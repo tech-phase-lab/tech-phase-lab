@@ -1,5 +1,95 @@
 # Six-part stock introductions
 
+## 2026-10-15: map recovery is the current priority
+
+The user accepted the restored NVDA map as the reference scale. Its exact
+pre-expansion payload from 95b5b29 is stored in
+`company-network-nvda-reviewed.data.json` and protected by an independent digest.
+Keep its 41 companies, 61 relationships, ordering, labels, layers and evidence.
+Never regenerate this reviewed map from the growing introduction registry.
+
+Other issuers start from their own sourced facts. Further context comes only
+from the fixed reviewed graph: at most three steps, 41 cards and 61 edges.
+These are ceilings, not targets. Rivalry never bridges to another supply chain.
+Direct and two-step views remove out-of-range cards. Do not add companies simply
+because their biographies have been added to the registry.
+
+LITE, COHR and IPGP now name actual competitors and their competing products.
+Optical overlap is an editorial comparison of current disclosed portfolios;
+IPG explicitly names Coherent and Lumentum in materials-processing competition.
+Anonymous competitor categories are not displayed as company names. Unreviewed
+names are marked pending, not guessed. The importer rejects new batches without
+a named competitor. Existing industry-only records still require factual review;
+hiding a placeholder does not complete that review. The working chat's audit
+records 36 issuers with published competitor corrections and 78 remaining
+industry-only issuers after the batches below. These are corrections, not a claim
+of exhaustive review of all product areas.
+Finish these quality corrections before adding new issuers.
+
+A published correction batch reviewed COST, MSFT, GOOG/GOOGL, AMZN, AVGO, DELL,
+ETN, CRWD, CRM, TXN, ADI, MCHP and SNPS (13 existing issuers; no additions).
+Each named rivalry links to a primary annual filing and identifies the product
+area. Where a peer makes the disclosure, both languages and the map label say so.
+Examples are selective, not exhaustive: cloud data products, endpoint security,
+workflow software, server systems, power equipment, semiconductor product lines
+and EDA have different competitors. Preserve existing non-competition facts and
+do not infer a customer or supplier relationship from a rivalry disclosure.
+Reviewed on 2026-10-15. The frozen NVDA payload is unchanged.
+
+### Competitor selection and removal review
+
+Use a small set of material, recognizable companies with overlapping products.
+State the competing product area, not just the industry. Do not fill a fixed
+number of slots or add a competitor merely because its biography exists.
+
+Accept a primary filing that explicitly names the rival, including a disclosure
+by the other company, after checking the product overlap. A separate comparison
+of both companies' official product portfolios is also acceptable, but label it
+as an editorial comparison rather than an explicit company disclosure.
+Competition evidence does not establish a customer or supplier relationship.
+
+Before replacing a competitor list, compare the previously published list AND
+named references from other issuer records. Review each omitted company against
+its original evidence; do not automatically reverse every existing edge.
+Record the reason for a removal, such as an unsupported claim, obsolete identity,
+duplicate or wrong product scope. Display simplification alone is not evidence
+that a previously supported competitor has ceased to compete.
+
+The LITE repair accidentally omitted AAOI when the renderer stopped importing
+other introduction records into the selected company's graph. AAOI's FY2025
+10-K explicitly names Lumentum, and both filings describe data-center optical
+transceivers. Preserve AAOI as a scoped LITE competitor with that peer-side
+source. The reviewed NVDA payload remains unchanged.
+
+Completion requires a content review, not just one named competitor. Track
+mixed named/industry lists and omitted-peer candidates separately from the
+industry-only issuers.
+
+A published reviewed correction batch covers AAPL, META, BABA, COHR, ZS, DDOG,
+MDB, ADBE, TEAM, HUBS and GLW (11 existing issuers; no additions). It replaces
+nine industry-only lists, leaving 88, and retains every previously named rival.
+BABA now distinguishes JD.com and Pinduoduo in e-commerce, Meituan in quick
+commerce, and its existing Baidu cloud comparison. COHR retains LITE and IPGP
+and adds AAOI using AAOI's explicit optical-transceiver competition disclosure.
+Peer-side disclosures are attributed; official-portfolio comparisons are marked
+as comparisons. Corning's NGK peer uses its current 2026 corporate name.
+These are representative product-specific examples, not exhaustive lists.
+Apple wearables and service-specific competition still require further review.
+Reviewed on 2026-10-15; all other editorial answers and the frozen NVDA payload
+are preserved.
+
+The subsequent batch corrects TSM, INTU, TWLO, ONTO, TEL, NET, CXM, PCOR,
+WMT and JD (10 existing issuers; no additions). Explicit peer disclosures are
+attributed; official product comparisons identify their product scope. TSM's
+rivals are limited to leading-edge foundry examples, and rivalry does not imply
+an additional manufacturing contract. Cloudflare comparisons identify CDN,
+zero-trust and compute products without adopting vendor superiority claims.
+Existing non-competition answers, relationships and the frozen NVDA map remain
+unchanged. Selection notes retain follow-up work for product areas not covered
+by these representative examples, including Intuit marketing and JD logistics.
+Do not copy old corporate names or segments without checking later divestitures.
+Reviewed on 2026-10-15.
+
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 

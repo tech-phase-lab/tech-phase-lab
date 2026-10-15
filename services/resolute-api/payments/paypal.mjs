@@ -1,4 +1,14 @@
 import { PaymentError, reject } from './policy.mjs';
+export const SANDBOX_RETURN = 'https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/resolute/checkout';
+export function approvalUrl(remote, orderId) {
+  const link = remote?.links?.find(link => ['approve','payer-action'].includes(link.rel));
+  if (!link) return null;
+  let url; try { url = new URL(link.href); } catch { reject('PAYPAL_UNAVAILABLE',503); }
+  if (remote.id !== orderId || url.origin !== 'https://www.sandbox.paypal.com' ||
+      url.pathname !== '/checkoutnow' || url.username || url.password || url.hash ||
+      url.searchParams.get('token') !== orderId || [...url.searchParams].length !== 1) reject('PAYPAL_UNAVAILABLE',503);
+  return url.href;
+}
 export function paypalConfig(env) {
   // Live charging intentionally unavailable until Sandbox acceptance and rollout.
   if (env.RESOLUTE_PAYPAL_ENV !== 'sandbox' || !env.RESOLUTE_PAYPAL_CLIENT_ID || !env.RESOLUTE_PAYPAL_CLIENT_SECRET ||
@@ -42,12 +52,17 @@ export function createPaypal(config, fetcher = fetch) {
   return {
     async create(order) {
       const q = order.quote, amount = { currency_code: q.currency, value: q.value };
-      return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', purchase_units: [{ reference_id: order.id,
+      return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', payment_source: { paypal: { experience_context: {
+        shipping_preference: 'NO_SHIPPING', user_action: 'CONTINUE',
+        return_url: `${SANDBOX_RETURN}?order=${order.id}&lang=${q.language}`,
+        cancel_url: `${SANDBOX_RETURN}?order=${order.id}&lang=${q.language}&cancel=1`
+      } } }, purchase_units: [{ reference_id: order.id,
         custom_id: order.id, invoice_id: order.id, payee: { merchant_id: config.merchantId },
         amount: { ...amount, breakdown: { item_total: amount } },
         items: [{ name: q.kind === 'initial' ? 'RESOLUTE' : 'RESOLUTE annual renewal', sku: q.sku,
           quantity: '1', category: 'DIGITAL_GOODS', unit_amount: amount }] }] }, order.id);
     },
+    approval: async orderId => approvalUrl(await call(`/v2/checkout/orders/${id(orderId)}`),orderId),
     get: orderId => call(`/v2/checkout/orders/${id(orderId)}`),
     capture: order => call(`/v2/checkout/orders/${id(order.paypal_id)}/capture`, 'POST', {}, order.capture_key),
     captureDetails: captureId => call(`/v2/payments/captures/${id(captureId)}`),

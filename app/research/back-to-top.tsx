@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, type MouseEvent } from "react";
+import { useSyncExternalStore, type MouseEvent } from "react";
 import { usePathname } from "next/navigation";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./back-to-top.module.css";
@@ -18,20 +18,8 @@ export default function BackToTop() {
   const pathname = usePathname();
   const [lang] = useResearchLanguage();
   const visible = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
-  const dock = useRef<HTMLDivElement>(null);
   const ja = lang === "ja";
   const name = ja ? "ページの先頭へ戻る" : "Back to top";
-  // Phone: sit 14px above the top edge of the bottom menu, whatever its height.
-  useEffect(() => {
-    const target = dock.current, nav = document.querySelector<HTMLElement>("[data-bottom-nav]");
-    if (!target || !nav) return;
-    const place = () => target.style.setProperty("--above-nav", `${Math.max(0, Math.round(window.innerHeight - nav.getBoundingClientRect().top + 14))}px`);
-    place();
-    window.addEventListener("resize", place);
-    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(place);
-    observer?.observe(nav);
-    return () => { window.removeEventListener("resize", place); observer?.disconnect(); };
-  }, [pathname]);
   if (pathname === "/research/stocks/widget") return null;
   function goToTop(event: MouseEvent<HTMLButtonElement>) {
     const smooth = typeof window.matchMedia === "function" && phone() && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -39,7 +27,7 @@ export default function BackToTop() {
     // Keep keyboard navigation at the top without focusing the logo after a tap.
     if (event.detail === 0) document.querySelector<HTMLElement>("header a")?.focus({ preventScroll: true });
   }
-  return <div ref={dock} className={styles.dock}>
+  return <div className={styles.dock}>
     <button type="button" className={`${styles.button} ${visible ? styles.show : ""}`} onClick={goToTop}
       aria-label={name} title={name} aria-hidden={visible ? undefined : true} tabIndex={visible ? 0 : -1}>
       <span className={styles.glyph} aria-hidden="true">↑</span>

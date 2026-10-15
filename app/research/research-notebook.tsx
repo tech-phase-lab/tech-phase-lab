@@ -85,8 +85,11 @@ function exportPrint(content: HTMLElement, marks: Annotation[], title: string, l
   const doc = popup.document;
   doc.documentElement.lang = lang;
   doc.title = `Tech Phase — ${title}`;
+  const viewport = doc.createElement("meta");
+  viewport.name = "viewport"; viewport.content = "width=device-width, initial-scale=1";
+  doc.head.append(viewport);
   const style = doc.createElement("style");
-  style.textContent = `*{box-sizing:border-box}body{margin:32px auto;padding:0 24px;max-width:800px;font:15px/1.85 system-ui,sans-serif;color:#182431;background:white}h1,h2,h3,h4{line-height:1.5;break-after:avoid}h2{font-size:24px}h3{font-size:18px}p,li{orphans:3;widows:3}a{color:#245b89;overflow-wrap:anywhere}a[href^="https"]:after{content:" (" attr(href) ")";font-size:10px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #bbc7ce;padding:6px}dl>div{display:flex;gap:12px}dd{margin:0}small{display:block}svg{display:none}blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid #abc}aside{margin:20px 0;padding:16px;background:#eff6f5;border-radius:8px}button{padding:10px 20px;font-size:16px;cursor:pointer}header{border-bottom:1px solid #ccd8de;margin-bottom:24px}article>div,article>section{margin:18px 0}article>div:first-child{font-size:12px}section{break-inside:auto}article span{print-color-adjust:exact;-webkit-print-color-adjust:exact}@page{margin:16mm}@media print{body{margin:0;padding:0;max-width:none}.print-tools{display:none}}`;
+  style.textContent = `*{box-sizing:border-box}body{margin:32px auto;padding:0 24px;max-width:800px;font:18px/1.85 system-ui,sans-serif;color:#182431;background:white}h1,h2,h3,h4{line-height:1.5;break-after:avoid}h2{font-size:24px}h3{font-size:18px}p,li{orphans:3;widows:3}a{color:#245b89;overflow-wrap:anywhere}a[href^="https"]:after{content:" (" attr(href) ")";font-size:10px}table{width:100%;border-collapse:collapse;font-size:16px}th,td{border:1px solid #bbc7ce;padding:6px}dl>div{display:flex;gap:12px}dd{margin:0}small{display:block}svg{display:none}blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid #abc}aside{margin:20px 0;padding:16px;background:#eff6f5;border-radius:8px}button{padding:10px 20px;font-size:16px;cursor:pointer}header{border-bottom:1px solid #ccd8de;margin-bottom:24px}article>div,article>section{margin:18px 0}article>div:first-child{font-size:12px}section{break-inside:auto}article span{print-color-adjust:exact;-webkit-print-color-adjust:exact}@page{margin:12mm}@media print{body{margin:0;padding:0;max-width:none;font-size:14pt}table{font-size:12pt}.print-tools{display:none}}`;
   doc.head.append(style);
   const controls = doc.createElement("aside"); controls.className = "print-tools";
   const hint = doc.createElement("p"); hint.textContent = lang === "ja" ? "印刷画面で「PDFに保存」を選んでください。iPhoneは印刷プレビューを開き、共有から「ファイルに保存」を選べます。" : "Choose Save as PDF in the print dialog. On iPhone, open the print preview, then Share → Save to Files.";
@@ -149,14 +152,19 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
           setEditing(true);
           setActiveMark(null);
         }
-        else if (root.current.contains(document.activeElement) || window.getSelection()?.anchorNode && root.current.contains(window.getSelection()!.anchorNode)) { savedRange.current = null; setSelection([]); }
+        else if (savedRange.current) {
+          savedRange.current = null;
+          setSelection([]);
+          // A note draft survives moving focus from the passage to its textarea.
+          if (!draft) { setEditing(false); setActiveMark(null); }
+        }
       }, 120);
     };
     const closeForMenu = () => { clearTimeout(timer); savedRange.current = null; window.getSelection()?.removeAllRanges(); setSelection([]); setEditing(false); setActiveMark(null); };
     window.addEventListener("tech-phase:menu-open", closeForMenu);
     document.addEventListener("selectionchange", capture);
     return () => { clearTimeout(timer); window.removeEventListener("tech-phase:menu-open", closeForMenu); document.removeEventListener("selectionchange", capture); };
-  }, [enabled]);
+  }, [enabled, draft]);
 
   function restoreSelection() {
     const range = savedRange.current;

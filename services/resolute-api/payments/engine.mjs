@@ -23,7 +23,8 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(!/^[A-Z0-9]{8,32}$/.test(remote.id ?? '')) reject('PAYPAL_UNAVAILABLE',503);
         order=await store.bind(order,remote.id);
       }
-      return { orderId:order.id,paypalOrderId:order.paypal_id,state:order.state,quote:order.quote,expiresAt:order.expires_at,sandbox:true };
+      return { orderId:order.id,paypalOrderId:order.paypal_id,state:order.state,quote:order.quote,expiresAt:order.expires_at,
+        approvalUrl:order.state === 'created' ? await paypal.approval(order.paypal_id) : null,sandbox:true };
     },
     async capture(userId,body) {
       input(body,['orderId']); let order=await owned(userId,body.orderId);
@@ -56,7 +57,7 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(remote.status === 'COMPLETED') await settle(order,remote);
       }
       const current=await owned(userId,id);
-      return { orderId:current.id,state:current.state,sandbox:true };
+      return { orderId:current.id,state:current.state,quote:current.quote,expiresAt:current.expires_at,sandbox:true };
     },
     async webhook(headers,event) {
       if(!await paypal.verify(headers,event)) { await store.flag(null,'INVALID_WEBHOOK_SIGNATURE'); reject('INVALID_SIGNATURE',400); }

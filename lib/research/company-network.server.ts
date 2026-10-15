@@ -1,4 +1,5 @@
 import { companyIntroductions, companyIntroductionFor } from "./company-introductions.ts";
+import reviewedNvidia from "./company-network-nvda-reviewed.data.json" with { type: "json" };
 import type { CompanyNetwork, NetworkNode, NetworkEdge, NetworkEvidence, NetworkText } from "./company-network.ts";
 
 const layers: Record<string, number> = {
@@ -72,23 +73,38 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
   const introduction = companyIntroductionFor(issuer);
   if (!introduction) return null;
   const root = introduction.tickers[0];
-  const companyIds = new Set(catalog.nodes.filter(node => node.kind === "company").map(node => node.id));
+  // NVIDIA's editorial map is restored exactly from 95b5b29 (before bulk
+  // additions). Biographies must never automatically expand this reviewed map.
+  if (root === "NVDA") return reviewedNvidia as CompanyNetwork;
+  // Start with this issuer's researched facts, never references added by
+  // unrelated biographies. Only the fixed reviewed map supplies context.
+  const ownEdges = catalog.edges.filter(edge =>
+    (edge.from === root || edge.to === root) && edge.evidence.some(item => item.about === root));
   const included = new Set([root]);
-  // Return the connected company component, not the entire stock registry.
-  let changed = true;
-  while (changed) {
-    changed = false;
-    for (const edge of catalog.edges) {
-      if (!companyIds.has(edge.from) || !companyIds.has(edge.to)) continue;
-      if (included.has(edge.from) && !included.has(edge.to)) { included.add(edge.to); changed = true; }
-      if (included.has(edge.to) && !included.has(edge.from)) { included.add(edge.from); changed = true; }
-    }
-  }
-  // Keep the root issuer’s own industry-level facts even when named links exist.
-  // Scoped buckets never pull in another issuer’s unnamed relationships.
-  for (const edge of catalog.edges) {
+  for (const edge of ownEdges) {
     if (edge.from === root) included.add(edge.to);
     if (edge.to === root) included.add(edge.from);
   }
-  return { root, nodes: catalog.nodes.filter(node => included.has(node.id)), edges: catalog.edges.filter(edge => included.has(edge.from) && included.has(edge.to)) };
+  const context = reviewedNvidia as CompanyNetwork;
+  const depth = new Map<string, number>([[root, 0]]);
+  for (const edge of ownEdges) if (edge.kind !== "competition") depth.set(edge.from === root ? edge.to : edge.from, 1);
+  // At most three steps, 41 cards and 61 edges: the approved NVDA scale.
+  // Rivalry never pulls in a rival's customers or suppliers.
+  for (let step = 1; step < 3; step++) for (const edge of context.edges) {
+    if (edge.kind === "competition") continue;
+    const next = depth.get(edge.from) === step ? edge.to : depth.get(edge.to) === step ? edge.from : null;
+    if (!next || depth.has(next) || included.size >= 41) continue;
+    included.add(next);
+    depth.set(next, step + 1);
+  }
+  const edges = new Map(ownEdges.map(edge => [edge.id, edge]));
+  for (const edge of context.edges) {
+    if (edges.size >= 61) break;
+    if (edge.kind !== "competition" && included.has(edge.from) && included.has(edge.to) && !edges.has(edge.id)) edges.set(edge.id, edge);
+  }
+  // Use the reviewed labels/order for context; add only this issuer's own nodes.
+  const nodes = new Map(context.nodes.filter(node => included.has(node.id)).map(node => [node.id, node]));
+  for (const node of catalog.nodes) if (included.has(node.id) && !nodes.has(node.id)) nodes.set(node.id, node);
+  nodes.set(root, catalog.nodes.find(node => node.id === root)!);
+  return { root, nodes: [...nodes.values()], edges: [...edges.values()] };
 }

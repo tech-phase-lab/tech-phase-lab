@@ -5,6 +5,11 @@ import { validateCompanyIntroductions } from '../../lib/research/company-introdu
 export function mergeCompanyIntroductions(current, batch) {
   validateCompanyIntroductions(current);
   validateCompanyIntroductions(batch);
+  for (const item of batch) {
+    if (!item.maps.competition.some(entry => entry.kind === 'company')) {
+      throw new Error(`Named competitor required for CIK ${item.cik}; industry labels are not company names`);
+    }
+  }
   const byCik = new Map(current.map(item => [item.cik, item]));
   for (const item of batch) {
     const previous = byCik.get(item.cik);

@@ -1,8 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { companyIntroductions } from '../lib/research/company-introductions.ts';
 import { companyNetworkFor } from '../lib/research/company-network.server.ts';
 import { networkFocus, layoutCompanyNetwork } from '../lib/research/company-network.ts';
 const graph = companyNetworkFor({cik:1045810,ticker:'NVDA'});
+
+test('NVIDIA exactly preserves the reviewed pre-expansion map payload', () => {
+  // Independently captured from 95b5b29, before bulk issuer additions.
+  // Includes ordering, labels, summaries, layers, evidence and sources.
+  assert.equal(graph.nodes.length, 41);
+  assert.equal(graph.edges.length, 61);
+  assert.equal(createHash('sha256').update(JSON.stringify(graph)).digest('hex'),
+    '29f71db1aeb70e90a6b18f3837389c9c1ad5873a7255f3914862339b99a302a4');
+  for (const symbol of ['BIDU','BABA','JD','TTWO','WMT','DOCN','WDAY','PATH']) {
+    assert.ok(!graph.nodes.some(node => node.id === symbol));
+  }
+});
+
 test('normalizes shared companies and directed relationships with sources', () => {
   assert.equal(new Set(graph.nodes.map(n=>n.id)).size,graph.nodes.length);
   assert.equal(new Set(graph.edges.map(e=>e.id)).size,graph.edges.length);
@@ -14,6 +29,18 @@ test('normalizes shared companies and directed relationships with sources', () =
   assert.equal(graph.nodes.some(n=>n.id==='COST'),false);
   assert.equal(companyNetworkFor({cik:1,ticker:'NVDA'}),null);
   assert.equal(companyNetworkFor({cik:1652044,ticker:'GOOGL'}).root,companyNetworkFor({cik:1652044,ticker:'GOOG'}).root);
+});
+
+test('every issuer stays within the reviewed map scale and does not traverse the live registry', () => {
+  for (const item of companyIntroductions) {
+    const map = companyNetworkFor({cik:item.cik,ticker:item.tickers[0]});
+    assert.ok(map.nodes.length <= 41, `${map.root}: ${map.nodes.length} nodes`);
+    assert.ok(map.edges.length <= 61, `${map.root}: ${map.edges.length} edges`);
+  }
+  const lite = companyNetworkFor({cik:1633978,ticker:'LITE'});
+  for (const ticker of ['BIDU','BABA','JD','TTWO','WMT','DOCN','WDAY','PATH']) assert.ok(!lite.nodes.some(node=>node.id===ticker));
+  const workday = companyNetworkFor({cik:1327811,ticker:'WDAY'});
+  assert.ok(!workday.nodes.some(node=>node.id==='ASML'));
 });
 test('two steps adds suppliers of suppliers without inventing direct edges', () => {
   const one=networkFocus(graph,'NVDA','direct'), two=networkFocus(graph,'NVDA','two');

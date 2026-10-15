@@ -15,7 +15,7 @@ test('every published company has six bilingual answers and dated primary source
     assert.match(company.reviewedOn, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(company.sources.length > 0);
     for (const source of company.sources) {
-      assert.ok(new Set(['www.sec.gov', 'ir.baidu.com', 'data.alibabagroup.com', 'www.take2games.com', 'news.sap.com', 'usa.visa.com', 'newsroom.mastercard.com', 'appian.com', 'knowledgebase.zetaglobal.com', 'newsroom.intel.com', 'www.bloomenergy.com', 'investor.vistracorp.com', 'www.gevernova.com', 'investors.digitalocean.com', 'ir.elastic.co', 'ir.gitlab.com', 'investors.jfrog.com', 'www.boxinvestorrelations.com', 'www.uipath.com', 'investors.dropbox.com', 'ir.dynatrace.com', 'investors.asana.com', 'ir.monday.com', 'ir.freshworks.com', 'www.ringcentral.com', 'www.bill.com', 'ir.appfolioinc.com', 'investors.blackline.com']).has(new URL(source.url).hostname), `Unreviewed source host: ${source.url}`);
+      assert.ok(new Set(['www.sec.gov', 'ir.baidu.com', 'data.alibabagroup.com', 'www.take2games.com', 'news.sap.com', 'usa.visa.com', 'newsroom.mastercard.com', 'appian.com', 'knowledgebase.zetaglobal.com', 'newsroom.intel.com', 'www.bloomenergy.com', 'investor.vistracorp.com', 'www.gevernova.com', 'investors.digitalocean.com', 'ir.elastic.co', 'ir.gitlab.com', 'investors.jfrog.com', 'www.boxinvestorrelations.com', 'www.uipath.com', 'investors.dropbox.com', 'ir.dynatrace.com', 'investors.asana.com', 'ir.monday.com', 'ir.freshworks.com', 'www.ringcentral.com', 'www.bill.com', 'ir.appfolioinc.com', 'investors.blackline.com', 'news.samsung.com', 'www.adobe.com', 'www.hubspot.com', 'www1.hkexnews.hk', 'www.ngk-global.com', 'investor.tsmc.com', 'www.te.com', 'www.cloudflare.com', 'www.oracle.com']).has(new URL(source.url).hostname), `Unreviewed source host: ${source.url}`);
       assert.ok(source.label.trim());
     }
     for (const lang of ['ja', 'en']) {
@@ -35,7 +35,7 @@ test('requires both issuer identity and ticker; supports share classes and non-m
 
 const require = createRequire(import.meta.url);
 function compileComponent(file, extra = {}) {
-  const compiled = ts.transpileModule(readFileSync(new URL(`../app/research/stocks/${file}.tsx`, import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+  const compiled = ts.transpileModule(readFileSync(new URL(`../app/research/stocks/${file}.tsx`, import.meta.url), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const mod = {exports:{}};
   new Function('require','module','exports',compiled)(name => name.endsWith('.css') ? {default:{}} : extra[name] ?? require(name), mod, mod.exports);
   return mod.exports;
@@ -72,9 +72,25 @@ test('all issuers render same-page selection maps in both languages', () => {
       assert.ok(!html.includes('href="/research/stocks'));
       assert.ok(!html.includes(lang==='ja'?'最初に戻る':'Reset'));
       const network = companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]});
-      assert.equal((html.match(/<button/g)??[]).length,3 + network.nodes.length);
-      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name}"`));
+      const focus = networkHelpers.networkFocus(network, network.root, 'two');
+      const visible = network.root === 'NVDA' ? network.nodes : network.nodes.filter(node => !(node.kind === 'industry' && focus.competitors.has(node.id)) && (focus.distances.has(node.id) || focus.competitors.has(node.id)));
+      assert.equal((html.match(/<button/g)??[]).length,3 + visible.length);
+      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name}"`), introduction.tickers[0]);
       assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     }
   }
+});
+
+test('Lumentum shows actual competitors, excludes anonymous rivals and removes out-of-range cards', () => {
+  const introduction = companyIntroductionFor({cik:1633978,ticker:'LITE'});
+  const network = companyNetworkFor({cik:1633978,ticker:'LITE'});
+  const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction,lang:'ja',network}));
+  assert.ok(html.includes('Coherent (COHR)'));
+  assert.ok(html.includes('IPG Photonics (IPGP)'));
+  assert.ok(html.includes('Applied Optoelectronics (AAOI)'));
+  const aaoi = introduction.maps.competition.find(entry => entry.ticker === 'AAOI');
+  assert.ok(aaoi.sourceIndexes.some(index => introduction.sources[index].url.endsWith('/aaoi20251231_10k.htm')));
+  assert.ok(!html.includes('光通信メーカー'));
+  assert.ok(!html.includes('レーザーメーカー'));
+  assert.ok(!html.includes('aria-label="Nikon"'));
 });
