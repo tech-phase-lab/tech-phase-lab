@@ -17,6 +17,7 @@ import json
 import unicodedata
 import os
 from pathlib import Path
+import importlib
 import re
 import time
 from urllib.error import HTTPError
@@ -32,7 +33,9 @@ SOURCES = json.loads(Path(__file__).with_name("signal_sources.json").read_text()
 MAX_BYTES = 12 * 1024 * 1024
 MAX_TEXT = 160_000
 # Official macro releases kept as exact, source-bound results (no tickers, no model copy).
-MACRO_RELEASE_SOURCES = frozenset({"bea-pce", "bls-cpi", "bls-ppi"})
+# Releases read straight from the bls.gov page, one module each (CPI Oct 14, PPI Oct 15, jobs report Oct 15).
+BLS_RELEASE_MODULES = {"bls-cpi": "bls_cpi", "bls-ppi": "bls_ppi", "bls-jobs": "bls_empsit"}
+MACRO_RELEASE_SOURCES = frozenset({"bea-pce", *BLS_RELEASE_MODULES})
 MAX_ITEMS = 500
 X_API_DAILY_REQUEST_LIMIT_DEFAULT = 100
 X_API_DAILY_REQUEST_LIMIT_MAX = 10_000
@@ -273,17 +276,10 @@ def parse(source, body, tickers):
         text = monitor.extract_html_text(body)
         if len(text) < 120 or len(text) >= MAX_TEXT:
             raise ValueError("signal-document-body-limit")
-        if source["id"] == "bls-cpi":
+        if source["id"] in BLS_RELEASE_MODULES:
             # The release page is read directly at the scheduled second (Oct 14).
-            # A page that is not a complete, consistent CPI release is an error, never a guess.
-            import bls_cpi
-            release = bls_cpi.parse_release(text)
-            return [{"url": safe_url(release["url"], source), "title": release["title"], "text": text,
-                     "publishedAt": release["publishedAt"], "matches": {}, "truncated": False}]
-        if source["id"] == "bls-ppi":
-            # Oct 15: the PPI release is read the same way as the CPI release.
-            import bls_ppi
-            release = bls_ppi.parse_release(text)
+            # A page that is not a complete, consistent release is an error, never a guess.
+            release = importlib.import_module(BLS_RELEASE_MODULES[source["id"]]).parse_release(text)
             return [{"url": safe_url(release["url"], source), "title": release["title"], "text": text,
                      "publishedAt": release["publishedAt"], "matches": {}, "truncated": False}]
         return [{"url": safe_url(source["url"], source), "title": source["name"],
@@ -2484,34 +2480,15 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             display_title = projection['title']
             translation['translationJa'] = projection['translationJa']
             publication = {'publishedAt': projection['publishedAt']}
-        if source['id'] == 'bls-cpi':
+        if source['id'] in BLS_RELEASE_MODULES:
             # Same rule as BEA: re-project only the current exact revision from
             # the stored page; the release time and values come from the page itself.
-            import bls_cpi
             document = db.execute('''SELECT title,text,sha FROM signal_documents
               WHERE source_id=? AND url=?''', (row['source_id'], row['url'])).fetchone()
             if not document or document['sha'] != row['sha'] or row['truncated']:
                 continue
             try:
-                projection = bls_cpi.parse_release(document['text'])
-                release_time = instant(projection['publishedAt'])
-                if projection['url'] != url or not release_time or not cutoff <= release_time <= current:
-                    continue
-            except (ValueError, TypeError):
-                continue
-            display_title = projection['title']
-            translation['translationJa'] = projection['translationJa']
-            publication = {'publishedAt': projection['publishedAt']}
-        if source['id'] == 'bls-ppi':
-            # Same rule as BEA: re-project only the current exact revision from
-            # the stored page; the release time and values come from the page itself.
-            import bls_ppi
-            document = db.execute('''SELECT title,text,sha FROM signal_documents
-              WHERE source_id=? AND url=?''', (row['source_id'], row['url'])).fetchone()
-            if not document or document['sha'] != row['sha'] or row['truncated']:
-                continue
-            try:
-                projection = bls_ppi.parse_release(document['text'])
+                projection = importlib.import_module(BLS_RELEASE_MODULES[source['id']]).parse_release(document['text'])
                 release_time = instant(projection['publishedAt'])
                 if projection['url'] != url or not release_time or not cutoff <= release_time <= current:
                     continue

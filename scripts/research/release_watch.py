@@ -34,7 +34,7 @@ CALL_LOOKBACK = timedelta(hours=12)
 WATCH_FOR = timedelta(hours=6)
 # X routes that post U.S. indicator results and earnings flashes.
 # Official release page polled in the same window as the social routes.
-OFFICIAL_ROUTES = {'cpi': 'bls-cpi', 'ppi': 'bls-ppi'}
+OFFICIAL_ROUTES = {'cpi': 'bls-cpi', 'ppi': 'bls-ppi', 'jobs': 'bls-jobs'}
 BURST_ROUTES = {'economic': ('x-wallstengine',), 'earnings': ('x-wallstengine', 'x-tipranks', 'x-tradethenews')}
 INDICATORS = {
     'jobs': r'payroll|非農業|雇用統計|unemployment rate|失業率',
@@ -112,7 +112,7 @@ def burst_routes(now, events=None):
     for event in [*(load_schedule() if events is None else events), *detected_events(now)]:
         if event['phase'] == 'release' and event['at'] - BURST_BEFORE <= now <= event['at'] + BURST_AFTER:
             routes.update(BURST_ROUTES[event['kind']])
-            # Oct 14/15: the CPI and PPI results are also read straight from the BLS release page.
+            # Oct 14/15: the CPI, PPI and jobs report results are also read straight from the BLS release page.
             if event['kind'] == 'economic' and event.get('indicator') in OFFICIAL_ROUTES:
                 routes.add(OFFICIAL_ROUTES[event['indicator']])
     return routes
