@@ -1497,3 +1497,8 @@ Chromiumの390px幅で日英の③→④→②→③を操作し、9時設定の
 会員別注文方式と返金/異議の停止方針をユーザー承認済み。Railway resolute-apiへユーザーがPayPal Sandbox用5変数を追加し、deployment d6c7b39b-f714-48f7-a18a-9a59c95bc2f1 SUCCESSを確認。値の取得や実認証は未実施。
 
 運営者限定・既定無効のSandbox注文API、PayPal検証、専用台帳SQLと不正防止テストを追加。Sandboxは本番利用権へ書き込まない。既存のreader権限・画面・ニュース・mainは変更しない。実DB適用、追加のmerchant/webhook/Clerk/writer設定、実Sandbox決済、メール送信、本番付与、旧固定リンク停止は未完了。詳しくは `docs/RESOLUTE-PAYMENTS.md`。これらの未完了項目を購入機能の完成扱いにしない。
+
+
+## 2026-10-15 — RESOLUTE Sandbox接続確認の続報
+
+専用決済スキーマと最小権限writerを実DBへ適用し、PayPal Sandboxの認証、同じアプリのWebhook URLと6イベント、Clerkでの運営者照合と確認済みメールを実接続で検証済み。購入受付は無効のまま。本番利用権、実決済、メール送信は未稼働。証跡と次の作業は `docs/RESOLUTE-PAYMENTS-OPERATIONS-2026-10-15.md` を参照。追加した接続設定のやり直しは不要。

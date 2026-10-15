@@ -51,6 +51,11 @@ No checkout UI or sales link is activated in this phase.
 
 ## Configuration
 
+2026-10-15 update: Sandbox schema/role provisioning and live read-only PayPal/Clerk
+authentication checks have passed. See `RESOLUTE-PAYMENTS-OPERATIONS-2026-10-15.md`
+for deployment evidence and the remaining rollout gates. Purchases remain disabled.
+The setup instructions below are retained for reproducibility.
+
 User has added these to Railway resolute-api, with a successful configuration deploy:
 `RESOLUTE_PAYPAL_ENV=sandbox`, `RESOLUTE_PAYPAL_CLIENT_ID`,
 `RESOLUTE_PAYPAL_CLIENT_SECRET`, `RESOLUTE_PAYMENT_ALERT_EMAIL`,
@@ -82,8 +87,10 @@ PayPal postback signature verification; exercise real Sandbox orders and events.
 
 ## Not completed / rollout gates
 
-- Live Sandbox credential authentication, schema/role provisioning, webhook registration,
-  real PayPal approval/capture/refund/dispute tests, multi-session PostgreSQL concurrency.
+- Real PayPal approval/capture/refund/dispute tests and multi-session PostgreSQL
+  concurrency. Credential authentication, schema/role provisioning and the registered
+  webhook URL plus all six event types were verified on 2026-10-15. This does not
+  prove delivery/processing of a real signed payment event or the receiving payee.
 - Checkout UI and PayPal approval experience/return URL.
 - Email delivery adapter, verified sender, delivery/retry worker and owner dashboard.
   Outbox creation is implemented, email delivery is NOT implemented or enabled.
