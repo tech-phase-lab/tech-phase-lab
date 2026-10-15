@@ -1,5 +1,5 @@
 export type NetworkText = { ja: string; en: string };
-export type NetworkNode = { id: string; name: string; ticker?: string; nameJa?: string; kind: "company" | "industry"; layer: number; summary?: NetworkText };
+export type NetworkNode = { id: string; name: string; ticker?: string; nameJa?: string; kind: "company" | "industry"; layer: number; summary?: NetworkText; businessLabel?: NetworkText };
 export type NetworkEvidence = { about: string; label: NetworkText; reviewedOn: string; sources: { label: string; url: string }[] };
 export type NetworkEdge = { id: string; from: string; to: string; kind: "supply" | "partner" | "investment" | "competition"; evidence: NetworkEvidence[] };
 export type CompanyNetwork = { root: string; nodes: NetworkNode[]; edges: NetworkEdge[]; layerLabels?: Record<number, NetworkText> };

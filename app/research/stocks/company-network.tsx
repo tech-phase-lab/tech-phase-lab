@@ -105,7 +105,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
         const relevant = mode === "all" || distance !== undefined || focus.competitors.has(node.id);
         const tone = active ? "selected" : focus.upstream.has(node.id) ? "upstream" : focus.downstream.has(node.id) ? "downstream" : focus.competitors.has(node.id) ? "competition" : distance === 1 ? "partner" : "indirect";
         return <button type="button" key={node.id} className={styles.node} onClick={() => flash(node.id)} data-flashed={flashed === node.id} style={{ left: position.x, top: position.y, width: position.width, height: position.height }} data-symbol={Boolean(node.ticker)} data-tone={tone} data-relevant={relevant} data-competitor={focus.competitors.has(node.id)} aria-current={active ? "true" : undefined} aria-label={label(node, lang)}>
-          <strong>{node.ticker ?? label(node, lang)}</strong><span>{node.ticker ? label(node, lang) : businessLabels[node.layer][lang]}</span>
+          <strong>{node.ticker ?? label(node, lang)}</strong><span>{node.businessLabel?.[lang] ?? (node.ticker ? label(node, lang) : businessLabels[node.layer][lang])}</span>
         </button>;
       })}
     </div>

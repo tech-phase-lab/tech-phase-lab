@@ -112,3 +112,23 @@ test('selected-sector maps render relevant headings without changing the reviewe
     }
   }
 });
+
+test('diversified competitors use the compared product in selected maps only', () => {
+  for (const [ticker,cik] of [['HPQ',47217],['WDC',106040],['STX',1137789],['MELI',1099590]]) {
+    const graph = companyNetworkFor({ticker,cik});
+    const peers = networkHelpers.networkFocus(graph,graph.root,'direct').competitors;
+    for (const id of peers) {
+      const node = graph.nodes.find(item => item.id === id);
+      assert.equal(node.layer,ticker==='HPQ'?5:ticker==='MELI'?7:2,id);
+      assert.ok(node.businessLabel?.ja && node.businessLabel?.en,id);
+    }
+    for (const lang of ['ja','en']) {
+      const html = renderToStaticMarkup(createElement(networkComponent.CompanyNetworkMap,{graph,lang}));
+      assert.ok(html.includes(ticker==='HPQ'?(lang==='ja'?'プリンター・消耗品':'Printers &amp; supplies'):ticker==='MELI'?(lang==='ja'?'ブラジルの通販':'Brazilian commerce'):(lang==='ja'?'企業向けSSD':'Enterprise SSDs')));
+      if (ticker==='MELI') assert.ok(!html.includes(lang==='ja'?'クラウド・AIサービス':'Cloud &amp; AI services'));
+    }
+  }
+  const asml = companyNetworkFor({ticker:'ASML',cik:937966});
+  assert.equal(asml.nodes.find(node=>node.id==='Canon').layer,0);
+  assert.equal(asml.nodes.find(node=>node.id==='Canon').businessLabel,undefined);
+});

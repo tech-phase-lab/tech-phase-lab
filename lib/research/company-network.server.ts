@@ -76,7 +76,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     2: { ja: "ストレージ製品", en: "Storage products" },
   };
   if (root === "HPQ") return {
-    5: { ja: "PC・プリンター", en: "PCs & printing" },
+    5: { ja: "PC・印刷・関連システム", en: "PCs, printing & related systems" },
   };
   if (["BE", "VST"].includes(root)) return {
     5: { ja: "発電・電力供給", en: "Power generation & supply" },
@@ -110,6 +110,39 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     5: { ja: "宇宙・防衛システム", en: "Space & defense systems" },
     7: { ja: "宇宙・防衛の関連企業", en: "Related space & defense companies" },
   };
+}
+
+// A diversified peer's product in this comparison can differ from its category
+// in the fixed semiconductor context (for example Canon printers versus optics).
+function productScopedNodes(root: string, nodes: NetworkNode[]): NetworkNode[] {
+  if (root === "MELI") return nodes.map(node => {
+    if (["AMZN", "SE"].includes(node.id)) return {
+      ...node, layer: 7, businessLabel: { ja: "ブラジルの通販", en: "Brazilian commerce" },
+    };
+    if (node.id === "NU") return {
+      ...node, layer: 7, businessLabel: { ja: "個人向け金融", en: "Consumer finance" },
+    };
+    return node;
+  });
+  if (root === "HPQ") return nodes.map(node => {
+    if (["DELL", "AAPL", "MSFT", "Lenovo"].includes(node.id)) return {
+      ...node, layer: 5, businessLabel: { ja: "PC・端末", en: "PCs & devices" },
+    };
+    if (["Canon", "Seiko Epson", "Brother Industries", "XRX"].includes(node.id)) return {
+      ...node, layer: 5, businessLabel: { ja: "プリンター・消耗品", en: "Printers & supplies" },
+    };
+    return node;
+  });
+  if (["WDC", "STX"].includes(root)) return nodes.map(node => {
+    if (["WDC", "STX", "Toshiba Electronic Devices & Storage"].includes(node.id) && node.id !== root) return {
+      ...node, layer: 2, businessLabel: { ja: "HDD", en: "HDDs" },
+    };
+    if (["MU", "Samsung Electronics"].includes(node.id)) return {
+      ...node, layer: 2, businessLabel: { ja: "企業向けSSD", en: "Enterprise SSDs" },
+    };
+    return node;
+  });
+  return nodes;
 }
 
 export function companyNetworkFor(issuer: { cik: number; ticker: string }): CompanyNetwork | null {
@@ -150,5 +183,5 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
   for (const node of catalog.nodes) if (included.has(node.id) && !nodes.has(node.id)) nodes.set(node.id, node);
   nodes.set(root, catalog.nodes.find(node => node.id === root)!);
   const layerLabels = sectorLayerLabels(root);
-  return { root, nodes: [...nodes.values()], edges: [...edges.values()], ...(layerLabels ? { layerLabels } : {}) };
+  return { root, nodes: productScopedNodes(root, [...nodes.values()]), edges: [...edges.values()], ...(layerLabels ? { layerLabels } : {}) };
 }
