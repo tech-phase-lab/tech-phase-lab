@@ -53,3 +53,11 @@ test('the page has All / Earnings tabs only, shows one date heading per day (mon
   const page = await readFile(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');
   assert.match(page, /"ハイテク速報" : "Tech Alerts"/);
 });
+
+test('a company X account post with no business content is left out (owner, Oct 16: Builders & Brews tour)', async () => {
+  const { socialChatter } = await import('../lib/research/news-presentation.ts');
+  const base = { id: '1', publisher: 'X · Nebius official', url: 'https://x.com/nebiusai/status/1', tickers: ['NBIS'], observedAt: '2026-10-15T21:27:40Z', publishedAt: '2026-10-15T21:27:33Z' };
+  assert.equal(socialChatter({ ...base, title: 'The Builders & Brews tour has wrapped: thousands of builders in 20 cities', translationJa: '20都市・17カ国の数千人のビルダーが参加したBuilders & Brewsツアーが終了しました。' }), true);
+  assert.equal(socialChatter({ ...base, title: 'Nebius signs a multi-year agreement to supply GPU capacity', translationJa: 'Nebius、GPU容量の複数年契約を締結' }), false);
+  assert.equal(socialChatter({ ...base, url: 'https://www.nvidia.com/blog/x', title: 'Builders tour', translationJa: 'ツアー' }), false);
+});

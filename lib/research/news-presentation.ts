@@ -40,7 +40,18 @@ export function shownInLanguage(item: OfficialUpdate, lang: Language) {
 /** A headline-only company item must say who did what: a bare product or
  * blog heading ("Next-Generation Scale-Up Networking for AI Fabrics") with no
  * body and no company name tells a reader nothing (owner, Oct 7). */
+/** A company's own X account also posts events and greetings ("Builders & Brews tour wrapped up", owner Oct 16):
+ * such a post is listed only when it says something about the business. */
+const BUSINESS = /\b(?:results?|earnings|acquir\w*|merger|dividend|guidance|revenue|buyback|repurchase|offering|appoint\w*|ceo|cfo|partner\w*|agreement|contract|launch\w*|available|announc\w*|data ?cent\w*|capacity|gpu\w*|cluster|raises?|funding|billion|million|price|pricing|customers?)\b|決算|買収|配当|売上|自社株|提携|契約|発表|提供|開始|資金|データセンター|億|増資/i;
+export function socialChatter(item: OfficialUpdate) {
+  let host = '';
+  try { host = new URL(item.url).hostname; } catch { /* not a link */ }
+  if (host !== 'x.com' || /^\/(?:tipranks|theflynews|wallstengine|fabymetal4|trade_the_news|trendspider|barchart)\//i.test(new URL(item.url).pathname)) return false;
+  return !BUSINESS.test(`${item.title} ${item.translationJa ?? ''}`);
+}
+
 export function informativeOfficial(item: OfficialUpdate) {
+  if (socialChatter(item)) return false;
   if (item.bodyJa || item.bodyEn || item.brief || item.newsCategory || item.generalSource || item.researchId) return true;
   const text = `${item.title} ${item.translationJa ?? ''}`.toLowerCase();
   const names = [...item.tickers, item.publisher.split(/\s+/)[0]].filter(name => name && name.length > 1);
