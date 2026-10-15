@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 138 issuers with published competitor corrections and 0 remaining
+records 148 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -683,3 +683,11 @@ Reviewed GTLB / NTAP / PAYX / ADP / BILL / APPN / NCNO / ALKT / RPD / SAP (10 ex
 Distinguish payroll from co-employment services, bank lending from account opening, file storage from full cloud platforms, and warehouse management from full ERP suites. Nutanix and NetApp's announced integration collaboration can coexist with storage competition; planned availability is not asserted as generally available. Manual accounting and internal development remain alternatives in prose. Existing integrations and non-competition relationships remain intact.
 
 Only the ten selected maps receive product-specific headings and captions. Splunk security analytics is not classified as networking hardware; IBM FlashSystem is enterprise storage in the NetApp comparison. Preserve NVDA's original 41 cards / 61 relationships, unrelated map structure and all other five bilingual answers. Reviewed 2026-10-16. Additional product scopes and peer-only leads remain open; this is not an exhaustive quality-audit completion.
+
+## 2026-10-16 · architecture, creation and payment alternatives
+
+Reviewed AMAT / AMD / ARM / QCOM / CDNS / RBLX / DASH / SONY / V / MA (10 existing records, no new issuers). Each prior named map competitor remains, including Roblox's earlier prose references to Epic and Unity. Process equipment, CPU/GPU/FPGA, licensed processor IP, EDA, creator engines, delivery, consoles, image sensors and payment networks receive separate product scopes and selected-root captions.
+
+RISC-V is an instruction-set standard, not a company. Cash, checks, instant bank-transfer systems, internal tools and merchant-owned ordering remain alternatives in prose. SiFive/ARC IP and named delivery services are independently compared products, not automatic substitutions for these concepts. Named company disclosures, peer disclosures and editorial official-product comparisons are distinguished. Sharing a competitor in another company's list does not establish a direct disclosure.
+
+Altera remains independent from Intel; Microsemi FPGA products are identified under Microchip. Discover is under Capital One, not a current independent DFS issuer. PayPal balance/bank-funded checkout can compete while card-funded checkout and existing debit partnerships coexist. Meta's 2026 Worlds mobile focus is distinguished from old VR-store assumptions. Sony consoles, screen content and industrial/mobile image sensors are different markets. NVDA's reviewed payload and 205 unrelated card/relationship sets remain protected. Other product scopes and peer-side leads remain open even after mixed industry cards are resolved. Reviewed 2026-10-16.

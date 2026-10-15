@@ -72,6 +72,39 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "AMAT") return {
+    2: { ja: "半導体製造装置・検査", en: "Semiconductor process tools & inspection" },
+  };
+  if (root === "AMD") return {
+    3: { ja: "CPU・GPU・プログラマブル半導体", en: "CPUs, GPUs & programmable chips" },
+  };
+  if (root === "ARM") return {
+    3: { ja: "CPU・プロセッサー設計IP", en: "CPUs & processor design IP" },
+  };
+  if (root === "QCOM") return {
+    3: { ja: "スマホ・PCの演算・通信半導体", en: "Phone/PC compute & connectivity chips" },
+  };
+  if (root === "CDNS") return {
+    1: { ja: "半導体設計・物理解析", en: "Electronic design & physics analysis" },
+  };
+  if (root === "RBLX") return {
+    6: { ja: "ゲーム・クラウド基盤", en: "Gaming & cloud platforms" },
+    7: { ja: "ゲーム体験・制作ツール", en: "Gaming experiences & creation tools" },
+  };
+  if (root === "DASH") return {
+    7: { ja: "料理・食品・日用品の配送", en: "Meal, grocery & everyday delivery" },
+  };
+  if (root === "SONY") return {
+    3: { ja: "画像センサー・関連半導体", en: "Image sensors & related chips" },
+    6: { ja: "ゲーム・クラウド基盤", en: "Gaming & cloud platforms" },
+    7: { ja: "ゲーム・映像コンテンツ", en: "Gaming & screen content" },
+  };
+  if (root === "V") return {
+    7: { ja: "決済ネットワーク・購入決済", en: "Payment networks & checkout" },
+  };
+  if (root === "MA") return {
+    7: { ja: "決済ネットワーク・購入決済", en: "Payment networks & checkout" },
+  };
   if (root === "GTLB") return {
     6: { ja: "開発・クラウド基盤", en: "Development & cloud platforms" },
     7: { ja: "開発・配布ツール", en: "Development & delivery tools" },
@@ -941,6 +974,362 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "業務ソフトの導入支援",
         "en": "Enterprise application implementation"
+      }
+    }
+  },
+  "AMAT": {
+    "LRCX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "成膜・エッチング",
+        "en": "Deposition & etch"
+      }
+    },
+    "Tokyo Electron": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "成膜・エッチング",
+        "en": "Deposition & etch"
+      }
+    },
+    "ASM International": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "原子層堆積（ALD）",
+        "en": "Atomic layer deposition"
+      }
+    },
+    "KLAC": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "検査・計測",
+        "en": "Inspection & metrology"
+      }
+    }
+  },
+  "AMD": {
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "サーバー・PCのCPU",
+        "en": "Server & PC CPUs"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "GPU・AI計算",
+        "en": "GPUs & AI compute"
+      }
+    },
+    "Altera": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "FPGA・適応型SoC",
+        "en": "FPGAs & adaptive SoCs"
+      }
+    },
+    "LSCC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "組み込みFPGA",
+        "en": "Embedded FPGAs"
+      }
+    },
+    "MCHP": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "FPGA・プログラマブル半導体",
+        "en": "FPGAs & programmable chips"
+      }
+    }
+  },
+  "ARM": {
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "x86 CPU",
+        "en": "x86 CPUs"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "x86 CPU",
+        "en": "x86 CPUs"
+      }
+    },
+    "SiFive": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "RISC-V CPU設計IP",
+        "en": "RISC-V CPU IP"
+      }
+    },
+    "SNPS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "ARC・ARC-V設計IP",
+        "en": "ARC & ARC-V processor IP"
+      }
+    }
+  },
+  "QCOM": {
+    "MediaTek": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "モバイル演算・通信",
+        "en": "Mobile compute & connectivity"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Exynosモバイル半導体",
+        "en": "Exynos mobile processors"
+      }
+    },
+    "AAPL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "C1携帯モデム",
+        "en": "C1 cellular modem"
+      }
+    },
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Core Ultra PC用CPU",
+        "en": "Core Ultra PC processors"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Ryzen PC用CPU",
+        "en": "Ryzen PC processors"
+      }
+    }
+  },
+  "CDNS": {
+    "SNPS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "EDA・IP・Ansys解析",
+        "en": "EDA, IP & Ansys simulation"
+      }
+    },
+    "Siemens EDA": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "電子設計・検証EDA",
+        "en": "Electronic design & verification"
+      }
+    },
+    "KEYS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "電子設計・物理解析",
+        "en": "Electronic design & analysis"
+      }
+    }
+  },
+  "RBLX": {
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Minecraft・クラウド基盤",
+        "en": "Minecraft & cloud platforms"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Horizon・体験制作",
+        "en": "Horizon experience creation"
+      }
+    },
+    "Epic Games": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Fortnite・UEFN",
+        "en": "Fortnite & UEFN"
+      }
+    },
+    "U": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ゲーム制作エンジン",
+        "en": "Game creation engine"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "App Store・配信と決済",
+        "en": "App Store distribution & payments"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Play・クラウド",
+        "en": "Google Play & cloud"
+      }
+    }
+  },
+  "DASH": {
+    "UBER": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Uber Eats・料理配達",
+        "en": "Uber Eats meal delivery"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "食品・日用品の配送",
+        "en": "Grocery & everyday delivery"
+      }
+    },
+    "CART": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "食品配送マーケットプレイス",
+        "en": "Grocery delivery marketplace"
+      }
+    },
+    "WMT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "食品・日用品の注文と配送",
+        "en": "Grocery ordering & delivery"
+      }
+    }
+  },
+  "SONY": {
+    "DIS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "映画・映像制作",
+        "en": "Film & screen production"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Xbox・クラウド基盤",
+        "en": "Xbox & cloud platforms"
+      }
+    },
+    "Nintendo": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Switchゲーム機・ソフト",
+        "en": "Switch consoles & games"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "ISOCELL画像センサー",
+        "en": "ISOCELL image sensors"
+      }
+    },
+    "ON": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Hyperlux画像センサー",
+        "en": "Hyperlux image sensors"
+      }
+    },
+    "NFLX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "映像作品の配信先",
+        "en": "Screen-content distributor"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Prime Video・クラウド",
+        "en": "Prime Video & cloud"
+      }
+    }
+  },
+  "V": {
+    "MA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "国際カード決済網",
+        "en": "Global card network"
+      }
+    },
+    "AXP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "カード決済ネットワーク",
+        "en": "Card-payment network"
+      }
+    },
+    "JCB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "カード決済ネットワーク",
+        "en": "Card-payment network"
+      }
+    },
+    "COF": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Discover決済ネットワーク",
+        "en": "Discover payment network"
+      }
+    },
+    "PYPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "残高・口座を使う購入決済",
+        "en": "Balance/bank-funded checkout"
+      }
+    }
+  },
+  "MA": {
+    "V": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "国際カード決済網",
+        "en": "Global card network"
+      }
+    },
+    "AXP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "カード決済ネットワーク",
+        "en": "Card-payment network"
+      }
+    },
+    "JCB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "カード決済ネットワーク",
+        "en": "Card-payment network"
+      }
+    },
+    "COF": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Discover決済ネットワーク",
+        "en": "Discover payment network"
+      }
+    },
+    "PYPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "残高・口座を使う購入決済",
+        "en": "Balance/bank-funded checkout"
       }
     }
   }

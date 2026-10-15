@@ -250,7 +250,7 @@
       "AMAT"
     ],
     "name": "Applied Materials",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -259,6 +259,30 @@
       {
         "label": "Lam Research FY2026 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm"
+      },
+      {
+        "label": "Applied Materials · Semiconductor equipment product portfolio",
+        "url": "https://www.appliedmaterials.com/us/en/semiconductor/products.html"
+      },
+      {
+        "label": "Tokyo Electron · Deposition and etch product portfolio",
+        "url": "https://www.tel.com/product/index.html"
+      },
+      {
+        "label": "Applied Materials · Olympia atomic layer deposition",
+        "url": "https://www.appliedmaterials.com/us/en/product-library/olympia-ald.html"
+      },
+      {
+        "label": "ASM International · Atomic layer deposition equipment",
+        "url": "https://www.asm.com/our-technology-products/ald"
+      },
+      {
+        "label": "KLA FY2026 Form 10-K · Process-control products and competition names Applied Materials",
+        "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm"
+      },
+      {
+        "label": "Applied Materials · Metrology and inspection",
+        "url": "https://www.appliedmaterials.com/in/en/semiconductor/products/processes/metrology-and-inspection.html"
       }
     ],
     "ja": {
@@ -266,7 +290,7 @@
       "revenue": "半導体メーカーへの装置販売と、設置済み装置の保守、交換部品、工場の運用ソフトなど。",
       "strength": "幅広い製造工程の技術を持ち、複数の工程を組み合わせて半導体の性能や良品率を改善できる。",
       "risks": "半導体メーカーの設備投資の波、中国向け輸出規制、装置開発の遅れや部品供給の制約。",
-      "competition": "膜を作る工程や削る工程ではLam Researchなど。工程ごとに専門の装置メーカーと競う。",
+      "competition": "成膜・エッチングではLam Research、同分野の装置ではTokyo Electron、原子層単位の成膜ではASM International、検査・計測ではKLAが競合例。LamとKLAは相手側の実名開示、Tokyo ElectronとASMは両社の公式製品を照合した比較。装置が扱う材料や工程は異なり、全製品が置き換わるわけではない。保守の顧客内製も代替になる。",
       "relationships": "半導体の受託生産会社やメモリーメーカーと連携し、次世代製品に必要な製造工程や装置を開発する。"
     },
     "en": {
@@ -274,7 +298,7 @@
       "revenue": "Equipment sales, maintenance, spare parts and factory software for chipmakers.",
       "strength": "Combines technologies across manufacturing steps to improve chip performance and production yields.",
       "risks": "Chipmaker investment cycles, China export restrictions, development delays and component-supply constraints.",
-      "competition": "Lam Research in deposition and etching, alongside specialist equipment suppliers across other process steps.",
+      "competition": "Examples are Lam Research in deposition/etch, Tokyo Electron in overlapping process tools, ASM International in atomic layer deposition, and KLA in inspection/metrology. Lam and KLA name Applied in their filings; Tokyo Electron and ASM are editorial comparisons of official products. Materials and process steps differ, so products are not universally interchangeable. Customer-performed servicing is another alternative.",
       "relationships": "Works with foundries and memory makers to develop manufacturing processes and equipment for future chips."
     },
     "maps": {
@@ -284,8 +308,8 @@
           "name": "Lam Research",
           "role": "competitor",
           "label": {
-            "ja": "成膜・エッチングで競合",
-            "en": "Deposition & etching"
+            "ja": "成膜・エッチング。Lam側の実名開示",
+            "en": "Deposition/etch; Lam names Applied"
           },
           "sourceIndexes": [
             1
@@ -293,17 +317,44 @@
           "ticker": "LRCX"
         },
         {
-          "kind": "industry",
-          "name": "Specialist toolmakers",
-          "nameJa": "専門装置メーカー",
+          "kind": "company",
+          "name": "Tokyo Electron",
           "role": "competitor",
           "label": {
-            "ja": "製造工程ごとに競合",
-            "en": "Compete by process step"
+            "ja": "成膜・エッチング装置。公式製品の比較",
+            "en": "Deposition/etch tools; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            2,
+            3
           ]
+        },
+        {
+          "kind": "company",
+          "name": "ASM International",
+          "role": "competitor",
+          "label": {
+            "ja": "原子層堆積（ALD）装置。公式製品の比較",
+            "en": "Atomic layer deposition tools; editorial comparison"
+          },
+          "sourceIndexes": [
+            4,
+            5
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "KLA",
+          "role": "competitor",
+          "label": {
+            "ja": "検査・計測。KLA側の実名開示と製品照合",
+            "en": "Inspection/metrology; KLA disclosure and product check"
+          },
+          "sourceIndexes": [
+            6,
+            7
+          ],
+          "ticker": "KLAC"
         }
       ],
       "relationships": [
@@ -1363,11 +1414,31 @@
       "AMD"
     ],
     "name": "AMD",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm"
+      },
+      {
+        "label": "Altera · FPGA product families",
+        "url": "https://www.altera.com/fpga"
+      },
+      {
+        "label": "Altera · September 2025 independent operations after Silver Lake majority investment",
+        "url": "https://www.altera.com/newsroom/news/press-release/altera-silver-lake"
+      },
+      {
+        "label": "Lattice Semiconductor · FPGA product families",
+        "url": "https://www.latticesemi.com/Products"
+      },
+      {
+        "label": "Microchip · FPGA and PLD product portfolio",
+        "url": "https://www.microchip.com/en-us/products/fpgas-and-plds"
+      },
+      {
+        "label": "Microchip · Microsemi acquisition completed May 29, 2018",
+        "url": "https://www.microchip.com/en-us/about/corporate-overview/acquisitions/microsemi"
       }
     ],
     "ja": {
@@ -1375,7 +1446,7 @@
       "revenue": "EPYCやRyzenなどのCPU、AI・ゲーム向けGPU、機器に組み込む半導体の販売。",
       "strength": "CPUとGPUを幅広く持ち、用途に応じて組み合わせられる。AI向けの開発ソフトも整備する。",
       "risks": "競合との性能・ソフト面の競争、製造委託先の供給制約、輸出規制やパソコン需要の変動。",
-      "competition": "CPUではIntel、GPUではNVIDIAなど。顧客が独自開発する半導体とも競う。",
+      "competition": "CPUではIntel、GPUではNVIDIA、FPGAではAltera、Lattice Semiconductor、Microchipが競合例。AMD自身の分野別開示と各社の製品を照合した。AlteraはIntelと区別する独立企業で、Microchipは旧MicrosemiのFPGA事業を含む。顧客の自社CPU・AIアクセラレーターも代替であり、CPU、GPU、FPGAは用途や開発方法が異なる。",
       "relationships": "TSMCなどに製造を委託し、クラウド事業者やパソコン・サーバーメーカーへ供給する。"
     },
     "en": {
@@ -1383,7 +1454,7 @@
       "revenue": "Sales of EPYC and Ryzen CPUs, AI and gaming GPUs, and embedded chips.",
       "strength": "Combines a broad CPU and GPU portfolio with supporting AI software.",
       "risks": "Performance and software competition, manufacturing constraints, export controls and PC-demand swings.",
-      "competition": "Intel in CPUs, NVIDIA in GPUs, and customers developing their own chips.",
+      "competition": "Intel in CPUs, NVIDIA in GPUs, and Altera, Lattice Semiconductor and Microchip in FPGAs are field-specific examples based on AMD disclosure and official portfolios. Altera is independent from Intel; Microchip includes the former Microsemi FPGA business. Customer-designed CPUs and AI accelerators remain alternatives. CPU, GPU and FPGA use cases and development models differ.",
       "relationships": "Uses manufacturers including TSMC and supplies cloud providers, PC makers and server vendors."
     },
     "maps": {
@@ -1393,8 +1464,8 @@
           "name": "Intel",
           "role": "competitor",
           "label": {
-            "ja": "CPUで競合",
-            "en": "CPUs"
+            "ja": "サーバー・PCのCPU。AMD自身の開示",
+            "en": "Server/PC CPUs; named by AMD"
           },
           "sourceIndexes": [
             0
@@ -1406,8 +1477,8 @@
           "name": "NVIDIA",
           "role": "competitor",
           "label": {
-            "ja": "GPUで競合",
-            "en": "GPUs"
+            "ja": "GPU・AI計算。AMD自身の開示",
+            "en": "GPUs and AI compute; named by AMD"
           },
           "sourceIndexes": [
             0
@@ -1415,17 +1486,47 @@
           "ticker": "NVDA"
         },
         {
-          "kind": "industry",
-          "name": "Customers with in-house chips",
-          "nameJa": "独自チップを作る顧客",
+          "kind": "company",
+          "name": "Altera",
           "role": "competitor",
           "label": {
-            "ja": "半導体の内製化",
-            "en": "Customer-designed silicon"
+            "ja": "FPGA・適応型SoC。AMD自身の開示、独立企業",
+            "en": "FPGAs/adaptive SoCs; AMD disclosure, independent company"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Lattice Semiconductor",
+          "role": "competitor",
+          "label": {
+            "ja": "組み込みFPGA。AMD自身の開示と製品照合",
+            "en": "Embedded FPGAs; AMD disclosure and product check"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "LSCC"
+        },
+        {
+          "kind": "company",
+          "name": "Microchip Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "旧Microsemiを含むFPGA。AMD開示と現行製品の照合",
+            "en": "FPGA portfolio including former Microsemi; current product check"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            5
+          ],
+          "ticker": "MCHP"
         }
       ],
       "relationships": [
@@ -1464,7 +1565,7 @@
       "ARM"
     ],
     "name": "Arm",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 20-F · Business / Risk factors",
@@ -1473,6 +1574,22 @@
       {
         "label": "June 2026 quarterly report · Arm-designed silicon",
         "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000114/arm-20260630.htm"
+      },
+      {
+        "label": "Intel · Core Ultra laptop processor datasheets",
+        "url": "https://www.intel.com/content/www/us/en/support/articles/000100721/processors/intel-core-ultra-processors.html"
+      },
+      {
+        "label": "AMD · Ryzen processors for laptops",
+        "url": "https://www.amd.com/en/products/processors/laptop/ryzen.html"
+      },
+      {
+        "label": "SiFive · RISC-V processor core IP portfolio",
+        "url": "https://www.sifive.com/risc-v-core-ip"
+      },
+      {
+        "label": "Synopsys · ARC and ARC-V processor IP",
+        "url": "https://www.synopsys.com/designware-ip/processor-solutions.html"
       }
     ],
     "ja": {
@@ -1480,7 +1597,7 @@
       "revenue": "設計技術のライセンス料と、その技術を使ったチップの出荷に応じて受け取る利用料。",
       "strength": "省電力の設計と、対応するソフト・開発者の広い基盤。スマホからサーバーへ用途を広げる。",
       "risks": "大口顧客やスマホ需要への依存、利用料・契約をめぐる争い、自社チップ展開による顧客との競合。",
-      "competition": "IntelやAMDが使うx86方式、公開規格のRISC-V、顧客が独自に開発する技術。",
+      "competition": "x86方式のIntel・AMDのCPUと競い、CPU設計IPではSiFiveのRISC-VコアやSynopsys ARC/ARC-Vが比較例。後者はArmのライセンス事業と公式製品を照合した編集上の比較で、同じ性能・互換性とは扱わない。RISC-Vは企業名ではなく公開命令セット規格。顧客の独自設計も代替となり、自社チップ事業の競争とは分けて考える。",
       "relationships": "半導体メーカーや機器メーカーが技術を採用。設計ソフトや製造の企業とも連携し、SoftBankが支配株主。"
     },
     "en": {
@@ -1488,7 +1605,7 @@
       "revenue": "Technology-license fees and royalties tied to shipments of chips using its designs.",
       "strength": "Power-efficient designs supported by a broad software and developer ecosystem, extending from phones to servers.",
       "risks": "Customer and smartphone exposure, licensing disputes and competing with customers through its own chips.",
-      "competition": "The x86 architecture used by Intel and AMD, open RISC-V and proprietary customer technologies.",
+      "competition": "Intel and AMD CPUs represent x86 competition; SiFive RISC-V cores and Synopsys ARC/ARC-V are processor-IP examples compared editorially with Arm licensing and official portfolios. Performance and compatibility are not assumed equivalent. RISC-V is an open instruction-set architecture, not a company. Proprietary customer designs remain alternatives, distinct from competition involving Arm-designed silicon.",
       "relationships": "Works with chipmakers, device makers and design or manufacturing partners; SoftBank is the controlling shareholder."
     },
     "maps": {
@@ -1498,11 +1615,12 @@
           "name": "Intel",
           "role": "competitor",
           "label": {
-            "ja": "x86方式が競合",
-            "en": "Competing x86 architecture"
+            "ja": "x86 CPU方式。Arm開示の競合アーキテクチャ",
+            "en": "x86 CPUs; competing architecture disclosed by Arm"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
           ],
           "ticker": "INTC"
         },
@@ -1511,26 +1629,41 @@
           "name": "AMD",
           "role": "competitor",
           "label": {
-            "ja": "x86方式が競合",
-            "en": "Competing x86 architecture"
+            "ja": "x86 CPU方式。Arm開示の競合アーキテクチャ",
+            "en": "x86 CPUs; competing architecture disclosed by Arm"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
           ],
           "ticker": "AMD"
         },
         {
-          "kind": "industry",
-          "name": "RISC-V",
-          "nameJa": "RISC-V",
+          "kind": "company",
+          "name": "SiFive",
           "role": "competitor",
           "label": {
-            "ja": "公開された命令セット規格",
-            "en": "Open instruction-set architecture"
+            "ja": "RISC-V CPU設計IP。公式製品の編集比較",
+            "en": "RISC-V CPU IP; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Synopsys",
+          "role": "competitor",
+          "label": {
+            "ja": "ARC/ARC-V CPU設計IP。公式製品の編集比較",
+            "en": "ARC/ARC-V processor IP; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "SNPS"
         }
       ],
       "relationships": [
@@ -5012,11 +5145,31 @@
       "QCOM"
     ],
     "name": "Qualcomm",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · QCT and QTL / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm"
+      },
+      {
+        "label": "Samsung · Exynos mobile processor portfolio",
+        "url": "https://semiconductor.samsung.com/processor/"
+      },
+      {
+        "label": "Apple · iPhone 16e technical specifications, Apple C1 cellular modem",
+        "url": "https://support.apple.com/en-us/122208"
+      },
+      {
+        "label": "Qualcomm · Snapdragon X Series PC processor portfolio",
+        "url": "https://www.qualcomm.com/laptops/products"
+      },
+      {
+        "label": "Intel · Core Ultra laptop processor datasheets",
+        "url": "https://www.intel.com/content/www/us/en/support/articles/000100721/processors/intel-core-ultra-processors.html"
+      },
+      {
+        "label": "AMD · Ryzen processors for laptops",
+        "url": "https://www.amd.com/en/products/processors/laptop/ryzen.html"
       }
     ],
     "ja": {
@@ -5024,7 +5177,7 @@
       "revenue": "Snapdragonなどのチップ販売と、端末メーカーから受け取る携帯通信特許のライセンス料・ロイヤルティが二本柱。",
       "strength": "高速通信、低消費電力CPU、画像・AI処理を一つのチップへまとめ、特許収入と製品開発を相互に支えられる。",
       "risks": "スマホ需要と中国市場への依存が大きい。Appleなど顧客の内製化、特許料を巡る規制・訴訟、先端製造委託先の供給も影響する。",
-      "competition": "スマホ向けではMediaTekや端末メーカーの自社チップ、PC・AI処理では複数の半導体設計会社と競う。",
+      "competition": "スマホの演算・通信ではMediaTekとSamsung Exynos、モデムの内製化ではApple C1が競合例。PCではSnapdragon XとIntel Core Ultra、AMD Ryzenが重なる。MediaTek・SamsungはQualcommの実名開示、C1とPCの例は公式製品の編集比較。モデム、アプリ処理、PC向けCPUは役割が異なり、Apple・Samsungとの取引関係と競合は併存する。",
       "relationships": "Apple、Samsung、Xiaomiが2025年度に各10％以上を占めた顧客。端末メーカーへチップを売り、特許をライセンスする。"
     },
     "en": {
@@ -5032,7 +5185,7 @@
       "revenue": "Two pillars are Snapdragon and related chip sales and license and royalty income from cellular intellectual property.",
       "strength": "Integrates connectivity, low-power computing, imaging and AI while patent income supports continued product research.",
       "risks": "Phone and China exposure, customer insourcing such as Apple, licensing disputes and reliance on advanced foundries can affect results.",
-      "competition": "Competes with MediaTek and device makers' internal phone chips and with multiple chip designers in PCs and AI processing.",
+      "competition": "Examples are MediaTek and Samsung Exynos in phone processing/connectivity, Apple C1 in customer-designed modems, and Intel Core Ultra/AMD Ryzen against Snapdragon X PCs. Qualcomm names MediaTek and Samsung; C1 and PC examples are editorial official-product comparisons. Modems, application processors and PC CPUs have different roles. Apple/Samsung customer relationships coexist with product competition.",
       "relationships": "Apple, Samsung and Xiaomi each represented at least 10% of fiscal 2025 revenue; Qualcomm sells chips and licenses patents to device makers."
     },
     "maps": {
@@ -5042,38 +5195,67 @@
           "name": "MediaTek",
           "role": "competitor",
           "label": {
-            "ja": "スマホ向けチップで競合",
-            "en": "Mobile chipsets"
+            "ja": "スマホ向け演算・通信チップ。Qualcomm自身の開示",
+            "en": "Mobile chipsets; named by Qualcomm"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Device makers' in-house chips",
-          "nameJa": "端末メーカーの自社チップ",
+          "kind": "company",
+          "name": "Samsung Electronics",
           "role": "competitor",
           "label": {
-            "ja": "内製チップと競合",
-            "en": "Customer-designed chips"
+            "ja": "Exynosのモバイル演算・通信。自社開示と製品照合",
+            "en": "Exynos mobile processing/connectivity; named vendor/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "PC and AI chip designers",
-          "nameJa": "PC・AI向け半導体会社",
+          "kind": "company",
+          "name": "Apple",
           "role": "competitor",
           "label": {
-            "ja": "演算・接続チップで競合",
-            "en": "Computing and connectivity chips"
+            "ja": "C1携帯モデムの内製。公式製品の編集比較",
+            "en": "Apple-designed C1 cellular modem; editorial comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Intel",
+          "role": "competitor",
+          "label": {
+            "ja": "Core Ultra対Snapdragon XのPC計算。編集比較",
+            "en": "Core Ultra versus Snapdragon X PC compute; editorial comparison"
+          },
+          "sourceIndexes": [
+            3,
+            4
+          ],
+          "ticker": "INTC"
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "role": "competitor",
+          "label": {
+            "ja": "Ryzen対Snapdragon XのPC計算。編集比較",
+            "en": "Ryzen versus Snapdragon X PC compute; editorial comparison"
+          },
+          "sourceIndexes": [
+            3,
+            5
+          ],
+          "ticker": "AMD"
         }
       ],
       "relationships": [
@@ -6999,7 +7181,7 @@
       "CDNS"
     ],
     "name": "Cadence Design Systems",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Design software and IP / Licensing / Customers / Competition",
@@ -7011,7 +7193,7 @@
       "revenue": "主に2〜3年の期間ライセンス、保守、設計IP、検証用ハード、技術サービスから継続的に収益を得る。",
       "strength": "チップ単体から基板・パッケージ・システムまで同じ設計環境で扱い、AIで設計探索と検証を自動化できる。",
       "risks": "半導体企業の研究開発費、輸出規制、少数大口案件の更新時期に左右される。顧客が自社ツールを開発する場合もある。",
-      "competition": "EDAではSynopsysやSiemens EDA、解析ではSynopsys傘下AnsysやKeysight、設計IPや顧客の内製ツールとも競う。",
+      "competition": "EDAではSynopsysとSiemens EDA、物理解析ではSynopsys傘下AnsysやKeysightが競合例。いずれもCadenceが実名で挙げる企業・製品分野に基づく。チップの設計・検証、基板設計、電磁界・物理解析では用途が異なる。顧客の社内設計ツールも代替手段であり、設計IPや技術サービスの競争は製品ごとに異なる。",
       "relationships": "半導体・電子機器会社へ設計ソフト、検証装置、IPを提供し、顧客の新しいチップやシステム開発を支える。"
     },
     "en": {
@@ -7019,7 +7201,7 @@
       "revenue": "Primarily earns recurring revenue from two-to-three-year licenses, maintenance, design IP, verification hardware and technical services.",
       "strength": "Covers chips, packages, boards and systems in connected workflows and uses AI to automate design exploration and verification.",
       "risks": "Semiconductor R&D budgets, export controls and large renewal timing affect results; customers can also develop competing internal tools.",
-      "competition": "Competes with Synopsys and Siemens EDA, Synopsys-owned Ansys and Keysight in analysis, plus IP vendors and in-house tools.",
+      "competition": "Synopsys and Siemens EDA in electronic design, plus Synopsys-owned Ansys and Keysight in physical/electronic analysis, are examples grounded in Cadence named-vendor disclosure. Chip design/verification, board design and physics analysis serve different workloads. Customer-built tools remain alternatives; design-IP and engineering-service rivalry varies by product.",
       "relationships": "Supplies design software, verification hardware and IP to semiconductor and electronics companies developing new chips and systems."
     },
     "maps": {
@@ -7027,23 +7209,23 @@
         {
           "kind": "company",
           "name": "Synopsys",
-          "ticker": "SNPS",
           "role": "competitor",
           "label": {
-            "ja": "EDA・解析・設計IPで競合",
-            "en": "EDA, simulation and design IP"
+            "ja": "EDA・設計IP・Ansys解析。Cadence自身の開示",
+            "en": "EDA, design IP and Ansys simulation; named by Cadence"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "SNPS"
         },
         {
           "kind": "company",
           "name": "Siemens EDA",
           "role": "competitor",
           "label": {
-            "ja": "EDAソフトで競合",
-            "en": "EDA software"
+            "ja": "半導体・電子設計EDA。Cadence自身の開示",
+            "en": "Electronic design automation; named by Cadence"
           },
           "sourceIndexes": [
             0
@@ -7054,25 +7236,13 @@
           "name": "Keysight Technologies",
           "role": "competitor",
           "label": {
-            "ja": "電子設計・解析で競合",
-            "en": "Electronic design and analysis"
+            "ja": "電子設計・物理解析。Cadence自身の開示",
+            "en": "Electronic design and analysis; named by Cadence"
           },
           "sourceIndexes": [
             0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Customers' internal design tools",
-          "nameJa": "顧客の自社設計ツール",
-          "role": "competitor",
-          "label": {
-            "ja": "設計ツールの内製化と競合",
-            "en": "Customer-built design tools"
-          },
-          "sourceIndexes": [
-            0
-          ]
+          ],
+          "ticker": "KEYS"
         }
       ],
       "relationships": [
@@ -10935,11 +11105,27 @@
       "RBLX"
     ],
     "name": "Roblox",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Platform / Robux / Distribution / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm"
+      },
+      {
+        "label": "Microsoft · Minecraft Bedrock creator tools",
+        "url": "https://learn.microsoft.com/en-us/minecraft/creator/?view=minecraft-bedrock-stable"
+      },
+      {
+        "label": "Meta · March 2026 state of VR, Horizon Worlds mobile focus",
+        "url": "https://developers.meta.com/vr/blog/gdc-2026-state-of-vr/"
+      },
+      {
+        "label": "Epic Games · Unreal Editor for Fortnite creation tools",
+        "url": "https://dev.epicgames.com/documentation/fortnite/build-a-game-in-unreal-editor-for-fortnite?lang=en-US"
+      },
+      {
+        "label": "Unity · Game and application engine",
+        "url": "https://unity.com/products/unity-engine"
       }
     ],
     "ja": {
@@ -10947,7 +11133,7 @@
       "revenue": "利用者が購入した仮想通貨Robuxを体験内アイテムや機能に使うことで稼ぎ、制作者へ一部を分配する。",
       "strength": "無料の制作ツール、膨大な利用者制作コンテンツ、利用者と制作者が互いを増やすネットワーク効果が強い。",
       "risks": "未成年者の安全と投稿管理、制作者の定着、Apple・Googleへの高い配信依存、規制、障害が利用と利益を左右する。",
-      "competition": "ゲーム、仮想空間、利用時間、制作ツールで大手ゲーム会社、Epic、Unity、Meta、Microsoftなどと競う。",
+      "competition": "利用時間や創作ではMicrosoftのMinecraft、Meta Horizon、Epic GamesのFortnite/UEFN、Unityの制作エンジンが競合例。Roblox自身が4社を挙げ、製品を公式情報で照合した。Metaは2026年にWorldsのモバイル重視を説明している。遊ぶ場と制作ソフトは役割が異なり、Unityで作る作品がRobloxと同じ配信・収益構造になるわけではない。",
       "relationships": "制作者が体験とアイテムを供給し、利用者がRobuxで購入する。AppleやGoogleなどが配信と決済を担う。"
     },
     "en": {
@@ -10955,7 +11141,7 @@
       "revenue": "Earns when users buy and spend the virtual currency Robux on in-experience items and features, sharing part with creators.",
       "strength": "Free creation tools, a large catalog of user-generated content and reinforcing user-creator network effects are key advantages.",
       "risks": "Youth safety and moderation, creator retention, heavy Apple and Google distribution dependence, regulation and outages can affect results.",
-      "competition": "Competes with game publishers, Epic, Unity, Meta, Microsoft and others for gaming, virtual worlds, attention and creators.",
+      "competition": "Examples are Microsoft Minecraft, Meta Horizon, Epic Games Fortnite/UEFN and Unity creation tools, based on Roblox named-vendor disclosure and official products. Meta described a mobile focus for Worlds in 2026. A playable platform and a development engine have different roles; Unity projects do not automatically share Roblox distribution or monetization.",
       "relationships": "Creators supply experiences and items, users purchase them with Robux, and platforms such as Apple and Google distribute and process payments."
     },
     "maps": {
@@ -10963,41 +11149,57 @@
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "ゲーム・利用時間で競合",
-            "en": "Gaming and user attention"
+            "ja": "Minecraftの創作・利用時間。Roblox開示と製品照合",
+            "en": "Minecraft creation/attention; Roblox disclosure and product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "Meta Platforms",
-          "ticker": "META",
           "role": "competitor",
           "label": {
-            "ja": "仮想空間・制作者で競合",
-            "en": "Virtual worlds and creators"
+            "ja": "Horizonの創作・利用時間。Worldsはモバイル重視へ",
+            "en": "Horizon creation/attention; Worlds shifting toward mobile"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
+          ],
+          "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "Epic Games",
+          "role": "competitor",
+          "label": {
+            "ja": "Fortnite/UEFNの体験制作。自社開示と公式製品",
+            "en": "Fortnite/UEFN experience creation; named vendor/product check"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         },
         {
-          "kind": "industry",
-          "name": "Game engines and publishers",
-          "nameJa": "ゲーム制作基盤・大手ゲーム会社",
+          "kind": "company",
+          "name": "Unity Software",
           "role": "competitor",
           "label": {
-            "ja": "制作ツールと娯楽で競合",
-            "en": "Creation tools and entertainment"
+            "ja": "2D・3Dゲーム制作エンジン。Roblox自身の開示",
+            "en": "2D/3D creation engine; named by Roblox"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4
+          ],
+          "ticker": "U"
         }
       ],
       "relationships": [
@@ -11290,11 +11492,23 @@
       "DASH"
     ],
     "name": "DoorDash",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Marketplace / Revenue / Competition / Dashers / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1792789/000179278926000013/dash-20251231.htm"
+      },
+      {
+        "label": "Amazon · May 2026 same-day grocery delivery",
+        "url": "https://www.aboutamazon.com/news/retail/amazon-same-day-fresh-grocery-delivery-united-states"
+      },
+      {
+        "label": "Instacart · Grocery delivery marketplace",
+        "url": "https://www.instacart.com/grocery-delivery"
+      },
+      {
+        "label": "Walmart · Pickup and delivery services",
+        "url": "https://www.walmart.com/help/article/pickup-and-delivery/d0d02a5f54e54592930f110aaf6a2f50"
       }
     ],
     "ja": {
@@ -11302,7 +11516,7 @@
       "revenue": "加盟店手数料、利用者の配達・サービス料、DashPass会費、加盟店やブランド向け広告から稼ぐ。",
       "strength": "加盟店、注文者、配達員が互いを増やす地域密度、配達技術、飲食以外へ広がる品ぞろえが強い。",
       "risks": "配達員の雇用区分規制、保険と事故、配送品質、販促費、加盟店・利用者・配達員の離脱が利益を左右する。",
-      "competition": "他の配達アプリ、加盟店の自社注文、食料品店や小売の配送、店頭購入と価格・品ぞろえ・速度で競う。",
+      "competition": "料理配達ではUber Eats、食品・日用品の配送ではAmazon、Instacart、Walmartが競合例。Uber・AmazonはDoorDash自身の実名開示、Instacart・Walmartは公式サービスとDoorDashの対象分野を比較した編集上の例。加盟店の直接注文・自社配送や店頭購入も代替で、地域や品ぞろえ、配送体制は各社で異なる。",
       "relationships": "加盟店が商品を供給し、配達員が注文を運び、利用者が購入する。加盟店やブランドには広告枠も販売する。"
     },
     "en": {
@@ -11310,7 +11524,7 @@
       "revenue": "Earns merchant commissions, consumer delivery and service fees, DashPass subscriptions, and advertising from merchants and brands.",
       "strength": "Local density across merchants, consumers and Dashers, logistics technology, and expansion beyond restaurants reinforce the network.",
       "risks": "Courier-classification rules, insurance and safety, delivery quality, promotions, and retention of merchants, consumers and Dashers affect profits.",
-      "competition": "Competes with delivery apps, merchant-owned ordering, grocery and retail delivery, and in-store shopping on price, selection and speed.",
+      "competition": "Uber Eats in meal delivery and Amazon, Instacart and Walmart in grocery/everyday delivery are examples. DoorDash names Uber and Amazon; Instacart and Walmart are editorial comparisons of official services with DoorDash scope. Direct merchant ordering, merchant fleets and in-store shopping remain alternatives. Geography, selection and delivery models differ.",
       "relationships": "Merchants supply goods, Dashers deliver orders, consumers purchase them, and merchants and brands also buy advertising inventory."
     },
     "maps": {
@@ -11318,41 +11532,57 @@
         {
           "kind": "company",
           "name": "Uber",
-          "ticker": "UBER",
           "role": "competitor",
           "label": {
-            "ja": "配達・地域商取引で競合",
-            "en": "Delivery and local commerce"
+            "ja": "Uber Eatsの料理配達。DoorDash自身の開示",
+            "en": "Uber Eats meal delivery; named by DoorDash"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "UBER"
         },
         {
-          "kind": "industry",
-          "name": "Merchant-owned ordering",
-          "nameJa": "加盟店の自社注文・配送",
+          "kind": "company",
+          "name": "Amazon",
           "role": "competitor",
           "label": {
-            "ja": "直接注文で競合",
-            "en": "Direct ordering and delivery"
+            "ja": "生鮮食品・日用品配送。自社実名開示と製品照合",
+            "en": "Grocery/everyday delivery; named vendor and product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "AMZN"
         },
         {
-          "kind": "industry",
-          "name": "Grocery and retail delivery",
-          "nameJa": "食料品・小売配送",
+          "kind": "company",
+          "name": "Instacart",
           "role": "competitor",
           "label": {
-            "ja": "日用品の品ぞろえと速度で競合",
-            "en": "Selection and delivery speed"
+            "ja": "食品・小売の配送市場。公式サービスの編集比較",
+            "en": "Grocery/retail delivery marketplace; editorial comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "CART"
+        },
+        {
+          "kind": "company",
+          "name": "Walmart",
+          "role": "competitor",
+          "label": {
+            "ja": "食品・日用品の注文と配送。公式サービスの編集比較",
+            "en": "Grocery/everyday ordering and delivery; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "WMT"
         }
       ],
       "relationships": [
@@ -26200,7 +26430,7 @@
       "SONY"
     ],
     "name": "Sony Group",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -26209,6 +26439,42 @@
       {
         "label": "Disney annual filing · overlapping screen-content activities",
         "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm"
+      },
+      {
+        "label": "Sony · Form 20-F for year ended March 31, 2026, official issuer copy",
+        "url": "https://www.sony.com/en/SonyInfo/IR/library/FY2025_20F_PDF.pdf"
+      },
+      {
+        "label": "Disney · Current entertainment and studio businesses",
+        "url": "https://thewaltdisneycompany.com/about/"
+      },
+      {
+        "label": "Sony PlayStation · PS5 gaming platform",
+        "url": "https://www.playstation.com/en-us/ps5/"
+      },
+      {
+        "label": "Microsoft · Xbox console gaming platforms",
+        "url": "https://www.xbox.com/en-US/consoles"
+      },
+      {
+        "label": "Nintendo · Switch 2 gaming platform",
+        "url": "https://www.nintendo.com/us/gaming-systems/switch-2/"
+      },
+      {
+        "label": "Sony · LYTIA mobile image sensors",
+        "url": "https://www.sony-semicon.com/en/products/is/mobile/lineup.html"
+      },
+      {
+        "label": "Samsung · ISOCELL mobile image sensors",
+        "url": "https://semiconductor.samsung.com/image-sensor/mobile-image-sensor/"
+      },
+      {
+        "label": "Sony · Industrial CMOS image sensors",
+        "url": "https://www.sony-semicon.com/en/products/is/industry/"
+      },
+      {
+        "label": "onsemi · Hyperlux CMOS sensing portfolio",
+        "url": "https://www.onsemi.com/solutions/technology/hyperlux"
       }
     ],
     "ja": {
@@ -26216,7 +26482,7 @@
       "revenue": "ゲーム機・ソフトの販売と定額サービス、音楽・映像の配信や権利使用料、画像センサーなどの販売で稼ぐ。金融事業は2025年の一部分離で連結から外れており、現在の売上と昔の数字は単純比較できない。",
       "strength": "人気作品や楽曲の権利、PlayStationの利用者基盤、撮影技術を持つ。作品をゲームや映像などへ展開でき、センサーでは高画質と小型化を両立する設計・製造技術が強み。",
       "risks": "ゲームや映画のヒットは読みづらく、制作費を回収できないことがある。センサーはスマホ需要や主要顧客の採用に左右され、工場投資も重い。メモリ価格の上昇はゲーム機などの採算を圧迫する。",
-      "competition": "ゲームでは他の家庭用ゲーム機やPC・スマホ向けサービス、画像センサーでは半導体メーカーと競う。Disneyとは映画や配信などの事業が重なり、作品や人材、視聴者の時間を取り合う。",
+      "competition": "ゲーム機ではMicrosoft XboxとNintendo Switch、スマホ用画像センサーではSamsung ISOCELL、産業用の画像センサーではonsemi Hyperluxが比較例。Disneyとの映画・映像制作の重なりもある。Sonyの事業範囲と各社の公式製品に基づく編集上の比較で、ゲーム機、作品、センサーを同じ市場とは扱わない。音楽や他の撮影機器では競合が別になる。",
       "relationships": "NetflixやAmazonなどへ映像作品を供給する一方、スマホ・カメラメーカーへ画像センサーを販売する。外部のゲーム開発会社はPlayStation向け作品を提供する。取引相手は事業ごとに異なる。"
     },
     "en": {
@@ -26224,7 +26490,7 @@
       "revenue": "Earns from hardware and game sales, subscriptions, music and film rights, and sensor sales. The 2025 partial spin-off removed financial services from consolidation, limiting comparisons with older totals.",
       "strength": "Combines valuable entertainment rights, an established PlayStation user base and imaging expertise. Can extend content across formats, while sensor design and manufacturing balance image quality with compact size.",
       "risks": "Creative hits are unpredictable and production costs may not be recovered. Sensors depend on smartphone demand and major customer adoption, require heavy investment, and memory inflation pressures device margins.",
-      "competition": "Faces other console, PC and mobile gaming platforms, plus sensor manufacturers. Its film and streaming activities overlap with Disney, competing for content, talent and audience time.",
+      "competition": "Examples are Microsoft Xbox and Nintendo Switch in consoles, Samsung ISOCELL in mobile image sensors, and onsemi Hyperlux in industrial sensing. Disney overlaps film/content production. These are editorial comparisons of Sony scope and official portfolios, not a single interchangeable market. Music and other imaging equipment have different rivals.",
       "relationships": "Supplies screen content to platforms including Netflix and Amazon, and sensors to device manufacturers. Independent developers provide PlayStation games; counterparties differ across businesses."
     },
     "maps": {
@@ -26234,40 +26500,68 @@
           "name": "Disney",
           "role": "competitor",
           "label": {
-            "ja": "映画・配信などの事業領域が重なる",
-            "en": "Overlapping film and streaming businesses"
+            "ja": "映画・映像制作の重なり。公式事業の編集比較",
+            "en": "Overlapping film/content production; editorial comparison"
           },
           "sourceIndexes": [
-            0,
-            1
+            2,
+            3
           ],
           "ticker": "DIS"
         },
         {
-          "kind": "industry",
-          "name": "Gaming platforms",
-          "nameJa": "ゲーム機・PC・スマホゲーム",
+          "kind": "company",
+          "name": "Microsoft",
           "role": "competitor",
           "label": {
-            "ja": "ゲーム作品と利用者の時間を競う",
-            "en": "Compete for games and player engagement"
+            "ja": "XboxとPlayStationのゲーム機・作品。公式製品比較",
+            "en": "Xbox/PlayStation consoles and games; editorial comparison"
           },
           "sourceIndexes": [
-            0
+            4,
+            5
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Nintendo",
+          "role": "competitor",
+          "label": {
+            "ja": "SwitchとPlayStationのゲーム機。公式製品比較",
+            "en": "Switch/PlayStation consoles; editorial comparison"
+          },
+          "sourceIndexes": [
+            4,
+            6
           ]
         },
         {
-          "kind": "industry",
-          "name": "Image-sensor manufacturers",
-          "nameJa": "画像センサーメーカー",
+          "kind": "company",
+          "name": "Samsung Electronics",
           "role": "competitor",
           "label": {
-            "ja": "画質・性能・価格と採用を競う",
-            "en": "Compete on image quality, performance and design wins"
+            "ja": "ISOCELLとSonyのスマホ用画像センサー。製品比較",
+            "en": "ISOCELL/Sony mobile image sensors; editorial comparison"
           },
           "sourceIndexes": [
-            0
+            7,
+            8
           ]
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "role": "competitor",
+          "label": {
+            "ja": "HyperluxとSonyの産業用画像センサー。製品比較",
+            "en": "Hyperlux/Sony industrial sensing; editorial comparison"
+          },
+          "sourceIndexes": [
+            9,
+            10
+          ],
+          "ticker": "ON"
         }
       ],
       "relationships": [
@@ -26679,7 +26973,7 @@
       "V"
     ],
     "name": "Visa",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -26688,6 +26982,14 @@
       {
         "label": "October 29, 2024 · Coinbase Visa Direct partnership",
         "url": "https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.20931.html"
+      },
+      {
+        "label": "Capital One · May 18, 2025 completed acquisition of Discover",
+        "url": "https://www.capitalone.com/about/newsroom/capital-one-completes-acquisition-of-discover/"
+      },
+      {
+        "label": "PayPal · Checkout using balance, bank accounts or cards",
+        "url": "https://www.paypal.com/us/digital-wallet/ways-to-pay/checkout-with-paypal"
       }
     ],
     "ja": {
@@ -26695,7 +26997,7 @@
       "revenue": "支払いの金額や処理件数、国境をまたぐ取引に応じた料金で稼ぐ。不正対策や加盟店支援などの追加サービスも売る。カード利用者の金利や、銀行間でやり取りされる手数料がそのままVisaの売上になるわけではない。",
       "strength": "多くの銀行・お店が参加する共通の仕組みと、世界中で使える信用力を持つ。取引が増えるほど使える場所と利便性が広がり、大量の決済を安定して処理する技術と不正対策が支える。",
       "risks": "決済ルールや料金を巡る規制・訴訟、銀行との大型契約更新が収益を左右する。銀行口座から直接払う仕組みの普及も競争要因。旅行が減ると単価の高い越境取引が弱くなり、障害や漏洩も信用を損なう。",
-      "competition": "MastercardやAmerican Express、JCBなどの決済網と競う。地域独自のネットワークや即時銀行送金も代替となる。銀行とお店に選ばれ、実際に支払いで使われることが重要。",
+      "competition": "Mastercard、American Express、JCB、Capital One傘下Discoverなどのカード決済網と競う。これらは自社の実名開示と現行の企業識別で確認した。PayPalは残高・銀行口座を使う支払いの比較例で、公式サービスに基づく編集上の比較。カード経由のPayPal決済では協業にもなる。現金、小切手、即時銀行送金は企業名ではない代替手段で、決済経路ごとに役割が異なる。",
       "relationships": "カードを発行する金融機関と、お店の決済を扱う金融機関・処理会社がネットワークを利用する。CoinbaseとはVisa Directによる入出金やデビットカードで連携し、暗号資産の取引そのものとは役割が異なる。"
     },
     "en": {
@@ -26703,7 +27005,7 @@
       "revenue": "Earns fees tied to payment volume, processing and cross-border activity, plus value-added services. Cardholder interest and interchange between banks are not Visa revenue.",
       "strength": "A widely accepted network connects banks and merchants globally. Reach, trusted branding, reliable high-volume processing and fraud controls reinforce adoption.",
       "risks": "Regulation, litigation and large client renewals affect economics. Account-to-account payments compete, weaker travel reduces cross-border activity, and outages or breaches threaten trust.",
-      "competition": "Competes with Mastercard, American Express, JCB and other networks, as well as domestic payment systems and instant bank transfers, for issuance, acceptance and usage.",
+      "competition": "Competes with Mastercard, American Express, JCB and Capital One-owned Discover in card networks, based on own named-vendor disclosure and current ownership. PayPal balance/bank-funded checkout is an editorial official-service comparison; card-funded PayPal payments can also involve cooperation. Cash, checks and instant account transfers are alternatives, not company names. Roles differ by payment rail.",
       "relationships": "Issuers, acquirers and processors use its network. Coinbase works with Visa on debit cards and Visa Direct funding and withdrawals; Visa provides payment infrastructure rather than the crypto exchange itself."
     },
     "maps": {
@@ -26713,8 +27015,8 @@
           "name": "Mastercard",
           "role": "competitor",
           "label": {
-            "ja": "国際決済ネットワークで競合",
-            "en": "Global payment network"
+            "ja": "国際カード決済網。自社の実名開示",
+            "en": "Global card network; named in own filing"
           },
           "sourceIndexes": [
             0
@@ -26726,8 +27028,8 @@
           "name": "American Express",
           "role": "competitor",
           "label": {
-            "ja": "カード決済の利用・加盟店を競う",
-            "en": "Competes for card spending and acceptance"
+            "ja": "カード決済の利用・加盟店を競う。自社開示",
+            "en": "Card spending/acceptance; own named-vendor disclosure"
           },
           "sourceIndexes": [
             0
@@ -26739,25 +27041,40 @@
           "name": "JCB",
           "role": "competitor",
           "label": {
-            "ja": "カード決済ネットワークで競合",
-            "en": "Card-payment network"
+            "ja": "カード決済ネットワーク。自社の実名開示",
+            "en": "Card-payment network; own named-vendor disclosure"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Instant account-to-account networks",
-          "nameJa": "即時銀行送金・地域決済網",
+          "kind": "company",
+          "name": "Capital One / Discover",
           "role": "competitor",
           "label": {
-            "ja": "カード以外の支払い方法となる",
-            "en": "Alternative payment rails"
+            "ja": "Discoverカード決済網。Capital Oneの取得完了を確認",
+            "en": "Discover card network; completed Capital One ownership checked"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "COF"
+        },
+        {
+          "kind": "company",
+          "name": "PayPal",
+          "role": "competitor",
+          "label": {
+            "ja": "残高・銀行口座を使う購入決済。公式サービスの編集比較",
+            "en": "Balance/bank-funded checkout; editorial service comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "PYPL"
         }
       ],
       "relationships": [
@@ -26822,7 +27139,7 @@
       "MA"
     ],
     "name": "Mastercard",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -26831,6 +27148,14 @@
       {
         "label": "June 4, 2025 · PayPal debit partnership and planned co-development",
         "url": "https://newsroom.mastercard.com/news/press/2025/june/mastercard-and-paypal-to-partner-on-mastercard-one-credential-to-supercharge-choice-at-checkout/"
+      },
+      {
+        "label": "Capital One · May 18, 2025 completed acquisition of Discover",
+        "url": "https://www.capitalone.com/about/newsroom/capital-one-completes-acquisition-of-discover/"
+      },
+      {
+        "label": "PayPal · Checkout using balance, bank accounts or cards",
+        "url": "https://www.paypal.com/us/digital-wallet/ways-to-pay/checkout-with-paypal"
       }
     ],
     "ja": {
@@ -26838,7 +27163,7 @@
       "revenue": "カードの利用金額や取引の処理、国境をまたぐ支払いなどから料金を得る。加えて、不正検知、顧客分析、販売促進といったサービスでも稼ぐ。金融機関への値引き・奨励金は売上を押し下げる。",
       "strength": "多くの金融機関と加盟店を結ぶ決済網に、セキュリティとデータ分析を組み合わせる。カード番号を安全な別番号へ置き換える仕組みなどで、スマホやネットの決済も支えられる。",
       "risks": "大手金融機関との取引を維持するための奨励金が増えると、決済量が伸びても利益が圧迫される。料金・競争を巡る規制や訴訟、地域独自の送金網、越境取引の減少、情報漏洩もリスク。",
-      "competition": "Visa、American Express、JCBなどと金融機関の採用やお店の利用を競う。銀行口座同士を直接つなぐ送金や地域独自の決済網も競合し、カード以外の分野ではデータ・セキュリティ会社とも重なる。",
+      "competition": "Visa、American Express、JCB、Capital One傘下Discoverなどのカード決済網と競う。これらは自社の実名開示と現行の企業識別で確認した。PayPalは残高・銀行口座を使う支払いの比較例で、公式サービスに基づく編集上の比較。カード経由のPayPal決済では協業にもなる。現金、小切手、即時銀行送金は企業名ではない代替手段で、決済経路ごとに役割が異なる。",
       "relationships": "カード発行会社と加盟店側の金融機関が決済網を利用する。PayPalとはデビットカードなどで長く連携しており、決済の選択肢を広げる共同開発も発表している。お店や企業には分析・不正対策なども提供する。"
     },
     "en": {
@@ -26846,7 +27171,7 @@
       "revenue": "Earns fees linked to spending, transaction processing and cross-border payments, plus security, analytics and engagement services. Customer rebates and incentives reduce reported revenue.",
       "strength": "Combines broad financial-institution and merchant reach with security and data capabilities. Tokenization replaces sensitive card details to support safer mobile and online payments.",
       "risks": "Growing incentives to retain major institutions can offset transaction growth. Regulatory and litigation exposure, domestic payment alternatives, weaker cross-border activity and data breaches are key risks.",
-      "competition": "Competes with Visa, American Express, JCB and other networks, alongside direct bank transfers and domestic rails. Its non-network services also face data and security specialists.",
+      "competition": "Competes with Visa, American Express, JCB and Capital One-owned Discover in card networks, based on own named-vendor disclosure and current ownership. PayPal balance/bank-funded checkout is an editorial official-service comparison; card-funded PayPal payments can also involve cooperation. Cash, checks and instant account transfers are alternatives, not company names. Roles differ by payment rail.",
       "relationships": "Issuers and acquirers use the payment network. PayPal is a longstanding debit-card partner, with further joint development announced to broaden payment choices. Businesses also buy analytics and security services."
     },
     "maps": {
@@ -26856,8 +27181,8 @@
           "name": "Visa",
           "role": "competitor",
           "label": {
-            "ja": "国際決済ネットワークで競合",
-            "en": "Global payment network"
+            "ja": "国際カード決済網。自社の実名開示",
+            "en": "Global card network; named in own filing"
           },
           "sourceIndexes": [
             0
@@ -26869,8 +27194,8 @@
           "name": "American Express",
           "role": "competitor",
           "label": {
-            "ja": "カード決済の採用・利用を競う",
-            "en": "Competes for payment issuance and usage"
+            "ja": "カード決済の利用・加盟店を競う。自社開示",
+            "en": "Card spending/acceptance; own named-vendor disclosure"
           },
           "sourceIndexes": [
             0
@@ -26882,25 +27207,40 @@
           "name": "JCB",
           "role": "competitor",
           "label": {
-            "ja": "カード決済ネットワークで競合",
-            "en": "Card-payment network"
+            "ja": "カード決済ネットワーク。自社の実名開示",
+            "en": "Card-payment network; own named-vendor disclosure"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Domestic and bank-transfer networks",
-          "nameJa": "地域決済網・銀行送金",
+          "kind": "company",
+          "name": "Capital One / Discover",
           "role": "competitor",
           "label": {
-            "ja": "カード以外の決済経路で競合",
-            "en": "Alternative domestic and account-based rails"
+            "ja": "Discoverカード決済網。Capital Oneの取得完了を確認",
+            "en": "Discover card network; completed Capital One ownership checked"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "COF"
+        },
+        {
+          "kind": "company",
+          "name": "PayPal",
+          "role": "competitor",
+          "label": {
+            "ja": "残高・銀行口座を使う購入決済。公式サービスの編集比較",
+            "en": "Balance/bank-funded checkout; editorial service comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "PYPL"
         }
       ],
       "relationships": [
