@@ -52,7 +52,7 @@ class ReleaseWatchTests(unittest.TestCase):
         self.assertEqual(watch.burst_routes(AT + timedelta(minutes=15), [CPI]), {'x-wallstengine', 'bls-cpi'})
         self.assertEqual(watch.burst_routes(AT + timedelta(minutes=16), [CPI]), set())
         self.assertEqual(watch.burst_routes(AT, [CALL]), set())
-        self.assertEqual(watch.burst_routes(ASML['at'], [ASML]), {'x-wallstengine', 'x-tipranks'})
+        self.assertEqual(watch.burst_routes(ASML['at'], [ASML]), {'x-wallstengine', 'x-tipranks', 'x-tradethenews'})
 
     def test_burst_route_polls_every_ten_seconds_and_skips_fair_share_pacing(self):
         source = {'id': 'x-wallstengine', 'format': 'x-api', 'intervalSeconds': 30}

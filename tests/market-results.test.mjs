@@ -89,3 +89,12 @@ test('U.S. inflation keeps index, core and basis; foreign currencies keep their 
  for(const value of ['£5B','€7.52X','7.52 EUR'])assert.throws(()=>parseResultBriefs([{...brief,facts:[{...brief.facts[0],value}]}]));
  assert.throws(()=>parseResultBriefs([{...cpi,facts:[{...cpi.facts[0],key:'cpi'}]}]));
 });
+
+test('Trade The News result lines for TSMC keep net income, operating income, margins and capex',()=>{
+ const facts=[{key:'net-income',ja:'純利益',en:'Net income',value:'NT$763.1B'},{key:'operating-income',ja:'営業利益',en:'Operating income',value:'NT$876.5B'},
+ {key:'operating-margin',ja:'営業利益率',en:'Operating margin',value:'58.7%'},{key:'gross-margin',ja:'粗利益率',en:'Gross margin',value:'66.4%'},{key:'capex',ja:'設備投資',en:'Capex',value:'$13.8B'}];
+ const [parsed]=parseResultBriefs([{...brief,ticker:'TSM',period:'Q3',facts,titleJa:'TSM Q3決算：純利益NT$763.1B、営業利益NT$876.5B',titleEn:'TSM Q3 earnings: Net income NT$763.1B, Operating income NT$876.5B',
+  url:'https://x.com/Trade_The_News/status/55334',publisher:'Trade The News'}]);
+ assert.equal(parsed.facts.length,5);
+ assert.throws(()=>parseResultBriefs([{...brief,facts:[{key:'net-income',ja:'純利益',en:'Net income',value:'BUY NOW'}]}]));
+});

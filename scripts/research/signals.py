@@ -1698,7 +1698,7 @@ PRICE_TARGET_FIRM_ALIASES = {
     "hcwainwright": "H.C. Wainwright", "telsey": "Telsey Advisory", "telseyadvisory": "Telsey Advisory",
 }
 PRICE_TARGET_PUBLISHERS = {
-    "tipranks": "X · TipRanks", "wallstengine": "X · Wall St Engine", "fabymetal4": "X · FabyΔ",
+    "tipranks": "X · TipRanks", "wallstengine": "X · Wall St Engine", "fabymetal4": "X · FabyΔ", "trade_the_news": "X · Trade The News",
     "aistocksavvy": "X · Hardik Shah",
 }
 

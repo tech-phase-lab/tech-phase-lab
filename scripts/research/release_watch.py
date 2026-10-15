@@ -35,7 +35,7 @@ WATCH_FOR = timedelta(hours=6)
 # X routes that post U.S. indicator results and earnings flashes.
 # Official release page polled in the same window as the social routes.
 OFFICIAL_CPI_ROUTE = 'bls-cpi'
-BURST_ROUTES = {'economic': ('x-wallstengine',), 'earnings': ('x-wallstengine', 'x-tipranks')}
+BURST_ROUTES = {'economic': ('x-wallstengine',), 'earnings': ('x-wallstengine', 'x-tipranks', 'x-tradethenews')}
 INDICATORS = {
     'jobs': r'payroll|非農業|雇用統計|unemployment rate|失業率',
     'cpi': r'\bCPI\b|消費者物価',
