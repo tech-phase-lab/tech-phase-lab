@@ -21,8 +21,18 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-currently records three corrections and 110 remaining industry-only issuers.
+currently records 16 corrections and 97 remaining industry-only issuers.
 Finish these quality corrections before adding new issuers.
+
+The next correction batch reviews COST, MSFT, GOOG/GOOGL, AMZN, AVGO, DELL,
+ETN, CRWD, CRM, TXN, ADI, MCHP and SNPS (13 existing issuers; no additions).
+Each named rivalry links to a primary annual filing and identifies the product
+area. Where a peer makes the disclosure, both languages and the map label say so.
+Examples are selective, not exhaustive: cloud data products, endpoint security,
+workflow software, server systems, power equipment, semiconductor product lines
+and EDA have different competitors. Preserve existing non-competition facts and
+do not infer a customer or supplier relationship from a rivalry disclosure.
+Reviewed on 2026-10-15. The frozen NVDA payload is unchanged.
 
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.

@@ -795,11 +795,23 @@
       "MSFT"
     ],
     "name": "Microsoft",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+      },
+      {
+        "label": "Snowflake FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm"
+      },
+      {
+        "label": "SentinelOne FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
+      },
+      {
+        "label": "Pegasystems FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm"
       }
     ],
     "ja": {
@@ -807,7 +819,7 @@
       "revenue": "業務ソフトの契約料やAzureの利用料、Windowsのライセンス、ゲームなどの販売。",
       "strength": "企業が日常的に使う業務ソフトとクラウドを組み合わせ、既存の仕事にAIを取り入れやすい。",
       "risks": "データセンターへの巨額投資、AIサービスの価格競争、サイバー攻撃や情報流出。",
-      "competition": "クラウドや業務ソフト、AIの各事業者。無料で使えるソフトや公開されたAIモデルとも競う。",
+      "competition": "Azureのデータ処理・分析ではSnowflake、端末防御ではSentinelOne、顧客対応・業務自動化ではPegasystemsが競合例。それぞれ相手企業の年次報告書がMicrosoftを競合として挙げている。製品分野ごとの比較で、全事業で競うという意味ではない。",
       "relationships": "パソコンメーカー、ソフト開発者、企業のシステム導入を支援する販売・技術パートナーとつながる。"
     },
     "en": {
@@ -815,35 +827,48 @@
       "revenue": "Business-software subscriptions, Azure usage fees, Windows licenses and gaming sales.",
       "strength": "Combines widely used workplace software and cloud services to bring AI into existing workflows.",
       "risks": "Heavy data-center investment, AI pricing pressure, cyberattacks and data breaches.",
-      "competition": "Cloud, business-software and AI providers, including free software and open AI models.",
+      "competition": "Examples are Snowflake in Azure data processing and analytics, SentinelOne in endpoint protection, and Pegasystems in customer engagement and workflow automation. Each peer names Microsoft in its annual report; the overlap is specific to those product areas.",
       "relationships": "Works with PC makers, software developers, resellers and enterprise technology partners."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Cloud providers",
-          "nameJa": "クラウド事業者",
+          "kind": "company",
+          "name": "Snowflake",
+          "ticker": "SNOW",
           "role": "competitor",
           "label": {
-            "ja": "クラウドサービスで競合",
-            "en": "Cloud services"
+            "ja": "クラウドのデータ処理・分析で競合（Snowflakeの開示）",
+            "en": "Cloud data processing and analytics; disclosed by Snowflake"
           },
           "sourceIndexes": [
-            0
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "Business software & AI",
-          "nameJa": "業務ソフト・AI各社",
+          "kind": "company",
+          "name": "SentinelOne",
+          "ticker": "S",
           "role": "competitor",
           "label": {
-            "ja": "有料・無料サービスで競合",
-            "en": "Paid & free alternatives"
+            "ja": "端末の攻撃検知・防御で競合（SentinelOneの開示）",
+            "en": "Endpoint threat detection and protection; disclosed by SentinelOne"
           },
           "sourceIndexes": [
-            0
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Pegasystems",
+          "ticker": "PEGA",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客対応・業務自動化で競合（Pegaの開示）",
+            "en": "Customer engagement and workflow automation; disclosed by Pega"
+          },
+          "sourceIndexes": [
+            3
           ]
         }
       ],
@@ -1198,11 +1223,19 @@
       "AVGO"
     ],
     "name": "Broadcom",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+      },
+      {
+        "label": "NXP FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
+      },
+      {
+        "label": "SentinelOne FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
       }
     ],
     "ja": {
@@ -1210,7 +1243,7 @@
       "revenue": "半導体の販売と、企業向けソフトのライセンス・契約料や保守サービス。",
       "strength": "高速通信の技術と、顧客の用途に合わせた専用AI半導体の設計。基盤ソフトにも事業を持つ。",
       "risks": "大口顧客や製造委託先への依存、専用チップの計画変更、ソフト契約の更新・移行に伴う顧客離れ。",
-      "competition": "通信・AI半導体各社や顧客の内製チップ。ソフトではクラウドや企業向けソフトの事業者。",
+      "competition": "半導体ではNXP、端末保護ソフトではSentinelOneが競合例。NXPはBroadcomを主要競合の一社とし、製品群の一部で競うと説明。SentinelOneはBroadcom傘下のCarbon BlackとSymantecを名指ししている。VMwareや専用AI半導体全体の比較ではない。",
       "relationships": "クラウド事業者などと専用半導体を開発し、製造の多くをTSMCなどに委託する。"
     },
     "en": {
@@ -1218,35 +1251,35 @@
       "revenue": "Chip sales, software licenses and subscriptions, and support services.",
       "strength": "High-speed networking and custom AI-chip design, alongside an established infrastructure-software business.",
       "risks": "Customer and supplier concentration, custom-project changes and customer losses during software renewals or transitions.",
-      "competition": "Chip suppliers, customers' in-house designs, cloud providers and enterprise-software vendors.",
+      "competition": "NXP names Broadcom among semiconductor rivals, with overlap limited to some product lines. SentinelOne separately names Broadcom’s Carbon Black and Symantec in endpoint security. These examples do not describe the whole VMware or custom AI-chip business.",
       "relationships": "Develops custom silicon with cloud and other customers; outsources much of manufacturing to TSMC and others."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Networking & AI chipmakers",
-          "nameJa": "通信・AI半導体各社",
+          "kind": "company",
+          "name": "NXP Semiconductors",
+          "ticker": "NXPI",
           "role": "competitor",
           "label": {
-            "ja": "半導体・顧客の内製で競合",
-            "en": "Chips & customer insourcing"
+            "ja": "半導体の一部製品群で競合（NXPの開示）",
+            "en": "Selected semiconductor product lines; disclosed by NXP"
           },
           "sourceIndexes": [
-            0
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "Cloud & infrastructure software",
-          "nameJa": "クラウド・基盤ソフト各社",
+          "kind": "company",
+          "name": "SentinelOne",
+          "ticker": "S",
           "role": "competitor",
           "label": {
-            "ja": "企業向けソフトで競合",
-            "en": "Enterprise software"
+            "ja": "端末の攻撃検知・防御で競合（SentinelOneの開示）",
+            "en": "Endpoint threat detection and protection; disclosed by SentinelOne"
           },
           "sourceIndexes": [
-            0
+            2
           ]
         }
       ],
@@ -1859,11 +1892,15 @@
       "GOOGL"
     ],
     "name": "Google",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "Alphabet FY2025 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm"
+      },
+      {
+        "label": "Snowflake FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm"
       }
     ],
     "ja": {
@@ -1871,7 +1908,7 @@
       "revenue": "検索やYouTubeの広告が中心。クラウド利用料や有料会員サービスも収益源。",
       "strength": "検索・動画・スマホを通じて利用者に届き、広告主や開発者を集められる。",
       "risks": "AIによる検索習慣の変化、広告への依存、競争法や個人情報をめぐる規制。",
-      "competition": "検索やAIのサービス、SNS広告、企業向けクラウドの各事業者。",
+      "competition": "Google Cloudのデータ処理・分析ではSnowflakeが競合例。Snowflakeの年次報告書はGoogle Cloudを競合として明記し、同時に自社サービスの稼働基盤としても利用すると説明している。検索・広告の競合とは分けて考える。",
       "relationships": "YouTubeの制作者や広告主、Android端末メーカーなどと事業を広げる。"
     },
     "en": {
@@ -1879,48 +1916,22 @@
       "revenue": "Primarily advertising, plus cloud usage fees and subscriptions.",
       "strength": "Search, video and mobile reach connect users with advertisers and developers.",
       "risks": "AI-driven changes in search habits, advertising dependence and competition or privacy regulation.",
-      "competition": "Search and AI services, social advertising platforms and enterprise cloud providers.",
+      "competition": "Snowflake is a named example in Google Cloud data processing and analytics. Its annual report explicitly identifies Google Cloud as both a competitor and infrastructure provider. This comparison concerns cloud data products rather than search or advertising.",
       "relationships": "Works with YouTube creators, advertisers and Android device manufacturers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Search & AI services",
-          "nameJa": "検索・AIサービス",
+          "kind": "company",
+          "name": "Snowflake",
+          "ticker": "SNOW",
           "role": "competitor",
           "label": {
-            "ja": "情報検索・AIで競合",
-            "en": "Search & AI"
+            "ja": "クラウドのデータ処理・分析で競合（Snowflakeの開示）",
+            "en": "Cloud data processing and analytics; disclosed by Snowflake"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Social advertising platforms",
-          "nameJa": "SNS広告各社",
-          "role": "competitor",
-          "label": {
-            "ja": "広告予算を競う",
-            "en": "Advertising budgets"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Enterprise cloud providers",
-          "nameJa": "企業向けクラウド",
-          "role": "competitor",
-          "label": {
-            "ja": "クラウドサービスで競合",
-            "en": "Cloud services"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -2074,11 +2085,19 @@
       "AMZN"
     ],
     "name": "Amazon",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+      },
+      {
+        "label": "Snowflake FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm"
+      },
+      {
+        "label": "Costco FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
       }
     ],
     "ja": {
@@ -2086,7 +2105,7 @@
       "revenue": "商品販売、出品者の手数料、AWS利用料、広告、Primeなどの会費。",
       "strength": "品揃えと配送網を組み合わせた通販と、幅広い機能を持つAWS。",
       "risks": "激しい価格競争、物流・人件費の上昇、データセンター投資の負担。",
-      "competition": "小売店・通販各社、クラウド事業者、広告や動画配信のサービス。",
+      "competition": "AWSのデータ処理・分析ではSnowflake、商品販売ではCostcoが競合例。SnowflakeとCostcoがそれぞれの年次報告書でAWSとAmazonを競合として挙げている。クラウドと小売では競う製品も顧客も異なる。",
       "relationships": "出品者、配送の協力会社、AWSを使う企業や開発者、広告主をつなぐ。"
     },
     "en": {
@@ -2094,48 +2113,35 @@
       "revenue": "Product sales, seller fees, AWS usage, advertising and subscriptions such as Prime.",
       "strength": "Combines retail selection and delivery infrastructure with a broad AWS service range.",
       "risks": "Price competition, logistics and labor costs, and heavy data-center investment.",
-      "competition": "Retailers, cloud providers, advertising platforms and streaming services.",
+      "competition": "Examples include Snowflake in AWS data processing and analytics, and Costco in merchandise retail. Snowflake names AWS and Costco names Amazon in their annual reports. These are separate cloud and retail markets.",
       "relationships": "Connects sellers, delivery partners, cloud customers, developers and advertisers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Retailers",
-          "nameJa": "小売・通販各社",
+          "kind": "company",
+          "name": "Snowflake",
+          "ticker": "SNOW",
           "role": "competitor",
           "label": {
-            "ja": "商品販売で競合",
-            "en": "Retail sales"
+            "ja": "クラウドのデータ処理・分析で競合（Snowflakeの開示）",
+            "en": "Cloud data processing and analytics; disclosed by Snowflake"
           },
           "sourceIndexes": [
-            0
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "Cloud providers",
-          "nameJa": "クラウド事業者",
+          "kind": "company",
+          "name": "Costco",
+          "ticker": "COST",
           "role": "competitor",
           "label": {
-            "ja": "AWSと競合",
-            "en": "Compete with AWS"
+            "ja": "商品販売で競合（Costcoの開示）",
+            "en": "Merchandise retail; disclosed by Costco"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Advertising & streaming",
-          "nameJa": "広告・動画サービス",
-          "role": "competitor",
-          "label": {
-            "ja": "広告・動画配信で競合",
-            "en": "Advertising & streaming"
-          },
-          "sourceIndexes": [
-            0
+            2
           ]
         }
       ],
@@ -2302,7 +2308,7 @@
       "COST"
     ],
     "name": "Costco",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
@@ -2314,7 +2320,7 @@
       "revenue": "商品の販売代金と会員の年会費。ガソリンや薬局なども展開する。",
       "strength": "品数を絞った大量仕入れと効率的な物流で低価格を支える。自社ブランドはKirkland Signature。",
       "risks": "薄い商品利益率のため仕入れ・人件費の上昇が響く。会員の継続や価格への信頼も重要。",
-      "competition": "会員制倉庫店、スーパー、ディスカウント店やネット通販。",
+      "competition": "Walmart（Sam’s Clubを含む）、BJ’s Wholesale Club、Target、Amazonなどと競合する。倉庫型の会員制店舗ではSam’s ClubやBJ’s、一般の商品販売ではWalmart・Target・Amazonなどが比較対象になる。価格だけでなく品揃えや立地、買い物の便利さでも競争する。",
       "relationships": "メーカーなどから直接仕入れ、物流拠点を通じて各店舗に商品を届ける。"
     },
     "en": {
@@ -2322,36 +2328,60 @@
       "revenue": "Merchandise sales and membership fees, alongside services such as gasoline and pharmacies.",
       "strength": "Limited selection, volume buying and efficient logistics support low prices; Kirkland Signature is its own brand.",
       "risks": "Thin merchandise margins expose earnings to rising costs; membership retention and price trust matter.",
-      "competition": "Warehouse clubs, supermarkets, discount retailers and online stores.",
+      "competition": "Named rivals include Walmart, including Sam’s Club, BJ’s Wholesale Club, Target and Amazon. Sam’s Club and BJ’s compete in membership warehouse clubs, while Walmart, Target and Amazon also compete in general merchandise retail. The overlap depends on product range, location, price and shopping convenience.",
       "relationships": "Buys directly from suppliers and distributes goods through its depot network."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Warehouse clubs",
-          "nameJa": "会員制倉庫店",
+          "kind": "company",
+          "name": "Walmart",
           "role": "competitor",
           "label": {
-            "ja": "会員制の小売で競合",
-            "en": "Membership retail"
+            "ja": "総合小売とSam’s Clubの会員制倉庫型店舗で競合",
+            "en": "General merchandise and Sam’s Club membership warehouses"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "WMT"
+        },
+        {
+          "kind": "company",
+          "name": "BJ's Wholesale Club",
+          "role": "competitor",
+          "label": {
+            "ja": "会員制の倉庫型店舗で競合",
+            "en": "Membership warehouse clubs"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Supermarkets & online stores",
-          "nameJa": "スーパー・通販各社",
+          "kind": "company",
+          "name": "Target",
           "role": "competitor",
           "label": {
-            "ja": "食品・日用品で競合",
-            "en": "Groceries & everyday goods"
+            "ja": "一般商品の小売で競合",
+            "en": "General merchandise retail"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "competitor",
+          "label": {
+            "ja": "一般商品の販売とオンライン小売で競合",
+            "en": "General merchandise and online retail"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
         }
       ],
       "relationships": [
@@ -3992,11 +4022,15 @@
       "DELL"
     ],
     "name": "Dell Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm"
+      },
+      {
+        "label": "Supermicro FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm"
       }
     ],
     "ja": {
@@ -4004,7 +4038,7 @@
       "revenue": "PC、サーバー、ストレージなどの機器販売が中心。保守契約、ソフト、導入サービス、金融サービスも収入源。",
       "strength": "部品調達と量産、世界規模の直販・販売店網、PCからデータセンターまで揃う製品群を組み合わせられる。",
       "risks": "PC需要と企業の設備投資が周期的に変動し、価格競争で利益率が下がりやすい。CPU・GPUなど限られた供給元への依存もある。",
-      "competition": "PC、サーバー、ストレージ、クラウド関連サービスの各分野で、大手総合メーカーと特定製品に強い会社の双方と競う。",
+      "competition": "サーバー・計算基盤ではSupermicroが競合例。Supermicroの年次報告書がDellを主要競合として明記しており、ラック構成、製品性能、電力効率、価格などが比較される。PCやストレージの競合まで同じ会社に限定するものではない。",
       "relationships": "企業、公共機関、クラウド事業者へPCやデータセンター機器を直接または販売パートナー経由で納め、保守まで担当する。"
     },
     "en": {
@@ -4012,48 +4046,22 @@
       "revenue": "Hardware sales lead revenue, supplemented by support contracts, software, deployment and financing services.",
       "strength": "Combines global procurement and manufacturing, direct and channel sales, and a portfolio spanning PCs through data centers.",
       "risks": "PC and enterprise spending cycles, price pressure and reliance on limited CPU and GPU sources can affect revenue and margins.",
-      "competition": "Competes with broad technology manufacturers and product specialists across PCs, servers, storage and cloud-related services.",
+      "competition": "Supermicro explicitly names Dell as a principal rival in servers and compute systems. Rack configurations, performance, energy efficiency and price are competitive factors. This example does not cover every PC or storage competitor.",
       "relationships": "Supplies PCs and data-center systems to enterprises, public agencies and cloud operators directly and through partners, then provides support."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "PC manufacturers",
-          "nameJa": "PCメーカー",
+          "kind": "company",
+          "name": "Super Micro Computer",
+          "ticker": "SMCI",
           "role": "competitor",
           "label": {
-            "ja": "PCで競合",
-            "en": "Personal computers"
+            "ja": "サーバー・計算基盤で競合（Supermicroの開示）",
+            "en": "Servers and compute systems; disclosed by Supermicro"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Server and storage vendors",
-          "nameJa": "サーバー・ストレージ会社",
-          "role": "competitor",
-          "label": {
-            "ja": "企業向け機器で競合",
-            "en": "Enterprise systems"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Cloud and infrastructure providers",
-          "nameJa": "クラウド・IT基盤会社",
-          "role": "competitor",
-          "label": {
-            "ja": "IT基盤サービスで競合",
-            "en": "Infrastructure services"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -4106,11 +4114,15 @@
       "ETN"
     ],
     "name": "Eaton",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / End markets / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/etn-20251231.htm"
+      },
+      {
+        "label": "Vertiv FY2025 Form 10-K · Offerings / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
       }
     ],
     "ja": {
@@ -4118,7 +4130,7 @@
       "revenue": "遮断器、配電盤、UPSなどの電気機器が中心。航空機部品、車両部品、保守・交換品の販売でも稼ぐ。",
       "strength": "高圧から施設内の配電まで製品が広く、データセンター、工場、電力会社など多様な設備投資を一社で支えられる。",
       "risks": "大型設備の建設時期、景気、原材料・部品コストに左右される。受注残を抱えるため、供給遅延や工事計画の変更も影響が大きい。",
-      "competition": "電力管理では世界の総合電機メーカーや専門メーカーと、性能、納期、保守、価格で競う。航空・車両では別の部品メーカーも競合。",
+      "competition": "データセンターなどの電力管理ではVertivが競合例。Vertivの年次報告書はEatonを大手競合として明記。UPSや配電などの重なる設備分野を比較するもので、Eatonの航空機・車両事業全体の競合を示すものではない。",
       "relationships": "データセンター、電力会社、工場、商業施設に配電・保護機器を供給し、航空機メーカーや車両メーカーにも部品を納める。"
     },
     "en": {
@@ -4126,35 +4138,22 @@
       "revenue": "Electrical products such as breakers, switchgear and UPS systems lead sales, joined by aerospace, vehicle and aftermarket products.",
       "strength": "A broad power-management portfolio spans utility feeds through facility distribution across data centers, factories and other end markets.",
       "risks": "Project timing, economic cycles and material costs matter; a large backlog also exposes deliveries to supply and construction delays.",
-      "competition": "Competes with global electrical groups and specialists on performance, delivery, service and price, with separate aerospace and vehicle rivals.",
+      "competition": "Vertiv names Eaton as a major competitor in critical infrastructure. The relevant comparison is overlapping power-management equipment such as UPS and power distribution, rather than Eaton’s entire aerospace or vehicle business.",
       "relationships": "Supplies power equipment to data centers, utilities, factories and buildings, and components to aerospace and vehicle manufacturers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Electrical equipment manufacturers",
-          "nameJa": "電力設備メーカー",
+          "kind": "company",
+          "name": "Vertiv",
+          "ticker": "VRT",
           "role": "competitor",
           "label": {
-            "ja": "配電・制御機器で競合",
-            "en": "Power distribution and control"
+            "ja": "UPS・配電などで競合（Vertivの開示）",
+            "en": "UPS and power distribution; disclosed by Vertiv"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Aerospace component makers",
-          "nameJa": "航空部品メーカー",
-          "role": "competitor",
-          "label": {
-            "ja": "航空機部品で競合",
-            "en": "Aerospace components"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -4333,11 +4332,15 @@
       "CRWD"
     ],
     "name": "CrowdStrike",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Falcon platform / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm"
+      },
+      {
+        "label": "SentinelOne FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
       }
     ],
     "ja": {
@@ -4345,7 +4348,7 @@
       "revenue": "端末保護、クラウド保護、脅威分析などの機能を組み合わせた定額契約が中心。調査・対応などの専門サービスも提供する。",
       "strength": "一つの軽量ソフトから大量の攻撃データを集め、クラウド上の分析と専門家の知見を各顧客の防御へすばやく反映する。",
       "risks": "防御基盤そのものの障害や更新不具合は多数の顧客へ同時に影響し、賠償や信用低下につながる。攻撃者と競合の進化も速い。",
-      "competition": "従来型ウイルス対策、端末防御、ネットワーク・クラウド防御、ID管理、攻撃対応の各専門会社と競う。",
+      "competition": "端末の攻撃検知・防御ではSentinelOneが競合例。SentinelOneの年次報告書はCrowdStrikeを端末セキュリティの競合として明記している。Falconの全機能と一対一で対応するわけではなく、端末保護の範囲で比較する。",
       "relationships": "企業と公共機関がFalconを利用し、販売代理店、クラウド市場、技術提携先が導入と機能連携を支える。"
     },
     "en": {
@@ -4353,48 +4356,22 @@
       "revenue": "Subscription modules for endpoint, cloud and threat protection drive revenue, supplemented by incident-response and other services.",
       "strength": "A lightweight agent feeds cloud-scale threat data and expert intelligence back into customer defenses quickly.",
       "risks": "Platform outages or flawed updates can affect many customers at once and trigger claims and reputational damage; threats and rivals also evolve quickly.",
-      "competition": "Competes with legacy antivirus, endpoint, network, cloud, identity and incident-response security providers.",
+      "competition": "SentinelOne explicitly names CrowdStrike as an endpoint-security competitor in its annual report. The comparison covers threat detection and protection on endpoints rather than a one-for-one match for every Falcon module.",
       "relationships": "Enterprises and public agencies use Falcon, while resellers, cloud marketplaces and technology partners support adoption and integrations."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Endpoint security vendors",
-          "nameJa": "端末防御会社",
+          "kind": "company",
+          "name": "SentinelOne",
+          "ticker": "S",
           "role": "competitor",
           "label": {
-            "ja": "端末防御で競合",
-            "en": "Endpoint security"
+            "ja": "端末の攻撃検知・防御で競合（SentinelOneの開示）",
+            "en": "Endpoint threat detection and protection; disclosed by SentinelOne"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Network and cloud security vendors",
-          "nameJa": "ネットワーク・クラウド防御会社",
-          "role": "competitor",
-          "label": {
-            "ja": "ネットワーク・クラウド防御で競合",
-            "en": "Network and cloud security"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Identity and incident-response providers",
-          "nameJa": "ID管理・攻撃対応会社",
-          "role": "competitor",
-          "label": {
-            "ja": "ID管理・攻撃対応で競合",
-            "en": "Identity and incident response"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -4851,11 +4828,15 @@
       "CRM"
     ],
     "name": "Salesforce",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Agentforce 360 / Revenue model / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+      },
+      {
+        "label": "Pegasystems FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm"
       }
     ],
     "ja": {
@@ -4863,7 +4844,7 @@
       "revenue": "Sales、Service、Data Cloud、Slackなどの利用契約とサポートが中心。導入支援や研修からも収入を得る。",
       "strength": "顧客情報を共通基盤へ集め、営業や問い合わせ対応の流れとAIを同じ権限・データ管理の下で動かせる。",
       "risks": "企業のIT予算と契約更新に左右され、生成AIの品質・費用・個人情報管理が導入速度を決める。製品統合が複雑になるリスクもある。",
-      "competition": "企業向け業務ソフト、クラウド型業務アプリ、特定業務に強い会社、AI専業の新興企業、顧客の自社開発と競う。",
+      "competition": "顧客対応と業務自動化ではPegasystemsが競合例。Pegasystemsの年次報告書がSalesforceを競合として挙げている。顧客とのやり取りを管理するソフトや業務フローが重なる分野で、Salesforceの全製品を同じものとして扱わない。",
       "relationships": "幅広い企業へ顧客管理基盤を定額提供し、コンサル会社、導入支援会社、アプリ開発会社が周辺機能と導入を支える。"
     },
     "en": {
@@ -4871,61 +4852,22 @@
       "revenue": "Subscriptions and support for Sales, Service, Data Cloud, Slack and other products lead revenue, with services and training also contributing.",
       "strength": "Unifies customer data, workflows and AI under shared permissions and governance across front-office teams.",
       "risks": "Enterprise budgets and renewals matter, while generative-AI quality, cost and privacy can slow adoption and product integration can add complexity.",
-      "competition": "Competes with enterprise and cloud application vendors, specialists, AI-native entrants and customer-built systems.",
+      "competition": "Pegasystems names Salesforce as a competitor in its annual report. The relevant overlap is customer-engagement software and workflow automation, rather than every Salesforce product.",
       "relationships": "Provides subscriptions to organizations and relies on consultants, implementation firms and app developers to extend and deploy the platform."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Enterprise application vendors",
-          "nameJa": "企業向け業務ソフト会社",
+          "kind": "company",
+          "name": "Pegasystems",
+          "ticker": "PEGA",
           "role": "competitor",
           "label": {
-            "ja": "営業・業務ソフトで競合",
-            "en": "Enterprise applications"
+            "ja": "顧客対応・業務自動化で競合（Pegaの開示）",
+            "en": "Customer engagement and workflow automation; disclosed by Pega"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Cloud application providers",
-          "nameJa": "クラウド型業務アプリ会社",
-          "role": "competitor",
-          "label": {
-            "ja": "クラウド業務アプリで競合",
-            "en": "Cloud applications"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Customer-built systems",
-          "nameJa": "顧客の自社開発",
-          "role": "competitor",
-          "label": {
-            "ja": "内製システムと競合",
-            "en": "Customer-built systems"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "AI-native software companies",
-          "nameJa": "AI専業ソフト会社",
-          "role": "competitor",
-          "label": {
-            "ja": "AI業務支援で競合",
-            "en": "AI workflow software"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -5386,11 +5328,15 @@
       "TXN"
     ],
     "name": "Texas Instruments",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Analog and Embedded Processing / Markets / Customers / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000059/txn-20251231.htm"
+      },
+      {
+        "label": "NXP FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
       }
     ],
     "ja": {
@@ -5398,7 +5344,7 @@
       "revenue": "2025年売上の約79％がアナログ、約15％が組み込み処理。産業・自動車向けがそれぞれ約33％を占める。",
       "strength": "8万点超の幅広い製品、自社製造、10万社超の顧客網、長寿命製品を組み合わせ、少量多品種の需要にも対応できる。",
       "risks": "半導体の在庫循環で需要が振れやすい。大規模な工場投資は需要不足時に稼働率と利益率を圧迫し、アジア勢との価格競争も強まる。",
-      "competition": "アナログ・組み込み半導体で、総合半導体メーカー、特定分野に強い専業会社、新興メーカーと競う。",
+      "competition": "アナログ・組み込み半導体ではNXPが競合例。NXPの年次報告書は同社を主要競合の一社として挙げる一方、競争は製品群の一部で生じると説明している。採用用途や性能、供給、価格などで比較する。",
       "relationships": "産業機器、自動車、データセンター、個人向け電子機器のメーカーへ半導体を供給。2025年売上の80％超を直接販売した。"
     },
     "en": {
@@ -5406,48 +5352,22 @@
       "revenue": "Analog generated about 79% and Embedded Processing about 15% of 2025 revenue; industrial and automotive each contributed about 33%.",
       "strength": "Combines more than 80,000 products, internal manufacturing, over 100,000 customers and long product lives to serve diverse designs.",
       "risks": "Inventory cycles can swing demand; large fab investments pressure utilization and margins in downturns, while Asian price competition is increasing.",
-      "competition": "Competes in analog and embedded chips with broad-line semiconductor companies, focused specialists and emerging suppliers.",
+      "competition": "NXP names this company among its semiconductor rivals and states that competition applies to some, rather than all, product lines. The relevant comparison is analog and embedded semiconductors, with selection depending on application, performance, availability and cost.",
       "relationships": "Supplies industrial, automotive, data-center and personal-electronics manufacturers; more than 80% of 2025 revenue was sold directly."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Broad-line analog suppliers",
-          "nameJa": "総合アナログ半導体メーカー",
+          "kind": "company",
+          "name": "NXP Semiconductors",
+          "ticker": "NXPI",
           "role": "competitor",
           "label": {
-            "ja": "アナログ製品群で競合",
-            "en": "Broad analog portfolios"
+            "ja": "アナログ・組み込み半導体の一部で競合（NXPの開示）",
+            "en": "Analog and embedded semiconductors; selected lines disclosed by NXP"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Embedded processing suppliers",
-          "nameJa": "組み込み処理メーカー",
-          "role": "competitor",
-          "label": {
-            "ja": "制御用プロセッサで競合",
-            "en": "Embedded processors"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Asian niche chipmakers",
-          "nameJa": "アジアの専業半導体会社",
-          "role": "competitor",
-          "label": {
-            "ja": "特定用途・価格で競合",
-            "en": "Focused products and price"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -5500,11 +5420,15 @@
       "ADI"
     ],
     "name": "Analog Devices",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / End markets / Competition / Production resources",
         "url": "https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm"
+      },
+      {
+        "label": "NXP FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
       }
     ],
     "ja": {
@@ -5512,7 +5436,7 @@
       "revenue": "産業、自動車、通信、民生の顧客へ半導体を販売。直販に加え、2025年度は売上の約56％を販売代理店経由で得た。",
       "strength": "高精度・高速・低雑音の信号処理、7万5千点超の製品、長い製品寿命、約1万3千人の技術者による用途知識が強み。",
       "risks": "半導体市況と代理店在庫の影響を受ける。年間ウエハー需要の半分超をTSMCなど外部工場へ頼り、供給停止や地域リスクも抱える。",
-      "competition": "高性能アナログ、電源管理、無線・センサーで、総合半導体メーカーや用途特化型の新興企業と競う。",
+      "competition": "信号処理などの半導体ではNXPが競合例。NXPの年次報告書は同社を主要競合の一社として挙げる一方、競争は製品群の一部で生じると説明している。採用用途や性能、供給、価格などで比較する。",
       "relationships": "産業・自動車・通信機器メーカーへ信号処理と電源半導体を供給し、ウエハーの半分超をTSMCなど外部工場から調達する。"
     },
     "en": {
@@ -5520,35 +5444,22 @@
       "revenue": "Sells chips into industrial, automotive, communications and consumer markets; distributors generated about 56% of fiscal 2025 revenue.",
       "strength": "Differentiates through precision, speed and low noise, more than 75,000 products, long product lives and about 13,000 engineers with application expertise.",
       "risks": "Semiconductor cycles and distributor inventory affect demand; more than half of annual wafer needs come from outside foundries including TSMC.",
-      "competition": "Competes in high-performance analog, power, RF and sensing with broad-line semiconductor vendors and focused emerging suppliers.",
+      "competition": "NXP names this company among its semiconductor rivals and states that competition applies to some, rather than all, product lines. The relevant comparison is signal-processing semiconductors, with selection depending on application, performance, availability and cost.",
       "relationships": "Supplies signal and power chips to industrial, automotive and communications makers and sources over half of its wafers from foundries such as TSMC."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "High-performance analog suppliers",
-          "nameJa": "高性能アナログ半導体メーカー",
+          "kind": "company",
+          "name": "NXP Semiconductors",
+          "ticker": "NXPI",
           "role": "competitor",
           "label": {
-            "ja": "精度・速度・消費電力で競合",
-            "en": "Precision, speed and power"
+            "ja": "信号処理などの半導体の一部で競合（NXPの開示）",
+            "en": "Signal-processing semiconductors; selected lines disclosed by NXP"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Power and RF chip specialists",
-          "nameJa": "電源・無線半導体の専業会社",
-          "role": "competitor",
-          "label": {
-            "ja": "電源管理・無線製品で競合",
-            "en": "Power management and RF"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -5777,11 +5688,15 @@
       "MCHP"
     ],
     "name": "Microchip Technology",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Customers and distributors / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000016/mchp-20260331.htm"
+      },
+      {
+        "label": "NXP FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
       }
     ],
     "ja": {
@@ -5789,7 +5704,7 @@
       "revenue": "自動車、産業、航空宇宙、通信、民生など約10万1千社へ製品を販売。2026年度は売上の約47％が代理店経由。",
       "strength": "幅広いマイコンと周辺半導体、互換性のあるソフト・開発ツール、長期供給をまとめ、顧客の設計変更を減らせる。",
       "risks": "半導体在庫の調整と価格下落に弱い。代理店への依存、工場稼働率、買収で増えた製品群と負債の管理も負担になる。",
-      "competition": "マイコン、アナログ、FPGA、接続半導体で大手総合メーカーや各分野の専業会社と競う。",
+      "competition": "組み込み制御用の半導体ではNXPが競合例。NXPの年次報告書は同社を主要競合の一社として挙げる一方、競争は製品群の一部で生じると説明している。採用用途や性能、供給、価格などで比較する。",
       "relationships": "多様な機器メーカーへ組み込み制御製品を供給し、Arrow Electronicsが2026年度売上の12％を占めた。"
     },
     "en": {
@@ -5797,48 +5712,22 @@
       "revenue": "Sells across automotive, industrial, aerospace, communications and consumer markets to about 101,000 customers; distributors generated about 47% of fiscal 2026 sales.",
       "strength": "Combines a broad MCU and companion-chip portfolio with compatible software, tools and long-term supply to reduce customer redesigns.",
       "risks": "Inventory corrections and price erosion affect demand; distributor reliance, fab utilization and managing an acquisition-built portfolio and debt add risk.",
-      "competition": "Competes in microcontrollers, analog, FPGA and connectivity with broad semiconductor companies and focused specialists.",
+      "competition": "NXP names this company among its semiconductor rivals and states that competition applies to some, rather than all, product lines. The relevant comparison is embedded-control semiconductors, with selection depending on application, performance, availability and cost.",
       "relationships": "Supplies embedded-control products to diverse equipment makers; Arrow Electronics represented 12% of fiscal 2026 sales."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Microcontroller suppliers",
-          "nameJa": "マイコンメーカー",
+          "kind": "company",
+          "name": "NXP Semiconductors",
+          "ticker": "NXPI",
           "role": "competitor",
           "label": {
-            "ja": "組み込み制御で競合",
-            "en": "Embedded control"
+            "ja": "組み込み制御用の半導体の一部で競合（NXPの開示）",
+            "en": "Embedded-control semiconductors; selected lines disclosed by NXP"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Analog and mixed-signal suppliers",
-          "nameJa": "アナログ・混載半導体メーカー",
-          "role": "competitor",
-          "label": {
-            "ja": "周辺アナログ製品で競合",
-            "en": "Companion analog products"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "FPGA and connectivity vendors",
-          "nameJa": "FPGA・接続半導体メーカー",
-          "role": "competitor",
-          "label": {
-            "ja": "FPGA・通信製品で競合",
-            "en": "FPGA and connectivity"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
@@ -6800,11 +6689,15 @@
       "SNPS"
     ],
     "name": "Synopsys",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · EDA and Ansys simulation / Design IP / Licensing / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm"
+      },
+      {
+        "label": "Cadence FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm"
       }
     ],
     "ja": {
@@ -6812,7 +6705,7 @@
       "revenue": "期間ライセンスと保守、設計IPの利用料・一部ロイヤルティ、検証ハード、Ansysのサブスク・永久ライセンスから稼ぐ。",
       "strength": "チップ設計から熱・流体・構造解析までをつなぎ、AI設計、自社IP、試作・検証装置を一体で提供できる。",
       "risks": "Ansys統合の負担、中国向け輸出規制、大口顧客の設計開始や更新時期、主要ファウンドリー需要の弱さが業績に影響する。",
-      "competition": "EDA・物理解析・設計IPで他社製品や顧客の自社ツールと競い、技術力、相互運用性、価格、支援体制が選定を左右する。",
+      "competition": "半導体・電子システムの設計ソフトではCadenceが競合例。Cadenceの年次報告書はSynopsysと傘下のAnsysを主要競合として明記している。EDAや関連する解析・設計ツールを比較するもので、個々の製品で機能や用途は異なる。",
       "relationships": "半導体・電子機器会社へ設計ツールとIPを提供し、航空宇宙、自動車、エネルギーなどへAnsysの解析環境も販売する。"
     },
     "en": {
@@ -6820,61 +6713,22 @@
       "revenue": "Earns from time-based licenses and support, design-IP fees and some royalties, verification hardware, and Ansys subscriptions and perpetual licenses.",
       "strength": "Connects chip design with thermal, fluid and structural simulation and combines AI design, proprietary IP and prototyping and verification hardware.",
       "risks": "Ansys integration, China export controls, large customer design and renewal timing and weaker demand from a major foundry can affect results.",
-      "competition": "Competes in EDA, physics simulation and design IP with other vendors and customers' internal tools on technology, interoperability, price and support.",
+      "competition": "Cadence names Synopsys and its acquired Ansys business among key competitors in semiconductor and electronic-system design software. The overlap is in EDA and related design and analysis tools; individual products differ in function and use.",
       "relationships": "Supplies design tools and IP to semiconductor and electronics companies and Ansys simulation to aerospace, automotive, energy and other industries."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "EDA software vendors",
-          "nameJa": "EDAソフト会社",
+          "kind": "company",
+          "name": "Cadence Design Systems",
+          "ticker": "CDNS",
           "role": "competitor",
           "label": {
-            "ja": "半導体設計・検証で競合",
-            "en": "Chip design and verification"
+            "ja": "EDA・関連設計解析で競合（Cadenceの開示）",
+            "en": "EDA and related design analysis; disclosed by Cadence"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Engineering simulation vendors",
-          "nameJa": "技術シミュレーション会社",
-          "role": "competitor",
-          "label": {
-            "ja": "物理解析ソフトで競合",
-            "en": "Physics simulation"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Semiconductor IP providers",
-          "nameJa": "半導体IP会社",
-          "role": "competitor",
-          "label": {
-            "ja": "回路IPで競合",
-            "en": "Reusable circuit IP"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Customers' internal design tools",
-          "nameJa": "顧客の自社設計ツール",
-          "role": "competitor",
-          "label": {
-            "ja": "設計ツールの内製化と競合",
-            "en": "Customer-built design tools"
-          },
-          "sourceIndexes": [
-            0
+            1
           ]
         }
       ],
