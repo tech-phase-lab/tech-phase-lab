@@ -12232,55 +12232,93 @@
       "SWKS"
     ],
     "name": "Skyworks Solutions",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Manufacturing / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm"
+      },
+      {
+        "label": "Broadcom · Mobile and Wi-Fi RF front-end modules",
+        "url": "https://www.broadcom.com/products/wireless/rf-front-end-modules"
+      },
+      {
+        "label": "Skyworks · October 5, 2026 completed Qorvo combination, Form 8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/4127/000110465926113538/tm2626934d1_8k.htm"
+      },
+      {
+        "label": "Qualcomm · RF front-end transceivers and filters",
+        "url": "https://www.qualcomm.com/modems/rf-solutions/rf-rffe"
+      },
+      {
+        "label": "Murata · RF front-end modules",
+        "url": "https://www.murata.com/en-global/products/frontendmodule?sc_lang=en"
+      },
+      {
+        "label": "Skyworks · Completed Qorvo combination on October 5, 2026",
+        "url": "https://www.qorvo.com/about/news-events/news-releases/2026/skyworks-completes-combination-with-qorvo"
       }
     ],
     "ja": {
-      "business": "スマートフォンなどが電波を送受信するためのRF半導体と、車載・産業・通信機器向けのアナログ半導体を作る会社。",
+      "business": "電波の送受信に使うRF・アナログ半導体を作る会社。2026年10月5日にQorvoとの統合を完了し、車載・産業・防衛などへ製品範囲を広げた。",
       "revenue": "端末メーカーや通信・車載・産業機器会社へ、RFフロントエンド、増幅器、フィルター、接続用チップを販売して稼ぐ。",
       "strength": "複数の無線部品を小型モジュールへまとめる設計力と製造技術、端末メーカーでの長い認定実績が強み。",
-      "risks": "スマートフォンと大口顧客への依存が大きく、機種変更や販売不振が直撃する。価格競争、在庫調整、中国需要、製造歩留まりも影響する。",
-      "competition": "スマートフォンのRFフロントエンドと無線接続部品で、総合半導体会社やRF専業会社、顧客の内製部門と競う。",
+      "risks": "スマートフォンと大口顧客への依存が大きく、機種変更や販売不振が直撃する。価格競争、在庫調整、中国需要、製造歩留まりも影響する。Qorvo事業の統合負担や買収資金の負債も確認が必要。",
+      "competition": "携帯・Wi-Fi向けのRFモジュールやフィルターではBroadcom、Qualcomm、村田製作所が競合例。統合前の実名開示と公式製品を照合した。Qorvoとは2026年10月5日に統合を完了しており、現在の独立した競合としては扱わない。",
       "relationships": "スマートフォン、通信機器、自動車、産業機器メーカーへ無線・アナログ部品を供給し、外部の製造・組立会社も利用する。"
     },
     "en": {
-      "business": "Makes radio-frequency chips used to transmit and receive wireless signals in smartphones, plus analog products for automotive, industrial and communications equipment.",
+      "business": "Makes RF and analog semiconductors for wireless signals. Completed the Qorvo combination on October 5, 2026, broadening its automotive, industrial and defense portfolio.",
       "revenue": "Sells RF front-end modules, amplifiers, filters and connectivity chips to device, communications, automotive and industrial manufacturers.",
       "strength": "Combines multiple radio functions in compact modules, backed by manufacturing know-how and long qualification histories with device makers.",
-      "risks": "Heavy smartphone and major-customer exposure makes model changes and weak sell-through important; pricing, inventory corrections, China demand and manufacturing yields also matter.",
-      "competition": "Competes in smartphone RF front ends and wireless connectivity with diversified chipmakers, RF specialists and customers' internal designs.",
+      "risks": "Heavy smartphone and major-customer exposure makes model changes and weak sell-through important; pricing, inventory corrections, China demand and manufacturing yields also matter. Qorvo integration and acquisition financing add execution and debt risks.",
+      "competition": "Broadcom, Qualcomm and Murata are examples in mobile/Wi-Fi RF modules and filters, checked against pre-combination named disclosures and official products. The Qorvo combination closed on October 5, 2026; Qorvo is no longer presented as an independent rival.",
       "relationships": "Supplies wireless and analog components to smartphone, network, automotive and industrial manufacturers and also uses external manufacturing and assembly providers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "RF front-end chipmakers",
-          "nameJa": "RFフロントエンド半導体会社",
+          "kind": "company",
+          "name": "Broadcom",
           "role": "competitor",
           "label": {
-            "ja": "無線モジュールで競合",
-            "en": "Wireless front-end modules"
+            "ja": "携帯・Wi-FiのRFモジュールで競合。統合前開示と公式製品",
+            "en": "Mobile/Wi-Fi RF modules; pre-combination disclosure and official products"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            2
+          ],
+          "ticker": "AVGO"
         },
         {
-          "kind": "industry",
-          "name": "Connectivity chip vendors",
-          "nameJa": "接続用半導体メーカー",
+          "kind": "company",
+          "name": "Qualcomm",
           "role": "competitor",
           "label": {
-            "ja": "Wi-Fi・接続製品で競合",
-            "en": "Wi-Fi and connectivity"
+            "ja": "RF送受信・フィルターで競合。統合前開示と公式製品",
+            "en": "RF transceivers/filters; pre-combination disclosure and official products"
           },
           "sourceIndexes": [
-            0
+            0,
+            3,
+            2
+          ],
+          "ticker": "QCOM"
+        },
+        {
+          "kind": "company",
+          "name": "Murata Manufacturing",
+          "role": "competitor",
+          "label": {
+            "ja": "RFフィルター一体モジュールで競合。統合前開示と公式製品",
+            "en": "RF filter-integrated modules; pre-combination disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            2
           ]
         }
       ],
@@ -12320,55 +12358,93 @@
       "QRVO"
     ],
     "name": "Qorvo",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm"
+      },
+      {
+        "label": "Broadcom · Mobile and Wi-Fi RF front-end modules",
+        "url": "https://www.broadcom.com/products/wireless/rf-front-end-modules"
+      },
+      {
+        "label": "Skyworks · October 5, 2026 completed Qorvo combination, Form 8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/4127/000110465926113538/tm2626934d1_8k.htm"
+      },
+      {
+        "label": "Qualcomm · RF front-end transceivers and filters",
+        "url": "https://www.qualcomm.com/modems/rf-solutions/rf-rffe"
+      },
+      {
+        "label": "Murata · RF front-end modules",
+        "url": "https://www.murata.com/en-global/products/frontendmodule?sc_lang=en"
+      },
+      {
+        "label": "Qorvo · October 5, 2026 Nasdaq Form 25 delisting notification",
+        "url": "https://ir.qorvo.com/static-files/e8e91181-beb0-4bef-932b-99da846d07df"
       }
     ],
     "ja": {
-      "business": "スマートフォンの電波を扱うRF部品に加え、防衛・航空宇宙、通信設備、電源管理向けの高性能半導体を作る会社。",
-      "revenue": "端末メーカーへのRFモジュール・フィルターと、防衛・基地局・産業機器向けのGaN、増幅器、電源製品の販売で稼ぐ。",
-      "strength": "BAWフィルター、GaN、高周波設計と自社製造を組み合わせ、民生端末から防衛まで厳しい無線性能に対応できる。",
-      "risks": "スマートフォンと大口顧客への集中、機種サイクル、在庫調整、中国規制、自社工場の稼働率が業績を動かす。",
-      "competition": "スマートフォンRF、接続、電源管理、防衛向け高周波半導体で、RF専業会社と大手総合半導体会社に競う。",
-      "relationships": "スマートフォンメーカー、通信設備会社、防衛・航空宇宙企業へRF・電源半導体を供給し、外部の製造・組立先も利用する。"
+      "business": "旧Qorvoは携帯・防衛・通信設備向けのRF・電源半導体会社。2026年10月5日にSkyworksへ統合済みで、QRVOは旧銘柄の情報として掲載している。",
+      "revenue": "統合前の事業では、端末メーカーへのRFモジュール・フィルターと、防衛・基地局・産業機器向けのGaN、増幅器、電源製品の販売で稼ぐ。",
+      "strength": "統合前の事業では、BAWフィルター、GaN、高周波設計と自社製造を組み合わせ、民生端末から防衛まで厳しい無線性能に対応できる。",
+      "risks": "独立会社時代の売上・顧客集中や工場稼働率の説明は統合前の情報。現在はSkyworks事業として統合の影響を確認する必要があり、旧QRVOを現行の独立上場銘柄と混同しない。",
+      "competition": "旧Qorvoの携帯・接続用RF事業ではBroadcom、Qualcomm、村田製作所が競合例。統合前の開示と公式製品で範囲を確認した。2026年10月5日以降はSkyworksへ統合済みで、Skyworksを別の競合として二重に並べない。",
+      "relationships": "統合前の事業では、スマートフォンメーカー、通信設備会社、防衛・航空宇宙企業へRF・電源半導体を供給し、外部の製造・組立先も利用する。"
     },
     "en": {
-      "business": "Makes RF components for smartphones and high-performance semiconductors for defense and aerospace, communications infrastructure and power management.",
-      "revenue": "Earns from handset RF modules and filters and from GaN, amplifier and power products sold into defense, base-station and industrial markets.",
-      "strength": "Combines BAW filters, GaN, high-frequency design and internal manufacturing to meet demanding radio requirements from consumer devices through defense systems.",
-      "risks": "Smartphone and major-customer concentration, model cycles, inventory corrections, China restrictions and internal-fab utilization can move results.",
-      "competition": "Competes with RF specialists and diversified chipmakers across smartphone RF, connectivity, power management and defense-oriented high-frequency products.",
-      "relationships": "Supplies RF and power semiconductors to smartphone, communications-equipment and defense and aerospace customers and also uses external manufacturing and assembly providers."
+      "business": "Former RF and power-chip company for mobile, defense and communications. Combined into Skyworks on October 5, 2026; this is the historical QRVO record.",
+      "revenue": "Before the combination, sold RF modules/filters and defense, infrastructure and power semiconductors.",
+      "strength": "Legacy strengths included BAW filters, GaN, RF design and internal manufacturing.",
+      "risks": "Standalone revenue, concentration and fab-utilization information predates the combination. Current business exposure belongs within Skyworks; the historical QRVO record is not a current independent listing.",
+      "competition": "Broadcom, Qualcomm and Murata are examples for the former Qorvo mobile/connectivity RF business, supported by pre-combination disclosures and official products. Qorvo joined Skyworks on October 5, 2026; Skyworks is not duplicated as an independent rival.",
+      "relationships": "Before the combination, supplied smartphone, communications, defense and aerospace manufacturers and used external production providers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Mobile RF suppliers",
-          "nameJa": "モバイルRF半導体会社",
+          "kind": "company",
+          "name": "Broadcom",
           "role": "competitor",
           "label": {
-            "ja": "端末向けRFで競合",
-            "en": "Mobile RF products"
+            "ja": "携帯・Wi-FiのRFモジュールで競合。統合前開示と公式製品",
+            "en": "Mobile/Wi-Fi RF modules; pre-combination disclosure and official products"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            2
+          ],
+          "ticker": "AVGO"
         },
         {
-          "kind": "industry",
-          "name": "Defense RF chipmakers",
-          "nameJa": "防衛向けRF半導体会社",
+          "kind": "company",
+          "name": "Qualcomm",
           "role": "competitor",
           "label": {
-            "ja": "高周波・GaN製品で競合",
-            "en": "High-frequency and GaN"
+            "ja": "RF送受信・フィルターで競合。統合前開示と公式製品",
+            "en": "RF transceivers/filters; pre-combination disclosure and official products"
           },
           "sourceIndexes": [
-            0
+            0,
+            3,
+            2
+          ],
+          "ticker": "QCOM"
+        },
+        {
+          "kind": "company",
+          "name": "Murata Manufacturing",
+          "role": "competitor",
+          "label": {
+            "ja": "RFフィルター一体モジュールで競合。統合前開示と公式製品",
+            "en": "RF filter-integrated modules; pre-combination disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            2
           ]
         }
       ],
@@ -12379,11 +12455,12 @@
           "nameJa": "スマートフォンメーカー",
           "role": "customer",
           "label": {
-            "ja": "RFモジュール・フィルターを供給",
-            "en": "RF modules and filters"
+            "ja": "統合前の旧Qorvo：RFモジュール・フィルターを供給",
+            "en": "Former Qorvo before combination: RF modules and filters"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
           ]
         },
         {
@@ -12392,11 +12469,12 @@
           "nameJa": "防衛・航空宇宙企業",
           "role": "customer",
           "label": {
-            "ja": "GaN・高周波部品を供給",
-            "en": "GaN and high-frequency products"
+            "ja": "統合前の旧Qorvo：GaN・高周波部品を供給",
+            "en": "Former Qorvo before combination: GaN and high-frequency products"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
           ]
         }
       ]
@@ -13884,42 +13962,91 @@
       "SLAB"
     ],
     "name": "Silicon Laboratories",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Wireless products / Markets / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm"
+      },
+      {
+        "label": "Nordic Semiconductor · nRF Bluetooth LE SoCs",
+        "url": "https://www.nordicsemi.com/Products/Wireless/Bluetooth-Low-Energy"
+      },
+      {
+        "label": "Texas Instruments · SimpleLink Wi-Fi and Bluetooth products",
+        "url": "https://www.ti.com/product-category/wireless-connectivity/wi-fi/overview.html"
+      },
+      {
+        "label": "Texas Instruments · Agreement to acquire Silicon Labs, expected first half 2027",
+        "url": "https://www.ti.com/about-ti/newsroom/news-releases/2026/2026-02-04-texas-instruments-to-acquire-silicon-labs.html"
+      },
+      {
+        "label": "Silicon Labs · August 11, 2026 quarterly results and pending transaction",
+        "url": "https://investor.silabs.com/news-releases/news-release-details/silicon-labs-reports-second-quarter-2026-results"
+      },
+      {
+        "label": "Infineon · AIROC Wi-Fi and Bluetooth IoT products",
+        "url": "https://www.infineon.com/products/wireless-connectivity/airoc-wi-fi-plus-bluetooth-combos/wi-fi-7"
       }
     ],
     "ja": {
       "business": "IoT機器を無線でつなぐBluetooth、Wi-Fi、Zigbee、Threadなど対応のSoCとマイコン、ソフトを作るファブレス半導体会社。",
       "revenue": "スマートホーム、産業、医療、商業機器メーカーへ無線SoC、モジュール、開発ソフトを販売して稼ぐ。",
       "strength": "無線、マイコン、セキュリティ、開発ツールを一式で提供し、複数の通信規格やMatterに対応する製品開発を簡単にする。",
-      "risks": "IoT需要と流通在庫、外部ファウンドリー・組立会社、通信規格の変化、価格競争、中国市場、製品認定に左右される。",
-      "competition": "低消費電力無線SoC、マイコン、Wi-Fi・Bluetooth接続製品で大手半導体会社や専門ベンダーと競う。",
+      "risks": "IoT需要と流通在庫、外部ファウンドリー・組立会社、通信規格の変化、価格競争、中国市場、製品認定に左右される。TIによる買収は2027年前半の完了予定で、承認や手続きによって遅れる可能性がある。",
+      "competition": "Bluetoothなどの低消費電力無線SoCではNordic Semiconductor、Wi-Fi・無線マイコンではTexas InstrumentsとInfineonが競合例。同社の実名開示と公式製品で照合した。TIによる買収は契約済みで、完了予定と完了済みを区別する。",
       "relationships": "IoT機器メーカーへ半導体とソフトを供給し、外部ファウンドリーと組立・検査会社へ製造を委託する。"
     },
     "en": {
       "business": "A fabless chip company making wireless SoCs, MCUs and software for IoT devices using Bluetooth, Wi-Fi, Zigbee, Thread and related protocols.",
       "revenue": "Sells wireless SoCs, modules and development software to smart-home, industrial, medical and commercial-device makers.",
       "strength": "Combines radios, MCUs, security and development tools to simplify products supporting multiple protocols and Matter.",
-      "risks": "IoT demand and channel inventory, outsourced foundry and assembly partners, changing protocols, pricing, China exposure and customer qualifications affect results.",
-      "competition": "Competes with large semiconductor companies and specialists in low-power wireless SoCs, MCUs and Wi-Fi and Bluetooth connectivity.",
+      "risks": "IoT demand and channel inventory, outsourced foundry and assembly partners, changing protocols, pricing, China exposure and customer qualifications affect results. The agreed TI acquisition is expected to close in first-half 2027, subject to approvals and other conditions.",
+      "competition": "Nordic Semiconductor is an example in low-power Bluetooth SoCs; Texas Instruments and Infineon overlap in Wi-Fi/wireless MCUs. Silicon Labs names them, and official products support the scope. TI’s acquisition is under agreement, with completion expected in first-half 2027 rather than treated as already closed.",
       "relationships": "Supplies chips and software to IoT device makers and outsources wafer fabrication, assembly and test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Wireless MCU and connectivity vendors",
-          "nameJa": "無線マイコン・接続半導体会社",
+          "kind": "company",
+          "name": "Nordic Semiconductor",
           "role": "competitor",
           "label": {
-            "ja": "IoT無線SoCで競合",
-            "en": "Wireless IoT SoCs"
+            "ja": "Bluetooth低消費電力SoCで競合。自社開示と公式製品",
+            "en": "Bluetooth low-energy SoCs; own disclosure and official products"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "role": "competitor",
+          "label": {
+            "ja": "Wi-Fi・無線MCUで競合。自社開示と公式製品、買収契約済み",
+            "en": "Wi-Fi/wireless MCUs; own disclosure/products, acquisition agreed"
+          },
+          "sourceIndexes": [
+            0,
+            2,
+            3,
+            4
+          ],
+          "ticker": "TXN"
+        },
+        {
+          "kind": "company",
+          "name": "Infineon Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "Wi-Fi・Bluetooth製品で競合。自社開示と公式製品",
+            "en": "Wi-Fi/Bluetooth products; own disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            5
           ]
         }
       ],
@@ -14071,11 +14198,27 @@
       "UMC"
     ],
     "name": "United Microelectronics",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Foundry services / Technologies / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm"
+      },
+      {
+        "label": "UMC FY2025 annual report · specialty foundry processes",
+        "url": "https://www.umc.com/upload/media/08_Investors/Annual_Reports/annual_report_english_pdf/2025/2025AR_ENG_all.pdf"
+      },
+      {
+        "label": "GlobalFoundries FY2025 Form 20-F · UMC named in foundry competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm"
+      },
+      {
+        "label": "Tower FY2025 Form 20-F · UMC specialty-process competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm"
+      },
+      {
+        "label": "TSMC · 28nm foundry process",
+        "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_28nm"
       }
     ],
     "ja": {
@@ -14083,7 +14226,7 @@
       "revenue": "通信、消費者機器、コンピューター、車載・産業向けの顧客からウエハー製造を受託して稼ぐ。",
       "strength": "量産実績の長い成熟工程に加え、組み込み不揮発メモリー、RF、電源管理など用途別の特殊工程を持つ。",
       "risks": "工場稼働率、半導体需要、大口顧客、巨額設備投資、台湾海峡の地政学、輸出規制、電力・水・材料供給に左右される。",
-      "competition": "成熟・特殊工程の受託生産で、世界と中国・台湾のファウンドリー、IDMの外販部門と競う。",
+      "competition": "成熟・特殊工程の半導体受託生産ではGlobalFoundries、Tower Semiconductor、TSMCが競合例。前2社は相手側の実名開示とUMCの工程範囲を照合し、TSMCは両社の公表工程を比べた編集上の比較。最先端ロジックの全工程が重なるという意味ではない。",
       "relationships": "ファブレス企業とIDMの設計を製造し、半導体装置・材料会社から工場設備とウエハー材料を調達する。"
     },
     "en": {
@@ -14091,23 +14234,52 @@
       "revenue": "Earns from wafer fabrication for communications, consumer, computing, automotive and industrial customers.",
       "strength": "Pairs long-proven mature-node production with specialty processes for embedded nonvolatile memory, RF, power management and other applications.",
       "risks": "Fab utilization, semiconductor demand, large customers, heavy capital spending, Taiwan Strait geopolitics, export controls and power, water and material supply affect results.",
-      "competition": "Competes in mature and specialty foundry services with global, Chinese and Taiwanese foundries and external operations of IDMs.",
+      "competition": "Examples in mature/specialty wafer manufacturing include GlobalFoundries and Tower, which name UMC in their own filings, and TSMC through an editorial comparison of disclosed process portfolios. UMC’s official process scope is checked separately; leading-edge logic nodes are not assumed equivalent.",
       "relationships": "Manufactures designs for fabless companies and IDMs and buys fab equipment and wafer materials from semiconductor suppliers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Mature-node semiconductor foundries",
-          "nameJa": "成熟工程ファウンドリー",
+          "kind": "company",
+          "name": "GlobalFoundries",
           "role": "competitor",
           "label": {
-            "ja": "成熟・特殊工程で競合",
-            "en": "Mature and specialty processes"
+            "ja": "成熟・特殊工程で競合。GFS側の開示とUMCの公表工程",
+            "en": "Mature/specialty foundry; GFS-side disclosure and UMC processes"
           },
           "sourceIndexes": [
-            0
-          ]
+            1,
+            2
+          ],
+          "ticker": "GFS"
+        },
+        {
+          "kind": "company",
+          "name": "Tower Semiconductor",
+          "role": "competitor",
+          "label": {
+            "ja": "特殊工程で競合。Tower側の開示とUMCの公表工程",
+            "en": "Specialty foundry; Tower-side disclosure and UMC processes"
+          },
+          "sourceIndexes": [
+            1,
+            3
+          ],
+          "ticker": "TSEM"
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "competitor",
+          "label": {
+            "ja": "重なる成熟・特殊工程で競合。公表工程の編集比較",
+            "en": "Overlapping mature/specialty processes; editorial comparison"
+          },
+          "sourceIndexes": [
+            1,
+            4
+          ],
+          "ticker": "TSM"
         }
       ],
       "relationships": [
@@ -14146,11 +14318,31 @@
       "STM"
     ],
     "name": "STMicroelectronics",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Product groups / Markets / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm"
+      },
+      {
+        "label": "STMicroelectronics FY2025 annual report · products and competition",
+        "url": "https://investors.st.com/static-files/e00ad51c-8706-4221-9cf4-bda97a157740"
+      },
+      {
+        "label": "NXP · S32 automotive processors and microcontrollers",
+        "url": "https://www.nxp.com/products/processors-and-microcontrollers/s32-automotive-processors%3AAUTOMOTIVE-MPUS"
+      },
+      {
+        "label": "Infineon · CoolSiC MOSFET products",
+        "url": "https://www.infineon.com/products/power/mosfet/silicon-carbide"
+      },
+      {
+        "label": "Navitas FY2025 Form 10-K · ST named in SiC/silicon competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm"
+      },
+      {
+        "label": "Analog Devices · MEMS inertial sensors",
+        "url": "https://www.analog.com/en/product-category/sensors.html"
       }
     ],
     "ja": {
@@ -14158,7 +14350,7 @@
       "revenue": "自動車、工場設備、電源、通信、個人向け電子機器メーカーへ半導体を販売して稼ぐ。",
       "strength": "マイコンからSiC電源半導体、MEMSセンサーまで幅広く持ち、設計と自社工場を組み合わせて長期の車載・産業案件に対応する。",
       "risks": "車載・産業需要と顧客在庫、工場稼働率、巨額設備投資、SiC需要、欧州・アジアの生産、輸出規制に左右される。",
-      "competition": "車載マイコン、アナログ、電源半導体、MEMSセンサーで世界の総合・専門半導体会社と競う。",
+      "competition": "車載マイコンではNXP、SiC電力半導体ではInfineonとNavitas、MEMS慣性センサーではAnalog Devicesが競合例。Navitasは相手側の実名開示、他は両社の公表製品を照合した編集上の比較。製品分野ごとに競争相手を分けて示す。",
       "relationships": "自動車・産業・電子機器メーカーへ半導体を供給し、外部の装置・材料会社と一部ファウンドリーを生産に利用する。"
     },
     "en": {
@@ -14166,23 +14358,65 @@
       "revenue": "Sells semiconductors to automotive, factory-equipment, power, communications and personal-electronics manufacturers.",
       "strength": "Spans MCUs, SiC power devices and MEMS sensors and combines design with internal fabs to support long automotive and industrial programs.",
       "risks": "Automotive and industrial demand and inventory, fab utilization, heavy capital spending, SiC demand, European and Asian manufacturing and export controls affect results.",
-      "competition": "Competes with global broad-line and specialist chip companies in automotive MCUs, analog, power semiconductors and MEMS sensors.",
+      "competition": "Examples include NXP in automotive MCUs, Infineon and Navitas in SiC power devices, and Analog Devices in MEMS inertial sensors. Navitas explicitly names ST; the other examples are editorial comparisons of official portfolios. These are separate product scopes, not whole-company equivalence.",
       "relationships": "Supplies chips to automotive, industrial and electronics manufacturers and uses equipment, material and selected external-foundry partners in production."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Automotive and industrial semiconductor vendors",
-          "nameJa": "車載・産業半導体会社",
+          "kind": "company",
+          "name": "NXP Semiconductors",
           "role": "competitor",
           "label": {
-            "ja": "マイコン・電源・センサーで競合",
-            "en": "MCUs, power and sensors"
+            "ja": "車載マイコンで競合。公表製品の編集比較",
+            "en": "Automotive MCUs; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            1,
+            2
+          ],
+          "ticker": "NXPI"
+        },
+        {
+          "kind": "company",
+          "name": "Infineon Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "SiC電力半導体で競合。公表製品の編集比較",
+            "en": "SiC power devices; editorial product comparison"
+          },
+          "sourceIndexes": [
+            1,
+            3
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Navitas Semiconductor",
+          "role": "competitor",
+          "label": {
+            "ja": "SiC・シリコン電力半導体で競合。Navitas側の開示",
+            "en": "SiC/silicon power devices; Navitas-side disclosure"
+          },
+          "sourceIndexes": [
+            1,
+            4
+          ],
+          "ticker": "NVTS"
+        },
+        {
+          "kind": "company",
+          "name": "Analog Devices",
+          "role": "competitor",
+          "label": {
+            "ja": "MEMS慣性センサーで競合。公表製品の編集比較",
+            "en": "MEMS inertial sensors; editorial product comparison"
+          },
+          "sourceIndexes": [
+            1,
+            5
+          ],
+          "ticker": "ADI"
         }
       ],
       "relationships": [
@@ -14221,11 +14455,15 @@
       "HIMX"
     ],
     "name": "Himax Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Display drivers / Non-driver products / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm"
+      },
+      {
+        "label": "Himax FY2025 annual report · display-driver and in-cell TDDI competitors",
+        "url": "https://www.himax.com.tw/wp-content/uploads/2026/06/Himax_2025_Annual_Report.pdf"
       }
     ],
     "ja": {
@@ -14233,7 +14471,7 @@
       "revenue": "テレビ、スマートフォン、車載ディスプレイ、モニター、AR機器などのメーカーへ半導体を販売して稼ぐ。",
       "strength": "表示駆動とタッチ制御を一体化した製品、車載向けの長期供給、小型カメラ・光学技術を組み合わせられる。",
       "risks": "ディスプレイ需要と価格、大口顧客、中国市場、外部ファウンドリーと組立会社、在庫調整、製品移行に左右される。",
-      "competition": "大型・小型・車載のディスプレイドライバー、タッチ制御、画像・光学半導体でアジアの専門メーカーと競う。",
+      "competition": "表示駆動ICと画面内タッチ統合のTDDIではNovatek、FocalTech、Ilitekが競合例。Himax自身が実名を挙げている。テレビ、携帯、車載では重なる製品が異なり、画像センサーやAR用の小型表示まで同じ競争相手だと一括りにしない。",
       "relationships": "パネル・電子機器メーカーへ表示・画像用半導体を供給し、ウエハー製造と組立・検査を外部会社へ委託する。"
     },
     "en": {
@@ -14241,22 +14479,45 @@
       "revenue": "Sells chips for televisions, smartphones, automotive displays, monitors, AR devices and other electronics.",
       "strength": "Combines display driving and touch control, supports long automotive programs and extends into miniature cameras and optics.",
       "risks": "Display demand and pricing, large customers, China exposure, external foundries and assembly providers, inventory corrections and product transitions affect results.",
-      "competition": "Competes with Asian specialists in large, small and automotive display drivers, touch control and imaging and optical semiconductors.",
+      "competition": "Himax explicitly names Novatek, FocalTech and Ilitek in display-driver and in-cell TDDI competition. Overlap differs across TV, mobile and automotive products. These examples do not assume identical competitors for image sensors or AR microdisplays.",
       "relationships": "Supplies display and imaging chips to panel and device makers and outsources wafer fabrication, assembly and test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Display driver semiconductor vendors",
-          "nameJa": "ディスプレイドライバー半導体会社",
+          "kind": "company",
+          "name": "Novatek Microelectronics",
           "role": "competitor",
           "label": {
-            "ja": "表示駆動・タッチ制御で競合",
-            "en": "Display driving and touch control"
+            "ja": "表示駆動IC・画面内TDDIで競合。Himaxの開示",
+            "en": "Display drivers and in-cell TDDI; Himax disclosure"
           },
           "sourceIndexes": [
-            0
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "FocalTech Systems",
+          "role": "competitor",
+          "label": {
+            "ja": "表示駆動IC・画面内TDDIで競合。Himaxの開示",
+            "en": "Display drivers and in-cell TDDI; Himax disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Ilitek",
+          "role": "competitor",
+          "label": {
+            "ja": "表示駆動IC・画面内TDDIで競合。Himaxの開示",
+            "en": "Display drivers and in-cell TDDI; Himax disclosure"
+          },
+          "sourceIndexes": [
+            1
           ]
         }
       ],
@@ -14296,11 +14557,19 @@
       "IMOS"
     ],
     "name": "ChipMOS Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Assembly and test / Products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm"
+      },
+      {
+        "label": "ChipMOS FY2025 Form 20-F · named assembly and testing competitors",
+        "url": "https://chipmostechnologiesinc.gcs-web.com/static-files/bd424803-d522-455d-9774-c5f078bbf424"
+      },
+      {
+        "label": "Chipbond · Display-driver IC bump, test and assembly services",
+        "url": "https://www.chipbond.com.tw/en"
       }
     ],
     "ja": {
@@ -14308,7 +14577,7 @@
       "revenue": "半導体会社からウエハーテスト、最終テスト、バンピング、組立を請け負い、処理量に応じて稼ぐ。",
       "strength": "メモリーとディスプレイドライバー向けに専門化し、ウエハー段階から完成品までのテストとパッケージ工程をまとめて提供できる。",
       "risks": "メモリー・画面需要、大口顧客、工場稼働率、設備投資、台湾の地政学、電力・水、装置調達、価格競争に左右される。",
-      "competition": "メモリーとディスプレイドライバーの組立・テストで他のOSAT、IDMや顧客の自社工程と競う。",
+      "competition": "半導体の組立・検査受託ではASEとAmkor、表示ドライバーICのバンピング・組立・検査ではChipbondが競合例。ChipMOS自身の実名開示を確認し、Chipbondの公式サービスでも表示向けの範囲を照合した。各社の高度なパッケージ製品がすべて同等という意味ではない。",
       "relationships": "半導体会社からウエハーとチップを受け取り、装置・材料会社の製品を使って組立・検査し、完成品を顧客へ返す。"
     },
     "en": {
@@ -14316,22 +14585,48 @@
       "revenue": "Earns by performing wafer sort, final test, bumping and assembly for semiconductor companies, generally based on processing volume.",
       "strength": "Specializes in memory and display drivers and can combine wafer-level and finished-device testing with packaging.",
       "risks": "Memory and display demand, large customers, factory utilization, capital spending, Taiwan geopolitics, power and water, equipment procurement and pricing affect results.",
-      "competition": "Competes in memory and display-driver assembly and test with other OSATs and customers' or IDMs' internal operations.",
+      "competition": "ChipMOS names ASE, Amkor and Chipbond in outsourced assembly/test competition. Chipbond’s official services independently confirm display-driver bumping, assembly and testing. These scoped examples do not imply equivalent coverage of every advanced-package technology.",
       "relationships": "Receives wafers and chips from semiconductor companies, uses supplier equipment and materials for assembly and test, and returns completed devices."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Memory and display OSAT providers",
-          "nameJa": "メモリー・表示半導体OSAT",
+          "kind": "company",
+          "name": "ASE Technology",
           "role": "competitor",
           "label": {
-            "ja": "組立・テストで競合",
-            "en": "Assembly and test"
+            "ja": "半導体の組立・検査受託で競合。ChipMOSの開示",
+            "en": "Outsourced semiconductor assembly/test; ChipMOS disclosure"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "ASX"
+        },
+        {
+          "kind": "company",
+          "name": "Amkor Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "半導体の組立・検査受託で競合。ChipMOSの開示",
+            "en": "Outsourced semiconductor assembly/test; ChipMOS disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "AMKR"
+        },
+        {
+          "kind": "company",
+          "name": "Chipbond Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "表示ドライバーの組立・検査で競合。自社開示と公式サービス",
+            "en": "Display-driver assembly/test; own disclosure and official services"
+          },
+          "sourceIndexes": [
+            1,
+            2
           ]
         }
       ],
@@ -14486,11 +14781,23 @@
       "SYNA"
     ],
     "name": "Synaptics",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Core IoT / Enterprise and automotive / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm"
+      },
+      {
+        "label": "Texas Instruments · SimpleLink Wi-Fi and Bluetooth products",
+        "url": "https://www.ti.com/product-category/wireless-connectivity/wi-fi/overview.html"
+      },
+      {
+        "label": "Infineon · AIROC Wi-Fi and Bluetooth IoT products",
+        "url": "https://www.infineon.com/products/wireless-connectivity/airoc-wi-fi-plus-bluetooth-combos/wi-fi-7"
+      },
+      {
+        "label": "Silicon Labs · Wi-Fi and Bluetooth IoT SoCs",
+        "url": "https://www.silabs.com/wireless/wi-fi"
       }
     ],
     "ja": {
@@ -14498,7 +14805,7 @@
       "revenue": "家庭・産業IoT、企業向け機器、自動車、PC周辺機器メーカーへ半導体と関連ソフトを販売して稼ぐ。",
       "strength": "演算、無線接続、音声・映像、タッチを一つのIoT基盤へまとめ、機器メーカーの設計を簡単にできる。",
       "risks": "IoT・PC需要、大口顧客、販売会社の在庫、外部ファウンドリー、製品移行、価格競争、買収統合に左右される。",
-      "competition": "IoTプロセッサー、無線接続、タッチ・表示、音声半導体で大手総合半導体会社や専門メーカーと競う。",
+      "competition": "Wi-Fi・BluetoothなどのIoT接続ではTexas InstrumentsのSimpleLink、InfineonのAIROC、Silicon LabsのSiWx製品が競合例。各社の公式製品を照合した編集上の比較。Broadcomからの技術取得・ライセンスと、接続製品での競争を混同しない。",
       "relationships": "IoT・企業・車載機器メーカーへ半導体とソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
     },
     "en": {
@@ -14506,23 +14813,51 @@
       "revenue": "Sells chips and related software to home and industrial IoT, enterprise-device, automotive and PC-peripheral manufacturers.",
       "strength": "Combines compute, wireless connectivity, audio and video and touch into IoT platforms that simplify device design.",
       "risks": "IoT and PC demand, large customers, distributor inventory, external foundries, product transitions, pricing and acquisition integration affect results.",
-      "competition": "Competes with broad-line and specialist chip suppliers in IoT processors, wireless connectivity, touch and display and audio semiconductors.",
+      "competition": "Examples in IoT Wi-Fi/Bluetooth connectivity include TI SimpleLink, Infineon AIROC and Silicon Labs SiWx products. These are editorial comparisons of official products. Synaptics’ Broadcom asset/licensing transaction is not itself evidence of product competition.",
       "relationships": "Supplies chips and software to IoT, enterprise and automotive device makers and outsources fabrication and assembly."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "IoT processor and connectivity vendors",
-          "nameJa": "IoTプロセッサー・接続半導体会社",
+          "kind": "company",
+          "name": "Texas Instruments",
           "role": "competitor",
           "label": {
-            "ja": "演算・無線・タッチで競合",
-            "en": "Compute, wireless and touch"
+            "ja": "SimpleLinkのWi-Fi・Bluetooth接続で競合。公表製品の編集比較",
+            "en": "SimpleLink Wi-Fi/Bluetooth connectivity; editorial comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "TXN"
+        },
+        {
+          "kind": "company",
+          "name": "Infineon Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "AIROCのWi-Fi・Bluetooth接続で競合。公表製品の編集比較",
+            "en": "AIROC Wi-Fi/Bluetooth connectivity; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Silicon Laboratories",
+          "role": "competitor",
+          "label": {
+            "ja": "SiWxのWi-Fi・Bluetooth接続で競合。公表製品の編集比較",
+            "en": "SiWx Wi-Fi/Bluetooth connectivity; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "SLAB"
         }
       ],
       "relationships": [
@@ -14674,43 +15009,70 @@
       "INDI"
     ],
     "name": "indie Semiconductor",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Automotive semiconductors / Products / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm"
+      },
+      {
+        "label": "indie FY2025 annual report · automotive competition and product reprioritization",
+        "url": "https://www.sec.gov/Archives/edgar/data/1841925/000119312526161651/ars_2025.pdf"
+      },
+      {
+        "label": "NXP · Automotive radar transceivers and processors",
+        "url": "https://www.nxp.com/applications/RADAR-SYSTEMS"
+      },
+      {
+        "label": "Monolithic Power Systems · Automotive power management and charging products",
+        "url": "https://www.monolithicpower.com/en/products/automotive.html"
       }
     ],
     "ja": {
-      "business": "先進運転支援、車内表示・照明、レーダー、LiDAR、接続機能向けの車載半導体とソフトを作るファブレス企業。",
+      "business": "ADASのレーダー・画像・LiDARや、車載接続・電源向けの半導体とソフトを作るファブレス企業。低付加価値の車内照明製品は縮小し、センサーとソフトへ重点を移している。",
       "revenue": "自動車部品会社と車載システムメーカーへ半導体を販売し、開発・設計サービスからも収入を得る。",
-      "strength": "センサー、通信、表示・照明、電源を車載品質でまとめ、複数年にわたる車種別の設計採用へ入り込む。",
+      "strength": "複数のセンサー、前処理、通信、ソフトを車載品質で組み合わせ、複数年の車種別設計採用に入り込む。",
       "risks": "量産前の設計採用が多く、売上化の遅延や中止、赤字と資金需要、買収統合、大口顧客、外部製造に左右される。",
-      "competition": "ADAS、レーダー・LiDAR、車内表示・照明、車載接続の半導体で大手と専門メーカーに競う。",
+      "competition": "車載レーダーの半導体ではNXP、車載電源・充電制御ではMonolithic Power Systemsが競合例。indie自身の実名開示と各社の公式製品で範囲を照合した。ADASセンサーと車内の電源機能を分け、縮小中の低付加価値照明へ競争範囲を広げない。",
       "relationships": "自動車部品会社と車載システムメーカーへ半導体・ソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
     },
     "en": {
-      "business": "A fabless company making automotive chips and software for driver assistance, cabin display and lighting, radar, lidar and connectivity.",
+      "business": "A fabless supplier of ADAS radar, vision and lidar technologies plus automotive connectivity and power chips/software. It is reducing lower-value interior lighting and prioritizing sensing and software-enabled platforms.",
       "revenue": "Sells semiconductors to automotive suppliers and system makers and also earns development and engineering revenue.",
-      "strength": "Combines sensing, communications, display and lighting and power functions at automotive quality and wins multi-year vehicle-platform designs.",
+      "strength": "Combines automotive-grade sensing, preprocessing, connectivity and software and wins multi-year vehicle-platform designs.",
       "risks": "Many wins precede production, so delays or cancellations, ongoing losses and funding needs, acquisition integration, large customers and outsourced manufacturing affect results.",
-      "competition": "Competes with large and specialist vendors in ADAS, radar and lidar, in-cabin display and lighting and automotive connectivity chips.",
+      "competition": "NXP is an example in automotive radar chips and Monolithic Power Systems in automotive power/charging controls. indie explicitly names both; official products support the scoped overlap. ADAS sensing and in-cabin power are distinct, while lower-value interior lighting is being reduced.",
       "relationships": "Supplies chips and software to automotive suppliers and system manufacturers and outsources fabrication, assembly and test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Automotive semiconductor vendors",
-          "nameJa": "車載半導体会社",
+          "kind": "company",
+          "name": "NXP Semiconductors",
           "role": "competitor",
           "label": {
-            "ja": "ADAS・車内機能で競合",
-            "en": "ADAS and in-cabin functions"
+            "ja": "車載レーダー半導体で競合。自社開示と公式製品",
+            "en": "Automotive radar semiconductors; own disclosure and official products"
           },
           "sourceIndexes": [
-            0
-          ]
+            1,
+            2
+          ],
+          "ticker": "NXPI"
+        },
+        {
+          "kind": "company",
+          "name": "Monolithic Power Systems",
+          "role": "competitor",
+          "label": {
+            "ja": "車載電源・充電制御で競合。自社開示と公式製品",
+            "en": "Automotive power/charging controls; own disclosure and official products"
+          },
+          "sourceIndexes": [
+            1,
+            3
+          ],
+          "ticker": "MPWR"
         }
       ],
       "relationships": [
@@ -15338,11 +15700,19 @@
       "AEHR"
     ],
     "name": "Aehr Test Systems",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm"
+      },
+      {
+        "label": "AEM · AMPS high-power parallel burn-in test system",
+        "url": "https://aem.com.sg/solutions/burn-in-solutions/"
+      },
+      {
+        "label": "Chroma · 58604 laser-diode burn-in and reliability test system",
+        "url": "https://www.chromaate.com/jp/product/laser_diode_burn_in_reliability_test_system_58604_45"
       }
     ],
     "ja": {
@@ -15350,7 +15720,7 @@
       "revenue": "FOX試験装置、WaferPak接触部品、Sonomaバーンイン装置と保守を半導体メーカーへ販売して稼ぐ。",
       "strength": "SiC・GaN電力半導体、光半導体、AI向け部品などを量産前に多数同時試験し、長期信頼性の弱い個体を選別できる。",
       "risks": "少数顧客への売上集中、長い製品認定、設備投資の波、需要予測、専用接触部品と単一調達部品に左右される。",
-      "competition": "ウエハーレベル試験、バーンイン装置、プローブカード・接触部品で半導体試験装置会社と競う。",
+      "competition": "高出力半導体のパッケージ段階のバーンインではAEMのAMPS、レーザーなど光半導体のバーンイン・寿命試験ではChromaの58604が競合例。各社の公式製品を照合した編集上の比較。ウエハー試験、パッケージ試験、プローブ部品はそれぞれ対象が異なる。",
       "relationships": "電力・光・メモリー・プロセッサー半導体メーカーへ試験装置と接触部品を供給し、精密部品を外部調達する。"
     },
     "en": {
@@ -15358,22 +15728,35 @@
       "revenue": "Sells FOX test systems, WaferPak contactors, Sonoma burn-in systems and service to semiconductor manufacturers.",
       "strength": "Tests many SiC and GaN power, photonics and AI-related devices in parallel before production to screen weak units for reliability.",
       "risks": "Customer concentration, long qualifications, capital-spending cycles, demand forecasts, custom contactors and sole-source parts affect results.",
-      "competition": "Competes in wafer-level test, burn-in systems and probe-card or contact technology with semiconductor-test suppliers.",
+      "competition": "Examples include AEM AMPS for high-power packaged-device burn-in and Chroma 58604 for laser/photonics burn-in and reliability testing. These are editorial comparisons of official products. Wafer-level tests, package-level tests and probe/contact components are distinct scopes.",
       "relationships": "Supplies systems and contactors to power, photonics, memory and processor makers and sources precision components externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Semiconductor burn-in and wafer-test vendors",
-          "nameJa": "半導体バーンイン・ウエハー試験会社",
+          "kind": "company",
+          "name": "AEM Holdings",
           "role": "competitor",
           "label": {
-            "ja": "試験装置と接触技術で競合",
-            "en": "Test systems and contact technology"
+            "ja": "高出力のパッケージ段階バーンインで競合。公表製品の編集比較",
+            "en": "High-power packaged-device burn-in; editorial comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Chroma ATE",
+          "role": "competitor",
+          "label": {
+            "ja": "光半導体のバーンイン・寿命試験で競合。公表製品の編集比較",
+            "en": "Photonics burn-in/reliability; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
         }
       ],

@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 87 issuers with published competitor corrections and 27 remaining
+records 97 issuers with published competitor corrections and 17 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -637,3 +637,11 @@ Reviewed GFS / TSEM / LSCC / NVTS / BAND / IOT / WK / AVPT / VRNS / ZETA (10 exi
 Altera is represented as a separate Silver Lake-majority-owned company with no invented public ticker, and Vonage is represented under Ericsson. Do not copy the obsolete Intel-subsidiary or VG identities. No new customer/supplier claims are inferred. Other five bilingual answers and all non-competition relationships are unchanged. Official primary URLs are stored in each record; reviewed on 2026-10-16.
 
 Examples are selective. Further FPGA substitutes, GaN specialists, emergency calling, equipment/site workflows, audit/sustainability, migration/governance, specialized data security and advertising/data-service scopes remain in the working chat’s follow-up queue. NVDA’s exact reviewed map and scrollbar spacing remain unchanged.
+
+## 2026-10-16 · RF identity and scoped semiconductor competition
+
+Reviewed SWKS / QRVO / UMC / STM / SLAB / SYNA / HIMX / IMOS / AEHR / INDI (10 existing records; no additions). Competition distinguishes explicit names in issuer disclosures, names in counterpart filings, and editorial comparisons of official products. Examples are selective, with product-scope follow-ups retained separately. All sources carry a 2026-10-16 review date.
+
+The October 5, 2026 Skyworks closing 8-K and Qorvo delisting notice establish the completed combination. The QRVO record is retained as historical information; its six answers and existing relationship labels are explicitly dated to the former standalone business. No automatic SWKS–QRVO rivalry, invented named customer, or new supplier relationship is added. Skyworks business/risk copy reflects the completed combination. Silicon Labs describes the Texas Instruments agreement as pending, with expected closing in the first half of 2027; it is not treated as completed. indie business/strength copy reflects the disclosed reduction of lower-value interior lighting.
+
+For the other six records, all five non-competition bilingual answers are unchanged. Non-competition relationship identities are retained for all ten; only QRVO labels/evidence are date-qualified. All 205 other issuer card/relation sets and NVDA’s exact reviewed map remain preserved. The 12px scrollbar spacing is unchanged.
