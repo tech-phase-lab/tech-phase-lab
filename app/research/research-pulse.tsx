@@ -10,7 +10,10 @@ import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
 const BASE_FONT_PX = 12;
 const MIN_FONT_PX = 10;
-function FittedHeadline({ headlines, full, lang, label }: { headlines: string[]; full: string; lang: Language; label: string }) {
+/** A long headline slides at a readable pace (owner, Oct 16: too fast to read); a one-way slide takes 70% of the cycle. */
+const SCROLL_PX_PER_SECOND = 35;
+const scrollSeconds = (shift: number) => Math.max(6, shift / SCROLL_PX_PER_SECOND / 0.7);
+function FittedHeadline({ headlines, full, lang, label, onSlide }: { headlines: string[]; full: string; lang: Language; label: string; onSlide?: (milliseconds: number) => void }) {
   const element = useRef<HTMLSpanElement>(null);
   const key = [full, ...headlines].join("\n");
   const [selected, setSelected] = useState({ key: "", text: "", clipped: false, size: BASE_FONT_PX, shift: 0 });
@@ -18,6 +21,10 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
   // headline (clipped by CSS if needed) rather than a bare category label.
   const initial = headlines.findLast(value => !isGenericPulseLabel(value)) ?? (full || headlines.at(-1) || "");
   const { text, clipped, size, shift } = selected.key === key ? selected : { text: initial, clipped: true, size: BASE_FONT_PX, shift: 0 };
+  useEffect(() => {
+    // The strip waits until the end of the headline has been on screen for a moment before it rotates.
+    onSlide?.(clipped && shift > 0 ? Math.round(scrollSeconds(shift) * 850 + 2000) : 0);
+  }, [clipped, shift, onSlide]);
   useEffect(() => {
     const target = element.current;
     const context = document.createElement("canvas").getContext("2d");
@@ -53,7 +60,7 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
   return <span ref={element} className={clipped ? `${styles.headline} ${styles.clipped}` : styles.headline} lang={lang}
     style={size < BASE_FONT_PX ? { fontSize: `${size}px` } : undefined}
     title={clipped ? text : undefined} aria-label={`${label}: ${text}`}>
-    {clipped && shift > 0 ? <span className={styles.scroll} style={{ "--shift": `-${shift}px` } as React.CSSProperties}>{text}</span> : text}
+    {clipped && shift > 0 ? <span className={styles.scroll} style={{ "--shift": `-${shift}px`, "--duration": `${scrollSeconds(shift).toFixed(1)}s` } as React.CSSProperties}>{text}</span> : text}
   </span>;
 }
 
@@ -63,6 +70,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const reduced = useSyncExternalStore(subscribe, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
   const [position, setPosition] = useState({first: "", index: 0});
   const [paused, setPaused] = useState(false);
+  const [slideMs, setSlideMs] = useState(0);
   const [interacting, setInteracting] = useState(false);
   const touch = useRef<{x: number; y: number} | null>(null);
   const suppressClick = useRef(false);
@@ -85,9 +93,9 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const stopped = paused || interacting || reduced;
   useEffect(() => {
     if (stopped || items.length < 2) return;
-    const timer = setInterval(() => { if (!document.hidden) setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + 1) % items.length})); }, 8000);
+    const timer = setInterval(() => { if (!document.hidden) setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + 1) % items.length})); }, Math.max(8000, slideMs));
     return () => clearInterval(timer);
-  }, [stopped, items.length, first]);
+  }, [stopped, items.length, first, slideMs]);
   function move(direction: number) {
     if (items.length < 2) return;
     setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + direction + items.length) % items.length}));
@@ -103,7 +111,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}
     onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
-    <FittedHeadline key={item.id} headlines={item.headlines} full={item.title} lang={lang} label={item.ticker} />
+    <FittedHeadline key={item.id} headlines={item.headlines} full={item.title} lang={lang} label={item.ticker} onSlide={setSlideMs} />
     <time className={styles.clock} dateTime={item.at} title={timestamp} aria-label={timestamp}>
       {timestamp}
     </time>

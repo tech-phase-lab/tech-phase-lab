@@ -5,7 +5,7 @@
 .headline{display:block;min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:20px;white-space:nowrap;overflow:hidden;animation:enter .5s ease-out}
 .clipped{text-overflow:ellipsis}
 /* A headline too long even at the smallest size scrolls once to its end. */
-.scroll{display:inline-block;animation:scroll 9s ease-in-out .2s infinite alternate both}
+.scroll{display:inline-block;animation:scroll var(--duration,9s) linear infinite alternate both}
 .clipped:has(.scroll){text-overflow:clip}
 @keyframes scroll{0%,15%{transform:translateX(0)}85%,100%{transform:translateX(var(--shift))}}
 .clock{display:inline-flex;flex:none;align-items:center;white-space:nowrap;font-size:9px;line-height:14px;color:#93a6ad}
