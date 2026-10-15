@@ -29,3 +29,6 @@
 @keyframes flow{to{transform:translateX(100%)}}
 @media(max-width:600px){.pulse{gap:8px;margin-bottom:18px}}
 @media(prefers-reduced-motion:reduce){.progress{animation:none;transform:none;opacity:.5}}
+
+/* A headline too long for one line takes more lines, so it is always read to its end (owner, Oct 15). */
+.headline.wrapped{white-space:normal;overflow:visible;line-height:1.5;overflow-wrap:anywhere}

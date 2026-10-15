@@ -74,6 +74,18 @@ class SignalTests(unittest.TestCase):
         self.assertTrue(all(not post["saved"] and not post["published"] for post in recent))
         self.assertNotIn("x-wallstengine", json.dumps(recent))
 
+    def test_owner_queue_says_why_a_returned_post_was_not_taken(self):
+        signals.schema(self.db)
+        rows = [("1", "$TSM Reports Q3 (NT$) Net 763.1B v 746.3Be"), ("2", "ERICSSON $ERIC Q3'26 EARNINGS HIGHLIGHTS Net Sales: SEK 59.478 b."),
+                ("3", "Zenzap is launching AI Agents for Work")]
+        for number, text in rows:
+            self.db.execute("INSERT INTO signal_x_acquisition VALUES(?,?,?,?,?,?,?,?,0,0)", ("x-wallstengine", "https://x.com/wallstengine/status/" + number,
+                            "sha" + number, text, text, "2026-10-15T05:00:00Z", "2026-10-15T05:00:0%sZ" % number, "2026-10-15T05:00:0%sZ" % number))
+        self.db.commit()
+        reasons = {post["text"][:6]: post["reason"] for post in signals.queue(self.db)["xRecent"]}
+        # A result-shaped post for a watched company that was not taken is the one real miss.
+        self.assertEqual(reasons, {"$TSM R": "unreadable", "ERICSS": "not-roster", "Zenzap": "not-result"})
+
     def check_feed(self, content, **response):
         return signals.check(self.db, self.feed, self.tickers, lambda *_: {"body": content, **response})
 

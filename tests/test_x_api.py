@@ -234,6 +234,17 @@ class XApiTests(unittest.TestCase):
             self.assertIn('"PT to"', source["query"])
             self.assertTrue(' OR results OR ' in source['query'] or '"quarterly results"' in source['query'])
 
+    def test_trade_the_news_result_line_is_taken_in_but_other_posts_are_not(self):
+        # Oct 15: the TSMC line says "Reports Q3", never "earnings", and was dropped at intake.
+        source = next(s for s in signals.SOURCES if s['id'] == 'x-tradethenews')
+        line = "$TSM Reports Q3 (NT$) Net 763.1B v 746.3Be (v 452.3B y/y), Op 876.5B v 849.6Be (v 500.7B y/y), Rev 1.49B v 1.49T prelim (TSMC)"
+        payload = {'includes': {'users': [{'id': '1', 'username': 'Trade_The_News'}]},
+                   'data': [{'id': str(9100 + i), 'author_id': '1', 'text': text, 'created_at': '2026-10-15T05:34:18Z'}
+                            for i, text in enumerate([line, "$TSM Q3 preview: Street looks for NT$740B", "$TSM Reports Q3 date to be announced"])]}
+        items = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
+        self.assertEqual([item['text'] for item in items], [line])
+        self.assertIn('TSM', items[0]['matches'])
+
     def test_x_sources_are_disabled_without_both_explicit_flag_and_token(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": ""}, clear=False):
             self.assertNotIn(self.source, signals.enabled_sources())
