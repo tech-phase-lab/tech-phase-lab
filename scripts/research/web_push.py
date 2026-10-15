@@ -273,6 +273,10 @@ def normalize_result(item):
     ticker = item.get('ticker')
     titles = {lang: item.get(key) for lang, key in (('ja', 'titleJa'), ('en', 'titleEn'))}
     quarter = re.search(r'Q([1-4])', str(item.get('period', '')))
+    facts = item.get('facts')
+    # An outlook post is not a result: the result already went out, so the outlook adds no second alert.
+    if isinstance(facts, list) and facts and all(isinstance(f, dict) and str(f.get('key', '')).startswith('guidance-') for f in facts):
+        return None
     if (not isinstance(ticker, str) or not re.fullmatch(r'[A-Z][A-Z0-9.-]{0,14}', ticker) or not quarter
             or any(not isinstance(text, str) or not 1 <= len(text.strip()) <= 240 for text in titles.values())):
         return None

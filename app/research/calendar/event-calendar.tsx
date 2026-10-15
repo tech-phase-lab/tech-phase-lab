@@ -43,7 +43,9 @@ export default function EventCalendar() {
   const [reported, setReported] = useState<{ ticker: string; at: number }[]>([]);
   const onReported = useCallback((rows: { ticker: string; at: number }[]) => setReported(rows), []);
   // A company whose result is already in the "released" list above no longer keeps its call row (owner, Oct 15).
-  const resultPosted = (event: CalendarEvent) => !!event.ticker && reported.some(row => row.ticker === event.ticker && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000);
+  // The same goes for an economic release (jobs, CPI, PPI, PCE) once its result is posted.
+  const resultKey = (event: CalendarEvent) => event.ticker ?? (event.kind === "economic" ? `econ:${/^[a-z]+/.exec(event.id)?.[0]}` : undefined);
+  const resultPosted = (event: CalendarEvent) => { const key = resultKey(event); return !!key && reported.some(row => row.ticker === key && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000); };
   const now = useCalendarClock();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const visible = now === null ? [] : selectCalendarEvents(favoritesOnly ? filterFavoriteEvents(calendarEvents, favorites) : calendarEvents, kind, period, now, zone).filter(event => !resultPosted(event));

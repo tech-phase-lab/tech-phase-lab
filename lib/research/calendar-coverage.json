@@ -199,8 +199,8 @@
     "ticker": "META",
     "name": "Meta Platforms",
     "sourceUrl": "https://investor.atmeta.com/investor-events/",
-    "lastAttemptedOn": "2026-10-02",
-    "lastCheckedOn": "2026-10-02"
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "MRVL",
@@ -312,7 +312,7 @@
     "name": "Seagate",
     "sourceUrl": "https://investors.seagate.com/",
     "lastAttemptedOn": "2026-10-15",
-    "lastCheckedOn": null
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "TSLA",

@@ -32,8 +32,9 @@ function dayHeading(key: string, ja: boolean) {
   const [, month, day] = key.split("-");
   return `${Number(month)}/${Number(day)}${ja ? `（${parts}）` : ` ${parts}`}`;
 }
-function timeCell(row: FlashRow, ja: boolean) {
-  if (row.timeKind === "date") return <time dateTime={row.at}>{ja ? "時刻なし" : "No time"}</time>;
+function timeCell(row: FlashRow) {
+  // A source that states only the day sits under that day's heading with no clock (owner, Oct 15: "時刻なし" removed).
+  if (row.timeKind === "date") return null;
   return <time dateTime={row.at}>{clock(row.at)}</time>;
 }
 
@@ -56,9 +57,17 @@ export default function FlashPage({ lang }: { lang: Language }) {
   const sources = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     // A tap anywhere (inside the list too) or Escape closes it; only the button itself toggles it.
-    const close = (event: Event) => { if (sources.current?.open && (event instanceof KeyboardEvent ? event.key === "Escape" : !(event.target as Element | null)?.closest?.("summary") || !sources.current.contains(event.target as Node))) sources.current.open = false; };
-    document.addEventListener("pointerdown", close); document.addEventListener("keydown", close);
-    return () => { document.removeEventListener("pointerdown", close); document.removeEventListener("keydown", close); };
+    // The tap is swallowed on the way in, so it never lands on whatever sits behind the list (owner, Oct 15: the TSM row opened).
+    const close = (event: Event) => {
+      const panel = sources.current;
+      if (!panel?.open) return;
+      if (event instanceof KeyboardEvent) { if (event.key === "Escape") panel.open = false; return; }
+      const target = event.target as Element | null;
+      if (target?.closest?.("summary") && panel.contains(target)) return;
+      event.preventDefault(); event.stopPropagation(); panel.open = false;
+    };
+    document.addEventListener("click", close, true); document.addEventListener("keydown", close);
+    return () => { document.removeEventListener("click", close, true); document.removeEventListener("keydown", close); };
   }, []);
   const markFresh = (ids: string[]) => { if (ids.length) setUnread(previous => new Set([...previous, ...ids])); };
 
@@ -108,7 +117,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
   const publication = (row: FlashRow) => row.timeKind === "date" ? `${ja ? "発表" : "Published"} ${row.at}`
     : `${ja ? "発表" : "Published"} ${new Date(row.at).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false })} JST`;
   const item = (row: FlashRow) => <article key={row.id} className={`${timeline.item} ${marked(row) ? timeline.unread : ""}`}>
-    <span className={timeline.when}>{timeCell(row, ja)}</span><span className={timeline.node} aria-hidden="true" />
+    <span className={timeline.when}>{timeCell(row)}</span><span className={timeline.node} aria-hidden="true" />
     <div className={timeline.entry}>
       <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
       {row.url
@@ -133,7 +142,6 @@ export default function FlashPage({ lang }: { lang: Language }) {
     </div>
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
-      {!feed && !failed && <p className={timeline.problem} role="status">{ja ? "読み込んでいます…" : "Loading…"}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
       {!!shown.length && <div className={timeline.timeline}>{shown.flatMap((row, index) => {
         const key = dayKey(row);

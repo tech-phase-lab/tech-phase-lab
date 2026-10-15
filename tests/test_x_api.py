@@ -245,6 +245,13 @@ class XApiTests(unittest.TestCase):
         self.assertEqual([item['text'] for item in items], [line])
         self.assertIn('TSM', items[0]['matches'])
 
+    def test_a_guide_post_is_taken_in(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'x-wallstengine')
+        text = "TSMC $TSM Q4'26 GUIDE\n\n- Revenue: $52.30B - $54.30B\n- Gross margin: 65% - 67%"
+        payload = {'includes': {'users': [{'id': '1', 'username': 'WallStengine'}]},
+                   'data': [{'id': '9200', 'author_id': '1', 'text': text, 'created_at': '2026-10-15T07:24:00Z'}]}
+        self.assertEqual([item['text'] for item in x_api.parse_response(source, payload, list(monitor.PROVIDERS))], [text])
+
     def test_x_sources_are_disabled_without_both_explicit_flag_and_token(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": ""}, clear=False):
             self.assertNotIn(self.source, signals.enabled_sources())

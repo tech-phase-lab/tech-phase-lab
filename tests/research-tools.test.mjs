@@ -110,9 +110,16 @@ test("Sandisk call keeps the official Eastern time and release/call distinction"
 test("date-only earnings keep the official date without fabricating a time", () => {
   const now = Date.parse("2026-09-22T12:00:00Z");
   assert.equal(selectDateOnlyEarnings("2026-09", now).length, 0);
-  assert.deepEqual(selectDateOnlyEarnings("2026-10", now).map((event) => event.date), ["2026-10-28"]);
-  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T21:59:00Z")).length, 1);
+  assert.deepEqual(selectDateOnlyEarnings("2026-10", now).map((event) => event.date), ["2026-10-28", "2026-10-22", "2026-10-27"]);
+  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T21:59:00Z")).length, 3);
   assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-28T07:00:00Z")).length, 1);
+  // META (Oct 22) and STX (Oct 27) dates are in Japan time, as given by the owner on Oct 15; no time is published.
+  assert.deepEqual(dateOnlyEvents.filter((event) => ["META", "STX"].includes(event.ticker)).map((event) => [event.ticker, event.date, event.sourceTimezone]), [["META", "2026-10-22", "Asia/Tokyo"], ["STX", "2026-10-27", "Asia/Tokyo"]]);
+});
+
+test("an economic release leaves the upcoming list once its result is posted", () => {
+  assert.match(eventCalendarSource, /econ:\$\{/);
+  assert.match(readFileSync(new URL("../app/research/calendar/economic-results-panel.tsx", import.meta.url), "utf8"), /ticker: `econ:/);
 });
 
 test("ASML keeps exact Amsterdam release and call times as separate events", () => {
@@ -184,7 +191,7 @@ test("FOMC meetings stay date-only until the Federal Reserve publishes clock tim
   assert.deepEqual(fomc.map((event) => event.date), ["2026-10-28", "2026-12-09"]);
   assert.ok(fomc.every((event) => event.kind === "economic" && !("startsAt" in event)));
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 2);
-  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 1);
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 3);
 });
 
 test("calendar coverage tracks 49 unique companies (all 37 roster stocks included) and only conclusive checks advance", async () => {
@@ -197,24 +204,24 @@ test("calendar coverage tracks 49 unique companies (all 37 roster stocks include
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
   assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-0[12]|10-15)$/.test(company.lastAttemptedOn)));
-  for (const ticker of ["ADBE", "ASML", "COHR", "CRM", "CRWD", "DELL", "GEV", "INTC", "KLAC", "LRCX", "META", "MU", "NBIS", "NFLX", "ORCL", "PANW", "PLTR", "QCOM", "SNDK", "SNOW", "TSM", "VRT"]) assert.equal(checked[ticker], "2026-10-02");
+  for (const ticker of ["ADBE", "ASML", "COHR", "CRM", "CRWD", "DELL", "GEV", "INTC", "KLAC", "LRCX", "MU", "NBIS", "NFLX", "ORCL", "PANW", "PLTR", "QCOM", "SNDK", "SNOW", "TSM", "VRT"]) assert.equal(checked[ticker], "2026-10-02");
   // Oct 15: dates read from the company's own release or SEC filing.
-  for (const ticker of ["AMD", "ANET", "ARM", "BE", "LITE", "MSFT", "SKHY", "TSLA", "VST"]) assert.equal(checked[ticker], "2026-10-15");
+  for (const ticker of ["AMD", "ANET", "ARM", "BE", "LITE", "MSFT", "SKHY", "TSLA", "VST", "META", "STX"]) assert.equal(checked[ticker], "2026-10-15");
   assert.equal(checked.AMAT, "2026-09-25");
-  for (const ticker of ["AAPL", "AMZN", "AVGO", "CRDO", "CRWV", "GOOGL", "MRVL", "NOW", "NVDA", "ALAB", "AAOI", "IREN", "APH", "SOFI", "IONQ", "STX", "CEG"]) assert.equal(checked[ticker], null);
+  for (const ticker of ["AAPL", "AMZN", "AVGO", "CRDO", "CRWV", "GOOGL", "MRVL", "NOW", "NVDA", "ALAB", "AAOI", "IREN", "APH", "SOFI", "IONQ", "CEG"]) assert.equal(checked[ticker], null);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-30").length, 0);
   const attemptedOn = (day) => coverage.filter((company) => company.lastAttemptedOn === day).map((company) => company.ticker).sort();
   assert.deepEqual(attemptedOn("2026-10-01"), []);
-  assert.deepEqual(attemptedOn("2026-10-15"), ["AAOI", "ALAB", "AMD", "ANET", "APH", "ARM", "BE", "CEG", "IONQ", "IREN", "LITE", "MSFT", "SKHY", "SOFI", "STX", "TSLA", "VST"]);
+  assert.deepEqual(attemptedOn("2026-10-15"), ["AAOI", "ALAB", "AMD", "ANET", "APH", "ARM", "BE", "CEG", "IONQ", "IREN", "LITE", "META", "MSFT", "SKHY", "SOFI", "STX", "TSLA", "VST"]);
   assert.deepEqual(attemptedOn("2026-10-02"), [
     "AAPL", "ADBE", "AMAT", "AMZN", "ASML", "AVGO",
     "COHR", "CRDO", "CRM", "CRWD", "CRWV", "DELL", "GEV", "GOOGL", "INTC", "KLAC",
-    "LRCX", "META", "MRVL", "MU", "NBIS", "NFLX", "NOW", "NVDA",
+    "LRCX", "MRVL", "MU", "NBIS", "NFLX", "NOW", "NVDA",
     "ORCL", "PANW", "PLTR", "QCOM", "SNDK", "SNOW", "TSM", "VRT",
   ]);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
-  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 32);
-  assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 17);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 33);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 16);
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SNOW", "VRT"]) {
     assert.match(byTicker[ticker].sourceUrl, /(?:events|investor-hub|category\/ir)/i);
   }
