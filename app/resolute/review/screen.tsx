@@ -79,6 +79,7 @@ function Workspace() {
     {([["/resolute/news",en?"News risk checker":"危険度チェッカーを見る"],["/resolute/wall",en?"Rules wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment to breathe":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
      <button key={target} disabled={opening} onClick={()=>void openFeature(target)}>{label}</button>)}
    </div>
+   <p><a href={`/resolute/checkout?lang=${locale}`}>{en?"Test checkout (Sandbox)":"テスト購入（Sandbox）"}</a></p>
    <label><input type="checkbox" checked={persistence.remembered} onChange={event=>store.setRemembered(event.target.checked)}/>
     {en?"Keep saved preview rules and settings on this device":"保存した確認用ルールと設定をこの端末に残す"}</label>
    <p className={controls.note}>{en?"This includes your financial amounts and answers. Use only on your own device. Uncheck to remove the saved copy. Unfinished quiz answers won’t be kept.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の未保存の回答は残りません"}</p>

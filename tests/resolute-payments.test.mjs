@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {randomUUID} from 'node:crypto';
 import {PGlite} from '@electric-sql/pglite';
 import {identity,quote,verifyOrder,LAUNCH_END,addYear,minorUnits} from '../services/resolute-api/payments/policy.mjs';
-import {paypalConfig,createPaypal} from '../services/resolute-api/payments/paypal.mjs';
+import {paypalConfig,createPaypal,approvalUrl,SANDBOX_RETURN} from '../services/resolute-api/payments/paypal.mjs';
 import {paymentEngine} from '../services/resolute-api/payments/engine.mjs';
 import {paymentStore} from '../services/resolute-api/payments/store.mjs';
 import {paymentHttp} from '../services/resolute-api/payments/http.mjs';
@@ -79,7 +79,7 @@ async function fixture() {
  const query=(sql,args)=>sql.includes('pg_advisory_xact_lock')?Promise.resolve({rows:[]}):db.query(sql,args);
  const store=paymentStore({query,connect:async()=>({query,release(){}})});
  let account=user(),captured=false,count=0,clock=now;
- const paypal={create:async()=>({id:'PAYPAL123456'}),get:async()=>remote(await store.findPaypal('PAYPAL123456'),captured?'COMPLETED':'APPROVED'),
+ const paypal={approval:async()=> 'https://www.sandbox.paypal.com/checkoutnow?token=PAYPAL123456',create:async()=>({id:'PAYPAL123456'}),get:async()=>remote(await store.findPaypal('PAYPAL123456'),captured?'COMPLETED':'APPROVED'),
  capture:async()=>{count++;captured=true},captureDetails:async()=>({id:'CAPTURE12345',amount:{currency_code:'JPY',value:'7980'},
  status:'REFUNDED',supplementary_data:{related_ids:{order_id:'PAYPAL123456'}}}),verify:async()=>true};
  const engine=paymentEngine({store,paypal,merchantId:merchant,getUser:async()=>account,now:()=>clock});
@@ -156,5 +156,34 @@ test('dispute suspends a purchase and resolution remains held for review; comple
   }
   await f.engine.webhook(new Headers(),{id:'LATE',event_type:'PAYMENT.CAPTURE.COMPLETED',resource:{id:'CAPTURE12345'}});
   assert.equal((await f.db.query('SELECT state FROM resolute_payments_sandbox.grants')).rows[0].state,'suspended');
+ } finally {await f.db.close()}
+});
+test('approval redirects are restricted to this Sandbox order and callbacks are server-owned',async()=>{
+ const id='PAYPAL123456';
+ const approved=href=>({id,links:[{rel:'payer-action',href}]});
+ assert.equal(approvalUrl(approved(`https://www.sandbox.paypal.com/checkoutnow?token=${id}`),id),`https://www.sandbox.paypal.com/checkoutnow?token=${id}`);
+ for(const href of ['https://www.paypal.com/checkoutnow?token='+id,'https://evil.test/checkoutnow?token='+id,
+  'https://www.sandbox.paypal.com/checkoutnow?token=OTHERORDER12',
+  `https://www.sandbox.paypal.com/checkoutnow?token=${id}&redirect=https://evil.test`,
+  `https://user@www.sandbox.paypal.com/checkoutnow?token=${id}`]) assert.throws(()=>approvalUrl(approved(href),id));
+ const calls=[];
+ const api=createPaypal({base:'https://api-m.sandbox.paypal.com',clientId:'id',secret:'secret',merchantId:merchant},async(url,options)=>{
+  calls.push({url,options}); return Response.json(url.endsWith('/token')?{access_token:'token',expires_in:300}:{id});
+ });
+ const order=sample(); await api.create(order);
+ const body=JSON.parse(calls[1].options.body),context=body.payment_source.paypal.experience_context;
+ assert.equal(context.user_action,'CONTINUE');assert.equal(context.shipping_preference,'NO_SHIPPING');
+ assert.equal(context.return_url,`${SANDBOX_RETURN}?order=${order.id}&lang=ja`);
+ assert.equal(context.cancel_url,`${context.return_url}&cancel=1`);
+ assert.equal(body.purchase_units[0].amount.value,'7980');
+});
+test('opening the return status does not capture or grant; buyer binding applies to status',async()=>{
+ const f=await fixture();
+ try {
+  const o=await f.engine.create('user_test',{kind:'initial',language:'ja',requestKey:randomUUID()});
+  const status=await f.engine.status('user_test',o.orderId);
+  assert.equal(status.state,'created');assert.equal(status.quote.value,'7980');assert.equal(f.count(),0);
+  assert.equal((await f.db.query('SELECT count(*)::int AS n FROM resolute_payments_sandbox.grants')).rows[0].n,0);
+  await assert.rejects(()=>f.engine.status('user_other',o.orderId),/ORDER_NOT_FOUND/);
  } finally {await f.db.close()}
 });

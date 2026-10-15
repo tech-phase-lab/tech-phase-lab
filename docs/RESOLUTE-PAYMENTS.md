@@ -47,7 +47,15 @@ Vercel proxies the internal routes under `/api/resolute/payments/`. It requires 
 approved owner session and checks Origin on POST. Railway independently verifies
 both the service credential and Clerk JWT. GET and return pages never authorize a
 capture; status may reconcile a previously authorized, PayPal-completed capture.
-No checkout UI or sales link is activated in this phase.
+The owner-only `/resolute/checkout` page is linked from owner review. It supports
+Japanese and English, shows the server quote, and redirects only to the validated
+Sandbox approval link for that order. PayPal return/cancel URLs are fixed to the
+preview branch checkout page on the server. Return query parameters cannot trigger
+a capture: the owner must explicitly confirm via POST after approval. Returning or
+refreshing only reads status (or reconciles an already authorized completed capture).
+The UI retains the create request key for retries and prevents overlapping clicks;
+a lost capture response directs the owner to refresh status first. No public sales
+link or live purchase is activated.
 
 ## Configuration
 
@@ -91,7 +99,9 @@ PayPal postback signature verification; exercise real Sandbox orders and events.
   concurrency. Credential authentication, schema/role provisioning and the registered
   webhook URL plus all six event types were verified on 2026-10-15. This does not
   prove delivery/processing of a real signed payment event or the receiving payee.
-- Checkout UI and PayPal approval experience/return URL.
+- Live browser acceptance of the owner-only checkout and PayPal approval/return flow.
+  UI and fixed server callbacks are implemented; actual payment completion is not
+  proven by unit tests or a successful build.
 - Email delivery adapter, verified sender, delivery/retry worker and owner dashboard.
   Outbox creation is implemented, email delivery is NOT implemented or enabled.
 - Reviewed reinstatement operation with audit reason and operator identity.
