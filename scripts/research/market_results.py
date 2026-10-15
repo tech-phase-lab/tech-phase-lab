@@ -10,9 +10,9 @@ import time
 from urllib.parse import urlsplit
 import monitor
 
-ACCOUNTS = {'tipranks', 'wallstengine', 'fabymetal4'}
+ACCOUNTS = {'tipranks', 'wallstengine', 'fabymetal4', 'trade_the_news'}
 NAMES = {'tipranks': 'TipRanks',
-         'wallstengine': 'Wall St Engine', 'fabymetal4': 'FabyΔ'}
+         'wallstengine': 'Wall St Engine', 'fabymetal4': 'FabyΔ', 'trade_the_news': 'Trade The News'}
 VALUE = r'([-+−]?\d[\d,]*(?:\.\d+)?)\s*(B|M|K|T(?![a-z])|billion|million|thousand|trillion|%)?'
 # Oct 11: ASML reports in euros, TSMC in NT dollars, SK hynix in won. The
 # currency is kept exactly as written; nothing is converted or assumed.
@@ -260,11 +260,67 @@ def economic_projection(text):
             'titleJa':'／'.join(f['ja']+' '+f['value'] for f in facts),
             'titleEn':'; '.join(f['en']+' '+f['value'] for f in facts)}
 
+# Oct 15: Trade The News posts a company's result as one fixed line, e.g.
+# "$TSM Reports Q3 (NT$) Net 763.1B v 746.3Be (v 452.3B y/y), Op 876.5B v ...".
+TTN_HEADER = re.compile(r'\s*\$([A-Z]{1,5}(?:\.[A-Z])?)\s+Reports\s+(?:(?:FY)?\s*(20\d{2})\s+)?Q([1-4])(?:\s+(?:FY)?\s*(20\d{2}))?\s*(?:\((' + CURRENCY[1:-1] + r')\))?')
+TTN_FIELDS = [('net-income', '純利益', 'Net income', r'Net'), ('operating-income', '営業利益', 'Operating income', r'Op'),
+              ('revenue', '売上高', 'Revenue', r'Rev'), ('eps', 'EPS', 'EPS', r'EPS')]
+TTN_UNITS = {'b': 'B', 'm': 'M', 'k': 'K', 't': 'T'}
+
+
+def trade_the_news_projection(text, tickers):
+    """One company result from a Trade The News line; anything unclear is left out.
+
+    The currency must be stated in the post, a figure whose unit differs from
+    the unit of its own comparison ("Rev 1.49B v 1.49T") is ambiguous and is not
+    published, and estimates ("...e") are never used as the result.
+    """
+    header = TTN_HEADER.match(text) if isinstance(text, str) else None
+    if not header or len(tickers) != 1 or header[1] != tickers[0]:
+        return None
+    if re.findall(r'(?<![\w$])\$([A-Z]{1,5}(?:\.[A-Z])?)(?![\w.])', text) != [tickers[0]]:
+        return None
+    lines = text.split('\n')
+    first = lines[0][header.end():]
+    head_symbol = currency_symbol(header[5])
+    facts = []
+    for key, ja, en, label in TTN_FIELDS:
+        m = re.search(r'(?:^|[\s,])' + label + r'\s+' + CURRENCY + r'?\s*(\d[\d,]*(?:\.\d+)?)([BMKT])?(?![\w%])'
+                      r'(?:\s+v\s+' + CURRENCY + r'?\s*(\d[\d,]*(?:\.\d+)?)([BMKT])?)?', first)
+        if not m:
+            continue
+        symbol = currency_symbol(m[1]) or head_symbol
+        unit = TTN_UNITS.get((m[3] or '').lower(), '')
+        if not symbol or (key != 'eps' and not unit) or (key == 'eps' and unit):
+            continue
+        if m[5] and TTN_UNITS.get((m[6] or '').lower(), '') != unit:
+            continue  # the post's own comparison disagrees about the unit
+        facts.append({'key': key, 'ja': ja, 'en': en, 'value': symbol + m[2].replace(',', '') + unit})
+    for line in lines[1:]:
+        for key, ja, en, label, symbolic in (('operating-margin', '営業利益率', 'Operating margin', r'Op margin', False),
+                                            ('gross-margin', '粗利益率', 'Gross margin', r'Gross margin', False),
+                                            ('capex', '設備投資', 'Capex', r'Capex', True)):
+            m = re.match(r'\s*-?\s*' + label + r'\s*:\s*' + (CURRENCY if symbolic else '()') + r'\s*(\d[\d,]*(?:\.\d+)?)\s*(%|[BMT])(?![\w%])', line)
+            if not m or (symbolic and (not currency_symbol(m[1]) or m[3] == '%')) or (not symbolic and m[3] != '%'):
+                continue
+            if not any(f['key'] == key for f in facts):
+                facts.append({'key': key, 'ja': ja, 'en': en, 'value': (currency_symbol(m[1]) if symbolic else '') + m[2].replace(',', '') + m[3]})
+    if not any(f['key'] in {'revenue', 'eps', 'net-income', 'operating-income'} for f in facts):
+        return None
+    quarter = 'Q' + header[3] + (' ' + (header[2] or header[4]) if header[2] or header[4] else '')
+    lead = facts[:2]
+    return {'kind': 'earnings', 'ticker': tickers[0], 'period': quarter, 'facts': facts,
+            'titleJa': tickers[0] + ' ' + quarter + '決算：' + '、'.join(f['ja'] + f['value'] for f in lead),
+            'titleEn': tickers[0] + ' ' + quarter + ' earnings: ' + ', '.join(f['en'] + ' ' + f['value'] for f in lead)}
+
+
 def projection(text, tickers):
     if not isinstance(text, str) or len(text) > 160000 or PREVIEW.search(text):
         return None
     if 'ECON' in tickers:
         return economic_projection(text)
+    if TTN_HEADER.match(text):
+        return trade_the_news_projection(text, tickers)
     if len(tickers) != 1 or not re.search(r'earnings|results|highlights|決算', text, re.I):
         return None
     # The post must be about this company: its first cashtag is the ticker.

@@ -20,7 +20,7 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
     const id=field('id',24), kind=field('kind',12), ticker=field('ticker',10), researchId=field('researchId',40);
     const url=new URL(field('url',250));
     if(!/^\d+$/.test(id)||researchId!==`x-result-${id}`||!['earnings','economic'].includes(kind)||!/^([A-Z][A-Z0-9.-]{0,9})$/.test(ticker)
-      ||url.origin!=='https://x.com'||url.search||url.hash||!/^\/(tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)) throw Error('Invalid result source');
+      ||url.origin!=='https://x.com'||url.search||url.hash||!/^\/(tipranks|theflynews|wallstengine|fabymetal4|trade_the_news)\/status\/\d+$/i.test(url.pathname)) throw Error('Invalid result source');
     const date=(name:string)=>{const v=field(name,50);if(!/T.*(Z|[+-]\d\d:\d\d)$/.test(v)||!Number.isFinite(Date.parse(v)))throw Error('Invalid result date');return v;};
     if(!Array.isArray(r.facts)||!r.facts.length||r.facts.length>8)throw Error('Invalid result facts');
     const facts=r.facts.map(f=>{
@@ -29,7 +29,7 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
       for(const k of ['key','ja','en','value'])if(typeof o[k]!=='string'||!(o[k] as string).trim()||(o[k] as string).length>80)throw Error('Invalid fact');
       // Oct 11: U.S. inflation keeps its index, core and basis; ASML (€),
       // TSMC (NT$) and SK hynix (₩) keep the currency they reported in.
-      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
+      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|net-income|operating-income|operating-margin|capex|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
         ||!/^(?:\$|€|NT\$|₩)?[-+]?\d+(?:\.\d+)?[BMKT%]?(?: ± (?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT%]?)?$/i.test(o.value as string))throw Error('Invalid fact value');
       const comparisons: ResultComparisons = {};
       // Optional detail is isolated from the already validated actual. It is

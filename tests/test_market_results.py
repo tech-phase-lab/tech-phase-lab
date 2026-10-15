@@ -322,6 +322,23 @@ class ResultTests(unittest.TestCase):
         payload['includes']['users'][0]['username']='FakeFaby'
         self.assertEqual(x_api.parse_response(source,payload,list(monitor.PROVIDERS)),[])
 
+    def test_trade_the_news_result_line_publishes_only_unambiguous_figures(self):
+        post = ("$TSM Reports Q3 (NT$) Net 763.1B v 746.3Be (v 452.3B y/y), Op 876.5B v 849.6Be (v 500.7B y/y), "
+                "Rev 1.49B v 1.49T prelim (TSMC)\n\n- Op margin: 58.7% v 50.6% y/y\n- Gross margin: 66.4% v 59.5% y/y v 66.5%e\n"
+                "- Capex: $13.8B v $9.7B y/y; YTD Capex: $40.6B v $29.4B y/y\n\n- Management Commentary: revenue increased 17.6%")
+        result = results.projection(post, ['TSM'])
+        values = {fact['key']: fact['value'] for fact in result['facts']}
+        # The estimate is never used, and revenue (1.49B against 1.49T) is left out as ambiguous.
+        self.assertEqual(values, {'net-income': 'NT$763.1B', 'operating-income': 'NT$876.5B', 'operating-margin': '58.7%',
+                                  'gross-margin': '66.4%', 'capex': '$13.8B'})
+        self.assertEqual(result['period'], 'Q3')
+        self.assertEqual(result['titleJa'], 'TSM Q3決算：純利益NT$763.1B、営業利益NT$876.5B')
+        # No stated currency, another company's ticker, or no figures: nothing is published.
+        self.assertIsNone(results.projection('$TSM Reports Q3 Net 763.1B v 746.3Be', ['TSM']))
+        self.assertIsNone(results.projection(post.replace('$TSM', '$NVDA', 1), ['TSM']))
+        self.assertIsNone(results.projection('$TSM Reports Q3 (NT$) Rev 1.49B v 1.49T prelim', ['TSM']))
+        self.assertIn('trade_the_news', results.ACCOUNTS)
+
 
 class ResultWindowTests(unittest.TestCase):
     def setUp(self):

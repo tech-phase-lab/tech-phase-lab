@@ -203,7 +203,7 @@ class XApiTests(unittest.TestCase):
         # Oct 11: earnings-only companies join the X scope for earnings and targets.
         earnings_only = {"AAPL", "AMZN", "TSLA", "SOFI", "IONQ", "STX", "CEG"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
-                         {"tipranks", "wallstengine", "nebiusai", "aistocksavvy"})
+                         {"tipranks", "wallstengine", "nebiusai", "aistocksavvy", "trade_the_news"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
                          set(monitor.PROVIDERS) | added)
         for source in x_sources:
@@ -213,6 +213,13 @@ class XApiTests(unittest.TestCase):
                 continue
             if source["id"] == "x-aistocksavvy":
                 continue  # Price-target-only route; checked in HardikShahPriceTargetRouteTests.
+            if source["id"] == "x-tradethenews":
+                # Oct 15: earnings-result route; one account, results lines only, never price targets.
+                self.assertEqual(source["accounts"], ["Trade_The_News"])
+                self.assertEqual(source["intervalSeconds"], 120)
+                self.assertTrue(source["query"].startswith("from:Trade_The_News "))
+                self.assertNotIn("target", source["query"])
+                continue
             self.assertLessEqual(len(source["query"]), 512)
             # Oct 11: LITE and ALAB joined the roster; DELL and ORCL became earnings-only.
             self.assertEqual(set(source["extraTickers"]),

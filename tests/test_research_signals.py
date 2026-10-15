@@ -57,7 +57,7 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn(source["id"], encoded)
         self.assertNotIn("matchedItems", encoded)
         # Per-route detail is numbered in configuration order and carries no route name.
-        self.assertEqual([d["route"] for d in result["routes"]["details"]], list(range(1, 7)))
+        self.assertEqual([d["route"] for d in result["routes"]["details"]], list(range(1, 8)))
         self.assertEqual(result["routes"]["details"][0]["error"], "fetch-failed")
 
     def test_owner_queue_lists_what_the_x_routes_returned_including_posts_never_read(self):
@@ -1071,8 +1071,9 @@ class SignalTests(unittest.TestCase):
         sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
         with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "2300"}):
             plan = signals.x_api_request_plan(sources)
-        # 5040 plus 480 polls a day for the 180 s Hardik Shah price-target route.
-        self.assertEqual(plan["configuredMaxRequestsPerDay"], 5520)
+        # 5040 plus 480 polls a day for the 180 s Hardik Shah price-target route
+        # and 720 for the 120 s Trade The News results route.
+        self.assertEqual(plan["configuredMaxRequestsPerDay"], 6240)
         self.assertTrue(plan["budgetCapped"])
         self.assertTrue(plan["pacingEnabled"])
         source = sources[0]
