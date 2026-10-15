@@ -1082,7 +1082,7 @@
       "TSM"
     ],
     "name": "TSMC",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Business / Risk factors",
@@ -1091,6 +1091,14 @@
       {
         "label": "NVIDIA FY2026 Form 10-K · Manufacturing",
         "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+      },
+      {
+        "label": "Intel FY2025 Form 10-K · Intel Foundry competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+      },
+      {
+        "label": "TSMC FY2025 Annual Report · Foundry services / Competition",
+        "url": "https://investor.tsmc.com/sites/ir/annual-report/2025/2025%20TSMC%20Annual%20Report.E.pdf"
       }
     ],
     "ja": {
@@ -1098,7 +1106,7 @@
       "revenue": "半導体の製造代金が中心。複数のチップを組み合わせる先端パッケージングなども手がける。",
       "strength": "微細な回路を大量生産する技術と生産規模。設計会社が製品を量産するための仕組みも整える。",
       "risks": "台湾への生産集中、地震や電力・水の供給障害、大口顧客の需要変動と設備投資の負担。",
-      "competition": "ほかの半導体受託生産会社や、外部顧客向けにも製造する半導体メーカー。",
+      "competition": "先端半導体の受託製造ではIntel FoundryとSamsungが競合例。IntelはTSMCを先端プロセスの主要競合と明記している。Samsungは両社の公表する製造事業を比較したもの。製造技術の世代や量産規模、先端パッケージングで競争条件は異なる。",
       "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。"
     },
     "en": {
@@ -1106,35 +1114,35 @@
       "revenue": "Primarily wafer fabrication, plus advanced packaging and related services.",
       "strength": "Leading-edge manufacturing expertise, production scale and support for customers moving designs into volume production.",
       "risks": "Taiwan concentration, earthquakes, utility disruptions, major-customer demand changes and high capital spending.",
-      "competition": "Other foundries and integrated chipmakers offering manufacturing to external customers.",
+      "competition": "Examples in leading-edge foundry services include Intel Foundry and Samsung. Intel explicitly names TSMC as a leading-edge competitor. Samsung is a comparison of disclosed manufacturing businesses. Technology generation, manufacturing scale and packaging capabilities differ.",
       "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Other foundries",
-          "nameJa": "半導体受託生産会社",
+          "kind": "company",
+          "name": "Intel",
           "role": "competitor",
           "label": {
-            "ja": "半導体の受託生産で競合",
-            "en": "Contract chip manufacturing"
+            "ja": "先端プロセスの受託製造で競合。IntelがTSMCを明記",
+            "en": "Leading-edge foundry services; Intel explicitly names TSMC"
           },
           "sourceIndexes": [
-            0
-          ]
+            2
+          ],
+          "ticker": "INTC"
         },
         {
-          "kind": "industry",
-          "name": "Integrated chipmakers",
-          "nameJa": "外販する半導体メーカー",
+          "kind": "company",
+          "name": "Samsung",
           "role": "competitor",
           "label": {
-            "ja": "外部顧客向けの製造で競合",
-            "en": "Manufacturing for outside customers"
+            "ja": "先端半導体の受託製造で競合。公表事業の比較",
+            "en": "Leading-edge foundry services; comparison of disclosed businesses"
           },
           "sourceIndexes": [
-            0
+            3,
+            2
           ]
         }
       ],
@@ -7493,11 +7501,23 @@
       "NET"
     ],
     "name": "Cloudflare",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Network / Products / Customers / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000016/cloud-20251231.htm"
+      },
+      {
+        "label": "Cloudflare · Akamai CDN product comparison",
+        "url": "https://www.cloudflare.com/cloudflare-vs-akamai/"
+      },
+      {
+        "label": "Cloudflare · Zscaler secure-access product comparison",
+        "url": "https://www.cloudflare.com/zero-trust/compare/cloudflare-vs-zscaler/"
+      },
+      {
+        "label": "Cloudflare · Workers and AWS Lambda product comparison",
+        "url": "https://www.cloudflare.com/en-gb/learning/serverless/serverless-performance/"
       }
     ],
     "ja": {
@@ -7505,7 +7525,7 @@
       "revenue": "CDN、DDoS防御、ゼロトラスト、開発者向け計算基盤などを、無料枠から大企業向け契約までサブスク中心で販売する。",
       "strength": "同じ世界ネットワーク上で配信、セキュリティ、接続、サーバーレス計算をまとめて提供し、通信データを製品改善へ活かせる。",
       "risks": "ネットワーク障害や攻撃、設備投資負担、通信・データ規制、価格競争があり、2025年も最終赤字だった。",
-      "competition": "通信機器、CDN、DNS、クラウドセキュリティ、SD-WAN、パブリッククラウドの各社と幅広く競う。",
+      "competition": "CDNではAkamai、ゼロトラスト接続ではZscaler、サーバーレス計算ではAWSのLambdaなどが競合例。Cloudflare自身が製品別の比較を公開している。比較資料は競合分野の確認に使い、性能や価格の優劣をそのまま断定しない。",
       "relationships": "Web・アプリ運営企業と社内ITへサービスを提供し、通信回線、データセンター、機器会社を使って世界ネットワークを運営する。"
     },
     "en": {
@@ -7513,62 +7533,49 @@
       "revenue": "Sells CDN, DDoS protection, zero-trust and developer-compute products mainly through subscriptions from free plans to enterprise contracts.",
       "strength": "Delivers content, security, connectivity and serverless compute on one global network and uses traffic insight to improve products.",
       "risks": "Network outages, attacks, infrastructure spending, communications and data regulation and pricing pressure remain risks; it was still loss-making in 2025.",
-      "competition": "Competes with network hardware, CDN, DNS, cloud-security, SD-WAN and public-cloud providers.",
+      "competition": "Examples include Akamai in CDN, Zscaler in zero-trust access, and AWS Lambda in serverless compute. Cloudflare publishes product-specific comparisons. These identify overlapping products without adopting the vendor’s performance or pricing superiority claims.",
       "relationships": "Serves website and application operators and enterprise IT while relying on carriers, data centers and hardware vendors to run its global network."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "CDN and DNS providers",
-          "nameJa": "CDN・DNS会社",
+          "kind": "company",
+          "name": "Akamai",
           "role": "competitor",
           "label": {
-            "ja": "配信・名前解決で競合",
-            "en": "Content delivery and DNS"
+            "ja": "CDNで競合。Cloudflare自身の製品比較",
+            "en": "CDN; Cloudflare’s product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "AKAM"
         },
         {
-          "kind": "industry",
-          "name": "Cloud security vendors",
-          "nameJa": "クラウドセキュリティ会社",
+          "kind": "company",
+          "name": "Zscaler",
           "role": "competitor",
           "label": {
-            "ja": "Web・ゼロトラスト防御で競合",
-            "en": "Web and zero-trust security"
+            "ja": "ゼロトラスト接続で競合。Cloudflare自身の比較",
+            "en": "Zero-trust access; Cloudflare’s product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            2
+          ],
+          "ticker": "ZS"
         },
         {
-          "kind": "industry",
-          "name": "Public cloud platforms",
-          "nameJa": "パブリッククラウド会社",
+          "kind": "company",
+          "name": "Amazon",
           "role": "competitor",
           "label": {
-            "ja": "開発者向け計算基盤で競合",
-            "en": "Developer compute platforms"
+            "ja": "WorkersとAWS Lambdaなどの計算で競合。Cloudflareの比較",
+            "en": "Workers versus AWS Lambda and related compute; Cloudflare’s comparison"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Network hardware and SD-WAN vendors",
-          "nameJa": "ネットワーク機器・SD-WAN会社",
-          "role": "competitor",
-          "label": {
-            "ja": "企業通信で競合",
-            "en": "Enterprise connectivity"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            3
+          ],
+          "ticker": "AMZN"
         }
       ],
       "relationships": [
@@ -8081,11 +8088,19 @@
       "INTU"
     ],
     "name": "Intuit",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/896878/000089687826000037/intu-20260731.htm"
+      },
+      {
+        "label": "H&R Block FY2026 Form 10-K · Assisted and DIY tax products",
+        "url": "https://www.sec.gov/Archives/edgar/data/12659/000001265926000026/hrb-20260630.htm"
+      },
+      {
+        "label": "BILL FY2026 Form 10-K · QuickBooks bill payment competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm"
       }
     ],
     "ja": {
@@ -8093,7 +8108,7 @@
       "revenue": "会計・給与・税務ソフトのサブスク、決済手数料、融資、確定申告支援、金融商品の送客、マーケティングサービスから稼ぐ。",
       "strength": "会計、給与、決済、税務、融資を同じ顧客データでつなぎ、専門家支援とAIを組み合わせられる。",
       "risks": "無料の税務・会計サービス、政府の直接申告、税制変更、信用・決済損失、重要な税務シーズンの障害が業績に影響する。",
-      "competition": "会計・給与、税務申告、決済・融資、個人金融比較、マーケティングソフトの各市場で大手と新興企業に競う。",
+      "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILLが競合例。税務は両社の公表製品を比較したもの。BILLはQuickBooks内蔵の請求書決済を競合として説明している。税務、会計、決済は分けて比べる。",
       "relationships": "中小企業、会計士、納税者へソフトと専門家支援を提供し、銀行・カード・保険会社へCredit Karma利用者を送客する。"
     },
     "en": {
@@ -8101,62 +8116,37 @@
       "revenue": "Earns from accounting, payroll and tax subscriptions, payments, lending, assisted tax, financial-product referrals and marketing services.",
       "strength": "Connects accounting, payroll, payments, tax and lending on shared customer data and combines software with experts and AI.",
       "risks": "Free tax and accounting tools, government direct filing, tax-law changes, credit and payment losses and peak-season outages can affect results.",
-      "competition": "Competes across accounting and payroll, tax filing, payments and lending, consumer finance comparison and marketing software.",
+      "competition": "Examples include H&R Block versus TurboTax in tax preparation, and BILL versus QuickBooks bill payment. The tax comparison uses disclosed product portfolios; BILL specifically describes competition from native QuickBooks bill payment. These are distinct product markets.",
       "relationships": "Serves small businesses, accountants and taxpayers and refers Credit Karma users to banks, card issuers and insurers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Accounting and payroll software",
-          "nameJa": "会計・給与ソフト会社",
+          "kind": "company",
+          "name": "H&R Block",
           "role": "competitor",
           "label": {
-            "ja": "中小企業の経理で競合",
-            "en": "Small-business finance"
+            "ja": "TurboTaxと税務申告で競合。両社の公表製品から比較",
+            "en": "Tax preparation versus TurboTax; disclosed-product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "HRB"
         },
         {
-          "kind": "industry",
-          "name": "Tax preparation services",
-          "nameJa": "確定申告サービス",
+          "kind": "company",
+          "name": "BILL",
           "role": "competitor",
           "label": {
-            "ja": "個人・専門家向け税務で競合",
-            "en": "Consumer and professional tax"
+            "ja": "QuickBooksの請求書決済で競合。BILLの開示",
+            "en": "QuickBooks native bill payment; BILL’s disclosure"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Government tax-filing systems",
-          "nameJa": "政府の税務申告システム",
-          "role": "competitor",
-          "label": {
-            "ja": "無料の直接申告と競合",
-            "en": "Free direct filing"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Payments and fintech platforms",
-          "nameJa": "決済・フィンテック会社",
-          "role": "competitor",
-          "label": {
-            "ja": "決済・融資・金融比較で競合",
-            "en": "Payments, lending and comparison"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            2
+          ],
+          "ticker": "BILL"
         }
       ],
       "relationships": [
@@ -9080,11 +9070,15 @@
       "TWLO"
     ],
     "name": "Twilio",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Communications / Segment / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1447669/000144766926000021/twlo-20251231.htm"
+      },
+      {
+        "label": "8x8 FY2026 Form 10-K · Communications competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm"
       }
     ],
     "ja": {
@@ -9092,7 +9086,7 @@
       "revenue": "通信APIの利用量課金が中心で、電話番号、メール、認証、Segmentの顧客データ基盤の契約料金も得る。",
       "strength": "多国間の通信網をAPIで扱え、メッセージ送信から顧客データ活用まで開発者が一つの基盤で組み込める。",
       "risks": "通信会社への接続費、迷惑通信規制、顧客の利用減、障害・不正利用、大手クラウドや通信APIとの価格競争が利益を圧迫する。",
-      "competition": "通信API、メール配信、本人確認、顧客データ基盤で、通信事業者、大手クラウド、専門ソフトと競う。",
+      "competition": "通信APIや顧客窓口向けサービスでは8x8が競合例。8x8自身の年次報告がTwilioを実名で挙げている。電話・メッセージなどをアプリへ組み込む機能と、顧客窓口の機能では比較する製品が異なり、全製品が同じという意味ではない。",
       "relationships": "通信会社やメール網から接続を仕入れ、企業のアプリやコンタクトセンターへメッセージ、通話、認証を届ける。"
     },
     "en": {
@@ -9100,49 +9094,24 @@
       "revenue": "Earns mainly usage-based communications fees, plus phone numbers, email, verification and Segment customer-data subscriptions.",
       "strength": "Developers can use one platform to reach communications networks across countries and connect customer interactions with data.",
       "risks": "Carrier fees, messaging regulation, lower customer usage, outages, abuse and price competition from clouds and API rivals can pressure margins.",
-      "competition": "Competes with carriers, hyperscalers and specialists across communications APIs, email, verification and customer-data platforms.",
+      "competition": "8x8 is one example in overlapping communications API and contact-center markets. Its annual report explicitly names Twilio. Embedding communications in applications and operating contact-center workflows are different product scopes, rather than a match across every offering.",
       "relationships": "Buys connectivity from carriers and email networks, then delivers messaging, calls and verification into enterprise apps and contact centers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Communications API providers",
-          "nameJa": "通信API事業者",
+          "kind": "company",
+          "name": "8x8",
           "role": "competitor",
           "label": {
-            "ja": "SMS・通話APIで競合",
-            "en": "Messaging and voice APIs"
+            "ja": "通信API・顧客窓口の一部で競合。8x8がTwilioを明記",
+            "en": "Communications APIs and selected contact-center workflows; 8x8 names Twilio"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Hyperscale cloud platforms",
-          "nameJa": "大手クラウド基盤",
-          "role": "competitor",
-          "label": {
-            "ja": "開発者向け通信機能で競合",
-            "en": "Developer communications services"
-          },
-          "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Customer data platforms",
-          "nameJa": "顧客データ基盤",
-          "role": "competitor",
-          "label": {
-            "ja": "顧客データ統合で競合",
-            "en": "Customer data unification"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "EGHT"
         }
       ],
       "relationships": [
@@ -11284,11 +11253,19 @@
       "ONTO"
     ],
     "name": "Onto Innovation",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm"
+      },
+      {
+        "label": "KLA FY2026 Form 10-K · Process-control competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm"
+      },
+      {
+        "label": "Nova FY2025 Form 20-F · Metrology competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm"
       }
     ],
     "ja": {
@@ -11296,7 +11273,7 @@
       "revenue": "半導体メーカーや組立・検査会社への装置販売に加え、ソフト、保守、交換部品で稼ぐ。",
       "strength": "光学検査、計測、工程データ解析を一体で提供できる。微細化だけでなく、複数チップを組み合わせる先端パッケージにも強い。",
       "risks": "半導体設備投資の波、大口顧客の発注、輸出規制の影響を受ける。新装置の認定遅れや部品不足も売上時期を動かす。",
-      "competition": "欠陥検査・寸法計測、リソグラフィー制御、先端パッケージ検査の各分野で、大手装置会社や専門メーカーと競う。",
+      "competition": "半導体の検査・計測ではKLA、寸法や薄膜などの計測ではNovaが競合例。両社の年次報告はOnto Innovationを実名で挙げている。欠陥検査、膜厚・寸法計測、先端パッケージなどで比較する装置や用途は異なる。",
       "relationships": "半導体工場と組立・検査会社へ装置とソフトを供給し、稼働後は保守や部品交換で量産を支える。"
     },
     "en": {
@@ -11304,36 +11281,36 @@
       "revenue": "Earns from system sales to chipmakers and assembly-and-test providers, plus software, service and replacement parts.",
       "strength": "Combines optical inspection, metrology and process-data analytics, serving both device scaling and multi-chip advanced packaging.",
       "risks": "Semiconductor spending cycles, large-customer orders and export controls affect demand; qualification delays and component shortages can shift revenue timing.",
-      "competition": "Competes with large equipment vendors and specialists across defect inspection, dimensional metrology, lithography control and advanced-packaging inspection.",
+      "competition": "Examples include KLA in semiconductor inspection and metrology, and Nova in critical-dimension and thin-film metrology. Both explicitly name Onto Innovation in annual filings. Defect inspection, dimensional measurement and packaging applications have different equipment requirements.",
       "relationships": "Supplies tools and software to wafer fabs and assembly-and-test providers, then supports production through service and replacement parts."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Process-control equipment vendors",
-          "nameJa": "工程管理装置メーカー",
+          "kind": "company",
+          "name": "KLA",
           "role": "competitor",
           "label": {
-            "ja": "検査・計測装置で競合",
-            "en": "Inspection and metrology"
+            "ja": "半導体の検査・計測で競合。KLAの開示",
+            "en": "Semiconductor inspection and metrology; KLA names Onto"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "KLAC"
         },
         {
-          "kind": "industry",
-          "name": "Advanced-packaging inspection vendors",
-          "nameJa": "先端パッケージ検査メーカー",
+          "kind": "company",
+          "name": "Nova",
           "role": "competitor",
           "label": {
-            "ja": "パッケージ検査で競合",
-            "en": "Advanced-packaging inspection"
+            "ja": "寸法・薄膜などの計測で競合。Novaの開示",
+            "en": "Critical-dimension and thin-film metrology; Nova names Onto"
           },
           "sourceIndexes": [
-            0
-          ]
+            2
+          ],
+          "ticker": "NVMI"
         }
       ],
       "relationships": [
@@ -14784,11 +14761,15 @@
       "TEL"
     ],
     "name": "TE Connectivity",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1385157/000110465925109150/tel-20250926x10k.htm"
+      },
+      {
+        "label": "TE Connectivity FY2025 Annual Report · Segment competitors",
+        "url": "https://www.te.com/content/dam/te-com/documents/about-te/our-company/global/annual-report/te-connectivity-annual-report-2025.pdf"
       }
     ],
     "ja": {
@@ -14796,7 +14777,7 @@
       "revenue": "輸送機器、産業機器、通信・データ機器メーカーへ接続部品、センサー、工具を大量供給して稼ぐ。",
       "strength": "厳しい温度・振動・小型化条件に合わせて接続部品を設計し、顧客製品へ認定された部品を世界各地で量産できる。",
       "risks": "自動車・産業需要、顧客プログラム、原材料価格、関税、工場移管、品質、買収統合と販売代理店在庫に左右される。",
-      "competition": "コネクター、センサー、リレー、端子加工工具で大手接続部品メーカーや専門会社と競う。",
+      "competition": "接続部品ではAmphenolとMolexが競合例。TE自身の年次報告が輸送・産業の両分野で実名を挙げている。データ機器、自動車、工場などでは用途・認定条件が異なり、全てのコネクターやセンサーで競うわけではない。",
       "relationships": "自動車・産業・通信機器メーカーへ接続部品を供給し、金属、樹脂、電子部品と製造設備を外部調達する。"
     },
     "en": {
@@ -14804,22 +14785,34 @@
       "revenue": "Supplies high volumes of connectivity parts, sensors and tooling to transportation, industrial and communications-equipment manufacturers.",
       "strength": "Engineers connections for harsh temperature, vibration and space constraints, qualifies into customer platforms and manufactures globally.",
       "risks": "Auto and industrial demand, customer programs, materials, tariffs, factory transfers, quality, acquisitions and channel inventory affect results.",
-      "competition": "Competes in connectors, sensors, relays and application tooling with broad connectivity companies and specialists.",
+      "competition": "TE names Amphenol and Molex among competitors in both transportation and industrial markets. Connectivity requirements differ across data networks, vehicles and factories; this does not equate all connector, sensor and relay products.",
       "relationships": "Supplies connectivity products to automotive, industrial and communications makers and sources metals, resins, electronics and equipment."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Connector, sensor and relay manufacturers",
-          "nameJa": "コネクター・センサー・リレーメーカー",
+          "kind": "company",
+          "name": "Amphenol",
           "role": "competitor",
           "label": {
-            "ja": "接続・センシング部品で競合",
-            "en": "Connectivity and sensing"
+            "ja": "接続部品で競合。TE自身の年次報告",
+            "en": "Connectivity components; TE’s annual report"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "APH"
+        },
+        {
+          "kind": "company",
+          "name": "Molex",
+          "role": "competitor",
+          "label": {
+            "ja": "輸送・産業向け接続部品で競合。TEの開示",
+            "en": "Transportation and industrial connectivity; TE’s disclosure"
+          },
+          "sourceIndexes": [
+            1
           ]
         }
       ],
@@ -20885,11 +20878,19 @@
       "CXM"
     ],
     "name": "Sprinklr",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm"
+      },
+      {
+        "label": "Sprout Social FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm"
+      },
+      {
+        "label": "Salesforce FY2026 Form 10-K · Customer-service products",
+        "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
       }
     ],
     "ja": {
@@ -20897,7 +20898,7 @@
       "revenue": "クラウドソフトの継続利用料が中心で、導入・設定などの支援も販売する。企業が追加製品を使い、別の部門や国へ展開することで契約を広げる。",
       "strength": "多数のSNS・デジタル窓口で得た反応をまとめ、分析と実際の顧客対応へつなげられる。大企業の承認・権限・多言語対応を同じ仕組みで管理し、部門間の情報の分断を減らす。",
       "risks": "大企業への大型契約は販売・導入に時間がかかり、更新や追加購入の減少が収益に響く。SNSのデータ提供条件の変更、複雑な製品の導入、顧客データの保護も課題になる。",
-      "competition": "SNS管理・評判分析、顧客窓口、マーケティングの専用サービスや、顧客管理ソフトの付属機能と競う。一つの用途に強い製品と、複数部門を統合する基盤の両方が比較対象。",
+      "competition": "SNS管理・反応分析ではSprout Social、顧客対応ソフトではSalesforceが競合例。Sprout SocialはSprinklrを実名で列挙。Salesforceは両社の公表する顧客対応製品を比較したもので、ソフト連携があっても一部機能では競合する。",
       "relationships": "Salesforce、Microsoft、Adobe、Google、Oracle、SAP、ServiceNowなどの業務・分析ソフトと接続する。大企業の顧客対応や販促部門へ提供し、連携先が顧客であるとは断定しない。"
     },
     "en": {
@@ -20905,49 +20906,37 @@
       "revenue": "Earns cloud subscription fees and deployment or configuration service revenue. Expands through additional products and adoption across departments and countries.",
       "strength": "Turns social and digital feedback into analysis and customer responses. Shared permissions, approvals and multilingual workflows reduce information fragmentation in large enterprises.",
       "risks": "Large enterprise contracts require lengthy sales and deployment work. Weaker renewals or expansion, changes in social-data access, deployment complexity and sensitive-data protection are risks.",
-      "competition": "Competes with specialist social-management, listening, contact-center and marketing tools, plus built-in CRM capabilities. Buyers compare focused products with cross-department platforms.",
+      "competition": "Examples include Sprout Social in social management and listening, and Salesforce in customer-service software. Sprout explicitly names Sprinklr. Salesforce is a comparison of disclosed service products; software integration can coexist with competition in selected capabilities.",
       "relationships": "Connects with Salesforce, Microsoft, Adobe, Google, Oracle, SAP and ServiceNow business and analytics systems. Serves enterprise service and marketing teams; connectivity is not evidence of a customer contract."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Social-management and listening vendors",
-          "nameJa": "SNS管理・評判分析サービス会社",
+          "kind": "company",
+          "name": "Sprout Social",
           "role": "competitor",
           "label": {
-            "ja": "投稿管理・顧客の反応分析で競合",
-            "en": "Publishing and customer-feedback analysis"
+            "ja": "SNS管理・反応分析で競合。Sprout Socialの開示",
+            "en": "Social management and listening; Sprout Social names Sprinklr"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "SPT"
         },
         {
-          "kind": "industry",
-          "name": "Contact-center vendors",
-          "nameJa": "顧客窓口サービス会社",
+          "kind": "company",
+          "name": "Salesforce",
           "role": "competitor",
           "label": {
-            "ja": "電話・デジタルの顧客対応で競合",
-            "en": "Voice and digital customer service"
+            "ja": "顧客対応ソフトで競合。両社の公表製品から比較",
+            "en": "Customer-service software; disclosed-product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "CRM and marketing platforms",
-          "nameJa": "顧客管理・販促ソフト会社",
-          "role": "competitor",
-          "label": {
-            "ja": "顧客管理に付属する対応・販促機能で競合",
-            "en": "Built-in service and marketing capabilities"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "CRM"
         }
       ],
       "relationships": [
@@ -21279,11 +21268,19 @@
       "PCOR"
     ],
     "name": "Procore",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1611052/000162828026011055/pcor-20251231.htm"
+      },
+      {
+        "label": "Autodesk FY2026 Form 10-K · Construction products / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm"
+      },
+      {
+        "label": "Oracle · Construction and engineering products",
+        "url": "https://www.oracle.com/ca-en/construction-engineering/"
       }
     ],
     "ja": {
@@ -21291,7 +21288,7 @@
       "revenue": "ソフトの継続利用料がほぼ全ての収益源。契約する製品の組み合わせと、基盤上で管理する工事金額などを基に料金を決める。案件や使う機能を増やすと契約拡大につながる。",
       "strength": "工事に関わる多くの会社を同じ情報へつなぎ、図面の取り違えや報告の行き違いを減らす。会計・文書・工程管理などの他ソフトとも接続し、工事の記録を共通の基盤に蓄積できる。",
       "risks": "建設案件の延期や減少、顧客の資金繰りが契約規模に影響する。現場への導入・定着に時間がかかり、データの誤りや障害は工事を妨げる。AWSなど外部の稼働基盤にも依存する。",
-      "competition": "建設管理をまとめたソフト、会計ソフトの工事管理機能、図面・入札・工程などの専用ツールと競う。紙、メール、表計算を使い続ける現場を置き換えることも必要になる。",
+      "competition": "建設プロジェクト管理ではAutodeskとOracleが競合例。Autodeskの年次報告はProcoreを実名で挙げている。OracleはAconexやPrimaveraなどの公表製品との比較で、文書・工程・費用管理など対象機能を分けて見る。",
       "relationships": "発注者、元請け、専門工事会社へ建設管理を提供し、AWSが主なクラウド稼働基盤を担う。会計・文書・工程ソフトとの連携で現場と事務をつなぎ、参加企業がすべて直接の契約者とは限らない。"
     },
     "en": {
@@ -21299,49 +21296,37 @@
       "revenue": "Generates substantially all revenue from software subscriptions. Pricing generally reflects product mix and contracted construction volume managed on the platform, with expansion through more projects or capabilities.",
       "strength": "Brings multiple project participants to the same records, reducing document mismatches and communication gaps. Integrates accounting, document and scheduling tools into a shared construction system of record.",
       "risks": "Project delays, lower construction activity and customers’ finances can reduce contract size. Deployment and adoption take time; data errors, outages and reliance on AWS can disrupt projects.",
-      "competition": "Competes with broad construction suites, accounting products with project features and specialized drawing, bidding or scheduling tools. Paper, email and spreadsheets remain alternative workflows.",
+      "competition": "Autodesk and Oracle are examples in construction project management. Autodesk explicitly names Procore. Oracle is a comparison with disclosed Aconex and Primavera products; document, scheduling and cost-management functionality should be compared separately.",
       "relationships": "Serves owners, general contractors and specialty contractors, with AWS providing primary hosting. Integrations connect field and office systems; not every project participant is a direct contracting customer."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Construction-management suites",
-          "nameJa": "建設管理ソフト会社",
+          "kind": "company",
+          "name": "Autodesk",
           "role": "competitor",
           "label": {
-            "ja": "工事全体の情報管理で競合",
-            "en": "Project-wide construction management"
+            "ja": "建設プロジェクト管理で競合。AutodeskがProcoreを明記",
+            "en": "Construction project management; Autodesk names Procore"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "ADSK"
         },
         {
-          "kind": "industry",
-          "name": "Accounting and specialist construction tools",
-          "nameJa": "会計・工事専用ツール",
+          "kind": "company",
+          "name": "Oracle",
           "role": "competitor",
           "label": {
-            "ja": "原価・図面・入札・工程などで競合",
-            "en": "Costs, drawings, bidding and scheduling"
+            "ja": "Aconex・Primaveraの文書・工程管理などで競合。製品比較",
+            "en": "Aconex and Primavera document and scheduling tools; product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Manual project workflows",
-          "nameJa": "紙・メール・表計算による管理",
-          "role": "competitor",
-          "label": {
-            "ja": "従来の現場管理が代替手段",
-            "en": "Existing manual project management"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "ORCL"
         }
       ],
       "relationships": [
@@ -23707,6 +23692,14 @@
       {
         "label": "JD.com Q2 and interim 2026 results",
         "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526347753/d143720dex991.htm"
+      },
+      {
+        "label": "PDD FY2025 Form 20-F · Pinduoduo commerce products",
+        "url": "https://www.sec.gov/Archives/edgar/data/1737806/000110465926050727/pdd-20251231x20f.htm"
+      },
+      {
+        "label": "Meituan FY2025 Annual Report · Food delivery and quick commerce",
+        "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042400179.pdf"
       }
     ],
     "ja": {
@@ -23714,7 +23707,7 @@
       "revenue": "主に商品の直販売上。出店者の販売・広告手数料、物流などのサービス収入もある。取扱高や顧客の決済額とは異なる。",
       "strength": "調達から倉庫・配送まで運営し、商品管理と配達品質をまとめて改善できる。",
       "risks": "価格競争、在庫と物流費、食品配達など新規事業への投資が負担。消費の弱さや規制にも左右される。",
-      "competition": "総合・専門通販、実店舗、物流サービスなど。価格に加え、品揃えや配達速度でも競争する。",
+      "competition": "中国の総合通販ではAlibabaとPDD傘下のPinduoduo、食品配達・即時配送ではMeituanが競合例。JDはAlibabaを競合として明記。PinduoduoとMeituanは両社の公表サービスの比較で、商品販売と食品配達は異なる分野として見る。",
       "relationships": "メーカーや卸から商品を調達。TencentとはWeixinへの入口、クラウド、広告などで協業する。"
     },
     "en": {
@@ -23722,33 +23715,49 @@
       "revenue": "Primarily product sales, alongside marketplace, advertising and logistics fees; transaction volume is not revenue.",
       "strength": "Controls procurement, warehouses and delivery to coordinate product quality and fulfillment.",
       "risks": "Price competition, inventory, logistics costs, new-business investment and weak consumption pressure results.",
-      "competition": "Competes with general and specialist retailers, physical stores and logistics providers.",
+      "competition": "Examples include Alibaba and PDD’s Pinduoduo in Chinese e-commerce, and Meituan in food delivery and quick commerce. JD explicitly names Alibaba. Pinduoduo and Meituan are comparisons of disclosed service portfolios across distinct retail and delivery markets.",
       "relationships": "Buys from manufacturers and distributors. Tencent cooperates on Weixin access, cloud, advertising and other services."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Online and physical retailers",
+          "kind": "company",
+          "name": "Alibaba",
           "role": "competitor",
           "label": {
-            "ja": "価格・品揃え・買い物体験で競争",
-            "en": "Competes on pricing, selection and shopping experience"
+            "ja": "中国の総合通販で競合。JDがAlibabaを実名で列挙",
+            "en": "Chinese general merchandise e-commerce; JD explicitly names Alibaba"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "BABA"
         },
         {
-          "kind": "industry",
-          "name": "Logistics providers",
+          "kind": "company",
+          "name": "PDD Holdings",
           "role": "competitor",
           "label": {
-            "ja": "配送・物流サービスで競争",
-            "en": "Competes in delivery and logistics"
+            "ja": "Pinduoduoの通販で競合。両社の公表サービスを比較",
+            "en": "Pinduoduo e-commerce; disclosed-service comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
+          ],
+          "ticker": "PDD"
+        },
+        {
+          "kind": "company",
+          "name": "Meituan",
+          "role": "competitor",
+          "label": {
+            "ja": "食品配達・即時配送で競合。両社の公表サービスを比較",
+            "en": "Food delivery and quick commerce; disclosed-service comparison"
+          },
+          "sourceIndexes": [
+            1,
+            3
           ]
         }
       ],
@@ -23938,6 +23947,14 @@
       {
         "label": "Walmart FY2027 Q2 results",
         "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000145/earningsreleasefy27q2.htm"
+      },
+      {
+        "label": "Costco FY2026 Form 10-K · Walmart and Sam’s Club competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+      },
+      {
+        "label": "Amazon FY2025 Form 10-K · Online and physical stores",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
       }
     ],
     "ja": {
@@ -23945,7 +23962,7 @@
       "revenue": "主に食品・日用品などの商品販売。会費、広告、出店者向け配送・販売支援も収入源で、会費だけで稼ぐ会社ではない。",
       "strength": "大規模な調達と店舗網を持ち、店舗を受け取り・配送の拠点にも使える。",
       "risks": "消費の弱さ、人件費・物流費、関税、商品安全やシステム障害が収益に影響する。",
-      "competition": "スーパー、通販、会員制倉庫型店など。広告や配送でも他社サービスと競争する。",
+      "competition": "会員制店舗ではSam’s ClubとCostco、総合小売・通販ではAmazonなどが競合例。CostcoはWalmartとSam’s Clubを実名で挙げている。Amazonは両社が公表する店舗・通販事業の比較で、広告や配送など全事業を同一視しない。",
       "relationships": "国内外のメーカー・卸から調達し、出店者には広告・配送を提供。非開示の供給会社名は推測しない。"
     },
     "en": {
@@ -23953,34 +23970,37 @@
       "revenue": "Mostly merchandise sales, plus memberships, advertising and merchant services.",
       "strength": "Purchasing scale and stores support shopping, pickup and local delivery.",
       "risks": "Consumption, labor and logistics costs, tariffs, product safety and system disruption affect returns.",
-      "competition": "Competes with retailers, marketplaces, warehouse clubs, advertising and fulfillment providers.",
+      "competition": "Examples include Costco versus Sam’s Club in membership warehouses, and Amazon in general merchandise and online retail. Costco explicitly names Walmart and Sam’s Club. Amazon is a comparison of disclosed retail businesses, rather than every advertising or delivery service.",
       "relationships": "Sources merchandise from domestic and international suppliers and provides services to marketplace sellers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Retailers and marketplaces",
+          "kind": "company",
+          "name": "Costco",
           "role": "competitor",
           "label": {
-            "ja": "価格・品揃え・利便性で競争",
-            "en": "Competes on price, selection and convenience"
+            "ja": "Sam’s Clubと会員制倉庫店などで競合。Costcoの開示",
+            "en": "Membership warehouses versus Sam’s Club; Costco names Walmart"
           },
           "sourceIndexes": [
-            0
-          ]
+            2
+          ],
+          "ticker": "COST"
         },
         {
-          "kind": "industry",
-          "name": "Membership warehouse clubs",
+          "kind": "company",
+          "name": "Amazon",
           "role": "competitor",
           "label": {
-            "ja": "会員制の小売で競争",
-            "en": "Competes in membership retail"
+            "ja": "店舗・通販の総合小売で競合。公表事業の比較",
+            "en": "General merchandise in online and physical stores; disclosed-business comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "AMZN"
         }
       ],
       "relationships": [

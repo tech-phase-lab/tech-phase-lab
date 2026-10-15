@@ -21,10 +21,12 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-currently records 16 corrections and 97 remaining industry-only issuers.
+records 36 issuers with published competitor corrections and 78 remaining
+industry-only issuers after the batches below. These are corrections, not a claim
+of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
 
-The next correction batch reviews COST, MSFT, GOOG/GOOGL, AMZN, AVGO, DELL,
+A published correction batch reviewed COST, MSFT, GOOG/GOOGL, AMZN, AVGO, DELL,
 ETN, CRWD, CRM, TXN, ADI, MCHP and SNPS (13 existing issuers; no additions).
 Each named rivalry links to a primary annual filing and identifies the product
 area. Where a peer makes the disclosure, both languages and the map label say so.
@@ -63,7 +65,7 @@ Completion requires a content review, not just one named competitor. Track
 mixed named/industry lists and omitted-peer candidates separately from the
 industry-only issuers.
 
-The next reviewed correction batch covers AAPL, META, BABA, COHR, ZS, DDOG,
+A published reviewed correction batch covers AAPL, META, BABA, COHR, ZS, DDOG,
 MDB, ADBE, TEAM, HUBS and GLW (11 existing issuers; no additions). It replaces
 nine industry-only lists, leaving 88, and retains every previously named rival.
 BABA now distinguishes JD.com and Pinduoduo in e-commerce, Meituan in quick
@@ -75,6 +77,18 @@ These are representative product-specific examples, not exhaustive lists.
 Apple wearables and service-specific competition still require further review.
 Reviewed on 2026-10-15; all other editorial answers and the frozen NVDA payload
 are preserved.
+
+The subsequent batch corrects TSM, INTU, TWLO, ONTO, TEL, NET, CXM, PCOR,
+WMT and JD (10 existing issuers; no additions). Explicit peer disclosures are
+attributed; official product comparisons identify their product scope. TSM's
+rivals are limited to leading-edge foundry examples, and rivalry does not imply
+an additional manufacturing contract. Cloudflare comparisons identify CDN,
+zero-trust and compute products without adopting vendor superiority claims.
+Existing non-competition answers, relationships and the frozen NVDA map remain
+unchanged. Selection notes retain follow-up work for product areas not covered
+by these representative examples, including Intuit marketing and JD logistics.
+Do not copy old corporate names or segments without checking later divestitures.
+Reviewed on 2026-10-15.
 
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
