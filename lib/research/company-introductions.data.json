@@ -10318,7 +10318,7 @@
       "revenue": "予約金額に対するサービス料が中心で、宿泊開始時に売上を認識する。2025年からホスト側の単一料金へ移行を始めた。",
       "strength": "世界中の多様な宿泊在庫と強いブランド、ホストとゲストが互いを呼ぶネットワーク、決済・安全支援を一体で持つ。",
       "risks": "短期賃貸規制、安全事故、不正、旅行需要の変動、ホスト不足、保険・決済費、地域ごとの法令が成長を左右する。",
-      "competition": "宿泊予約ではBooking HoldingsのBooking.com、貸切住宅ではExpedia GroupのVrbo、ホテル滞在ではMarriottのホテル群が比較例。Airbnbの開示する競合分野と相手側の公式サービスを照合した編集上の比較で、ホテルと民泊の全体が同じ商品ではない。既存のAlphabet／Googleも旅行検索での競合として保持する。体験予約やホスト獲得は別に確認する。",
+      "competition": "宿泊予約ではBooking HoldingsのBooking.com、貸切住宅ではExpedia GroupのVrbo、ホテル滞在ではMarriottのホテル群が比較例。Airbnbの開示する競合分野と相手側の公式サービスを照合した編集上の比較で、ホテルと民泊の全体が同じ商品ではない。Alphabet／Googleとは旅行検索で競合する。体験予約やホスト獲得は別に確認する。",
       "relationships": "ホストの宿泊・体験・サービスをゲストへ仲介し、カード網、銀行、決済会社を通じて代金を回収・送金する。"
     },
     "en": {
@@ -10326,7 +10326,7 @@
       "revenue": "Earns mainly service fees tied to bookings and recognizes revenue at check-in; it began shifting toward a host-only single-fee structure in 2025.",
       "strength": "Combines diverse global inventory, a strong brand, host-guest network effects, payments and trust support.",
       "risks": "Short-term rental rules, safety incidents, fraud, travel demand, host supply, insurance, payments and local laws can constrain growth.",
-      "competition": "Accommodation examples are Booking Holdings’ Booking.com, Expedia Group’s Vrbo whole-home rentals and Marriott hotels. These are editorial comparisons of official services with Airbnb’s competitive categories; hotels and home stays are not identical products. Alphabet/Google is retained for travel-search competition. Experiences and host acquisition require separate review.",
+      "competition": "Accommodation examples are Booking Holdings’ Booking.com, Expedia Group’s Vrbo whole-home rentals and Marriott hotels. These are editorial comparisons of official services with Airbnb’s competitive categories; hotels and home stays are not identical products. Alphabet/Google also competes in travel search. Experiences and host acquisition require separate review.",
       "relationships": "Matches host stays, experiences and services with guests and uses card networks, banks and processors to collect and remit payments."
     },
     "maps": {
@@ -10336,8 +10336,8 @@
           "name": "Alphabet",
           "role": "competitor",
           "label": {
-            "ja": "旅行・宿泊の検索。Airbnbの既存実名開示を保持",
-            "en": "Travel/accommodation search; existing named disclosure retained"
+            "ja": "旅行・宿泊の検索。Airbnb自身の実名開示",
+            "en": "Travel/accommodation search; Airbnb named disclosure"
           },
           "sourceIndexes": [
             0
@@ -10452,7 +10452,7 @@
       "revenue": "Premiumなどの月額契約が中心で、無料版では音声・動画・表示広告を広告主や代理店へ販売する。",
       "strength": "大きな利用者基盤と再生データを使った推薦、無料版から有料版へ移す導線、複数音声形式を一つに集める点が強い。",
       "risks": "レーベル・出版社への権利料、契約更新、Appleなど端末基盤との競争、値上げ・解約、広告市況が利益を左右する。",
-      "competition": "音楽ではApple Music・YouTube Music・Amazon Music、音声書籍ではApple Books・Amazon Audibleなどが競合例。Spotify自身の分野別開示に基づく。以前の本文のMetaとByteDanceも保持し、Facebook等やTikTok・Douyinなどで利用時間や広告予算を争う文脈で区別する。これらを有料音楽サービスと同じ商品とは扱わない。",
+      "competition": "音楽ではApple Music・YouTube Music・Amazon Music、音声書籍ではApple Books・Amazon Audibleなどが競合例。Spotify自身の分野別開示に基づく。MetaとByteDanceとは、Facebook等やTikTok・Douyinなどで利用時間や広告予算を争う文脈で区別する。これらを有料音楽サービスと同じ商品とは扱わない。",
       "relationships": "レーベル、出版社、制作者から音源・番組の権利を得て利用者へ配信し、通信会社経由でも有料契約を販売する。"
     },
     "en": {
@@ -10460,7 +10460,7 @@
       "revenue": "Earns mainly monthly Premium and related subscriptions, while the free service sells audio, video and display ads to brands and agencies.",
       "strength": "A large user base, personalization data, free-to-paid conversion and multiple audio formats reinforce engagement.",
       "risks": "Label and publisher royalties, contract renewals, competition from device platforms, price-related churn and ad markets can affect profits.",
-      "competition": "Music examples are Apple Music, YouTube Music and Amazon Music; audiobook examples include Apple Books and Amazon Audible, based on Spotify’s own field-specific disclosures. Prior prose names Meta and ByteDance are retained for competition over attention and advertising through Facebook and short-video products such as TikTok/Douyin. These are not treated as identical paid-music services.",
+      "competition": "Music examples are Apple Music, YouTube Music and Amazon Music; audiobook examples include Apple Books and Amazon Audible, based on Spotify’s own field-specific disclosures. Meta and ByteDance also compete for attention and advertising through Facebook and short-video products such as TikTok/Douyin. These are not treated as identical paid-music services.",
       "relationships": "Licenses music and programs from labels, publishers and creators, distributes them to listeners and also sells subscriptions through telecom partners."
     },
     "maps": {
@@ -10470,8 +10470,8 @@
           "name": "Alphabet",
           "role": "competitor",
           "label": {
-            "ja": "YouTube Music・YouTube、広告。在来の実名を保持",
-            "en": "YouTube Music/YouTube and ads; prior named peer retained"
+            "ja": "YouTube Music・YouTubeと広告。Spotifyの実名開示",
+            "en": "YouTube Music/YouTube and ads; Spotify named disclosure"
           },
           "sourceIndexes": [
             0
@@ -22327,7 +22327,7 @@
       "revenue": "基本の仕事管理は利用者数とプランに応じた継続料金。AI StudioとAI Teammatesは使用量に応じた方式も採り、無料利用からの有料化や組織内の利用拡大が収益につながる。",
       "strength": "誰が何を担当し、どの目標や作業につながるかをWork Graphで結び付ける。部門ごとの別々の道具をつなぎ、進捗や遅れの影響を組織全体で把握できる。",
       "risks": "有料化や社内での利用拡大が止まると成長が鈍る。無料・付属ツールとの競争、販売費用、AI処理費用と誤動作も課題。AIによる自動化を顧客が継続して使う価値へ変えられるかが重要。",
-      "competition": "monday.comの業務管理、Microsoft Plannerのタスク・プロジェクト管理、AtlassianのJira・Trelloが競合例。monday.comは相手側年次報告の実名記載、MicrosoftとAtlassianはAsanaの開示する分野と公式製品を照合した編集上の比較。Teams・Jiraなどの既存連携はそのまま保持し、競合と連携が併存することを区別する。",
+      "competition": "monday.comの業務管理、Microsoft Plannerのタスク・プロジェクト管理、AtlassianのJira・Trelloが競合例。monday.comは相手側年次報告の実名記載、MicrosoftとAtlassianはAsanaの開示する分野と公式製品を照合した編集上の比較。Teams・Jiraなどとの連携と、製品分野ごとの競合が併存する。",
       "relationships": "AWSがサービスの稼働基盤を提供する。Microsoft Teams、SalesforceのSlack、AtlassianのJiraなどと製品連携し、OpenAIとAnthropicのモデルをAI機能に使う。"
     },
     "en": {
@@ -22335,7 +22335,7 @@
       "revenue": "Earns seat-based work-management subscriptions and consumption-based AI fees, supported by paid conversion and expansion.",
       "strength": "Work Graph links people, tasks and goals to show progress and dependencies across departments.",
       "risks": "Paid conversion, expansion, bundled alternatives, sales costs and reliable, cost-effective AI adoption are challenges.",
-      "competition": "Examples are monday.com work management, Microsoft Planner task/project management, and Atlassian Jira/Trello. monday.com names Asana in its annual report; Microsoft/Atlassian are editorial comparisons of official products with Asana’s disclosed categories. Existing Teams/Jira integrations are retained: integration and competition can coexist.",
+      "competition": "Examples are monday.com work management, Microsoft Planner task/project management, and Atlassian Jira/Trello. monday.com names Asana in its annual report; Microsoft/Atlassian are editorial comparisons of official products with Asana’s disclosed categories. Teams/Jira integration and product-specific competition can coexist.",
       "relationships": "AWS hosts its platform. Integrates with Teams, Slack and Jira, and uses OpenAI and Anthropic models for AI features."
     },
     "maps": {
@@ -26121,7 +26121,7 @@
       "revenue": "パークの入場券、ホテルやクルーズ、配信の会員料、広告、映画の興行・販売、キャラクター使用料などが収益源。一つの作品を映像だけで終わらせず、体験や商品にも展開する。",
       "strength": "世代を超えて知られるキャラクターと作品群を持つ。映画が入口となって配信、旅行、商品へ利用が広がり、他社が短期間では作れないブランドと施設を組み合わせられる。",
       "risks": "映画や配信作品は制作費が大きく、ヒットしても十分な利益が出るとは限らない。スポーツ放映権の高騰と従来型テレビの契約減少が重荷となり、パークは景気・旅行費用・悪天候に影響される。",
-      "competition": "映像配信ではNetflix、Amazon Prime Video、Comcast傘下Peacock、映画ではSonyとUniversal、テーマパークではComcast傘下Universal、スポーツ配信ではPrime VideoとNBC／Peacockが比較例。公式製品に基づく編集上の比較と、既存のSony側開示を区別する。ComcastのNBCUniversal・Sky分離は2026年6月に計画発表、約1年後の完了予定で、現在の親会社を維持する。",
+      "competition": "映像配信ではNetflix、Amazon Prime Video、Comcast傘下Peacock、映画ではSonyとUniversal、テーマパークではComcast傘下Universal、スポーツ配信ではPrime VideoとNBC／Peacockが比較例。公式製品に基づく編集上の比較と、Sony側の実名開示を区別する。ComcastのNBCUniversal・Sky分離は2026年6月に計画発表、約1年後の完了予定で、現在の親会社を維持する。",
       "relationships": "Apple、Amazon、Comcastなどを通じて映像を届け、NFLなどからスポーツ放映権を得る。東京ディズニーリゾートはオリエンタルランドが所有・運営し、Disneyはライセンスに基づく使用料を受け取る。"
     },
     "en": {
@@ -26129,7 +26129,7 @@
       "revenue": "Earns from park admissions, hotels, cruises, subscriptions, advertising, theatrical and content distribution, and licensing. A successful property can generate revenue across media, experiences and merchandise.",
       "strength": "Combines enduring characters and franchises with distribution and physical destinations. Films can feed streaming, travel and merchandise demand, supported by brands and infrastructure that take years to build.",
       "risks": "Content is expensive and hits do not guarantee attractive returns. Sports-rights inflation and declining traditional-TV subscriptions add pressure; parks depend on travel spending, economic conditions and weather.",
-      "competition": "Examples are Netflix, Amazon Prime Video and Comcast’s Peacock in streaming; Sony/Universal in film; Universal in theme parks; and Prime Video/NBC/Peacock in sports. These official-product comparisons are distinguished from the existing Sony-side disclosure. Comcast announced a planned NBCUniversal/Sky separation in June 2026, expected in approximately one year; current ownership is retained.",
+      "competition": "Examples are Netflix, Amazon Prime Video and Comcast’s Peacock in streaming; Sony/Universal in film; Universal in theme parks; and Prime Video/NBC/Peacock in sports. These official-product comparisons are distinguished from Sony-side disclosure. Comcast announced a planned NBCUniversal/Sky separation in June 2026, expected in approximately one year; current ownership is retained.",
       "relationships": "Distributes content through Apple, Amazon, Comcast and other outlets, and licenses sports rights from organizations such as the NFL. Oriental Land owns and operates Tokyo Disney Resort and pays Disney royalties."
     },
     "maps": {
@@ -26139,8 +26139,8 @@
           "name": "Sony Group",
           "role": "competitor",
           "label": {
-            "ja": "映画・映像制作。既存のSony側開示を保持",
-            "en": "Film/content production; prior Sony-side disclosure retained"
+            "ja": "映画・映像制作。Sony側の実名開示",
+            "en": "Film/content production; Sony-side named disclosure"
           },
           "sourceIndexes": [
             1
