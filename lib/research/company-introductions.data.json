@@ -8101,6 +8101,10 @@
       {
         "label": "BILL FY2026 Form 10-K · QuickBooks bill payment competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm"
+      },
+      {
+        "label": "Intuit Mailchimp · HubSpot email marketing and automation comparison",
+        "url": "https://mailchimp.com/resources/mailchimp-vs-hubspot/"
       }
     ],
     "ja": {
@@ -8108,7 +8112,7 @@
       "revenue": "会計・給与・税務ソフトのサブスク、決済手数料、融資、確定申告支援、金融商品の送客、マーケティングサービスから稼ぐ。",
       "strength": "会計、給与、決済、税務、融資を同じ顧客データでつなぎ、専門家支援とAIを組み合わせられる。",
       "risks": "無料の税務・会計サービス、政府の直接申告、税制変更、信用・決済損失、重要な税務シーズンの障害が業績に影響する。",
-      "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILLが競合例。税務は両社の公表製品を比較したもの。BILLはQuickBooks内蔵の請求書決済を競合として説明している。税務、会計、決済は分けて比べる。",
+      "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILL、メール販促・自動化ではMailchimpとHubSpotが競合例。税務は公表製品の比較、BILLは相手側の開示、HubSpotはMailchimp自身の比較資料が根拠。製品分野を分けて見る。",
       "relationships": "中小企業、会計士、納税者へソフトと専門家支援を提供し、銀行・カード・保険会社へCredit Karma利用者を送客する。"
     },
     "en": {
@@ -8116,7 +8120,7 @@
       "revenue": "Earns from accounting, payroll and tax subscriptions, payments, lending, assisted tax, financial-product referrals and marketing services.",
       "strength": "Connects accounting, payroll, payments, tax and lending on shared customer data and combines software with experts and AI.",
       "risks": "Free tax and accounting tools, government direct filing, tax-law changes, credit and payment losses and peak-season outages can affect results.",
-      "competition": "Examples include H&R Block versus TurboTax in tax preparation, and BILL versus QuickBooks bill payment. The tax comparison uses disclosed product portfolios; BILL specifically describes competition from native QuickBooks bill payment. These are distinct product markets.",
+      "competition": "Examples include H&R Block versus TurboTax in tax preparation, BILL versus QuickBooks bill payment, and HubSpot versus Mailchimp in email marketing and automation. Tax is a disclosed-product comparison, BILL is peer-side disclosure, and Mailchimp publishes its own HubSpot comparison. These are separate product markets.",
       "relationships": "Serves small businesses, accountants and taxpayers and refers Credit Karma users to banks, card issuers and insurers."
     },
     "maps": {
@@ -8147,6 +8151,20 @@
             2
           ],
           "ticker": "BILL"
+        },
+        {
+          "kind": "company",
+          "name": "HubSpot",
+          "ticker": "HUBS",
+          "role": "competitor",
+          "label": {
+            "ja": "Mailchimpのメール販促・自動化で競合。Mailchimp自身の比較",
+            "en": "Mailchimp email marketing and automation; Mailchimp’s own comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ]
         }
       ],
       "relationships": [
@@ -8488,11 +8506,27 @@
       "AKAM"
     ],
     "name": "Akamai Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm"
+      },
+      {
+        "label": "Cloudflare · Akamai CDN product comparison",
+        "url": "https://www.cloudflare.com/cloudflare-vs-akamai/"
+      },
+      {
+        "label": "AWS · CloudFront content delivery",
+        "url": "https://aws.amazon.com/cloudfront/"
+      },
+      {
+        "label": "AWS · Amazon EC2 cloud compute documentation",
+        "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/"
+      },
+      {
+        "label": "F5 · Akamai application and API protection comparison",
+        "url": "https://www.f5.com/products/compare/akamai"
       }
     ],
     "ja": {
@@ -8500,7 +8534,7 @@
       "revenue": "セキュリティ、配信、クラウド計算の利用料や契約料金が中心で、大企業やメディア、SaaS事業者から継続収入を得る。",
       "strength": "利用者に近い多数の拠点と大量通信を処理する運用技術を持ち、配信と防御を同じ基盤で提供できる。",
       "risks": "大手クラウドやCDNとの競争、通信量単価の低下、障害や攻撃、設備投資、通信・データセンター費の上昇が重荷になる。",
-      "competition": "CDN・エッジ配信、Webセキュリティ、クラウド計算の各市場で、大手クラウドや専門事業者と競う。",
+      "competition": "CDNではCloudflareとAWSのCloudFront、クラウド計算ではAWSのEC2、Web・API防御ではF5が競合例。CloudflareとF5はAkamaiを名指しした製品比較を公開。AWSは公表製品を比較したもので、各社の性能・価格の優劣を断定するものではない。",
       "relationships": "通信・データセンター事業者の設備を使い、企業やメディアのコンテンツとアプリを利用者の近くで配信・防御する。"
     },
     "en": {
@@ -8508,49 +8542,51 @@
       "revenue": "Earns recurring and usage-based fees from security, delivery and compute services sold to enterprises, media companies and software providers.",
       "strength": "Combines a widely distributed edge footprint with operating expertise that can deliver and secure high volumes of traffic on one platform.",
       "risks": "Cloud and CDN competition, falling delivery prices, outages, attacks, capital needs and higher network or colocation costs can pressure results.",
-      "competition": "Competes with hyperscalers and specialists across CDN and edge delivery, web security and cloud compute.",
+      "competition": "Examples include Cloudflare and AWS CloudFront in CDN, AWS EC2 in cloud compute, and F5 in web and API protection. Cloudflare and F5 publish comparisons naming Akamai; AWS is an editorial comparison of disclosed products. Vendor superiority claims are not adopted.",
       "relationships": "Uses carrier and data-center infrastructure to deliver and protect enterprise, media and software traffic close to end users."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "CDN and edge providers",
-          "nameJa": "CDN・エッジ配信事業者",
+          "kind": "company",
+          "name": "Cloudflare",
           "role": "competitor",
           "label": {
-            "ja": "エッジ配信・Web防御で競合",
-            "en": "Edge delivery and web security"
+            "ja": "CDNで競合。Cloudflare自身の比較",
+            "en": "CDN; Cloudflare’s comparison naming Akamai"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "NET"
         },
         {
-          "kind": "industry",
-          "name": "Hyperscale cloud platforms",
-          "nameJa": "大手クラウド基盤",
+          "kind": "company",
+          "name": "Amazon",
           "role": "competitor",
           "label": {
-            "ja": "クラウド計算・配信で競合",
-            "en": "Cloud compute and delivery"
+            "ja": "CloudFrontの配信・EC2の計算で競合。公表製品の比較",
+            "en": "CloudFront delivery and EC2 compute; disclosed-product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2,
+            3
+          ],
+          "ticker": "AMZN"
         },
         {
-          "kind": "industry",
-          "name": "Cybersecurity vendors",
-          "nameJa": "サイバーセキュリティ企業",
+          "kind": "company",
+          "name": "F5",
           "role": "competitor",
           "label": {
-            "ja": "アプリ防御で競合",
-            "en": "Application protection"
+            "ja": "Web・API防御で競合。F5自身の製品比較",
+            "en": "Web and API protection; F5’s comparison naming Akamai"
           },
           "sourceIndexes": [
-            0
-          ]
+            4
+          ],
+          "ticker": "FFIV"
         }
       ],
       "relationships": [
@@ -11349,11 +11385,15 @@
       "TER"
     ],
     "name": "Teradyne",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Semiconductor Test / Robotics / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm"
+      },
+      {
+        "label": "Teradyne FY2025 Form 10-K · Segment-specific competitors, page 6",
+        "url": "https://investors.teradyne.com/sec-filings/all-sec-filings/content/0001193125-26-059002/0001193125-26-059002.pdf"
       }
     ],
     "ja": {
@@ -11361,7 +11401,7 @@
       "revenue": "半導体・製品テスト装置と保守、Universal Robotsの協働ロボット、MiRの搬送ロボットの販売で稼ぐ。",
       "strength": "複雑なSoCやメモリーを高速に大量検査する装置、長年の導入実績、世界各地の技術支援が強み。ロボットは扱いやすさを重視する。",
       "risks": "半導体の新製品投入と設備投資に売上が左右され、大口顧客への集中もある。ロボット需要の弱さや部品供給、輸出規制も負担になる。",
-      "competition": "半導体テスト装置では専業メーカー、ロボットでは産業用・協働ロボット各社と、性能、処理量、価格、サポートで競う。",
+      "competition": "半導体テスターではAdvantestとCohu、製品試験ではKeysight、ロボットでは協働アームのDoosan Roboticsや自律搬送のOmronが競合例。いずれもTeradyne自身の年次報告に実名がある。半導体、電子機器の試験、工場の搬送では比較する製品が異なる。",
       "relationships": "半導体メーカーや受託組立・検査会社へテスト装置を供給し、工場や物流現場へ協働・搬送ロボットを販売する。"
     },
     "en": {
@@ -11369,35 +11409,71 @@
       "revenue": "Earns from semiconductor and product-test systems and service, Universal Robots cobots and MiR mobile robots.",
       "strength": "Combines high-throughput testing for complex SoCs and memory with a large installed base and global support; its robots emphasize ease of deployment.",
       "risks": "Revenue depends on semiconductor launches and capital spending and is concentrated among major customers; weak robotics demand, component supply and export controls add risk.",
-      "competition": "Competes with test-equipment specialists and industrial and collaborative robot vendors on performance, throughput, price and support.",
+      "competition": "Teradyne names Advantest and Cohu in semiconductor test, Keysight in product test, Doosan Robotics in collaborative arms and Omron in autonomous mobile robots. These are separate test and automation applications.",
       "relationships": "Supplies testers to chipmakers and outsourced assembly-and-test providers, and sells collaborative and mobile robots into factories and logistics sites."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Semiconductor test vendors",
-          "nameJa": "半導体テスト装置メーカー",
+          "kind": "company",
+          "name": "Advantest",
           "role": "competitor",
           "label": {
-            "ja": "SoC・メモリーテストで競合",
-            "en": "SoC and memory test"
+            "ja": "半導体テスターで競合。Teradyneの開示",
+            "en": "Semiconductor test systems; Teradyne’s disclosure"
           },
           "sourceIndexes": [
-            0
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "Collaborative robot vendors",
-          "nameJa": "協働ロボットメーカー",
+          "kind": "company",
+          "name": "Cohu",
           "role": "competitor",
           "label": {
-            "ja": "工場自動化で競合",
-            "en": "Factory automation"
+            "ja": "半導体テスターで競合。Teradyneの開示",
+            "en": "Semiconductor test systems; Teradyne’s disclosure"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "COHU"
+        },
+        {
+          "kind": "company",
+          "name": "Keysight Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "電子機器などの製品試験で競合。Teradyneの開示",
+            "en": "Product-test equipment; Teradyne’s disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "KEYS"
+        },
+        {
+          "kind": "company",
+          "name": "Doosan Robotics",
+          "role": "competitor",
+          "label": {
+            "ja": "協働ロボットアームで競合。Teradyneの開示",
+            "en": "Collaborative robot arms; Teradyne’s disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Omron",
+          "role": "competitor",
+          "label": {
+            "ja": "自律搬送ロボットで競合。Teradyneの開示",
+            "en": "Autonomous mobile robots; Teradyne’s disclosure"
+          },
+          "sourceIndexes": [
+            1
           ]
         }
       ],
@@ -11523,7 +11599,7 @@
       "ACMR"
     ],
     "name": "ACM Research",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / China risks",
@@ -11535,7 +11611,7 @@
       "revenue": "半導体メーカーへの製造装置販売と、設置後の部品・保守サービスで稼ぐ。洗浄装置が主力で、工程範囲を広げている。",
       "strength": "複数枚のウエハーを効率よく洗う独自技術と、中国の顧客に近い開発・サービス体制。洗浄以外の工程へ製品を広げられる。",
       "risks": "売上と資産が中国に大きく集中し、米中規制、監査・上場制度、輸出管理の影響を受ける。顧客集中と新装置の認定も課題。",
-      "competition": "ウエハー洗浄では海外と中国の装置メーカー、めっき・炉・パッケージ工程では各工程の専門会社と競う。",
+      "competition": "ウエハー洗浄・めっきなどの工程装置ではLam Research、SCREEN、炉装置などではKokusai Semiconductor Equipment、PECVD成膜ではApplied Materialsが競合例。ACM自身の年次報告に実名がある。洗浄、めっき、熱処理、成膜では装置の役割が異なる。",
       "relationships": "主に中国の半導体工場へ洗浄・めっき・熱処理装置を供給し、部品会社から精密機器や材料を調達する。"
     },
     "en": {
@@ -11543,36 +11619,60 @@
       "revenue": "Earns from equipment sales to chipmakers and post-installation parts and service; cleaning remains the core while the process portfolio expands.",
       "strength": "Combines proprietary multi-wafer cleaning technology with engineering and support close to Chinese customers, and can extend into adjacent process steps.",
       "risks": "Revenue and assets are heavily concentrated in China, exposing the company to U.S.-China rules, audit and listing issues and export controls; customer concentration and tool qualification also matter.",
-      "competition": "Competes with international and Chinese cleaning-tool vendors and with specialists in plating, furnace and packaging processes.",
+      "competition": "ACM names Lam Research, SCREEN and Kokusai Semiconductor Equipment among rivals across cleaning, plating and furnace equipment, and Applied Materials in PECVD. These are distinct process-tool categories rather than interchangeable products.",
       "relationships": "Primarily supplies cleaning, plating and thermal-process tools to Chinese fabs and purchases precision components and materials from suppliers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Wafer-cleaning equipment vendors",
-          "nameJa": "ウエハー洗浄装置メーカー",
+          "kind": "company",
+          "name": "Lam Research",
           "role": "competitor",
           "label": {
-            "ja": "洗浄工程で競合",
-            "en": "Wafer cleaning"
+            "ja": "洗浄・めっき等の工程装置で競合。ACMの開示",
+            "en": "Cleaning, plating and related process tools; ACM’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "LRCX"
+        },
+        {
+          "kind": "company",
+          "name": "SCREEN",
+          "role": "competitor",
+          "label": {
+            "ja": "ウエハー洗浄などの工程装置で競合。ACMの開示",
+            "en": "Wafer-cleaning and related process tools; ACM’s disclosure"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Chinese process-tool vendors",
-          "nameJa": "中国の半導体装置メーカー",
+          "kind": "company",
+          "name": "Kokusai Semiconductor Equipment",
           "role": "competitor",
           "label": {
-            "ja": "各製造工程で競合",
-            "en": "Semiconductor process tools"
+            "ja": "炉装置などの工程装置で競合。ACMの開示",
+            "en": "Furnace and related process tools; ACM’s disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "competitor",
+          "label": {
+            "ja": "PECVD成膜装置で競合。ACMの開示",
+            "en": "PECVD deposition equipment; ACM’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMAT"
         }
       ],
       "relationships": [
@@ -12341,11 +12441,23 @@
       "CAMT"
     ],
     "name": "Camtek",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Products / Markets / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/zk2634678.htm"
+      },
+      {
+        "label": "Onto Innovation · Dragonfly G5 advanced-packaging inspection and 3D metrology",
+        "url": "https://ontoinnovation.com/products/dragonfly-g5-inspection/"
+      },
+      {
+        "label": "KLA FY2026 Form 10-K · Advanced-packaging inspection and metrology",
+        "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm"
+      },
+      {
+        "label": "Nova FY2025 Form 20-F · Named process-control and packaging competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm"
       }
     ],
     "ja": {
@@ -12353,7 +12465,7 @@
       "revenue": "半導体メーカーと組立・検査会社へ検査・計測装置を販売し、保守、部品、ソフトの継続収入も得る。",
       "strength": "一台で2D検査と3D計測を組み合わせ、量産速度を保ちながら複雑なパッケージの欠陥と高さを確認できる。",
       "risks": "設備投資の波、大口顧客、輸出規制、イスラエルの地政学、少数の製造委託先に左右される。装置認定の遅れも売上時期を動かす。",
-      "competition": "ウエハー検査、3D計測、先端パッケージ工程で、大手工程管理装置メーカーや専門検査会社と競う。",
+      "competition": "先端パッケージなどの検査・計測ではOnto InnovationとKLA、計測の一部ではNovaが競合例。NovaはCamtekを実名で挙げている。OntoとKLAは両社の公表装置との比較で、欠陥検査と高さ・寸法計測を区別する。",
       "relationships": "半導体工場と組立・検査会社へ装置を供給し、外部メーカーから光学・機械・電子部品を調達して組み立てる。"
     },
     "en": {
@@ -12361,23 +12473,51 @@
       "revenue": "Sells inspection and metrology systems to chipmakers and assembly-and-test providers, with recurring service, parts and software revenue.",
       "strength": "Combines high-throughput 2D inspection and 3D metrology to check defects and height across increasingly complex packages.",
       "risks": "Results depend on fab spending, large customers, export controls, Israeli geopolitical conditions and a limited supplier base; qualification delays can shift revenue timing.",
-      "competition": "Competes with large process-control vendors and inspection specialists in wafer inspection, 3D metrology and advanced packaging.",
+      "competition": "Examples include Onto Innovation and KLA in advanced-packaging inspection and metrology, and Nova in selected metrology applications. Nova explicitly names Camtek. Onto and KLA are editorial comparisons of disclosed tools, distinguishing defect inspection from dimensional and height measurement.",
       "relationships": "Supplies systems to wafer fabs and assembly-and-test providers and sources optical, mechanical and electronic components from external manufacturers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Semiconductor inspection vendors",
-          "nameJa": "半導体検査装置メーカー",
+          "kind": "company",
+          "name": "Onto Innovation",
           "role": "competitor",
           "label": {
-            "ja": "検査・3D計測で競合",
-            "en": "Inspection and 3D metrology"
+            "ja": "先端パッケージの検査・3D計測で競合。公表装置の比較",
+            "en": "Advanced-packaging inspection and 3D metrology; product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "ONTO"
+        },
+        {
+          "kind": "company",
+          "name": "KLA",
+          "role": "competitor",
+          "label": {
+            "ja": "先端パッケージの検査・計測で競合。公表装置の比較",
+            "en": "Advanced-packaging inspection and metrology; product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "KLAC"
+        },
+        {
+          "kind": "company",
+          "name": "Nova",
+          "role": "competitor",
+          "label": {
+            "ja": "パッケージ等の計測で競合。NovaがCamtekを明記",
+            "en": "Packaging and specialty metrology; Nova names Camtek"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "NVMI"
         }
       ],
       "relationships": [
@@ -12416,7 +12556,7 @@
       "NVMI"
     ],
     "name": "Nova",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Solutions / Customers / Competition / Manufacturing / Risk factors",
@@ -12428,7 +12568,7 @@
       "revenue": "半導体メーカーへの計測装置販売と、ソフト、保守、交換部品、既存装置の更新で稼ぐ。",
       "strength": "光学、X線、材料計測と機械学習解析を組み合わせ、微細化した工程や先端パッケージを非破壊で管理できる。",
       "risks": "少数の大口顧客、半導体設備投資、輸出規制、イスラエルの地政学、外部製造・部品供給に業績が左右される。",
-      "competition": "膜厚・寸法・材料計測と工程解析で、大手工程管理装置会社や専門計測メーカーと競う。",
+      "competition": "寸法・薄膜・薬液の工程管理ではOnto InnovationとKLA、装置内の計測ではApplied Materials、ウエハーレベルのパッケージ計測などではCamtekとドイツのMerckが競合例。Nova自身が実名を挙げている。測る対象や工程が異なり、全装置を同じ用途とはみなさない。",
       "relationships": "半導体工場へ装置と解析ソフトを供給し、外部メーカーから光学、X線、電子、機械部品を調達する。"
     },
     "en": {
@@ -12436,19 +12576,70 @@
       "revenue": "Earns from metrology-system sales to semiconductor manufacturers plus software, service, spare parts and installed-base upgrades.",
       "strength": "Combines optical, X-ray and materials metrology with machine-learning analytics to control scaled processes and advanced packaging without damaging wafers.",
       "risks": "A few large customers, semiconductor capital spending, export controls, Israeli geopolitical conditions and outsourced components and manufacturing affect results.",
-      "competition": "Competes with large process-control suppliers and metrology specialists in film, dimensional and materials measurement and process analytics.",
+      "competition": "Nova names Onto Innovation and KLA in dimensional, thin-film and chemical process control; Applied Materials in in-situ metrology; and Camtek and Germany’s Merck in wafer-level packaging and specialty markets. These involve different measurements and process stages.",
       "relationships": "Supplies tools and analytics software to wafer fabs and sources optical, X-ray, electronic and mechanical components externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Semiconductor metrology vendors",
-          "nameJa": "半導体計測装置メーカー",
+          "kind": "company",
+          "name": "Onto Innovation",
           "role": "competitor",
           "label": {
-            "ja": "膜厚・寸法・材料計測で競合",
-            "en": "Film, dimensional and materials metrology"
+            "ja": "寸法・薄膜・薬液の工程管理で競合。Novaの開示",
+            "en": "Dimensional, film and chemical process control; Nova’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ONTO"
+        },
+        {
+          "kind": "company",
+          "name": "KLA",
+          "role": "competitor",
+          "label": {
+            "ja": "寸法・薄膜・薬液の工程管理で競合。Novaの開示",
+            "en": "Dimensional, film and chemical process control; Nova’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "KLAC"
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "competitor",
+          "label": {
+            "ja": "装置内センサー・計測で競合。Novaの開示",
+            "en": "In-situ sensors and metrology; Nova’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "Camtek",
+          "role": "competitor",
+          "label": {
+            "ja": "パッケージ等の計測で競合。Novaの開示",
+            "en": "Packaging and specialty metrology; Nova’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CAMT"
+        },
+        {
+          "kind": "company",
+          "name": "Merck",
+          "role": "competitor",
+          "label": {
+            "ja": "ドイツのMerck。パッケージ等の計測で競合。Novaの開示",
+            "en": "Germany’s Merck; packaging and specialty metrology; Nova’s disclosure"
           },
           "sourceIndexes": [
             0
@@ -12491,7 +12682,7 @@
       "ACLS"
     ],
     "name": "Axcelis Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Ion implantation / Customers / Competition / Supply chain / Risk factors",
@@ -12503,7 +12694,7 @@
       "revenue": "半導体工場へのPurion装置販売に加え、保守、部品、装置改造、訓練で稼ぐ。",
       "strength": "高電流から高エネルギーまで共通設計のPurionシリーズでカバーし、パワー半導体や成熟工程の量産にも対応する。",
       "risks": "設備投資と中国需要、大口顧客、輸出規制、長い認定期間、少数の重要部品供給元に左右される。",
-      "competition": "高電流、中電流、高エネルギーのイオン注入装置で、他の装置メーカーや顧客の既存設備と競う。",
+      "competition": "イオン注入装置ではApplied Materialsが主な競合。Axcelis自身は両社が一通りの注入方式を扱うと説明し、住友重機械イオンテクノロジーと日新イオン機器も実名で挙げている。注入エネルギーや電流、対象材料によって競合する装置は異なる。",
       "relationships": "半導体メーカーへイオン注入装置を供給し、磁石、電源、真空、制御部品を外部供給元から調達する。"
     },
     "en": {
@@ -12511,19 +12702,43 @@
       "revenue": "Earns from Purion system sales to wafer fabs plus service, spare parts, upgrades and training.",
       "strength": "Its common-platform Purion family spans high-current through high-energy implantation and serves high-volume power and mature-node production.",
       "risks": "Fab spending and China demand, large customers, export controls, long qualifications and limited sources for critical components affect results.",
-      "competition": "Competes in high-current, medium-current and high-energy ion implantation with other equipment vendors and customers' installed tools.",
+      "competition": "Axcelis identifies Applied Materials as its main ion-implant competitor and also names Sumitomo Heavy Industries Ion Technology and Nissin Ion Equipment. Implant energy, current and wafer material determine which tools overlap.",
       "relationships": "Supplies implantation systems to semiconductor manufacturers and buys magnets, power, vacuum and control components from external suppliers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Ion implantation equipment vendors",
-          "nameJa": "イオン注入装置メーカー",
+          "kind": "company",
+          "name": "Applied Materials",
           "role": "competitor",
           "label": {
-            "ja": "イオン注入装置で競合",
-            "en": "Ion implantation systems"
+            "ja": "イオン注入装置の主な競合。Axcelis自身の開示",
+            "en": "Main ion-implant competitor; Axcelis’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "Sumitomo Heavy Industries Ion Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "イオン注入装置で競合。Axcelisの開示",
+            "en": "Ion implantation; Axcelis’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Nissin Ion Equipment",
+          "role": "competitor",
+          "label": {
+            "ja": "イオン注入装置で競合。Axcelisの開示",
+            "en": "Ion implantation; Axcelis’s disclosure"
           },
           "sourceIndexes": [
             0
@@ -12566,7 +12781,7 @@
       "COHU"
     ],
     "name": "Cohu",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Test and inspection / Products / Customers / Competition / Risk factors",
@@ -12578,7 +12793,7 @@
       "revenue": "半導体メーカーと組立・検査会社への装置販売、交換頻度の高いソケット・接触部品、保守と部品で稼ぐ。",
       "strength": "テスター、ハンドラー、画像検査、接触部品をまとめて提供し、車載・産業・通信向けチップの量産工程を一式で支えられる。",
       "risks": "半導体の生産量と設備投資、大口顧客、買収統合、部品供給、価格競争、地政学と輸出規制に左右される。",
-      "competition": "半導体テスター、ハンドラー、画像検査、テストソケットの各市場で大手装置会社と専門メーカーに競う。",
+      "competition": "半導体テストではAdvantestとTeradyne、テスト時の搬送・自動化ではHon Precision、検査・計測ではKLAが競合例。Cohu自身が年次報告で実名を挙げている。テスター、搬送装置、検査装置、接触部品を同じ製品としては扱わない。",
       "relationships": "半導体メーカーと組立・検査会社へテスト工程の装置と消耗部品を供給し、電子・機械部品を外部から調達する。"
     },
     "en": {
@@ -12586,23 +12801,60 @@
       "revenue": "Earns from equipment sales to chipmakers and OSATs, recurring sockets and contactors, service and spare parts.",
       "strength": "Combines testers, handlers, vision inspection and interface products to support complete production-test cells for automotive, industrial and communications chips.",
       "risks": "Semiconductor unit volume and capital spending, large customers, acquisition integration, component supply, pricing, geopolitics and export controls affect results.",
-      "competition": "Competes with major equipment companies and specialists across testers, handlers, inspection and test sockets.",
+      "competition": "Cohu names Advantest, Teradyne, Hon Precision and KLA among its competitors. Examples span semiconductor testing, test automation, inspection and metrology. Testers, handlers, inspection tools and contact interfaces serve different functions.",
       "relationships": "Supplies production-test equipment and consumables to chipmakers and OSATs and sources electronic and mechanical components externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Semiconductor test equipment vendors",
-          "nameJa": "半導体テスト装置メーカー",
+          "kind": "company",
+          "name": "Advantest",
           "role": "competitor",
           "label": {
-            "ja": "テスター・搬送・接触部品で競合",
-            "en": "Testers, handlers and contactors"
+            "ja": "半導体テストなどで競合。Cohuの開示",
+            "en": "Semiconductor testing and related tools; Cohu’s disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Teradyne",
+          "role": "competitor",
+          "label": {
+            "ja": "半導体テストなどで競合。Cohuの開示",
+            "en": "Semiconductor testing and related tools; Cohu’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TER"
+        },
+        {
+          "kind": "company",
+          "name": "Hon Precision",
+          "role": "competitor",
+          "label": {
+            "ja": "テスト搬送・自動化などで競合。Cohuの開示",
+            "en": "Test automation and handling; Cohu’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "KLA",
+          "role": "competitor",
+          "label": {
+            "ja": "検査・計測などで競合。Cohuの開示",
+            "en": "Inspection and metrology; Cohu’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "KLAC"
         }
       ],
       "relationships": [
@@ -12641,7 +12893,7 @@
       "AMKR"
     ],
     "name": "Amkor Technology",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Packaging and test / Customers / Competition / Manufacturing / Risk factors",
@@ -12653,7 +12905,7 @@
       "revenue": "ファブレス企業、IDM、電子機器メーカーから、先端・従来型パッケージングとテストを請け負って稼ぐ。",
       "strength": "フリップチップ、SiP、ファンアウト、2.5Dなど幅広い工程と世界各地の量産拠点を持ち、設計からテストまで対応できる。",
       "risks": "大口顧客とスマホ・車載需要、工場稼働率、巨額設備投資、地政学、素材・装置供給、顧客の内製化に左右される。",
-      "competition": "半導体の組立・テスト受託で他のOSATと競い、IDMや大口顧客の自社工場とも競合する。",
+      "competition": "半導体の組立・パッケージ・テスト受託ではASE Technology、JCET Group、Powertech Technologyが競合例。Amkor自身が年次報告に実名を記載している。先端パッケージ、従来型の組立、メモリーのテストなどで各社の得意分野は異なる。",
       "relationships": "半導体設計会社やIDMからチップを受け取り、外部の材料・装置会社を使って組立・検査し、完成品を顧客へ返す。"
     },
     "en": {
@@ -12661,19 +12913,43 @@
       "revenue": "Earns by performing advanced and conventional packaging and test for fabless companies, IDMs and electronics manufacturers.",
       "strength": "Offers flip-chip, SiP, fan-out, 2.5D and other processes across a global manufacturing footprint, spanning package design through test.",
       "risks": "Large customers, handset and automotive demand, factory utilization, heavy capital spending, geopolitics, material and equipment supply and customer insourcing affect results.",
-      "competition": "Competes with other OSATs and with packaging and test performed inside IDMs and large customers.",
+      "competition": "Amkor names ASE Technology, JCET Group and Powertech Technology as outsourced packaging and test competitors. Their emphasis differs across advanced packaging, conventional assembly and memory testing; they are not interchangeable across every service.",
       "relationships": "Receives chips from fabless companies and IDMs, uses materials and equipment suppliers to assemble and test them, and returns completed devices to customers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Outsourced assembly and test providers",
-          "nameJa": "半導体組立・検査受託会社",
+          "kind": "company",
+          "name": "ASE Technology Holding",
           "role": "competitor",
           "label": {
-            "ja": "パッケージ・テストで競合",
-            "en": "Packaging and test"
+            "ja": "半導体のパッケージ・テスト受託で競合。Amkorの開示",
+            "en": "Outsourced semiconductor packaging and test; Amkor’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ASX"
+        },
+        {
+          "kind": "company",
+          "name": "JCET Group",
+          "role": "competitor",
+          "label": {
+            "ja": "半導体のパッケージ・テスト受託で競合。Amkorの開示",
+            "en": "Outsourced semiconductor packaging and test; Amkor’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Powertech Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "半導体のパッケージ・テスト受託で競合。Amkorの開示",
+            "en": "Outsourced semiconductor packaging and test; Amkor’s disclosure"
           },
           "sourceIndexes": [
             0
@@ -14079,7 +14355,7 @@
       "FORM"
     ],
     "name": "FormFactor",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Probe cards and systems / Markets / Customers / Competition / Risk factors",
@@ -14091,7 +14367,7 @@
       "revenue": "半導体メーカーとテスト会社へプローブカード、計測システム、関連部品と保守を販売して稼ぐ。",
       "strength": "先端ロジック、DRAM・HBM、先端パッケージの微細な接点へ同時に触れ、量産前後の電気特性を高精度で測れる。",
       "risks": "半導体設備投資、大口顧客、メモリー市況、製品認定、複雑な製造歩留まり、買収統合、部品供給に左右される。",
-      "competition": "プローブカード、ウエハーテスト、計測・低温試験システムで装置会社や専門部品メーカーと競う。",
+      "competition": "プローブカードではTechnoprobeとMicronics Japan、計測用プローブ・プローブステーションではMPI、温度制御ではAEM、極低温装置ではBlueforsが競合例。FormFactor自身が製品別に実名を挙げている。量産検査用の接触部品と研究・計測用装置は分けて比べる。",
       "relationships": "半導体工場とテスト会社へ検査用プローブカードと計測装置を供給し、精密部品・材料を外部から調達する。"
     },
     "en": {
@@ -14099,19 +14375,66 @@
       "revenue": "Sells probe cards, measurement systems, related parts and service to semiconductor manufacturers and test providers.",
       "strength": "Contacts fine-pitch advanced logic, DRAM and HBM and advanced-packaging devices in parallel to measure electrical performance before and during production.",
       "risks": "Semiconductor capital spending, large customers, memory cycles, qualifications, complex manufacturing yield, acquisition integration and component supply affect results.",
-      "competition": "Competes in probe cards, wafer test and measurement and cryogenic systems with equipment companies and specialist component makers.",
+      "competition": "FormFactor names Technoprobe and Micronics Japan in probe cards, MPI in analytical probes and probe stations, AEM in thermal subsystems, and Bluefors in cryogenic systems. Production-test contacts and laboratory measurement equipment are distinct markets.",
       "relationships": "Supplies test probe cards and measurement tools to wafer fabs and test providers and sources precision components and materials externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Wafer probe and test equipment vendors",
-          "nameJa": "ウエハー検査・テスト装置会社",
+          "kind": "company",
+          "name": "Technoprobe",
           "role": "competitor",
           "label": {
-            "ja": "プローブカード・計測で競合",
-            "en": "Probe cards and measurement"
+            "ja": "MEMSプローブカードで競合。FormFactorの開示",
+            "en": "MEMS probe cards; FormFactor’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Micronics Japan",
+          "role": "competitor",
+          "label": {
+            "ja": "MEMSプローブカードで競合。FormFactorの開示",
+            "en": "MEMS probe cards; FormFactor’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MPI",
+          "role": "competitor",
+          "label": {
+            "ja": "計測用プローブ・ステーションで競合。FormFactorの開示",
+            "en": "Analytical probes and probe stations; FormFactor’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AEM",
+          "role": "competitor",
+          "label": {
+            "ja": "温度制御のサブシステムで競合。FormFactorの開示",
+            "en": "Thermal subsystems; FormFactor’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bluefors",
+          "role": "competitor",
+          "label": {
+            "ja": "極低温装置で競合。FormFactorの開示",
+            "en": "Cryogenic systems; FormFactor’s disclosure"
           },
           "sourceIndexes": [
             0
@@ -14154,7 +14477,7 @@
       "PLAB"
     ],
     "name": "Photronics",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Products / Customers / Competition / Risk factors",
@@ -14166,7 +14489,7 @@
       "revenue": "半導体・ディスプレーメーカーへ、用途別に設計・製造したフォトマスクを販売して稼ぐ。",
       "strength": "微細な回路データを大面積のマスクへ正確に描画し、顧客工場の認定を受けて短納期で量産供給できる。",
       "risks": "半導体・ディスプレー投資、大口顧客、設備の高額化、歩留まり、輸出規制、マスク原板や装置の供給に左右される。",
-      "competition": "半導体・ディスプレー用フォトマスクで、内製部門や他の独立系マスクメーカーと品質・納期・価格を競う。",
+      "competition": "フォトマスクではTekscend Photomask、Dai Nippon Printing（DNP）、SK-Electronicsなどが競合例。Photronics自身が実名を挙げている。DNPの競合記載は台湾・中国以外が対象で、半導体向けとディスプレー向けでも技術や需要は異なる。",
       "relationships": "半導体・ディスプレーメーカーへフォトマスクを供給し、マスク原板、描画・検査装置を外部から調達する。"
     },
     "en": {
@@ -14174,19 +14497,42 @@
       "revenue": "Earns revenue by selling application-specific photomasks to semiconductor and display manufacturers.",
       "strength": "Writes fine customer circuit data accurately onto large masks, qualifies with fabs and supports production on short delivery cycles.",
       "risks": "Semiconductor and display investment, large customers, costly equipment, yield, export controls and blank or tool supply affect results.",
-      "competition": "Competes in semiconductor and display photomasks with captive mask shops and other merchant suppliers on quality, delivery and price.",
+      "competition": "Photronics names Tekscend Photomask, Dai Nippon Printing and SK-Electronics among photomask rivals. Its DNP competition statement excludes Taiwan and China. Semiconductor and display masks also differ in technology and demand.",
       "relationships": "Supplies photomasks to semiconductor and display makers and sources mask blanks plus writing and inspection equipment externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Photomask manufacturers and captive mask shops",
-          "nameJa": "フォトマスクメーカー・内製部門",
+          "kind": "company",
+          "name": "Tekscend Photomask",
           "role": "competitor",
           "label": {
-            "ja": "品質・納期・価格で競合",
-            "en": "Quality, delivery and price"
+            "ja": "フォトマスクで競合。Photronicsの開示",
+            "en": "Photomasks; Photronics’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dai Nippon Printing",
+          "role": "competitor",
+          "label": {
+            "ja": "台湾・中国以外のフォトマスクで競合。Photronicsの開示",
+            "en": "Photomasks outside Taiwan and China; Photronics’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "SK-Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "フォトマスクで競合。Photronicsの開示",
+            "en": "Photomasks; Photronics’s disclosure"
           },
           "sourceIndexes": [
             0
