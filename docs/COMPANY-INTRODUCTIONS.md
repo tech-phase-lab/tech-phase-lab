@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred ninety-five issuers / one hundred ninety-six tickers:
+Researched coverage is 210 issuers / 211 tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -18,7 +18,7 @@ SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
 PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM, BHE, TSLA,
 IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS, RDW, ZM, DOCN,
 ESTC, GTLB, FROG, NTNX, NTAP, BOX, WDAY, PATH, ADSK, PTC, BSY, VEEV, MANH,
-PEGA, PAYC, PAYX, ADP, NICE, DBX, FIVN, RNG, DT, BILL, ASAN, MNDY, APPF, BL, FRSH, OTEX, BAND, EGHT, IOT, KVYO, BRZE, CXM, SPT, WK and PCOR.
+PEGA, PAYC, PAYX, ADP, NICE, DBX, FIVN, RNG, DT, BILL, ASAN, MNDY, APPF, BL, FRSH, OTEX, BAND, EGHT, IOT, KVYO, BRZE, CXM, SPT, WK, PCOR, APPN, AVPT, NCNO, QTWO, ALKT, TENB, RPD, VRNS, QLYS, ZETA, SONY, SAP, DIS, V and MA.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -33,8 +33,8 @@ This change records the instruction and adds company introductions only; it does
 not alter Claude-owned news acquisition, translation or delivery configuration.
 This is not full-directory coverage. Uncovered
 issuers retain their existing approved annual-brief behavior; no generic or
-automatically generated introduction is substituted. No automatic research or
-update job has been enabled.
+automatically generated introduction is substituted. Company additions are scheduled separately; each batch still requires source review,
+integrated validation and confirmed preview publication.
 
 Records live in `lib/research/company-introductions.data.json`; the typed server
 registry and CIK index live in `lib/research/company-introductions.ts`. The profile API selects
@@ -333,3 +333,111 @@ NCNO, QTWO, ALKT, TENB, RPD, VRNS, CYBR (verify acquisition status), ZETA and SE
 Recount and recheck the latest remote data before choosing the next batch; do not
 repeat any issuer already present. This list is a research queue, not confirmed
 publication-ready coverage.
+
+
+## 2026-10-15 · banking, data governance and enterprise security batch
+
+Added APPN / AVPT / NCNO / QTWO / ALKT / TENB / RPD / VRNS / QLYS / ZETA.
+Coverage: 195 issuers / 196 tickers → 205 issuers / 206 tickers.
+All six Japanese and English answers and both maps were reviewed on 2026-10-15.
+Existing 195 records and the shared UI are unchanged.
+
+Previous batch publication is confirmed at 99d19b4f9ad7c118ac1e1929a16ea6301f0bd193:
+CI run 38584900724 passed, Vercel deployment dpl_xkPKbe9eyXBXuUEzFAFZsBFQqTSL
+was READY, and the BAND page was checked in Japanese and English.
+This batch starts from f5232a4cf6867263257c256739307f4aa6164607, preserving other
+contributors’ Saved Research and RESOLUTE changes.
+
+Primary annual evidence (retrieved and read on 2026-10-15):
+- APPN: https://www.sec.gov/Archives/edgar/data/1441683/000144168326000013/appn-20251231.htm
+- AVPT: https://www.sec.gov/Archives/edgar/data/1777921/000143774926005907/avpt20251231_10k.htm
+- NCNO: https://www.sec.gov/Archives/edgar/data/1902733/000190273326000022/ncno-20260131.htm
+- QTWO: https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm
+- ALKT: https://www.sec.gov/Archives/edgar/data/1529274/000152927426000009/alk-20251231.htm
+- TENB: https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm
+- RPD: https://www.sec.gov/Archives/edgar/data/1560327/000156032726000008/rp-20251231.htm
+- VRNS: https://www.sec.gov/Archives/edgar/data/1361113/000162828026005450/vrns-20251231.htm
+- QLYS: https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm
+- ZETA: https://www.sec.gov/Archives/edgar/data/1851003/000119312526068598/zeta-20251231.htm
+
+Supplementary evidence:
+- Appian/Pegasystems process-automation rivalry: https://appian.com/pega-verdict (no legal-outcome claim is included).
+- Varonis July 28, 2026 results, SaaS transition: https://www.sec.gov/Archives/edgar/data/1361113/000117184326004948/exh_991.htm
+- Zeta Salesforce CRM product integration: https://knowledgebase.zetaglobal.com/kb/salesforce-crm
+- Fiserv current FISV ticker, June 2026 cover: https://www.sec.gov/Archives/edgar/data/798354/000079835426000031/R1.htm
+
+Review notes: nCino uses current issuer CIK 1902733 and its shift to asset-based
+pricing; Salesforce is a paid platform supplier, not a customer. Q2's annual
+report supports the reciprocal nCino and Alkami competition edges. Galileo is
+identified by its own name without assigning its parent’s stock ticker. MANTL
+is an acquired Alkami business, not a separate counterparty. AWS hosting and
+Rapid7 technology alliances are explicitly supported by the relevant annual
+filings. AvePoint, Varonis and Zeta integration targets are not labeled buyers.
+Unidentified customers and competitors remain supported industry categories.
+Map direction, source indexes, duplicate nodes and JA/EN meaning were reviewed.
+
+Local validation passed: lint (0 errors; 2 existing warnings), npm test (888),
+Python suite (2436), build, compileall and diff-check. CI success, Vercel READY
+and actual preview-page verification are required before counting this batch as published.
+The publication result is reported with the release commit; next run must check
+that result before starting another batch.
+
+Next candidates: financial technology and IT services (FISV / FIS / JKHY / GPN /
+FOUR / PAY / PAYO / MQ / ACN / EPAM / GLOB / CTSH). Recheck the live search
+universe, current listing/acquisition status and newest registry before selection.
+CFLT / INFA / CYBR / SEMR remain research candidates only until ownership and
+listing status are verified. Do not duplicate this batch or modify news, saved
+research, RESOLUTE, main or production.
+
+User priority update (2026-10-15): prioritize well-known unrepresented issuers
+before smaller software vendors. Start with Sony, SAP, Disney, Visa and Mastercard;
+then review Alibaba, Baidu and other recognizable large companies. DBX / FIVN /
+RNG / DT / BILL / ASAN / MNDY / APPF / BL / FRSH are already covered.
+
+
+## 2026-10-15 · well-known issuer priority supplement
+
+Added Sony (SONY), SAP, Disney (DIS), Visa (V) and Mastercard (MA) in response
+to the user's explicit request to prioritize recognizable large companies.
+Together with the preceding unpublished ten-company batch this release moves
+from 195 issuers / 196 tickers to 210 issuers / 211 tickers (15 new issuers).
+All six JA/EN fields and both maps are complete; reviewed on 2026-10-15.
+The ten-company remote commit c4f6b8643b9bd09d06115e2ac7d432e1db94636b was
+created but its ref update was deliberately NOT performed after the remote
+advanced. Do not treat that orphan commit as a published release.
+Integrated latest remote c753c724e1e4a2d5aaa79fa2c4b2e68e8ecb2c45, preserving
+Claude's news-panel change, before validating and publishing the combined batch.
+
+Primary annual reports:
+- SONY: https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm
+- SAP: https://www.sec.gov/Archives/edgar/data/1000184/000110465926020058/sap-20251231x20f.htm
+- DIS: https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm
+- V: https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm
+- MA: https://www.sec.gov/Archives/edgar/data/1141391/000114139126000013/ma-20251231.htm
+
+Supplementary evidence and interpretation:
+- Oracle and Workday annual filings explicitly name SAP as a rival; URLs are
+  stored on the SAP record. Sony/Disney competition is an editorial comparison
+  of the overlapping film and streaming businesses documented in both reports,
+  not a claim that either annual filing explicitly names the other company.
+- Sony's 2026 report includes the completed financial-services deconsolidation.
+  Netflix and Amazon are screen-content distribution outlets. Unnamed image-
+  sensor customers are not assigned guessed company names.
+- Disney's annual filing distinguishes Oriental Land's ownership/operation of
+  Tokyo Disney Resort from Disney's royalty income. NFL is a rights supplier.
+- SAP/Azure migration: https://news.sap.com/2026/05/expanding-rise-with-sap-microsoft-azure-elevating-customer-success/
+- Visa/Coinbase funding: https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.20931.html
+- Mastercard/PayPal: https://newsroom.mastercard.com/news/press/2025/june/mastercard-and-paypal-to-partner-on-mastercard-one-credential-to-supercharge-choice-at-checkout/
+  Existing debit-card collaboration is distinguished from announced development.
+- Visa and Mastercard are networks, not card-issuing lenders. Their revenue
+  is not cardholder interest or simply the interchange exchanged between banks.
+
+Publish the combined final tree only after all required gates pass, then check
+the exact commit's CI, Vercel READY and actual JA/EN stock pages. Do not report
+210 as published until those checks complete.
+
+Next priorities: Alibaba (BABA), Baidu (BIDU), JD.com (JD), PDD, Electronic Arts
+(EA), Take-Two (TTWO), Nokia (NOK), Ericsson (ERIC), Berkshire Hathaway (BRK.B),
+Walmart (WMT), JPMorgan Chase (JPM), American Express (AXP). Recheck current
+listing/acquisition status and the latest registry before picking a batch.
+Prioritize well-known issuers over the smaller-software research queue above.

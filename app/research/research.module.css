@@ -1754,7 +1754,7 @@
 /* Saved collection: compact navigation, save-order control and personal ink hint. */
 .savedSort{margin-left:auto;max-width:100%;min-height:40px;padding:6px 28px 6px 10px;border:1px solid #344b57;border-radius:8px;background:#101e29;color:#bdd6d4;font:inherit;font-size:13px;cursor:pointer}
 .savedInkBadge{display:inline-flex;align-items:center;color:#8be6bf;margin-right:6px;vertical-align:middle}
-.backToSaved{display:inline-flex;align-items:center;gap:6px;min-height:40px;margin:0 0 12px;padding:6px 10px;border:1px solid #35524f;border-radius:7px;background:#142a29;color:#b9eadb;font-size:13px;cursor:pointer}
+.app .backToSaved{display:inline-flex;align-items:center;gap:4px;min-height:40px;margin:0 0 6px;padding:4px 0;border:0;background:transparent;color:var(--muted);font-size:12px;cursor:pointer}
 .savedSort:focus-visible,.backToSaved:focus-visible{outline:2px solid #8be6bf;outline-offset:3px}
 @media(max-width:600px){.savedSort{font-size:16px;max-width:100%;margin-top:4px}.backToSaved{min-height:44px}}
 

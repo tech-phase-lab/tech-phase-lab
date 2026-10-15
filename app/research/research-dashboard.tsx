@@ -292,7 +292,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             </div>
 
             {active && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
-              {tab === "saved" && <button className={styles.backToSaved} onClick={returnToSaved}><span aria-hidden="true">←</span> {t("保存一覧に戻る", "Back to collection")}</button>}
+              {tab === "saved" && <button className={styles.backToSaved} onClick={returnToSaved}><span aria-hidden="true">◀</span> {t("保存一覧に戻る", "Back to collection")}</button>}
               {tab !== "saved" && <div className={styles.articleSaveBar}>
                 <button className={styles.articleSaveButton} disabled={!collection.editable} aria-pressed={saved.includes(active.id)} aria-label={saved.includes(active.id) ? t("この記事の保存を解除", "Unsave this article") : t("この記事を保存する", "Save this article")} onClick={() => toggleSaved(active.id)}><Bookmark filled={saved.includes(active.id)} /><span>{saved.includes(active.id) ? t("保存済み", "Saved") : t("保存する", "Save article")}</span></button>
                 {saved.includes(active.id) && <button className={styles.openSavedButton} onClick={() => { clearFilters(); openView("saved"); }}>{t("保存した記事を開く", "Open saved articles")} <span aria-hidden="true">→</span></button>}
