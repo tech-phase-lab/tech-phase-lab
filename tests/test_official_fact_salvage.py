@@ -26,7 +26,8 @@ class FactSalvageTests(unittest.TestCase):
         invented = copy('Inferizeを5億ドルで買収した。', 'Nebius acquired Inferize for $500 million.', QUOTES[0])
         self.assertEqual(self.run_note(reply(self.note_with(invented))), 'done')
         item = self.feed()[0]
-        text = json.dumps(item, ensure_ascii=False)
+        # Only the story's own wording: timing fields carry millisecond digits that can contain "500" by chance.
+        text = json.dumps({key: item[key] for key in ('title', 'summary', 'facts', 'purpose') if key in item}, ensure_ascii=False)
         self.assertNotIn('5億', text)
         self.assertNotIn('500', text)
         self.assertIn('買収', item['title']['ja'])
