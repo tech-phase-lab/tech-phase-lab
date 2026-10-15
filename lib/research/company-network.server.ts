@@ -72,6 +72,28 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (["WDC", "STX"].includes(root)) return {
+    2: { ja: "ストレージ製品", en: "Storage products" },
+  };
+  if (root === "HPQ") return {
+    5: { ja: "PC・プリンター", en: "PCs & printing" },
+  };
+  if (["BE", "VST"].includes(root)) return {
+    5: { ja: "発電・電力供給", en: "Power generation & supply" },
+    7: { ja: "電力の関連企業", en: "Related power companies" },
+  };
+  if (root === "MELI") return {
+    7: { ja: "通販・金融サービス", en: "Commerce & financial services" },
+  };
+  if (root === "SOFI") return {
+    7: { ja: "金融サービス・銀行技術", en: "Financial services & banking technology" },
+  };
+  if (root === "DUOL") return {
+    7: { ja: "語学学習・教育・試験", en: "Language learning, education & assessment" },
+  };
+  if (root === "TSLA") return {
+    7: { ja: "自動車・蓄電システム", en: "Vehicles & energy storage" },
+  };
   if (["IONQ", "RGTI", "QBTS", "QUBT"].includes(root)) return {
     6: { ja: "量子計算システム", en: "Quantum computing systems" },
     7: { ja: "量子計算の関連企業", en: "Related quantum computing companies" },

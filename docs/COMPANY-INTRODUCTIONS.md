@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 108 issuers with published competitor corrections and 6 remaining
+records 118 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -655,3 +655,13 @@ Rocket Lab separates launch, spacecraft and components. Optical imagery examples
 AeroVironment and Redwire independently name one another in small UAS; Edge Autonomy belongs within Redwire. Kratos separates tactical autonomous jets and satellite ground-control software. Competition and teaming can coexist without establishing any new customer/supplier relationship. All five other bilingual answers and all non-competition map relationships remain unchanged for all eleven. NVDA’s exact reviewed payload, all 204 other issuer card/relation sets and 12px scrollbar padding remain preserved. Reviewed on 2026-10-16; product-scope and mixed-list audits remain open.
 
 Public-screen review also caught legacy semiconductor/server layer headings on these eleven quantum/space/defense maps. Selected-map bilingual headings now describe quantum computing, satellite communications, geospatial intelligence or space/defense. This changes headings only: the cards, positions, relationship sets, depth modes and all other issuers (including the exact NVDA payload) retain their existing behavior.
+
+## 2026-10-16 · final anonymous lists and mixed hardware lists
+
+Reviewed BE / VST / MELI / SOFI / DUOL / TSLA and HPE / WDC / STX / HPQ (10 existing records; no additions). The six remaining industry-only lists now have named, product-scoped examples. This does not complete the mixed-list, omission or full product-scope audits.
+
+Power-generation technologies, wholesale power and retail electricity are separate scopes. Constellation includes the completed Calpine acquisition. Happen Bank is the current name of former LendingClub, with HAPN rather than obsolete LC. Consumer finance is distinct from Galileo/Technisys enterprise technology. Language apps, AI conversation tutors and English tests are compared separately; test acceptance is not assumed equivalent. Vehicle and home/utility storage examples also remain separate.
+
+All prior named map competitors are retained. HP's prior prose names (including Lenovo, Canon, Epson, Brother and Xerox) are carried into its map. WDC/STX keep both original HDD peers and distinguish editorial SSD alternatives from own-disclosed names; HDD and SSD often complement one another. HPE's own disclosure supports cloud names. Other editorial product comparisons are clearly identified as such in both languages and map evidence.
+
+Only nine selected issuer maps receive contextual layer headings, including storage and PC/printing; no node is reclassified. All other five bilingual answers, non-competition relationships, the original NVDA 41-company/61-relation payload and scrollbar 12px spacing are preserved. Reviewed on 2026-10-16. Mixed lists and additional product scopes remain open before new issuers.

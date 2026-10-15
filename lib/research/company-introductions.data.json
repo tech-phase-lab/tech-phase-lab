@@ -2813,7 +2813,7 @@
       "BE"
     ],
     "name": "Bloom Energy",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -2826,6 +2826,22 @@
       {
         "label": "Bloom Energy · Brookfield infrastructure partnership",
         "url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-announce-5-billion-strategic-ai-infrastructure-partnership/"
+      },
+      {
+        "label": "Caterpillar · Natural-gas continuous and prime-power gensets",
+        "url": "https://www.cat.com/en_US/campaigns/awareness/electric-power/gas-power-solution.html"
+      },
+      {
+        "label": "Cummins · Data-center natural-gas prime-power scope",
+        "url": "https://www.cummins.com/en-na/generators/data-centers"
+      },
+      {
+        "label": "GE Vernova · Onsite data-center gas-turbine configurations",
+        "url": "https://www.gevernova.com/gas-power/resources/articles/2026/data-center-configurations"
+      },
+      {
+        "label": "FuelCell Energy · Carbonate distributed-generation systems",
+        "url": "https://www.fuelcellenergy.com/platform/fuel-cell-power-plants"
       }
     ],
     "ja": {
@@ -2833,7 +2849,7 @@
       "revenue": "発電設備の販売・設置・保守と、一部契約での電力販売。",
       "strength": "必要な場所に段階的に増設できるモジュール型の発電設備。",
       "risks": "導入資金や工事の遅れ、大口案件への依存、燃料価格や制度変更が採算に響く。",
-      "competition": "電力系統からの調達や、ガスエンジン・タービンなどの発電方式と競う。",
+      "competition": "オンサイト電源の選択肢として、CaterpillarとCumminsのガスエンジン発電機、GE Vernovaのガスタービン、FuelCell Energyの炭酸塩型燃料電池を比較する。Bloomの開示する競合分野と各社の公式製品を照合した編集上の競合例で、燃料電池と燃焼式発電を同じ方式・性能とは扱わない。系統電力の購入も代替手段になる。",
       "relationships": "Oracle向けの発電設備を展開し、Brookfieldとは案件の資金面で協力する。"
     },
     "en": {
@@ -2841,36 +2857,66 @@
       "revenue": "Equipment sales, installation, maintenance and electricity sales under some contracts.",
       "strength": "Modular systems allow customers to add on-site power in stages.",
       "risks": "Financing, installation delays, large-project concentration, fuel costs and policy changes affect returns.",
-      "competition": "Competes with grid power and alternatives such as gas engines and turbines.",
+      "competition": "Onsite-power alternatives include Caterpillar and Cummins gas-engine gensets, GE Vernova gas turbines and FuelCell Energy carbonate fuel cells. These are editorial comparisons of official products against Bloom’s disclosed competitive categories, not a claim that Bloom names each supplier or that the technologies perform identically. Grid purchases are another alternative.",
       "relationships": "Deploys systems for Oracle and works with Brookfield on project financing."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Grid power",
+          "kind": "company",
+          "name": "Caterpillar",
           "role": "competitor",
           "label": {
-            "ja": "系統電力との選択",
-            "en": "Alternative to on-site generation"
+            "ja": "ガスエンジンの常用・連続発電。公式製品の比較",
+            "en": "Gas-engine prime/continuous power; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
           ],
-          "nameJa": "系統電力"
+          "ticker": "CAT"
         },
         {
-          "kind": "industry",
-          "name": "Gas engines & turbines",
+          "kind": "company",
+          "name": "Cummins",
           "role": "competitor",
           "label": {
-            "ja": "常時稼働する発電方式",
-            "en": "Firm power generation"
+            "ja": "データセンター向けガス発電。公式製品の比較",
+            "en": "Data-center gas generation; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
           ],
-          "nameJa": "ガス発電設備"
+          "ticker": "CMI"
+        },
+        {
+          "kind": "company",
+          "name": "GE Vernova",
+          "role": "competitor",
+          "label": {
+            "ja": "オンサイト用ガスタービン。公式製品の比較",
+            "en": "Onsite gas turbines; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "GEV"
+        },
+        {
+          "kind": "company",
+          "name": "FuelCell Energy",
+          "role": "competitor",
+          "label": {
+            "ja": "炭酸塩型の分散電源用燃料電池。方式は異なる",
+            "en": "Carbonate distributed-generation fuel cells; different architecture"
+          },
+          "sourceIndexes": [
+            0,
+            6
+          ],
+          "ticker": "FCEL"
         }
       ],
       "relationships": [
@@ -2908,7 +2954,7 @@
       "VST"
     ],
     "name": "Vistra",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -2921,6 +2967,18 @@
       {
         "label": "Vistra · Q2 2026 results",
         "url": "https://investor.vistracorp.com/2026-08-07-Vistra-Reports-Second-Quarter-2026-Results"
+      },
+      {
+        "label": "Constellation · Calpine acquisition completed January 7, 2026",
+        "url": "https://www.constellationenergy.com/news/2026/01/constellation-completes-calpine-transaction-powering-americas-clean-energy-future.html"
+      },
+      {
+        "label": "NRG FY2025 Form 10-K · Generation and retail scope",
+        "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm"
+      },
+      {
+        "label": "Talen · PJM 2026/2027 auction and generation scope",
+        "url": "https://ir.talenenergy.com/node/8771/pdf"
       }
     ],
     "ja": {
@@ -2928,7 +2986,7 @@
       "revenue": "卸売市場での電力・供給能力の販売と、小売契約からの収入。",
       "strength": "発電と小売を組み合わせ、多様な電源を運用できる。",
       "risks": "電力・燃料価格、異常気象、発電所の停止や規制変更で損益が変わる。",
-      "competition": "他の発電事業者や電力小売会社と、価格や供給力で競う。",
+      "competition": "卸電力ではConstellation（Calpine取得済み）、NRG、Talen Energy、小売電力ではConstellationとNRGのReliant・Direct Energyなどが競合例。Vistraの事業地域と各社の公式開示を比較したもので、すべての州・市場で競合するという意味ではない。発電設備のメーカーと電力販売会社は区別する。",
       "relationships": "Metaと長期の原子力電力購入契約を締結。電力は送電網を通じて供給される。"
     },
     "en": {
@@ -2936,36 +2994,52 @@
       "revenue": "Wholesale energy and capacity sales, plus retail customer contracts.",
       "strength": "Combines a diverse generation fleet with retail operations.",
       "risks": "Power and fuel prices, extreme weather, plant outages and regulation affect earnings.",
-      "competition": "Competes with other generators and electricity retailers.",
+      "competition": "Wholesale-power examples include Constellation, including acquired Calpine, NRG and Talen Energy. Retail-power examples include Constellation and NRG’s Reliant and Direct Energy brands. These editorial comparisons use official regional and business disclosures; they do not imply overlap in every state or market. Power sellers are distinct from equipment manufacturers.",
       "relationships": "Has long-term nuclear power agreements with Meta; generation remains connected to the grid."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Power producers",
+          "kind": "company",
+          "name": "Constellation Energy",
           "role": "competitor",
           "label": {
-            "ja": "卸売電力・供給能力",
-            "en": "Wholesale energy and capacity"
+            "ja": "卸・小売電力。Calpine取得完了後の企業範囲で比較",
+            "en": "Wholesale/retail power; includes completed Calpine acquisition"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
           ],
-          "nameJa": "発電事業者"
+          "ticker": "CEG"
         },
         {
-          "kind": "industry",
-          "name": "Electricity retailers",
+          "kind": "company",
+          "name": "NRG Energy",
           "role": "competitor",
           "label": {
-            "ja": "家庭・企業向け電力販売",
-            "en": "Retail electricity contracts"
+            "ja": "卸電力とReliant・Direct Energy等の小売。地域別の比較",
+            "en": "Wholesale power and Reliant/Direct Energy retail; regional comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
           ],
-          "nameJa": "電力小売会社"
+          "ticker": "NRG"
+        },
+        {
+          "kind": "company",
+          "name": "Talen Energy",
+          "role": "competitor",
+          "label": {
+            "ja": "PJMの発電・卸電力。小売全般の競合とはしない",
+            "en": "PJM generation/wholesale power; not blanket retail competition"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "TLN"
         }
       ],
       "relationships": [
@@ -3720,11 +3794,19 @@
       "HPE"
     ],
     "name": "Hewlett Packard Enterprise",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Competition / Supply chain / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm"
+      },
+      {
+        "label": "AWS · Outposts on-premises hybrid infrastructure",
+        "url": "https://aws.amazon.com/outposts/"
+      },
+      {
+        "label": "Microsoft · Azure Local distributed infrastructure",
+        "url": "https://learn.microsoft.com/en-us/azure/azure-sovereign-clouds/private/azure-local/azure-local-overview"
       }
     ],
     "ja": {
@@ -3732,7 +3814,7 @@
       "revenue": "機器とソフトの販売、GreenLakeなどの利用契約、保守・技術サービス、顧客向けのリースや金融サービスで稼ぐ。",
       "strength": "計算・保存・通信をまとめて提供でき、スーパーコンピューターや企業内AI、利用量課金の運用まで支援できる。",
       "risks": "企業の設備投資、サーバーの価格競争、GPUなど単一供給部品に左右される。買収した事業の統合にも実行リスクがある。",
-      "competition": "DellやLenovoのサーバー、Ciscoのネットワーク、大手クラウドの従量課金サービスなどと分野別に競う。",
+      "competition": "サーバーではDellとLenovo、ネットワークではCisco、ハイブリッドクラウドではAmazon Web Services、Microsoft Azure、Google Cloudなどが競合例。HPE自身の製品分野別の実名開示に基づく。AWS OutpostsやAzure Localはオンプレミス向けの比較例で、クラウドの協業関係がなくなるという意味ではない。",
       "relationships": "NVIDIAなどからGPUを調達し、企業や公共機関へAIサーバー、ネットワーク、GreenLakeと保守を提供する。"
     },
     "en": {
@@ -3740,61 +3822,128 @@
       "revenue": "Hardware and software sales, GreenLake subscriptions, support and technical services, and customer financing.",
       "strength": "Combines compute, storage and networking with supercomputing, private AI and consumption-based operations.",
       "risks": "Enterprise spending, server price pressure and single-source components such as GPUs matter, while acquisitions create integration risk.",
-      "competition": "Competes by category with Dell and Lenovo in servers, Cisco in networking and large public-cloud consumption services.",
+      "competition": "HPE names Dell and Lenovo in servers, Cisco in networking, and AWS, Microsoft Azure and Google Cloud in hybrid-cloud competition. Outposts and Azure Local are on-premises product examples checked against official descriptions. Competition is product-specific and can coexist with cloud collaboration.",
       "relationships": "Sources GPUs from vendors including NVIDIA and supplies enterprises and public agencies with AI systems, networking and support."
     },
     "maps": {
       "competition": [
         {
           "kind": "company",
-          "name": "Dell",
-          "ticker": "DELL",
+          "name": "Dell Technologies",
           "role": "competitor",
           "label": {
-            "ja": "企業向けサーバーで競合",
-            "en": "Enterprise servers"
+            "ja": "企業向けサーバー。HPEの実名開示",
+            "en": "Enterprise servers; HPE named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "DELL"
         },
         {
           "kind": "company",
-          "name": "Cisco",
-          "ticker": "CSCO",
+          "name": "Cisco Systems",
           "role": "competitor",
           "label": {
-            "ja": "企業向けネットワークで競合",
-            "en": "Enterprise networking"
+            "ja": "企業向けネットワーク。HPEの実名開示",
+            "en": "Enterprise networking; HPE named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CSCO"
         },
         {
           "kind": "company",
           "name": "Lenovo",
           "role": "competitor",
           "label": {
-            "ja": "サーバーで競合",
-            "en": "Servers"
+            "ja": "企業向けサーバー。HPEの実名開示",
+            "en": "Enterprise servers; HPE named disclosure"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Public cloud providers",
-          "nameJa": "大手クラウド事業者",
+          "kind": "company",
+          "name": "Amazon Web Services",
           "role": "competitor",
           "label": {
-            "ja": "従量課金のIT基盤で競合",
-            "en": "Consumption-based infrastructure"
+            "ja": "クラウド基盤。Outpostsのオンプレミス製品例",
+            "en": "Cloud infrastructure; Outposts on-premises product example"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "Azureクラウド基盤。Azure Localの製品例",
+            "en": "Azure cloud infrastructure; Azure Local product example"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet / Google",
+          "role": "competitor",
+          "label": {
+            "ja": "Google Cloud。HPEの実名開示",
+            "en": "Google Cloud; HPE named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Supermicro",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けサーバー。HPE自身の実名開示を再確認",
+            "en": "Enterprise servers; independently rechecked HPE named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "SMCI"
+        },
+        {
+          "kind": "company",
+          "name": "Arista Networks",
+          "role": "competitor",
+          "label": {
+            "ja": "データセンターネットワーク。HPE自身の実名開示",
+            "en": "Data-center networking; HPE named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ANET"
+        },
+        {
+          "kind": "company",
+          "name": "Ciena",
+          "role": "competitor",
+          "label": {
+            "ja": "ネットワーク基盤。HPEのNetworking実名開示",
+            "en": "Network infrastructure; HPE Networking named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CIEN"
         }
       ],
       "relationships": [
@@ -6162,11 +6311,19 @@
       "WDC"
     ],
     "name": "Western Digital",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · HDD products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm"
+      },
+      {
+        "label": "Micron · Data-center SSD product portfolio",
+        "url": "https://www.micron.com/products/storage/ssd/data-center-ssd"
+      },
+      {
+        "label": "Samsung Electronics · Enterprise SSD portfolio",
+        "url": "https://semiconductor.samsung.com/ssd/enterprise-ssd/"
       }
     ],
     "ja": {
@@ -6174,7 +6331,7 @@
       "revenue": "ハイパースケールクラウド、ネオクラウド、PCメーカー、OEM、代理店へHDDを販売する。",
       "strength": "記録ヘッドと磁気媒体をほぼ自社で設計・製造し、1台当たりの容量とコストを継続的に改善できる。",
       "risks": "SanDisk分離後はHDDへの集中が高い。2026年度は上位3顧客が売上の44％を占め、クラウド投資、価格、技術移行の影響が大きい。",
-      "competition": "HDDではSeagateとToshiba、代替技術ではNANDフラッシュやストレージシステム企業と競う。",
+      "competition": "HDDではSeagate Technologyと東芝デバイス＆ストレージ、代替ストレージではMicronとSamsung Electronicsの企業・データセンター向けSSDが比較例。HDDの実名は既存の記載を保持し、SSDは公式製品に基づく編集上の比較とした。HDDとSSDは多くの用途で補完関係にあり、一部の用途で競合する。",
       "relationships": "クラウド事業者と機器メーカーへ大容量HDDを供給し、長期保存や大規模データ基盤を支える。"
     },
     "en": {
@@ -6182,7 +6339,7 @@
       "revenue": "Sells HDDs to hyperscale cloud providers, neoclouds, computer makers, OEMs, distributors and retailers.",
       "strength": "Designs and manufactures substantially all recording heads and magnetic media, supporting continued gains in capacity and cost per drive.",
       "risks": "After the SanDisk separation it is concentrated in HDDs; its top three customers were 44% of fiscal 2026 revenue, increasing cloud-spending, pricing and transition risk.",
-      "competition": "Competes with Seagate and Toshiba in HDDs and with NAND flash and storage-system providers as alternative technologies.",
+      "competition": "HDD examples retain Seagate Technology and Toshiba Electronic Devices & Storage. Editorial alternative-storage examples are Micron and Samsung enterprise/data-center SSDs. Official products support the SSD comparison; HDDs and SSDs often complement one another and compete in selected workloads, with different capacity, performance and cost trade-offs.",
       "relationships": "Supplies high-capacity HDDs to cloud operators and equipment makers for mass data infrastructure and long-term storage."
     },
     "maps": {
@@ -6190,7 +6347,6 @@
         {
           "kind": "company",
           "name": "Seagate Technology",
-          "ticker": "STX",
           "role": "competitor",
           "label": {
             "ja": "大容量HDDで競合",
@@ -6198,7 +6354,8 @@
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "STX"
         },
         {
           "kind": "company",
@@ -6213,16 +6370,30 @@
           ]
         },
         {
-          "kind": "industry",
-          "name": "NAND flash suppliers",
-          "nameJa": "NANDフラッシュメーカー",
+          "kind": "company",
+          "name": "Micron Technology",
           "role": "competitor",
           "label": {
-            "ja": "代替ストレージ技術で競合",
-            "en": "Alternative storage technology"
+            "ja": "データセンターSSD。HDDを一部用途で代替する比較",
+            "en": "Data-center SSDs; potential HDD alternative in selected workloads"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "MU"
+        },
+        {
+          "kind": "company",
+          "name": "Samsung Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けSSD。容量・性能・費用の条件は異なる",
+            "en": "Enterprise SSDs; capacity/performance/cost conditions differ"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
         }
       ],
@@ -6275,11 +6446,19 @@
       "STX"
     ],
     "name": "Seagate Technology",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products and markets / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm"
+      },
+      {
+        "label": "Micron · Data-center SSD product portfolio",
+        "url": "https://www.micron.com/products/storage/ssd/data-center-ssd"
+      },
+      {
+        "label": "Samsung Electronics · Enterprise SSD portfolio",
+        "url": "https://semiconductor.samsung.com/ssd/enterprise-ssd/"
       }
     ],
     "ja": {
@@ -6287,7 +6466,7 @@
       "revenue": "売上の大部分をデータセンター向けが占め、クラウド事業者、企業OEM、代理店へ大容量HDDを販売する。",
       "strength": "記録ヘッドや磁気媒体を自社で作る垂直統合と、高密度記録技術により、容量・消費電力・総保有コストを改善できる。",
       "risks": "大口クラウド企業の投資時期に売上が左右される。HDD価格、量産歩留まり、次世代記録技術への移行、NANDへの置き換えもリスク。",
-      "competition": "HDDではWestern DigitalとToshiba、代替技術ではNANDフラッシュやストレージシステム企業と競う。",
+      "competition": "HDDではWestern Digitalと東芝デバイス＆ストレージ、代替ストレージではMicronとSamsung Electronicsの企業・データセンター向けSSDが比較例。HDDの実名は既存の記載を保持し、SSDは公式製品に基づく編集上の比較とした。HDDとSSDは多くの用途で補完関係にあり、一部の用途で競合する。",
       "relationships": "クラウドサービス会社、OEM、企業顧客へ大容量HDDを供給し、AI・クラウドで増えるデータ保存を支える。"
     },
     "en": {
@@ -6295,7 +6474,7 @@
       "revenue": "The vast majority comes from data-center markets, selling high-capacity drives to cloud providers, enterprise OEMs and distributors.",
       "strength": "Vertical integration in heads and media plus areal-density technology improves capacity, energy use and total cost of ownership.",
       "risks": "Large cloud customers' investment timing matters; HDD pricing, manufacturing yields, recording-technology transitions and NAND substitution add risk.",
-      "competition": "Competes with Western Digital and Toshiba in HDDs and with NAND flash and storage-system providers as alternatives.",
+      "competition": "HDD examples retain Western Digital and Toshiba Electronic Devices & Storage. Editorial alternative-storage examples are Micron and Samsung enterprise/data-center SSDs. Official products support the SSD comparison; HDDs and SSDs often complement one another and compete in selected workloads, with different capacity, performance and cost trade-offs.",
       "relationships": "Supplies high-capacity HDDs to cloud service providers, OEMs and enterprises that store growing AI and cloud data."
     },
     "maps": {
@@ -6303,7 +6482,6 @@
         {
           "kind": "company",
           "name": "Western Digital",
-          "ticker": "WDC",
           "role": "competitor",
           "label": {
             "ja": "大容量HDDで競合",
@@ -6311,7 +6489,8 @@
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "WDC"
         },
         {
           "kind": "company",
@@ -6326,16 +6505,30 @@
           ]
         },
         {
-          "kind": "industry",
-          "name": "NAND flash suppliers",
-          "nameJa": "NANDフラッシュメーカー",
+          "kind": "company",
+          "name": "Micron Technology",
           "role": "competitor",
           "label": {
-            "ja": "代替ストレージ技術で競合",
-            "en": "Alternative storage technology"
+            "ja": "データセンターSSD。HDDを一部用途で代替する比較",
+            "en": "Data-center SSDs; potential HDD alternative in selected workloads"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "MU"
+        },
+        {
+          "kind": "company",
+          "name": "Samsung Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けSSD。容量・性能・費用の条件は異なる",
+            "en": "Enterprise SSDs; capacity/performance/cost conditions differ"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
         }
       ],
@@ -6388,7 +6581,7 @@
       "HPQ"
     ],
     "name": "HP",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Personal Systems / Printing / Competition / Suppliers",
@@ -6400,7 +6593,7 @@
       "revenue": "PC本体・サービスに加え、プリンター本体と継続購入されるインク・トナー・保守から稼ぐ。",
       "strength": "世界的な販売網とブランド、法人PCの保守・セキュリティ、プリンター本体から消耗品へつなぐ継続収益を持つ。",
       "risks": "PC更新需要と価格競争、印刷量の減少、互換インクの拡大に左右される。Windowsや主要CPU・GPUメーカーへの依存もある。",
-      "competition": "PCではDell、Apple、Lenovo、Microsoftなど、印刷ではCanon、Epson、Brother、Xeroxなどと競う。",
+      "competition": "PCではDell・Apple・Lenovo・Microsoft、プリンターと関連消耗品ではCanon・Seiko Epson・Brother Industries・Xeroxが競合例。HP自身の分野別実名開示に基づき、以前の本文にあった企業名をすべてマップにも反映した。PCと印刷を分け、各社の製品群すべてが同じ用途を持つとは扱わない。",
       "relationships": "PCにMicrosoft WindowsやGoogle ChromeOS、Intel・AMDのCPU、NVIDIAのGPUを採用し、法人・個人へ完成品として販売する。"
     },
     "en": {
@@ -6408,32 +6601,57 @@
       "revenue": "Earns from PCs and services plus printer hardware and recurring ink, toner, supplies and support.",
       "strength": "Combines global distribution and brand, commercial-PC support and security, and recurring supplies revenue attached to installed printers.",
       "risks": "PC refresh cycles, price competition, falling print volumes and third-party supplies affect results; it also depends on major OS and processor vendors.",
-      "competition": "Competes with Dell, Apple, Lenovo and Microsoft in PCs and with Canon, Epson, Brother and Xerox in printing.",
+      "competition": "PC examples include Dell, Apple, Lenovo and Microsoft; printing hardware/supplies examples include Canon, Seiko Epson, Brother Industries and Xerox. HP names these companies by business area. All previously visible prose names are retained in the map; PC and printing competition is scoped separately rather than treated as identical portfolios.",
       "relationships": "Uses Microsoft Windows or Google ChromeOS and processors from Intel, AMD and NVIDIA in systems sold to business and consumer customers."
     },
     "maps": {
       "competition": [
         {
           "kind": "company",
-          "name": "Dell",
-          "ticker": "DELL",
+          "name": "Dell Technologies",
           "role": "competitor",
           "label": {
-            "ja": "法人・個人向けPCで競合",
-            "en": "Commercial and consumer PCs"
+            "ja": "PC。HPのPersonal Systems実名開示",
+            "en": "PCs; HP Personal Systems named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "DELL"
         },
         {
           "kind": "company",
           "name": "Apple",
-          "ticker": "AAPL",
           "role": "competitor",
           "label": {
-            "ja": "PC・ワークステーションで競合",
-            "en": "PCs and workstations"
+            "ja": "MacなどのPC。HPの実名開示",
+            "en": "Mac/PCs; HP named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "PC・端末。HPのPersonal Systems実名開示",
+            "en": "PC/devices; HP Personal Systems named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Lenovo",
+          "role": "competitor",
+          "label": {
+            "ja": "PC。以前の本文の実名をマップにも保持",
+            "en": "PCs; prior prose name retained in map"
           },
           "sourceIndexes": [
             0
@@ -6441,29 +6659,52 @@
         },
         {
           "kind": "company",
-          "name": "Microsoft",
-          "ticker": "MSFT",
+          "name": "Canon",
           "role": "competitor",
           "label": {
-            "ja": "端末・サービスで競合",
-            "en": "Devices and services"
+            "ja": "プリンター・関連消耗品。HPのPrinting実名開示",
+            "en": "Printing hardware/supplies; HP Printing named disclosure"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Printer manufacturers",
-          "nameJa": "プリンターメーカー",
+          "kind": "company",
+          "name": "Seiko Epson",
           "role": "competitor",
           "label": {
-            "ja": "本体・消耗品で競合",
-            "en": "Printer hardware and supplies"
+            "ja": "プリンター・関連消耗品。HPの実名開示",
+            "en": "Printing hardware/supplies; HP named disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Brother Industries",
+          "role": "competitor",
+          "label": {
+            "ja": "プリンター・関連消耗品。HPの実名開示",
+            "en": "Printing hardware/supplies; HP named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Xerox",
+          "role": "competitor",
+          "label": {
+            "ja": "プリンター・関連消耗品。HPの実名開示",
+            "en": "Printing hardware/supplies; HP named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "XRX"
         }
       ],
       "relationships": [
@@ -10843,11 +11084,23 @@
       "MELI"
     ],
     "name": "MercadoLibre",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Commerce / Mercado Pago / Logistics / Credit / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm"
+      },
+      {
+        "label": "Amazon · Brazilian retail and Prime delivery scope",
+        "url": "https://www.aboutamazon.com/news/amazon-prime/amazon-prime-lands-in-brazil"
+      },
+      {
+        "label": "Sea · Shopee Brazil merchant platform, November 2025",
+        "url": "https://www.sea.com/news/378"
+      },
+      {
+        "label": "Nu · Q2 2026 financial services in Brazil, Mexico and Colombia",
+        "url": "https://international.nubank.com.br/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2026-financial-results"
       }
     ],
     "ja": {
@@ -10855,7 +11108,7 @@
       "revenue": "販売手数料、配送・広告、決済処理、融資利息など、ECとMercado Pagoを横断して稼ぐ。",
       "strength": "買い手・売り手・決済・配送・信用を一つに結ぶ地域ネットワークと、中南米向けに築いた現地インフラが強い。",
       "risks": "為替・インフレ、各国規制、貸倒れ、物流費、不正取引、ECと金融の両市場での競争が利益を左右する。",
-      "competition": "EC市場、小売、デジタル決済、銀行・融資、物流、広告で地域企業と世界的な事業者に競う。",
+      "competition": "通販ではブラジルのAmazonとSea傘下のShopee、金融ではブラジル・メキシコ・コロンビアのNu（Nubank）の口座・カード・融資が比較例。MercadoLibreの事業分野と各社の現地サービスを照合した編集上の競合例で、各社が中南米全域で同じサービスを提供するという意味ではない。",
       "relationships": "販売事業者が商品を出品し、買い手が購入する。加盟店・利用者には決済、口座、融資を提供し、配送網と連携する。"
     },
     "en": {
@@ -10863,49 +11116,52 @@
       "revenue": "Earns marketplace fees, shipping and advertising revenue, payment-processing fees and credit interest across commerce and Mercado Pago.",
       "strength": "A regional network linking buyers, sellers, payments, logistics and credit, supported by locally built infrastructure, is the core advantage.",
       "risks": "Currency and inflation, country regulation, credit losses, logistics costs, fraud and competition across both commerce and finance are risks.",
-      "competition": "Competes with marketplaces, retailers, digital wallets, banks and lenders, logistics providers and advertising platforms.",
+      "competition": "Commerce examples are Amazon and Sea’s Shopee in Brazil. In financial services, Nu/Nubank accounts, cards and lending in Brazil, Mexico and Colombia overlap selected Mercado Pago offerings. These are editorial comparisons of official local services, not an assertion of identical coverage across Latin America or that MercadoLibre explicitly names these companies.",
       "relationships": "Sellers list goods and buyers purchase them; merchants and consumers also use payments, accounts and credit connected to logistics networks."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "E-commerce marketplaces and retailers",
-          "nameJa": "EC市場・小売企業",
+          "kind": "company",
+          "name": "Amazon",
           "role": "competitor",
           "label": {
-            "ja": "品ぞろえ・価格・配送で競合",
-            "en": "Selection, price and delivery"
+            "ja": "ブラジルの通販・配送サービス。地域を限定した比較",
+            "en": "Brazilian commerce/delivery services; geographically scoped comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "AMZN"
         },
         {
-          "kind": "industry",
-          "name": "Digital wallets and banks",
-          "nameJa": "デジタル決済・銀行",
+          "kind": "company",
+          "name": "Sea / Shopee",
           "role": "competitor",
           "label": {
-            "ja": "決済・口座で競合",
-            "en": "Payments and accounts"
+            "ja": "ブラジルのオンライン市場。Sea傘下のShopee",
+            "en": "Shopee marketplace in Brazil; Sea subsidiary"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "SE"
         },
         {
-          "kind": "industry",
-          "name": "Lenders and logistics providers",
-          "nameJa": "融資会社・物流会社",
+          "kind": "company",
+          "name": "Nu Holdings / Nubank",
           "role": "competitor",
           "label": {
-            "ja": "信用と配送で競合",
-            "en": "Credit and logistics"
+            "ja": "ブラジル・メキシコ・コロンビアの個人向け金融",
+            "en": "Consumer financial services in Brazil, Mexico and Colombia"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "NU"
         }
       ],
       "relationships": [
@@ -11242,11 +11498,31 @@
       "SOFI"
     ],
     "name": "SoFi Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Lending / Financial Services / Technology Platform / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1818874/000181887426000013/sofi-20251231.htm"
+      },
+      {
+        "label": "Happen · Q2 2026 results, completed LendingClub rebrand and HAPN ticker",
+        "url": "https://ir.happen.com/news-events/news-releases/news-details/2026/Happen-Inc--Reports-Second-Quarter-2026-Results-07-27-2026/default.aspx"
+      },
+      {
+        "label": "Happen · Current identity and Nasdaq HAPN investor FAQ",
+        "url": "https://ir.happen.com/resources/investor-faqs/default.aspx"
+      },
+      {
+        "label": "Robinhood · Supported stocks and ETF investing",
+        "url": "https://robinhood.com/us/en/support/articles/investments-you-can-make-on-robinhood/"
+      },
+      {
+        "label": "Marqeta · Card issuance and processing platform",
+        "url": "https://www.marqeta.com/platform/card-issuing"
+      },
+      {
+        "label": "Fiserv · Finxact cloud-native banking platform",
+        "url": "https://www.finxact.com/"
       }
     ],
     "ja": {
@@ -11254,7 +11530,7 @@
       "revenue": "貸出利息と組成・売却・管理、カードや金融サービスの手数料、企業向け技術基盤の利用料で稼ぐ。",
       "strength": "銀行免許と預金資金、会員への複数商品販売、個人向け金融と企業向け銀行技術を垂直統合する点が強い。",
       "risks": "貸倒れ、金利と資金調達、融資売却市場、銀行規制と自己資本、技術顧客の集中・離脱が利益を左右する。",
-      "competition": "銀行、オンライン融資、証券・デジタル財布と、金融機関向け決済・勘定系技術の両市場で競う。",
+      "competition": "個人融資・預金ではHappen Bank（旧LendingClub）、株式・ETF投資ではRobinhood、企業向け技術ではMarqetaのカード発行・処理とFiservのFinxact基幹銀行システムが比較例。SoFiの開示する製品範囲と相手側公式製品を比較した。消費者向け金融とGalileo・Technisysの法人向け技術を分けて見る。",
       "relationships": "会員へ融資・預金・投資を提供し、金融機関やFintechには決済APIと銀行基盤を提供する。"
     },
     "en": {
@@ -11262,49 +11538,67 @@
       "revenue": "Earns loan interest and origination, sale and servicing income, financial-service fees, and technology-platform usage fees.",
       "strength": "A bank charter and deposit funding, member cross-selling, and vertical integration of consumer finance with banking technology are advantages.",
       "risks": "Credit losses, rates and funding, loan-sale markets, bank capital rules, and concentration or loss of technology clients can affect results.",
-      "competition": "Competes with banks, online lenders, brokers and wallets, as well as payment and core-banking technology platforms.",
+      "competition": "Product-specific examples are Happen Bank, formerly LendingClub, in personal lending/deposits; Robinhood in stock/ETF investing; Marqeta in card issuance/processing; and Fiserv Finxact in core banking. These editorial comparisons match official products to SoFi’s disclosed scope and separate consumer finance from Galileo/Technisys enterprise technology.",
       "relationships": "Members use loans, deposits and investing, while banks and fintech clients use payment APIs and core-banking technology."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Banks and online lenders",
-          "nameJa": "銀行・オンライン融資",
+          "kind": "company",
+          "name": "Happen Bank (formerly LendingClub)",
           "role": "competitor",
           "label": {
-            "ja": "預金・融資で競合",
-            "en": "Deposits and lending"
+            "ja": "個人融資・預金。2026年6月改称、現行HAPN",
+            "en": "Personal lending/deposits; June 2026 rebrand, current HAPN"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            2
+          ],
+          "ticker": "HAPN"
         },
         {
-          "kind": "industry",
-          "name": "Brokers and digital wallets",
-          "nameJa": "証券・デジタル財布",
+          "kind": "company",
+          "name": "Robinhood Markets",
           "role": "competitor",
           "label": {
-            "ja": "投資・決済で競合",
-            "en": "Investing and payments"
+            "ja": "株式・ETFの個人向け投資口座。公式製品の比較",
+            "en": "Retail stock/ETF investing accounts; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "HOOD"
         },
         {
-          "kind": "industry",
-          "name": "Banking technology platforms",
-          "nameJa": "銀行技術基盤",
+          "kind": "company",
+          "name": "Marqeta",
           "role": "competitor",
           "label": {
-            "ja": "決済API・勘定系で競合",
-            "en": "Payment APIs and core banking"
+            "ja": "Galileoと比較するカード発行・決済処理基盤",
+            "en": "Card issuing/processing platform compared with Galileo"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4
+          ],
+          "ticker": "MQ"
+        },
+        {
+          "kind": "company",
+          "name": "Fiserv",
+          "role": "competitor",
+          "label": {
+            "ja": "Technisysと比較するFinxact基幹銀行システム",
+            "en": "Finxact core banking compared with Technisys"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "FI"
         }
       ],
       "relationships": [
@@ -11356,11 +11650,31 @@
       "DUOL"
     ],
     "name": "Duolingo",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Learning Products / Subscriptions / AI / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm"
+      },
+      {
+        "label": "Babbel · Language-learning app",
+        "url": "https://www.babbel.com/about-us"
+      },
+      {
+        "label": "Speak · AI language-conversation tutor",
+        "url": "https://help.speak.com/en/articles/11396739-what-is-speak-tutor"
+      },
+      {
+        "label": "Speak · Speakeasy Labs corporate identity",
+        "url": "https://www.speak.com/terms"
+      },
+      {
+        "label": "Pearson · PTE Academic English proficiency test",
+        "url": "https://www.pearsonpte.com/pte-academic/"
+      },
+      {
+        "label": "ETS · TOEFL iBT academic English assessment",
+        "url": "https://www.ets.org/toefl.html"
       }
     ],
     "ja": {
@@ -11368,7 +11682,7 @@
       "revenue": "Super DuolingoとDuolingo Maxの月額・年額契約が中心で、広告、アプリ内購入、英語試験でも稼ぐ。",
       "strength": "無料で始められる導線、習慣化を促すゲーム設計、学習データを使う個別最適化、強いブランドが成長を支える。",
       "risks": "学習継続と有料化、AIによる競争と内容品質、Apple・Googleへの配信依存、個人情報・未成年者対応が弱点。",
-      "competition": "語学アプリ、AI家庭教師、オンライン・対面教育、資格試験と、学習時間・価格・成果で競う。",
+      "competition": "語学アプリではBabbel、AI会話練習ではSpeakeasy LabsのSpeak、英語力試験ではPearsonのPTE AcademicとETSのTOEFL iBTが比較例。各社の公式サービスとDuolingoの対象分野を照合した編集上の競合例。学習アプリと試験を分け、試験の採用校・用途や受験方式が同じとはしない。",
       "relationships": "学習者と有料会員へ教材を提供し、学校・大学は英語試験を受け入れ、アプリ配信基盤が契約決済を担う。"
     },
     "en": {
@@ -11376,48 +11690,63 @@
       "revenue": "Earns mainly Super Duolingo and Duolingo Max subscriptions, with additional ads, in-app purchases and English Test revenue.",
       "strength": "A free entry point, habit-forming game design, data-driven personalization and a strong brand support growth and conversion.",
       "risks": "Learner retention and paid conversion, AI competition and content quality, Apple and Google dependence, privacy and youth safety are risks.",
-      "competition": "Competes with language apps, AI tutors, online and classroom education, and testing providers on time, price and outcomes.",
+      "competition": "Language-learning examples include Babbel and Speakeasy Labs’ Speak AI conversation tutor. English-assessment examples are Pearson PTE Academic and ETS TOEFL iBT. These are editorial comparisons of official services with Duolingo’s scope, not a company-named list. Learning apps and tests differ, including acceptance, purposes and delivery methods.",
       "relationships": "Learners and subscribers use courses, schools and universities recognize the English Test, and app platforms handle distribution and billing."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Language-learning applications",
-          "nameJa": "語学学習アプリ",
+          "kind": "company",
+          "name": "Babbel",
           "role": "competitor",
           "label": {
-            "ja": "教材・習慣化で競合",
-            "en": "Lessons and habit formation"
+            "ja": "語学学習アプリ。公式サービスの比較",
+            "en": "Language-learning app; editorial service comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "AI tutors and education platforms",
-          "nameJa": "AI家庭教師・教育基盤",
+          "kind": "company",
+          "name": "Speakeasy Labs / Speak",
           "role": "competitor",
           "label": {
-            "ja": "個別学習で競合",
-            "en": "Personalized learning"
+            "ja": "Speak TutorのAI会話・発音練習。運営会社も確認",
+            "en": "Speak Tutor AI conversation/pronunciation practice; operator verified"
           },
           "sourceIndexes": [
-            0
+            0,
+            2,
+            3
           ]
         },
         {
-          "kind": "industry",
-          "name": "Language testing providers",
-          "nameJa": "語学試験運営者",
+          "kind": "company",
+          "name": "Pearson",
           "role": "competitor",
           "label": {
-            "ja": "英語能力試験で競合",
-            "en": "English proficiency testing"
+            "ja": "PTE Academicの英語力試験。採用範囲は異なる",
+            "en": "PTE Academic English assessment; acceptance differs"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
+          ],
+          "ticker": "PSO"
+        },
+        {
+          "kind": "company",
+          "name": "ETS",
+          "role": "competitor",
+          "label": {
+            "ja": "TOEFL iBTの英語力試験。学習アプリとは区別",
+            "en": "TOEFL iBT English assessment; distinct from learning apps"
+          },
+          "sourceIndexes": [
+            0,
+            5
           ]
         }
       ],
@@ -16884,11 +17213,31 @@
       "TSLA"
     ],
     "name": "Tesla",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Segments / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm"
+      },
+      {
+        "label": "Ford · Mustang Mach-E electric SUV",
+        "url": "https://www.ford.com/suvs/mach-e/models/"
+      },
+      {
+        "label": "General Motors Chevrolet · Equinox EV and Blazer EV",
+        "url": "https://www.chevrolet.com/suvs"
+      },
+      {
+        "label": "BYD · SEALION 7 battery-electric SUV",
+        "url": "https://media.byd.com/section/models/pure-electric/sealion-7/?lang=eng"
+      },
+      {
+        "label": "Fluence · Gridstack utility-scale energy storage",
+        "url": "https://fluenceenergy.com/gridstack-grid-energy-storage/"
+      },
+      {
+        "label": "Enphase · IQ Battery 5P home-storage owner guide",
+        "url": "https://enphase.com/download/enphase-energy-system-iq-battery-5p-owners-guide.pdf"
       }
     ],
     "ja": {
@@ -16896,7 +17245,7 @@
       "revenue": "自動車の販売・リースと規制クレジット、蓄電池・太陽光、充電や整備などのサービスで稼ぐ。",
       "strength": "車両、電池、電力制御、ソフト、工場、直販、急速充電網まで広く自社で組み合わせられる。",
       "risks": "値下げ競争と需要変動、新型車・自動運転の開発、工場増産、電池材料、規制やブランドへの影響に左右される。",
-      "competition": "電気自動車と従来車、家庭・産業用蓄電池、充電サービスの各市場で世界のメーカーと競う。",
+      "competition": "乗用EVではFordのMustang Mach-E、GMのChevrolet Equinox EV・Blazer EV、BYDのSEALION 7が比較例。蓄電池では大型向けのFluence Gridstackと家庭向けのEnphase IQ Batteryを分けて比較する。公式製品を照合した編集上の競合例で、車種の販売地域や用途、蓄電システムの規模・性能が同じとはしない。",
       "relationships": "消費者や法人へ車両とエネルギー製品を販売し、電池セル、電子部品、材料、製造装置を外部から調達する。"
     },
     "en": {
@@ -16904,23 +17253,79 @@
       "revenue": "Vehicle sales and leases, regulatory credits, battery and solar products, plus charging, service and other activities.",
       "strength": "Integrates vehicles, batteries, power electronics, software, factories, direct sales and a fast-charging network.",
       "risks": "Pricing and demand, new-product and autonomy execution, factory ramps, battery materials, regulation and brand effects drive risk.",
-      "competition": "Competes with global makers across electric and conventional vehicles, energy storage and charging services.",
+      "competition": "Passenger-EV examples are Ford Mustang Mach-E, GM Chevrolet Equinox EV/Blazer EV and BYD SEALION 7. Storage examples separately compare Fluence Gridstack at utility scale and Enphase IQ Battery at home scale. These editorial comparisons use official products; vehicle availability, use cases and storage scale/performance are not assumed identical.",
       "relationships": "Sells vehicles and energy products to consumers and businesses and sources cells, electronics, materials and factory equipment."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Vehicle and energy-storage makers",
-          "nameJa": "自動車・蓄電池メーカー",
+          "kind": "company",
+          "name": "Ford Motor",
           "role": "competitor",
           "label": {
-            "ja": "車両・蓄電池で競合",
-            "en": "Vehicles and storage"
+            "ja": "Mustang Mach-Eの乗用EV。公式製品の比較",
+            "en": "Mustang Mach-E passenger EV; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "F"
+        },
+        {
+          "kind": "company",
+          "name": "General Motors",
+          "role": "competitor",
+          "label": {
+            "ja": "Chevrolet Equinox EV・Blazer EV。公式製品の比較",
+            "en": "Chevrolet Equinox EV/Blazer EV; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "GM"
+        },
+        {
+          "kind": "company",
+          "name": "BYD",
+          "role": "competitor",
+          "label": {
+            "ja": "SEALION 7の乗用EV。販売地域は車種別",
+            "en": "SEALION 7 passenger EV; availability varies by market"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Fluence Energy",
+          "role": "competitor",
+          "label": {
+            "ja": "Gridstackの大規模蓄電。Megapackと用途を比較",
+            "en": "Gridstack utility-scale storage compared with Megapack use cases"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "FLNC"
+        },
+        {
+          "kind": "company",
+          "name": "Enphase Energy",
+          "role": "competitor",
+          "label": {
+            "ja": "IQ Batteryの家庭用蓄電。Powerwallと用途を比較",
+            "en": "IQ Battery home storage compared with Powerwall use cases"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "ENPH"
         }
       ],
       "relationships": [
