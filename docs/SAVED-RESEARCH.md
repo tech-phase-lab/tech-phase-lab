@@ -121,3 +121,7 @@
 
 ## 2026-10-15: button-only print control tracking
 - The sticky print control now shrinks to the button width with a transparent wrapper. The blank area to its left no longer covers article text during scrolling.
+
+## 2026-10-15: prevent accidental unsaving
+- Removing a saved article asks for confirmation in the current language before changing the collection. Cancel leaves the article and annotations intact; an explicit removal never re-adds an article concurrently removed elsewhere.
+- Empty collection uses an upright bookmark in a restrained circular mint outline instead of a tilted tile.

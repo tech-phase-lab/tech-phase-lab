@@ -128,7 +128,9 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const allMetrics = filtered.flatMap((event) => event.metrics.map((metric) => ({ metric, event })));
   const kinds = { acquisition: t("買収", "Acquisition"), partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   function toggleSaved(id: string) {
-    setStorageError(!collection.update(current => ({ ...current, saved: current.saved.includes(id) ? current.saved.filter(value => value !== id) : [...current.saved, id] })));
+    const removing = saved.includes(id);
+    if (removing && !window.confirm(t("この記事を保存一覧から外しますか？", "Remove this article from saved research?"))) return;
+    setStorageError(!collection.update(current => ({ ...current, saved: removing ? current.saved.filter(value => value !== id) : current.saved.includes(id) ? current.saved : [...current.saved, id] })));
   }
   function selectEvent(id: string) {
     setActiveId(id);

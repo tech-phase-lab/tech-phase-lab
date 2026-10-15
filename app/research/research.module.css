@@ -744,7 +744,7 @@
 .savedWorkspace .detail { border-radius:10px; border-color:#68b7bc38; }
 .savedWorkspace :focus-visible { outline-color:#9fe9db; }
 .savedEmpty { grid-column:1/-1; text-align:center; padding:54px 24px; border:1px solid #68b7bc38; border-radius:12px; background:radial-gradient(ellipse at top,#73d4bf0d,transparent 65%),#101720; }
-.savedEmptyIcon { display:inline-flex; padding:17px; border:1px solid #73d4bf38; border-radius:16px; color:#8be6bf; background:#73d4bf09; transform:rotate(-5deg); }
+.savedEmptyIcon { display:inline-flex; align-items:center; justify-content:center; width:64px; height:64px; border:1px solid #73d4bf26; border-radius:50%; color:#8be6cf; background:linear-gradient(145deg,#73d4bf12,#73d4bf03); }
 .savedEmptyIcon svg { width:28px; height:28px; }
 .savedEmpty h2 { font-size:20px; font-weight:500; margin:22px 0 10px; }
 .savedEmpty p { color:#a7b4c3; font-size:13px; max-width:330px; margin:0 auto 22px; }
