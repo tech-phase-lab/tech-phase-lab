@@ -1,7 +1,7 @@
 import sqlite3
 import sys
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts' / 'research'))
@@ -112,6 +112,32 @@ class TranslationTests(unittest.TestCase):
         with company_wire.connect(self.path) as db:
             attempts = {r['key']: r['attempts'] for r in db.execute('SELECT * FROM company_wire_attempts')}
         self.assertTrue(attempts and max(attempts.values()) == 3)
+
+    def test_the_reason_a_headline_was_not_translated_is_reported_without_titles(self):
+        send = self.transport({'Why Credo stock slid': 'Credo株が7%下落した理由'})
+        for n in range(3):
+            company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp() + n * 700)
+        def broken(payload, key):
+            raise TimeoutError('slow')
+        company_wire.translate_once(self.path, transport=broken, env=self.env, now_ts=self.now.timestamp() + 5000)
+        with company_wire.connect(self.path) as db:
+            from unittest.mock import patch
+            with patch.object(company_wire, 'now', lambda: self.now + timedelta(hours=2)):
+                status = company_wire.status(db, {})
+            reasons = {r['reason'] for r in db.execute('SELECT * FROM company_wire_attempts')}
+        self.assertIn('invalid-translation', reasons)
+        self.assertTrue(status['_translation']['gaveUpByReason24h'])
+        self.assertNotIn('Why Credo', repr(status))
+
+    def test_a_retry_tells_the_model_why_the_last_answer_was_rejected(self):
+        seen = []
+        def spy(payload, key):
+            seen.append(self.json.loads(payload['input']))
+            return self.transport({})(payload, key)
+        company_wire.translate_once(self.path, transport=spy, env=self.env, now_ts=self.now.timestamp())
+        company_wire.translate_once(self.path, transport=spy, env=self.env, now_ts=self.now.timestamp() + 700)
+        self.assertFalse(any('previousRejection' in item for item in seen[0]))
+        self.assertTrue(all(item.get('previousRejection') == 'invalid-translation' for item in seen[1]))
 
     def test_disabled_without_configuration_and_budget_is_respected(self):
         self.assertEqual(company_wire.translate_once(self.path, transport=self.transport({}), env={}, now_ts=self.now.timestamp()), 'disabled')
