@@ -1746,8 +1746,12 @@
 .articleSaveBar { display:flex; align-items:center; flex-wrap:wrap; gap:6px 8px; margin-bottom:12px; }
 .app .articleSaveBar .backToSaved { margin:0; }
 .articleSaveBar .articleSaveButton { margin-left:auto; flex-shrink:0; }
-.articleSaveButton { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:9px 16px; border:1px solid #8bd9c1; border-radius:8px; background:#8bd9c11a; color:#b8efdc; font-size:14px; font-weight:600; cursor:pointer; }
-.articleSaveButton[aria-pressed=true] { width:44px; padding:10px; border-color:transparent; background:transparent; }
+.articleSaveButton { position:relative; display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:34px; padding:5px 18px; border:1px solid #a6eed5; border-radius:7px; background:#9ce5cd; color:#102720; font-size:13px; line-height:20px; font-weight:700; box-shadow:0 2px 0 #477a69; cursor:pointer; }
+.articleSaveButton::before { content:""; position:absolute; inset:-5px 0; }
+.articleSaveButton:hover { background:#b8f1dd; }
+.articleSaveButton:active { box-shadow:none; }
+.articleSaveButton[aria-pressed=true] { width:44px; min-height:44px; padding:10px; border-color:transparent; background:transparent; color:#b8efdc; box-shadow:none; }
+.articleSaveButton[aria-pressed=true]::before { inset:0; }
 .openSavedButton { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 0; border:0; background:transparent; color:#b8efdc; font-size:13px; cursor:pointer; }
 .articleSaveStatus { flex-basis:100%; color:var(--muted); font-size:12px; }
 .articleSaveStatus:empty { display:none; }
