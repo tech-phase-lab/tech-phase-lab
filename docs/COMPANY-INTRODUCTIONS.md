@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 67 issuers with published competitor corrections and 47 remaining
+records 77 issuers with published competitor corrections and 37 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -136,6 +136,20 @@ are corroborated by official portfolios. Other five bilingual answers and all
 non-competition relationships are preserved, as are frozen NVDA and the 12px
 competitor-scrollbar spacing. These are selected examples; PNT, pigments,
 spatial audio/sensing, and further power and analog niches require follow-up.
+
+A further 2026-10-16 batch corrects PLTR, NFLX, SHOP, ROKU, TTD, PYPL,
+XYZ, PATH, APPF and BL (ten existing issuers; no new introductions). Roku's
+named device/OS rivals and The Trade Desk's named DSP rivals come from their
+own filings. Other examples explicitly distinguish company product comparisons
+from editorial comparisons of both parties' disclosed portfolios. Shopify's
+Square comparison is attributed, and retail POS, P2P, merchant processing and
+BNPL are separate scopes. Existing UiPath Microsoft/SAP integrations and
+BlackLine SAP resale/ERP connections are preserved. VIZIO is represented under
+Walmart, Blue Prism under SS&C, and Square under Block. No historical public
+ticker is guessed for RealPage or an unlisted software vendor. Named examples
+are selective: government/defense platforms, gaming, advertising, financial
+services and specialist software sub-products remain separately tracked.
+All other five bilingual answers and non-competition relationships remain intact.
 
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.

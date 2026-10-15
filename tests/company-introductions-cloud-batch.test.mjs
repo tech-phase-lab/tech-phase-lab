@@ -8,7 +8,8 @@ test('cloud batch retains exact issuer identity and a fixed map root', () => {
   for (const [ticker, cik] of Object.entries(issuers)) {
     const record = companyIntroductionFor({ ticker, cik });
     assert.ok(record, ticker);
-    assert.equal(record.reviewedOn, '2026-10-14');
+    // PATH competitor products were re-reviewed; the other nine records retain their original date.
+    assert.equal(record.reviewedOn, ticker === 'PATH' ? '2026-10-16' : '2026-10-14');
     assert.equal(companyIntroductionFor({ ticker, cik: 1 }), null);
     const graph = companyNetworkFor({ ticker, cik });
     assert.equal(graph.root, ticker);
