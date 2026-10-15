@@ -87,6 +87,9 @@ test('Lumentum shows actual competitors, excludes anonymous rivals and removes o
   const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction,lang:'ja',network}));
   assert.ok(html.includes('Coherent (COHR)'));
   assert.ok(html.includes('IPG Photonics (IPGP)'));
+  assert.ok(html.includes('Applied Optoelectronics (AAOI)'));
+  const aaoi = introduction.maps.competition.find(entry => entry.ticker === 'AAOI');
+  assert.ok(aaoi.sourceIndexes.some(index => introduction.sources[index].url.endsWith('/aaoi20251231_10k.htm')));
   assert.ok(!html.includes('光通信メーカー'));
   assert.ok(!html.includes('レーザーメーカー'));
   assert.ok(!html.includes('aria-label="Nikon"'));

@@ -18,6 +18,10 @@
       {
         "label": "IPGP · annual filing · products and competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm"
+      },
+      {
+        "label": "Applied Optoelectronics FY2025 Form 10-K · Products / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774926005875/aaoi20251231_10k.htm"
       }
     ],
     "ja": {
@@ -25,7 +29,7 @@
       "revenue": "通信向けレーザーや光信号を送受信するモジュール、工場で使うレーザーなどの販売。",
       "strength": "光を生み出す半導体から通信モジュールまで手がけ、顧客が求める速度や省電力性能に合わせて設計できる。",
       "risks": "大口顧客の発注変更、価格競争、新製品の量産や供給能力拡大の遅れ。需要予測が外れると在庫も負担になる。",
-      "competition": "Coherent（COHR）とは光通信部品・トランシーバーや産業用レーザーで製品領域が重なる。IPG Photonics（IPGP）とは材料加工向けレーザーで競合し、IPGの年次報告もLumentumを実名で挙げている。競合する範囲は製品ごとに異なる。",
+      "competition": "光通信部品・トランシーバーではCoherent（COHR）やApplied Optoelectronics（AAOI）と競合する。AAOIの年次報告はLumentumを実名で挙げている。産業用レーザーではCoherent、材料加工向けレーザーではIPG Photonics（IPGP）が比較対象で、IPGもLumentumを競合として明記。競合する範囲は製品ごとに異なる。",
       "relationships": "クラウド事業者や通信機器メーカーへ供給。NVIDIAからは2026年3月に出資を受けた。"
     },
     "en": {
@@ -33,7 +37,7 @@
       "revenue": "Sales of communications lasers, optical transceivers and lasers used in manufacturing.",
       "strength": "Spans laser chips through optical modules, tailoring designs to customers' bandwidth and power needs.",
       "risks": "Major-customer order changes, pricing pressure, production-ramp delays and excess inventory if demand falls short.",
-      "competition": "Coherent (COHR) overlaps in optical components, transceivers and industrial lasers, based on the companies’ disclosed product portfolios. IPG Photonics (IPGP) explicitly names Lumentum as a competitor in materials-processing lasers. Competitive overlap varies by product.",
+      "competition": "Coherent (COHR) and Applied Optoelectronics (AAOI) compete in optical components and transceivers; AAOI explicitly names Lumentum in its annual report. Coherent also overlaps in industrial lasers. IPG Photonics (IPGP) explicitly names Lumentum in materials-processing lasers. Competitive overlap varies by product.",
       "relationships": "Supplies cloud providers and network-equipment makers; received an investment from NVIDIA in March 2026."
     },
     "maps": {
@@ -51,6 +55,20 @@
             0,
             1,
             2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Applied Optoelectronics",
+          "ticker": "AAOI",
+          "role": "competitor",
+          "label": {
+            "ja": "データセンター向け光トランシーバーなどで競合。AAOIがLumentumを実名で列挙",
+            "en": "Data-center optical transceivers and related products; AAOI explicitly names Lumentum"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         },
         {

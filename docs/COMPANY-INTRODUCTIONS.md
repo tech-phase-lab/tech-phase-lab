@@ -34,6 +34,35 @@ and EDA have different competitors. Preserve existing non-competition facts and
 do not infer a customer or supplier relationship from a rivalry disclosure.
 Reviewed on 2026-10-15. The frozen NVDA payload is unchanged.
 
+### Competitor selection and removal review
+
+Use a small set of material, recognizable companies with overlapping products.
+State the competing product area, not just the industry. Do not fill a fixed
+number of slots or add a competitor merely because its biography exists.
+
+Accept a primary filing that explicitly names the rival, including a disclosure
+by the other company, after checking the product overlap. A separate comparison
+of both companies' official product portfolios is also acceptable, but label it
+as an editorial comparison rather than an explicit company disclosure.
+Competition evidence does not establish a customer or supplier relationship.
+
+Before replacing a competitor list, compare the previously published list AND
+named references from other issuer records. Review each omitted company against
+its original evidence; do not automatically reverse every existing edge.
+Record the reason for a removal, such as an unsupported claim, obsolete identity,
+duplicate or wrong product scope. Display simplification alone is not evidence
+that a previously supported competitor has ceased to compete.
+
+The LITE repair accidentally omitted AAOI when the renderer stopped importing
+other introduction records into the selected company's graph. AAOI's FY2025
+10-K explicitly names Lumentum, and both filings describe data-center optical
+transceivers. Preserve AAOI as a scoped LITE competitor with that peer-side
+source. The reviewed NVDA payload remains unchanged.
+
+Completion requires a content review, not just one named competitor. Track
+mixed named/industry lists and omitted-peer candidates separately from the 97
+industry-only issuers. BABA's commerce competitors still require review.
+
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
