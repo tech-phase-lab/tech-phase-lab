@@ -61,7 +61,8 @@ link or live purchase is activated.
 
 2026-10-15 update: Sandbox schema/role provisioning and live read-only PayPal/Clerk
 authentication checks have passed. See `RESOLUTE-PAYMENTS-OPERATIONS-2026-10-15.md`
-for deployment evidence and the remaining rollout gates. Purchases remain disabled.
+for deployment evidence and the remaining rollout gates. The later 12:38 UTC
+checkpoint enables owner-only Sandbox checkout; public/live sales remain disabled.
 The setup instructions below are retained for reproducibility.
 
 User has added these to Railway resolute-api, with a successful configuration deploy:

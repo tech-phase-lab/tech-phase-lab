@@ -2,7 +2,8 @@
 
 ## Verified state
 
-Purchases remain disabled (`RESOLUTE_PAYMENTS_ENABLED=false`), Sandbox only,
+At the initial connection-check checkpoint, purchases were disabled
+(`RESOLUTE_PAYMENTS_ENABLED=false`), Sandbox only,
 operator only. No real payment, production entitlement grant, customer email or
 paid-service subscription was performed. Do not ask the owner to repeat the
 successful PayPal/Clerk credential setup. Secret values were not printed or saved
@@ -79,3 +80,40 @@ implemented security audit/outbox entry; no email delivery adapter is enabled.
 
 Do not describe the purchase or entitlement flow as complete based on these checks.
 Application implementation and safety gates remain documented in RESOLUTE-PAYMENTS.md.
+
+
+## 12:38 UTC — owner Sandbox checkout enabled
+
+Implementation commit `716aace43d20db98c9cbf71f24c3e488add8b172` adds
+`/resolute/checkout` and the owner-review link. It fixes callback URLs on the server,
+validates PayPal approval URLs, and requires explicit POST confirmation after return.
+Local final integrated gates: lint 0 errors (2 pre-existing warnings), Node 905/905,
+Python 2439/2439, build, compileall and diff checks passed. Remote tree SHA exactly
+matched staged local tree `09fedec9b669f8724834a7e403e6c381702dbe2f`.
+
+Vercel deployment `dpl_8aNKWjY4EvsTgZNikHqcSdVD7gtr` READY. Railway API pinned to
+that commit, deployment `55ac97d0-925a-4467-abdc-eaac6197c884` SUCCESS with
+RESOLUTE_API_READY. `RESOLUTE_PAYMENTS_ENABLED=true` now permits ONLY the existing
+owner allowlist and ONLY Sandbox. Live is still rejected in code. Anonymous create
+returns 401 AUTH_REQUIRED. No production entitlement or email delivery was enabled.
+
+Actual authenticated browser checks: owner-review link opens checkout; Japanese
+initial order displays JPY 7,980, English initial order displays USD 59.00; both
+orders are created by PayPal Sandbox. Japanese approval link reaches the real
+PayPal Sandbox login, and its cancel link points back to the correct internal order.
+Both orders remain unapproved/unpaid at this checkpoint. No grant or capture was
+performed. Continue with the owner's Sandbox Personal buyer login through secure
+browser authentication, never credentials in chat. The business seller account is
+not the buyer account. Desktop layout was inspected; narrow mobile layout remains
+unverified (this browser did not change viewport using keyboard controls).
+
+GitHub run `38735400659` was cancelled when a separate newer branch commit landed;
+this is not a passing CI result. Subsequent `313ce03` only changes research notebook
+PDF controls and docs; it was fast-forwarded without altering checkout. Verify the
+latest descendant CI result. The external PayPal login initially chose French from
+its browser location; switching its visible English link worked. Add explicit
+PayPal experience locale in a future checked change if needed.
+
+Next gates remain actual buyer approval/capture, signed completion delivery,
+refund/dispute/concurrent-DB tests and post-migration backup restore. API success
+and correct order amounts do not complete those gates.
