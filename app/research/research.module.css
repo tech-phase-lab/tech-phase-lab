@@ -748,7 +748,8 @@
 .savedEmptyIcon svg { width:28px; height:28px; }
 .savedEmpty h2 { font-size:20px; font-weight:500; margin:22px 0 10px; }
 .savedEmpty p { color:#a7b4c3; font-size:13px; max-width:330px; margin:0 auto 22px; }
-.savedEmpty button { padding:11px 20px; border-radius:7px; border:1px solid #73d4bf66; background:#73d4bf15; color:#b9f5e0; font-size:13px; }
+.savedEmpty button { display:block; margin:0 auto; min-height:48px; padding:12px 24px; border-radius:12px; border:1px solid #8be6cf66; background:linear-gradient(180deg,#294b48,#193431); box-shadow:inset 0 1px 0 #c8fff033,0 4px 0 #0b211f,0 8px 18px #0004; color:#d3fff1; font-size:14px; font-weight:600; cursor:pointer; }
+.savedEmpty button:active { transform:translateY(2px); box-shadow:inset 0 1px 0 #c8fff033,0 2px 0 #0b211f; }
 .savedEmpty button span { margin-left:14px; }
 .savedWorkspace .researchGrid:has(.savedEmpty) { grid-template-columns:1fr; }
 @media(max-width:600px) {
@@ -1736,7 +1737,7 @@
 /* Explicit article-saving entry point, also visible after mobile detail scroll. */
 .articleSaveBar { display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; padding-bottom:16px; margin-bottom:20px; border-bottom:1px solid #8fc9bd26; }
 .articleSaveButton { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:9px 16px; border:1px solid #8bd9c1; border-radius:8px; background:#8bd9c11a; color:#b8efdc; font-size:14px; font-weight:600; cursor:pointer; }
-.articleSaveButton[aria-pressed=true] { background:#8bd9c12a; }
+.articleSaveButton[aria-pressed=true] { width:44px; padding:10px; border-color:transparent; background:transparent; }
 .openSavedButton { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 0; border:0; background:transparent; color:#b8efdc; font-size:13px; cursor:pointer; }
 .articleSaveStatus { flex-basis:100%; color:var(--muted); font-size:12px; }
 .articleSaveStatus:empty { display:none; }
@@ -1771,3 +1772,5 @@
 .savedImport summary{cursor:pointer;width:fit-content;padding:10px 0}
 .savedImport button{margin-top:4px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--muted);min-height:44px;cursor:pointer}
 .savedImport summary:focus-visible,.savedImport button:focus-visible{outline:2px solid #8be6bf;outline-offset:3px}
+
+.articleOnly, .researchGrid:not(:has(.detail)) { grid-template-columns:1fr; }

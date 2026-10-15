@@ -51,7 +51,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const restoredView = useSyncExternalStore(subscribeView, viewSnapshot, () => null);
   const tab = restoredView ?? "home";
   const [savedActiveId, setSavedActiveId] = useState("");
-  const [savedSort, setSavedSort] = useState<"saved" | "published">("saved");
+  const [researchArticleOpen, setResearchArticleOpen] = useState(false);
   const savedReturn = useRef<{ id: string; top: number; scroll: number } | null>(null);
   const cardButtons = useRef(new Map<string, HTMLButtonElement>());
   const returnFrame = useRef(0);
@@ -88,6 +88,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           }
         }
         const noteId = window.location.hash.startsWith("#what-changed/") ? window.location.hash.slice("#what-changed/".length) : "";
+        setResearchArticleOpen(Boolean(noteId));
         if (noteId) { setActiveId(noteId); setQuery(""); setTicker("all"); setCategory("all"); }
         if (next === "home") { setQuery(""); setTicker("all"); setCategory("all"); }
       }
@@ -116,7 +117,9 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
       matchesResearchSearch(fields, query, marks) &&
       (tab !== "saved" || saved.includes(event.id));
   });
-  const filtered = tab === "saved" ? orderSavedEvents(matches, saved, savedSort) : matches;
+  const filtered = tab === "saved" ? orderSavedEvents(matches, saved, "saved") : matches;
+  const hasSavedArticles = saved.some(id => events.some(event => event.id === id));
+  const showingResearchArticle = tab === "changes" && researchArticleOpen;
   const selected = tab === "saved" ? filtered.find(event => event.id === savedActiveId) : filtered.find((event) => event.id === activeId) ?? filtered[0];
   const article = useMemberArticle(selected?.id, Boolean(selected?.locked && (tab === "changes" || tab === "saved")));
   const active = article.event ?? selected;
@@ -141,8 +144,11 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
       } else window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: id }, "", "#saved");
       setSavedActiveId(id);
     }
-    if (tab === "changes") window.history.replaceState(null, "", `#what-changed/${id}`);
-    if (tab === "saved" || window.matchMedia("(max-width: 1150px)").matches) {
+    if (tab === "changes") {
+      setResearchArticleOpen(true);
+      window.history.pushState(null, "", `#what-changed/${id}`);
+    }
+    if (tab === "saved" || tab === "changes" || window.matchMedia("(max-width: 1150px)").matches) {
       cancelAnimationFrame(detailFrame.current);
       // Wait for the selected article and collection layout to commit, then
       // place its top below the actual sticky header (including safe-area padding).
@@ -258,18 +264,14 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <span id="metrics" className={styles.anchorTarget} aria-hidden="true" />
           <span id="saved" className={styles.anchorTarget} aria-hidden="true" />
           {tab === "saved" && <header className={styles.savedHeader}>
-            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になる記事を残して、あとからまとめて読み返す。", "Keep useful research together and revisit it anytime.")}</p></div>
+            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になる記事にメモを書き込み、自分だけのリサーチノートに。", "Add your own notes to useful articles and build your personal research notebook.")}</p></div>
             <div className={styles.savedCount}><Bookmark filled /><strong>{saved.filter((id) => events.some((event) => event.id === id)).length}</strong><span>{t("保存済み", "Saved")}</span></div>
           </header>}
-          <div className={`${styles.toolbar} ${tab === "saved" ? styles.savedToolbar : ""}`}>
+          {!showingResearchArticle && (tab !== "saved" || hasSavedArticles) && <div className={`${styles.toolbar} ${tab === "saved" ? styles.savedToolbar : ""}`}>
             {tab !== "changes" && <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : t("保存一覧", "Your collection")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>}
-            {tab === "saved" && <select className={styles.savedSort} aria-label={t("並べ替え", "Sort research")} value={savedSort} onChange={event => setSavedSort(event.target.value as "saved" | "published")}>
-              <option value="saved">{t("保存した順", "Recently saved")}</option>
-              <option value="published">{t("発表日の新しい順", "Newest announcement")}</option>
-            </select>}
             <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={tab === "saved" ? t("銘柄・キーワード・メモで検索", "Search ticker, keyword or notes") : t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={tab === "saved" ? t("保存した記事を検索", "Search saved research") : t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
-          </div>
-          {tab !== "saved" && <div className={styles.filters}>
+          </div>}
+          {tab !== "saved" && !showingResearchArticle && <div className={styles.filters}>
             {[{ id: "all", label: t("すべて", "All topics") }, { id: "cloud", label: t("AIクラウド", "AI cloud") }, { id: "memory", label: t("半導体", "Semiconductors") }].map((item) => <button key={item.id} aria-pressed={category === item.id} onClick={() => { setCategory(item.id); setTicker("all"); }}>{item.label}</button>)}
             {ticker !== "all" && <button className={styles.activeTicker} onClick={() => setTicker("all")} aria-label={t(`${ticker}の絞り込みを解除`, `Clear ${ticker} filter`)}>{ticker} ×</button>}
             <span className={styles.sortLabel}>{t("発表日の新しい順", "Newest announcement first")}</span>
@@ -279,8 +281,8 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
           {tab === "metrics" ? <div className={styles.tableWrap}>
             {allMetrics.length ? <table><caption>{t("実績・見通し・ARRを区別。金額のMは百万米ドル。", "Actuals, guidance, and run-rate are distinct. M denotes USD millions.")}</caption><thead><tr>{[t("銘柄 / 指標", "Ticker / metric"), t("値", "Value"), t("対象・基準", "Scope / basis"), t("期間", "Period"), t("根拠", "Source")].map((label) => <th key={label} scope="col">{label}</th>)}</tr></thead><tbody>{allMetrics.map(({ metric, event }) => <tr key={`${event.id}:${metric.name}`}><th scope="row"><span className={styles.tableTicker}>{event.ticker}</span>{metricNames[metric.name]?.[lang] ?? metric.name}</th><td className={styles.tableValue}>{valueLabel(metric)}</td><td>{metric.scope}<small>{metric.basis} · {metric.kind === "guidance" ? t("会社見通し", "Guidance") : metric.kind === "run-rate" ? t("年換算指標", "Run-rate") : t("実績", "Actual")}</small></td><td>{metric.period}</td><td><a href={event.sources.find((source) => source.id === metric.sourceId)?.url} target="_blank" rel="noreferrer">{t("原文", "Source")} <Arrow /></a></td></tr>)}</tbody></table> : <Empty lang={lang} onReset={clearFilters} />}
-          </div> : <div className={styles.researchGrid}>
-            <div className={styles.eventList}>
+          </div> : <div className={`${styles.researchGrid} ${showingResearchArticle ? styles.articleOnly : ""}`}>
+            {!showingResearchArticle && <div className={styles.eventList}>
               {filtered.map((event) => <article key={event.id} className={`${styles.eventCard} ${active?.id === event.id ? styles.selected : ""}`}>
                 <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} disabled={!collection.editable} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} />{tab !== "saved" && <span>{saved.includes(event.id) ? t("保存済み", "Saved") : t("保存", "Save")}</span>}</button></div>
                 <button ref={node => { if (node) cardButtons.current.set(event.id, node); else cardButtons.current.delete(event.id); }} className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3>{event.id === "mu-q3-2026" && <small>{t("PRO分析の無料サンプル", "Free sample of PRO research")}</small>}<p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{tab === "saved" && <SavedInkBadge hasInk={Boolean(collection.document.notebooks[notebookKey(event.id, lang)]?.length)} lang={lang} />}{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
@@ -289,15 +291,16 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
                 <span className={styles.savedEmptyIcon}><Bookmark /></span>
                 <h2>{t("読み返したい記事を、ここに。", "Keep a good read close.")}</h2>
                 <p>{t("記事を開いて「保存する」を押すと、この一覧に追加されます。", "Open an article and select Save article to add it to your collection.")}</p>
-                <button onClick={() => { clearFilters(); openView("changes"); }}>{t("リサーチを見る", "Explore research")} <span aria-hidden="true">→</span></button>
+                <button onClick={() => { clearFilters(); openView("changes"); }}>{t("保存する記事を調べる", "Find articles to save")}</button>
               </div> : <Empty lang={lang} onReset={clearFilters} />)}
-            </div>
+            </div>}
 
-            {active && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
+            {active && (tab !== "changes" || showingResearchArticle) && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
+              {showingResearchArticle && <button className={styles.backToSaved} onClick={() => openView("changes")}><span aria-hidden="true">◀</span> {t("記事一覧に戻る", "Back to articles")}</button>}
               {tab === "saved" && <button className={styles.backToSaved} onClick={returnToSaved}><span aria-hidden="true">◀</span> {t("保存一覧に戻る", "Back to collection")}</button>}
               {tab !== "saved" && <div className={styles.articleSaveBar}>
-                <button className={styles.articleSaveButton} disabled={!collection.editable} aria-pressed={saved.includes(active.id)} aria-label={saved.includes(active.id) ? t("この記事の保存を解除", "Unsave this article") : t("この記事を保存する", "Save this article")} onClick={() => toggleSaved(active.id)}><Bookmark filled={saved.includes(active.id)} /><span>{saved.includes(active.id) ? t("保存済み", "Saved") : t("保存する", "Save article")}</span></button>
-                {saved.includes(active.id) && <button className={styles.openSavedButton} onClick={() => { clearFilters(); openView("saved"); }}>{t("保存した記事を開く", "Open saved articles")} <span aria-hidden="true">→</span></button>}
+                <button className={styles.articleSaveButton} disabled={!collection.editable} aria-pressed={saved.includes(active.id)} aria-label={saved.includes(active.id) ? t("この記事の保存を解除", "Unsave this article") : t("この記事を保存する", "Save this article")} onClick={() => toggleSaved(active.id)}><Bookmark filled={saved.includes(active.id)} />{!saved.includes(active.id) && <span>{t("保存する", "Save article")}</span>}</button>
+                {saved.includes(active.id) && <button className={styles.openSavedButton} onClick={() => { clearFilters(); openView("saved"); }}>{t("保存一覧へ", "View saved articles")}</button>}
                 <span className={styles.articleSaveStatus} role="status">{storageError ? t("保存できませんでした。ブラウザーの設定をご確認ください。", "Could not save. Check your browser settings.") : ""}</span>
               </div>}
               <ResearchNotebook key={`${collection.scope}:${active.id}:${lang}:${Boolean(active.locked)}`} raw={JSON.stringify(collection.document.notebooks[notebookKey(active.id, lang)] ?? [])} onCommit={(raw, marks) => collection.commitMarks(active.id, lang, raw, marks)} editable={collection.editable} lang={lang} title={active.title[lang]} enabled={tab === "saved" || saved.includes(active.id)}>

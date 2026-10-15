@@ -125,3 +125,8 @@
 ## 2026-10-15: prevent accidental unsaving
 - Removing a saved article asks for confirmation in the current language before changing the collection. Cancel leaves the article and annotations intact; an explicit removal never re-adds an article concurrently removed elsewhere.
 - Empty collection uses an upright bookmark in a restrained circular mint outline instead of a tilted tile.
+
+## 2026-10-16: focused article and simpler collection
+- Research articles open as a standalone detail with a small return action, so unrelated historical cards no longer sit above the article when scrolling. List visits do not auto-open an article.
+- The saved detail action is an icon-only bookmark and a quiet collection link; removal confirmation remains intact.
+- Collection introduction emphasizes personal notes. Removed the sort selector; newest saves remain first. Empty collections hide search and collection controls and show a centered, raised Find articles to save button. No saved data was changed for verification.
