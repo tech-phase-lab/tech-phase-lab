@@ -40,8 +40,12 @@ completion, and repeated renewal completion. The refund race also checks that
 only one alert is queued and delayed completion cannot revive revoked access.
 The test refuses non-loopback databases and databases containing application
 tables. It does not contact PayPal or Clerk or use deployment credentials.
-Execution result remains pending until the new CI job completes; adding the
-tests alone is not a passing concurrency result.
+All five cases passed on PostgreSQL 17.11 in CI on October 16, 2026 (JST).
+The first run passed four cases; the renewal fixture incorrectly attempted to
+renew before its initial payment time. Advancing the fixture clock fixed that
+test setup, and the complete rerun passed. Payment application code was unchanged.
+This covers SQL-store concurrency, not live PayPal network delivery or production
+database operations.
 
 ## Next steps and privacy
 
@@ -59,14 +63,15 @@ capture, so it is not a strictly read-only database audit. Current routes do not
 replace checks of grant count and grant periods. Do not bypass deployment
 approvals or relax authentication to obtain easier access.
 
-Still required before live sales: actual USD FREE and JPY/USD PRO renewals, PostgreSQL
-concurrency, dispute delivery, payment-table backup/restore, production entitlement
+Still required before live sales: actual USD FREE and JPY/USD PRO renewals,
+end-to-end concurrent payment delivery, dispute delivery, payment-table backup/restore, production entitlement
 projection, reconciliation, alert delivery, mobile checkout QA, and deactivation
 of legacy fixed payment links. No real-money sales or email dispatch enabled.
 
 ## Validation
 
-Final integrated application tree: Node 916/916; Python 2,463/2,463; lint zero
+Final integrated application tree: Node 916/916; Python 2,465/2,465; lint zero
 errors (two existing warnings); Next.js production build, Python compileall and
 whitespace checks passed. Only tests and handoff documentation changed in this
-verification; application behavior was not changed.
+verification, together with the separate PostgreSQL CI job; application behavior
+was not changed.
