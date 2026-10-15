@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 57 issuers with published competitor corrections and 57 remaining
+records 67 issuers with published competitor corrections and 47 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -123,6 +123,19 @@ answer or non-competition relationship was removed. The selected examples do
 not exhaust every product line: precision-machining niches, smaller chemical
 subsystem suppliers and additional MKS plating-tool peers require further review.
 Reviewed on 2026-10-15; frozen NVDA and competitor-scrollbar spacing are preserved.
+
+A reviewed 2026-10-16 batch corrects VIAV, SITM, RMBS, DIOD, CEVA, CRUS,
+AMBA, MXL, PI and AOSL (ten existing issuers; no additions). Product areas are
+separated within network test and optics, precision timing, memory-interface
+chips and silicon IP, audio/haptics, vision AI, communications, RFID and power.
+SiTime completed its Renesas timing-business acquisition in July 2026; the older
+Renesas competitor entry is not carried forward as an independent timing rival.
+Diodes includes attributed SiTime and AOS peer-side disclosures after checking
+its timing and power products. Cirrus audio/haptics and Credo optical DSP scopes
+are corroborated by official portfolios. Other five bilingual answers and all
+non-competition relationships are preserved, as are frozen NVDA and the 12px
+competitor-scrollbar spacing. These are selected examples; PNT, pigments,
+spatial audio/sensing, and further power and analog niches require follow-up.
 
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.

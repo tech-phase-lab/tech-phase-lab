@@ -12512,11 +12512,15 @@
       "SITM"
     ],
     "name": "SiTime",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Precision timing / Markets / Customers / Competition / Manufacturing",
         "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm"
+      },
+      {
+        "label": "SiTime · Renesas timing-business acquisition completed July 1, 2026",
+        "url": "https://investor.sitime.com/news-releases/news-release-details/sitime-completes-acquisition-renesas-timing-business"
       }
     ],
     "ja": {
@@ -12524,7 +12528,7 @@
       "revenue": "データセンター、通信、車載、産業、航空宇宙、消費者機器向けに、精密タイミング半導体を販売して稼ぐ。",
       "strength": "MEMS振動子、アナログ回路、パッケージ、ソフトを一体設計し、振動や温度変化に強く、設定変更できるタイミング製品を作れる。",
       "risks": "大口顧客と製品認定の時期、外部工場・組立会社への依存、長い設計サイクル、水晶部品との競争、輸出規制が成長を左右する。",
-      "competition": "従来の水晶発振器・振動子メーカーと、クロックICやMEMSタイミングを作る半導体会社に競う。",
+      "competition": "精密タイミングではMicrochip、Diodes、Seiko Epsonが競合例。SiTimeの開示は水晶発振器・振動子とクロック半導体の双方を対象とする。2026年7月にRenesasのタイミング事業を取得済みのため、旧年次報告のRenesasをそのまま独立した競合として転記しない。",
       "relationships": "データセンター・通信・自動車・産業機器メーカーへタイミング製品を供給し、外部の半導体工場と組立会社へ製造を委託する。"
     },
     "en": {
@@ -12532,32 +12536,44 @@
       "revenue": "Sells precision-timing devices into data-center, communications, automotive, industrial, aerospace and consumer equipment.",
       "strength": "Integrates MEMS resonators, analog circuitry, packaging and software to deliver programmable timing resilient to vibration and temperature change.",
       "risks": "Major-customer and qualification timing, reliance on foundry and assembly partners, long design cycles, quartz competition and export controls affect growth.",
-      "competition": "Competes with traditional quartz resonator and oscillator makers and semiconductor suppliers of clock ICs and MEMS timing products.",
+      "competition": "Examples in precision timing include Microchip, Diodes and Seiko Epson, named in SiTime’s filing across clock semiconductors and quartz-based timing alternatives. SiTime completed its acquisition of Renesas’ timing business in July 2026, so the older Renesas entry is not copied as an independent timing rival.",
       "relationships": "Supplies timing products to data-center, network, automotive and industrial equipment makers and outsources fabrication and assembly."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Quartz timing suppliers",
-          "nameJa": "水晶タイミング部品メーカー",
+          "kind": "company",
+          "name": "Microchip Technology",
           "role": "competitor",
           "label": {
-            "ja": "発振器・振動子で競合",
-            "en": "Oscillators and resonators"
+            "ja": "クロック半導体など精密タイミングで競合。SiTimeの開示",
+            "en": "Clock semiconductors and precision timing; SiTime disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MCHP"
         },
         {
-          "kind": "industry",
-          "name": "Semiconductor clock vendors",
-          "nameJa": "クロック半導体メーカー",
+          "kind": "company",
+          "name": "Diodes Incorporated",
           "role": "competitor",
           "label": {
-            "ja": "クロックICで競合",
-            "en": "Clock ICs"
+            "ja": "クロック・タイミング製品で競合。SiTimeの開示",
+            "en": "Clock and timing products; SiTime disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "DIOD"
+        },
+        {
+          "kind": "company",
+          "name": "Seiko Epson",
+          "role": "competitor",
+          "label": {
+            "ja": "水晶発振器・振動子などで競合。SiTimeの開示",
+            "en": "Quartz oscillators and resonators; SiTime disclosure"
           },
           "sourceIndexes": [
             0
@@ -13420,11 +13436,15 @@
       "RMBS"
     ],
     "name": "Rambus",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Memory interface chips and IP / Customers / Competition / Manufacturing / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm"
+      },
+      {
+        "label": "Rambus FY2025 Annual Report · Competition, printed page 7",
+        "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526096479/d931669dars.pdf"
       }
     ],
     "ja": {
@@ -13432,7 +13452,7 @@
       "revenue": "サーバー向けインターフェースチップの販売、半導体設計IPのライセンス料、顧客製品の出荷に連動するロイヤルティで稼ぐ。",
       "strength": "DDRなどメモリー規格に沿った高速回路、信号品質、セキュリティIPをまとめ、顧客の開発期間を短縮できる。",
       "risks": "メモリー需要と規格移行、少数顧客、外部製造、IP保護と訴訟、顧客の内製、製品認定の長期化に左右される。",
-      "competition": "メモリーインターフェースチップと半導体設計IPで、専門半導体会社、IPベンダー、顧客の自社設計と競う。",
+      "competition": "メモリー接続チップではMonolithic Power Systems、Montage Technology、Texas Instruments、半導体設計IPではCadenceとSynopsysが競合例。Rambus自身が製品分野を分けて実名を記載している。メモリー接続チップと設計IPのライセンスは区別する。",
       "relationships": "メモリー・サーバー向け半導体会社へチップと設計IPを供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。"
     },
     "en": {
@@ -13440,23 +13460,74 @@
       "revenue": "Earns from sales of server memory-interface chips, upfront and recurring IP license fees and royalties tied to customer product shipments.",
       "strength": "Combines high-speed DDR-standard circuitry, signal integrity and security IP to shorten customer development cycles.",
       "risks": "Memory demand and standards transitions, a limited customer base, outsourced manufacturing, IP protection and litigation, customer insourcing and long qualifications affect results.",
-      "competition": "Competes in memory-interface chips and silicon IP with specialist chip and IP vendors and customers' internal designs.",
+      "competition": "Rambus names Monolithic Power Systems, Montage Technology and Texas Instruments in memory-interface chips, and Cadence and Synopsys in silicon IP. These are separate product markets; chip sales and licensable interface/security IP should not be treated as the same offering.",
       "relationships": "Supplies chips and design IP to memory and server semiconductor companies and outsources fabrication, assembly and test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Memory-interface chip and IP vendors",
-          "nameJa": "メモリー接続半導体・IP会社",
+          "kind": "company",
+          "name": "Monolithic Power Systems",
           "role": "competitor",
           "label": {
-            "ja": "接続チップ・設計IPで競合",
-            "en": "Interface chips and silicon IP"
+            "ja": "メモリー接続チップで競合。Rambusの開示",
+            "en": "Memory-interface chips; Rambus disclosure"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "MPWR"
+        },
+        {
+          "kind": "company",
+          "name": "Montage Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "メモリー接続チップで競合。Rambusの開示",
+            "en": "Memory-interface chips; Rambus disclosure"
+          },
+          "sourceIndexes": [
+            1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "role": "competitor",
+          "label": {
+            "ja": "メモリー接続チップで競合。Rambusの開示",
+            "en": "Memory-interface chips; Rambus disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "TXN"
+        },
+        {
+          "kind": "company",
+          "name": "Cadence",
+          "role": "competitor",
+          "label": {
+            "ja": "インターフェース・セキュリティ設計IPで競合。Rambusの開示",
+            "en": "Interface and security silicon IP; Rambus disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "CDNS"
+        },
+        {
+          "kind": "company",
+          "name": "Synopsys",
+          "role": "competitor",
+          "label": {
+            "ja": "インターフェース・セキュリティ設計IPで競合。Rambusの開示",
+            "en": "Interface and security silicon IP; Rambus disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "SNPS"
         }
       ],
       "relationships": [
@@ -13495,11 +13566,23 @@
       "DIOD"
     ],
     "name": "Diodes Incorporated",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Markets / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm"
+      },
+      {
+        "label": "Diodes FY2025 Annual Report · Products / Competition, printed pages 6–9",
+        "url": "https://www.sec.gov/Archives/edgar/data/29002/000119312526138092/2025_annual_report.pdf"
+      },
+      {
+        "label": "FY2025 Form 10-K · Precision timing / Markets / Customers / Competition / Manufacturing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm"
+      },
+      {
+        "label": "FY2026 Form 10-K · Products / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm"
       }
     ],
     "ja": {
@@ -13507,7 +13590,7 @@
       "revenue": "車載、産業、コンピューター、通信、消費者機器向けに製品を直販または販売会社経由で販売して稼ぐ。",
       "strength": "ディスクリートからアナログ、ロジックまで品ぞろえが広く、自社工場と組立拠点を使って顧客へ複数部品をまとめて提案できる。",
       "risks": "半導体市況、販売会社の在庫、中国・アジアの生産集中、工場稼働率、価格競争、原材料と輸出規制に左右される。",
-      "competition": "ディスクリート、電源・信号用アナログ、ロジック、タイミングの各市場で大手・専門半導体会社と競う。",
+      "competition": "アナログ・個別半導体ではonsemi、Vishay、Texas Instruments、タイミングではSiTime、電力ディスクリートではAlpha and Omega Semiconductorが競合例。前3社はDiodes自身の開示、後2社は相手側がDiodesを明記した資料と製品範囲を照合した。",
       "relationships": "自動車、産業、通信、コンピューター、消費者機器メーカーへ直販または販売会社経由で部品を供給する。"
     },
     "en": {
@@ -13515,22 +13598,74 @@
       "revenue": "Sells products directly and through distributors into automotive, industrial, computing, communications and consumer electronics.",
       "strength": "A broad portfolio spanning discrete, analog and logic devices plus internal wafer and assembly capacity supports cross-selling multiple parts to customers.",
       "risks": "Semiconductor cycles, distributor inventory, Asian manufacturing concentration, fab utilization, pricing, raw materials and export controls affect results.",
-      "competition": "Competes with large and specialist semiconductor suppliers across discrete, power and signal analog, logic and timing markets.",
+      "competition": "Examples include onsemi, Vishay and Texas Instruments in analog/discrete semiconductors, SiTime in timing, and Alpha and Omega Semiconductor in power discretes. Diodes names the first three; SiTime and AOS explicitly name Diodes, with overlap checked against Diodes’ products.",
       "relationships": "Supplies automotive, industrial, communications, computing and consumer equipment makers directly and through distributors."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Analog and discrete semiconductor vendors",
-          "nameJa": "アナログ・ディスクリート半導体会社",
+          "kind": "company",
+          "name": "onsemi",
           "role": "competitor",
           "label": {
-            "ja": "電源・信号・個別半導体で競合",
-            "en": "Power, signal and discrete devices"
+            "ja": "ディスクリート・アナログ製品で競合。Diodesの開示",
+            "en": "Discrete and analog semiconductors; Diodes disclosure"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "ON"
+        },
+        {
+          "kind": "company",
+          "name": "Vishay Intertechnology",
+          "role": "competitor",
+          "label": {
+            "ja": "ディスクリート・アナログ製品で競合。Diodesの開示",
+            "en": "Discrete and analog semiconductors; Diodes disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "VSH"
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "role": "competitor",
+          "label": {
+            "ja": "アナログ・ミックスドシグナル製品で競合。Diodesの開示",
+            "en": "Analog and mixed-signal products; Diodes disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "TXN"
+        },
+        {
+          "kind": "company",
+          "name": "SiTime",
+          "ticker": "SITM",
+          "role": "competitor",
+          "label": {
+            "ja": "クロック・タイミング製品で競合。SiTimeがDiodesを明記",
+            "en": "Clock and timing products; SiTime names Diodes"
+          },
+          "sourceIndexes": [
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alpha and Omega Semiconductor",
+          "ticker": "AOSL",
+          "role": "competitor",
+          "label": {
+            "ja": "電力ディスクリートで競合。AOSがDiodesを明記",
+            "en": "Power discretes; AOS names Diodes"
+          },
+          "sourceIndexes": [
+            3
           ]
         }
       ],
@@ -13645,7 +13780,7 @@
       "CEVA"
     ],
     "name": "CEVA",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Silicon IP / Licensing and royalties / Customers / Competition / Risk factors",
@@ -13657,7 +13792,7 @@
       "revenue": "設計IPを採用するときのライセンス料、開発支援料、顧客チップの出荷数に応じたロイヤルティで稼ぐ。",
       "strength": "無線通信、DSP、センサー、エッジAIの再利用可能なIPとソフトを持ち、顧客が一から回路を作る時間とリスクを減らす。",
       "risks": "少数の大口ライセンシー、採用から量産までの長い期間、通信規格の変化、顧客内製、IP保護、中国需要に左右される。",
-      "competition": "無線・DSP・AI向けの半導体設計IPで、他のIPベンダーや顧客が社内開発する回路と競う。",
+      "competition": "DSP・AI向け設計IPではCadence、Arm、VeriSiliconが競合例。無線ではInfineonなどの社内設計チームも代替となり、CEVA自身が競争要因として記載している。外部販売するIPベンダーとの競争と、顧客が自社開発してライセンスしないリスクは区別する。",
       "relationships": "半導体会社へ設計IPとソフトを提供し、採用企業がそのIPを組み込んだチップを出荷するとロイヤルティを受け取る。"
     },
     "en": {
@@ -13665,19 +13800,56 @@
       "revenue": "Earns upfront license and development-support fees plus royalties based on shipments of customers' chips using its IP.",
       "strength": "Reusable wireless, DSP, sensing and edge-AI IP and software reduce the time and risk for customers building functions from scratch.",
       "risks": "A limited set of large licensees, long design-to-production cycles, changing standards, customer insourcing, IP protection and China demand affect results.",
-      "competition": "Competes in wireless, DSP and AI silicon IP with other IP vendors and customers' internally developed designs.",
+      "competition": "CEVA identifies Cadence, Arm and VeriSilicon in DSP, AI and processor IP, and Infineon’s internal wireless design teams as a competitive alternative in short-range connectivity. Third-party IP licensing competition is distinct from a chipmaker choosing to develop its own design.",
       "relationships": "Licenses design IP and software to semiconductor companies and receives royalties when licensees ship chips incorporating that IP."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Wireless and processor IP vendors",
-          "nameJa": "無線・プロセッサーIP会社",
+          "kind": "company",
+          "name": "Cadence",
           "role": "competitor",
           "label": {
-            "ja": "無線・DSP・AI設計IPで競合",
-            "en": "Wireless, DSP and AI IP"
+            "ja": "DSP・AI向け設計IPで競合。CEVAの開示",
+            "en": "DSP and AI IP; CEVA disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CDNS"
+        },
+        {
+          "kind": "company",
+          "name": "Arm",
+          "role": "competitor",
+          "label": {
+            "ja": "プロセッサー・AI設計IPで競合。CEVAの開示",
+            "en": "Processor and AI IP; CEVA disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ARM"
+        },
+        {
+          "kind": "company",
+          "name": "VeriSilicon",
+          "role": "competitor",
+          "label": {
+            "ja": "DSP・AI設計IPで競合。CEVAの開示",
+            "en": "DSP and AI IP; CEVA disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Infineon",
+          "role": "competitor",
+          "label": {
+            "ja": "無線の社内設計が代替となる。CEVAの開示",
+            "en": "Internal wireless designs are an alternative; CEVA disclosure"
           },
           "sourceIndexes": [
             0
@@ -14020,11 +14192,23 @@
       "CRUS"
     ],
     "name": "Cirrus Logic",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Audio and mixed-signal products / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm"
+      },
+      {
+        "label": "Asahi Kasei Microdevices · Audio D/A converters",
+        "url": "https://www.akm.com/us/en/products/audio/audio-dac/"
+      },
+      {
+        "label": "Analog Devices · Audio processors",
+        "url": "https://www.analog.com/en/product-category/audio-processors.html"
+      },
+      {
+        "label": "Texas Instruments · Audio, haptics and piezo products",
+        "url": "https://www.ti.com/product-category/audio/overview.html"
       }
     ],
     "ja": {
@@ -14032,7 +14216,7 @@
       "revenue": "主にスマートフォン、タブレット、ノートPC、ウェアラブル機器メーカーへ半導体を販売して稼ぐ。",
       "strength": "低消費電力の音声処理、アンプ、電源・触覚制御を一つの機器向けに統合し、大量生産製品へ深く組み込まれる。",
       "risks": "一社の大口顧客への依存、スマートフォン販売、設計採用の入れ替え、外部製造、在庫、輸出規制に業績が左右される。",
-      "competition": "オーディオコーデック、アンプ、電源・触覚制御などの高性能アナログ・ミックスドシグナル半導体で競う。",
+      "competition": "オーディオ用の変換・信号処理ICではAKMとAnalog Devices、音声アンプや触覚制御ではTexas Instrumentsが競合例。Cirrus Logic自身が3社を列挙し、製品分野は各社の公式製品で照合した。全製品で同じ競合がいるわけではない。",
       "relationships": "電子機器メーカーへ音声・制御用半導体を供給し、ウエハー製造、組立、検査は外部パートナーへ委託する。"
     },
     "en": {
@@ -14040,23 +14224,51 @@
       "revenue": "Sells semiconductors primarily to makers of smartphones, tablets, laptops, wearables and related devices.",
       "strength": "Integrates low-power audio processing, amplification, power and haptic control and becomes deeply designed into high-volume devices.",
       "risks": "Dependence on one major customer, smartphone sales, design-win changes, outsourced manufacturing, inventory and export controls affect results.",
-      "competition": "Competes in audio codecs, amplifiers, power and haptic control and other high-performance analog and mixed-signal chips.",
+      "competition": "Examples include AKM and Analog Devices in audio conversion and signal-processing ICs, and Texas Instruments in audio amplifiers and haptic drivers. Cirrus Logic names all three; product scopes are checked against official portfolios rather than inferred solely from the broad competitor list.",
       "relationships": "Supplies audio and control chips to device makers and outsources wafer fabrication, assembly and test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Audio and mixed-signal semiconductor vendors",
-          "nameJa": "音声・ミックスドシグナル半導体会社",
+          "kind": "company",
+          "name": "AKM Semiconductor",
           "role": "competitor",
           "label": {
-            "ja": "音声・電源・触覚制御で競合",
-            "en": "Audio, power and haptic control"
+            "ja": "オーディオD/A変換などで競合。Cirrusの開示と公式製品",
+            "en": "Audio D/A conversion; Cirrus disclosure and official products"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Analog Devices",
+          "role": "competitor",
+          "label": {
+            "ja": "オーディオ信号処理で競合。Cirrusの開示と公式製品",
+            "en": "Audio signal processing; Cirrus disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "ADI"
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "role": "competitor",
+          "label": {
+            "ja": "音声アンプ・触覚ドライバーで競合。Cirrusの開示と公式製品",
+            "en": "Audio amplifiers and haptic drivers; Cirrus disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "TXN"
         }
       ],
       "relationships": [
@@ -14170,7 +14382,7 @@
       "AMBA"
     ],
     "name": "Ambarella",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Edge AI and video SoCs / Markets / Customers / Manufacturing / Competition / Risk factors",
@@ -14182,7 +14394,7 @@
       "revenue": "車載カメラ、監視・業務用カメラ、ドローン、ロボット、消費者向け映像機器メーカーへSoCを販売して稼ぐ。",
       "strength": "低消費電力の映像圧縮と独自のCVflow AI演算を組み合わせ、高画質映像と物体認識を一つのチップで処理できる。",
       "risks": "設計採用から量産までの長さ、大口顧客、車載案件の遅延、中国需要、外部ファウンドリー、AI競争に左右される。",
-      "competition": "車載・監視・ロボット向けのエッジAI、画像処理、映像SoCで大手半導体会社や専門メーカーと競う。",
+      "competition": "IoT向けの映像・エッジAIではNVIDIA、Qualcomm、Novatek、車載カメラではこれらに加えてMobileyeが競合例。Ambarellaの開示がIoTと車載を分けて実名を挙げている。GPU全般の市場ではなく、カメラ映像の処理・認識に重なる範囲を示す。",
       "relationships": "カメラ・自動車・ロボットメーカーへAI映像SoCとソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
     },
     "en": {
@@ -14190,23 +14402,61 @@
       "revenue": "Sells SoCs to automotive-camera, security and professional-camera, drone, robotics and consumer-video equipment makers.",
       "strength": "Combines low-power video compression with proprietary CVflow AI compute to process high-quality video and object recognition on one chip.",
       "risks": "Long design-to-production cycles, large customers, automotive delays, China demand, external foundries and AI competition affect results.",
-      "competition": "Competes with large and specialist chip vendors in edge AI, image processing and video SoCs for automotive, security and robotics.",
+      "competition": "Ambarella names NVIDIA, Qualcomm and Novatek in IoT video/edge AI, and those companies plus Mobileye in automotive cameras. The overlap concerns camera processing and perception, not the whole GPU market. Its filing distinguishes IoT from automotive competition.",
       "relationships": "Supplies AI vision SoCs and software to camera, automotive and robotics manufacturers and outsources fabrication and assembly."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Edge AI and vision semiconductor vendors",
-          "nameJa": "エッジAI・画像半導体会社",
+          "kind": "company",
+          "name": "NVIDIA",
           "role": "competitor",
           "label": {
-            "ja": "画像AI・映像SoCで競合",
-            "en": "Vision AI and video SoCs"
+            "ja": "IoT映像・車載カメラ向け処理で競合。Ambarellaの開示",
+            "en": "IoT vision and automotive-camera processing; Ambarella disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Qualcomm",
+          "role": "competitor",
+          "label": {
+            "ja": "IoT映像・車載カメラ向け処理で競合。Ambarellaの開示",
+            "en": "IoT vision and automotive-camera processing; Ambarella disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "QCOM"
+        },
+        {
+          "kind": "company",
+          "name": "Novatek Microelectronics",
+          "role": "competitor",
+          "label": {
+            "ja": "IoT映像・車載カメラSoCで競合。Ambarellaの開示",
+            "en": "IoT video and automotive-camera SoCs; Ambarella disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Mobileye",
+          "role": "competitor",
+          "label": {
+            "ja": "車載カメラ・認識処理で競合。Ambarellaの開示",
+            "en": "Automotive cameras and perception; Ambarella disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MBLY"
         }
       ],
       "relationships": [
@@ -14320,11 +14570,15 @@
       "PI"
     ],
     "name": "Impinj",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · RAIN RFID platform / Products / Partners / Competition / Manufacturing / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm"
+      },
+      {
+        "label": "Impinj FY2025 Annual Report · Product-specific competition, printed page 12",
+        "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526159065/2026_ars.pdf"
       }
     ],
     "ja": {
@@ -14332,7 +14586,7 @@
       "revenue": "タグ・ラベルメーカーへエンドポイントICを、機器メーカーや導入企業へ読み取り製品とクラウド関連サービスを販売して稼ぐ。",
       "strength": "タグ側とリーダー側の半導体、機器、ソフトを一つの基盤で提供し、大量の物品データを継続的に読み取れる。",
       "risks": "小売・物流の導入速度、大口顧客、タグ価格、在庫変動、外部製造、無線規格、知的財産訴訟に左右される。",
-      "competition": "RAIN RFIDのタグIC、リーダーIC・機器、物品識別ソフトで半導体会社や識別技術メーカーと競う。",
+      "competition": "RAIN RFIDのタグ用ICではNXPとAlien Technology、読み取りICではPhychips、タグ試験・生産システムではCISC Semiconductorが競合例。Impinj自身が製品別に実名を記載している。読み取り機器の多くは同社基盤を利用するため、導入先を一律に競合扱いしない。",
       "relationships": "タグ・ラベル会社へICを供給し、リーダー・ソフトのパートナーを通じて小売、物流、製造現場の物品を接続する。"
     },
     "en": {
@@ -14340,22 +14594,58 @@
       "revenue": "Sells endpoint ICs to tag and label makers and reader products and cloud-related services to equipment makers and adopters.",
       "strength": "Provides tag-side and reader-side chips, devices and software as one platform that continuously reads data from very large populations of items.",
       "risks": "Retail and logistics adoption, large customers, tag pricing, inventory swings, outsourced manufacturing, radio standards and IP litigation affect results.",
-      "competition": "Competes in RAIN RFID endpoint chips, reader chips and devices and item-identification software with chip and identification-technology vendors.",
+      "competition": "Impinj names NXP and Alien Technology in endpoint/tag ICs, Phychips in reader ICs, and CISC Semiconductor in tag and production systems. Its filing separates these product areas and notes that many reader/gateway suppliers use its platform; customers are not automatically competitors.",
       "relationships": "Supplies ICs to tag and label companies and uses reader and software partners to connect items across retail, logistics and manufacturing."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "RFID semiconductor and systems vendors",
-          "nameJa": "RFID半導体・システム会社",
+          "kind": "company",
+          "name": "NXP Semiconductors",
           "role": "competitor",
           "label": {
-            "ja": "タグIC・読み取り機器で競合",
-            "en": "Tag chips and readers"
+            "ja": "RAIN RFIDタグ用ICで競合。Impinjの開示",
+            "en": "RAIN RFID endpoint/tag ICs; Impinj disclosure"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "NXPI"
+        },
+        {
+          "kind": "company",
+          "name": "Alien Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "RAIN RFIDタグ用ICで競合。Impinjの開示",
+            "en": "RAIN RFID endpoint/tag ICs; Impinj disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Phychips",
+          "role": "competitor",
+          "label": {
+            "ja": "RAIN RFID読み取りICで競合。Impinjの開示",
+            "en": "RAIN RFID reader ICs; Impinj disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CISC Semiconductor",
+          "role": "competitor",
+          "label": {
+            "ja": "タグ試験・生産システムで競合。Impinjの開示",
+            "en": "Tag and production systems; Impinj disclosure"
+          },
+          "sourceIndexes": [
+            1
           ]
         }
       ],
@@ -14470,11 +14760,27 @@
       "MXL"
     ],
     "name": "MaxLinear",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Communications ICs / Markets / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm"
+      },
+      {
+        "label": "Credo · Cardinal 800 optical DSP product brief, March 2026",
+        "url": "https://credosemi.com/wp-content/uploads/Cardinal.800.Product-Brief.3.23.2026.pdf"
+      },
+      {
+        "label": "Broadcom · Cable, DSL and PON broadband platforms",
+        "url": "https://www.broadcom.com/products/broadband"
+      },
+      {
+        "label": "Qualcomm · Wi-Fi products",
+        "url": "https://www.qualcomm.com/wi-fi/products"
+      },
+      {
+        "label": "Texas Instruments · Power-management products",
+        "url": "https://www.ti.com/product-category/power-management/products.html"
       }
     ],
     "ja": {
@@ -14482,7 +14788,7 @@
       "revenue": "ブロードバンド機器、データセンター接続、無線基地局、家庭用ネットワーク、産業機器メーカーへ半導体を販売して稼ぐ。",
       "strength": "RFからデジタル信号処理、ネットワーク、電源までを一つのチップへ統合し、通信機器の部品数と消費電力を減らせる。",
       "risks": "通信設備投資、顧客在庫、大口顧客、中国需要、外部ファウンドリー、価格競争、製品認定の長期化に左右される。",
-      "competition": "ブロードバンド、無線・有線通信、データセンター接続、電源管理の半導体で大手と専門メーカーに競う。",
+      "competition": "ブロードバンド用半導体ではBroadcom、Wi-Fi接続ではQualcomm、高速光接続用DSPではCredo、電源管理ICではTexas Instrumentsが競合例。MaxLinear自身が4社を競合として列挙しており、製品ごとの範囲は両社の公表製品を照合した編集上の比較。",
       "relationships": "通信・ネットワーク機器メーカーへ半導体を供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。"
     },
     "en": {
@@ -14490,23 +14796,66 @@
       "revenue": "Sells chips to broadband equipment, data-center connectivity, wireless infrastructure, home-networking and industrial-equipment makers.",
       "strength": "Integrates RF, digital signal processing, networking and power functions to reduce component count and power consumption in communications equipment.",
       "risks": "Communications spending, customer inventory, large customers, China demand, external foundries, pricing and long qualifications affect results.",
-      "competition": "Competes with large and specialist chip vendors in broadband, wired and wireless communications, data-center connectivity and power management.",
+      "competition": "Examples include Broadcom in broadband chips, Qualcomm in Wi-Fi connectivity, Credo in high-speed optical DSPs and Texas Instruments in power-management ICs. MaxLinear explicitly names all four; the product-specific scopes are editorial comparisons of disclosed portfolios.",
       "relationships": "Supplies chips to communications and networking equipment makers and outsources fabrication, assembly and test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Communications semiconductor vendors",
-          "nameJa": "通信半導体会社",
+          "kind": "company",
+          "name": "Broadcom",
           "role": "competitor",
           "label": {
-            "ja": "RF・ブロードバンド・接続で競合",
-            "en": "RF, broadband and connectivity"
+            "ja": "RF・ブロードバンド・通信接続で競合。MaxLinearの開示と公式製品の照合",
+            "en": "RF, broadband and connectivity; MaxLinear disclosure and official product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "AVGO"
+        },
+        {
+          "kind": "company",
+          "name": "Qualcomm",
+          "role": "competitor",
+          "label": {
+            "ja": "RF・通信接続半導体で競合。MaxLinearの開示と公式製品の照合",
+            "en": "RF and connectivity semiconductors; MaxLinear disclosure and official product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "QCOM"
+        },
+        {
+          "kind": "company",
+          "name": "Credo",
+          "role": "competitor",
+          "label": {
+            "ja": "高速接続・光通信用DSPで競合。開示と公式製品",
+            "en": "High-speed interconnect and optical DSP; disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "CRDO"
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "role": "competitor",
+          "label": {
+            "ja": "電源管理・アナログ製品で競合。MaxLinearの開示と公式製品の照合",
+            "en": "Power-management and analog products; MaxLinear disclosure and official product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "TXN"
         }
       ],
       "relationships": [
@@ -14840,7 +15189,7 @@
       "AOSL"
     ],
     "name": "Alpha and Omega Semiconductor",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Customers / Manufacturing / Competition / Risk factors",
@@ -14852,7 +15201,7 @@
       "revenue": "PC、家電、通信、産業、自動車向けメーカーへ電力ディスクリートと電源管理ICを販売して稼ぐ。",
       "strength": "電力素子と制御ICの両方を持ち、用途ごとに損失・発熱・サイズを抑えた電源回路を提案できる。",
       "risks": "PC・家電需要、販売価格の低下、顧客認定、製造歩留まり、製造委託先、品質事故や在庫調整に左右される。",
-      "competition": "MOSFET、電力ディスクリート、電源管理ICで大手総合半導体会社や電力半導体専業と競う。",
+      "competition": "MOSFETなどの電力ディスクリートではInfineon、onsemi、Vishay、電源管理ICではMonolithic Power Systems、Texas Instruments、onsemi、Vishayが競合例。AOS自身が両分野を分けて記載しており、電力素子と電源制御ICを区別する。",
       "relationships": "OEM・設計製造会社へ電力半導体を直接または販売代理店経由で供給し、外部工場と組立検査会社も利用する。"
     },
     "en": {
@@ -14860,23 +15209,74 @@
       "revenue": "Sells power discretes and power-management ICs into computing, consumer, communications, industrial and automotive equipment.",
       "strength": "Combines power devices and control ICs to tailor power circuits for lower loss, heat and size in each application.",
       "risks": "PC and consumer demand, price erosion, qualifications, manufacturing yield, outsourced capacity, quality events and inventory corrections affect results.",
-      "competition": "Competes in MOSFETs, power discretes and power-management ICs with broad semiconductor and power-specialist suppliers.",
+      "competition": "AOS names Infineon, onsemi and Vishay among power-discrete competitors, and Monolithic Power Systems, Texas Instruments, onsemi and Vishay among power-IC competitors. Its filing separates power devices such as MOSFETs from the ICs that control power.",
       "relationships": "Supplies power semiconductors to OEMs and design manufacturers directly or through distributors and uses outside fabs and assembly-test providers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Power semiconductor and analog IC suppliers",
-          "nameJa": "電力半導体・アナログIC会社",
+          "kind": "company",
+          "name": "Infineon",
           "role": "competitor",
           "label": {
-            "ja": "MOSFET・電源ICで競合",
-            "en": "MOSFETs and power ICs"
+            "ja": "MOSFETなど電力ディスクリートで競合。AOSの開示",
+            "en": "Power discretes including MOSFETs; AOS disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "role": "competitor",
+          "label": {
+            "ja": "電力ディスクリート・電源ICで競合。AOSの開示",
+            "en": "Power discretes and power ICs; AOS disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ON"
+        },
+        {
+          "kind": "company",
+          "name": "Vishay Intertechnology",
+          "role": "competitor",
+          "label": {
+            "ja": "電力ディスクリート・電源ICで競合。AOSの開示",
+            "en": "Power discretes and power ICs; AOS disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "VSH"
+        },
+        {
+          "kind": "company",
+          "name": "Monolithic Power Systems",
+          "role": "competitor",
+          "label": {
+            "ja": "電源管理ICで競合。AOSの開示",
+            "en": "Power-management ICs; AOS disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MPWR"
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "role": "competitor",
+          "label": {
+            "ja": "電源管理ICで競合。AOSの開示",
+            "en": "Power-management ICs; AOS disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TXN"
         }
       ],
       "relationships": [
@@ -15078,7 +15478,7 @@
       "VIAV"
     ],
     "name": "Viavi Solutions",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Segments / Products / Markets / Competition / Risk factors",
@@ -15090,7 +15490,7 @@
       "revenue": "通信会社、ネットワーク機器・データセンター、航空宇宙防衛、偽造防止・ディスプレー市場へ製品とソフトを販売して稼ぐ。",
       "strength": "高速通信を現場から研究所まで測る技術と、精密な光学・色制御、測位・時刻技術を複数市場へ展開できる。",
       "risks": "通信設備投資、顧客集中、買収統合、政府予算、部品供給、製品移行、輸出規制と工場稼働率に左右される。",
-      "competition": "通信試験・監視、測位・時刻、光学セキュリティ部材で計測器会社や光学技術会社と競う。",
+      "competition": "通信網の試験・監視ではKeysightとAnritsu、紙幣などの偽造防止技術ではCrane NXT、受動光部品ではCoherentが競合例。VIAVI自身の開示を製品別に整理しており、通信計測と特殊光学部材を同じ市場として扱わない。",
       "relationships": "通信・データセンター、航空宇宙防衛、偽造防止・表示機器会社へ測定装置や光学部材を供給し、電子・光学部品を調達する。"
     },
     "en": {
@@ -15098,23 +15498,61 @@
       "revenue": "Sells hardware and software to telecom, network and data-center, aerospace-defense, anti-counterfeit and display markets.",
       "strength": "Combines field-to-lab high-speed network measurement with precision optical, color, positioning and timing technologies across markets.",
       "risks": "Telecom spending, customer concentration, acquisition integration, government budgets, components, transitions, export controls and utilization affect results.",
-      "competition": "Competes in network test and assurance, positioning and timing, and optical security materials with test and photonics companies.",
+      "competition": "VIAVI names Keysight and Anritsu in network test and monitoring, Crane NXT in anti-counterfeiting technologies, and Coherent in passive optical components. These examples separate network measurement from optical security and components; they are not an exhaustive list.",
       "relationships": "Supplies test systems and optics to communications, data-center, defense and secure-document or display customers and sources optical-electronic parts."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Network-test and optical-technology vendors",
-          "nameJa": "通信計測・光学技術会社",
+          "kind": "company",
+          "name": "Keysight Technologies",
           "role": "competitor",
           "label": {
-            "ja": "通信測定・光学部材で競合",
-            "en": "Network measurement and optics"
+            "ja": "通信網の試験・監視で競合。VIAVIの開示",
+            "en": "Network test and monitoring; VIAVI disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "KEYS"
+        },
+        {
+          "kind": "company",
+          "name": "Anritsu",
+          "role": "competitor",
+          "label": {
+            "ja": "通信網の試験・測定で競合。VIAVIの開示",
+            "en": "Network test and measurement; VIAVI disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Crane NXT",
+          "role": "competitor",
+          "label": {
+            "ja": "紙幣などの偽造防止技術で競合。VIAVIの開示",
+            "en": "Anti-counterfeiting technologies; VIAVI disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CXT"
+        },
+        {
+          "kind": "company",
+          "name": "Coherent",
+          "role": "competitor",
+          "label": {
+            "ja": "受動光部品などで競合。VIAVIの開示",
+            "en": "Passive optical components; VIAVI disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "COHR"
         }
       ],
       "relationships": [
