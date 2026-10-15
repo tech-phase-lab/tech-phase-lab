@@ -37,7 +37,9 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   const ja = lang === "ja";
   // The agenda below marks a company's call "results posted" from these rows (owner, Oct 15).
   useEffect(() => {
-    onReported?.(earningsResults(updates, briefs).filter(row => !ja || row.result.ja).map(row => ({ ticker: row.ticker, at: Date.parse(row.releasedAt) })));
+    // Posted economic releases count too, keyed "econ:ppi" etc., so their calendar row goes away (owner, Oct 15).
+    const economic = mergeEconomicResults(updates, briefs).filter(row => !ja || row.title.ja).map(row => ({ ticker: `econ:${/^[a-z]+/.exec(row.id)?.[0]}`, at: Date.parse(row.releasedAt) }));
+    onReported?.([...earningsResults(updates, briefs).filter(row => !ja || row.result.ja).map(row => ({ ticker: row.ticker, at: Date.parse(row.releasedAt) })), ...economic]);
   }, [updates, briefs, ja, onReported]);
   const results = mergeEconomicResults(updates, briefs).filter(event => (period === "upcoming" || period === "today-upcoming") || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";

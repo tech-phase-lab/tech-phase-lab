@@ -339,6 +339,19 @@ class ResultTests(unittest.TestCase):
         self.assertIsNone(results.projection('$TSM Reports Q3 (NT$) Rev 1.49B v 1.49T prelim', ['TSM']))
         self.assertIn('trade_the_news', results.ACCOUNTS)
 
+    def test_a_guide_post_keeps_the_outlook_ranges_it_states(self):
+        post = "TSMC $TSM Q4'26 GUIDE\n\n- Revenue: $52.30B - $54.30B\n- Gross margin: 65% - 67%\n- Operating margin: 56.5% - 58.5%"
+        result = results.projection(post, ['TSM'])
+        self.assertEqual({f['key']: f['value'] for f in result['facts']}, {
+            'guidance-revenue': '$52.30B-$54.30B', 'guidance-gross-margin': '65%-67%', 'guidance-operating-margin': '56.5%-58.5%'})
+        self.assertEqual(result['period'], 'Q4 2026')
+        self.assertEqual(results.projection("$TSM Q4'26 GUIDE\nRev $52.30-54.30B\nGM 65-67%", ['TSM'])['facts'][0]['value'], '$52.30B-$54.30B')
+        # An estimate, a missing currency, a unit mismatch, another company or no revenue range: nothing is published.
+        for bad in ("$TSM Q4'26 GUIDE\nRevenue $52.3B-$54.3Be", "$TSM Q4'26 GUIDE\nRevenue 52.3B-54.3B",
+                    "$TSM Q4'26 GUIDE\nRevenue $52.3B-$54.3M", "$TSM Q4'26 GUIDE\nGross margin: 65% - 67%"):
+            self.assertIsNone(results.projection(bad, ['TSM']), bad)
+        self.assertIsNone(results.projection("$NVDA Q4'26 GUIDE\nRevenue $52.3B-$54.3B", ['TSM']))
+
 
 class ResultWindowTests(unittest.TestCase):
     def setUp(self):

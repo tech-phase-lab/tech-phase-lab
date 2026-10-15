@@ -192,6 +192,13 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
     sourceUrl: "https://ir.kla.com/news-events/press-releases/detail/522/kla-announces-first-quarter-fiscal-year-2027-earnings-date", checkedOn: "2026-10-01",
     note: { ja: "米国市場終了後の公開予定です。公式発表に正確な公開時刻がないため、日付のみ掲載しています。", en: "Due after the U.S. market closes. Only the date is shown because the announcement does not give an exact publication time." },
   },
+  ...([
+    ["meta-q3-2026-results", "META", "2026-10-22", "Meta 決算発表（2026年Q3）", "Meta Q3 2026 results", "Meta IR", "https://investor.atmeta.com/investor-events/"],
+    ["stx-fq1-2027-results", "STX", "2026-10-27", "Seagate 決算発表（2027年度Q1）", "Seagate fiscal Q1 2027 results", "Seagate IR", "https://investors.seagate.com/"],
+  ] as const).map(([id, ticker, date, ja, en, sourceName, sourceUrl]): DateOnlyCalendarEvent => ({
+    id, kind: "earnings", ticker, date, sourceTimezone: "Asia/Tokyo", title: { ja, en }, sourceName, sourceUrl, checkedOn: "2026-10-15",
+    note: { ja: "日付は日本時間です。発表時刻は未公表のため、日付のみ掲載しています。", en: "The date is in Japan time. Only the date is shown because no publication time has been announced." },
+  })),
   ...["2026-10-28", "2026-12-09"].map((date): DateOnlyCalendarEvent => ({
     id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",
     title: { ja: "FOMC会合 最終日", en: "FOMC meeting final day" }, sourceName: "Federal Reserve",

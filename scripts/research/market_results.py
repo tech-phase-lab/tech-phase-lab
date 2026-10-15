@@ -319,6 +319,74 @@ def ttn_result(text):
     header = TTN_HEADER.match(text) if isinstance(text, str) else None
     return bool(header and trade_the_news_projection(text, [header[1]]))
 
+# Oct 15: Wall St Engine posts a company's next-quarter outlook as "TSMC $TSM Q4'26 GUIDE"
+# followed by range lines (revenue, gross margin, operating margin).
+GUIDE_HEADER = re.compile(r"\s*(?:[A-Za-z][A-Za-z.&-]*\s+){0,3}\$([A-Z]{1,5}(?:\.[A-Z])?)\s+Q([1-4])\s*['’]?\s*(20\d{2}|\d{2})\s+GUIDE(?:LINE|S)?\b", re.I)
+GUIDE_FIELDS = [('guidance-revenue', '会社見通し 売上高', 'Guidance revenue', r'(?:revenue|rev)', True),
+                ('guidance-gross-margin', '会社見通し 粗利益率', 'Guidance gross margin', r'(?:gross margin|gm)', False),
+                ('guidance-operating-margin', '会社見通し 営業利益率', 'Guidance operating margin', r'(?:operating margin|op(?:erating)? margin|op\.? margin|om)', False)]
+GUIDE_UNITS = {'b': 'B', 'm': 'M', 'k': 'K', 't': 'T'}
+GUIDE_NUMBER = r'(\d[\d,]*(?:\.\d+)?)'
+
+
+def guidance_projection(text, tickers):
+    """The next-quarter outlook from a "GUIDE" post, kept as the range the post states.
+
+    Only explicit ranges with a stated currency (revenue) or percent sign
+    (margins) are read; an estimate ("...e"), a unit mismatch or an unclear line is
+    left out, and a post without a readable revenue range is not published.
+    """
+    header = GUIDE_HEADER.match(text) if isinstance(text, str) else None
+    if not header or len(tickers) != 1 or header[1] != tickers[0]:
+        return None
+    if re.findall(r'(?<![\w$])\$([A-Z]{1,5}(?:\.[A-Z])?)(?![\w.])', text) != [tickers[0]]:
+        return None
+    facts = []
+    for line in text[header.end():].split('\n'):
+        line = re.split(r'\s+v\s+|\(', line, maxsplit=1)[0]
+        for key, ja, en, label, money in GUIDE_FIELDS:
+            if any(f['key'] == key for f in facts):
+                continue
+            if money:
+                m = re.match(r'\s*[-•*]?\s*' + label + r'\s*[:=]?\s*' + CURRENCY + r'\s*' + GUIDE_NUMBER + r'\s*([BMKT])?\s*(?:-|–|—|to|~)\s*' + CURRENCY + r'?\s*' + GUIDE_NUMBER + r'\s*([BMKT])?\s*$', line, re.I)
+                if not m:
+                    continue
+                symbol = currency_symbol(m[1])
+                if currency_symbol(m[4]) not in ('', symbol) or not symbol:
+                    continue
+                low_unit, high_unit = GUIDE_UNITS.get((m[3] or '').lower(), ''), GUIDE_UNITS.get((m[6] or '').lower(), '')
+                if low_unit and high_unit and low_unit != high_unit:
+                    continue
+                unit = low_unit or high_unit
+                if not unit:
+                    continue
+                low, high = m[2].replace(',', ''), m[5].replace(',', '')
+                value = symbol + low + unit + '-' + symbol + high + unit
+            else:
+                m = re.match(r'\s*[-•*]?\s*' + label + r'\s*[:=]?\s*' + GUIDE_NUMBER + r'\s*(%)?\s*(?:-|–|—|to|~)\s*' + GUIDE_NUMBER + r'\s*(%)\s*$', line, re.I)
+                if not m:
+                    continue
+                value = m[1] + '%-' + m[3] + '%'
+            low_value = float(re.sub(r'[^\d.]', '', value.split('-')[0]))
+            high_value = float(re.sub(r'[^\d.]', '', value.split('-')[1]))
+            if not 0 < low_value <= high_value or (not money and high_value > 100):
+                continue
+            facts.append({'key': key, 'ja': ja, 'en': en, 'value': value})
+    if not any(f['key'] == 'guidance-revenue' for f in facts):
+        return None
+    year = header[3] if len(header[3]) == 4 else '20' + header[3]
+    quarter = 'Q' + header[2] + ' ' + year
+    lead = facts[:2]
+    return {'kind': 'earnings', 'ticker': tickers[0], 'period': quarter, 'facts': facts,
+            'titleJa': tickers[0] + ' ' + quarter + ' 会社見通し：' + '、'.join(f['ja'].replace('会社見通し ', '') + f['value'] for f in lead),
+            'titleEn': tickers[0] + ' ' + quarter + ' guidance: ' + ', '.join(f['en'].replace('Guidance ', '') + ' ' + f['value'] for f in lead)}
+
+
+def guidance_result(text):
+    """True for a GUIDE post whose outlook can actually be read."""
+    header = GUIDE_HEADER.match(text) if isinstance(text, str) else None
+    return bool(header and guidance_projection(text, [header[1]]))
+
 
 def projection(text, tickers):
     if not isinstance(text, str) or len(text) > 160000 or PREVIEW.search(text):
@@ -327,6 +395,8 @@ def projection(text, tickers):
         return economic_projection(text)
     if TTN_HEADER.match(text):
         return trade_the_news_projection(text, tickers)
+    if GUIDE_HEADER.match(text):
+        return guidance_projection(text, tickers)
     if len(tickers) != 1 or not re.search(r'earnings|results|highlights|決算', text, re.I):
         return None
     # The post must be about this company: its first cashtag is the ticker.

@@ -55,6 +55,13 @@ class PushTests(unittest.TestCase):
         self.assertEqual(again['attempted'], 0)
         self.assertEqual(len(sent), 1)
 
+    def test_an_outlook_only_brief_is_not_announced_as_a_result(self):
+        brief = {'kind': 'earnings', 'ticker': 'TSM', 'period': 'Q4 2026', 'titleJa': 'TSM Q4 2026 会社見通し：売上高$52.30B-$54.30B',
+                 'titleEn': 'TSM Q4 2026 guidance', 'publishedAt': '2026-10-15T07:24:00Z', 'observedAt': '2026-10-15T07:25:00Z',
+                 'facts': [{'key': 'guidance-revenue', 'ja': 'x', 'en': 'x', 'value': '$52.30B-$54.30B'}]}
+        self.assertIsNone(push.normalize_event(brief))
+        self.assertIsNotNone(push.normalize_event({**brief, 'facts': [{'key': 'revenue', 'ja': 'x', 'en': 'x', 'value': '$1B'}]}))
+
     def test_earnings_results_respect_the_watched_companies_and_freshness(self):
         push.register(self.db, {'subscription': subscription(), 'tickers': ['MU'], 'language': 'ja'}, {'TSM', 'MU'}, self.now - 10)
         sent = []
