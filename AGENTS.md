@@ -48,3 +48,9 @@ A September 27 connector update truncated existing research files. Before any Gi
   `scripts/test_clock` on `PYTHONPATH`, so Python fixtures spawned from `.mjs` tests load the
   same clock through `sitecustomize.py`. Run the Node suite through `npm test`, not bare
   `node --test`.
+
+# Product plans (owner decisions)
+
+- Home news: once the Stock News API contract is in place, switch the home screen news
+  (top LIVE band and the lower news list) to the Stock News API. The home screen is redesigned
+  in mid-November; until then the current sources stay as they are.

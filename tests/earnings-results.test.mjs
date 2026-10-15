@@ -12,7 +12,9 @@ const update = (title, extra = {}) => ({ id: '9', title, url: 'https://www.apple
 test('released earnings combine flashes and the companies own results releases, newest first', () => {
   const rows = earningsResults([update('Apple reports fourth quarter results', { translationJa: 'Apple、第4四半期決算を発表' })], [brief]);
   assert.deepEqual(rows.map(row => [row.ticker, row.kind]), [['AAPL', 'release'], ['TSM', 'flash']]);
-  assert.equal(rows[1].result.ja, brief.titleJa);
+  // TSMC is shown by its name, not its ticker (owner, Oct 15).
+  assert.equal(rows[1].result.ja, 'TSMC Q3 2026決算：売上高NT$989.9B');
+  assert.equal(rows[1].title.ja, 'TSMC 決算速報（Q3 2026）');
   assert.equal(rows[0].result.ja, 'Apple、第4四半期決算を発表');
 });
 

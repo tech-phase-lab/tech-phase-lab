@@ -5,7 +5,7 @@ import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/
 import { newsPulseItems } from "@/lib/research/news-pulse-items";
 import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
-import { lateDetection, pulseClock, recentPublication } from "@/lib/research/news-time";
+import { pulseClock } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
 const BASE_FONT_PX = 12;
@@ -13,11 +13,11 @@ const MIN_FONT_PX = 10;
 function FittedHeadline({ headlines, full, lang, label }: { headlines: string[]; full: string; lang: Language; label: string }) {
   const element = useRef<HTMLSpanElement>(null);
   const key = [full, ...headlines].join("\n");
-  const [selected, setSelected] = useState({ key: "", text: "", clipped: false, size: BASE_FONT_PX, shift: 0, wrap: false });
+  const [selected, setSelected] = useState({ key: "", text: "", clipped: false, size: BASE_FONT_PX, shift: 0 });
   // Until real font metrics are available, show the shortest informative
   // headline (clipped by CSS if needed) rather than a bare category label.
   const initial = headlines.findLast(value => !isGenericPulseLabel(value)) ?? (full || headlines.at(-1) || "");
-  const { text, clipped, size, shift, wrap } = selected.key === key ? selected : { text: initial, clipped: true, size: BASE_FONT_PX, shift: 0, wrap: false };
+  const { text, clipped, size, shift } = selected.key === key ? selected : { text: initial, clipped: true, size: BASE_FONT_PX, shift: 0 };
   useEffect(() => {
     const target = element.current;
     const context = document.createElement("canvas").getContext("2d");
@@ -34,12 +34,12 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
       const picked = pickPulseLine(choices, title, width, value => context.measureText(value).width);
       // A line slightly too long is shown smaller instead of cut with "…".
       const scaled = picked.clipped ? BASE_FONT_PX * width / Math.max(1, context.measureText(picked.text).width) : BASE_FONT_PX;
-      // Still too long at the smallest size: show every word on more lines (owner, Oct 15:
-      // a line that scrolled once stopped at its last words, "…過去最高に達す").
+      // Still too long at the smallest size: it slides to its end and back, again and again, in the
+      // same single row, so it never stops at its last words and never takes a second line (owner, Oct 15).
       const next = scaled >= MIN_FONT_PX
-        ? { text: picked.text, clipped: false, size: Math.min(BASE_FONT_PX, Math.floor(scaled * 10) / 10), shift: 0, wrap: false }
-        : { text: picked.text, clipped: false, size: BASE_FONT_PX, shift: 0, wrap: true };
-      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped && previous.size === next.size && previous.shift === next.shift && previous.wrap === next.wrap ? previous : { key, ...next });
+        ? { text: picked.text, clipped: false, size: Math.min(BASE_FONT_PX, Math.floor(scaled * 10) / 10), shift: 0 }
+        : { ...picked, size: MIN_FONT_PX, shift: Math.ceil(context.measureText(picked.text).width * MIN_FONT_PX / BASE_FONT_PX - width) };
+      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped && previous.size === next.size && previous.shift === next.shift ? previous : { key, ...next });
     };
     const request = () => {
       if (!active || frame) return;
@@ -50,7 +50,7 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
     void document.fonts.ready.then(request);
     return () => { active = false; observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
   }, [key]);
-  return <span ref={element} className={wrap ? `${styles.headline} ${styles.wrapped}` : clipped ? `${styles.headline} ${styles.clipped}` : styles.headline} lang={lang}
+  return <span ref={element} className={clipped ? `${styles.headline} ${styles.clipped}` : styles.headline} lang={lang}
     style={size < BASE_FONT_PX ? { fontSize: `${size}px` } : undefined}
     title={clipped ? text : undefined} aria-label={`${label}: ${text}`}>
     {clipped && shift > 0 ? <span className={styles.scroll} style={{ "--shift": `-${shift}px` } as React.CSSProperties}>{text}</span> : text}
@@ -96,7 +96,6 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   if (!item) return null;
   // Japanese readers see Japan time; English readers see U.S. Eastern time.
   const timestamp = pulseClock(item.at, item.kind, ja, "observedAt" in item ? item.observedAt : undefined);
-  const fresh = recentPublication(item.at, item.kind, snapshot?.checkedAt ?? 0) && !lateDetection(item.at, "observedAt" in item ? item.observedAt : undefined);
   return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped} tabIndex={0}
     onTouchStart={event => { suppressClick.current = false; const point = event.touches[0]; touch.current = event.touches.length === 1 ? {x: point.clientX, y: point.clientY} : null; setInteracting(true); }}
     onTouchEnd={event => { const start = touch.current; const end = event.changedTouches[0]; touch.current = null; setInteracting(false); if (!start || !end) return; const dx = end.clientX - start.x; const dy = end.clientY - start.y; if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { suppressClick.current = true; move(dx < 0 ? 1 : -1); } }}
@@ -106,7 +105,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
     <FittedHeadline key={item.id} headlines={item.headlines} full={item.title} lang={lang} label={item.ticker} />
     <time className={styles.clock} dateTime={item.at} title={timestamp} aria-label={timestamp}>
-      {timestamp}{fresh && <b className={styles.fresh}>NEW</b>}
+      {timestamp}
     </time>
     <button type="button" onClick={() => setPaused(value => !value)} disabled={reduced} aria-pressed={paused} aria-label={paused ? (ja ? "自動切替を再開" : "Resume rotation") : (ja ? "自動切替を停止" : "Pause rotation")}>{paused || reduced ? "▶" : "Ⅱ"}</button>
     {!stopped && items.length > 1 && <i key={`${item.id}-progress`} className={styles.progress} aria-hidden="true" />}
