@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 77 issuers with published competitor corrections and 37 remaining
+records 87 issuers with published competitor corrections and 27 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -629,3 +629,11 @@ recognizable uncovered issuers. Recheck current listing/acquisition status and t
 latest registry before selecting. EA ownership/listing requires explicit verification.
 This batch is handled in the current chat; its hourly heartbeat is active under
 automation id tech-phase-research. Recount published records on each run.
+
+## 2026-10-16 · scoped foundry, programmable logic and software competition
+
+Reviewed GFS / TSEM / LSCC / NVTS / BAND / IOT / WK / AVPT / VRNS / ZETA (10 existing issuers; no additions). GFS, Tower and Navitas explicitly name the selected competitors. Samsara’s previously named five peers are retained and now represented in its map with product scope. Other entries distinguish editorial comparisons of official products from company-disclosed names.
+
+Altera is represented as a separate Silver Lake-majority-owned company with no invented public ticker, and Vonage is represented under Ericsson. Do not copy the obsolete Intel-subsidiary or VG identities. No new customer/supplier claims are inferred. Other five bilingual answers and all non-competition relationships are unchanged. Official primary URLs are stored in each record; reviewed on 2026-10-16.
+
+Examples are selective. Further FPGA substitutes, GaN specialists, emergency calling, equipment/site workflows, audit/sustainability, migration/governance, specialized data security and advertising/data-service scopes remain in the working chat’s follow-up queue. NVDA’s exact reviewed map and scrollbar spacing remain unchanged.

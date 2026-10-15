@@ -13384,11 +13384,15 @@
       "GFS"
     ],
     "name": "GlobalFoundries",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Technology platforms / Customers / Competition / Manufacturing / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm"
+      },
+      {
+        "label": "Tower FY2025 Form 20-F · named specialty foundry competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm"
       }
     ],
     "ja": {
@@ -13396,7 +13400,7 @@
       "revenue": "米国、ドイツ、シンガポールの工場でウエハーを製造し、長期供給契約や共同開発費を含む形で顧客から収入を得る。",
       "strength": "RF、シリコンフォトニクス、FDX、車載など差別化工程と、米欧を含む製造拠点を持ち、長期供給を求める顧客に対応する。",
       "risks": "巨額設備投資と高い固定費、工場稼働率、大口顧客、補助金条件、輸出規制、材料・装置供給、需要予測のずれに左右される。",
-      "competition": "特殊・成熟工程の受託生産で他のファウンドリーやIDMの外販部門と競う。",
+      "competition": "半導体の受託生産ではTSMC、UMC、SMIC、特殊工程ではTower Semiconductorなどが競合例。GlobalFoundries自身が実名を挙げている。微細化の最先端をすべて同じ条件で比べるのではなく、RF・電源・車載などで重なる工程と生産能力を比べる。",
       "relationships": "ファブレス企業とIDMの設計をウエハーに製造し、半導体装置・材料会社から生産設備と材料を調達する。"
     },
     "en": {
@@ -13404,23 +13408,62 @@
       "revenue": "Earns by fabricating wafers in the United States, Germany and Singapore under customer programs that include long-term supply and development arrangements.",
       "strength": "Offers differentiated RF, silicon photonics, FDX and automotive platforms and a manufacturing footprint that includes the United States and Europe.",
       "risks": "Heavy capital needs and fixed costs, utilization, large customers, subsidy conditions, export controls, equipment and material supply and forecast errors affect results.",
-      "competition": "Competes with other foundries and external foundry operations of IDMs in differentiated and mature process technologies.",
+      "competition": "GlobalFoundries explicitly names TSMC, UMC, SMIC and specialty foundry Tower Semiconductor among its competitors. The overlap concerns outsourced wafer manufacturing and available specialty processes for RF, power and automotive applications, rather than equivalence across every leading-edge node.",
       "relationships": "Fabricates customer designs for fabless companies and IDMs and buys production tools and materials from semiconductor equipment and material suppliers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Specialty semiconductor foundries",
-          "nameJa": "特殊半導体ファウンドリー",
+          "kind": "company",
+          "name": "TSMC",
           "role": "competitor",
           "label": {
-            "ja": "特殊・成熟工程で競合",
-            "en": "Specialty and mature processes"
+            "ja": "ウエハー受託生産・重なる特殊工程で競合。GFSの開示",
+            "en": "Wafer foundry and overlapping specialty processes; GFS disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "United Microelectronics",
+          "role": "competitor",
+          "label": {
+            "ja": "成熟・特殊工程のウエハー受託生産で競合。GFSの開示",
+            "en": "Mature/specialty wafer foundry services; GFS disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "UMC"
+        },
+        {
+          "kind": "company",
+          "name": "Semiconductor Manufacturing International",
+          "role": "competitor",
+          "label": {
+            "ja": "ウエハー受託生産で競合。GFSの開示",
+            "en": "Wafer foundry services; GFS disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Tower Semiconductor",
+          "role": "competitor",
+          "label": {
+            "ja": "RFなど特殊工程の受託生産で競合。両社の開示",
+            "en": "Specialty foundry including RF; both companies’ disclosures"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "TSEM"
         }
       ],
       "relationships": [
@@ -13459,7 +13502,7 @@
       "TSEM"
     ],
     "name": "Tower Semiconductor",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Specialty analog foundry / Customers / Competition / Fabs / Risk factors",
@@ -13471,7 +13514,7 @@
       "revenue": "顧客設計のウエハー製造、工程開発、試作と関連サービスで稼ぐ。イスラエル、米国、日本などの工場を使う。",
       "strength": "用途別に調整した特殊工程と設計支援を持ち、製品寿命が長いアナログ・RF部品を複数拠点で量産できる。",
       "risks": "工場稼働率、大口顧客、設備投資、イスラエルの地政学、電力・水・材料供給、外貨、工場再編に左右される。",
-      "competition": "特殊アナログ工程のファウンドリーや、顧客が保有する自社工場と競う。",
+      "competition": "特殊アナログ工程ではGlobalFoundries、とくにRF工程が競合し、X-FABも競合例。TSMCとUMCは特殊工程を提供する範囲で重なる。いずれもTower自身が実名を挙げており、最先端ロジック工場の全製品と同じ事業だとは扱わない。",
       "relationships": "ファブレス企業とIDMのアナログ・RF製品を受託生産し、装置・材料会社から工場設備と生産材料を調達する。"
     },
     "en": {
@@ -13479,23 +13522,61 @@
       "revenue": "Earns from customer wafer fabrication, process development, prototypes and related services using fabs in Israel, the United States, Japan and elsewhere.",
       "strength": "Pairs application-specific specialty processes with design support and can manufacture long-lived analog and RF products across multiple sites.",
       "risks": "Fab utilization, large customers, capital spending, Israeli geopolitics, power, water and material supply, currencies and fab restructuring affect results.",
-      "competition": "Competes with specialty analog foundries and with customers' internal fabrication capacity.",
+      "competition": "Tower explicitly names GlobalFoundries, particularly in RF, and X-FAB as specialty-foundry competitors. It also names TSMC and UMC where their specialty process offerings overlap. These comparisons do not make Tower equivalent to a leading-edge logic foundry across its entire portfolio.",
       "relationships": "Fabricates analog and RF designs for fabless companies and IDMs and sources fab tools and production materials from equipment and material suppliers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Specialty analog foundries",
-          "nameJa": "特殊アナログファウンドリー",
+          "kind": "company",
+          "name": "GlobalFoundries",
           "role": "competitor",
           "label": {
-            "ja": "RF・アナログ工程で競合",
-            "en": "RF and analog processes"
+            "ja": "とくにRF特殊工程の受託生産で競合。Towerの開示",
+            "en": "Especially RF specialty foundry; Tower disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GFS"
+        },
+        {
+          "kind": "company",
+          "name": "X-FAB",
+          "role": "competitor",
+          "label": {
+            "ja": "特殊アナログ工程の受託生産で競合。Towerの開示",
+            "en": "Specialty analog foundry; Tower disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "competitor",
+          "label": {
+            "ja": "特殊工程を提供する範囲で競合。Towerの開示",
+            "en": "Overlapping specialty foundry processes; Tower disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "United Microelectronics",
+          "role": "competitor",
+          "label": {
+            "ja": "特殊工程を提供する範囲で競合。Towerの開示",
+            "en": "Overlapping specialty foundry processes; Tower disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "UMC"
         }
       ],
       "relationships": [
@@ -14783,11 +14864,27 @@
       "LSCC"
     ],
     "name": "Lattice Semiconductor",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · FPGAs / Markets / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm"
+      },
+      {
+        "label": "AMD · Spartan UltraScale+ FPGA products",
+        "url": "https://www.amd.com/en/products/adaptive-socs-and-fpgas/fpga/spartan-ultrascale-plus.html"
+      },
+      {
+        "label": "Microchip · FPGA and PLD product portfolio",
+        "url": "https://www.microchip.com/en-us/products/fpgas-and-plds"
+      },
+      {
+        "label": "Altera · MAX 10 FPGAs",
+        "url": "https://www.altera.com/products/fpga/max-10"
+      },
+      {
+        "label": "Altera · September 2025 Silver Lake majority investment completed",
+        "url": "https://www.altera.com/newsroom/altera-silver-lake"
       }
     ],
     "ja": {
@@ -14795,7 +14892,7 @@
       "revenue": "通信、産業、自動車、コンピューター、消費者機器メーカーへFPGAを販売し、ソフトとIPも提供して稼ぐ。",
       "strength": "小型・低消費電力のFPGAに集中し、機器の制御、接続、セキュリティ、エッジAI機能を短期間で変更できる。",
       "risks": "産業・通信需要、大口販売会社、在庫、外部ファウンドリー、製品世代交代、輸出規制、より大規模な競合に左右される。",
-      "competition": "低・中密度FPGA、組み込み制御、エッジAIで大手FPGA会社、マイコン、ASICと競う。",
+      "competition": "低消費電力・小中規模のFPGAではAMDのSpartan・Artix系、MicrochipのPolarFire、AlteraのMAX 10などが競合例。各社の公表製品を照合した編集上の比較。AlteraはSilver Lakeが過半数を取得した会社として表示し、Intelの現在の子会社や独立した上場銘柄としては扱わない。",
       "relationships": "機器メーカーへFPGA、設計ソフト、IPを供給し、ウエハー製造と組立・検査は外部会社へ委託する。"
     },
     "en": {
@@ -14803,22 +14900,51 @@
       "revenue": "Sells FPGAs and provides software and IP to communications, industrial, automotive, computing and consumer-device makers.",
       "strength": "Focuses on small, low-power FPGAs that let customers quickly change control, connectivity, security and edge-AI functions.",
       "risks": "Industrial and communications demand, major distributors, inventory, external foundries, product transitions, export controls and larger rivals affect results.",
-      "competition": "Competes in low- and mid-density FPGAs, embedded control and edge AI with large FPGA suppliers, MCUs and ASICs.",
+      "competition": "Examples in low-power and small/mid-range programmable logic include AMD Spartan/Artix families, Microchip PolarFire and Altera MAX 10. This is an editorial comparison of official products. Altera is majority-owned by Silver Lake, with Intel retaining a minority stake; no separate public ticker is assigned.",
       "relationships": "Supplies FPGAs, design software and IP to equipment makers and outsources wafer fabrication, assembly and test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "FPGA and embedded-control vendors",
-          "nameJa": "FPGA・組み込み制御半導体会社",
+          "kind": "company",
+          "name": "Advanced Micro Devices",
           "role": "competitor",
           "label": {
-            "ja": "低消費電力FPGAで競合",
-            "en": "Low-power FPGAs"
+            "ja": "Spartan・Artix系FPGAで競合。公表製品の編集比較",
+            "en": "Spartan/Artix FPGA families; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "AMD"
+        },
+        {
+          "kind": "company",
+          "name": "Microchip Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "PolarFireなど低消費電力FPGAで競合。公表製品の編集比較",
+            "en": "PolarFire and low-power FPGAs; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "MCHP"
+        },
+        {
+          "kind": "company",
+          "name": "Altera",
+          "role": "competitor",
+          "label": {
+            "ja": "MAX 10の小規模FPGAで競合。公表製品の編集比較",
+            "en": "MAX 10 small FPGAs; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3,
+            4
           ]
         }
       ],
@@ -15413,7 +15539,7 @@
       "NVTS"
     ],
     "name": "Navitas Semiconductor",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Strategy / Customers / Competition / Risk factors",
@@ -15425,7 +15551,7 @@
       "revenue": "AIデータセンター、電力網、産業機器、太陽光・蓄電、充電器向けに電力半導体と制御製品を販売して稼ぐ。",
       "strength": "高速に切り替わるGaN、耐高電圧のSiC、制御・絶縁を組み合わせ、電源を小型化しながら変換損失を減らせる。",
       "risks": "高出力市場への移行、設計採用の獲得、赤字継続、製造委託先、量産品質、製品責任と輸出規制に左右される。",
-      "competition": "GaN・SiC・シリコン電力半導体と電源制御で、大手電力半導体会社や新興GaN企業と競う。",
+      "competition": "GaN電力半導体ではInfineonとPower Integrations、SiCではInfineon、onsemi、STMicroelectronics、シリコン電源製品ではこの4社などが競合例。Navitas自身の実名開示に基づく。GaN、SiC、シリコンは耐圧や用途が異なり、すべてを同一製品として比較しない。",
       "relationships": "データセンター・エネルギー・産業機器メーカーへ電力半導体を供給し、ウエハー製造と組立検査を外部へ委託する。"
     },
     "en": {
@@ -15433,23 +15559,61 @@
       "revenue": "Sells power semiconductors and controls for AI data centers, grids, industrial systems, solar and storage, and chargers.",
       "strength": "Combines fast-switching GaN, high-voltage SiC and control or isolation to shrink power systems while reducing conversion loss.",
       "risks": "The shift to high-power markets, design wins, continued losses, outsourced manufacturing, production quality, liability and export controls affect results.",
-      "competition": "Competes across GaN, SiC and silicon power devices and controls with large power-semiconductor vendors and GaN specialists.",
+      "competition": "Navitas explicitly names Infineon and Power Integrations in GaN competition, Infineon, onsemi and STMicroelectronics in SiC, and all four in silicon-based power products. GaN, SiC and silicon alternatives differ in voltage and application; the examples are scoped rather than interchangeable products.",
       "relationships": "Supplies power devices to data-center, energy and industrial-equipment makers while outsourcing wafer fabrication and assembly-test."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "GaN, SiC and silicon power semiconductor suppliers",
-          "nameJa": "GaN・SiC・シリコン電力半導体会社",
+          "kind": "company",
+          "name": "Infineon Technologies",
           "role": "competitor",
           "label": {
-            "ja": "高効率電力変換で競合",
-            "en": "Efficient power conversion"
+            "ja": "GaN・SiC・シリコン電力半導体で競合。Navitasの開示",
+            "en": "GaN, SiC and silicon power devices; Navitas disclosure"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Power Integrations",
+          "role": "competitor",
+          "label": {
+            "ja": "GaN・シリコン電源製品で競合。Navitasの開示",
+            "en": "GaN and silicon power products; Navitas disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "POWI"
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "role": "competitor",
+          "label": {
+            "ja": "SiC・シリコン電力半導体で競合。Navitasの開示",
+            "en": "SiC and silicon power devices; Navitas disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ON"
+        },
+        {
+          "kind": "company",
+          "name": "STMicroelectronics",
+          "role": "competitor",
+          "label": {
+            "ja": "SiC・シリコン電力半導体で競合。Navitasの開示",
+            "en": "SiC and silicon power devices; Navitas disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "STM"
         }
       ],
       "relationships": [
@@ -21350,7 +21514,7 @@
       "BAND"
     ],
     "name": "Bandwidth",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -21359,6 +21523,22 @@
       {
         "label": "September 2026 investor presentation · Salesforce rollout and customer examples",
         "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000069/a2026bandwidthinvestorpr.htm"
+      },
+      {
+        "label": "Twilio · Programmable Voice API",
+        "url": "https://www.twilio.com/en-us/voice"
+      },
+      {
+        "label": "Twilio · Messaging APIs",
+        "url": "https://www.twilio.com/en-us/messaging"
+      },
+      {
+        "label": "Vonage · Voice and messaging communications APIs",
+        "url": "https://www.vonage.com/communications-apis/"
+      },
+      {
+        "label": "Ericsson · Completed acquisition of Vonage",
+        "url": "https://www.ericsson.com/en/press-releases/2022/7/ericsson-completes-acquisition-of-vonage"
       }
     ],
     "ja": {
@@ -21366,7 +21546,7 @@
       "revenue": "通話やメッセージの使用量に応じた料金が中心。電話番号の保有・管理、緊急通報への接続などの継続料金も得る。通信事業者へのメッセージ追加料金を顧客へ転嫁する売上も含まれる。",
       "strength": "通信網と各国の規制対応を持ち、企業が複数地域の通信を一つの基盤から管理できる。Maestroで電話、顧客窓口、AI音声などを結び、既存システムを使いながら接続先を選べる。",
       "risks": "顧客の通信量が減ると売上も減り、選挙向けメッセージなど一時的な需要にも左右される。通信事業者の料金変更、迷惑電話・メッセージへの規制、通信障害や攻撃への対応が必要。",
-      "competition": "通信機能をアプリへ提供するサービス会社や既存の通信事業者と競う。通話品質、届きやすさ、対応する国、規制への対応、使用量に応じた価格が選ばれる条件になる。",
+      "competition": "通話・メッセージをアプリへ組み込むAPIではTwilioとEricsson傘下のVonageが競合例。Bandwidthと各社の公式サービスを照合した編集上の比較で、Bandwidth自身の実名列挙ではない。既存顧客や接続先との関係から競合を推測せず、緊急通報などの機能は別に比較する。",
       "relationships": "Microsoft、Google、Zoom、Cisco、RingCentral、Five9などの通信サービスへ通話・メッセージ基盤を提供する。Salesforceの顧客窓口との提携も拡大しているが、各国への展開は段階的に進める計画。"
     },
     "en": {
@@ -21374,36 +21554,40 @@
       "revenue": "Most revenue comes from usage-based calling and messaging fees, with recurring number-management and emergency-access charges. Revenue also includes carrier messaging surcharges passed through to customers.",
       "strength": "Owns network infrastructure and regulatory capabilities across countries. Maestro connects telephony, contact centers and voice AI while letting enterprises retain existing systems and choose integrations.",
       "risks": "Revenue varies with customer traffic and episodic demand such as election messaging. Carrier price changes, anti-abuse regulations, outages and cyberattacks can affect costs and service quality.",
-      "competition": "Competes with communications API providers and established telecom carriers. Reliability, message delivery, geographic coverage, regulatory support and usage pricing influence customer selection.",
+      "competition": "Twilio and Ericsson’s Vonage are examples in programmable voice and messaging APIs. This editorial comparison uses Bandwidth’s scope and official peer services, not a named list from Bandwidth. Customer/interconnection relationships are preserved; emergency-calling capabilities require their own comparison.",
       "relationships": "Supplies voice and messaging infrastructure to Microsoft, Google, Zoom, Cisco, RingCentral and Five9. Its Salesforce contact-center collaboration has expanded; international rollout is a phased plan."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Communications API providers",
-          "nameJa": "通信APIサービス会社",
+          "kind": "company",
+          "name": "Twilio",
           "role": "competitor",
           "label": {
-            "ja": "アプリへの通話・メッセージ提供で競合",
-            "en": "Calling and messaging APIs"
+            "ja": "通話・メッセージAPIで競合。公表サービスの編集比較",
+            "en": "Programmable voice and messaging APIs; editorial service comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2,
+            3
+          ],
+          "ticker": "TWLO"
         },
         {
-          "kind": "industry",
-          "name": "Telecommunications carriers",
-          "nameJa": "通信事業者",
+          "kind": "company",
+          "name": "Ericsson",
           "role": "competitor",
           "label": {
-            "ja": "企業向け通信網・電話番号で競合",
-            "en": "Enterprise networks and phone-number services"
+            "ja": "Vonageの通話・メッセージAPIで競合。公表サービスの編集比較",
+            "en": "Vonage voice/messaging APIs; editorial service comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4,
+            5
+          ],
+          "ticker": "ERIC"
         }
       ],
       "relationships": [
@@ -21673,11 +21857,31 @@
       "IOT"
     ],
     "name": "Samsara",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1642896/000162828026018167/iot-20260131.htm"
+      },
+      {
+        "label": "Geotab · Fleet-management products",
+        "url": "https://www.geotab.com/fleet-management-solutions/"
+      },
+      {
+        "label": "Verizon Connect · Fleet tracking and integrated video safety",
+        "url": "https://www.verizonconnect.com/solutions/"
+      },
+      {
+        "label": "Lytx · Fleet dash cameras and driver safety",
+        "url": "https://www.lytx.com/fleet-dash-cams"
+      },
+      {
+        "label": "Motive · Driver safety products",
+        "url": "https://gomotive.com/products/driver-safety/"
+      },
+      {
+        "label": "Netradyne · Driveri video safety products",
+        "url": "https://www.netradyne.com/company/about"
       }
     ],
     "ja": {
@@ -21685,7 +21889,7 @@
       "revenue": "Connected Operations Platformの継続利用料が中心。接続する車両や設備と使う機能を増やすことで契約を広げる。契約には機器、クラウド利用、通信接続、サポートなどが組み込まれる。",
       "strength": "車両映像、位置、運転、設備の稼働情報を同じ基盤で扱い、複数の現場を横断して改善に使える。単にデータを集めるだけでなく、危険運転への対応や保守作業につなげられる。",
       "risks": "機器の製造・部品供給や携帯通信、AWSに依存し、供給不足や障害は導入を遅らせる。運転者の映像・位置情報を扱うため、プライバシー対応と、AIが誤検知した際の信頼も重要になる。",
-      "competition": "車両管理ではGeotabやVerizon Connect、映像による安全管理ではLytx、Motive、Netradyneなどと競う。設備・現場を含めた統合基盤と、用途ごとの専用製品が比較される。",
+      "competition": "車両管理ではGeotabとVerizon Connect、映像による運転安全管理ではLytx、Motive、Netradyneなどが競合例。Samsara自身の実名開示と各社の公式製品を照合した。車両の位置・稼働管理と、カメラによる危険運転の検知・指導は分けて比べる。",
       "relationships": "運送、建設、物流、製造、公共機関などへ現場管理を提供する。AmazonのAWSがクラウド稼働基盤を担い、機器製造・部品会社と携帯通信会社がデータの収集・送信を支える。"
     },
     "en": {
@@ -21693,35 +21897,75 @@
       "revenue": "Earns recurring Connected Operations Platform subscription fees. Customers expand by connecting more assets and adopting more applications; subscriptions incorporate devices, cloud services, connectivity and support.",
       "strength": "Combines video, location, driving and equipment data across operations. Turns observations into safety interventions, maintenance workflows and operational improvements.",
       "risks": "Depends on device manufacturers, components, cellular networks and AWS. Supply shortages and outages can delay deployments, while video and location data create privacy and AI-detection risks.",
-      "competition": "Competes with Geotab and Verizon Connect in fleet management and Lytx, Motive and Netradyne in video safety. Integrated operations platforms compete with application-specific tools.",
+      "competition": "Samsara explicitly names Geotab, Verizon Connect, Lytx, Motive and Netradyne. Official products support the distinction between fleet tracking/operations and camera-based driver safety/coaching. Product coverage differs by application, geography and asset type; these examples do not cover every equipment and site workflow.",
       "relationships": "Serves transportation, construction, logistics, manufacturing and public-sector operations. AWS supplies hosting; device manufacturers, component suppliers and cellular carriers enable data collection and transmission."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Fleet-management providers",
-          "nameJa": "車両管理サービス会社",
+          "kind": "company",
+          "name": "Geotab",
           "role": "competitor",
           "label": {
-            "ja": "Geotab・Verizon Connectなどと車両管理で競合",
-            "en": "Fleet management, including Geotab and Verizon Connect"
+            "ja": "車両の位置・稼働管理で競合。Samsaraの開示と公式製品",
+            "en": "Fleet tracking and operations; Samsara disclosure and official products"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "Video-safety providers",
-          "nameJa": "映像安全管理サービス会社",
+          "kind": "company",
+          "name": "Verizon",
           "role": "competitor",
           "label": {
-            "ja": "Lytx・Motive・Netradyneなどと競合",
-            "en": "Video safety, including Lytx, Motive and Netradyne"
+            "ja": "Verizon Connectの車両管理で競合。Samsaraの開示と公式製品",
+            "en": "Verizon Connect fleet management; Samsara disclosure and official products"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
+          ],
+          "ticker": "VZ"
+        },
+        {
+          "kind": "company",
+          "name": "Lytx",
+          "role": "competitor",
+          "label": {
+            "ja": "車載映像の安全管理・指導で競合。Samsaraの開示と公式製品",
+            "en": "Video driver safety and coaching; Samsara disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Motive",
+          "role": "competitor",
+          "label": {
+            "ja": "運転安全の検知・指導で競合。Samsaraの開示と公式製品",
+            "en": "Driver safety detection and coaching; Samsara disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Netradyne",
+          "role": "competitor",
+          "label": {
+            "ja": "Driveriの映像安全管理で競合。Samsaraの開示と公式製品",
+            "en": "Driveri video safety; Samsara disclosure and official products"
+          },
+          "sourceIndexes": [
+            0,
+            5
           ]
         }
       ],
@@ -22369,11 +22613,19 @@
       "WK"
     ],
     "name": "Workiva",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1445305/000144530526000016/wk-20251231.htm"
+      },
+      {
+        "label": "Donnelley Financial Solutions · ActiveDisclosure SEC reporting",
+        "url": "https://www.dfinsolutions.com/products/activedisclosure"
+      },
+      {
+        "label": "Oracle · Cloud EPM Narrative Reporting",
+        "url": "https://www.oracle.com/performance-management/narrative-reporting/"
       }
     ],
     "ja": {
@@ -22381,7 +22633,7 @@
       "revenue": "クラウドソフトとサポートの継続利用料が中心で、導入支援なども収益になる。財務報告を入り口に、監査・内部統制や環境などの報告へ用途を広げ、追加契約につなげる。",
       "strength": "一つの数字を複数の資料に連動させ、変更履歴と承認を残せる。別々の表計算を手直しする作業を減らし、報告する数字と根拠を追えるため、監査や開示の確認に使いやすい。",
       "risks": "開示・環境報告の規制が変わると顧客の導入優先度も変わる。誤ったデータ連携や報告、機密情報の漏えいは影響が大きく、顧客ごとに異なるシステムとの接続・導入も負担になる。",
-      "competition": "財務・リスク管理の専用ソフト、基幹業務ソフト、報告を代行する専門会社と競う。顧客が表計算と手作業を使い続けることも、統合基盤を導入する際の競争相手になる。",
+      "competition": "財務開示資料の共同作成・提出ではDonnelley Financial SolutionsのActiveDisclosure、財務・経営報告の共同作成ではOracle Cloud EPM Narrative Reportingが競合例。両社の公式製品とWorkivaの業務範囲を照合した編集上の比較。監査・内部統制・環境報告の競争をこの2社だけで網羅する意味ではない。",
       "relationships": "AWSを主なクラウド基盤として使い、企業の会計・人事・顧客管理システムからデータを取り込む。財務・監査・リスク・環境報告の担当者へ提供し、専門サービス会社や技術パートナーが導入を支える。"
     },
     "en": {
@@ -22389,49 +22641,38 @@
       "revenue": "Earns recurring software and support subscriptions plus implementation revenue. Expands from financial reporting into audit, controls and other reporting uses.",
       "strength": "Links a single data value across documents while preserving changes and approvals. Reduces manual spreadsheet updates and makes reported figures traceable to supporting evidence.",
       "risks": "Changing disclosure and sustainability regulations can alter purchase priorities. Incorrect linked data, confidential-information breaches and complex customer-specific integrations pose risks.",
-      "competition": "Competes with specialist finance and risk software, enterprise systems and reporting-service providers. Existing spreadsheet-based manual processes are also a substitute for adopting its platform.",
+      "competition": "Examples include Donnelley Financial Solutions ActiveDisclosure for financial disclosure authoring/filing and Oracle Cloud EPM Narrative Reporting for collaborative financial/management reporting. This editorial comparison covers overlapping official products, not all audit, controls or sustainability-reporting alternatives.",
       "relationships": "Runs primarily on AWS and connects with customers’ accounting, HR and CRM systems. Serves finance, audit, risk and sustainability teams, supported by services and technology partners."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Reporting and GRC software providers",
-          "nameJa": "開示・監査・リスク管理ソフト会社",
+          "kind": "company",
+          "name": "Donnelley Financial Solutions",
           "role": "competitor",
           "label": {
-            "ja": "報告・内部統制の専用機能で競合",
-            "en": "Reporting and control applications"
+            "ja": "ActiveDisclosureの財務開示作成・提出で競合。公表製品の編集比較",
+            "en": "ActiveDisclosure financial authoring/filing; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "DFIN"
         },
         {
-          "kind": "industry",
-          "name": "Enterprise software providers",
-          "nameJa": "基幹業務ソフト会社",
+          "kind": "company",
+          "name": "Oracle",
           "role": "competitor",
           "label": {
-            "ja": "業務システム内の報告機能で競合",
-            "en": "Built-in reporting capabilities"
+            "ja": "Narrative Reportingの財務報告共同作成で競合。公表製品の編集比較",
+            "en": "Narrative Reporting collaborative financial reports; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Manual reporting and professional services",
-          "nameJa": "表計算・報告代行サービス",
-          "role": "competitor",
-          "label": {
-            "ja": "既存の手作業・外部委託が代替手段",
-            "en": "Existing manual processes and reporting services"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "ORCL"
         }
       ],
       "relationships": [
@@ -22711,11 +22952,19 @@
       "AVPT"
     ],
     "name": "AvePoint",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1777921/000143774926005907/avpt20251231_10k.htm"
+      },
+      {
+        "label": "Veeam · Microsoft 365 backup and recovery",
+        "url": "https://www.veeam.com/products/saas/backup-microsoft-office-365.html"
+      },
+      {
+        "label": "Rubrik · Microsoft 365 protection and recovery",
+        "url": "https://www.rubrik.com/solutions/microsoft-365"
       }
     ],
     "ja": {
@@ -22723,7 +22972,7 @@
       "revenue": "クラウドサービスや期間ライセンスの利用料が中心。利用者数や保護するデータ量に応じて課金し、保守・導入・移行支援でも稼ぐ。対象のサービスや保護範囲が広がると契約も拡大する。",
       "strength": "復元だけでなくデータの分類、共有権限、保存ルールまでまとめて扱える。複数のクラウドを横断して管理し、AIに社内情報を使わせる前の整理にもつながる。",
       "risks": "対応先のクラウドが仕様や接続条件を変えると製品の修正が必要になる。クラウド側の標準機能との競争や稼働基盤の費用上昇に加え、復元の失敗や情報漏洩は信用を大きく損なう。",
-      "competition": "バックアップ専業、データ分類・アクセス管理のセキュリティ会社、小規模なクラウド管理ツールと競う。保護だけを安く済ませるか、管理までまとめるかが比較点になる。",
+      "competition": "Microsoft 365のバックアップ・復元ではVeeamとRubrikが競合例。AvePointの公表業務と両社の公式製品を照合した編集上の比較。Microsoft 365に対応することはMicrosoft自身が顧客だという意味ではなく、データ移行・権限管理の競争は別に調べる必要がある。",
       "relationships": "Microsoft、Google、Salesforceなどのサービス内のデータを保護・管理する。AWSなどの販売マーケットプレイスや運用代行会社も販路となる。対応先の会社自体が顧客とは限らない。"
     },
     "en": {
@@ -22731,49 +22980,37 @@
       "revenue": "Earns SaaS and term-license fees, generally based on users or protected data volume, plus support and implementation services. Broader coverage supports contract expansion.",
       "strength": "Combines recovery with classification, sharing controls and retention policies across cloud environments, helping prepare governed data for enterprise AI.",
       "risks": "Cloud-provider changes can require product updates. Native platform features, hosting costs, failed recovery or data breaches can pressure margins and customer trust.",
-      "competition": "Competes with backup vendors, data-security specialists and smaller cloud-management tools. Buyers weigh standalone protection against broader governance and management.",
+      "competition": "Veeam and Rubrik are examples in Microsoft 365 backup and recovery, based on an editorial comparison of AvePoint’s scope and official peer products. Supporting Microsoft 365 does not make Microsoft a customer. Migration, access governance and other management functions need separate competitor review.",
       "relationships": "Protects data in Microsoft, Google, Salesforce and other services. Cloud marketplaces, including AWS, and managed-service providers support distribution; integration targets are not necessarily customers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Backup vendors",
-          "nameJa": "バックアップ専業",
+          "kind": "company",
+          "name": "Veeam",
           "role": "competitor",
           "label": {
-            "ja": "データ保存と復元で競合",
-            "en": "Data backup and recovery"
+            "ja": "Microsoft 365のバックアップ・復元で競合。公表製品の編集比較",
+            "en": "Microsoft 365 backup/recovery; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "Data-security specialists",
-          "nameJa": "データ保護・アクセス管理会社",
+          "kind": "company",
+          "name": "Rubrik",
           "role": "competitor",
           "label": {
-            "ja": "分類・権限・危険箇所の把握で競合",
-            "en": "Classification, permissions and exposure visibility"
+            "ja": "Microsoft 365の保護・復元で競合。公表製品の編集比較",
+            "en": "Microsoft 365 protection/recovery; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Cloud-management tools",
-          "nameJa": "クラウド管理ツール",
-          "role": "competitor",
-          "label": {
-            "ja": "移行・運用管理の一部機能で競合",
-            "en": "Migration and administration capabilities"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "RBRK"
         }
       ],
       "relationships": [
@@ -23527,7 +23764,7 @@
       "VRNS"
     ],
     "name": "Varonis Systems",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -23536,6 +23773,14 @@
       {
         "label": "July 28, 2026 · SaaS transition and quarterly results",
         "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184326004948/exh_991.htm"
+      },
+      {
+        "label": "Microsoft · Purview Data Security Posture Management",
+        "url": "https://learn.microsoft.com/en-us/purview/data-security-posture-management-learn-about"
+      },
+      {
+        "label": "Palo Alto Networks · Prisma Cloud DSPM",
+        "url": "https://www.paloaltonetworks.com/prisma/cloud/cloud-data-security"
       }
     ],
     "ja": {
@@ -23543,7 +23788,7 @@
       "revenue": "クラウド型ソフトの継続利用料が中心となり、従来の顧客環境で動かす製品から移行が進んでいる。2026年4〜6月期にはクラウド型の売上が全体の大部分を占めた。",
       "strength": "情報の機密性とアクセス権、実際の操作を結び付けて調べる。見つけるだけでなく余分な権限の修正まで自動化し、社員やAIが必要以上の社内情報へアクセスする範囲を減らせる。",
       "risks": "従来製品の顧客がクラウドへの移行を選ばない場合、契約を失う可能性がある。大量のデータを正しく分類する精度と外部サービスへの対応が必要で、権限の誤変更や情報漏洩も重大なリスク。",
-      "competition": "データの分類・監視・アクセス管理に特化した製品や、複数機能をまとめるセキュリティ基盤と競う。顧客が既存の標準機能や手作業で管理し続けることも代替となる。",
+      "competition": "機密データの発見・分類とリスク管理ではMicrosoft Purview、クラウドのデータセキュリティ態勢管理ではPalo Alto NetworksのPrisma Cloud DSPMが競合例。Varonisと両社の公式製品を照合した編集上の比較。接続先としてのMicrosoftとの関係は保ち、全機能が同じとは扱わない。",
       "relationships": "Microsoft 365、Salesforce、Googleのサービス、Snowflakeなどにある顧客データを保護する。これは対応・接続関係であり、それらの会社がVaronisを購入しているという意味ではない。"
     },
     "en": {
@@ -23551,49 +23796,38 @@
       "revenue": "Recurring SaaS fees are becoming the core model as customers migrate from self-hosted products. SaaS represented most revenue in the April–June 2026 quarter.",
       "strength": "Links data sensitivity, permissions and actual activity, then automates access remediation. Helps reduce unnecessary data access by employees and AI systems.",
       "risks": "Self-hosted customers may decline migration. Classification accuracy and external-service compatibility are essential; incorrect access changes or breaches can cause serious harm.",
-      "competition": "Competes with specialist classification, monitoring and access-control products, broader security platforms, native tools and manual processes.",
+      "competition": "Examples include Microsoft Purview in sensitive-data discovery/classification and risk management, and Palo Alto Networks Prisma Cloud DSPM in cloud data-security posture management. These are editorial product comparisons. Microsoft integrations remain distinct; feature overlap does not imply equivalent end-to-end coverage.",
       "relationships": "Protects customers’ data in Microsoft 365, Salesforce, Google services, Snowflake and other systems. These are supported environments, not evidence those vendors buy Varonis."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Data-security point products",
-          "nameJa": "データ保護の専用製品",
+          "kind": "company",
+          "name": "Microsoft",
           "role": "competitor",
           "label": {
-            "ja": "分類・監視・権限管理で競合",
-            "en": "Classification, monitoring and access controls"
+            "ja": "Purviewのデータ分類・リスク管理で競合。公表製品の編集比較",
+            "en": "Purview data discovery/classification and risk; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "MSFT"
         },
         {
-          "kind": "industry",
-          "name": "Security platforms",
-          "nameJa": "統合セキュリティ基盤",
+          "kind": "company",
+          "name": "Palo Alto Networks",
           "role": "competitor",
           "label": {
-            "ja": "複数の保護機能をまとめて提供",
-            "en": "Bundled data-security capabilities"
+            "ja": "Prisma Cloud DSPMで競合。公表製品の編集比較",
+            "en": "Prisma Cloud data-security posture management; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Native tools and manual controls",
-          "nameJa": "標準機能・手作業の管理",
-          "role": "competitor",
-          "label": {
-            "ja": "既存の管理方法が代替手段",
-            "en": "Existing native and manual controls"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "PANW"
         }
       ],
       "relationships": [
@@ -23798,7 +24032,7 @@
       "ZETA"
     ],
     "name": "Zeta Global",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -23807,6 +24041,22 @@
       {
         "label": "Zeta product documentation · Salesforce CRM integration",
         "url": "https://knowledgebase.zetaglobal.com/kb/salesforce-crm"
+      },
+      {
+        "label": "Zeta FY2025 annual report · marketing platform and competition",
+        "url": "https://s25.q4cdn.com/525061491/files/doc_financials/2025/ar/ZETA_2025_Annual_Report_Wrapped-cleaned.pdf"
+      },
+      {
+        "label": "Adobe · Journey Optimizer",
+        "url": "https://business.adobe.com/products/journey-optimizer.html"
+      },
+      {
+        "label": "Salesforce · Marketing Cloud Engagement",
+        "url": "https://www.salesforce.com/marketing/engagement/"
+      },
+      {
+        "label": "Braze · Cross-channel engagement and journey orchestration",
+        "url": "https://www.braze.com/product"
       }
     ],
     "ja": {
@@ -23814,7 +24064,7 @@
       "revenue": "ソフトの利用料と配信・処理量に応じた料金、運用支援で稼ぐ。利用量に左右される売上が大きく、顧客が広告予算や配信量を増やすと収入も増える仕組み。",
       "strength": "顧客の識別情報、分析、配信を同じ基盤にまとめ、施策の結果から次の案内を改善できる。買収済みのMarigoldの大企業向け事業も加わり、顧客維持や継続利用を促す機能を広げている。",
       "risks": "広告予算の削減や大口顧客の利用減少が売上へ直接響く。個人情報の規制やブラウザーの仕様変更でデータが使いにくくなるリスクがあり、買収事業の統合にも費用と時間がかかる。",
-      "competition": "顧客データをまとめる基盤、広告配信、メールなどの販促自動化ツールと競う。データの精度だけでなく、複数の配信先をつなぎ実際の売上効果を示せるかが比較される。",
+      "competition": "メールなどの配信と顧客ごとの販促シナリオではAdobe Journey Optimizer、Salesforce Marketing Cloud Engagement、Brazeが競合例。Zetaと各社の公表製品を照合した編集上の比較。Salesforce CRMとの既存接続は維持し、広告枠の買い付けやデータ販売まで一括して同じ市場とは扱わない。",
       "relationships": "広告主や代理店が利用し、媒体社やデータ供給会社から広告枠・情報を調達する。Salesforce CRMへの顧客情報の登録・連携にも対応するが、これはソフト同士の接続であり購入契約ではない。"
     },
     "en": {
@@ -23822,49 +24072,52 @@
       "revenue": "Earns platform subscriptions, volume-based usage fees and service revenue. A substantial usage component links revenue to customers’ marketing activity.",
       "strength": "Combines identity, analysis and delivery so campaign results inform future decisions. The acquired Marigold enterprise business extends retention and loyalty capabilities.",
       "risks": "Advertising cuts and reduced large-customer usage directly affect revenue. Privacy rules, browser changes, data availability and acquisition integration create additional risks.",
-      "competition": "Competes with customer-data platforms, advertising tools and marketing-automation products. Data quality, connected delivery and measurable business results influence selection.",
+      "competition": "Adobe Journey Optimizer, Salesforce Marketing Cloud Engagement and Braze are examples in cross-channel messaging and customer-journey orchestration. These are editorial comparisons of official products. Zeta’s Salesforce CRM integration remains; advertising buying and data services are separate competitive scopes.",
       "relationships": "Brands and agencies use its platform; publishers and data suppliers provide media and information. Salesforce CRM integration creates and shares customer records, rather than establishing a purchasing relationship."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Customer-data platforms",
-          "nameJa": "顧客データ基盤",
+          "kind": "company",
+          "name": "Adobe",
           "role": "competitor",
           "label": {
-            "ja": "顧客情報の統合・分析で競合",
-            "en": "Customer-data integration and analysis"
+            "ja": "Journey Optimizerの販促シナリオ・配信で競合。公表製品の編集比較",
+            "en": "Journey Optimizer orchestration/messaging; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            3
+          ],
+          "ticker": "ADBE"
         },
         {
-          "kind": "industry",
-          "name": "Marketing-automation tools",
-          "nameJa": "販促自動化ツール",
+          "kind": "company",
+          "name": "Salesforce",
           "role": "competitor",
           "label": {
-            "ja": "メールなどの配信設計・実行で競合",
-            "en": "Campaign orchestration and delivery"
+            "ja": "Marketing Cloud Engagementの配信で競合。公表製品の編集比較",
+            "en": "Marketing Cloud Engagement messaging; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            4
+          ],
+          "ticker": "CRM"
         },
         {
-          "kind": "industry",
-          "name": "Advertising platforms",
-          "nameJa": "広告配信基盤",
+          "kind": "company",
+          "name": "Braze",
           "role": "competitor",
           "label": {
-            "ja": "広告の対象選定と効果測定で競合",
-            "en": "Audience selection and measurement"
+            "ja": "複数チャネルの顧客配信・シナリオで競合。公表製品の編集比較",
+            "en": "Cross-channel messaging/journey orchestration; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            5
+          ],
+          "ticker": "BRZE"
         }
       ],
       "relationships": [
