@@ -1,5 +1,12 @@
 [
   {
+    "ticker": "AAOI",
+    "name": "Applied Optoelectronics",
+    "sourceUrl": "https://ir.ao-inc.com/",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": null
+  },
+  {
     "ticker": "AAPL",
     "name": "Apple",
     "sourceUrl": "https://investor.apple.com/investor-relations/default.aspx",
@@ -14,6 +21,13 @@
     "lastCheckedOn": "2026-10-02"
   },
   {
+    "ticker": "ALAB",
+    "name": "Astera Labs",
+    "sourceUrl": "https://ir.asteralabs.com/",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": null
+  },
+  {
     "ticker": "AMAT",
     "name": "Applied Materials",
     "sourceUrl": "https://ir.appliedmaterials.com/events?tab=upcoming",
@@ -24,8 +38,8 @@
     "ticker": "AMD",
     "name": "AMD",
     "sourceUrl": "https://ir.amd.com/news-events/ir-calendar",
-    "lastAttemptedOn": "2026-10-02",
-    "lastCheckedOn": "2026-10-02"
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "AMZN",
@@ -38,15 +52,22 @@
     "ticker": "ANET",
     "name": "Arista Networks",
     "sourceUrl": "https://investors.arista.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-10-02",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
+  },
+  {
+    "ticker": "APH",
+    "name": "Amphenol",
+    "sourceUrl": "https://investors.amphenol.com/",
+    "lastAttemptedOn": "2026-10-15",
     "lastCheckedOn": null
   },
   {
     "ticker": "ARM",
     "name": "Arm",
     "sourceUrl": "https://investors.arm.com/",
-    "lastAttemptedOn": "2026-10-02",
-    "lastCheckedOn": null
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "ASML",
@@ -66,7 +87,14 @@
     "ticker": "BE",
     "name": "Bloom Energy",
     "sourceUrl": "https://investor.bloomenergy.com/events-and-presentations/events-calendar/",
-    "lastAttemptedOn": "2026-10-02",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
+  },
+  {
+    "ticker": "CEG",
+    "name": "Constellation Energy",
+    "sourceUrl": "https://investors.constellationenergy.com/",
+    "lastAttemptedOn": "2026-10-15",
     "lastCheckedOn": null
   },
   {
@@ -133,6 +161,20 @@
     "lastCheckedOn": "2026-10-02"
   },
   {
+    "ticker": "IONQ",
+    "name": "IonQ",
+    "sourceUrl": "https://investors.ionq.com/",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "IREN",
+    "name": "IREN",
+    "sourceUrl": "https://iren.com/investors",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": null
+  },
+  {
     "ticker": "KLAC",
     "name": "KLA",
     "sourceUrl": "https://ir.kla.com/events-presentations/",
@@ -143,8 +185,8 @@
     "ticker": "LITE",
     "name": "Lumentum",
     "sourceUrl": "https://investor.lumentum.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-10-02",
-    "lastCheckedOn": null
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "LRCX",
@@ -171,8 +213,8 @@
     "ticker": "MSFT",
     "name": "Microsoft",
     "sourceUrl": "https://www.microsoft.com/en-us/investor/default",
-    "lastAttemptedOn": "2026-10-02",
-    "lastCheckedOn": "2026-10-02"
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "MU",
@@ -241,8 +283,8 @@
     "ticker": "SKHY",
     "name": "SK hynix",
     "sourceUrl": "https://news.skhynix.com/en/category/ir/",
-    "lastAttemptedOn": "2026-10-02",
-    "lastCheckedOn": "2026-10-02"
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "SNDK",
@@ -259,11 +301,25 @@
     "lastCheckedOn": "2026-10-02"
   },
   {
+    "ticker": "SOFI",
+    "name": "SoFi Technologies",
+    "sourceUrl": "https://investors.sofi.com/",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "STX",
+    "name": "Seagate",
+    "sourceUrl": "https://investors.seagate.com/",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": null
+  },
+  {
     "ticker": "TSLA",
     "name": "Tesla",
     "sourceUrl": "https://ir.tesla.com/",
-    "lastAttemptedOn": "2026-10-02",
-    "lastCheckedOn": "2026-10-02"
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   },
   {
     "ticker": "TSM",
@@ -278,5 +334,12 @@
     "sourceUrl": "https://investors.vertiv.com/events-presentations/events-presentations/default.aspx",
     "lastAttemptedOn": "2026-10-02",
     "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "ticker": "VST",
+    "name": "Vistra",
+    "sourceUrl": "https://investor.vistracorp.com/",
+    "lastAttemptedOn": "2026-10-15",
+    "lastCheckedOn": "2026-10-15"
   }
 ]

@@ -264,10 +264,36 @@ def parse_event_time(value):
         return None
 
 
+# Companies shown by name rather than ticker (owner, Oct 15).
+DISPLAY_NAME = {'TSM': 'TSMC'}
+
+
+def normalize_result(item):
+    """An earnings result brief (Oct 15: results are announced to phones as soon as they are read)."""
+    ticker = item.get('ticker')
+    titles = {lang: item.get(key) for lang, key in (('ja', 'titleJa'), ('en', 'titleEn'))}
+    quarter = re.search(r'Q([1-4])', str(item.get('period', '')))
+    if (not isinstance(ticker, str) or not re.fullmatch(r'[A-Z][A-Z0-9.-]{0,14}', ticker) or not quarter
+            or any(not isinstance(text, str) or not 1 <= len(text.strip()) <= 240 for text in titles.values())):
+        return None
+    published = parse_event_time(item.get('publishedAt'))
+    observed = parse_event_time(item.get('observedAt'))
+    if published is None or observed is None:
+        return None
+    try:
+        observed_timestamp = observed.timestamp()
+    except (OverflowError, OSError, ValueError):
+        return None
+    return {'kind': 'earnings', 'ticker': ticker, 'quarter': 'Q' + quarter[1], 'titles': {k: v.strip() for k, v in titles.items()},
+            'published': published, 'observed_timestamp': observed_timestamp}
+
+
 def normalize_event(item):
     """Validate public change data before it can reach a push provider."""
     if not isinstance(item, dict):
         return None
+    if item.get('kind') == 'earnings':
+        return normalize_result(item)
     ticker, firm = item.get('ticker'), item.get('firm')
     if (not isinstance(ticker, str) or not re.fullmatch(r'[A-Z][A-Z0-9.-]{0,14}', ticker)
             or not isinstance(firm, str) or not 1 <= len(firm.strip()) <= 120):
@@ -294,6 +320,10 @@ def normalize_event(item):
 
 
 def event_key(item):
+    if item.get('kind') == 'earnings':
+        # One result is one notification, whichever account posted it first (Oct 15).
+        return hashlib.sha256(json.dumps(['earnings', item['ticker'], item['quarter'],
+                                          item['published'].strftime('%Y-%m')]).encode()).hexdigest()
     # Same broker action reported by several accounts is one notification.
     date = item['published'].date().isoformat()
     facts = [item['ticker'], item['firm'].casefold(), float(item['previous']), float(item['latest']), date]
@@ -437,9 +467,14 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             # attempt, while standalone status reads still reject future rows.
             status_now = max(status_now, attempted_at)
             ja = device['language'] == 'ja'
-            payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
-                       'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
-                       'tag': key, 'url': '/research#what-changed'}
+            if item.get('kind') == 'earnings':
+                name = DISPLAY_NAME.get(item['ticker'], item['ticker'])
+                payload = {'title': f"{name} · " + ('決算速報' if ja else 'Earnings flash'),
+                           'body': item['titles']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
+            else:
+                payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
+                           'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
+                           'tag': key, 'url': '/research#what-changed'}
             provider_started = monotonic_now()
             try:
                 code = transport(json.loads(device['subscription']), payload)

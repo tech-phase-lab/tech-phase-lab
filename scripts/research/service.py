@@ -1033,6 +1033,12 @@ class AutomaticMonitor:
             polled_at = utc_now()
             try:
                 items = self.public_price_targets()["items"]
+                try:
+                    # Earnings results are announced as soon as they are read (owner, Oct 15).
+                    with self.db_lock, monitor.connect(self.db_path) as results_db:
+                        items = [*items, *(item for item in market_results.public_feed(results_db) if item.get("kind") == "earnings")]
+                except Exception:
+                    print("web-push-results-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                 with self.state_lock:

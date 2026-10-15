@@ -27,6 +27,7 @@ BURST_BEFORE = timedelta(minutes=1)
 BURST_AFTER = timedelta(minutes=15)
 BURST_INTERVAL_SECONDS = 10
 ALERT_AFTER = timedelta(minutes=3)
+APPROXIMATE_EXTRA = timedelta(minutes=7)
 RELEASE_LOOKBACK = timedelta(minutes=5)
 # Oct 14: ASML's call is 8 hours after its release; a 6-hour window missed the already
 # published result and sent a false "not published" alert at the call.
@@ -133,7 +134,8 @@ def window(event):
     """(earliest matching publication, alert due time) for one event."""
     if event['phase'] == 'call':
         return event['at'] - CALL_LOOKBACK, event['at']
-    return event['at'] - RELEASE_LOOKBACK, event['at'] + ALERT_AFTER
+    # An estimated time (U.S. market close) leaves the company a few more minutes before "not published" is raised.
+    return event['at'] - RELEASE_LOOKBACK, event['at'] + ALERT_AFTER + (APPROXIMATE_EXTRA if event.get('approximate') else timedelta())
 
 
 def active(now, events=None):
@@ -195,11 +197,13 @@ def delay_text(seconds):
 
 def notification(event, kind, delay):
     if kind == 'missing':
-        due = '開始時刻' if event['phase'] == 'call' else '予定時刻から3分'
+        due = ('開始時刻' if event['phase'] == 'call' else '米国市場終了から10分' if event.get('approximate')
+               else '予定時刻から3分')
         return {'title': f"⚠ 未掲載：{event['titleJa']}",
                 'body': f"{due}を過ぎても結果がサイトに出ていません。",
                 'tag': f"release-watch-missing-{event['id']}", 'url': '/research/calendar'}
-    timing = (f"予定時刻から{delay_text(delay)}" if delay >= 0 else f"予定時刻の{delay_text(-delay)}前")
+    base = '米国市場終了' if event.get('approximate') else '予定時刻'
+    timing = (f"{base}から{delay_text(delay)}" if delay >= 0 else f"{base}の{delay_text(-delay)}前")
     return {'title': f"✅ 掲載：{event['titleJa']}", 'body': f"結果を掲載しました（{timing}）。",
             'tag': f"release-watch-published-{event['id']}", 'url': '/research/calendar'}
 
@@ -208,7 +212,12 @@ def check(db, payload, now, transport=None, events=None):
     """Record and push due alerts once per event and kind; returns new alerts."""
     schema(db)
     sent = []
+    scheduled = load_schedule() if events is None else events
+    estimated_close = {e['id'] for e in scheduled if e.get('approximate')}
     for event in active(now, events):
+        # The market-close entry of the same company already raises this alert (Oct 15).
+        if event['phase'] == 'call' and event['id'] + '-close' in estimated_close:
+            continue
         recorded = {row[0] for row in db.execute(
             'SELECT kind FROM release_watch_alerts WHERE event_id=?', (event['id'],))}
         public = match(event, payload)

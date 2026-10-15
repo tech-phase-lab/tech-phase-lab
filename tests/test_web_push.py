@@ -35,6 +35,36 @@ class PushTests(unittest.TestCase):
     def member_payload(self, owner='user_owner'):
         return {'memberId': owner, 'accessExpiresAt': self.now+60, 'subscription': subscription(), 'allTargets': True}
 
+    def result(self, ticker='TSM', period='Q3', published='2026-09-26T13:59:50+00:00', observed='2026-09-26T14:00:01+00:00'):
+        return {'kind': 'earnings', 'ticker': ticker, 'period': period, 'titleJa': ticker + ' Q3決算：純利益NT$763.1B',
+                'titleEn': ticker + ' Q3 earnings: Net income NT$763.1B', 'publishedAt': published, 'observedAt': observed}
+
+    def test_earnings_results_reach_a_device_once_per_company_and_quarter_under_the_company_name(self):
+        # Oct 15: results are pushed as soon as they are read, whichever account posted them first.
+        push.register(self.db, {'subscription': subscription(), 'tickers': ['TSM'], 'language': 'ja'}, {'TSM', 'MU'}, self.now - 10)
+        sent = []
+        transport = lambda sub, payload: sent.append(payload) or 201
+        first = push.deliver(self.db, [self.result(), self.result(period="Q3'26", published='2026-09-26T13:59:58+00:00')],
+                             transport, self.now, wall_now=lambda: self.now)
+        self.assertEqual((first['attempted'], first['accepted']), (1, 1))
+        self.assertEqual(sent[0]['title'], 'TSMC · 決算速報')
+        self.assertIn('純利益NT$763.1B', sent[0]['body'])
+        self.assertEqual(sent[0]['url'], '/research/news')
+        # Posted again later, or by another account: still one notification.
+        again = push.deliver(self.db, [self.result(published='2026-09-26T14:00:00+00:00')], transport, self.now + 1, wall_now=lambda: self.now + 1)
+        self.assertEqual(again['attempted'], 0)
+        self.assertEqual(len(sent), 1)
+
+    def test_earnings_results_respect_the_watched_companies_and_freshness(self):
+        push.register(self.db, {'subscription': subscription(), 'tickers': ['MU'], 'language': 'ja'}, {'TSM', 'MU'}, self.now - 10)
+        sent = []
+        transport = lambda sub, payload: sent.append(payload) or 201
+        # Another company, a late discovery and unusable data are never pushed.
+        late = self.result(ticker='MU', published='2026-09-26T13:00:00+00:00')
+        broken = {**self.result(ticker='MU'), 'period': 'unknown'}
+        result = push.deliver(self.db, [self.result(), late, broken], transport, self.now, wall_now=lambda: self.now)
+        self.assertEqual((result['attempted'], sent), (0, []))
+
     def test_member_ownership_and_expiry(self):
         payload = self.member_payload()
         push.register_member(self.db, payload, {'MU'}, self.now-10)

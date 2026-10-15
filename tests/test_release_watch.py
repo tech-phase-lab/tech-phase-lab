@@ -122,6 +122,25 @@ class ReleaseWatchTests(unittest.TestCase):
         self.assertEqual(state['next'][0]['event'], 'cpi-2026-10-14')
         self.assertNotIn('endpoint', json.dumps(state))
 
+    def test_an_estimated_market_close_entry_waits_longer_and_replaces_the_call_alert(self):
+        # Oct 15: after-close companies are watched from the close; the call entry stays quiet.
+        close = {'id': 'msft-call-close', 'kind': 'earnings', 'ticker': 'MSFT', 'phase': 'release', 'at': AT,
+                 'titleJa': 'Microsoft 決算（米国市場終了後）', 'approximate': True}
+        call = {'id': 'msft-call', 'kind': 'earnings', 'ticker': 'MSFT', 'phase': 'call', 'at': AT + timedelta(hours=1, minutes=30),
+                'titleJa': 'Microsoft 決算説明会'}
+        events = [close, call]
+        self.assertEqual(watch.check(self.db, {}, AT + timedelta(minutes=3), self.transport, events), [])
+        self.assertEqual(watch.check(self.db, {}, AT + timedelta(minutes=9, seconds=59), self.transport, events), [])
+        alerts = watch.check(self.db, {}, AT + timedelta(minutes=10), self.transport, events)
+        self.assertEqual([(a['event'], a['kind']) for a in alerts], [('msft-call-close', 'missing')])
+        self.assertIn('米国市場終了から10分', self.sent[-1][1]['body'])
+        # The call entry raises nothing, not even once the call has started.
+        self.assertEqual(watch.check(self.db, {}, call['at'] + timedelta(minutes=1), self.transport, events), [])
+        payload = {'resultBriefs': [{'kind': 'earnings', 'ticker': 'MSFT', 'publishedAt': iso(AT + timedelta(minutes=2)),
+                                     'publicAt': iso(AT + timedelta(minutes=2, seconds=5))}]}
+        published = watch.notification(close, 'published', 125)
+        self.assertIn('米国市場終了から2分05秒', published['body'])
+
 
 if __name__ == '__main__':
     unittest.main()
