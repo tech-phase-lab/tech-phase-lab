@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { calendarDateKey, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, calendarReviewedOn, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
 import { filterFavoriteEvents } from "@/lib/research/favorites";
 import { useStockFavorites } from "../use-stock-favorites";
@@ -40,6 +40,10 @@ export default function EventCalendar() {
   const zoneLabel = (value: string) => value === "Asia/Tokyo" ? "JST" : "ET";
   const months = [...new Set([...calendarEvents.map((event) => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...dateOnlyEvents.map((event) => event.date.slice(0, 7))])].sort();
   const [period, setPeriod] = useState("today-upcoming");
+  const [reported, setReported] = useState<{ ticker: string; at: number }[]>([]);
+  const onReported = useCallback((rows: { ticker: string; at: number }[]) => setReported(rows), []);
+  // A company's result is in the "released" list above: its call row says so instead of "time passed".
+  const resultPosted = (event: CalendarEvent) => !!event.ticker && reported.some(row => row.ticker === event.ticker && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000);
   const now = useCalendarClock();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const visible = now === null ? [] : selectCalendarEvents(favoritesOnly ? filterFavoriteEvents(calendarEvents, favorites) : calendarEvents, kind, period, now, zone);
@@ -68,12 +72,12 @@ export default function EventCalendar() {
     </div>
     {favoritesOnly && favorites.length === 0 && <p role="status" className={styles.description}>{t("お気に入りがまだありません。銘柄を追加すると、その決算予定も表示します。", "No favorites yet. Add companies to include their earnings schedules.")}</p>}
     <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
-    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} />
+    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} />
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
       <details>
         <summary>
           <time dateTime={event.startsAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "numeric", day: "numeric", weekday: "short" }).format(new Date(event.startsAt))}<small>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.startsAt))} {zoneLabel(zone)}</small></time>
-          <span className={calendarStyles.eventName}>{event.title[lang]}{now !== null && Date.parse(event.startsAt) < now && <small>{t("予定時刻を経過", "Scheduled time passed")}</small>}</span>
+          <span className={calendarStyles.eventName}>{event.title[lang]}{resultPosted(event) ? <small>{t("決算結果は掲載済み（上の一覧）", "Results posted (see list above)")}</small> : now !== null && Date.parse(event.startsAt) < now && <small>{t("予定時刻を経過", "Scheduled time passed")}</small>}</span>
           <span className={calendarStyles.expand} aria-hidden="true">＋</span>
         </summary>
         <div className={calendarStyles.eventDetails}>

@@ -4,6 +4,7 @@ import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { newsPulseItems } from "@/lib/research/news-pulse-items";
 import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
+import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { lateDetection, pulseClock, recentPublication } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
@@ -66,7 +67,20 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const touch = useRef<{x: number; y: number} | null>(null);
   const suppressClick = useRef(false);
   const ja = lang === "ja";
-  const items = snapshot?.checkedAt ? newsPulseItems(feed, lang, snapshot.checkedAt) : [];
+  const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});
+  const checkedAt = snapshot?.checkedAt;
+  useEffect(() => {
+    // Company headlines join the strip, refreshed whenever the news feed is; a failure here never affects the rest.
+    let alive = true;
+    void (async () => {
+      try {
+        const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
+        if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) setWire(items); }
+      } catch { /* keep the previous list */ }
+    })();
+    return () => { alive = false; };
+  }, [checkedAt]);
+  const items = snapshot?.checkedAt ? newsPulseItems(feed, lang, snapshot.checkedAt, wire) : [];
   const first = items[0]?.id ?? "";
   const stopped = paused || interacting || reduced;
   useEffect(() => {
