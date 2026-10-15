@@ -289,8 +289,8 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
               </article>)}
               {!filtered.length && (tab === "saved" && !collection.ready ? <p role="status">{t("保存したリサーチを確認しています…", "Loading saved research…")}</p> : tab === "saved" && !saved.some((id) => events.some((event) => event.id === id)) ? <div className={styles.savedEmpty}>
                 <span className={styles.savedEmptyIcon}><Bookmark /></span>
-                <h2>{t("読み返したい記事を、ここに。", "Keep a good read close.")}</h2>
-                <p>{t("記事を開いて「保存する」を押すと、この一覧に追加されます。", "Open an article and select Save article to add it to your collection.")}</p>
+                <h2>{t("気づきを残す、自分だけの一冊。", "A personal notebook for your insights.")}</h2>
+                <p>{t("何度でも立ち戻れる場所に。", "A place to return to, time and again.")}</p>
                 <button onClick={() => { clearFilters(); openView("changes"); }}>{t("保存する記事を調べる", "Find articles to save")}</button>
               </div> : <Empty lang={lang} onReset={clearFilters} />)}
             </div>}
