@@ -118,3 +118,6 @@
 ## 2026-10-15: compact print action
 - Removed the export instruction paragraph and large tinted panel in both languages. A single 44px-minimum-height Save PDF / Print button sits at the upper right and stays available while scrolling.
 - Controls remain excluded from printed output. Article typography, annotations and the native PDF flow are unchanged.
+
+## 2026-10-15: button-only print control tracking
+- The sticky print control now shrinks to the button width with a transparent wrapper. The blank area to its left no longer covers article text during scrolling.
