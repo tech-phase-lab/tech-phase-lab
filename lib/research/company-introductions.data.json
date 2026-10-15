@@ -23323,5 +23323,532 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1329099,
+    "tickers": [
+      "BIDU"
+    ],
+    "name": "Baidu",
+    "reviewedOn": "2026-10-15",
+    "sources": [
+      {
+        "label": "Baidu FY2025 Form 20-F · Business / Competition / Risk factors",
+        "url": "https://ir.baidu.com/static-files/f655f8c4-bfaa-41c5-872c-005087bce94f"
+      },
+      {
+        "label": "Baidu Q2 2026 results · AI cloud and Apollo Go operating updates",
+        "url": "https://ir.baidu.com/news-releases/news-release-details/baidu-announces-second-quarter-2026-results"
+      }
+    ],
+    "ja": {
+      "business": "中国の検索・AI企業。検索広告に加え、AIクラウド、生成AI、Apollo Goの自動運転を手がける。",
+      "revenue": "広告、クラウド・AIサービス、動画配信など。広告事業の減少をAI関連の拡大で補う転換期にある。",
+      "strength": "検索で培った利用者基盤と、AI基盤・モデル・アプリを組み合わせて企業へ提供できる。",
+      "risks": "広告需要の低下、AI投資の負担、先端半導体の調達制限、自動運転の安全性・許認可が課題。",
+      "competition": "Alibaba、Tencent、ByteDanceなどと広告・AIで競争。クラウドではHuaweiなども競合となる。",
+      "relationships": "Apollo GoでUber・Lyftと協業。ロンドンの公道試験と、ドバイのUber経由の商用提供は段階が異なる。"
+    },
+    "en": {
+      "business": "Chinese search and AI company spanning advertising, AI cloud, generative AI and Apollo Go autonomous driving.",
+      "revenue": "Earns advertising, cloud, AI-service and video revenue, while AI growth offsets pressure on advertising.",
+      "strength": "Combines search distribution with AI infrastructure, models and applications.",
+      "risks": "Advertising weakness, AI investment, chip-access restrictions and driving safety or permits create risks.",
+      "competition": "Competes with Alibaba, Tencent and ByteDance; Huawei also competes in cloud.",
+      "relationships": "Works with Uber and Lyft. London road testing differs from commercial Uber availability in Dubai."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Alibaba",
+          "ticker": "BABA",
+          "role": "competitor",
+          "label": {
+            "ja": "広告・AIクラウドで競争",
+            "en": "Competes in advertising and AI cloud"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ByteDance",
+          "role": "competitor",
+          "label": {
+            "ja": "広告・AIサービスで競争",
+            "en": "Competes in advertising and AI services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Huawei",
+          "role": "competitor",
+          "label": {
+            "ja": "AIクラウドで競争",
+            "en": "Competes in AI cloud"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Uber",
+          "ticker": "UBER",
+          "role": "partner",
+          "label": {
+            "ja": "ロンドンで試験、ドバイでアプリ経由の商用提供",
+            "en": "London testing and commercial app availability in Dubai"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Lyft",
+          "ticker": "LYFT",
+          "role": "partner",
+          "label": {
+            "ja": "ロンドンでApollo Goの公道試験に協力",
+            "en": "Partners in Apollo Go road testing in London"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1577552,
+    "tickers": [
+      "BABA"
+    ],
+    "name": "Alibaba",
+    "reviewedOn": "2026-10-15",
+    "sources": [
+      {
+        "label": "Alibaba FY2026 Form 20-F",
+        "url": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm"
+      },
+      {
+        "label": "Alibaba June quarter 2026 results · updated business structure",
+        "url": "https://data.alibabagroup.com/ecms-files/1532295521/fa5d65fc-9b3e-4e82-a8fc-4ce1c3e2c407/Alibaba%20Group%20Announces%20June%20Quarter%202026%20Results.pdf"
+      },
+      {
+        "label": "Baidu FY2025 Form 20-F · named cloud competitors",
+        "url": "https://ir.baidu.com/static-files/f655f8c4-bfaa-41c5-872c-005087bce94f"
+      }
+    ],
+    "ja": {
+      "business": "中国の通販・クラウド企業。Taobao・Tmallや海外通販に加え、AI向け計算基盤とQwenなどのAIサービスを展開する。",
+      "revenue": "出店者の広告・販売支援、取引関連サービス、商品販売、クラウドなどの利用料。通販の取扱総額そのものが売上になるわけではない。",
+      "strength": "消費者と出店者の大きな接点を持ち、通販の運営・物流とクラウド・AIを組み合わせられる。",
+      "risks": "価格競争や販促費、AI設備投資が利益・資金繰りを圧迫する。中国の規制、海外事業の通商・データ管理もリスクとなる。",
+      "competition": "通販・即時配達・クラウドで相手が異なる。AIクラウドではBaiduとも競争する。",
+      "relationships": "Alipayが決済・エスクローを提供。出店者は販売支援の利用者であり、クラウド顧客とは区別する。"
+    },
+    "en": {
+      "business": "Chinese commerce and cloud company operating Taobao, Tmall, international shopping platforms and AI services including Qwen.",
+      "revenue": "Earns merchant advertising and service fees, product sales and cloud fees. Merchandise transaction value is not revenue.",
+      "strength": "Links extensive consumer and merchant distribution with commerce operations, logistics, cloud and AI capabilities.",
+      "risks": "Competition, promotions and AI capital spending pressure returns; regulation, trade and data rules add risk.",
+      "competition": "Rivals differ across commerce, delivery and cloud; Baidu competes in AI cloud.",
+      "relationships": "Alipay supplies payment and escrow services. Merchants use commerce services; they are distinct from cloud customers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Commerce and delivery platforms",
+          "role": "competitor",
+          "label": {
+            "ja": "通販・配達で競争",
+            "en": "Competes in commerce and delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Baidu",
+          "ticker": "BIDU",
+          "role": "competitor",
+          "label": {
+            "ja": "AIクラウドで競争",
+            "en": "Competes in AI cloud"
+          },
+          "sourceIndexes": [
+            2
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Alipay",
+          "role": "supplier",
+          "label": {
+            "ja": "決済・エスクローを提供",
+            "en": "Provides payment and escrow services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Marketplace merchants",
+          "role": "customer",
+          "label": {
+            "ja": "広告・販売支援を利用",
+            "en": "Uses advertising and commerce services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud and AI customers",
+          "role": "customer",
+          "label": {
+            "ja": "計算基盤・AIサービスを利用",
+            "en": "Uses computing and AI services"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1549802,
+    "tickers": [
+      "JD"
+    ],
+    "name": "JD.com",
+    "reviewedOn": "2026-10-15",
+    "sources": [
+      {
+        "label": "JD.com FY2025 Form 20-F",
+        "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526157870/d53690d20f.htm"
+      },
+      {
+        "label": "JD.com Q2 and interim 2026 results",
+        "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526347753/d143720dex991.htm"
+      }
+    ],
+    "ja": {
+      "business": "中国の通販・物流企業。商品を仕入れて売る直販と出店型の通販を運営し、他社向けの物流や食品配達も手がける。",
+      "revenue": "主に商品の直販売上。出店者の販売・広告手数料、物流などのサービス収入もある。取扱高や顧客の決済額とは異なる。",
+      "strength": "調達から倉庫・配送まで運営し、商品管理と配達品質をまとめて改善できる。",
+      "risks": "価格競争、在庫と物流費、食品配達など新規事業への投資が負担。消費の弱さや規制にも左右される。",
+      "competition": "総合・専門通販、実店舗、物流サービスなど。価格に加え、品揃えや配達速度でも競争する。",
+      "relationships": "メーカーや卸から商品を調達。TencentとはWeixinへの入口、クラウド、広告などで協業する。"
+    },
+    "en": {
+      "business": "Chinese retailer and logistics group combining direct sales, a merchant marketplace, external logistics and food delivery.",
+      "revenue": "Primarily product sales, alongside marketplace, advertising and logistics fees; transaction volume is not revenue.",
+      "strength": "Controls procurement, warehouses and delivery to coordinate product quality and fulfillment.",
+      "risks": "Price competition, inventory, logistics costs, new-business investment and weak consumption pressure results.",
+      "competition": "Competes with general and specialist retailers, physical stores and logistics providers.",
+      "relationships": "Buys from manufacturers and distributors. Tencent cooperates on Weixin access, cloud, advertising and other services."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Online and physical retailers",
+          "role": "competitor",
+          "label": {
+            "ja": "価格・品揃え・買い物体験で競争",
+            "en": "Competes on pricing, selection and shopping experience"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Logistics providers",
+          "role": "competitor",
+          "label": {
+            "ja": "配送・物流サービスで競争",
+            "en": "Competes in delivery and logistics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Tencent",
+          "role": "partner",
+          "label": {
+            "ja": "Weixinへの入口・クラウド・広告などで協業",
+            "en": "Cooperates on Weixin access, cloud and advertising"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Manufacturers and distributors",
+          "role": "supplier",
+          "label": {
+            "ja": "直販用の商品を調達",
+            "en": "Supplies merchandise for direct retail"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Third-party merchants",
+          "role": "customer",
+          "label": {
+            "ja": "出店・広告などのサービスを利用",
+            "en": "Uses marketplace and advertising services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 946581,
+    "tickers": [
+      "TTWO"
+    ],
+    "name": "Take-Two Interactive",
+    "reviewedOn": "2026-10-15",
+    "sources": [
+      {
+        "label": "Take-Two FY2026 Form 10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/946581/000162828026037434/ttwo-20260331.htm"
+      },
+      {
+        "label": "Take-Two fiscal Q1 2027 results",
+        "url": "https://www.take2games.com/ir/news/take-two-interactive-software-inc-reports-results-fiscal-first-6"
+      }
+    ],
+    "ja": {
+      "business": "Rockstar Games、2K、Zyngaを持つゲーム会社。Grand Theft AutoやNBA 2K、スマホゲームを開発・販売・運営する。",
+      "revenue": "ゲーム本体に加え、追加コンテンツ、仮想アイテム、ゲーム内広告など。販売後も遊んでもらう継続消費が大きい。",
+      "strength": "長年育てた作品と開発組織を持ち、家庭用ゲーム機・PC・スマホへ展開できる。",
+      "risks": "大型作品の延期や不振、開発費、集客費、配信プラットフォームへの依存が業績を揺らす。",
+      "competition": "Roblox、Sony、Microsoftなどのゲーム事業と競争。プラットフォーム企業は販売先でもあり、競争と協力が併存する。",
+      "relationships": "Apple・Googleのストア、Sony・Microsoftの家庭用機基盤で配信。配信先への手数料と、競合作品との関係を区別する。"
+    },
+    "en": {
+      "business": "Game developer and publisher behind Rockstar Games, 2K and Zynga, including Grand Theft Auto, NBA 2K and mobile titles.",
+      "revenue": "Earns game sales, add-on content, virtual-item spending and advertising.",
+      "strength": "Established franchises and development teams span consoles, PC and mobile.",
+      "risks": "Release delays, hit dependence, development and acquisition costs, and platform dependence create risk.",
+      "competition": "Competes with Roblox, Sony and Microsoft, among others; platform partners also publish rival games.",
+      "relationships": "Distributes through Apple, Google, Sony and Microsoft platforms, with associated fees and licensing arrangements."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Roblox",
+          "ticker": "RBLX",
+          "role": "competitor",
+          "label": {
+            "ja": "ゲーム・利用者の時間で競争",
+            "en": "Competes for game spending and player attention"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Sony",
+          "ticker": "SONY",
+          "role": "competitor",
+          "label": {
+            "ja": "ゲームソフトで競争",
+            "en": "Competes in game publishing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "ゲームソフトで競争",
+            "en": "Competes in game publishing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "ecosystem",
+          "label": {
+            "ja": "App Storeで配信し手数料を負担",
+            "en": "Distributes through App Store and pays platform fees"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOGL",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Google Playで配信し手数料を負担",
+            "en": "Distributes through Google Play and pays platform fees"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Sony",
+          "ticker": "SONY",
+          "role": "ecosystem",
+          "label": {
+            "ja": "PlayStation向けの開発・販売ライセンス",
+            "en": "Licenses development and distribution on PlayStation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Xbox向けの開発・販売ライセンス",
+            "en": "Licenses development and distribution on Xbox"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 104169,
+    "tickers": [
+      "WMT"
+    ],
+    "name": "Walmart",
+    "reviewedOn": "2026-10-15",
+    "sources": [
+      {
+        "label": "Walmart FY2026 Form 10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm"
+      },
+      {
+        "label": "Walmart FY2027 Q2 results",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000145/earningsreleasefy27q2.htm"
+      }
+    ],
+    "ja": {
+      "business": "実店舗と通販をつなぐ小売企業。Walmart、会員制のSam's Club、海外事業を運営し、広告や出店者向けサービスも拡大する。",
+      "revenue": "主に食品・日用品などの商品販売。会費、広告、出店者向け配送・販売支援も収入源で、会費だけで稼ぐ会社ではない。",
+      "strength": "大規模な調達と店舗網を持ち、店舗を受け取り・配送の拠点にも使える。",
+      "risks": "消費の弱さ、人件費・物流費、関税、商品安全やシステム障害が収益に影響する。",
+      "competition": "スーパー、通販、会員制倉庫型店など。広告や配送でも他社サービスと競争する。",
+      "relationships": "国内外のメーカー・卸から調達し、出店者には広告・配送を提供。非開示の供給会社名は推測しない。"
+    },
+    "en": {
+      "business": "Omnichannel retailer operating Walmart, Sam's Club and international businesses, alongside advertising and merchant services.",
+      "revenue": "Mostly merchandise sales, plus memberships, advertising and merchant services.",
+      "strength": "Purchasing scale and stores support shopping, pickup and local delivery.",
+      "risks": "Consumption, labor and logistics costs, tariffs, product safety and system disruption affect returns.",
+      "competition": "Competes with retailers, marketplaces, warehouse clubs, advertising and fulfillment providers.",
+      "relationships": "Sources merchandise from domestic and international suppliers and provides services to marketplace sellers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Retailers and marketplaces",
+          "role": "competitor",
+          "label": {
+            "ja": "価格・品揃え・利便性で競争",
+            "en": "Competes on price, selection and convenience"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Membership warehouse clubs",
+          "role": "competitor",
+          "label": {
+            "ja": "会員制の小売で競争",
+            "en": "Competes in membership retail"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Domestic and international merchandise suppliers",
+          "role": "supplier",
+          "label": {
+            "ja": "食品・日用品などを供給",
+            "en": "Supplies grocery and general merchandise"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Marketplace sellers and brands",
+          "role": "customer",
+          "label": {
+            "ja": "広告・配送・販売支援を利用",
+            "en": "Uses advertising, fulfillment and seller services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is 210 issuers / 211 tickers:
+Researched coverage is 215 issuers / 216 tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -18,7 +18,7 @@ SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
 PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM, BHE, TSLA,
 IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS, RDW, ZM, DOCN,
 ESTC, GTLB, FROG, NTNX, NTAP, BOX, WDAY, PATH, ADSK, PTC, BSY, VEEV, MANH,
-PEGA, PAYC, PAYX, ADP, NICE, DBX, FIVN, RNG, DT, BILL, ASAN, MNDY, APPF, BL, FRSH, OTEX, BAND, EGHT, IOT, KVYO, BRZE, CXM, SPT, WK, PCOR, APPN, AVPT, NCNO, QTWO, ALKT, TENB, RPD, VRNS, QLYS, ZETA, SONY, SAP, DIS, V and MA.
+PEGA, PAYC, PAYX, ADP, NICE, DBX, FIVN, RNG, DT, BILL, ASAN, MNDY, APPF, BL, FRSH, OTEX, BAND, EGHT, IOT, KVYO, BRZE, CXM, SPT, WK, PCOR, APPN, AVPT, NCNO, QTWO, ALKT, TENB, RPD, VRNS, QLYS, ZETA, SONY, SAP, DIS, V, MA, BIDU, BABA, JD, TTWO and WMT.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -441,3 +441,40 @@ Next priorities: Alibaba (BABA), Baidu (BIDU), JD.com (JD), PDD, Electronic Arts
 Walmart (WMT), JPMorgan Chase (JPM), American Express (AXP). Recheck current
 listing/acquisition status and the latest registry before picking a batch.
 Prioritize well-known issuers over the smaller-software research queue above.
+
+
+## 2026-10-15 · recognizable commerce and gaming issuers
+
+Added BIDU / BABA / JD / TTWO / WMT. Registry coverage moves from 210 issuers /
+211 tickers to 215 issuers / 216 tickers. All six JA/EN answers and both maps
+were reviewed on 2026-10-15. Source URLs are stored in each record.
+
+Review notes:
+- Alibaba's June 2026 reporting reorganization supersedes the older segment names;
+  the introduction describes businesses without presenting the old structure as current.
+  Alipay payment/escrow provision is supported by the annual report. Baidu's annual
+  report independently names Alibaba Cloud as a competitor.
+- Baidu: distinguish London road testing from Dubai commercial availability through
+  Uber. Lyft is a testing/deployment partner, not an asserted revenue customer.
+- JD: direct merchandise revenue differs from marketplace volume. Tencent cooperation
+  is supported by the May 2025 five-year renewal in the FY2025 report. Suppliers and
+  merchants remain industry nodes when individual identities are not documented.
+- Take-Two: Sony/Microsoft are both rival publishers and licensed distribution
+  platforms; these edges remain separate. Apple/Google platform fees are explicit.
+  The introduction does not promise a release date or investment return.
+- Walmart: supplier and marketplace-service relationships are distinct. Advertising
+  and membership supplement merchandise sales; no unnamed supplier is guessed.
+
+Environment repair: repository clone succeeded after session network access was
+approved. A temporary non-persistent Vercel Sandbox provides Linux, Node and Python
+for the preview gates. The source-host allowlist now includes only the three
+newly reviewed official Baidu, Alibaba and Take-Two hosts. The local Windows checkout holds the final data.
+Full integrated checks, tree identity, exact-commit CI and preview verification must
+succeed before reporting the new records as published. No main/production, common
+UI, monitored-news pipeline, Saved Research or RESOLUTE changes are included.
+
+Next priorities: PDD / TTWO peers / NOK / ERIC / BRK.B / JPM / AXP, then other
+recognizable uncovered issuers. Recheck current listing/acquisition status and the
+latest registry before selecting. EA ownership/listing requires explicit verification.
+This batch is handled in the current chat; its hourly heartbeat is active under
+automation id tech-phase-research. Recount published records on each run.
