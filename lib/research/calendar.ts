@@ -8,6 +8,8 @@ export type CalendarEvent = {
   sourceName: string;
   sourceUrl: string;
   ticker?: string;
+  /** Results are due after the U.S. market closes (16:00 ET) that day; the exact time is not announced. */
+  afterClose?: boolean;
   note?: Copy;
 };
 export type DateOnlyCalendarEvent = {
@@ -61,6 +63,61 @@ export const calendarEvents: CalendarEvent[] = [
     id: "mu-fq4-2026-call", ticker: "MU", kind: "earnings" as const, title: { ja: "MU 決算説明会（2026年度Q4）", en: "MU fiscal Q4 2026 earnings call" },
     startsAt: "2026-09-30T14:30:00-06:00", sourceTimezone: "America/Denver", sourceName: "Micron IR",
     sourceUrl: "https://investors.micron.com/news/press-release/2026/Micron-Technology-to-Report-Fiscal-Fourth-Quarter-Results-on-September-30-2026/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
+  },
+  // Official announcements read on Oct 15 from the company's own release or SEC filing (owner: all 37 roster companies belong in the calendar).
+  {
+    id: "msft-fq1-2027-call", afterClose: true, ticker: "MSFT", kind: "earnings" as const, title: { ja: "Microsoft 決算説明会（2027年度Q1）", en: "Microsoft fiscal Q1 2027 earnings call" },
+    startsAt: "2026-10-28T14:30:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Microsoft IR",
+    sourceUrl: "https://news.microsoft.com/source/2026/10/07/microsoft-announces-quarterly-earnings-release-date/",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "be-q3-2026-call", afterClose: true, ticker: "BE", kind: "earnings" as const, title: { ja: "Bloom Energy 決算説明会（2026年Q3）", en: "Bloom Energy Q3 2026 earnings call" },
+    startsAt: "2026-10-22T14:00:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Bloom Energy IR",
+    sourceUrl: "https://www.bloomenergy.com/news/bloom-energy-to-announce-third-quarter-2026-financial-results-on-october-22-2026/",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "tsla-q3-2026-webcast", afterClose: true, ticker: "TSLA", kind: "earnings" as const, title: { ja: "Tesla 決算説明会（2026年Q3）", en: "Tesla Q3 2026 results webcast" },
+    startsAt: "2026-10-21T16:30:00-05:00", sourceTimezone: "America/Chicago", sourceName: "Tesla (SEC Form 8-K)",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026064366/exhibit991111111.htm",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "skhy-3q26-call", ticker: "SKHY", kind: "earnings" as const, title: { ja: "SK hynix 決算説明会（2026年Q3）", en: "SK hynix 3Q26 earnings call" },
+    startsAt: "2026-10-28T09:00:00+09:00", sourceTimezone: "Asia/Seoul", sourceName: "SK hynix (SEC Form 6-K)",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526420934/d413172d6k.htm",
+    note: { ja: "説明会の開始予定（韓国時間）です。決算資料は同日にIRサイトへ掲載予定です。", en: "Scheduled call start (Seoul time). Materials are posted on the IR site the same day." },
+  },
+  {
+    id: "amd-q3-2026-call", afterClose: true, ticker: "AMD", kind: "earnings" as const, title: { ja: "AMD 決算説明会（2026年Q3）", en: "AMD Q3 2026 earnings call" },
+    startsAt: "2026-11-03T17:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "AMD IR",
+    sourceUrl: "https://ir.amd.com/news-events/press-releases/detail/1300/amd-to-report-fiscal-third-quarter-2026-financial-results",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "anet-q3-2026-call", afterClose: true, ticker: "ANET", kind: "earnings" as const, title: { ja: "Arista 決算説明会（2026年Q3）", en: "Arista Q3 2026 earnings call" },
+    startsAt: "2026-11-03T13:30:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Arista IR",
+    sourceUrl: "https://www.arista.com/company/news/press-release/24817-pr-20261006",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "arm-fq2-2027-call", afterClose: true, ticker: "ARM", kind: "earnings" as const, title: { ja: "Arm 決算説明会（2027年度Q2）", en: "Arm fiscal Q2 2027 earnings call" },
+    startsAt: "2026-11-04T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Arm Newsroom",
+    sourceUrl: "https://newsroom.arm.com/news/arm-announces-earnings-release-date-for-second-quarter-fiscal-year-ending-2027",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "lite-fq1-2027-call", afterClose: true, ticker: "LITE", kind: "earnings" as const, title: { ja: "Lumentum 決算説明会（2027年度Q1）", en: "Lumentum fiscal Q1 2027 earnings webcast" },
+    startsAt: "2026-11-05T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Lumentum IR",
+    sourceUrl: "https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Reporting-Date-for-Fiscal-First-Quarter-2027-Financial-Results/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "vst-q3-2026-call", ticker: "VST", kind: "earnings" as const, title: { ja: "Vistra 決算説明会（2026年Q3）", en: "Vistra Q3 2026 earnings call" },
+    startsAt: "2026-11-06T10:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "Vistra IR",
+    sourceUrl: "https://investor.vistracorp.com/2026-09-29-Vistra-to-Report-Third-Quarter-Results-on-Nov-6,-2026",
     note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
   },
   {

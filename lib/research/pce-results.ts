@@ -24,14 +24,16 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
   }
   // The CPI and PPI releases read straight from bls.gov (Oct 14/15): the official result takes the same place as BEA's PCE.
   const blsIndicators = [
-    { key: "cpi", label: "CPI", title: { ja: (month: number) => `米国CPI（消費者物価指数）（${month}月）`, en: (period: string) => `U.S. Consumer Price Index (${period})` },
+    { key: "jobs", file: "empsit", label: "jobs report", title: { ja: (month: number) => `米国雇用統計（${month}月）`, en: (period: string) => `U.S. employment report (${period})` },
+      detail: { ja: "非農業部門雇用者数の増減と失業率をBLS公式発表から取得。市場予想との比較は含みません。", en: "Change in total nonfarm payroll employment and the unemployment rate from the official BLS release. No consensus comparison." } },
+    { key: "cpi", file: "cpi", label: "CPI", title: { ja: (month: number) => `米国CPI（消費者物価指数）（${month}月）`, en: (period: string) => `U.S. Consumer Price Index (${period})` },
       detail: { ja: "総合とコアの前月比・前年比をBLS公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BLS release. No consensus comparison." } },
-    { key: "ppi", label: "PPI", title: { ja: (month: number) => `米国PPI（生産者物価指数）（${month}月）`, en: (period: string) => `U.S. Producer Price Index (${period})` },
+    { key: "ppi", file: "ppi", label: "PPI", title: { ja: (month: number) => `米国PPI（生産者物価指数）（${month}月）`, en: (period: string) => `U.S. Producer Price Index (${period})` },
       detail: { ja: "最終需要の前月比・前年比と、食品・エネルギー・商業サービスを除くコアの変化をBLS公式発表から取得。市場予想との比較は含みません。", en: "Final demand and core (less foods, energy and trade services) monthly and annual changes from the official BLS release. No consensus comparison." } },
   ];
   for (const indicator of blsIndicators) for (const item of updates) {
     const url = new URL(item.url);
-    const match = new RegExp(`^\\/news\\.release\\/archives\\/${indicator.key}_(\\d{2})(\\d{2})(20\\d{2})\\.htm$`).exec(url.pathname);
+    const match = new RegExp(`^\\/news\\.release\\/archives\\/${indicator.file}_(\\d{2})(\\d{2})(20\\d{2})\\.htm$`).exec(url.pathname);
     const named = new RegExp(`^U\\.S\\. ([A-Z][a-z]+) ${indicator.label}:`).exec(item.title);
     if (url.origin !== "https://www.bls.gov" || url.search || url.hash || !match || !named || item.publisher !== "BLS" || !item.publishedAt || !item.translationJa) continue;
     const month = months.indexOf(named[1].toLowerCase()) + 1;

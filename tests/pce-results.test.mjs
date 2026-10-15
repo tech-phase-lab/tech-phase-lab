@@ -124,3 +124,23 @@ test("the PPI release read from bls.gov is accepted only at its dated archive pa
   assert.equal(row.releasedAt, "2026-10-15T08:30:00-04:00");
   assert.equal(row.result.ja, ppi.translationJa);
 });
+
+const jobs = {
+  id: "9103", title: "U.S. September jobs report: nonfarm payrolls +29K / unemployment rate 4.2%",
+  translationJa: "米国9月雇用統計：非農業部門雇用者数 +29,000人／失業率 4.2%",
+  url: "https://www.bls.gov/news.release/archives/empsit_10022026.htm", publisher: "BLS", tickers: [],
+  observedAt: "2026-10-02T12:30:07Z", publishedAt: "2026-10-02T08:30:00-04:00",
+};
+
+test("the jobs report read from bls.gov is accepted only at its dated archive path and joins the calendar results", () => {
+  const payload = publicNewsPayload({ ok: true, enabled: false, items: [], officialUpdates: [{ ...jobs, text: "private evidence" }] });
+  assert.equal(payload.officialUpdates.length, 1);
+  for (const url of ["https://www.bls.gov/news.release/empsit.nr0.htm", jobs.url + "?q=1", jobs.url.replace("www.bls.gov", "bls.gov.evil.example")]) {
+    assert.throws(() => publicNewsPayload({ ok: true, enabled: false, items: [], officialUpdates: [{ ...jobs, url }] }));
+  }
+  const row = mergeEconomicResults([jobs]).find(event => event.id === "jobs-2026-09");
+  assert.ok(row);
+  assert.equal(row.title.ja, "米国雇用統計（9月）");
+  assert.equal(row.sourceName, "BLS");
+  assert.equal(row.result.ja, jobs.translationJa);
+});
