@@ -206,7 +206,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
         {tab === "home" && <HomeHero lang={lang} />}
 
-        {tab !== "companies" && tab !== "saved" && tab !== "home" && <div className={styles.heading}><div><p className={styles.eyebrow}>THE RESEARCH DESK</p><h1 id="research-page-title">{tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "changes" ? t("何が変わった？", "What changed?") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1>{<p>{tab === "changes" ? t("決算や提携、新サービスなど企業の変化を1ページで。", "Earnings, partnerships, new services and other company changes, all on one page.") : tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p>}</div>{tab !== "pro" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>{latestReview?.replaceAll("-", ".") ?? "—"}</strong></div>}</div>}
+        {tab !== "companies" && tab !== "saved" && tab !== "home" && tab !== "changes" && <div className={styles.heading}><div><p className={styles.eyebrow}>THE RESEARCH DESK</p><h1 id="research-page-title">{tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1>{<p>{tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p>}</div>{tab !== "pro" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>{latestReview?.replaceAll("-", ".") ?? "—"}</strong></div>}</div>}
 
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
@@ -296,9 +296,9 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             </div>}
 
             {active && (tab !== "changes" || showingResearchArticle) && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
-              {showingResearchArticle && <button className={styles.backToSaved} onClick={() => openView("changes")}><span aria-hidden="true">◀</span> {t("記事一覧に戻る", "Back to articles")}</button>}
               {tab === "saved" && <button className={styles.backToSaved} onClick={returnToSaved}><span aria-hidden="true">◀</span> {t("保存一覧に戻る", "Back to collection")}</button>}
               {tab !== "saved" && <div className={styles.articleSaveBar}>
+                {showingResearchArticle && <button className={styles.backToSaved} onClick={() => openView("changes")}><span aria-hidden="true">◀</span> {t("記事一覧に戻る", "Back to articles")}</button>}
                 <button className={styles.articleSaveButton} disabled={!collection.editable} aria-pressed={saved.includes(active.id)} aria-label={saved.includes(active.id) ? t("この記事の保存を解除", "Unsave this article") : t("この記事を保存する", "Save this article")} onClick={() => toggleSaved(active.id)}><Bookmark filled={saved.includes(active.id)} />{!saved.includes(active.id) && <span>{t("保存する", "Save article")}</span>}</button>
                 {saved.includes(active.id) && <button className={styles.openSavedButton} onClick={() => { clearFilters(); openView("saved"); }}>{t("保存一覧へ", "View saved articles")}</button>}
                 <span className={styles.articleSaveStatus} role="status">{storageError ? t("保存できませんでした。ブラウザーの設定をご確認ください。", "Could not save. Check your browser settings.") : ""}</span>

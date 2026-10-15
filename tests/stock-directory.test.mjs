@@ -390,7 +390,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(researchStyles, /\.primaryNav \{\s*display:none/);
   assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.primaryNav \{\s*display:flex/);
   assert.match(researchStyles, /\.sideMenu \{/);
-  assert.match(dashboard, /何が変わった？/);
+  assert.doesNotMatch(dashboard, /何が変わった？/);
+  assert.doesNotMatch(dashboard, /決算や提携、新サービスなど企業の変化を1ページで。/);
   assert.match(dashboard, /米国株を探す/);
   assert.match(dashboard, /Tech Phase PRO/);
   assert.doesNotMatch(dashboard, /変化を追う/);
