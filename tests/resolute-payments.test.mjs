@@ -187,3 +187,85 @@ test('opening the return status does not capture or grant; buyer binding applies
   await assert.rejects(()=>f.engine.status('user_other',o.orderId),/ORDER_NOT_FOUND/);
  } finally {await f.db.close()}
 });
+
+// Multi-order provider double: exercise the real engine and SQL ledger. This is
+// local verification, not evidence of a live PayPal approval or capture.
+async function multiOrderFixture() {
+ const f=await fixture(), captures=new Map();let sequence=0,clock=now,lookup=null;
+ f.paypal.create=async()=>({id:`PAYPALTEST${++sequence}`});
+ f.paypal.approval=async id=>`https://www.sandbox.paypal.com/checkoutnow?token=${id}`;
+ f.paypal.capture=async order=>{captures.set(order.paypal_id,{id:`CAPTURETEST${sequence}`,time:clock});};
+ f.paypal.get=async id=>{
+  const r=remote(await f.store.findPaypal(id),captures.has(id)?'COMPLETED':'APPROVED');
+  if(captures.has(id)) {
+   r.purchase_units[0].payments.captures[0].id=captures.get(id).id;
+   r.purchase_units[0].payments.captures[0].create_time=new Date(captures.get(id).time).toISOString();
+  }
+  return r;
+ };
+ const engine=paymentEngine({store:f.store,paypal:f.paypal,merchantId:merchant,getUser:async()=>lookup?lookup():user(),now:()=>clock});
+ return {...f,engine,captures,account:fn=>{lookup=fn},clock:t=>{clock=t},
+  purchase:async(kind,language)=>{
+   const o=await engine.create('user_test',{kind,language,requestKey:randomUUID()});
+   assert.equal((await engine.capture('user_test',{orderId:o.orderId})).state,'paid');return o;
+  }};
+}
+for(const [language,currency,initial,free,discount] of [['ja','JPY','7980','5980','3980'],['en','USD','59.00','39.00','29.00']]) {
+ test(`${language}: initial, FREE renewal and PRO renewal grant consecutive years without duplicate grants`,async()=>{
+  const f=await multiOrderFixture();
+  try {
+   const first=await f.purchase('initial',language);
+   assert.equal(first.quote.currency,currency);assert.equal(first.quote.value,initial);
+   f.clock(now+2000);
+   const renewal=await f.purchase('renewal',language);
+   assert.equal(renewal.quote.value,free);assert.equal(renewal.quote.priceClass,'free');
+   f.account(pro);f.clock(now+4000);
+   const discounted=await f.purchase('renewal',language);
+   assert.equal(discounted.quote.value,discount);assert.equal(discounted.quote.priceClass,'pro');
+   f.account(user); // Losing PRO after payment must not cancel the purchased year.
+   assert.equal((await f.engine.capture('user_test',{orderId:discounted.orderId})).state,'already-paid');
+   const rows=(await f.db.query('SELECT kind,state,starts_at,expires_at FROM resolute_payments_sandbox.grants ORDER BY starts_at')).rows;
+   assert.equal(rows.length,3);assert.equal(f.captures.size,3);
+   for(let i=0;i<3;i++) {
+    assert.equal(rows[i].state,'active');assert.equal(rows[i].kind,i?'renewal':'initial');
+    assert.equal(new Date(rows[i].starts_at).toISOString(),`202${6+i}-10-15T06:00:00.000Z`);
+    assert.equal(new Date(rows[i].expires_at).toISOString(),`202${7+i}-10-15T06:00:00.000Z`);
+   }
+  } finally {await f.db.close()}
+ });
+ test(`${language}: a PRO downgrade on the final identity lookup stops capture and records an alert`,async()=>{
+  const f=await multiOrderFixture();
+  try {
+   await f.purchase('initial',language);f.clock(now+2000);f.account(pro);
+   const o=await f.engine.create('user_test',{kind:'renewal',language,requestKey:randomUUID()});
+   let calls=0;f.account(()=>++calls===1?pro():user());
+   await assert.rejects(()=>f.engine.capture('user_test',{orderId:o.orderId}),/PRICE_CHANGED/);
+   assert.equal(calls,2);assert.equal(f.captures.size,1);
+   assert.equal((await f.db.query('SELECT count(*)::int AS n FROM resolute_payments_sandbox.grants')).rows[0].n,1);
+   assert.equal((await f.db.query("SELECT count(*)::int AS n FROM resolute_payments_sandbox.audit WHERE code='CAPTURE_ELIGIBILITY_CHANGED'")).rows[0].n,1);
+   assert.equal((await f.db.query('SELECT count(*)::int AS n FROM resolute_payments_sandbox.alert_outbox')).rows[0].n,1);
+  } finally {await f.db.close()}
+ });
+ test(`${language}: injected prices and PRO claims cannot create orders; renewal requires a purchase`,async()=>{
+  const f=await multiOrderFixture();
+  try {
+   const body={kind:'initial',language,requestKey:randomUUID()};
+   for(const injected of [{amount:1},{currency:'USD'},{priceClass:'pro'},{plan:'pro'},{pro:true},{userId:'user_other'}])
+    await assert.rejects(()=>f.engine.create('user_test',{...body,...injected}),/INVALID_PAYMENT_INPUT/);
+   await assert.rejects(()=>f.engine.create('user_test',{...body,kind:'renewal'}),/INITIAL_PURCHASE_REQUIRED/);
+   assert.equal((await f.db.query('SELECT count(*)::int AS n FROM resolute_payments_sandbox.orders')).rows[0].n,0);
+  } finally {await f.db.close()}
+ });
+}
+test('USD captured amount and currency mismatches never create a grant',async()=>{
+ for(const badAmount of [{currency_code:'USD',value:'0.59'},{currency_code:'JPY',value:'5900'}]) {
+  const f=await multiOrderFixture();
+  try {
+   const o=await f.engine.create('user_test',{kind:'initial',language:'en',requestKey:randomUUID()});
+   const get=f.paypal.get;
+   f.paypal.get=async id=>{const r=await get(id);if(r.status==='COMPLETED')r.purchase_units[0].payments.captures[0].amount=badAmount;return r};
+   await assert.rejects(()=>f.engine.capture('user_test',{orderId:o.orderId}),/PAYMENT_MISMATCH/);
+   assert.equal((await f.db.query('SELECT count(*)::int AS n FROM resolute_payments_sandbox.grants')).rows[0].n,0);
+  } finally {await f.db.close()}
+ }
+});
