@@ -52,11 +52,15 @@ export default function NotebookPdfPreview({ snapshot, onClose }: { snapshot: Pd
   const dialog = useRef<HTMLDialogElement>(null);
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState<{ attempt: number; pdf: PDFDocumentProxy; file: File; url: string } | null>(null);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [selection, setSelection] = useState<{ source: File; page: number; file: File; url: string } | null>(null);
+  const [selectionError, setSelectionError] = useState(false);
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const current = result?.attempt === attempt ? result : null;
+  const exportFile = pageNumber === 0 ? current : selection?.source === current?.file && selection?.page === pageNumber ? selection : null;
   const t = (ja: string, en: string) => snapshot.lang === "ja" ? ja : en;
   const onReady = useCallback(() => setReady(true), []);
   const onError = useCallback(() => setFailed(true), []);
@@ -66,7 +70,7 @@ export default function NotebookPdfPreview({ snapshot, onClose }: { snapshot: Pd
     const previousFocus = document.activeElement as HTMLElement | null;
     const top = window.scrollY;
     const overflow = document.documentElement.style.overflow;
-    element.showModal(); document.documentElement.style.overflow = "hidden";
+    element.showModal(); element.focus({ preventScroll: true }); document.documentElement.style.overflow = "hidden";
     return () => {
       element.close(); document.documentElement.style.overflow = overflow;
       previousFocus?.focus({ preventScroll: true });
@@ -99,23 +103,44 @@ export default function NotebookPdfPreview({ snapshot, onClose }: { snapshot: Pd
     return () => { cancelled = true; void task?.destroy().catch(() => {}); if (url) URL.revokeObjectURL(url); };
   }, [snapshot, attempt]);
 
-  return <dialog ref={dialog} className={styles.preview} aria-label={t("PDFプレビュー", "PDF preview")} onCancel={event => { event.preventDefault(); onClose(); }}>
+  useEffect(() => {
+    if (!current || pageNumber === 0) return;
+    let cancelled = false, url: string | undefined;
+    void (async () => {
+      try {
+        const { extractNotebookPdfPage } = await import("@/lib/research/notebook-pdf-page");
+        const bytes = await extractNotebookPdfPage(await current.file.arrayBuffer(), pageNumber);
+        if (cancelled) return;
+        const file = new File([bytes], current.file.name.replace(/\.pdf$/, `-p${pageNumber}.pdf`), { type: "application/pdf" });
+        url = URL.createObjectURL(file);
+        setSelection({ source: current.file, page: pageNumber, file, url });
+      } catch { if (!cancelled) setSelectionError(true); }
+    })();
+    return () => { cancelled = true; if (url) URL.revokeObjectURL(url); };
+  }, [current, pageNumber]);
+
+  return <dialog ref={dialog} tabIndex={-1} className={styles.preview} aria-label={t("PDFプレビュー", "PDF preview")} onCancel={event => { event.preventDefault(); onClose(); }}>
     <header className={styles.header}>
       <button onClick={onClose} aria-label={t("プレビューを閉じる", "Close preview")}><span aria-hidden="true">×</span>{t("閉じる", "Close")}</button>
-      <strong>{t("PDFプレビュー", "PDF preview")}</strong>
-      <button className={styles.save} disabled={!current || !ready || failed || sharing} onClick={async () => {
-        if (!current) return;
+      <select className={styles.range} aria-label={t("保存するページ", "Pages to save")} value={pageNumber} disabled={!current || sharing} onChange={event => {
+        setSelection(null); setPageNumber(Number(event.target.value)); setSelectionError(false); setSaveError(false); setReady(false);
+      }}>
+        <option value={0}>{t("全ページ", "All pages")}</option>
+        {current && Array.from({ length: current.pdf.numPages }, (_, index) => <option key={index + 1} value={index + 1}>{t(`${index + 1}ページのみ`, `Page ${index + 1} only`)}</option>)}
+      </select>
+      <button className={styles.save} disabled={!exportFile || !ready || failed || selectionError || sharing} onClick={async () => {
+        if (!exportFile) return;
         setSharing(true); setSaveError(false);
-        try { await saveNotebookPdf(current.file, current.url, snapshot.title); }
+        try { await saveNotebookPdf(exportFile.file, exportFile.url, snapshot.title); }
         catch (error) { if (!(error instanceof DOMException && error.name === "AbortError")) setSaveError(true); }
         finally { setSharing(false); }
       }}>{t("保存", "Save")}</button>
     </header>
     <div className={styles.pages}>
-      {saveError && <p role="alert">{t("保存できませんでした。もう一度お試しください。", "Could not save. Please try again.")}</p>}
+      {(saveError || selectionError) && <p role="alert">{t("保存できませんでした。もう一度お試しください。", "Could not save. Please try again.")}</p>}
       {failed ? <div className={styles.status} role="alert"><p>{t("プレビューを表示できませんでした。", "Could not load the preview.")}</p><button onClick={() => { setFailed(false); setReady(false); setAttempt(value => value + 1); }}>{t("再試行", "Retry")}</button></div>
         : !current ? <p className={styles.status} role="status">{t("プレビューを作成中…", "Preparing preview…")}</p>
-        : Array.from({ length: current.pdf.numPages }, (_, index) => <PdfPage key={`${attempt}:${index}`} pdf={current.pdf} number={index + 1} lang={snapshot.lang} onReady={onReady} onError={onError} />)}
+        : (pageNumber ? [pageNumber] : Array.from({ length: current.pdf.numPages }, (_, index) => index + 1)).map(number => <PdfPage key={`${attempt}:${pageNumber}:${number}`} pdf={current.pdf} number={number} lang={snapshot.lang} onReady={onReady} onError={onError} />)}
     </div>
   </dialog>;
 }

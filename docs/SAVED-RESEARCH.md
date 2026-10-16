@@ -151,3 +151,8 @@
 - PDF.js renders the exact generated PDF, including real pagination and annotations; every page is available in the scrollable preview with a page count. Only canvases near the viewport are retained to limit phone memory. The viewer and versioned worker are loaded on demand and hosted locally.
 - Native file sharing/download requires an explicit Save click after a preview page has rendered. There is no automatic print or share call. Close/Escape restores the underlying article and scroll position; failures offer a retry. The preview uses a snapshot captured on opening, and is discarded with the notebook when changing account/article/language.
 - Physical iPhone preview/share verification is separate from browser and automated checks.
+
+## 2026-10-16: compact preview and single-page export
+- Preview header uses slim Close/Save controls and an All pages / Page N only selector in Japanese and English. Initial modal focus no longer outlines Close; keyboard focus remains visible.
+- Selecting a page shows that original page and prepares a one-page PDF before the explicit Save click. Text, ink and geometry are copied from the complete PDF; the original page number is retained. Returning to All pages restores the complete export. Obsolete selections are discarded and temporary URLs released. No saved article or annotation data changes.
+- Physical iPhone file sharing remains a separate check.

@@ -1,13 +1,13 @@
-.preview { position:fixed; inset:0; width:100%; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; border:0; color:#e8edf3; background:#141b23; overflow:hidden; }
+.preview { position:fixed; inset:0; width:100%; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; border:0; color:#e8edf3; background:#141b23; overflow:hidden; outline:none; }
 .preview::backdrop { background:#080d13; }
 .preview[open] { display:flex; flex-direction:column; }
 .header { display:flex; align-items:center; justify-content:space-between; flex-shrink:0; gap:10px; padding:calc(8px + env(safe-area-inset-top)) 14px 8px; border-bottom:1px solid #ffffff18; background:#101720; }
-.header strong { font-size:14px; font-weight:500; }
-.header button, .status button { min-height:44px; padding:8px 12px; border:1px solid transparent; border-radius:9px; background:transparent; color:inherit; font:inherit; font-size:14px; cursor:pointer; }
+.range { max-width:46%; min-height:32px; padding:4px 8px; border:1px solid #ffffff24; border-radius:6px; background:#141f2a; color:inherit; font:inherit; font-size:14px; }
+.header button, .status button { min-height:32px; padding:4px 10px; border:1px solid transparent; border-radius:6px; background:transparent; color:inherit; font:inherit; font-size:14px; cursor:pointer; }
 .header button span { font-size:22px; margin-right:6px; vertical-align:-1px; }
 .header .save { color:#d3fff1; background:#294b48; border-color:#8be6cf66; min-width:66px; font-weight:600; }
 .header button:disabled { opacity:.45; cursor:wait; }
-.header button:focus-visible, .status button:focus-visible { outline:2px solid #8be6cf; outline-offset:2px; }
+.header button:focus-visible, .status button:focus-visible, .range:focus-visible { outline:2px solid #8be6cf; outline-offset:2px; }
 .pages { overflow:auto; overscroll-behavior:contain; flex:1; min-height:0; padding:18px 12px calc(20px + env(safe-area-inset-bottom)); -webkit-overflow-scrolling:touch; }
 .page { width:100%; max-width:min(720px, calc((100dvh - 140px) * .70588)); margin:0 auto 20px; }
 .paper { aspect-ratio:420 / 595; background:white; box-shadow:0 4px 16px #0005; }
