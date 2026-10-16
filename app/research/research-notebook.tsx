@@ -79,42 +79,6 @@ function drawBoxes(content: HTMLElement) {
   }
 }
 
-function exportPrint(content: HTMLElement, marks: Annotation[], title: string, lang: string) {
-  const popup = window.open("", "_blank");
-  if (!popup) return false;
-  const doc = popup.document;
-  doc.documentElement.lang = lang;
-  doc.title = `Tech Phase — ${title}`;
-  const viewport = doc.createElement("meta");
-  viewport.name = "viewport"; viewport.content = "width=device-width, initial-scale=1";
-  doc.head.append(viewport);
-  const style = doc.createElement("style");
-  style.textContent = `*{box-sizing:border-box}body{margin:32px auto;padding:0 24px;max-width:800px;font:18px/1.85 system-ui,sans-serif;color:#182431;background:white}h1,h2,h3,h4{line-height:1.5;break-after:avoid}h2{font-size:24px}h3{font-size:18px}p,li{orphans:3;widows:3}a{color:#245b89;overflow-wrap:anywhere}a[href^="https"]:after{content:" (" attr(href) ")";font-size:10px}table{width:100%;border-collapse:collapse;font-size:16px}th,td{border:1px solid #bbc7ce;padding:6px}dl>div{display:flex;gap:12px}dd{margin:0}small{display:block}svg{display:none}blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid #abc}.print-tools{display:flex;justify-content:flex-end;position:sticky;top:0;z-index:1;width:fit-content;max-width:100%;padding:8px 0;margin:0 0 12px auto;background:transparent}.print-tools button{min-height:44px;padding:8px 14px;border:1px solid #bbc7ce;border-radius:8px;background:white;color:#182431;font:600 14px/1.4 system-ui,sans-serif;cursor:pointer}header{border-bottom:1px solid #ccd8de;margin-bottom:24px}article>div,article>section{margin:18px 0}article>div:first-child{font-size:12px}section{break-inside:auto}article span{print-color-adjust:exact;-webkit-print-color-adjust:exact}@page{margin:12mm}@media print{body{margin:0;padding:0;max-width:none;font-size:14pt}table{font-size:12pt}.print-tools{display:none}}`;
-  doc.head.append(style);
-  const controls = doc.createElement("div"); controls.className = "print-tools";
-  const button = doc.createElement("button"); button.textContent = lang === "ja" ? "PDF保存・印刷" : "Save PDF / Print"; button.onclick = () => { drawBoxes(article); popup.print(); };
-  controls.append(button); doc.body.append(controls);
-  const header = doc.createElement("header"); header.textContent = "TECH PHASE RESEARCH"; doc.body.append(header);
-  const article = doc.createElement("article"); article.style.position = "relative";
-  const clone = content.cloneNode(true) as HTMLElement;
-  clone.querySelectorAll("[data-ink-outline]").forEach(element => element.remove());
-  clone.querySelectorAll("[class]").forEach(element => element.removeAttribute("class"));
-  article.append(...Array.from(clone.childNodes)); doc.body.append(article);
-  if (marks.some(mark => mark.note)) {
-    const heading = doc.createElement("h2"); heading.textContent = lang === "ja" ? "自分のメモ" : "My notes"; doc.body.append(heading);
-    for (const mark of marks.filter(mark => mark.note)) {
-      const note = doc.createElement("section");
-      const quote = doc.createElement("blockquote"); quote.textContent = mark.parts.map(p => p.quote).join(" "); quote.style.borderColor = inkColors[mark.color];
-      const body = doc.createElement("p"); body.textContent = mark.note; body.style.whiteSpace = "pre-wrap"; body.style.borderLeft = `3px solid ${inkColors[mark.color]}`; body.style.paddingLeft = "14px";
-      note.append(quote, body); doc.body.append(note);
-    }
-  }
-  drawBoxes(article);
-  popup.addEventListener("resize", () => drawBoxes(article));
-  popup.addEventListener("beforeprint", () => drawBoxes(article));
-  return true;
-}
-
 export default function ResearchNotebook({ lang, title, enabled, children, raw, onCommit, editable }: { raw: string; onCommit: (raw: string, marks: Annotation[]) => boolean; editable: boolean; lang: "ja" | "en"; title: string; enabled: boolean; children: ReactNode }) {
   const marks = useMemo(() => parseAnnotations(raw), [raw]);
   const [editing, setEditing] = useState(false);
@@ -124,6 +88,10 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
   const [draft, setDraft] = useState<{ id?: string; original?: string; parts: InkPart[]; text: string } | null>(null);
   const [history, setHistory] = useState<{ before: Annotation[]; after: Annotation[] }[]>([]);
   const [error, setError] = useState("");
+  const [pdfBusy, setPdfBusy] = useState(false);
+  const [pdfFile, setPdfFile] = useState<{ file: File; url: string } | null>(null);
+  const pdfRequest = useRef(false);
+  useEffect(() => () => { if (pdfFile) URL.revokeObjectURL(pdfFile.url); }, [pdfFile]);
   const draftConflict = Boolean(draft?.id && JSON.stringify(marks.find(mark => mark.id === draft.id)) !== draft.original);
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDetailsElement>(null);
@@ -256,7 +224,18 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
         <button className={styles.writeAction} aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("書き込む", "Annotate")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><path d="m16 3 5 5-12 12-6 1 1-6L16 3ZM13 6l5 5M4 15l5 5" /></svg></button>
-        <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2" /><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h5" /></svg></button>
+        <button disabled={pdfBusy} onClick={async () => {
+          if (!root.current || pdfRequest.current) return;
+          pdfRequest.current = true; setPdfBusy(true); setPdfFile(null); setError("");
+          try {
+            const { generateNotebookPdf } = await import("@/lib/research/notebook-pdf-browser");
+            if (!root.current) return;
+            const blob = await generateNotebookPdf(root.current, visible ? currentMarks() : [], title, lang);
+            const file = new File([blob], `Tech-Phase-${title.replace(/[\\/:*?"<>|]/g, "").slice(0, 80)}.pdf`, { type: "application/pdf" });
+            setPdfFile({ file, url: URL.createObjectURL(file) });
+          } catch { setError(t("PDFを作成できませんでした。接続を確認して、もう一度お試しください。", "Could not create the PDF. Check your connection and try again.")); }
+          finally { pdfRequest.current = false; setPdfBusy(false); }
+        }}>{pdfBusy ? t("PDF作成中…", "Creating PDF…") : t("PDF保存", "Save PDF")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2" /><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h5" /></svg></button>
         {marks.length > 0 && <details className={styles.moreActions}>
           <summary>{t("その他", "More")} <span aria-hidden="true">⋯</span></summary>
           <div>
@@ -266,6 +245,13 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
           </div>
         </details>}
       </div>
+      {pdfFile && <div className={styles.actions} aria-label={t("作成したPDF", "Your PDF")}>
+        <a href={pdfFile.url} download={pdfFile.file.name}>{t("PDFをダウンロード", "Download PDF")}</a>
+        {typeof navigator !== "undefined" && navigator.canShare?.({ files: [pdfFile.file] }) && <button onClick={async () => {
+          try { await navigator.share({ files: [pdfFile.file], title }); }
+          catch (error) { if (!(error instanceof DOMException && error.name === "AbortError")) setError(t("共有できませんでした。PDFをダウンロードしてください。", "Could not share. Download the PDF instead.")); }
+        }}>{t("保存・共有", "Save / Share")}</button>}
+      </div>}
       {editing && <div className={styles.editor} onPointerDown={event => {
         if (!(event.target as HTMLElement).closest("button")) return;
         toolPointer.current = true;

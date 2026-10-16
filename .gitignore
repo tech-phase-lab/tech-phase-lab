@@ -45,3 +45,6 @@ next-env.d.ts
 /.research-private/
 __pycache__/
 *.pyc
+
+# Generated from the pinned font package before dev/build
+/public/research-pdf-fonts/

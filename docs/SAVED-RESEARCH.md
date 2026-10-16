@@ -134,3 +134,9 @@
 ## 2026-10-16: dismiss tools after writing
 - Successfully adding an underline, highlight or box, or saving a new/edited note, closes the bottom tray and clears the completed selection. Selecting the next passage opens the tray again. Failed writes retain the editor and draft for retry.
 - Color/line selection, partial erase, undo, account sync and PDF behavior remain unchanged. No saved user data is modified for verification.
+
+## 2026-10-16: direct PDF export without browser printing
+- Replaced the about:blank print window and window.print with a genuine PDF generated locally using pdf-lib. No automatic print action is embedded or invoked. Creating a PDF never changes the saved collection or annotations.
+- Export reads only the currently rendered, membership-checked article and matching notes. Text remains selectable and scalable; visible ink colors, underlines, highlights, boxes, notes, tables, source links and page numbers are retained. Hidden marks are excluded.
+- Noto Sans JP subsets are self-hosted from the pinned font package by predev/prebuild; font assets are generated rather than committed. Article and note contents are not sent to a conversion service.
+- Once generated, Download PDF is available. Browsers supporting file sharing also offer Save / Share from a fresh user click; cancellation leaves the PDF available. Errors remain retryable. Physical iPhone Files/share behavior requires device confirmation.
