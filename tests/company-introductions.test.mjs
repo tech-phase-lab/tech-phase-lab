@@ -278,5 +278,5 @@ test('space and optics relations retain evidence dates and distinguish customer,
   assert.ok(rocket.maps.relationships.some(e=>e.ticker==='PL'&&e.role==='customer'));
   const lunr=rocket.maps.competition.find(e=>e.ticker==='LUNR');assert.match(lunr.label.en,/Lanteris defense/);
   assert.ok(lunr.sourceIndexes.some(i=>rocket.sources[i].url.includes('lunr-20251231')));
-  const g=companyNetworkFor({ticker:'LITE',cik:1633978});assert.match(g.nodes.find(n=>n.id==='AVGO').businessLabel.en,/EML/);assert.match(g.nodes.find(n=>n.id==='GLW').businessLabel.en,/Fiber/);
+  const g=companyNetworkFor({ticker:'LITE',cik:1633978});assert.equal(g.layerLabels[3].en,'Chip design & connectivity');assert.match(g.nodes.find(n=>n.id==='AVGO').businessLabel.en,/EML/);assert.match(g.nodes.find(n=>n.id==='GLW').businessLabel.en,/Fiber/);
 });

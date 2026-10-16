@@ -73,7 +73,7 @@ const catalog = buildNetwork();
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
   if (root === "LITE") return {
-    3: { ja: "光通信用アナログ半導体", en: "Optical communications analog chips" },
+    3: { ja: "チップ設計・接続半導体", en: "Chip design & connectivity" },
     4: { ja: "光源・モジュール・ファイバー", en: "Light sources, modules & fiber" },
     5: { ja: "光通信装置・システム", en: "Optical networking systems" },
   };
