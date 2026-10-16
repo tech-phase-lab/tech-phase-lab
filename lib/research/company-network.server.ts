@@ -72,9 +72,14 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "AAPL") return { 5: { ja: "端末・PC・スマートフォン", en: "Devices, PCs & smartphones" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
+  if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
+  if (root === "META") return { 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・動画・広告", en: "Social, video & ads" } };
+  if (root === "ON") return { 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "製品を採用する企業", en: "Named product adopters" } };
+
   if (root === "RDDT") return { 6: { ja: "クラウド・AI・データ提携", en: "Cloud, AI & data partnerships" }, 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
-  if (root === "PINS") return { 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
-  if (root === "SNAP") return { 7: { ja: "動画・交流・広告", en: "Video, communication & ads" } };
+  if (root === "PINS") return { 6: { ja: "クラウド・ログイン・広告提携", en: "Cloud, login & ad partnerships" }, 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
+  if (root === "SNAP") return { 6: { ja: "クラウド・OS・配信基盤", en: "Cloud, OS & distribution" }, 7: { ja: "動画・交流・広告", en: "Video, communication & ads" } };
   if (root === "ENTG") return { 0: { ja: "半導体用の高純度化・材料", en: "Semiconductor purity & materials" } };
   if (root === "MTSI") return { 3: { ja: "RF・光接続・アナログ半導体", en: "RF, optical connectivity & analog" } };
   if (root === "POWI") return { 3: { ja: "電源制御・モーター駆動半導体", en: "Power control & motor-drive chips" } };
@@ -1523,6 +1528,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Aries PCIeリタイマー",
         "en": "Aries PCIe retimers"
       }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS：半導体顧客・EDA基盤",
+        "en": "AWS: chip customer / EDA compute"
+      }
     }
   },
   "VRT": {
@@ -1553,6 +1565,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "データセンター冷却",
         "en": "Data center thermal management"
       }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GB300導入の協力先",
+        "en": "GB300 deployment collaborator"
+      }
     }
   },
   "ALAB": {
@@ -1582,6 +1601,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Switchtec PCIeスイッチ",
         "en": "Switchtec PCIe switches"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVLink Fusion接続協業",
+        "en": "NVLink Fusion connectivity"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "支払い連動の顧客ワラント",
+        "en": "Payment-linked customer warrants"
       }
     }
   },
@@ -2731,10 +2764,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "GOOG": {
-      "layer": 7,
+      "layer": 6,
       "businessLabel": {
-        "ja": "Lens・YouTube・広告等",
-        "en": "Lens, YouTube & ads"
+        "ja": "Googleログイン基盤",
+        "en": "Google login platform"
       }
     },
     "META": {
@@ -2752,10 +2785,17 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "AMZN": {
-      "layer": 7,
+      "layer": 6,
       "businessLabel": {
-        "ja": "商品探索・広告",
-        "en": "Product discovery & ads"
+        "ja": "AWS基盤・Amazon広告提携",
+        "en": "AWS infrastructure / Amazon ads"
+      }
+    },
+    "AAPL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Appleログイン基盤",
+        "en": "Apple login platform"
       }
     }
   },
@@ -2782,10 +2822,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "GOOG": {
-      "layer": 7,
+      "layer": 6,
       "businessLabel": {
-        "ja": "YouTube・Google広告",
-        "en": "YouTube & Google ads"
+        "ja": "Google Cloud・Android配信",
+        "en": "Google Cloud / Android distribution"
       }
     },
     "META": {
@@ -2800,6 +2840,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "TikTokと関連合弁会社",
         "en": "TikTok & affiliated joint ventures"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWSクラウド基盤",
+        "en": "AWS cloud infrastructure"
+      }
+    },
+    "AAPL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "iOS・App Store配信",
+        "en": "iOS / App Store distribution"
       }
     }
   },
@@ -3054,6 +3108,163 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Nexus Repository artifacts"
       }
     }
+  },
+  "ON": {
+    "NIO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "EliteSiC採用のEVメーカー",
+        "en": "EV maker adopting EliteSiC"
+      }
+    },
+    "Samsung": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "画像センサー",
+        "en": "Image sensors"
+      }
+    }
+  },
+  "AAPL": {
+    "AAPL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "端末・ソフトウェア・サービス",
+        "en": "Devices, software & services"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "5G RF・FBAR部品",
+        "en": "5G RF / FBAR components"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ChatGPT機能の統合提携",
+        "en": "ChatGPT integration partner"
+      }
+    },
+    "HPQ": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Macと比較するPC",
+        "en": "PCs competing with Mac"
+      }
+    },
+    "Samsung": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Galaxyスマートフォン",
+        "en": "Galaxy smartphones"
+      }
+    }
+  },
+  "AMZN": {
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS・通販・広告",
+        "en": "AWS, commerce & ads"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS Trainiumの計算顧客",
+        "en": "AWS Trainium compute customer"
+      }
+    },
+    "PINS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "AWSを利用する画像探索・広告企業",
+        "en": "Visual-discovery / ads company using AWS"
+      }
+    },
+    "SNAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "AWSを利用する交流・広告企業",
+        "en": "Social / ads company using AWS"
+      }
+    },
+    "MRVL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AWS向けAI・光接続半導体",
+        "en": "AI / optical chips for AWS"
+      }
+    }
+  },
+  "GOOG": {
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud・検索・広告",
+        "en": "Google Cloud, search & ads"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud TPUの計算顧客",
+        "en": "Google Cloud TPU customer"
+      }
+    },
+    "RDDT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Data API・Vertex AI提携",
+        "en": "Data API / Vertex AI partner"
+      }
+    },
+    "SNAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google Cloudを利用する交流・広告企業",
+        "en": "Social / ads company using Google Cloud"
+      }
+    }
+  },
+  "META": {
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "交流・広告・AIサービス",
+        "en": "Social, ads & AI services"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Instinct GPUの容量計画",
+        "en": "Instinct GPU capacity plan"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "CPU・GPU・通信基盤の協業",
+        "en": "CPU / GPU / networking partner"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "検索・YouTubeの広告",
+        "en": "Search / YouTube advertising"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "契約に基づくAI計算容量の供給元",
+        "en": "Contracted AI compute-capacity supplier"
+      }
+    }
   }
 };
 
@@ -3116,6 +3327,15 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const ownNodes = catalog.nodes.filter(n => ids.has(n.id));
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
+  }
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META"].includes(root)) {
+    // Supplier context may explain an upstream dependency. It must not import
+    // that supplier's unrelated customers or turn an AI partner into NVIDIA's
+    // entire customer network. Competition is never an expansion bridge.
+    const suppliers = new Set(introduction.maps.relationships.filter(e => e.kind === "company" && e.role === "supplier").map(e => e.ticker ?? e.name));
+    const extra = context.edges.filter(e => e.kind === "supply" && suppliers.has(e.to) && e.from !== root && !ownEdges.some(own => own.id === e.id));
+    const ids = new Set([...included, ...extra.flatMap(e => [e.from, e.to])]);
+    return { root, nodes: productScopedNodes(root, catalog.nodes.filter(n => ids.has(n.id))), edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
   const depth = new Map<string, number>([[root, 0]]);
   for (const edge of ownEdges) if (edge.kind !== "competition") depth.set(edge.from === root ? edge.to : edge.from, 1);

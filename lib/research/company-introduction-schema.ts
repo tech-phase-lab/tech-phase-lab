@@ -69,7 +69,11 @@ export function validateCompanyIntroductions(value: unknown): asserts value is C
         check(topic === "competition" ? entry.role === "competitor" : entry.role !== "competitor", `${cik}: role in wrong map`);
         check(object(entry.label) && text(entry.label.ja) && text(entry.label.en), `${cik}: missing bilingual relation`);
         check(Array.isArray(entry.sourceIndexes) && entry.sourceIndexes.length > 0 && entry.sourceIndexes.every(i => Number.isInteger(i) && i >= 0 && i < (item.sources as unknown[]).length), `${cik}: missing relation evidence`);
-        const identity = String(entry.ticker ?? entry.name).toUpperCase();
+        // One company can supply infrastructure and separately collaborate on
+        // advertising, or buy chips while supplying EDA compute. Keep the facts
+        // and their evidence separate; duplicates within a role remain invalid.
+        const entity = String(entry.ticker ?? entry.name).toUpperCase();
+        const identity = topic === "relationships" ? `${entity}:${entry.role}` : entity;
         check(!seen.has(identity), `${cik}: duplicate map entity ${identity}`);
         seen.add(identity);
       }

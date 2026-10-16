@@ -373,6 +373,10 @@
       {
         "label": "Applied Materials · Metrology and inspection",
         "url": "https://www.appliedmaterials.com/in/en/semiconductor/products/processes/metrology-and-inspection.html"
+      },
+      {
+        "label": "Applied Materials — TSMC EPIC partnership, May 11, 2026",
+        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-tsmc-partner-epic-center-accelerate-ai/"
       }
     ],
     "ja": {
@@ -381,7 +385,7 @@
       "strength": "幅広い製造工程の技術を持ち、複数の工程を組み合わせて半導体の性能や良品率を改善できる。",
       "risks": "半導体メーカーの設備投資の波、中国向け輸出規制、装置開発の遅れや部品供給の制約。",
       "competition": "成膜・エッチングではLam Research、同分野の装置ではTokyo Electron、原子層単位の成膜ではASM International、検査・計測ではKLAが競合例。LamとKLAは相手側の実名開示、Tokyo ElectronとASMは両社の公式製品を照合した比較。装置が扱う材料や工程は異なり、全製品が置き換わるわけではない。保守の顧客内製も代替になる。",
-      "relationships": "半導体の受託生産会社やメモリーメーカーと連携し、次世代製品に必要な製造工程や装置を開発する。"
+      "relationships": "TSMCは2026年5月にEPIC Centerの創設パートナーとして公表された。先端ロジック向けの材料・装置・工程の研究開発を協働する。発表時点の施設稼働計画を、全計画の完了とは扱わない。"
     },
     "en": {
       "business": "Builds semiconductor manufacturing tools for deposition, etching, inspection and advanced packaging.",
@@ -389,7 +393,7 @@
       "strength": "Combines technologies across manufacturing steps to improve chip performance and production yields.",
       "risks": "Chipmaker investment cycles, China export restrictions, development delays and component-supply constraints.",
       "competition": "Examples are Lam Research in deposition/etch, Tokyo Electron in overlapping process tools, ASM International in atomic layer deposition, and KLA in inspection/metrology. Lam and KLA name Applied in their filings; Tokyo Electron and ASM are editorial comparisons of official products. Materials and process steps differ, so products are not universally interchangeable. Customer-performed servicing is another alternative.",
-      "relationships": "Works with foundries and memory makers to develop manufacturing processes and equipment for future chips."
+      "relationships": "TSMC was announced as a founding EPIC Center partner in May 2026, collaborating on materials, equipment and process research for advanced logic. The announcement’s facility schedule does not establish completion of every planned activity."
     },
     "maps": {
       "competition": [
@@ -473,6 +477,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：EPIC先端ロジックの共同研究",
+            "en": "May 2026: EPIC advanced-logic R&D partnership"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "TSM"
         }
       ]
     }
@@ -757,6 +774,10 @@
       {
         "label": "Astera Labs · Aries, Taurus, Scorpio and Leo connectivity portfolio",
         "url": "https://www.asteralabs.com/products/"
+      },
+      {
+        "label": "Marvell — expanded AWS collaboration, December 2, 2024",
+        "url": "https://investor.marvell.com/news-events/press-releases/detail/121/marvell-expands-strategic-collaboration-with-aws-to-enable-accelerated-infrastructure-for-ai-in-the-cloud"
       }
     ],
     "ja": {
@@ -765,7 +786,7 @@
       "strength": "高速な電気・光通信と専用チップの設計技術を持ち、顧客のシステムに合わせて組み合わせられる。",
       "risks": "顧客の開発計画変更や内製化、製造委託先の供給不足、新しい製品の開発・量産の遅れ。",
       "competition": "Marvellが実名で挙げるBroadcom、Credo、Astera Labsには、高速接続半導体で重なる製品がある。公式製品ではBroadcomのPCIe接続製品、CredoのToucan、AsteraのAriesとMarvell Alaska PのPCIeリタイマーを比較できる。競合社名はMarvellの開示、個別製品の対応付けは編集上の比較で、カスタム半導体や光通信の全分野が同等という意味ではない。",
-      "relationships": "クラウド事業者や機器メーカーと製品を設計。半導体の製造や組み立ては外部の専門企業に委託する。"
+      "relationships": "2024年12月にAWS（Amazon）との5年間の協業拡大を発表。AWSへカスタムAI・光接続・ネットワーク半導体を供給する関係と、Marvell自身がEDA設計でAWSを利用する関係が併存する。匿名の設計案件から他の顧客名は推定しない。"
     },
     "en": {
       "business": "Designs chips that move, process and store data, including custom AI silicon.",
@@ -773,7 +794,7 @@
       "strength": "Combines high-speed electrical and optical connectivity with custom-chip design for customer systems.",
       "risks": "Customer project changes or insourcing, manufacturing constraints and delays in development or volume production.",
       "competition": "Marvell names Broadcom, Credo and Astera Labs, whose high-speed connectivity portfolios overlap. Official portfolios support comparisons involving Broadcom PCIe connectivity, Credo Toucan, Astera Aries and Marvell Alaska P PCIe retimers. Vendor names come from Marvell disclosure; product matching is editorial and does not imply equivalence across custom silicon or all optical products.",
-      "relationships": "Designs products with cloud and equipment customers; outsources chip fabrication and assembly to specialist manufacturers."
+      "relationships": "A December 2024 announcement expanded collaboration with AWS (Amazon) under a five-year agreement. Marvell supplies custom AI, optical-connectivity and networking chips to AWS and separately uses AWS for EDA design. Unnamed design wins do not identify other customers."
     },
     "maps": {
       "competition": [
@@ -849,6 +870,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "customer",
+          "label": {
+            "ja": "AWS向けカスタムAI・光接続半導体（2024年発表）",
+            "en": "Custom AI / optical-connectivity chips for AWS (2024 announcement)"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "supplier",
+          "label": {
+            "ja": "MarvellのEDA設計にAWSを利用",
+            "en": "AWS used for Marvell EDA design"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -880,6 +927,10 @@
       {
         "label": "Johnson Controls · Data center thermal management",
         "url": "https://www.johnsoncontrols.com/industries/data-centers/solutions/thermal-management"
+      },
+      {
+        "label": "CoreWeave — initial GB300 NVL72 deployment, July 3, 2025",
+        "url": "https://coreweave.com/news/coreweave-becomes-first-cloud-provider-to-deploy-nvidia-gb300-nvl72-platform"
       }
     ],
     "ja": {
@@ -888,7 +939,7 @@
       "strength": "電源と冷却をまとめて設計でき、設置後も世界各地の保守網で設備の安定稼働を支える。",
       "risks": "顧客の設備投資や発注延期に左右される。部材・工事費の上昇や冷却技術の変化への対応も重要。",
       "competition": "Vertiv自身はSchneider Electric、Eaton、Legrand、Johnson Controlsを競合に挙げる。公式製品ではSchneiderのUniflair冷却、EatonとLegrandの配電、Johnson Controlsのデータセンター冷却が比較例。UPS、ラック配電、チラー、液冷装置は役割が異なり、各社の全製品を同じものとは扱わない。",
-      "relationships": "データセンター運営者に設備を供給。NVIDIAとは次世代AI基盤に向けた電源・冷却技術で協力する。"
+      "relationships": "NVIDIAとはAI向け電源・冷却で協働する。CoreWeaveの2025年7月の発表では、初期GB300 NVL72導入への協力企業としてVertivが実名で挙げられた。この導入事例から全設備の独占供給や契約金額は推定しない。"
     },
     "en": {
       "business": "Provides power and cooling equipment that keeps data centers and other critical facilities operating.",
@@ -896,7 +947,7 @@
       "strength": "Integrates power and cooling design with a global service network that supports equipment throughout its life.",
       "risks": "Customer investment cycles, delayed orders, rising project costs and changes in cooling requirements.",
       "competition": "Vertiv names Schneider Electric, Eaton, Legrand and Johnson Controls as competitors. Official-product examples include Schneider Uniflair cooling, Eaton/Legrand power distribution and Johnson Controls data center thermal management. UPS systems, rack distribution, chillers and liquid-cooling equipment serve different roles; entire portfolios are not treated as equivalent.",
-      "relationships": "Supplies data-center operators and collaborates with NVIDIA on power and cooling for next-generation AI infrastructure."
+      "relationships": "Vertiv collaborates with NVIDIA on AI power and cooling. CoreWeave’s July 2025 announcement names Vertiv among collaborators on its initial GB300 NVL72 deployment. This example does not establish exclusive supply or a contract value."
     },
     "maps": {
       "competition": [
@@ -981,6 +1032,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "CoreWeave",
+          "role": "partner",
+          "label": {
+            "ja": "2025年7月：初期GB300 NVL72導入に協力",
+            "en": "July 2025: collaboration on initial GB300 NVL72 deployment"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "CRWV"
         }
       ]
     }
@@ -1016,6 +1080,10 @@
       {
         "label": "Microchip · Switchtec PCIe switches",
         "url": "https://www.microchip.com/en-us/products/interface-networking-connectivity/pcie/pcie-switches"
+      },
+      {
+        "label": "Astera Labs — NVIDIA NVLink Fusion collaboration, May 19, 2025",
+        "url": "https://www.asteralabs.com/news/astera-labs-expands-collaboration-with-nvidia-to-advance-nvlink-fusion-ecosystem/"
       }
     ],
     "ja": {
@@ -1024,7 +1092,7 @@
       "strength": "半導体と管理ソフトCOSMOSを組み合わせ、接続状態の監視や不具合の診断まで支援できる。",
       "risks": "少数の大口顧客と製造委託先への依存。顧客の採用試験が長引いたり、接続規格が変わったりするリスク。",
       "competition": "Astera自身が挙げるBroadcom、Marvell、Credo、Microchipが高速接続半導体の競合例。公式製品ではBroadcomやMicrochip SwitchtecのPCIeスイッチ、Marvell Alaska PやCredo ToucanのPCIeリタイマーを比較する。AsteraのScorpioスイッチ、Ariesリタイマー、Leo CXL製品は役割が異なり、全製品の互換性や同等性能を意味しない。",
-      "relationships": "大手クラウド事業者やAI半導体・サーバー各社と連携し、製品同士が正しく動くかも共同で検証する。"
+      "relationships": "Amazon関連会社との顧客ワラントは、Amazon側からAsteraへの支払いを権利確定条件として開示されている。2026年2月の追加ワラントも、全株式の取得済みや個別チップ採用を意味しない。NVIDIAとは2025年5月にNVLink Fusion接続分野の協業拡大を発表した。"
     },
     "en": {
       "business": "Develops chips that connect GPUs, memory and other AI-server components while reducing signal degradation and data bottlenecks.",
@@ -1032,7 +1100,7 @@
       "strength": "Combines connectivity silicon with COSMOS software for link monitoring, management and diagnostics.",
       "risks": "Customer and manufacturer concentration, lengthy product qualification and evolving connectivity standards.",
       "competition": "Astera names Broadcom, Marvell, Credo and Microchip as connectivity-chip competitors. Official products allow comparisons with Broadcom/Microchip Switchtec PCIe switches and Marvell Alaska P/Credo Toucan PCIe retimers. Astera Scorpio switches, Aries retimers and Leo CXL products have distinct roles; compatibility or equal performance across portfolios is not assumed.",
-      "relationships": "Collaborates with major cloud, AI-chip and server companies, including joint interoperability testing."
+      "relationships": "Amazon-affiliate customer warrants disclose vesting tied to payments to Astera. The additional February 2026 warrant does not establish that every share was acquired or identify a particular chip design. Astera announced expanded NVIDIA NVLink Fusion connectivity collaboration in May 2025."
     },
     "maps": {
       "competition": [
@@ -1123,6 +1191,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "customer",
+          "label": {
+            "ja": "Amazon関連会社：支払い連動の顧客ワラント開示",
+            "en": "Amazon affiliate: payment-linked customer warrants"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2025年5月：NVLink Fusion接続の協業拡大",
+            "en": "May 2025: expanded NVLink Fusion connectivity collaboration"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -2562,7 +2656,7 @@
       "GOOGL"
     ],
     "name": "Google",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Alphabet FY2025 Form 10-K · Business / Risk factors",
@@ -2571,6 +2665,18 @@
       {
         "label": "Snowflake FY2026 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm"
+      },
+      {
+        "label": "Anthropic — Google and Broadcom capacity agreement, April 6, 2026",
+        "url": "https://www.anthropic.com/news/google-broadcom-partnership-compute"
+      },
+      {
+        "label": "Google — expanded Reddit partnership, February 22, 2024",
+        "url": "https://blog.google/company-news/inside-google/company-announcements/expanded-reddit-partnership/"
+      },
+      {
+        "label": "Snap FY2025 Form 10-K — Google Cloud infrastructure use",
+        "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm"
       }
     ],
     "ja": {
@@ -2579,7 +2685,7 @@
       "strength": "検索・動画・スマホを通じて利用者に届き、広告主や開発者を集められる。",
       "risks": "AIによる検索習慣の変化、広告への依存、競争法や個人情報をめぐる規制。",
       "competition": "Google Cloudのデータ処理・分析ではSnowflakeが競合例。Snowflakeの年次報告書はGoogle Cloudを競合として明記し、同時に自社サービスの稼働基盤としても利用すると説明している。検索・広告の競合とは分けて考える。",
-      "relationships": "YouTubeの制作者や広告主、Android端末メーカーなどと事業を広げる。"
+      "relationships": "AnthropicはGoogle CloudのTPU計算を利用し、2026年4月にはGoogle・Broadcomとの追加容量契約を発表した。新容量は2027年からの稼働予定。Redditとは2024年2月にData APIとVertex AIの提携を発表しており、広告競合と協業は併存する。 Snapも自社の年次報告でGoogle Cloudの基盤利用を開示している。"
     },
     "en": {
       "business": "Alphabet's Google operates Search, YouTube, Android and cloud services. The listed shares represent parent Alphabet.",
@@ -2587,7 +2693,7 @@
       "strength": "Search, video and mobile reach connect users with advertisers and developers.",
       "risks": "AI-driven changes in search habits, advertising dependence and competition or privacy regulation.",
       "competition": "Snowflake is a named example in Google Cloud data processing and analytics. Its annual report explicitly identifies Google Cloud as both a competitor and infrastructure provider. This comparison concerns cloud data products rather than search or advertising.",
-      "relationships": "Works with YouTube creators, advertisers and Android device manufacturers."
+      "relationships": "Anthropic uses Google Cloud TPU compute and announced additional capacity with Google and Broadcom in April 2026, expected to come online from 2027. Google and Reddit announced a Data API / Vertex AI partnership in February 2024; advertising competition and collaboration coexist. Snap also discloses Google Cloud infrastructure use in its own filing."
     },
     "maps": {
       "competition": [
@@ -2644,6 +2750,44 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "customer",
+          "label": {
+            "ja": "TPU計算を利用・2026年契約の追加容量は2027年予定",
+            "en": "TPU compute customer; added 2026-agreement capacity expected from 2027"
+          },
+          "sourceIndexes": [
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Reddit",
+          "role": "partner",
+          "label": {
+            "ja": "2024年2月：Data API・Vertex AIの提携",
+            "en": "February 2024: Data API / Vertex AI partnership"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "RDDT"
+        },
+        {
+          "kind": "company",
+          "name": "Snap",
+          "ticker": "SNAP",
+          "role": "customer",
+          "label": {
+            "ja": "SnapがGoogle Cloudの基盤利用を開示（2025年）",
+            "en": "Snap discloses Google Cloud infrastructure use (2025 filing)"
+          },
+          "sourceIndexes": [
+            4
+          ]
         }
       ]
     }
@@ -2654,7 +2798,7 @@
       "AAPL"
     ],
     "name": "Apple",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -2667,6 +2811,14 @@
       {
         "label": "Samsung · Galaxy S26 smartphone products",
         "url": "https://news.samsung.com/global/samsung-unveils-galaxy-s26-series-the-most-intuitive-galaxy-ai-phone-yet"
+      },
+      {
+        "label": "Apple — Broadcom agreement, May 23, 2023",
+        "url": "https://www.apple.com/newsroom/2023/05/apple-announces-multibillion-dollar-deal-with-broadcom/"
+      },
+      {
+        "label": "OpenAI — Apple partnership, June 10, 2024",
+        "url": "https://openai.com/index/openai-and-apple-announce-partnership/"
       }
     ],
     "ja": {
@@ -2675,7 +2827,7 @@
       "strength": "端末・基本ソフト・サービスを一体で設計し、製品同士を使いやすく連携させる。",
       "risks": "iPhoneの需要変動、海外の製造網への依存、アプリ配信などをめぐる規制。",
       "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。",
-      "relationships": "部品・組立の委託先、携帯通信会社、アプリ開発者やコンテンツ提供者とつながる。"
+      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。"
     },
     "en": {
       "business": "Creates iPhone, Mac and other devices, with their software and services.",
@@ -2683,7 +2835,7 @@
       "strength": "Integrates hardware, operating systems and services across its products.",
       "risks": "iPhone demand shifts, overseas manufacturing dependence and regulation of its platforms.",
       "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services.",
-      "relationships": "Relies on manufacturing partners, mobile carriers, app developers and content providers."
+      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established."
     },
     "maps": {
       "competition": [
@@ -2753,6 +2905,31 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "supplier",
+          "label": {
+            "ja": "2023年5月：5G RF・FBARなどの複数年契約",
+            "en": "May 2023: multiyear 5G RF / FBAR component agreement"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "AVGO"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2024年6月：ChatGPTのSiri・Writing Tools統合発表",
+            "en": "June 2024: ChatGPT / Siri / Writing Tools integration announced"
+          },
+          "sourceIndexes": [
+            4
+          ]
         }
       ]
     }
@@ -2763,7 +2940,7 @@
       "AMZN"
     ],
     "name": "Amazon",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -2776,6 +2953,22 @@
       {
         "label": "Costco FY2026 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+      },
+      {
+        "label": "Anthropic — expanded Amazon compute agreement, April 20, 2026",
+        "url": "https://www.anthropic.com/news/anthropic-amazon-compute"
+      },
+      {
+        "label": "Pinterest FY2025 Form 10-K — AWS infrastructure use",
+        "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm"
+      },
+      {
+        "label": "Snap FY2025 Form 10-K — AWS infrastructure use",
+        "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm"
+      },
+      {
+        "label": "Marvell — AWS supply agreement, December 2, 2024",
+        "url": "https://investor.marvell.com/news-events/press-releases/detail/121/marvell-expands-strategic-collaboration-with-aws-to-enable-accelerated-infrastructure-for-ai-in-the-cloud"
       }
     ],
     "ja": {
@@ -2784,7 +2977,7 @@
       "strength": "品揃えと配送網を組み合わせた通販と、幅広い機能を持つAWS。",
       "risks": "激しい価格競争、物流・人件費の上昇、データセンター投資の負担。",
       "competition": "AWSのデータ処理・分析ではSnowflake、商品販売ではCostcoが競合例。SnowflakeとCostcoがそれぞれの年次報告書でAWSとAmazonを競合として挙げている。クラウドと小売では競う製品も顧客も異なる。",
-      "relationships": "出品者、配送の協力会社、AWSを使う企業や開発者、広告主をつなぐ。"
+      "relationships": "AnthropicはAWSのTrainiumを利用する実名の計算顧客。2026年4月には最大5GWの計算容量契約を発表し、段階的な拡大を計画する。AmazonのAnthropicへの投資は、この計算サービス供給とは別の資本関係であり、全容量の稼働済みを意味しない。 Pinterest・Snapは自社の年次報告でAWS利用を開示し、MarvellはAWS向け半導体の供給契約を公表している。"
     },
     "en": {
       "business": "Runs online retail, AWS cloud computing, advertising and streaming services.",
@@ -2792,7 +2985,7 @@
       "strength": "Combines retail selection and delivery infrastructure with a broad AWS service range.",
       "risks": "Price competition, logistics and labor costs, and heavy data-center investment.",
       "competition": "Examples include Snowflake in AWS data processing and analytics, and Costco in merchandise retail. Snowflake names AWS and Costco names Amazon in their annual reports. These are separate cloud and retail markets.",
-      "relationships": "Connects sellers, delivery partners, cloud customers, developers and advertisers."
+      "relationships": "Anthropic is a named AWS Trainium compute customer. An April 2026 announcement described an agreement for up to 5 GW with a staged capacity expansion. Amazon’s investment in Anthropic is a separate capital relationship; the announcement does not establish that all capacity is operational. Pinterest and Snap disclose AWS use in their own filings, while Marvell announces a chip-supply agreement with AWS."
     },
     "maps": {
       "competition": [
@@ -2875,6 +3068,57 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "customer",
+          "label": {
+            "ja": "2026年4月：最大5GWのAWS計算容量契約・段階的拡大",
+            "en": "April 2026: up to 5 GW AWS compute agreement; staged expansion"
+          },
+          "sourceIndexes": [
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Pinterest",
+          "ticker": "PINS",
+          "role": "customer",
+          "label": {
+            "ja": "PinterestがAWSの基盤利用を開示（2025年）",
+            "en": "Pinterest discloses AWS infrastructure use (2025 filing)"
+          },
+          "sourceIndexes": [
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Snap",
+          "ticker": "SNAP",
+          "role": "customer",
+          "label": {
+            "ja": "SnapがAWSの計算・保存基盤利用を開示（2025年）",
+            "en": "Snap discloses AWS compute/storage use (2025 filing)"
+          },
+          "sourceIndexes": [
+            5
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Marvell",
+          "ticker": "MRVL",
+          "role": "supplier",
+          "label": {
+            "ja": "2024年12月：AWS向けカスタムAI・光接続半導体の契約",
+            "en": "December 2024: custom AI / optical-connectivity chip agreement for AWS"
+          },
+          "sourceIndexes": [
+            6
+          ]
         }
       ]
     }
@@ -2885,7 +3129,7 @@
       "META"
     ],
     "name": "Meta",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -2902,6 +3146,18 @@
       {
         "label": "Alphabet FY2025 Form 10-K · Google advertising",
         "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm"
+      },
+      {
+        "label": "NVIDIA — Meta AI infrastructure partnership, February 17, 2026",
+        "url": "https://nvidianews.nvidia.com/news/meta-builds-ai-infrastructure-with-nvidia"
+      },
+      {
+        "label": "Meta — AMD infrastructure agreement, February 24, 2026",
+        "url": "https://about.fb.com/news/2026/02/meta-amd-partner-longterm-ai-infrastructure-agreement/"
+      },
+      {
+        "label": "Nebius — Meta AI infrastructure agreement, March 16, 2026",
+        "url": "https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta"
       }
     ],
     "ja": {
@@ -2910,7 +3166,7 @@
       "strength": "多くの利用者が集まるアプリと、投稿や広告を届けるAIの仕組み。",
       "risks": "広告への依存、個人情報の規制やスマホ側の仕様変更、AI・次世代端末への投資負担。",
       "competition": "利用者の時間ではTikTokやSnapchat、広告ではGoogleとAppLovinが競合例。MetaはTikTokとの競争を開示し、SnapとAppLovinもMetaを競合として挙げる。Googleは両社の広告事業の比較であり、検索や動画などの提供方法には違いがある。",
-      "relationships": "広告主や投稿するクリエイターに加え、スマホの基本ソフト・アプリ配信基盤とも関わる。"
+      "relationships": "NVIDIAとは2026年2月にCPU・GPU・ネットワークの複数年協業を発表。AMDとも同月、最大6GWのInstinct GPU計画とロードマップ連携を発表し、初回出荷は2026年後半の計画とされた。計画上の全容量を導入済みとは扱わない。 Nebiusは2026年3月にMetaへの計算容量契約を公表し、新容量の提供は2027年初めからの予定としている。"
     },
     "en": {
       "business": "Operates Facebook, Instagram and WhatsApp, and develops AI and smart glasses.",
@@ -2918,7 +3174,7 @@
       "strength": "Large app audiences and AI systems for content discovery and advertising.",
       "risks": "Advertising dependence, privacy rules, mobile-platform changes and expensive AI and hardware investments.",
       "competition": "Examples include TikTok and Snap’s Snapchat for engagement, plus Google and AppLovin for advertising. Meta discusses TikTok, while Snap and AppLovin explicitly name Meta. Google is a comparison of the companies’ disclosed advertising businesses, whose formats and distribution differ.",
-      "relationships": "Works with advertisers and creators while depending on mobile operating systems and app distribution."
+      "relationships": "Meta announced a multiyear NVIDIA CPU, GPU and networking collaboration in February 2026. Its AMD agreement that month outlined up to 6 GW of Instinct GPUs and roadmap alignment, with initial shipments planned for the second half of 2026. Planned total capacity is not deployed capacity. Nebius announced a Meta compute-capacity agreement in March 2026, with new capacity delivery planned from early 2027."
     },
     "maps": {
       "competition": [
@@ -3013,6 +3269,45 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年2月：CPU・GPU・ネットワークの複数年協業",
+            "en": "February 2026: multiyear CPU / GPU / networking partnership"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年2月：最大6GWのInstinct計画・初回出荷は下期予定",
+            "en": "February 2026: up to 6 GW Instinct plan; initial shipments scheduled for H2"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "AMD"
+        },
+        {
+          "kind": "company",
+          "name": "Nebius",
+          "ticker": "NBIS",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年3月：AI容量契約・新容量は2027年初めから予定",
+            "en": "March 2026: AI capacity agreement; new delivery planned from early 2027"
+          },
+          "sourceIndexes": [
+            6
           ]
         }
       ]
@@ -7322,11 +7617,15 @@
       "ON"
     ],
     "name": "onsemi",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Customers / End markets / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1097864/000109786426000006/on-20251231.htm"
+      },
+      {
+        "label": "onsemi — NIO collaboration, April 27, 2026",
+        "url": "https://investor.onsemi.com/news-releases/news-release-details/onsemi-and-nio-expand-strategic-collaboration-accelerate-next"
       }
     ],
     "ja": {
@@ -7335,7 +7634,7 @@
       "strength": "シリコン、SiC、GaNの電力変換と車載画像センサーを持ち、設計から製造・パッケージまで一体で最適化できる。",
       "risks": "自動車・産業需要の減速、SiC工場の稼働率、代理店在庫に左右される。2025年には工場再編と在庫処分で大きな費用も計上した。",
       "competition": "電力製品ではInfineonやSTMicroelectronics、アナログではTexas InstrumentsやAnalog Devices、画像ではSonyやSamsungと競う。",
-      "relationships": "自動車、産業、AIデータセンター、再生可能エネルギー関連のメーカーへ電力・センシング製品を供給する。"
+      "relationships": "NIOとは2026年4月に協業拡大を発表し、EliteSiC M3eによる高電圧EVプラットフォームへの採用を説明した。実名の採用事例であり、他の自動車メーカーへの供給や調達数量は推定しない。"
     },
     "en": {
       "business": "Makes power semiconductors for EVs, renewable energy and AI data centers and image sensors for vehicles and factories.",
@@ -7343,7 +7642,7 @@
       "strength": "Combines silicon, SiC and GaN power conversion with automotive imaging and integrates design, manufacturing and packaging.",
       "risks": "Automotive and industrial demand, SiC fab utilization and distributor inventory matter; 2025 also included sizable manufacturing realignment and inventory charges.",
       "competition": "Competes with Infineon and STMicroelectronics in power, Texas Instruments and Analog Devices in analog, and Sony and Samsung in imaging.",
-      "relationships": "Supplies power and sensing products to automotive, industrial, AI data-center and renewable-energy manufacturers."
+      "relationships": "An April 2026 announcement expanded collaboration with NIO and described EliteSiC M3e adoption for its higher-voltage EV platforms. This named adoption does not establish supply to other automakers or procurement volumes."
     },
     "maps": {
       "competition": [
@@ -7464,6 +7763,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NIO",
+          "role": "customer",
+          "label": {
+            "ja": "2026年4月：高電圧EV向けEliteSiC M3e採用",
+            "en": "April 2026: EliteSiC M3e adoption for higher-voltage EVs"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NIO"
         }
       ]
     }
@@ -11978,6 +12290,10 @@
       {
         "label": "Snap FY2025 · Competition and TikTok affiliated joint ventures",
         "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm"
+      },
+      {
+        "label": "Pinterest — Amazon advertising partnership, April 27, 2023",
+        "url": "https://newsroom.pinterest.com/news/pinterest-announces-partnership-with-amazon-to-bring-third-party-ad-demand-to-the-platform/"
       }
     ],
     "ja": {
@@ -11986,7 +12302,7 @@
       "strength": "購入前の計画段階で使われる画像データ、検索意図、AIによる推薦と商品発見の組み合わせが強い。",
       "risks": "広告収入への依存、利用者の成長と継続、プライバシー規制、検索・生成AIとの競争、外部コンテンツへの依存が弱点。",
       "competition": "Pinterest自身が挙げるGoogle・Meta・Snap・Reddit・TikTokは、利用時間や広告予算の競合。Amazonは商品探索・購買意図のある利用者と広告の比較例でもある。Google Lens・Gemini・YouTube、生成AIやECは役割が異なり、画像の発見機能すべての互換性は意味しない。TikTok関連事業には合弁会社も含む。",
-      "relationships": "利用者と制作者・出版社が画像を供給し、広告主と販売事業者は商品発見から購入につながる広告を出す。"
+      "relationships": "AWS（Amazon）は主要な計算・保存基盤。Amazonとは2023年4月に第三者広告の提携を発表した。Google・Appleのログイン基盤への依存も開示しており、広告競合と基盤利用・提携は別の関係として併存する。"
     },
     "en": {
       "business": "A visual discovery service for saving and organizing images and videos around home, style, travel, shopping and other ideas.",
@@ -11994,7 +12310,7 @@
       "strength": "Planning-stage intent, a rich image corpus and AI recommendations that connect inspiration with product discovery are key strengths.",
       "risks": "Advertising dependence, user retention, privacy rules, search and generative-AI competition, and reliance on third-party content are risks.",
       "competition": "Pinterest names Google, Meta, Snap, Reddit and TikTok in competition for engagement and advertising. Amazon also illustrates product discovery, commercial intent and ads. Google Lens, Gemini, YouTube, generative AI and commerce differ in function; visual-discovery products are not assumed interchangeable. TikTok-related businesses include affiliated joint ventures.",
-      "relationships": "Users, creators and publishers supply visual content, while advertisers and merchants promote products from discovery toward purchase."
+      "relationships": "AWS (Amazon) provides major computing and storage infrastructure. Pinterest announced an Amazon advertising partnership in April 2023 and discloses dependencies on Google and Apple login platforms. Infrastructure, advertising collaboration and competition are distinct roles."
     },
     "maps": {
       "competition": [
@@ -12116,6 +12432,58 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "supplier",
+          "label": {
+            "ja": "AWS：主要な計算・保存基盤（2025年開示）",
+            "en": "AWS: major compute/storage infrastructure (2025 filing)"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "2023年4月：第三者広告の提携発表",
+            "en": "April 2023: third-party advertising partnership announced"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Google：ログイン基盤への依存（2025年開示）",
+            "en": "Google: login-platform dependency (2025 filing)"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Apple：ログイン基盤への依存（2025年開示）",
+            "en": "Apple: login-platform dependency (2025 filing)"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
         }
       ]
     }
@@ -12139,7 +12507,7 @@
       "strength": "カメラ中心の操作、若い利用者層、友人同士の私的な交流、AR技術と制作者向け機能が差別化になる。",
       "risks": "広告依存、利用者成長、未成年者の安全、個人情報規制、AppleやGoogleによる端末・配信ルール変更が弱点。",
       "competition": "Snap自身が挙げるAlphabet・Meta・Pinterest・Reddit・ByteDanceのTikTok関連事業・合弁会社は、利用時間と広告で競争する。YouTubeは動画、InstagramはStoriesなどの比較対象。端末カメラ・メッセージ機能も代替で、AR機器や全広告サービスが同等という意味ではない。Google等への基盤依存と競争は併存する。",
-      "relationships": "利用者と制作者が投稿を供給し、広告主が広告枠を購入し、AR開発者やアプリ配信基盤が体験を支える。"
+      "relationships": "Google CloudとAWS（Amazon）が主要な計算・保存・通信基盤を担う。GoogleのAndroid/Google PlayとAppleのiOS/App Storeはアプリの配信基盤。クラウド調達とOS・配信への依存を分けて捉える。"
     },
     "en": {
       "business": "A mobile social service combining photo and video messages, short-form content, maps and augmented-reality lenses.",
@@ -12147,7 +12515,7 @@
       "strength": "A camera-first interface, younger audience, private friend communication, AR technology and creator tools differentiate the service.",
       "risks": "Advertising dependence, user growth, youth safety, privacy rules, and Apple or Google platform-policy changes are major risks.",
       "competition": "Snap names Alphabet, Meta, Pinterest, Reddit and ByteDance with TikTok-affiliated joint ventures in engagement and advertising. YouTube concerns video and Instagram includes Stories. Device cameras and messaging remain alternatives; this is not equivalence across AR hardware or all ad services. Platform dependence and competition can coexist.",
-      "relationships": "Users and creators supply content, advertisers buy inventory, and AR developers and mobile distribution platforms support the experience."
+      "relationships": "Google Cloud and AWS (Amazon) provide major compute, storage and bandwidth infrastructure. Google Android/Play and Apple iOS/App Store support app distribution. Cloud procurement differs from operating-system and distribution dependencies."
     },
     "maps": {
       "competition": [
@@ -12255,6 +12623,58 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "supplier",
+          "label": {
+            "ja": "Google Cloud：計算・保存・通信基盤",
+            "en": "Google Cloud: compute, storage and bandwidth"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "supplier",
+          "label": {
+            "ja": "AWS：計算・保存・通信基盤",
+            "en": "AWS: compute, storage and bandwidth"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Android・Google Playの配信基盤に依存",
+            "en": "Dependency on Android / Google Play distribution"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "ecosystem",
+          "label": {
+            "ja": "iOS・App Storeの配信基盤に依存",
+            "en": "Dependency on iOS / App Store distribution"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
         }
       ]
     }

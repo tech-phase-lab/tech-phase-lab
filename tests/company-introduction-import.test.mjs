@@ -36,6 +36,20 @@ test('bulk upsert preserves untouched issuers and rejects older research', () =>
   assert.throws(() => mergeCompanyIntroductions(companyIntroductions, [item]), /Stale review/);
 });
 
+test('distinct evidenced roles can share a company while duplicate roles and competitors are rejected', () => {
+  const item = structuredClone(companyIntroductions.find(c => c.tickers.includes('PINS')));
+  item.maps.relationships = [
+    {kind:'company', name:'Amazon', ticker:'AMZN', role:'supplier', label:{ja:'AWS計算基盤',en:'AWS compute'},sourceIndexes:[0]},
+    {kind:'company', name:'Amazon', ticker:'AMZN', role:'partner', label:{ja:'広告連携',en:'Advertising partnership'},sourceIndexes:[0]},
+  ];
+  assert.doesNotThrow(() => validateCompanyIntroductions([item]));
+  item.maps.relationships.push(structuredClone(item.maps.relationships[0]));
+  assert.throws(() => validateCompanyIntroductions([item]), /duplicate map entity/);
+  item.maps.relationships.pop();
+  item.maps.competition.push(structuredClone(item.maps.competition[0]));
+  assert.throws(() => validateCompanyIntroductions([item]), /duplicate map entity/);
+});
+
 test('new batches cannot substitute industry labels for named competitors', () => {
   const item = structuredClone(companyIntroductions[0]);
   item.maps.competition = [{kind:'industry',name:'Optical suppliers',role:'competitor',label:{ja:'光通信メーカー',en:'Optical suppliers'},sourceIndexes:[0]}];
