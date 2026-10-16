@@ -1101,9 +1101,10 @@ class SignalTests(unittest.TestCase):
         sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
         with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "2300"}):
             plan = signals.x_api_request_plan(sources)
-        # 5040 plus 480 polls a day for the 180 s Hardik Shah price-target route
-        # and 720 for the 120 s Trade The News results route.
-        self.assertEqual(plan["configuredMaxRequestsPerDay"], 6240)
+        # Oct 16: the lower-value routes were slowed (Hardik Shah 600 s, Nebius 300 s, Barchart 600 s,
+        # TrendSpider 900 s) and the Trade The News results route sped up to 60 s, so the daily budget
+        # goes to earnings and results first.
+        self.assertEqual(plan["configuredMaxRequestsPerDay"], 4992)
         self.assertTrue(plan["budgetCapped"])
         self.assertTrue(plan["pacingEnabled"])
         source = sources[0]

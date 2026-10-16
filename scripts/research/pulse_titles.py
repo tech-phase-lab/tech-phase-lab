@@ -25,7 +25,7 @@ import headline_translation
 POLICY_ID = 'pulse-title-v2'
 INSTRUCTIONS = (
     'Write a one-line headline for a narrow news ticker from the supplied published headline (titleJa and '
-    'titleEn of the same story). Return shortJa (at most 16 Japanese characters) and shortEn (at most 45 '
+    'titleEn of the same story). Return shortJa (at most 22 Japanese characters) and shortEn (at most 45 '
     'characters) that tell a reader what happened: the subject, the action and, if it fits, the single most '
     'important figure. You may drop secondary details, but never change a fact, number, direction, date or '
     'name, and keep any negation, plan, forecast, possibility or "reported" status. Write every number exactly '
@@ -38,11 +38,11 @@ FIELDS = ('shortJa', 'shortEn')
 OUTPUT_TOKENS = 2000
 BUDGET_SHARE = 0.2
 LEDGER_PREFIX = 'pulse:'
-# The strip shrinks to 10 px before scrolling, so a few characters over the
-# 16-character target still fit; rejecting them wasted most strip-title calls.
-MAX_JA = 22
+# The strip shrinks a little and then slides slowly (Oct 16), so characters over the
+# 22-character target still read fine; rejecting them wasted a third of the strip-title calls.
+MAX_JA = 32
 # A headline this short already fits a phone and needs no call.
-FITS_JA = 16
+FITS_JA = 22
 MAX_EN = 64
 CANDIDATES = 30
 JAPANESE = re.compile(r'[぀-ヿ一-鿿]')

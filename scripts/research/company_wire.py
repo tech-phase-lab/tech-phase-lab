@@ -166,12 +166,13 @@ def status(db, errors):
       WHERE j.key IS NULL AND w.published_at>=? AND (a.key IS NULL OR a.attempts<?)''', (since, TRANSLATION_ATTEMPTS)).fetchone()[0]
     gave_up = {r[0] or 'unknown': r[1] for r in db.execute('''SELECT a.reason, COUNT(*) FROM company_wire w JOIN company_wire_attempts a USING(key)
       LEFT JOIN company_wire_ja j USING(key) WHERE j.key IS NULL AND w.published_at>=? AND a.attempts>=? GROUP BY a.reason''', (since, TRANSLATION_ATTEMPTS))}
-    out['_translation'] = {'waiting24h': waiting, 'gaveUpByReason24h': gave_up}
+    calls = db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (current.timestamp() - 86400,)).fetchone()[0]
+    out['_translation'] = {'waiting24h': waiting, 'gaveUpByReason24h': gave_up, 'modelCalls24h': calls}
     return out
 
 
 # ---- Stage 2: Japanese headlines and the per-company public feed (Oct 14) ----
-TRANSLATION_BATCH = 20
+TRANSLATION_BATCH = 30
 TRANSLATION_ATTEMPTS = 3
 TRANSLATION_RETRY_SECONDS = 600
 PUBLIC_PER_COMPANY = 10
@@ -202,13 +203,62 @@ def truncated(title):
     return title.rstrip().endswith(('...', '…'))
 
 
+# Oct 16: the feeds carry about 2,000 headlines a day for the 22 stocks, far more than can be translated,
+# and the same story arrives from five publishers. The translator takes one headline per story, from the
+# most reliable publisher first, and skips headlines that are not news about the company.
+NOISE = re.compile(
+    r'\bNet ETF (?:Buying|Selling)\b|\bETFs? Are (?:Buying|Selling)\b|^Lobbying Update\b'
+    r'|\b(?:ETF|Trust|Fund)\b.{0,60}\b(?:Buys|Sells|Bought|Sold)\b.{0,60}\bon\b'
+    r'|\bZacks (?:Analyst Blog|Investment Ideas)\b|\bTake five\b|\blifetime access\b|\bfor one \$\d+ payment\b'
+    r'|\bForecast\s+[—–-]\s+Price Target\b|\bPrediction for 20\d\d\b|\bBC-Most Active\b', re.I)
+MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
+                   r'the information|nikkei|investor.s business|seeking alpha|yahoo finance|benzinga|the verge|ars technica|tom.s hardware', re.I)
+STOPWORDS = frozenset('the and for with from that this its are was has have will into over after than more new how why what '
+                      'stock stocks shares share inc corp says say said amid about could would just now out up down'.split())
+SAME_STORY = 0.5
+
+
+def story_words(title):
+    return frozenset(w for w in re.findall(r'[a-z0-9$.]+', title.lower()) if len(w) > 2 and w not in STOPWORDS)
+
+
+def same_story(a, b):
+    if not a or not b:
+        return False
+    return len(a & b) / len(a | b) >= SAME_STORY
+
+
+def priority(row):
+    """Lower is translated first: company/wire releases, then major publishers, then the rest."""
+    if row['origin'] == 'wire':
+        return 0
+    return 1 if MAJOR.search(row['publisher'] or '') else 2
+
+
 def pending_rows(db, now_ts, limit=TRANSLATION_BATCH):
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
-    rows = db.execute('''SELECT w.key, w.title FROM company_wire w
+    rows = db.execute('''SELECT w.key, w.title, w.ticker, w.origin, w.publisher, w.published_at FROM company_wire w
       LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
       WHERE j.key IS NULL AND w.published_at>=? AND (a.key IS NULL OR (a.attempts<? AND a.next_at<=?))
-      ORDER BY w.published_at DESC LIMIT ?''', (since, TRANSLATION_ATTEMPTS, now_ts, limit * 2)).fetchall()
-    return [r for r in rows if not truncated(r['title'])][:limit]
+      ORDER BY w.published_at DESC LIMIT 400''', (since, TRANSLATION_ATTEMPTS, now_ts)).fetchall()
+    rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title'])]
+    # A story already translated for the same company needs no second copy.
+    done = {}
+    for r in db.execute('''SELECT w.ticker, w.title FROM company_wire w JOIN company_wire_ja j USING(key)
+                         WHERE w.published_at>=?''', (since,)):
+        done.setdefault(r['ticker'], []).append(story_words(r['title']))
+    chosen, taken = [], {}
+    # Best publisher first; within a tier, the newest first.
+    for r in sorted(rows, key=lambda r: (priority(r), -datetime.fromisoformat(r['published_at']).timestamp())):
+        words = story_words(r['title'])
+        known = done.get(r['ticker'], []) + taken.get(r['ticker'], [])
+        if any(same_story(words, other) for other in known):
+            continue
+        taken.setdefault(r['ticker'], []).append(words)
+        chosen.append(r)
+        if len(chosen) >= limit:
+            break
+    return chosen
 
 
 def previous_reasons(db, keys):
@@ -241,7 +291,7 @@ def translate_once(path, transport=None, env=None, now_ts=None):
     if config is None:
         return 'disabled'
     key, model, _ = config
-    limit = int((os.environ if env is None else env).get('COMPANY_WIRE_TRANSLATION_DAILY_LIMIT', '200'))
+    limit = int((os.environ if env is None else env).get('COMPANY_WIRE_TRANSLATION_DAILY_LIMIT', '600'))
     with connect(path) as db:
         schema_translation(db)
         if db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (now_ts - 86400,)).fetchone()[0] >= limit:

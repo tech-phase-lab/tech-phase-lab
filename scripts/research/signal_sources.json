@@ -749,7 +749,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 120,
+    "intervalSeconds": 60,
     "maxResults": 30,
     "reuse": "review-required",
     "streamExcluded": true
@@ -829,7 +829,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 180,
+    "intervalSeconds": 600,
     "maxResults": 30,
     "reuse": "review-required",
     "streamExcluded": true,
@@ -883,7 +883,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 120,
+    "intervalSeconds": 300,
     "maxResults": 30,
     "reuse": "review-required"
   },
@@ -904,7 +904,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 120,
+    "intervalSeconds": 900,
     "maxResults": 30,
     "reuse": "factual-results-only",
     "buybackUpdates": true,
@@ -962,7 +962,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 120,
+    "intervalSeconds": 600,
     "maxResults": 30,
     "reuse": "factual-results-only"
   }

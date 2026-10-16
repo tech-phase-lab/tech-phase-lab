@@ -61,7 +61,7 @@ class PulseTitleTests(unittest.TestCase):
         for bad, code in (({**GOOD, 'shortJa': 'オラクル、電力費30億ドル負担を計画'}, 'unsupported-number'),
                           ({**GOOD, 'shortJa': 'オラクル、電力費3億ドルを負担'}, 'changed-qualifier'),
                           ({**GOOD, 'shortJa': 'オラクル、電力費3億ドル負担計画を撤回'}, 'changed-negation'),
-                          ({**GOOD, 'shortJa': 'オラクル、データセンター電力費3億ドルを全額負担する計画'}, 'too-long')):
+                          ({**GOOD, 'shortJa': 'オラクル、データセンターやクラウド設備にかかる電力費3億ドルを自社で全額負担する計画を発表'}, 'too-long')):
             with self.subTest(code=code):
                 with self.assertRaises(ValueError) as caught:
                     pulse_titles.validate(bad, JA, EN)
