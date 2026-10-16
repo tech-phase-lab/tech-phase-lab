@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 148 issuers with published competitor corrections and 0 remaining
+records 158 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -691,3 +691,9 @@ Reviewed AMAT / AMD / ARM / QCOM / CDNS / RBLX / DASH / SONY / V / MA (10 existi
 RISC-V is an instruction-set standard, not a company. Cash, checks, instant bank-transfer systems, internal tools and merchant-owned ordering remain alternatives in prose. SiFive/ARC IP and named delivery services are independently compared products, not automatic substitutions for these concepts. Named company disclosures, peer disclosures and editorial official-product comparisons are distinguished. Sharing a competitor in another company's list does not establish a direct disclosure.
 
 Altera remains independent from Intel; Microsemi FPGA products are identified under Microchip. Discover is under Capital One, not a current independent DFS issuer. PayPal balance/bank-funded checkout can compete while card-funded checkout and existing debit partnerships coexist. Meta's 2026 Worlds mobile focus is distinguished from old VR-store assumptions. Sony consoles, screen content and industrial/mobile image sensors are different markets. NVDA's reviewed payload and 205 unrelated card/relationship sets remain protected. Other product scopes and peer-side leads remain open even after mixed industry cards are resolved. Reviewed 2026-10-16.
+
+## 2026-10-16 · interconnect, GPU cloud, lithography and memory coverage review
+
+Triaged APH / ANET / MRVL / VRT / ALAB / NBIS / ASML / CRDO / MU / INTC (10 existing records, no new issuers). Existing named competitors remain; adequate lists are refined rather than expanded to a numerical target. Official own-vendor disclosure, peer disclosure and editorial product matching are distinguished. Amphenol's TE/Molex/Corning examples and Credo's Amphenol AEC comparison are editorial official-product comparisons. This does not establish any procurement relationship.
+
+Switches, retimers, active electrical cables, network packet brokers, power/cooling, GPU cloud, DUV exposure, metrology, DRAM/HBM, NAND/SSD, PC processors and foundry manufacturing receive separate product scopes and selected-root captions. Nikon/Canon DUV is not represented as EUV equivalence. Kioxia/Sandisk NAND is not HBM. HPE includes acquired Juniper. Azure competition coexists with Nebius capacity contracts; TSMC competition coexists with Intel outsourcing. Additional product fields and counterpart-only leads remain open. NVDA's reviewed payload and 205 unrelated card/relationship sets remain protected. Reviewed 2026-10-16.

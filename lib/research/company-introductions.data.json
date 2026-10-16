@@ -393,11 +393,27 @@
       "APH"
     ],
     "name": "Amphenol",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm"
+      },
+      {
+        "label": "Amphenol · Connector, cable and interconnect portfolio",
+        "url": "https://www.amphenol.com/products"
+      },
+      {
+        "label": "TE Connectivity · Data center connectivity portfolio",
+        "url": "https://www.te.com/en/industries/data-centers-ai/portfolio.html"
+      },
+      {
+        "label": "Molex · Data center connectivity",
+        "url": "https://www.molex.com/en-us/industries-applications/data-center-connectivity"
+      },
+      {
+        "label": "Corning · Data center optical connectivity",
+        "url": "https://www.corning.com/data-center/worldwide/en/home.html"
       }
     ],
     "ja": {
@@ -405,7 +421,7 @@
       "revenue": "データセンターや自動車、産業機器、航空・防衛などの顧客への接続部品やセンサーの販売。",
       "strength": "高速通信から振動・高温に耐える接続まで製品の幅が広く、顧客の設計段階から用途に合わせて開発できる。",
       "risks": "顧客の生産・設備投資の減速、金属などの原材料高や関税、部品調達の遅れが収益に響く。",
-      "competition": "TE Connectivity、Molex、Corningなど。製品や用途によって競合するメーカーが異なる。",
+      "competition": "コネクター・ケーブルではTE ConnectivityとMolex、光ファイバー接続ではCorningが比較例。Amphenolと各社の公式製品を照合した編集上の比較で、Amphenol自身がこの3社を実名で列挙したという意味ではない。電気接続、光配線、センサーでは製品範囲が異なり、全製品が置き換わるわけではない。",
       "relationships": "機器メーカーと共同で次世代製品の接続部分を設計し、世界各地の生産拠点から供給する。"
     },
     "en": {
@@ -413,7 +429,7 @@
       "revenue": "Component sales to data-center, automotive, industrial, aerospace and defense customers, among others.",
       "strength": "Broad expertise spans high-speed links and harsh environments, with products developed around customer designs.",
       "risks": "Customer production or investment slowdowns, raw-material inflation, tariffs and component shortages.",
-      "competition": "TE Connectivity, Molex, Corning and other suppliers, depending on the product and application.",
+      "competition": "Examples are TE Connectivity and Molex in connectors/cables, and Corning in optical-fiber connectivity. These are editorial comparisons of official portfolios, not a claim that Amphenol explicitly names these three companies. Electrical interconnects, optical cabling and sensors have different scopes; products are not universally interchangeable.",
       "relationships": "Works with equipment makers during product design and supplies them through a global manufacturing network."
     },
     "maps": {
@@ -423,11 +439,12 @@
           "name": "TE Connectivity",
           "role": "competitor",
           "label": {
-            "ja": "接続部品で競合",
-            "en": "Connectivity components"
+            "ja": "コネクター・電源接続。公式製品の比較",
+            "en": "Connectors/power interconnect; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            1,
+            2
           ],
           "ticker": "TEL"
         },
@@ -436,11 +453,12 @@
           "name": "Molex",
           "role": "competitor",
           "label": {
-            "ja": "接続部品で競合",
-            "en": "Connectivity components"
+            "ja": "高速電気・光接続。公式製品の比較",
+            "en": "High-speed electrical/optical interconnect; editorial comparison"
           },
           "sourceIndexes": [
-            0
+            1,
+            3
           ]
         },
         {
@@ -448,11 +466,12 @@
           "name": "Corning",
           "role": "competitor",
           "label": {
-            "ja": "一部の製品・用途で競合",
-            "en": "Selected products & applications"
+            "ja": "データセンター光配線。公式製品の比較",
+            "en": "Data center optical cabling; editorial comparison"
           },
           "sourceIndexes": [
-            0
+            1,
+            4
           ],
           "ticker": "GLW"
         }
@@ -480,11 +499,27 @@
       "ANET"
     ],
     "name": "Arista Networks",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+      },
+      {
+        "label": "HPE · July 2, 2025 completion of Juniper acquisition",
+        "url": "https://www.hpe.com/us/en/newsroom/press-release/2025/07/hewlett-packard-enterprise-closes-acquisition-of-juniper-networks-to-offer-industry-leading-comprehensive-cloud-native-ai-driven-portfolio.html"
+      },
+      {
+        "label": "NVIDIA · Spectrum-X Ethernet networking",
+        "url": "https://www.nvidia.com/en-us/networking/spectrumx/"
+      },
+      {
+        "label": "Extreme Networks · Campus wired and wireless networking",
+        "url": "https://www.extremenetworks.com/solutions/higher-education"
+      },
+      {
+        "label": "Keysight · Vision 400 network packet broker",
+        "url": "https://www.keysight.com/us/en/product/SYS-V400-BASE-AC/vision-400.html"
       }
     ],
     "ja": {
@@ -492,7 +527,7 @@
       "revenue": "データの行き先を振り分けるスイッチなどの機器販売と、ソフトや保守サービスの契約料。",
       "strength": "共通の基本ソフトEOSを軸に、大規模なネットワークの監視や設定をまとめて自動化できる。",
       "risks": "少数の大口顧客の発注に左右されやすい。Broadcomへの部品依存やAI向け通信方式の競争も課題。",
-      "competition": "Cisco、HPE、NVIDIAなど。汎用機器に公開ソフトを組み合わせる低価格の構成とも競う。",
+      "competition": "スイッチ・ルーターではCisco、Aruba/Juniperを持つHPE、学内・企業ネットワークではExtreme Networksが競合例。AI向け接続ではNVIDIA、ネットワーク監視のパケットブローカーではKeysightもArista自身が挙げる。HPEによるJuniper取得は完了済み。EthernetとInfiniBandは方式が異なり、ホワイトボックス機器やオープンソースも代替になる。",
       "relationships": "クラウド事業者や企業に供給。主要な通信半導体をBroadcomから調達し、製品開発でも連携する。"
     },
     "en": {
@@ -500,18 +535,18 @@
       "revenue": "Sales of switches and other equipment, plus software and support contracts.",
       "strength": "Its common EOS operating system helps automate configuration and monitoring across large networks.",
       "risks": "Large-customer order swings, reliance on Broadcom components and competition between AI networking technologies.",
-      "competition": "Cisco, HPE, NVIDIA and lower-cost systems combining commodity hardware with open-source software.",
+      "competition": "Arista names Cisco and HPE, including Aruba/Juniper, in switching/routing; Extreme Networks in campus networking; NVIDIA in AI networking; and Keysight in network packet brokers. HPE has completed its Juniper acquisition. Ethernet and InfiniBand are different technologies. White-box equipment and open-source software remain alternatives.",
       "relationships": "Supplies cloud providers and enterprises; sources key switching chips from Broadcom and collaborates on product development."
     },
     "maps": {
       "competition": [
         {
           "kind": "company",
-          "name": "Cisco",
+          "name": "Cisco Systems",
           "role": "competitor",
           "label": {
-            "ja": "ネットワーク機器で競合",
-            "en": "Networking equipment"
+            "ja": "スイッチ・ルーター。Arista自身の開示",
+            "en": "Switching/routing; named by Arista"
           },
           "sourceIndexes": [
             0
@@ -520,14 +555,15 @@
         },
         {
           "kind": "company",
-          "name": "HPE",
+          "name": "Hewlett Packard Enterprise",
           "role": "competitor",
           "label": {
-            "ja": "ネットワーク機器で競合",
-            "en": "Networking equipment"
+            "ja": "Aruba/Juniperネットワーク。自社開示、取得完了",
+            "en": "Aruba/Juniper networking; named peer, acquisition completed"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ],
           "ticker": "HPE"
         },
@@ -536,13 +572,42 @@
           "name": "NVIDIA",
           "role": "competitor",
           "label": {
-            "ja": "AIネットワークで競合",
-            "en": "AI networking"
+            "ja": "AIネットワーク。自社開示、Spectrum-X製品照合",
+            "en": "AI networking; Arista disclosure and Spectrum-X check"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
           ],
           "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Extreme Networks",
+          "role": "competitor",
+          "label": {
+            "ja": "学内・企業ネットワーク。自社開示と製品照合",
+            "en": "Campus networking; Arista disclosure and product check"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "EXTR"
+        },
+        {
+          "kind": "company",
+          "name": "Keysight Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "Visionパケットブローカー。自社開示と製品照合",
+            "en": "Vision network packet brokers; Arista disclosure/product check"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "KEYS"
         }
       ],
       "relationships": [
@@ -581,11 +646,27 @@
       "MRVL"
     ],
     "name": "Marvell",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm"
+      },
+      {
+        "label": "Marvell · Alaska P PCIe retimers",
+        "url": "https://www.marvell.com/products/pcie-retimers.html"
+      },
+      {
+        "label": "Broadcom · PCIe switches and retimers",
+        "url": "https://www.broadcom.com/products/pcie-switches-retimers"
+      },
+      {
+        "label": "Credo · Toucan PCIe retimers and active electrical cables",
+        "url": "https://credosemi.com/products/pcie/"
+      },
+      {
+        "label": "Astera Labs · Aries, Taurus, Scorpio and Leo connectivity portfolio",
+        "url": "https://www.asteralabs.com/products/"
       }
     ],
     "ja": {
@@ -593,7 +674,7 @@
       "revenue": "データセンターや通信設備向けの半導体販売。共通仕様の製品と、顧客の用途に合わせた専用製品がある。",
       "strength": "高速な電気・光通信と専用チップの設計技術を持ち、顧客のシステムに合わせて組み合わせられる。",
       "risks": "顧客の開発計画変更や内製化、製造委託先の供給不足、新しい製品の開発・量産の遅れ。",
-      "competition": "Broadcom、Credo、Astera Labsなど。顧客自身による半導体の内製化も競争相手になる。",
+      "competition": "Marvellが実名で挙げるBroadcom、Credo、Astera Labsには、高速接続半導体で重なる製品がある。公式製品ではBroadcomのPCIe接続製品、CredoのToucan、AsteraのAriesとMarvell Alaska PのPCIeリタイマーを比較できる。競合社名はMarvellの開示、個別製品の対応付けは編集上の比較で、カスタム半導体や光通信の全分野が同等という意味ではない。",
       "relationships": "クラウド事業者や機器メーカーと製品を設計。半導体の製造や組み立ては外部の専門企業に委託する。"
     },
     "en": {
@@ -601,7 +682,7 @@
       "revenue": "Chip sales for data centers and communications infrastructure, spanning standard and customer-specific products.",
       "strength": "Combines high-speed electrical and optical connectivity with custom-chip design for customer systems.",
       "risks": "Customer project changes or insourcing, manufacturing constraints and delays in development or volume production.",
-      "competition": "Broadcom, Credo, Astera Labs and customers developing their own chips.",
+      "competition": "Marvell names Broadcom, Credo and Astera Labs, whose high-speed connectivity portfolios overlap. Official portfolios support comparisons involving Broadcom PCIe connectivity, Credo Toucan, Astera Aries and Marvell Alaska P PCIe retimers. Vendor names come from Marvell disclosure; product matching is editorial and does not imply equivalence across custom silicon or all optical products.",
       "relationships": "Designs products with cloud and equipment customers; outsources chip fabrication and assembly to specialist manufacturers."
     },
     "maps": {
@@ -611,24 +692,28 @@
           "name": "Broadcom",
           "role": "competitor",
           "label": {
-            "ja": "通信・専用半導体で競合",
-            "en": "Networking & custom silicon"
+            "ja": "PCIe接続半導体。自社実名開示と製品照合",
+            "en": "PCIe connectivity chips; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
           ],
           "ticker": "AVGO"
         },
         {
           "kind": "company",
-          "name": "Credo",
+          "name": "Credo Technology",
           "role": "competitor",
           "label": {
-            "ja": "高速接続で競合",
-            "en": "High-speed connectivity"
+            "ja": "Toucan PCIeリタイマー。自社開示と製品照合",
+            "en": "Toucan PCIe retimers; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            3
           ],
           "ticker": "CRDO"
         },
@@ -637,11 +722,13 @@
           "name": "Astera Labs",
           "role": "competitor",
           "label": {
-            "ja": "接続用半導体で競合",
-            "en": "Connectivity chips"
+            "ja": "Aries PCIeリタイマー。自社開示と製品照合",
+            "en": "Aries PCIe retimers; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            4
           ],
           "ticker": "ALAB"
         }
@@ -682,11 +769,27 @@
       "VRT"
     ],
     "name": "Vertiv",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors / Partnerships",
         "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
+      },
+      {
+        "label": "Schneider Electric · Uniflair cooling systems",
+        "url": "https://www.se.com/ww/en/work/products/product-launch/uniflair/"
+      },
+      {
+        "label": "Eaton · IT power distribution equipment",
+        "url": "https://www.eaton.com/us/en-us/products/backup-power-ups-surge-it-power-distribution/power-distribution-for-it-equipment.html"
+      },
+      {
+        "label": "Legrand · Data center power distribution systems",
+        "url": "https://www.legrand.com/datacenter/gb-en/white-paper-power-distribution-as-system-within-the-high-density-data-center"
+      },
+      {
+        "label": "Johnson Controls · Data center thermal management",
+        "url": "https://www.johnsoncontrols.com/industries/data-centers/solutions/thermal-management"
       }
     ],
     "ja": {
@@ -694,7 +797,7 @@
       "revenue": "電源装置や空冷・液冷設備などの販売と、導入支援、保守、部品交換などのサービス。",
       "strength": "電源と冷却をまとめて設計でき、設置後も世界各地の保守網で設備の安定稼働を支える。",
       "risks": "顧客の設備投資や発注延期に左右される。部材・工事費の上昇や冷却技術の変化への対応も重要。",
-      "competition": "Schneider Electric、Eaton、Legrandなど。冷却や電源の特定分野に強いメーカーとも競う。",
+      "competition": "Vertiv自身はSchneider Electric、Eaton、Legrand、Johnson Controlsを競合に挙げる。公式製品ではSchneiderのUniflair冷却、EatonとLegrandの配電、Johnson Controlsのデータセンター冷却が比較例。UPS、ラック配電、チラー、液冷装置は役割が異なり、各社の全製品を同じものとは扱わない。",
       "relationships": "データセンター運営者に設備を供給。NVIDIAとは次世代AI基盤に向けた電源・冷却技術で協力する。"
     },
     "en": {
@@ -702,7 +805,7 @@
       "revenue": "Power and cooling equipment sales, installation support, maintenance and replacement parts.",
       "strength": "Integrates power and cooling design with a global service network that supports equipment throughout its life.",
       "risks": "Customer investment cycles, delayed orders, rising project costs and changes in cooling requirements.",
-      "competition": "Schneider Electric, Eaton, Legrand and specialists in particular power or cooling technologies.",
+      "competition": "Vertiv names Schneider Electric, Eaton, Legrand and Johnson Controls as competitors. Official-product examples include Schneider Uniflair cooling, Eaton/Legrand power distribution and Johnson Controls data center thermal management. UPS systems, rack distribution, chillers and liquid-cooling equipment serve different roles; entire portfolios are not treated as equivalent.",
       "relationships": "Supplies data-center operators and collaborates with NVIDIA on power and cooling for next-generation AI infrastructure."
     },
     "maps": {
@@ -712,11 +815,12 @@
           "name": "Schneider Electric",
           "role": "competitor",
           "label": {
-            "ja": "電源・冷却設備で競合",
-            "en": "Power & cooling"
+            "ja": "Uniflair等の冷却。自社開示と製品照合",
+            "en": "Uniflair cooling; Vertiv disclosure/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
         },
         {
@@ -724,11 +828,12 @@
           "name": "Eaton",
           "role": "competitor",
           "label": {
-            "ja": "電源設備などで競合",
-            "en": "Power infrastructure"
+            "ja": "データセンター配電。自社開示と製品照合",
+            "en": "Data center power distribution; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
           ],
           "ticker": "ETN"
         },
@@ -737,12 +842,27 @@
           "name": "Legrand",
           "role": "competitor",
           "label": {
-            "ja": "データセンター設備で競合",
-            "en": "Data-center infrastructure"
+            "ja": "ラック配電。自社開示と製品照合",
+            "en": "Rack power distribution; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Johnson Controls",
+          "role": "competitor",
+          "label": {
+            "ja": "データセンター冷却。自社開示と製品照合",
+            "en": "Data center cooling; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "JCI"
         }
       ],
       "relationships": [
@@ -781,11 +901,31 @@
       "ALAB"
     ],
     "name": "Astera Labs",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm"
+      },
+      {
+        "label": "Astera Labs · Aries, Taurus, Scorpio and Leo connectivity portfolio",
+        "url": "https://www.asteralabs.com/products/"
+      },
+      {
+        "label": "Broadcom · PCIe switches and retimers",
+        "url": "https://www.broadcom.com/products/pcie-switches-retimers"
+      },
+      {
+        "label": "Marvell · Alaska P PCIe retimers",
+        "url": "https://www.marvell.com/products/pcie-retimers.html"
+      },
+      {
+        "label": "Credo · Toucan PCIe retimers and active electrical cables",
+        "url": "https://credosemi.com/products/pcie/"
+      },
+      {
+        "label": "Microchip · Switchtec PCIe switches",
+        "url": "https://www.microchip.com/en-us/products/interface-networking-connectivity/pcie/pcie-switches"
       }
     ],
     "ja": {
@@ -793,7 +933,7 @@
       "revenue": "接続用の半導体や基板、ケーブル用モジュールの販売。機器を制御・監視するソフトも製品に組み込む。",
       "strength": "半導体と管理ソフトCOSMOSを組み合わせ、接続状態の監視や不具合の診断まで支援できる。",
       "risks": "少数の大口顧客と製造委託先への依存。顧客の採用試験が長引いたり、接続規格が変わったりするリスク。",
-      "competition": "Broadcom、Marvell、Credoなど。接続方式や製品の種類によって競う相手が異なる。",
+      "competition": "Astera自身が挙げるBroadcom、Marvell、Credo、Microchipが高速接続半導体の競合例。公式製品ではBroadcomやMicrochip SwitchtecのPCIeスイッチ、Marvell Alaska PやCredo ToucanのPCIeリタイマーを比較する。AsteraのScorpioスイッチ、Ariesリタイマー、Leo CXL製品は役割が異なり、全製品の互換性や同等性能を意味しない。",
       "relationships": "大手クラウド事業者やAI半導体・サーバー各社と連携し、製品同士が正しく動くかも共同で検証する。"
     },
     "en": {
@@ -801,7 +941,7 @@
       "revenue": "Sales of connectivity chips, boards and cable modules with embedded control and monitoring software.",
       "strength": "Combines connectivity silicon with COSMOS software for link monitoring, management and diagnostics.",
       "risks": "Customer and manufacturer concentration, lengthy product qualification and evolving connectivity standards.",
-      "competition": "Broadcom, Marvell, Credo and others, with competitors varying by product and connection standard.",
+      "competition": "Astera names Broadcom, Marvell, Credo and Microchip as connectivity-chip competitors. Official products allow comparisons with Broadcom/Microchip Switchtec PCIe switches and Marvell Alaska P/Credo Toucan PCIe retimers. Astera Scorpio switches, Aries retimers and Leo CXL products have distinct roles; compatibility or equal performance across portfolios is not assumed.",
       "relationships": "Collaborates with major cloud, AI-chip and server companies, including joint interoperability testing."
     },
     "maps": {
@@ -811,39 +951,60 @@
           "name": "Broadcom",
           "role": "competitor",
           "label": {
-            "ja": "接続用半導体で競合",
-            "en": "Connectivity chips"
+            "ja": "PCIeスイッチ・リタイマー。自社開示と製品照合",
+            "en": "PCIe switches/retimers; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
           ],
           "ticker": "AVGO"
         },
         {
           "kind": "company",
-          "name": "Marvell",
+          "name": "Marvell Technology",
           "role": "competitor",
           "label": {
-            "ja": "接続用半導体で競合",
-            "en": "Connectivity chips"
+            "ja": "Alaska P PCIeリタイマー。自社開示と製品照合",
+            "en": "Alaska P PCIe retimers; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            3
           ],
           "ticker": "MRVL"
         },
         {
           "kind": "company",
-          "name": "Credo",
+          "name": "Credo Technology",
           "role": "competitor",
           "label": {
-            "ja": "高速接続で競合",
-            "en": "High-speed connectivity"
+            "ja": "Toucan PCIeリタイマー。自社開示と製品照合",
+            "en": "Toucan PCIe retimers; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            4
           ],
           "ticker": "CRDO"
+        },
+        {
+          "kind": "company",
+          "name": "Microchip Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "Switchtec PCIeスイッチ。自社開示と製品照合",
+            "en": "Switchtec PCIe switches; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            1,
+            5
+          ],
+          "ticker": "MCHP"
         }
       ],
       "relationships": [
@@ -995,11 +1156,43 @@
       "NBIS"
     ],
     "name": "Nebius",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
         "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+      },
+      {
+        "label": "Nebius · GPU cloud infrastructure and inference",
+        "url": "https://nebius.com/"
+      },
+      {
+        "label": "CoreWeave · GPU compute",
+        "url": "https://coreweave.com/products/gpu-compute"
+      },
+      {
+        "label": "Crusoe · GPU cloud",
+        "url": "https://www.crusoe.ai/cloud"
+      },
+      {
+        "label": "Lambda · GPU cloud instances",
+        "url": "https://lambda.ai/instances"
+      },
+      {
+        "label": "Amazon Web Services · EC2 P5 GPU instances",
+        "url": "https://aws.amazon.com/ec2/instance-types/p5/"
+      },
+      {
+        "label": "Google Cloud · Compute Engine GPUs",
+        "url": "https://docs.cloud.google.com/compute/docs/gpus/"
+      },
+      {
+        "label": "Microsoft Azure · NVIDIA GPU compute technologies",
+        "url": "https://learn.microsoft.com/en-us/azure/virtual-machines/accelerator-technologies/cuda-overview"
+      },
+      {
+        "label": "Oracle Cloud · GPU compute",
+        "url": "https://www.oracle.com/cloud/compute/gpu/"
       }
     ],
     "ja": {
@@ -1007,7 +1200,7 @@
       "revenue": "GPUなどの計算設備、データ保存、関連サービスの利用料。専用設備を長期契約で提供する事業もある。",
       "strength": "AI向けに設計した設備と自社開発ソフトを組み合わせ、計算環境の構築から運用まで支える。",
       "risks": "設備拡張に多額の資金と電力が必要。建設・供給の遅れや大口契約の履行が業績を左右する。",
-      "competition": "CoreWeave、Crusoe、LambdaなどのAIクラウド。AWSやGoogle Cloudなどの大手とも競う。",
+      "competition": "NebiusはGPUクラウドの競合としてCoreWeave、Crusoe、Lambdaに加え、Amazon AWS、Google Cloud、Microsoft Azure、Oracle Cloudを挙げる。各社の公式GPU計算サービスを照合した。料金、供給枠、運用サービスは異なり、同一条件とは扱わない。Microsoftとの容量契約とクラウド競合は併存し、管理型推論サービスの比較は別の製品範囲となる。",
       "relationships": "NVIDIAのGPUを採用し、技術面でも協力。MicrosoftやMetaには契約に基づき計算設備を提供する。"
     },
     "en": {
@@ -1015,7 +1208,7 @@
       "revenue": "Charges for GPU capacity, storage and related services, including long-term dedicated-capacity contracts.",
       "strength": "Combines AI-focused infrastructure with in-house software to support deployment and operations.",
       "risks": "Large funding and power needs, construction or supply delays, and execution of major customer contracts.",
-      "competition": "CoreWeave, Crusoe, Lambda and major clouds such as AWS and Google Cloud.",
+      "competition": "Nebius names CoreWeave, Crusoe and Lambda, plus Amazon AWS, Google Cloud, Microsoft Azure and Oracle Cloud, as GPU-cloud competitors. Official GPU-compute services were checked. Pricing, capacity availability and managed services differ. Microsoft capacity contracts coexist with cloud competition; managed inference is a separate product scope.",
       "relationships": "Uses NVIDIA GPUs and collaborates with NVIDIA; supplies contracted capacity to Microsoft and Meta."
     },
     "maps": {
@@ -1025,11 +1218,13 @@
           "name": "CoreWeave",
           "role": "competitor",
           "label": {
-            "ja": "AIクラウドで競合",
-            "en": "AI cloud"
+            "ja": "GPUクラウド計算。Nebius開示とサービス照合",
+            "en": "GPU cloud compute; Nebius disclosure/service check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
           ],
           "ticker": "CRWV"
         },
@@ -1038,11 +1233,12 @@
           "name": "Crusoe",
           "role": "competitor",
           "label": {
-            "ja": "AIクラウドで競合",
-            "en": "AI cloud"
+            "ja": "GPUクラウド。自社開示とサービス照合",
+            "en": "GPU cloud; named peer/service check"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
           ]
         },
         {
@@ -1050,38 +1246,69 @@
           "name": "Lambda",
           "role": "competitor",
           "label": {
-            "ja": "AIクラウドで競合",
-            "en": "AI cloud"
+            "ja": "GPUインスタンス。自社開示とサービス照合",
+            "en": "GPU instances; named peer/service check"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
           ]
         },
         {
           "kind": "company",
-          "name": "Amazon / AWS",
+          "name": "Amazon",
           "role": "competitor",
           "label": {
-            "ja": "大手クラウドとして競合",
-            "en": "Large cloud platform"
+            "ja": "AWS EC2 GPU計算。自社開示とサービス照合",
+            "en": "AWS EC2 GPU compute; named peer/service check"
           },
           "sourceIndexes": [
-            0
+            0,
+            5
           ],
           "ticker": "AMZN"
         },
         {
           "kind": "company",
-          "name": "Google Cloud",
+          "name": "Alphabet",
           "role": "competitor",
           "label": {
-            "ja": "大手クラウドとして競合",
-            "en": "Large cloud platform"
+            "ja": "Google Cloud GPU計算。自社開示と照合",
+            "en": "Google Cloud GPU compute; named peer/service check"
           },
           "sourceIndexes": [
-            0
+            0,
+            6
           ],
           "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "Azure GPU計算。自社開示、容量契約と併存",
+            "en": "Azure GPU compute; disclosed rivalry alongside capacity contracts"
+          },
+          "sourceIndexes": [
+            0,
+            7
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "role": "competitor",
+          "label": {
+            "ja": "OCI GPU計算。自社開示とサービス照合",
+            "en": "OCI GPU compute; named peer/service check"
+          },
+          "sourceIndexes": [
+            0,
+            8
+          ],
+          "ticker": "ORCL"
         }
       ],
       "relationships": [
@@ -1233,11 +1460,31 @@
       "ASML"
     ],
     "name": "ASML",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Annual Report · Products / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
+      },
+      {
+        "label": "ASML · 2025 annual report, DUV and patterning application competition",
+        "url": "https://ourbrand.asml.com/m/71076aaad607de4d/original/asml-2025-annual-report-based-on-us-gaap.pdf"
+      },
+      {
+        "label": "Nikon · Semiconductor lithography lineup",
+        "url": "https://www.nikon.com/business/semi/lineup/"
+      },
+      {
+        "label": "ASML · Metrology and inspection systems",
+        "url": "https://www.asml.com/products/metrology-and-inspection-systems"
+      },
+      {
+        "label": "Applied Materials · Metrology and inspection portfolio",
+        "url": "https://www.appliedmaterials.com/in/en/semiconductor/products/processes/metrology-and-inspection.html"
+      },
+      {
+        "label": "KLA · FY2026 Form 10-K, process-control products and competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm"
       }
     ],
     "ja": {
@@ -1245,7 +1492,7 @@
       "revenue": "半導体工場への装置販売と、稼働中の装置の保守や性能向上サービス。",
       "strength": "非常に短い波長の光を使うEUV露光を実用化し、先端半導体の製造を支える。",
       "risks": "輸出規制、少数の大口顧客の設備投資、重要部品の供給制約や新型装置の開発遅延。",
-      "competition": "従来型のDUV露光装置ではNikonやCanon。計測・検査などでは別の装置メーカーとも競う。",
+      "competition": "ASML自身は深紫外線（DUV）露光のNikon・Canon、パターニング関連のApplied Materials・KLAを競合に挙げる。前者はDUV露光、後者は計測・検査など重なる工程の比較で、EUV露光装置の同等品を意味しない。光学露光、オーバーレイ計測、電子線検査では用途や工程が異なる。",
       "relationships": "半導体メーカーに装置を供給。Carl Zeiss SMTが重要なレンズやミラーなどの光学部品を担う。"
     },
     "en": {
@@ -1253,7 +1500,7 @@
       "revenue": "Equipment sales, maintenance and upgrades for installed systems.",
       "strength": "Commercial EUV lithography uses extremely short-wavelength light to support advanced chip manufacturing.",
       "risks": "Export controls, concentrated customer spending, critical-part shortages and development delays.",
-      "competition": "Nikon and Canon in DUV lithography; other equipment suppliers in measurement and inspection.",
+      "competition": "ASML names Nikon and Canon in deep-ultraviolet lithography, and Applied Materials and KLA in patterning applications. These cover DUV exposure and overlapping metrology/inspection processes, not equivalent EUV lithography systems. Optical exposure, overlay metrology and electron-beam inspection have different process roles.",
       "relationships": "Supplies chipmakers; Carl Zeiss SMT provides critical optical components such as lenses and mirrors."
     },
     "maps": {
@@ -1263,11 +1510,12 @@
           "name": "Nikon",
           "role": "competitor",
           "label": {
-            "ja": "DUV露光装置で競合",
-            "en": "DUV lithography"
+            "ja": "DUV露光。ASML自身の開示と製品照合",
+            "en": "DUV lithography; ASML disclosure/product check"
           },
           "sourceIndexes": [
-            0
+            1,
+            2
           ]
         },
         {
@@ -1275,12 +1523,41 @@
           "name": "Canon",
           "role": "competitor",
           "label": {
-            "ja": "DUV露光装置で競合",
-            "en": "DUV lithography"
+            "ja": "DUV露光。ASML自身の開示",
+            "en": "DUV lithography; named by ASML"
           },
           "sourceIndexes": [
-            0
+            1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "competitor",
+          "label": {
+            "ja": "パターニング計測・検査。自社開示と製品照合",
+            "en": "Patterning metrology/inspection; named peer/product check"
+          },
+          "sourceIndexes": [
+            1,
+            3,
+            4
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "KLA",
+          "role": "competitor",
+          "label": {
+            "ja": "パターニング計測・検査。自社と相手側の開示",
+            "en": "Patterning metrology/inspection; ASML and KLA disclosures"
+          },
+          "sourceIndexes": [
+            1,
+            5
+          ],
+          "ticker": "KLAC"
         }
       ],
       "relationships": [
@@ -1714,11 +1991,31 @@
       "CRDO"
     ],
     "name": "Credo",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm"
+      },
+      {
+        "label": "Credo · Toucan PCIe retimers and active electrical cables",
+        "url": "https://credosemi.com/products/pcie/"
+      },
+      {
+        "label": "Broadcom · PCIe switches and retimers",
+        "url": "https://www.broadcom.com/products/pcie-switches-retimers"
+      },
+      {
+        "label": "Marvell · Alaska P PCIe retimers",
+        "url": "https://www.marvell.com/products/pcie-retimers.html"
+      },
+      {
+        "label": "Astera Labs · Aries, Taurus, Scorpio and Leo connectivity portfolio",
+        "url": "https://www.asteralabs.com/products/"
+      },
+      {
+        "label": "Amphenol · Active electrical cables, distinct from passive and active copper cables",
+        "url": "https://www.amphenol-cs.com/cables/active-electrical-cables.html"
       }
     ],
     "ja": {
@@ -1726,7 +2023,7 @@
       "revenue": "接続用の半導体・ケーブルなどの販売と、高速通信の設計技術を使うためのライセンス料。",
       "strength": "大量のデータを低い消費電力で安定して送る技術。機器間の接続不良を減らす仕組みも提供する。",
       "risks": "少数の大口顧客への売上集中、採用計画の変更、製造委託先への依存や接続方式の変化。",
-      "competition": "Broadcom、Marvell、Astera Labsのほか、ケーブルや光通信部品のメーカー。",
+      "competition": "Credo自身が挙げるBroadcom、Marvell、Astera Labsが高速接続半導体の競合例。公式製品ではPCIeリタイマーなどを照合した。ケーブルではAmphenolのアクティブ電気ケーブル（AEC）とCredo AECを編集上比較する。AEC、受動ケーブル、光通信DSPは役割が異なり、AmphenolがCredoの顧客という意味ではない。",
       "relationships": "クラウド事業者や機器メーカーへ供給。Oracleとは光接続の安定性を高める製品を共同開発した。"
     },
     "en": {
@@ -1734,7 +2031,7 @@
       "revenue": "Connectivity-product sales and licenses for high-speed signaling technology.",
       "strength": "Combines energy-efficient data transfer with tools that improve connection reliability.",
       "risks": "Concentrated customers, changing adoption plans, outsourced manufacturing and shifts in connectivity technology.",
-      "competition": "Broadcom, Marvell, Astera Labs, and cable or optical-component suppliers.",
+      "competition": "Credo names Broadcom, Marvell and Astera Labs in high-speed connectivity; official PCIe-retimer products were compared. Amphenol active electrical cables are an editorial comparison with Credo AECs. Active electrical cables, passive cables and optical DSPs have different roles. This comparison does not establish Amphenol as a Credo customer.",
       "relationships": "Supplies cloud and equipment companies; developed optical-reliability products with Oracle."
     },
     "maps": {
@@ -1744,24 +2041,28 @@
           "name": "Broadcom",
           "role": "competitor",
           "label": {
-            "ja": "高速接続で競合",
-            "en": "High-speed connectivity"
+            "ja": "PCIe接続半導体。自社開示と製品照合",
+            "en": "PCIe connectivity; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
           ],
           "ticker": "AVGO"
         },
         {
           "kind": "company",
-          "name": "Marvell",
+          "name": "Marvell Technology",
           "role": "competitor",
           "label": {
-            "ja": "高速接続で競合",
-            "en": "High-speed connectivity"
+            "ja": "Alaska P PCIeリタイマー。自社開示と照合",
+            "en": "Alaska P PCIe retimers; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            3
           ],
           "ticker": "MRVL"
         },
@@ -1770,13 +2071,29 @@
           "name": "Astera Labs",
           "role": "competitor",
           "label": {
-            "ja": "接続用半導体で競合",
-            "en": "Connectivity chips"
+            "ja": "Aries PCIeリタイマー。自社開示と製品照合",
+            "en": "Aries PCIe retimers; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            4
           ],
           "ticker": "ALAB"
+        },
+        {
+          "kind": "company",
+          "name": "Amphenol",
+          "role": "competitor",
+          "label": {
+            "ja": "アクティブ電気ケーブル。公式製品の編集比較",
+            "en": "Active electrical cables; editorial product comparison"
+          },
+          "sourceIndexes": [
+            1,
+            5
+          ],
+          "ticker": "APH"
         }
       ],
       "relationships": [
@@ -1953,7 +2270,7 @@
       "MU"
     ],
     "name": "Micron",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
@@ -1962,6 +2279,18 @@
       {
         "label": "NVIDIA FY2026 Form 10-K · Manufacturing",
         "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+      },
+      {
+        "label": "Samsung · HBM memory portfolio",
+        "url": "https://semiconductor.samsung.com/dram/hbm/"
+      },
+      {
+        "label": "SK hynix · September 2026 AI DRAM, HBM and NAND portfolio",
+        "url": "https://news.skhynix.com/en/dtf-2026/"
+      },
+      {
+        "label": "Kioxia · Flash memory portfolio",
+        "url": "https://americas.kioxia.com/en-us/business/memory.html"
       }
     ],
     "ja": {
@@ -1969,7 +2298,7 @@
       "revenue": "データセンター、スマホ、パソコンなどのメーカーにメモリーや記憶装置を販売する。",
       "strength": "設計から製造まで手がけ、AI向けの高速メモリーHBMも展開する。",
       "risks": "メモリー価格の上下が業績に響きやすい。供給過剰や巨額の設備投資も負担になる。",
-      "competition": "Samsung、SK hynix。データ保存用のNANDではKioxiaやSandiskなど。",
+      "competition": "Micron自身はSamsung Electronics、SK hynix、Kioxia、Sandiskを主要な競合に挙げる。DRAM・HBMとNANDフラッシュでは市場が異なり、KioxiaとSandiskはNAND・SSDの範囲で比較する。両社をHBMの競合と扱う意味ではない。メモリ世代や用途、供給条件によって競争相手は変わる。",
       "relationships": "NVIDIAのメモリー調達先の一社。クラウド事業者や機器メーカーともつながる。"
     },
     "en": {
@@ -1977,7 +2306,7 @@
       "revenue": "Sells memory and storage products for data centers, phones, PCs and other devices.",
       "strength": "Designs and manufactures memory, including high-bandwidth memory (HBM) for AI.",
       "risks": "Memory-price cycles, oversupply and heavy factory investment can pressure earnings.",
-      "competition": "Samsung and SK hynix; Kioxia and Sandisk also compete in NAND.",
+      "competition": "Micron names Samsung Electronics, SK hynix, Kioxia and Sandisk as major competitors. DRAM/HBM and NAND flash are distinct markets; Kioxia and Sandisk are compared in NAND/SSD products, not as HBM rivals. Relevant competition varies by memory generation, workload and supply conditions.",
       "relationships": "Supplies memory to NVIDIA and serves cloud and device manufacturers."
     },
     "maps": {
@@ -1987,11 +2316,12 @@
           "name": "Samsung",
           "role": "competitor",
           "label": {
-            "ja": "メモリーで競合",
-            "en": "Memory chips"
+            "ja": "DRAM・HBM・NAND。Micron自身の開示",
+            "en": "DRAM/HBM/NAND; named by Micron"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
           ]
         },
         {
@@ -1999,11 +2329,12 @@
           "name": "SK hynix",
           "role": "competitor",
           "label": {
-            "ja": "メモリーで競合",
-            "en": "Memory chips"
+            "ja": "DRAM・HBM・NAND。自社開示と製品照合",
+            "en": "DRAM/HBM/NAND; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
           ]
         },
         {
@@ -2011,11 +2342,12 @@
           "name": "Kioxia",
           "role": "competitor",
           "label": {
-            "ja": "NANDで競合",
-            "en": "NAND flash"
+            "ja": "NANDフラッシュ・SSD。自社開示と製品照合",
+            "en": "NAND flash/SSDs; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
           ]
         },
         {
@@ -2023,8 +2355,8 @@
           "name": "Sandisk",
           "role": "competitor",
           "label": {
-            "ja": "NANDで競合",
-            "en": "NAND flash"
+            "ja": "NANDフラッシュ・SSD。Micron自身の開示",
+            "en": "NAND flash/SSDs; named by Micron"
           },
           "sourceIndexes": [
             0
@@ -2630,7 +2962,7 @@
       "INTC"
     ],
     "name": "Intel",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -2639,6 +2971,10 @@
       {
         "label": "Intel · NVIDIA product collaboration, September 2025",
         "url": "https://newsroom.intel.com/artificial-intelligence/intel-and-nvidia-to-jointly-develop-ai-infrastructure-and-personal-computing-products"
+      },
+      {
+        "label": "Qualcomm · Snapdragon PC processor portfolio",
+        "url": "https://www.qualcomm.com/laptops/products"
       }
     ],
     "ja": {
@@ -2646,7 +2982,7 @@
       "revenue": "CoreやXeonなどの半導体販売が中心。製造・先端パッケージングも提供する。",
       "strength": "x86対応ソフトの広い基盤と、自社の設計・製造技術を持つ。",
       "risks": "製造技術の遅れや工場の稼働率低下が重荷。AMDや独自チップとの競争も厳しい。",
-      "competition": "CPUでAMD、AI計算でNVIDIA、受託製造でTSMCなどと競う。",
+      "competition": "Intel自身が挙げるAMD・NVIDIAはCPUやAI計算、QualcommとAppleはArm方式のPC計算、TSMCとSamsung Electronicsは受託製造の競合例。PC用CPU、AIアクセラレーター、半導体製造は異なる市場。TSMCへの製造委託やNVIDIAとの協業は競合と併存する。設計IPや命令セット規格そのものを同じ完成品チップとは扱わない。",
       "relationships": "一部チップの製造をTSMCに委託。NVIDIAとはPC・データセンター製品を共同開発する。"
     },
     "en": {
@@ -2654,7 +2990,7 @@
       "revenue": "Primarily chip sales, including Core and Xeon, plus manufacturing and advanced packaging.",
       "strength": "A broad x86 software ecosystem and in-house chip design and manufacturing capabilities.",
       "risks": "Process delays, underused factories and competition from AMD and custom chips can weigh on returns.",
-      "competition": "Competes with AMD in CPUs, NVIDIA in AI computing and TSMC in foundry services.",
+      "competition": "Intel names AMD/NVIDIA in CPUs or AI compute, Qualcomm/Apple in Arm-based PC compute, and TSMC/Samsung Electronics in foundry manufacturing. PC processors, AI accelerators and chip manufacturing are different markets. Outsourcing to TSMC and collaboration with NVIDIA coexist with rivalry. Processor IP and instruction-set standards are not treated as identical finished chips.",
       "relationships": "Uses TSMC for some chips and collaborates with NVIDIA on PC and data-center products."
     },
     "maps": {
@@ -2664,8 +3000,8 @@
           "name": "AMD",
           "role": "competitor",
           "label": {
-            "ja": "PC・サーバーCPU",
-            "en": "PC and server CPUs"
+            "ja": "PC・サーバーCPUとAI計算。Intel自身の開示",
+            "en": "PC/server CPUs and AI compute; named by Intel"
           },
           "sourceIndexes": [
             0
@@ -2677,8 +3013,8 @@
           "name": "NVIDIA",
           "role": "competitor",
           "label": {
-            "ja": "AI計算基盤",
-            "en": "AI computing"
+            "ja": "AIアクセラレーター。Intel自身の開示",
+            "en": "AI accelerators; named by Intel"
           },
           "sourceIndexes": [
             0
@@ -2690,13 +3026,52 @@
           "name": "TSMC",
           "role": "competitor",
           "label": {
-            "ja": "半導体の受託製造",
-            "en": "Foundry services"
+            "ja": "半導体受託製造。自社開示、委託と競合が併存",
+            "en": "Foundry manufacturing; rivalry coexists with outsourcing"
           },
           "sourceIndexes": [
             0
           ],
           "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "Qualcomm",
+          "role": "competitor",
+          "label": {
+            "ja": "SnapdragonのPC計算。自社開示と製品照合",
+            "en": "Snapdragon PC compute; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "QCOM"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "competitor",
+          "label": {
+            "ja": "MシリーズによるPC計算。Intel自身の開示",
+            "en": "M-series PC compute; named by Intel"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Samsung Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "半導体受託製造。Intel自身の開示",
+            "en": "Foundry manufacturing; named by Intel"
+          },
+          "sourceIndexes": [
+            0
+          ]
         }
       ],
       "relationships": [

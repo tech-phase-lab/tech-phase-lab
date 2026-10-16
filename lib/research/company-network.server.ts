@@ -72,6 +72,38 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "APH") return {
+    4: { ja: "コネクター・光配線", en: "Connectors & optical cabling" },
+  };
+  if (root === "ANET") return {
+    5: { ja: "ネットワーク機器・可視化", en: "Networking & packet visibility" },
+  };
+  if (root === "MRVL") return {
+    3: { ja: "高速接続半導体", en: "High-speed connectivity chips" },
+  };
+  if (root === "VRT") return {
+    5: { ja: "データセンター電源・冷却", en: "Data center power & cooling" },
+  };
+  if (root === "ALAB") return {
+    3: { ja: "PCIe・CXL接続半導体", en: "PCIe & CXL connectivity chips" },
+  };
+  if (root === "NBIS") return {
+    6: { ja: "GPU計算・AIクラウド", en: "GPU compute & AI cloud" },
+  };
+  if (root === "ASML") return {
+    2: { ja: "露光・計測・検査装置", en: "Lithography, metrology & inspection" },
+  };
+  if (root === "CRDO") return {
+    3: { ja: "高速接続半導体", en: "High-speed connectivity chips" },
+    4: { ja: "ケーブル・物理接続", en: "Cables & physical interconnect" },
+  };
+  if (root === "MU") return {
+    2: { ja: "DRAM・HBM・NANDメモリ", en: "DRAM, HBM & NAND memory" },
+  };
+  if (root === "INTC") return {
+    1: { ja: "半導体受託製造", en: "Foundry manufacturing" },
+    3: { ja: "CPU・AIアクセラレーター", en: "CPUs & AI accelerators" },
+  };
   if (root === "AMAT") return {
     2: { ja: "半導体製造装置・検査", en: "Semiconductor process tools & inspection" },
   };
@@ -1330,6 +1362,334 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "残高・口座を使う購入決済",
         "en": "Balance/bank-funded checkout"
+      }
+    }
+  },
+  "APH": {
+    "TEL": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "コネクター・電源接続",
+        "en": "Connectors & power interconnect"
+      }
+    },
+    "Molex": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "高速電気・光接続",
+        "en": "Electrical & optical interconnect"
+      }
+    },
+    "GLW": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光ファイバー・配線",
+        "en": "Optical fiber & cabling"
+      }
+    }
+  },
+  "ANET": {
+    "CSCO": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "スイッチ・ルーター",
+        "en": "Switches & routers"
+      }
+    },
+    "HPE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Aruba・Juniperネットワーク",
+        "en": "Aruba & Juniper networking"
+      }
+    },
+    "NVDA": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AI計算・ネットワーク接続",
+        "en": "AI compute & networking"
+      }
+    },
+    "EXTR": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "学内・企業ネットワーク",
+        "en": "Campus networking"
+      }
+    },
+    "KEYS": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Visionパケットブローカー",
+        "en": "Vision network packet brokers"
+      }
+    }
+  },
+  "MRVL": {
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "PCIe接続半導体",
+        "en": "PCIe connectivity chips"
+      }
+    },
+    "CRDO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Toucan PCIeリタイマー",
+        "en": "Toucan PCIe retimers"
+      }
+    },
+    "ALAB": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Aries PCIeリタイマー",
+        "en": "Aries PCIe retimers"
+      }
+    }
+  },
+  "VRT": {
+    "Schneider Electric": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Uniflair冷却システム",
+        "en": "Uniflair cooling"
+      }
+    },
+    "ETN": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "データセンター配電",
+        "en": "Data center power distribution"
+      }
+    },
+    "Legrand": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "ラック配電",
+        "en": "Rack power distribution"
+      }
+    },
+    "JCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "データセンター冷却",
+        "en": "Data center thermal management"
+      }
+    }
+  },
+  "ALAB": {
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "PCIeスイッチ・リタイマー",
+        "en": "PCIe switches & retimers"
+      }
+    },
+    "MRVL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Alaska P PCIeリタイマー",
+        "en": "Alaska P PCIe retimers"
+      }
+    },
+    "CRDO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Toucan PCIeリタイマー",
+        "en": "Toucan PCIe retimers"
+      }
+    },
+    "MCHP": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Switchtec PCIeスイッチ",
+        "en": "Switchtec PCIe switches"
+      }
+    }
+  },
+  "NBIS": {
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GPUクラウド計算",
+        "en": "GPU cloud compute"
+      }
+    },
+    "Crusoe": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GPUクラウド",
+        "en": "GPU cloud"
+      }
+    },
+    "Lambda": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GPUインスタンス",
+        "en": "GPU instances"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS GPU計算",
+        "en": "AWS GPU compute"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud GPU計算",
+        "en": "Google Cloud GPU compute"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure・計算容量契約",
+        "en": "Azure & compute capacity contracts"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OCI GPU計算",
+        "en": "OCI GPU compute"
+      }
+    }
+  },
+  "ASML": {
+    "Nikon": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DUV露光装置",
+        "en": "DUV lithography"
+      }
+    },
+    "Canon": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DUV露光装置",
+        "en": "DUV lithography"
+      }
+    },
+    "AMAT": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "計測・検査装置",
+        "en": "Metrology & inspection"
+      }
+    },
+    "KLAC": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "計測・検査装置",
+        "en": "Metrology & inspection"
+      }
+    }
+  },
+  "CRDO": {
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "PCIe接続半導体",
+        "en": "PCIe connectivity chips"
+      }
+    },
+    "MRVL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Alaska P PCIeリタイマー",
+        "en": "Alaska P PCIe retimers"
+      }
+    },
+    "ALAB": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Aries PCIeリタイマー",
+        "en": "Aries PCIe retimers"
+      }
+    },
+    "APH": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "アクティブ電気ケーブル",
+        "en": "Active electrical cables"
+      }
+    }
+  },
+  "MU": {
+    "Samsung": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM・NAND",
+        "en": "DRAM, HBM & NAND"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM・NAND",
+        "en": "DRAM, HBM & NAND"
+      }
+    },
+    "Kioxia": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NANDフラッシュ・SSD",
+        "en": "NAND flash & SSDs"
+      }
+    },
+    "SNDK": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NANDフラッシュ・SSD",
+        "en": "NAND flash & SSDs"
+      }
+    }
+  },
+  "INTC": {
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "PC・サーバーCPUとAI計算",
+        "en": "PC/server CPUs & AI compute"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AIアクセラレーター",
+        "en": "AI accelerators"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "半導体受託製造",
+        "en": "Foundry manufacturing"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Snapdragon PC用CPU",
+        "en": "Snapdragon PC processors"
+      }
+    },
+    "AAPL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "MシリーズPC用CPU",
+        "en": "M-series PC processors"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "半導体受託製造",
+        "en": "Foundry manufacturing"
       }
     }
   }
