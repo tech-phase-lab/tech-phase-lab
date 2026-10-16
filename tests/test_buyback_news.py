@@ -235,7 +235,7 @@ class BuybackTests(unittest.TestCase):
         # 4 approved routes plus the polling-only Hardik Shah price-target and Trade The News result routes.
         self.assertEqual(len(active),6)
         self.assertTrue(all(len(s['query'])<=512 and s['maxResults']==30 for s in active))
-        self.assertEqual(SOURCE['intervalSeconds'],120)
+        self.assertEqual(SOURCE['intervalSeconds'],900)  # Oct 16: slowed so the daily X budget goes to the earnings and result routes
         self.assertIn(' OR 自社株買い',SOURCE['query'])
         self.assertEqual(len(SOURCE['query']),440)
         for term in ('repurchase','repurchases','repurchased','repurchasing'):

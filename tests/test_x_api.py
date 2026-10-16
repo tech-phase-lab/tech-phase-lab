@@ -216,7 +216,7 @@ class XApiTests(unittest.TestCase):
             if source["id"] == "x-tradethenews":
                 # Oct 15: earnings-result route; one account, results lines only, never price targets.
                 self.assertEqual(source["accounts"], ["Trade_The_News"])
-                self.assertEqual(source["intervalSeconds"], 120)
+                self.assertEqual(source["intervalSeconds"], 60)
                 self.assertTrue(source["query"].startswith("from:Trade_The_News "))
                 self.assertNotIn("target", source["query"])
                 continue

@@ -169,3 +169,52 @@ class JapaneseNameTests(unittest.TestCase):
         for text in (company_wire.POLICY, headline_translation.POLICY):
             self.assertIn('GE Vernova = GEベルノバ', text)
             self.assertIn('Bloom Energy = ブルーム・エナジー', text)
+
+
+class TriageTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile, os
+        self.dir = tempfile.TemporaryDirectory()
+        self.path = os.path.join(self.dir.name, 'db.sqlite')
+        self.now = datetime(2026, 10, 16, 12, 0, tzinfo=timezone.utc)
+
+    def tearDown(self):
+        self.dir.cleanup()
+
+    def headlines(self, *items):
+        rows = [{'ticker': 'NVDA', 'source': 'gnews', 'title': title, 'publisher': publisher,
+                 'url': f'https://news.example/{n}', 'published': self.now - timedelta(minutes=n)}
+                for n, (title, publisher) in enumerate(items, 1)]
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, rows, 'NVIDIA', seen_at=self.now)
+            company_wire.schema_translation(db)
+            return [r['title'] for r in company_wire.pending_rows(db, self.now.timestamp())]
+
+    def test_noise_is_never_sent_for_translation(self):
+        picked = self.headlines(('Invesco QQQ Trust (QQQ) Sells NVIDIA and Apple on Oct. 14', 'Yahoo Finance'),
+                                ('Lobbying Update: $110,000 of NVIDIA CORPORATION lobbying was just disclosed', 'Quiver'),
+                                ('NVIDIA (NVDA) Sees $224.6 Million in Net ETF Buying on Oct. 14', 'Yahoo Finance'),
+                                ('Germany to unveil Nvidia AI agreement next week, government sources say', 'Reuters'))
+        self.assertEqual(picked, ['Germany to unveil Nvidia AI agreement next week, government sources say'])
+
+    def test_one_headline_is_taken_per_story_from_the_best_publisher(self):
+        picked = self.headlines(('Volvo Cars expands automated driving partnership with Nvidia', 'Just Auto'),
+                                ('Volvo Cars Expands Nvidia Partnership for Hands-Free Automated Driving', 'Technology Org'),
+                                ('Volvo Cars expands automated driving partnership with Nvidia', 'Reuters'),
+                                ('Nvidia launches three open Nemotron models', 'TechRepublic'))
+        self.assertEqual(len(picked), 2)
+        self.assertIn('Volvo Cars expands automated driving partnership with Nvidia', picked)
+        self.assertEqual(picked[0], 'Volvo Cars expands automated driving partnership with Nvidia')
+
+    def test_a_story_already_translated_is_not_sent_again(self):
+        with company_wire.connect(self.path) as db:
+            rows = [{'ticker': 'NVDA', 'source': 'gnews', 'title': 'Nvidia expands Nemotron family with two new models', 'publisher': 'Reuters',
+                     'url': 'https://news.example/a', 'published': self.now - timedelta(minutes=30)}]
+            company_wire.store(db, rows, 'NVIDIA', seen_at=self.now)
+            company_wire.schema_translation(db)
+            key = db.execute('SELECT key FROM company_wire').fetchone()[0]
+            db.execute('INSERT INTO company_wire_ja VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', self.now.isoformat()))
+            db.commit()
+        picked = self.headlines(('Nvidia expands Nemotron family with two new open models', 'Techzine'),
+                                ('Germany plans AI cooperation deal with Nvidia, Handelsblatt says', 'Reuters'))
+        self.assertEqual(picked, ['Germany plans AI cooperation deal with Nvidia, Handelsblatt says'])

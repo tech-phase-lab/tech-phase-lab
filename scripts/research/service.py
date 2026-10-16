@@ -1187,7 +1187,7 @@ class AutomaticMonitor:
                 result = company_wire.translate_once(self.db_path)
             except Exception:
                 print("company-wire-translation-failed", flush=True)
-            self.stop_event.wait(5 if result == "done" else 60)
+            self.stop_event.wait(3 if result == "done" else 20)
 
     def company_wire_feed(self):
         with company_wire.connect(self.db_path) as db:
