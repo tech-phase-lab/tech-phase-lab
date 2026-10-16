@@ -91,6 +91,7 @@ test('PostgreSQL ledger grants once, binds buyer, tolerates duplicate completion
   const input={kind:'initial',language:'ja',requestKey:randomUUID()};
   const first=await f.engine.create('user_test',input),again=await f.engine.create('user_test',input);
   assert.equal(first.orderId,again.orderId);
+  assert.equal((await f.store.access('user_test')).canUseTools,false);
   await assert.rejects(()=>f.engine.capture('user_other',{orderId:first.orderId}),/ORDER_NOT_FOUND/);
   await assert.rejects(()=>f.engine.create('user_test',{...input,amount:1}),/INVALID_PAYMENT_INPUT/);
   assert.equal((await f.engine.capture('user_test',{orderId:first.orderId})).state,'paid');
@@ -98,10 +99,17 @@ test('PostgreSQL ledger grants once, binds buyer, tolerates duplicate completion
   const event={id:'EV-COMPLETED',event_type:'PAYMENT.CAPTURE.COMPLETED',resource:{id:'CAPTURE12345'}};
   await f.engine.webhook(new Headers(),event);await f.engine.webhook(new Headers(),event);
   assert.equal((await f.db.query('SELECT count(*)::int AS n FROM resolute_payments_sandbox.grants')).rows[0].n,1);
+  const access=await f.store.access('user_test');
+  assert.equal(access.sandbox,true);assert.equal(access.canUseTools,true);
+  assert.equal(access.canReceiveNotifications,true);
+  assert.equal((await f.store.access('user_other')).canUseTools,false);
+  await assert.rejects(()=>f.store.access("user_test' OR 1=1--"));
   const refund={id:'EV-REFUNDED',event_type:'PAYMENT.CAPTURE.REFUNDED',resource:{supplementary_data:{related_ids:{capture_id:'CAPTURE12345'}}}};
   await f.engine.webhook(new Headers(),refund);
   await f.engine.webhook(new Headers(),{...event,id:'EV-LATE-COMPLETE'});
   assert.equal((await f.store.get(first.orderId)).state,'revoked');
+  assert.equal((await f.store.access('user_test')).canUseTools,false);
+  assert.equal((await f.store.access('user_test')).canReceiveNotifications,false);
   assert.equal((await f.db.query('SELECT state FROM resolute_payments_sandbox.grants')).rows[0].state,'revoked');
   assert.equal((await f.db.query('SELECT count(*)::int AS n FROM resolute_payments_sandbox.alert_outbox')).rows[0].n,1);
   assert.equal((await f.db.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema='resolute' AND table_name='entitlements'")).rows[0].n,0);

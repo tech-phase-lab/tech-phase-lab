@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { addYear, reject } from './policy.mjs';
+import { sandboxAccess } from './access.mjs';
 const S = 'resolute_payments_sandbox';
 const iso = row => row && Object.fromEntries(Object.entries(row).map(([k,v]) => [k,v instanceof Date ? v.toISOString() : v]));
 export function paymentStore(pool) {
@@ -25,6 +26,19 @@ export function paymentStore(pool) {
     const { rows } = await pool.query(`SELECT * FROM ${S}.orders WHERE id=$1`, [id]); return iso(rows[0]);
   }
   return { tx, audit, rights, get,
+    async access(user) {
+      if (!/^user_[A-Za-z0-9]{1,128}$/.test(user)) reject('AUTH_REQUIRED',401);
+      // One statement gives a consistent clock and snapshot across refund/capture commits.
+      const { rows } = await pool.query(`SELECT statement_timestamp() AS as_of,
+        g.kind,g.state,g.starts_at,g.expires_at,o.state AS order_state
+        FROM (SELECT $1::text AS user_id) subject
+        LEFT JOIN ${S}.grants g ON g.user_id=subject.user_id
+        LEFT JOIN ${S}.orders o ON o.id=g.order_id AND o.user_id=subject.user_id
+          AND o.quote->>'product'='resolute_v1' AND o.quote->>'kind'=g.kind
+          AND o.capture_id IS NOT NULL AND o.paid_at IS NOT NULL`, [user]);
+      if (!rows.length) throw Error('Missing access snapshot');
+      return sandboxAccess(rows.filter(row=>row.kind !== null),new Date(rows[0].as_of).toISOString());
+    },
     async create(user, key, makeQuote, now) {
       return tx(user, async db => {
         const existing = await db.query(`SELECT * FROM ${S}.orders WHERE user_id=$1 AND request_key=$2`, [user,key]);

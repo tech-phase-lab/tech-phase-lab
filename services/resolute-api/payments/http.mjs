@@ -28,6 +28,7 @@ export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers
         if(webhook) return json(await engine.webhook(request.headers,await readJson(request)));
         if(path === '/internal/v1/payments/orders' && request.method === 'POST') return json(await engine.create(user,await readJson(request,2048)));
         if(path === '/internal/v1/payments/capture' && request.method === 'POST') return json(await engine.capture(user,await readJson(request,2048)));
+        if(path === '/internal/v1/payments/access' && request.method === 'GET') return json(await store.access(user));
         if(path === '/internal/v1/payments/audit' && request.method === 'GET') return json({events:await store.auditList()});
         const match=path.match(/^\/internal\/v1\/payments\/orders\/([0-9a-f-]{36})$/i);
         if(match && request.method === 'GET') return json(await engine.status(user,match[1]));

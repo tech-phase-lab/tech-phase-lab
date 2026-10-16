@@ -16,7 +16,7 @@ async function handle(request: Request, context: { params: Promise<{ action: str
     if (path === "audit" && userId !== OWNER_ACCOUNT_ID)
       return Response.json({ error: "SANDBOX_ACCESS_DENIED" }, { status: 403, headers });
     if (!(request.method === "POST" && ["orders", "capture"].includes(path)) &&
-        !(request.method === "GET" && (path === "audit" || /^orders\/[0-9a-f-]{36}$/i.test(path))))
+        !(request.method === "GET" && (path === "audit" || path === "access" || /^orders\/[0-9a-f-]{36}$/i.test(path))))
       return Response.json({ error: "NOT_FOUND" }, { status: 404, headers });
     const incoming = new URL(request.url);
     if (incoming.search || request.method === "POST" && request.headers.get("origin") !== incoming.origin)

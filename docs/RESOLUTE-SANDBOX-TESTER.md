@@ -75,3 +75,11 @@ own acceptance evidence. Do not enable live charges, new paid plans or email
 delivery without the applicable authorization. Tester admission and temporary
 PRO qualification expire at their existing configured deadline; setup does not
 extend that deadline. No further purchase is needed for these six price cases.
+
+## 2026-10-16 — Sandbox購入台帳からの利用権判定
+
+`GET /internal/v1/payments/access` を追加。既存のサービス間認証・本人Clerk認証・期限付きSandbox許可リストを通過した本人だけが照会できる。userId等のquery指定は拒否。Sandbox専用台帳の注文と付与記録を一つのSQL snapshotで読み、商品・会員・購入種別・確定済み支払いの一致を要求する。戻り画面やPRO属性から利用権を作らない。
+
+初回購入はツールの無期限利用、初回/更新はそれぞれの通知期間として判定する。連続した期間だけを結合し、返金された更新期間の穴を埋めない。初回購入の返金・停止時には更新記録が残っても両方の能力フラグをfalseにする。注文か付与記録のどちらかが停止していれば許可しない。返金履歴・重複排除は既存の台帳/auditを使い、別の非同期コピーを作らない。
+
+この応答は必ず `sandbox: true`。通常の `/internal/v1/entitlements`、`resolute.entitlements`、本番ツール、通知ジョブには接続しない。DB移行・追加権限・本番決済・メール送信なし。本番利用権への接続は未完了であり、この変更を本番販売の完成扱いにしない。
