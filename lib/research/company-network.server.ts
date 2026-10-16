@@ -154,10 +154,10 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "BRZE") return {"6": {"ja": "データ・AIモデルの技術連携", "en": "Data & AI-model interoperability"}, "7": {"ja": "顧客体験・マーケティング配信", "en": "Customer journeys & marketing messages"}};
   if (root === "SPT") return {"6": {"ja": "SNS・クラウド・CRM連携と採用", "en": "Social, cloud & CRM integration / adoption"}, "7": {"ja": "SNS運用・分析ソフト", "en": "Social management & analytics"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "6": {"ja": "クラウド・AI・販売経路の協業", "en": "Cloud, AI & channel collaboration"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
-  if (root === "PTC") return {"6": {"ja": "設計・製品情報の技術連携", "en": "Design / product-data technology collaboration"}, "7": {"ja": "設計・製品ライフサイクル管理", "en": "Design & product lifecycle management"}};
-  if (root === "BSY") return {"6": {"ja": "クラウド基盤・都市デジタルツイン", "en": "Cloud infrastructure & city digital twins"}, "7": {"ja": "インフラの設計・建設ソフト", "en": "Infrastructure design & delivery software"}};
+  if (root === "PTC") return {"6": {"ja": "設計・製品情報の技術連携", "en": "Design / product-data technology collaboration"}, "7": {"ja": "設計・製品・ソフト開発管理", "en": "Design, product & software lifecycle management"}};
+  if (root === "BSY") return {"6": {"ja": "クラウド基盤・都市デジタルツイン", "en": "Cloud infrastructure & city digital twins"}, "7": {"ja": "インフラの設計・建設・資産運用", "en": "Infrastructure design, delivery & asset software"}};
   if (root === "VEEV") return {"6": {"ja": "クラウド・従来CRM・製品連携", "en": "Cloud, legacy CRM & product integration"}, "7": {"ja": "ライフサイエンスの業務・データ", "en": "Life-sciences applications & data"}};
-  if (root === "MANH") return {"6": {"ja": "クラウド基盤・販売経路", "en": "Cloud infrastructure & distribution"}, "7": {"ja": "物流・業務ソフトと導入支援", "en": "Supply-chain applications & implementation"}};
+  if (root === "MANH") return {"6": {"ja": "クラウド基盤・販売経路", "en": "Cloud infrastructure & distribution"}, "7": {"ja": "物流・店舗・業務ソフトと導入支援", "en": "Supply-chain / store applications & implementation"}};
   if (root === "HUBS") return {"6": {"ja": "顧客情報のAIツール連携", "en": "Customer-context integration in AI tools"}, "7": {"ja": "CRM・営業・マーケティング", "en": "CRM, sales & marketing"}};
   if (root === "TEAM") return {"6": {"ja": "業務情報・AIエージェント連携", "en": "Work context & AI agent integration"}, "7": {"ja": "案件・開発・IT業務ソフト", "en": "Work, development & IT service software"}};
   if (root === "DT") return {"5": {"ja": "AIインフラの監視エコシステム", "en": "AI infrastructure observability ecosystem"}, "6": {"ja": "監視・分析・クラウド連携", "en": "Observability, analytics & cloud integration"}};
@@ -4063,43 +4063,50 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "ADSK": {
       "layer": 7,
       "businessLabel": {
-        "ja": "設計・製造・建設ソフト",
-        "en": "Design, manufacturing & construction software"
+        "ja": "Autodesk | 設計・製造・建設ソフト",
+        "en": "Autodesk | Design, manufacturing & construction software"
       }
     },
     "SNX": {
       "layer": 5,
       "businessLabel": {
-        "ja": "一部市場の販売・流通提携",
-        "en": "Selected-market sales / distribution"
+        "ja": "TD SYNNEX | 一部市場の販売・流通提携",
+        "en": "TD SYNNEX | Selected-market sales / distribution"
       }
     },
     "BSY": {
       "layer": 7,
       "businessLabel": {
-        "ja": "建築・インフラ設計",
-        "en": "Building & infrastructure design"
+        "ja": "Bentley Systems | 建築・インフラ設計",
+        "en": "Bentley Systems | Building & infrastructure design"
       }
     },
     "PTC": {
       "layer": 7,
       "businessLabel": {
-        "ja": "製品設計・開発",
-        "en": "Product design & development"
+        "ja": "PTC | 製品設計・開発",
+        "en": "PTC | Product design & development"
       }
     },
     "PCOR": {
       "layer": 7,
       "businessLabel": {
-        "ja": "建設プロジェクト管理",
-        "en": "Construction project management"
+        "ja": "Procore | 建設プロジェクト管理",
+        "en": "Procore | Construction project management"
       }
     },
     "AMZN": {
       "layer": 6,
       "businessLabel": {
-        "ja": "AWS協業・Fusion販売経路の計画",
-        "en": "AWS alliance / Fusion channel plans"
+        "ja": "Amazon | AWS協業・Fusion販売経路の計画",
+        "en": "Amazon | AWS alliance / Fusion channel plans"
+      }
+    },
+    "Dassault Systèmes": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Dassault Systèmes｜SOLIDWORKS CAD",
+        "en": "Dassault Systèmes | SOLIDWORKS CAD"
       }
     }
   },
@@ -4356,22 +4363,57 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "NVDA": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Omniverseの設計・シミュレーション連携",
-        "en": "Omniverse design / simulation integration"
+        "ja": "NVIDIA | Omniverseの設計・シミュレーション連携",
+        "en": "NVIDIA | Omniverse design / simulation integration"
       }
     },
     "AMZN": {
       "layer": 6,
       "businessLabel": {
-        "ja": "PLM・CAD等のAWS協業",
-        "en": "AWS alliance for PLM / CAD"
+        "ja": "Amazon | PLM・CAD等のAWS協業",
+        "en": "Amazon | AWS alliance for PLM / CAD"
       }
     },
     "MSFT": {
       "layer": 6,
       "businessLabel": {
-        "ja": "製品情報・クラウド・AIの連携",
-        "en": "Product-data, cloud & AI collaboration"
+        "ja": "Microsoft | 製品情報・クラウド・AIの連携",
+        "en": "Microsoft | Product-data, cloud & AI collaboration"
+      }
+    },
+    "ADSK": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Autodesk",
+        "en": "Autodesk"
+      }
+    },
+    "PTC": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "PTC",
+        "en": "PTC"
+      }
+    },
+    "Siemens": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Siemens",
+        "en": "Siemens"
+      }
+    },
+    "Dassault Systèmes": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Dassault Systèmes",
+        "en": "Dassault Systèmes"
+      }
+    },
+    "IBM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "IBM｜ソフト開発・要件・試験管理",
+        "en": "IBM | engineering lifecycle management"
       }
     }
   },
@@ -4379,8 +4421,64 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "NVDA": {
       "layer": 6,
       "businessLabel": {
-        "ja": "2025年の都市デジタルツイン技術事例",
-        "en": "2025 city digital-twin technology example"
+        "ja": "NVIDIA | 2025年の都市デジタルツイン技術事例",
+        "en": "NVIDIA | 2025 city digital-twin technology example"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft",
+        "en": "Microsoft"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Nebius",
+        "en": "Nebius"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google",
+        "en": "Google"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle",
+        "en": "Oracle"
+      }
+    },
+    "ADSK": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Autodesk",
+        "en": "Autodesk"
+      }
+    },
+    "BSY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Bentley Systems",
+        "en": "Bentley Systems"
+      }
+    },
+    "TRMB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Trimble",
+        "en": "Trimble"
+      }
+    },
+    "Schneider Electric": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Schneider Electric｜AVEVA産業ソフト",
+        "en": "Schneider Electric | AVEVA industrial software"
       }
     }
   },
@@ -4397,8 +4495,64 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "GOOG": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Active稼働基盤・Marketplace共同販売",
-        "en": "Active hosting / Marketplace GTM"
+        "ja": "Google | Active稼働基盤・Marketplace共同販売",
+        "en": "Google | Active hosting / Marketplace GTM"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA",
+        "en": "NVIDIA"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle",
+        "en": "Oracle"
+      }
+    },
+    "MANH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Manhattan Associates",
+        "en": "Manhattan Associates"
+      }
+    },
+    "SAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SAP",
+        "en": "SAP"
+      }
+    },
+    "ACN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Accenture",
+        "en": "Accenture"
+      }
+    },
+    "Blue Yonder": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Blue Yonder",
+        "en": "Blue Yonder"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce｜店舗POS",
+        "en": "Salesforce | POS"
+      }
+    },
+    "IBM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "IBM｜Sterling注文・履行管理",
+        "en": "IBM | Sterling order fulfillment"
       }
     }
   },
@@ -4612,8 +4766,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "PEGA": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Pega｜業務自動化",
-        "en": "Pega | workflow automation"
+        "ja": "Pegasystems | Pega｜業務自動化",
+        "en": "Pegasystems | Pega | workflow automation"
       }
     },
     "NOW": {
@@ -4664,6 +4818,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Amazon AWS｜開発協業",
         "en": "Amazon AWS | development alliance"
       }
+    },
+    "IBM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "IBM｜業務フロー・案件管理",
+        "en": "IBM | workflow / case management"
+      }
     }
   },
   "NICE": {
@@ -4707,6 +4868,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "RingCentral｜RingEX・CXone販売",
         "en": "RingCentral | RingEX / CXone sales"
+      }
+    },
+    "FICO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "FICO｜Falcon決済不正検知",
+        "en": "FICO | Falcon payment-fraud detection"
       }
     }
   },
