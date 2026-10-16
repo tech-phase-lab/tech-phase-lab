@@ -16,7 +16,7 @@ export default function SavedSyncStatus({ collection, lang }: { collection: Retu
     const link = document.createElement('a'); link.href = url; link.download = 'saved-research-draft.json'; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 10000);
   }
-  if (collection.status === 'guest') return null;
+  if (collection.status === 'guest' || collection.status === 'loading') return null;
   if (collection.status === 'synced') return collection.canImport ? <details className={styles.savedImport}>
     <summary>{t('保存データの引き継ぎ', 'Import saved research')}</summary>
     <button onClick={collection.importLocal}>{t('このブラウザーの保存記事・メモを引き継ぐ', 'Import this browser’s articles and notes')}</button>

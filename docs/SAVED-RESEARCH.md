@@ -140,3 +140,8 @@
 - Export reads only the currently rendered, membership-checked article and matching notes. Text remains selectable and scalable; visible ink colors, underlines, highlights, boxes, notes, tables, source links and page numbers are retained. Hidden marks are excluded.
 - Noto Sans JP subsets are self-hosted from the pinned font package by predev/prebuild; font assets are generated rather than committed. Article and note contents are not sent to a conversion service.
 - Once generated, Download PDF is available. Browsers supporting file sharing also offer Save / Share from a fresh user click; cancellation leaves the PDF available. Errors remain retryable. Physical iPhone Files/share behavior requires device confirmation.
+
+## 2026-10-16: single PDF action and quiet initial loading
+- Replaced the extra Download PDF / Save / Share row with one Save PDF action. The currently rendered article is prepared locally in advance, so file-capable browsers enter native sharing directly from the tap. Cancellation leaves the article and scroll position intact. Other browsers download with a separate-tab target, never replacing the research page or invoking print.
+- Article/language/annotation/visibility changes immediately invalidate the prepared file; obsolete generation results are discarded and object URLs released. Preparation errors offer retry on the same button. Real iPhone share-sheet behavior remains a physical-device check.
+- Initial account loading uses one quiet article placeholder instead of duplicate checking messages and a misleading zero count. Authentication, no-store fetches, account isolation and saved-data writes are unchanged; the initial network wait is not represented as eliminated.

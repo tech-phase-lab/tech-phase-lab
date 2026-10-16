@@ -1788,3 +1788,8 @@
 .savedImport summary:focus-visible,.savedImport button:focus-visible{outline:2px solid #8be6bf;outline-offset:3px}
 
 .articleOnly, .researchGrid:not(:has(.detail)) { grid-template-columns:1fr; }
+
+.savedLoading { grid-column:1/-1; padding:28px; border:1px solid #68b7bc26; border-radius:12px; min-height:160px; }
+.savedLoading span { display:block; height:12px; margin:0 0 20px; border-radius:4px; background:#a7b4c314; }
+.savedLoading span:first-child { width:25%; }
+.savedLoading span:last-child { width:65%; }
