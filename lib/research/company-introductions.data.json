@@ -5057,6 +5057,14 @@
       {
         "label": "Zoom · Workplace Meetings",
         "url": "https://www.zoom.com/en/products/virtual-meetings/"
+      },
+      {
+        "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m03/cisco-secure-ai-factory-with-nvidia-GTC-2026.html",
+        "label": "Cisco — Secure AI Factory with NVIDIA, March 16, 2026"
+      },
+      {
+        "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m08/cisco-secure-ai-factory-nvidia-rack-scale.html",
+        "label": "Cisco — Supermicro rack-scale collaboration, August 25, 2026; announced October availability"
       }
     ],
     "ja": {
@@ -5065,7 +5073,7 @@
       "strength": "ネットワーク機器からセキュリティ、障害監視までを一体で管理でき、世界中の販売・保守網と既存顧客基盤を持つ。",
       "risks": "クラウド化やAI向け通信の変化を読み違えると製品更新が遅れる。価格競争、部品供給、ソフト契約の更新率にも左右される。",
       "competition": "Cisco自身が挙げるArista・HPEはネットワーク、Palo Alto Networksはネットワーク防御、CrowdStrikeは端末保護、ZoomはWeb会議の比較例。分野の対応付けは各社の公式製品と照合した。スイッチ、ファイアウォール、端末防御、Webex会議は用途が異なり、全製品の同等性を意味しない。",
-      "relationships": "企業、公共機関、通信会社、クラウド事業者にネットワークと保守を提供し、販売代理店や技術パートナーを通じても届ける。"
+      "relationships": "企業、公共機関、通信会社、クラウド事業者にネットワークと保守を提供し、販売代理店や技術パートナーを通じても届ける。 NVIDIAとは2026年3月にSecure AI Factoryのネットワーク・防御・エッジAI協業を拡大。Supermicroとは8月にラック型計算基盤で協業を発表し、10月からの提供予定を示した。発表された全機能の提供完了や供給数量は示していない。"
     },
     "en": {
       "business": "Provides switches and routers that connect networks, plus security, observability and collaboration products.",
@@ -5073,7 +5081,7 @@
       "strength": "Integrates networking, security and observability, backed by a large installed base and global sales and service channels.",
       "risks": "Cloud and AI networking shifts can outpace product cycles; pricing, component supply and software renewal rates also affect results.",
       "competition": "Cisco names Arista/HPE, Palo Alto Networks, CrowdStrike and Zoom. Product examples are networking, network security, endpoint protection and web meetings respectively, matched against official portfolios. Switches, firewalls, endpoint defense and Webex meetings serve different purposes; entire portfolios are not assumed equivalent.",
-      "relationships": "Supplies enterprises, public agencies, carriers and cloud providers directly and through channel and technology partners."
+      "relationships": "Supplies enterprises, public agencies, carriers and cloud providers directly and through channel and technology partners. NVIDIA collaboration expanded in March 2026 around Secure AI Factory networking, security and edge AI. An August Supermicro collaboration announced availability from October; this does not establish delivery of every planned capability or unit volumes."
     },
     "maps": {
       "competition": [
@@ -5188,6 +5196,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：Secure AI Factoryのネットワーク・防御・エッジAI協業",
+            "en": "March 2026: Secure AI Factory networking, security and edge-AI collaboration"
+          },
+          "sourceIndexes": [
+            7
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Supermicro",
+          "role": "partner",
+          "label": {
+            "ja": "2026年8月：AI Factory向けサーバー協業、10月から提供予定と発表",
+            "en": "August 2026: AI Factory server collaboration; announced availability from October"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "SMCI"
         }
       ]
     }
@@ -5923,7 +5957,7 @@
       "ETN"
     ],
     "name": "Eaton",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / End markets / Competition / Risk factors",
@@ -5932,6 +5966,10 @@
       {
         "label": "Vertiv FY2025 Form 10-K · Offerings / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
+      },
+      {
+        "url": "https://www.eaton.com/ph/en-us/company/news-insights/news-releases/2026/eaton-collaborates-with-nvidia-to-unveil-its-beam-rubin-dsx-platform.html",
+        "label": "Eaton — Beam Rubin DSX platform, March 16, 2026"
       }
     ],
     "ja": {
@@ -5940,7 +5978,7 @@
       "strength": "高圧から施設内の配電まで製品が広く、データセンター、工場、電力会社など多様な設備投資を一社で支えられる。",
       "risks": "大型設備の建設時期、景気、原材料・部品コストに左右される。受注残を抱えるため、供給遅延や工事計画の変更も影響が大きい。",
       "competition": "データセンターなどの電力管理ではVertivが競合例。Vertivの年次報告書はEatonを大手競合として明記。UPSや配電などの重なる設備分野を比較するもので、Eatonの航空機・車両事業全体の競合を示すものではない。",
-      "relationships": "データセンター、電力会社、工場、商業施設に配電・保護機器を供給し、航空機メーカーや車両メーカーにも部品を納める。"
+      "relationships": "データセンター、電力会社、工場、商業施設に配電・保護機器を供給し、航空機メーカーや車両メーカーにも部品を納める。 NVIDIAとは2026年3月にBeam Rubin DSXの電源・冷却リファレンス設計で協業。技術設計の協力であり、特定のGPU購入数量や全データセンターへの導入完了を示さない。"
     },
     "en": {
       "business": "Makes electrical distribution and control equipment plus power components for aerospace and vehicles.",
@@ -5948,7 +5986,7 @@
       "strength": "A broad power-management portfolio spans utility feeds through facility distribution across data centers, factories and other end markets.",
       "risks": "Project timing, economic cycles and material costs matter; a large backlog also exposes deliveries to supply and construction delays.",
       "competition": "Vertiv names Eaton as a major competitor in critical infrastructure. The relevant comparison is overlapping power-management equipment such as UPS and power distribution, rather than Eaton’s entire aerospace or vehicle business.",
-      "relationships": "Supplies power equipment to data centers, utilities, factories and buildings, and components to aerospace and vehicle manufacturers."
+      "relationships": "Supplies power equipment to data centers, utilities, factories and buildings, and components to aerospace and vehicle manufacturers. A March 2026 NVIDIA collaboration covers Beam Rubin DSX power / cooling reference designs. Technical collaboration does not establish GPU purchase volumes or completed deployment across all data centers."
     },
     "maps": {
       "competition": [
@@ -6005,6 +6043,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：Beam Rubin DSXの電源・冷却リファレンス設計で協業",
+            "en": "March 2026: Beam Rubin DSX power / cooling reference-design collaboration"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -6331,6 +6382,14 @@
       {
         "label": "Snowflake · Data and AI platform",
         "url": "https://www.snowflake.com/en/product/platform/"
+      },
+      {
+        "url": "https://www.palantir.com/partnerships/microsoft/",
+        "label": "Palantir — Microsoft strategic partnership; checked October 16, 2026"
+      },
+      {
+        "url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers",
+        "label": "Palantir / Nebius joint release, September 8, 2026; integration period applies"
       }
     ],
     "ja": {
@@ -6339,7 +6398,7 @@
       "strength": "機密性の高い複数システムを統合し、分析結果を製造、補給、防衛など実際の業務手順へ結び付けられる。",
       "risks": "政府予算や大型契約の時期に左右され、販売と導入に時間がかかる。高度な人材への依存と、機密データを扱う責任も大きい。",
       "competition": "民間企業向けのデータ統合・分析・AI基盤では、Microsoft Fabric、Databricks、Snowflakeが競合例。PalantirのFoundry・AIPの説明と各社の公式製品を照合した編集上の比較で、同社が3社を実名で競合と開示したという意味ではない。政府・防衛向け全領域を一括比較したものでもない。",
-      "relationships": "米国と同盟国の政府機関、製造・医療・金融などの企業に基盤を提供し、クラウドや導入支援のパートナーとも連携する。"
+      "relationships": "米国と同盟国の政府機関、製造・医療・金融などの企業に基盤を提供し、クラウドや導入支援のパートナーとも連携する。 MicrosoftとはAzureでのFoundry展開・Marketplace販売を連携し、分析製品の競合とも併存。Nebiusとは2026年9月に主権AI基盤の正式提携を発表し、統合期間後の顧客接続を計画している。"
     },
     "en": {
       "business": "Provides Foundry, Gotham and AIP software that connects organizational data to operational decisions and workflows.",
@@ -6347,7 +6406,7 @@
       "strength": "Integrates sensitive, fragmented systems and connects analysis to real workflows in areas such as manufacturing, logistics and defense.",
       "risks": "Government budgets and large-contract timing create volatility, deployments and sales can be lengthy, and handling sensitive data carries substantial responsibility.",
       "competition": "Microsoft Fabric, Databricks and Snowflake are examples in commercial data integration, analytics and AI platforms. This is an editorial comparison of Palantir’s Foundry/AIP descriptions and official peer products, not a claim that Palantir explicitly names these companies or that their entire government/defense offerings are equivalent.",
-      "relationships": "Serves U.S. and allied governments and companies across manufacturing, healthcare and finance, alongside cloud and implementation partners."
+      "relationships": "Serves U.S. and allied governments and companies across manufacturing, healthcare and finance, alongside cloud and implementation partners. Microsoft collaboration covers Foundry on Azure and Marketplace distribution, alongside analytics-product competition. A September 2026 Nebius sovereign-AI partnership plans customer access after an integration period."
     },
     "maps": {
       "competition": [
@@ -6432,6 +6491,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "Azure上のFoundry展開とMarketplace経由の販売連携",
+            "en": "Foundry deployment on Azure and Marketplace distribution"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Nebius",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：主権AI基盤の提携、統合期間後に顧客向け接続を計画",
+            "en": "September 2026: sovereign-AI infrastructure partnership; customer access planned after integration"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "NBIS"
         }
       ]
     }
@@ -8486,6 +8571,10 @@
       {
         "label": "Samsung Electronics · Enterprise SSD portfolio",
         "url": "https://semiconductor.samsung.com/ssd/enterprise-ssd/"
+      },
+      {
+        "url": "https://www.westerndigital.com/en-in/company/newsroom/press-releases/2026/2026-04-22-wd-raises-the-bar-on-sustainable-infrastructure_msm_moved",
+        "label": "Western Digital — FY2025 sustainability / Microsoft recovery pilot, April 22, 2026"
       }
     ],
     "ja": {
@@ -8494,7 +8583,7 @@
       "strength": "記録ヘッドと磁気媒体をほぼ自社で設計・製造し、1台当たりの容量とコストを継続的に改善できる。",
       "risks": "SanDisk分離後はHDDへの集中が高い。2026年度は上位3顧客が売上の44％を占め、クラウド投資、価格、技術移行の影響が大きい。",
       "competition": "HDDではSeagate Technologyと東芝デバイス＆ストレージ、代替ストレージではMicronとSamsung Electronicsの企業・データセンター向けSSDが比較例。HDDの実名は既存の記載を保持し、SSDは公式製品に基づく編集上の比較とした。HDDとSSDは多くの用途で補完関係にあり、一部の用途で競合する。",
-      "relationships": "クラウド事業者と機器メーカーへ大容量HDDを供給し、長期保存や大規模データ基盤を支える。"
+      "relationships": "クラウド事業者と機器メーカーへ大容量HDDを供給し、長期保存や大規模データ基盤を支える。 Microsoftとの使用済みHDDの希土類回収プログラムを2026年4月に公表。回収実証の協力であり、この発表だけでMicrosoftへのHDD供給量や購入契約を確定しない。"
     },
     "en": {
       "business": "Develops and manufactures hard disk drives that store large data volumes for cloud, enterprise, PC and surveillance systems.",
@@ -8502,7 +8591,7 @@
       "strength": "Designs and manufactures substantially all recording heads and magnetic media, supporting continued gains in capacity and cost per drive.",
       "risks": "After the SanDisk separation it is concentrated in HDDs; its top three customers were 44% of fiscal 2026 revenue, increasing cloud-spending, pricing and transition risk.",
       "competition": "HDD examples retain Seagate Technology and Toshiba Electronic Devices & Storage. Editorial alternative-storage examples are Micron and Samsung enterprise/data-center SSDs. Official products support the SSD comparison; HDDs and SSDs often complement one another and compete in selected workloads, with different capacity, performance and cost trade-offs.",
-      "relationships": "Supplies high-capacity HDDs to cloud operators and equipment makers for mass data infrastructure and long-term storage."
+      "relationships": "Supplies high-capacity HDDs to cloud operators and equipment makers for mass data infrastructure and long-term storage. An April 2026 disclosure names Microsoft in a retired-HDD rare-earth recovery program. This pilot collaboration alone does not establish Microsoft HDD supply volumes or a purchase contract."
     },
     "maps": {
       "competition": [
@@ -8598,6 +8687,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月公表：使用済みHDDの希土類回収プログラムで協力",
+            "en": "Disclosed April 2026: collaboration on rare-earth recovery from retired HDDs"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -8621,6 +8723,10 @@
       {
         "label": "Samsung Electronics · Enterprise SSD portfolio",
         "url": "https://semiconductor.samsung.com/ssd/enterprise-ssd/"
+      },
+      {
+        "url": "https://www.seagate.com/stories/articles/the-new-seagate-storage-expansion-card-for-xbox-series-x-pr-master/",
+        "label": "Seagate — Microsoft Xbox expansion-card collaboration, September 24, 2020"
       }
     ],
     "ja": {
@@ -8629,7 +8735,7 @@
       "strength": "記録ヘッドや磁気媒体を自社で作る垂直統合と、高密度記録技術により、容量・消費電力・総保有コストを改善できる。",
       "risks": "大口クラウド企業の投資時期に売上が左右される。HDD価格、量産歩留まり、次世代記録技術への移行、NANDへの置き換えもリスク。",
       "competition": "HDDではWestern Digitalと東芝デバイス＆ストレージ、代替ストレージではMicronとSamsung Electronicsの企業・データセンター向けSSDが比較例。HDDの実名は既存の記載を保持し、SSDは公式製品に基づく編集上の比較とした。HDDとSSDは多くの用途で補完関係にあり、一部の用途で競合する。",
-      "relationships": "クラウドサービス会社、OEM、企業顧客へ大容量HDDを供給し、AI・クラウドで増えるデータ保存を支える。"
+      "relationships": "クラウドサービス会社、OEM、企業顧客へ大容量HDDを供給し、AI・クラウドで増えるデータ保存を支える。 Microsoftとは2020年9月にXbox Series X|S向け拡張カードの共同設計を発表。ゲーム機向けSSDカードの関係であり、Azure向けHDDの購入量や現行の独占契約を意味しない。"
     },
     "en": {
       "business": "Designs and manufactures HDDs, storage systems and related solutions for cloud data centers and edge devices.",
@@ -8637,7 +8743,7 @@
       "strength": "Vertical integration in heads and media plus areal-density technology improves capacity, energy use and total cost of ownership.",
       "risks": "Large cloud customers' investment timing matters; HDD pricing, manufacturing yields, recording-technology transitions and NAND substitution add risk.",
       "competition": "HDD examples retain Western Digital and Toshiba Electronic Devices & Storage. Editorial alternative-storage examples are Micron and Samsung enterprise/data-center SSDs. Official products support the SSD comparison; HDDs and SSDs often complement one another and compete in selected workloads, with different capacity, performance and cost trade-offs.",
-      "relationships": "Supplies high-capacity HDDs to cloud service providers, OEMs and enterprises that store growing AI and cloud data."
+      "relationships": "Supplies high-capacity HDDs to cloud service providers, OEMs and enterprises that store growing AI and cloud data. A September 2020 Microsoft collaboration designed the Xbox Series X|S expansion card. This gaming SSD-card relationship does not establish Azure HDD purchase volumes or current exclusivity."
     },
     "maps": {
       "competition": [
@@ -8733,6 +8839,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "2020年9月：Xbox Series X|S用ストレージ拡張カードを共同設計",
+            "en": "September 2020: jointly designed Xbox Series X|S storage expansion card"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -9089,6 +9208,10 @@
       {
         "label": "FY2025 Form 10-K · Design software and IP / Licensing / Customers / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm"
+      },
+      {
+        "url": "https://newsroom.cadence.com/press-releases/press-release-details/2026/Cadence-Collaborates-With-TSMC-to-Deliver-Certified-Tool-Solutions-and-Industry-Leading-Silicon-Proven-UALink-IP-on-TSMC-Advanced-Processes/default.aspx",
+        "label": "Cadence — expanded TSMC collaboration, September 23, 2026"
       }
     ],
     "ja": {
@@ -9097,7 +9220,7 @@
       "strength": "チップ単体から基板・パッケージ・システムまで同じ設計環境で扱い、AIで設計探索と検証を自動化できる。",
       "risks": "半導体企業の研究開発費、輸出規制、少数大口案件の更新時期に左右される。顧客が自社ツールを開発する場合もある。",
       "competition": "EDAではSynopsysとSiemens EDA、物理解析ではSynopsys傘下AnsysやKeysightが競合例。いずれもCadenceが実名で挙げる企業・製品分野に基づく。チップの設計・検証、基板設計、電磁界・物理解析では用途が異なる。顧客の社内設計ツールも代替手段であり、設計IPや技術サービスの競争は製品ごとに異なる。",
-      "relationships": "半導体・電子機器会社へ設計ソフト、検証装置、IPを提供し、顧客の新しいチップやシステム開発を支える。"
+      "relationships": "半導体・電子機器会社へ設計ソフト、検証装置、IPを提供し、顧客の新しいチップやシステム開発を支える。 TSMCとは2026年9月にA14・N2Pの認証設計フロー、3D-IC・IPで協業を拡大。個別IPの開発・評価中の工程と認証済みツールを区別し、全IPの提供完了とは扱わない。"
     },
     "en": {
       "business": "Provides EDA software, prototyping hardware, design IP and physics simulation for semiconductor and electronic-system design and verification.",
@@ -9105,7 +9228,7 @@
       "strength": "Covers chips, packages, boards and systems in connected workflows and uses AI to automate design exploration and verification.",
       "risks": "Semiconductor R&D budgets, export controls and large renewal timing affect results; customers can also develop competing internal tools.",
       "competition": "Synopsys and Siemens EDA in electronic design, plus Synopsys-owned Ansys and Keysight in physical/electronic analysis, are examples grounded in Cadence named-vendor disclosure. Chip design/verification, board design and physics analysis serve different workloads. Customer-built tools remain alternatives; design-IP and engineering-service rivalry varies by product.",
-      "relationships": "Supplies design software, verification hardware and IP to semiconductor and electronics companies developing new chips and systems."
+      "relationships": "Supplies design software, verification hardware and IP to semiconductor and electronics companies developing new chips and systems. A September 2026 TSMC collaboration expands certified A14 / N2P flows, 3D-IC and IP. Certified tools and IP still in development or testing have different availability; not all IP is complete."
     },
     "maps": {
       "competition": [
@@ -9187,6 +9310,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：A14・N2P認証設計フローと3D-IC・IPの協業",
+            "en": "September 2026: A14 / N2P certified design flows and 3D-IC / IP collaboration"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "TSM"
         }
       ]
     }
@@ -9311,6 +9447,10 @@
       {
         "label": "HPE · Juniper MX Series routers",
         "url": "https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-routing-solutions/juniper-mx-series-universal-routers/p/1014920254"
+      },
+      {
+        "url": "https://www.ciena.com/insights/blog/2025/a-look-back-cienas-top-milestones-of-2025",
+        "label": "Ciena — 2025 milestones / Meta DCOM co-development; checked October 16, 2026"
       }
     ],
     "ja": {
@@ -9319,7 +9459,7 @@
       "strength": "光伝送とネットワーク制御を一体で提供し、既存回線の容量を増やしながら大規模ネットワークを自動化できる。",
       "risks": "大口顧客の設備投資時期で売上が振れやすく、部品供給、輸出規制、通信会社の統合、価格競争も業績を左右する。",
       "competition": "Ciena自身がNokia・Huawei・Cisco・HPE・ZTEを競合に挙げる。光伝送とルーティングが主な比較分野で、HPEは傘下Juniperのルーター製品を照合した。光伝送装置、ルーター、運用自動化ソフトは別の製品で、光部品メーカーとの関係や全製品の互換性を示すものではない。",
-      "relationships": "クラウド会社、通信事業者、海底ケーブル事業者、企業・政府へ光通信設備とネットワークソフトを納入する。"
+      "relationships": "クラウド会社、通信事業者、海底ケーブル事業者、企業・政府へ光通信設備とネットワークソフトを納入する。 Metaとはデータセンターの帯域外管理（DCOM）を共同開発したと2025年の自社回顧で公表。管理ネットワークの協力であり、全てのMeta向け光伝送設備や購入数量を示さない。"
     },
     "en": {
       "business": "Provides optical networking systems, routers, network-control software and services to telecom operators and cloud providers.",
@@ -9327,7 +9467,7 @@
       "strength": "Combines high-capacity optical transport with software control to expand existing fiber capacity and automate large networks.",
       "risks": "Results depend on large customers' capital-spending cycles and face component supply, export-control, carrier-consolidation and pricing risks.",
       "competition": "Ciena names Nokia, Huawei, Cisco, HPE and ZTE. Optical transport and routing are key comparison fields; HPE is matched to its Juniper router portfolio. Optical transport systems, routers and operations-automation software are distinct products, not evidence of component-vendor relationships or universal interchangeability.",
-      "relationships": "Supplies optical systems and network software to cloud providers, telecom carriers, submarine-network operators, enterprises and governments."
+      "relationships": "Supplies optical systems and network software to cloud providers, telecom carriers, submarine-network operators, enterprises and governments. Its 2025 review identifies Meta as the DCOM out-of-band data-center management co-development partner. This management-network collaboration does not establish all Meta optical deployments or purchase volumes."
     },
     "maps": {
       "competition": [
@@ -9434,6 +9574,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "ticker": "META",
+          "role": "partner",
+          "label": {
+            "ja": "2025年の自社回顧：DCOMの帯域外ネットワーク管理を共同開発",
+            "en": "2025 company review: co-developed DCOM out-of-band network management"
+          },
+          "sourceIndexes": [
+            2
+          ]
         }
       ]
     }
@@ -9444,7 +9597,7 @@
       "KEYS"
     ],
     "name": "Keysight Technologies",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Solutions / Markets / Customers / Competition",
@@ -9473,6 +9626,10 @@
       {
         "label": "Cadence · AWR RF/microwave circuit and EM design",
         "url": "https://www.cadence.com/en_US/home/tools/system-analysis/rf-microwave-design/awr-design-environment-platform.html"
+      },
+      {
+        "url": "https://www.keysight.com/in/en/about/newsroom/news-releases/2025/0326-pr25-051-keysight-debuts-1-6t-platform-and-first-of-its-kind-software-to-automate-validation-of-network-interconnect-performance.html",
+        "label": "Keysight — 1.6T testing platform and Broadcom collaboration, March 26, 2025"
       }
     ],
     "ja": {
@@ -9481,7 +9638,7 @@
       "strength": "80年以上の計測技術と広い導入基盤を持ち、設計、シミュレーション、試作、量産検査まで同じ会社で支援できる。",
       "risks": "顧客の研究開発費と設備投資、中国向け規制、部品供給、買収事業の統合、技術世代の切り替えに左右される。",
       "competition": "電子機器の試験ではTeradyne、オシロスコープではRohde & Schwarz、通信網の試験・監視ではVIAVI、RF回路・電磁界の設計ソフトではCadenceが競合例。TeradyneとVIAVIはKeysightを実名で列挙。RohdeはKeysightの比較資料、Cadenceは両社の公表製品を比較したもの。",
-      "relationships": "通信機器、半導体、自動車・電池、航空宇宙・防衛の開発会社へ測定器と設計・試験ソフトを提供する。"
+      "relationships": "通信機器、半導体、自動車・電池、航空宇宙・防衛の開発会社へ測定器と設計・試験ソフトを提供する。 Broadcomとは2025年3月に1.6Tネットワークの信号品質・誤り訂正を扱う試験技術で協業を公表。共同開発・検証の関係で、購入数量や独占契約は未開示。"
     },
     "en": {
       "business": "Provides instruments, test systems and design software used to develop and validate communications, semiconductor, automotive and aerospace products.",
@@ -9489,7 +9646,7 @@
       "strength": "Combines more than 80 years of measurement expertise and a large installed base with tools spanning design, simulation, prototype and production test.",
       "risks": "Results depend on customer R&D and capital spending and face China restrictions, component supply, acquisition integration and technology-transition risks.",
       "competition": "Examples include Teradyne in product test, Rohde & Schwarz in oscilloscopes, VIAVI in network test and monitoring, and Cadence in RF circuit and electromagnetic design. Teradyne and VIAVI name Keysight; Rohde is supported by Keysight’s comparison and Cadence by an editorial comparison of disclosed products.",
-      "relationships": "Supplies measurement and design and test software to communications, semiconductor, automotive, battery, aerospace and defense developers."
+      "relationships": "Supplies measurement and design and test software to communications, semiconductor, automotive, battery, aerospace and defense developers. A March 2025 Broadcom collaboration addresses signal integrity and error correction for 1.6T network testing. Development / validation collaboration does not disclose purchase volumes or exclusivity."
     },
     "maps": {
       "competition": [
@@ -9599,6 +9756,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "partner",
+          "label": {
+            "ja": "2025年3月：1.6Tネットワーク向け信号・誤り訂正の試験技術で協業",
+            "en": "March 2025: 1.6T networking signal / error-correction test collaboration"
+          },
+          "sourceIndexes": [
+            7
+          ],
+          "ticker": "AVGO"
         }
       ]
     }
@@ -9609,7 +9779,7 @@
       "FLEX"
     ],
     "name": "Flex",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Segments / Markets / Customers / Spin-off risks",
@@ -9630,6 +9800,10 @@
       {
         "label": "Eaton FY2025 Form 10-K · Electrical distribution and data-center products",
         "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/etn-20251231.htm"
+      },
+      {
+        "url": "https://investors.flex.com/news/news-details/2026/Flex-Accelerates-AI-Factory-Deployment-with-NVIDIA-Omniverse-DSX-Reference-Designs/default.aspx",
+        "label": "Flex — NVIDIA Omniverse DSX reference designs, March 16, 2026"
       }
     ],
     "ja": {
@@ -9638,7 +9812,7 @@
       "strength": "世界各地の工場、調達網、設計力を組み合わせ、部品調達から量産、修理まで一括で請け負える。",
       "risks": "低採算になりやすい受託製造、顧客の生産計画変更、部品価格、工場稼働率に加え、電源事業の分離計画にも実行リスクがある。",
       "competition": "受託製造ではSanminaとJabil、データセンターの電源・冷却ではVertiv、配電設備ではEatonが競合例。SanminaはFlexを競合に列挙。他は両社の公表するサービス・製品の比較で、受託製造と自社の電源・冷却製品を同一視しない。",
-      "relationships": "通信、クラウド・データセンター、自動車、医療、産業機器会社の製品と電源設備を設計・製造する。"
+      "relationships": "通信、クラウド・データセンター、自動車、医療、産業機器会社の製品と電源設備を設計・製造する。 NVIDIAとは2026年3月にOmniverse DSX向けの電源・液冷・ラック統合設計を発表。800VDC移行を支える設計であり、全計画設備の稼働完了を意味しない。"
     },
     "en": {
       "business": "Designs, sources and manufactures electronics and data-center power and cooling systems for other companies.",
@@ -9646,7 +9820,7 @@
       "strength": "Combines a global factory and sourcing network with engineering to handle component procurement, production and lifecycle services.",
       "risks": "Contract manufacturing carries margin, customer-schedule, component-cost and utilization risks, while the planned power-business separation adds execution risk.",
       "competition": "Examples include Sanmina and Jabil in contract manufacturing, Vertiv in data-center power and cooling, and Eaton in electrical distribution. Sanmina names Flex; the other examples compare disclosed services and products. Manufacturing services and owned infrastructure products are distinct businesses.",
-      "relationships": "Designs and manufactures products and power infrastructure for communications, cloud and data-center, automotive, medical and industrial customers."
+      "relationships": "Designs and manufactures products and power infrastructure for communications, cloud and data-center, automotive, medical and industrial customers. March 2026 NVIDIA collaboration covers Omniverse DSX power, liquid cooling and integrated racks, including 800VDC designs. Reference designs do not establish completed operation of every planned facility."
     },
     "maps": {
       "competition": [
@@ -9758,6 +9932,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：Omniverse DSX向け800VDC電源・冷却・ラック設計で協業",
+            "en": "March 2026: Omniverse DSX 800VDC power, cooling and rack-design collaboration"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -9801,6 +9988,10 @@
       {
         "label": "Microsoft · Defender for Endpoint security policies",
         "url": "https://learn.microsoft.com/en-us/defender-endpoint/endpoint-security-policies-configure"
+      },
+      {
+        "url": "https://investor.fortinet.com/news-releases/news-release-details/fortinet-wins-2026-google-cloud-partner-year-award-workload",
+        "label": "Fortinet — Google Cloud development / co-selling, April 21, 2026"
       }
     ],
     "ja": {
@@ -9809,7 +10000,7 @@
       "strength": "独自ASICを使う機器と多数のセキュリティ機能を同じOSで統合し、拠点・クラウド・端末を一括管理できる。",
       "risks": "機器更新の波、競合の値下げ・無料バンドル、製品の脆弱性、契約更新、クラウド運用費の増加が業績に影響する。",
       "competition": "Fortinet自身が挙げるCisco・Palo Alto Networks・CrowdStrike・Microsoft・Zscalerを公式製品と照合した。FortiGateはファイアウォール、FortiEDRは端末保護、Zscaler Internet Accessはクラウド経由の安全な接続の比較例。ネットワーク、端末、クラウド接続では用途が異なり、各社の全製品が同等という意味ではない。",
-      "relationships": "企業、通信事業者、公共機関へ、販売代理店やサービス事業者を通じて機器と継続課金の防御サービスを提供する。"
+      "relationships": "企業、通信事業者、公共機関へ、販売代理店やサービス事業者を通じて機器と継続課金の防御サービスを提供する。 Google Cloudとは2026年4月の自社発表で、クラウドのワークロード防御の共同開発・共同販売を確認。FortiCNAPP等の製品連携であり、Googleへの出資や計算容量の購入契約ではない。"
     },
     "en": {
       "business": "Provides firewalls, SASE and cloud, endpoint and security-operations products that protect enterprise networks.",
@@ -9817,7 +10008,7 @@
       "strength": "Combines proprietary-ASIC appliances and many security functions under one operating system to manage branches, cloud and endpoints together.",
       "risks": "Hardware refresh cycles, competitor discounting and bundling, vulnerabilities, renewals and rising cloud-delivery costs can affect results.",
       "competition": "Fortinet names Cisco, Palo Alto Networks, CrowdStrike, Microsoft and Zscaler. Official-product matching separates FortiGate firewalls, FortiEDR endpoint protection and Zscaler Internet Access cloud-delivered secure access. Network, endpoint and cloud-access use cases differ; entire portfolios are not equivalent.",
-      "relationships": "Sells appliances and recurring protection services to enterprises, carriers and public organizations through distributors and service providers."
+      "relationships": "Sells appliances and recurring protection services to enterprises, carriers and public organizations through distributors and service providers. An April 2026 disclosure confirms joint Google Cloud workload-security development and co-selling, including FortiCNAPP integration. This is not an equity investment in Google or a compute-capacity purchase contract."
     },
     "maps": {
       "competition": [
@@ -9935,6 +10126,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月公表：Google Cloudのワークロード防御を共同開発・共同販売",
+            "en": "Disclosed April 2026: Google Cloud workload-security development and co-selling"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -26881,11 +27085,19 @@
       "EGHT"
     ],
     "name": "8x8",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm"
+      },
+      {
+        "url": "https://www.investors.8x8.com/news-releases/news-release-details/8x8-inc-reports-fourth-quarter-and-fiscal-year-2026-financial",
+        "label": "8x8 — FY2026 results / OpenAI voice-model support, May 19, 2026"
+      },
+      {
+        "url": "https://www.investors.8x8.com/news-releases/news-release-details/8x8-ai-studio-adds-openais-gpt-realtime-2-support-production",
+        "label": "8x8 — OpenAI real-time voice-model early availability, May 14, 2026; opt-in required"
       }
     ],
     "ja": {
@@ -26894,7 +27106,7 @@
       "strength": "社員同士の連絡と外部の顧客対応を一つの基盤でつなぎ、問い合わせを専門部署へ引き継げる。複数拠点の電話や顧客情報をまとめ、AIによる分析や対応を組み込める。",
       "risks": "MicrosoftやZoomの包括的なサービス、顧客窓口の専門会社との競争が強い。通信品質と各国の規制対応が欠かせず、契約更新、顧客離れ、負債の返済も収益を左右する。",
       "competition": "社員用通信ではRingCentral、Zoom、Cisco、Microsoft、顧客窓口ではFive9、NiCE、Genesys、通信APIではTwilioなどと競う。電話からAI対応まで、事業ごとに競合が違う。",
-      "relationships": "企業へ通信・顧客対応基盤を提供し、Microsoft TeamsやSalesforceと製品連携する。通信事業者と販売代理店が販売・展開を支え、連携先を8x8製品の購入者とは断定しない。"
+      "relationships": "企業へ通信・顧客対応基盤を提供し、Microsoft TeamsやSalesforceと製品連携する。通信事業者と販売代理店が販売・展開を支え、連携先を8x8製品の購入者とは断定しない。 2026年5月の決算発表ではOpenAIのリアルタイム音声モデルへの対応を公表。モデルへの技術対応であり、OpenAIを容量顧客や出資先とは扱わない。 5月14日の製品発表では早期提供枠が対象で、既存エージェントは利用者がモデル変更を選ぶまで従来構成を維持すると説明。"
     },
     "en": {
       "business": "Connects employee communications and customer contact centers in the cloud, offering phone, meetings, messaging, routing, analytics and communications APIs.",
@@ -26902,7 +27114,7 @@
       "strength": "Links internal collaboration with external customer service, enabling handoffs to specialist teams. Combines multi-site telephony, customer records and AI-assisted analysis and responses.",
       "risks": "Faces bundled communications suites and contact-center specialists. Call reliability, international telecom compliance, renewals, customer churn and debt repayment affect business performance.",
       "competition": "Competes with RingCentral, Zoom, Cisco and Microsoft in employee communications; Five9, NiCE and Genesys in contact centers; and Twilio in communications APIs.",
-      "relationships": "Serves enterprise communications and service teams, integrates with Microsoft Teams and Salesforce, and distributes through telecom and reseller partners. Integration does not establish a purchasing relationship."
+      "relationships": "Serves enterprise communications and service teams, integrates with Microsoft Teams and Salesforce, and distributes through telecom and reseller partners. Integration does not establish a purchasing relationship. May 2026 results disclose support for an OpenAI real-time voice model. Model compatibility does not make OpenAI a capacity customer or equity investee. The May 14 product release limits availability to AI Studio early-access customers; existing agents keep their configuration until customers opt in."
     },
     "maps": {
       "competition": [
@@ -27036,6 +27248,19 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：AI Studioの早期提供枠でOpenAI音声モデル対応",
+            "en": "May 2026: OpenAI voice-model support in AI Studio early availability"
+          },
+          "sourceIndexes": [
+            1,
+            2
           ]
         }
       ]

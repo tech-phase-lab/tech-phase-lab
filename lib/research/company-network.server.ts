@@ -72,6 +72,17 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "CIEN") return {4: {ja: "光伝送・ルーティング", en: "Optical transport & routing"}, 6: {ja: "データセンター管理の共同開発", en: "Data-center management co-development"}};
+  if (root === "CSCO") return {"3": {"ja": "AIプラットフォームの協業", "en": "AI-platform collaboration"}, "5": {"ja": "ネットワーク機器・AIサーバー", "en": "Networking & AI servers"}, "7": {"ja": "セキュリティ・Web会議", "en": "Security & web meetings"}};
+  if (root === "ETN") return {"3": {"ja": "AI基盤の電源・冷却設計協業", "en": "AI power / cooling design collaboration"}, "5": {"ja": "データセンター電源・冷却", "en": "Data-center power & cooling"}};
+  if (root === "PLTR") return {"6": {"ja": "データ・AI基盤とクラウド連携", "en": "Data / AI platforms & cloud alliances"}, "7": {"ja": "データ・AI分析ソフト", "en": "Data & AI analytics software"}};
+  if (root === "WDC") return {"2": {"ja": "ストレージ製品", "en": "Storage products"}, "6": {"ja": "HDDの資源回収協力", "en": "HDD material-recovery collaboration"}};
+  if (root === "STX") return {"2": {"ja": "ストレージ製品", "en": "Storage products"}, "6": {"ja": "Xboxストレージの共同設計", "en": "Xbox storage co-design"}};
+  if (root === "CDNS") return {"0": {"ja": "半導体設計・物理解析", "en": "Electronic design & physics analysis"}, "1": {"ja": "製造プロセス向け設計認証", "en": "Design certification for manufacturing processes"}};
+  if (root === "KEYS") return {"0": {"ja": "電子設計・検証・試験", "en": "Electronic design, verification & test"}, "3": {"ja": "通信半導体の試験協業", "en": "Networking-chip test collaboration"}, "4": {"ja": "光通信・ネットワーク試験", "en": "Optical & network testing"}};
+  if (root === "FLEX") return {"3": {"ja": "AI基盤の電源・ラック設計協業", "en": "AI power / rack-design collaboration"}, "5": {"ja": "製造受託・電源・冷却", "en": "Manufacturing services, power & cooling"}};
+  if (root === "FTNT") return {"6": {"ja": "ネットワーク・端末・安全な接続", "en": "Network, endpoint & secure access"}, "7": {"ja": "クラウド防御の開発・販売提携", "en": "Cloud-security development & co-selling"}};
+  if (root === "EGHT") return {"6": {"ja": "CRM・Teams・音声AIへの技術対応", "en": "CRM, Teams & voice-AI compatibility"}, "7": {"ja": "企業通信・顧客対応", "en": "Business communications & contact centers"}};
   if (root === "PEGA") return {"6": {"ja": "クラウド・AI開発協業", "en": "Cloud / AI development collaboration"}, "7": {"ja": "業務自動化・導入支援", "en": "Workflow automation & implementation"}};
   if (root === "NICE") return {"6": {"ja": "通信・顧客対応の販売提携", "en": "Communications / contact-center distribution"}, "7": {"ja": "顧客対応・金融犯罪対策", "en": "Contact centers & financial-crime tools"}};
   if (root === "DBX") return {"6": {"ja": "クラウド基盤・AI文書連携", "en": "Cloud infrastructure & AI document connections"}, "7": {"ja": "保存・共有・署名・検索", "en": "Storage, sharing, signatures & search"}};
@@ -1332,6 +1343,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "電子設計・物理解析",
         "en": "Electronic design & analysis"
       }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC｜設計フロー認証",
+        "en": "TSMC | certified design flows"
+      }
     }
   },
   "RBLX": {
@@ -2232,6 +2250,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Web会議",
         "en": "Web meetings"
       }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜AI基盤協業",
+        "en": "NVIDIA | AI infrastructure"
+      }
+    },
+    "SMCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Supermicro｜AIサーバー協業",
+        "en": "Supermicro | AI servers"
+      }
     }
   },
   "CRWV": {
@@ -2554,6 +2586,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "光伝送・ネットワーク",
         "en": "Optical transport & networking"
       }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta｜DCOM共同開発",
+        "en": "Meta | DCOM co-development"
+      }
     }
   },
   "FTNT": {
@@ -2597,6 +2636,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Defender端末防御",
         "en": "Defender endpoint security"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google｜クラウド防御協業",
+        "en": "Google | cloud-security alliance"
       }
     }
   },
@@ -5019,6 +5065,146 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Salesforce | Service Cloud / adoption"
       }
     }
+  },
+  "WDC": {
+    "STX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "HDD",
+        "en": "HDDs"
+      }
+    },
+    "Toshiba Electronic Devices & Storage": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "HDD",
+        "en": "HDDs"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "企業向けSSD",
+        "en": "Enterprise SSDs"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "企業向けSSD",
+        "en": "Enterprise SSDs"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜HDD資源回収協力",
+        "en": "Microsoft | HDD recovery"
+      }
+    }
+  },
+  "STX": {
+    "WDC": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "HDD",
+        "en": "HDDs"
+      }
+    },
+    "Toshiba Electronic Devices & Storage": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "HDD",
+        "en": "HDDs"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "企業向けSSD",
+        "en": "Enterprise SSDs"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "企業向けSSD",
+        "en": "Enterprise SSDs"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜Xbox共同設計",
+        "en": "Microsoft | Xbox co-design"
+      }
+    }
+  },
+  "ETN": {
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜電源・冷却設計",
+        "en": "NVIDIA | power / cooling design"
+      }
+    }
+  },
+  "PLTR": {
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜Azure連携・分析競合",
+        "en": "Microsoft | Azure / analytics"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Nebius｜主権AI基盤の提携",
+        "en": "Nebius | sovereign-AI alliance"
+      }
+    }
+  },
+  "KEYS": {
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom｜1.6T試験協業",
+        "en": "Broadcom | 1.6T test collaboration"
+      }
+    }
+  },
+  "FLEX": {
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜電源・ラック設計",
+        "en": "NVIDIA | power / rack design"
+      }
+    }
+  },
+  "EGHT": {
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜音声モデル対応",
+        "en": "OpenAI | voice-model support"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜Teams連携",
+        "en": "Microsoft | Teams integration"
+      }
+    },
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Salesforce｜CRM連携",
+        "en": "Salesforce | CRM integration"
+      }
+    }
   }
 };
 
@@ -5082,7 +5268,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
