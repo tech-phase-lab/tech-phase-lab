@@ -21994,7 +21994,7 @@
       "IONQ"
     ],
     "name": "IonQ",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risk factors",
@@ -22019,6 +22019,10 @@
       {
         "label": "Rigetti FY2025 Form 10-K · gate-model systems and named competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm"
+      },
+      {
+        "url": "https://www.ionq.com/quantum-cloud",
+        "label": "IONQ / Amazon — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -22027,7 +22031,7 @@
       "strength": "同じ種類の原子を量子ビットに使うためばらつきが小さく、計算機から制御ソフトまで一体で開発できる。",
       "risks": "市場が初期段階で赤字が続き、性能向上、量産、部品調達、人材、政府・大口案件の時期に左右される。",
       "competition": "イオントラップ型ではQuantinuum、超伝導ゲート型ではIBM、Google、Rigettiが競合例。IonQの年次報告は各方式と企業名を挙げている。計算機の方式・利用環境が異なるため、量子ビット数だけで性能を同一視しない。",
-      "relationships": "企業、大学、研究機関、政府へ量子計算環境と開発支援を提供し、レーザー・光学・真空など専門部品を調達する。"
+      "relationships": "企業、大学、研究機関、政府へ量子計算環境と開発支援を提供し、レーザー・光学・真空など専門部品を調達する。 公式クラウド窓口はAmazon Braket、Microsoft Azure、Google CloudをIonQシステムの利用経路として掲載。クラウド経由の提供提携であり、各社の計算容量購入契約・投資額や全機種の常時利用可能性を推定しない。Googleの自社量子計算との競争は併存する。"
     },
     "en": {
       "business": "Develops trapped-ion quantum computers and is expanding into quantum networking and sensing.",
@@ -22035,7 +22039,7 @@
       "strength": "Uses identical atomic ions for consistent qubits and develops the system, controls and software as an integrated stack.",
       "risks": "An early market, continuing losses, performance and scale-up goals, specialized supply, talent and contract timing create risk.",
       "competition": "IonQ names Quantinuum in trapped-ion computing and IBM, Google and Rigetti in superconducting gate-model computing. These are architecture-specific examples, not equivalent performance claims based on qubit counts.",
-      "relationships": "Provides quantum access and development support to enterprises, researchers and governments while sourcing lasers, optics and vacuum components."
+      "relationships": "Provides quantum access and development support to enterprises, researchers and governments while sourcing lasers, optics and vacuum components. Its cloud-access page lists Amazon Braket, Microsoft Azure and Google Cloud as routes to IonQ systems. Distribution/access partnerships do not establish capacity-purchase contracts, investment amounts or continuous availability of every device. Google’s own quantum-hardware competition coexists with this role."
     },
     "maps": {
       "competition": [
@@ -22121,6 +22125,45 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "公式クラウド窓口：Amazon Braket経由のIonQ量子計算アクセス",
+            "en": "Official cloud-access page: IonQ quantum access through Amazon Braket"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "公式クラウド窓口：Microsoft Azure経由のIonQ量子計算アクセス",
+            "en": "Official cloud-access page: IonQ quantum access through Microsoft Azure"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "公式クラウド窓口：Google Cloud経由のIonQ量子計算アクセス",
+            "en": "Official cloud-access page: IonQ quantum access through Google Cloud"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -22131,7 +22174,7 @@
       "RGTI"
     ],
     "name": "Rigetti Computing",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
@@ -22152,6 +22195,10 @@
       {
         "label": "Quantinuum · Trapped-ion systems",
         "url": "https://www.quantinuum.com/products-solutions/quantinuum-systems"
+      },
+      {
+        "url": "https://www.rigetti.com/applications?area=education-entertainment&sort=&type=platform",
+        "label": "RGTI / Amazon — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -22160,7 +22207,7 @@
       "strength": "量子チップを自社施設で製造し、高速ゲート、複数チップ接続、制御ソフトを一体で改善できる。",
       "risks": "実用上の優位性はまだ確立せず、誤り率と拡張性、赤字と資金、政府案件、極低温部品に左右される。",
       "competition": "ゲート型量子計算機ではIBMとGoogleの超伝導方式、IonQとQuantinuumのイオントラップ方式が競合例。Rigetti自身の実名開示と各社の方式を照合した。クラウドで利用できることと、そのクラウド会社が計算機を製造することは区別する。",
-      "relationships": "政府研究所、大学、企業へ量子計算機と研究支援を提供し、極低温・電子制御・製造材料を調達する。"
+      "relationships": "政府研究所、大学、企業へ量子計算機と研究支援を提供し、極低温・電子制御・製造材料を調達する。 公式利用窓口にAmazon Braket経由のRigetti量子システムを掲載。利用経路の提携でありAWSからの半導体調達や専用容量購入とは区別する。異なる量子方式が同等性能と示されたわけではない。"
     },
     "en": {
       "business": "Builds gate-model quantum computers using superconducting circuits, spanning chips, controls and cloud access.",
@@ -22168,7 +22215,7 @@
       "strength": "Fabricates chips in-house and can co-develop fast gates, multi-chip scaling, controls and software.",
       "risks": "Practical advantage is unproven; error rates, scaling, losses, funding, government work and cryogenic supply create risk.",
       "competition": "Rigetti names IBM and Google, which develop superconducting systems, and IonQ and Quantinuum, which use trapped ions, as computing competitors. Hardware development is distinct from cloud distribution, and different architectures are not treated as interchangeable.",
-      "relationships": "Provides systems and research support to government labs, universities and enterprises and sources cryogenic and control components."
+      "relationships": "Provides systems and research support to government labs, universities and enterprises and sources cryogenic and control components. Its official access page lists Rigetti systems through Amazon Braket. This is a distribution/access partnership, distinct from chip procurement from AWS or an AWS dedicated-capacity purchase. It does not establish equivalent performance across different quantum architectures."
     },
     "maps": {
       "competition": [
@@ -22254,6 +22301,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "公式利用窓口：Amazon BraketでRigetti量子システムを提供",
+            "en": "Official access page: Rigetti quantum systems available through Amazon Braket"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -22264,7 +22324,7 @@
       "QBTS"
     ],
     "name": "D-Wave Quantum",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
@@ -22285,6 +22345,18 @@
       {
         "label": "Quantinuum · Trapped-ion systems",
         "url": "https://www.quantinuum.com/products-solutions/quantinuum-systems"
+      },
+      {
+        "url": "https://www.dwavequantum.com/company/newsroom/press-release/d-wave-technology-drives-ntt-docomo-s-second-production-quantum-application-in-network-operations/",
+        "label": "QBTS / NTT — official relationship source; checked October 17, 2026"
+      },
+      {
+        "url": "https://group.ntt/jp/group/gnavi/",
+        "label": "NTT group identifies DOCOMO"
+      },
+      {
+        "url": "https://www.group.ntt/jp/ir/shares/stock/",
+        "label": "NTT listed parent, Tokyo9432; checked October17,2026"
       }
     ],
     "ja": {
@@ -22293,7 +22365,7 @@
       "strength": "アニーリング機を実際の最適化問題へ使うためのハード、ハイブリッドソルバー、開発環境を一体で持つ。",
       "risks": "市場が初期段階で赤字が続き、採用速度、システム販売時期、技術ロードマップ、資金と部品に左右される。",
       "competition": "D-WaveはIBM、Google、Quantinuumなどを量子計算市場の競合として開示している。IBM・Googleの超伝導ゲート型とQuantinuumのイオントラップ型は、同社のAdvantage2アニーリング機とは方式が異なる。計算需要や研究予算で競う例であり、同じ最適化問題で同等の製品だとは断定しない。",
-      "relationships": "企業、政府、研究機関へクラウド利用と導入支援を提供し、極低温・電子制御部品を調達する。"
+      "relationships": "企業、政府、研究機関へクラウド利用と導入支援を提供し、極低温・電子制御部品を調達する。 2026年8月の共同発表は、NTT傘下DOCOMOがD-Waveを使う2件目のネットワーク最適化を本番導入したと説明。上場親会社NTT（東証9432）で表示し、DOCOMOの旧上場銘柄を復活させない。実装事例の成果を全ネットワーク・全量子方式に一般化しない。"
     },
     "en": {
       "business": "Provides quantum-annealing systems and cloud tools for combinatorial optimization while developing gate-model technology.",
@@ -22301,7 +22373,7 @@
       "strength": "Combines annealing hardware, hybrid solvers and developer tools aimed at applied optimization workloads.",
       "risks": "An early market, continuing losses, adoption, irregular system sales, roadmap execution, funding and components create risk.",
       "competition": "D-Wave names IBM, Google and Quantinuum among quantum-computing competitors. Their gate-model systems differ from Advantage2 annealing: they compete for computing demand and research budgets, without implying identical optimization capabilities or performance.",
-      "relationships": "Provides cloud access and implementation support to enterprises, governments and researchers and sources cryogenic and control equipment."
+      "relationships": "Provides cloud access and implementation support to enterprises, governments and researchers and sources cryogenic and control equipment. An August 2026 joint release describes NTT subsidiary DOCOMO deploying a second production network-optimization application using D-Wave. The card identifies listed parent NTT (Tokyo 9432), without reviving DOCOMO’s former listing. Case-specific results do not generalize to all networks or quantum architectures."
     },
     "maps": {
       "competition": [
@@ -22376,6 +22448,20 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NTT",
+          "role": "customer",
+          "label": {
+            "ja": "2026年8月：NTT傘下DOCOMOが2件目の量子ネットワーク最適化を本番導入",
+            "en": "August 2026: NTT subsidiary DOCOMO deploys its second production quantum network-optimization application"
+          },
+          "sourceIndexes": [
+            5,
+            6,
+            7
+          ]
         }
       ]
     }
@@ -22386,7 +22472,7 @@
       "QUBT"
     ],
     "name": "Quantum Computing Inc.",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
@@ -22403,6 +22489,10 @@
       {
         "label": "Xanadu · Aurora photonic quantum computer",
         "url": "https://www.xanadu.ai/blog/lighting-up-the-quantum-computing-horizon-with-aurora"
+      },
+      {
+        "url": "https://www.ciena.com/about/newsroom/press-releases/quantum-computing-inc-and-ciena-demonstrate-next-generation-quantum-secured-communications-with-high-speed-encryption-using-pqc-and-qkd-at-ofc-2026",
+        "label": "QUBT / Ciena — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -22411,7 +22501,7 @@
       "strength": "室温で動く光学方式、光集積回路の設計、チップ製造設備を組み合わせて試作から製品まで進められる。",
       "risks": "2025年売上は小さく、赤字と資金需要、製品化と顧客獲得、工場立ち上げ、競合の豊富な資金に左右される。",
       "competition": "Diracなどの量子・光学計算ではD-WaveのAdvantage2、IBMのゲート型計算機、Xanaduの光量子計算機Auroraが競合・代替方式の例。同社の実名開示と公式製品で範囲を確認した。光を使う方式でも設計と用途は異なり、これらを薄膜ニオブ酸リチウムの製造受託会社だとは扱わない。",
-      "relationships": "企業・政府・研究機関へ製品と開発支援を提供し、光学・半導体材料や製造装置を調達する。"
+      "relationships": "企業・政府・研究機関へ製品と開発支援を提供し、光学・半導体材料や製造装置を調達する。 2026年3月、CienaとOFCで量子鍵配送（QKD）・量子認証・光暗号の共同実演を発表。通信セキュリティの技術協力であり、汎用量子計算性能の同等性、確定販売量、全顧客への提供完了は示していない。"
     },
     "en": {
       "business": "Develops photonic quantum and sensing systems plus thin-film lithium-niobate photonic integrated circuits with in-house fabrication.",
@@ -22419,7 +22509,7 @@
       "strength": "Combines room-temperature photonics, integrated-circuit design and chip fabrication from prototype through product development.",
       "risks": "Revenue remains small; losses, funding, commercialization, customer adoption, foundry ramp and better-funded rivals create risk.",
       "competition": "QCi names D-Wave, IBM and Xanadu among computing competitors. Examples include Advantage2 annealing, IBM gate-model systems and Xanadu Aurora photonic computing, checked against official products. Their architectures and applications differ; none is inferred to be a thin-film lithium-niobate foundry rival.",
-      "relationships": "Provides products and development work to enterprise, government and research users and sources optical materials and fabrication equipment."
+      "relationships": "Provides products and development work to enterprise, government and research users and sources optical materials and fabrication equipment. In March 2026 QCi and Ciena announced an OFC demonstration combining QKD, quantum authentication and optical encryption. This is communications-security collaboration, without establishing equivalent general-purpose quantum performance, a sales volume or completed rollout to all customers."
     },
     "maps": {
       "competition": [
@@ -22491,6 +22581,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Ciena",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：CienaとOFCでQKD・量子認証・光暗号の共同実演を発表",
+            "en": "March 2026: announced joint OFC QKD, quantum-authentication and optical-encryption demonstration with Ciena"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "CIEN"
         }
       ]
     }
@@ -22669,7 +22772,7 @@
       "ASTS"
     ],
     "name": "AST SpaceMobile",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · SpaceMobile service / Revenue / Competition / Risk factors",
@@ -22686,6 +22789,10 @@
       {
         "label": "Globalstar · Q2 2026 Form 10-Q, handset services and pending Amazon transaction",
         "url": "https://investors.globalstar.com/static-files/d9651b64-921b-428d-9701-f7fbacec73e9"
+      },
+      {
+        "url": "https://ast-science.com/partners/",
+        "label": "ASTS / AT&T — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -22694,7 +22801,7 @@
       "strength": "端末に専用機器を追加せず、携帯会社の周波数と顧客基盤を使って圏外地域を補完する設計。",
       "risks": "衛星配備に多額の資金が必要で、打ち上げ、技術性能、周波数・各国認可、通信会社との契約に左右される。",
       "competition": "スマートフォンの圏外通信ではSpaceXのStarlink直接接続とGlobalstarの端末向け衛星サービスが競合例。各社の公式説明を照合した編集上の比較で、メッセージ・SOSとブロードバンドの対応範囲は同一ではない。GlobalstarのAmazonによる買収は契約済み・完了予定の段階として区別する。",
-      "relationships": "携帯通信会社とサービスを組み、利用者へ提供する。衛星部品、製造設備、打ち上げサービスを外部調達する。"
+      "relationships": "携帯通信会社とサービスを組み、利用者へ提供する。衛星部品、製造設備、打ち上げサービスを外部調達する。 公式提携先ページでAT&T、Verizon、Vodafoneを実名で確認。衛星と携帯網の統合に向けた技術・検証・商業協力であり、全地域の常時サービス提供完了や全契約量とは区別する。提携先一覧だけから各社の現時点の株式保有を推定しない。"
     },
     "en": {
       "business": "Is building a satellite cellular network designed to connect ordinary smartphones directly, deploying its large BlueBird satellites in stages.",
@@ -22702,7 +22809,7 @@
       "strength": "Uses mobile operators' spectrum and customer reach without requiring a special device, extending coverage beyond terrestrial networks.",
       "risks": "Capital needs, launches, technical performance, spectrum and country approvals, and definitive operator agreements drive risk.",
       "competition": "Examples for off-grid handset connectivity are SpaceX Starlink direct-to-cell and Globalstar handset satellite services. This editorial comparison of official disclosures distinguishes messaging/SOS from broadband. Globalstar’s agreed Amazon transaction is pending, not treated as completed.",
-      "relationships": "Works with mobile-network operators to reach subscribers and sources satellite components, production equipment and launch services."
+      "relationships": "Works with mobile-network operators to reach subscribers and sources satellite components, production equipment and launch services. Its partner page explicitly identifies AT&T, Verizon and Vodafone for technical, validation and commercial cooperation on satellite/mobile integration. Partnerships do not establish continuous service in every region or disclosed volumes. The directory alone does not establish each company’s current shareholding."
     },
     "maps": {
       "competition": [
@@ -22760,6 +22867,45 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "AT&T",
+          "role": "partner",
+          "label": {
+            "ja": "公式提携先：AT&Tとの衛星・地上携帯網の開発・検証協力",
+            "en": "Official partner page: AT&T collaboration on satellite / terrestrial mobile integration"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "T"
+        },
+        {
+          "kind": "company",
+          "name": "Verizon",
+          "role": "partner",
+          "label": {
+            "ja": "公式提携先：Verizonとの衛星携帯通信の開発・検証協力",
+            "en": "Official partner page: Verizon satellite-mobile development and validation collaboration"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "VZ"
+        },
+        {
+          "kind": "company",
+          "name": "Vodafone",
+          "role": "partner",
+          "label": {
+            "ja": "公式提携先：Vodafoneとの衛星・携帯網の技術・商業協力",
+            "en": "Official partner page: Vodafone satellite-mobile technical and commercial collaboration"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "VOD"
         }
       ]
     }
@@ -22770,7 +22916,7 @@
       "PL"
     ],
     "name": "Planet Labs",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Platform / Customers / Revenue / Risk factors",
@@ -22791,6 +22937,10 @@
       {
         "label": "BlackSky · Gen-3 imagery and Spectra general availability",
         "url": "https://blacksky.com/press-releases/blacksky-successfully-commissions-gen-3-in-less-than-one-week-opening-gen-3-general-availability-for-global-customer-base/"
+      },
+      {
+        "url": "https://investors.planet.com/news/news-details/2026/Planet-to-Build-Worlds-First-GPU-Native-AI-Engine-for-Planetary-Intelligence-with-NVIDIA/default.aspx",
+        "label": "PL / NVIDIA — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -22799,7 +22949,7 @@
       "strength": "高い撮影頻度と長年の画像履歴を組み合わせ、地域の変化を時系列で比較しやすい。",
       "risks": "契約更新、政府予算、衛星・打ち上げ失敗、画像性能、競争、赤字と継続投資に左右される。",
       "competition": "光学衛星画像・撮影指示ではVantorのWorldView、AirbusのPléiades Neo、BlackSkyのGen-3・Spectraが競合例。両社の公式製品を照合した編集上の比較で、解像度・再訪頻度・分析機能は同一ではない。Vantorは旧Maxar Intelligenceの現社名で、旧上場銘柄とは結び付けない。",
-      "relationships": "政府、防衛、農業、地図、保険などへ画像・分析を提供し、打ち上げと衛星部品を外部から調達する。"
+      "relationships": "政府、防衛、農業、地図、保険などへ画像・分析を提供し、打ち上げと衛星部品を外部から調達する。 2026年3月、NVIDIAとGPUによる衛星画像処理、CorrDiffによる画像高度化、AI検索用埋め込みを共同開発すると発表。Blackwell・IGX Thor等の技術利用を説明するが、全計画の提供完了、NVIDIAの画像購入や株式投資は推定しない。"
     },
     "en": {
       "business": "Operates fleets of small satellites to repeatedly image Earth and provide imagery, change data and analytics software.",
@@ -22807,7 +22957,7 @@
       "strength": "Combines frequent collection with a long image archive, making geographic change easier to compare over time.",
       "risks": "Renewals, government budgets, satellite or launch failures, image performance, competition, losses and continued investment create risk.",
       "competition": "Examples in optical imagery and tasking are Vantor WorldView, Airbus Pleiades Neo and BlackSky Gen-3/Spectra. This editorial comparison of official products does not imply equal resolution, revisit or analytics. Vantor is the current name of former Maxar Intelligence, without an obsolete public ticker.",
-      "relationships": "Provides imagery and analytics to government, defense, agriculture, mapping and insurance users and sources launches and satellite components."
+      "relationships": "Provides imagery and analytics to government, defense, agriculture, mapping and insurance users and sources launches and satellite components. In March 2026 Planet announced NVIDIA collaboration on GPU imagery processing, CorrDiff enhancement and embeddings for AI search. The use of Blackwell and IGX Thor technology does not establish completed delivery of all plans, NVIDIA imagery purchases or an equity investment."
     },
     "maps": {
       "competition": [
@@ -22878,6 +23028,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：NVIDIAとGPUによる衛星画像処理・AI検索を共同開発",
+            "en": "March 2026: NVIDIA collaboration on GPU satellite-image processing and AI search"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -22888,7 +23051,7 @@
       "BKSY"
     ],
     "name": "BlackSky Technology",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Spectra platform / Revenue / Customers / Risk factors",
@@ -22909,6 +23072,10 @@
       {
         "label": "Planet · PlanetScope, SkySat and Pelican imagery products",
         "url": "https://www.planet.com/products/satellite-imagery-of-earth/"
+      },
+      {
+        "url": "https://blacksky.com/press-releases/blacksky-and-rocket-lab-establish-launch-window-for-first-gen-3-satellite/",
+        "label": "BKSY / Rocket Lab — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -22917,7 +23084,7 @@
       "strength": "衛星の撮影指示から画像配信・変化検知までをソフトで自動化し、短い時間で判断材料を届けられる。",
       "risks": "政府顧客への集中、契約・予算、衛星と打ち上げ、製造、資金需要、AI分析の品質に左右される。",
       "competition": "光学衛星画像・撮影指示ではVantorのWorldView、AirbusのPléiades Neo、PlanetのSkySat・Pelicanが競合例。両社の公式製品を照合した編集上の比較で、解像度・再訪頻度・分析機能は同一ではない。Vantorは旧Maxar Intelligenceの現社名で、旧上場銘柄とは結び付けない。",
-      "relationships": "米国・海外政府を中心に画像・分析と専用システムを提供し、衛星部品、打ち上げ、クラウド基盤を利用する。"
+      "relationships": "米国・海外政府を中心に画像・分析と専用システムを提供し、衛星部品、打ち上げ、クラウド基盤を利用する。 2025年2月の自社共同発表はGen-3衛星をRocket LabのElectronに搭載し打ち上げ準備を進める関係を明記。発表時点の計画と供給元を示し、その予定日を実際の打ち上げ日や全後続衛星の完了に置き換えない。匿名の後続ミッションの顧客名も推定しない。"
     },
     "en": {
       "business": "Provides space-based intelligence by rapidly tasking small satellites and delivering imagery and AI analysis.",
@@ -22925,7 +23092,7 @@
       "strength": "Automates tasking, delivery and change detection in one software platform to shorten the time from request to insight.",
       "risks": "Government concentration, awards and budgets, satellite and launch performance, manufacturing, capital needs and AI quality create risk.",
       "competition": "Examples in optical imagery and tasking are Vantor WorldView, Airbus Pleiades Neo and Planet SkySat/Pelican. This editorial comparison of official products does not imply equal resolution, revisit or analytics. Vantor is the current name of former Maxar Intelligence, without an obsolete public ticker.",
-      "relationships": "Provides imagery, analytics and mission systems mainly to U.S. and foreign governments and uses satellite, launch and cloud suppliers."
+      "relationships": "Provides imagery, analytics and mission systems mainly to U.S. and foreign governments and uses satellite, launch and cloud suppliers. Its February 2025 joint announcement identifies Rocket Lab Electron launch preparations for a Gen-3 satellite. The dated announcement establishes the launch provider, without treating its scheduled date as the actual launch date or assuming completion of all later satellites. Unnamed later missions are not assigned a customer identity."
     },
     "maps": {
       "competition": [
@@ -22996,6 +23163,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Rocket Lab",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年2月：Gen-3衛星のElectron打ち上げ準備を共同発表",
+            "en": "February 2025: joint announcement of Electron launch preparations for a Gen-3 satellite"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "RKLB"
         }
       ]
     }
@@ -23006,7 +23186,7 @@
       "AVAV"
     ],
     "name": "AeroVironment",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Autonomous systems / Space, cyber and directed energy / Revenue / Risk factors",
@@ -23023,6 +23203,10 @@
       {
         "label": "RTX Raytheon · Coyote counter-UAS effector",
         "url": "https://www.rtx.com/raytheon/what-we-do/integrated-air-and-missile-defense/coyote"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465924090206/tm242150d3_ars.pdf",
+        "label": "AVAV / L3Harris Technologies — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -23031,7 +23215,7 @@
       "strength": "小型無人機から攻撃・迎撃、指揮ソフト、宇宙・電波技術までを統合し、実任務向けに提供できる。",
       "risks": "政府予算と契約時期、製品性能、機密・輸出規制、増産、部品調達、買収事業の統合に左右される。",
       "competition": "小型無人機ではRedwire傘下Edge AutonomyのStalker・Penguin、対ドローンではAndurilのRoadrunnerとRTXのCoyoteが競合例。AeroVironmentの分野別実名開示と公式製品で確認した。大型協働戦闘機、徘徊型攻撃兵器、迎撃機を同じ製品として一括りにしない。",
-      "relationships": "米国政府と同盟国へ製品・開発・保守を提供し、航空電子、推進、通信、複合材料を調達する。"
+      "relationships": "米国政府と同盟国へ製品・開発・保守を提供し、航空電子、推進、通信、複合材料を調達する。 FY2024報告は、L3HarrisとCorvidが共同開発したShrykeをVAPOR 55 MXから投下する実証を記載。L3Harrisカードはこの時点・ペイロード対応に限定し、現在の購入量・独占契約や全機種への搭載とは扱わない。"
     },
     "en": {
       "business": "Provides uncrewed aircraft, loitering munitions and counter-drone systems plus space, cyber and directed-energy technologies.",
@@ -23039,7 +23223,7 @@
       "strength": "Integrates small drones, strike and counter-drone systems, command software, space and RF capabilities for operational missions.",
       "risks": "Budgets and award timing, product performance, security and export rules, production, supply and acquisition integration create risk.",
       "competition": "Examples include Redwire/Edge Autonomy Stalker and Penguin in small UAS and Anduril Roadrunner and RTX Coyote in counter-UAS. AeroVironment names these firms in the relevant categories; product evidence supports the scope. Small ISR aircraft, loitering munitions and interceptors are distinct.",
-      "relationships": "Provides products, development and support to U.S. and allied governments and sources avionics, propulsion, communications and composites."
+      "relationships": "Provides products, development and support to U.S. and allied governments and sources avionics, propulsion, communications and composites. Its FY2024 report describes a VAPOR 55 MX release demonstration using Shryke payloads co-developed by L3Harris and Corvid. The L3Harris card is limited to that dated payload integration, without asserting current volumes, exclusivity or adoption across every aircraft."
     },
     "maps": {
       "competition": [
@@ -23111,6 +23295,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "L3Harris Technologies",
+          "role": "ecosystem",
+          "label": {
+            "ja": "FY2024報告：L3Harris共同開発ShrykeをVAPOR 55 MXから投下実証",
+            "en": "FY2024 report: VAPOR 55 MX demonstrated release of Shryke payloads co-developed by L3Harris"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "LHX"
         }
       ]
     }
@@ -23121,7 +23318,7 @@
       "KTOS"
     ],
     "name": "Kratos Defense",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Government Solutions / Unmanned Systems / Customers / Risk factors",
@@ -23138,6 +23335,10 @@
       {
         "label": "L3Harris · InControl satellite command-and-control software",
         "url": "https://www.l3harris.com/all-capabilities/incontrol-satellite-command-and-control"
+      },
+      {
+        "url": "https://www.kratosdefense.com/newsroom/airbus-u740-valkyrie-uncrewed-combat-aircraft-takes-off-for-first-european-test-flight",
+        "label": "KTOS / Airbus — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -23146,7 +23347,7 @@
       "strength": "比較的低コストで量産できる無人機、標的機、推進・電波技術を持ち、新しい防衛構想を短期間で試せる。",
       "risks": "米国政府予算と調達、契約採算、試験・量産、機密資格、専門人材、部品、買収統合に左右される。",
       "competition": "戦術用無人ジェットではAndurilのFuryとGeneral AtomicsのAvenger・協働機開発、衛星地上管制ではL3HarrisのInControlが競合例。Kratosの実名開示と公式製品を照合した。防衛案件では企業同士が別の案件で提携する場合もあり、競合から取引関係を推測しない。",
-      "relationships": "米国政府、同盟国、防衛元請けへ製品と技術を提供し、航空宇宙・電子部品を外部調達する。"
+      "relationships": "米国政府、同盟国、防衛元請けへ製品と技術を提供し、航空宇宙・電子部品を外部調達する。 2026年10月12日、AirbusとU740 Valkyrieの欧州初飛行完了を共同発表。Kratos機体とAirbusのMARS等を統合する開発協力で、2029年を目標とする実用能力の提供完了や受注量とは区別する。"
     },
     "en": {
       "business": "Builds unmanned target and tactical aircraft, satellite communications, missile-defense, rocket and jet propulsion and RF systems.",
@@ -23154,7 +23355,7 @@
       "strength": "Combines relatively affordable, producible drones and targets with propulsion and RF technologies for rapid defense experimentation.",
       "risks": "U.S. budgets and procurement, contract margins, testing and production, clearances, talent, parts and acquisition integration create risk.",
       "competition": "Examples include Anduril Fury and General Atomics Avenger/CCA development in tactical autonomous jets, and L3Harris InControl in satellite ground control. Kratos names these firms; official products support the scopes. Firms may team on other programs, so rivalry does not establish a commercial relationship.",
-      "relationships": "Provides products and technology to U.S. government, allied and prime-contractor customers and sources aerospace and electronic components."
+      "relationships": "Provides products and technology to U.S. government, allied and prime-contractor customers and sources aerospace and electronic components. On October 12, 2026 Kratos and Airbus announced the U740 Valkyrie’s first European flight. This is cooperation integrating the Kratos airframe with Airbus MARS and other systems; operational capability targeted for 2029 is not treated as delivered capability or a disclosed order volume."
     },
     "maps": {
       "competition": [
@@ -23225,6 +23426,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Airbus",
+          "role": "partner",
+          "label": {
+            "ja": "2026年10月：AirbusとU740 Valkyrieの欧州初飛行を完了、2029年実用化を目標",
+            "en": "October 2026: Airbus U740 Valkyrie first European flight completed; operational capability targeted for 2029"
+          },
+          "sourceIndexes": [
+            4
+          ]
         }
       ]
     }
@@ -23235,7 +23448,7 @@
       "RDW"
     ],
     "name": "Redwire",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Space / Defense Tech / Customers / Risk factors",
@@ -23252,6 +23465,10 @@
       {
         "label": "Shield AI · V-BAT ISR aircraft",
         "url": "https://shield.ai/v-bat/"
+      },
+      {
+        "url": "https://ir.rdw.com/news-events/press-releases/detail/246/final-pair-of-redwire-rosa-wings-launch-to-the-iss",
+        "label": "RDW / Boeing — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -23260,7 +23477,7 @@
       "strength": "宇宙での運用実績を持つ部品・大型構造・微小重力技術と、防衛向け無人・センサー技術を組み合わせる。",
       "risks": "政府案件、固定価格契約、衛星・任務失敗、部品、買収統合と負債、内部統制の重要な不備に左右される。",
       "competition": "宇宙機の電力・構造などの部品ではRocket Lab、小型の偵察無人機ではAeroVironmentとShield AIのV-BATが競合例。Redwire自身の実名開示と公式の製品範囲を照合した。宇宙機部品と無人機を分け、提携や共同提案から全面的な競合・取引を推測しない。",
-      "relationships": "民間宇宙、国家安全保障、政府・同盟国へ機器と開発を提供し、航空宇宙材料・電子部品を調達する。"
+      "relationships": "民間宇宙、国家安全保障、政府・同盟国へ機器と開発を提供し、航空宇宙材料・電子部品を調達する。 2026年10月の自社発表は、ISSのROSA太陽電池アレイについてBoeingを顧客と明記。太陽電池アレイの商業関係であり、Boeing全事業への供給、全打ち上げ・設置の完了や株式保有とは区別する。"
     },
     "en": {
       "business": "Provides space infrastructure such as solar power, structures, sensors and spacecraft plus defense autonomy, RF and optical systems.",
@@ -23268,7 +23485,7 @@
       "strength": "Combines flight-proven components, large structures and microgravity capabilities with autonomous and sensing technologies for defense.",
       "risks": "Government work, fixed-price contracts, mission failures, supply, acquisition integration and debt, and material control weaknesses create risk.",
       "competition": "Redwire names Rocket Lab in space components and AeroVironment and Shield AI in UAS. Examples include spacecraft power/structures, small ISR aircraft and Shield AI V-BAT, checked against official scope. Space components and UAS are separate; teaming does not imply blanket rivalry or a new customer relationship.",
-      "relationships": "Provides hardware and development to civil, national-security, commercial and allied customers and sources aerospace materials and electronics."
+      "relationships": "Provides hardware and development to civil, national-security, commercial and allied customers and sources aerospace materials and electronics. Its October 2026 announcement explicitly names Boeing as a customer for ISS ROSA solar-array wings. This is a solar-array commercial relationship, without asserting supply to all Boeing businesses, completion of every launch/installation or equity ownership."
     },
     "maps": {
       "competition": [
@@ -23340,6 +23557,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Boeing",
+          "role": "customer",
+          "label": {
+            "ja": "2026年10月：ISS向けROSA太陽電池アレイの顧客としてBoeingを明記",
+            "en": "October 2026: Boeing explicitly named as customer for ISS ROSA solar-array wings"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "BA"
         }
       ]
     }

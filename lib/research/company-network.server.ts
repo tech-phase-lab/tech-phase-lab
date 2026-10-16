@@ -72,6 +72,15 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "RDW") return {"5": {"ja": "宇宙・防衛システムと機器供給先", "en": "Space / defense systems & hardware customers"}, "7": {"ja": "宇宙・防衛の関連企業", "en": "Related space & defense companies"}};
+  if (root === "KTOS") return {"5": {"ja": "無人機・防衛システムの開発協力", "en": "Uncrewed / defense systems & collaboration"}, "7": {"ja": "宇宙・防衛の関連企業", "en": "Related space & defense companies"}};
+  if (root === "AVAV") return {"5": {"ja": "無人機・防衛システム・ペイロード対応", "en": "Uncrewed / defense systems & payload integration"}, "7": {"ja": "防衛システムの関連企業", "en": "Related defense-system companies"}};
+  if (root === "BKSY") return {"1": {"ja": "衛星打ち上げの供給元", "en": "Satellite-launch provider"}, "5": {"ja": "衛星画像・地理空間情報", "en": "Satellite imagery & geospatial intelligence"}, "7": {"ja": "地理空間情報の関連企業", "en": "Related geospatial intelligence companies"}};
+  if (root === "PL") return {"3": {"ja": "GPU画像処理の開発協力", "en": "GPU-imagery development partner"}, "5": {"ja": "衛星画像・地理空間情報", "en": "Satellite imagery & geospatial intelligence"}, "7": {"ja": "地理空間情報の関連企業", "en": "Related geospatial intelligence companies"}};
+  if (root === "QUBT") return {"4": {"ja": "量子安全な光通信の技術協力", "en": "Quantum-safe optical communications"}, "6": {"ja": "量子計算システム", "en": "Quantum computing systems"}, "7": {"ja": "量子計算の関連企業", "en": "Related quantum companies"}};
+  if (root === "QBTS") return {"6": {"ja": "量子計算システム", "en": "Quantum computing systems"}, "7": {"ja": "量子最適化を使う通信事業者", "en": "Telecom quantum-optimization user"}};
+  if (root === "RGTI") return {"6": {"ja": "量子計算システム・クラウド利用窓口", "en": "Quantum systems & cloud-access partners"}, "7": {"ja": "量子計算の関連企業", "en": "Related quantum companies"}};
+  if (root === "IONQ") return {"6": {"ja": "量子計算システム・クラウド利用窓口", "en": "Quantum systems & cloud-access partners"}, "7": {"ja": "量子計算の関連企業", "en": "Related quantum companies"}};
   if (root === "IPGP") return {"0": {"ja": "産業用レーザー・溶接構成", "en": "Industrial lasers & welding options"}};
   if (root === "NVTS") return {"3": {"ja": "GaN・SiC電源半導体", "en": "GaN & SiC power chips"}, "5": {"ja": "800VDC向け技術対応", "en": "800 VDC architecture compatibility"}};
   if (root === "CEVA") return {"3": {"ja": "半導体IP・採用先のチップ", "en": "Semiconductor IP & licensee chips"}};
@@ -393,10 +402,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     6: { ja: "量子計算システム", en: "Quantum computing systems" },
     7: { ja: "量子計算の関連企業", en: "Related quantum computing companies" },
   };
-  if (root === "ASTS") return {
-    5: { ja: "衛星通信システム", en: "Satellite communications systems" },
-    7: { ja: "衛星通信の関連企業", en: "Related satellite communications companies" },
-  };
+  if (root === "ASTS") return {"5": {"ja": "衛星通信システム・サービス", "en": "Satellite communications systems & services"}, "7": {"ja": "提携する携帯通信事業者", "en": "Mobile-network partners"}};
   if (["PL", "BKSY"].includes(root)) return {
     5: { ja: "衛星画像・地理空間情報", en: "Satellite imagery & geospatial intelligence" },
     7: { ja: "地理空間情報の関連企業", en: "Related geospatial intelligence companies" },
@@ -7021,6 +7027,404 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "ESAB | FlexCell welding options"
       }
     }
+  },
+  "IONQ": {
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜Cloud利用窓口・量子計算",
+        "en": "Google | Cloud access / quantum systems"
+      }
+    },
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IBM",
+        "en": "IBM"
+      }
+    },
+    "IONQ": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IonQ",
+        "en": "IonQ"
+      }
+    },
+    "RGTI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Rigetti Computing",
+        "en": "Rigetti Computing"
+      }
+    },
+    "Quantinuum": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Quantinuum",
+        "en": "Quantinuum"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon｜Braket量子利用窓口",
+        "en": "Amazon | Braket quantum access"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜Azure量子利用窓口",
+        "en": "Microsoft | Azure quantum access"
+      }
+    }
+  },
+  "RGTI": {
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google",
+        "en": "Google"
+      }
+    },
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IBM",
+        "en": "IBM"
+      }
+    },
+    "IONQ": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IonQ",
+        "en": "IonQ"
+      }
+    },
+    "RGTI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Rigetti Computing",
+        "en": "Rigetti Computing"
+      }
+    },
+    "Quantinuum": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Quantinuum",
+        "en": "Quantinuum"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon｜Braket量子利用窓口",
+        "en": "Amazon | Braket quantum access"
+      }
+    }
+  },
+  "QBTS": {
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google",
+        "en": "Google"
+      }
+    },
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IBM",
+        "en": "IBM"
+      }
+    },
+    "QBTS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "D-Wave Quantum",
+        "en": "D-Wave Quantum"
+      }
+    },
+    "Quantinuum": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Quantinuum",
+        "en": "Quantinuum"
+      }
+    },
+    "NTT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "NTT / DOCOMO｜量子最適化の利用",
+        "en": "NTT / DOCOMO | quantum optimization"
+      }
+    }
+  },
+  "QUBT": {
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IBM",
+        "en": "IBM"
+      }
+    },
+    "QBTS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "D-Wave Quantum",
+        "en": "D-Wave Quantum"
+      }
+    },
+    "QUBT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Quantum Computing Inc.",
+        "en": "Quantum Computing Inc."
+      }
+    },
+    "Xanadu": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Xanadu",
+        "en": "Xanadu"
+      }
+    },
+    "CIEN": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Ciena｜量子安全通信の共同実演",
+        "en": "Ciena | quantum-safe communications"
+      }
+    }
+  },
+  "ASTS": {
+    "ASTS": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AST SpaceMobile",
+        "en": "AST SpaceMobile"
+      }
+    },
+    "SpaceX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SpaceX",
+        "en": "SpaceX"
+      }
+    },
+    "GSAT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Globalstar",
+        "en": "Globalstar"
+      }
+    },
+    "T": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "AT&T｜衛星携帯通信の提携先",
+        "en": "AT&T | satellite-mobile partner"
+      }
+    },
+    "VZ": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Verizon｜衛星携帯通信の提携先",
+        "en": "Verizon | satellite-mobile partner"
+      }
+    },
+    "VOD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Vodafone｜衛星携帯通信の提携先",
+        "en": "Vodafone | satellite-mobile partner"
+      }
+    }
+  },
+  "PL": {
+    "PL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Planet Labs",
+        "en": "Planet Labs"
+      }
+    },
+    "BKSY": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "BlackSky Technology",
+        "en": "BlackSky Technology"
+      }
+    },
+    "Vantor": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Vantor",
+        "en": "Vantor"
+      }
+    },
+    "Airbus": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Airbus",
+        "en": "Airbus"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜GPU画像処理の開発協力",
+        "en": "NVIDIA | GPU-imagery collaboration"
+      }
+    }
+  },
+  "BKSY": {
+    "PL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Planet Labs",
+        "en": "Planet Labs"
+      }
+    },
+    "BKSY": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "BlackSky Technology",
+        "en": "BlackSky Technology"
+      }
+    },
+    "Vantor": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Vantor",
+        "en": "Vantor"
+      }
+    },
+    "Airbus": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Airbus",
+        "en": "Airbus"
+      }
+    },
+    "RKLB": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Rocket Lab｜Electron打ち上げ供給",
+        "en": "Rocket Lab | Electron launch provider"
+      }
+    }
+  },
+  "AVAV": {
+    "AVAV": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AeroVironment",
+        "en": "AeroVironment"
+      }
+    },
+    "RDW": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Redwire",
+        "en": "Redwire"
+      }
+    },
+    "Anduril Industries": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Anduril Industries",
+        "en": "Anduril Industries"
+      }
+    },
+    "RTX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "RTX",
+        "en": "RTX"
+      }
+    },
+    "LHX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "L3Harris｜FY2024 Shryke搭載実証",
+        "en": "L3Harris | FY2024 Shryke integration"
+      }
+    }
+  },
+  "KTOS": {
+    "KTOS": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Kratos Defense",
+        "en": "Kratos Defense"
+      }
+    },
+    "Anduril Industries": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Anduril Industries",
+        "en": "Anduril Industries"
+      }
+    },
+    "General Atomics": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "General Atomics",
+        "en": "General Atomics"
+      }
+    },
+    "LHX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "L3Harris Technologies",
+        "en": "L3Harris Technologies"
+      }
+    },
+    "Airbus": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Airbus｜U740開発・欧州飛行",
+        "en": "Airbus | U740 development / flight"
+      }
+    }
+  },
+  "RDW": {
+    "RKLB": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Rocket Lab",
+        "en": "Rocket Lab"
+      }
+    },
+    "AVAV": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AeroVironment",
+        "en": "AeroVironment"
+      }
+    },
+    "RDW": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Redwire",
+        "en": "Redwire"
+      }
+    },
+    "Shield AI": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Shield AI",
+        "en": "Shield AI"
+      }
+    },
+    "BA": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Boeing｜ISS太陽電池アレイの顧客",
+        "en": "Boeing | ISS solar-array customer"
+      }
+    }
   }
 };
 
@@ -7084,7 +7488,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC", "MTSI", "POWI", "SITM", "RMBS", "DIOD", "SLAB", "CEVA", "NVTS", "IPGP"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC", "MTSI", "POWI", "SITM", "RMBS", "DIOD", "SLAB", "CEVA", "NVTS", "IPGP", "IONQ", "RGTI", "QBTS", "QUBT", "ASTS", "PL", "BKSY", "AVAV", "KTOS", "RDW"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
