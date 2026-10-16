@@ -8,8 +8,9 @@ import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-w
 import { pulseClock } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
-const BASE_FONT_PX = 12;
-const MIN_FONT_PX = 10;
+// The headline is 13.5px in the stylesheet; measuring at another size made some lines overflow and others look bigger (owner, Oct 16).
+const BASE_FONT_PX = 13.5;
+const MIN_FONT_PX = 12;
 /** A long headline slides at a readable pace (owner, Oct 16: too fast to read); a one-way slide takes 70% of the cycle. */
 const SCROLL_PX_PER_SECOND = 35;
 const scrollSeconds = (shift: number) => Math.max(6, shift / SCROLL_PX_PER_SECOND / 0.7);
