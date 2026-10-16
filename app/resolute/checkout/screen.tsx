@@ -22,7 +22,8 @@ async function request(path: string, body?: object) {
  if (data.sandbox !== true) throw Error("PAYMENT_UNAVAILABLE");
  return data;
 }
-export default function CheckoutScreen({ orderId, language, cancelled }: CheckoutProps) {
+export default function CheckoutScreen({ orderId, language: initialLanguage, cancelled }: CheckoutProps) {
+ const [language, setLanguage] = useState(initialLanguage);
  const en = language === "en";
  const [kind, setKind] = useState<"initial" | "renewal">("initial");
  const [order, setOrder] = useState<Order | null>(null);
@@ -30,7 +31,17 @@ export default function CheckoutScreen({ orderId, language, cancelled }: Checkou
  const [error, setError] = useState("");
  const [uncertain, setUncertain] = useState(false);
  const requestKey = useRef<string | null>(null);
+ const requestLanguage = useRef<"ja" | "en" | null>(null);
  const lock = useRef(false);
+ function switchLanguage(next: "ja" | "en") {
+  if (lock.current) return;
+  setLanguage(next);
+  const url = new URL(window.location.href);
+  url.searchParams.set("lang", next);
+  const id = order?.orderId ?? orderId;
+  if (id) url.searchParams.set("order", id);
+  window.history.replaceState(null, "", url.pathname + url.search);
+ }
  function failure(e: unknown) { setError(e instanceof Error ? e.message : "PAYMENT_UNAVAILABLE"); }
  useEffect(() => {
   if (!orderId) return;
@@ -44,7 +55,8 @@ export default function CheckoutScreen({ orderId, language, cancelled }: Checkou
   try {
    if (action === "create") {
     requestKey.current ??= crypto.randomUUID();
-    const data: Order = await request("orders", { kind, language, requestKey: requestKey.current });
+    requestLanguage.current ??= language;
+    const data: Order = await request("orders", { kind, language: requestLanguage.current, requestKey: requestKey.current });
     setOrder(data);
     window.history.replaceState(null, "", `/resolute/checkout?lang=${language}&order=${data.orderId}`);
    } else {
@@ -67,7 +79,10 @@ export default function CheckoutScreen({ orderId, language, cancelled }: Checkou
   <p className={styles.badge}>OWNER ONLY · PAYPAL SANDBOX</p>
   <h1>{en ? "Test checkout" : "テスト購入"}</h1>
   <p>{en ? "Use a PayPal Sandbox personal account. No real money will move, and this test won’t unlock the live product." : "PayPalのSandbox用Personalアカウントを使います。実際の請求や本番の利用権付与は行いません。"}</p>
-  <nav className={styles.links} aria-label="Language"><a href={`/resolute/checkout?lang=ja${orderId ? `&order=${orderId}` : ""}`}>日本語</a><a href={`/resolute/checkout?lang=en${orderId ? `&order=${orderId}` : ""}`}>English</a></nav>
+  <nav className={`${styles.links} ${styles.languages}`} aria-label="Language">
+   <button type="button" disabled={busy} aria-pressed={!en} onClick={() => switchLanguage("ja")}>日本語</button>
+   <button type="button" disabled={busy} aria-pressed={en} onClick={() => switchLanguage("en")}>English</button>
+  </nav>
   {cancelled && <p role="status">{en ? "You returned from PayPal without finishing. No payment is captured just by opening this page." : "PayPalの操作を中断して戻りました。このページを開いただけで支払いは確定しません。"}</p>}
   {!order && !orderId ? <>
    <label>{en ? "Purchase type" : "購入内容"}<select value={kind} disabled={busy || requestKey.current !== null} onChange={e => setKind(e.target.value as "initial" | "renewal")}>
