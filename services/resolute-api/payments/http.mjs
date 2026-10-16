@@ -1,7 +1,7 @@
 import { PaymentError } from './policy.mjs';
 import { readJson } from './paypal.mjs';
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});
-export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers }) {
+export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers, auditUsers = [] }) {
   let active=0; const windows=new Map();
   return async request=>{
     const url=new URL(request.url),path=url.pathname;
@@ -15,8 +15,9 @@ export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers
         if(!enabled) return json({error:'PAYMENT_DISABLED'},503);
         user=await authenticate(request.headers);
         if(!user) return json({error:'AUTH_REQUIRED'},401);
-        // Sandbox is operator-only until the end-to-end acceptance tests pass.
-        if(!allowedUsers.includes(user)) return json({error:'SANDBOX_ACCESS_DENIED'},403);
+        const admitted = typeof allowedUsers === 'function' ? allowedUsers() : allowedUsers;
+        if(!admitted.includes(user)) return json({error:'SANDBOX_ACCESS_DENIED'},403);
+        if(path === '/internal/v1/payments/audit' && !auditUsers.includes(user)) return json({error:'SANDBOX_ACCESS_DENIED'},403);
       }
       const now=Date.now(),key=user ?? 'webhook';
       for(const [k,v] of windows) if(v.until<=now) windows.delete(k);

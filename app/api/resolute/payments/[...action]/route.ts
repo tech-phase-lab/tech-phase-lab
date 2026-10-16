@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { OWNER_ACCOUNT_ID } from "@/lib/membership/entitlements";
+import { sandboxTester } from "@/lib/resolute/sandbox-access";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -8,9 +9,12 @@ async function handle(request: Request, context: { params: Promise<{ action: str
   try {
     const { userId, getToken } = await auth();
     if (!userId) return Response.json({ error: "AUTH_REQUIRED" }, { status: 401, headers });
-    if (userId !== OWNER_ACCOUNT_ID) return Response.json({ error: "SANDBOX_ACCESS_DENIED" }, { status: 403, headers });
+    const tester = process.env.VERCEL_ENV === "preview" ? sandboxTester(process.env) : null;
+    if (userId !== OWNER_ACCOUNT_ID && userId !== tester) return Response.json({ error: "SANDBOX_ACCESS_DENIED" }, { status: 403, headers });
     const { action } = await context.params;
     const path = action.join("/");
+    if (path === "audit" && userId !== OWNER_ACCOUNT_ID)
+      return Response.json({ error: "SANDBOX_ACCESS_DENIED" }, { status: 403, headers });
     if (!(request.method === "POST" && ["orders", "capture"].includes(path)) &&
         !(request.method === "GET" && (path === "audit" || /^orders\/[0-9a-f-]{36}$/i.test(path))))
       return Response.json({ error: "NOT_FOUND" }, { status: 404, headers });

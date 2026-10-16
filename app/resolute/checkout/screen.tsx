@@ -76,7 +76,7 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
   order?.state === "capturing" || uncertain ? (en ? "Payment status is being checked. Refresh the status before trying anything else." : "支払い結果の確認が必要です。先に状況を再確認してください。") :
   (en ? "Payment hasn’t been confirmed yet." : "支払い完了はまだ確認されていません。");
  return <main className={styles.page}><section className={styles.card}>
-  <p className={styles.badge}>OWNER ONLY · PAYPAL SANDBOX</p>
+  <p className={styles.badge}>PAYPAL SANDBOX</p>
   <h1>{en ? "Test checkout" : "テスト購入"}</h1>
   <p>{en ? "Use a PayPal Sandbox personal account. No real money will move, and this test won’t unlock the live product." : "PayPalのSandbox用Personalアカウントを使います。実際の請求や本番の利用権付与は行いません。"}</p>
   <nav className={`${styles.links} ${styles.languages}`} aria-label="Language">

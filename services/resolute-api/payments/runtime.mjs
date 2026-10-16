@@ -3,6 +3,7 @@ import { createClerkClient } from '@clerk/backend';
 import { resoluteDatabaseConfig } from '../../../lib/resolute/database-config.ts';
 import { authenticate } from '../auth.mjs';
 import { OWNER_ACCOUNT_ID } from '../../../lib/membership/entitlements.ts';
+import { sandboxTester } from '../../../lib/resolute/sandbox-access.ts';
 import { paypalConfig, createPaypal } from './paypal.mjs';
 import { paymentStore } from './store.mjs';
 import { paymentEngine } from './engine.mjs';
@@ -25,7 +26,9 @@ export function paymentRuntime(env,authConfig) {
         const clerk=createClerkClient({secretKey:env.RESOLUTE_PAYMENT_CLERK_SECRET_KEY});
         const engine=paymentEngine({store,paypal,merchantId:config.merchantId,getUser:id=>clerk.users.getUser(id)});
         handler=paymentHttp({engine,store,authenticate:headers=>authenticate(headers,authConfig),
-          enabled:env.RESOLUTE_PAYMENTS_ENABLED === 'true',allowedUsers:[OWNER_ACCOUNT_ID]});
+          enabled:env.RESOLUTE_PAYMENTS_ENABLED === 'true',
+          allowedUsers:()=>[OWNER_ACCOUNT_ID, ...(env.RESOLUTE_PAYPAL_ENV === 'sandbox' && sandboxTester(env) ? [sandboxTester(env)] : [])],
+          auditUsers:[OWNER_ACCOUNT_ID]});
       }
       return await handler(request);
     } catch { return Response.json({error:'PAYMENT_UNAVAILABLE'},{status:503,headers:{'Cache-Control':'private, no-store'}}); }
