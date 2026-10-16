@@ -8,8 +8,8 @@ test('cloud batch retains exact issuer identity and a fixed map root', () => {
   for (const [ticker, cik] of Object.entries(issuers)) {
     const record = companyIntroductionFor({ ticker, cik });
     assert.ok(record, ticker);
-    // Only records with a completed product-scope re-review have a newer date.
-    assert.equal(record.reviewedOn, ['PATH', 'GTLB', 'NTAP', 'ZM', 'DOCN', 'ESTC', 'FROG'].includes(ticker) ? '2026-10-16' : '2026-10-14');
+    // Completed product-scope or named-relationship re-reviews advance the date.
+    assert.equal(record.reviewedOn, ['PATH', 'GTLB', 'NTAP', 'ZM', 'DOCN', 'ESTC', 'FROG', 'BOX', 'WDAY'].includes(ticker) ? '2026-10-16' : '2026-10-14');
     assert.equal(companyIntroductionFor({ ticker, cik: 1 }), null);
     const graph = companyNetworkFor({ ticker, cik });
     assert.equal(graph.root, ticker);

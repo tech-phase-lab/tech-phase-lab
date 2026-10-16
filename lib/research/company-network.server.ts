@@ -72,6 +72,15 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "MSFT") return {"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}};
+  if (root === "ADBE") return {"6": {"ja": "制作ツールのAIモデル連携", "en": "AI model integration in creative tools"}, "7": {"ja": "制作・文書・マーケティング", "en": "Creative, documents & marketing"}};
+  if (root === "CRM") return {"6": {"ja": "CRM・業務アプリ・AI連携", "en": "CRM, business applications & AI integration"}};
+  if (root === "BOX") return {"6": {"ja": "企業コンテンツ・AI連携", "en": "Enterprise content & AI integration"}, "7": {"ja": "会議・共同作業", "en": "Meetings & collaboration"}};
+  if (root === "WDAY") return {"6": {"ja": "クラウド・業務AI連携", "en": "Cloud & workflow AI integration"}, "7": {"ja": "人事・財務・給与", "en": "HR, finance & payroll"}};
+  if (root === "DELL") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ラック", "en": "Servers & racks"}, "6": {"ja": "ラックを導入するクラウド企業", "en": "Cloud companies adopting racks"}};
+  if (root === "HPE") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ネットワーク", "en": "Servers & networking"}, "6": {"ja": "クラウド・ハイブリッド基盤", "en": "Cloud & hybrid infrastructure"}};
+  if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
+
   if (root === "AAPL") return { 5: { ja: "端末・PC・スマートフォン", en: "Devices, PCs & smartphones" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
   if (root === "META") return { 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・動画・広告", en: "Social, video & ads" } };
@@ -3123,6 +3132,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "画像センサー",
         "en": "Image sensors"
       }
+    },
+    "Infineon": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電力・アナログ半導体",
+        "en": "Power & analog chips"
+      }
+    },
+    "STM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電力・アナログ半導体",
+        "en": "Power & analog chips"
+      }
+    },
+    "SONY": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "画像センサー",
+        "en": "Image sensors"
+      }
     }
   },
   "AAPL": {
@@ -3265,6 +3295,372 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Contracted AI compute-capacity supplier"
       }
     }
+  },
+  "MSFT": {
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure・企業向けソフト・AI",
+        "en": "Azure, enterprise software & AI"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "主要クラウド提携・非独占IP",
+        "en": "Primary cloud partnership / non-exclusive IP"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure計算容量の購入を約束",
+        "en": "Azure compute purchase commitment"
+      }
+    },
+    "SNOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データ処理・分析",
+        "en": "Data processing & analytics"
+      }
+    },
+    "S": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "端末防御",
+        "en": "Endpoint protection"
+      }
+    },
+    "PEGA": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "顧客対応・業務自動化",
+        "en": "Customer engagement & automation"
+      }
+    }
+  },
+  "ADBE": {
+    "ADBE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "制作・文書・マーケティング",
+        "en": "Creative, documents & marketing"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Fireflyへの生成AIモデル連携",
+        "en": "Generative-model integration in Firefly"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Fireflyの画像生成・編集連携",
+        "en": "Firefly image generation / editing"
+      }
+    },
+    "DOCU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "電子署名",
+        "en": "Electronic signatures"
+      }
+    },
+    "KVYO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "マーケティング自動化",
+        "en": "Marketing automation"
+      }
+    }
+  },
+  "CRM": {
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "CRM・Agentforce・Slack",
+        "en": "CRM, Agentforce & Slack"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ChatGPT・Agentforce連携",
+        "en": "ChatGPT / Agentforce integration"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Claudeforce業務連携",
+        "en": "Claudeforce workflow integration"
+      }
+    },
+    "PEGA": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "顧客対応・業務自動化",
+        "en": "Customer engagement & automation"
+      }
+    }
+  },
+  "BOX": {
+    "BOX": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "企業コンテンツ管理・Box AI",
+        "en": "Enterprise content management / Box AI"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SharePoint・OneDrive競合／AI連携",
+        "en": "SharePoint / OneDrive rivals; AI integration"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Drive競合／AI連携",
+        "en": "Drive rival; AI integration"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Box AIモデル連携",
+        "en": "Box AI model integration"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ChatGPT内の権限付きファイル連携",
+        "en": "Permission-governed files in ChatGPT"
+      }
+    },
+    "ZM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "会議・資料共有連携",
+        "en": "Meetings / shared-content integration"
+      }
+    },
+    "DBX": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "企業向けファイル共有",
+        "en": "Enterprise file sharing"
+      }
+    },
+    "OTEX": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Documentum文書管理",
+        "en": "Documentum content management"
+      }
+    }
+  },
+  "WDAY": {
+    "WDAY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "人事・財務・業務AI",
+        "en": "HR, finance & workflow AI"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Sana・Gemini Enterprise連携",
+        "en": "Sana / Gemini Enterprise integration"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWSクラウド提携",
+        "en": "AWS cloud partnership"
+      }
+    },
+    "ADP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "給与連携・人事給与の競合",
+        "en": "Payroll integration; HR / payroll rivalry"
+      }
+    },
+    "ORCL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "基幹人事・財務アプリ",
+        "en": "Core HR & finance applications"
+      }
+    },
+    "SAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "基幹人事・財務アプリ",
+        "en": "Core HR & finance applications"
+      }
+    }
+  },
+  "DELL": {
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けサーバー・ラック",
+        "en": "Enterprise servers & racks"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "GB300・Grace採用元",
+        "en": "Adopted GB300 / Grace technology"
+      }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GB300ラックの納入先",
+        "en": "GB300 rack customer"
+      }
+    },
+    "SMCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "サーバー・計算システム",
+        "en": "Servers & compute systems"
+      }
+    }
+  },
+  "HPE": {
+    "HPE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "サーバー・ネットワーク",
+        "en": "Servers & networking"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AIサーバーのGPU採用元",
+        "en": "Adopted AI-server GPU technology"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "ProLiant Gen12のEPYC採用元",
+        "en": "Adopted EPYC in ProLiant Gen12"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けサーバー",
+        "en": "Enterprise servers"
+      }
+    },
+    "Lenovo": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けサーバー",
+        "en": "Enterprise servers"
+      }
+    },
+    "SMCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けサーバー",
+        "en": "Enterprise servers"
+      }
+    },
+    "CSCO": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けネットワーク",
+        "en": "Enterprise networking"
+      }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "データセンターネットワーク",
+        "en": "Data-center networking"
+      }
+    },
+    "CIEN": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "ネットワーク基盤",
+        "en": "Networking infrastructure"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS・Outposts",
+        "en": "AWS / Outposts"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure・Azure Local",
+        "en": "Azure / Azure Local"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud",
+        "en": "Google Cloud"
+      }
+    }
+  },
+  "ADSK": {
+    "ADSK": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "設計・製造・建設ソフト",
+        "en": "Design, manufacturing & construction software"
+      }
+    },
+    "SNX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "一部市場の販売・流通提携",
+        "en": "Selected-market sales / distribution"
+      }
+    },
+    "BSY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "建築・インフラ設計",
+        "en": "Building & infrastructure design"
+      }
+    },
+    "PTC": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "製品設計・開発",
+        "en": "Product design & development"
+      }
+    },
+    "PCOR": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "建設プロジェクト管理",
+        "en": "Construction project management"
+      }
+    }
   }
 };
 
@@ -3328,7 +3724,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.

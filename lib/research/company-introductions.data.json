@@ -1227,7 +1227,7 @@
       "MSFT"
     ],
     "name": "Microsoft",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
@@ -1244,6 +1244,14 @@
       {
         "label": "Pegasystems FY2025 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm"
+      },
+      {
+        "url": "https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/",
+        "label": "Microsoft — amended OpenAI agreement, April 27, 2026"
+      },
+      {
+        "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/",
+        "label": "Microsoft — Anthropic strategic partnerships, November 18, 2025"
       }
     ],
     "ja": {
@@ -1252,7 +1260,7 @@
       "strength": "企業が日常的に使う業務ソフトとクラウドを組み合わせ、既存の仕事にAIを取り入れやすい。",
       "risks": "データセンターへの巨額投資、AIサービスの価格競争、サイバー攻撃や情報流出。",
       "competition": "Azureのデータ処理・分析ではSnowflake、端末防御ではSentinelOne、顧客対応・業務自動化ではPegasystemsが競合例。それぞれ相手企業の年次報告書がMicrosoftを競合として挙げている。製品分野ごとの比較で、全事業で競うという意味ではない。",
-      "relationships": "パソコンメーカー、ソフト開発者、企業のシステム導入を支援する販売・技術パートナーとつながる。"
+      "relationships": "OpenAIとは2026年4月に契約を改定し、Microsoftは主要クラウド提携先を維持する一方、IPライセンスは非独占となり、OpenAIは他のクラウドでも製品を提供できる。Anthropicは2025年11月にAzure計算容量の購入を約束し、Claudeの提供連携も公表した。容量の約束や投資計画を全て実行済みとは扱わない。"
     },
     "en": {
       "business": "Provides Windows, Microsoft 365 and Azure cloud services, alongside AI and gaming products.",
@@ -1260,7 +1268,7 @@
       "strength": "Combines widely used workplace software and cloud services to bring AI into existing workflows.",
       "risks": "Heavy data-center investment, AI pricing pressure, cyberattacks and data breaches.",
       "competition": "Examples are Snowflake in Azure data processing and analytics, SentinelOne in endpoint protection, and Pegasystems in customer engagement and workflow automation. Each peer names Microsoft in its annual report; the overlap is specific to those product areas.",
-      "relationships": "Works with PC makers, software developers, resellers and enterprise technology partners."
+      "relationships": "The April 2026 amended OpenAI agreement retains Microsoft as a primary cloud partner while making its IP license non-exclusive and allowing OpenAI products on other clouds. Anthropic announced Azure compute purchase commitments and Claude integration in November 2025; committed capacity and investment plans are not all completed deployments."
     },
     "maps": {
       "competition": [
@@ -1329,6 +1337,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月：主要クラウド提携・IPは非独占",
+            "en": "April 2026: primary cloud partnership; non-exclusive IP license"
+          },
+          "sourceIndexes": [
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "customer",
+          "label": {
+            "ja": "2025年11月：Azure計算容量の購入を約束",
+            "en": "November 2025: Azure compute purchase commitment"
+          },
+          "sourceIndexes": [
+            5
           ]
         }
       ]
@@ -4967,6 +4999,10 @@
       {
         "label": "Microsoft · Azure Local distributed infrastructure",
         "url": "https://learn.microsoft.com/en-us/azure/azure-sovereign-clouds/private/azure-local/azure-local-overview"
+      },
+      {
+        "url": "https://www.hpe.com/us/en/newsroom/press-release/2025/06/hpe-expands-proliant-gen12-server-portfolio-helps-customers-modernize-virtualization-and-edge-computing-with-ai-driven-management.html",
+        "label": "HPE — AMD EPYC Gen12 portfolio expansion, June 25, 2025"
       }
     ],
     "ja": {
@@ -4975,7 +5011,7 @@
       "strength": "計算・保存・通信をまとめて提供でき、スーパーコンピューターや企業内AI、利用量課金の運用まで支援できる。",
       "risks": "企業の設備投資、サーバーの価格競争、GPUなど単一供給部品に左右される。買収した事業の統合にも実行リスクがある。",
       "competition": "サーバーではDellとLenovo、ネットワークではCisco、ハイブリッドクラウドではAmazon Web Services、Microsoft Azure、Google Cloudなどが競合例。HPE自身の製品分野別の実名開示に基づく。AWS OutpostsやAzure Localはオンプレミス向けの比較例で、クラウドの協業関係がなくなるという意味ではない。",
-      "relationships": "NVIDIAなどからGPUを調達し、企業や公共機関へAIサーバー、ネットワーク、GreenLakeと保守を提供する。"
+      "relationships": "NVIDIAのGPUをAIサーバーへ採用する。2025年6月にはAMD EPYC搭載のProLiant Compute Gen12拡充も公表しており、GPUと汎用サーバーCPUの採用分野は異なる。これらの採用から契約量や独占性は推定しない。"
     },
     "en": {
       "business": "Provides enterprise servers, storage and networking, plus GreenLake consumption-based infrastructure services.",
@@ -4983,7 +5019,7 @@
       "strength": "Combines compute, storage and networking with supercomputing, private AI and consumption-based operations.",
       "risks": "Enterprise spending, server price pressure and single-source components such as GPUs matter, while acquisitions create integration risk.",
       "competition": "HPE names Dell and Lenovo in servers, Cisco in networking, and AWS, Microsoft Azure and Google Cloud in hybrid-cloud competition. Outposts and Azure Local are on-premises product examples checked against official descriptions. Competition is product-specific and can coexist with cloud collaboration.",
-      "relationships": "Sources GPUs from vendors including NVIDIA and supplies enterprises and public agencies with AI systems, networking and support."
+      "relationships": "HPE adopts NVIDIA GPUs in AI systems. A June 2025 announcement expanded ProLiant Compute Gen12 with AMD EPYC processors, a different product scope from AI GPUs. These adoptions do not establish procurement volumes or exclusivity."
     },
     "maps": {
       "competition": [
@@ -5145,6 +5181,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年6月：ProLiant Compute Gen12へEPYCを採用",
+            "en": "June 2025: EPYC adoption in ProLiant Compute Gen12"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "AMD"
         }
       ]
     }
@@ -5508,7 +5557,7 @@
       "DELL"
     ],
     "name": "Dell Technologies",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Customers / Competition / Risk factors",
@@ -5517,6 +5566,10 @@
       {
         "label": "Supermicro FY2026 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm"
+      },
+      {
+        "url": "https://www.dell.com/en-us/blog/dell-delivers-market-s-first-nvidia-gb300-nvl72-to-coreweave/",
+        "label": "Dell — GB300 NVL72 shipment to CoreWeave, July 3, 2025"
       }
     ],
     "ja": {
@@ -5525,7 +5578,7 @@
       "strength": "部品調達と量産、世界規模の直販・販売店網、PCからデータセンターまで揃う製品群を組み合わせられる。",
       "risks": "PC需要と企業の設備投資が周期的に変動し、価格競争で利益率が下がりやすい。CPU・GPUなど限られた供給元への依存もある。",
       "competition": "サーバー・計算基盤ではSupermicroが競合例。Supermicroの年次報告書がDellを主要競合として明記しており、ラック構成、製品性能、電力効率、価格などが比較される。PCやストレージの競合まで同じ会社に限定するものではない。",
-      "relationships": "企業、公共機関、クラウド事業者へPCやデータセンター機器を直接または販売パートナー経由で納め、保守まで担当する。"
+      "relationships": "2025年7月にNVIDIA GB300 NVL72搭載ラックのCoreWeave向け出荷を公表した。NVIDIAはGPU・CPU技術の採用元、CoreWeaveはラックを導入する実名の顧客。個別の導入事例から現在の全調達量や独占供給は推定しない。"
     },
     "en": {
       "business": "Builds enterprise servers and storage and consumer and business PCs, with deployment and support services.",
@@ -5533,7 +5586,7 @@
       "strength": "Combines global procurement and manufacturing, direct and channel sales, and a portfolio spanning PCs through data centers.",
       "risks": "PC and enterprise spending cycles, price pressure and reliance on limited CPU and GPU sources can affect revenue and margins.",
       "competition": "Supermicro explicitly names Dell as a principal rival in servers and compute systems. Rack configurations, performance, energy efficiency and price are competitive factors. This example does not cover every PC or storage competitor.",
-      "relationships": "Supplies PCs and data-center systems to enterprises, public agencies and cloud operators directly and through partners, then provides support."
+      "relationships": "Dell announced shipment of NVIDIA GB300 NVL72 racks to CoreWeave in July 2025. NVIDIA supplies the adopted GPU/CPU technology, while CoreWeave is a named rack customer. This deployment does not establish current total volumes or exclusive supply."
     },
     "maps": {
       "competition": [
@@ -5590,6 +5643,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年7月：GB300・Grace搭載ラックを出荷",
+            "en": "July 2025: racks using NVIDIA GB300 / Grace technology"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "CoreWeave",
+          "role": "customer",
+          "label": {
+            "ja": "2025年7月：GB300 NVL72搭載ラックの納入先",
+            "en": "July 2025: recipient of GB300 NVL72 racks"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "CRWV"
         }
       ]
     }
@@ -6445,7 +6524,7 @@
       "CRM"
     ],
     "name": "Salesforce",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Agentforce 360 / Revenue model / Competition / Risk factors",
@@ -6454,6 +6533,14 @@
       {
         "label": "Pegasystems FY2025 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm"
+      },
+      {
+        "url": "https://www.salesforce.com/uk/news/press-releases/2026/08/26/salesforce-and-anthropic-announce-claudeforce/",
+        "label": "Salesforce — Claudeforce partnership, August 26, 2026"
+      },
+      {
+        "url": "https://investor.salesforce.com/news/news-details/2025/CORRECTING-and-REPLACING-Salesforce-and-OpenAI-Partner-Across-Enterprise-Work-and-Commerce/default.aspx",
+        "label": "Salesforce — corrected OpenAI partnership announcement, October 14, 2025"
       }
     ],
     "ja": {
@@ -6462,7 +6549,7 @@
       "strength": "顧客情報を共通基盤へ集め、営業や問い合わせ対応の流れとAIを同じ権限・データ管理の下で動かせる。",
       "risks": "企業のIT予算と契約更新に左右され、生成AIの品質・費用・個人情報管理が導入速度を決める。製品統合が複雑になるリスクもある。",
       "competition": "顧客対応と業務自動化ではPegasystemsが競合例。Pegasystemsの年次報告書がSalesforceを競合として挙げている。顧客とのやり取りを管理するソフトや業務フローが重なる分野で、Salesforceの全製品を同じものとして扱わない。",
-      "relationships": "幅広い企業へ顧客管理基盤を定額提供し、コンサル会社、導入支援会社、アプリ開発会社が周辺機能と導入を支える。"
+      "relationships": "Anthropicとは2026年8月にClaudeforceを発表し、ClaudeからSalesforceのデータ・業務操作を扱う連携を説明した。OpenAIとは2025年10月にAgentforce・ChatGPT・Slackの連携拡大を発表。公表済み機能と今後の統合計画を分けて捉える。"
     },
     "en": {
       "business": "Provides cloud software for sales, service, marketing and analytics and embeds AI agents into business workflows.",
@@ -6470,7 +6557,7 @@
       "strength": "Unifies customer data, workflows and AI under shared permissions and governance across front-office teams.",
       "risks": "Enterprise budgets and renewals matter, while generative-AI quality, cost and privacy can slow adoption and product integration can add complexity.",
       "competition": "Pegasystems names Salesforce as a competitor in its annual report. The relevant overlap is customer-engagement software and workflow automation, rather than every Salesforce product.",
-      "relationships": "Provides subscriptions to organizations and relies on consultants, implementation firms and app developers to extend and deploy the platform."
+      "relationships": "Salesforce announced Claudeforce with Anthropic in August 2026, connecting Claude with Salesforce data and governed business actions. An October 2025 OpenAI announcement expanded Agentforce, ChatGPT and Slack integration. Announced available features are distinct from further integration plans."
     },
     "maps": {
       "competition": [
@@ -6526,6 +6613,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年8月：Claudeforce・Salesforce業務連携",
+            "en": "August 2026: Claudeforce / Salesforce workflow partnership"
+          },
+          "sourceIndexes": [
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2025年10月：Agentforce・ChatGPT・Slack連携発表",
+            "en": "October 2025: Agentforce / ChatGPT / Slack partnership announced"
+          },
+          "sourceIndexes": [
+            3
           ]
         }
       ]
@@ -7709,6 +7820,44 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Infineon",
+          "role": "competitor",
+          "label": {
+            "ja": "電力・アナログ半導体で競合（onsemi自身の開示）",
+            "en": "Power / analog chips; named by onsemi"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "STMicroelectronics",
+          "role": "competitor",
+          "label": {
+            "ja": "電力・アナログ半導体で競合（onsemi自身の開示）",
+            "en": "Power / analog chips; named by onsemi"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "STM"
+        },
+        {
+          "kind": "company",
+          "name": "Sony",
+          "role": "competitor",
+          "label": {
+            "ja": "画像センサーで競合（onsemi自身の開示）",
+            "en": "Image sensors; named by onsemi"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "SONY"
         }
       ],
       "relationships": [
@@ -9831,7 +9980,7 @@
       "ADBE"
     ],
     "name": "Adobe",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Subscription revenue / Competition / AI risks",
@@ -9848,6 +9997,10 @@
       {
         "label": "Klaviyo FY2025 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm"
+      },
+      {
+        "url": "https://news.adobe.com/news/2025/10/adobe-max-2025-creative-cloud",
+        "label": "Adobe — MAX Creative Cloud model integrations, October 28, 2025"
       }
     ],
     "ja": {
@@ -9856,7 +10009,7 @@
       "strength": "制作ソフトの定番製品群、PDF規格、企業の制作・承認・配信までつなぐ環境と、権利に配慮した生成AIを持つ。",
       "risks": "生成AIや無料ツールによる代替、契約更新、価格への反発、著作権・学習データ規制、競合への人材流出がリスク。",
       "competition": "コンテンツ作成ではAdobe ExpressとCanva、電子署名ではAcrobat SignとDocusign、マーケティング基盤ではKlaviyoが競合例。Adobe自身がCanvaとの比較を公開し、DocusignとKlaviyoの年次報告もAdobeを名指ししている。競合範囲は製品ごとに異なる。",
-      "relationships": "個人クリエイター、企業の制作部門、文書利用者、マーケティング・営業部門へ制作・文書・顧客体験ツールを提供する。"
+      "relationships": "2025年10月のAdobe MAXでは、FireflyでGoogleとOpenAIの生成AIモデルを選択・利用できる機能を公表した。これは制作ツールへのモデル連携で、両社がAdobeの計算容量を購入する契約ではない。製品・機能ごとに提供範囲が異なる。"
     },
     "en": {
       "business": "Provides Creative Cloud for images and video, Document Cloud for PDF and enterprise customer-experience and marketing software.",
@@ -9864,7 +10017,7 @@
       "strength": "Combines standard creative tools, the PDF ecosystem, end-to-end enterprise content workflows and commercially safer generative AI.",
       "risks": "Generative AI and free tools, renewals, pricing resistance, copyright and training-data rules and talent competition can weaken results.",
       "competition": "Examples include Canva versus Adobe Express in content creation, Docusign versus Acrobat Sign in e-signatures, and Klaviyo in marketing platforms. Adobe publishes a Canva comparison; Docusign and Klaviyo explicitly name Adobe. The overlap varies by product.",
-      "relationships": "Supplies creative, document and customer-experience tools to creators, enterprise content teams, document users and marketing and sales organizations."
+      "relationships": "Adobe MAX in October 2025 described Google and OpenAI model options in Firefly. These are creative-tool model integrations, not contracts for those companies to buy Adobe compute capacity. Availability differs by product and feature."
     },
     "maps": {
       "competition": [
@@ -9945,6 +10098,31 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年10月：FireflyなどへGoogle生成AIモデルを連携",
+            "en": "October 2025: Google generative-model integration in Firefly"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年10月：Fireflyの画像生成・編集モデル連携",
+            "en": "October 2025: Firefly image-generation/editing model integration"
+          },
+          "sourceIndexes": [
+            4
           ]
         }
       ]
@@ -22050,7 +22228,7 @@
       "BOX"
     ],
     "name": "Box",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -22063,6 +22241,10 @@
       {
         "label": "Q2 FY2027 results · Business update",
         "url": "https://www.boxinvestorrelations.com/news-and-media/news/press-release-details/2026/Box-Reports-Second-Quarter-Fiscal-2027-Financial-Results/"
+      },
+      {
+        "url": "https://blog.box.com/box-chatgpt-enterprise-content-integration",
+        "label": "Box — ChatGPT enterprise-content integration, September 10, 2026"
       }
     ],
     "ja": {
@@ -22071,7 +22253,7 @@
       "strength": "ファイルを置くだけでなく、社外との共有から承認、保存期限、安全管理まで扱える。AI機能にも既存のアクセス権限を引き継げる。",
       "risks": "MicrosoftやGoogleの一括契約に含まれる保存機能と競う。機密文書を預かるため、漏洩や権限設定の不備は大きな信用リスクになる。",
       "competition": "文書管理ではMicrosoft SharePointやOpenText、ファイル共有ではOneDrive、Google Drive、Dropboxと競合する。",
-      "relationships": "Microsoft、Google、AWS経由のAIモデルなどをBox AIへ組み込む。Zoomとは会議と資料共有を連携し、企業の業務をつなぐ。"
+      "relationships": "Microsoft・Google・AWS経由のAIモデル連携とZoomの会議・資料共有連携を持つ。2026年9月にはOpenAIとの提携拡大を公表し、Boxの権限を保ったままChatGPTでファイルを閲覧・参照・操作する機能を説明した。"
     },
     "en": {
       "business": "Stores and shares enterprise documents, adding permissions, retention, e-signatures, AI search and information extraction.",
@@ -22079,7 +22261,7 @@
       "strength": "Connects sharing, approvals and governance; AI respects existing content-access permissions.",
       "risks": "Bundled Microsoft and Google storage pressures pricing. Sensitive documents make breaches and permission failures costly.",
       "competition": "Competes with SharePoint and OpenText in content management, and OneDrive, Google Drive and Dropbox in file sharing.",
-      "relationships": "Integrates Microsoft, Google and AWS-delivered AI models. Its Zoom integration links meetings with content collaboration."
+      "relationships": "Box integrates AI models through Microsoft, Google and AWS and connects meetings and shared content with Zoom. Its September 2026 expanded OpenAI partnership enables browsing, referencing and supported actions on Box files within ChatGPT while retaining Box permissions."
     },
     "maps": {
       "competition": [
@@ -22201,6 +22383,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：ChatGPTでBoxの権限付きファイルを連携",
+            "en": "September 2026: permission-governed Box files in ChatGPT"
+          },
+          "sourceIndexes": [
+            3
+          ]
         }
       ]
     }
@@ -22211,11 +22405,15 @@
       "WDAY"
     ],
     "name": "Workday",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm"
+      },
+      {
+        "url": "https://newsroom.workday.com/2026-05-28-Workday-and-Google-Cloud-Expand-Strategic-Partnership-to-Bring-AI-Agents-for-HR-and-Finance-Into-Employees-Daily-Workflows",
+        "label": "Workday — Google Cloud expanded partnership, May 28, 2026"
       }
     ],
     "ja": {
@@ -22224,7 +22422,7 @@
       "strength": "人材と財務の情報を共通基盤で扱い、実績を予算や人員計画へ反映しやすい。導入後の基幹業務に深く組み込まれる。",
       "risks": "基幹システムの入れ替えは商談と導入が長期化しやすい。機密性の高い人事・財務データの保護と、新しいAI機能の信頼性も重要になる。",
       "competition": "OracleやSAPと人事・財務の基幹ソフトで競う。給与ではADPなど、用途ごとの専門会社とも競合する。",
-      "relationships": "AWSやGoogle Cloudとクラウド分野で提携。ADPなどの給与会社とは連携サービスも提供し、競合関係と協力関係の両方がある。"
+      "relationships": "AWS・Google Cloudとの提携とADPの給与連携を持つ。2026年5月にはGoogleとの協業拡大を公表し、Sana Self-Service AgentのGemini Enterpriseでの提供とSanaでのGemini採用を説明した。追加エージェントの展開計画を全て提供済みとは扱わない。"
     },
     "en": {
       "business": "Provides cloud software for enterprise HR, payroll, finance and planning.",
@@ -22232,7 +22430,7 @@
       "strength": "A shared people-and-finance data foundation connects transactions with workforce and budget planning.",
       "risks": "Core-system replacements involve long sales and deployment cycles. Sensitive records and AI reliability raise operational risks.",
       "competition": "Competes with Oracle and SAP in core enterprise applications and ADP in payroll-related areas.",
-      "relationships": "Partners with AWS and Google Cloud. ADP is also a payroll-integration partner, distinct from its competitive role."
+      "relationships": "Workday partners with AWS and Google Cloud and integrates payroll with ADP. Its May 2026 Google expansion describes Sana Self-Service Agent availability in Gemini Enterprise and Gemini adoption in Sana. Further planned agents are not all treated as delivered."
     },
     "maps": {
       "competition": [
@@ -22296,11 +22494,12 @@
           "ticker": "GOOG",
           "role": "partner",
           "label": {
-            "ja": "Google Cloudとクラウド分野で提携",
-            "en": "Google Cloud partnership"
+            "ja": "2026年5月：Sana・Gemini Enterpriseの業務連携",
+            "en": "May 2026: Sana / Gemini Enterprise workflow integration"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
         },
         {
@@ -22487,7 +22686,7 @@
       "ADSK"
     ],
     "name": "Autodesk",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
@@ -22504,7 +22703,7 @@
       "strength": "図面・建物・製品のデータを同じ作業の流れで扱える製品群と、利用者・開発者の蓄積。顧客が使い慣れた設計データや周辺アプリを引き継げることが、継続利用を支える。",
       "risks": "建設・製造への投資が減ると新規契約や利用拡大が鈍る。販売方式の変更で販売店との関係や収益の見え方が変わり、AIや安価な設計ツールへの対応が遅れるリスクもある。",
       "competition": "Bentleyとは建築・インフラ設計、PTCやDassault Systèmesとは製品設計、Procoreとは建設現場の管理で競合する。設計だけでなく、製造・施工につながる作業を誰がまとめるかも競争になる。",
-      "relationships": "建築・製造・映像制作の顧客へソフトを提供する。TD SYNNEXは流通を担い、外部開発者はAutodeskのAPIで拡張アプリを作る。流通契約を設計ソフトの顧客契約と混同しない。"
+      "relationships": "TD SYNNEXは流通・販売の提携先で、2026年1月期には売上の14%を占めた。新しい取引モデルの下でも、一部地域の政府向け事業や新興市場で流通関係を維持する。流通契約を設計ソフトの最終顧客契約と混同しない。"
     },
     "en": {
       "business": "Sells design and production software to architects, manufacturers and media studios. AutoCAD handles drawings, Revit building models and Fusion product design through machining.",
@@ -22512,7 +22711,7 @@
       "strength": "Connected design tools, accumulated project data and a large developer community support repeat use and integration with customers’ existing workflows.",
       "risks": "Construction and manufacturing slowdowns weaken demand. Channel changes complicate relationships and revenue comparisons; cheaper tools and AI may disrupt established products.",
       "competition": "Competes with Bentley in infrastructure design, PTC and Dassault Systèmes in product design, and Procore in construction management.",
-      "relationships": "Supplies design software to industry customers. TD SYNNEX distributes products; independent developers build API extensions. Distribution is distinct from end-customer use."
+      "relationships": "TD SYNNEX is a distribution partner, accounting for 14% of revenue in the year ended January 2026. Under Autodesk’s new transaction model, distribution relationships remain for government business in certain jurisdictions and emerging markets. Distribution differs from an end-customer software contract."
     },
     "maps": {
       "competition": [
@@ -22563,8 +22762,8 @@
           "ticker": "SNX",
           "role": "partner",
           "label": {
-            "ja": "流通・販売を担う",
-            "en": "Distribution and sales"
+            "ja": "2026年1月期：流通売上14%・一部地域などの販売提携",
+            "en": "FY ended January 2026: 14% distributor revenue; selected-market distribution"
           },
           "sourceIndexes": [
             0
