@@ -139,6 +139,23 @@ class TranslationTests(unittest.TestCase):
         self.assertFalse(any('previousRejection' in item for item in seen[0]))
         self.assertTrue(all(item.get('previousRejection') == 'invalid-translation' for item in seen[1]))
 
+    def test_a_company_keeps_its_newest_translated_headlines_even_when_newer_ones_are_untranslated(self):
+        rows = [{'ticker': 'CRDO', 'source': 'gnews', 'title': f'Credo headline number {n}', 'publisher': '',
+                 'url': f'https://news.example/h{n}', 'published': self.now - timedelta(minutes=n)} for n in range(1, 31)]
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, rows, 'Credo', seen_at=self.now)
+            company_wire.schema_translation(db)
+            for row in db.execute("SELECT key,title FROM company_wire WHERE title LIKE 'Credo headline number %'").fetchall():
+                number = int(row['title'].rsplit(' ', 1)[1])
+                if number > 20:  # only the oldest ten are translated
+                    db.execute('INSERT INTO company_wire_ja VALUES(?,?,?,?)', (row['key'], '日本語の見出し', 'm', self.now.isoformat()))
+            db.commit()
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        shown = feed['items']['CRDO']
+        self.assertEqual(sum(1 for item in shown if item['titleJa']), 10)
+        self.assertLessEqual(sum(1 for item in shown if not item['titleJa']), 5)
+        self.assertEqual([item['publishedAt'] for item in shown], sorted((item['publishedAt'] for item in shown), reverse=True))
+
     def test_disabled_without_configuration_and_budget_is_respected(self):
         self.assertEqual(company_wire.translate_once(self.path, transport=self.transport({}), env={}, now_ts=self.now.timestamp()), 'disabled')
         env = {**self.env, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '1'}

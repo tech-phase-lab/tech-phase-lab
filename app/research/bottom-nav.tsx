@@ -4,13 +4,14 @@ import { usePathname } from "next/navigation";
 import { useLayoutEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
 import { useResearchLanguage } from "./use-research-language";
 import { useAlertsUnread } from "./use-alerts-unread";
+import { effectiveHash, rememberHash } from "@/lib/research/view-hash";
 import styles from "./bottom-nav.module.css";
 
 function subscribe(notify: () => void) {
   window.addEventListener("hashchange", notify); window.addEventListener("popstate", notify);
   return () => { window.removeEventListener("hashchange", notify); window.removeEventListener("popstate", notify); };
 }
-const getHash = () => window.location.hash;
+const getHash = () => effectiveHash();
 const serverHash = () => "";
 
 // Browser tab vs. home-screen app. Both checks: the display-mode media query
@@ -70,6 +71,7 @@ export default function BottomNav() {
     if (pathname !== "/research" || !href.startsWith("/research#")) return;
     event.preventDefault();
     window.history.pushState(null, "", href);
+    rememberHash(href.slice(href.indexOf("#")));
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     window.scrollTo({ top: 0, behavior: "instant" });
   }

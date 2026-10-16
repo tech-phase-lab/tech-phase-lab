@@ -2454,7 +2454,12 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             publication['publishedOn'] = published
         elif (isinstance(published, str) and published_at and
               re.search(r'T\d{2}:\d{2}.*(?:Z|[+-]\d{2}:\d{2})$', published)):
-            publication['publishedAt'] = published_at.isoformat()
+            # Oct 16: a page that stores only a day as exactly 00:00 UTC (Nebius Blog) is a date, not a 9:00 JST release.
+            if (source.get('format') != 'x-api' and published_at.utcoffset() == timedelta(0)
+                    and (published_at.hour, published_at.minute, published_at.second, published_at.microsecond) == (0, 0, 0, 0)):
+                publication['publishedOn'] = published_at.date().isoformat()
+            else:
+                publication['publishedAt'] = published_at.isoformat()
         translated = db.execute('''SELECT headline_ja FROM signal_headline_translations
           WHERE source_id=? AND url=? AND sha=?''',
                                 (row['source_id'], row['url'], row['sha'])).fetchone()

@@ -3,12 +3,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSyncExternalStore, type MouseEvent } from "react";
 import { researchViewFromHash } from "@/lib/research/navigation";
+import { effectiveHash, rememberHash } from "@/lib/research/view-hash";
 function subscribe(callback: () => void) {
   window.addEventListener("hashchange", callback);
   window.addEventListener("popstate", callback);
   return () => { window.removeEventListener("hashchange", callback); window.removeEventListener("popstate", callback); };
 }
-function getHash() { return window.location.hash; }
+function getHash() { return effectiveHash(); }
 function serverHash() { return ""; }
 import NavigationIcon from "./navigation-icon";
 import styles from "./research.module.css";
@@ -20,6 +21,7 @@ export default function HomeLink({ lang }: { lang: "ja" | "en" }) {
     if (pathname !== "/research") return;
     event.preventDefault();
     if (window.location.hash !== "#research-main") window.history.pushState(null, "", "/research#research-main");
+    rememberHash("#research-main");
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     document.getElementById("research-main")?.scrollIntoView({ behavior: "instant", block: "start" });
   }

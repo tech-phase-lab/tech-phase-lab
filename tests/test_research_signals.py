@@ -357,6 +357,24 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn("private evidence", serialized)
         self.assertNotIn("private diff", serialized)
 
+    def test_a_day_stored_as_midnight_utc_is_a_date_not_a_nine_oclock_release(self):
+        source = next(item for item in signals.SOURCES if item["id"] == "nebius-blog")
+        reference = datetime(2026, 10, 16, 14, tzinfo=timezone.utc)
+        signals.schema(self.db)
+        with self.db:
+            for url, published in (("https://nebius.com/blog/day-only", "2026-10-16T00:00:00+00:00"),
+                                   ("https://nebius.com/blog/with-time", "2026-10-16T06:30:00+00:00")):
+                self.db.execute("""INSERT INTO signal_events(
+                  source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
+                  published_at,published_on,observed_at,excerpt,diff,truncated
+                  ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+                    source["id"], url, "a", "", url.rsplit("/", 1)[1].replace("-", " ").title(), '["NBIS"]', '{}', "new",
+                    published, None, "2026-10-16T13:00:00+00:00", "e", "d"))
+        updates = {item["url"]: item for item in signals.public_official_updates(self.db, sources=[source], reference=reference)}
+        self.assertEqual(updates["https://nebius.com/blog/day-only"]["publishedOn"], "2026-10-16")
+        self.assertNotIn("publishedAt", updates["https://nebius.com/blog/day-only"])
+        self.assertEqual(updates["https://nebius.com/blog/with-time"]["publishedAt"], "2026-10-16T06:30:00+00:00")
+
     def test_document_retention_orders_mixed_offsets_by_absolute_time(self):
         signals.schema(self.db)
         source_id = self.feed["id"]
