@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 176 issuers with published competitor corrections and 0 remaining
+records 186 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -715,3 +715,9 @@ Selected-map captions/layers follow the compared products; corporate global cate
 Reviewed the user's PL/ASTS/LUNR and CIEN/Corning/MTSI/POET/AVGO candidates without deleting prior names or relationships. Planet is a disclosed past Rocket Lab launch customer; LUNR's own filing names Rocket Lab in Lanteris defense/national-security spacecraft competition after its January 2026 acquisition. Compensation peer membership alone does not establish an ASTS trade or product rivalry, so no unverified ASTS edge is added.
 
 LITE adds an editorial 200G/lane EML comparison with Broadcom, a dated 2017 Ciena WaveLogic module-development announcement, Corning's OFC 2026 CPO research/demo, MACOM's OFC 2019 interoperability event, and POET's November 2022 DML adoption announcement. Historical announcements are not evidence of current volumes or completed production plans. Optical chips, modules, fiber and systems receive distinct selected-map captions. NVDA remains exact, earlier LITE competitors including AAOI remain, no new introduction records are added, and correction-log coverage stays 176 because both records had already been reviewed. Other scopes remain open.
+
+## 2026-10-16 · social, materials, analog, collaboration and developer-software coverage
+
+Reviewed RDDT / PINS / SNAP / ENTG / MTSI / POWI / ZM / DOCN / ESTC / FROG against their annual disclosures and relevant official products. Previous map names and prose Meta/TikTok/Infineon/STMicroelectronics remain represented. MACOM's old Qorvo reference is reconciled to the completed Skyworks combination rather than revived as a current independent listing. TikTok-affiliated joint ventures, Merck KGaA versus US Merck, meeting versus contact-center products, and source-code versus artifact repositories are distinguished.
+
+Ten selected maps use comparison-specific headings and captions. Existing non-competition relationships and the other five bilingual answers remain intact; AWS hosting and Elastic rivalry coexist. Previous named lists are kept small where sufficient. The log covers 186 existing issuers, with 29 outside it awaiting triage including frozen NVDA, not 29 confirmed errors. Additional products and counterpart-only candidates still require evidence. No new issuer introductions were added. Reviewed 2026-10-16.

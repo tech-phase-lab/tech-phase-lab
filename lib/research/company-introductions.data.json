@@ -11681,11 +11681,15 @@
       "RDDT"
     ],
     "name": "Reddit",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1713445/000171344526000022/rddt-20251231.htm"
+      },
+      {
+        "label": "Snap FY2025 · Competition and TikTok affiliated joint ventures",
+        "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm"
       }
     ],
     "ja": {
@@ -11693,7 +11697,7 @@
       "revenue": "主に企業や代理店へ広告枠を販売し、公開投稿データのライセンス供与などからも収益を得る。",
       "strength": "利用者とモデレーターが継続的に作る会話データ、細かな関心別コミュニティ、投稿が投稿を呼ぶネットワーク効果が強い。",
       "risks": "不適切投稿の管理、検索や生成AIへの利用流出、広告市況、個人情報規制、アプリ配信基盤への依存が利用と収益を左右する。",
-      "competition": "情報探索では検索・生成AI、交流と娯楽ではMeta、Snap、Pinterest、TikTokなどのサービスと利用時間・広告費を競う。",
+      "competition": "Reddit自身は情報探索、娯楽、趣味の交流、広告で競争する企業を分けて開示する。広告予算ではGoogle・Meta・Snap・Pinterest・TikTok、交流ではFacebook GroupsやPinterestなどが例。Googleの検索・YouTube、生成AIによる情報探索は役割が異なり、全サービスが同じ機能という意味ではない。TikTokの事業・合弁会社を一律に単独所有と扱わない。",
       "relationships": "利用者とモデレーターが投稿を供給し、広告主へ関心別広告を販売し、企業向けには公開データの利用権を提供する。"
     },
     "en": {
@@ -11701,7 +11705,7 @@
       "revenue": "Earns mainly by selling advertising to brands and agencies, with additional revenue from licensing public content data.",
       "strength": "Continuously refreshed conversations, highly specific interest communities and user-moderator network effects support engagement.",
       "risks": "Content safety, traffic shifting to search or generative AI, advertising cycles, privacy rules and distribution-platform dependence can affect growth.",
-      "competition": "Competes with search and AI tools for information and with Meta, Snap, Pinterest, TikTok and others for attention and ad budgets.",
+      "competition": "Reddit separates information seeking, entertainment, interests and advertising. Named advertising peers include Google, Meta, Snap, Pinterest and TikTok; interest-based alternatives include Facebook Groups and Pinterest. Search, YouTube and generative-AI information seeking differ in function. TikTok businesses and affiliated joint ventures are not treated as uniformly wholly owned.",
       "relationships": "Users and moderators supply posts, advertisers buy interest-based inventory, and enterprise licensees receive rights to use public data."
     },
     "maps": {
@@ -11709,40 +11713,66 @@
         {
           "kind": "company",
           "name": "Pinterest",
-          "ticker": "PINS",
           "role": "competitor",
           "label": {
-            "ja": "関心探索と広告で競合",
-            "en": "Interest discovery and ads"
+            "ja": "発見・趣味・広告。Reddit自身の開示",
+            "en": "Discovery, interests & ads; named by Reddit"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "PINS"
         },
         {
           "kind": "company",
           "name": "Snap",
-          "ticker": "SNAP",
           "role": "competitor",
           "label": {
-            "ja": "交流・娯楽・広告で競合",
-            "en": "Social, entertainment and ads"
+            "ja": "利用時間・広告。Reddit自身の開示",
+            "en": "Engagement & ads; named by Reddit"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "SNAP"
         },
         {
           "kind": "company",
           "name": "Alphabet",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "情報検索と広告で競合",
-            "en": "Information search and ads"
+            "ja": "Google検索・YouTube・広告。自社開示",
+            "en": "Google Search, YouTube & ads; own disclosure"
           },
           "sourceIndexes": [
             0
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "role": "competitor",
+          "label": {
+            "ja": "Facebook等の交流・広告。自社開示",
+            "en": "Facebook communities & ads; own disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "ByteDance",
+          "role": "competitor",
+          "label": {
+            "ja": "TikTok関連事業・合弁会社の利用時間・広告",
+            "en": "TikTok businesses/JVs: engagement & ads"
+          },
+          "sourceIndexes": [
+            0,
+            1
           ]
         }
       ],
@@ -11795,11 +11825,15 @@
       "PINS"
     ],
     "name": "Pinterest",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Product / Advertising / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm"
+      },
+      {
+        "label": "Snap FY2025 · Competition and TikTok affiliated joint ventures",
+        "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm"
       }
     ],
     "ja": {
@@ -11807,7 +11841,7 @@
       "revenue": "利用者の検索意図や興味に合わせ、ブランドや販売事業者へ画像・動画広告を販売して稼ぐ。",
       "strength": "購入前の計画段階で使われる画像データ、検索意図、AIによる推薦と商品発見の組み合わせが強い。",
       "risks": "広告収入への依存、利用者の成長と継続、プライバシー規制、検索・生成AIとの競争、外部コンテンツへの依存が弱点。",
-      "competition": "発見・検索・広告ではGoogle、Meta、Snap、Reddit、TikTok、生成AIやECサイトと競う。",
+      "competition": "Pinterest自身が挙げるGoogle・Meta・Snap・Reddit・TikTokは、利用時間や広告予算の競合。Amazonは商品探索・購買意図のある利用者と広告の比較例でもある。Google Lens・Gemini・YouTube、生成AIやECは役割が異なり、画像の発見機能すべての互換性は意味しない。TikTok関連事業には合弁会社も含む。",
       "relationships": "利用者と制作者・出版社が画像を供給し、広告主と販売事業者は商品発見から購入につながる広告を出す。"
     },
     "en": {
@@ -11815,7 +11849,7 @@
       "revenue": "Makes money by selling image and video ads to brands and merchants based on users' interests and discovery intent.",
       "strength": "Planning-stage intent, a rich image corpus and AI recommendations that connect inspiration with product discovery are key strengths.",
       "risks": "Advertising dependence, user retention, privacy rules, search and generative-AI competition, and reliance on third-party content are risks.",
-      "competition": "Competes with Google, Meta, Snap, Reddit, TikTok, generative AI and commerce sites in discovery, search and advertising.",
+      "competition": "Pinterest names Google, Meta, Snap, Reddit and TikTok in competition for engagement and advertising. Amazon also illustrates product discovery, commercial intent and ads. Google Lens, Gemini, YouTube, generative AI and commerce differ in function; visual-discovery products are not assumed interchangeable. TikTok-related businesses include affiliated joint ventures.",
       "relationships": "Users, creators and publishers supply visual content, while advertisers and merchants promote products from discovery toward purchase."
     },
     "maps": {
@@ -11823,41 +11857,80 @@
         {
           "kind": "company",
           "name": "Reddit",
-          "ticker": "RDDT",
           "role": "competitor",
           "label": {
-            "ja": "興味探索と広告で競合",
-            "en": "Interest discovery and ads"
+            "ja": "交流・広告。Pinterest自身の開示",
+            "en": "Community engagement & ads; named by Pinterest"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "RDDT"
         },
         {
           "kind": "company",
           "name": "Snap",
-          "ticker": "SNAP",
           "role": "competitor",
           "label": {
-            "ja": "画像体験と広告で競合",
-            "en": "Visual experiences and ads"
+            "ja": "利用時間・広告。Pinterest自身の開示",
+            "en": "Engagement & ads; named by Pinterest"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "SNAP"
         },
         {
           "kind": "company",
           "name": "Alphabet",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "検索・商品発見で競合",
-            "en": "Search and product discovery"
+            "ja": "Lens・YouTube・広告等。自社開示",
+            "en": "Lens, YouTube & ads; own disclosure"
           },
           "sourceIndexes": [
             0
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "role": "competitor",
+          "label": {
+            "ja": "Facebook・Instagram・広告等。自社開示",
+            "en": "Facebook, Instagram & ads; own disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "ByteDance",
+          "role": "competitor",
+          "label": {
+            "ja": "TikTok関連事業・合弁会社の利用時間・広告",
+            "en": "TikTok businesses/JVs: engagement & ads"
+          },
+          "sourceIndexes": [
+            0,
+            1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "competitor",
+          "label": {
+            "ja": "商品探索・広告。Pinterest自身の開示",
+            "en": "Product discovery & ads; named by Pinterest"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
         }
       ],
       "relationships": [
@@ -11909,7 +11982,7 @@
       "SNAP"
     ],
     "name": "Snap",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Snapchat / Advertising / Competition / Risks",
@@ -11921,7 +11994,7 @@
       "revenue": "主に企業や代理店へ広告枠を販売し、Snapchat+などの有料契約からも収益を得る。",
       "strength": "カメラ中心の操作、若い利用者層、友人同士の私的な交流、AR技術と制作者向け機能が差別化になる。",
       "risks": "広告依存、利用者成長、未成年者の安全、個人情報規制、AppleやGoogleによる端末・配信ルール変更が弱点。",
-      "competition": "交流、短編動画、広告、ARでMeta、TikTok、YouTube、Pinterest、Redditなどと競う。",
+      "competition": "Snap自身が挙げるAlphabet・Meta・Pinterest・Reddit・ByteDanceのTikTok関連事業・合弁会社は、利用時間と広告で競争する。YouTubeは動画、InstagramはStoriesなどの比較対象。端末カメラ・メッセージ機能も代替で、AR機器や全広告サービスが同等という意味ではない。Google等への基盤依存と競争は併存する。",
       "relationships": "利用者と制作者が投稿を供給し、広告主が広告枠を購入し、AR開発者やアプリ配信基盤が体験を支える。"
     },
     "en": {
@@ -11929,7 +12002,7 @@
       "revenue": "Earns mainly from advertising sold to brands and agencies, with additional subscription revenue such as Snapchat+.",
       "strength": "A camera-first interface, younger audience, private friend communication, AR technology and creator tools differentiate the service.",
       "risks": "Advertising dependence, user growth, youth safety, privacy rules, and Apple or Google platform-policy changes are major risks.",
-      "competition": "Competes with Meta, TikTok, YouTube, Pinterest, Reddit and others in social use, short video, ads and AR.",
+      "competition": "Snap names Alphabet, Meta, Pinterest, Reddit and ByteDance with TikTok-affiliated joint ventures in engagement and advertising. YouTube concerns video and Instagram includes Stories. Device cameras and messaging remain alternatives; this is not equivalence across AR hardware or all ad services. Platform dependence and competition can coexist.",
       "relationships": "Users and creators supply content, advertisers buy inventory, and AR developers and mobile distribution platforms support the experience."
     },
     "maps": {
@@ -11937,37 +12010,62 @@
         {
           "kind": "company",
           "name": "Pinterest",
-          "ticker": "PINS",
           "role": "competitor",
           "label": {
-            "ja": "画像・広告で競合",
-            "en": "Visual discovery and ads"
+            "ja": "利用時間・広告。Snap自身の実名開示",
+            "en": "Engagement & ads; named by Snap"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "PINS"
         },
         {
           "kind": "company",
           "name": "Reddit",
-          "ticker": "RDDT",
           "role": "competitor",
           "label": {
-            "ja": "利用時間と広告で競合",
-            "en": "Attention and advertising"
+            "ja": "交流・広告。Snap自身の実名開示",
+            "en": "Community engagement & ads; named by Snap"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "RDDT"
         },
         {
           "kind": "company",
           "name": "Alphabet",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "動画・広告で競合",
-            "en": "Video and advertising"
+            "ja": "YouTube・Google広告。Snap自身の開示",
+            "en": "YouTube & Google ads; named by Snap"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "role": "competitor",
+          "label": {
+            "ja": "Instagram Stories・広告等。自社開示",
+            "en": "Instagram Stories & ads; own disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "ByteDance",
+          "role": "competitor",
+          "label": {
+            "ja": "TikTokと関連合弁会社。Snap自身の開示",
+            "en": "TikTok & affiliated joint ventures; named by Snap"
           },
           "sourceIndexes": [
             0
@@ -13491,7 +13589,7 @@
       "ENTG"
     ],
     "name": "Entegris",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Risk factors",
@@ -13503,7 +13601,7 @@
       "revenue": "工場で繰り返し交換される材料・フィルター・容器と、流体管理システムを半導体メーカーや装置会社へ販売して稼ぐ。",
       "strength": "材料科学、ろ過、流体管理を幅広く持ち、顧客の工程開発段階から品質と純度を作り込める。消耗品が継続収益につながる。",
       "risks": "半導体生産量と設備投資の波、顧客集中、原材料不足、輸出規制の影響を受ける。買収で増えた負債と事業統合も負担。",
-      "competition": "純度管理・フィルターと電子材料では、世界大手から地域の専門メーカーまで、製品ごとに異なる相手と競う。",
+      "competition": "Entegris自身は部門別に競合を開示する。Pall（Danaher傘下）は高純度化ソリューション、Merck KGaAのEMD Performance Materialsは材料分野の比較対象。Merck KGaAは米国製薬会社Merck & Co.とは別企業。ろ過・材料・搬送の全製品を互換とせず、製品別に範囲が異なる。",
       "relationships": "半導体工場と製造装置メーカーへ材料、フィルター、搬送部品を供給し、量産工程の汚染管理を支える。"
     },
     "en": {
@@ -13511,7 +13609,7 @@
       "revenue": "Sells recurring materials, filters and containers plus fluid-management systems to chipmakers and equipment manufacturers.",
       "strength": "Its breadth across materials science, filtration and fluid management lets it work with customers during process development; consumables create recurring demand.",
       "risks": "Semiconductor output and capital cycles, customer concentration, raw-material constraints and export controls affect results; acquisition debt and integration add pressure.",
-      "competition": "Competes product by product with global groups and regional specialists in purity control, filtration and electronic materials.",
+      "competition": "Entegris names competitors by segment. Pall, part of Danaher, is an Advanced Purity Solutions peer; Merck KGaA EMD Performance Materials is a Materials Solutions peer. Merck KGaA is distinct from US Merck & Co. Filtration, materials and handling portfolios are not interchangeable across all products.",
       "relationships": "Supplies materials, filters and delivery components to wafer fabs and equipment makers, supporting contamination control in volume production."
     },
     "maps": {
@@ -13521,8 +13619,8 @@
           "name": "Pall",
           "role": "competitor",
           "label": {
-            "ja": "純度管理・フィルターで競合",
-            "en": "Purity control and filtration"
+            "ja": "Danaher傘下・高純度化。Entegris自身の開示",
+            "en": "Danaher subsidiary; advanced purity; own disclosure"
           },
           "sourceIndexes": [
             0
@@ -13533,8 +13631,8 @@
           "name": "Merck Electronics",
           "role": "competitor",
           "label": {
-            "ja": "電子材料で競合",
-            "en": "Electronic materials"
+            "ja": "Merck KGaA・電子材料。Entegris自身の開示",
+            "en": "Merck KGaA electronic materials; own disclosure"
           },
           "sourceIndexes": [
             0
@@ -14283,11 +14381,15 @@
       "MTSI"
     ],
     "name": "MACOM Technology Solutions",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm"
+      },
+      {
+        "label": "Skyworks · Qorvo combination completed October 5, 2026",
+        "url": "https://www.qorvo.com/about/news-events/news-releases/2026/skyworks-completes-combination-with-qorvo"
       }
     ],
     "ja": {
@@ -14295,7 +14397,7 @@
       "revenue": "通信・クラウド機器、防衛、産業機器メーカーへ、増幅器、レーザー・光検出器、ダイオード、GaN製品を販売して稼ぐ。",
       "strength": "高速光通信と高周波RFを横断し、化合物半導体、シリコン、フォトニクスを用途に合わせて使い分けられる。",
       "risks": "通信・データセンター投資の波、輸出規制、顧客と製品の集中、外部工場の供給、買収統合、防衛案件の時期が業績を動かす。",
-      "competition": "高速光・RF・マイクロ波の分野でAnalog Devices、Broadcom、Marvell、Qorvoなどと競い、一部では顧客の内製とも競う。",
+      "competition": "MACOM自身はAnalog Devices・Broadcom・Marvell・Skyworksなどを競合に挙げる。比較分野はRF・マイクロ波・光通信用の高性能アナログ半導体で、全社の全製品が同等ではない。旧Qorvoは2026年10月5日にSkyworksとの統合が完了しており、現行の独立上場競合として重複表示しない。顧客の内製設計も代替になる。",
       "relationships": "データセンター・通信機器会社と防衛・産業顧客へ半導体を供給し、外部工場や組立会社へ製造を委託する。"
     },
     "en": {
@@ -14303,7 +14405,7 @@
       "revenue": "Sells amplifiers, lasers and photodetectors, diodes and GaN products to communications, cloud-equipment, defense and industrial manufacturers.",
       "strength": "Spans high-speed optical and RF technologies and can apply compound semiconductors, silicon and photonics to different performance needs.",
       "risks": "Communications and data-center spending cycles, export controls, customer and product concentration, foundry supply, acquisition integration and defense-program timing affect results.",
-      "competition": "Competes in high-speed optical, RF and microwave markets with Analog Devices, Broadcom, Marvell, Qorvo and others, as well as some customer insourcing.",
+      "competition": "MACOM names Analog Devices, Broadcom, Marvell and Skyworks among its competitors in RF, microwave and photonic analog semiconductors. Entire portfolios are not equivalent. Qorvo completed its combination with Skyworks on October 5, 2026 and is not duplicated as a currently independent listed peer. Customer in-house design remains an alternative.",
       "relationships": "Supplies chips to data-center and communications-equipment makers and defense and industrial customers, while outsourcing portions of fabrication and assembly."
     },
     "maps": {
@@ -14311,41 +14413,55 @@
         {
           "kind": "company",
           "name": "Analog Devices",
-          "ticker": "ADI",
           "role": "competitor",
           "label": {
-            "ja": "高性能アナログ・RFで競合",
-            "en": "High-performance analog and RF"
+            "ja": "RF・高性能アナログ。MACOM自身の開示",
+            "en": "RF/high-performance analog; named by MACOM"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "ADI"
         },
         {
           "kind": "company",
           "name": "Broadcom",
-          "ticker": "AVGO",
           "role": "competitor",
           "label": {
-            "ja": "光通信・RFで競合",
-            "en": "Optical and RF products"
+            "ja": "通信・光接続半導体。MACOM自身の開示",
+            "en": "Communication/optical connectivity chips; own disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "AVGO"
         },
         {
           "kind": "company",
-          "name": "Marvell Technology",
-          "ticker": "MRVL",
+          "name": "Marvell",
           "role": "competitor",
           "label": {
-            "ja": "データセンター向け光・接続で競合",
-            "en": "Data-center optics and connectivity"
+            "ja": "高速通信半導体。MACOM自身の開示",
+            "en": "High-speed communication chips; named by MACOM"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MRVL"
+        },
+        {
+          "kind": "company",
+          "name": "Skyworks Solutions",
+          "role": "competitor",
+          "label": {
+            "ja": "RF・旧Qorvo事業を含む。自社開示と統合確認",
+            "en": "RF, including former Qorvo; named peer/closing check"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "SWKS"
         }
       ],
       "relationships": [
@@ -14384,7 +14500,7 @@
       "POWI"
     ],
     "name": "Power Integrations",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Manufacturing / Risk factors",
@@ -14396,7 +14512,7 @@
       "revenue": "家電、充電器、産業機器、再生可能エネルギー、車載向けに、電源変換ICとドライバー製品を販売して稼ぐ。",
       "strength": "高耐圧スイッチと制御回路を一つにまとめ、部品点数、電力損失、設計時間を減らせる。設計支援と省エネ性能も強み。",
       "risks": "家電・消費者機器の需要、流通在庫、中国市場と競争、外部工場の供給に左右される。代替部品の値下がりも価格圧力になる。",
-      "competition": "電源ICではInfineon、STMicroelectronics、Texas Instruments、NXPなど、モータードライバーではON Semiconductorなどと競う。",
+      "competition": "Power Integrations自身の開示では、高電圧電源ICにSTMicroelectronics・Infineon、PWM制御ICにNXP・Texas Instrumentsなどが競合する。onsemiはモーター駆動用パワーモジュールで比較する。GaN、ゲートドライバー、制御ICは役割が異なり、個別部品を組み合わせた設計も代替になる。",
       "relationships": "家電・産業・自動車の電源メーカーへ製品を直接または販売会社経由で供給し、外部工場と組立・検査会社へ製造を委託する。"
     },
     "en": {
@@ -14404,7 +14520,7 @@
       "revenue": "Sells power-conversion ICs and driver products into appliances, chargers, industrial systems, renewable energy and automotive applications.",
       "strength": "Integrates high-voltage switches and control circuitry to reduce component count, energy loss and design time, supported by design tools and efficiency features.",
       "risks": "Appliance and consumer demand, channel inventory, China exposure, competition and outsourced manufacturing affect results; falling discrete-component prices can add pricing pressure.",
-      "competition": "Competes in power ICs with Infineon, STMicroelectronics, Texas Instruments and NXP, and in motor drivers with ON Semiconductor and others.",
+      "competition": "Power Integrations names STMicroelectronics and Infineon for high-voltage power ICs, and NXP and Texas Instruments among PWM-controller suppliers. onsemi is compared in motor-drive power modules. GaN, gate drivers and controllers serve different roles; discrete-component designs also remain alternatives.",
       "relationships": "Supplies appliance, industrial and automotive power designers directly and through distributors while outsourcing wafer fabrication, assembly and test."
     },
     "maps": {
@@ -14412,24 +14528,49 @@
         {
           "kind": "company",
           "name": "Texas Instruments",
-          "ticker": "TXN",
           "role": "competitor",
           "label": {
-            "ja": "電源制御ICで競合",
-            "en": "Power-control ICs"
+            "ja": "PWM制御IC。Power Integrations自身の開示",
+            "en": "PWM controllers; own disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "TXN"
         },
         {
           "kind": "company",
           "name": "NXP Semiconductors",
-          "ticker": "NXPI",
           "role": "competitor",
           "label": {
-            "ja": "高耐圧電源ICで競合",
-            "en": "High-voltage power ICs"
+            "ja": "PWM制御IC。Power Integrations自身の開示",
+            "en": "PWM controllers; own disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NXPI"
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "role": "competitor",
+          "label": {
+            "ja": "モーター駆動用モジュール。自社開示",
+            "en": "Motor-drive power modules; own disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ON"
+        },
+        {
+          "kind": "company",
+          "name": "Infineon",
+          "role": "competitor",
+          "label": {
+            "ja": "高電圧電源IC・駆動製品。自社開示",
+            "en": "High-voltage power ICs/drivers; own disclosure"
           },
           "sourceIndexes": [
             0
@@ -14437,16 +14578,16 @@
         },
         {
           "kind": "company",
-          "name": "onsemi",
-          "ticker": "ON",
+          "name": "STMicroelectronics",
           "role": "competitor",
           "label": {
-            "ja": "モータードライバーで競合",
-            "en": "Motor-driver products"
+            "ja": "高電圧電源IC・モーター駆動。自社開示",
+            "en": "High-voltage power ICs/motor drives; own disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "STM"
         }
       ],
       "relationships": [
@@ -20188,7 +20329,7 @@
       "ZM"
     ],
     "name": "Zoom",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -20200,7 +20341,7 @@
       "revenue": "企業や個人から受け取るサービス利用料が中心。会議に加えて電話やコンタクトセンターの契約を広げ、導入支援などでも収益を得る。",
       "strength": "会議から電話、顧客対応まで同じ基盤で扱える。既存の会議室機器や他社の業務アプリとも連携し、利用環境を大きく変えず導入しやすい。",
       "risks": "Teamsなどを含む他社の一括契約と競い、単独サービスの価値を示す必要がある。障害や情報漏洩は信頼を損ない、契約継続にも響く。",
-      "competition": "会議ではMicrosoft Teams、Google Meet、Cisco Webexと競合。問い合わせ窓口向けではFive9などと競う。",
+      "competition": "Zoom自身はMicrosoft 365のTeams、Google WorkspaceのMeet、Cisco Webexを会議・共同作業の競合、Five9をコンタクトセンター分野の競合に挙げる。電話・会議・顧客対応では範囲が異なり、Five9を一般会議サービスとして比較しない。既存の外部アプリ連携と競争は併存する。",
       "relationships": "Boxなどの業務アプリと連携し、会議前後の資料共有を支える。サービスの運用には外部のクラウドや電話網も利用する。"
     },
     "en": {
@@ -20208,7 +20349,7 @@
       "revenue": "Primarily earns subscription fees from businesses and individuals, with additional products and implementation services.",
       "strength": "Combines employee communication and customer engagement, integrating existing meeting-room equipment and business applications.",
       "risks": "Bundled rivals can pressure pricing. Outages or privacy failures can damage trust and renewals.",
-      "competition": "Competes with Microsoft Teams, Google Meet and Cisco Webex in meetings, and Five9 in contact centers.",
+      "competition": "Zoom names Microsoft 365 with Teams, Google Workspace with Meet and Cisco Webex in meetings/collaboration, and Five9 in contact centers. Phone, meetings and customer service have different scopes; Five9 is not presented as a general meeting service. External-app integrations and competition can coexist.",
       "relationships": "Integrates with business applications including Box. External cloud hosting and telephone networks help deliver its services."
     },
     "maps": {
@@ -20216,54 +20357,54 @@
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "Teamsで会議・社内連絡を競う",
-            "en": "Teams meetings and collaboration"
+            "ja": "Teams・会議と共同作業。Zoom自身の開示",
+            "en": "Teams meetings/collaboration; named by Zoom"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
-          "name": "Google",
-          "ticker": "GOOG",
+          "name": "Alphabet",
           "role": "competitor",
           "label": {
-            "ja": "Meetでオンライン会議を競う",
-            "en": "Meet video meetings"
+            "ja": "Google Meet・会議。Zoom自身の開示",
+            "en": "Google Meet meetings; named by Zoom"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
           "name": "Cisco",
-          "ticker": "CSCO",
           "role": "competitor",
           "label": {
-            "ja": "Webexで会議を競う",
-            "en": "Webex meetings"
+            "ja": "Webex会議。Zoom自身の開示",
+            "en": "Webex meetings; named by Zoom"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CSCO"
         },
         {
           "kind": "company",
           "name": "Five9",
-          "ticker": "FIVN",
           "role": "competitor",
           "label": {
-            "ja": "問い合わせ窓口向けソフトで競合",
-            "en": "Contact-center software"
+            "ja": "コンタクトセンター。Zoom自身の開示",
+            "en": "Contact center; named by Zoom"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "FIVN"
         }
       ],
       "relationships": [
@@ -20328,7 +20469,7 @@
       "DOCN"
     ],
     "name": "DigitalOcean",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -20344,7 +20485,7 @@
       "revenue": "計算処理やデータ保存などの利用量に応じた料金が中心。月単位の利用に加え、大きな顧客とは最低利用額を定める契約も結ぶ。",
       "strength": "設定の分かりやすさと運用負担の軽さが特徴。小さく始めたアプリを、データベース管理やAI機能まで同じ環境で拡張できる。",
       "risks": "顧客が利用を減らすと収益へ反映されやすい。GPUや設備を先に確保する費用も重く、需要と供給能力がずれるリスクがある。",
-      "competition": "一般的なクラウドではAWS、Azure、Google Cloud、AI計算基盤ではCoreWeaveなどと競う。",
+      "competition": "DigitalOcean自身が挙げるAWS・Microsoft Azure・Google Cloudはクラウド基盤とAI/ML基盤、CoreWeaveはAI/ML基盤の競合例。汎用仮想サーバー、GPU計算、Cloudways等のマネージドホスティングでは対象が異なる。NVIDIA・AMDのGPU採用を直接の調達契約や競合と取り違えない。",
       "relationships": "NVIDIAやAMDのGPUをサービスに採用。MongoDBとは管理型データベースで提携し、開発者や企業へ運用込みの環境を提供する。"
     },
     "en": {
@@ -20352,62 +20493,62 @@
       "revenue": "Mainly charges for resource consumption; some larger customers commit to minimum spending.",
       "strength": "Simple deployment and managed services let customers expand applications without operating every infrastructure component themselves.",
       "risks": "Usage reductions affect revenue, while GPU procurement and capacity commitments can outpace demand.",
-      "competition": "Competes with AWS, Azure and Google Cloud in cloud infrastructure and CoreWeave in AI computing.",
+      "competition": "DigitalOcean names AWS, Microsoft Azure and Google Cloud for cloud and AI/ML infrastructure, and CoreWeave for AI/ML infrastructure. General virtual machines, GPU compute and managed hosting such as Cloudways have different scopes. NVIDIA/AMD GPU adoption is not treated as proof of a direct procurement contract or rivalry.",
       "relationships": "Uses NVIDIA and AMD GPUs and partners with MongoDB for a managed database service. Adoption does not establish a direct hardware purchase contract."
     },
     "maps": {
       "competition": [
         {
           "kind": "company",
-          "name": "Amazon",
-          "ticker": "AMZN",
+          "name": "Amazon / AWS",
           "role": "competitor",
           "label": {
-            "ja": "AWSとクラウド基盤で競合",
-            "en": "AWS cloud infrastructure"
+            "ja": "クラウド・AI/ML基盤。DigitalOcean自身の開示",
+            "en": "Cloud/AI-ML infrastructure; named by DigitalOcean"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "AMZN"
         },
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "Azureとクラウド基盤で競合",
-            "en": "Azure cloud infrastructure"
+            "ja": "Azureクラウド・AI/ML。自社開示",
+            "en": "Azure cloud/AI-ML; own disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
-          "name": "Google",
-          "ticker": "GOOG",
+          "name": "Alphabet",
           "role": "competitor",
           "label": {
-            "ja": "Google Cloudとクラウド基盤で競合",
-            "en": "Google Cloud infrastructure"
+            "ja": "Google Cloud・AI/ML。自社開示",
+            "en": "Google Cloud/AI-ML; own disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
           "name": "CoreWeave",
-          "ticker": "CRWV",
           "role": "competitor",
           "label": {
-            "ja": "AI計算基盤で競合",
-            "en": "AI computing infrastructure"
+            "ja": "AI/ML計算基盤。DigitalOcean自身の開示",
+            "en": "AI/ML infrastructure; named by DigitalOcean"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CRWV"
         }
       ],
       "relationships": [
@@ -20472,7 +20613,7 @@
       "ESTC"
     ],
     "name": "Elastic",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -20488,7 +20629,7 @@
       "revenue": "クラウド版と顧客が自分で運用する有料ソフトの契約料が中心。使う計算資源などに応じた料金に、導入支援や研修が加わる。",
       "strength": "文書や操作記録などを共通の検索基盤で扱える。検索、障害調査、脅威検知をつなぎ、AIへ渡す社内情報も探し出せる。",
       "risks": "無料の代替ソフトや大手クラウドと競う。顧客が利用を節約しても、外部クラウドへの複数年の容量契約が費用として残る場合がある。",
-      "competition": "検索ではMongoDBなど、システム監視ではDatadogやCisco傘下のSplunk、セキュリティではCrowdStrikeなどと競う。",
+      "competition": "Elastic自身は検索・AIでMongoDB Atlas、可観測性でDatadogやCisco傘下Splunk、セキュリティでCrowdStrikeやSplunkを挙げる。AWSの派生プラットフォーム提供も競合だがElastic公式のサポート対象ではない。クラウド上でのElastic提供と競争は併存し、検索・監視・防御を同一機能として扱わない。",
       "relationships": "AWS、Google Cloud、Azure上でElastic Cloudを提供する。これらは運用基盤である一方、独自の検索・監視サービスでは競合にもなる。"
     },
     "en": {
@@ -20496,7 +20637,7 @@
       "revenue": "Earns resource-based subscriptions for hosted and self-managed software, plus implementation and training fees.",
       "strength": "A shared search engine connects documents and operational data across search, troubleshooting and threat detection.",
       "risks": "Free alternatives and cloud rivals pressure sales. Hosting commitments can remain even when customers reduce consumption.",
-      "competition": "Competes with MongoDB in search, Datadog and Cisco's Splunk in observability, and CrowdStrike in security.",
+      "competition": "Elastic names MongoDB Atlas in Search & AI, Datadog and Cisco-owned Splunk in observability, and CrowdStrike and Splunk in security. AWS fork-based offerings also compete and are not supported by Elastic. Elastic cloud hosting and competition can coexist; search, monitoring and defense are distinct functions.",
       "relationships": "Runs Elastic Cloud on AWS, Google Cloud and Azure. These infrastructure providers also offer competing services."
     },
     "maps": {
@@ -20504,54 +20645,67 @@
         {
           "kind": "company",
           "name": "MongoDB",
-          "ticker": "MDB",
           "role": "competitor",
           "label": {
-            "ja": "Atlasの検索機能と競合",
-            "en": "Atlas search"
+            "ja": "Atlasの検索・ベクトル検索。Elastic自身の開示",
+            "en": "Atlas search/vector search; named by Elastic"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MDB"
         },
         {
           "kind": "company",
           "name": "Datadog",
-          "ticker": "DDOG",
           "role": "competitor",
           "label": {
-            "ja": "アプリ・システム監視で競合",
-            "en": "Application and infrastructure observability"
+            "ja": "可観測性。Elastic自身の実名開示",
+            "en": "Observability; named by Elastic"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "DDOG"
         },
         {
           "kind": "company",
           "name": "Cisco",
-          "ticker": "CSCO",
           "role": "competitor",
           "label": {
-            "ja": "Splunkの監視・セキュリティ分析と競合",
-            "en": "Splunk observability and security"
+            "ja": "Splunk可観測性・防御。Elastic自身の開示",
+            "en": "Splunk observability/security; named by Elastic"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CSCO"
         },
         {
           "kind": "company",
           "name": "CrowdStrike",
-          "ticker": "CRWD",
           "role": "competitor",
           "label": {
-            "ja": "セキュリティ分析で競合",
-            "en": "Security analytics"
+            "ja": "セキュリティ。Elastic自身の実名開示",
+            "en": "Security; named by Elastic"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CRWD"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "role": "competitor",
+          "label": {
+            "ja": "派生検索基盤。Elastic自身の開示",
+            "en": "Fork-based search platform; named by Elastic"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
         }
       ],
       "relationships": [
@@ -20779,7 +20933,7 @@
       "FROG"
     ],
     "name": "JFrog",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -20788,6 +20942,22 @@
       {
         "label": "Q2 2026 results · Claude Code plugin and cloud subscriptions",
         "url": "https://investors.jfrog.com/news/news-details/2026/JFrog-Announces-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "label": "JFrog FY2025 Annual Report · Competition",
+        "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001800667/36b99460-cdd3-4945-858d-af145424fc08.pdf"
+      },
+      {
+        "label": "GitHub · Packages",
+        "url": "https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages"
+      },
+      {
+        "label": "GitLab · Package registry",
+        "url": "https://docs.gitlab.com/user/packages/package_registry/"
+      },
+      {
+        "label": "Sonatype · Nexus Repository",
+        "url": "https://www.sonatype.com/products/sonatype-nexus-repository"
       }
     ],
     "ja": {
@@ -20795,7 +20965,7 @@
       "revenue": "顧客が自社で運用する版とクラウド版の契約料で稼ぐ。機能の上位プランや利用量の拡大が収益の増加につながる。",
       "strength": "多くの形式のソフト部品を共通の保管庫で扱い、安全性の検査と配布をつなげられる。複数クラウドや社内設備をまたぐ開発にも対応する。",
       "risks": "開発基盤やクラウドに同様の機能をまとめられると価格競争になる。配布物への攻撃やサービス停止は、顧客の開発・更新工程に直接影響する。",
-      "competition": "GitHub、GitLab、Sonatypeなどとソフトの管理・配布で競う。クラウド各社も一部の機能では競合する。",
+      "competition": "JFrog自身はMicrosoftのGitHub・GitLab・Sonatypeなどを、製品範囲の一部で競合する企業として挙げる。公式製品の照合ではGitHub Packages、GitLab Package Registry、Sonatype Nexus Repositoryがパッケージ・成果物保管の比較例。ソースコード管理、成果物保管、セキュリティ、AIモデル管理の全機能が同等という意味ではない。 クラウド各社の開発機能や社内開発も一部の代替になる。",
       "relationships": "AWS、Azure、Google Cloudと提携し、Hugging FaceとはAIモデルの取り込み・管理で連携する。AnthropicとはClaude Code向けプラグインを提供した。"
     },
     "en": {
@@ -20803,7 +20973,7 @@
       "revenue": "Earns self-managed and cloud subscription revenue; higher tiers and cloud consumption support expansion.",
       "strength": "One repository supports many package formats and connects security checks with delivery across environments.",
       "risks": "Bundled development tools pressure pricing. Compromised artifacts or outages can disrupt customers' release processes.",
-      "competition": "Competes with GitHub, GitLab, Sonatype and overlapping cloud-provider tools.",
+      "competition": "JFrog names Microsoft GitHub, GitLab and Sonatype among vendors competing with a limited set of its offerings. Official-product matching compares GitHub Packages, GitLab Package Registry and Sonatype Nexus Repository for packages/artifacts. Source control, artifact storage, security and AI-model management are not equivalent across all functions. Cloud development tools and in-house solutions also compete with subsets of functionality.",
       "relationships": "Partners with AWS, Azure and Google Cloud, integrates Hugging Face models, and delivered a Claude Code plugin with Anthropic."
     },
     "maps": {
@@ -20811,39 +20981,42 @@
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "GitHubなどの開発・配布機能と競合",
-            "en": "GitHub and overlapping delivery tools"
+            "ja": "GitHub Packages成果物保管。自社開示と製品照合",
+            "en": "GitHub Packages artifacts; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            3
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "GitLab",
-          "ticker": "GTLB",
           "role": "competitor",
           "label": {
-            "ja": "ソフト開発・配布機能の一部で競合",
-            "en": "Overlapping development and delivery tools"
+            "ja": "Package Registry。自社開示と公式製品照合",
+            "en": "Package Registry; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            4
+          ],
+          "ticker": "GTLB"
         },
         {
           "kind": "company",
           "name": "Sonatype",
           "role": "competitor",
           "label": {
-            "ja": "ソフト部品管理・安全性検査で競合",
-            "en": "Package management and security"
+            "ja": "Nexus Repository成果物保管。自社開示と照合",
+            "en": "Nexus Repository artifacts; named peer/product check"
           },
           "sourceIndexes": [
-            0
+            2,
+            5
           ]
         }
       ],

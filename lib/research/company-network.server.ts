@@ -72,6 +72,16 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "RDDT") return { 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
+  if (root === "PINS") return { 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
+  if (root === "SNAP") return { 7: { ja: "動画・交流・広告", en: "Video, communication & ads" } };
+  if (root === "ENTG") return { 0: { ja: "半導体用の高純度化・材料", en: "Semiconductor purity & materials" } };
+  if (root === "MTSI") return { 3: { ja: "RF・光接続・アナログ半導体", en: "RF, optical connectivity & analog" } };
+  if (root === "POWI") return { 3: { ja: "電源制御・モーター駆動半導体", en: "Power control & motor-drive chips" } };
+  if (root === "ZM") return { 7: { ja: "会議・共同作業・顧客対応", en: "Meetings, collaboration & contact centers" } };
+  if (root === "DOCN") return { 6: { ja: "クラウド・AI・データ基盤", en: "Cloud, AI & data infrastructure" } };
+  if (root === "ESTC") return { 6: { ja: "検索・監視・防御・クラウド", en: "Search, observability, security & cloud" } };
+  if (root === "FROG") return { 6: { ja: "開発・クラウド・AI基盤", en: "Development, cloud & AI infrastructure" } };
   if (root === "LITE") return {
     3: { ja: "チップ設計・接続半導体", en: "Chip design & connectivity" },
     4: { ja: "光源・モジュール・ファイバー", en: "Light sources, modules & fiber" },
@@ -2582,6 +2592,397 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "宇宙機電力・構造部品",
         "en": "Spacecraft power/structure components"
+      }
+    }
+  },
+  "RDDT": {
+    "RDDT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "交流・情報探索・広告",
+        "en": "Communities, discovery & ads"
+      }
+    },
+    "PINS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "発見・趣味・広告",
+        "en": "Discovery, interests & ads"
+      }
+    },
+    "SNAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "利用時間・広告",
+        "en": "Engagement & ads"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google検索・YouTube・広告",
+        "en": "Google Search, YouTube & ads"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Facebook等の交流・広告",
+        "en": "Facebook communities & ads"
+      }
+    },
+    "ByteDance": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "TikTok関連事業・合弁会社の利用時間・広告",
+        "en": "TikTok businesses/JVs: engagement & ads"
+      }
+    }
+  },
+  "PINS": {
+    "PINS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "商品・画像の発見・広告",
+        "en": "Product/visual discovery & ads"
+      }
+    },
+    "RDDT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "交流・広告",
+        "en": "Community engagement & ads"
+      }
+    },
+    "SNAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "利用時間・広告",
+        "en": "Engagement & ads"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Lens・YouTube・広告等",
+        "en": "Lens, YouTube & ads"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Facebook・Instagram・広告等",
+        "en": "Facebook, Instagram & ads"
+      }
+    },
+    "ByteDance": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "TikTok関連事業・合弁会社の利用時間・広告",
+        "en": "TikTok businesses/JVs: engagement & ads"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "商品探索・広告",
+        "en": "Product discovery & ads"
+      }
+    }
+  },
+  "SNAP": {
+    "SNAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "動画・交流・広告",
+        "en": "Video, communication & ads"
+      }
+    },
+    "PINS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "利用時間・広告",
+        "en": "Engagement & ads"
+      }
+    },
+    "RDDT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "交流・広告",
+        "en": "Community engagement & ads"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "YouTube・Google広告",
+        "en": "YouTube & Google ads"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Instagram Stories・広告等",
+        "en": "Instagram Stories & ads"
+      }
+    },
+    "ByteDance": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "TikTokと関連合弁会社",
+        "en": "TikTok & affiliated joint ventures"
+      }
+    }
+  },
+  "ENTG": {
+    "ENTG": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "半導体用の高純度化・材料",
+        "en": "Semiconductor purity & materials"
+      }
+    },
+    "Pall": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Danaher傘下・高純度化",
+        "en": "Danaher subsidiary"
+      }
+    },
+    "Merck Electronics": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Merck KGaA・電子材料",
+        "en": "Merck KGaA electronic materials"
+      }
+    }
+  },
+  "MTSI": {
+    "MTSI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "RF・光接続・アナログ半導体",
+        "en": "RF, optical connectivity & analog"
+      }
+    },
+    "ADI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "RF・高性能アナログ",
+        "en": "RF/high-performance analog"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "通信・光接続半導体",
+        "en": "Communication/optical connectivity chips"
+      }
+    },
+    "MRVL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "高速通信半導体",
+        "en": "High-speed communication chips"
+      }
+    },
+    "SWKS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "RF・旧Qorvo事業を含む",
+        "en": "RF, including former Qorvo"
+      }
+    }
+  },
+  "POWI": {
+    "POWI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電源制御・モーター駆動半導体",
+        "en": "Power control & motor-drive chips"
+      }
+    },
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "PWM制御IC",
+        "en": "PWM controllers"
+      }
+    },
+    "NXPI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "PWM制御IC",
+        "en": "PWM controllers"
+      }
+    },
+    "ON": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "モーター駆動用モジュール",
+        "en": "Motor-drive power modules"
+      }
+    },
+    "Infineon": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "高電圧電源IC・駆動製品",
+        "en": "High-voltage power ICs/drivers"
+      }
+    },
+    "STM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "高電圧電源IC・モーター駆動",
+        "en": "High-voltage power ICs/motor drives"
+      }
+    }
+  },
+  "ZM": {
+    "ZM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "会議・共同作業・顧客対応",
+        "en": "Meetings, collaboration & contact centers"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Teams・会議と共同作業",
+        "en": "Teams meetings/collaboration"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google Meet・会議",
+        "en": "Google Meet meetings"
+      }
+    },
+    "CSCO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Webex会議",
+        "en": "Webex meetings"
+      }
+    },
+    "FIVN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "コンタクトセンター",
+        "en": "Contact center"
+      }
+    }
+  },
+  "DOCN": {
+    "DOCN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド・AI計算基盤",
+        "en": "Cloud & AI compute infrastructure"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド・AI/ML基盤",
+        "en": "Cloud/AI-ML infrastructure"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azureクラウド・AI/ML",
+        "en": "Azure cloud/AI-ML"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud・AI/ML",
+        "en": "Google Cloud/AI-ML"
+      }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AI/ML計算基盤",
+        "en": "AI/ML infrastructure"
+      }
+    }
+  },
+  "ESTC": {
+    "ESTC": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "検索・可観測性・セキュリティ",
+        "en": "Search, observability & security"
+      }
+    },
+    "MDB": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Atlasの検索・ベクトル検索",
+        "en": "Atlas search/vector search"
+      }
+    },
+    "DDOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "可観測性",
+        "en": "Observability"
+      }
+    },
+    "CSCO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Splunk可観測性・防御",
+        "en": "Splunk observability/security"
+      }
+    },
+    "CRWD": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "セキュリティ",
+        "en": "Security"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "派生検索基盤",
+        "en": "Fork-based search platform"
+      }
+    }
+  },
+  "FROG": {
+    "FROG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ソフトウェア成果物の管理",
+        "en": "Software artifact management"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GitHub Packages成果物保管",
+        "en": "GitHub Packages artifacts"
+      }
+    },
+    "GTLB": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Package Registry",
+        "en": "Package Registry"
+      }
+    },
+    "Sonatype": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Nexus Repository成果物保管",
+        "en": "Nexus Repository artifacts"
       }
     }
   }
