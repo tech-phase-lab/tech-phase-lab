@@ -72,6 +72,12 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "XYZ") return {"7": {"ja": "決済・店舗・注文連携", "en": "Payments, merchants & order integration"}};
+  if (root === "PYPL") return {"7": {"ja": "決済・ウォレット・コマース連携", "en": "Payments, wallets & commerce"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
+  if (root === "TTD") return {"7": {"ja": "広告購入・媒体在庫連携", "en": "Ad buying & publisher inventory"}};
+  if (root === "ROKU") return {"7": {"ja": "TV配信・CTV広告", "en": "TV streaming & CTV advertising"}};
+  if (root === "SHOP") return {"7": {"ja": "コマース基盤・販売チャネル", "en": "Commerce platforms & channels"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
+  if (root === "NFLX") return {"7": {"ja": "動画配信・番組配信協業", "en": "Streaming & program distribution"}};
   if (root === "VIAV") return {"0": {"ja": "通信ネットワーク試験", "en": "Network test & validation"}, "3": {"ja": "AI-RAN試験・シミュレーション協業", "en": "AI-RAN testing / simulation collaboration"}, "4": {"ja": "光学材料・特殊光製品", "en": "Optical materials & specialty optics"}};
   if (root === "MXL") return {"3": {"ja": "接続・通信・信号処理半導体", "en": "Connectivity & signal-processing silicon"}, "5": {"ja": "エッジネットワーク技術協業", "en": "Edge-network collaboration"}};
   if (root === "LSCC") return {"3": {"ja": "FPGA・物理AIプラットフォーム協業", "en": "FPGAs & physical-AI platform collaboration"}};
@@ -201,12 +207,8 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "FTNT") return {
     6: { ja: "ネットワーク・端末・安全な接続", en: "Network, endpoint & secure access" },
   };
-  if (root === "UBER") return {
-    7: { ja: "配車・配送・貨物仲介", en: "Mobility, delivery & freight brokerage" },
-  };
-  if (root === "APP") return {
-    7: { ja: "デジタル広告・利用者獲得", en: "Digital advertising & user acquisition" },
-  };
+  if (root === "UBER") return {"7": {"ja": "配車・配送・自動運転協業", "en": "Mobility, delivery & AV collaboration"}};
+  if (root === "APP") return {"7": {"ja": "広告技術・クラウド供給", "en": "Advertising technology & cloud supply"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
   if (root === "SIMO") return {
     3: { ja: "SSD・NAND制御半導体", en: "SSD & NAND controller chips" },
   };
@@ -289,9 +291,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     6: { ja: "ゲーム・クラウド基盤", en: "Gaming & cloud platforms" },
     7: { ja: "ゲーム体験・制作ツール", en: "Gaming experiences & creation tools" },
   };
-  if (root === "DASH") return {
-    7: { ja: "料理・食品・日用品の配送", en: "Meal, grocery & everyday delivery" },
-  };
+  if (root === "DASH") return {"7": {"ja": "配送・小売販売チャネル", "en": "Delivery & retail sales channels"}};
   if (root === "SONY") return {
     3: { ja: "画像センサー・関連半導体", en: "Image sensors & related chips" },
     6: { ja: "ゲーム・クラウド基盤", en: "Gaming & cloud platforms" },
@@ -359,12 +359,8 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "DOCU") return {
     7: { ja: "電子署名・契約管理", en: "E-signatures & contract management" },
   };
-  if (root === "ABNB") return {
-    7: { ja: "宿泊予約・旅行検索", en: "Accommodation booking & travel search" },
-  };
-  if (root === "SPOT") return {
-    7: { ja: "音楽・コンテンツ・広告", en: "Music, content & advertising" },
-  };
+  if (root === "ABNB") return {"7": {"ja": "旅行・宿泊予約", "en": "Travel & accommodation booking"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
+  if (root === "SPOT") return {"7": {"ja": "音楽・音声・動画配信", "en": "Music, audio & video distribution"}};
   if (root === "ASAN") return {
     7: { ja: "業務管理・コラボレーション", en: "Work management & collaboration" },
   };
@@ -381,9 +377,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     5: { ja: "発電・電力供給", en: "Power generation & supply" },
     7: { ja: "電力の関連企業", en: "Related power companies" },
   };
-  if (root === "MELI") return {
-    7: { ja: "通販・金融サービス", en: "Commerce & financial services" },
-  };
+  if (root === "MELI") return {"7": {"ja": "通販・小売・決済サービス", "en": "Commerce, retail & payments"}};
   if (root === "SOFI") return {
     7: { ja: "金融サービス・銀行技術", en: "Financial services & banking technology" },
   };
@@ -704,29 +698,50 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "GOOG": {
       "layer": 7,
       "businessLabel": {
-        "ja": "旅行・宿泊検索",
-        "en": "Travel & accommodation search"
+        "ja": "Google | 旅行・宿泊検索",
+        "en": "Google | Travel & accommodation search"
       }
     },
     "BKNG": {
       "layer": 7,
       "businessLabel": {
-        "ja": "宿泊施設の予約",
-        "en": "Accommodation booking"
+        "ja": "Booking Holdings | 宿泊施設の予約",
+        "en": "Booking Holdings | Accommodation booking"
       }
     },
     "EXPE": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Vrbo・貸切住宅予約",
-        "en": "Vrbo whole-home booking"
+        "ja": "Expedia Group | Vrbo・貸切住宅予約",
+        "en": "Expedia Group | Vrbo whole-home booking"
       }
     },
     "MAR": {
       "layer": 7,
       "businessLabel": {
-        "ja": "ホテル・リゾート",
-        "en": "Hotels & resorts"
+        "ja": "Marriott International | ホテル・リゾート",
+        "en": "Marriott International | Hotels & resorts"
+      }
+    },
+    "ABNB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Airbnb｜宿泊・体験予約",
+        "en": "Airbnb | stays / experiences"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon / AWS｜クラウド供給",
+        "en": "Amazon / AWS | cloud provider"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜開発用モデル契約",
+        "en": "OpenAI | model-access agreement"
       }
     }
   },
@@ -734,36 +749,50 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "GOOG": {
       "layer": 7,
       "businessLabel": {
-        "ja": "YouTube Music・動画・広告",
-        "en": "YouTube Music, video & ads"
+        "ja": "Google | YouTube Music・動画・広告",
+        "en": "Google | YouTube Music, video & ads"
       }
     },
     "AMZN": {
       "layer": 7,
       "businessLabel": {
-        "ja": "音楽・Audible・広告",
-        "en": "Music, Audible & ads"
+        "ja": "Amazon | 音楽・Audible・広告",
+        "en": "Amazon | Music, Audible & ads"
       }
     },
     "AAPL": {
       "layer": 7,
       "businessLabel": {
-        "ja": "音楽・番組・音声書籍",
-        "en": "Music, podcasts & audiobooks"
+        "ja": "Apple | 音楽・番組・音声書籍",
+        "en": "Apple | Music, podcasts & audiobooks"
       }
     },
     "META": {
       "layer": 7,
       "businessLabel": {
-        "ja": "コンテンツ・広告",
-        "en": "Content & advertising"
+        "ja": "Meta | コンテンツ・広告",
+        "en": "Meta | Content & advertising"
       }
     },
     "ByteDance": {
       "layer": 7,
       "businessLabel": {
-        "ja": "短編動画・利用時間",
-        "en": "Short video & attention"
+        "ja": "ByteDance | 短編動画・利用時間",
+        "en": "ByteDance | Short video & attention"
+      }
+    },
+    "SPOT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Spotify｜音楽・音声・動画",
+        "en": "Spotify | music / audio / video"
+      }
+    },
+    "NFLX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Netflix｜番組動画配信協業",
+        "en": "Netflix | video-program collaboration"
       }
     }
   },
@@ -1430,29 +1459,50 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "UBER": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Uber Eats・料理配達",
-        "en": "Uber Eats meal delivery"
+        "ja": "Uber Technologies | Uber Eats・料理配達",
+        "en": "Uber Technologies | Uber Eats meal delivery"
       }
     },
     "AMZN": {
       "layer": 7,
       "businessLabel": {
-        "ja": "食品・日用品の配送",
-        "en": "Grocery & everyday delivery"
+        "ja": "Amazon | 食品・日用品の配送",
+        "en": "Amazon | Grocery & everyday delivery"
       }
     },
     "CART": {
       "layer": 7,
       "businessLabel": {
-        "ja": "食品配送マーケットプレイス",
-        "en": "Grocery delivery marketplace"
+        "ja": "Instacart | 食品配送マーケットプレイス",
+        "en": "Instacart | Grocery delivery marketplace"
       }
     },
     "WMT": {
       "layer": 7,
       "businessLabel": {
-        "ja": "食品・日用品の注文と配送",
-        "en": "Grocery ordering & delivery"
+        "ja": "Walmart | 食品・日用品の注文と配送",
+        "en": "Walmart | Grocery ordering & delivery"
+      }
+    },
+    "DASH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "DoorDash｜地域配送",
+        "en": "DoorDash | local delivery"
+      }
+    },
+    "KR": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Kroger｜食料品配達協業",
+        "en": "Kroger | grocery-delivery partner"
+      }
+    },
+    "SHOP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Shopify｜米国実店舗販売連携",
+        "en": "Shopify | US physical-store channel"
       }
     }
   },
@@ -2680,50 +2730,57 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "UBER": {
       "layer": 7,
       "businessLabel": {
-        "ja": "配車・配送・貨物仲介",
-        "en": "Mobility, delivery & freight brokerage"
+        "ja": "Uber｜配車・配送",
+        "en": "Uber | mobility / delivery"
       }
     },
     "LYFT": {
       "layer": 7,
       "businessLabel": {
-        "ja": "配車アプリ",
-        "en": "Ride-hailing app"
+        "ja": "Lyft | 配車アプリ",
+        "en": "Lyft | Ride-hailing app"
       }
     },
     "Didi": {
       "layer": 7,
       "businessLabel": {
-        "ja": "海外の配車",
-        "en": "International ride-hailing"
+        "ja": "Didi | 海外の配車",
+        "en": "Didi | International ride-hailing"
       }
     },
     "Bolt": {
       "layer": 7,
       "businessLabel": {
-        "ja": "地域別の配車",
-        "en": "Regional ride-hailing"
+        "ja": "Bolt | 地域別の配車",
+        "en": "Bolt | Regional ride-hailing"
       }
     },
     "Ola": {
       "layer": 7,
       "businessLabel": {
-        "ja": "インドの配車",
-        "en": "Indian ride-hailing"
+        "ja": "Ola | インドの配車",
+        "en": "Ola | Indian ride-hailing"
       }
     },
     "DASH": {
       "layer": 7,
       "businessLabel": {
-        "ja": "商品配送",
-        "en": "Product delivery"
+        "ja": "DoorDash | 商品配送",
+        "en": "DoorDash | Product delivery"
       }
     },
     "CHRW": {
       "layer": 7,
       "businessLabel": {
-        "ja": "貨物仲介",
-        "en": "Freight brokerage"
+        "ja": "C.H. Robinson | 貨物仲介",
+        "en": "C.H. Robinson | Freight brokerage"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Alphabet / Waymo｜配車協業",
+        "en": "Alphabet / Waymo | ride partnership"
       }
     }
   },
@@ -2731,36 +2788,36 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "APP": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Axon広告・媒体収益化",
-        "en": "Axon advertising & monetization"
+        "ja": "AppLovin｜広告技術",
+        "en": "AppLovin | advertising technology"
       }
     },
     "GOOG": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Google広告",
-        "en": "Google advertising"
+        "ja": "Google｜Cloud供給・広告技術",
+        "en": "Google | Cloud supply / ad tech"
       }
     },
     "META": {
       "layer": 7,
       "businessLabel": {
-        "ja": "広告配信・利用者獲得",
-        "en": "Advertising & user acquisition"
+        "ja": "Meta | 広告配信・利用者獲得",
+        "en": "Meta | Advertising & user acquisition"
       }
     },
     "AMZN": {
       "layer": 7,
       "businessLabel": {
-        "ja": "広告配信",
-        "en": "Advertising platforms"
+        "ja": "Amazon | 広告配信",
+        "en": "Amazon | Advertising platforms"
       }
     },
     "U": {
       "layer": 7,
       "businessLabel": {
-        "ja": "広告による利用者獲得",
-        "en": "Advertising user acquisition"
+        "ja": "Unity | 広告による利用者獲得",
+        "en": "Unity | Advertising user acquisition"
       }
     }
   },
@@ -6142,6 +6199,146 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Coherent | specialty optics"
       }
     }
+  },
+  "NFLX": {
+    "NFLX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Netflix｜動画配信",
+        "en": "Netflix | streaming"
+      }
+    },
+    "SPOT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Spotify｜動画ポッドキャスト協業",
+        "en": "Spotify | video-podcast collaboration"
+      }
+    }
+  },
+  "SHOP": {
+    "SHOP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Shopify｜コマース基盤",
+        "en": "Shopify | commerce platform"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜UCP・AIコマース協業",
+        "en": "Google | UCP / AI commerce"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜ChatGPT商品連携",
+        "en": "OpenAI | ChatGPT commerce"
+      }
+    }
+  },
+  "ROKU": {
+    "ROKU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Roku｜TV配信・広告",
+        "en": "Roku | TV streaming / ads"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Amazon｜DSP協業・TV配信",
+        "en": "Amazon | DSP collaboration / TV"
+      }
+    }
+  },
+  "TTD": {
+    "TTD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "The Trade Desk｜広告購入DSP",
+        "en": "The Trade Desk | advertising DSP"
+      }
+    },
+    "SPOT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Spotify｜音声・動画広告在庫",
+        "en": "Spotify | audio / video ad inventory"
+      }
+    }
+  },
+  "MELI": {
+    "MELI": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Mercado Libre｜通販・金融",
+        "en": "Mercado Libre | commerce / finance"
+      }
+    },
+    "V": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Visa｜メキシコのカード連携",
+        "en": "Visa | Mexico card network"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Amazon｜ブラジルの通販",
+        "en": "Amazon | Brazilian commerce"
+      }
+    },
+    "SE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Sea / Shopee｜ブラジルの通販",
+        "en": "Sea / Shopee | Brazilian commerce"
+      }
+    },
+    "NU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Nu Holdings / Nubank | Nu Holdings｜個人向け金融",
+        "en": "Nu Holdings / Nubank | Nu Holdings | Consumer finance"
+      }
+    }
+  },
+  "PYPL": {
+    "PYPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "PayPal｜決済・ウォレット",
+        "en": "PayPal | payments / wallet"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜ChatGPT決済連携",
+        "en": "OpenAI | ChatGPT payments"
+      }
+    }
+  },
+  "XYZ": {
+    "XYZ": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Block / Square｜店舗・決済",
+        "en": "Block / Square | merchant payments"
+      }
+    },
+    "DASH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "DoorDash｜Square注文連携",
+        "en": "DoorDash | Square order integration"
+      }
+    }
   }
 };
 
@@ -6205,7 +6402,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.

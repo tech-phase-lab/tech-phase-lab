@@ -11220,11 +11220,15 @@
       "UBER"
     ],
     "name": "Uber Technologies",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Mobility / Delivery / Freight / Revenue / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315126000015/uber-20251231.htm"
+      },
+      {
+        "url": "https://investor.uber.com/news-events/news/press-release-details/2025/Atlanta-The-Future-is-Here-with-Waymo-and-Uber-2025-y1tuDCCSgu/default.aspx",
+        "label": "Uber — Waymo Atlanta launch, June 24, 2025"
       }
     ],
     "ja": {
@@ -11233,7 +11237,7 @@
       "strength": "乗客、運転手、配達員、店舗を同じ需要予測と決済基盤で結び、移動と配送の稼働を相互に高められる。",
       "risks": "運転手の雇用区分、各国規制、保険・事故、値下げ競争、自動運転への移行、地域ごとの競合が利益を左右する。",
       "competition": "Uber自身は配車のLyft・Didi・Bolt・Ola、配送のDoorDash、貨物仲介のC.H. Robinsonを競合に挙げる。配車、商品配送、貨物手配は市場と地域が異なる。自家用車・タクシー・公共交通や、店への直接注文も代替手段。自動運転の潜在競争とは区別して読む。",
-      "relationships": "運転手・配達員と乗客・注文者、店舗を仲介し、荷主と運送会社をUber Freightでつなぐ。"
+      "relationships": "運転手・配達員と乗客・注文者、店舗を仲介し、荷主と運送会社をUber Freightでつなぐ。 2025年6月の自社発表は、Alphabet傘下Waymoの自動運転車をUberアプリでAtlantaに展開し、Austinでも提供すると説明。都市・配車サービスを限定した提携で、全地域への導入や車両保有への出資を示すものではない。"
     },
     "en": {
       "business": "Operates apps that connect ride-hailing, food and grocery delivery, business travel and North American freight.",
@@ -11241,7 +11245,7 @@
       "strength": "Uses one demand, dispatch and payments platform to connect riders, drivers, couriers and merchants and improve utilization across mobility and delivery.",
       "risks": "Worker classification, regulation, insurance and accidents, discounting, autonomous vehicles and local competitors can affect profitability.",
       "competition": "Uber names Lyft, Didi, Bolt and Ola in mobility, DoorDash in delivery, and C.H. Robinson in freight brokerage. Ride-hailing, product delivery and freight differ by market and geography. Personal cars, taxis, public transit and direct merchant ordering remain alternatives, separate from potential autonomous-vehicle rivalry.",
-      "relationships": "Connects drivers and couriers with riders and orderers, merchants with delivery demand, and shippers with carriers through Uber Freight."
+      "relationships": "Connects drivers and couriers with riders and orderers, merchants with delivery demand, and shippers with carriers through Uber Freight. Its June 2025 release describes Waymo autonomous rides through Uber in Atlanta and Austin. Waymo is represented under Alphabet. The city-specific service partnership does not establish deployment everywhere or an equity investment."
     },
     "maps": {
       "competition": [
@@ -11373,6 +11377,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "2025年6月：Waymoの自動運転配車をAtlantaで開始、Austinでも提供",
+            "en": "June 2025: Waymo autonomous rides launched in Atlanta, also offered in Austin"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -11383,7 +11400,7 @@
       "NFLX"
     ],
     "name": "Netflix",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Membership revenue / Content / Competition / Risks",
@@ -11400,6 +11417,10 @@
       {
         "label": "Alphabet FY2025 Form 10-K · YouTube video and advertising business",
         "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm"
+      },
+      {
+        "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001065280/5c943b10-61c2-4e9a-a175-f61e2391fa78.pdf",
+        "label": "Netflix — January 20, 2026 shareholder letter, page 7"
       }
     ],
     "ja": {
@@ -11408,7 +11429,7 @@
       "strength": "世界規模の会員基盤と視聴データを使い、各地域の作品を制作・調達して世界へ配信できる。",
       "risks": "作品費の上昇、会員の解約、値上げへの反発、ヒット作不足、為替、規制、制作遅延が利益に影響する。",
       "competition": "動画配信ではAmazonのPrime VideoとDisney+、動画の視聴時間や広告予算ではAlphabetのYouTubeが競合例。Netflixの競争分野と各社の公式サービスを照合した編集上の比較。定額の映画・ドラマ配信と、投稿動画を含むYouTubeは収益モデルが異なる。",
-      "relationships": "制作会社や権利者から作品を調達・共同制作し、通信・端末事業者と配信・料金回収を行い、広告主へ視聴枠を販売する。"
+      "relationships": "制作会社や権利者から作品を調達・共同制作し、通信・端末事業者と配信・料金回収を行い、広告主へ視聴枠を販売する。 2026年1月20日の株主書簡はSpotify / The Ringerとの提携による動画ポッドキャストの提供開始を明記。対象番組の配信提携であり、Spotifyの全音楽カタログの権利取得や会社買収とは区別する。"
     },
     "en": {
       "business": "Streams films, series, animation, live programming and games to members worldwide.",
@@ -11416,7 +11437,7 @@
       "strength": "Uses a global member base and viewing data to produce and license local content and distribute it worldwide.",
       "risks": "Rising content costs, churn, pricing resistance, weak titles, currencies, regulation and production delays can affect profits.",
       "competition": "Examples include Amazon Prime Video and Disney+ in streaming entertainment, and Alphabet’s YouTube for viewing time and video advertising. This editorial comparison uses Netflix’s competitive scope and official peer services. Subscription films/series and YouTube’s mix of uploaded content have different business models.",
-      "relationships": "Licenses and co-produces content with studios and rights holders, distributes and bills through telecom and device partners, and sells viewing inventory to advertisers."
+      "relationships": "Licenses and co-produces content with studios and rights holders, distributes and bills through telecom and device partners, and sells viewing inventory to advertisers. Its January 20, 2026 shareholder letter reports starting video podcasts through the Spotify / The Ringer partnership. This is selected-program distribution, without implying rights to Spotify’s entire music catalog or a company acquisition."
     },
     "maps": {
       "competition": [
@@ -11515,6 +11536,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Spotify",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：Spotify / The Ringer提携の動画ポッドキャストを提供開始と自社報告",
+            "en": "January 2026: company reports starting video-podcast launches with Spotify / The Ringer"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "SPOT"
         }
       ]
     }
@@ -12707,7 +12741,7 @@
       "SHOP"
     ],
     "name": "Shopify",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Commerce platform / Revenue / Competition / Risks",
@@ -12732,6 +12766,10 @@
       {
         "label": "Block · Square point-of-sale and payments",
         "url": "https://squareup.com/us/en/point-of-sale"
+      },
+      {
+        "url": "https://www.shopify.com/news/ai-commerce-at-scale",
+        "label": "Shopify — agentic commerce / UCP, January 11, 2026"
       }
     ],
     "ja": {
@@ -12740,7 +12778,7 @@
       "strength": "小規模店から大企業まで同じ基盤で成長でき、決済と2万超のアプリを含む豊富なパートナー網を持つ。",
       "risks": "加盟店や消費の減速、決済損失、競争、障害、クラウド費、アプリ・決済・AIなど外部事業者への依存が利益を左右する。",
       "competition": "ECサイト・コマース基盤ではAdobe CommerceとWix、実店舗のPOS・決済ではBlockのSquareが競合例。前2社は公表製品の編集上の比較。SquareはShopify自身のPOS比較資料と両社の公式製品で照合した。決済で連携する会社が全製品で競合するとは限らない。",
-      "relationships": "加盟店へ販売・決済基盤を提供し、アプリ開発者や制作会社が機能を拡張し、決済・クラウド会社が処理基盤を支える。"
+      "relationships": "加盟店へ販売・決済基盤を提供し、アプリ開発者や制作会社が機能を拡張し、決済・クラウド会社が処理基盤を支える。 2026年1月の自社発表はGoogleとUCPを共同開発し、AI Mode / Geminiの決済機能を展開予定と説明。ChatGPT向け連携もAgentic Storefrontsで管理する。商品・決済連携を計算容量購入と混同せず、発表時の展開計画を全加盟店で完了済みとは扱わない。"
     },
     "en": {
       "business": "Provides a commerce platform that combines online, retail and social selling with inventory, payments and marketing.",
@@ -12748,7 +12786,7 @@
       "strength": "One platform can scale from small sellers to large brands, reinforced by payments and an ecosystem of more than 20,000 apps.",
       "risks": "Merchant or consumer weakness, payment losses, competition, outages, cloud costs and dependence on app, payments and AI providers can affect profits.",
       "competition": "Adobe Commerce and Wix are examples in ecommerce storefront/platform software, while Block’s Square overlaps in retail POS and payments. The first two are editorial product comparisons; Square is also covered by Shopify’s own POS comparison. Integration and competition can coexist in different product areas.",
-      "relationships": "Provides selling and payment tools to merchants; developers and agencies extend the platform while payment and cloud providers support processing."
+      "relationships": "Provides selling and payment tools to merchants; developers and agencies extend the platform while payment and cloud providers support processing. Its January 2026 announcement describes UCP co-development with Google and planned AI Mode / Gemini checkout. ChatGPT integrations are managed through Agentic Storefronts. These are commerce integrations; planned rollout is not assumed complete for every merchant."
     },
     "maps": {
       "competition": [
@@ -12836,6 +12874,31 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：GoogleとUCPを共同開発、AI Mode / Gemini決済は展開予定として発表",
+            "en": "January 2026: UCP co-development with Google; AI Mode / Gemini checkout announced for rollout"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：Agentic StorefrontsでChatGPT向け商品連携を管理すると自社説明",
+            "en": "January 2026: company describes managing ChatGPT commerce integration through Agentic Storefronts"
+          },
+          "sourceIndexes": [
+            6
+          ]
         }
       ]
     }
@@ -12846,7 +12909,7 @@
       "APP"
     ],
     "name": "AppLovin",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Axon advertising platform / Revenue / Competition / Risks",
@@ -12855,6 +12918,10 @@
       {
         "label": "Unity · User acquisition campaign goals",
         "url": "https://docs.unity.com/en-us/grow/acquire/campaigns/types"
+      },
+      {
+        "url": "https://cloud.google.com/blog/products/compute/applovin-builds-ai-ad-platform-on-google-cloud-g2-vms/",
+        "label": "Google Cloud / AppLovin — G2 / GKE adoption case, December 12, 2023"
       }
     ],
     "ja": {
@@ -12863,7 +12930,7 @@
       "strength": "大規模な広告入札データがAxon AIの推薦精度を高め、成果が上がるほど広告主と広告枠が増える循環を作る。",
       "risks": "AppleやGoogleなどの規約・識別子変更、個人情報規制、広告需要、推定精度、少数の配信基盤への依存が業績を大きく動かす。",
       "competition": "AppLovin自身はGoogle・Meta・Amazon・Unityを広告分野の競合に挙げる。広告主の予算、利用者の獲得、アプリ等の広告枠が比較対象で、Unityは公式の広告獲得製品を照合した。ゲーム制作エンジンそのものとの比較ではなく、広告仲介、計測、CTVでは製品範囲が異なる。競合が取引相手を兼ねる場合もある。",
-      "relationships": "広告主の入札をアプリ・Web・CTVの広告枠へつなぎ、AppleやGoogleなどの配信基盤の規約下でサービスを動かす。"
+      "relationships": "広告主の入札をアプリ・Web・CTVの広告枠へつなぎ、AppleやGoogleなどの配信基盤の規約下でサービスを動かす。 Google CloudとAppLovin幹部による2023年12月の事例は、広告AI基盤でG2 VMとGKEを利用したと説明。クラウド供給元Googleとの広告競争は併存し、過去の事例から現在の契約額やNVIDIAとの直接調達契約を推定しない。"
     },
     "en": {
       "business": "Uses its Axon AI advertising platform to connect advertiser acquisition goals with publisher monetization.",
@@ -12871,7 +12938,7 @@
       "strength": "Large-scale auction data improves Axon AI recommendations, creating a cycle in which better results attract more advertisers and inventory.",
       "risks": "Apple or Google policy and identifier changes, privacy rules, ad demand, model performance and dependence on a few distribution platforms can move results sharply.",
       "competition": "AppLovin names Google, Meta, Amazon and Unity in advertising. Comparisons concern advertiser budgets, user acquisition and advertising inventory; Unity is matched to official user-acquisition products, not its game-development engine. Mediation, measurement and CTV differ in scope, and competitors may also be counterparties.",
-      "relationships": "Matches advertiser bids to app, web and CTV inventory while operating under the policies of distribution platforms such as Apple and Google."
+      "relationships": "Matches advertiser bids to app, web and CTV inventory while operating under the policies of distribution platforms such as Apple and Google. A December 2023 case coauthored by Google Cloud and an AppLovin executive describes G2 VM / GKE use for advertising AI. Cloud supply coexists with advertising competition; the dated case does not establish current contract amounts or direct NVIDIA procurement."
     },
     "maps": {
       "competition": [
@@ -12968,6 +13035,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "supplier",
+          "label": {
+            "ja": "2023年12月の共同事例：Google CloudのG2 VM / GKEで広告AI基盤を構築",
+            "en": "December 2023 joint case: Google Cloud G2 VMs / GKE support advertising-AI infrastructure"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -12978,7 +13058,7 @@
       "ABNB"
     ],
     "name": "Airbnb",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Marketplace / Service fees / Competition / Risks",
@@ -12995,6 +13075,10 @@
       {
         "label": "Marriott · Hotel brands and properties",
         "url": "https://www.marriott.com/marriott/aboutmarriott.mi"
+      },
+      {
+        "url": "https://news.airbnb.com/expanding-access-to-openai-frontier-models-including-gpt-6-astra",
+        "label": "Airbnb — OpenAI model-access agreement, September 23, 2026"
       }
     ],
     "ja": {
@@ -13003,7 +13087,7 @@
       "strength": "世界中の多様な宿泊在庫と強いブランド、ホストとゲストが互いを呼ぶネットワーク、決済・安全支援を一体で持つ。",
       "risks": "短期賃貸規制、安全事故、不正、旅行需要の変動、ホスト不足、保険・決済費、地域ごとの法令が成長を左右する。",
       "competition": "宿泊予約ではBooking HoldingsのBooking.com、貸切住宅ではExpedia GroupのVrbo、ホテル滞在ではMarriottのホテル群が比較例。Airbnbの開示する競合分野と相手側の公式サービスを照合した編集上の比較で、ホテルと民泊の全体が同じ商品ではない。Alphabet／Googleとは旅行検索で競合する。体験予約やホスト獲得は別に確認する。",
-      "relationships": "ホストの宿泊・体験・サービスをゲストへ仲介し、カード網、銀行、決済会社を通じて代金を回収・送金する。"
+      "relationships": "ホストの宿泊・体験・サービスをゲストへ仲介し、カード網、銀行、決済会社を通じて代金を回収・送金する。 2026年9月の自社発表はOpenAIのフロンティアモデルへのアクセス拡張契約を説明し、優先クラウド供給元をAWSと明記。OpenAI APIとAmazon Bedrockを使う開発・製品用途で、宿泊予約の全処理委託や出資ではない。"
     },
     "en": {
       "business": "Runs a global travel marketplace connecting guests with hosts offering homes, experiences and trip services.",
@@ -13011,7 +13095,7 @@
       "strength": "Combines diverse global inventory, a strong brand, host-guest network effects, payments and trust support.",
       "risks": "Short-term rental rules, safety incidents, fraud, travel demand, host supply, insurance, payments and local laws can constrain growth.",
       "competition": "Accommodation examples are Booking Holdings’ Booking.com, Expedia Group’s Vrbo whole-home rentals and Marriott hotels. These are editorial comparisons of official services with Airbnb’s competitive categories; hotels and home stays are not identical products. Alphabet/Google also competes in travel search. Experiences and host acquisition require separate review.",
-      "relationships": "Matches host stays, experiences and services with guests and uses card networks, banks and processors to collect and remit payments."
+      "relationships": "Matches host stays, experiences and services with guests and uses card networks, banks and processors to collect and remit payments. Its September 2026 announcement describes expanded OpenAI frontier-model access and identifies AWS as its preferred cloud provider. OpenAI APIs and Amazon Bedrock support engineering / product work; this does not establish outsourced booking operations or investment."
     },
     "maps": {
       "competition": [
@@ -13110,6 +13194,31 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：開発・製品チーム向けフロンティアモデルへのアクセス拡張契約",
+            "en": "September 2026: agreement expands frontier-model access for engineering / product teams"
+          },
+          "sourceIndexes": [
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年9月の自社説明：AWSが優先クラウド基盤、Amazon Bedrockも利用",
+            "en": "September 2026 company disclosure: AWS is preferred cloud provider; Amazon Bedrock also used"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -13120,7 +13229,7 @@
       "SPOT"
     ],
     "name": "Spotify Technology",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Premium / Advertising / Content / Competition / Risks",
@@ -13129,6 +13238,10 @@
       {
         "label": "ByteDance · TikTok and Douyin product identity",
         "url": "https://www.bytedance.com/en/"
+      },
+      {
+        "url": "https://newsroom.spotify.com/2026-05-27/on-purpose-jay-shetty-video-spotify-netflix/",
+        "label": "Spotify — Netflix / On Purpose video collaboration, May 27, 2026"
       }
     ],
     "ja": {
@@ -13137,7 +13250,7 @@
       "strength": "大きな利用者基盤と再生データを使った推薦、無料版から有料版へ移す導線、複数音声形式を一つに集める点が強い。",
       "risks": "レーベル・出版社への権利料、契約更新、Appleなど端末基盤との競争、値上げ・解約、広告市況が利益を左右する。",
       "competition": "音楽ではApple Music・YouTube Music・Amazon Music、音声書籍ではApple Books・Amazon Audibleなどが競合例。Spotify自身の分野別開示に基づく。MetaとByteDanceとは、Facebook等やTikTok・Douyinなどで利用時間や広告予算を争う文脈で区別する。これらを有料音楽サービスと同じ商品とは扱わない。",
-      "relationships": "レーベル、出版社、制作者から音源・番組の権利を得て利用者へ配信し、通信会社経由でも有料契約を販売する。"
+      "relationships": "レーベル、出版社、制作者から音源・番組の権利を得て利用者へ配信し、通信会社経由でも有料契約を販売する。 2026年5月、NetflixとJay ShettyのOn Purpose動画配信協業を発表し、7月13日の提供開始を予定。Spotifyが番組の世界広告販売を担うと説明する。番組別の契約であり、全音楽・全ポッドキャストの独占提供とは扱わない。"
     },
     "en": {
       "business": "Streams personalized music, podcasts and audiobooks to users worldwide.",
@@ -13145,7 +13258,7 @@
       "strength": "A large user base, personalization data, free-to-paid conversion and multiple audio formats reinforce engagement.",
       "risks": "Label and publisher royalties, contract renewals, competition from device platforms, price-related churn and ad markets can affect profits.",
       "competition": "Music examples are Apple Music, YouTube Music and Amazon Music; audiobook examples include Apple Books and Amazon Audible, based on Spotify’s own field-specific disclosures. Meta and ByteDance also compete for attention and advertising through Facebook and short-video products such as TikTok/Douyin. These are not treated as identical paid-music services.",
-      "relationships": "Licenses music and programs from labels, publishers and creators, distributes them to listeners and also sells subscriptions through telecom partners."
+      "relationships": "Licenses music and programs from labels, publishers and creators, distributes them to listeners and also sells subscriptions through telecom partners. A May 2026 announcement describes Netflix / Jay Shetty collaboration for On Purpose video, with July 13 launch planned and Spotify representing global advertising sales for the show. This is program-specific, without implying exclusivity over all music or podcasts."
     },
     "maps": {
       "competition": [
@@ -13267,6 +13380,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Netflix",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：On Purposeの動画配信協業を発表、7月13日開始予定",
+            "en": "May 2026: On Purpose video collaboration announced, with July 13 launch planned"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "NFLX"
         }
       ]
     }
@@ -14031,11 +14157,15 @@
       "ROKU"
     ],
     "name": "Roku",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Platform / Devices / Advertising / Distribution / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm"
+      },
+      {
+        "url": "https://advertising.amazon.com/library/news/roku-amazon-ads-partnership",
+        "label": "Amazon Ads / Roku — US CTV integration, June 16, 2025"
       }
     ],
     "ja": {
@@ -14044,7 +14174,7 @@
       "strength": "テレビのホーム画面と視聴データ、多数の動画サービスへの入口、OSから広告まで一体で運営する点が強い。",
       "risks": "広告市況、動画会社との契約更新、個人情報規制、機器の低採算、テレビメーカーや大手端末基盤との競争が弱点。",
       "competition": "テレビ向け端末・OSではAmazonのFire TV、AppleのApple TV端末、AlphabetのGoogle TV・Android TV、Walmart傘下のVIZIO・Onnが競合例。Roku自身が実名を記載している。VIZIOは独立した別会社として重複追加せず、動画広告や番組の競争とは分けて示す。",
-      "relationships": "テレビメーカーや小売を通じて端末を広げ、動画会社を利用者へ配信し、広告主へテレビ広告枠を販売する。"
+      "relationships": "テレビメーカーや小売を通じて端末を広げ、動画会社を利用者へ配信し、広告主へテレビ広告枠を販売する。 2025年6月のAmazon Ads / Roku共同発表は、Amazon DSPを通じる米国CTVの認証済み到達・広告測定連携を説明し、2025年第四半期までの提供を予定した。特定の広告機能の提携で、全Roku広告の独占販売や全地域への提供完了とは扱わない。"
     },
     "en": {
       "business": "A TV streaming platform combining an operating system, discovery interface, advertising, its own channel and player devices.",
@@ -14052,7 +14182,7 @@
       "strength": "Control of the TV home screen, viewing data, broad service discovery and integrated OS-to-ad operations are key advantages.",
       "risks": "Ad cycles, content-contract renewals, privacy limits, low-margin devices and competition from TV makers and larger device ecosystems are risks.",
       "competition": "Roku explicitly names Amazon Fire TV, Apple TV devices, Google/Android TV and Walmart’s VIZIO/Onn products in streaming-device and TV-OS competition. VIZIO is represented under Walmart rather than as another independent issuer. This scope is distinct from video-content and advertising competition.",
-      "relationships": "TV makers and retailers distribute devices, streaming services reach viewers through Roku, and advertisers buy connected-TV inventory."
+      "relationships": "TV makers and retailers distribute devices, streaming services reach viewers through Roku, and advertisers buy connected-TV inventory. The June 2025 Amazon Ads / Roku announcement describes authenticated US CTV reach and measurement through Amazon DSP, planned by Q4 2025. The partnership concerns specified advertising capabilities, without implying exclusive sale of all Roku ads or completed worldwide availability."
     },
     "maps": {
       "competition": [
@@ -14148,6 +14278,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "2025年6月：米国CTVの認証済み広告到達・測定をAmazon DSPと連携すると発表",
+            "en": "June 2025: announced Amazon DSP integration for authenticated US CTV reach / measurement"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -14158,11 +14301,15 @@
       "TTD"
     ],
     "name": "The Trade Desk",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Platform / Pricing / Open Internet / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm"
+      },
+      {
+        "url": "https://www.thetradedesk.com/resources/elevate-omnichannel-strategy-with-spotify-ads",
+        "label": "The Trade Desk — Spotify publisher integration, September 29, 2025"
       }
     ],
     "ja": {
@@ -14171,7 +14318,7 @@
       "strength": "媒体を保有しない独立性、多数の広告在庫を横断する買い付け、データ・測定・最適化技術が強い。",
       "risks": "広告市況、Cookieや端末IDの制限、広告在庫・データ会社への依存、大口代理店の集中、巨大広告基盤との競争が弱点。",
       "competition": "広告主や代理店が広告枠を買い付けるDSPでは、AlphabetのGoogle事業とAmazonが競合例。The Trade Desk自身が実名を挙げている。Googleは広告在庫の供給元でもあり、買い付け基盤での競争と在庫調達の関係は両立する。",
-      "relationships": "広告主と代理店が買い手となり、媒体社・広告取引所から広告枠を調達し、データ・測定会社と連携する。"
+      "relationships": "広告主と代理店が買い手となり、媒体社・広告取引所から広告枠を調達し、データ・測定会社と連携する。 2025年9月の自社記事はSpotify Ad Exchangeの音声・動画広告在庫をThe Trade Deskから購入できると説明。媒体在庫への接続・広告販売協業で、Spotifyの全音楽データ提供や計算容量購入ではない。"
     },
     "en": {
       "business": "A demand-side platform used by advertisers and agencies to buy and measure connected-TV, video, audio and display ads programmatically.",
@@ -14179,7 +14326,7 @@
       "strength": "Independence from owned media, access across many inventory sources, and data, measurement and optimization technology are advantages.",
       "risks": "Ad cycles, cookie and device-ID restrictions, inventory and data dependencies, agency concentration and competition from large platforms are risks.",
       "competition": "The Trade Desk explicitly names Google and Amazon as demand-side advertising-platform competitors. The overlap concerns advertiser/agency buying tools. Google is also an advertising-inventory supplier in its filing, so platform competition and inventory sourcing can coexist.",
-      "relationships": "Advertisers and agencies are buyers, publishers and exchanges provide inventory, and data and measurement vendors support targeting and results."
+      "relationships": "Advertisers and agencies are buyers, publishers and exchanges provide inventory, and data and measurement vendors support targeting and results. Its September 2025 article describes access to Spotify Ad Exchange audio / video inventory through The Trade Desk. This is publisher-inventory integration and advertising collaboration, without implying access to all music data or computing-capacity purchases."
     },
     "maps": {
       "competition": [
@@ -14249,6 +14396,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Spotify",
+          "role": "partner",
+          "label": {
+            "ja": "2025年9月の自社説明：Spotify Ad Exchangeの音声・動画広告在庫をDSPから購入可能",
+            "en": "September 2025 company disclosure: DSP access to Spotify Ad Exchange audio / video inventory"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "SPOT"
         }
       ]
     }
@@ -14259,7 +14419,7 @@
       "DASH"
     ],
     "name": "DoorDash",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Marketplace / Revenue / Competition / Dashers / Risks",
@@ -14276,6 +14436,14 @@
       {
         "label": "Walmart · Pickup and delivery services",
         "url": "https://www.walmart.com/help/article/pickup-and-delivery/d0d02a5f54e54592930f110aaf6a2f50"
+      },
+      {
+        "url": "https://about.doordash.com/en-us/news/doordash-launches-snap-ebt-with-kroger",
+        "label": "DoorDash — Kroger SNAP / EBT launch, May 1, 2026"
+      },
+      {
+        "url": "https://ir.doordash.com/news/news-details/2026/DoorDash-Integrates-Directly-with-Shopify-to-Connect-Brick-and-Mortar-Retailers-with-On-Demand-Delivery/default.aspx",
+        "label": "DoorDash — Shopify sales-channel integration, July 14, 2026"
       }
     ],
     "ja": {
@@ -14284,7 +14452,7 @@
       "strength": "加盟店、注文者、配達員が互いを増やす地域密度、配達技術、飲食以外へ広がる品ぞろえが強い。",
       "risks": "配達員の雇用区分規制、保険と事故、配送品質、販促費、加盟店・利用者・配達員の離脱が利益を左右する。",
       "competition": "料理配達ではUber Eats、食品・日用品の配送ではAmazon、Instacart、Walmartが競合例。Uber・AmazonはDoorDash自身の実名開示、Instacart・Walmartは公式サービスとDoorDashの対象分野を比較した編集上の例。加盟店の直接注文・自社配送や店頭購入も代替で、地域や品ぞろえ、配送体制は各社で異なる。",
-      "relationships": "加盟店が商品を供給し、配達員が注文を運び、利用者が購入する。加盟店やブランドには広告枠も販売する。"
+      "relationships": "加盟店が商品を供給し、配達員が注文を運び、利用者が購入する。加盟店やブランドには広告枠も販売する。 2026年5月に米国Kroger系列約2,700店でSNAP / EBTを使う食料品配達決済を開始。7月には米国に実店舗を持つShopify加盟店向け販売チャネル連携を開始した。海外展開計画や期限付き配達料優遇を恒久・全地域の条件とは扱わない。"
     },
     "en": {
       "business": "A local-commerce platform connecting restaurants, retailers, consumers and couriers to order and deliver meals and everyday goods.",
@@ -14292,7 +14460,7 @@
       "strength": "Local density across merchants, consumers and Dashers, logistics technology, and expansion beyond restaurants reinforce the network.",
       "risks": "Courier-classification rules, insurance and safety, delivery quality, promotions, and retention of merchants, consumers and Dashers affect profits.",
       "competition": "Uber Eats in meal delivery and Amazon, Instacart and Walmart in grocery/everyday delivery are examples. DoorDash names Uber and Amazon; Instacart and Walmart are editorial comparisons of official services with DoorDash scope. Direct merchant ordering, merchant fleets and in-store shopping remain alternatives. Geography, selection and delivery models differ.",
-      "relationships": "Merchants supply goods, Dashers deliver orders, consumers purchase them, and merchants and brands also buy advertising inventory."
+      "relationships": "Merchants supply goods, Dashers deliver orders, consumers purchase them, and merchants and brands also buy advertising inventory. In May 2026 it launched SNAP / EBT grocery-delivery payments at nearly 2,700 US Kroger-family stores. July brought a Shopify sales channel for merchants with US physical stores. Planned international expansion and temporary fee promotions are not assumed permanent or worldwide."
     },
     "maps": {
       "competition": [
@@ -14391,6 +14559,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Kroger",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：米国Kroger系列約2,700店のSNAP / EBT配達決済に対応",
+            "en": "May 2026: SNAP / EBT delivery payments launched at nearly 2,700 US Kroger-family stores"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "KR"
+        },
+        {
+          "kind": "company",
+          "name": "Shopify",
+          "role": "partner",
+          "label": {
+            "ja": "2026年7月：米国実店舗を持つShopify加盟店向け販売チャネル連携を開始",
+            "en": "July 2026: sales-channel integration launched for Shopify merchants with US physical stores"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "SHOP"
         }
       ]
     }
@@ -14401,7 +14595,7 @@
       "MELI"
     ],
     "name": "MercadoLibre",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Commerce / Mercado Pago / Logistics / Credit / Risks",
@@ -14418,6 +14612,10 @@
       {
         "label": "Nu · Q2 2026 financial services in Brazil, Mexico and Colombia",
         "url": "https://international.nubank.com.br/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "url": "https://www.mercadopago.com.mx/tarjeta-de-credito/lista-de-espera",
+        "label": "Mercado Pago Mexico — Visa credit-card product; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -14426,7 +14624,7 @@
       "strength": "買い手・売り手・決済・配送・信用を一つに結ぶ地域ネットワークと、中南米向けに築いた現地インフラが強い。",
       "risks": "為替・インフレ、各国規制、貸倒れ、物流費、不正取引、ECと金融の両市場での競争が利益を左右する。",
       "competition": "通販ではブラジルのAmazonとSea傘下のShopee、金融ではブラジル・メキシコ・コロンビアのNu（Nubank）の口座・カード・融資が比較例。MercadoLibreの事業分野と各社の現地サービスを照合した編集上の競合例で、各社が中南米全域で同じサービスを提供するという意味ではない。",
-      "relationships": "販売事業者が商品を出品し、買い手が購入する。加盟店・利用者には決済、口座、融資を提供し、配送網と連携する。"
+      "relationships": "販売事業者が商品を出品し、買い手が購入する。加盟店・利用者には決済、口座、融資を提供し、配送網と連携する。 Mercado Pagoのメキシコ公式商品ページはVisa対応クレジットカードを明記。メキシコの商品・決済ネットワークの関係であり、他国の全決済やVisaによる出資を示さない。"
     },
     "en": {
       "business": "A Latin American commerce and financial-services company combining a marketplace, payments, digital accounts, logistics, ads and credit.",
@@ -14434,7 +14632,7 @@
       "strength": "A regional network linking buyers, sellers, payments, logistics and credit, supported by locally built infrastructure, is the core advantage.",
       "risks": "Currency and inflation, country regulation, credit losses, logistics costs, fraud and competition across both commerce and finance are risks.",
       "competition": "Commerce examples are Amazon and Sea’s Shopee in Brazil. In financial services, Nu/Nubank accounts, cards and lending in Brazil, Mexico and Colombia overlap selected Mercado Pago offerings. These are editorial comparisons of official local services, not an assertion of identical coverage across Latin America or that MercadoLibre explicitly names these companies.",
-      "relationships": "Sellers list goods and buyers purchase them; merchants and consumers also use payments, accounts and credit connected to logistics networks."
+      "relationships": "Sellers list goods and buyers purchase them; merchants and consumers also use payments, accounts and credit connected to logistics networks. Mercado Pago’s official Mexico product page identifies its Visa-backed credit card. This establishes a Mexico product / payment-network relationship, without implying all payments in other countries or a Visa equity investment."
     },
     "maps": {
       "competition": [
@@ -14520,6 +14718,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Visa",
+          "role": "partner",
+          "label": {
+            "ja": "メキシコ公式商品ページ：Mercado PagoクレジットカードのVisaネットワーク対応",
+            "en": "Mexico official product page: Mercado Pago credit card supported by the Visa network"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "V"
         }
       ]
     }
@@ -14530,7 +14741,7 @@
       "PYPL"
     ],
     "name": "PayPal",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Payments / Transaction Revenue / Competition / Risk Management",
@@ -14551,6 +14762,10 @@
       {
         "label": "Affirm · Merchant installment and buy-now-pay-later products",
         "url": "https://www.affirm.com/business"
+      },
+      {
+        "url": "https://newsroom.paypal-corp.com/2025-10-28-OpenAI-and-PayPal-Team-Up-to-Power-Instant-Checkout-and-Agentic-Commerce-in-ChatGPT",
+        "label": "PayPal — OpenAI agentic-commerce partnership, October 28, 2025"
       }
     ],
     "ja": {
@@ -14559,7 +14774,7 @@
       "strength": "買い手と売り手の二面ネットワーク、決済データ、不正検知、複数の資金源を一つにつなぐチェックアウトが強い。",
       "risks": "不正・取引損失、規制、加盟店価格、ブランド決済の競争、カード網・銀行・処理会社への依存が利益を左右する。",
       "competition": "デジタル財布・オンライン支払いではApple Pay、加盟店向け決済処理ではStripe、Venmoの送金や加盟店決済ではBlockのCash App・Square、後払いではAffirmが競合例。各社の公表製品を照合した編集上の比較で、PayPal自身の実名列挙ではない。決済手段として相互利用できる場合もある。",
-      "relationships": "個人が支払い・送金し、加盟店が代金を受け取る。銀行、カード網、処理会社が入出金と決済を支える。"
+      "relationships": "個人が支払い・送金し、加盟店が代金を受け取る。銀行、カード網、処理会社が入出金と決済を支える。 2025年10月、OpenAIのInstant CheckoutとACPに対応する決済提携を発表し、加盟店商品カタログの展開は2026年計画と説明。PayPalの決済処理とChatGPT Enterprise / Codex利用は異なる用途で、全加盟店の提供開始やAI計算容量購入とは扱わない。"
     },
     "en": {
       "business": "A payments platform centered on PayPal and Venmo that connects consumers and merchants across checkout, transfers, invoicing and credit.",
@@ -14567,7 +14782,7 @@
       "strength": "A two-sided buyer-seller network, payment data, fraud controls and checkout across multiple funding sources are key advantages.",
       "risks": "Fraud and transaction losses, regulation, merchant pricing, branded-checkout competition and dependence on banks and card networks are risks.",
       "competition": "Examples include Apple Pay in wallet/online checkout, Stripe in merchant processing, Block’s Cash App/Square in P2P and merchant payments, and Affirm in BNPL. These are editorial comparisons of disclosed products, not PayPal’s explicit named list. Payment providers may also support one another’s methods.",
-      "relationships": "Consumers pay and transfer funds, merchants receive payments, and banks, card networks and processors support money movement and settlement."
+      "relationships": "Consumers pay and transfer funds, merchants receive payments, and banks, card networks and processors support money movement and settlement. Its October 2025 OpenAI partnership covers Instant Checkout / ACP payments, with merchant catalogs planned for 2026. Payment processing and internal ChatGPT Enterprise / Codex use have different roles; completed rollout to every merchant and AI capacity purchases are not inferred."
     },
     "maps": {
       "competition": [
@@ -14666,6 +14881,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2025年10月：ChatGPTのInstant Checkout / ACP決済提携、加盟店展開は2026年計画",
+            "en": "October 2025: ChatGPT Instant Checkout / ACP payments partnership, merchant rollout planned in 2026"
+          },
+          "sourceIndexes": [
+            5
+          ]
         }
       ]
     }
@@ -14676,7 +14903,7 @@
       "XYZ"
     ],
     "name": "Block",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Square / Cash App / Revenue / Competition / Risks",
@@ -14701,6 +14928,10 @@
       {
         "label": "Affirm · Merchant installment and buy-now-pay-later products",
         "url": "https://www.affirm.com/business"
+      },
+      {
+        "url": "https://squareup.com/help/us/en/article/8518-integrate-doordash-with-square",
+        "label": "Square — DoorDash integration, US eligibility / restaurant modes; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -14709,7 +14940,7 @@
       "strength": "決済端末からソフト・融資まで揃うSquareと、日常金融を集約するCash Appの二つの生態系と取引データが強い。",
       "risks": "不正・貸倒れ、金融規制、銀行・カード網への依存、激しい決済競争、ビットコイン価格と取引量の変動が弱点。",
       "competition": "Squareの店舗POSではShopify POS、Cash Appの送金や加盟店決済ではPayPal・Venmo、Afterpayの後払いではAffirmが競合例。ShopifyのSquare比較と各社の公表製品を照合しており、送金、店舗運営、後払いを同じ市場として扱わない。",
-      "relationships": "事業者がSquareで販売・決済し、個人がCash Appを使う。銀行、カード網、処理会社が決済と口座機能を支える。"
+      "relationships": "事業者がSquareで販売・決済し、個人がCash Appを使う。銀行、カード網、処理会社が決済と口座機能を支える。 Squareの米国公式サポートは、対象Squareプランと飲食店POSモードでDoorDash注文・メニュー・営業時間等を同期できると説明。製品連携であり、DoorDash自身を加盟飲食店顧客とみなしたり、全プラン・全地域に一般化しない。"
     },
     "en": {
       "business": "A financial-technology company serving sellers through Square and consumers through Cash App transfers, cards, savings and investing.",
@@ -14717,7 +14948,7 @@
       "strength": "Square's integrated hardware, software and finance plus Cash App's consumer ecosystem and first-party transaction data are advantages.",
       "risks": "Fraud and credit losses, financial regulation, bank and card-network dependence, intense payments competition and bitcoin volatility are risks.",
       "competition": "Examples include Shopify POS versus Square, PayPal/Venmo versus Cash App and merchant payments, and Affirm versus Afterpay BNPL. Shopify’s Square comparison and official product descriptions support these scoped examples. Retail operations, P2P and installment lending are separate product areas.",
-      "relationships": "Sellers use Square and consumers use Cash App, while banks, card networks and processors support payments and account functions."
+      "relationships": "Sellers use Square and consumers use Cash App, while banks, card networks and processors support payments and account functions. Square’s US support page describes DoorDash order, menu and opening-hours integration for eligible plans and restaurant POS modes. This is product integration; DoorDash is not inferred to be a restaurant merchant customer, and availability is not generalized to all plans or countries."
     },
     "maps": {
       "competition": [
@@ -14805,6 +15036,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "DoorDash",
+          "role": "partner",
+          "label": {
+            "ja": "米国公式対応：対象Squareプラン・飲食店POSモードでDoorDash注文とメニューを連携",
+            "en": "Official US support: DoorDash order / menu integration for eligible Square plans and restaurant POS modes"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "DASH"
         }
       ]
     }
