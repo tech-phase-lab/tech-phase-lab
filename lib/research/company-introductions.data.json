@@ -16688,7 +16688,7 @@
       "MTSI"
     ],
     "name": "MACOM Technology Solutions",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
@@ -16697,6 +16697,10 @@
       {
         "label": "Skyworks · Qorvo combination completed October 5, 2026",
         "url": "https://www.qorvo.com/about/news-events/news-releases/2026/skyworks-completes-combination-with-qorvo"
+      },
+      {
+        "url": "https://ir.macom.com/news-releases/news-release-details/thirteen-industry-leaders-unite-define-active-copper-cable/",
+        "label": "MTSI / Semtech — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -16705,7 +16709,7 @@
       "strength": "高速光通信と高周波RFを横断し、化合物半導体、シリコン、フォトニクスを用途に合わせて使い分けられる。",
       "risks": "通信・データセンター投資の波、輸出規制、顧客と製品の集中、外部工場の供給、買収統合、防衛案件の時期が業績を動かす。",
       "competition": "MACOM自身はAnalog Devices・Broadcom・Marvell・Skyworksなどを競合に挙げる。比較分野はRF・マイクロ波・光通信用の高性能アナログ半導体で、全社の全製品が同等ではない。旧Qorvoは2026年10月5日にSkyworksとの統合が完了しており、現行の独立上場競合として重複表示しない。顧客の内製設計も代替になる。",
-      "relationships": "データセンター・通信機器会社と防衛・産業顧客へ半導体を供給し、外部工場や組立会社へ製造を委託する。"
+      "relationships": "データセンター・通信機器会社と防衛・産業顧客へ半導体を供給し、外部工場や組立会社へ製造を委託する。 2026年2月、SemtechとACC-MSAの共同議長を務め、リニア・イコライザーを使う銅接続の電気・ファームウェア・試験仕様の策定を発表。規格協力であり、加盟全社との個別売買や出資を意味しない。"
     },
     "en": {
       "business": "Makes high-frequency and analog semiconductors for optical networking, data centers, telecom, defense and industrial systems across RF, microwave and photonics.",
@@ -16713,7 +16717,7 @@
       "strength": "Spans high-speed optical and RF technologies and can apply compound semiconductors, silicon and photonics to different performance needs.",
       "risks": "Communications and data-center spending cycles, export controls, customer and product concentration, foundry supply, acquisition integration and defense-program timing affect results.",
       "competition": "MACOM names Analog Devices, Broadcom, Marvell and Skyworks among its competitors in RF, microwave and photonic analog semiconductors. Entire portfolios are not equivalent. Qorvo completed its combination with Skyworks on October 5, 2026 and is not duplicated as a currently independent listed peer. Customer in-house design remains an alternative.",
-      "relationships": "Supplies chips to data-center and communications-equipment makers and defense and industrial customers, while outsourcing portions of fabrication and assembly."
+      "relationships": "Supplies chips to data-center and communications-equipment makers and defense and industrial customers, while outsourcing portions of fabrication and assembly. In February 2026 MACOM and Semtech announced co-chairing ACC-MSA to define electrical, firmware and test specifications for copper interconnects with linear equalizers. Standards work does not establish purchases or investments between every consortium member."
     },
     "maps": {
       "competition": [
@@ -16797,6 +16801,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Semtech",
+          "role": "partner",
+          "label": {
+            "ja": "2026年2月：MACOMとSemtechがACC-MSAの共同議長、銅接続規格を策定",
+            "en": "February 2026: MACOM and Semtech co-chair ACC-MSA copper-interconnect specifications"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "SMTC"
         }
       ]
     }
@@ -16807,11 +16824,15 @@
       "POWI"
     ],
     "name": "Power Integrations",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Manufacturing / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/833640/000083364026000037/powi-20251231x10k.htm"
+      },
+      {
+        "url": "https://investors.power.com/news/news-details/2026/Power-Integrations-Unveils-Space-Saving-Ultra-Slim-Auxiliary-PSU-Reference-Designs-for-NVIDIA-Kyber-800-VDC-AI-Data-Center/default.aspx",
+        "label": "POWI / NVIDIA — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -16820,7 +16841,7 @@
       "strength": "高耐圧スイッチと制御回路を一つにまとめ、部品点数、電力損失、設計時間を減らせる。設計支援と省エネ性能も強み。",
       "risks": "家電・消費者機器の需要、流通在庫、中国市場と競争、外部工場の供給に左右される。代替部品の値下がりも価格圧力になる。",
       "competition": "Power Integrations自身の開示では、高電圧電源ICにSTMicroelectronics・Infineon、PWM制御ICにNXP・Texas Instrumentsなどが競合する。onsemiはモーター駆動用パワーモジュールで比較する。GaN、ゲートドライバー、制御ICは役割が異なり、個別部品を組み合わせた設計も代替になる。",
-      "relationships": "家電・産業・自動車の電源メーカーへ製品を直接または販売会社経由で供給し、外部工場と組立・検査会社へ製造を委託する。"
+      "relationships": "家電・産業・自動車の電源メーカーへ製品を直接または販売会社経由で供給し、外部工場と組立・検査会社へ製造を委託する。 2026年6月、NVIDIA Kyber 800VDC構成向け15W・35W補助電源の参照設計を公開。技術対応でありNVIDIAの購入契約量ではない。FY2025の自社開示はSeiko Epsonを主要シリコンウエハー製造先の一社とし、契約期限を2035年12月と記載する。"
     },
     "en": {
       "business": "Makes high-voltage chips that efficiently convert wall power into the direct current used by electronics, along with motor and GaN gate drivers.",
@@ -16828,7 +16849,7 @@
       "strength": "Integrates high-voltage switches and control circuitry to reduce component count, energy loss and design time, supported by design tools and efficiency features.",
       "risks": "Appliance and consumer demand, channel inventory, China exposure, competition and outsourced manufacturing affect results; falling discrete-component prices can add pricing pressure.",
       "competition": "Power Integrations names STMicroelectronics and Infineon for high-voltage power ICs, and NXP and Texas Instruments among PWM-controller suppliers. onsemi is compared in motor-drive power modules. GaN, gate drivers and controllers serve different roles; discrete-component designs also remain alternatives.",
-      "relationships": "Supplies appliance, industrial and automotive power designers directly and through distributors while outsourcing wafer fabrication, assembly and test."
+      "relationships": "Supplies appliance, industrial and automotive power designers directly and through distributors while outsourcing wafer fabrication, assembly and test. In June 2026 it published 15 W and 35 W auxiliary-power reference designs for NVIDIA Kyber 800 VDC, establishing technical compatibility rather than NVIDIA purchase volumes. Its FY2025 filing names Seiko Epson among major silicon-wafer foundries, with an agreement through December 2035."
     },
     "maps": {
       "competition": [
@@ -16923,6 +16944,31 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2026年6月：NVIDIA Kyber 800VDC向け補助電源の参照設計を公開",
+            "en": "June 2026: auxiliary-power reference designs for NVIDIA Kyber 800 VDC"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Seiko Epson",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2025開示：Seiko Epsonが主要シリコンウエハー製造先、契約は2035年12月まで",
+            "en": "FY2025 filing: Seiko Epson is a major silicon-wafer foundry; agreement through December 2035"
+          },
+          "sourceIndexes": [
+            0
+          ]
         }
       ]
     }
@@ -16933,7 +16979,7 @@
       "SITM"
     ],
     "name": "SiTime",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Precision timing / Markets / Customers / Competition / Manufacturing",
@@ -16950,7 +16996,7 @@
       "strength": "MEMS振動子、アナログ回路、パッケージ、ソフトを一体設計し、振動や温度変化に強く、設定変更できるタイミング製品を作れる。",
       "risks": "大口顧客と製品認定の時期、外部工場・組立会社への依存、長い設計サイクル、水晶部品との競争、輸出規制が成長を左右する。",
       "competition": "精密タイミングではMicrochip、Diodes、Seiko Epsonが競合例。SiTimeの開示は水晶発振器・振動子とクロック半導体の双方を対象とする。2026年7月にRenesasのタイミング事業を取得済みのため、旧年次報告のRenesasをそのまま独立した競合として転記しない。",
-      "relationships": "データセンター・通信・自動車・産業機器メーカーへタイミング製品を供給し、外部の半導体工場と組立会社へ製造を委託する。"
+      "relationships": "データセンター・通信・自動車・産業機器メーカーへタイミング製品を供給し、外部の半導体工場と組立会社へ製造を委託する。 FY2025の自社開示はTSMCとUMCをMEMSタイミングデバイス・アナログ混合信号ICの主要製造先として明記。各社別の製造量や全製品の担当範囲は開示されていないため割り当てない。"
     },
     "en": {
       "business": "Makes MEMS resonators, oscillators and clock ICs that keep electronic systems synchronized, replacing quartz components with semiconductor technology.",
@@ -16958,7 +17004,7 @@
       "strength": "Integrates MEMS resonators, analog circuitry, packaging and software to deliver programmable timing resilient to vibration and temperature change.",
       "risks": "Major-customer and qualification timing, reliance on foundry and assembly partners, long design cycles, quartz competition and export controls affect growth.",
       "competition": "Examples in precision timing include Microchip, Diodes and Seiko Epson, named in SiTime’s filing across clock semiconductors and quartz-based timing alternatives. SiTime completed its acquisition of Renesas’ timing business in July 2026, so the older Renesas entry is not copied as an independent timing rival.",
-      "relationships": "Supplies timing products to data-center, network, automotive and industrial equipment makers and outsources fabrication and assembly."
+      "relationships": "Supplies timing products to data-center, network, automotive and industrial equipment makers and outsources fabrication and assembly. Its FY2025 filing explicitly names TSMC and UMC among principal foundries for MEMS timing devices and analog mixed-signal ICs. It does not allocate undisclosed manufacturing volumes or every product to either foundry."
     },
     "maps": {
       "competition": [
@@ -17027,6 +17073,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2025開示：TSMCがMEMSタイミング・アナログ混合信号ICの主要製造先の一社",
+            "en": "FY2025 filing: TSMC among principal foundries for MEMS timing devices and analog mixed-signal ICs"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "United Microelectronics",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2025開示：UMCがMEMSタイミング・アナログ混合信号ICの主要製造先の一社",
+            "en": "FY2025 filing: UMC among principal foundries for MEMS timing devices and analog mixed-signal ICs"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "UMC"
         }
       ]
     }
@@ -18109,7 +18181,7 @@
       "RMBS"
     ],
     "name": "Rambus",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Memory interface chips and IP / Customers / Competition / Manufacturing / Risk factors",
@@ -18118,6 +18190,10 @@
       {
         "label": "Rambus FY2025 Annual Report · Competition, printed page 7",
         "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526096479/d931669dars.pdf"
+      },
+      {
+        "url": "https://investor.rambus.com/press-releases/press-release-details/2026/Rambus-Sets-New-Benchmark-for-AI-Memory-Performance-with-Industry-Leading-HBM4E-Controller-IP/default.aspx",
+        "label": "RMBS / Samsung — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -18126,7 +18202,7 @@
       "strength": "DDRなどメモリー規格に沿った高速回路、信号品質、セキュリティIPをまとめ、顧客の開発期間を短縮できる。",
       "risks": "メモリー需要と規格移行、少数顧客、外部製造、IP保護と訴訟、顧客の内製、製品認定の長期化に左右される。",
       "competition": "メモリー接続チップではMonolithic Power Systems、Montage Technology、Texas Instruments、半導体設計IPではCadenceとSynopsysが競合例。Rambus自身が製品分野を分けて実名を記載している。メモリー接続チップと設計IPのライセンスは区別する。",
-      "relationships": "メモリー・サーバー向け半導体会社へチップと設計IPを供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。"
+      "relationships": "メモリー・サーバー向け半導体会社へチップと設計IPを供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。 2026年3月のHBM4EコントローラーIP発表にSamsung Electronicsの協力方針を掲載。開発・エコシステム協力として扱い、Samsungからの確定受注量、ライセンス収入、全HBM4E製品の量産完了とはしない。"
     },
     "en": {
       "business": "Makes memory-interface chips and silicon IP that move large amounts of data quickly and securely between processors and memory.",
@@ -18134,7 +18210,7 @@
       "strength": "Combines high-speed DDR-standard circuitry, signal integrity and security IP to shorten customer development cycles.",
       "risks": "Memory demand and standards transitions, a limited customer base, outsourced manufacturing, IP protection and litigation, customer insourcing and long qualifications affect results.",
       "competition": "Rambus names Monolithic Power Systems, Montage Technology and Texas Instruments in memory-interface chips, and Cadence and Synopsys in silicon IP. These are separate product markets; chip sales and licensable interface/security IP should not be treated as the same offering.",
-      "relationships": "Supplies chips and design IP to memory and server semiconductor companies and outsources fabrication, assembly and test."
+      "relationships": "Supplies chips and design IP to memory and server semiconductor companies and outsources fabrication, assembly and test. Its March 2026 HBM4E controller-IP announcement includes Samsung Electronics’ stated intent to collaborate. This is development / ecosystem cooperation, without asserting a purchase volume, license revenue or completed mass production of every HBM4E product."
     },
     "maps": {
       "competition": [
@@ -18229,6 +18305,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Samsung",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：SamsungがHBM4E IP開発でRambusとの協力方針を表明",
+            "en": "March 2026: Samsung states intent to collaborate with Rambus on HBM4E IP"
+          },
+          "sourceIndexes": [
+            2
+          ]
         }
       ]
     }
@@ -18239,7 +18327,7 @@
       "DIOD"
     ],
     "name": "Diodes Incorporated",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Markets / Customers / Manufacturing / Competition / Risk factors",
@@ -18256,6 +18344,10 @@
       {
         "label": "FY2026 Form 10-K · Products / Customers / Manufacturing / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm"
+      },
+      {
+        "url": "https://www.diodes.com/about/contact-us/contact-sales/contacts/north-america/united-states/washington",
+        "label": "DIOD / Arrow Electronics — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -18264,7 +18356,7 @@
       "strength": "ディスクリートからアナログ、ロジックまで品ぞろえが広く、自社工場と組立拠点を使って顧客へ複数部品をまとめて提案できる。",
       "risks": "半導体市況、販売会社の在庫、中国・アジアの生産集中、工場稼働率、価格競争、原材料と輸出規制に左右される。",
       "competition": "アナログ・個別半導体ではonsemi、Vishay、Texas Instruments、タイミングではSiTime、電力ディスクリートではAlpha and Omega Semiconductorが競合例。前3社はDiodes自身の開示、後2社は相手側がDiodesを明記した資料と製品範囲を照合した。",
-      "relationships": "自動車、産業、通信、コンピューター、消費者機器メーカーへ直販または販売会社経由で部品を供給する。"
+      "relationships": "自動車、産業、通信、コンピューター、消費者機器メーカーへ直販または販売会社経由で部品を供給する。 公式の米国Washington向け販売窓口にArrow ElectronicsとAvnetを販売代理店として掲載。流通の関係であり、最終顧客の実名・購入量や全世界での独占販売を推定しない。"
     },
     "en": {
       "business": "Makes a broad range of diodes, transistors, power and signal analog ICs, logic and timing devices used to control current and signals.",
@@ -18272,7 +18364,7 @@
       "strength": "A broad portfolio spanning discrete, analog and logic devices plus internal wafer and assembly capacity supports cross-selling multiple parts to customers.",
       "risks": "Semiconductor cycles, distributor inventory, Asian manufacturing concentration, fab utilization, pricing, raw materials and export controls affect results.",
       "competition": "Examples include onsemi, Vishay and Texas Instruments in analog/discrete semiconductors, SiTime in timing, and Alpha and Omega Semiconductor in power discretes. Diodes names the first three; SiTime and AOS explicitly name Diodes, with overlap checked against Diodes’ products.",
-      "relationships": "Supplies automotive, industrial, communications, computing and consumer equipment makers directly and through distributors."
+      "relationships": "Supplies automotive, industrial, communications, computing and consumer equipment makers directly and through distributors. Its official Washington, US sales directory lists Arrow Electronics and Avnet as distributors. This establishes distribution, without identifying undisclosed end customers, volumes or worldwide exclusivity."
     },
     "maps": {
       "competition": [
@@ -18368,6 +18460,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Arrow Electronics",
+          "role": "partner",
+          "label": {
+            "ja": "公式米国Washington販売窓口：Arrow Electronicsを販売代理店として掲載",
+            "en": "Official Washington, US sales directory: Arrow Electronics listed as distributor"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "ARW"
+        },
+        {
+          "kind": "company",
+          "name": "Avnet",
+          "role": "partner",
+          "label": {
+            "ja": "公式米国Washington販売窓口：Avnetを販売代理店として掲載",
+            "en": "Official Washington, US sales directory: Avnet listed as distributor"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "AVT"
         }
       ]
     }
@@ -18378,7 +18496,7 @@
       "SLAB"
     ],
     "name": "Silicon Laboratories",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Wireless products / Markets / Manufacturing / Competition / Risk factors",
@@ -18403,6 +18521,10 @@
       {
         "label": "Infineon · AIROC Wi-Fi and Bluetooth IoT products",
         "url": "https://www.infineon.com/products/wireless-connectivity/airoc-wi-fi-plus-bluetooth-combos/wi-fi-7"
+      },
+      {
+        "url": "https://www.silabs.com/wireless/amazon-sidewalk",
+        "label": "SLAB / Amazon — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -18411,7 +18533,7 @@
       "strength": "無線、マイコン、セキュリティ、開発ツールを一式で提供し、複数の通信規格やMatterに対応する製品開発を簡単にする。",
       "risks": "IoT需要と流通在庫、外部ファウンドリー・組立会社、通信規格の変化、価格競争、中国市場、製品認定に左右される。TIによる買収は2027年前半の完了予定で、承認や手続きによって遅れる可能性がある。",
       "competition": "Bluetoothなどの低消費電力無線SoCではNordic Semiconductor、Wi-Fi・無線マイコンではTexas InstrumentsとInfineonが競合例。同社の実名開示と公式製品で照合した。TIによる買収は契約済みで、完了予定と完了済みを区別する。",
-      "relationships": "IoT機器メーカーへ半導体とソフトを供給し、外部ファウンドリーと組立・検査会社へ製造を委託する。"
+      "relationships": "IoT機器メーカーへ半導体とソフトを供給し、外部ファウンドリーと組立・検査会社へ製造を委託する。 公式製品ページはAmazon Sidewalk対応のSG23・SG28と開発キットを掲載。Echo・Ring等の対応ブリッジを使う無線ネットワーク向け技術対応であり、Amazon自身による半導体購入量や出資とは区別する。"
     },
     "en": {
       "business": "A fabless chip company making wireless SoCs, MCUs and software for IoT devices using Bluetooth, Wi-Fi, Zigbee, Thread and related protocols.",
@@ -18419,7 +18541,7 @@
       "strength": "Combines radios, MCUs, security and development tools to simplify products supporting multiple protocols and Matter.",
       "risks": "IoT demand and channel inventory, outsourced foundry and assembly partners, changing protocols, pricing, China exposure and customer qualifications affect results. The agreed TI acquisition is expected to close in first-half 2027, subject to approvals and other conditions.",
       "competition": "Nordic Semiconductor is an example in low-power Bluetooth SoCs; Texas Instruments and Infineon overlap in Wi-Fi/wireless MCUs. Silicon Labs names them, and official products support the scope. TI’s acquisition is under agreement, with completion expected in first-half 2027 rather than treated as already closed.",
-      "relationships": "Supplies chips and software to IoT device makers and outsources wafer fabrication, assembly and test."
+      "relationships": "Supplies chips and software to IoT device makers and outsources wafer fabrication, assembly and test. Its product page lists SG23, SG28 and development kits for Amazon Sidewalk, a wireless network using compatible bridges such as Echo and Ring. Product compatibility is distinct from Amazon semiconductor purchase volumes or equity investment."
     },
     "maps": {
       "competition": [
@@ -18492,6 +18614,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "ecosystem",
+          "label": {
+            "ja": "公式製品ページ：Amazon Sidewalk対応SG23・SG28と開発キット",
+            "en": "Official product page: Amazon Sidewalk-compatible SG23 / SG28 and development kits"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -18502,11 +18637,15 @@
       "CEVA"
     ],
     "name": "CEVA",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Silicon IP / Licensing and royalties / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm"
+      },
+      {
+        "url": "https://www.ceva-ip.com/ceva-licensees/",
+        "label": "CEVA / Samsung — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -18515,7 +18654,7 @@
       "strength": "無線通信、DSP、センサー、エッジAIの再利用可能なIPとソフトを持ち、顧客が一から回路を作る時間とリスクを減らす。",
       "risks": "少数の大口ライセンシー、採用から量産までの長い期間、通信規格の変化、顧客内製、IP保護、中国需要に左右される。",
       "competition": "DSP・AI向け設計IPではCadence、Arm、VeriSiliconが競合例。無線ではInfineonなどの社内設計チームも代替となり、CEVA自身が競争要因として記載している。外部販売するIPベンダーとの競争と、顧客が自社開発してライセンスしないリスクは区別する。",
-      "relationships": "半導体会社へ設計IPとソフトを提供し、採用企業がそのIPを組み込んだチップを出荷するとロイヤルティを受け取る。"
+      "relationships": "半導体会社へ設計IPとソフトを提供し、採用企業がそのIPを組み込んだチップを出荷するとロイヤルティを受け取る。 公式ライセンス先一覧にSamsungを掲載し、LTEモデムでのCeva DSP技術採用を説明。掲載事例の製品範囲に限定し、現在の全Samsungモデム、契約額や出荷量には拡張しない。"
     },
     "en": {
       "business": "Licenses silicon IP and software for Bluetooth, Wi-Fi, 5G, voice, vision, sensing and AI processing; it operates without its own fabs.",
@@ -18523,7 +18662,7 @@
       "strength": "Reusable wireless, DSP, sensing and edge-AI IP and software reduce the time and risk for customers building functions from scratch.",
       "risks": "A limited set of large licensees, long design-to-production cycles, changing standards, customer insourcing, IP protection and China demand affect results.",
       "competition": "CEVA identifies Cadence, Arm and VeriSilicon in DSP, AI and processor IP, and Infineon’s internal wireless design teams as a competitive alternative in short-range connectivity. Third-party IP licensing competition is distinct from a chipmaker choosing to develop its own design.",
-      "relationships": "Licenses design IP and software to semiconductor companies and receives royalties when licensees ship chips incorporating that IP."
+      "relationships": "Licenses design IP and software to semiconductor companies and receives royalties when licensees ship chips incorporating that IP. Its official licensee directory names Samsung and describes Ceva DSP adoption in an LTE modem. The example does not establish use in all current Samsung modems, contract values or shipment volumes."
     },
     "maps": {
       "competition": [
@@ -18603,6 +18742,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Samsung",
+          "role": "customer",
+          "label": {
+            "ja": "公式ライセンス先一覧：SamsungのLTEモデムでCeva DSP技術を採用",
+            "en": "Official licensee directory: Samsung adoption of Ceva DSP technology in an LTE modem"
+          },
+          "sourceIndexes": [
+            1
           ]
         }
       ]
@@ -20555,11 +20706,15 @@
       "NVTS"
     ],
     "name": "Navitas Semiconductor",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Strategy / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm"
+      },
+      {
+        "url": "https://ir.navitassemi.com/news-releases/news-release-details/navitas-supports-800-vdc-power-architecture-nvidias-next",
+        "label": "NVTS / NVIDIA — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -20568,7 +20723,7 @@
       "strength": "高速に切り替わるGaN、耐高電圧のSiC、制御・絶縁を組み合わせ、電源を小型化しながら変換損失を減らせる。",
       "risks": "高出力市場への移行、設計採用の獲得、赤字継続、製造委託先、量産品質、製品責任と輸出規制に左右される。",
       "competition": "GaN電力半導体ではInfineonとPower Integrations、SiCではInfineon、onsemi、STMicroelectronics、シリコン電源製品ではこの4社などが競合例。Navitas自身の実名開示に基づく。GaN、SiC、シリコンは耐圧や用途が異なり、すべてを同一製品として比較しない。",
-      "relationships": "データセンター・エネルギー・産業機器メーカーへ電力半導体を供給し、ウエハー製造と組立検査を外部へ委託する。"
+      "relationships": "データセンター・エネルギー・産業機器メーカーへ電力半導体を供給し、ウエハー製造と組立検査を外部へ委託する。 2025年10月、NVIDIAの800VDC電源構成に対応するGaN・SiCデバイスの開発進捗を公表。参照構成への技術対応であり、NVIDIAによる直接購入・出資、全AIデータセンターでの採用完了とは扱わない。"
     },
     "en": {
       "business": "A fabless semiconductor company designing GaN power ICs, SiC power devices and controllers for efficient power conversion.",
@@ -20576,7 +20731,7 @@
       "strength": "Combines fast-switching GaN, high-voltage SiC and control or isolation to shrink power systems while reducing conversion loss.",
       "risks": "The shift to high-power markets, design wins, continued losses, outsourced manufacturing, production quality, liability and export controls affect results.",
       "competition": "Navitas explicitly names Infineon and Power Integrations in GaN competition, Infineon, onsemi and STMicroelectronics in SiC, and all four in silicon-based power products. GaN, SiC and silicon alternatives differ in voltage and application; the examples are scoped rather than interchangeable products.",
-      "relationships": "Supplies power devices to data-center, energy and industrial-equipment makers while outsourcing wafer fabrication and assembly-test."
+      "relationships": "Supplies power devices to data-center, energy and industrial-equipment makers while outsourcing wafer fabrication and assembly-test. In October 2025 it announced development progress on GaN and SiC devices for NVIDIA’s 800 VDC power architecture. Technical support for that architecture does not establish direct NVIDIA purchases, investment or completed deployment across all AI data centers."
     },
     "maps": {
       "competition": [
@@ -20658,6 +20813,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年10月：NVIDIA 800VDC構成向けGaN・SiC電源半導体の開発進捗",
+            "en": "October 2025: GaN / SiC power-device development for NVIDIA 800 VDC architecture"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -20668,11 +20836,15 @@
       "IPGP"
     ],
     "name": "IPG Photonics",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm"
+      },
+      {
+        "url": "https://www.ipgphotonics.com/products/robotic-automation/flexcell",
+        "label": "IPGP / ESAB — official relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -20681,7 +20853,7 @@
       "strength": "ダイオード、光ファイバー、光学部品まで主要部品を垂直統合し、高出力・高効率・長寿命の光源を作れる。",
       "risks": "中国を含む産業設備投資、販売価格の低下、顧客の内製、輸出規制、部材、工場稼働率と技術転換に左右される。",
       "competition": "材料加工向けレーザーではCoherent（COHR）やLumentum（LITE）などと競合する。IPGの年次報告は両社を実名で列挙している。競争は出力、加工品質、価格などで起こり、顧客によるレーザーの内製化もリスクになる。",
-      "relationships": "機械メーカー、システムインテグレーター、製造業へレーザーを供給し、電子部品や原材料を外部調達する。"
+      "relationships": "機械メーカー、システムインテグレーター、製造業へレーザーを供給し、電子部品や原材料を外部調達する。 公式FlexCellのアーク溶接構成ではESABの電源・トーチ等を標準選択肢として掲載。製品構成上の対応であり、全装置にESAB製品が必須とはせず、地域による提供差や個別仕様を保持する。"
     },
     "en": {
       "business": "Makes high-power fiber lasers, amplifiers and laser systems used for cutting, welding and other material processing.",
@@ -20689,7 +20861,7 @@
       "strength": "Vertically integrates key diodes, fibers and optics to build high-power, efficient and long-life laser sources.",
       "risks": "Industrial investment including China, price erosion, customer insourcing, export controls, materials, utilization and technology shifts affect results.",
       "competition": "Coherent (COHR) and Lumentum (LITE) are among the companies explicitly listed as competitors in materials-processing lasers in IPG’s annual report. Competition involves output power, processing quality and price. Customers developing their own lasers can also reduce the available market.",
-      "relationships": "Supplies lasers to machine builders, system integrators and manufacturers and sources electronics and raw materials externally."
+      "relationships": "Supplies lasers to machine builders, system integrators and manufacturers and sources electronics and raw materials externally. Official FlexCell arc-welding specifications list ESAB power sources, torches and other standard options. This is configuration compatibility, without requiring ESAB equipment in every system; availability varies by region and configuration."
     },
     "maps": {
       "competition": [
@@ -20746,6 +20918,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "ESAB",
+          "role": "ecosystem",
+          "label": {
+            "ja": "公式FlexCell仕様：ESABのアーク溶接電源・トーチ等を選択肢に掲載",
+            "en": "Official FlexCell specifications: ESAB arc-welding power sources, torches and other options"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "ESAB"
         }
       ]
     }

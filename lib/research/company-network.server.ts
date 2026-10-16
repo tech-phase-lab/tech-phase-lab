@@ -72,6 +72,13 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "IPGP") return {"0": {"ja": "産業用レーザー・溶接構成", "en": "Industrial lasers & welding options"}};
+  if (root === "NVTS") return {"3": {"ja": "GaN・SiC電源半導体", "en": "GaN & SiC power chips"}, "5": {"ja": "800VDC向け技術対応", "en": "800 VDC architecture compatibility"}};
+  if (root === "CEVA") return {"3": {"ja": "半導体IP・採用先のチップ", "en": "Semiconductor IP & licensee chips"}};
+  if (root === "SLAB") return {"3": {"ja": "無線・IoT半導体", "en": "Wireless & IoT chips"}, "7": {"ja": "Sidewalkネットワーク技術対応", "en": "Sidewalk network compatibility"}};
+  if (root === "DIOD") return {"3": {"ja": "アナログ・電源・ディスクリート半導体", "en": "Analog, power & discrete chips"}, "7": {"ja": "半導体の販売代理店", "en": "Semiconductor distributors"}};
+  if (root === "RMBS") return {"3": {"ja": "半導体IP・メモリー技術協力", "en": "Semiconductor IP & memory collaboration"}};
+  if (root === "SITM") return {"1": {"ja": "ウエハー製造の供給元", "en": "Wafer foundry suppliers"}, "3": {"ja": "タイミング半導体", "en": "Timing semiconductors"}};
   if (root === "PAYC") return {"7": {"ja": "給与・人事・給与カード網", "en": "Payroll, HR & payroll-card network"}};
   if (root === "WMT") return {"6": {"ja": "AIを使うコマース連携", "en": "AI-commerce integrations"}, "7": {"ja": "小売・通販", "en": "Retail & commerce"}};
   if (root === "QLYS") return {"6": {"ja": "クラウド接続・認証対応", "en": "Cloud connectors & authentication"}, "7": {"ja": "脆弱性・サイバーリスク管理", "en": "Vulnerability & cyber-risk management"}};
@@ -177,8 +184,8 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "PINS") return { 6: { ja: "クラウド・ログイン・広告提携", en: "Cloud, login & ad partnerships" }, 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
   if (root === "SNAP") return { 6: { ja: "クラウド・OS・配信基盤", en: "Cloud, OS & distribution" }, 7: { ja: "動画・交流・広告", en: "Video, communication & ads" } };
   if (root === "ENTG") return {"0": {"ja": "半導体材料・汚染管理", "en": "Semiconductor materials & purity"}, "1": {"ja": "材料・汚染管理製品の顧客", "en": "Materials / purity customer"}};
-  if (root === "MTSI") return { 3: { ja: "RF・光接続・アナログ半導体", en: "RF, optical connectivity & analog" } };
-  if (root === "POWI") return { 3: { ja: "電源制御・モーター駆動半導体", en: "Power control & motor-drive chips" } };
+  if (root === "MTSI") return {"3": {"ja": "通信半導体・銅接続規格の協力", "en": "Connectivity chips & copper standards"}};
+  if (root === "POWI") return {"1": {"ja": "ウエハー製造の供給元", "en": "Wafer foundry supplier"}, "3": {"ja": "電源制御半導体", "en": "Power-control semiconductors"}, "5": {"ja": "800VDC向け参照構成", "en": "800 VDC reference architecture"}};
   if (root === "ZM") return { 7: { ja: "会議・共同作業・顧客対応", en: "Meetings, collaboration & contact centers" } };
   if (root === "DOCN") return { 6: { ja: "クラウド・AI・データ基盤", en: "Cloud, AI & data infrastructure" } };
   if (root === "ESTC") return { 6: { ja: "検索・監視・防御・クラウド", en: "Search, observability, security & cloud" } };
@@ -3181,36 +3188,43 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "MTSI": {
       "layer": 3,
       "businessLabel": {
-        "ja": "RF・光接続・アナログ半導体",
-        "en": "RF, optical connectivity & analog"
+        "ja": "MACOM Technology Solutions | RF・光接続・アナログ半導体",
+        "en": "MACOM Technology Solutions | RF, optical connectivity & analog"
       }
     },
     "ADI": {
       "layer": 3,
       "businessLabel": {
-        "ja": "RF・高性能アナログ",
-        "en": "RF/high-performance analog"
+        "ja": "Analog Devices | RF・高性能アナログ",
+        "en": "Analog Devices | RF/high-performance analog"
       }
     },
     "AVGO": {
       "layer": 3,
       "businessLabel": {
-        "ja": "通信・光接続半導体",
-        "en": "Communication/optical connectivity chips"
+        "ja": "Broadcom | 通信・光接続半導体",
+        "en": "Broadcom | Communication/optical connectivity chips"
       }
     },
     "MRVL": {
       "layer": 3,
       "businessLabel": {
-        "ja": "高速通信半導体",
-        "en": "High-speed communication chips"
+        "ja": "Marvell | 高速通信半導体",
+        "en": "Marvell | High-speed communication chips"
       }
     },
     "SWKS": {
       "layer": 3,
       "businessLabel": {
-        "ja": "RF・旧Qorvo事業を含む",
-        "en": "RF, including former Qorvo"
+        "ja": "Skyworks Solutions | RF・旧Qorvo事業を含む",
+        "en": "Skyworks Solutions | RF, including former Qorvo"
+      }
+    },
+    "SMTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Semtech｜ACC-MSA共同議長",
+        "en": "Semtech | ACC-MSA co-chair"
       }
     }
   },
@@ -3218,43 +3232,57 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "POWI": {
       "layer": 3,
       "businessLabel": {
-        "ja": "電源制御・モーター駆動半導体",
-        "en": "Power control & motor-drive chips"
+        "ja": "Power Integrations | 電源制御・モーター駆動半導体",
+        "en": "Power Integrations | Power control & motor-drive chips"
       }
     },
     "TXN": {
       "layer": 3,
       "businessLabel": {
-        "ja": "PWM制御IC",
-        "en": "PWM controllers"
+        "ja": "Texas Instruments | PWM制御IC",
+        "en": "Texas Instruments | PWM controllers"
       }
     },
     "NXPI": {
       "layer": 3,
       "businessLabel": {
-        "ja": "PWM制御IC",
-        "en": "PWM controllers"
+        "ja": "NXP Semiconductors | PWM制御IC",
+        "en": "NXP Semiconductors | PWM controllers"
       }
     },
     "ON": {
       "layer": 3,
       "businessLabel": {
-        "ja": "モーター駆動用モジュール",
-        "en": "Motor-drive power modules"
+        "ja": "onsemi | モーター駆動用モジュール",
+        "en": "onsemi | Motor-drive power modules"
       }
     },
     "Infineon": {
       "layer": 3,
       "businessLabel": {
-        "ja": "高電圧電源IC・駆動製品",
-        "en": "High-voltage power ICs/drivers"
+        "ja": "Infineon | 高電圧電源IC・駆動製品",
+        "en": "Infineon | High-voltage power ICs/drivers"
       }
     },
     "STM": {
       "layer": 3,
       "businessLabel": {
-        "ja": "高電圧電源IC・モーター駆動",
-        "en": "High-voltage power ICs/motor drives"
+        "ja": "STMicroelectronics | 高電圧電源IC・モーター駆動",
+        "en": "STMicroelectronics | High-voltage power ICs/motor drives"
+      }
+    },
+    "NVDA": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "NVIDIA｜800VDC参照構成",
+        "en": "NVIDIA | 800 VDC architecture"
+      }
+    },
+    "Seiko Epson": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Seiko Epson｜ウエハー製造",
+        "en": "Seiko Epson | wafer foundry"
       }
     }
   },
@@ -6685,6 +6713,314 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "OpenAI | ChatGPT commerce"
       }
     }
+  },
+  "SITM": {
+    "MCHP": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Microchip Technology",
+        "en": "Microchip Technology"
+      }
+    },
+    "SITM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "SiTime",
+        "en": "SiTime"
+      }
+    },
+    "DIOD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Diodes Incorporated",
+        "en": "Diodes Incorporated"
+      }
+    },
+    "Seiko Epson": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Seiko Epson",
+        "en": "Seiko Epson"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC｜主要製造先",
+        "en": "TSMC | principal foundry"
+      }
+    },
+    "UMC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "UMC｜主要製造先",
+        "en": "UMC | principal foundry"
+      }
+    }
+  },
+  "RMBS": {
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Texas Instruments",
+        "en": "Texas Instruments"
+      }
+    },
+    "MPWR": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Monolithic Power Systems",
+        "en": "Monolithic Power Systems"
+      }
+    },
+    "CDNS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Cadence Design Systems",
+        "en": "Cadence Design Systems"
+      }
+    },
+    "SNPS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Synopsys",
+        "en": "Synopsys"
+      }
+    },
+    "RMBS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Rambus",
+        "en": "Rambus"
+      }
+    },
+    "Montage Technology": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Montage Technology",
+        "en": "Montage Technology"
+      }
+    },
+    "Samsung": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Samsung｜HBM4E開発協力方針",
+        "en": "Samsung | HBM4E collaboration intent"
+      }
+    }
+  },
+  "DIOD": {
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Texas Instruments",
+        "en": "Texas Instruments"
+      }
+    },
+    "ON": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "onsemi",
+        "en": "onsemi"
+      }
+    },
+    "SITM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "SiTime",
+        "en": "SiTime"
+      }
+    },
+    "DIOD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Diodes Incorporated",
+        "en": "Diodes Incorporated"
+      }
+    },
+    "AOSL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Alpha and Omega Semiconductor",
+        "en": "Alpha and Omega Semiconductor"
+      }
+    },
+    "VSH": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Vishay Intertechnology",
+        "en": "Vishay Intertechnology"
+      }
+    },
+    "ARW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Arrow Electronics｜販売代理店",
+        "en": "Arrow Electronics | distributor"
+      }
+    },
+    "AVT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Avnet｜販売代理店",
+        "en": "Avnet | distributor"
+      }
+    }
+  },
+  "SLAB": {
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Texas Instruments",
+        "en": "Texas Instruments"
+      }
+    },
+    "SLAB": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Silicon Laboratories",
+        "en": "Silicon Laboratories"
+      }
+    },
+    "Nordic Semiconductor": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Nordic Semiconductor",
+        "en": "Nordic Semiconductor"
+      }
+    },
+    "Infineon Technologies": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Infineon Technologies",
+        "en": "Infineon Technologies"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Amazon｜Sidewalk技術対応",
+        "en": "Amazon | Sidewalk compatibility"
+      }
+    }
+  },
+  "CEVA": {
+    "ARM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Arm",
+        "en": "Arm"
+      }
+    },
+    "CDNS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Cadence Design Systems",
+        "en": "Cadence Design Systems"
+      }
+    },
+    "CEVA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "CEVA",
+        "en": "CEVA"
+      }
+    },
+    "Infineon": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Infineon",
+        "en": "Infineon"
+      }
+    },
+    "VeriSilicon": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "VeriSilicon",
+        "en": "VeriSilicon"
+      }
+    },
+    "Samsung": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Samsung｜LTE向けDSP採用",
+        "en": "Samsung | LTE DSP licensee"
+      }
+    }
+  },
+  "NVTS": {
+    "ON": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "onsemi",
+        "en": "onsemi"
+      }
+    },
+    "POWI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Power Integrations",
+        "en": "Power Integrations"
+      }
+    },
+    "STM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "STMicroelectronics",
+        "en": "STMicroelectronics"
+      }
+    },
+    "NVTS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Navitas Semiconductor",
+        "en": "Navitas Semiconductor"
+      }
+    },
+    "Infineon Technologies": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Infineon Technologies",
+        "en": "Infineon Technologies"
+      }
+    },
+    "NVDA": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "NVIDIA｜800VDC技術対応",
+        "en": "NVIDIA | 800 VDC compatibility"
+      }
+    }
+  },
+  "IPGP": {
+    "LITE": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Lumentum",
+        "en": "Lumentum"
+      }
+    },
+    "COHR": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Coherent",
+        "en": "Coherent"
+      }
+    },
+    "IPGP": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "IPG Photonics",
+        "en": "IPG Photonics"
+      }
+    },
+    "ESAB": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "ESAB｜FlexCell溶接構成",
+        "en": "ESAB | FlexCell welding options"
+      }
+    }
   }
 };
 
@@ -6748,7 +7084,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC", "MTSI", "POWI", "SITM", "RMBS", "DIOD", "SLAB", "CEVA", "NVTS", "IPGP"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
