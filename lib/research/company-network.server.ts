@@ -72,6 +72,31 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "SIMO") return {
+    3: { ja: "SSD・NAND制御半導体", en: "SSD & NAND controller chips" },
+  };
+  if (root === "AAOI") return {
+    4: { ja: "光通信部品・トランシーバー", en: "Optical components & transceivers" },
+  };
+  if (root === "GEV") return {
+    5: { ja: "発電・送配電設備", en: "Generation & grid equipment" },
+  };
+  if (root === "IREN") return {
+    6: { ja: "GPU計算・AIクラウド", en: "GPU compute & AI cloud" },
+  };
+  if (root === "LRCX") return {
+    0: { ja: "成膜・エッチング・洗浄装置", en: "Deposition, etch & cleaning tools" },
+  };
+  if (root === "KLAC") return {
+    0: { ja: "検査・計測・工程管理", en: "Inspection, metrology & process control" },
+  };
+  if (root === "SMCI") return {
+    5: { ja: "サーバー・ラック・システム設計", en: "Servers, racks & system design" },
+  };
+  if (root === "CSCO") return {
+    5: { ja: "ネットワーク機器", en: "Networking equipment" },
+    7: { ja: "セキュリティ・Web会議", en: "Security & web meetings" },
+  };
   if (root === "APH") return {
     4: { ja: "コネクター・光配線", en: "Connectors & optical cabling" },
   };
@@ -105,7 +130,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     3: { ja: "CPU・AIアクセラレーター", en: "CPUs & AI accelerators" },
   };
   if (root === "AMAT") return {
-    2: { ja: "半導体製造装置・検査", en: "Semiconductor process tools & inspection" },
+    0: { ja: "半導体製造装置・検査", en: "Semiconductor process tools & inspection" },
   };
   if (root === "AMD") return {
     3: { ja: "CPU・GPU・プログラマブル半導体", en: "CPUs, GPUs & programmable chips" },
@@ -117,7 +142,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     3: { ja: "スマホ・PCの演算・通信半導体", en: "Phone/PC compute & connectivity chips" },
   };
   if (root === "CDNS") return {
-    1: { ja: "半導体設計・物理解析", en: "Electronic design & physics analysis" },
+    0: { ja: "半導体設計・物理解析", en: "Electronic design & physics analysis" },
   };
   if (root === "RBLX") return {
     6: { ja: "ゲーム・クラウド基盤", en: "Gaming & cloud platforms" },
@@ -1011,28 +1036,28 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
   },
   "AMAT": {
     "LRCX": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "成膜・エッチング",
         "en": "Deposition & etch"
       }
     },
     "Tokyo Electron": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "成膜・エッチング",
         "en": "Deposition & etch"
       }
     },
     "ASM International": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "原子層堆積（ALD）",
         "en": "Atomic layer deposition"
       }
     },
     "KLAC": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "検査・計測",
         "en": "Inspection & metrology"
@@ -1145,21 +1170,21 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
   },
   "CDNS": {
     "SNPS": {
-      "layer": 1,
+      "layer": 0,
       "businessLabel": {
         "ja": "EDA・IP・Ansys解析",
         "en": "EDA, IP & Ansys simulation"
       }
     },
     "Siemens EDA": {
-      "layer": 1,
+      "layer": 0,
       "businessLabel": {
         "ja": "電子設計・検証EDA",
         "en": "Electronic design & verification"
       }
     },
     "KEYS": {
-      "layer": 1,
+      "layer": 0,
       "businessLabel": {
         "ja": "電子設計・物理解析",
         "en": "Electronic design & analysis"
@@ -1697,6 +1722,281 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "半導体受託製造",
         "en": "Foundry manufacturing"
+      }
+    }
+  },
+  "SIMO": {
+    "Phison": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NAND・SSDコントローラー",
+        "en": "NAND & SSD controllers"
+      }
+    },
+    "MCHP": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Flashtec SSDコントローラー",
+        "en": "Flashtec SSD controllers"
+      }
+    }
+  },
+  "AAOI": {
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "データセンター光モジュール",
+        "en": "Datacom optical modules"
+      }
+    },
+    "LITE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "データセンター光トランシーバー",
+        "en": "Datacom optical transceivers"
+      }
+    },
+    "InnoLight": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光トランシーバー",
+        "en": "Optical transceivers"
+      }
+    }
+  },
+  "GEV": {
+    "Siemens Energy": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電・送配電設備",
+        "en": "Generation & grid equipment"
+      }
+    },
+    "Mitsubishi Power": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電設備",
+        "en": "Power generation equipment"
+      }
+    },
+    "Vestas": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "風力発電機",
+        "en": "Wind turbines"
+      }
+    },
+    "Schneider Electric": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "電力網制御・自動化",
+        "en": "Grid control & automation"
+      }
+    },
+    "Hitachi": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "原子炉・燃料・保守の合弁",
+        "en": "Nuclear technology joint ventures"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS電力協力・クラウド利用",
+        "en": "AWS power initiatives & cloud"
+      }
+    }
+  },
+  "IREN": {
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AI向けGPUクラウド",
+        "en": "AI GPU cloud"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AI向けGPUクラウド",
+        "en": "AI GPU cloud"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS GPU計算",
+        "en": "AWS GPU compute"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud GPU計算",
+        "en": "Google Cloud GPU compute"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure・専用GPU容量契約",
+        "en": "Azure & dedicated GPU capacity"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OCI GPU計算",
+        "en": "OCI GPU compute"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "GPUサーバー調達",
+        "en": "GPU server systems"
+      }
+    }
+  },
+  "LRCX": {
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "成膜・エッチング",
+        "en": "Deposition & etch"
+      }
+    },
+    "ASM International": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "ALD・PECVD成膜",
+        "en": "ALD & PECVD deposition"
+      }
+    },
+    "Tokyo Electron": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "エッチング・湿式洗浄",
+        "en": "Etch & wet clean"
+      }
+    }
+  },
+  "KLAC": {
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "検査・計測",
+        "en": "Inspection & metrology"
+      }
+    },
+    "ASML": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "計測・電子線検査",
+        "en": "Metrology & e-beam inspection"
+      }
+    },
+    "Hitachi High-Tech": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "検査・計測",
+        "en": "Inspection & metrology"
+      }
+    },
+    "Lasertec": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "検査装置",
+        "en": "Inspection systems"
+      }
+    },
+    "ONTO": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "検査・計測",
+        "en": "Inspection & metrology"
+      }
+    }
+  },
+  "SMCI": {
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "サーバー・ラック",
+        "en": "Servers & racks"
+      }
+    },
+    "HPE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けサーバー",
+        "en": "Enterprise servers"
+      }
+    },
+    "CSCO": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "データセンターシステム",
+        "en": "Data center systems"
+      }
+    },
+    "Lenovo": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "サーバーシステム",
+        "en": "Server systems"
+      }
+    },
+    "Foxconn": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "サーバーの設計・製造",
+        "en": "Server design & manufacturing"
+      }
+    },
+    "Quanta Computer": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "サーバーの設計・製造",
+        "en": "Server design & manufacturing"
+      }
+    }
+  },
+  "CSCO": {
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "ネットワーク機器",
+        "en": "Networking equipment"
+      }
+    },
+    "HPE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けネットワーク",
+        "en": "Enterprise networking"
+      }
+    },
+    "PANW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ファイアウォール・防御",
+        "en": "Firewalls & network defense"
+      }
+    },
+    "CRWD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "端末保護・EDR",
+        "en": "Endpoint protection & EDR"
+      }
+    },
+    "ZM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Web会議",
+        "en": "Web meetings"
       }
     }
   }

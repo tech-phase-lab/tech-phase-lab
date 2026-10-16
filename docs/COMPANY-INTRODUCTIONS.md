@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 158 issuers with published competitor corrections and 0 remaining
+records 166 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -697,3 +697,9 @@ Altera remains independent from Intel; Microsemi FPGA products are identified un
 Triaged APH / ANET / MRVL / VRT / ALAB / NBIS / ASML / CRDO / MU / INTC (10 existing records, no new issuers). Existing named competitors remain; adequate lists are refined rather than expanded to a numerical target. Official own-vendor disclosure, peer disclosure and editorial product matching are distinguished. Amphenol's TE/Molex/Corning examples and Credo's Amphenol AEC comparison are editorial official-product comparisons. This does not establish any procurement relationship.
 
 Switches, retimers, active electrical cables, network packet brokers, power/cooling, GPU cloud, DUV exposure, metrology, DRAM/HBM, NAND/SSD, PC processors and foundry manufacturing receive separate product scopes and selected-root captions. Nikon/Canon DUV is not represented as EUV equivalence. Kioxia/Sandisk NAND is not HBM. HPE includes acquired Juniper. Azure competition coexists with Nebius capacity contracts; TSMC competition coexists with Intel outsourcing. Additional product fields and counterpart-only leads remain open. NVDA's reviewed payload and 205 unrelated card/relationship sets remain protected. Reviewed 2026-10-16.
+
+## 2026-10-16 · controller, optics, power, equipment and system coverage review
+
+Reviewed SIMO / AAOI / GEV / IREN / LRCX / KLAC / SMCI / CSCO (8 existing records) plus AMAT / CDNS selected-map layout follow-ups. Earlier named competitors are retained. Supermicro's earlier prose names Foxconn and Quanta now also appear on its map. No new issuers or non-competition relationships were added. Controller chips are distinguished from NAND itself; datacom transceivers from CATV equipment; generation, wind and grid automation from one another; GPU cloud from mining; and network equipment from endpoint defense and web meetings. Named-company disclosures and editorial product matching are distinguished.
+
+AMAT and CDNS competitors now share the selected company's existing process/design layer. LRCX/KLAC likewise use their existing equipment layer. ASML-related KLA competition concerns metrology/inspection, not equivalent EUV exposure tools. Only selected-map contexts change; global categories and the frozen NVDA graph remain unchanged. Eight new coverage records bring the correction log to 166, with 49 outside the log still requiring triage rather than automatic repair. Additional products and counterpart leads remain open. Reviewed 2026-10-16.
