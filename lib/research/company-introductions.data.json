@@ -5,7 +5,7 @@
       "LITE"
     ],
     "name": "Lumentum",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors / NVIDIA investment",
@@ -22,6 +22,30 @@
       {
         "label": "Applied Optoelectronics FY2025 Form 10-K · Products / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774926005875/aaoi20251231_10k.htm"
+      },
+      {
+        "label": "Lumentum · 200G PAM4 CWDM EML laser",
+        "url": "https://www.lumentum.com/en/products/eml-200g-pam4-cwdm-laser"
+      },
+      {
+        "label": "Broadcom · 283VCS/283VCL 200G/lane EML product brief",
+        "url": "https://docs.broadcom.com/doc/283VCS-283VCL-PB"
+      },
+      {
+        "label": "Lumentum · Ciena WaveLogic coherent development, March 20, 2017",
+        "url": "https://investor.lumentum.com/financial-news-releases/news-details/2017/Lumentum-to-Leverage-Cienas-WaveLogic-Coherent-Optical-Technology/default.aspx"
+      },
+      {
+        "label": "Corning · OFC 2026 CPO collaboration and Lumentum booth demo",
+        "url": "https://www.corning.com/optical-communications/worldwide/en/home/the-signal-network-blog/corning-at-ofc-2026.html"
+      },
+      {
+        "label": "MACOM · InnovationZone interoperability demonstrations, March 1, 2019",
+        "url": "https://www.macom.com/updates/news/2019/macoms-innovationzone-to-feature"
+      },
+      {
+        "label": "POET · Lumentum DML adoption announcement, November 14, 2022",
+        "url": "https://www.poet-technologies.com/news/2022-nov-14"
       }
     ],
     "ja": {
@@ -29,16 +53,16 @@
       "revenue": "通信向けレーザーや光信号を送受信するモジュール、工場で使うレーザーなどの販売。",
       "strength": "光を生み出す半導体から通信モジュールまで手がけ、顧客が求める速度や省電力性能に合わせて設計できる。",
       "risks": "大口顧客の発注変更、価格競争、新製品の量産や供給能力拡大の遅れ。需要予測が外れると在庫も負担になる。",
-      "competition": "光通信部品・トランシーバーではCoherent（COHR）やApplied Optoelectronics（AAOI）と競合する。AAOIの年次報告はLumentumを実名で挙げている。産業用レーザーではCoherent、材料加工向けレーザーではIPG Photonics（IPGP）が比較対象で、IPGもLumentumを競合として明記。競合する範囲は製品ごとに異なる。",
-      "relationships": "クラウド事業者や通信機器メーカーへ供給。NVIDIAからは2026年3月に出資を受けた。"
+      "competition": "光通信部品・トランシーバーではCoherent（COHR）やApplied Optoelectronics（AAOI）と競合する。AAOIの年次報告はLumentumを実名で挙げている。産業用レーザーではCoherent、材料加工向けレーザーではIPG Photonics（IPGP）が比較対象で、IPGもLumentumを競合として明記。競合する範囲は製品ごとに異なる。 Broadcom（AVGO）の200G/lane EML光源も、両社の公式製品を照合した競合例。スイッチ半導体や業務ソフトなどBroadcomの全事業との比較ではない。",
+      "relationships": "NVIDIAから出資を受け、クラウド事業者や通信機器メーカーへ光製品を供給する。CIENとは2017年にWaveLogic Aiを使う400Gモジュール開発、GLWとは2026年OFCのCPO研究・展示、MTSIとは2019年OFCの相互接続デモ参加が公表されている。POETは2022年11月にLumentum製DMLの採用を発表。発表年と製品範囲を区別し、過去の発表から現在の量産契約や売上を推定しない。"
     },
     "en": {
       "business": "Makes optical components and systems for data transmission, including AI data centers, alongside industrial lasers.",
       "revenue": "Sales of communications lasers, optical transceivers and lasers used in manufacturing.",
       "strength": "Spans laser chips through optical modules, tailoring designs to customers' bandwidth and power needs.",
       "risks": "Major-customer order changes, pricing pressure, production-ramp delays and excess inventory if demand falls short.",
-      "competition": "Coherent (COHR) and Applied Optoelectronics (AAOI) compete in optical components and transceivers; AAOI explicitly names Lumentum in its annual report. Coherent also overlaps in industrial lasers. IPG Photonics (IPGP) explicitly names Lumentum in materials-processing lasers. Competitive overlap varies by product.",
-      "relationships": "Supplies cloud providers and network-equipment makers; received an investment from NVIDIA in March 2026."
+      "competition": "Coherent (COHR) and Applied Optoelectronics (AAOI) compete in optical components and transceivers; AAOI explicitly names Lumentum in its annual report. Coherent also overlaps in industrial lasers. IPG Photonics (IPGP) explicitly names Lumentum in materials-processing lasers. Competitive overlap varies by product. Broadcom (AVGO) is another editorial product comparison in 200G/lane EML light sources, not across all of Broadcom’s switching-chip and software businesses.",
+      "relationships": "Receives NVIDIA investment and supplies optics to cloud and network-equipment customers. Disclosures cover 400G WaveLogic Ai module development with CIEN in 2017, CPO research/demonstration with GLW at OFC 2026, and participation in MTSI’s OFC 2019 interoperability demo. POET announced Lumentum DML adoption in November 2022. Dates and scope matter; these announcements do not establish current production contracts or revenue."
     },
     "maps": {
       "competition": [
@@ -83,6 +107,20 @@
           "sourceIndexes": [
             2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "role": "competitor",
+          "label": {
+            "ja": "200G/lane EML光源。両社公式製品の編集比較",
+            "en": "200G/lane EML light sources; editorial comparison of official products"
+          },
+          "sourceIndexes": [
+            4,
+            5
+          ]
         }
       ],
       "relationships": [
@@ -123,6 +161,58 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Ciena",
+          "ticker": "CIEN",
+          "role": "partner",
+          "label": {
+            "ja": "2017年WaveLogic Ai DSP採用の400Gモジュール開発発表",
+            "en": "2017 announcement: 400G module development using WaveLogic Ai DSP"
+          },
+          "sourceIndexes": [
+            6
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Corning",
+          "ticker": "GLW",
+          "role": "partner",
+          "label": {
+            "ja": "2026年OFCのCPO研究・展示。Corning自身の説明",
+            "en": "OFC 2026 CPO research/demonstration; disclosed by Corning"
+          },
+          "sourceIndexes": [
+            7
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MACOM",
+          "ticker": "MTSI",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2019年OFC相互接続デモの参加企業。MACOM発表",
+            "en": "2019 OFC interoperability demo participant; MACOM announcement"
+          },
+          "sourceIndexes": [
+            8
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "POET Technologies",
+          "ticker": "POET",
+          "role": "customer",
+          "label": {
+            "ja": "2022年11月のDMLレーザー採用発表。現在の契約量は示さない",
+            "en": "November 2022 DML adoption announcement; no current contract-volume claim"
+          },
+          "sourceIndexes": [
+            9
           ]
         }
       ]
@@ -19270,6 +19360,14 @@
       {
         "label": "Redwire FY2025 Form 10-K · space components, UAS and named competitors",
         "url": "https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm"
+      },
+      {
+        "label": "Intuitive Machines FY2025 Form 10-K · Lanteris national security competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm"
+      },
+      {
+        "label": "Intuitive Machines · Lanteris acquisition completed, January 13, 2026",
+        "url": "https://www.intuitivemachines.com/discover/news/intuitive-machines-completes-acquisition-of-lanteris-space-systems"
       }
     ],
     "ja": {
@@ -19277,16 +19375,16 @@
       "revenue": "打ち上げサービスと、衛星本体、太陽電池、姿勢制御・通信部品、宇宙機の製造・運用で稼ぐ。",
       "strength": "ロケット、発射場、衛星、主要部品、軌道上運用を一社でつなぎ、任務全体をまとめて提供できる。",
       "risks": "打ち上げ失敗や延期、Neutron開発費、政府案件への依存、工場増産、部品・規制に左右される。",
-      "competition": "打ち上げではSpaceXのFalcon 9とFireflyのAlpha、宇宙機ではNorthrop Grumman、宇宙機部品ではRedwireが競合例。Rocket Lab自身が分野別に実名を開示している。機体規模や相乗り・専用打ち上げの条件、部品の用途を区別して見る。",
-      "relationships": "政府・商業衛星事業者へ打ち上げと宇宙システムを提供し、航空宇宙材料や電子・推進部品を調達する。"
+      "competition": "打ち上げではSpaceXのFalcon 9とFireflyのAlpha、宇宙機ではNorthrop Grumman、宇宙機部品ではRedwireが競合例。Rocket Lab自身が分野別に実名を開示している。機体規模や相乗り・専用打ち上げの条件、部品の用途を区別して見る。 LUNR傘下Lanterisの年次報告は、国防・国家安全保障向け宇宙機製造の競合にRocket Labを明記する。LUNRの月面着陸サービスすべてと同じ事業という意味ではない。",
+      "relationships": "政府・商業宇宙事業者へ打ち上げ、衛星、部品を提供する。Planet（PL）は2025年年次報告に打ち上げ顧客として実名開示される。これは公表済みの打ち上げ実績で、将来の全衛星を受注したという意味ではない。材料・電子・推進部品は航空宇宙関連の供給会社から調達する。"
     },
     "en": {
       "business": "Provides Electron small-rocket launches and spacecraft, components and operations software; the larger Neutron remains in development.",
       "revenue": "Launch services and sales of spacecraft, solar power, attitude-control and communications components, manufacturing and operations.",
       "strength": "Connects rockets, launch sites, spacecraft, key components and on-orbit operations into an end-to-end mission offering.",
       "risks": "Launch failures or delays, Neutron development cost, government exposure, production ramps, components and regulation create risk.",
-      "competition": "Rocket Lab names SpaceX and Firefly in launch, Northrop Grumman in spacecraft and Redwire in components. Falcon 9 rideshare/dedicated launches and Alpha serve different payload needs; spacecraft and component competition is a separate scope.",
-      "relationships": "Provides launch and space systems to government and commercial satellite operators and sources aerospace materials, electronics and propulsion parts."
+      "competition": "Rocket Lab names SpaceX and Firefly in launch, Northrop Grumman in spacecraft and Redwire in components. Falcon 9 rideshare/dedicated launches and Alpha serve different payload needs; spacecraft and component competition is a separate scope. LUNR identifies Rocket Lab as a competitor to its Lanteris business in defense/national-security spacecraft manufacturing, not as an equivalent across all lunar-landing services.",
+      "relationships": "Provides launches, spacecraft and components to government and commercial users. Its FY2025 annual filing names Planet (PL) as a launch customer. This records disclosed past launches, not an award for all future Planet satellites. Aerospace suppliers provide materials, electronics and propulsion components."
     },
     "maps": {
       "competition": [
@@ -19344,6 +19442,20 @@
             4
           ],
           "ticker": "RDW"
+        },
+        {
+          "kind": "company",
+          "name": "Intuitive Machines",
+          "ticker": "LUNR",
+          "role": "competitor",
+          "label": {
+            "ja": "Lanterisの国防向け宇宙機製造。LUNR自身がRKLBを競合と明記",
+            "en": "Lanteris defense spacecraft manufacturing; LUNR explicitly names RKLB"
+          },
+          "sourceIndexes": [
+            5,
+            6
+          ]
         }
       ],
       "relationships": [
@@ -19368,6 +19480,19 @@
           "label": {
             "ja": "材料・電子・推進部品を調達",
             "en": "Materials, electronics and propulsion parts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Planet Labs",
+          "ticker": "PL",
+          "role": "customer",
+          "label": {
+            "ja": "Planetの衛星打ち上げ実績。RKLBの2025年年次報告",
+            "en": "Past Planet satellite launches; RKLB FY2025 annual filing"
           },
           "sourceIndexes": [
             0

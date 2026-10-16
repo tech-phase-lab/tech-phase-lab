@@ -72,6 +72,11 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "LITE") return {
+    3: { ja: "光通信用アナログ半導体", en: "Optical communications analog chips" },
+    4: { ja: "光源・モジュール・ファイバー", en: "Light sources, modules & fiber" },
+    5: { ja: "光通信装置・システム", en: "Optical networking systems" },
+  };
   if (root === "CRWV") return {
     6: { ja: "GPU計算・AIクラウド", en: "GPU compute & AI cloud" },
   };
@@ -2461,6 +2466,122 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "広告による利用者獲得",
         "en": "Advertising user acquisition"
+      }
+    }
+  },
+  "LITE": {
+    "LITE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光半導体・モジュール",
+        "en": "Optical chips & modules"
+      }
+    },
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光通信部品・産業用レーザー",
+        "en": "Optics & industrial lasers"
+      }
+    },
+    "AAOI": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "データセンター光モジュール",
+        "en": "Datacom optical modules"
+      }
+    },
+    "IPGP": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "材料加工用レーザー",
+        "en": "Materials-processing lasers"
+      }
+    },
+    "AVGO": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "200G/lane EML光源",
+        "en": "200G/lane EML light sources"
+      }
+    },
+    "CIEN": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "2017年WaveLogicモジュール開発",
+        "en": "2017 WaveLogic module development"
+      }
+    },
+    "GLW": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "ファイバー・2026年CPO展示",
+        "en": "Fiber & OFC 2026 CPO demo"
+      }
+    },
+    "MTSI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "2019年OFC相互接続デモ",
+        "en": "OFC 2019 interoperability demo"
+      }
+    },
+    "POET": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "2022年DML採用発表",
+        "en": "2022 DML adoption announcement"
+      }
+    }
+  },
+  "RKLB": {
+    "RKLB": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "打ち上げ・宇宙機・部品",
+        "en": "Launch, spacecraft & components"
+      }
+    },
+    "LUNR": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Lanteris国防向け宇宙機",
+        "en": "Lanteris defense spacecraft"
+      }
+    },
+    "PL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "衛星画像事業・打ち上げ顧客",
+        "en": "Imagery business & past launch customer"
+      }
+    },
+    "SpaceX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "打ち上げサービス",
+        "en": "Launch services"
+      }
+    },
+    "FLY": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Alpha打ち上げサービス",
+        "en": "Alpha launch services"
+      }
+    },
+    "NOC": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "宇宙機・衛星バス",
+        "en": "Spacecraft & satellite buses"
+      }
+    },
+    "RDW": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "宇宙機電力・構造部品",
+        "en": "Spacecraft power/structure components"
       }
     }
   }
