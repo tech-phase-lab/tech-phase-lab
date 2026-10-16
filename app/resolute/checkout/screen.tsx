@@ -4,7 +4,10 @@ import styles from "./styles.module.css";
 export type CheckoutProps = { orderId: string | null; language: "ja" | "en"; cancelled: boolean };
 type Order = { orderId: string; state: string; sandbox: true; expiresAt: string; approvalUrl?: string | null;
  quote: { kind: "initial" | "renewal"; language: "ja" | "en"; currency: "JPY" | "USD"; value: string; priceClass: string } };
+type Access = { sandbox: true; asOf: string; canUseTools: boolean; canReceiveNotifications: boolean;
+ alertPeriods: { startsAt: string; expiresAt: string }[] };
 const messages: Record<string, [string, string]> = {
+ ACCESS_UNAVAILABLE: ["利用権を確認できませんでした。時間をおいて再確認してください。", "We couldn’t check your test access. Please try again shortly."],
  PAYMENT_DISABLED: ["テスト購入の受付はまだ有効になっていません。", "Test checkout hasn’t been enabled yet."],
  ALREADY_PURCHASED: ["初回購入は確認済みです。更新を選んでください。", "You’ve already made your first purchase. Choose annual renewal."],
  INITIAL_PURCHASE_REQUIRED: ["更新するには、先に初回のテスト購入が必要です。", "Make your first test purchase before renewing."],
@@ -29,6 +32,7 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
  const [order, setOrder] = useState<Order | null>(null);
  const [busy, setBusy] = useState(false);
  const [error, setError] = useState("");
+ const [access, setAccess] = useState<Access | null>(null);
  const [uncertain, setUncertain] = useState(false);
  const requestKey = useRef<string | null>(null);
  const requestLanguage = useRef<"ja" | "en" | null>(null);
@@ -49,11 +53,19 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
   request(`orders/${orderId}`).then(data => { if (active) setOrder(data); }).catch(e => { if (active) failure(e); });
   return () => { active = false; };
  }, [orderId]);
- async function act(action: "create" | "capture" | "status") {
+ async function act(action: "create" | "capture" | "status" | "access") {
   if (lock.current) return;
   lock.current = true; setBusy(true); setError("");
   try {
-   if (action === "create") {
+   if (action === "access") {
+    setAccess(null);
+    const data: Access = await request("access");
+    if (typeof data.canUseTools !== "boolean" || typeof data.canReceiveNotifications !== "boolean" ||
+        !Number.isFinite(Date.parse(data.asOf)) || !Array.isArray(data.alertPeriods) ||
+        data.alertPeriods.some(p => !Number.isFinite(Date.parse(p.startsAt)) || !Number.isFinite(Date.parse(p.expiresAt))))
+      throw Error("ACCESS_UNAVAILABLE");
+    setAccess(data);
+   } else if (action === "create") {
     requestKey.current ??= crypto.randomUUID();
     requestLanguage.current ??= language;
     const data: Order = await request("orders", { kind, language: requestLanguage.current, requestKey: requestKey.current });
@@ -62,11 +74,15 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
    } else {
     const id = order?.orderId ?? orderId;
     if (!id) return;
+    setAccess(null);
     if (action === "capture") { setUncertain(true); await request("capture", { orderId: id }); }
     setOrder(await request(`orders/${id}`)); setUncertain(false);
    }
-  } catch (e) { failure(e); } finally { lock.current = false; setBusy(false); }
+  } catch (e) { failure(action === "access" ? new Error("ACCESS_UNAVAILABLE") : e); } finally { lock.current = false; setBusy(false); }
  }
+ const date = (value: string) => new Intl.DateTimeFormat(en ? "en-US" : "ja-JP", {
+  timeZone: "Asia/Tokyo", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false,
+ }).format(new Date(value));
  const approval = order?.approvalUrl;
  const safeApproval = approval && /^https:\/\/www\.sandbox\.paypal\.com\/checkoutnow\?token=[A-Z0-9]{8,32}$/.test(approval) ? approval : null;
  const paid = order?.state === "paid";
@@ -105,6 +121,21 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
   {(order || orderId) && <button disabled={busy} onClick={() => void act("status")}>{en ? "Refresh payment status" : "支払い状況を再確認する"}</button>}
   {busy && <p role="status">{en ? "Checking…" : "確認しています…"}</p>}
   {error && <p role="alert">{messages[error]?.[en ? 1 : 0] ?? (en ? "We couldn’t confirm the result. If you started a payment, refresh its status before creating another order." : "結果を確認できませんでした。支払い操作の後は、新しい注文を作る前に支払い状況を再確認してください。")}</p>}
+  <section className={styles.access} aria-labelledby="test-access-title">
+   <h2 id="test-access-title">{en ? "Your test access" : "テスト利用権の確認"}</h2>
+   <p>{en ? "Check the access recorded for your signed-in account. This won’t create an order or charge you." : "ログイン中の会員の利用権を確認します。注文の作成や支払いは行いません。"}</p>
+   <button disabled={busy} onClick={() => void act("access")}>{en ? "Check test access" : "テスト利用権を確認する"}</button>
+   {access && <div role="status">
+    <dl><dt>{en ? "Tools" : "ツール"}</dt><dd>{access.canUseTools ? (en ? "Available · no expiry" : "利用可・期限なし") : (en ? "Not available" : "利用不可")}</dd>
+     <dt>{en ? "Alerts" : "通知"}</dt><dd>{access.canReceiveNotifications ? (en ? "Available" : "利用可") : (en ? "Not currently available" : "現在は利用不可")}</dd></dl>
+    {access.canUseTools && access.alertPeriods.length > 0 && <>
+     <p>{en ? "Recorded alert periods (Japan time). Each period ends at the time shown." : "通知の有効期間（日本時間）。終了時刻になると期限切れになります。"}</p>
+     <ul>{access.alertPeriods.map(p => <li key={p.startsAt}>{date(p.startsAt)}<br />{en ? "to " : "〜 "}{date(p.expiresAt)}</li>)}</ul>
+    </>}
+    <p className={styles.checkedAt}>{en ? "Checked: " : "確認日時："}{date(access.asOf)} {en ? "JST" : "（日本時間）"}</p>
+    <p>{en ? "These are test results only. Live RESOLUTE access is unchanged." : "検証用の判定結果です。本番のRESOLUTE利用権は変更されません。"}</p>
+   </div>}
+  </section>
   <footer className={styles.links}><a href={`/resolute/checkout?lang=${language}`}>{en ? "Start a new order" : "新しい注文へ"}</a><a href="/resolute/review">{en ? "Back to owner preview" : "運営者画面に戻る"}</a></footer>
  </section></main>;
 }
