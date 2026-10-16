@@ -194,7 +194,7 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
       const parts = mark.parts.filter(part => !selection.some(selected => selected.block === part.block));
       return parts.length ? [{ ...mark, parts }] : [];
     }) : marks;
-    if (commit([...retained, { id: crypto.randomUUID(), kind, color, parts: selection, note: "" }])) { clearSelection(); }
+    if (commit([...retained, { id: crypto.randomUUID(), kind, color, parts: selection, note: "" }])) { setEditing(false); setActiveMark(null); clearSelection(); }
   }
   // Tool/color/selection state must not rebuild the text DOM under native selection.
   const { rendered, presentMarks } = useMemo(() => {
@@ -287,7 +287,7 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
           <button disabled={!history.length} onClick={() => { const previous = history.at(-1); if (!previous) return; const wrap = (items: Annotation[]) => ({ saved: [], notebooks: { "undo:ja": items } }); const merged = mergeSavedDocuments(wrap(previous.after), wrap(previous.before), wrap(marks)); if (!merged) { setError(t("別の端末で変更された書き込みは元に戻せません。", "Cannot undo an annotation changed on another device.")); return; } if (commit(merged.notebooks["undo:ja"] ?? [], true)) setHistory(history.slice(0, -1)); }}>{t("元に戻す", "Undo")}</button>
         </div>
         <p className={styles.selected}>{selection.length ? selection.map(p => p.quote).join(" ").slice(0, 100) : "\u00a0"}</p>
-        {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id && !draftConflict ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); clearSelection(); } }}>
+        {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id && !draftConflict ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); setEditing(false); setActiveMark(null); clearSelection(); } }}>
           {draftConflict && <p>{t("元のメモが更新されました。別のメモとして残せます。", "The original note changed. You can save this as a separate note.")}</p>}
           <textarea aria-label={t("自分のメモ", "My note")} placeholder={t("気づいたことを書き残す", "Write down your thoughts")} maxLength={1000} value={draft.text} onChange={event => setDraft({ ...draft, text: event.target.value })} />
           <button type="submit" disabled={!draft.text.trim()}>{draftConflict ? t("別のメモとして保存", "Save as a separate note") : t("メモを保存", "Save note")}</button><button type="button" onClick={() => setDraft(null)}>{t("キャンセル", "Cancel")}</button>

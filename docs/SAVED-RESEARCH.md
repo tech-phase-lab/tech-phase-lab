@@ -130,3 +130,7 @@
 - Research articles open as a standalone detail with a small return action, so unrelated historical cards no longer sit above the article when scrolling. List visits do not auto-open an article.
 - The saved detail action is an icon-only bookmark and a quiet collection link; removal confirmation remains intact.
 - Collection introduction emphasizes personal notes. Removed the sort selector; newest saves remain first. Empty collections hide search and collection controls and show a centered, raised Find articles to save button. No saved data was changed for verification.
+
+## 2026-10-16: dismiss tools after writing
+- Successfully adding an underline, highlight or box, or saving a new/edited note, closes the bottom tray and clears the completed selection. Selecting the next passage opens the tray again. Failed writes retain the editor and draft for retry.
+- Color/line selection, partial erase, undo, account sync and PDF behavior remain unchanged. No saved user data is modified for verification.
