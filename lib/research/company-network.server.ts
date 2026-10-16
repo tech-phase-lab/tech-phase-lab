@@ -1326,22 +1326,22 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "SNPS": {
       "layer": 0,
       "businessLabel": {
-        "ja": "EDA・IP・Ansys解析",
-        "en": "EDA, IP & Ansys simulation"
+        "ja": "Synopsys｜EDA・Ansys",
+        "en": "Synopsys | EDA / Ansys"
       }
     },
     "Siemens EDA": {
       "layer": 0,
       "businessLabel": {
-        "ja": "電子設計・検証EDA",
-        "en": "Electronic design & verification"
+        "ja": "Siemens EDA｜設計・検証",
+        "en": "Siemens EDA | design / verify"
       }
     },
     "KEYS": {
       "layer": 0,
       "businessLabel": {
-        "ja": "電子設計・物理解析",
-        "en": "Electronic design & analysis"
+        "ja": "Keysight｜設計・解析",
+        "en": "Keysight | design / analysis"
       }
     },
     "TSM": {
@@ -2219,36 +2219,36 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "ANET": {
       "layer": 5,
       "businessLabel": {
-        "ja": "ネットワーク機器",
-        "en": "Networking equipment"
+        "ja": "Arista｜ネットワーク",
+        "en": "Arista | networking"
       }
     },
     "HPE": {
       "layer": 5,
       "businessLabel": {
-        "ja": "企業向けネットワーク",
-        "en": "Enterprise networking"
+        "ja": "Hewlett Packard Enterprise",
+        "en": "Hewlett Packard Enterprise"
       }
     },
     "PANW": {
       "layer": 7,
       "businessLabel": {
-        "ja": "ファイアウォール・防御",
-        "en": "Firewalls & network defense"
+        "ja": "Palo Alto Networks｜防御",
+        "en": "Palo Alto Networks | firewalls"
       }
     },
     "CRWD": {
       "layer": 7,
       "businessLabel": {
-        "ja": "端末保護・EDR",
-        "en": "Endpoint protection & EDR"
+        "ja": "CrowdStrike｜端末保護",
+        "en": "CrowdStrike | Endpoint / EDR"
       }
     },
     "ZM": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Web会議",
-        "en": "Web meetings"
+        "ja": "Zoom｜Web会議",
+        "en": "Zoom | Web meetings"
       }
     },
     "NVDA": {
@@ -2548,43 +2548,43 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "CIEN": {
       "layer": 4,
       "businessLabel": {
-        "ja": "光伝送装置・ルーター",
-        "en": "Optical transport systems & routers"
+        "ja": "Ciena｜光伝送・ルーター",
+        "en": "Ciena | optical transport"
       }
     },
     "Nokia": {
       "layer": 4,
       "businessLabel": {
-        "ja": "光伝送・ネットワーク",
-        "en": "Optical transport & networking"
+        "ja": "Nokia｜光伝送",
+        "en": "Nokia | optical networking"
       }
     },
     "CSCO": {
       "layer": 4,
       "businessLabel": {
-        "ja": "ルーティング・光通信",
-        "en": "Routing & optical networking"
+        "ja": "Cisco｜ルーター・光通信",
+        "en": "Cisco | routing / optics"
       }
     },
     "HPE": {
       "layer": 4,
       "businessLabel": {
-        "ja": "Juniperルーター",
-        "en": "Juniper routers"
+        "ja": "Hewlett Packard Enterprise",
+        "en": "Hewlett Packard Enterprise"
       }
     },
     "Huawei": {
       "layer": 4,
       "businessLabel": {
-        "ja": "通信・光伝送設備",
-        "en": "Telecom & optical transport"
+        "ja": "Huawei｜光伝送",
+        "en": "Huawei | optical transport"
       }
     },
     "ZTE": {
       "layer": 4,
       "businessLabel": {
-        "ja": "光伝送・ネットワーク",
-        "en": "Optical transport & networking"
+        "ja": "ZTE｜光伝送",
+        "en": "ZTE | optical networking"
       }
     },
     "META": {
@@ -2599,43 +2599,43 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "FTNT": {
       "layer": 6,
       "businessLabel": {
-        "ja": "FortiGate・FortiEDR・安全な接続",
-        "en": "FortiGate, FortiEDR & secure access"
+        "ja": "Fortinet｜FortiGate・端末防御",
+        "en": "Fortinet | FortiGate / EDR"
       }
     },
     "CSCO": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Secure Firewall",
-        "en": "Secure Firewall"
+        "ja": "Cisco｜Secure Firewall",
+        "en": "Cisco | Secure Firewall"
       }
     },
     "PANW": {
       "layer": 6,
       "businessLabel": {
-        "ja": "ファイアウォール・防御",
-        "en": "Firewalls & network defense"
+        "ja": "Palo Alto Networks｜防御",
+        "en": "Palo Alto Networks | firewalls"
       }
     },
     "CRWD": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Falcon端末保護",
-        "en": "Falcon endpoint protection"
+        "ja": "CrowdStrike｜Falcon",
+        "en": "CrowdStrike | Falcon"
       }
     },
     "ZS": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Internet Access安全な接続",
-        "en": "Internet Access secure access"
+        "ja": "Zscaler｜安全な接続",
+        "en": "Zscaler | Internet Access"
       }
     },
     "MSFT": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Defender端末防御",
-        "en": "Defender endpoint security"
+        "ja": "Microsoft｜Defender",
+        "en": "Microsoft | Defender"
       }
     },
     "GOOG": {
@@ -5070,29 +5070,29 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "STX": {
       "layer": 2,
       "businessLabel": {
-        "ja": "HDD",
-        "en": "HDDs"
+        "ja": "Seagate｜HDD",
+        "en": "Seagate | HDDs"
       }
     },
     "Toshiba Electronic Devices & Storage": {
       "layer": 2,
       "businessLabel": {
-        "ja": "HDD",
-        "en": "HDDs"
+        "ja": "東芝｜HDD",
+        "en": "Toshiba | HDDs"
       }
     },
     "MU": {
       "layer": 2,
       "businessLabel": {
-        "ja": "企業向けSSD",
-        "en": "Enterprise SSDs"
+        "ja": "Micron｜企業向けSSD",
+        "en": "Micron | Enterprise SSDs"
       }
     },
     "Samsung Electronics": {
       "layer": 2,
       "businessLabel": {
-        "ja": "企業向けSSD",
-        "en": "Enterprise SSDs"
+        "ja": "Samsung｜企業向けSSD",
+        "en": "Samsung | Enterprise SSDs"
       }
     },
     "MSFT": {
@@ -5107,29 +5107,29 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "WDC": {
       "layer": 2,
       "businessLabel": {
-        "ja": "HDD",
-        "en": "HDDs"
+        "ja": "Western Digital｜HDD",
+        "en": "Western Digital | HDDs"
       }
     },
     "Toshiba Electronic Devices & Storage": {
       "layer": 2,
       "businessLabel": {
-        "ja": "HDD",
-        "en": "HDDs"
+        "ja": "東芝｜HDD",
+        "en": "Toshiba | HDDs"
       }
     },
     "MU": {
       "layer": 2,
       "businessLabel": {
-        "ja": "企業向けSSD",
-        "en": "Enterprise SSDs"
+        "ja": "Micron｜企業向けSSD",
+        "en": "Micron | Enterprise SSDs"
       }
     },
     "Samsung Electronics": {
       "layer": 2,
       "businessLabel": {
-        "ja": "企業向けSSD",
-        "en": "Enterprise SSDs"
+        "ja": "Samsung｜企業向けSSD",
+        "en": "Samsung | Enterprise SSDs"
       }
     },
     "MSFT": {
