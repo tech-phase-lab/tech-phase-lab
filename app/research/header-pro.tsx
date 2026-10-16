@@ -1,6 +1,7 @@
 "use client";
 import { useSyncExternalStore } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { effectiveHash, rememberHash } from "@/lib/research/view-hash";
 function subscribe(callback: () => void) {
   window.addEventListener("hashchange", callback);
   window.addEventListener("popstate", callback);
@@ -11,7 +12,7 @@ let returnTo = "/research#research-main";
 export function useProIntroduction() {
   const pathname = usePathname();
   const router = useRouter();
-  const hash = useSyncExternalStore(subscribe, () => window.location.hash, () => "");
+  const hash = useSyncExternalStore(subscribe, effectiveHash, () => "");
   const open = pathname === "/research" && hash === "#tech-phase-pro";
   function toggle(force?: boolean) {
     const opening = force ?? !open;
@@ -20,6 +21,7 @@ export function useProIntroduction() {
     const target = opening ? "/research#tech-phase-pro" : returnTo;
     if (target.split(/[?#]/)[0] === pathname) {
       window.history.pushState(null, "", target);
+      rememberHash(target.includes("#") ? target.slice(target.indexOf("#")) : "");
       window.dispatchEvent(new HashChangeEvent("hashchange"));
       window.scrollTo({ top: 0, behavior: "instant" });
     } else router.push(target);

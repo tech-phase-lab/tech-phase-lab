@@ -12,6 +12,7 @@ import { metricNames } from "@/lib/research/data";
 import { compareMetrics } from "@/lib/research/quality";
 import { valueLabel, dateLabel } from "@/lib/research/presentation";
 import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/lib/research/navigation";
+import { effectiveHash, rememberHash } from "@/lib/research/view-hash";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
@@ -33,7 +34,7 @@ function subscribeView(callback: () => void) {
   window.addEventListener("popstate", callback);
   return () => { window.removeEventListener("hashchange", callback); window.removeEventListener("popstate", callback); };
 }
-function viewSnapshot() { return researchViewFromHash(window.location.hash) ?? "home"; }
+function viewSnapshot() { return researchViewFromHash(effectiveHash()) ?? "home"; }
 
 function Arrow() { return <span aria-hidden="true">↗</span>; }
 function Bookmark({ filled = false }: { filled?: boolean }) {
@@ -69,7 +70,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
   useEffect(() => {
     const syncHash = () => {
-      const next = researchViewFromHash(window.location.hash);
+      const next = researchViewFromHash(effectiveHash());
       if (next) {
         if (next === "saved") {
           const id = window.history.state?.techPhaseSavedArticle;
@@ -87,7 +88,8 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             });
           }
         }
-        const noteId = window.location.hash.startsWith("#what-changed/") ? window.location.hash.slice("#what-changed/".length) : "";
+        const shownHash = effectiveHash();
+        const noteId = shownHash.startsWith("#what-changed/") ? shownHash.slice("#what-changed/".length) : "";
         setResearchArticleOpen(Boolean(noteId));
         if (noteId) { setActiveId(noteId); setQuery(""); setTicker("all"); setCategory("all"); }
         if (next === "home") { setQuery(""); setTicker("all"); setCategory("all"); }
@@ -140,13 +142,13 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     if (tab === "saved") {
       if (!savedActiveId) {
         savedReturn.current = { id, top: cardButtons.current.get(id)?.getBoundingClientRect().top ?? 0, scroll: window.scrollY };
-        window.history.pushState({ ...window.history.state, techPhaseSavedArticle: id }, "", "#saved");
-      } else window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: id }, "", "#saved");
+        window.history.pushState({ ...window.history.state, techPhaseSavedArticle: id }, "", "#saved"); rememberHash("#saved");
+      } else { window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: id }, "", "#saved"); rememberHash("#saved"); }
       setSavedActiveId(id);
     }
     if (tab === "changes") {
       setResearchArticleOpen(true);
-      window.history.pushState(null, "", `#what-changed/${id}`);
+      window.history.pushState(null, "", `#what-changed/${id}`); rememberHash(`#what-changed/${id}`);
     }
     if (tab === "saved" || tab === "changes" || window.matchMedia("(max-width: 1150px)").matches) {
       cancelAnimationFrame(detailFrame.current);
@@ -177,6 +179,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     if (next === "saved" && tab === "saved" && savedActiveId) { returnToSaved(); return; }
     if (window.location.hash !== hash) window.history.pushState(null, "", hash);
     else window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: null }, "", hash);
+    rememberHash(hash);
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     if (next === "home") clearFilters();
     requestAnimationFrame(() => {

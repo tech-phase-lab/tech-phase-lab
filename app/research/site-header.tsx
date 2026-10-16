@@ -6,6 +6,7 @@ import type { Language } from "@/lib/research/data";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import { useProIntroduction } from "./header-pro";
 import { useScrollLock } from "./use-scroll-lock";
+import { rememberHash } from "@/lib/research/view-hash";
 import base from "./research.module.css";
 import styles from "./site-header.module.css";
 
@@ -49,6 +50,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
     if (pathname !== "/research" || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     window.history.pushState(null, "", "/research#research-main");
+    rememberHash("#research-main");
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     window.scrollTo({ top: 0, behavior: "instant" });
   }
@@ -167,6 +169,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
     if (pathname !== "/research" || !href.startsWith("/research#")) return;
     event.preventDefault();
     window.history.pushState(null, "", href);
+    rememberHash(href.slice(href.indexOf("#")));
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     window.scrollTo({ top: 0, behavior: "instant" });
   }
