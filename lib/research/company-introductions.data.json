@@ -1283,6 +1283,26 @@
       {
         "label": "Oracle Cloud · GPU compute",
         "url": "https://www.oracle.com/cloud/compute/gpu/"
+      },
+      {
+        "label": "Nebius / Palantir · Sovereign AI partnership, September 8, 2026",
+        "url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers"
+      },
+      {
+        "label": "Nebius · MCP Server and Claude integration, July 16, 2025",
+        "url": "https://nebius.com/blog/posts/introducing-nebius-mcp-server"
+      },
+      {
+        "label": "Nebius · Token Factory / GPT-OSS support, November 5, 2025",
+        "url": "https://nebius.com/newsroom/nebius-launches-nebius-token-factory-to-deliver-production-ai-inference-at-scale"
+      },
+      {
+        "label": "IREN · AI Cloud training and inference services, reviewed October 16, 2026",
+        "url": "https://www.iren.com/"
+      },
+      {
+        "label": "Nebius · AI Cloud training and inference services, reviewed October 16, 2026",
+        "url": "https://nebius.com/ai-cloud"
       }
     ],
     "ja": {
@@ -1290,16 +1310,16 @@
       "revenue": "GPUなどの計算設備、データ保存、関連サービスの利用料。専用設備を長期契約で提供する事業もある。",
       "strength": "AI向けに設計した設備と自社開発ソフトを組み合わせ、計算環境の構築から運用まで支える。",
       "risks": "設備拡張に多額の資金と電力が必要。建設・供給の遅れや大口契約の履行が業績を左右する。",
-      "competition": "NebiusはGPUクラウドの競合としてCoreWeave、Crusoe、Lambdaに加え、Amazon AWS、Google Cloud、Microsoft Azure、Oracle Cloudを挙げる。各社の公式GPU計算サービスを照合した。料金、供給枠、運用サービスは異なり、同一条件とは扱わない。Microsoftとの容量契約とクラウド競合は併存し、管理型推論サービスの比較は別の製品範囲となる。",
-      "relationships": "NVIDIAのGPUを採用し、技術面でも協力。MicrosoftやMetaには契約に基づき計算設備を提供する。"
+      "competition": "上場企業ではCoreWeaveとIRENが専業GPUクラウドの比較対象。AWS、Google Cloud、Microsoft Azure、Oracle CloudともGPU計算の分野で競合する。Microsoftは計算容量の顧客でもあり、競争と取引が併存する。Metaは開示済みの計算容量顧客として扱い、同じAI分野というだけで競合に加えない。",
+      "relationships": "NVIDIAのGPU基盤を採用し、MicrosoftとMetaに計算容量を提供する契約を開示。Palantirとは2026年9月にソブリンAI基盤の提携を発表し、顧客向け接続は統合期間後の予定。AnthropicのClaudeへのMCP接続とOpenAIのGPT-OSSモデル対応は公式に説明されているが、両社がNebiusの計算容量を購入する契約とは区別する。"
     },
     "en": {
       "business": "Provides cloud computing infrastructure for AI training and inference.",
       "revenue": "Charges for GPU capacity, storage and related services, including long-term dedicated-capacity contracts.",
       "strength": "Combines AI-focused infrastructure with in-house software to support deployment and operations.",
       "risks": "Large funding and power needs, construction or supply delays, and execution of major customer contracts.",
-      "competition": "Nebius names CoreWeave, Crusoe and Lambda, plus Amazon AWS, Google Cloud, Microsoft Azure and Oracle Cloud, as GPU-cloud competitors. Official GPU-compute services were checked. Pricing, capacity availability and managed services differ. Microsoft capacity contracts coexist with cloud competition; managed inference is a separate product scope.",
-      "relationships": "Uses NVIDIA GPUs and collaborates with NVIDIA; supplies contracted capacity to Microsoft and Meta."
+      "competition": "CoreWeave and IREN are listed specialist GPU-cloud comparisons. AWS, Google Cloud, Microsoft Azure and Oracle Cloud overlap in GPU compute. Microsoft is also a capacity customer, so competition and trade coexist. Meta is a disclosed capacity customer; sharing the AI sector alone does not establish a competing cloud offering.",
+      "relationships": "Nebius adopts NVIDIA infrastructure and discloses capacity agreements with Microsoft and Meta. Its September 2026 Palantir partnership plans customer access after an integration period. Official documentation also describes Claude/MCP connectivity and OpenAI GPT-OSS support; these technical capabilities do not establish capacity-purchase agreements with Anthropic or OpenAI."
     },
     "maps": {
       "competition": [
@@ -1317,6 +1337,20 @@
             2
           ],
           "ticker": "CRWV"
+        },
+        {
+          "kind": "company",
+          "name": "IREN",
+          "ticker": "IREN",
+          "role": "competitor",
+          "label": {
+            "ja": "NBISとIRENの公式GPUクラウド製品を照合した編集比較。AI学習・推論用の専用GPU計算容量で重なる",
+            "en": "Editorial comparison of official Nebius and IREN GPU-cloud offerings: dedicated GPU capacity for AI training/inference"
+          },
+          "sourceIndexes": [
+            12,
+            13
+          ]
         },
         {
           "kind": "company",
@@ -1440,6 +1474,43 @@
             0
           ],
           "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "Palantir",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月発表のソブリンAI基盤提携。Palantir顧客向け接続は統合期間後の提供予定",
+            "en": "September 2026 sovereign AI infrastructure partnership; customer access follows an integration period"
+          },
+          "sourceIndexes": [
+            9
+          ],
+          "ticker": "PLTR"
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年7月公表のMCP ServerによるClaude接続。技術対応であり、Anthropicの計算容量購入契約を示さない",
+            "en": "July 2025 MCP Server connection to Claude; technical compatibility, not an Anthropic compute-purchase contract"
+          },
+          "sourceIndexes": [
+            10
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年11月Token Factory発表でGPT-OSSモデル提供を明記。モデル対応であり、OpenAIの容量購入契約を示さない",
+            "en": "November 2025 Token Factory announcement names GPT-OSS support; model availability, not an OpenAI capacity-purchase contract"
+          },
+          "sourceIndexes": [
+            11
+          ]
         }
       ]
     }
@@ -3837,6 +3908,18 @@
       {
         "label": "Oracle Cloud · GPU compute",
         "url": "https://www.oracle.com/cloud/compute/gpu/"
+      },
+      {
+        "label": "IREN · NVIDIA contract and strategic partnership, May 7, 2026",
+        "url": "https://iren.gcs-web.com/news-releases/news-release-details/iren-business-update-and-q3-fy26-results"
+      },
+      {
+        "label": "The Motley Fool · Reported Anthropic cloud deal, October 12, 2026 (secondary reporting)",
+        "url": "https://www.fool.com/coverage/stock-market-today/2026/10/12/stock-market-today-oct-12-iren-surges-on-reports-of-anthropic-cloud-services-deal/"
+      },
+      {
+        "label": "IREN · FY26 results, August 27, 2026; frontier AI lab unnamed",
+        "url": "https://iren.gcs-web.com/news-releases/news-release-details/iren-reports-fy26-results"
       }
     ],
     "ja": {
@@ -3845,7 +3928,7 @@
       "strength": "電力・土地・データセンターを押さえ、計算設備の導入まで一体で進める。",
       "risks": "巨額投資と資金調達、納期・顧客集中、GPUの陳腐化や採掘採算に左右される。",
       "competition": "IREN自身はAIクラウドの競合としてCoreWeave、Nebius、Amazon AWS、Google Cloud、Microsoft Azure、Oracle Cloudを挙げる。GPU計算サービスの比較であり、専用容量契約、一般向けインスタンス、運用ソフトは条件が異なる。Microsoftとの顧客関係とAzureの競合は併存し、ビットコイン採掘の競争とは分けて考える。",
-      "relationships": "NVIDIA・AMDの計算基盤やDellの設備を使い、Microsoft向けGPUサービスを提供する。"
+      "relationships": "NVIDIA・AMDのGPU基盤とDellのシステムを採用し、Microsoft向けGPU容量契約を開示。NVIDIAとは2026年5月に5年34億ドルのAIクラウド契約と戦略提携を発表し、容量の立ち上げ目標は2027年初め。Anthropicとの複数年クラウド契約は2026年10月の報道として掲載する。会社発表では相手名・金額を確認できておらず、8月公表の匿名契約とは別の追加売上とは断定しない。"
     },
     "en": {
       "business": "Operates data centers for AI GPU services and Bitcoin mining.",
@@ -3853,7 +3936,7 @@
       "strength": "Controls power, sites and data centers alongside compute deployment.",
       "risks": "Heavy funding needs, delivery deadlines, customer concentration, GPU obsolescence and mining economics.",
       "competition": "IREN names CoreWeave, Nebius, Amazon AWS, Google Cloud, Microsoft Azure and Oracle Cloud as AI-cloud competitors. These are GPU-compute examples; dedicated-capacity contracts, general instances and management software differ. Microsoft customer relationships coexist with Azure competition, separate from Bitcoin-mining rivalry.",
-      "relationships": "Uses NVIDIA and AMD platforms and Dell equipment; provides dedicated GPU services to Microsoft."
+      "relationships": "IREN adopts NVIDIA/AMD GPU platforms and Dell systems and discloses Microsoft capacity agreements. Its May 2026 NVIDIA strategic partnership includes a five-year $3.4bn cloud contract targeting an early-2027 capacity ramp. The Anthropic multiyear cloud relationship is identified as October 2026 reporting: company announcements do not confirm the counterparty name/value, or establish revenue additional to the unnamed August contract."
     },
     "maps": {
       "competition": [
@@ -3944,13 +4027,14 @@
         {
           "kind": "company",
           "name": "NVIDIA",
-          "role": "supplier",
+          "role": "partner",
           "label": {
-            "ja": "GPU・ネットワーク基盤を採用",
-            "en": "GPU and networking platforms"
+            "ja": "NVIDIA GPUの採用に加え、2026年5月に5年34億ドルのAIクラウド契約と戦略提携を発表。NVIDIA向け容量は2027年初めの立ち上げ目標",
+            "en": "NVIDIA GPU adoption plus a May 2026 five-year $3.4bn AI-cloud contract and strategic partnership; capacity for NVIDIA targets an early-2027 ramp"
           },
           "sourceIndexes": [
-            0
+            0,
+            5
           ],
           "ticker": "NVDA"
         },
@@ -3992,6 +4076,19 @@
             0
           ],
           "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "customer",
+          "label": {
+            "ja": "契約報道：2026年10月にAnthropicとの複数年クラウド契約が報じられた。会社発表による相手名・金額の確認は未了。8月公表の匿名契約への追加売上とは断定しない",
+            "en": "Reported contract: October 2026 reporting identifies a multiyear Anthropic cloud deal. Counterparty name/value are not confirmed in company announcements; no claim of revenue additional to the unnamed August contract"
+          },
+          "sourceIndexes": [
+            6,
+            7
+          ]
         }
       ]
     }
@@ -11690,6 +11787,14 @@
       {
         "label": "Snap FY2025 · Competition and TikTok affiliated joint ventures",
         "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm"
+      },
+      {
+        "label": "Google · Expanded Reddit partnership, February 22, 2024",
+        "url": "https://blog.google/company-news/inside-google/company-announcements/expanded-reddit-partnership/"
+      },
+      {
+        "label": "OpenAI and Reddit · Partnership, May 16, 2024",
+        "url": "https://openai.com/index/openai-and-reddit-partnership/"
       }
     ],
     "ja": {
@@ -11698,7 +11803,7 @@
       "strength": "利用者とモデレーターが継続的に作る会話データ、細かな関心別コミュニティ、投稿が投稿を呼ぶネットワーク効果が強い。",
       "risks": "不適切投稿の管理、検索や生成AIへの利用流出、広告市況、個人情報規制、アプリ配信基盤への依存が利用と収益を左右する。",
       "competition": "Reddit自身は情報探索、娯楽、趣味の交流、広告で競争する企業を分けて開示する。広告予算ではGoogle・Meta・Snap・Pinterest・TikTok、交流ではFacebook GroupsやPinterestなどが例。Googleの検索・YouTube、生成AIによる情報探索は役割が異なり、全サービスが同じ機能という意味ではない。TikTokの事業・合弁会社を一律に単独所有と扱わない。",
-      "relationships": "利用者とモデレーターが投稿を供給し、広告主へ関心別広告を販売し、企業向けには公開データの利用権を提供する。"
+      "relationships": "2025年年次報告はAWSとGoogle Cloudの基盤利用を実名で開示。Googleとは2024年2月にData APIとVertex AIの提携、OpenAIとは2024年5月にData API・AI機能・広告の提携を発表した。検索・広告での競争と協業は併存する。発表時点の予定から現在の契約量や全機能の提供完了を推定しない。"
     },
     "en": {
       "business": "A social platform where people post and discuss interests inside communities, building a store of knowledge and experience.",
@@ -11706,7 +11811,7 @@
       "strength": "Continuously refreshed conversations, highly specific interest communities and user-moderator network effects support engagement.",
       "risks": "Content safety, traffic shifting to search or generative AI, advertising cycles, privacy rules and distribution-platform dependence can affect growth.",
       "competition": "Reddit separates information seeking, entertainment, interests and advertising. Named advertising peers include Google, Meta, Snap, Pinterest and TikTok; interest-based alternatives include Facebook Groups and Pinterest. Search, YouTube and generative-AI information seeking differ in function. TikTok businesses and affiliated joint ventures are not treated as uniformly wholly owned.",
-      "relationships": "Users and moderators supply posts, advertisers buy interest-based inventory, and enterprise licensees receive rights to use public data."
+      "relationships": "The FY2025 filing explicitly identifies AWS and Google Cloud infrastructure use. Google announced a Data API/Vertex AI partnership in February 2024; OpenAI announced Data API, AI-feature and advertising collaboration in May 2024. Search/advertising competition and collaboration coexist. Announcement plans do not establish current volumes or delivery of all features."
     },
     "maps": {
       "competition": [
@@ -11814,6 +11919,45 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "partner",
+          "label": {
+            "ja": "2024年2月のData API・Vertex AI提携。2025年年次報告にもGoogle Cloud利用を明記",
+            "en": "February 2024 Data API/Vertex AI partnership; FY2025 filing also identifies Google Cloud use"
+          },
+          "sourceIndexes": [
+            2,
+            0
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年年次報告がAWSのクラウド基盤利用を実名開示",
+            "en": "FY2025 annual filing explicitly identifies AWS cloud infrastructure use"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2024年5月のData API・AI機能・広告提携発表。現在の契約量や全機能提供完了は示さない",
+            "en": "May 2024 Data API, AI-feature and advertising partnership announcement; no current-volume or full-delivery claim"
+          },
+          "sourceIndexes": [
+            3
           ]
         }
       ]

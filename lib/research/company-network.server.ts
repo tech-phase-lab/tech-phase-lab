@@ -72,7 +72,7 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
-  if (root === "RDDT") return { 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
+  if (root === "RDDT") return { 6: { ja: "クラウド・AI・データ提携", en: "Cloud, AI & data partnerships" }, 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
   if (root === "PINS") return { 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
   if (root === "SNAP") return { 7: { ja: "動画・交流・広告", en: "Video, communication & ads" } };
   if (root === "ENTG") return { 0: { ja: "半導体用の高純度化・材料", en: "Semiconductor purity & materials" } };
@@ -159,7 +159,13 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     3: { ja: "PCIe・CXL接続半導体", en: "PCIe & CXL connectivity chips" },
   };
   if (root === "NBIS") return {
-    6: { ja: "GPU計算・AIクラウド", en: "GPU compute & AI cloud" },
+    0: { ja: "NBIS・Nebius", en: "NBIS · Nebius" },
+    1: { ja: "供給元", en: "Supplier" },
+    2: { ja: "計算容量の顧客", en: "Capacity customers" },
+    3: { ja: "提携先", en: "Partners" },
+    4: { ja: "モデル・接続への技術対応", en: "Model & integration compatibility" },
+    5: { ja: "GPUクラウドの競合", en: "Competing GPU clouds" },
+    6: { ja: "供給元の先にある企業", en: "Further upstream companies" },
   };
   if (root === "ASML") return {
     0: { ja: "露光・計測・検査・光学部品", en: "Lithography, inspection & optics" },
@@ -1581,10 +1587,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
   },
   "NBIS": {
     "CRWV": {
-      "layer": 6,
+      "layer": 5,
       "businessLabel": {
-        "ja": "GPUクラウド計算",
-        "en": "GPU cloud compute"
+        "ja": "専業GPUクラウド",
+        "en": "Specialist GPU cloud"
       }
     },
     "Crusoe": {
@@ -1602,31 +1608,80 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "AMZN": {
-      "layer": 6,
+      "layer": 5,
       "businessLabel": {
         "ja": "AWS GPU計算",
         "en": "AWS GPU compute"
       }
     },
     "GOOG": {
-      "layer": 6,
+      "layer": 5,
       "businessLabel": {
         "ja": "Google Cloud GPU計算",
         "en": "Google Cloud GPU compute"
       }
     },
     "MSFT": {
-      "layer": 6,
+      "layer": 2,
       "businessLabel": {
-        "ja": "Azure・計算容量契約",
-        "en": "Azure & compute capacity contracts"
+        "ja": "Azure・容量顧客／競合",
+        "en": "Azure · capacity customer / rival"
       }
     },
     "ORCL": {
-      "layer": 6,
+      "layer": 5,
       "businessLabel": {
         "ja": "OCI GPU計算",
         "en": "OCI GPU compute"
+      }
+    },
+    "NBIS": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Nebius・選択中の企業",
+        "en": "Nebius · selected company"
+      }
+    },
+    "NVDA": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GPU基盤の供給・技術協力",
+        "en": "GPU infrastructure & engineering"
+      }
+    },
+    "META": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "GPU計算容量の顧客",
+        "en": "GPU capacity customer"
+      }
+    },
+    "PLTR": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "ソブリンAI基盤の正式提携",
+        "en": "Sovereign AI infrastructure partner"
+      }
+    },
+    "Anthropic": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Claude・MCP接続への技術対応",
+        "en": "Claude / MCP compatibility"
+      }
+    },
+    "OpenAI": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "GPT-OSSモデルの提供対応",
+        "en": "GPT-OSS model availability"
+      }
+    },
+    "IREN": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "専用GPU計算容量",
+        "en": "Dedicated GPU capacity"
       }
     }
   },
@@ -2618,10 +2673,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "GOOG": {
-      "layer": 7,
+      "layer": 6,
       "businessLabel": {
-        "ja": "Google検索・YouTube・広告",
-        "en": "Google Search, YouTube & ads"
+        "ja": "Google Cloud・2024年データ提携",
+        "en": "Google Cloud & 2024 data partnership"
       }
     },
     "META": {
@@ -2636,6 +2691,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "TikTok関連事業・合弁会社の利用時間・広告",
         "en": "TikTok businesses/JVs: engagement & ads"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS・クラウド基盤の利用",
+        "en": "AWS cloud infrastructure"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "2024年データ・AI・広告提携",
+        "en": "2024 data, AI & advertising partnership"
       }
     }
   },
@@ -3040,6 +3109,14 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     if (edge.to === root) included.add(edge.from);
   }
   const context = reviewedNvidia as CompanyNetwork;
+  if (root === "NBIS") {
+    const suppliers = new Set(introduction.maps.relationships.filter(e => e.kind === "company" && e.role === "supplier").map(e => e.ticker ?? e.name));
+    const extra = context.edges.filter(e => e.kind === "supply" && suppliers.has(e.to) && !included.has(e.from));
+    const ids = new Set([...included, ...extra.map(e => e.from)]);
+    const ownNodes = catalog.nodes.filter(n => ids.has(n.id));
+    const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
+    return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
+  }
   const depth = new Map<string, number>([[root, 0]]);
   for (const edge of ownEdges) if (edge.kind !== "competition") depth.set(edge.from === root ? edge.to : edge.from, 1);
   // At most three steps, 41 cards and 61 edges: the approved NVDA scale.

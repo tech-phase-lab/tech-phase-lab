@@ -4,6 +4,24 @@ export type NetworkEvidence = { about: string; label: NetworkText; reviewedOn: s
 export type NetworkEdge = { id: string; from: string; to: string; kind: "supply" | "partner" | "investment" | "competition"; evidence: NetworkEvidence[] };
 export type CompanyNetwork = { root: string; nodes: NetworkNode[]; edges: NetworkEdge[]; layerLabels?: Record<number, NetworkText> };
 export type NetworkMode = "direct" | "two" | "all";
+// A missing US ticker does not imply private ownership. These names identify
+// listed overseas issuers; unresolved names stay out of the stock map.
+const listedOverseas = new Set([
+  "BJ's Wholesale Club", "Target", "Avnet", "Arrow Electronics", "Phison", "InnoLight", "RS",
+  "Tokyo Electron", "ASM International", "Schneider Electric", "Legrand", "Samsung", "Samsung Electronics",
+  "Nikon", "Canon", "SoftBank", "SK hynix", "Kioxia", "Siemens Energy", "Vestas", "Hitachi", "Lasertec",
+  "Lenovo", "Foxconn", "Quanta Computer", "MediaTek", "Xiaomi", "Capgemini", "Infineon", "Infineon Technologies",
+  "Seiko Epson", "Brother Industries", "Nokia", "ZTE", "Advantest", "Doosan Robotics", "Omron", "SCREEN",
+  "INFICON", "Murata Manufacturing", "Merck", "JCET Group", "Powertech Technology", "Semiconductor Manufacturing International",
+  "X-FAB", "Montage Technology", "Nordic Semiconductor", "VeriSilicon", "Novatek Microelectronics", "FocalTech Systems",
+  "Ilitek", "Chipbond Technology", "Technoprobe", "Micronics Japan", "MPI", "AEM", "AEM Holdings", "Chroma ATE",
+  "Tekscend Photomask", "Dai Nippon Printing", "SK-Electronics", "Anritsu", "AGC", "Nippon Electric Glass",
+  "NGK Corporation", "BYD", "Airbus", "Dassault Systèmes", "Siemens", "Nintendo", "Oriental Land", "Meituan", "Tencent",
+]);
+export function isStockMapCompany(node: NetworkNode) {
+  if (node.kind !== "company" || node.id === "QRVO") return false;
+  return Boolean(node.ticker) || listedOverseas.has(node.id) || ["Anthropic", "OpenAI"].includes(node.id);
+}
 export const networkLayers: NetworkText[] = [
   { ja: "製造装置・材料", en: "Equipment & materials" },
   { ja: "半導体の受託製造", en: "Chip manufacturing" },

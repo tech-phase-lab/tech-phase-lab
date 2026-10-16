@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { layoutCompanyNetwork, networkEdgePath, networkFocus, networkLayers } from "@/lib/research/company-network";
+import { isStockMapCompany, layoutCompanyNetwork, networkEdgePath, networkFocus, networkLayers } from "@/lib/research/company-network";
 import type { CompanyNetwork, NetworkEdge, NetworkMode, NetworkNode } from "@/lib/research/company-network";
 import styles from "./company-network.module.css";
 
@@ -20,7 +20,7 @@ const businessLabels = [
 const label = (node: NetworkNode, lang: "ja" | "en") => lang === "ja" ? node.nameJa ?? node.name : node.name;
 
 export function CompanyNetworkMap({ graph, lang }: Props) {
-  const [mode, setMode] = useState<NetworkMode>("two");
+  const [mode, setMode] = useState<NetworkMode>(graph.root === "NBIS" ? "direct" : "two");
   const [width, setWidth] = useState(640);
   const board = useRef<HTMLDivElement>(null);
   const [flashed, setFlashed] = useState<string | null>(null);
@@ -36,14 +36,14 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
   const focus = useMemo(() => networkFocus(graph, selected.id, mode), [graph, selected.id, mode]);
   // Preserve the approved NVDA presentation. Other maps remove cards outside
   // the selected depth instead of leaving hundreds of dimmed cards behind.
-  const namedCompetitors = [...focus.competitors].filter(id => byId.get(id)?.kind === "company");
-  const visibleNodes = useMemo(() => graph.root === "NVDA" ? graph.nodes : graph.nodes.filter(node =>
-    !(node.kind === "industry" && focus.competitors.has(node.id)) &&
-    (mode === "all" || focus.distances.has(node.id) || focus.competitors.has(node.id))), [graph, mode, focus]);
+  const namedCompetitors = [...focus.competitors].filter(id => isStockMapCompany(byId.get(id)!));
+  const visibleNodes = useMemo(() => graph.nodes.filter(node =>
+    (node.id === graph.root || isStockMapCompany(node)) &&
+    (graph.root === "NVDA" || mode === "all" || focus.distances.has(node.id) || focus.competitors.has(node.id))), [graph, mode, focus]);
   const layout = useMemo(() => layoutCompanyNetwork(visibleNodes, width), [visibleNodes, width]);
   const visibleEdges = focus.visibleEdges.filter(edge => layout.positions[edge.from] && layout.positions[edge.to]);
   const direct = graph.edges.filter(edge => edge.from === selected.id || edge.to === selected.id);
-  const relationships = direct.filter(edge => edge.kind !== "competition" || namedCompetitors.includes(edge.from === selected.id ? edge.to : edge.from));
+  const relationships = direct.filter(edge => isStockMapCompany(byId.get(edge.from === selected.id ? edge.to : edge.from)!));
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
   useEffect(() => {
@@ -74,15 +74,16 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
       </div>
       <div className={styles.selection}>
         <div className={styles.selectedName} role="status"><strong>{selected.ticker ?? label(selected, lang)}</strong>{selected.ticker && <span>{label(selected, lang)}</span>}</div>
-        <span className={styles.count}>{visibleNodes.filter(node => node.kind === "company").length}{t("社", " companies")} · {(graph.root === "NVDA" ? graph.edges : visibleEdges).length}{t("の関係", " connections")}</span>
+        <span className={styles.count}>{visibleNodes.length}{t("社", " companies")} · {visibleEdges.length}{t("の関係", " connections")}</span>
       </div>
     </div>
 
     <div className={styles.legend}>
-      <span data-tone="upstream">{t("供給・採用元", "Suppliers")}</span><span data-tone="downstream">{t("納入・採用先", "Recipients")}</span><span data-tone="partner">{t("提携・出資", "Partners & investment")}</span><span data-tone="indirect">{t("さらに先の関係", "Further connections")}</span><span data-tone="competition">{t("競合", "Competitors")}</span>
+      <span data-tone="upstream">{t("供給・採用元", "Suppliers")}</span><span data-tone="downstream">{t("納入・採用先", "Recipients")}</span><span data-tone="partner">{t("提携・出資・技術対応", "Partners, investment & compatibility")}</span><span data-tone="indirect">{t("さらに先の関係", "Further connections")}</span><span data-tone="competition">{t("競合", "Competitors")}</span>
     </div>
     <div className={styles.competitors} data-topic="competition">
       <h3><span>05</span>{t("競合は？", "Who competes with it?")}</h3>
+      {graph.root === "NBIS" && <p>{t("専業GPUクラウドの上場比較はCoreWeave・IREN。AWS・Google Cloud・Azure・Oracle CloudともGPU計算で競合します。Microsoftは容量顧客でもあり、Metaは容量顧客です。", "Listed specialist GPU-cloud comparisons are CoreWeave and IREN. AWS, Google Cloud, Azure and Oracle Cloud also overlap in GPU compute. Microsoft is also a capacity customer; Meta is a capacity customer.")}</p>}
       <div>{namedCompetitors.map(id => {
         const node = byId.get(id)!;
         return <span key={id} className={styles.competitor}>{graph.root === "NVDA" ? node.ticker ?? label(node, lang) : `${label(node, lang)}${node.ticker ? ` (${node.ticker})` : ""}`}</span>;
@@ -115,7 +116,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
         const other = byId.get(edge.from === selected.id ? edge.to : edge.from)!;
         const evidence = edge.evidence.find(item => item.about === selected.id) ?? edge.evidence[0];
         return <li key={edge.id} data-tone={edgeTone(edge)}>
-          <div className={styles.connectionTitle}><strong>{other.ticker ?? label(other, lang)}</strong><small>{edge.kind === "supply" ? (edge.to === selected.id ? t("供給・採用元", "Supplier") : t("納入・採用先", "Recipient")) : edge.kind === "competition" ? t("競合", "Competitor") : edge.kind === "investment" ? t("出資", "Investment") : t("提携・連携", "Collaboration")}</small></div>
+          <div className={styles.connectionTitle}><strong>{other.ticker ?? label(other, lang)}</strong><small>{graph.root === "NBIS" && ["Anthropic", "OpenAI"].includes(other.id) ? t("技術対応", "Compatibility") : graph.root === "IREN" && other.id === "Anthropic" ? t("顧客・契約報道", "Reported customer") : edge.kind === "supply" ? (edge.to === selected.id ? t("供給・採用元", "Supplier") : t("納入・採用先", "Recipient")) : edge.kind === "competition" ? t("競合", "Competitor") : edge.kind === "investment" ? t("出資", "Investment") : t("提携・連携", "Collaboration")}</small></div>
           <p className={styles.relationshipText}>{evidence.about !== selected.id && <span>{byId.get(evidence.about)?.name ?? evidence.about}: </span>}{evidence.label[lang]}</p>
         </li>;
       })}</ul>
