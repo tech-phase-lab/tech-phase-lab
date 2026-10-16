@@ -72,9 +72,14 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
-  if (root === "MSFT") return {"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}};
+  if (root === "TXN") return {"3": {"ja": "アナログ・制御・ロボット技術連携", "en": "Analog, control & robotics collaboration"}};
+  if (root === "ADI") return {"1": {"ja": "半導体の受託製造", "en": "External wafer fabrication"}, "3": {"ja": "アナログ・信号処理半導体", "en": "Analog & signal-processing chips"}, "7": {"ja": "自動車の採用事例", "en": "Automotive adoption"}};
+  if (root === "DDOG") return {"6": {"ja": "監視・セキュリティ・クラウド連携", "en": "Observability, security & cloud collaboration"}};
+  if (root === "ZS") return {"6": {"ja": "安全な接続・防御AI・運用連携", "en": "Secure access, defensive AI & SecOps"}};
+
+  if (root === "MSFT") return {"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM","en":"PC operating systems & sales CRM"}};
   if (root === "ADBE") return {"6": {"ja": "制作ツールのAIモデル連携", "en": "AI model integration in creative tools"}, "7": {"ja": "制作・文書・マーケティング", "en": "Creative, documents & marketing"}};
-  if (root === "CRM") return {"6": {"ja": "CRM・業務アプリ・AI連携", "en": "CRM, business applications & AI integration"}};
+  if (root === "CRM") return {"6": {"ja": "営業CRM・マーケティング・AI連携", "en": "Sales CRM, marketing & AI integration"}};
   if (root === "BOX") return {"6": {"ja": "企業コンテンツ・AI連携", "en": "Enterprise content & AI integration"}, "7": {"ja": "会議・共同作業", "en": "Meetings & collaboration"}};
   if (root === "WDAY") return {"6": {"ja": "クラウド・業務AI連携", "en": "Cloud & workflow AI integration"}, "7": {"ja": "人事・財務・給与", "en": "HR, finance & payroll"}};
   if (root === "DELL") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ラック", "en": "Servers & racks"}, "6": {"ja": "ラックを導入するクラウド企業", "en": "Cloud companies adopting racks"}};
@@ -316,6 +321,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     7: { ja: "語学学習・教育・試験", en: "Language learning, education & assessment" },
   };
   if (root === "TSLA") return {
+    2: { ja: "電池セル供給元", en: "Battery-cell suppliers" },
     7: { ja: "自動車・蓄電システム", en: "Vehicles & energy storage" },
   };
   if (["IONQ", "RGTI", "QBTS", "QUBT"].includes(root)) return {
@@ -431,6 +437,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "ITコンサルティング",
         "en": "IT consulting"
+      }
+    },
+    "ADBE": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "顧客向けソリューションの戦略提携",
+        "en": "Strategic customer-solution partner"
+      }
+    },
+    "SAP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "顧客向けソリューションの戦略提携",
+        "en": "Strategic customer-solution partner"
       }
     }
   },
@@ -3338,6 +3358,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "顧客対応・業務自動化",
         "en": "Customer engagement & automation"
       }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWSクラウド基盤",
+        "en": "AWS cloud infrastructure"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloudの計算・保存",
+        "en": "Google Cloud compute / storage"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "macOS・PC用OS",
+        "en": "macOS / PC operating system"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Dynamics 365 Salesと営業CRM",
+        "en": "Sales CRM versus Dynamics 365 Sales"
+      }
     }
   },
   "ADBE": {
@@ -3375,6 +3423,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "マーケティング自動化",
         "en": "Marketing automation"
       }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Final Cut Proの動画編集",
+        "en": "Final Cut Pro video editing"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Clipchampの動画作成",
+        "en": "Clipchamp video creation"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "顧客データ・マーケティング",
+        "en": "Customer data / marketing"
+      }
     }
   },
   "CRM": {
@@ -3404,6 +3473,41 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "顧客対応・業務自動化",
         "en": "Customer engagement & automation"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Dynamics 365 Sales",
+        "en": "Dynamics 365 Sales"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle CXの営業・顧客対応",
+        "en": "Oracle CX sales / service"
+      }
+    },
+    "SAP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Sales Cloud V2の営業支援",
+        "en": "Sales Cloud V2 sales automation"
+      }
+    },
+    "HUBS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Sales Hubの商談管理",
+        "en": "Sales Hub pipeline management"
+      }
+    },
+    "ADBE": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Experience Platformの顧客データ",
+        "en": "Experience Platform customer data"
       }
     }
   },
@@ -3661,6 +3765,170 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Construction project management"
       }
     }
+  },
+  "TXN": {
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "アナログ・組み込み半導体",
+        "en": "Analog & embedded chips"
+      }
+    },
+    "NXPI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "アナログ・組み込みの競合",
+        "en": "Analog / embedded rivalry"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Jetson・Holoscanのロボット連携",
+        "en": "Jetson / Holoscan robotics collaboration"
+      }
+    }
+  },
+  "ADI": {
+    "ADI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "アナログ・信号処理",
+        "en": "Analog & signal processing"
+      }
+    },
+    "NXPI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "信号処理などで競合",
+        "en": "Selected signal-processing rivalry"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "外部ウエハー製造",
+        "en": "External wafer fabrication"
+      }
+    },
+    "GM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "2020年発表のUltium無線BMS採用",
+        "en": "2020 announced Ultium wBMS adoption"
+      }
+    }
+  },
+  "DDOG": {
+    "DDOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "インフラ・アプリ監視",
+        "en": "Infrastructure / application observability"
+      }
+    },
+    "DT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "APM・性能監視",
+        "en": "APM / performance monitoring"
+      }
+    },
+    "CSCO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "APM・ログ管理",
+        "en": "APM / log management"
+      }
+    },
+    "ESTC": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ログ管理・監視",
+        "en": "Logs / observability"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS純正監視の競合・正式協業",
+        "en": "AWS native-monitoring rival / strategic partner"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure純正監視",
+        "en": "Azure native monitoring"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud純正監視",
+        "en": "Google Cloud native monitoring"
+      }
+    }
+  },
+  "ZS": {
+    "ZS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ゼロトラスト・安全な接続",
+        "en": "Zero Trust / secure access"
+      }
+    },
+    "PANW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド型の安全な接続",
+        "en": "Cloud-delivered secure access"
+      }
+    },
+    "FTNT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SASE・安全な接続",
+        "en": "SASE / secure access"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Entra Agent ID早期対応",
+        "en": "Entra Agent ID early adoption"
+      }
+    },
+    "CRWD": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "端末・運用連携（計画を含む）",
+        "en": "Endpoint / SecOps integration including plans"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "TAC・防御AI利用",
+        "en": "TAC / defensive-AI use"
+      }
+    }
+  },
+  "TSLA": {
+    "Panasonic Holdings": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "東証6752・傘下の電池事業",
+        "en": "Tokyo 6752 / Energy business"
+      }
+    },
+    "CATL": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "香港3750・電池セル供給元",
+        "en": "HKEX 3750 / battery-cell supplier"
+      }
+    }
   }
 };
 
@@ -3724,7 +3992,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.

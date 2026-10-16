@@ -1252,6 +1252,34 @@
       {
         "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/",
         "label": "Microsoft — Anthropic strategic partnerships, November 18, 2025"
+      },
+      {
+        "url": "https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-azure",
+        "label": "Microsoft Azure — cloud platform and computing services"
+      },
+      {
+        "url": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/what-is-cloud-computing.html",
+        "label": "AWS — cloud compute, storage and database platform"
+      },
+      {
+        "url": "https://cloud.google.com/products",
+        "label": "Google Cloud — Compute Engine, storage and cloud services"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/windows",
+        "label": "Microsoft — Windows operating system"
+      },
+      {
+        "url": "https://www.apple.com/os/macos/",
+        "label": "Apple — macOS operating system"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dynamics365/sales/overview",
+        "label": "Microsoft — Dynamics 365 Sales product capabilities"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+        "label": "Salesforce FY2026 Form 10-K — Sales and Marketing products"
       }
     ],
     "ja": {
@@ -1259,7 +1287,7 @@
       "revenue": "業務ソフトの契約料やAzureの利用料、Windowsのライセンス、ゲームなどの販売。",
       "strength": "企業が日常的に使う業務ソフトとクラウドを組み合わせ、既存の仕事にAIを取り入れやすい。",
       "risks": "データセンターへの巨額投資、AIサービスの価格競争、サイバー攻撃や情報流出。",
-      "competition": "Azureのデータ処理・分析ではSnowflake、端末防御ではSentinelOne、顧客対応・業務自動化ではPegasystemsが競合例。それぞれ相手企業の年次報告書がMicrosoftを競合として挙げている。製品分野ごとの比較で、全事業で競うという意味ではない。",
+      "competition": "クラウド基盤ではAWSとGoogle Cloud、PC用OSではAppleのmacOS、営業CRMではSalesforceとDynamics 365 Salesを比較する。これらは公式製品を照合した編集上の比較。Snowflakeのデータ分析、SentinelOneの端末防御、Pegasystemsの顧客対応・業務自動化は相手側の年次報告がMicrosoftを競合として挙げる分野で、全事業の同等性を意味しない。",
       "relationships": "OpenAIとは2026年4月に契約を改定し、Microsoftは主要クラウド提携先を維持する一方、IPライセンスは非独占となり、OpenAIは他のクラウドでも製品を提供できる。Anthropicは2025年11月にAzure計算容量の購入を約束し、Claudeの提供連携も公表した。容量の約束や投資計画を全て実行済みとは扱わない。"
     },
     "en": {
@@ -1267,7 +1295,7 @@
       "revenue": "Business-software subscriptions, Azure usage fees, Windows licenses and gaming sales.",
       "strength": "Combines widely used workplace software and cloud services to bring AI into existing workflows.",
       "risks": "Heavy data-center investment, AI pricing pressure, cyberattacks and data breaches.",
-      "competition": "Examples are Snowflake in Azure data processing and analytics, SentinelOne in endpoint protection, and Pegasystems in customer engagement and workflow automation. Each peer names Microsoft in its annual report; the overlap is specific to those product areas.",
+      "competition": "Official-product comparisons cover AWS and Google Cloud versus Azure, Apple macOS versus Windows, and Salesforce sales CRM versus Dynamics 365 Sales. Snowflake data analytics, SentinelOne endpoint protection and Pegasystems customer-engagement/workflow overlaps are separately supported by those peers’ filings; the companies are not equivalent across all businesses.",
       "relationships": "The April 2026 amended OpenAI agreement retains Microsoft as a primary cloud partner while making its IP license non-exclusive and allowing OpenAI products on other clouds. Anthropic announced Azure compute purchase commitments and Claude integration in November 2025; committed capacity and investment plans are not all completed deployments."
     },
     "maps": {
@@ -1310,6 +1338,62 @@
           "sourceIndexes": [
             3
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "competitor",
+          "label": {
+            "ja": "AWSとAzureのクラウド基盤。公式製品の比較",
+            "en": "AWS versus Azure cloud infrastructure; editorial product comparison"
+          },
+          "sourceIndexes": [
+            6,
+            7
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "competitor",
+          "label": {
+            "ja": "Google CloudとAzureの計算・保存基盤。公式製品の比較",
+            "en": "Google Cloud versus Azure compute/storage; editorial comparison"
+          },
+          "sourceIndexes": [
+            6,
+            8
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "competitor",
+          "label": {
+            "ja": "macOSとWindowsのPC用OS。公式製品の比較",
+            "en": "macOS versus Windows PC operating systems; editorial comparison"
+          },
+          "sourceIndexes": [
+            9,
+            10
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "role": "competitor",
+          "label": {
+            "ja": "Dynamics 365 Salesと営業CRM。公式製品の比較",
+            "en": "Sales CRM versus Dynamics 365 Sales; editorial comparison"
+          },
+          "sourceIndexes": [
+            11,
+            12
+          ],
+          "ticker": "CRM"
         }
       ],
       "relationships": [
@@ -6541,6 +6625,26 @@
       {
         "url": "https://investor.salesforce.com/news/news-details/2025/CORRECTING-and-REPLACING-Salesforce-and-OpenAI-Partner-Across-Enterprise-Work-and-Commerce/default.aspx",
         "label": "Salesforce — corrected OpenAI partnership announcement, October 14, 2025"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dynamics365/sales/overview",
+        "label": "Microsoft — Dynamics 365 Sales product capabilities"
+      },
+      {
+        "url": "https://www.oracle.com/cx/",
+        "label": "Oracle — CX sales, marketing and service applications"
+      },
+      {
+        "url": "https://learning.sap.com/courses/exploring-sap-sales-cloud-version-2/getting-an-overview-about-sap-sales-cloud-version-2",
+        "label": "SAP — Sales Cloud Version 2 sales automation and pipeline management"
+      },
+      {
+        "url": "https://www.hubspot.com/products/sales",
+        "label": "HubSpot — Sales Hub deal and pipeline management"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm",
+        "label": "Adobe FY2025 Form 10-K — Express, Premiere Pro and Experience Platform"
       }
     ],
     "ja": {
@@ -6548,7 +6652,7 @@
       "revenue": "Sales、Service、Data Cloud、Slackなどの利用契約とサポートが中心。導入支援や研修からも収入を得る。",
       "strength": "顧客情報を共通基盤へ集め、営業や問い合わせ対応の流れとAIを同じ権限・データ管理の下で動かせる。",
       "risks": "企業のIT予算と契約更新に左右され、生成AIの品質・費用・個人情報管理が導入速度を決める。製品統合が複雑になるリスクもある。",
-      "competition": "顧客対応と業務自動化ではPegasystemsが競合例。Pegasystemsの年次報告書がSalesforceを競合として挙げている。顧客とのやり取りを管理するソフトや業務フローが重なる分野で、Salesforceの全製品を同じものとして扱わない。",
+      "competition": "営業CRMではMicrosoft Dynamics 365 Sales、Oracle CX、SAP Sales Cloud V2、HubSpot Sales Hub、顧客データ・マーケティングではAdobe Experience Platformが比較例。Salesforceの年次報告と各社の公式製品を照合した編集上の比較で、Salesforce自身が全社を実名列挙したという意味ではない。Pegasystemsの顧客対応・業務自動化は同社の年次報告による実名開示。",
       "relationships": "Anthropicとは2026年8月にClaudeforceを発表し、ClaudeからSalesforceのデータ・業務操作を扱う連携を説明した。OpenAIとは2025年10月にAgentforce・ChatGPT・Slackの連携拡大を発表。公表済み機能と今後の統合計画を分けて捉える。"
     },
     "en": {
@@ -6556,7 +6660,7 @@
       "revenue": "Subscriptions and support for Sales, Service, Data Cloud, Slack and other products lead revenue, with services and training also contributing.",
       "strength": "Unifies customer data, workflows and AI under shared permissions and governance across front-office teams.",
       "risks": "Enterprise budgets and renewals matter, while generative-AI quality, cost and privacy can slow adoption and product integration can add complexity.",
-      "competition": "Pegasystems names Salesforce as a competitor in its annual report. The relevant overlap is customer-engagement software and workflow automation, rather than every Salesforce product.",
+      "competition": "Sales-CRM comparisons cover Microsoft Dynamics 365 Sales, Oracle CX, SAP Sales Cloud V2 and HubSpot Sales Hub; Adobe Experience Platform overlaps in customer data/marketing. These editorial comparisons use Salesforce’s filing and official products, not a claim that Salesforce explicitly lists every company. Pegasystems independently names Salesforce in customer engagement/workflow automation.",
       "relationships": "Salesforce announced Claudeforce with Anthropic in August 2026, connecting Claude with Salesforce data and governed business actions. An October 2025 OpenAI announcement expanded Agentforce, ChatGPT and Slack integration. Announced available features are distinct from further integration plans."
     },
     "maps": {
@@ -6573,6 +6677,76 @@
           "sourceIndexes": [
             1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "Dynamics 365 Salesと営業CRM。公式製品の比較",
+            "en": "Dynamics 365 Sales / sales CRM; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "role": "competitor",
+          "label": {
+            "ja": "Oracle CXの営業・顧客対応。公式製品の比較",
+            "en": "Oracle CX sales / service applications; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "ORCL"
+        },
+        {
+          "kind": "company",
+          "name": "SAP",
+          "role": "competitor",
+          "label": {
+            "ja": "Sales Cloud V2の営業支援。公式製品の比較",
+            "en": "Sales Cloud V2 sales automation; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            6
+          ],
+          "ticker": "SAP"
+        },
+        {
+          "kind": "company",
+          "name": "HubSpot",
+          "role": "competitor",
+          "label": {
+            "ja": "Sales Hubの商談・営業管理。公式製品の比較",
+            "en": "Sales Hub deal / pipeline management; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            7
+          ],
+          "ticker": "HUBS"
+        },
+        {
+          "kind": "company",
+          "name": "Adobe",
+          "role": "competitor",
+          "label": {
+            "ja": "Experience Platformの顧客データ・マーケティング。公式製品の比較",
+            "en": "Experience Platform customer data / marketing; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            8
+          ],
+          "ticker": "ADBE"
         }
       ],
       "relationships": [
@@ -6886,7 +7060,7 @@
       "strength": "長年運用される基幹システムと顧客関係を持ち、Red Hatの技術を使って社内設備と複数クラウドをまたぐ運用を支援できる。",
       "risks": "クラウド・AIで競争が激しく、古い事業から成長分野への移行には実行力が必要。大型案件、人材確保、為替、サイバー障害も影響する。",
       "competition": "ソフトウェア・クラウドではGoogle、AWS、Microsoft、Oracle、ITコンサルティングではAccentureとCapgemini、サーバーではDell PowerEdgeとHPE ProLiantが比較例。企業名はIBM自身の分野別実名開示に基づき、サーバーの製品名は相手側の公式情報で確認した。協業と競合は分野ごとに併存し、各社の全製品がIBM全体の代替になるとはしない。",
-      "relationships": "企業と公共機関へソフト、コンサル、基幹機器を組み合わせて提供し、クラウド会社や業務ソフト会社とも提携と競争を同時に行う。"
+      "relationships": "年次報告はAdobe、AWS、Microsoft、Oracle、Palo Alto Networks、Salesforce、SAPなどを戦略的提携先として挙げ、顧客向けソリューションの共同提供を説明する。ソフトウェアやクラウドでの競合と提携は併存し、個別契約量や全製品の共同開発を意味しない。"
     },
     "en": {
       "business": "Provides AI and hybrid-cloud software, consulting and mainframe infrastructure for mission-critical enterprise and government systems.",
@@ -6894,7 +7068,7 @@
       "strength": "Deep mission-critical customer relationships and Red Hat technology support operations spanning on-premises systems and multiple clouds.",
       "risks": "Cloud and AI competition makes portfolio execution critical; large projects, skilled labor, currency and cyber incidents also affect results.",
       "competition": "Examples are Google, AWS, Microsoft and Oracle in software/cloud; Accenture and Capgemini in IT consulting; and Dell PowerEdge and HPE ProLiant in servers. IBM names the companies by business segment; peer official portfolios support the server examples. Partnerships and competition coexist by field, without implying every portfolio replaces all of IBM.",
-      "relationships": "Combines software, consulting and core systems for enterprises and governments while partnering and competing with cloud and application vendors."
+      "relationships": "IBM names Adobe, AWS, Microsoft, Oracle, Palo Alto Networks, Salesforce and SAP among strategic partners for customer solutions. Partnerships can coexist with software/cloud rivalry and do not establish individual contract volumes or joint development of every product."
     },
     "maps": {
       "competition": [
@@ -7108,6 +7282,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Adobe",
+          "role": "partner",
+          "label": {
+            "ja": "2025年年次報告が顧客向けソリューションの戦略提携先として実名開示",
+            "en": "FY2025 named strategic partner for customer solutions"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ADBE"
+        },
+        {
+          "kind": "company",
+          "name": "SAP",
+          "role": "partner",
+          "label": {
+            "ja": "2025年年次報告が顧客向けソリューションの戦略提携先として実名開示",
+            "en": "FY2025 named strategic partner for customer solutions"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "SAP"
         }
       ]
     }
@@ -7118,7 +7318,7 @@
       "TXN"
     ],
     "name": "Texas Instruments",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Analog and Embedded Processing / Markets / Customers / Competition",
@@ -7127,6 +7327,10 @@
       {
         "label": "NXP FY2025 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
+      },
+      {
+        "url": "https://www.ti.com/about-ti/newsroom/news-releases/2026/2026-03-05-ti-accelerates-the-next-generation-of-physical-ai-with-nvidia.html",
+        "label": "Texas Instruments — physical-AI collaboration with NVIDIA, March 5, 2026"
       }
     ],
     "ja": {
@@ -7135,7 +7339,7 @@
       "strength": "8万点超の幅広い製品、自社製造、10万社超の顧客網、長寿命製品を組み合わせ、少量多品種の需要にも対応できる。",
       "risks": "半導体の在庫循環で需要が振れやすい。大規模な工場投資は需要不足時に稼働率と利益率を圧迫し、アジア勢との価格競争も強まる。",
       "competition": "アナログ・組み込み半導体ではNXPが競合例。NXPの年次報告書は同社を主要競合の一社として挙げる一方、競争は製品群の一部で生じると説明している。採用用途や性能、供給、価格などで比較する。",
-      "relationships": "産業機器、自動車、データセンター、個人向け電子機器のメーカーへ半導体を供給。2025年売上の80％超を直接販売した。"
+      "relationships": "2026年3月にNVIDIAとの協業を発表し、TIのミリ波レーダーをJetson Thor・Holoscanへ接続するロボット向け技術を説明した。センシング・制御・電源と演算基盤の連携で、NVIDIAのGPUをTIが製造する契約ではない。"
     },
     "en": {
       "business": "Designs and manufactures analog chips that handle real-world signals and embedded processors that control electronic equipment.",
@@ -7143,7 +7347,7 @@
       "strength": "Combines more than 80,000 products, internal manufacturing, over 100,000 customers and long product lives to serve diverse designs.",
       "risks": "Inventory cycles can swing demand; large fab investments pressure utilization and margins in downturns, while Asian price competition is increasing.",
       "competition": "NXP names this company among its semiconductor rivals and states that competition applies to some, rather than all, product lines. The relevant comparison is analog and embedded semiconductors, with selection depending on application, performance, availability and cost.",
-      "relationships": "Supplies industrial, automotive, data-center and personal-electronics manufacturers; more than 80% of 2025 revenue was sold directly."
+      "relationships": "A March 2026 NVIDIA collaboration connects TI mmWave radar with Jetson Thor and Holoscan for robotics. It joins sensing, control and power with compute technology; it is not a contract for TI to manufacture NVIDIA GPUs."
     },
     "maps": {
       "competition": [
@@ -7200,6 +7404,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：Jetson Thor・Holoscanとレーダー技術を連携",
+            "en": "March 2026: mmWave radar integration with Jetson Thor / Holoscan"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -7210,7 +7427,7 @@
       "ADI"
     ],
     "name": "Analog Devices",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / End markets / Competition / Production resources",
@@ -7219,6 +7436,14 @@
       {
         "label": "NXP FY2025 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
+      },
+      {
+        "url": "https://investor.analog.com/news-releases/news-release-details/analog-devices-introduces-automotive-industrys-first-wireless",
+        "label": "ADI — GM Ultium wireless BMS adoption announcement, September 2020"
+      },
+      {
+        "url": "https://investor.analog.com/news-releases/news-release-details/analog-devices-wireless-battery-management-system-achieves-top",
+        "label": "ADI — wireless BMS production update, March 31, 2022"
       }
     ],
     "ja": {
@@ -7227,7 +7452,7 @@
       "strength": "高精度・高速・低雑音の信号処理、7万5千点超の製品、長い製品寿命、約1万3千人の技術者による用途知識が強み。",
       "risks": "半導体市況と代理店在庫の影響を受ける。年間ウエハー需要の半分超をTSMCなど外部工場へ頼り、供給停止や地域リスクも抱える。",
       "competition": "信号処理などの半導体ではNXPが競合例。NXPの年次報告書は同社を主要競合の一社として挙げる一方、競争は製品群の一部で生じると説明している。採用用途や性能、供給、価格などで比較する。",
-      "relationships": "産業・自動車・通信機器メーカーへ信号処理と電源半導体を供給し、ウエハーの半分超をTSMCなど外部工場から調達する。"
+      "relationships": "TSMCを外部ウエハー製造の主要供給元として年次報告に記載する。GMのUltium搭載車向け無線バッテリー管理システムは2020年に採用を発表し、2022年には同技術の量産化を説明した。採用時点の公表であり、現行全車種への搭載や現在の調達量は示していない。"
     },
     "en": {
       "business": "Develops high-performance analog and mixed-signal chips, power management, RF, sensors and embedded processing products.",
@@ -7235,7 +7460,7 @@
       "strength": "Differentiates through precision, speed and low noise, more than 75,000 products, long product lives and about 13,000 engineers with application expertise.",
       "risks": "Semiconductor cycles and distributor inventory affect demand; more than half of annual wafer needs come from outside foundries including TSMC.",
       "competition": "NXP names this company among its semiconductor rivals and states that competition applies to some, rather than all, product lines. The relevant comparison is signal-processing semiconductors, with selection depending on application, performance, availability and cost.",
-      "relationships": "Supplies signal and power chips to industrial, automotive and communications makers and sources over half of its wafers from foundries such as TSMC."
+      "relationships": "ADI names TSMC as a major external wafer foundry. It announced wireless battery-management adoption for GM Ultium vehicles in 2020 and described the technology’s move to production in March 2022. Those dated disclosures do not establish installation in every current vehicle or present procurement volumes."
     },
     "maps": {
       "competition": [
@@ -7305,6 +7530,20 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "General Motors",
+          "role": "customer",
+          "label": {
+            "ja": "2020年発表：Ultium車向け無線BMS採用。2022年に量産化を説明",
+            "en": "2020 announced Ultium wBMS adoption; 2022 production update"
+          },
+          "sourceIndexes": [
+            2,
+            3
+          ],
+          "ticker": "GM"
         }
       ]
     }
@@ -9407,7 +9646,7 @@
       "ZS"
     ],
     "name": "Zscaler",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Platform / Revenue / Competition / Risks",
@@ -9420,6 +9659,18 @@
       {
         "label": "Fortinet FY2025 Form 10-K · Products / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm"
+      },
+      {
+        "url": "https://www.zscaler.com/de/press/zscaler-proud-partner-microsoft-entra-agent-id-partner-ecosystem",
+        "label": "Zscaler — Microsoft Entra Agent ID ecosystem, November 18, 2025"
+      },
+      {
+        "url": "https://ir.zscaler.com/news-releases/news-release-details/zscaler-and-crowdstrike-expand-strategic-partnership",
+        "label": "Zscaler — CrowdStrike expanded partnership, September 2, 2026"
+      },
+      {
+        "url": "https://ir.zscaler.com/news-releases/news-release-details/zscaler-and-openai-partner-advance-next-era-cybersecurity",
+        "label": "Zscaler — OpenAI cybersecurity partnership, April 15, 2026"
       }
     ],
     "ja": {
@@ -9428,7 +9679,7 @@
       "strength": "世界中のクラウド拠点で通信を検査し、Web、SaaS、社内アプリ、データ、AI利用を一つの基盤で守れる。",
       "risks": "大口契約の営業期間が長く、競合の無料バンドル、クラウド障害、脅威の見逃し、更新率低下が成長に響く。",
       "competition": "クラウド型の安全な接続・通信防御ではPalo Alto NetworksとFortinetが競合例。両社の年次報告はZscalerを実名で競合として挙げている。SASEなどの接続・防御機能で比べるもので、端末防御など全製品が同じという意味ではない。",
-      "relationships": "企業の利用者と拠点、SaaS・社内アプリ、クラウド上の処理を仲介し、販売代理店や運用会社と導入する。"
+      "relationships": "Microsoft Entra Agent IDの早期導入パートナーとして2025年11月に参加を発表。CrowdStrikeとは2026年9月にゼロトラストとセキュリティ運用の連携を拡大した。OpenAIとは2026年4月にTACプログラム参加と防御AI利用を説明している。開発中の連携や追加導入計画は、提供済み機能と区別する。"
     },
     "en": {
       "business": "Provides zero-trust security that verifies each user, device and application connection instead of placing users directly on corporate networks.",
@@ -9436,7 +9687,7 @@
       "strength": "Inspects traffic across a global cloud and protects web, SaaS, private applications, data and AI use on one platform.",
       "risks": "Long enterprise sales cycles, competitor bundling, cloud outages, missed threats and lower renewal rates can weaken growth.",
       "competition": "Palo Alto Networks and Fortinet are examples in cloud-delivered secure access and traffic protection. Both name Zscaler in their annual reports. The overlap includes secure networking and SASE capabilities rather than every endpoint or security product.",
-      "relationships": "Connects enterprise users and branches to SaaS, private applications and cloud workloads, working with resellers and managed-service providers."
+      "relationships": "Zscaler joined the Microsoft Entra Agent ID early-adoption ecosystem in November 2025, expanded its CrowdStrike Zero Trust/SecOps partnership in September 2026, and described OpenAI TAC participation and defensive-AI use in April 2026. Integrations under development and further adoption plans remain distinct from delivered functionality."
     },
     "maps": {
       "competition": [
@@ -9507,6 +9758,44 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "2025年11月：Entra Agent IDの早期導入パートナー",
+            "en": "November 2025: Entra Agent ID early-adoption partner"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "CrowdStrike",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：ゼロトラスト・セキュリティ運用連携を拡大。開発計画を含む",
+            "en": "September 2026: expanded Zero Trust / SecOps partnership; includes development plans"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "CRWD"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月：TAC参加・防御AI利用。追加統合計画を含む",
+            "en": "April 2026: TAC partnership / defensive AI use; includes integration plans"
+          },
+          "sourceIndexes": [
+            5
           ]
         }
       ]
@@ -9657,11 +9946,15 @@
       "DDOG"
     ],
     "name": "Datadog",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Platform / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm"
+      },
+      {
+        "url": "https://www.datadoghq.com/about/latest-news/press-releases/datadog-announces-expanded-collaboration-agreement-highlights-new-capabilities-with-aws-across-ai-observability-and-security-at-aws-reinvent/",
+        "label": "Datadog — expanded AWS strategic collaboration, December 3, 2025"
       }
     ],
     "ja": {
@@ -9670,7 +9963,7 @@
       "strength": "インフラからアプリ、利用者体験、セキュリティまで同じデータ基盤で結び、障害原因を横断して追跡できる。",
       "risks": "顧客のクラウド利用減少、利用量課金の変動、価格競争、大手クラウドの純正監視、障害・情報漏えいが成長に影響する。",
       "competition": "アプリ性能監視ではDynatraceやCisco、ログ管理ではElasticやCisco、クラウド監視ではAWS・Microsoft Azure・Google Cloudが競合例。Datadog自身の年次報告がこれらを分野別に列挙している。各社の全製品が同じ機能を持つわけではない。",
-      "relationships": "クラウド・SaaS・ECなどの運営会社へ監視基盤を提供し、開発、運用、セキュリティの各チームが同じデータを使う。"
+      "relationships": "AWSとは2025年12月に戦略的協業契約を拡大し、監視・AI・セキュリティ製品の連携、AWS Marketplace、共同販売を説明した。AWSの純正監視とは競合も併存する。発表内のプレビュー機能を全て一般提供済みとはしない。"
     },
     "en": {
       "business": "Monitors cloud applications, servers, networks, logs, user experience and security in one platform.",
@@ -9678,7 +9971,7 @@
       "strength": "Connects infrastructure, applications, user experience and security on one data platform so teams can trace incidents across layers.",
       "risks": "Lower customer cloud usage, variable consumption billing, price competition, native cloud monitoring, outages and data breaches can affect growth.",
       "competition": "Datadog names Dynatrace and Cisco in application performance monitoring, Elastic and Cisco in log management, and AWS, Microsoft Azure and Google Cloud in cloud monitoring. These are product-specific examples from its annual report.",
-      "relationships": "Supplies monitoring to cloud, SaaS and commerce operators, letting development, operations and security teams use the same telemetry."
+      "relationships": "A December 2025 AWS strategic collaboration covers observability, AI/security integrations, AWS Marketplace and joint go-to-market work, alongside rivalry with native AWS monitoring. Features labeled preview in the announcement are not all treated as generally available."
     },
     "maps": {
       "competition": [
@@ -9800,6 +10093,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "role": "partner",
+          "label": {
+            "ja": "2025年12月：監視・AI・セキュリティの正式協業契約",
+            "en": "December 2025: strategic collaboration in observability, AI and security"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -10001,6 +10307,18 @@
       {
         "url": "https://news.adobe.com/news/2025/10/adobe-max-2025-creative-cloud",
         "label": "Adobe — MAX Creative Cloud model integrations, October 28, 2025"
+      },
+      {
+        "url": "https://www.apple.com/final-cut-pro/",
+        "label": "Apple — Final Cut Pro video editing"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/microsoft-365/clipchamp",
+        "label": "Microsoft — Clipchamp video editor"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+        "label": "Salesforce FY2026 Form 10-K — Sales and Marketing products"
       }
     ],
     "ja": {
@@ -10008,7 +10326,7 @@
       "revenue": "Photoshop、Illustrator、Acrobatなどの個人・法人サブスクと、企業向けデータ・マーケティングサービスから稼ぐ。",
       "strength": "制作ソフトの定番製品群、PDF規格、企業の制作・承認・配信までつなぐ環境と、権利に配慮した生成AIを持つ。",
       "risks": "生成AIや無料ツールによる代替、契約更新、価格への反発、著作権・学習データ規制、競合への人材流出がリスク。",
-      "competition": "コンテンツ作成ではAdobe ExpressとCanva、電子署名ではAcrobat SignとDocusign、マーケティング基盤ではKlaviyoが競合例。Adobe自身がCanvaとの比較を公開し、DocusignとKlaviyoの年次報告もAdobeを名指ししている。競合範囲は製品ごとに異なる。",
+      "competition": "動画編集はApple Final Cut ProとPremiere Pro、動画作成はMicrosoft ClipchampとAdobe Express、顧客データ・マーケティングではSalesforceとAdobe Experience Platformを比較する。これらは公式製品を照合した編集上の比較。電子署名のDocusignとマーケティングのKlaviyoは相手側年次報告がAdobeを競合として挙げている。",
       "relationships": "2025年10月のAdobe MAXでは、FireflyでGoogleとOpenAIの生成AIモデルを選択・利用できる機能を公表した。これは制作ツールへのモデル連携で、両社がAdobeの計算容量を購入する契約ではない。製品・機能ごとに提供範囲が異なる。"
     },
     "en": {
@@ -10016,7 +10334,7 @@
       "revenue": "Earns from individual and enterprise subscriptions to products such as Photoshop, Illustrator and Acrobat and from enterprise data and marketing services.",
       "strength": "Combines standard creative tools, the PDF ecosystem, end-to-end enterprise content workflows and commercially safer generative AI.",
       "risks": "Generative AI and free tools, renewals, pricing resistance, copyright and training-data rules and talent competition can weaken results.",
-      "competition": "Examples include Canva versus Adobe Express in content creation, Docusign versus Acrobat Sign in e-signatures, and Klaviyo in marketing platforms. Adobe publishes a Canva comparison; Docusign and Klaviyo explicitly name Adobe. The overlap varies by product.",
+      "competition": "Official-product comparisons cover Apple Final Cut Pro versus Premiere Pro, Microsoft Clipchamp versus Adobe Express video creation, and Salesforce versus Adobe Experience Platform in customer data/marketing. Docusign e-signatures and Klaviyo marketing are separately supported by those peers’ filings naming Adobe.",
       "relationships": "Adobe MAX in October 2025 described Google and OpenAI model options in Firefly. These are creative-tool model integrations, not contracts for those companies to buy Adobe compute capacity. Availability differs by product and feature."
     },
     "maps": {
@@ -10058,6 +10376,48 @@
             3
           ],
           "ticker": "KVYO"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "competitor",
+          "label": {
+            "ja": "Final Cut ProとPremiere Proの動画編集。公式製品の比較",
+            "en": "Final Cut Pro versus Premiere Pro video editing; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "ClipchampとAdobe Expressの動画作成。公式製品の比較",
+            "en": "Clipchamp versus Adobe Express video creation; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            6
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客データ・マーケティング基盤。公式製品の比較",
+            "en": "Customer-data / marketing platforms; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            7
+          ],
+          "ticker": "CRM"
         }
       ],
       "relationships": [
@@ -19589,6 +19949,18 @@
       {
         "label": "Enphase · IQ Battery 5P home-storage owner guide",
         "url": "https://enphase.com/download/enphase-energy-system-iq-battery-5p-owners-guide.pdf"
+      },
+      {
+        "url": "https://holdings.panasonic/global/corporate/investors/inquiry/general-03.html",
+        "label": "Panasonic Holdings — Tokyo listing and securities code 6752"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1649752/000110465925108370/tm2530601d1_ex99-3.htm",
+        "label": "NMG / Panasonic Energy — wholly owned Panasonic Holdings subsidiary, October 31, 2025"
+      },
+      {
+        "url": "https://www.catl.com/en/uploads/1/file/public/202604/20260415221104_m2gm0p01w8.pdf",
+        "label": "CATL — 2026 first-quarter issuer report, HKEX code 3750"
       }
     ],
     "ja": {
@@ -19597,7 +19969,7 @@
       "strength": "車両、電池、電力制御、ソフト、工場、直販、急速充電網まで広く自社で組み合わせられる。",
       "risks": "値下げ競争と需要変動、新型車・自動運転の開発、工場増産、電池材料、規制やブランドへの影響に左右される。",
       "competition": "乗用EVではFordのMustang Mach-E、GMのChevrolet Equinox EV・Blazer EV、BYDのSEALION 7が比較例。蓄電池では大型向けのFluence Gridstackと家庭向けのEnphase IQ Batteryを分けて比較する。公式製品を照合した編集上の競合例で、車種の販売地域や用途、蓄電システムの規模・性能が同じとはしない。",
-      "relationships": "消費者や法人へ車両とエネルギー製品を販売し、電池セル、電子部品、材料、製造装置を外部から調達する。"
+      "relationships": "2025年年次報告は電池セルの供給元としてPanasonicとCATLを実名で挙げる。Panasonicは東京上場のPanasonic Holdings（6752）と傘下の電池事業、CATLは香港上場3750として識別する。車種ごとの供給比率や現在の全調達量、独占契約は公表文から推定しない。"
     },
     "en": {
       "business": "Designs and manufactures electric vehicles and battery storage, supported by charging, service, insurance and solar offerings.",
@@ -19605,7 +19977,7 @@
       "strength": "Integrates vehicles, batteries, power electronics, software, factories, direct sales and a fast-charging network.",
       "risks": "Pricing and demand, new-product and autonomy execution, factory ramps, battery materials, regulation and brand effects drive risk.",
       "competition": "Passenger-EV examples are Ford Mustang Mach-E, GM Chevrolet Equinox EV/Blazer EV and BYD SEALION 7. Storage examples separately compare Fluence Gridstack at utility scale and Enphase IQ Battery at home scale. These editorial comparisons use official products; vehicle availability, use cases and storage scale/performance are not assumed identical.",
-      "relationships": "Sells vehicles and energy products to consumers and businesses and sources cells, electronics, materials and factory equipment."
+      "relationships": "Tesla’s FY2025 filing names Panasonic and CATL as battery-cell suppliers. Panasonic is represented through Tokyo-listed Panasonic Holdings (6752) and its Energy business; CATL is Hong Kong listed as 3750. The disclosure does not establish per-model supply shares, total current procurement or exclusivity."
     },
     "maps": {
       "competition": [
@@ -19704,6 +20076,33 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Panasonic Holdings",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年年次報告の電池セル供給元Panasonic。上場親会社・傘下Energy事業",
+            "en": "FY2025 named Panasonic cell supplier; listed parent / Energy business"
+          },
+          "sourceIndexes": [
+            0,
+            6,
+            7
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CATL",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年年次報告が電池セル供給元として実名開示。香港上場3750",
+            "en": "FY2025 named battery-cell supplier; Hong Kong listed 3750"
+          },
+          "sourceIndexes": [
+            0,
+            8
           ]
         }
       ]
