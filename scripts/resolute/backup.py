@@ -12,6 +12,38 @@ from urllib.request import Request, urlopen
 
 PREFIX = 'resolute/v1/'
 PROBE = "SELECT jsonb_agg(t ORDER BY id)::text FROM resolute_backup_probe.sample t"
+# Read only, on the isolated restored database. Never emit member or payment IDs.
+PAYMENT_RESTORE_CHECK = """
+SELECT json_build_object(
+ 'orders', (SELECT count(*) FROM resolute_payments_sandbox.orders),
+ 'grants', (SELECT count(*) FROM resolute_payments_sandbox.grants),
+ 'events', (SELECT count(*) FROM resolute_payments_sandbox.events),
+ 'audit', (SELECT count(*) FROM resolute_payments_sandbox.audit),
+ 'alert_outbox', (SELECT count(*) FROM resolute_payments_sandbox.alert_outbox),
+ 'invalid_grants', (SELECT count(*) FROM resolute_payments_sandbox.grants g
+   LEFT JOIN resolute_payments_sandbox.orders o ON o.id=g.order_id
+   WHERE o.id IS NULL OR g.user_id IS DISTINCT FROM o.user_id
+     OR o.quote->>'product' IS DISTINCT FROM 'resolute_v1'
+     OR o.quote->>'kind' IS DISTINCT FROM g.kind
+     OR o.capture_id IS NULL OR o.paid_at IS NULL
+     OR g.state IS DISTINCT FROM CASE o.state
+       WHEN 'paid' THEN 'active' WHEN 'revoked' THEN 'revoked'
+       WHEN 'suspended' THEN 'suspended' ELSE NULL END
+     OR (SELECT count(*) FROM resolute_payments_sandbox.audit a
+         WHERE a.order_id=g.order_id AND a.code='SANDBOX_ACCESS_GRANTED') <> 1),
+ 'missing_grants', (SELECT count(*) FROM resolute_payments_sandbox.orders o
+   WHERE o.state='paid' AND NOT EXISTS
+     (SELECT 1 FROM resolute_payments_sandbox.grants g WHERE g.order_id=o.id))
+)::text
+"""
+
+def verify_restored_payments(env):
+    result = json.loads(run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c',
+                             PAYMENT_RESTORE_CHECK], env=env))
+    if result['invalid_grants'] or result['missing_grants']:
+        raise RuntimeError('restored payment ledger is inconsistent')
+    return {key: result[key] for key in ('orders', 'grants', 'events', 'audit', 'alert_outbox')}
+
 SQL = """CREATE SCHEMA IF NOT EXISTS resolute_backup_probe;
 CREATE TABLE IF NOT EXISTS resolute_backup_probe.sample
 (id integer PRIMARY KEY, payload jsonb NOT NULL);
@@ -162,8 +194,10 @@ def main():
                     raise RuntimeError('restored probe differs from backed-up data')
                 count = int(run(['psql', '-XAt', '-c', 'SELECT count(*) FROM resolute_backup_probe.sample'], env=e))
                 if count != 2: raise RuntimeError('probe row count differs')
+                payment_counts = verify_restored_payments(e)
                 report = {'event': 'RESOLUTE_RESTORE_OK', 'bytes': manifest['bytes'],
-                          'probe_rows': count, 'checks': ['download','decrypt','checksums','pg_restore','probe_content','primary_key']}
+                          'probe_rows': count, 'payment_rows': payment_counts,
+                          'checks': ['download','decrypt','checksums','pg_restore','probe_content','primary_key','sandbox_payment_integrity']}
                 # Verify restored PK rejects duplicate ID, not just column presence.
                 try:
                     run(['psql', '-X', '-v', 'ON_ERROR_STOP=1', '-c',

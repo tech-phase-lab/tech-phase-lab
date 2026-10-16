@@ -30,3 +30,23 @@ class ResoluteRetentionTests(unittest.TestCase):
         self.assertEqual(backup.retained_keys([]), set())
         key = backup.PREFIX+'dumps/20270105T000000Z.dump.age'
         self.assertEqual(backup.retained_keys([{'Key': key}]), {key})
+
+class ResolutePaymentRestoreTests(unittest.TestCase):
+    def test_inconsistent_payment_backup_cannot_report_success(self):
+        from unittest.mock import patch
+        import json
+        for field in ('invalid_grants', 'missing_grants'):
+            report = dict(orders=1, grants=1, events=2, audit=3, alert_outbox=1,
+                          invalid_grants=0, missing_grants=0)
+            report[field] = 1
+            with patch.object(backup, 'run', return_value=json.dumps(report).encode()):
+                with self.assertRaises(RuntimeError):
+                    backup.verify_restored_payments({})
+
+    def test_success_reports_counts_only(self):
+        from unittest.mock import patch
+        import json
+        counts = dict(orders=2, grants=1, events=3, audit=4, alert_outbox=1)
+        report = dict(counts, invalid_grants=0, missing_grants=0)
+        with patch.object(backup, 'run', return_value=json.dumps(report).encode()):
+            self.assertEqual(backup.verify_restored_payments({}), counts)
