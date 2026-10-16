@@ -91,7 +91,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     6: { ja: "GPU計算・AIクラウド", en: "GPU compute & AI cloud" },
   };
   if (root === "ASML") return {
-    2: { ja: "露光・計測・検査装置", en: "Lithography, metrology & inspection" },
+    0: { ja: "露光・計測・検査・光学部品", en: "Lithography, inspection & optics" },
   };
   if (root === "CRDO") return {
     3: { ja: "高速接続半導体", en: "High-speed connectivity chips" },
@@ -1561,31 +1561,38 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
   },
   "ASML": {
     "Nikon": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "DUV露光装置",
         "en": "DUV lithography"
       }
     },
     "Canon": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "DUV露光装置",
         "en": "DUV lithography"
       }
     },
     "AMAT": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "計測・検査装置",
         "en": "Metrology & inspection"
       }
     },
     "KLAC": {
-      "layer": 2,
+      "layer": 0,
       "businessLabel": {
         "ja": "計測・検査装置",
         "en": "Metrology & inspection"
+      }
+    },
+    "Carl Zeiss SMT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "露光装置向け光学部品",
+        "en": "Lithography optical components"
       }
     }
   },

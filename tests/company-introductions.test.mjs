@@ -129,7 +129,7 @@ test('diversified competitors use the compared product in selected maps only', (
     }
   }
   const asml = companyNetworkFor({ticker:'ASML',cik:937966});
-  assert.equal(asml.nodes.find(node=>node.id==='Canon').layer,2);
+  assert.equal(asml.nodes.find(node=>node.id==='Canon').layer,asml.nodes.find(node=>node.id===asml.root).layer);
   assert.equal(asml.nodes.find(node=>node.id==='Canon').businessLabel.en,'DUV lithography');
 });
 
@@ -212,7 +212,11 @@ test('connectivity, GPU cloud, memory and foundry competitors retain distinct pr
   assert.ok(intel.maps.competition.some(e=>e.ticker==='TSM'));
   assert.ok(intel.maps.relationships.some(e=>e.ticker==='TSM'));
   const asml=companyNetworkFor({ticker:'ASML',cik:937966});
-  for (const name of ['Nikon','Canon']) assert.match(asml.nodes.find(n=>n.name===name).businessLabel.en,/DUV/);
+  for (const name of ['Nikon','Canon']) {
+    const peer=asml.nodes.find(n=>n.name===name);
+    assert.match(peer.businessLabel.en,/DUV/);
+    assert.equal(peer.layer,asml.nodes.find(n=>n.id===asml.root).layer);
+  }
   const mu=companyNetworkFor({ticker:'MU',cik:723125});
   for (const name of ['Kioxia','Sandisk']) {
     const label=mu.nodes.find(n=>n.name===name).businessLabel.en;
