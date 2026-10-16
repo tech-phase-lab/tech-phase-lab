@@ -24198,11 +24198,15 @@
       "PEGA"
     ],
     "name": "Pegasystems",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
         "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm"
+      },
+      {
+        "url": "https://www.pega.com/about/news/press-releases/pega-signs-five-year-strategic-collaboration-agreement-aws-reimagine",
+        "label": "Pega — five-year AWS strategic collaboration, July 14, 2025"
       }
     ],
     "ja": {
@@ -24211,7 +24215,7 @@
       "strength": "規則や判断を組み込んだ業務の流れを、部署をまたいで管理できる。Blueprintによるアプリ設計と既存の業務エンジンを組み合わせ、複雑な規制対応や案件処理に使える。",
       "risks": "大企業の商談・導入は長く、導入パートナーが不足すると効果を出しにくい。クラウドへの移行費用、大手の競争、訴訟や情報セキュリティの問題も業績に影響する。",
       "competition": "ServiceNowやMicrosoft、IBMと業務自動化・アプリ基盤で競合し、Salesforceとは顧客対応や次の行動を決める機能で競う。顧客が複数の個別ツールを組み合わせる方法も代替になる。",
-      "relationships": "大企業や政府へソフトを提供し、Accenture、Cognizant、Infosysなどが業務設計・導入を支援する。クラウド事業者も提供基盤を支えるが、未開示の顧客名や個別契約は推測しない。"
+      "relationships": "大企業や政府へソフトを提供し、Accenture、Cognizant、Infosysなどが業務設計・導入を支援する。クラウド事業者も提供基盤を支えるが、未開示の顧客名や個別契約は推測しない。 AmazonのAWSとは2025年7月、BlueprintとBedrock・AWS Transformの連携を進める5年の協業契約を発表した。"
     },
     "en": {
       "business": "Automates complex work for banks, insurers, telecoms and governments. Pega Platform connects cases, approvals, decisions and subsequent actions across departments.",
@@ -24219,7 +24223,7 @@
       "strength": "Combines rules and decisioning with workflow execution. Blueprint application design supports complex, regulated case-management processes.",
       "risks": "Long sales and implementation cycles depend on skilled partners. Cloud-transition costs, larger competitors, litigation and security issues can affect performance.",
       "competition": "Competes with ServiceNow, Microsoft and IBM in workflow platforms and Salesforce in customer engagement and decisioning; assembled point tools are alternatives.",
-      "relationships": "Supplies enterprises and governments. Accenture, Cognizant and Infosys help design and implement workflows, while cloud providers support delivery infrastructure."
+      "relationships": "Supplies enterprises and governments. Accenture, Cognizant and Infosys help design and implement workflows, while cloud providers support delivery infrastructure. In July 2025, Pega announced a five-year AWS collaboration around Blueprint, Bedrock and AWS Transform."
     },
     "maps": {
       "competition": [
@@ -24315,6 +24319,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "2025年7月：Blueprint・Bedrock・AWS Transformを組み合わせる5年の協業契約",
+            "en": "July 2025: five-year Blueprint, Bedrock and AWS Transform collaboration"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -24787,11 +24804,15 @@
       "NICE"
     ],
     "name": "NiCE",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
         "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm"
+      },
+      {
+        "url": "https://ir.ringcentral.com/news/press-release-details/2026/NiCE-and-RingCentral-Expand-Strategic-Partnership-to-Orchestrate-the-Future-of-AI-Powered-Customer-and-Employee-Experiences/default.aspx",
+        "label": "NiCE / RingCentral — bidirectional UCaaS / CCaaS agreement, July 23, 2026"
       }
     ],
     "ja": {
@@ -24800,7 +24821,7 @@
       "strength": "問い合わせの受付から担当者の管理、会話の分析、自動応答までをまとめられる。金融犯罪対策では規制対応の知識と取引分析を組み合わせ、機密性の高い業務を支える。",
       "risks": "AIの誤回答や金融犯罪の見逃し、通信障害、機密データの漏えいは信頼を損なう。クラウド移行の遅れ、大手の競争、買収したCognigyの技術・人材の統合もリスクになる。",
       "competition": "顧客対応ではGenesys、Five9、Amazon Connectなどと競合し、会話AIではSalesforceなども競う。金融犯罪対策ではSAS、FICO、Oracleなどと、不正検知や資金洗浄対策の案件を争う。",
-      "relationships": "企業の顧客対応部門と金融機関へソフトを提供し、販売・導入パートナーが展開を支える。Cognigyは2025年9月に買収済みで、外部の独立した取引先として扱わない。"
+      "relationships": "企業の顧客対応部門と金融機関へソフトを提供し、販売・導入パートナーが展開を支える。Cognigyは2025年9月に買収済みで、外部の独立した取引先として扱わない。 RingCentralとは2026年7月、NiCEによるRingEX再販と、CXone搭載RingCentral Contact Centerの販売契約延長を発表した。"
     },
     "en": {
       "business": "Provides customer-service and financial-crime software. CXone handles calls, chat and AI interactions; Actimize supports fraud, money-laundering and trading surveillance.",
@@ -24808,7 +24829,7 @@
       "strength": "Connects contact handling, workforce management, analytics and automation. Financial-crime tools combine regulatory expertise with transaction analysis.",
       "risks": "AI errors, missed crime, outages and breaches damage trust. Slow cloud migration, large competitors and Cognigy acquisition integration add risk.",
       "competition": "Competes with Genesys, Five9 and Amazon Connect in contact centers, Salesforce in conversational AI, and SAS, FICO or Oracle in financial-crime tools.",
-      "relationships": "Supplies enterprise service teams and financial institutions through direct and partner channels. Cognigy was acquired in September 2025 and is no longer an independent counterparty."
+      "relationships": "Supplies enterprise service teams and financial institutions through direct and partner channels. Cognigy was acquired in September 2025 and is no longer an independent counterparty. In July 2026, NiCE and RingCentral expanded distribution: NiCE resells RingEX and RingCentral continues to sell its CXone-powered contact center."
     },
     "maps": {
       "competition": [
@@ -24904,6 +24925,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "RingCentral",
+          "role": "partner",
+          "label": {
+            "ja": "2026年7月：NiCEがRingEXを再販し、CXoneを使うRingCentral Contact Centerの販売契約も延長",
+            "en": "July 2026: NiCE resells RingEX; CXone-powered RingCentral Contact Center sales agreement extended"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "RNG"
         }
       ]
     }
@@ -24914,7 +24948,7 @@
       "DBX"
     ],
     "name": "Dropbox",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -24923,6 +24957,14 @@
       {
         "label": "Latest reviewed quarterly results · 2026 disclosure",
         "url": "https://investors.dropbox.com/news-releases/news-release-details/dropbox-announces-second-quarter-2026-results"
+      },
+      {
+        "url": "https://blog.dropbox.com/topics/news/move-your-work-forward-with-new-dropbox-apps-in-chatgpt",
+        "label": "Dropbox — ChatGPT apps announcement, April 16, 2026; Dash rollout described separately"
+      },
+      {
+        "url": "https://www.dropbox.com/en_GB/app-integrations",
+        "label": "Dropbox — official AI partners and Claude document connectivity; checked October 16, 2026"
       }
     ],
     "ja": {
@@ -24931,7 +24973,7 @@
       "strength": "端末やアプリをまたいでファイルを同期・共有でき、相手が使う道具を変えずに共同作業へ組み込める。蓄積した資料と利用者の共有ネットワークが、別サービスへの移行の手間になる。",
       "risks": "MicrosoftやGoogleが業務ソフトとストレージをまとめて提供するため、単独サービスの価値を示す必要がある。無料利用者の有料化、Dashの普及、重要な資料の漏えいや消失も課題になる。",
       "competition": "保存・共同作業ではMicrosoft、Google、Boxなど、電子署名ではAdobeとDocuSign、AI検索ではGleanなどと競う。保存容量だけでなく、探しやすさや組織の管理機能が争点になる。",
-      "relationships": "個人や企業のチームへファイル共有を提供する。保存基盤は自社設計の設備を中心に運用し、一部でAmazonのAWSを使う。AWSの利用は、AmazonがDropbox製品を買う関係ではない。"
+      "relationships": "個人や企業のチームへファイル共有を提供する。保存基盤は自社設計の設備を中心に運用し、一部でAmazonのAWSを使う。AWSの利用は、AmazonがDropbox製品を買う関係ではない。 OpenAIのChatGPT内アプリとAnthropicのClaude接続で、利用者が権限を持つDropbox文書を扱える。"
     },
     "en": {
       "business": "Provides file storage, synchronization and collaboration, plus Dropbox Sign e-signatures and Dash search across connected applications.",
@@ -24939,7 +24981,7 @@
       "strength": "Cross-device sharing fits existing tools. Stored content and collaboration networks make migration demanding.",
       "risks": "Bundled Microsoft and Google storage pressures differentiation. Paid conversion, Dash adoption and data loss or breaches remain risks.",
       "competition": "Competes with Microsoft, Google and Box in storage and collaboration, Adobe and DocuSign in signatures, and Glean in search.",
-      "relationships": "Serves individuals and business teams. Its own infrastructure stores most user data; AWS supports part of storage and delivery. AWS is a supplier relationship."
+      "relationships": "Serves individuals and business teams. Its own infrastructure stores most user data; AWS supports part of storage and delivery. AWS is a supplier relationship. Dropbox also provides a ChatGPT app and Claude document connectivity for authorized user content."
     },
     "maps": {
       "competition": [
@@ -25035,6 +25077,30 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月：ChatGPT内でDropboxファイルを参照・保存・共有するアプリ連携",
+            "en": "April 2026: Dropbox app in ChatGPT for file access, saving and sharing"
+          },
+          "sourceIndexes": [
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "ClaudeとDropboxの文書を接続する製品連携",
+            "en": "Product integration connecting Claude with Dropbox documents"
+          },
+          "sourceIndexes": [
+            3
+          ]
         }
       ]
     }
@@ -25045,7 +25111,7 @@
       "FIVN"
     ],
     "name": "Five9",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -25054,6 +25120,10 @@
       {
         "label": "Latest reviewed quarterly results · 2026 disclosure",
         "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000121/a063026ex991earningsrelease.htm"
+      },
+      {
+        "url": "https://www.five9.com/news/news-releases/five9-launches-joint-enterprise-customer-experience-ai-solution-google-cloud",
+        "label": "Five9 — Google Cloud Enterprise CX AI announcement, January 12, 2026"
       }
     ],
     "ja": {
@@ -25062,7 +25132,7 @@
       "strength": "電話網と顧客管理ソフトを結び、受付から対応・分析まで同じ基盤で扱える。既存の顧客情報や業務に接続したまま、有人対応とAIを組み合わせられる点が強み。",
       "risks": "AIが問い合わせを処理すると担当者数に応じた料金が減る可能性があり、AIの売上で補えるかが課題。通話障害、誤回答、顧客管理ソフトとの連携停止は顧客の業務に直接影響する。",
       "competition": "NiCEとGenesysは顧客対応基盤、RingCentralとZoomは電話と問い合わせ窓口、Amazon Connectなどは開発者が作る窓口で競う。競合する範囲は提供する機能によって異なる。",
-      "relationships": "企業の顧客対応部門へサービスを提供する。Salesforce、Microsoft、Oracle、ServiceNowの顧客管理・業務ソフトと連携し、販売・導入パートナーが展開を支える。製品連携を購入契約とは扱わない。"
+      "relationships": "企業の顧客対応部門へサービスを提供する。Salesforce、Microsoft、Oracle、ServiceNowの顧客管理・業務ソフトと連携し、販売・導入パートナーが展開を支える。製品連携を購入契約とは扱わない。 Googleとは2026年1月、Gemini・Vertex AIの共同CX AIソリューションと販売連携を発表し、Five9自身の社内業務にもGoogle Cloudを利用する。"
     },
     "en": {
       "business": "Runs cloud contact centers, combining calls, chat, routing, analytics and AI responses for enterprise service teams.",
@@ -25070,7 +25140,7 @@
       "strength": "Connects telephony with customer records and operational workflows while combining human and automated service.",
       "risks": "AI may reduce paid agent seats. Monetizing automation, maintaining calls and avoiding AI errors or integration failures are key challenges.",
       "competition": "Competes with NiCE and Genesys in contact centers, RingCentral and Zoom in combined communications, and Amazon Connect in developer-built solutions.",
-      "relationships": "Serves enterprise contact centers and integrates with Salesforce, Microsoft, Oracle and ServiceNow. Integrations do not establish purchasing contracts."
+      "relationships": "Serves enterprise contact centers and integrates with Salesforce, Microsoft, Oracle and ServiceNow. Integrations do not establish purchasing contracts. A January 2026 Google Cloud announcement covers joint Gemini / Vertex AI CX solutions and distribution, plus Five9’s own internal cloud / Gemini Enterprise use."
     },
     "maps": {
       "competition": [
@@ -25179,6 +25249,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：Gemini・Vertex AIを使う共同CX AIソリューションとMarketplace販売",
+            "en": "January 2026: joint CX AI solution using Gemini / Vertex AI and Marketplace distribution"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年1月：社内の主要業務とGemini EnterpriseにGoogle Cloudを利用",
+            "en": "January 2026: Google Cloud / Gemini Enterprise used for key internal workloads"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -25189,7 +25285,7 @@
       "RNG"
     ],
     "name": "RingCentral",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -25198,6 +25294,14 @@
       {
         "label": "Q2 2026 official results",
         "url": "https://www.ringcentral.com/whyringcentral/company/pressreleases/ringcentral-announces-second-quarter-2026-financial-results.html"
+      },
+      {
+        "url": "https://ir.ringcentral.com/news/press-release-details/2025/ATT-Expands-OfficeHand-Business-Communications-Portfolio-with-RingCX-AI-Powered-Contact-Center-and-RingSense-Conversational-Intelligence-Solutions-by-RingCentral/default.aspx",
+        "label": "RingCentral / AT&T — Office@Hand portfolio expansion, August 4, 2025"
+      },
+      {
+        "url": "https://ir.ringcentral.com/news/press-release-details/2026/NiCE-and-RingCentral-Expand-Strategic-Partnership-to-Orchestrate-the-Future-of-AI-Powered-Customer-and-Employee-Experiences/default.aspx",
+        "label": "NiCE / RingCentral — bidirectional UCaaS / CCaaS agreement, July 23, 2026"
       }
     ],
     "ja": {
@@ -25206,7 +25310,7 @@
       "strength": "オフィスの電話設備をクラウドへ移し、複数拠点や在宅勤務でも同じ番号・通信基盤を使える。通信事業者や販売代理店を通じて、企業の既存の電話環境へ展開できる。",
       "risks": "MicrosoftやZoomとの価格競争に加え、電話の接続品質と通信規制への対応が必要。第三者の通信・顧客対応技術に依存する部分があり、提供条件の変更や負債の返済も制約になる。",
       "competition": "社員用通信ではMicrosoft Teams、Zoom、Cisco、顧客窓口ではFive9、NiCE、Genesysなどと競う。両分野をまとめて提供する会社と、特定機能に強い会社の両方が競合になる。",
-      "relationships": "企業へ通信サービスを提供し、通信事業者・販売代理店が販売を支える。一部の機能にはNiCE、Bandwidth、Microsoftなど第三者の技術・連携を使う。競争関係と提供関係を分けて表示する。"
+      "relationships": "企業へ通信サービスを提供し、通信事業者・販売代理店が販売を支える。一部の機能にはNiCE、Bandwidth、Microsoftなど第三者の技術・連携を使う。競争関係と提供関係を分けて表示する。 AT&Tとは2025年8月にOffice@HandのRingCX・RingSense対応を拡張。NiCEとは2026年7月にRingEX再販とCXone搭載サービスの販売契約拡張を発表した。"
     },
     "en": {
       "business": "Provides cloud business phone, messaging and video through RingEX, plus customer-service contact centers through RingCX and voice-AI features.",
@@ -25214,7 +25318,7 @@
       "strength": "Extends enterprise phone systems across offices and remote workers, supported by telecom and reseller distribution.",
       "risks": "Faces bundled competitors, call-quality and telecom regulation risks, third-party dependencies and debt obligations.",
       "competition": "Competes with Teams, Zoom and Cisco in employee communications and Five9, NiCE and Genesys in contact centers.",
-      "relationships": "Serves businesses through direct and partner channels. Uses technology or integrations from NiCE, Bandwidth and Microsoft for some services, separately from rivalry."
+      "relationships": "Serves businesses through direct and partner channels. Uses technology or integrations from NiCE, Bandwidth and Microsoft for some services, separately from rivalry. AT&T expanded Office@Hand with RingCX and RingSense in August 2025. A July 2026 NiCE agreement adds RingEX resale and extends CXone-powered contact-center distribution."
     },
     "maps": {
       "competition": [
@@ -25336,6 +25440,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "AT&T",
+          "role": "partner",
+          "label": {
+            "ja": "2025年8月：Office@HandにRingCXの顧客対応とRingSenseの会話分析を展開",
+            "en": "August 2025: Office@Hand adds RingCX contact-center and RingSense conversation intelligence"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "T"
+        },
+        {
+          "kind": "company",
+          "name": "NiCE",
+          "role": "partner",
+          "label": {
+            "ja": "2026年7月：NiCEによるRingEX再販とCXone搭載サービスの販売契約拡張",
+            "en": "July 2026: NiCE RingEX resale and extended CXone-powered service distribution"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "NICE"
         }
       ]
     }
@@ -25828,7 +25958,7 @@
       "MNDY"
     ],
     "name": "monday.com",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -25841,6 +25971,10 @@
       {
         "label": "September 2026 Form 6-K · restructuring plan and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326003553/zk2635715.htm"
+      },
+      {
+        "url": "https://developer.monday.com/api-reference/changelog/consume-ai-models-through-monday",
+        "label": "monday.com — Models API / upstream OpenAI and Anthropic, June 25, 2026; API-version requirements apply"
       }
     ],
     "ja": {
@@ -25849,7 +25983,7 @@
       "strength": "画面の部品や自動処理を組み合わせ、利用部門に合わせた仕事の仕組みを作れる。同じ基盤の上で複数用途へ広げられ、担当者が日々使う業務の流れに入り込める。",
       "risks": "仕事管理への収益集中があり、別製品やAIの普及が期待通り進まない可能性がある。顧客の利用人数削減、組織再編に伴う実行の遅れ、イスラエルの地域情勢もリスクになる。",
       "competition": "仕事管理ではAsanaやAtlassianのTrello、顧客管理ではHubSpotなど、開発・社内サービスではAtlassianとFreshworksが競合。製品ごとに争う市場が違う。",
-      "relationships": "AWSとGoogle Cloudを稼働基盤に使い、販売・導入パートナーやアプリ開発者が業務への展開を支える。利用企業へ管理ソフトを提供する関係と、クラウドを調達する関係を分ける。"
+      "relationships": "AWSとGoogle Cloudを稼働基盤に使い、販売・導入パートナーやアプリ開発者が業務への展開を支える。利用企業へ管理ソフトを提供する関係と、クラウドを調達する関係を分ける。 2026年6月の開発者発表ではOpenAI・AnthropicのモデルへmondayのAIゲートウェイ経由で接続できる。Models APIとGraphQLは必要なAPI版・権限が異なり、容量購入契約を示すものではない。"
     },
     "en": {
       "business": "Provides configurable work management, CRM, development and service tools, expanding into AI that executes work.",
@@ -25857,7 +25991,7 @@
       "strength": "Modular workflows and automation adapt to departments, with multiple products sharing a common platform.",
       "risks": "Revenue concentration, slower cross-selling or AI adoption, seat reductions, restructuring execution and regional conflict create risks.",
       "competition": "Competes with Asana and Trello in work management, HubSpot in CRM, and Atlassian or Freshworks in development and service management.",
-      "relationships": "AWS and Google Cloud host its platform; implementation partners and developers support customer deployments."
+      "relationships": "AWS and Google Cloud host its platform; implementation partners and developers support customer deployments. June 2026 developer documentation describes model access through monday’s gateway to OpenAI and Anthropic. Models API / GraphQL access has version and permission requirements; it does not establish a capacity-purchase agreement."
     },
     "maps": {
       "competition": [
@@ -25952,6 +26086,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月：mondayのAIゲートウェイ経由でモデルを利用する技術対応",
+            "en": "June 2026: model access through monday AI gateway"
+          },
+          "sourceIndexes": [
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月：mondayのAIゲートウェイ経由でモデルを利用する技術対応",
+            "en": "June 2026: model access through monday AI gateway"
+          },
+          "sourceIndexes": [
+            3
           ]
         }
       ]
@@ -26215,7 +26373,7 @@
       "FRSH"
     ],
     "name": "Freshworks",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -26224,6 +26382,10 @@
       {
         "label": "Q2 2026 official results",
         "url": "https://ir.freshworks.com/news/news-details/2026/Freshworks-Reports-Record-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "url": "https://www.freshworks.com/press-releases/freshworks-announces-strategic-collaboration-agreement-with-aws-to-increase-the-reach-of-its-ai-boosted-software-as-a-service/",
+        "label": "Freshworks — multi-year AWS strategic collaboration, January 29, 2024"
       }
     ],
     "ja": {
@@ -26232,7 +26394,7 @@
       "strength": "導入しやすい共通基盤で、問い合わせ受付から解決・分析までをつなぐ。IT機器の把握や障害対応の製品も組み合わせ、IT部門以外の人事・財務などへ使い方を広げられる。",
       "risks": "大手の包括的な製品との競争があり、導入しやすさを有料契約の継続へつなげる必要がある。AWSへの依存、顧客情報の漏えい、AIの誤回答、買収製品の統合がリスクになる。",
       "competition": "社内ITサービスではServiceNowとAtlassian、顧客対応ではSalesforceやZendesk、顧客管理ではHubSpotやMicrosoftなどと競う。問い合わせの相手が社員か顧客かで競合も変わる。",
-      "relationships": "AWSが大部分の稼働基盤を提供し、販売・導入パートナーが企業への展開を支える。Device42とFireHydrantは買収した自社側の製品で、独立した外部の供給会社として扱わない。"
+      "relationships": "AWSが大部分の稼働基盤を提供し、販売・導入パートナーが企業への展開を支える。Device42とFireHydrantは買収した自社側の製品で、独立した外部の供給会社として扱わない。 AWSとは2024年1月に製品開発とMarketplace販売を広げる複数年協業契約も発表した。"
     },
     "en": {
       "business": "Provides customer-service software through Freshdesk and employee IT service tools through Freshservice, with AI response and analysis capabilities.",
@@ -26240,7 +26402,7 @@
       "strength": "Connects request intake, resolution and analytics with approachable deployment, asset discovery and incident tools.",
       "risks": "Bundled competitors, renewal execution, AWS dependence, sensitive data, AI errors and acquisition integration are risks.",
       "competition": "Competes with ServiceNow and Atlassian in IT services, Salesforce or Zendesk in customer support, and HubSpot or Microsoft in CRM.",
-      "relationships": "AWS supplies most hosting; partners support deployment. Device42 and FireHydrant are acquired products, not independent external suppliers."
+      "relationships": "AWS supplies most hosting; partners support deployment. Device42 and FireHydrant are acquired products, not independent external suppliers. Freshworks also announced a multi-year AWS product-development and Marketplace collaboration in January 2024."
     },
     "maps": {
       "competition": [
@@ -26349,6 +26511,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "2024年1月：AWS上の製品開発・Marketplace販売を広げる複数年協業契約",
+            "en": "January 2024: multi-year AWS product-development / Marketplace collaboration"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -27046,11 +27221,19 @@
       "KVYO"
     ],
     "name": "Klaviyo",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm"
+      },
+      {
+        "url": "https://www.klaviyo.com/newsroom/klaviyo-chatgpt-app",
+        "label": "Klaviyo — ChatGPT app launch, January 27, 2026"
+      },
+      {
+        "url": "https://www.klaviyo.com/blog/klaviyo-data-in-claude",
+        "label": "Klaviyo — remote MCP and Claude Connector directory, January 23, 2026"
       }
     ],
     "ja": {
@@ -27059,7 +27242,7 @@
       "strength": "購買・行動・連絡への同意を同じ顧客データにまとめ、案内の作成から送信、結果の確認までつなげる。Shopifyを含む多数の既存システムと接続し、企業が自社のデータを使える。",
       "risks": "Shopifyとの連携・販促契約への依存があり、条件変更は顧客獲得に影響する。消費の減速、個人情報の規制、メールやメッセージの届きにくさも利用量と成果を左右する。",
       "competition": "マーケティング配信ではMailchimpやBraze、広範な販売促進ソフトではAdobeやSalesforceと競う。データを蓄積するだけでなく、顧客への働きかけへ使えるかが比較のポイント。",
-      "relationships": "Shopifyとデータ連携・販促の提携を行い、Klaviyoが契約に基づく収益分配を支払う。Google、Meta、Toastなどとも製品連携し、小売・飲食などへ提供する。連携を取引先の購入とは扱わない。"
+      "relationships": "Shopifyとデータ連携・販促の提携を行い、Klaviyoが契約に基づく収益分配を支払う。Google、Meta、Toastなどとも製品連携し、小売・飲食などへ提供する。連携を取引先の購入とは扱わない。 2026年1月にはOpenAIのChatGPTアプリとAnthropicのClaude向けMCP接続を発表。利用者が許可した顧客・販促情報の接続であり、AI各社によるKlaviyoの購入契約ではない。"
     },
     "en": {
       "business": "Provides customer-data-driven marketing and service software. Combines purchase history and behavior to personalize email, SMS, WhatsApp and other customer interactions.",
@@ -27067,7 +27250,7 @@
       "strength": "Unifies purchases, behavior and consent, connecting campaign creation, delivery and measurement. Integrations with Shopify and other systems let businesses activate their own first-party data.",
       "risks": "Depends partly on Shopify integration and marketing agreements. Changes in terms, weaker consumer spending, privacy regulation and message deliverability can affect acquisition and usage.",
       "competition": "Competes with Mailchimp and Braze in marketing communications and Adobe and Salesforce in broader marketing platforms. Turning stored data into relevant customer interactions is a key distinction.",
-      "relationships": "Partners with Shopify on interoperability and marketing, paying a contractual revenue share. Integrates with Google, Meta and Toast and serves retail, restaurants and other businesses. Integrations do not establish purchases."
+      "relationships": "Partners with Shopify on interoperability and marketing, paying a contractual revenue share. Integrates with Google, Meta and Toast and serves retail, restaurants and other businesses. Integrations do not establish purchases. January 2026 announcements add a ChatGPT app and Claude MCP connectivity for authorized customer / marketing data; these integrations do not establish purchases by the AI providers."
     },
     "maps": {
       "competition": [
@@ -27189,6 +27372,30 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：ChatGPT内でKlaviyoの顧客・キャンペーン情報を利用するアプリ",
+            "en": "January 2026: ChatGPT app for authorized Klaviyo customer / campaign information"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：ClaudeからKlaviyoの顧客・販促情報を扱うMCP接続",
+            "en": "January 2026: Claude MCP connector for Klaviyo customer / marketing data"
+          },
+          "sourceIndexes": [
+            2
+          ]
         }
       ]
     }
@@ -27199,11 +27406,19 @@
       "BRZE"
     ],
     "name": "Braze",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1676238/000167623826000013/brze-20260131.htm"
+      },
+      {
+        "url": "https://www.braze.com/docs/partners/ai_model_providers/openai",
+        "label": "Braze — OpenAI BYOK Agent Console integration; checked October 16, 2026"
+      },
+      {
+        "url": "https://www.braze.com/docs/partners/ai_model_providers/anthropic",
+        "label": "Braze — Anthropic BYOK Agent Console integration; checked October 16, 2026"
       }
     ],
     "ja": {
@@ -27212,7 +27427,7 @@
       "strength": "顧客の行動に応じて内容や配信経路を変え、複数の接点を一つの流れとして設計できる。実験や結果分析を組み込み、データを集める部門と顧客へ働きかける部門をつなぐ。",
       "risks": "企業の販促予算の削減や契約更新の失敗が成長を抑える。個人情報の扱い、メール・通知の配信ルールの変更、誤ったAI出力や大規模配信の障害はブランドへの信頼を損ねる。",
       "competition": "Adobe、Salesforce、Iterable、Klaviyoなどのマーケティングソフトと競う。配信できる経路だけでなく、顧客の行動をすばやく反映し、一貫した体験にできるかが争点になる。",
-      "relationships": "Snowflakeとデータ共有で提携し、Microsoft Azure、AWS、Google Cloudなどへイベントデータを出力できる。企業のマーケティング部門へ提供し、これらの接続を各社の購入契約とは扱わない。"
+      "relationships": "Snowflakeとデータ共有で提携し、Microsoft Azure、AWS、Google Cloudなどへイベントデータを出力できる。企業のマーケティング部門へ提供し、これらの接続を各社の購入契約とは扱わない。 Braze Agentsを有効にした顧客はOpenAI・Anthropicの自分のAPIキーを接続できる。これはモデルの技術連携で、Brazeによる計算容量の購入契約ではない。"
     },
     "en": {
       "business": "Helps businesses deliver context-sensitive customer engagement. Uses app and web activity to coordinate email, notifications, in-app messages and other interactions.",
@@ -27220,7 +27435,7 @@
       "strength": "Adapts messages and channels to customer behavior while coordinating a complete journey. Experimentation and measurement connect data teams with teams responsible for customer engagement.",
       "risks": "Marketing-budget cuts and failed renewals can constrain growth. Privacy obligations, delivery-rule changes, incorrect AI output and large-scale messaging outages threaten customer trust.",
       "competition": "Competes with Adobe, Salesforce, Iterable and Klaviyo. Rapidly acting on customer behavior and maintaining consistency across channels are central differentiators.",
-      "relationships": "Partners with Snowflake for data sharing and exports event data to Azure, AWS, Google Cloud and other systems. Serves enterprise marketing teams; connectivity does not mean these platform providers buy Braze."
+      "relationships": "Partners with Snowflake for data sharing and exports event data to Azure, AWS, Google Cloud and other systems. Serves enterprise marketing teams; connectivity does not mean these platform providers buy Braze. With Braze Agents enabled, customers can connect their own OpenAI or Anthropic API keys. This is model interoperability, not a Braze compute-capacity purchase contract."
     },
     "maps": {
       "competition": [
@@ -27341,6 +27556,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "Braze Agents有効時に利用者自身のAPIキーを接続するモデル連携",
+            "en": "Model integration using the customer’s own API key when Braze Agents is enabled"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "Braze Agents有効時に利用者自身のAPIキーを接続するモデル連携",
+            "en": "Model integration using the customer’s own API key when Braze Agents is enabled"
+          },
+          "sourceIndexes": [
+            2
           ]
         }
       ]
@@ -27488,11 +27727,19 @@
       "SPT"
     ],
     "name": "Sprout Social",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm"
+      },
+      {
+        "url": "https://support.sproutsocial.com/hc/en-us/articles/9162993820173-Salesforce-Service-Cloud-Integration",
+        "label": "Sprout Social — official Service Cloud integration documentation; checked October 16, 2026"
+      },
+      {
+        "url": "https://investors.sproutsocial.com/news/news-details/2026/Sprout-Social-Announces-Second-Quarter-2026-Financial-Results/default.aspx",
+        "label": "Sprout Social — Q2 2026 financial results, customer highlights; not necessarily a new customer"
       }
     ],
     "ja": {
@@ -27501,7 +27748,7 @@
       "strength": "複数のSNSを一つの画面で扱い、投稿・対応・分析の作業をつなげられる。SNS各社との接続を整え、企業の既存の販売・顧客対応の仕組みにSNSの情報を組み込める。",
       "risks": "SNS各社のAPIやデータ提供の条件に依存し、料金・機能・アクセス権の変更が製品に影響する。大企業向けの販売長期化、販促予算の削減、AWSの障害も契約や稼働を左右する。",
       "competition": "Hootsuite、Khoros、SprinklrなどのSNS管理会社や、分析・投稿などに特化した製品と競う。機能の多さだけでなく、使い始めやすさ、企業での管理、成果の把握が選択基準になる。",
-      "relationships": "MetaのFacebook・Instagram、MicrosoftのLinkedIn、GoogleのYouTubeなどと接続し、投稿や反応を扱う。AWSが主な稼働基盤を提供する。SNS会社への接続と、SNS会社が製品を買う関係は別。"
+      "relationships": "MetaのFacebook・Instagram、MicrosoftのLinkedIn、GoogleのYouTubeなどと接続し、投稿や反応を扱う。AWSが主な稼働基盤を提供する。SNS会社への接続と、SNS会社が製品を買う関係は別。 SalesforceのService CloudとはSNSの問い合わせ案件を連携し、同社は2026年4〜6月期の新規・既存顧客ハイライトにも含まれる。製品連携と顧客としての採用は別の根拠・役割。"
     },
     "en": {
       "business": "Provides software for business social-media operations, including publishing, replies, analytics, listening and influencer campaigns.",
@@ -27509,7 +27756,7 @@
       "strength": "Connects publishing, engagement and measurement across networks. Integrations bring social data into existing commerce and customer-service workflows.",
       "risks": "Depends on social-network APIs and data-access terms. Pricing or access changes, longer enterprise sales cycles, marketing-budget cuts and AWS outages can affect contracts and operations.",
       "competition": "Competes with Hootsuite, Khoros, Sprinklr and specialist publishing or analytics tools. Usability, enterprise controls and measurable outcomes matter alongside feature breadth.",
-      "relationships": "Connects to Meta social networks, Microsoft LinkedIn and Google YouTube for publishing and engagement data. AWS supplies most hosting. Network connectivity does not imply that network owners purchase Sprout Social."
+      "relationships": "Connects to Meta social networks, Microsoft LinkedIn and Google YouTube for publishing and engagement data. AWS supplies most hosting. Network connectivity does not imply that network owners purchase Sprout Social. Salesforce Service Cloud integrates social-service cases. Salesforce is also named in Q2 2026 new / existing customer highlights; integration and customer adoption are separately sourced roles."
     },
     "maps": {
       "competition": [
@@ -27618,6 +27865,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "role": "partner",
+          "label": {
+            "ja": "Service CloudとSNSメッセージ・問い合わせ案件を連携",
+            "en": "Service Cloud integration for social messages and customer-service cases"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "CRM"
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "role": "customer",
+          "label": {
+            "ja": "2026年4〜6月期に取引を拡大した新規・既存顧客の一社として自社が開示",
+            "en": "Named among new / existing customers with Q2 2026 business growth; issuer disclosure"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "CRM"
         }
       ]
     }

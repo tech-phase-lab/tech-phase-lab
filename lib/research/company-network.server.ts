@@ -72,6 +72,16 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "PEGA") return {"6": {"ja": "クラウド・AI開発協業", "en": "Cloud / AI development collaboration"}, "7": {"ja": "業務自動化・導入支援", "en": "Workflow automation & implementation"}};
+  if (root === "NICE") return {"6": {"ja": "通信・顧客対応の販売提携", "en": "Communications / contact-center distribution"}, "7": {"ja": "顧客対応・金融犯罪対策", "en": "Contact centers & financial-crime tools"}};
+  if (root === "DBX") return {"6": {"ja": "クラウド基盤・AI文書連携", "en": "Cloud infrastructure & AI document connections"}, "7": {"ja": "保存・共有・署名・検索", "en": "Storage, sharing, signatures & search"}};
+  if (root === "FIVN") return {"6": {"ja": "CRM・業務ソフト・AI基盤の連携", "en": "CRM, workflow & cloud AI integrations"}, "7": {"ja": "クラウドの顧客対応基盤", "en": "Cloud contact-center platforms"}};
+  if (root === "RNG") return {"6": {"ja": "通信の販売提携・技術供給", "en": "Communications distribution & technology"}, "7": {"ja": "企業通信・顧客対応", "en": "Business communications & contact centers"}};
+  if (root === "MNDY") return {"6": {"ja": "クラウド基盤・AIモデル対応", "en": "Cloud hosting & AI model access"}, "7": {"ja": "業務管理・共同作業", "en": "Work management & collaboration"}};
+  if (root === "FRSH") return {"6": {"ja": "クラウド基盤・販売協業", "en": "Cloud hosting & distribution"}, "7": {"ja": "IT運用・顧客対応ソフト", "en": "IT operations & customer-service tools"}};
+  if (root === "KVYO") return {"6": {"ja": "EC・データ・AIツールの連携", "en": "Commerce, data & AI-tool integration"}, "7": {"ja": "顧客情報・マーケティング", "en": "Customer data & marketing"}};
+  if (root === "BRZE") return {"6": {"ja": "データ・AIモデルの技術連携", "en": "Data & AI-model interoperability"}, "7": {"ja": "顧客体験・マーケティング配信", "en": "Customer journeys & marketing messages"}};
+  if (root === "SPT") return {"6": {"ja": "SNS・クラウド・CRM連携と採用", "en": "Social, cloud & CRM integration / adoption"}, "7": {"ja": "SNS運用・分析ソフト", "en": "Social management & analytics"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "6": {"ja": "クラウド・AI・販売経路の協業", "en": "Cloud, AI & channel collaboration"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
   if (root === "PTC") return {"6": {"ja": "設計・製品情報の技術連携", "en": "Design / product-data technology collaboration"}, "7": {"ja": "設計・製品ライフサイクル管理", "en": "Design & product lifecycle management"}};
   if (root === "BSY") return {"6": {"ja": "クラウド基盤・都市デジタルツイン", "en": "Cloud infrastructure & city digital twins"}, "7": {"ja": "インフラの設計・建設ソフト", "en": "Infrastructure design & delivery software"}};
@@ -4380,6 +4390,635 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "DoorDash | member merchandise delivery"
       }
     }
+  },
+  "PEGA": {
+    "PEGA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Pega｜業務自動化",
+        "en": "Pega | workflow automation"
+      }
+    },
+    "NOW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ServiceNow",
+        "en": "ServiceNow"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce",
+        "en": "Salesforce"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft",
+        "en": "Microsoft"
+      }
+    },
+    "ACN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Accenture",
+        "en": "Accenture"
+      }
+    },
+    "CTSH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Cognizant",
+        "en": "Cognizant"
+      }
+    },
+    "INFY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Infosys",
+        "en": "Infosys"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon AWS｜開発協業",
+        "en": "Amazon AWS | development alliance"
+      }
+    }
+  },
+  "NICE": {
+    "NICE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "NiCE｜顧客対応・金融犯罪対策",
+        "en": "NiCE | CX / financial crime"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Amazon",
+        "en": "Amazon"
+      }
+    },
+    "FIVN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Five9",
+        "en": "Five9"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce",
+        "en": "Salesforce"
+      }
+    },
+    "ORCL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Oracle",
+        "en": "Oracle"
+      }
+    },
+    "RNG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "RingCentral｜RingEX・CXone販売",
+        "en": "RingCentral | RingEX / CXone sales"
+      }
+    }
+  },
+  "DBX": {
+    "DBX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Dropbox｜保存・共有・検索",
+        "en": "Dropbox | files / search"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft",
+        "en": "Microsoft"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google",
+        "en": "Google"
+      }
+    },
+    "BOX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Box",
+        "en": "Box"
+      }
+    },
+    "ADBE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Adobe",
+        "en": "Adobe"
+      }
+    },
+    "DOCU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "DocuSign",
+        "en": "DocuSign"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon AWS｜一部の保存基盤",
+        "en": "Amazon AWS | part of file hosting"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜ChatGPT文書連携",
+        "en": "OpenAI | ChatGPT file integration"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Anthropic｜Claude文書連携",
+        "en": "Anthropic | Claude file integration"
+      }
+    }
+  },
+  "FIVN": {
+    "FIVN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Five9｜顧客対応プラットフォーム",
+        "en": "Five9 | contact center"
+      }
+    },
+    "NICE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "NiCE",
+        "en": "NiCE"
+      }
+    },
+    "RNG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "RingCentral",
+        "en": "RingCentral"
+      }
+    },
+    "ZM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Zoom",
+        "en": "Zoom"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Amazon",
+        "en": "Amazon"
+      }
+    },
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Salesforce｜CRM連携",
+        "en": "Salesforce | CRM integration"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜CRM・Teams連携",
+        "en": "Microsoft | CRM / Teams integration"
+      }
+    },
+    "NOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ServiceNow｜業務ソフト連携",
+        "en": "ServiceNow | workflow integration"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜Gemini・Vertex AI・社内基盤",
+        "en": "Google | Gemini / Vertex AI / hosting"
+      }
+    }
+  },
+  "RNG": {
+    "RNG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "RingCentral｜企業通信・顧客対応",
+        "en": "RingCentral | communications"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜製品・技術連携",
+        "en": "Microsoft | product integrations"
+      }
+    },
+    "ZM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Zoom",
+        "en": "Zoom"
+      }
+    },
+    "CSCO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Cisco",
+        "en": "Cisco"
+      }
+    },
+    "FIVN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Five9",
+        "en": "Five9"
+      }
+    },
+    "NICE": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "NiCE｜CXone・RingEX協業",
+        "en": "NiCE | CXone / RingEX alliance"
+      }
+    },
+    "BAND": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Bandwidth｜通信・SMS基盤",
+        "en": "Bandwidth | voice / SMS services"
+      }
+    },
+    "T": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AT&T｜Office@Hand販売",
+        "en": "AT&T | Office@Hand distribution"
+      }
+    }
+  },
+  "MNDY": {
+    "MNDY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "monday.com｜業務管理",
+        "en": "monday.com | work management"
+      }
+    },
+    "ASAN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Asana",
+        "en": "Asana"
+      }
+    },
+    "TEAM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Atlassian",
+        "en": "Atlassian"
+      }
+    },
+    "HUBS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "HubSpot",
+        "en": "HubSpot"
+      }
+    },
+    "FRSH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Freshworks",
+        "en": "Freshworks"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon AWS｜稼働基盤",
+        "en": "Amazon AWS | hosting"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud｜稼働基盤",
+        "en": "Google Cloud | hosting"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜モデルAPI対応",
+        "en": "OpenAI | model API access"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Anthropic｜モデルAPI対応",
+        "en": "Anthropic | model API access"
+      }
+    }
+  },
+  "FRSH": {
+    "FRSH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Freshworks｜IT・顧客対応",
+        "en": "Freshworks | IT / customer service"
+      }
+    },
+    "NOW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ServiceNow",
+        "en": "ServiceNow"
+      }
+    },
+    "TEAM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Atlassian",
+        "en": "Atlassian"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce",
+        "en": "Salesforce"
+      }
+    },
+    "HUBS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "HubSpot",
+        "en": "HubSpot"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft",
+        "en": "Microsoft"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon AWS｜稼働・販売協業",
+        "en": "Amazon AWS | hosting / distribution"
+      }
+    }
+  },
+  "KVYO": {
+    "KVYO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Klaviyo｜顧客情報・販促",
+        "en": "Klaviyo | customer marketing"
+      }
+    },
+    "BRZE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Braze",
+        "en": "Braze"
+      }
+    },
+    "ADBE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Adobe",
+        "en": "Adobe"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce",
+        "en": "Salesforce"
+      }
+    },
+    "Mailchimp": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Mailchimp",
+        "en": "Mailchimp"
+      }
+    },
+    "SHOP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Shopify｜通販データ・販促連携",
+        "en": "Shopify | commerce / marketing"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜製品・データ連携",
+        "en": "Google | product / data integration"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta｜製品・データ連携",
+        "en": "Meta | product / data integration"
+      }
+    },
+    "TOST": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Toast｜飲食店データ連携",
+        "en": "Toast | restaurant data integration"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜ChatGPT情報連携",
+        "en": "OpenAI | ChatGPT data connection"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Anthropic｜Claude・MCP接続",
+        "en": "Anthropic | Claude / MCP connection"
+      }
+    }
+  },
+  "BRZE": {
+    "BRZE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Braze｜顧客体験・配信",
+        "en": "Braze | customer engagement"
+      }
+    },
+    "ADBE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Adobe",
+        "en": "Adobe"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce",
+        "en": "Salesforce"
+      }
+    },
+    "KVYO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Klaviyo",
+        "en": "Klaviyo"
+      }
+    },
+    "Iterable": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Iterable",
+        "en": "Iterable"
+      }
+    },
+    "SNOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Snowflake｜データ共有",
+        "en": "Snowflake | data sharing"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜Azureへデータ出力",
+        "en": "Microsoft | data export to Azure"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon｜AWSへデータ出力",
+        "en": "Amazon | data export to AWS"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜Cloudへデータ出力",
+        "en": "Google | cloud data export"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜利用者のAPIキー接続",
+        "en": "OpenAI | customer API-key access"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Anthropic｜利用者のAPIキー接続",
+        "en": "Anthropic | customer API-key access"
+      }
+    }
+  },
+  "SPT": {
+    "SPT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Sprout Social｜SNS運用",
+        "en": "Sprout Social | social management"
+      }
+    },
+    "CXM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Sprinklr",
+        "en": "Sprinklr"
+      }
+    },
+    "Hootsuite": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Hootsuite",
+        "en": "Hootsuite"
+      }
+    },
+    "Khoros": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Khoros",
+        "en": "Khoros"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta｜Facebook・Instagram接続",
+        "en": "Meta | Facebook / Instagram"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜LinkedIn接続",
+        "en": "Microsoft | LinkedIn connectivity"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜YouTube接続",
+        "en": "Google | YouTube connectivity"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon AWS｜主な稼働基盤",
+        "en": "Amazon AWS | main hosting"
+      }
+    },
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Salesforce｜Service Cloud連携・採用",
+        "en": "Salesforce | Service Cloud / adoption"
+      }
+    }
   }
 };
 
@@ -4443,7 +5082,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
