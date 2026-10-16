@@ -3470,11 +3470,23 @@
       "COST"
     ],
     "name": "Costco",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+      },
+      {
+        "url": "https://customerservice.costco.com/app/answers/detail/a_id/719/kw/purchases%20tires",
+        "label": "Costco — current US payment methods and Citi Visa card, checked October 16, 2026"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000119312515078956/d885985dex991.htm",
+        "label": "Costco — Citi co-brand / Visa acceptance agreement announcement, March 2, 2015"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/831001/000110465926115323/c-ex99d1.htm",
+        "label": "Citigroup — October 13, 2026 issuer release, NYSE C identity"
       }
     ],
     "ja": {
@@ -3483,7 +3495,7 @@
       "strength": "品数を絞った大量仕入れと効率的な物流で低価格を支える。自社ブランドはKirkland Signature。",
       "risks": "薄い商品利益率のため仕入れ・人件費の上昇が響く。会員の継続や価格への信頼も重要。",
       "competition": "Walmart（Sam’s Clubを含む）、BJ’s Wholesale Club、Target、Amazonなどと競合する。倉庫型の会員制店舗ではSam’s ClubやBJ’s、一般の商品販売ではWalmart・Target・Amazonなどが比較対象になる。価格だけでなく品揃えや立地、買い物の便利さでも競争する。",
-      "relationships": "メーカーなどから直接仕入れ、物流拠点を通じて各店舗に商品を届ける。"
+      "relationships": "米国ではCitiのCostco Anywhere Visa提携カードとVisaの受入ネットワークを利用する。2015年の契約発表と現在の米国向け支払方法を照合した関係で、Citiは上場親会社Citigroupとして表示する。海外倉庫・オンラインの受入条件は異なり、世界中でVisaだけを受け付けるという意味ではない。"
     },
     "en": {
       "business": "Runs membership warehouses and online stores selling groceries and everyday goods.",
@@ -3491,7 +3503,7 @@
       "strength": "Limited selection, volume buying and efficient logistics support low prices; Kirkland Signature is its own brand.",
       "risks": "Thin merchandise margins expose earnings to rising costs; membership retention and price trust matter.",
       "competition": "Named rivals include Walmart, including Sam’s Club, BJ’s Wholesale Club, Target and Amazon. Sam’s Club and BJ’s compete in membership warehouse clubs, while Walmart, Target and Amazon also compete in general merchandise retail. The overlap depends on product range, location, price and shopping convenience.",
-      "relationships": "Buys directly from suppliers and distributes goods through its depot network."
+      "relationships": "US payment methods include the Citi Costco Anywhere Visa co-brand card and Visa acceptance. The 2015 agreement is checked against current US payment guidance; Citi is represented by listed parent Citigroup. Overseas warehouses and online channels have different acceptance rules, so this is not worldwide Visa-only acceptance."
     },
     "maps": {
       "competition": [
@@ -3559,6 +3571,36 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Citigroup / Citi",
+          "role": "partner",
+          "label": {
+            "ja": "米国Citi提携カード。上場親会社はCitigroup",
+            "en": "US Citi co-brand card; listed parent Citigroup"
+          },
+          "sourceIndexes": [
+            1,
+            2,
+            3
+          ],
+          "ticker": "C"
+        },
+        {
+          "kind": "company",
+          "name": "Visa",
+          "role": "partner",
+          "label": {
+            "ja": "米国倉庫のカード受入・提携カード網",
+            "en": "US warehouse card acceptance / co-brand network"
+          },
+          "sourceIndexes": [
+            1,
+            2,
+            3
+          ],
+          "ticker": "V"
         }
       ]
     }
@@ -11751,7 +11793,7 @@
       "TEAM"
     ],
     "name": "Atlassian",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Subscription revenue / Competition / Risks",
@@ -11768,6 +11810,14 @@
       {
         "label": "Freshworks FY2025 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm"
+      },
+      {
+        "url": "https://www.atlassian.com/blog/company-news/atlassian-openai-strategic-partnership",
+        "label": "Atlassian — OpenAI strategic partnership update, October 6, 2026"
+      },
+      {
+        "url": "https://www.atlassian.com/blog/company-news/claude-agent-for-jira",
+        "label": "Atlassian — Claude Agent for Jira availability, June 18, 2026"
       }
     ],
     "ja": {
@@ -11776,7 +11826,7 @@
       "strength": "開発部門から全社へ広がりやすい製品群と、製品同士の連携、開発者・販売パートナーの大きな生態系を持つ。",
       "risks": "クラウド移行のつまずき、障害や情報漏えい、生成AIによる競争変化、大企業向け販売の長期化が成長を鈍らせる。",
       "competition": "案件・業務管理ではmonday.com、開発工程ではGitLab、ITサービス管理ではFreshworksが競合例。各社の年次報告はAtlassianやJira・Trelloを競合として挙げる。Jira Service Managementと一般の案件管理では、比較する製品と用途を分ける。",
-      "relationships": "企業の開発・IT・営業などのチームが利用し、Marketplace開発者と導入パートナーが機能追加や運用を支える。"
+      "relationships": "OpenAIとは2026年10月にTeamwork Graph・Rovoとモデルを組み合わせる提携の進展を説明。AnthropicのClaude Agent for Jiraは同年6月に対象プラン向け提供を発表した。Jiraの業務・権限とAI実行を接続するもので、全プランでの無条件利用や計算容量販売とは異なる。"
     },
     "en": {
       "business": "Provides Jira, Confluence, Loom and related software for development, project work, knowledge sharing and video collaboration.",
@@ -11784,7 +11834,7 @@
       "strength": "Products can spread from software teams across an enterprise and are reinforced by integrated workflows and a large developer and partner ecosystem.",
       "risks": "Cloud migration problems, outages or breaches, generative-AI disruption and longer enterprise sales cycles can slow growth.",
       "competition": "Examples include monday.com in work management, GitLab in development workflows, and Freshworks in IT service management. Their annual reports name Atlassian or its Jira and Trello products. The relevant product and workflow differ by market.",
-      "relationships": "Development, IT and business teams use its products, while Marketplace developers and implementation partners extend and deploy them."
+      "relationships": "An October 2026 update describes OpenAI models combined with Teamwork Graph and Rovo. Claude Agent for Jira was announced in June 2026 for eligible plans. These link Jira work and permissions to AI execution, rather than establishing unconditional availability on all plans or compute-capacity sales."
     },
     "maps": {
       "competition": [
@@ -11866,6 +11916,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年10月：Teamwork Graph・Rovoとモデル連携",
+            "en": "October 2026: Teamwork Graph / Rovo model collaboration"
+          },
+          "sourceIndexes": [
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2026年6月：Claude Agent for Jiraを条件付き提供",
+            "en": "June 2026: Claude Agent for Jira available to eligible plans"
+          },
+          "sourceIndexes": [
+            5
           ]
         }
       ]
@@ -12127,7 +12201,7 @@
       "HUBS"
     ],
     "name": "HubSpot",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Customer platform / Subscriptions / Competition / Risks",
@@ -12144,6 +12218,14 @@
       {
         "label": "monday.com FY2025 Form 20-F · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm"
+      },
+      {
+        "url": "https://www.hubspot.com/company-news/hubspot-and-openai-deepen-partnership",
+        "label": "HubSpot — OpenAI expanded partnership, September 16, 2026"
+      },
+      {
+        "url": "https://www.hubspot.com/company-news/hubspot-connector-claude",
+        "label": "HubSpot — Claude CRM connector, July 29, 2025"
       }
     ],
     "ja": {
@@ -12152,7 +12234,7 @@
       "strength": "無料版から導入しやすく、顧客データを共通基盤に置いたまま必要なHubを追加でき、パートナー網も大きい。",
       "risks": "中小企業の景気感、顧客獲得費、解約、大手CRMとの競争、AIで既存機能が一般化するリスクが成長に影響する。",
       "competition": "CRM・営業支援ではSalesforce、Freshworks、monday.comが競合例。HubSpot自身がSales HubとSalesforce Sales Cloudの比較を公開し、Freshworksとmonday.comもHubSpotをCRMの競合として挙げる。比較は顧客管理・営業の範囲で、各社の全製品が同じという意味ではない。",
-      "relationships": "企業の営業・マーケティング・サポート部門が利用し、アプリ開発者や代理店が連携機能、導入、運用を支える。"
+      "relationships": "OpenAIとは2026年9月にChatGPTのCRM・広告連携を拡大したと説明。AnthropicのClaude向けCRMコネクターは2025年7月に提供を発表した。顧客が許可したCRM情報とAIツールを接続する機能で、全顧客データの提供契約やAI企業によるHubSpot計算容量の購入を意味しない。"
     },
     "en": {
       "business": "Provides a customer platform, mainly for small and mid-sized businesses, spanning marketing, sales, service, content and commerce.",
@@ -12160,7 +12242,7 @@
       "strength": "A low-friction free entry point, shared customer data and expandable Hubs are reinforced by a broad partner ecosystem.",
       "risks": "SMB spending, customer acquisition costs, churn, large CRM rivals and AI commoditizing existing features can affect growth.",
       "competition": "Examples in CRM and sales software include Salesforce, Freshworks and monday.com. HubSpot publishes a Sales Hub versus Salesforce Sales Cloud comparison; Freshworks and monday.com name HubSpot as a CRM rival. This does not equate every product in their portfolios.",
-      "relationships": "Sales, marketing and support teams use the platform, while app developers and agencies provide integrations, implementation and operations."
+      "relationships": "A September 2026 update expands OpenAI / ChatGPT CRM and advertising integration. HubSpot announced its Claude CRM connector in July 2025. These connect authorized customer context to AI tools; they are not blanket customer-data licensing agreements or purchases of HubSpot compute capacity by AI developers."
     },
     "maps": {
       "competition": [
@@ -12242,6 +12324,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：ChatGPTのCRM・広告連携を拡大",
+            "en": "September 2026: expanded CRM / advertising integration with ChatGPT"
+          },
+          "sourceIndexes": [
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年7月：Claude向けCRMコネクター提供",
+            "en": "July 2025: CRM connector available for Claude"
+          },
+          "sourceIndexes": [
+            5
           ]
         }
       ]
@@ -23306,6 +23412,10 @@
       {
         "label": "FY2027 Q2 official results · August 27, 2026",
         "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000059/q227pressrelease.htm"
+      },
+      {
+        "url": "https://investors.autodesk.com/news-releases/news-release-details/autodesk-signs-strategic-collaboration-agreement-amazon-web",
+        "label": "Autodesk — AWS strategic collaboration, June 3, 2026"
       }
     ],
     "ja": {
@@ -23314,7 +23424,7 @@
       "strength": "図面・建物・製品のデータを同じ作業の流れで扱える製品群と、利用者・開発者の蓄積。顧客が使い慣れた設計データや周辺アプリを引き継げることが、継続利用を支える。",
       "risks": "建設・製造への投資が減ると新規契約や利用拡大が鈍る。販売方式の変更で販売店との関係や収益の見え方が変わり、AIや安価な設計ツールへの対応が遅れるリスクもある。",
       "competition": "Bentleyとは建築・インフラ設計、PTCやDassault Systèmesとは製品設計、Procoreとは建設現場の管理で競合する。設計だけでなく、製造・施工につながる作業を誰がまとめるかも競争になる。",
-      "relationships": "TD SYNNEXは流通・販売の提携先で、2026年1月期には売上の14%を占めた。新しい取引モデルの下でも、一部地域の政府向け事業や新興市場で流通関係を維持する。流通契約を設計ソフトの最終顧客契約と混同しない。"
+      "relationships": "TD SYNNEXは2026年1月期の売上14%を占める販売提携先。AWSとは同年6月に戦略的協業契約を発表し、FusionのAWS Marketplace提供とクラウド・AIでの協力を説明した。流通売上、正式協業、発表時点の提供計画を区別し、AWSを設計ソフトの最終購入顧客と推定しない。"
     },
     "en": {
       "business": "Sells design and production software to architects, manufacturers and media studios. AutoCAD handles drawings, Revit building models and Fusion product design through machining.",
@@ -23322,7 +23432,7 @@
       "strength": "Connected design tools, accumulated project data and a large developer community support repeat use and integration with customers’ existing workflows.",
       "risks": "Construction and manufacturing slowdowns weaken demand. Channel changes complicate relationships and revenue comparisons; cheaper tools and AI may disrupt established products.",
       "competition": "Competes with Bentley in infrastructure design, PTC and Dassault Systèmes in product design, and Procore in construction management.",
-      "relationships": "TD SYNNEX is a distribution partner, accounting for 14% of revenue in the year ended January 2026. Under Autodesk’s new transaction model, distribution relationships remain for government business in certain jurisdictions and emerging markets. Distribution differs from an end-customer software contract."
+      "relationships": "TD SYNNEX accounted for 14% of revenue in the year ended January 2026. A June 2026 AWS strategic collaboration covers cloud / AI work and announced Fusion availability through AWS Marketplace. Distributor revenue, collaboration and availability plans are distinct; AWS is not inferred to be the end customer."
     },
     "maps": {
       "competition": [
@@ -23405,6 +23515,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月：正式協業契約・FusionのMarketplace提供計画",
+            "en": "June 2026: strategic collaboration / Fusion Marketplace availability plans"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -23415,7 +23538,7 @@
       "PTC"
     ],
     "name": "PTC",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
@@ -23428,6 +23551,14 @@
       {
         "label": "FY2026 Q3 Form 10-Q · post-divestiture revenue",
         "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312526328444/ptc-20260630.htm"
+      },
+      {
+        "url": "https://www.ptc.com/en/partners/strategic-partnerships/nvidia",
+        "label": "PTC — NVIDIA Omniverse technology collaboration, checked October 16, 2026"
+      },
+      {
+        "url": "https://www.ptc.com/en/partners/strategic-partnerships",
+        "label": "PTC — named strategic partner directory, checked October 16, 2026"
       }
     ],
     "ja": {
@@ -23436,7 +23567,7 @@
       "strength": "設計から部品・変更管理、組み込みソフトの開発までをつなげられる。複雑な製品の履歴や承認手続きを残す仕組みが、長い開発期間を持つメーカーの業務に組み込まれている。",
       "risks": "大型契約の更新や期間変更で売上が振れやすい。顧客の開発投資削減、クラウド移行や既存システムとの統合の難しさも負担。売却した事業の売上を現在の成長と混ぜて比較できない。",
       "competition": "Autodesk、Dassault Systèmes、Siemensと製品設計・製品情報管理で競合する。開発ソフトの要求・テスト管理ではIBMやSiemensなどと競う。",
-      "relationships": "メーカーへ設計・管理ソフトを提供し、販売・導入パートナーが現場への適用を支える。KepwareとThingWorxは2026年3月にTPG系の買い手へ売却済みで、現在の主力製品として扱わない。"
+      "relationships": "公式の戦略提携一覧はMicrosoftのクラウド・AI、AWSとのPLM・CAD等のクラウド協業、NVIDIA技術のWindchill・Creo・Onshapeへの統合を実名で説明する。Kepware・ThingWorxは2026年3月に売却済みで、旧事業の提携を現行PTC製品の取引として復活させない。技術連携はGPU購入量の根拠ではない。"
     },
     "en": {
       "business": "Provides product-development software: Creo and Onshape for design, Windchill for product data and changes, and Codebeamer for software requirements and testing.",
@@ -23444,7 +23575,7 @@
       "strength": "Connects mechanical design, product records and software development, embedding change histories and approvals in complex manufacturing workflows.",
       "risks": "Large renewals can swing revenue. Customer investment cuts, cloud migration and integration are risks; divested revenue complicates growth comparisons.",
       "competition": "Competes with Autodesk, Dassault Systèmes and Siemens in CAD and product lifecycle management; IBM and Siemens compete in software lifecycle tools.",
-      "relationships": "Supplies manufacturers through direct and partner channels. Kepware and ThingWorx were sold to a TPG-affiliated buyer in March 2026 and are no longer core offerings."
+      "relationships": "PTC’s named partner directory describes Microsoft cloud / AI work, an AWS alliance around PLM, CAD and related applications, and NVIDIA technology integration in Windchill, Creo and Onshape. Kepware and ThingWorx were divested in March 2026. Technical integration does not establish GPU procurement volumes or revive relationships of the divested businesses."
     },
     "maps": {
       "competition": [
@@ -23512,6 +23643,45 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "Windchill・Creo・Onshapeへの技術統合。2026年10月確認",
+            "en": "Technology integration in Windchill, Creo and Onshape; checked October 2026"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "role": "partner",
+          "label": {
+            "ja": "PLM・CAD等とAWSのクラウド協業。2026年10月確認",
+            "en": "PLM / CAD and AWS cloud alliance; checked October 2026"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "クラウド・AIと製品情報の連携。2026年10月確認",
+            "en": "Cloud / AI and product-data collaboration; checked October 2026"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -23522,11 +23692,15 @@
       "BSY"
     ],
     "name": "Bentley Systems",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
         "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm"
+      },
+      {
+        "url": "https://www.bentley.com/en/blog/how-bentley-and-nvidia-are-helping-make-cities-smarter-safer-and-more-livable/",
+        "label": "Bentley — NVIDIA smart-city blueprint / Cesium technical contribution, November 4, 2025"
       }
     ],
     "ja": {
@@ -23535,7 +23709,7 @@
       "strength": "土木・構造・地盤など複数分野の設計データをまとめ、建設後の点検・維持管理まで使える。長く稼働する設備の記録を引き継ぐため、単発の図面作成にとどまらない。",
       "risks": "公共工事や資源開発の予算・計画が遅れると利用拡大も遅れる。買収した製品の統合、クラウドの停止、大手設計ソフトとの価格・機能競争も負担になる。",
       "competition": "Autodesk、Trimble、Hexagonとインフラ設計で競合する。プロジェクト情報管理ではAutodeskやOracle、設備運用ではAVEVAなどと競う。",
-      "relationships": "設計会社、建設会社、設備所有者へソフトを提供する。Microsoft Azureが主なクラウド供給元で、Google Cloudも利用する。クラウド会社がBentleyの設計ソフトを買うという関係ではない。"
+      "relationships": "Azure・Google Cloudの稼働基盤利用に加え、2025年11月の自社記事はCesiumとNVIDIA Omniverseを組み合わせた都市デジタルツインの実証事例と、スマートシティ用Blueprintへの技術貢献を説明する。都市の実証をGPUクラウドの販売契約や現在の導入量とは扱わない。"
     },
     "en": {
       "business": "Provides infrastructure software for roads, rail, water and energy: MicroStation design, ProjectWise collaboration and iTwin digital representations of physical assets.",
@@ -23543,7 +23717,7 @@
       "strength": "Connects civil, structural and geotechnical information through construction and long-term asset maintenance, preserving more than standalone drawings.",
       "risks": "Project-budget delays slow expansion. Acquisition integration, cloud outages and competition from larger design vendors can raise costs or weaken demand.",
       "competition": "Competes with Autodesk, Trimble and Hexagon in infrastructure design, Autodesk and Oracle in project delivery, and AVEVA in asset operations.",
-      "relationships": "Supplies engineers, contractors and asset owners. Microsoft Azure is its main cloud supplier; Google Cloud also supports delivery. These are infrastructure supply relationships."
+      "relationships": "Alongside Azure and Google Cloud infrastructure, Bentley’s November 2025 article describes a city digital-twin pilot combining Cesium with NVIDIA Omniverse and a technical contribution to a smart-city blueprint. The example is not a GPU-cloud sales agreement or evidence of present deployment volumes."
     },
     "maps": {
       "competition": [
@@ -23626,6 +23800,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年11月：Cesium・Omniverseの都市デジタルツイン技術事例",
+            "en": "November 2025: Cesium / Omniverse city digital-twin technology example"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -23636,7 +23823,7 @@
       "VEEV"
     ],
     "name": "Veeva Systems",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
@@ -23645,6 +23832,10 @@
       {
         "label": "FY2027 Q2 official results",
         "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000032/veev-20260731xex991.htm"
+      },
+      {
+        "url": "https://www.veeva.com/meet-veeva/partners/product/",
+        "label": "Veeva — named Microsoft product / AI partner directory, checked October 16, 2026"
       }
     ],
     "ja": {
@@ -23653,7 +23844,7 @@
       "strength": "医薬品の規制や現場の手順に合わせた機能があり、研究・品質・営業の記録を共有できる。業界特有の文書管理や検証が必要なため、汎用ソフトだけでは置き換えにくい。",
       "risks": "製薬業界の予算や規制変更に影響され、機密の治験・患者関連データの保護も不可欠。従来CRMからVault CRMへの移行が遅れると、競合への切り替えや支援費用の増加につながる。",
       "competition": "製薬企業の営業管理ではSalesforce、業界データ・分析ではIQVIAと競う。研究・品質管理ではOracleなどの既存製品や顧客の内製システムが代替になる。",
-      "relationships": "製薬企業、開発受託会社、治験施設へ業務ソフトを提供する。VaultはAWSで稼働し、従来のVeeva CRMはSalesforce基盤を使う。Salesforceは供給元でも競合でもあり、従来CRMは2029年末まで支援予定。"
+      "relationships": "AWSはVaultの稼働基盤、Salesforceは従来Veeva CRMの基盤で競合も併存する。公式製品パートナー一覧はMicrosoft技術とVaultアプリの連携も実名で記載する。従来CRMの支援は2029年12月までの計画で、製品連携を全顧客の移行完了や計算容量購入とは混同しない。"
     },
     "en": {
       "business": "Supplies cloud software and data to life-sciences organizations for trials, safety, regulatory submissions, quality and medical sales. It does not manufacture drugs.",
@@ -23661,7 +23852,7 @@
       "strength": "Industry-specific processes and regulated document management connect research, quality and commercial records, making generic software a less straightforward substitute.",
       "risks": "Pharmaceutical budgets, regulation and sensitive-data protection matter. Delays migrating legacy CRM users to Vault CRM create switching and support risks.",
       "competition": "Competes with Salesforce in life-sciences CRM and IQVIA in data and analytics; Oracle and internal systems provide alternatives in regulated operations.",
-      "relationships": "Serves drugmakers, CROs and trial sites. AWS hosts Vault; Salesforce powers legacy CRM and also competes. Legacy CRM support is planned through December 2029."
+      "relationships": "AWS hosts Vault, while Salesforce supports legacy Veeva CRM and also competes. Veeva’s product-partner directory names Microsoft technology / Vault application collaboration. Legacy CRM support is planned through December 2029; integration does not establish completed migration of every customer or compute-capacity purchases."
     },
     "maps": {
       "competition": [
@@ -23744,6 +23935,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "Vaultアプリとの製品連携。2026年10月の公式一覧で確認",
+            "en": "Vault application / Microsoft technology collaboration; directory checked October 2026"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -23754,11 +23958,15 @@
       "MANH"
     ],
     "name": "Manhattan Associates",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
         "url": "https://www.sec.gov/Archives/edgar/data/1056696/000119312526037138/manh-20251231.htm"
+      },
+      {
+        "url": "https://ir.manh.com/news-releases/news-release-details/manhattan-associates-launches-supply-chain-commerce-solutions-0",
+        "label": "Manhattan Associates — Google Cloud Marketplace / GTM expansion, May 28, 2025"
       }
     ],
     "ja": {
@@ -23767,7 +23975,7 @@
       "strength": "倉庫の作業・輸送・店舗在庫・注文を連携させ、販売経路をまたいで商品を届けられる。Activeは共通のコードを継続更新する方式で、顧客ごとの大規模な版更新を減らす。",
       "risks": "物流システムは顧客の実業務に深く関わるため、導入遅延や不具合の影響が大きい。小売・物流の投資減少、長い商談、Google Cloudへの依存もリスクになる。",
       "competition": "SAPやOracleの業務基盤、Blue YonderやInfiosの倉庫・輸送ソフトと競合する。店舗の販売時点管理ではOracleやSalesforceなどとも競う。",
-      "relationships": "小売・製造・物流企業へソフトと導入支援を提供し、Activeのサーバー基盤にはGoogle Cloudを使う。Accentureなどのパートナーは顧客への導入や業務設計を支援する。"
+      "relationships": "Google CloudがActiveの稼働基盤を提供し、Accentureが導入・業務設計を支援する。2025年5月にはGoogle Cloud MarketplaceでのActive提供と共同販売の拡大を発表。稼働基盤の調達と販売経路・機能連携は別の役割で、Googleを物流ソフトの最終購入顧客と推定しない。"
     },
     "en": {
       "business": "Provides warehouse, transport, inventory and order software to retailers, wholesalers, manufacturers and logistics firms. It coordinates fulfillment rather than operating a carrier.",
@@ -23775,7 +23983,7 @@
       "strength": "Connects warehouse operations with transport, stores and orders. A continually updated common codebase reduces disruptive customer version upgrades.",
       "risks": "Operationally critical installations create delay and failure risks. Retail investment cuts, long sales cycles and Google Cloud dependence also matter.",
       "competition": "Competes with SAP and Oracle business suites, Blue Yonder and Infios logistics tools, and Oracle or Salesforce in point-of-sale systems.",
-      "relationships": "Supplies commerce and logistics customers. Google Cloud hosts Active; partners including Accenture help implement systems and redesign customer processes."
+      "relationships": "Google Cloud hosts Active and Accenture supports implementation and process design. A May 2025 announcement expands Active availability on Google Cloud Marketplace and joint go-to-market work. Infrastructure procurement differs from distribution and integration; Google is not inferred to be the end buyer of logistics software."
     },
     "maps": {
       "competition": [
@@ -23857,6 +24065,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2025年5月：ActiveをMarketplace提供・共同販売",
+            "en": "May 2025: Active Marketplace distribution / joint go-to-market"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -25015,7 +25236,7 @@
       "DT"
     ],
     "name": "Dynatrace",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -25024,6 +25245,10 @@
       {
         "label": "Latest reviewed quarterly results · 2026 disclosure",
         "url": "https://ir.dynatrace.com/news-events/press-releases/detail/434/dynatrace-reports-first-quarter-fiscal-year-2027-financial-results"
+      },
+      {
+        "url": "https://www.dynatrace.com/news/blog/scaling-enterprise-ai-with-confidence-dynatrace-joins-the-dell-technologies-ai-ecosystem-program/",
+        "label": "Dynatrace — Dell AI Ecosystem Program participation, May 19 / June 1, 2026"
       }
     ],
     "ja": {
@@ -25032,7 +25257,7 @@
       "strength": "複数のアプリや設備の依存関係を自動で整理し、記録・性能・利用者のデータを一緒に分析できる。個々の警報を並べるだけでなく、障害の原因を絞る文脈を作れる。",
       "risks": "監視データが増えるほど保管・処理の費用がかかり、顧客が利用量を抑えると売上にも影響する。企業への導入は長期化しやすく、AIの判断ミスや機密データの扱いにも注意が必要。",
       "competition": "Datadog、Cisco傘下のSplunk・AppDynamics、Elastic、Grafana、New Relicなどと監視・ログ分析で競う。クラウド会社が自社の設備向けに提供する監視機能も競合になる。",
-      "relationships": "企業のIT運用部門へ監視・分析を提供し、AWS、Microsoft Azure、Google Cloudの環境と接続する。販売・導入パートナーも利用する。接続対応だけでクラウド会社を顧客と断定しない。"
+      "relationships": "AWS・Azure・Google Cloudの環境に対応し、2026年5月にはDell Technologies AI Ecosystem Program参加とAI Factory環境での監視連携を発表。対応・参加はDellが監視サービスを購入した証拠ではない。クラウド純正監視との競合と技術連携は併存する。"
     },
     "en": {
       "business": "Monitors enterprise applications and infrastructure, correlating operational data to diagnose failures, performance issues and user impact.",
@@ -25040,7 +25265,7 @@
       "strength": "Automatically maps dependencies and correlates logs, performance and user data to narrow down root causes.",
       "risks": "Data-processing costs, customer usage controls, lengthy deployments, AI errors and sensitive telemetry create risks.",
       "competition": "Competes with Datadog, Cisco’s Splunk and AppDynamics, Elastic, Grafana, New Relic and cloud-native monitoring.",
-      "relationships": "Serves enterprise IT teams and integrates with AWS, Azure and Google Cloud. Supported environments are not automatically customers."
+      "relationships": "Dynatrace integrates with AWS, Azure and Google Cloud environments. A May 2026 announcement adds Dell Technologies AI Ecosystem Program participation and observability in AI Factory environments. Compatibility and program participation do not establish Dell as a purchasing customer; cloud-native monitoring rivalry can coexist with integration."
     },
     "maps": {
       "competition": [
@@ -25136,6 +25361,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Dell",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2026年5月：Dell AI Ecosystem Program参加・AI監視連携",
+            "en": "May 2026: Dell AI Ecosystem Program / AI observability integration"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "DELL"
         }
       ]
     }
@@ -26011,11 +26249,15 @@
       "OTEX"
     ],
     "name": "OpenText",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm"
+      },
+      {
+        "url": "https://www.opentext.com/partners/opentext-on-google-cloud",
+        "label": "OpenText — Google Cloud partnership / integration directory, checked October 16, 2026"
       }
     ],
     "ja": {
@@ -26024,7 +26266,7 @@
       "strength": "文書の取り込みから保存・検索・廃棄までを管理し、会計や顧客管理の業務と結び付けられる。長年蓄積した情報や承認手順を扱うため、顧客が別製品へ移るにはデータ移行と業務の見直しが必要。",
       "risks": "買収した多くの製品を統合しながら、保守・ライセンス中心の顧客をクラウドへ移す必要がある。買収に伴う負債、大手のAI・業務ソフトとの競争、重要文書の漏えいも経営上の制約になる。",
       "competition": "企業情報や業務ソフトではIBM、Microsoft、Oracle、ServiceNow、文書管理ではBoxやHylandなどと競う。Microsoftは競合であると同時に連携先でもあり、競争する製品とつながる製品は異なる。",
-      "relationships": "SAPの基幹業務・人事ソフト、Salesforceの顧客管理、Microsoft 365などと文書・業務を連携する。製造・金融・政府などに情報管理を提供し、販売・導入パートナーが展開を支える。"
+      "relationships": "SAP・Salesforce・Microsoftとの情報管理連携に加え、公式ページはGoogle Cloudとの文書管理、Vertex AI・Gemini、Marketplaceでの共同提供を説明する。企業向け情報管理の連携で、全製品の対応完了やGoogleによるOpenTextサービスの購入量を示すものではない。"
     },
     "en": {
       "business": "Provides software to govern enterprise documents and transaction data. Its portfolio also supports business-to-business exchanges, IT operations and security, connecting information with business workflows and AI.",
@@ -26032,7 +26274,7 @@
       "strength": "Manages information from capture through retention and disposal, linking it with business systems. Moving historical content and established approval processes to another vendor can require substantial work.",
       "risks": "Must integrate acquired products and migrate customers toward cloud services. Acquisition-related debt, competition from large AI and business-software providers, and sensitive-document breaches are risks.",
       "competition": "Competes with IBM, Microsoft, Oracle and ServiceNow in enterprise software and with Box and Hyland in content management. Microsoft is also an integration partner; the roles depend on the product.",
-      "relationships": "Connects content with SAP business and HR systems, Salesforce CRM and Microsoft 365. Serves manufacturing, finance, government and other sectors, supported by resellers and implementation partners."
+      "relationships": "Alongside SAP, Salesforce and Microsoft information-management integrations, OpenText names Google Cloud collaboration around content management, Vertex AI / Gemini and Marketplace delivery. This does not establish completed support for every product or procurement volumes by Google."
     },
     "maps": {
       "competition": [
@@ -26154,6 +26396,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "role": "partner",
+          "label": {
+            "ja": "文書管理・Vertex AI・Marketplace連携。2026年10月確認",
+            "en": "Content / Vertex AI / Marketplace collaboration; checked October 2026"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "GOOG"
         }
       ]
     }

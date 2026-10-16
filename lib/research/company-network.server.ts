@@ -72,6 +72,17 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "6": {"ja": "クラウド・AI・販売経路の協業", "en": "Cloud, AI & channel collaboration"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
+  if (root === "PTC") return {"6": {"ja": "設計・製品情報の技術連携", "en": "Design / product-data technology collaboration"}, "7": {"ja": "設計・製品ライフサイクル管理", "en": "Design & product lifecycle management"}};
+  if (root === "BSY") return {"6": {"ja": "クラウド基盤・都市デジタルツイン", "en": "Cloud infrastructure & city digital twins"}, "7": {"ja": "インフラの設計・建設ソフト", "en": "Infrastructure design & delivery software"}};
+  if (root === "VEEV") return {"6": {"ja": "クラウド・従来CRM・製品連携", "en": "Cloud, legacy CRM & product integration"}, "7": {"ja": "ライフサイエンスの業務・データ", "en": "Life-sciences applications & data"}};
+  if (root === "MANH") return {"6": {"ja": "クラウド基盤・販売経路", "en": "Cloud infrastructure & distribution"}, "7": {"ja": "物流・業務ソフトと導入支援", "en": "Supply-chain applications & implementation"}};
+  if (root === "HUBS") return {"6": {"ja": "顧客情報のAIツール連携", "en": "Customer-context integration in AI tools"}, "7": {"ja": "CRM・営業・マーケティング", "en": "CRM, sales & marketing"}};
+  if (root === "TEAM") return {"6": {"ja": "業務情報・AIエージェント連携", "en": "Work context & AI agent integration"}, "7": {"ja": "案件・開発・IT業務ソフト", "en": "Work, development & IT service software"}};
+  if (root === "DT") return {"5": {"ja": "AIインフラの監視エコシステム", "en": "AI infrastructure observability ecosystem"}, "6": {"ja": "監視・分析・クラウド連携", "en": "Observability, analytics & cloud integration"}};
+  if (root === "OTEX") return {"6": {"ja": "情報管理・クラウド・AI連携", "en": "Information management, cloud & AI"}, "7": {"ja": "文書・業務アプリ連携", "en": "Content & business application integration"}};
+  if (root === "COST") return {"6": {"ja": "米国の提携カード・決済網", "en": "US co-brand card & payment network"}, "7": {"ja": "会員制小売・総合小売・通販", "en": "Warehouse clubs, general retail & e-commerce"}};
+
   if (root === "CRWD") return {"6": {"ja": "端末・クラウド防御・AI研究協力", "en": "Endpoint / cloud security & AI research"}};
   if (root === "NET") return {"6": {"ja": "配信・安全な接続・AI検索研究", "en": "Delivery, secure access & AI-search research"}};
   if (root === "INTU") return {"6": {"ja": "金融ツールのAIモデル連携", "en": "AI model integration in financial tools"}, "7": {"ja": "会計・税務・給与・マーケティング", "en": "Accounting, tax, payroll & marketing"}};
@@ -3835,6 +3846,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "建設プロジェクト管理",
         "en": "Construction project management"
       }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS協業・Fusion販売経路の計画",
+        "en": "AWS alliance / Fusion channel plans"
+      }
     }
   },
   "TXN": {
@@ -4085,6 +4103,241 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "VMware virtualization software"
       }
     }
+  },
+  "PTC": {
+    "NVDA": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Omniverseの設計・シミュレーション連携",
+        "en": "Omniverse design / simulation integration"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "PLM・CAD等のAWS協業",
+        "en": "AWS alliance for PLM / CAD"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "製品情報・クラウド・AIの連携",
+        "en": "Product-data, cloud & AI collaboration"
+      }
+    }
+  },
+  "BSY": {
+    "NVDA": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "2025年の都市デジタルツイン技術事例",
+        "en": "2025 city digital-twin technology example"
+      }
+    }
+  },
+  "VEEV": {
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "VaultアプリとMicrosoft技術の連携",
+        "en": "Vault / Microsoft technology collaboration"
+      }
+    }
+  },
+  "MANH": {
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Active稼働基盤・Marketplace共同販売",
+        "en": "Active hosting / Marketplace GTM"
+      }
+    }
+  },
+  "HUBS": {
+    "HUBS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "営業・マーケティングCRM",
+        "en": "Sales / marketing CRM"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Sales Cloudの営業CRM",
+        "en": "Sales Cloud sales CRM"
+      }
+    },
+    "FRSH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "顧客対応・営業CRM",
+        "en": "Customer-service / sales CRM"
+      }
+    },
+    "MNDY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "営業・商談管理",
+        "en": "Sales / deal management"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ChatGPTのCRM・広告連携",
+        "en": "ChatGPT CRM / advertising integration"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Claude CRMコネクター",
+        "en": "Claude CRM connector"
+      }
+    }
+  },
+  "TEAM": {
+    "TEAM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "案件・開発・情報共有",
+        "en": "Work, development & knowledge"
+      }
+    },
+    "MNDY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "案件管理",
+        "en": "Work management"
+      }
+    },
+    "GTLB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "開発・コード共同作業",
+        "en": "Development / code collaboration"
+      }
+    },
+    "FRSH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ITサービス管理",
+        "en": "IT service management"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Teamwork Graph・Rovoのモデル連携",
+        "en": "Teamwork Graph / Rovo model integration"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "対象プランのClaude Agent for Jira",
+        "en": "Claude Agent for Jira on eligible plans"
+      }
+    }
+  },
+  "DT": {
+    "DT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "性能・ログ・AIの監視",
+        "en": "Performance, logs & AI observability"
+      }
+    },
+    "DDOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "監視・分析の競合",
+        "en": "Observability / analytics rivalry"
+      }
+    },
+    "CSCO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Splunk・AppDynamicsの監視",
+        "en": "Splunk / AppDynamics observability"
+      }
+    },
+    "ESTC": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ログ管理・監視",
+        "en": "Logs / observability"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AI Ecosystem Programの監視連携",
+        "en": "AI Ecosystem Program observability"
+      }
+    }
+  },
+  "OTEX": {
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "文書管理・Vertex AI・Marketplace連携",
+        "en": "Content, Vertex AI & Marketplace integration"
+      }
+    }
+  },
+  "COST": {
+    "COST": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "会員制の倉庫型小売",
+        "en": "Membership warehouse retail"
+      }
+    },
+    "WMT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Walmart・Sam’s Clubの小売",
+        "en": "Walmart / Sam’s Club retail"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "総合通販・小売",
+        "en": "General online commerce / retail"
+      }
+    },
+    "Target": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "総合小売",
+        "en": "General merchandise retail"
+      }
+    },
+    "BJ's Wholesale Club": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "会員制の倉庫型小売",
+        "en": "Membership warehouse retail"
+      }
+    },
+    "C": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "米国Citi提携カード・上場親会社",
+        "en": "US Citi co-brand card / listed parent"
+      }
+    },
+    "V": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "米国のカード受入ネットワーク",
+        "en": "US card-acceptance network"
+      }
+    }
   }
 };
 
@@ -4148,7 +4401,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
