@@ -521,6 +521,14 @@
       {
         "label": "Corning · Data center optical connectivity",
         "url": "https://www.corning.com/data-center/worldwide/en/home.html"
+      },
+      {
+        "url": "https://www.amphenol-cs.com/connect/connecting-the-ai-factory-amphenol-and-nvidia-mgx.html",
+        "label": "Amphenol — NVIDIA MGX ecosystem collaboration, June 1, 2026"
+      },
+      {
+        "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Cisco-Introduce-New-Pluggable-Optics-Form-Factor-to-Scale-AI-Factories/default.aspx",
+        "label": "NVIDIA / Cisco — named Amphenol USFP technical collaboration, October 12, 2026"
       }
     ],
     "ja": {
@@ -529,7 +537,7 @@
       "strength": "高速通信から振動・高温に耐える接続まで製品の幅が広く、顧客の設計段階から用途に合わせて開発できる。",
       "risks": "顧客の生産・設備投資の減速、金属などの原材料高や関税、部品調達の遅れが収益に響く。",
       "competition": "コネクター・ケーブルではTE ConnectivityとMolex、光ファイバー接続ではCorningが比較例。Amphenolと各社の公式製品を照合した編集上の比較で、Amphenol自身がこの3社を実名で列挙したという意味ではない。電気接続、光配線、センサーでは製品範囲が異なり、全製品が置き換わるわけではない。",
-      "relationships": "機器メーカーと共同で次世代製品の接続部分を設計し、世界各地の生産拠点から供給する。"
+      "relationships": "2026年6月の自社技術記事がNVIDIA MGXの接続部品での協力を説明。10月のNVIDIA・Cisco共同発表ではAmphenolとUSFPのケージ・コネクター・モジュールを開発する計画を実名で記載する。技術協力の根拠であり、現行の購入金額・出荷量・独占契約や量産完了を示すものではない。"
     },
     "en": {
       "business": "Makes connectors and cables that carry power and signals, alongside sensors and related products.",
@@ -537,7 +545,7 @@
       "strength": "Broad expertise spans high-speed links and harsh environments, with products developed around customer designs.",
       "risks": "Customer production or investment slowdowns, raw-material inflation, tariffs and component shortages.",
       "competition": "Examples are TE Connectivity and Molex in connectors/cables, and Corning in optical-fiber connectivity. These are editorial comparisons of official portfolios, not a claim that Amphenol explicitly names these three companies. Electrical interconnects, optical cabling and sensors have different scopes; products are not universally interchangeable.",
-      "relationships": "Works with equipment makers during product design and supplies them through a global manufacturing network."
+      "relationships": "Amphenol’s June 2026 technical article describes NVIDIA MGX interconnect collaboration. An October NVIDIA/Cisco announcement names Amphenol in planned USFP cage, connector and module development. These establish technical cooperation, not current procurement value, shipment volume, exclusivity or completed mass production."
     },
     "maps": {
       "competition": [
@@ -596,6 +604,33 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月：MGX接続部品の技術協力。10月にはUSFP共同開発計画",
+            "en": "June 2026: MGX interconnect collaboration; October USFP development plans"
+          },
+          "sourceIndexes": [
+            5,
+            6
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "role": "partner",
+          "label": {
+            "ja": "2026年10月：USFPコネクターなどの共同開発。計画段階を含む",
+            "en": "October 2026: USFP connector ecosystem development, including plans"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "CSCO"
         }
       ]
     }
@@ -5484,6 +5519,14 @@
       {
         "label": "IBM · Db2 database",
         "url": "https://www.ibm.com/products/db2"
+      },
+      {
+        "url": "https://openai.com/index/stargate-advances-with-partnership-with-oracle/",
+        "label": "OpenAI — Oracle additional Stargate capacity agreement, July 22, 2025"
+      },
+      {
+        "url": "https://www.oracle.com/news/announcement/oracle-deploys-openai-gpt5-across-oracle-database-and-cloud-applications-portfolio-2025-08-18/",
+        "label": "Oracle — GPT-5 database and cloud application integration, August 18, 2025"
       }
     ],
     "ja": {
@@ -5492,7 +5535,7 @@
       "strength": "長年使われるデータベースと業務ソフトを持ち、同じ製品を顧客の社内設備とOracle Cloudの両方で動かせる。",
       "risks": "AIデータセンターへの先行投資が大きく、需要や建設が計画を下回ると採算が悪化する。クラウド移行と強い価格競争にも左右される。",
       "competition": "Oracle自身が挙げるAWS・Microsoft・Google・Salesforce・SAP・IBMを、公式製品と分野別に照合した。OCIの比較はクラウド基盤、Fusionの比較は顧客対応・ERP等の業務ソフト、IBM Db2の比較はデータベース。クラウド、業務アプリ、データベースの全機能が相互に同等という意味ではない。",
-      "relationships": "企業や公共機関にデータベース、業務アプリ、OCIの計算能力を提供し、導入企業や販売・技術パートナーが周辺を支える。"
+      "relationships": "OpenAIとは2025年7月にStargateの追加4.5GWを開発する合意を公表した。計画容量を全て稼働済みとは扱わない。別に同年8月、Oracleのデータベース・業務アプリへのGPT-5組み込みを発表し、計算容量の提供とモデル利用の役割が併存する。"
     },
     "en": {
       "business": "Provides databases and enterprise applications and operates Oracle Cloud Infrastructure for computing workloads.",
@@ -5500,7 +5543,7 @@
       "strength": "A large database and application installed base can run across customer premises and Oracle Cloud.",
       "risks": "Heavy AI data-center commitments can hurt returns if demand or construction lags, while cloud migration and price competition remain intense.",
       "competition": "Oracle names AWS, Microsoft, Google, Salesforce, SAP and IBM. Official-product matching separates OCI cloud infrastructure, Fusion customer-service/ERP applications, and IBM Db2 databases. These are scoped comparisons, not claims that clouds, business applications and databases are interchangeable across all features.",
-      "relationships": "Supplies databases, applications and OCI capacity to enterprises and public agencies through direct and partner channels."
+      "relationships": "OpenAI announced a July 2025 agreement with Oracle to develop an additional 4.5GW of Stargate capacity; development capacity is not all delivered capacity. Separately, Oracle announced GPT-5 integration in database and business applications in August 2025. Compute provision and model integration are different roles."
     },
     "maps": {
       "competition": [
@@ -5630,6 +5673,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "customer",
+          "label": {
+            "ja": "2025年7月：追加4.5GWのStargate開発合意。稼働済み容量とは異なる",
+            "en": "July 2025: additional 4.5GW Stargate development agreement, not delivered capacity"
+          },
+          "sourceIndexes": [
+            8
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2025年8月：データベース・業務アプリへGPT-5を組み込み",
+            "en": "August 2025: GPT-5 integration in database / business applications"
+          },
+          "sourceIndexes": [
+            9
           ]
         }
       ]
@@ -6007,7 +6074,7 @@
       "CRWD"
     ],
     "name": "CrowdStrike",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Falcon platform / Customers / Competition / Risk factors",
@@ -6016,6 +6083,10 @@
       {
         "label": "SentinelOne FY2026 Form 10-K · Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
+      },
+      {
+        "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-anthropic-critical-infrastructure-defense-program/",
+        "label": "CrowdStrike — Anthropic critical-infrastructure defense program, October 8, 2026"
       }
     ],
     "ja": {
@@ -6024,7 +6095,7 @@
       "strength": "一つの軽量ソフトから大量の攻撃データを集め、クラウド上の分析と専門家の知見を各顧客の防御へすばやく反映する。",
       "risks": "防御基盤そのものの障害や更新不具合は多数の顧客へ同時に影響し、賠償や信用低下につながる。攻撃者と競合の進化も速い。",
       "competition": "端末の攻撃検知・防御ではSentinelOneが競合例。SentinelOneの年次報告書はCrowdStrikeを端末セキュリティの競合として明記している。Falconの全機能と一対一で対応するわけではなく、端末保護の範囲で比較する。",
-      "relationships": "企業と公共機関がFalconを利用し、販売代理店、クラウド市場、技術提携先が導入と機能連携を支える。"
+      "relationships": "AWS・Google CloudのMarketplace経由でFalconを提供し、Microsoft Marketplaceでの提供計画も年次報告に記載する。2026年10月にはAnthropicの重要インフラ防御プログラムへの参加を発表。防御研究・知見共有の協力で、Anthropicへの計算容量販売や未公表の購入契約を意味しない。"
     },
     "en": {
       "business": "Provides the Falcon platform to monitor and protect enterprise endpoints, servers and cloud workloads from cyberattacks.",
@@ -6032,7 +6103,7 @@
       "strength": "A lightweight agent feeds cloud-scale threat data and expert intelligence back into customer defenses quickly.",
       "risks": "Platform outages or flawed updates can affect many customers at once and trigger claims and reputational damage; threats and rivals also evolve quickly.",
       "competition": "SentinelOne explicitly names CrowdStrike as an endpoint-security competitor in its annual report. The comparison covers threat detection and protection on endpoints rather than a one-for-one match for every Falcon module.",
-      "relationships": "Enterprises and public agencies use Falcon, while resellers, cloud marketplaces and technology partners support adoption and integrations."
+      "relationships": "Falcon is distributed through AWS and Google Cloud marketplaces; the annual filing also describes planned Microsoft Marketplace distribution. In October 2026 CrowdStrike joined Anthropic’s Critical Infrastructure Defense Program for defensive research and expertise sharing, not a disclosed compute-capacity sale or procurement contract."
     },
     "maps": {
       "competition": [
@@ -6127,6 +6198,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年10月：重要インフラ防御プログラムへ参加",
+            "en": "October 2026: Critical Infrastructure Defense Program participation"
+          },
+          "sourceIndexes": [
+            2
           ]
         }
       ]
@@ -6295,6 +6378,14 @@
       {
         "label": "Palantir · Foundry data operations architecture",
         "url": "https://www.palantir.com/docs/foundry/architecture-center/overview"
+      },
+      {
+        "url": "https://www.snowflake.com/en/news/press-releases/snowflake-and-anthropic-accelerate-enterprise-ai-adoption-driven-by-rising-demand-for-governed-ai/",
+        "label": "Snowflake — Anthropic Cortex AI partnership update, June 1, 2026"
+      },
+      {
+        "url": "https://www.snowflake.com/en/blog/openai-snowflake-business-native-ai/?gclsrc=aw.ds&regcode=MFMETA",
+        "label": "Snowflake — OpenAI Cortex AI general availability, June 4, 2026"
       }
     ],
     "ja": {
@@ -6303,7 +6394,7 @@
       "strength": "AWS、Azure、Google Cloudをまたいで同じ仕組みを使え、データの管理・共有・分析を分断せずに行える。",
       "risks": "顧客が処理を節約すると売上がすぐ鈍る。基盤を借りる大手クラウド自身が競合でもあり、価格や障害の影響を受ける。",
       "competition": "データ分析ではAmazon Redshift、Microsoft Fabric、Google BigQueryが製品例。Snowflake自身がAWS・Microsoft・Googleを競合として挙げる。Databricks SQLの分析基盤、Palantir Foundryのデータ統合・業務分析は、両社の公式製品とSnowflakeの範囲を照合した編集上の比較。クラウド提供・協業と競合は併存し、Foundry全体と同一製品とは扱わない。",
-      "relationships": "AWS、Microsoft Azure、Google Cloudの設備上でサービスを動かし、企業のデータ担当者や開発者へ従量課金で提供する。"
+      "relationships": "AWS・Microsoft Azure・Google Cloudを稼働基盤として利用する一方、AnthropicとはCortex AIへのClaude統合と共同販売で協力。OpenAIモデルは2026年6月にCortex AIで一般提供と説明した。クラウド基盤の調達とAIモデルの連携は別の役割で、モデル各社がSnowflakeの計算容量を購入したという意味ではない。"
     },
     "en": {
       "business": "Provides a data platform for storing, analyzing, sharing and building AI applications across multiple public clouds.",
@@ -6311,7 +6402,7 @@
       "strength": "Runs a consistent governed data layer across AWS, Azure and Google Cloud without separating storage, sharing and analytics.",
       "risks": "Customer optimization can slow revenue quickly; the cloud providers hosting the platform also compete and influence cost and availability.",
       "competition": "Analytics examples are Amazon Redshift, Microsoft Fabric and Google BigQuery; Snowflake names their providers as competitors. Databricks SQL and Palantir Foundry data integration/operational analytics are editorial comparisons of official products with Snowflake’s scope. Foundry is not an identical replacement for the whole platform. Cloud supply and collaboration can coexist with competition.",
-      "relationships": "Runs on AWS, Microsoft Azure and Google Cloud infrastructure and serves enterprise data teams and developers on a consumption basis."
+      "relationships": "Snowflake runs on AWS, Azure and Google Cloud and partners with Anthropic on Claude in Cortex AI and joint go-to-market work. Its June 2026 update describes OpenAI models as generally available in Cortex AI. Cloud infrastructure procurement differs from model integration and does not establish capacity purchases by the model developers."
     },
     "maps": {
       "competition": [
@@ -6437,6 +6528,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月：Cortex AIのClaude連携・共同販売を説明",
+            "en": "June 2026: Claude in Cortex AI and joint go-to-market"
+          },
+          "sourceIndexes": [
+            7
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月：Cortex AIでモデルを一般提供",
+            "en": "June 2026: OpenAI models generally available in Cortex AI"
+          },
+          "sourceIndexes": [
+            8
           ]
         }
       ]
@@ -6847,6 +6962,14 @@
       {
         "label": "Workday · Human Capital Management",
         "url": "https://www.workday.com/en-us/products/human-capital-management/overview.html"
+      },
+      {
+        "url": "https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-and-Anthropic-partner-to-help-customers-build-AI-powered-applications-accelerate-time-to-value-and-apply-trusted-AI-to-critical-industries/default.aspx",
+        "label": "ServiceNow — Anthropic workflow collaboration, January 28, 2026"
+      },
+      {
+        "url": "https://investor.servicenow.com/news/news-details/2026/ServiceNow-and-OpenAI-collaborate-to-deepen-and-accelerate-enterprise-AI-outcomes/default.aspx",
+        "label": "ServiceNow — OpenAI multi-year collaboration, January 20, 2026"
       }
     ],
     "ja": {
@@ -6855,7 +6978,7 @@
       "strength": "部署や既存システムをまたぐ作業手順を共通データへつなぎ、AIを使った受付、判断、実行まで一体化できる。",
       "risks": "大企業向けは契約まで長く、更新や追加購入に成長が左右される。AIの誤動作、機密データ、基盤障害への責任も重い。",
       "competition": "ServiceNow自身がMicrosoft・Oracle・Salesforce・SAP・Workdayを競合に挙げる。公式製品の比較例はPower Automateの業務自動化、Service Cloudの顧客対応、Oracle・SAPの企業業務、Workdayの人事業務。IT・顧客・人事ワークフローでは範囲が異なり、自社開発の仕組みも代替になる。クラウド連携と競争は併存する。",
-      "relationships": "企業・公共機関に定額契約で基盤を提供し、コンサル会社や導入パートナーが顧客ごとの業務設計と接続を支える。"
+      "relationships": "AWS・Google・Microsoft・NVIDIAとの既存のクラウド・AI協力に加え、2026年1月にはOpenAIとの複数年連携とAnthropicとのClaude連携を発表。ClaudeはBuild Agentと社内業務で採用。OpenAIを使う音声エージェントなどは開発計画を含み、全機能の提供完了や単独モデルへの独占依存を示さない。"
     },
     "en": {
       "business": "Automates requests, approvals and work across IT, HR, customer service and other functions on one cloud platform.",
@@ -6863,7 +6986,7 @@
       "strength": "Connects workflows and data across departments and existing systems, then applies AI from intake through decision and action.",
       "risks": "Large-enterprise sales cycles are long and growth depends on renewals and expansion; AI errors, sensitive data and outages also carry risk.",
       "competition": "ServiceNow names Microsoft, Oracle, Salesforce, SAP and Workday. Official-product examples include Power Automate workflows, Service Cloud customer service, Oracle/SAP enterprise processes and Workday HR. IT, customer and employee workflows differ; in-house systems remain alternatives. Cloud collaboration can coexist with competition.",
-      "relationships": "Sells subscriptions to enterprises and public agencies, with consultants and implementation partners tailoring workflows and integrations."
+      "relationships": "Alongside existing AWS, Google, Microsoft and NVIDIA collaboration, January 2026 announcements cover a multi-year OpenAI agreement and Anthropic Claude integration. Claude powers Build Agent and internal work. OpenAI voice agents include development plans; neither release establishes completed delivery of every feature or exclusive dependence on one model."
     },
     "maps": {
       "competition": [
@@ -7028,6 +7151,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：Build AgentのClaude採用・社内利用",
+            "en": "January 2026: Claude in Build Agent and internal adoption"
+          },
+          "sourceIndexes": [
+            6
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：複数年モデル連携。音声エージェントは開発計画を含む",
+            "en": "January 2026: multi-year model collaboration; voice agents include development plans"
+          },
+          "sourceIndexes": [
+            7
           ]
         }
       ]
@@ -9807,7 +9954,7 @@
       "NET"
     ],
     "name": "Cloudflare",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Network / Products / Customers / Competition",
@@ -9824,6 +9971,10 @@
       {
         "label": "Cloudflare · Workers and AWS Lambda product comparison",
         "url": "https://www.cloudflare.com/en-gb/learning/serverless/serverless-performance/"
+      },
+      {
+        "url": "https://www.cloudflare.com/press/press-releases/2026/cloudflare-announces-research-pilot-with-openai/",
+        "label": "Cloudflare — OpenAI research pilot, July 8, 2026"
       }
     ],
     "ja": {
@@ -9832,7 +9983,7 @@
       "strength": "同じ世界ネットワーク上で配信、セキュリティ、接続、サーバーレス計算をまとめて提供し、通信データを製品改善へ活かせる。",
       "risks": "ネットワーク障害や攻撃、設備投資負担、通信・データ規制、価格競争があり、2025年も最終赤字だった。",
       "competition": "CDNではAkamai、ゼロトラスト接続ではZscaler、サーバーレス計算ではAWSのLambdaなどが競合例。Cloudflare自身が製品別の比較を公開している。比較資料は競合分野の確認に使い、性能や価格の優劣をそのまま断定しない。",
-      "relationships": "Web・アプリ運営企業と社内ITへサービスを提供し、通信回線、データセンター、機器会社を使って世界ネットワークを運営する。"
+      "relationships": "2026年7月にOpenAIとの研究パイロットを発表。参加Webサイトの更新・トラフィックなどのネットワーク情報を活用し、AI検索の探索・索引精度を改善する研究。全顧客のコンテンツ提供契約や独占提携、研究成果の実現を意味しない。"
     },
     "en": {
       "business": "Runs a global network that accelerates and protects websites and applications and also carries enterprise traffic and developer workloads.",
@@ -9840,7 +9991,7 @@
       "strength": "Delivers content, security, connectivity and serverless compute on one global network and uses traffic insight to improve products.",
       "risks": "Network outages, attacks, infrastructure spending, communications and data regulation and pricing pressure remain risks; it was still loss-making in 2025.",
       "competition": "Examples include Akamai in CDN, Zscaler in zero-trust access, and AWS Lambda in serverless compute. Cloudflare publishes product-specific comparisons. These identify overlapping products without adopting the vendor’s performance or pricing superiority claims.",
-      "relationships": "Serves website and application operators and enterprise IT while relying on carriers, data centers and hardware vendors to run its global network."
+      "relationships": "A July 2026 OpenAI research pilot examines whether network signals from participating websites improve AI-search discovery and indexing. It is a research collaboration, not an exclusive content deal covering every Cloudflare customer or a guarantee of achieved results."
     },
     "maps": {
       "competition": [
@@ -9935,6 +10086,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年7月：Web探索・索引の研究パイロット",
+            "en": "July 2026: web discovery / indexing research pilot"
+          },
+          "sourceIndexes": [
+            4
           ]
         }
       ]
@@ -10494,7 +10657,7 @@
       "INTU"
     ],
     "name": "Intuit",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Revenue / Competition / Risks",
@@ -10511,6 +10674,14 @@
       {
         "label": "Intuit Mailchimp · HubSpot email marketing and automation comparison",
         "url": "https://mailchimp.com/resources/mailchimp-vs-hubspot/"
+      },
+      {
+        "url": "https://www.intuit.com/blog/innovative-thinking/tech-innovation/ai-principles-openai-anthropic-partnerships/",
+        "label": "Intuit — OpenAI / Anthropic partnership principles, July 21, 2026"
+      },
+      {
+        "url": "https://investors.intuit.com/news-events/press-releases/detail/1305/intuit-and-anthropic-partner-to-bring-trusted-financial-intelligence-and-custom-ai-agents-to-consumers-and-businesses",
+        "label": "Intuit — Anthropic multi-year agent partnership, February 24, 2026"
       }
     ],
     "ja": {
@@ -10519,7 +10690,7 @@
       "strength": "会計、給与、決済、税務、融資を同じ顧客データでつなぎ、専門家支援とAIを組み合わせられる。",
       "risks": "無料の税務・会計サービス、政府の直接申告、税制変更、信用・決済損失、重要な税務シーズンの障害が業績に影響する。",
       "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILL、メール販促・自動化ではMailchimpとHubSpotが競合例。税務は公表製品の比較、BILLは相手側の開示、HubSpotはMailchimp自身の比較資料が根拠。製品分野を分けて見る。",
-      "relationships": "中小企業、会計士、納税者へソフトと専門家支援を提供し、銀行・カード・保険会社へCredit Karma利用者を送客する。"
+      "relationships": "OpenAI・AnthropicとAIモデル利用やChatGPT・Claudeでの金融ツール連携を進める。Anthropicとの2026年2月発表にはClaude Agent SDKによる業務エージェント、MCP連携、Claude Code採用を含む。段階展開の計画と提供済み機能を区別し、両社との売上分配や全体展開完了を推定しない。"
     },
     "en": {
       "business": "Provides QuickBooks for small businesses, TurboTax for tax filing, Credit Karma for consumer finance and Mailchimp for marketing.",
@@ -10527,7 +10698,7 @@
       "strength": "Connects accounting, payroll, payments, tax and lending on shared customer data and combines software with experts and AI.",
       "risks": "Free tax and accounting tools, government direct filing, tax-law changes, credit and payment losses and peak-season outages can affect results.",
       "competition": "Examples include H&R Block versus TurboTax in tax preparation, BILL versus QuickBooks bill payment, and HubSpot versus Mailchimp in email marketing and automation. Tax is a disclosed-product comparison, BILL is peer-side disclosure, and Mailchimp publishes its own HubSpot comparison. These are separate product markets.",
-      "relationships": "Serves small businesses, accountants and taxpayers and refers Credit Karma users to banks, card issuers and insurers."
+      "relationships": "Intuit works with OpenAI and Anthropic on model use and financial-tool integration in ChatGPT and Claude. Its February 2026 Anthropic announcement includes Claude Agent SDK workflows, MCP integrations and Claude Code adoption. Phased rollout plans do not establish completed delivery of all features or revenue-sharing arrangements."
     },
     "maps": {
       "competition": [
@@ -10624,6 +10795,30 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年7月説明：モデル利用とChatGPT連携",
+            "en": "July 2026 update: model use and ChatGPT integration"
+          },
+          "sourceIndexes": [
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年2月：Claudeエージェント・金融ツール連携。段階展開の計画を含む",
+            "en": "February 2026: Claude agents / financial tools; includes phased rollout plans"
+          },
+          "sourceIndexes": [
+            5
           ]
         }
       ]
@@ -22234,11 +22429,15 @@
       "NTNX"
     ],
     "name": "Nutanix",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm"
+      },
+      {
+        "url": "https://www.nutanix.com/press-releases/2026/nutanix-and-netapp-form-strategic-alliance",
+        "label": "Nutanix — NetApp strategic alliance and planned integration, April 7, 2026"
       }
     ],
     "ja": {
@@ -22247,7 +22446,7 @@
       "strength": "分散した設備を一つの管理画面と運用方法で扱える。機器やクラウドの選択肢があり、既存設備を生かしながら段階的に移行できる。",
       "risks": "販売代理店への依存と、対応サーバーの価格・納期の影響を受ける。顧客が従来の仮想化基盤から移行するには検証と時間が必要になる。",
       "competition": "Broadcom傘下のVMwareやMicrosoft、IBM傘下のRed Hatと基盤ソフトで競合。クラウドや機器メーカーとも用途により競う。",
-      "relationships": "Cisco、Dell、HPEなどが対応機器とNutanixのソフトを販売する。AWS、Azure、Google Cloudでも基盤を利用でき、競合と提携が併存する。"
+      "relationships": "Cisco・Dell・HPEの対応システムと、AWS・Azure・Google Cloud向けNC2で協力する。NetAppとは2026年4月にONTAP基盤とNCPの統合を発表したが、同資料での提供時期は年内の計画。提携発表だけで全統合が提供済みとは扱わない。"
     },
     "en": {
       "business": "Unifies enterprise compute, storage and networking in software across data centers and clouds, supporting virtual machines, containers and AI.",
@@ -22255,7 +22454,7 @@
       "strength": "Common management across hardware and clouds supports gradual modernization while retaining infrastructure choices.",
       "risks": "Channel dependence, hardware prices and lead times affect sales. Migration from existing virtualization requires validation and time.",
       "competition": "Competes with Broadcom's VMware, Microsoft and IBM's Red Hat, plus cloud and systems vendors.",
-      "relationships": "Cisco, Dell and HPE sell compatible systems with its software. NC2 extends the platform to AWS, Azure and Google Cloud."
+      "relationships": "Existing Cisco, Dell and HPE systems and NC2 on AWS, Azure and Google Cloud remain. The April 2026 NetApp alliance plans ONTAP/NCP integration later that year; the announcement alone does not establish completed availability of every integration."
     },
     "maps": {
       "competition": [
@@ -22377,6 +22576,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NetApp",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月：ONTAP・NCP統合の提携。年内提供の計画",
+            "en": "April 2026: ONTAP / NCP alliance, with planned availability later in 2026"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NTAP"
         }
       ]
     }
@@ -23916,6 +24128,10 @@
       {
         "label": "Insperity FY2025 Form 10-K · PEO competition names ADP and Paychex",
         "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm"
+      },
+      {
+        "url": "https://www.paychex.com/newsroom/news-releases/paychex-wise-microsoft-365-teams",
+        "label": "Paychex — WISE Microsoft 365 / Teams integration, August 3, 2026"
       }
     ],
     "ja": {
@@ -23924,7 +24140,7 @@
       "strength": "ソフトだけでなく給与・労務の相談や実務を支える担当者も提供できる。給与から福利厚生、採用・人材管理へ取引を広げる製品と顧客基盤がある。",
       "risks": "顧客企業の倒産や雇用減少で利用が縮み、金利低下で利息収入が減る。給与の資金移動や個人情報の保護、保険費用、Paycorの統合と買収に伴う借入もリスク。",
       "competition": "給与・人事ソフトではADP、Paycom、Paylocity、共同雇用型のPEOではADP TotalSource、TriNet、Insperityが競合例。給与の例は公式製品の比較とPaycomなど相手側の開示、PEOの例はTriNet・Insperity側の実名開示に基づく。人事ソフトと共同雇用型の業務代行は提供範囲・責任が異なる。PaycorはPaychex傘下で独立した競合とは数えない。",
-      "relationships": "雇用主の給与・人事を支援し、銀行が給与・税金の送金、保険会社が福利厚生を支える。Paycorの買収は2025年4月に完了済みで、独立した競合として数えない。"
+      "relationships": "2026年8月にWISEをMicrosoft 365 Copilot・Teamsで提供すると発表。対応するPaychex製品の契約が必要な連携で、Microsoftが給与処理の購入顧客であるとは限らない。Paycorは2025年4月に取得済みの傘下事業として扱う。"
     },
     "en": {
       "business": "Provides payroll, HR and benefits software with human support. Its acquired Paycor business extends its reach beyond smaller employers.",
@@ -23932,7 +24148,7 @@
       "strength": "Combines software with practical payroll and HR advice, expanding customer relationships into benefits, recruiting and talent management.",
       "risks": "Customer failures and employment cuts reduce demand; lower rates reduce interest. Payment security, insurance costs, Paycor integration and acquisition debt add risk.",
       "competition": "Payroll/HR examples are ADP, Paycom and Paylocity; PEO examples are ADP TotalSource, TriNet and Insperity. Payroll examples use official-product comparisons and counterpart disclosures; PEO examples use TriNet/Insperity named disclosures. HR software differs from co-employment outsourcing in coverage and responsibilities. Paycor belongs to Paychex and is not counted separately.",
-      "relationships": "Serves employers; banks support remittances and insurers support benefits. Paycor was acquired in April 2025 and is not counted as an independent competitor."
+      "relationships": "An August 2026 announcement makes WISE available within Microsoft 365 Copilot and Teams, subject to applicable product subscriptions. This integration does not establish Microsoft as a payroll-processing customer. Paycor remains the business acquired in April 2025, not an independent rival."
     },
     "maps": {
       "competition": [
@@ -24043,6 +24259,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2026年8月：WISEをMicrosoft 365 Copilot・Teamsで提供",
+            "en": "August 2026: WISE available in Microsoft 365 Copilot / Teams"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -24086,6 +24315,10 @@
       {
         "label": "Workday · Human capital management and payroll scope",
         "url": "https://www.workday.com/en-us/products/human-capital-management.html"
+      },
+      {
+        "url": "https://www.adp.com/what-we-offer/products/adp-smartcompliance/integrations/workday.aspx",
+        "label": "ADP — certified Workday SmartCompliance integrations, checked October 16, 2026"
       }
     ],
     "ja": {
@@ -24094,7 +24327,7 @@
       "strength": "国や地域で異なる給与・税務ルールへの対応、蓄積した実務知識、幅広い顧客規模を支える体制。ソフトだけで完結しない給与の計算・送金・届出まで支援できる。",
       "risks": "顧客の雇用減少や金利変化が収益に響く。巨額の給与・納税資金を正確に送る必要があり、障害・不正・情報漏えいは大きな責任につながる。PEOには雇用・保険制度の変更リスクもある。",
       "competition": "給与・人事ではPaychex、Paycom、Workday、共同雇用型のPEOではPaychex、TriNet、Insperityが競合例。給与の例は公式製品の比較とPaycomなど相手側の開示、PEOの例はTriNet・Insperity側の実名開示に基づく。人事ソフトと共同雇用型の業務代行は提供範囲・責任が異なる。社内で人事・給与を処理する方法も代替手段になる。",
-      "relationships": "雇用主の依頼で従業員や税務当局へ給与・税金を送る。ADP TotalSourceは共同雇用の形で福利厚生と人事管理を支援する。顧客資金を受け取る相手とソフトの購入者を区別する。"
+      "relationships": "Workdayと給与・人事・給与後処理の連携を提供する。ADPの公式資料はWorkday認定のSmartCompliance連携による税務などの処理を説明している。給与・人事製品の競合と機能連携は併存し、全顧客が全サービスを利用するとは限らない。"
     },
     "en": {
       "business": "Provides payroll and HR software and outsourcing to employers from small businesses to multinationals, including time, recruiting, benefits and local compliance.",
@@ -24102,7 +24335,7 @@
       "strength": "Combines regulatory expertise and operating scale with calculation, payments and filings, supporting payroll work that extends beyond software alone.",
       "risks": "Employment and rates affect earnings. Payment failures, fraud and breaches create substantial liability; PEO operations also face employment and insurance regulation risks.",
       "competition": "Payroll/HR examples are Paychex, Paycom and Workday; PEO examples are Paychex, TriNet and Insperity. Payroll examples use official-product comparisons and counterpart disclosures; PEO examples use TriNet/Insperity named disclosures. HR software differs from co-employment outsourcing in coverage and responsibilities. In-house payroll/HR remains another alternative.",
-      "relationships": "Serves employers and remits their payroll and taxes. TotalSource supports benefits and HR through co-employment; payment recipients are distinct from purchasing clients."
+      "relationships": "ADP provides Workday-certified SmartCompliance integration for payroll-related tax and post-payroll compliance. Product rivalry in HR and payroll can coexist with these integrations; the relationship does not imply every shared customer uses every service."
     },
     "maps": {
       "competition": [
@@ -24200,6 +24433,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Workday",
+          "role": "partner",
+          "label": {
+            "ja": "給与後処理・税務の認定連携。2026年10月確認",
+            "en": "Certified post-payroll / tax-compliance integration; checked October 2026"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "WDAY"
         }
       ]
     }
@@ -28951,6 +29197,10 @@
       {
         "label": "SAP · Extended Warehouse Management features",
         "url": "https://www.sap.com/products/scm/extended-warehouse-management/features.html"
+      },
+      {
+        "url": "https://news.sap.com/2026/05/sap-anthropic-to-bring-claude-sap-business-ai-platform/",
+        "label": "SAP — planned Anthropic Business AI collaboration, May 12, 2026"
       }
     ],
     "ja": {
@@ -28959,7 +29209,7 @@
       "strength": "各国の会計や業種別の複雑な業務を扱い、基幹システムとして長く使われる。社内データと実際の取引手順がつながるため、AIを日々の業務へ組み込みやすい。導入を支える提携会社も多い。",
       "risks": "基幹システムの入れ替えは大きな工事となり、顧客がクラウド移行を延期することがある。移行で従来の保守収入が減る一方、クラウド運営費やAI投資は増える。障害・情報漏洩の影響も広い。",
       "competition": "Oracle Fusion Cloud ERPとは基幹業務、Workdayとは人事・財務、Manhattan Active Warehouse ManagementとはSAP EWMの倉庫管理分野で競う。WorkdayとManhattanは相手側の年次報告がSAPを実名で挙げ、製品範囲も公式情報で照合した。倉庫業務の専用ソフトと企業全体の業務基盤は同一ではなく、既存システムを使い続ける方法も代替手段になる。",
-      "relationships": "MicrosoftとはAzureへの移行・稼働支援で連携し、Accentureは企業への導入を支える。Google Cloudとはデータ連携を進め、企業や公共機関がSAPを日常業務の基盤として利用する。"
+      "relationships": "MicrosoftとはAzure移行・稼働、Accentureとは導入支援、Google Cloudとはデータ連携で協力。2026年5月にはAnthropicのClaudeをBusiness AI Platform・Jouleへ組み込む計画を発表した。発表時点の将来計画を全製品で提供完了としない。"
     },
     "en": {
       "business": "Connects finance, procurement, inventory, HR and other business processes. A sale can update stock, billing and accounting in one system, serving large and midsize organizations.",
@@ -28967,7 +29217,7 @@
       "strength": "Handles complex industry workflows and local requirements as a deeply embedded system of record. Connected business data and transactions support practical AI, reinforced by a broad implementation ecosystem.",
       "risks": "Core-system migrations are complex and may be postponed. Moving to subscriptions can reduce legacy maintenance while hosting and AI spending rise; outages or breaches can disrupt critical operations.",
       "competition": "Examples are Oracle Fusion Cloud ERP in enterprise operations, Workday in HR/finance and Manhattan Active Warehouse Management against SAP EWM in warehouse management. Workday and Manhattan name SAP in annual filings; official products support the scoped examples. A warehouse specialist is not the same as an entire ERP suite. Retaining existing systems remains an alternative.",
-      "relationships": "Works with Microsoft on Azure migration and operations, Accenture on implementation, and Google Cloud on data interoperability. Businesses and public organizations use SAP to run operations."
+      "relationships": "Microsoft supports Azure migration and operations, Accenture implementation, and Google Cloud data interoperability. In May 2026 SAP announced plans to integrate Anthropic Claude into Business AI Platform and Joule; the announcement does not establish completed availability across all products."
     },
     "maps": {
       "competition": [
@@ -29065,6 +29315,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：Business AI Platform・JouleへClaudeを組み込む計画",
+            "en": "May 2026: planned Claude integration in Business AI Platform / Joule"
+          },
+          "sourceIndexes": [
+            9
           ]
         }
       ]

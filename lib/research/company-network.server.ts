@@ -72,6 +72,14 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "CRWD") return {"6": {"ja": "端末・クラウド防御・AI研究協力", "en": "Endpoint / cloud security & AI research"}};
+  if (root === "NET") return {"6": {"ja": "配信・安全な接続・AI検索研究", "en": "Delivery, secure access & AI-search research"}};
+  if (root === "INTU") return {"6": {"ja": "金融ツールのAIモデル連携", "en": "AI model integration in financial tools"}, "7": {"ja": "会計・税務・給与・マーケティング", "en": "Accounting, tax, payroll & marketing"}};
+  if (root === "SAP") return {"6": {"ja": "クラウド・データ・AI連携", "en": "Cloud, data & AI collaboration"}, "7": {"ja": "企業の業務アプリ・導入支援", "en": "Enterprise applications & implementation"}};
+  if (root === "PAYX") return {"6": {"ja": "人事情報の業務ツール連携", "en": "HR intelligence in workflow tools"}, "7": {"ja": "給与・人事・福利厚生", "en": "Payroll, HR & benefits"}};
+  if (root === "NTNX") return {"5": {"ja": "対応サーバー・ストレージ連携", "en": "Compatible servers & storage integration"}, "6": {"ja": "仮想化・クラウド基盤", "en": "Virtualization & cloud infrastructure"}};
+  if (root === "APH") return {"3": {"ja": "接続アーキテクチャの技術協力", "en": "Interconnect architecture collaboration"}, "4": {"ja": "接続部品・ケーブル・光ファイバー", "en": "Connectors, cables & fiber"}, "5": {"ja": "USFP機器・接続部品の開発協力", "en": "USFP systems / connector development"}};
+
   if (root === "TXN") return {"3": {"ja": "アナログ・制御・ロボット技術連携", "en": "Analog, control & robotics collaboration"}};
   if (root === "ADI") return {"1": {"ja": "半導体の受託製造", "en": "External wafer fabrication"}, "3": {"ja": "アナログ・信号処理半導体", "en": "Analog & signal-processing chips"}, "7": {"ja": "自動車の採用事例", "en": "Automotive adoption"}};
   if (root === "DDOG") return {"6": {"ja": "監視・セキュリティ・クラウド連携", "en": "Observability, security & cloud collaboration"}};
@@ -110,7 +118,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     6: { ja: "GPU計算・AIクラウド", en: "GPU compute & AI cloud" },
   };
   if (root === "ORCL") return {
-    6: { ja: "クラウド計算基盤", en: "Cloud computing infrastructure" },
+    6: { ja: "クラウド計算・AIモデル連携", en: "Cloud computing & AI-model collaboration" },
     7: { ja: "業務アプリ・データベース", en: "Business applications & databases" },
   };
   if (root === "PANW") return {
@@ -379,6 +387,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "データ統合・業務分析",
         "en": "Data integration & analytics"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Cortex AIのClaude・共同販売",
+        "en": "Claude in Cortex AI / joint go-to-market"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Cortex AIのモデル提供",
+        "en": "Models available in Cortex AI"
       }
     }
   },
@@ -866,6 +888,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "共同雇用型の人事支援",
         "en": "Co-employment HR services"
       }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "WISEのCopilot・Teams対応",
+        "en": "WISE in Copilot / Teams"
+      }
     }
   },
   "ADP": {
@@ -900,8 +929,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "WDAY": {
       "layer": 7,
       "businessLabel": {
-        "ja": "人事・給与管理",
-        "en": "HCM & payroll"
+        "ja": "給与後処理・税務の認定連携",
+        "en": "Certified post-payroll / tax integration"
       }
     }
   },
@@ -1117,6 +1146,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "業務ソフトの導入支援",
         "en": "Enterprise application implementation"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Business AI・Joule連携計画",
+        "en": "Business AI / Joule integration plans"
       }
     }
   },
@@ -1496,6 +1532,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "光ファイバー・配線",
         "en": "Optical fiber & cabling"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "MGX・USFP接続の技術協力",
+        "en": "MGX / USFP interconnect collaboration"
+      }
+    },
+    "CSCO": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "USFPコネクター等の開発計画",
+        "en": "USFP connector development plans"
       }
     }
   },
@@ -2249,6 +2299,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Db2データベース",
         "en": "Db2 databases"
       }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Stargate計算容量・GPTモデル連携",
+        "en": "Stargate capacity / GPT model integration"
+      }
     }
   },
   "PANW": {
@@ -2329,6 +2386,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "人事業務・HCM",
         "en": "HR processes & HCM"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Build AgentのClaude・社内採用",
+        "en": "Claude in Build Agent / internal adoption"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "モデル・音声エージェント連携計画",
+        "en": "Model / voice-agent collaboration plans"
       }
     }
   },
@@ -3929,6 +4000,91 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "HKEX 3750 / battery-cell supplier"
       }
     }
+  },
+  "CRWD": {
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "重要インフラの防御研究プログラム",
+        "en": "Critical-infrastructure defense program"
+      }
+    },
+    "CRWD": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Falconの端末・クラウド防御",
+        "en": "Falcon endpoint / cloud protection"
+      }
+    },
+    "S": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "端末防御の競合",
+        "en": "Endpoint security rivalry"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS Marketplaceでの提供",
+        "en": "AWS Marketplace distribution"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud Marketplaceでの提供",
+        "en": "Google Cloud Marketplace distribution"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "端末防御の競合・Marketplace計画",
+        "en": "Endpoint rival / Marketplace distribution plans"
+      }
+    }
+  },
+  "NET": {
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Web探索・索引の研究パイロット",
+        "en": "Web discovery / indexing research pilot"
+      }
+    }
+  },
+  "INTU": {
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "金融ツール・モデル連携",
+        "en": "Financial-tool / model integration"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Claudeエージェント・MCP連携計画",
+        "en": "Claude-agent / MCP integration plans"
+      }
+    }
+  },
+  "NTNX": {
+    "NTAP": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "ONTAP・NCPの統合計画",
+        "en": "ONTAP / NCP integration plans"
+      }
+    },
+    "AVGO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "VMware仮想化ソフト",
+        "en": "VMware virtualization software"
+      }
+    }
   }
 };
 
@@ -3992,7 +4148,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
