@@ -11559,7 +11559,7 @@
       "AKAM"
     ],
     "name": "Akamai Technologies",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risks",
@@ -11580,6 +11580,14 @@
       {
         "label": "F5 · Akamai application and API protection comparison",
         "url": "https://www.f5.com/products/compare/akamai"
+      },
+      {
+        "url": "https://www.akamai.com/newsroom/press-release/akamai-announces-11-6-billion-multi-year-agreement-with-anthropic-to-support-growing-demand",
+        "label": "AKAM / Anthropic — primary relationship source; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.ir.akamai.com/node/32906",
+        "label": "AKAM / NVIDIA — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -11588,7 +11596,7 @@
       "strength": "利用者に近い多数の拠点と大量通信を処理する運用技術を持ち、配信と防御を同じ基盤で提供できる。",
       "risks": "大手クラウドやCDNとの競争、通信量単価の低下、障害や攻撃、設備投資、通信・データセンター費の上昇が重荷になる。",
       "competition": "CDNではCloudflareとAWSのCloudFront、クラウド計算ではAWSのEC2、Web・API防御ではF5が競合例。CloudflareとF5はAkamaiを名指しした製品比較を公開。AWSは公表製品を比較したもので、各社の性能・価格の優劣を断定するものではない。",
-      "relationships": "通信・データセンター事業者の設備を使い、企業やメディアのコンテンツとアプリを利用者の近くで配信・防御する。"
+      "relationships": "通信・データセンター事業者の設備を使い、企業やメディアのコンテンツとアプリを利用者の近くで配信・防御する。 2026年9月、Anthropic向けCPUクラウド容量の7年116億ドルの契約コミットメントを発表。将来の提供条件付きで売上実績ではなく、追加拡張分や最大約5%の条件付きワラントを全取得済みとは扱わない。3月にはNVIDIA Blackwell GPUの取得・展開を発表しており、CPU顧客契約とは異なる役割。"
     },
     "en": {
       "business": "Uses a global edge network to accelerate web delivery, protect applications and provide cloud computing services to enterprises.",
@@ -11596,7 +11604,7 @@
       "strength": "Combines a widely distributed edge footprint with operating expertise that can deliver and secure high volumes of traffic on one platform.",
       "risks": "Cloud and CDN competition, falling delivery prices, outages, attacks, capital needs and higher network or colocation costs can pressure results.",
       "competition": "Examples include Cloudflare and AWS CloudFront in CDN, AWS EC2 in cloud compute, and F5 in web and API protection. Cloudflare and F5 publish comparisons naming Akamai; AWS is an editorial comparison of disclosed products. Vendor superiority claims are not adopted.",
-      "relationships": "Uses carrier and data-center infrastructure to deliver and protect enterprise, media and software traffic close to end users."
+      "relationships": "Uses carrier and data-center infrastructure to deliver and protect enterprise, media and software traffic close to end users. In September 2026 it announced a seven-year $11.6bn Anthropic CPU-cloud commitment, subject to delivery terms rather than realized revenue. Expansion options and warrants for up to about 5% are not treated as exercised ownership. Its March NVIDIA Blackwell acquisition / deployment announcement has a separate supplier role."
     },
     "maps": {
       "competition": [
@@ -11681,6 +11689,31 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "customer",
+          "label": {
+            "ja": "2026年9月：CPUクラウド容量の7年116億ドル契約コミットメント",
+            "en": "September 2026: seven-year $11.6bn commitment for CPU cloud capacity"
+          },
+          "sourceIndexes": [
+            5
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年3月：Blackwell GPU数千基の取得・展開を発表",
+            "en": "March 2026: announced acquisition / deployment of thousands of Blackwell GPUs"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -11691,7 +11724,7 @@
       "OKTA"
     ],
     "name": "Okta",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Platform / Subscription revenue / Competition / Risks",
@@ -11712,6 +11745,10 @@
       {
         "label": "Google · Identity Platform application authentication",
         "url": "https://docs.cloud.google.com/identity-platform/docs"
+      },
+      {
+        "url": "https://sec.okta.com/articles/2026/09/hunting-vulnerabilities-using-frontier-models/",
+        "label": "OKTA / OpenAI — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -11720,7 +11757,7 @@
       "strength": "特定クラウドに偏らず、多数の業務アプリや端末と接続できる統合網とID専業の運用知識が強み。",
       "risks": "自社や顧客への侵害は信用を直接損ない、大手ソフト企業との競争、長い販売期間、クラウド障害も成長を左右する。",
       "competition": "Microsoft Entra IDは従業員向け認証の製品例で、MicrosoftはOkta自身が主要競合と明記する。Ping Identityの従業員・顧客向け認証、SailPointのアクセス権限ガバナンス、Google Identity Platformのアプリ利用者認証は公式製品に基づく編集上の比較。Auth0の顧客認証と従業員の権限管理を分ける。社内開発やオープンソースも代替手段になる。",
-      "relationships": "企業の人事・業務アプリや顧客向けサービスをつなぎ、販売・導入パートナーを通じて認証とアクセス制御を提供する。"
+      "relationships": "企業の人事・業務アプリや顧客向けサービスをつなぎ、販売・導入パートナーを通じて認証とアクセス制御を提供する。 2026年9月の自社報告はOpenAI DaybreakとAnthropic Project Glasswingのモデルを使い、自社製品の脆弱性を調査したと説明。研究プログラム・モデル利用の提携で、全顧客への機能提供や計算容量購入ではない。"
     },
     "en": {
       "business": "Provides identity software that verifies employees and customers and controls secure access to cloud and on-premise systems.",
@@ -11728,7 +11765,7 @@
       "strength": "Its vendor-neutral integration network connects many business applications and devices, backed by focused identity expertise.",
       "risks": "A breach can directly damage trust, while large software rivals, long sales cycles and cloud outages can slow growth.",
       "competition": "Microsoft Entra ID is a workforce-authentication example; Okta explicitly names Microsoft as a principal competitor. Ping Identity workforce/customer authentication, SailPoint access governance and Google Identity Platform app authentication are editorial comparisons of official products. Customer authentication, including Auth0, differs from workforce governance. In-house development and open-source software remain alternatives.",
-      "relationships": "Connects enterprise HR and business apps and customer services, delivering authentication and access controls through implementation and channel partners."
+      "relationships": "Connects enterprise HR and business apps and customer services, delivering authentication and access controls through implementation and channel partners. Its September 2026 report describes using OpenAI Daybreak and Anthropic Project Glasswing models to investigate vulnerabilities in its own products. These are research / model-access partnerships, without implying availability to all customers or computing-capacity purchases."
     },
     "maps": {
       "competition": [
@@ -11827,6 +11864,30 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：Daybreakのモデルを使う自社製品の脆弱性調査",
+            "en": "September 2026: Daybreak model access for vulnerability research on its own products"
+          },
+          "sourceIndexes": [
+            5
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：Project Glasswingのモデルを使う脆弱性調査",
+            "en": "September 2026: Project Glasswing model access for vulnerability research"
+          },
+          "sourceIndexes": [
+            5
+          ]
         }
       ]
     }
@@ -11837,7 +11898,7 @@
       "S"
     ],
     "name": "SentinelOne",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Singularity platform / Revenue / Competition / Risks",
@@ -11850,6 +11911,10 @@
       {
         "label": "Google · Wiz acquisition completed March 11, 2026",
         "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/wiz-acquisition/"
+      },
+      {
+        "url": "https://www.sentinelone.com/press/sentinelone-expands-strategic-collaboration-with-google-cloud-to-deliver-autonomous-ai-powered-security-at-global-scale/",
+        "label": "S / Alphabet — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -11858,7 +11923,7 @@
       "strength": "端末からクラウドまでの情報を一つのデータ基盤に集め、検知後の調査と復旧を自動化できる。",
       "risks": "競争が激しく赤字が続く可能性があり、検知漏れ、侵害、AI判断の誤り、クラウド費、販売パートナー依存が負担になる。",
       "competition": "SentinelOneの開示では、端末防御にCrowdStrike・Broadcom（Carbon Black／Symantec）・Trellix・Microsoft、セキュリティ基盤にPalo Alto Networks、ログを集めて脅威を検知するSIEMにCisco傘下SplunkとElastic、クラウド防御にGoogle傘下Wizを挙げる。製品分野ごとの競合で、全サービスが同一ではない。WizのGoogleによる取得完了も公式発表で確認した。",
-      "relationships": "企業や政府へ直接または販売会社・運用代行会社経由で提供し、クラウドや業務ツールと連携して脅威データを集める。"
+      "relationships": "企業や政府へ直接または販売会社・運用代行会社経由で提供し、クラウドや業務ツールと連携して脅威データを集める。 2026年3月にGoogle Cloudとの複数年セキュリティ開発協業を発表。Singularityを北米・Frankfurt・サウジアラビアのGoogle Cloud地域で提供する基盤利用も記載する。開発提携とクラウド供給を分け、後続の全開発計画が完成したとは扱わない。"
     },
     "en": {
       "business": "Provides the Singularity security platform, using AI to detect and contain attacks across endpoints, servers, cloud workloads and identities.",
@@ -11866,7 +11931,7 @@
       "strength": "Brings endpoint, cloud and identity telemetry into one data platform and automates investigation, response and recovery.",
       "risks": "Intense competition, continued losses, missed detections, breaches, AI errors, cloud costs and reliance on channel partners can hurt results.",
       "competition": "SentinelOne names CrowdStrike, Broadcom’s Carbon Black/Symantec, Trellix and Microsoft in endpoint protection; Palo Alto Networks in broader security; Cisco-owned Splunk and Elastic in SIEM; and Google-owned Wiz in cloud security. These are field-specific rivals with different portfolios. Google’s official announcement independently confirms completion of the Wiz acquisition.",
-      "relationships": "Sells directly and through resellers and managed-security providers, integrating with cloud and business tools to collect threat telemetry."
+      "relationships": "Sells directly and through resellers and managed-security providers, integrating with cloud and business tools to collect threat telemetry. A March 2026 release names multiyear Google Cloud security development and Singularity hosting across North America, Frankfurt and Saudi Arabia regions. Collaboration and infrastructure supply are separate roles; later development plans are not assumed complete."
     },
     "maps": {
       "competition": [
@@ -12015,6 +12080,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：Google Cloudとの複数年セキュリティ開発協業",
+            "en": "March 2026: multiyear Google Cloud security-development collaboration"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年3月：SingularityをGoogle Cloudの北米・Frankfurt・サウジ地域で提供",
+            "en": "March 2026: Singularity hosted in Google Cloud North America, Frankfurt and Saudi regions"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -12025,7 +12116,7 @@
       "CHKP"
     ],
     "name": "Check Point Software Technologies",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Products / Revenue / Competition / Risks",
@@ -12038,6 +12129,10 @@
       {
         "label": "Microsoft · Defender for Cloud",
         "url": "https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud"
+      },
+      {
+        "url": "https://www.checkpoint.com/partners/microsoft/",
+        "label": "CHKP / Microsoft — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -12046,7 +12141,7 @@
       "strength": "長年蓄積した脅威情報と一元管理技術を使い、ネットワークからクラウド・端末まで共通方針で守れる。",
       "risks": "クラウド移行への対応遅れ、激しい価格競争、検知漏れや脆弱性、販売会社依存、為替やイスラエル情勢が業績に影響する。",
       "competition": "ネットワーク防御ではPalo Alto Networks、Fortinet、Cisco、クラウド防御ではCrowdStrike Falcon Cloud SecurityとMicrosoft Defender for Cloudが競合例。企業名はCheck Point自身の開示にあり、後者2製品は公式情報をCloudGuardの分野と照合した。ネットワーク・クラウド・端末は分けて見る。メールやモバイルなど他分野まで同一の競合構成とはしない。",
-      "relationships": "販売会社やシステム構築会社を通じて企業・政府へ提供し、クラウドや端末環境を一つの管理基盤で保護する。"
+      "relationships": "販売会社やシステム構築会社を通じて企業・政府へ提供し、クラウドや端末環境を一つの管理基盤で保護する。 Microsoftとの公式提携ページはAzure、Sentinel、Intuneとのセキュリティ統合を説明。製品連携とMicrosoft製防御製品との競争は併存する。掲載されたFY2020表彰を2026年の新受賞とは扱わない。"
     },
     "en": {
       "business": "Develops firewalls and integrated security products that protect enterprise networks, cloud environments, email and endpoints.",
@@ -12054,7 +12149,7 @@
       "strength": "Combines long-developed threat intelligence and centralized management to enforce common policies from networks to cloud and endpoints.",
       "risks": "Slow cloud adaptation, price competition, missed threats or vulnerabilities, channel dependence, currencies and conditions in Israel can affect results.",
       "competition": "Network-security examples are Palo Alto Networks, Fortinet and Cisco. Cloud examples are CrowdStrike Falcon Cloud Security and Microsoft Defender for Cloud. Check Point names the companies; the latter two product examples are editorial comparisons against CloudGuard using official descriptions. Network, cloud and endpoint scopes differ; email/mobile competition is not assumed identical.",
-      "relationships": "Reaches enterprises and governments through resellers and integrators, protecting cloud, network and endpoint environments through one management layer."
+      "relationships": "Reaches enterprises and governments through resellers and integrators, protecting cloud, network and endpoint environments through one management layer. Its Microsoft partner page describes Azure, Sentinel and Intune security integrations. Product integration coexists with competition against Microsoft security products. A displayed FY2020 award is not treated as a new 2026 award."
     },
     "maps": {
       "competition": [
@@ -12165,6 +12260,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "公式連携ページ：Azure・Sentinel・Intuneのセキュリティ統合",
+            "en": "Official partner page: security integrations with Azure, Sentinel and Intune"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -12333,7 +12441,7 @@
       "TWLO"
     ],
     "name": "Twilio",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Communications / Segment / Revenue / Competition / Risks",
@@ -12342,6 +12450,10 @@
       {
         "label": "8x8 FY2026 Form 10-K · Communications competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm"
+      },
+      {
+        "url": "https://investors.twilio.com/node/13691/pdf",
+        "label": "TWLO / Microsoft — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -12350,7 +12462,7 @@
       "strength": "多国間の通信網をAPIで扱え、メッセージ送信から顧客データ活用まで開発者が一つの基盤で組み込める。",
       "risks": "通信会社への接続費、迷惑通信規制、顧客の利用減、障害・不正利用、大手クラウドや通信APIとの価格競争が利益を圧迫する。",
       "competition": "通信APIや顧客窓口向けサービスでは8x8が競合例。8x8自身の年次報告がTwilioを実名で挙げている。電話・メッセージなどをアプリへ組み込む機能と、顧客窓口の機能では比較する製品が異なり、全製品が同じという意味ではない。",
-      "relationships": "通信会社やメール網から接続を仕入れ、企業のアプリやコンタクトセンターへメッセージ、通話、認証を届ける。"
+      "relationships": "通信会社やメール網から接続を仕入れ、企業のアプリやコンタクトセンターへメッセージ、通話、認証を届ける。 2025年5月にMicrosoftとAzure AI Foundryを使う会話AIの複数年開発提携を発表。音声・メッセージ・担当者支援の開発計画で、全計画の提供完了やクラウドの契約額を推定しない。"
     },
     "en": {
       "business": "Provides APIs and cloud software that embed messaging, voice, email and verification in apps and unify customer data.",
@@ -12358,7 +12470,7 @@
       "strength": "Developers can use one platform to reach communications networks across countries and connect customer interactions with data.",
       "risks": "Carrier fees, messaging regulation, lower customer usage, outages, abuse and price competition from clouds and API rivals can pressure margins.",
       "competition": "8x8 is one example in overlapping communications API and contact-center markets. Its annual report explicitly names Twilio. Embedding communications in applications and operating contact-center workflows are different product scopes, rather than a match across every offering.",
-      "relationships": "Buys connectivity from carriers and email networks, then delivers messaging, calls and verification into enterprise apps and contact centers."
+      "relationships": "Buys connectivity from carriers and email networks, then delivers messaging, calls and verification into enterprise apps and contact centers. A May 2025 announcement establishes a multiyear Microsoft conversational-AI development partnership using Azure AI Foundry. Voice, messaging and agent-assistance plans do not establish completed rollout of every feature or a disclosed cloud contract value."
     },
     "maps": {
       "competition": [
@@ -12416,6 +12528,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "2025年5月：Azure AI Foundryを使う会話AIの複数年開発提携",
+            "en": "May 2025: multiyear conversational-AI development partnership using Azure AI Foundry"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -12426,7 +12551,7 @@
       "DOCU"
     ],
     "name": "Docusign",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · IAM / Subscription revenue / Competition / Risks",
@@ -12447,6 +12572,10 @@
       {
         "label": "Microsoft · Microsoft 365 eSignature and provider integrations",
         "url": "https://learn.microsoft.com/en-us/microsoft-365/documentprocessing/esignature-overview?view=o365-worldwide"
+      },
+      {
+        "url": "https://www.microsoft.com/en/customers/story/27299-docusign-microsoft-foundry",
+        "label": "DOCU / Microsoft — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -12455,7 +12584,7 @@
       "strength": "電子署名の知名度と大きな利用基盤を入口に、契約の作成前から締結後まで同じ基盤へ広げられる。",
       "risks": "電子署名の成熟、無料・同梱製品との競争、情報漏えい、各国の電子契約法やデータ保管規制が成長を左右する。",
       "competition": "電子署名ではAdobe Acrobat SignとDropbox Sign、契約作成から管理までのCLMではIcertisとIronclad、Microsoft 365内の基本的な署名ではMicrosoft eSignatureを比較する。AdobeはDocusign自身の明記、DropboxはDropbox側の開示、他は公式製品に基づく編集上の比較。Microsoft 365にはDocusignとの連携もあり、競合と連携が併存する。",
-      "relationships": "企業の営業・法務・人事・購買部門が利用し、業務アプリや導入支援会社との連携で契約工程へ組み込む。"
+      "relationships": "企業の営業・法務・人事・購買部門が利用し、業務アプリや導入支援会社との連携で契約工程へ組み込む。 2026年9月のMicrosoft側の顧客事例は、Docusign IAMがAzureとFoundryを使うと説明。Docusign幹部の発言を含む基盤採用事例で、Azure経由のモデル利用をOpenAIとの直接容量契約に置き換えない。"
     },
     "en": {
       "business": "Digitizes agreement creation, electronic signature, storage and analysis through its Intelligent Agreement Management platform.",
@@ -12463,7 +12592,7 @@
       "strength": "Uses its well-known eSignature product and large user base to expand across the agreement process before and after signing.",
       "risks": "A maturing eSignature market, free or bundled rivals, data breaches and electronic-contract or residency rules can affect growth.",
       "competition": "E-signature examples are Adobe Acrobat Sign and Dropbox Sign; contract-lifecycle management examples are Icertis and Ironclad; Microsoft eSignature covers basic signing within Microsoft 365. Docusign names Adobe, Dropbox names Docusign, and the other examples are editorial official-product comparisons. Microsoft 365 also integrates Docusign, so competition and integration coexist.",
-      "relationships": "Sales, legal, HR and procurement teams use the platform, integrated into workflows through business apps and implementation partners."
+      "relationships": "Sales, legal, HR and procurement teams use the platform, integrated into workflows through business apps and implementation partners. A September 2026 Microsoft customer case, including Docusign executives, describes IAM using Azure and Foundry. Model access through Azure does not establish a direct OpenAI computing-capacity contract."
     },
     "maps": {
       "competition": [
@@ -12573,6 +12702,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年9月のMicrosoft側事例：IAMのAzure / Foundry基盤採用",
+            "en": "September 2026 Microsoft case: Azure / Foundry infrastructure for IAM"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "MSFT"
         }
       ]
     }
@@ -15059,7 +15201,7 @@
       "SOFI"
     ],
     "name": "SoFi Technologies",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Lending / Financial Services / Technology Platform / Risks",
@@ -15084,6 +15226,10 @@
       {
         "label": "Fiserv · Finxact cloud-native banking platform",
         "url": "https://www.finxact.com/"
+      },
+      {
+        "url": "https://investors.sofi.com/news/news-details/2026/SoFi-Becomes-First-National-Bank-to-Go-Live-with-Stablecoin-Settlement-across-Mastercards-Global-Payments-Network/default.aspx",
+        "label": "SOFI / Mastercard — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -15092,7 +15238,7 @@
       "strength": "銀行免許と預金資金、会員への複数商品販売、個人向け金融と企業向け銀行技術を垂直統合する点が強い。",
       "risks": "貸倒れ、金利と資金調達、融資売却市場、銀行規制と自己資本、技術顧客の集中・離脱が利益を左右する。",
       "competition": "個人融資・預金ではHappen Bank（旧LendingClub）、株式・ETF投資ではRobinhood、企業向け技術ではMarqetaのカード発行・処理とFiservのFinxact基幹銀行システムが比較例。SoFiの開示する製品範囲と相手側公式製品を比較した。消費者向け金融とGalileo・Technisysの法人向け技術を分けて見る。",
-      "relationships": "会員へ融資・預金・投資を提供し、金融機関やFintechには決済APIと銀行基盤を提供する。"
+      "relationships": "会員へ融資・預金・投資を提供し、金融機関やFintechには決済APIと銀行基盤を提供する。 2026年9月、MastercardとSoFi BankのカードプログラムでSoFiUSDを使う清算の稼働開始を発表。年間処理量の見込みは実績と区別し、世界の全Mastercard取引がSoFiへ移行したとは扱わない。"
     },
     "en": {
       "business": "Provides loans, deposits, investing and cards to consumers, plus payment and banking technology to institutions through Galileo and Technisys.",
@@ -15100,7 +15246,7 @@
       "strength": "A bank charter and deposit funding, member cross-selling, and vertical integration of consumer finance with banking technology are advantages.",
       "risks": "Credit losses, rates and funding, loan-sale markets, bank capital rules, and concentration or loss of technology clients can affect results.",
       "competition": "Product-specific examples are Happen Bank, formerly LendingClub, in personal lending/deposits; Robinhood in stock/ETF investing; Marqeta in card issuance/processing; and Fiserv Finxact in core banking. These editorial comparisons match official products to SoFi’s disclosed scope and separate consumer finance from Galileo/Technisys enterprise technology.",
-      "relationships": "Members use loans, deposits and investing, while banks and fintech clients use payment APIs and core-banking technology."
+      "relationships": "Members use loans, deposits and investing, while banks and fintech clients use payment APIs and core-banking technology. A September 2026 joint announcement confirms SoFiUSD settlement live for SoFi Bank card programs with Mastercard. Expected annualized volume is distinct from actual results, and not all global Mastercard transactions are assumed migrated."
     },
     "maps": {
       "competition": [
@@ -15201,6 +15347,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Mastercard",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：SoFi BankのカードでSoFiUSDによる決済清算を開始",
+            "en": "September 2026: SoFiUSD settlement live for SoFi Bank card programs"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "MA"
         }
       ]
     }
@@ -15211,7 +15370,7 @@
       "DUOL"
     ],
     "name": "Duolingo",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Learning Products / Subscriptions / AI / Competition / Risks",
@@ -15236,6 +15395,10 @@
       {
         "label": "ETS · TOEFL iBT academic English assessment",
         "url": "https://www.ets.org/toefl.html"
+      },
+      {
+        "url": "https://investors.duolingo.com/news-releases/news-release-details/duolingo-max-shows-future-ai-education",
+        "label": "DUOL / OpenAI — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -15244,7 +15407,7 @@
       "strength": "無料で始められる導線、習慣化を促すゲーム設計、学習データを使う個別最適化、強いブランドが成長を支える。",
       "risks": "学習継続と有料化、AIによる競争と内容品質、Apple・Googleへの配信依存、個人情報・未成年者対応が弱点。",
       "competition": "語学アプリではBabbel、AI会話練習ではSpeakeasy LabsのSpeak、英語力試験ではPearsonのPTE AcademicとETSのTOEFL iBTが比較例。各社の公式サービスとDuolingoの対象分野を照合した編集上の競合例。学習アプリと試験を分け、試験の採用校・用途や受験方式が同じとはしない。",
-      "relationships": "学習者と有料会員へ教材を提供し、学校・大学は英語試験を受け入れ、アプリ配信基盤が契約決済を担う。"
+      "relationships": "学習者と有料会員へ教材を提供し、学校・大学は英語試験を受け入れ、アプリ配信基盤が契約決済を担う。 2023年3月の自社発表で、OpenAI GPT-4を使うDuolingo Maxを対象市場のiOS向けに提供。時点を限定した製品採用であり、当時のモデル・機能・対応市場が現在も全て同じとは扱わない。"
     },
     "en": {
       "business": "A mobile and web learning service offering game-like language, math, music and chess courses plus an English proficiency test.",
@@ -15252,7 +15415,7 @@
       "strength": "A free entry point, habit-forming game design, data-driven personalization and a strong brand support growth and conversion.",
       "risks": "Learner retention and paid conversion, AI competition and content quality, Apple and Google dependence, privacy and youth safety are risks.",
       "competition": "Language-learning examples include Babbel and Speakeasy Labs’ Speak AI conversation tutor. English-assessment examples are Pearson PTE Academic and ETS TOEFL iBT. These are editorial comparisons of official services with Duolingo’s scope, not a company-named list. Learning apps and tests differ, including acceptance, purposes and delivery methods.",
-      "relationships": "Learners and subscribers use courses, schools and universities recognize the English Test, and app platforms handle distribution and billing."
+      "relationships": "Learners and subscribers use courses, schools and universities recognize the English Test, and app platforms handle distribution and billing. Its March 2023 release identifies OpenAI GPT-4 in Duolingo Max for iOS in selected markets. This is dated product adoption, without assuming every original model, feature or market remains unchanged today."
     },
     "maps": {
       "competition": [
@@ -15349,6 +15512,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2023年3月：GPT-4採用のDuolingo Maxを対象市場・iOSで発表",
+            "en": "March 2023: GPT-4-powered Duolingo Max announced for iOS in selected markets"
+          },
+          "sourceIndexes": [
+            6
           ]
         }
       ]
@@ -25451,11 +25626,15 @@
       "PAYC"
     ],
     "name": "Paycom Software",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
         "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm"
+      },
+      {
+        "url": "https://www.paycom.com/software/vault/",
+        "label": "PAYC / Visa — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -25464,7 +25643,7 @@
       "strength": "一つのデータベースで人事情報と給与を連動させる。Betiでは従業員が支払い前に給与を確認・修正でき、担当者の入力や差し戻しを減らすことを狙う。",
       "risks": "顧客の雇用縮小で利用料金が減り、金利低下で預かり資金の利息も減る。給与・納税の誤りや情報漏えいは信頼に直結し、自動化を顧客に定着させる負担もある。",
       "competition": "ADP、Paychex、Paylocityなどと給与・人事管理で競合し、大企業向けではWorkdayやOracleも代替になる。価格だけでなく導入のしやすさ、機能、顧客支援も競争になる。",
-      "relationships": "雇用主へソフトを提供し、従業員への給与と税務当局への納税を支援する。銀行などが資金移動・預かりを支える。特定の銀行を未確認の契約相手として名指ししない。"
+      "relationships": "雇用主へソフトを提供し、従業員への給与と税務当局への納税を支援する。銀行などが資金移動・預かりを支える。特定の銀行を未確認の契約相手として名指ししない。 公式Vault商品ページはVisa給与カードを説明し、発行元をThe Bancorp Bank, N.A.と明記。Visaのネットワーク対応と銀行のカード発行を区別し、他の匿名銀行やAmazon DSP事業者からAmazon自身との取引を推定しない。"
     },
     "en": {
       "business": "Provides payroll and HR cloud software covering hiring, time, benefits and separation, emphasizing employee review and correction of their own information.",
@@ -25472,7 +25651,7 @@
       "strength": "A single database connects HR and payroll. Beti lets employees check and resolve pay issues before processing, aiming to reduce administrative rework.",
       "risks": "Employment cuts reduce fees; lower rates reduce client-fund interest. Payroll errors, data breaches and adoption challenges can undermine customer trust.",
       "competition": "Competes with ADP, Paychex and Paylocity in payroll and HR, with Workday and Oracle also serving larger organizations.",
-      "relationships": "Serves employers and supports employee payments and tax remittances. Banks support money movement; undisclosed banking counterparties are not named."
+      "relationships": "Serves employers and supports employee payments and tax remittances. Banks support money movement; undisclosed banking counterparties are not named. Its official Vault page identifies a Visa payroll card issued by The Bancorp Bank, N.A. Visa network compatibility is distinct from bank issuance; other unnamed banks and Amazon DSP operators do not establish a contract with Amazon itself."
     },
     "maps": {
       "competition": [
@@ -25542,6 +25721,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Visa",
+          "role": "ecosystem",
+          "label": {
+            "ja": "公式Vault商品ページ：給与カードのVisaネットワーク対応、発行元はBancorp Bank",
+            "en": "Official Vault page: Visa payroll-card network; issuer is The Bancorp Bank"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "V"
         }
       ]
     }
@@ -27230,7 +27422,7 @@
       "APPF"
     ],
     "name": "AppFolio",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -27247,6 +27439,10 @@
       {
         "label": "RealPage · OneSite property-management software",
         "url": "https://www.realpage.com/property-management-software/"
+      },
+      {
+        "url": "https://press.aboutamazon.com/aws/2026/8/appfolio-names-amazon-web-services-its-preferred-cloud-provider",
+        "label": "APPF / Amazon — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -27255,7 +27451,7 @@
       "strength": "不動産管理に必要な記録と取引を一つの基盤で扱える。家賃決済や審査まで日々の業務へ組み込むことで、管理会社だけでなく入居者や取引先にも利用が広がる。",
       "risks": "管理物件数や入居者の取引が減ると収益にも影響する。決済の不正、審査・保険の規制、外部の決済・信用情報会社への依存があり、生活に関わる情報の扱いを誤ると信頼を失う。",
       "competition": "不動産管理の賃貸・入居者対応・会計をまとめる基盤では、YardiのVoyager・BreezeとRealPageのOneSiteが競合例。AppFolioの公表業務範囲と両社の公式製品を照合した編集上の比較。決済、審査、保険など個別機能の競合をすべて網羅するものではない。",
-      "relationships": "不動産管理会社へ業務基盤を提供し、入居者や物件オーナーが決済・情報共有に参加する。決済処理、信用情報、保険関連の外部事業者が付加サービスを支える。"
+      "relationships": "不動産管理会社へ業務基盤を提供し、入居者や物件オーナーが決済・情報共有に参加する。決済処理、信用情報、保険関連の外部事業者が付加サービスを支える。 2026年8月のAWS側共同発表はAppFolioの優先クラウド供給元をAWSと明記。ClaudeはAmazon Bedrock経由のモデル利用で、Anthropicとの直接容量購入や出資とは区別する。"
     },
     "en": {
       "business": "Provides property-management software for leasing, rent collection, accounting and maintenance, linking managers, residents and owners.",
@@ -27263,7 +27459,7 @@
       "strength": "Unifies property records and recurring transactions, extending daily use to residents and counterparties.",
       "risks": "Property activity, payment fraud, screening and insurance regulation, external providers and sensitive resident data create risks.",
       "competition": "Yardi Voyager/Breeze and RealPage OneSite are examples in property-management platforms spanning leasing, resident operations and accounting. This is an editorial comparison with AppFolio’s disclosed scope, not its explicit named list. It does not exhaust standalone payments, screening or insurance-related alternatives.",
-      "relationships": "Serves property managers and connects residents and owners. Payment processors, credit-information and risk-mitigation providers support additional services."
+      "relationships": "Serves property managers and connects residents and owners. Payment processors, credit-information and risk-mitigation providers support additional services. An August 2026 announcement hosted by AWS identifies AWS as AppFolio’s preferred cloud provider. Claude usage is through Amazon Bedrock, distinct from a direct Anthropic capacity purchase or equity investment."
     },
     "maps": {
       "competition": [
@@ -27332,6 +27528,31 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年8月：AppFolio基盤を稼働するAWSを優先クラウド供給元に指定",
+            "en": "August 2026: AWS named preferred cloud provider for the AppFolio platform"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2026年8月：Amazon Bedrock経由でClaudeを利用する製品技術対応",
+            "en": "August 2026: Claude product-model use through Amazon Bedrock"
+          },
+          "sourceIndexes": [
+            4
           ]
         }
       ]
@@ -30455,11 +30676,15 @@
       "QLYS"
     ],
     "name": "Qualys",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm"
+      },
+      {
+        "url": "https://notifications.qualys.com/product/2026/07/20/qualys-totalcloud-2-26-0-release-updates",
+        "label": "QLYS / Alphabet — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -30468,7 +30693,7 @@
       "strength": "機器に入れた小さなプログラムや検査用センサーから情報を集め、同じ基盤で資産把握から弱点の修正・確認まで進められる。別々のツールを使う作業をまとめやすい。",
       "risks": "競合の一括販売による価格圧力と、追加機能を顧客に使ってもらえるかが課題。新しい脆弱性への対応が遅れたり、共通クラウド基盤で障害が起きたりすると、多くの顧客へ影響が及ぶ。",
       "competition": "Tenable、Rapid7とは弱点の検査・管理で競う。CrowdStrikeやPalo Alto Networksとも一部の保護機能が重なり、顧客が内製した検査・管理ツールの置き換えも狙う。",
-      "relationships": "企業や公共機関に保護機能を提供し、販売代理店・監視運用会社が顧客への導入を支援する。サービスは外部のデータセンターやクラウド環境でも稼働しており、供給元の安定運営に依存する。"
+      "relationships": "企業や公共機関に保護機能を提供し、販売代理店・監視運用会社が顧客への導入を支援する。サービスは外部のデータセンターやクラウド環境でも稼働しており、供給元の安定運営に依存する。 2026年7月の自社TotalCloud 2.26告知はGoogle Cloud接続でWIF認証をサポートすると説明。ただしこの機能は申請により有効化するベータであり、全顧客の一般提供完了やGoogleからの調達量とは扱わない。"
     },
     "en": {
       "business": "Examines IT assets and clouds for vulnerable software and unsafe configurations. Supports prioritization, patching, verification and compliance checks.",
@@ -30476,7 +30701,7 @@
       "strength": "Collects information through agents and sensors, bringing asset discovery, assessment, remediation and verification into one platform.",
       "risks": "Faces pricing pressure from bundled competitors and must persuade customers to adopt additional applications. Slow vulnerability coverage or shared-platform outages can affect many customers.",
       "competition": "Competes with Tenable and Rapid7 in vulnerability management, overlaps with CrowdStrike and Palo Alto Networks, and seeks to replace internally developed tools.",
-      "relationships": "Serves enterprises and public agencies through direct sales, resellers and managed-security providers. External data centers and cloud environments support service delivery."
+      "relationships": "Serves enterprises and public agencies through direct sales, resellers and managed-security providers. External data centers and cloud environments support service delivery. Its July 2026 TotalCloud 2.26 notice describes Google Cloud connector WIF authentication as a beta enabled on request. This is technical compatibility, without assuming general availability to every customer or a Google procurement volume."
     },
     "maps": {
       "competition": [
@@ -30572,6 +30797,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "ecosystem",
+          "label": {
+            "ja": "2026年7月：Google Cloud接続のWIF認証は申請制ベータ対応",
+            "en": "July 2026: Google Cloud connector WIF authentication in request-enabled beta"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -32133,7 +32371,7 @@
       "WMT"
     ],
     "name": "Walmart",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Walmart FY2026 Form 10-K",
@@ -32150,6 +32388,14 @@
       {
         "label": "Amazon FY2025 Form 10-K · Online and physical stores",
         "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+      },
+      {
+        "url": "https://corporate.walmart.com/news/2026/01/11/walmart-and-google-turn-ai-discovery-into-effortless-shopping-experiences",
+        "label": "WMT / Alphabet — primary relationship source; checked October 17, 2026"
+      },
+      {
+        "url": "https://corporate.walmart.com/about/technology",
+        "label": "WMT / OpenAI — primary relationship source; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -32158,7 +32404,7 @@
       "strength": "大規模な調達と店舗網を持ち、店舗を受け取り・配送の拠点にも使える。",
       "risks": "消費の弱さ、人件費・物流費、関税、商品安全やシステム障害が収益に影響する。",
       "competition": "会員制店舗ではSam’s ClubとCostco、総合小売・通販ではAmazonなどが競合例。CostcoはWalmartとSam’s Clubを実名で挙げている。Amazonは両社が公表する店舗・通販事業の比較で、広告や配送など全事業を同一視しない。",
-      "relationships": "国内外のメーカー・卸から調達し、出店者には広告・配送を提供。非開示の供給会社名は推測しない。"
+      "relationships": "国内外のメーカー・卸から調達し、出店者には広告・配送を提供。非開示の供給会社名は推測しない。 2026年1月にGoogleとGemini内の買い物体験を共同計画。自社技術ページはChatGPTとのコマース連携発表も掲載する。AIによる商品発見・購入体験の連携で、2025年のInstant Checkout構成や全地域の提供完了を前提としない。"
     },
     "en": {
       "business": "Omnichannel retailer operating Walmart, Sam's Club and international businesses, alongside advertising and merchant services.",
@@ -32166,7 +32412,7 @@
       "strength": "Purchasing scale and stores support shopping, pickup and local delivery.",
       "risks": "Consumption, labor and logistics costs, tariffs, product safety and system disruption affect returns.",
       "competition": "Examples include Costco versus Sam’s Club in membership warehouses, and Amazon in general merchandise and online retail. Costco explicitly names Walmart and Sam’s Club. Amazon is a comparison of disclosed retail businesses, rather than every advertising or delivery service.",
-      "relationships": "Sources merchandise from domestic and international suppliers and provides services to marketplace sellers."
+      "relationships": "Sources merchandise from domestic and international suppliers and provides services to marketplace sellers. In January 2026 it announced plans with Google for shopping in Gemini; its technology page also lists announced ChatGPT commerce integration. These concern product discovery / shopping, without assuming the original 2025 Instant Checkout architecture or completed worldwide rollout."
     },
     "maps": {
       "competition": [
@@ -32221,6 +32467,31 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：Gemini内のWalmart / Sam’s Club買い物体験を共同計画",
+            "en": "January 2026: planned Walmart / Sam’s Club shopping experience in Gemini"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "ecosystem",
+          "label": {
+            "ja": "公式技術ページ：ChatGPTとのコマース連携発表を掲載",
+            "en": "Official technology page: announced ChatGPT commerce integration"
+          },
+          "sourceIndexes": [
+            5
           ]
         }
       ]

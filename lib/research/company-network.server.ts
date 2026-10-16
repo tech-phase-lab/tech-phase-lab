@@ -72,6 +72,12 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "PAYC") return {"7": {"ja": "給与・人事・給与カード網", "en": "Payroll, HR & payroll-card network"}};
+  if (root === "WMT") return {"6": {"ja": "AIを使うコマース連携", "en": "AI-commerce integrations"}, "7": {"ja": "小売・通販", "en": "Retail & commerce"}};
+  if (root === "QLYS") return {"6": {"ja": "クラウド接続・認証対応", "en": "Cloud connectors & authentication"}, "7": {"ja": "脆弱性・サイバーリスク管理", "en": "Vulnerability & cyber-risk management"}};
+  if (root === "APPF") return {"6": {"ja": "クラウド基盤・AIモデル対応", "en": "Cloud infrastructure & AI models"}, "7": {"ja": "不動産管理ソフトウェア", "en": "Property-management software"}};
+  if (root === "TWLO") return {"6": {"ja": "会話AIの開発協業", "en": "Conversational-AI development"}, "7": {"ja": "通信・顧客対応基盤", "en": "Communications & customer engagement"}};
+  if (root === "AKAM") return {"3": {"ja": "GPU供給元と上流", "en": "GPU supplier & upstream"}, "6": {"ja": "クラウド・CDN・防御サービス", "en": "Cloud, CDN & security"}, "7": {"ja": "CPUクラウド容量の顧客", "en": "CPU cloud-capacity customer"}};
   if (root === "XYZ") return {"7": {"ja": "決済・店舗・注文連携", "en": "Payments, merchants & order integration"}};
   if (root === "PYPL") return {"7": {"ja": "決済・ウォレット・コマース連携", "en": "Payments, wallets & commerce"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
   if (root === "TTD") return {"7": {"ja": "広告購入・媒体在庫連携", "en": "Ad buying & publisher inventory"}};
@@ -347,18 +353,10 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     6: { ja: "企業向けソフトウェア・クラウド", en: "Enterprise software & cloud" },
     7: { ja: "ITコンサルティング・業務サービス", en: "IT consulting & business services" },
   };
-  if (root === "OKTA") return {
-    6: { ja: "ID管理・認証基盤", en: "Identity management & authentication" },
-  };
-  if (root === "S") return {
-    6: { ja: "セキュリティ基盤", en: "Security platforms" },
-  };
-  if (root === "CHKP") return {
-    6: { ja: "セキュリティ基盤", en: "Security platforms" },
-  };
-  if (root === "DOCU") return {
-    7: { ja: "電子署名・契約管理", en: "E-signatures & contract management" },
-  };
+  if (root === "OKTA") return {"6": {"ja": "ID認証・権限・AI防御研究", "en": "Identity, access & AI security research"}};
+  if (root === "S") return {"6": {"ja": "セキュリティ・クラウド供給・開発協業", "en": "Security, cloud supply & collaboration"}};
+  if (root === "CHKP") return {"6": {"ja": "セキュリティ製品・Azure連携", "en": "Security products & Azure integration"}};
+  if (root === "DOCU") return {"7": {"ja": "電子署名・契約管理・Azure供給", "en": "E-signatures, agreements & Azure supply"}};
   if (root === "ABNB") return {"7": {"ja": "旅行・宿泊予約", "en": "Travel & accommodation booking"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
   if (root === "SPOT") return {"7": {"ja": "音楽・音声・動画配信", "en": "Music, audio & video distribution"}};
   if (root === "ASAN") return {
@@ -378,12 +376,8 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
     7: { ja: "電力の関連企業", en: "Related power companies" },
   };
   if (root === "MELI") return {"7": {"ja": "通販・小売・決済サービス", "en": "Commerce, retail & payments"}};
-  if (root === "SOFI") return {
-    7: { ja: "金融サービス・銀行技術", en: "Financial services & banking technology" },
-  };
-  if (root === "DUOL") return {
-    7: { ja: "語学学習・教育・試験", en: "Language learning, education & assessment" },
-  };
+  if (root === "SOFI") return {"7": {"ja": "銀行・金融技術・決済ネットワーク", "en": "Banking, fintech & payment networks"}};
+  if (root === "DUOL") return {"6": {"ja": "学習用AIモデル技術", "en": "AI models for learning"}, "7": {"ja": "語学学習・語学評価", "en": "Language learning & assessment"}};
   if (root === "TSLA") return {
     2: { ja: "電池セル供給元", en: "Battery-cell suppliers" },
     7: { ja: "自動車・蓄電システム", en: "Vehicles & energy storage" },
@@ -536,29 +530,50 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "MSFT": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Entra ID・従業員認証",
-        "en": "Entra ID workforce authentication"
+        "ja": "Microsoft | Entra ID・従業員認証",
+        "en": "Microsoft | Entra ID workforce authentication"
       }
     },
     "Ping Identity": {
       "layer": 6,
       "businessLabel": {
-        "ja": "従業員・顧客向け認証",
-        "en": "Workforce/customer authentication"
+        "ja": "Ping Identity | 従業員・顧客向け認証",
+        "en": "Ping Identity | Workforce/customer authentication"
       }
     },
     "SAIL": {
       "layer": 6,
       "businessLabel": {
-        "ja": "アクセス権限ガバナンス",
-        "en": "Access governance"
+        "ja": "SailPoint | アクセス権限ガバナンス",
+        "en": "SailPoint | Access governance"
       }
     },
     "GOOG": {
       "layer": 6,
       "businessLabel": {
-        "ja": "アプリ利用者の認証",
-        "en": "Application-user authentication"
+        "ja": "Google | アプリ利用者の認証",
+        "en": "Google | Application-user authentication"
+      }
+    },
+    "OKTA": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Okta",
+        "en": "Okta"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜Daybreak研究協力",
+        "en": "OpenAI | Daybreak research"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Anthropic｜Glasswing研究協力",
+        "en": "Anthropic | Glasswing research"
       }
     }
   },
@@ -566,57 +581,64 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "CRWD": {
       "layer": 6,
       "businessLabel": {
-        "ja": "端末の脅威防御",
-        "en": "Endpoint threat protection"
+        "ja": "CrowdStrike | 端末の脅威防御",
+        "en": "CrowdStrike | Endpoint threat protection"
       }
     },
     "MSFT": {
       "layer": 6,
       "businessLabel": {
-        "ja": "端末の脅威防御",
-        "en": "Endpoint threat protection"
+        "ja": "Microsoft | 端末の脅威防御",
+        "en": "Microsoft | Endpoint threat protection"
       }
     },
     "AVGO": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Carbon Black・Symantec",
-        "en": "Carbon Black & Symantec"
+        "ja": "Broadcom | Carbon Black・Symantec",
+        "en": "Broadcom | Carbon Black & Symantec"
       }
     },
     "Trellix": {
       "layer": 6,
       "businessLabel": {
-        "ja": "端末の脅威防御",
-        "en": "Endpoint threat protection"
+        "ja": "Trellix | 端末の脅威防御",
+        "en": "Trellix | Endpoint threat protection"
       }
     },
     "PANW": {
       "layer": 6,
       "businessLabel": {
-        "ja": "セキュリティ基盤",
-        "en": "Security platforms"
+        "ja": "Palo Alto Networks | セキュリティ基盤",
+        "en": "Palo Alto Networks | Security platforms"
       }
     },
     "CSCO": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Splunk・脅威検知",
-        "en": "Splunk threat detection"
+        "ja": "Cisco | Splunk・脅威検知",
+        "en": "Cisco | Splunk threat detection"
       }
     },
     "ESTC": {
       "layer": 6,
       "businessLabel": {
-        "ja": "ログ分析・脅威検知",
-        "en": "Log analytics & threat detection"
+        "ja": "Elastic | ログ分析・脅威検知",
+        "en": "Elastic | Log analytics & threat detection"
       }
     },
     "GOOG": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Wiz・クラウド防御",
-        "en": "Wiz cloud protection"
+        "ja": "Google｜基盤供給・防御協業",
+        "en": "Google | cloud / security partner"
+      }
+    },
+    "S": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SentinelOne",
+        "en": "SentinelOne"
       }
     }
   },
@@ -624,36 +646,43 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "PANW": {
       "layer": 6,
       "businessLabel": {
-        "ja": "ネットワーク防御",
-        "en": "Network security"
+        "ja": "Palo Alto Networks | ネットワーク防御",
+        "en": "Palo Alto Networks | Network security"
       }
     },
     "FTNT": {
       "layer": 6,
       "businessLabel": {
-        "ja": "ファイアウォール",
-        "en": "Firewalls"
+        "ja": "Fortinet | ファイアウォール",
+        "en": "Fortinet | Firewalls"
       }
     },
     "CSCO": {
       "layer": 6,
       "businessLabel": {
-        "ja": "ネットワーク防御",
-        "en": "Network security"
+        "ja": "Cisco | ネットワーク防御",
+        "en": "Cisco | Network security"
       }
     },
     "CRWD": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Falcon Cloud Security",
-        "en": "Falcon Cloud Security"
+        "ja": "CrowdStrike | Falcon Cloud Security",
+        "en": "CrowdStrike | Falcon Cloud Security"
       }
     },
     "MSFT": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Defender for Cloud",
-        "en": "Defender for Cloud"
+        "ja": "Microsoft｜Azure連携・防御製品",
+        "en": "Microsoft | Azure / security"
+      }
+    },
+    "CHKP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Check Point Software Technologies",
+        "en": "Check Point Software Technologies"
       }
     }
   },
@@ -661,8 +690,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "ADBE": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Acrobat Sign・電子署名",
-        "en": "Acrobat Sign e-signatures"
+        "ja": "Adobe | Acrobat Sign・電子署名",
+        "en": "Adobe | Acrobat Sign e-signatures"
       }
     },
     "DBX": {
@@ -675,22 +704,29 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "Icertis": {
       "layer": 7,
       "businessLabel": {
-        "ja": "契約ライフサイクル管理",
-        "en": "Contract lifecycle management"
+        "ja": "Icertis | 契約ライフサイクル管理",
+        "en": "Icertis | Contract lifecycle management"
       }
     },
     "Ironclad": {
       "layer": 7,
       "businessLabel": {
-        "ja": "契約ライフサイクル管理",
-        "en": "Contract lifecycle management"
+        "ja": "Ironclad | 契約ライフサイクル管理",
+        "en": "Ironclad | Contract lifecycle management"
       }
     },
     "MSFT": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Microsoft 365内の署名",
-        "en": "Signing within Microsoft 365"
+        "ja": "Microsoft｜Azure供給・電子署名",
+        "en": "Microsoft | Azure / e-signatures"
+      }
+    },
+    "DOCU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Docusign",
+        "en": "Docusign"
       }
     }
   },
@@ -6339,6 +6375,316 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "DoorDash | Square order integration"
       }
     }
+  },
+  "AKAM": {
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon",
+        "en": "Amazon"
+      }
+    },
+    "NET": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Cloudflare",
+        "en": "Cloudflare"
+      }
+    },
+    "AKAM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Akamai Technologies",
+        "en": "Akamai Technologies"
+      }
+    },
+    "FFIV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "F5",
+        "en": "F5"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜GPU供給元",
+        "en": "NVIDIA | GPU supplier"
+      }
+    },
+    "Anthropic": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Anthropic｜CPU容量の顧客",
+        "en": "Anthropic | CPU capacity customer"
+      }
+    }
+  },
+  "TWLO": {
+    "TWLO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Twilio",
+        "en": "Twilio"
+      }
+    },
+    "EGHT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "8x8",
+        "en": "8x8"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft｜会話AI開発協業",
+        "en": "Microsoft | conversational AI"
+      }
+    }
+  },
+  "SOFI": {
+    "SOFI": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SoFi Technologies",
+        "en": "SoFi Technologies"
+      }
+    },
+    "HAPN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Happen Bank (formerly LendingClub)",
+        "en": "Happen Bank (formerly LendingClub)"
+      }
+    },
+    "HOOD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Robinhood Markets",
+        "en": "Robinhood Markets"
+      }
+    },
+    "MQ": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Marqeta",
+        "en": "Marqeta"
+      }
+    },
+    "FI": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Fiserv",
+        "en": "Fiserv"
+      }
+    },
+    "MA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Mastercard｜SoFiUSD清算協業",
+        "en": "Mastercard | SoFiUSD settlement"
+      }
+    }
+  },
+  "DUOL": {
+    "DUOL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Duolingo",
+        "en": "Duolingo"
+      }
+    },
+    "Babbel": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Babbel",
+        "en": "Babbel"
+      }
+    },
+    "Speakeasy Labs / Speak": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Speakeasy Labs / Speak",
+        "en": "Speakeasy Labs / Speak"
+      }
+    },
+    "PSO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Pearson",
+        "en": "Pearson"
+      }
+    },
+    "ETS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ETS",
+        "en": "ETS"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜MaxのAIモデル採用",
+        "en": "OpenAI | models for Max"
+      }
+    }
+  },
+  "PAYC": {
+    "PAYC": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Paycom Software",
+        "en": "Paycom Software"
+      }
+    },
+    "PAYX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Paychex",
+        "en": "Paychex"
+      }
+    },
+    "ADP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Automatic Data Processing",
+        "en": "Automatic Data Processing"
+      }
+    },
+    "PCTY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Paylocity",
+        "en": "Paylocity"
+      }
+    },
+    "V": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Visa｜Vault給与カード網",
+        "en": "Visa | Vault payroll network"
+      }
+    }
+  },
+  "APPF": {
+    "APPF": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "AppFolio",
+        "en": "AppFolio"
+      }
+    },
+    "Yardi": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Yardi",
+        "en": "Yardi"
+      }
+    },
+    "RealPage": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "RealPage",
+        "en": "RealPage"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon / AWS｜クラウド供給",
+        "en": "Amazon / AWS | cloud provider"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Anthropic｜Bedrock経由Claude",
+        "en": "Anthropic | Claude via Bedrock"
+      }
+    }
+  },
+  "QLYS": {
+    "PANW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Palo Alto Networks",
+        "en": "Palo Alto Networks"
+      }
+    },
+    "CRWD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "CrowdStrike",
+        "en": "CrowdStrike"
+      }
+    },
+    "TENB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Tenable",
+        "en": "Tenable"
+      }
+    },
+    "RPD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Rapid7",
+        "en": "Rapid7"
+      }
+    },
+    "QLYS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Qualys",
+        "en": "Qualys"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜Cloud接続・認証対応",
+        "en": "Google | Cloud connector"
+      }
+    }
+  },
+  "WMT": {
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Amazon | 通販・小売",
+        "en": "Amazon | Retail / commerce"
+      }
+    },
+    "COST": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Costco",
+        "en": "Costco"
+      }
+    },
+    "WMT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Walmart",
+        "en": "Walmart"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google｜Geminiコマース協業",
+        "en": "Google | Gemini commerce"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI｜ChatGPT商品連携",
+        "en": "OpenAI | ChatGPT commerce"
+      }
+    }
   }
 };
 
@@ -6402,7 +6748,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
