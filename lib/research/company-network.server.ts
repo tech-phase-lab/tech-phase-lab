@@ -4941,6 +4941,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Anthropic｜Claude文書連携",
         "en": "Anthropic | Claude file integration"
       }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA",
+        "en": "NVIDIA"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple｜Apple iCloud Drive",
+        "en": "Apple iCloud Drive"
+      }
+    },
+    "TEAM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Atlassian｜Atlassian Confluence",
+        "en": "Atlassian Confluence"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce｜Salesforce傘下Slack",
+        "en": "Salesforce Slack"
+      }
     }
   },
   "FIVN": {
@@ -4987,10 +5015,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "MSFT": {
-      "layer": 6,
+      "layer": 7,
       "businessLabel": {
-        "ja": "Microsoft｜CRM・Teams連携",
-        "en": "Microsoft | CRM / Teams integration"
+        "ja": "Microsoft｜Microsoft Dynamics 365 Contact Center",
+        "en": "Microsoft Dynamics 365 Contact Center"
       }
     },
     "NOW": {
@@ -5005,6 +5033,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Google｜Gemini・Vertex AI・社内基盤",
         "en": "Google | Gemini / Vertex AI / hosting"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA",
+        "en": "NVIDIA"
+      }
+    },
+    "CSCO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Cisco｜Cisco Webex Contact Center",
+        "en": "Cisco Webex Contact Center"
+      }
+    },
+    "TWLO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Twilio｜Twilio Flex",
+        "en": "Twilio Flex"
       }
     }
   },
@@ -5542,6 +5591,55 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Salesforce｜CRM連携",
         "en": "Salesforce | CRM integration"
+      }
+    },
+    "TWLO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Twilio",
+        "en": "Twilio"
+      }
+    },
+    "ZM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Zoom",
+        "en": "Zoom"
+      }
+    },
+    "NICE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "NiCE",
+        "en": "NiCE"
+      }
+    },
+    "FIVN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Five9",
+        "en": "Five9"
+      }
+    },
+    "RNG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "RingCentral",
+        "en": "RingCentral"
+      }
+    },
+    "EGHT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "8x8",
+        "en": "8x8"
+      }
+    },
+    "CSCO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Cisco｜Cisco Webex",
+        "en": "Cisco Webex"
       }
     }
   },
@@ -6774,6 +6872,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Visa｜Vault給与カード網",
         "en": "Visa | Vault payroll network"
+      }
+    },
+    "WDAY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Workday｜Workday HCM",
+        "en": "Workday HCM"
+      }
+    },
+    "ORCL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Oracle｜Oracle Fusion Cloud HCM",
+        "en": "Oracle Fusion Cloud HCM"
       }
     }
   },

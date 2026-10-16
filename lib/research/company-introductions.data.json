@@ -26214,6 +26214,14 @@
       {
         "url": "https://www.paycom.com/software/vault/",
         "label": "PAYC / Visa — primary relationship source; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.workday.com/en-us/products/human-capital-management.html",
+        "label": "Workday official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.oracle.com/human-capital-management/",
+        "label": "Oracle official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -26221,7 +26229,7 @@
       "revenue": "利用する機能や従業員数などに基づく継続料金が中心。導入料や勤怠端末の販売もあり、給与・税金の支払い前に預かる顧客資金から利息収入も得る。預かった元本自体は売上ではない。",
       "strength": "一つのデータベースで人事情報と給与を連動させる。Betiでは従業員が支払い前に給与を確認・修正でき、担当者の入力や差し戻しを減らすことを狙う。",
       "risks": "顧客の雇用縮小で利用料金が減り、金利低下で預かり資金の利息も減る。給与・納税の誤りや情報漏えいは信頼に直結し、自動化を顧客に定着させる負担もある。",
-      "competition": "ADP、Paychex、Paylocityなどと給与・人事管理で競合し、大企業向けではWorkdayやOracleも代替になる。価格だけでなく導入のしやすさ、機能、顧客支援も競争になる。",
+      "competition": "ADP、Paychex、Paylocityなどと給与・人事管理で競合し、大企業向けではWorkdayやOracleも代替になる。価格だけでなく導入のしやすさ、機能、顧客支援も競争になる。 自社の競合開示にあるWorkdayとOracleについて、Workday HCM・Oracle Fusion Cloud HCMの人事管理を比較する。各製品の全機能・対象地域が同じという意味ではない。",
       "relationships": "雇用主へソフトを提供し、従業員への給与と税務当局への納税を支援する。銀行などが資金移動・預かりを支える。特定の銀行を未確認の契約相手として名指ししない。 公式Vault商品ページはVisa給与カードを説明し、発行元をThe Bancorp Bank, N.A.と明記。Visaのネットワーク対応と銀行のカード発行を区別し、他の匿名銀行やAmazon DSP事業者からAmazon自身との取引を推定しない。"
     },
     "en": {
@@ -26229,7 +26237,7 @@
       "revenue": "Earns recurring fees tied to features and workforce size, implementation and time-clock revenue, and interest on client funds. Held principal is not revenue.",
       "strength": "A single database connects HR and payroll. Beti lets employees check and resolve pay issues before processing, aiming to reduce administrative rework.",
       "risks": "Employment cuts reduce fees; lower rates reduce client-fund interest. Payroll errors, data breaches and adoption challenges can undermine customer trust.",
-      "competition": "Competes with ADP, Paychex and Paylocity in payroll and HR, with Workday and Oracle also serving larger organizations.",
+      "competition": "Competes with ADP, Paychex and Paylocity in payroll and HR, with Workday and Oracle also serving larger organizations. Self-named competitors Workday and Oracle are compared in HCM, using Workday HCM and Oracle Fusion Cloud HCM. This does not equate every feature or supported region.",
       "relationships": "Serves employers and supports employee payments and tax remittances. Banks support money movement; undisclosed banking counterparties are not named. Its official Vault page identifies a Visa payroll card issued by The Bancorp Bank, N.A. Visa network compatibility is distinct from bank issuance; other unnamed banks and Amazon DSP operators do not establish a contract with Amazon itself."
     },
     "maps": {
@@ -26271,6 +26279,34 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Workday",
+          "ticker": "WDAY",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Workday HCMと人事管理を比較",
+            "en": "Company disclosure / product scope: Workday HCM / human resources"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Oracle Fusion Cloud HCMと人事管理を比較",
+            "en": "Company disclosure / product scope: Oracle Fusion Cloud HCM / human resources"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         }
       ],
@@ -26846,7 +26882,7 @@
       "DBX"
     ],
     "name": "Dropbox",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -26863,6 +26899,18 @@
       {
         "url": "https://www.dropbox.com/en_GB/app-integrations",
         "label": "Dropbox — official AI partners and Claude document connectivity; checked October 16, 2026"
+      },
+      {
+        "url": "https://www.apple.com/icloud/",
+        "label": "Apple official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.atlassian.com/software/confluence",
+        "label": "Atlassian official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://slack.com/features",
+        "label": "Salesforce official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -26870,7 +26918,7 @@
       "revenue": "個人・チーム・企業向けの有料プランの継続利用料で稼ぐ。無料利用からの有料化に加え、保存容量や管理機能の上位プラン、署名・資料共有などの追加製品が収益につながる。",
       "strength": "端末やアプリをまたいでファイルを同期・共有でき、相手が使う道具を変えずに共同作業へ組み込める。蓄積した資料と利用者の共有ネットワークが、別サービスへの移行の手間になる。",
       "risks": "MicrosoftやGoogleが業務ソフトとストレージをまとめて提供するため、単独サービスの価値を示す必要がある。無料利用者の有料化、Dashの普及、重要な資料の漏えいや消失も課題になる。",
-      "competition": "保存・共同作業ではMicrosoft、Google、Boxなど、電子署名ではAdobeとDocuSign、AI検索ではGleanなどと競う。保存容量だけでなく、探しやすさや組織の管理機能が争点になる。",
+      "competition": "保存・共同作業ではMicrosoft、Google、Boxなど、電子署名ではAdobeとDocuSign、AI検索ではGleanなどと競う。保存容量だけでなく、探しやすさや組織の管理機能が争点になる。 自社開示のAppleはiCloud Driveの保存・共有、AtlassianはConfluence、Salesforce傘下Slackはコンテンツ共同作業の範囲で比較する。Slackを独立上場会社とせず、全CRMやAI検索と同一視しない。",
       "relationships": "個人や企業のチームへファイル共有を提供する。保存基盤は自社設計の設備を中心に運用し、一部でAmazonのAWSを使う。AWSの利用は、AmazonがDropbox製品を買う関係ではない。 OpenAIのChatGPT内アプリとAnthropicのClaude接続で、利用者が権限を持つDropbox文書を扱える。"
     },
     "en": {
@@ -26878,7 +26926,7 @@
       "revenue": "Earns recurring individual, team and enterprise subscription fees, with upgrades and additional signature or sharing products.",
       "strength": "Cross-device sharing fits existing tools. Stored content and collaboration networks make migration demanding.",
       "risks": "Bundled Microsoft and Google storage pressures differentiation. Paid conversion, Dash adoption and data loss or breaches remain risks.",
-      "competition": "Competes with Microsoft, Google and Box in storage and collaboration, Adobe and DocuSign in signatures, and Glean in search.",
+      "competition": "Competes with Microsoft, Google and Box in storage and collaboration, Adobe and DocuSign in signatures, and Glean in search. Self-disclosed Apple is scoped to iCloud Drive storage and sharing; Atlassian Confluence and Salesforce-owned Slack concern content collaboration. Slack is not a separate listed issuer; the comparison does not extend to all CRM or AI search.",
       "relationships": "Serves individuals and business teams. Its own infrastructure stores most user data; AWS supports part of storage and delivery. AWS is a supplier relationship. Dropbox also provides a ChatGPT app and Claude document connectivity for authorized user content."
     },
     "maps": {
@@ -26947,6 +26995,48 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Apple iCloud Driveとファイル保存・共有を比較",
+            "en": "Company disclosure / product scope: Apple iCloud Drive / file storage and sharing"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Atlassian",
+          "ticker": "TEAM",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Atlassian Confluenceとコンテンツ共同作業を比較",
+            "en": "Company disclosure / product scope: Atlassian Confluence / content collaboration"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Salesforce傘下Slackとコンテンツ共同作業を比較",
+            "en": "Company disclosure / product scope: Salesforce Slack / content collaboration"
+          },
+          "sourceIndexes": [
+            0,
+            6
+          ]
         }
       ],
       "relationships": [
@@ -27009,7 +27099,7 @@
       "FIVN"
     ],
     "name": "Five9",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -27022,6 +27112,18 @@
       {
         "url": "https://www.five9.com/news/news-releases/five9-launches-joint-enterprise-customer-experience-ai-solution-google-cloud",
         "label": "Five9 — Google Cloud Enterprise CX AI announcement, January 12, 2026"
+      },
+      {
+        "url": "https://www.webex.com/us/en/products/customer-experience/contact-center.html",
+        "label": "Cisco official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.twilio.com/en-us/flex",
+        "label": "Twilio official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/dynamics-365/products/contact-center",
+        "label": "Microsoft official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -27029,7 +27131,7 @@
       "revenue": "担当者の利用ライセンスに応じた継続料金と通話の従量料金が中心。AI機能は使用量や処理能力に応じて課金し、導入・運用改善の支援でも収益を得る。",
       "strength": "電話網と顧客管理ソフトを結び、受付から対応・分析まで同じ基盤で扱える。既存の顧客情報や業務に接続したまま、有人対応とAIを組み合わせられる点が強み。",
       "risks": "AIが問い合わせを処理すると担当者数に応じた料金が減る可能性があり、AIの売上で補えるかが課題。通話障害、誤回答、顧客管理ソフトとの連携停止は顧客の業務に直接影響する。",
-      "competition": "NiCEとGenesysは顧客対応基盤、RingCentralとZoomは電話と問い合わせ窓口、Amazon Connectなどは開発者が作る窓口で競う。競合する範囲は提供する機能によって異なる。",
+      "competition": "NiCEとGenesysは顧客対応基盤、RingCentralとZoomは電話と問い合わせ窓口、Amazon Connectなどは開発者が作る窓口で競う。競合する範囲は提供する機能によって異なる。 自社はCiscoを既存・クラウド顧客窓口、TwilioとMicrosoftを開発者向け顧客窓口の競合として明記。Webex Contact Center、Twilio Flex、Dynamics 365 Contact Centerの範囲を照合し、全ネットワーク機器や全Azure計算と同一視しない。",
       "relationships": "企業の顧客対応部門へサービスを提供する。Salesforce、Microsoft、Oracle、ServiceNowの顧客管理・業務ソフトと連携し、販売・導入パートナーが展開を支える。製品連携を購入契約とは扱わない。 Googleとは2026年1月、Gemini・Vertex AIの共同CX AIソリューションと販売連携を発表し、Five9自身の社内業務にもGoogle Cloudを利用する。"
     },
     "en": {
@@ -27037,7 +27139,7 @@
       "revenue": "Earns agent-license subscriptions, telephony usage fees, consumption or capacity fees for AI, and implementation services.",
       "strength": "Connects telephony with customer records and operational workflows while combining human and automated service.",
       "risks": "AI may reduce paid agent seats. Monetizing automation, maintaining calls and avoiding AI errors or integration failures are key challenges.",
-      "competition": "Competes with NiCE and Genesys in contact centers, RingCentral and Zoom in combined communications, and Amazon Connect in developer-built solutions.",
+      "competition": "Competes with NiCE and Genesys in contact centers, RingCentral and Zoom in combined communications, and Amazon Connect in developer-built solutions. Five9 names Cisco in legacy and cloud contact centers and Twilio and Microsoft in developer-oriented contact-center solutions. Product scoping uses Webex Contact Center, Twilio Flex and Dynamics 365 Contact Center, without extending to all networking equipment or Azure compute.",
       "relationships": "Serves enterprise contact centers and integrates with Salesforce, Microsoft, Oracle and ServiceNow. Integrations do not establish purchasing contracts. A January 2026 Google Cloud announcement covers joint Gemini / Vertex AI CX solutions and distribution, plus Five9’s own internal cloud / Gemini Enterprise use."
     },
     "maps": {
@@ -27092,6 +27194,48 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Cisco Webex Contact Centerと顧客窓口を比較",
+            "en": "Company disclosure / product scope: Cisco Webex Contact Center / customer service"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Twilio",
+          "ticker": "TWLO",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Twilio Flexと開発者向けコンタクトセンターを比較",
+            "en": "Company disclosure / product scope: Twilio Flex / developer contact centers"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Microsoft Dynamics 365 Contact Centerと顧客窓口を比較",
+            "en": "Company disclosure / product scope: Microsoft Dynamics 365 Contact Center / customer service"
+          },
+          "sourceIndexes": [
+            0,
+            5
           ]
         }
       ],
@@ -28808,7 +28952,7 @@
       "EGHT"
     ],
     "name": "8x8",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -28821,6 +28965,10 @@
       {
         "url": "https://www.investors.8x8.com/news-releases/news-release-details/8x8-ai-studio-adds-openais-gpt-realtime-2-support-production",
         "label": "8x8 — OpenAI real-time voice-model early availability, May 14, 2026; opt-in required"
+      },
+      {
+        "url": "https://www.webex.com/us/en/products/customer-experience/contact-center.html",
+        "label": "Cisco official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -28828,7 +28976,7 @@
       "revenue": "社員用通信と顧客窓口の継続利用料、通話・メッセージなどの使用量に応じた料金が中心。通信機器や導入支援も販売し、同じ企業へ複数の通信機能を追加できる。",
       "strength": "社員同士の連絡と外部の顧客対応を一つの基盤でつなぎ、問い合わせを専門部署へ引き継げる。複数拠点の電話や顧客情報をまとめ、AIによる分析や対応を組み込める。",
       "risks": "MicrosoftやZoomの包括的なサービス、顧客窓口の専門会社との競争が強い。通信品質と各国の規制対応が欠かせず、契約更新、顧客離れ、負債の返済も収益を左右する。",
-      "competition": "社員用通信ではRingCentral、Zoom、Cisco、Microsoft、顧客窓口ではFive9、NiCE、Genesys、通信APIではTwilioなどと競う。電話からAI対応まで、事業ごとに競合が違う。",
+      "competition": "社員用通信ではRingCentral、Zoom、Cisco、Microsoft、顧客窓口ではFive9、NiCE、Genesys、通信APIではTwilioなどと競う。電話からAI対応まで、事業ごとに競合が違う。 本文にもあるCiscoを自社開示の通信・顧客窓口分野で比較する。Webexの製品範囲であり、半導体やネットワーク機器全体との競合という意味ではない。",
       "relationships": "企業へ通信・顧客対応基盤を提供し、Microsoft TeamsやSalesforceと製品連携する。通信事業者と販売代理店が販売・展開を支え、連携先を8x8製品の購入者とは断定しない。 2026年5月の決算発表ではOpenAIのリアルタイム音声モデルへの対応を公表。モデルへの技術対応であり、OpenAIを容量顧客や出資先とは扱わない。 5月14日の製品発表では早期提供枠が対象で、既存エージェントは利用者がモデル変更を選ぶまで従来構成を維持すると説明。"
     },
     "en": {
@@ -28836,7 +28984,7 @@
       "revenue": "Earns recurring communications and contact-center fees plus calling and messaging usage charges. Equipment and implementation services complement subscriptions and expansion within existing customers.",
       "strength": "Links internal collaboration with external customer service, enabling handoffs to specialist teams. Combines multi-site telephony, customer records and AI-assisted analysis and responses.",
       "risks": "Faces bundled communications suites and contact-center specialists. Call reliability, international telecom compliance, renewals, customer churn and debt repayment affect business performance.",
-      "competition": "Competes with RingCentral, Zoom, Cisco and Microsoft in employee communications; Five9, NiCE and Genesys in contact centers; and Twilio in communications APIs.",
+      "competition": "Competes with RingCentral, Zoom, Cisco and Microsoft in employee communications; Five9, NiCE and Genesys in contact centers; and Twilio in communications APIs. Cisco, already named in the text, is compared in the disclosed communications and contact-center scope. The Webex comparison does not imply competition across all semiconductors or networking hardware.",
       "relationships": "Serves enterprise communications and service teams, integrates with Microsoft Teams and Salesforce, and distributes through telecom and reseller partners. Integration does not establish a purchasing relationship. May 2026 results disclose support for an OpenAI real-time voice model. Model compatibility does not make OpenAI a capacity customer or equity investee. The May 14 product release limits availability to AI Studio early-access customers; existing agents keep their configuration until customers opt in."
     },
     "maps": {
@@ -28917,6 +29065,20 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Cisco Webexと企業通信・コンタクトセンターを比較",
+            "en": "Company disclosure / product scope: Cisco Webex / business communications and contact centers"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         }
       ],
