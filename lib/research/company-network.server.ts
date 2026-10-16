@@ -4327,15 +4327,15 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "C": {
       "layer": 6,
       "businessLabel": {
-        "ja": "米国Citi提携カード・上場親会社",
-        "en": "US Citi co-brand card / listed parent"
+        "ja": "Citigroup / Citi｜米国提携カード",
+        "en": "Citigroup / Citi | US co-brand card"
       }
     },
     "V": {
       "layer": 6,
       "businessLabel": {
-        "ja": "米国のカード受入ネットワーク",
-        "en": "US card-acceptance network"
+        "ja": "Visa｜米国のカード決済網",
+        "en": "Visa | US card-payment network"
       }
     }
   }
