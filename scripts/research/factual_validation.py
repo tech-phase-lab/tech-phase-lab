@@ -607,6 +607,16 @@ DIRECTION_FAMILIES = (
      r'\b(?:reject(?:s|ed|ion)?|block(?:s|ed)?)\b', r'却下|否決|阻止'),
 )
 
+# Oct 16: validate_semantics' polarity check used a short word list (fall, decline, drop ...) while the direction
+# check knows slide, slump, tumble, plunge, rally, jump ... A headline such as "Nvidia rises as Intel and
+# AMD slide" was rejected only because "slide" was missing here. Both checks now share one list.
+# Used by validate_semantics only: validate_pair keeps the short list, because its both-directions-present
+# rule would reject a sentence that honestly says "expanded the business and aims to reduce costs".
+WIDE_SEMANTIC_POLARITIES = (
+    (DIRECTION_FAMILIES[0][1] + '|' + DIRECTION_FAMILIES[0][2], DIRECTION_FAMILIES[0][3] + '|' + DIRECTION_FAMILIES[0][4]),
+    SEMANTIC_POLARITIES[1],
+)
+
 # Metrics whose direction must not be swapped with another metric's direction
 # in a mixed headline ("revenue rose while margin declined"). Order matters:
 # more specific labels are matched first and claim their characters.
@@ -848,7 +858,7 @@ def validate_semantics(text, evidence):
             and not re.search(ongoing_integration, evidence, re.I)
             and re.search(ongoing_integration + r'|統合(?:を進めている|中|した|済み|を完了)', text, re.I)):
         raise ValueError('invalid-copy')
-    for positive, negative in SEMANTIC_POLARITIES:
+    for positive, negative in WIDE_SEMANTIC_POLARITIES:
         if re.search(positive,text,re.I) and re.search(negative,evidence,re.I) and not re.search(positive,evidence,re.I):
             raise ValueError('invalid-copy')
         if re.search(negative,text,re.I) and re.search(positive,evidence,re.I) and not re.search(negative,evidence,re.I):
