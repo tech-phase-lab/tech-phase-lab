@@ -156,3 +156,7 @@
 - Preview header uses slim Close/Save controls and an All pages / Page N only selector in Japanese and English. Initial modal focus no longer outlines Close; keyboard focus remains visible.
 - Selecting a page shows that original page and prepares a one-page PDF before the explicit Save click. Text, ink and geometry are copied from the complete PDF; the original page number is retained. Returning to All pages restores the complete export. Obsolete selections are discarded and temporary URLs released. No saved article or annotation data changes.
 - Physical iPhone file sharing remains a separate check.
+
+## 2026-10-16: save multiple chosen pages together
+- Select pages enables tapping the preview pages themselves. Selected pages have a yellow border/tint and numbered yellow labels above; tapping again deselects them. All pages remain visible for easy selection. Save exports the chosen pages together in document order; Use all pages restores the complete export. Yellow is a functional selection color requested by the owner, not gold branding.
+- Empty selections disable Save. Switching selections invalidates the prior file immediately; completed obsolete extraction is discarded. Japanese and English controls are included. No collection or annotation writes.

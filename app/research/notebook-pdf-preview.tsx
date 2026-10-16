@@ -8,7 +8,7 @@ import styles from "./notebook-pdf-preview.module.css";
 
 export type PdfSnapshot = { content: HTMLElement; marks: Annotation[]; title: string; lang: "ja" | "en" };
 
-function PdfPage({ pdf, number, lang, onReady, onError }: { pdf: PDFDocumentProxy; number: number; lang: string; onReady: () => void; onError: () => void }) {
+function PdfPage({ pdf, number, lang, selecting, selected, onToggle, onReady, onError }: { pdf: PDFDocumentProxy; number: number; lang: string; selecting: boolean; selected: boolean; onToggle: () => void; onReady: () => void; onError: () => void }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const frame = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -42,9 +42,12 @@ function PdfPage({ pdf, number, lang, onReady, onError }: { pdf: PDFDocumentProx
     return () => { disposed = true; generation++; render?.cancel(); observer.disconnect(); resize.disconnect(); element.width = 0; element.height = 0; };
   }, [pdf, number, onReady, onError]);
   const label = lang === "ja" ? `${number} / ${pdf.numPages} ページ` : `Page ${number} of ${pdf.numPages}`;
-  return <figure className={styles.page}>
-    <div ref={frame} className={styles.paper}><canvas ref={canvas} role="img" aria-label={label} /></div>
-    <figcaption>{label}</figcaption>
+  return <figure className={`${styles.page} ${selecting && selected ? styles.selectedPage : ""}`}>
+    <figcaption>{selecting && selected && <span aria-hidden="true">✓ </span>}{lang === "ja" ? `${number}ページ` : `Page ${number}`}</figcaption>
+    <div ref={frame} className={styles.paper}>
+      <canvas ref={canvas} role="img" aria-label={label} />
+      {selecting && <button className={styles.pageTap} aria-label={lang === "ja" ? `${number}ページを選択` : `Select page ${number}`} aria-pressed={selected} onClick={onToggle} />}
+    </div>
   </figure>;
 }
 
@@ -52,15 +55,21 @@ export default function NotebookPdfPreview({ snapshot, onClose }: { snapshot: Pd
   const dialog = useRef<HTMLDialogElement>(null);
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState<{ attempt: number; pdf: PDFDocumentProxy; file: File; url: string } | null>(null);
-  const [pageNumber, setPageNumber] = useState(0);
-  const [selection, setSelection] = useState<{ source: File; page: number; file: File; url: string } | null>(null);
+  const [selecting, setSelecting] = useState(false);
+  const [pageNumbers, setPageNumbers] = useState<number[] | null>(null);
+  const [selection, setSelection] = useState<{ source: File; pages: string; file: File; url: string } | null>(null);
   const [selectionError, setSelectionError] = useState(false);
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const current = result?.attempt === attempt ? result : null;
-  const exportFile = pageNumber === 0 ? current : selection?.source === current?.file && selection?.page === pageNumber ? selection : null;
+  const pageKey = pageNumbers?.join(",") ?? "all";
+  const exportFile = pageNumbers === null ? current : selection?.source === current?.file && selection?.pages === pageKey ? selection : null;
+  const visiblePages = pageNumbers ?? Array.from({ length: current?.pdf.numPages ?? 0 }, (_, index) => index + 1);
+  function changePages(numbers: number[] | null) {
+    setSelection(null); setPageNumbers(numbers); setSelectionError(false); setSaveError(false);
+  }
   const t = (ja: string, en: string) => snapshot.lang === "ja" ? ja : en;
   const onReady = useCallback(() => setReady(true), []);
   const onError = useCallback(() => setFailed(true), []);
@@ -104,30 +113,27 @@ export default function NotebookPdfPreview({ snapshot, onClose }: { snapshot: Pd
   }, [snapshot, attempt]);
 
   useEffect(() => {
-    if (!current || pageNumber === 0) return;
+    if (!current || !pageNumbers?.length) return;
     let cancelled = false, url: string | undefined;
     void (async () => {
       try {
-        const { extractNotebookPdfPage } = await import("@/lib/research/notebook-pdf-page");
-        const bytes = await extractNotebookPdfPage(await current.file.arrayBuffer(), pageNumber);
+        const { extractNotebookPdfPages } = await import("@/lib/research/notebook-pdf-page");
+        const bytes = await extractNotebookPdfPages(await current.file.arrayBuffer(), pageNumbers);
         if (cancelled) return;
-        const file = new File([bytes], current.file.name.replace(/\.pdf$/, `-p${pageNumber}.pdf`), { type: "application/pdf" });
+        const file = new File([bytes], current.file.name.replace(/\.pdf$/, `-p${pageNumbers.join("-")}.pdf`), { type: "application/pdf" });
         url = URL.createObjectURL(file);
-        setSelection({ source: current.file, page: pageNumber, file, url });
+        setSelection({ source: current.file, pages: pageKey, file, url });
       } catch { if (!cancelled) setSelectionError(true); }
     })();
     return () => { cancelled = true; if (url) URL.revokeObjectURL(url); };
-  }, [current, pageNumber]);
+  }, [current, pageNumbers, pageKey]);
 
   return <dialog ref={dialog} tabIndex={-1} className={styles.preview} aria-label={t("PDFプレビュー", "PDF preview")} onCancel={event => { event.preventDefault(); onClose(); }}>
     <header className={styles.header}>
       <button onClick={onClose} aria-label={t("プレビューを閉じる", "Close preview")}><span aria-hidden="true">×</span>{t("閉じる", "Close")}</button>
-      <select className={styles.range} aria-label={t("保存するページ", "Pages to save")} value={pageNumber} disabled={!current || sharing} onChange={event => {
-        setSelection(null); setPageNumber(Number(event.target.value)); setSelectionError(false); setSaveError(false); setReady(false);
-      }}>
-        <option value={0}>{t("全ページ", "All pages")}</option>
-        {current && Array.from({ length: current.pdf.numPages }, (_, index) => <option key={index + 1} value={index + 1}>{t(`${index + 1}ページのみ`, `Page ${index + 1} only`)}</option>)}
-      </select>
+      <button className={styles.selectPages} aria-pressed={selecting} disabled={!current || sharing} onClick={() => {
+        setSelecting(!selecting); changePages(selecting ? null : []);
+      }}>{selecting ? t("全ページに戻す", "Use all pages") : t("ページを選択する", "Select pages")}</button>
       <button className={styles.save} disabled={!exportFile || !ready || failed || selectionError || sharing} onClick={async () => {
         if (!exportFile) return;
         setSharing(true); setSaveError(false);
@@ -136,11 +142,17 @@ export default function NotebookPdfPreview({ snapshot, onClose }: { snapshot: Pd
         finally { setSharing(false); }
       }}>{t("保存", "Save")}</button>
     </header>
+    {selecting && <div className={styles.selectedNumbers} aria-live="polite">
+      {pageNumbers?.length ? pageNumbers.map(number => <span key={number}>{t(`${number}ページ`, `Page ${number}`)}</span>) : <span className={styles.selectionHint}>{t("保存するページをタップ", "Tap the pages to save")}</span>}
+    </div>}
     <div className={styles.pages}>
       {(saveError || selectionError) && <p role="alert">{t("保存できませんでした。もう一度お試しください。", "Could not save. Please try again.")}</p>}
       {failed ? <div className={styles.status} role="alert"><p>{t("プレビューを表示できませんでした。", "Could not load the preview.")}</p><button onClick={() => { setFailed(false); setReady(false); setAttempt(value => value + 1); }}>{t("再試行", "Retry")}</button></div>
         : !current ? <p className={styles.status} role="status">{t("プレビューを作成中…", "Preparing preview…")}</p>
-        : (pageNumber ? [pageNumber] : Array.from({ length: current.pdf.numPages }, (_, index) => index + 1)).map(number => <PdfPage key={`${attempt}:${pageNumber}:${number}`} pdf={current.pdf} number={number} lang={snapshot.lang} onReady={onReady} onError={onError} />)}
+        : Array.from({ length: current.pdf.numPages }, (_, index) => index + 1).map(number => <PdfPage key={`${attempt}:${number}`} pdf={current.pdf} number={number} lang={snapshot.lang} selecting={selecting} selected={visiblePages.includes(number)} onToggle={() => {
+          if (sharing) return;
+          changePages(visiblePages.includes(number) ? visiblePages.filter(page => page !== number) : [...visiblePages, number].sort((a, b) => a - b));
+        }} onReady={onReady} onError={onError} />)}
     </div>
   </dialog>;
 }

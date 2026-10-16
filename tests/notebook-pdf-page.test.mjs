@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { PDFDocument, PDFName } from 'pdf-lib';
-import { extractNotebookPdfPage } from '../lib/research/notebook-pdf-page.ts';
+import { extractNotebookPdfPages } from '../lib/research/notebook-pdf-page.ts';
 
 test('single-page export copies the requested page and leaves the complete PDF intact', async () => {
   const source = await PDFDocument.create();
@@ -13,7 +13,7 @@ test('single-page export copies the requested page and leaves the complete PDF i
   const bytes = await source.save();
   const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs');
   for (const number of [1, 2, 3]) {
-    const extracted = await extractNotebookPdfPage(bytes.buffer, number);
+    const extracted = await extractNotebookPdfPages(bytes.buffer, [number]);
     const result = await PDFDocument.load(extracted);
     assert.equal(result.getPageCount(), 1);
     assert.equal(result.getTitle(), 'Research');
@@ -27,6 +27,17 @@ test('single-page export copies the requested page and leaves the complete PDF i
       assert.equal(text, `Distinct page ${number}`);
     } finally { await task.destroy(); }
   }
+  const combined = await extractNotebookPdfPages(bytes.buffer, [2, 1, 2]);
+  const combinedTask = getDocument({data:new Uint8Array(combined),useWasm:false});
+  try {
+    const pdf = await combinedTask.promise;
+    assert.equal(pdf.numPages, 2);
+    for (let index = 1; index <= 2; index++) {
+      const page = await pdf.getPage(index);
+      assert.equal((await page.getTextContent()).items.map(item => item.str).join(''), `Distinct page ${index}`);
+    }
+  } finally { await combinedTask.destroy(); }
+  await assert.rejects(extractNotebookPdfPages(bytes.buffer, []), RangeError);
   assert.equal((await PDFDocument.load(bytes)).getPageCount(), 3);
-  for (const invalid of [0, -1, 4, 1.5, NaN]) await assert.rejects(extractNotebookPdfPage(bytes.buffer, invalid), RangeError);
+  for (const invalid of [0, -1, 4, 1.5, NaN]) await assert.rejects(extractNotebookPdfPages(bytes.buffer, [invalid]), RangeError);
 });
