@@ -72,6 +72,16 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "ICHR") return {"0": {"ja": "流体システム・精密加工", "en": "Fluid systems & precision machining"}, "1": {"ja": "流体システム等の装置顧客", "en": "Equipment customers for fluid systems / parts"}};
+  if (root === "UCTT") return {"0": {"ja": "装置サブシステム・洗浄", "en": "Equipment subsystems & cleaning"}, "1": {"ja": "装置向けサブシステムの顧客", "en": "Equipment-subsystem customers"}};
+  if (root === "FORM") return {"0": {"ja": "プローブ・計測・温度制御", "en": "Probes, measurement & thermal control"}, "2": {"ja": "メモリー分野の顧客", "en": "Memory customers"}};
+  if (root === "AMKR") return {"1": {"ja": "先端包装・試験の協業", "en": "Advanced-packaging / test collaboration"}, "2": {"ja": "半導体の包装・検査受託", "en": "Semiconductor packaging & test"}, "3": {"ja": "半導体設計の顧客", "en": "Chip-design customers"}, "7": {"ja": "電子機器の顧客", "en": "Electronics customers"}};
+  if (root === "JBL") return {"0": {"ja": "半導体装置分野の顧客", "en": "Semiconductor-equipment customers"}, "5": {"ja": "電子機器の設計・製造受託", "en": "Electronics design & contract manufacturing"}};
+  if (root === "COHU") return {"0": {"ja": "半導体テスト・搬送・検査", "en": "Semiconductor test, handling & inspection"}, "5": {"ja": "テスト装置の製造委託先", "en": "Test-system contract manufacturer"}};
+  if (root === "SANM") return {"4": {"ja": "光アクセス機器の製造顧客", "en": "Optical-access manufacturing customer"}, "5": {"ja": "電子機器の設計・製造受託", "en": "Electronics design & contract manufacturing"}};
+  if (root === "ARW") return {"3": {"ja": "販売する半導体・IT製品の供給元", "en": "Semiconductor / IT distribution suppliers"}, "5": {"ja": "電子部品・企業ITの流通", "en": "Components & enterprise-IT distribution"}};
+  if (root === "AVT") return {"3": {"ja": "設計・統合向け半導体の供給元", "en": "Semiconductor suppliers for design / integration"}, "5": {"ja": "電子部品流通・設計支援", "en": "Component distribution & design support"}};
+  if (root === "PLAB") return {"0": {"ja": "フォトマスク・合弁・地域別競合", "en": "Photomasks, joint ventures & regional competition"}};
   if (root === "CIEN") return {4: {ja: "光伝送・ルーティング", en: "Optical transport & routing"}, 6: {ja: "データセンター管理の共同開発", en: "Data-center management co-development"}};
   if (root === "CSCO") return {"3": {"ja": "AIプラットフォームの協業", "en": "AI-platform collaboration"}, "5": {"ja": "ネットワーク機器・AIサーバー", "en": "Networking & AI servers"}, "7": {"ja": "セキュリティ・Web会議", "en": "Security & web meetings"}};
   if (root === "ETN") return {"3": {"ja": "AI基盤の電源・冷却設計協業", "en": "AI power / cooling design collaboration"}, "5": {"ja": "データセンター電源・冷却", "en": "Data-center power & cooling"}};
@@ -5205,6 +5215,362 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Salesforce | CRM integration"
       }
     }
+  },
+  "ICHR": {
+    "ICHR": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Ichor｜流体システム",
+        "en": "Ichor | fluid systems"
+      }
+    },
+    "UCTT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Ultra Clean｜流体システム競合",
+        "en": "Ultra Clean | fluid systems"
+      }
+    },
+    "BHE": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Benchmark｜精密加工競合",
+        "en": "Benchmark | precision machining"
+      }
+    },
+    "LRCX": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Lam Research｜装置顧客",
+        "en": "Lam Research | equipment customer"
+      }
+    },
+    "AMAT": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Applied Materials｜装置顧客",
+        "en": "Applied Materials | customer"
+      }
+    },
+    "ASML": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "ASML｜装置顧客",
+        "en": "ASML | equipment customer"
+      }
+    }
+  },
+  "UCTT": {
+    "UCTT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Ultra Clean｜サブシステム",
+        "en": "Ultra Clean | subsystems"
+      }
+    },
+    "ICHR": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Ichor｜流体システム競合",
+        "en": "Ichor | fluid systems"
+      }
+    },
+    "BHE": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Benchmark｜サブシステム競合",
+        "en": "Benchmark | subsystems"
+      }
+    },
+    "NPO": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Enpro｜洗浄・コーティング",
+        "en": "Enpro | cleaning / coatings"
+      }
+    },
+    "LRCX": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Lam Research｜装置顧客",
+        "en": "Lam Research | equipment customer"
+      }
+    },
+    "AMAT": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Applied Materials｜装置顧客",
+        "en": "Applied Materials | customer"
+      }
+    }
+  },
+  "FORM": {
+    "FORM": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "FormFactor｜プローブ・計測",
+        "en": "FormFactor | probes / measurement"
+      }
+    },
+    "Technoprobe": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Technoprobe｜プローブカード",
+        "en": "Technoprobe | probe cards"
+      }
+    },
+    "Micronics Japan": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "日本マイクロニクス｜プローブ",
+        "en": "Micronics Japan | probes"
+      }
+    },
+    "MPI": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "MPI｜プローブ・計測",
+        "en": "MPI | probes / measurement"
+      }
+    },
+    "AEM": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "AEM｜温度制御",
+        "en": "AEM | thermal control"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SK hynix｜FY2025顧客",
+        "en": "SK hynix | FY2025 customer"
+      }
+    }
+  },
+  "AMKR": {
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor｜包装・検査受託",
+        "en": "Amkor | packaging / test"
+      }
+    },
+    "ASX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "ASE｜包装・検査競合",
+        "en": "ASE | packaging / test"
+      }
+    },
+    "JCET Group": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "JCET｜包装・検査競合",
+        "en": "JCET | packaging / test"
+      }
+    },
+    "Powertech Technology": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Powertech｜包装・検査競合",
+        "en": "Powertech | packaging / test"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC｜先端包装の協業",
+        "en": "TSMC | packaging alliance"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Qualcomm｜FY2025顧客",
+        "en": "Qualcomm | FY2025 customer"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple｜FY2025顧客",
+        "en": "Apple | FY2025 customer"
+      }
+    }
+  },
+  "JBL": {
+    "JBL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Jabil｜設計・製造受託",
+        "en": "Jabil | design / manufacturing"
+      }
+    },
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Applied Materials｜供給先",
+        "en": "Applied Materials | customer"
+      }
+    },
+    "COHU": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Cohu｜テスト装置の製造受託",
+        "en": "Cohu | test-system customer"
+      }
+    }
+  },
+  "COHU": {
+    "COHU": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Cohu｜テスト・自動化",
+        "en": "Cohu | test / automation"
+      }
+    },
+    "Advantest": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Advantest｜半導体テスト",
+        "en": "Advantest | semiconductor test"
+      }
+    },
+    "TER": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Teradyne｜半導体テスト",
+        "en": "Teradyne | semiconductor test"
+      }
+    },
+    "KLAC": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "KLA｜検査・計測",
+        "en": "KLA | inspection / metrology"
+      }
+    },
+    "Hon Precision": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Hon Precision｜搬送・自動化",
+        "en": "Hon Precision | handling"
+      }
+    },
+    "JBL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Jabil｜テスト装置の製造委託",
+        "en": "Jabil | test-system manufacturer"
+      }
+    }
+  },
+  "SANM": {
+    "SANM": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Sanmina｜設計・製造受託",
+        "en": "Sanmina | design / manufacturing"
+      }
+    },
+    "NOK": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Nokia｜米国OLTの製造受託",
+        "en": "Nokia | US OLT customer"
+      }
+    }
+  },
+  "ARW": {
+    "ARW": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arrow｜部品・IT流通",
+        "en": "Arrow | components / IT distribution"
+      }
+    },
+    "AVT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Avnet｜電子部品流通",
+        "en": "Avnet | components distribution"
+      }
+    },
+    "SNX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "TD SYNNEX｜企業IT流通",
+        "en": "TD SYNNEX | IT distribution"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜販売製品の供給元",
+        "en": "NVIDIA | distribution supplier"
+      }
+    }
+  },
+  "AVT": {
+    "AVT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Avnet｜電子部品・設計支援",
+        "en": "Avnet | components / design"
+      }
+    },
+    "ARW": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arrow｜電子部品流通",
+        "en": "Arrow | components distribution"
+      }
+    },
+    "RS": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "RS｜電子部品流通",
+        "en": "RS | components distribution"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD｜EPYCの供給パートナー",
+        "en": "AMD | EPYC supplier partner"
+      }
+    }
+  },
+  "PLAB": {
+    "PLAB": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Photronics｜フォトマスク",
+        "en": "Photronics | photomasks"
+      }
+    },
+    "Tekscend Photomask": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Tekscend｜フォトマスク",
+        "en": "Tekscend | photomasks"
+      }
+    },
+    "Dai Nippon Printing": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "大日本印刷｜合弁・域外競合",
+        "en": "DNP | joint venture / competition"
+      }
+    },
+    "SK-Electronics": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "エスケーエレクトロニクス｜マスク",
+        "en": "SK-Electronics | photomasks"
+      }
+    }
   }
 };
 
@@ -5268,7 +5634,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.

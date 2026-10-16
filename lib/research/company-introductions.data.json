@@ -9063,7 +9063,7 @@
       "JBL"
     ],
     "name": "Jabil",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Design and manufacturing / Customers / Competition",
@@ -9080,6 +9080,14 @@
       {
         "label": "Flex FY2026 Form 10-K · Manufacturing and cloud/power infrastructure",
         "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm"
+      },
+      {
+        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-awards-suppliers-outstanding-performance-1",
+        "label": "Applied Materials — Supplier Excellence Awards, February 24, 2026"
+      },
+      {
+        "url": "https://ir.cohu.com/static-files/766a4e2b-4bca-425a-8148-e32fa3d3ba1f",
+        "label": "Cohu — FY2025 Form 10-K, Jabil contract manufacturing"
       }
     ],
     "ja": {
@@ -9088,7 +9096,7 @@
       "strength": "世界各地の工場、専用生産ライン、自動化、設計から調達・量産までの一貫運営により、顧客が短期間で生産量を増減できる。",
       "risks": "2025年度は上位5顧客が売上の約36％。部品不足、特定顧客の発注減、顧客による製造内製化、専用設備の遊休が利益を圧迫する。",
       "competition": "電子機器の設計・受託製造ではSanmina、Benchmark Electronics、Flexが競合例。SanminaとBenchmarkはJabilを実名で挙げている。Flexは両社の公表する製造サービスを比較したもの。扱う機器や必要な認証、量産規模によって競合する案件は異なる。",
-      "relationships": "クラウド・データセンター、通信、半導体装置、車、医療、エネルギーなどの企業から設計・調達・製造を受託する。"
+      "relationships": "クラウド・データセンター、通信、半導体装置、車、医療、エネルギーなどの企業から設計・調達・製造を受託する。 Applied Materialsは2026年2月、前年の供給実績でJabilを表彰。個別装置や取引額は未開示。CohuのFY2025年次報告書は、半導体テスト装置の大部分をマレーシアのJabil拠点に製造委託していると明記している。"
     },
     "en": {
       "business": "Provides product design, component sourcing, manufacturing, assembly and logistics across customers' full product lifecycles.",
@@ -9096,7 +9104,7 @@
       "strength": "Global factories, dedicated lines, automation and integrated design-to-production operations let customers scale output quickly.",
       "risks": "Its top five customers were about 36% of fiscal 2025 revenue; component shortages, order reductions, customer insourcing and idle dedicated capacity can hurt margins.",
       "competition": "Examples in electronics design and contract manufacturing include Sanmina, Benchmark Electronics and Flex. Sanmina and Benchmark explicitly name Jabil; Flex is an editorial comparison of disclosed manufacturing services. Product requirements, qualifications and production volumes vary.",
-      "relationships": "Performs design, sourcing and manufacturing for cloud, data-center, communications, semiconductor-equipment, automotive, healthcare and energy companies."
+      "relationships": "Performs design, sourcing and manufacturing for cloud, data-center, communications, semiconductor-equipment, automotive, healthcare and energy companies. Applied Materials recognized Jabil in February 2026 for prior-year supplier performance without naming individual tools or transaction values. Cohu’s FY2025 annual report identifies Jabil in Malaysia as the contract manufacturer for most of its semiconductor test systems."
     },
     "maps": {
       "competition": [
@@ -9193,6 +9201,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "customer",
+          "label": {
+            "ja": "2026年2月：顧客Applied Materialsが前年の供給実績を表彰",
+            "en": "February 2026: Applied Materials recognizes prior-year supplier performance"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "Cohu",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025開示：マレーシアで半導体テスト装置の製造を受託",
+            "en": "FY2025 disclosure: contract manufacturing of semiconductor test systems in Malaysia"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "COHU"
         }
       ]
     }
@@ -15504,7 +15538,7 @@
       "ICHR"
     ],
     "name": "Ichor Holdings",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Risk factors",
@@ -15521,7 +15555,7 @@
       "strength": "顧客装置に合わせた設計、厳しい清浄度管理、精密溶接と量産対応を一体で提供する。認定に時間がかかるため継続採用されやすい。",
       "risks": "売上が少数の装置メーカーに大きく集中し、その生産計画と半導体設備投資に左右される。品質問題や部品不足も影響が大きい。",
       "competition": "流体供給サブシステムではUltra Clean、半導体装置向け精密加工ではBenchmark Electronicsが競合例。Ultra CleanはIchor自身の開示、Benchmarkは両社の公表する加工サービスの比較。ガス・薬液供給と精密加工は別の製品・工程として見る。",
-      "relationships": "半導体装置メーカーへ組み込まれる流体システムと部品を供給し、精密加工・材料の仕入先から部材を調達する。"
+      "relationships": "半導体装置メーカーへ組み込まれる流体システムと部品を供給し、精密加工・材料の仕入先から部材を調達する。 FY2025の自社年次報告書はLam Research、Applied Materials、ASMLを主要OEM顧客として明記。流体供給システムや精密部品の関係で、将来の最低発注数量を保証するものではない。"
     },
     "en": {
       "business": "Makes gas-and-chemical delivery subsystems, ultra-high-purity weldments and precision components built into semiconductor manufacturing equipment.",
@@ -15529,7 +15563,7 @@
       "strength": "Combines customer-specific design, stringent purity control, precision welding and volume manufacturing; lengthy qualification can support recurring programs.",
       "risks": "Revenue is highly concentrated among a few equipment customers and follows their production plans and semiconductor capital spending; quality issues and component shortages can have outsized effects.",
       "competition": "Examples include Ultra Clean in fluid-delivery subsystems and Benchmark Electronics in semiconductor-equipment precision machining. Ichor explicitly names Ultra Clean; Benchmark is an editorial comparison of disclosed machining services. Fluid delivery and machining are distinct scopes.",
-      "relationships": "Supplies fluid systems and components integrated into wafer-fab equipment and sources materials and precision parts from its supplier base."
+      "relationships": "Supplies fluid systems and components integrated into wafer-fab equipment and sources materials and precision parts from its supplier base. Its FY2025 annual report names Lam Research, Applied Materials and ASML as major OEM customers for fluid-delivery systems and precision components. This does not guarantee minimum future order volumes."
     },
     "maps": {
       "competition": [
@@ -15587,6 +15621,45 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Lam Research",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：流体供給システム・精密部品の主要OEM顧客",
+            "en": "FY2025: major OEM customer for fluid-delivery systems / precision parts"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "LRCX"
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：流体供給システム・精密部品の主要OEM顧客",
+            "en": "FY2025: major OEM customer for fluid-delivery systems / precision parts"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "ASML",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：流体供給システム・精密部品の主要OEM顧客",
+            "en": "FY2025: major OEM customer for fluid-delivery systems / precision parts"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ASML"
         }
       ]
     }
@@ -15597,7 +15670,7 @@
       "UCTT"
     ],
     "name": "Ultra Clean Holdings",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Services / Customers / Competition / Risk factors",
@@ -15610,7 +15683,7 @@
       "strength": "複雑な装置モジュールを世界各地で量産し、洗浄・再生・分析まで一社で扱える。顧客の生産拠点近くで支援できる。",
       "risks": "少数の大手装置顧客への依存、半導体設備投資の変動、急な増減産、品質管理、世界各地の供給網がリスク。",
       "competition": "ガス供給ではIchorとFujikin、装置サブシステムではBenchmark Electronics、部品の洗浄・コーティングではEnproが競合例。Ultra Clean自身が製品分野ごとに実名を挙げている。供給装置、加工部品、洗浄サービスを同じものとして比較しない。",
-      "relationships": "半導体装置メーカーへ組立済みサブシステムを供給し、装置会社や半導体工場から部品を預かって洗浄・分析する。"
+      "relationships": "半導体装置メーカーへ組立済みサブシステムを供給し、装置会社や半導体工場から部品を預かって洗浄・分析する。 FY2025の自社年次報告書でApplied MaterialsとLam Researchを最大の2顧客と開示し、各社への売上はそれぞれ全体の10%超。装置向けサブシステム等の供給関係であり、顧客の全製品を独占供給する意味ではない。"
     },
     "en": {
       "business": "Builds complex subsystems and components for semiconductor equipment and provides ultra-high-purity cleaning and analysis for used parts.",
@@ -15618,7 +15691,7 @@
       "strength": "Combines global manufacturing of complex modules with cleaning, refurbishment and analysis close to customers' production locations.",
       "risks": "Dependence on a few large equipment customers, semiconductor capital cycles, rapid production changes, quality execution and a global supply chain create risk.",
       "competition": "Ultra Clean names Ichor and Fujikin in gas delivery, Benchmark Electronics in critical subsystems, and Enpro in cleaning and coating services. Delivery systems, manufactured components and refurbishment services have different functions.",
-      "relationships": "Supplies assembled subsystems to equipment manufacturers and receives parts from equipment companies and fabs for cleaning and analysis."
+      "relationships": "Supplies assembled subsystems to equipment manufacturers and receives parts from equipment companies and fabs for cleaning and analysis. Its FY2025 annual report identifies Applied Materials and Lam Research as its two largest customers, each above 10% of revenue. The equipment-subsystem relationship does not establish exclusive supply across all customer products."
     },
     "maps": {
       "competition": [
@@ -15700,6 +15773,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：半導体装置向けサブシステム等の主要顧客",
+            "en": "FY2025: major semiconductor-equipment subsystem customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "Lam Research",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：半導体装置向けサブシステム等の主要顧客",
+            "en": "FY2025: major semiconductor-equipment subsystem customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "LRCX"
         }
       ]
     }
@@ -16787,11 +16886,15 @@
       "COHU"
     ],
     "name": "Cohu",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Test and inspection / Products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm"
+      },
+      {
+        "url": "https://ir.cohu.com/static-files/766a4e2b-4bca-425a-8148-e32fa3d3ba1f",
+        "label": "Cohu — FY2025 Form 10-K, Jabil manufacturing dependency"
       }
     ],
     "ja": {
@@ -16800,7 +16903,7 @@
       "strength": "テスター、ハンドラー、画像検査、接触部品をまとめて提供し、車載・産業・通信向けチップの量産工程を一式で支えられる。",
       "risks": "半導体の生産量と設備投資、大口顧客、買収統合、部品供給、価格競争、地政学と輸出規制に左右される。",
       "competition": "半導体テストではAdvantestとTeradyne、テスト時の搬送・自動化ではHon Precision、検査・計測ではKLAが競合例。Cohu自身が年次報告で実名を挙げている。テスター、搬送装置、検査装置、接触部品を同じ製品としては扱わない。",
-      "relationships": "半導体メーカーと組立・検査会社へテスト工程の装置と消耗部品を供給し、電子・機械部品を外部から調達する。"
+      "relationships": "半導体メーカーと組立・検査会社へテスト工程の装置と消耗部品を供給し、電子・機械部品を外部から調達する。 FY2025年次報告書は、半導体テスト装置の大部分をマレーシアのJabil拠点に製造委託すると明記。製造受託先としての関係であり、CohuからJabilへの出資を示すものではない。"
     },
     "en": {
       "business": "Makes semiconductor test systems, handlers, vision-inspection equipment and sockets that contact finished chips during high-volume testing.",
@@ -16808,7 +16911,7 @@
       "strength": "Combines testers, handlers, vision inspection and interface products to support complete production-test cells for automotive, industrial and communications chips.",
       "risks": "Semiconductor unit volume and capital spending, large customers, acquisition integration, component supply, pricing, geopolitics and export controls affect results.",
       "competition": "Cohu names Advantest, Teradyne, Hon Precision and KLA among its competitors. Examples span semiconductor testing, test automation, inspection and metrology. Testers, handlers, inspection tools and contact interfaces serve different functions.",
-      "relationships": "Supplies production-test equipment and consumables to chipmakers and OSATs and sources electronic and mechanical components externally."
+      "relationships": "Supplies production-test equipment and consumables to chipmakers and OSATs and sources electronic and mechanical components externally. Its FY2025 annual report identifies Jabil in Malaysia as the contract manufacturer for most semiconductor test systems. This manufacturing relationship does not establish an equity investment in Jabil."
     },
     "maps": {
       "competition": [
@@ -16889,6 +16992,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Jabil",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2025開示：マレーシアで半導体テスト装置の大部分を製造委託",
+            "en": "FY2025 disclosure: Malaysian contract manufacturer for most semiconductor test systems"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "JBL"
         }
       ]
     }
@@ -16899,11 +17015,15 @@
       "AMKR"
     ],
     "name": "Amkor Technology",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Packaging and test / Customers / Competition / Manufacturing / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"
+      },
+      {
+        "url": "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership",
+        "label": "Amkor / TSMC — joint release, June 16, 2026"
       }
     ],
     "ja": {
@@ -16912,7 +17032,7 @@
       "strength": "フリップチップ、SiP、ファンアウト、2.5Dなど幅広い工程と世界各地の量産拠点を持ち、設計からテストまで対応できる。",
       "risks": "大口顧客とスマホ・車載需要、工場稼働率、巨額設備投資、地政学、素材・装置供給、顧客の内製化に左右される。",
       "competition": "半導体の組立・パッケージ・テスト受託ではASE Technology、JCET Group、Powertech Technologyが競合例。Amkor自身が年次報告に実名を記載している。先端パッケージ、従来型の組立、メモリーのテストなどで各社の得意分野は異なる。",
-      "relationships": "半導体設計会社やIDMからチップを受け取り、外部の材料・装置会社を使って組立・検査し、完成品を顧客へ返す。"
+      "relationships": "半導体設計会社やIDMからチップを受け取り、外部の材料・装置会社を使って組立・検査し、完成品を顧客へ返す。 FY2025のApple・Qualcommへの直接売上は、それぞれ29.8%・11.1%。TSMCとは2026年6月に米国で先端包装・試験を調達する枠組みを含む10年協業契約を発表した。アリゾナの能力拡張は計画・建設中の範囲を含む。"
     },
     "en": {
       "business": "Provides outsourced semiconductor packaging that protects and connects diced chips, then tests them for proper operation.",
@@ -16920,7 +17040,7 @@
       "strength": "Offers flip-chip, SiP, fan-out, 2.5D and other processes across a global manufacturing footprint, spanning package design through test.",
       "risks": "Large customers, handset and automotive demand, factory utilization, heavy capital spending, geopolitics, material and equipment supply and customer insourcing affect results.",
       "competition": "Amkor names ASE Technology, JCET Group and Powertech Technology as outsourced packaging and test competitors. Their emphasis differs across advanced packaging, conventional assembly and memory testing; they are not interchangeable across every service.",
-      "relationships": "Receives chips from fabless companies and IDMs, uses materials and equipment suppliers to assemble and test them, and returns completed devices to customers."
+      "relationships": "Receives chips from fabless companies and IDMs, uses materials and equipment suppliers to assemble and test them, and returns completed devices to customers. Direct sales to Apple and Qualcomm were 29.8% and 11.1% of FY2025 sales. A June 2026 ten-year TSMC agreement creates a US advanced-packaging and testing procurement framework; Arizona capacity expansion includes planned and developing facilities."
     },
     "maps": {
       "competition": [
@@ -16988,6 +17108,45 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：半導体包装・検査の直接売上29.8%の顧客",
+            "en": "FY2025: direct packaging / test customer, 29.8% of sales"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Qualcomm",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：半導体包装・検査の直接売上11.1%の顧客",
+            "en": "FY2025: direct packaging / test customer, 11.1% of sales"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "QCOM"
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月：米国の先端包装・試験調達を支える10年協業契約",
+            "en": "June 2026: 10-year US advanced-packaging / testing collaboration framework"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "TSM"
         }
       ]
     }
@@ -19135,7 +19294,7 @@
       "FORM"
     ],
     "name": "FormFactor",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Probe cards and systems / Markets / Customers / Competition / Risk factors",
@@ -19148,7 +19307,7 @@
       "strength": "先端ロジック、DRAM・HBM、先端パッケージの微細な接点へ同時に触れ、量産前後の電気特性を高精度で測れる。",
       "risks": "半導体設備投資、大口顧客、メモリー市況、製品認定、複雑な製造歩留まり、買収統合、部品供給に左右される。",
       "competition": "プローブカードではTechnoprobeとMicronics Japan、計測用プローブ・プローブステーションではMPI、温度制御ではAEM、極低温装置ではBlueforsが競合例。FormFactor自身が製品別に実名を挙げている。量産検査用の接触部品と研究・計測用装置は分けて比べる。",
-      "relationships": "半導体工場とテスト会社へ検査用プローブカードと計測装置を供給し、精密部品・材料を外部から調達する。"
+      "relationships": "半導体工場とテスト会社へ検査用プローブカードと計測装置を供給し、精密部品・材料を外部から調達する。 FY2025の自社開示でSK hynix向け売上は22.9%。プローブカード等の顧客関係として表示する。顧客別の全製品内訳や将来の購入数量は示していない。"
     },
     "en": {
       "business": "Makes probe cards whose fine contacts electrically test each die on a wafer plus precision measurement and cryogenic test systems.",
@@ -19156,7 +19315,7 @@
       "strength": "Contacts fine-pitch advanced logic, DRAM and HBM and advanced-packaging devices in parallel to measure electrical performance before and during production.",
       "risks": "Semiconductor capital spending, large customers, memory cycles, qualifications, complex manufacturing yield, acquisition integration and component supply affect results.",
       "competition": "FormFactor names Technoprobe and Micronics Japan in probe cards, MPI in analytical probes and probe stations, AEM in thermal subsystems, and Bluefors in cryogenic systems. Production-test contacts and laboratory measurement equipment are distinct markets.",
-      "relationships": "Supplies test probe cards and measurement tools to wafer fabs and test providers and sources precision components and materials externally."
+      "relationships": "Supplies test probe cards and measurement tools to wafer fabs and test providers and sources precision components and materials externally. FY2025 disclosure attributes 22.9% of sales to SK hynix, a customer for probe cards and related products. The filing does not provide a complete customer-specific product split or future purchase volumes."
     },
     "maps": {
       "competition": [
@@ -19247,6 +19406,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "SK hynix",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：売上22.9%の顧客、プローブカード等を供給",
+            "en": "FY2025: customer representing 22.9% of sales; probe cards and related products"
+          },
+          "sourceIndexes": [
+            0
+          ]
         }
       ]
     }
@@ -19257,11 +19428,15 @@
       "PLAB"
     ],
     "name": "Photronics",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036126036138/plab-20260802.htm",
+        "label": "Photronics — August 2, 2026 Form 10-Q, PDMCX joint venture"
       }
     ],
     "ja": {
@@ -19270,7 +19445,7 @@
       "strength": "微細な回路データを大面積のマスクへ正確に描画し、顧客工場の認定を受けて短納期で量産供給できる。",
       "risks": "半導体・ディスプレー投資、大口顧客、設備の高額化、歩留まり、輸出規制、マスク原板や装置の供給に左右される。",
       "competition": "フォトマスクではTekscend Photomask、Dai Nippon Printing（DNP）、SK-Electronicsなどが競合例。Photronics自身が実名を挙げている。DNPの競合記載は台湾・中国以外が対象で、半導体向けとディスプレー向けでも技術や需要は異なる。",
-      "relationships": "半導体・ディスプレーメーカーへフォトマスクを供給し、マスク原板、描画・検査装置を外部から調達する。"
+      "relationships": "半導体・ディスプレーメーカーへフォトマスクを供給し、マスク原板、描画・検査装置を外部から調達する。 2026年8月2日期の自社開示で、大日本印刷との中国フォトマスク合弁PDMCXを確認。Photronicsは50.01%、大日本印刷側は49.99%を保有し、台湾・中国以外の競合関係と併存する。上場親会社の大日本印刷として表示する。"
     },
     "en": {
       "business": "Makes photomasks, the master templates used to transfer circuit patterns during semiconductor and display manufacturing.",
@@ -19278,7 +19453,7 @@
       "strength": "Writes fine customer circuit data accurately onto large masks, qualifies with fabs and supports production on short delivery cycles.",
       "risks": "Semiconductor and display investment, large customers, costly equipment, yield, export controls and blank or tool supply affect results.",
       "competition": "Photronics names Tekscend Photomask, Dai Nippon Printing and SK-Electronics among photomask rivals. Its DNP competition statement excludes Taiwan and China. Semiconductor and display masks also differ in technology and demand.",
-      "relationships": "Supplies photomasks to semiconductor and display makers and sources mask blanks plus writing and inspection equipment externally."
+      "relationships": "Supplies photomasks to semiconductor and display makers and sources mask blanks plus writing and inspection equipment externally. The August 2, 2026 quarterly filing confirms the Chinese photomask venture PDMCX: Photronics holds 50.01% and the DNP side 49.99%. This coexists with competition outside Taiwan and China; the card represents listed parent Dai Nippon Printing."
     },
     "maps": {
       "competition": [
@@ -19344,6 +19519,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dai Nippon Printing",
+          "role": "partner",
+          "label": {
+            "ja": "2026年8月期開示：大日本印刷と中国PDMCXのフォトマスク合弁",
+            "en": "August 2026 quarter: DNP photomask joint venture PDMCX in China"
+          },
+          "sourceIndexes": [
+            1
           ]
         }
       ]
@@ -20126,7 +20313,7 @@
       "ARW"
     ],
     "name": "Arrow Electronics",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Products and services / Customers / Competition / Risk factors",
@@ -20139,6 +20326,10 @@
       {
         "label": "TD SYNNEX FY2025 Form 10-K · Technology distribution competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm"
+      },
+      {
+        "url": "https://www.arrow.com/globalecs/na/vendors/nvidia/nvidia-information-hub/",
+        "label": "Arrow ECS — NVIDIA distribution portfolio; checked October 16, 2026"
       }
     ],
     "ja": {
@@ -20147,7 +20338,7 @@
       "strength": "多数の仕入先と顧客を結び、部品選定、設計、在庫、物流、IT統合まで一括して支援できる。",
       "risks": "薄い利益率、半導体在庫サイクル、仕入先の販売方針、価格下落、信用損失、運転資金、関税に左右される。",
       "competition": "電子部品の流通ではAvnet、企業向けIT機器・ソフトの流通ではTD SYNNEXが競合例。いずれも相手側の年次報告がArrowを実名で挙げている。部品の在庫・設計支援と、企業ITの販売店向け流通は異なる分野として比べる。",
-      "relationships": "半導体・電子部品・ITメーカーから製品を仕入れ、OEM、受託製造会社、販売店、ITサービス会社へ供給する。"
+      "relationships": "半導体・電子部品・ITメーカーから製品を仕入れ、OEM、受託製造会社、販売店、ITサービス会社へ供給する。 Arrow ECSの公式ページはNVIDIAのGPU、ネットワーク、ソフトウェアの販売・技術支援を明記。流通向けの供給元として表示し、Arrow自身がGPUクラウド容量を購入したという意味にはしない。"
     },
     "en": {
       "business": "A technology distributor that sources semiconductors and components plus servers, cloud and software and delivers them to businesses.",
@@ -20155,7 +20346,7 @@
       "strength": "Connects many suppliers and customers while supporting component selection, design, inventory, logistics and IT integration.",
       "risks": "Thin margins, semiconductor inventory cycles, supplier policies, price declines, credit losses, working capital and tariffs affect results.",
       "competition": "Examples include Avnet in electronic-component distribution and TD SYNNEX in enterprise technology distribution. Both peers explicitly name Arrow in annual filings. Component inventory and design support differ from enterprise IT distribution to resellers.",
-      "relationships": "Buys from semiconductor, component and enterprise-technology vendors and supplies OEMs, contract manufacturers, resellers and service providers."
+      "relationships": "Buys from semiconductor, component and enterprise-technology vendors and supplies OEMs, contract manufacturers, resellers and service providers. Arrow ECS identifies NVIDIA GPUs, networking and software in its distribution and technical-support portfolio. NVIDIA is a distribution supplier; this does not establish Arrow purchasing GPU-cloud capacity."
     },
     "maps": {
       "competition": [
@@ -20212,6 +20403,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "supplier",
+          "label": {
+            "ja": "公式販売ページ：NVIDIAのGPU・ネットワーク・ソフトを流通・支援",
+            "en": "Official distribution page: NVIDIA GPUs, networking and software distribution / support"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -20222,11 +20426,15 @@
       "AVT"
     ],
     "name": "Avnet",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Segments / Products and services / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/8858/000110465926096346/avt-20260627x10k.htm"
+      },
+      {
+        "url": "https://www.avnet.com/integrated/supplier-partners/amd/",
+        "label": "Avnet Integrated — AMD supplier partnership; checked October 16, 2026"
       }
     ],
     "ja": {
@@ -20235,7 +20443,7 @@
       "strength": "量産向けの世界規模の供給網と、Farnellの小口・即納販売を持ち、試作から量産まで同じ顧客を支援できる。",
       "risks": "半導体サイクル、在庫評価損、仕入先契約、価格下落、顧客信用、運転資金、物流と地政学に左右される。",
       "competition": "電子部品の量産向け流通ではArrow Electronics、Farnellの少量・短納期販売ではMouser、Digi-Key、RSが競合例。Avnet自身が年次報告で実名を挙げている。量産調達と試作・小口の通販では顧客の用途や必要なサービスが異なる。",
-      "relationships": "半導体・電子部品メーカーから仕入れ、OEM・受託製造会社・技術者へ部品、設計、供給網サービスを提供する。"
+      "relationships": "半導体・電子部品メーカーから仕入れ、OEM・受託製造会社・技術者へ部品、設計、供給網サービスを提供する。 Avnet Integratedの公式ページはAMDを供給パートナーとして挙げ、EPYCサーバーCPUを用いる設計・統合を支援。製品供給・設計支援の関係で、特定顧客の購入数量や独占性は未開示。"
     },
     "en": {
       "business": "A technology distributor sourcing semiconductors, interconnect, passive and embedded products and selling them with design and procurement support.",
@@ -20243,7 +20451,7 @@
       "strength": "Combines a global production supply chain with Farnell's small-order, quick-delivery channel to support customers from prototype to volume.",
       "risks": "Semiconductor cycles, inventory write-downs, supplier agreements, price declines, customer credit, working capital, logistics and geopolitics affect results.",
       "competition": "Avnet names Arrow Electronics in production component distribution and Mouser, Digi-Key and RS among Farnell’s high-service distribution competitors. Volume sourcing differs from prototype and small-order online procurement.",
-      "relationships": "Sources from semiconductor and component makers and provides parts, design help and supply-chain services to OEMs, manufacturers and engineers."
+      "relationships": "Sources from semiconductor and component makers and provides parts, design help and supply-chain services to OEMs, manufacturers and engineers. Avnet Integrated names AMD as a supplier partner and supports designs and integration using EPYC server CPUs. This identifies product supply and design support, without customer-specific purchase volumes or exclusivity."
     },
     "maps": {
       "competition": [
@@ -20323,6 +20531,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "role": "supplier",
+          "label": {
+            "ja": "公式製品ページ：Avnet IntegratedのAMD EPYCサーバーCPU供給・設計支援",
+            "en": "Official product page: AMD EPYC server CPUs and Avnet Integrated design support"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "AMD"
         }
       ]
     }
@@ -20333,11 +20554,15 @@
       "SANM"
     ],
     "name": "Sanmina",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Q1 Form 10-Q · Markets / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000015/sanm-20251227.htm"
+      },
+      {
+        "url": "https://www.nokia.com/newsroom/first-nokia-buy-america-compliant-products-roll-off-sanmina-manufacturing-line/",
+        "label": "Nokia — Sanmina OLT production, April 24, 2024"
       }
     ],
     "ja": {
@@ -20346,7 +20571,7 @@
       "strength": "高信頼性が必要な複雑製品を、設計、部品製造、組立、試験、供給網、修理まで一貫して支援できる。",
       "risks": "大口顧客と注文変動、薄い利益率、工場稼働率、部品不足、品質、関税、規制産業の認定に左右される。",
       "competition": "電子機器の設計・製造受託ではJabil、Flex、Benchmark Electronicsが競合例。Sanmina自身が四半期報告で実名を挙げている。医療、通信、クラウド機器などでは製造技術や認証条件が異なり、全社がすべての案件を同じ条件で競うわけではない。",
-      "relationships": "幅広い機器メーカーから設計・製造を受託し、半導体、電子部品、金属・樹脂材料を外部から調達する。"
+      "relationships": "幅広い機器メーカーから設計・製造を受託し、半導体、電子部品、金属・樹脂材料を外部から調達する。 Nokiaは2024年4月、米ウィスコンシン州のSanmina生産ラインでBuy America対応の光アクセス向けOLTカードの製造開始を発表。発表対象の米国製品の関係で、現在の全世界向け生産数量は未開示。"
     },
     "en": {
       "business": "Designs and manufactures branded customers' electronics from boards and components through finished systems, repair and logistics.",
@@ -20354,7 +20579,7 @@
       "strength": "Supports complex high-reliability products across design, component fabrication, assembly, test, supply chain and repair.",
       "risks": "Large customers and order changes, thin margins, utilization, shortages, quality, tariffs and regulated-market qualifications affect results.",
       "competition": "Sanmina names Jabil, Flex and Benchmark Electronics among its electronics manufacturing competitors. Medical, communications and cloud products require different technologies and qualifications, so competition differs by program.",
-      "relationships": "Provides design and manufacturing to equipment companies and sources semiconductors, electronic components, metals and resins."
+      "relationships": "Provides design and manufacturing to equipment companies and sources semiconductors, electronic components, metals and resins. Nokia announced in April 2024 that Buy America-compliant optical-access OLT cards had entered production at Sanmina in Wisconsin. This identifies the announced US products, without establishing current worldwide production volumes."
     },
     "maps": {
       "competition": [
@@ -20424,6 +20649,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Nokia",
+          "role": "customer",
+          "label": {
+            "ja": "2024年4月：米国製OLTカードの製造開始をNokiaが公表",
+            "en": "April 2024: Nokia announces US-made OLT cards from Sanmina production"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NOK"
         }
       ]
     }
