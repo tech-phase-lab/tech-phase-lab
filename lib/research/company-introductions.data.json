@@ -3487,6 +3487,18 @@
       {
         "url": "https://www.sec.gov/Archives/edgar/data/831001/000110465926115323/c-ex99d1.htm",
         "label": "Citigroup — October 13, 2026 issuer release, NYSE C identity"
+      },
+      {
+        "url": "https://company.instacart.com/pressreleases/costco-launches-first-same-day-websites-in-france-and-spain-with-instacart",
+        "label": "Instacart / Costco — Storefront Pro and European same-day launch, January 30, 2026; Nasdaq CART / Maplebear identity"
+      },
+      {
+        "url": "https://investor.uber.com/news-events/news/press-release-details/2026/Costco-Expands-Nationwide-Delivery-on-Uber-Eats/default.aspx",
+        "label": "Uber / Costco — US merchandise-delivery expansion, September 16, 2026"
+      },
+      {
+        "url": "https://ir.doordash.com/news/news-details/2026/DoorDash-and-Costco-Expand-Global-Partnership-with-Nationwide-U-S--Launch/default.aspx",
+        "label": "DoorDash / Costco — US Marketplace launch, September 17, 2026"
       }
     ],
     "ja": {
@@ -3495,7 +3507,7 @@
       "strength": "品数を絞った大量仕入れと効率的な物流で低価格を支える。自社ブランドはKirkland Signature。",
       "risks": "薄い商品利益率のため仕入れ・人件費の上昇が響く。会員の継続や価格への信頼も重要。",
       "competition": "Walmart（Sam’s Clubを含む）、BJ’s Wholesale Club、Target、Amazonなどと競合する。倉庫型の会員制店舗ではSam’s ClubやBJ’s、一般の商品販売ではWalmart・Target・Amazonなどが比較対象になる。価格だけでなく品揃えや立地、買い物の便利さでも競争する。",
-      "relationships": "米国ではCitiのCostco Anywhere Visa提携カードとVisaの受入ネットワークを利用する。2015年の契約発表と現在の米国向け支払方法を照合した関係で、Citiは上場親会社Citigroupとして表示する。海外倉庫・オンラインの受入条件は異なり、世界中でVisaだけを受け付けるという意味ではない。"
+      "relationships": "米国ではCitiの提携カードとVisaの決済網を利用する。Instacart（上場名Maplebear、CART）は北米の即日配送・通販基盤に加え2026年1月に仏・西へ協業を拡張。Uber Eatsは同年9月に米国47州への配送拡大、DoorDashは米国全倉庫の会員向け配送開始を発表した。決済条件と配送対象は国・サービスで異なり、これらの提携は出資を意味しない。 Visaだけが世界共通の受入条件という意味ではない。"
     },
     "en": {
       "business": "Runs membership warehouses and online stores selling groceries and everyday goods.",
@@ -3503,7 +3515,7 @@
       "strength": "Limited selection, volume buying and efficient logistics support low prices; Kirkland Signature is its own brand.",
       "risks": "Thin merchandise margins expose earnings to rising costs; membership retention and price trust matter.",
       "competition": "Named rivals include Walmart, including Sam’s Club, BJ’s Wholesale Club, Target and Amazon. Sam’s Club and BJ’s compete in membership warehouse clubs, while Walmart, Target and Amazon also compete in general merchandise retail. The overlap depends on product range, location, price and shopping convenience.",
-      "relationships": "US payment methods include the Citi Costco Anywhere Visa co-brand card and Visa acceptance. The 2015 agreement is checked against current US payment guidance; Citi is represented by listed parent Citigroup. Overseas warehouses and online channels have different acceptance rules, so this is not worldwide Visa-only acceptance."
+      "relationships": "US payments include Citi co-brand cards and Visa acceptance. Instacart, listed as Maplebear / CART, extended its North American same-day delivery and commerce-platform partnership to France and Spain in January 2026. September 2026 announcements expanded Uber Eats delivery to 47 US states and launched DoorDash member delivery across US warehouses. Payment rules and delivery coverage vary by market and service; these partnerships do not establish equity investments. This is not worldwide Visa-only acceptance."
     },
     "maps": {
       "competition": [
@@ -3601,6 +3613,45 @@
             3
           ],
           "ticker": "V"
+        },
+        {
+          "kind": "company",
+          "name": "Instacart",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：北米の即日配送・通販基盤の協業を仏・西の会員向けサイトへ拡張",
+            "en": "January 2026: North American same-day delivery / commerce-platform alliance expanded to French and Spanish member websites"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "CART"
+        },
+        {
+          "kind": "company",
+          "name": "Uber",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：Uber Eatsの商品配送提携を米国47州へ拡大と発表",
+            "en": "September 2026: Uber Eats merchandise-delivery partnership expanded to 47 US states"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "UBER"
+        },
+        {
+          "kind": "company",
+          "name": "DoorDash",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：会員向け商品即日配送を米国全倉庫へ展開と発表",
+            "en": "September 2026: member merchandise same-day delivery launched across US warehouses"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "DASH"
         }
       ]
     }
@@ -8165,6 +8216,26 @@
       {
         "label": "onsemi — NIO collaboration, April 27, 2026",
         "url": "https://investor.onsemi.com/news-releases/news-release-details/onsemi-and-nio-expand-strategic-collaboration-accelerate-next"
+      },
+      {
+        "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-to-integrate-its-silicon-carbide-technology-in-bmw-group-s-next-generation-electric-vehicles",
+        "label": "onsemi — BMW AG EliteSiC supply agreement, March 6, 2023"
+      },
+      {
+        "url": "https://www.bmwgroup.com/en/investor-relations/bmw-shares.html",
+        "label": "BMW AG — current German listing and ordinary-share identity"
+      },
+      {
+        "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-selected-to-power-volkswagen-group-s-next-generation-electric-vehicles",
+        "label": "onsemi — Volkswagen Group multi-year power-box agreement, July 22, 2024"
+      },
+      {
+        "url": "https://www.volkswagen-group.com/en/shares-15791",
+        "label": "Volkswagen AG — current listed-parent share information"
+      },
+      {
+        "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-collaborates-with-nvidia-to-accelerate-transition-to-800-vdc-power-solutions-for-next-generation-ai-data-centers",
+        "label": "onsemi — NVIDIA 800 VDC architecture collaboration, July 29, 2025"
       }
     ],
     "ja": {
@@ -8173,7 +8244,7 @@
       "strength": "シリコン、SiC、GaNの電力変換と車載画像センサーを持ち、設計から製造・パッケージまで一体で最適化できる。",
       "risks": "自動車・産業需要の減速、SiC工場の稼働率、代理店在庫に左右される。2025年には工場再編と在庫処分で大きな費用も計上した。",
       "competition": "電力製品ではInfineonやSTMicroelectronics、アナログではTexas InstrumentsやAnalog Devices、画像ではSonyやSamsungと競う。",
-      "relationships": "NIOとは2026年4月に協業拡大を発表し、EliteSiC M3eによる高電圧EVプラットフォームへの採用を説明した。実名の採用事例であり、他の自動車メーカーへの供給や調達数量は推定しない。"
+      "relationships": "NIOの2026年4月のEliteSiC採用に加え、BMW AGとは2023年3月、Volkswagen AGとは2024年7月にEV駆動系向けSiCの供給契約を発表した。NVIDIAとは2025年7月にAIデータセンターの800VDC電源技術で協業を発表。発表時点の用途・契約範囲を示し、全車種への供給や現在の調達量、出資を意味しない。"
     },
     "en": {
       "business": "Makes power semiconductors for EVs, renewable energy and AI data centers and image sensors for vehicles and factories.",
@@ -8181,7 +8252,7 @@
       "strength": "Combines silicon, SiC and GaN power conversion with automotive imaging and integrates design, manufacturing and packaging.",
       "risks": "Automotive and industrial demand, SiC fab utilization and distributor inventory matter; 2025 also included sizable manufacturing realignment and inventory charges.",
       "competition": "Competes with Infineon and STMicroelectronics in power, Texas Instruments and Analog Devices in analog, and Sony and Samsung in imaging.",
-      "relationships": "An April 2026 announcement expanded collaboration with NIO and described EliteSiC M3e adoption for its higher-voltage EV platforms. This named adoption does not establish supply to other automakers or procurement volumes."
+      "relationships": "Alongside NIO’s April 2026 EliteSiC adoption, onsemi announced EV-drivetrain SiC supply agreements with BMW AG in March 2023 and Volkswagen AG in July 2024. A July 2025 NVIDIA collaboration concerns 800 VDC power technology for AI data centers. These dated scopes do not establish all-model supply, current purchase volumes or equity investment."
     },
     "maps": {
       "competition": [
@@ -8353,6 +8424,45 @@
             1
           ],
           "ticker": "NIO"
+        },
+        {
+          "kind": "company",
+          "name": "BMW AG",
+          "role": "customer",
+          "label": {
+            "ja": "2023年3月発表：EV駆動系向けEliteSiCの長期供給契約",
+            "en": "March 2023 announcement: long-term EliteSiC supply agreement for EV drivetrains"
+          },
+          "sourceIndexes": [
+            2,
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Volkswagen AG",
+          "role": "customer",
+          "label": {
+            "ja": "2024年7月発表：次世代SSP駆動系のSiCパワーボックス供給契約",
+            "en": "July 2024 announcement: SiC power-box supply agreement for next-generation SSP drivetrains"
+          },
+          "sourceIndexes": [
+            4,
+            5
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2025年7月：次世代AIデータセンターの800VDC電源技術で協業",
+            "en": "July 2025: collaboration on 800 VDC power technology for next-generation AI data centers"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "NVDA"
         }
       ]
     }

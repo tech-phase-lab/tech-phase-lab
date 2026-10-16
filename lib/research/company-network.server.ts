@@ -81,7 +81,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "TEAM") return {"6": {"ja": "業務情報・AIエージェント連携", "en": "Work context & AI agent integration"}, "7": {"ja": "案件・開発・IT業務ソフト", "en": "Work, development & IT service software"}};
   if (root === "DT") return {"5": {"ja": "AIインフラの監視エコシステム", "en": "AI infrastructure observability ecosystem"}, "6": {"ja": "監視・分析・クラウド連携", "en": "Observability, analytics & cloud integration"}};
   if (root === "OTEX") return {"6": {"ja": "情報管理・クラウド・AI連携", "en": "Information management, cloud & AI"}, "7": {"ja": "文書・業務アプリ連携", "en": "Content & business application integration"}};
-  if (root === "COST") return {"6": {"ja": "米国の提携カード・決済網", "en": "US co-brand card & payment network"}, "7": {"ja": "会員制小売・総合小売・通販", "en": "Warehouse clubs, general retail & e-commerce"}};
+  if (root === "COST") return {"5": {"ja": "通販基盤・商品の配送提携", "en": "Commerce platforms & merchandise delivery"}, "6": {"ja": "米国の提携カード・決済網", "en": "US co-brand card & payment network"}, "7": {"ja": "会員制小売・総合小売・通販", "en": "Warehouse clubs, general retail & e-commerce"}};
 
   if (root === "CRWD") return {"6": {"ja": "端末・クラウド防御・AI研究協力", "en": "Endpoint / cloud security & AI research"}};
   if (root === "NET") return {"6": {"ja": "配信・安全な接続・AI検索研究", "en": "Delivery, secure access & AI-search research"}};
@@ -108,7 +108,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "AAPL") return { 5: { ja: "端末・PC・スマートフォン", en: "Devices, PCs & smartphones" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
   if (root === "META") return { 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・動画・広告", en: "Social, video & ads" } };
-  if (root === "ON") return { 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "製品を採用する企業", en: "Named product adopters" } };
+  if (root === "ON") return { 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
 
   if (root === "RDDT") return { 6: { ja: "クラウド・AI・データ提携", en: "Cloud, AI & data partnerships" }, 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
   if (root === "PINS") return { 6: { ja: "クラウド・ログイン・広告提携", en: "Cloud, login & ad partnerships" }, 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
@@ -3255,6 +3255,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "画像センサー",
         "en": "Image sensors"
       }
+    },
+    "BMW AG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "BMW｜2023年SiC供給契約",
+        "en": "BMW | 2023 SiC supply agreement"
+      }
+    },
+    "Volkswagen AG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Volkswagen｜2024年SiC供給契約",
+        "en": "Volkswagen | 2024 SiC supply deal"
+      }
+    },
+    "NVDA": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "NVIDIA｜800VDC電源技術の協業",
+        "en": "NVIDIA | 800 VDC power collaboration"
+      }
     }
   },
   "AAPL": {
@@ -4336,6 +4357,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Visa｜米国のカード決済網",
         "en": "Visa | US card-payment network"
+      }
+    },
+    "CART": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Instacart｜通販基盤・即日配送",
+        "en": "Instacart | commerce / same-day delivery"
+      }
+    },
+    "UBER": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Uber Eats｜商品の配送提携",
+        "en": "Uber Eats | merchandise delivery"
+      }
+    },
+    "DASH": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "DoorDash｜会員向け商品配送",
+        "en": "DoorDash | member merchandise delivery"
       }
     }
   }
