@@ -85,7 +85,13 @@ export default function StockDirectory() {
   useEffect(() => {
     if (!selectedResultKey || (!profileLoading && !marketTicker)) return;
     const frame = window.requestAnimationFrame(() => {
-      marketTarget.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const target = marketTarget.current;
+      if (!target) return;
+      const headerBottom = document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
+      window.scrollTo({
+        top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerBottom - 12),
+        behavior: "smooth",
+      });
     });
     return () => window.cancelAnimationFrame(frame);
   }, [marketTicker, profileLoading, selectedResultKey]);

@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 const compiled = ts.transpileModule(readFileSync(new URL('../app/research/stocks/stock-directory.tsx', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
 const entries = [{ ticker:'VS',cik:1,exchange:'NASDAQ',name:'Versus' },{ ticker:'VST',cik:2,exchange:'NYSE',name:'Vistra' }];
 function harness(t, initial='/research/stocks?q=VS') {
-  const saved = { window:globalThis.window, fetch:globalThis.fetch, requestAnimationFrame:globalThis.requestAnimationFrame };
+  const saved = { document:globalThis.document, window:globalThis.window, fetch:globalThis.fetch, requestAnimationFrame:globalThis.requestAnimationFrame };
   const slots=[], effects=[], timers=new Map(), frames=new Map(), stack=[{url:initial,state:null}], requests=[];
   let index=0, cursor=0, dirty=true, tree, timerId=0;
   const hooks={
@@ -19,6 +19,7 @@ function harness(t, initial='/research/stocks?q=VS') {
   };
   const history={get state(){return stack[cursor].state;},replaceState(state,_,url){if(state)state.__NA=true;stack[cursor]={state,url};dirty=true;},pushState(state,_,url){assert.equal(state?.__NA,undefined,'do not reuse a Next.js-decorated replaceState argument');stack.splice(cursor+1);stack.push({state,url});cursor++;dirty=true;},back(){cursor=Math.max(0,cursor-1);dirty=true;},forward(){cursor=Math.min(stack.length-1,cursor+1);dirty=true;}};
   globalThis.window={history,scrollY:620,scrollTo:({top})=>{window.scrollY=top;},setTimeout:fn=>{const id=++timerId;timers.set(id,fn);return id;},clearTimeout:id=>timers.delete(id),requestAnimationFrame:fn=>{const id=++timerId;frames.set(id,fn);return id;},cancelAnimationFrame:id=>frames.delete(id)};
+  globalThis.document={querySelector:()=>({getBoundingClientRect:()=>({bottom:96})})};
   globalThis.requestAnimationFrame=window.requestAnimationFrame;
   globalThis.fetch=url=>new Promise(resolve=>requests.push({url,resolve}));
   const mod={exports:{}};
@@ -33,7 +34,7 @@ function harness(t, initial='/research/stocks?q=VS') {
     return {default:()=>null,MarketWorkspace:()=>null};
   },mod,mod.exports);
   function nodes(node=tree){if(!node||typeof node!=='object')return [];return [node,...[].concat(node.props?.children??[]).flat(Infinity).filter(child=>child!=null).flatMap(child=>nodes(child))];}
-  function render(){for(let count=0;dirty&&count<25;count++){dirty=false;index=0;tree=mod.exports.default();for(const run of effects.splice(0))run();}assert.equal(dirty,false,'render settles');for(const [id,fn] of [...frames]){frames.delete(id);fn();}}
+  function render(){for(let count=0;dirty&&count<25;count++){dirty=false;index=0;tree=mod.exports.default();for(const n of nodes())if(n.type==='div'&&n.props.ref)n.props.ref.current={getBoundingClientRect:()=>({top:500-window.scrollY})};for(const run of effects.splice(0))run();}assert.equal(dirty,false,'render settles');for(const [id,fn] of [...frames]){frames.delete(id);fn();}}
   async function answer(request,data){request.resolve({ok:true,json:async()=>data});await new Promise(r=>setImmediate(r));render();}
   t.after(()=>{Object.assign(globalThis,saved);});
   render();
@@ -44,7 +45,7 @@ test('detail Back restores matches, query and scroll; late profile responses can
  const h=harness(t);await h.runSearch();h.open();assert.match(h.url(),/stock=VST/);assert.equal(h.stack.length,2);
  const profile=h.requests.at(-1);window.scrollY=20;h.history.back();h.render();assert.equal(h.url(),'/research/stocks?q=VS');assert.equal(window.scrollY,620);
  assert.equal(h.nodes().filter(n=>n.type==='button'&&n.props['aria-current']==='true').length,0);
- await h.answer(profile,{ok:true,profile:{ticker:'VST',name:'Vistra',recentFilings:[]}});
+ await h.answer(profile,{ok:true,profile:{ticker:'VST',name:'Vistra',exchange:'NYSE',recentFilings:[]}});
  assert.equal(h.nodes().filter(n=>n.props?.ticker==='VST').length,0);
  h.history.forward();h.render();assert.match(h.requests.at(-1).url,/ticker=VST/);
 });
@@ -56,4 +57,11 @@ test('typing replaces stale URL query, without adding one Back step per keystrok
 test('a directly opened detail restores its selection and can return without leaving the site',async t=>{
  const h=harness(t,stockSearchUrl('VS','VST:2:NYSE'));await h.runSearch();assert.match(h.requests.at(-1).url,/ticker=VST/);
  h.nodes().find(n=>n.type==='button'&&n.props.children==='← 検索結果に戻る').props.onClick();h.render();assert.equal(h.url(),'/research/stocks?q=VS');
+});
+
+test('opening a stock leaves the return control below the fixed header, including after loading',async t=>{
+ const h=harness(t);await h.runSearch();h.open();
+ assert.equal(window.scrollY,392,'detail starts 12px below the 96px header');
+ await h.answer(h.requests.at(-1),{ok:true,profile:{ticker:'VST',name:'Vistra',exchange:'NYSE',recentFilings:[]}});
+ assert.equal(window.scrollY,392,'loaded detail retains the header clearance');
 });

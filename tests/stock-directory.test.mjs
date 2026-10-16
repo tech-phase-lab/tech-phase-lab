@@ -341,7 +341,6 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /useStockHistory/);
   assert.match(page, /検索結果に戻る/);
   assert.match(page, /visibleResults/);
-  assert.match(page, /marketTarget\.current\?\.scrollIntoView\(\{ behavior: "smooth", block: "start" \}\)/);
   assert.match(page, /銘柄情報を読み込み中/);
   assert.match(page, /sourceDrawer/);
   assert.match(polish, /\.mobileTitle\{display:block/);
