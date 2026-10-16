@@ -15116,7 +15116,7 @@
       "ONTO"
     ],
     "name": "Onto Innovation",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Products / Customers / Competition / Risk factors",
@@ -15129,6 +15129,14 @@
       {
         "label": "Nova FY2025 Form 20-F · Metrology competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm"
+      },
+      {
+        "url": "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Receives-Best-Partner-Award-from-SK-hynix-for-Hidden-Defect-Prevention-in-High-Bandwidth-Memory-Production/default.aspx",
+        "label": "Onto Innovation — SK hynix Best Partner Award, October 12, 2026"
+      },
+      {
+        "url": "https://pr.tsmc.com/english/news/3274",
+        "label": "TSMC — 2025 Excellent Performance Awards, November 26, 2025"
       }
     ],
     "ja": {
@@ -15137,7 +15145,7 @@
       "strength": "光学検査、計測、工程データ解析を一体で提供できる。微細化だけでなく、複数チップを組み合わせる先端パッケージにも強い。",
       "risks": "半導体設備投資の波、大口顧客の発注、輸出規制の影響を受ける。新装置の認定遅れや部品不足も売上時期を動かす。",
       "competition": "半導体の検査・計測ではKLA、寸法や薄膜などの計測ではNovaが競合例。両社の年次報告はOnto Innovationを実名で挙げている。欠陥検査、膜厚・寸法計測、先端パッケージなどで比較する装置や用途は異なる。",
-      "relationships": "半導体工場と組立・検査会社へ装置とソフトを供給し、稼働後は保守や部品交換で量産を支える。"
+      "relationships": "半導体工場と組立・検査会社へ装置とソフトを供給し、稼働後は保守や部品交換で量産を支える。 SK hynixとのHBM生産向けDragonfly G5検査協力は2026年10月の自社発表で確認。TSMCも2025年11月にOntoの生産支援を供給者表彰した。表彰対象の関係を示し、特定装置の購入数量は未開示。"
     },
     "en": {
       "business": "Makes inspection and metrology tools and analytics software that find defects and measure dimensions and overlay in semiconductor production, including advanced packaging and specialty devices.",
@@ -15145,7 +15153,7 @@
       "strength": "Combines optical inspection, metrology and process-data analytics, serving both device scaling and multi-chip advanced packaging.",
       "risks": "Semiconductor spending cycles, large-customer orders and export controls affect demand; qualification delays and component shortages can shift revenue timing.",
       "competition": "Examples include KLA in semiconductor inspection and metrology, and Nova in critical-dimension and thin-film metrology. Both explicitly name Onto Innovation in annual filings. Defect inspection, dimensional measurement and packaging applications have different equipment requirements.",
-      "relationships": "Supplies tools and software to wafer fabs and assembly-and-test providers, then supports production through service and replacement parts."
+      "relationships": "Supplies tools and software to wafer fabs and assembly-and-test providers, then supports production through service and replacement parts. An October 2026 company release confirms Dragonfly G5 inspection collaboration with SK hynix in HBM production. TSMC recognized Onto production support in November 2025. These awards establish the disclosed relationships without individual tool purchase volumes."
     },
     "maps": {
       "competition": [
@@ -15202,6 +15210,31 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "SK hynix",
+          "role": "customer",
+          "label": {
+            "ja": "2026年10月：Dragonfly G5によるHBM生産の欠陥検出協力を表彰",
+            "en": "October 2026: Dragonfly G5 HBM production defect-detection collaboration recognized"
+          },
+          "sourceIndexes": [
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "customer",
+          "label": {
+            "ja": "2025年11月：TSMCが生産支援の供給実績を表彰",
+            "en": "November 2025: TSMC recognizes production-support supplier performance"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "TSM"
         }
       ]
     }
@@ -15212,7 +15245,7 @@
       "TER"
     ],
     "name": "Teradyne",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Semiconductor Test / Robotics / Customers / Competition / Risk factors",
@@ -15229,7 +15262,7 @@
       "strength": "複雑なSoCやメモリーを高速に大量検査する装置、長年の導入実績、世界各地の技術支援が強み。ロボットは扱いやすさを重視する。",
       "risks": "半導体の新製品投入と設備投資に売上が左右され、大口顧客への集中もある。ロボット需要の弱さや部品供給、輸出規制も負担になる。",
       "competition": "半導体テスターではAdvantestとCohu、製品試験ではKeysight、ロボットでは協働アームのDoosan Roboticsや自律搬送のOmronが競合例。いずれもTeradyne自身の年次報告に実名がある。半導体、電子機器の試験、工場の搬送では比較する製品が異なる。",
-      "relationships": "半導体メーカーや受託組立・検査会社へテスト装置を供給し、工場や物流現場へ協働・搬送ロボットを販売する。"
+      "relationships": "半導体メーカーや受託組立・検査会社へテスト装置を供給し、工場や物流現場へ協働・搬送ロボットを販売する。 FY2025年次報告書では、FlexにマレーシアでFLEX・J750の製造と試験を委託。Plexusにはマレーシア・タイでFLEX・Magnum、マレーシアでETSを委託する。FLEXはテスト装置の商品名でもあり、供給企業Flexと区別する。"
     },
     "en": {
       "business": "Builds automated equipment that tests semiconductors and electronic products before shipment, and also sells collaborative and autonomous mobile robots.",
@@ -15237,7 +15270,7 @@
       "strength": "Combines high-throughput testing for complex SoCs and memory with a large installed base and global support; its robots emphasize ease of deployment.",
       "risks": "Revenue depends on semiconductor launches and capital spending and is concentrated among major customers; weak robotics demand, component supply and export controls add risk.",
       "competition": "Teradyne names Advantest and Cohu in semiconductor test, Keysight in product test, Doosan Robotics in collaborative arms and Omron in autonomous mobile robots. These are separate test and automation applications.",
-      "relationships": "Supplies testers to chipmakers and outsourced assembly-and-test providers, and sells collaborative and mobile robots into factories and logistics sites."
+      "relationships": "Supplies testers to chipmakers and outsourced assembly-and-test providers, and sells collaborative and mobile robots into factories and logistics sites. Its FY2025 annual report identifies Flex manufacturing and testing FLEX / J750 in Malaysia, and Plexus manufacturing and testing FLEX / Magnum in Malaysia and Thailand and ETS in Malaysia. The FLEX system brand is distinct from supplier Flex."
     },
     "maps": {
       "competition": [
@@ -15330,6 +15363,32 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Flex",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2025：マレーシアでFLEX・J750テスト装置の製造・試験を委託",
+            "en": "FY2025: Malaysian contract manufacturing / testing of FLEX and J750 systems"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "FLEX"
+        },
+        {
+          "kind": "company",
+          "name": "Plexus",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2025：FLEX・Magnum・ETSテスト装置の製造・試験を委託",
+            "en": "FY2025: contract manufacturing / testing of FLEX, Magnum and ETS systems"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "PLXS"
         }
       ]
     }
@@ -15353,7 +15412,7 @@
       "strength": "材料科学、ろ過、流体管理を幅広く持ち、顧客の工程開発段階から品質と純度を作り込める。消耗品が継続収益につながる。",
       "risks": "半導体生産量と設備投資の波、顧客集中、原材料不足、輸出規制の影響を受ける。買収で増えた負債と事業統合も負担。",
       "competition": "Entegris自身は部門別に競合を開示する。Pall（Danaher傘下）は高純度化ソリューション、Merck KGaAのEMD Performance Materialsは材料分野の比較対象。Merck KGaAは米国製薬会社Merck & Co.とは別企業。ろ過・材料・搬送の全製品を互換とせず、製品別に範囲が異なる。",
-      "relationships": "半導体工場と製造装置メーカーへ材料、フィルター、搬送部品を供給し、量産工程の汚染管理を支える。"
+      "relationships": "半導体工場と製造装置メーカーへ材料、フィルター、搬送部品を供給し、量産工程の汚染管理を支える。 FY2025自社開示ではTSMCが売上の16%を占める。半導体材料や汚染管理製品等の顧客であり、顧客別の全製品内訳や将来の最低発注量を示すものではない。"
     },
     "en": {
       "business": "Makes ultra-pure materials, filters and chemical-and-gas delivery components that protect semiconductor processes from microscopic contamination.",
@@ -15361,7 +15420,7 @@
       "strength": "Its breadth across materials science, filtration and fluid management lets it work with customers during process development; consumables create recurring demand.",
       "risks": "Semiconductor output and capital cycles, customer concentration, raw-material constraints and export controls affect results; acquisition debt and integration add pressure.",
       "competition": "Entegris names competitors by segment. Pall, part of Danaher, is an Advanced Purity Solutions peer; Merck KGaA EMD Performance Materials is a Materials Solutions peer. Merck KGaA is distinct from US Merck & Co. Filtration, materials and handling portfolios are not interchangeable across all products.",
-      "relationships": "Supplies materials, filters and delivery components to wafer fabs and equipment makers, supporting contamination control in volume production."
+      "relationships": "Supplies materials, filters and delivery components to wafer fabs and equipment makers, supporting contamination control in volume production. TSMC represented 16% of FY2025 sales, according to company disclosure. This identifies a customer for semiconductor materials and contamination-control products, without a complete customer-specific product split or minimum future orders."
     },
     "maps": {
       "competition": [
@@ -15416,6 +15475,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：材料・汚染管理製品等の顧客、売上16%",
+            "en": "FY2025: materials / contamination-control customer, 16% of sales"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
         }
       ]
     }
@@ -16546,7 +16618,7 @@
       "CAMT"
     ],
     "name": "Camtek",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Products / Markets / Customers / Competition / Risk factors",
@@ -16571,7 +16643,7 @@
       "strength": "一台で2D検査と3D計測を組み合わせ、量産速度を保ちながら複雑なパッケージの欠陥と高さを確認できる。",
       "risks": "設備投資の波、大口顧客、輸出規制、イスラエルの地政学、少数の製造委託先に左右される。装置認定の遅れも売上時期を動かす。",
       "competition": "先端パッケージなどの検査・計測ではOnto InnovationとKLA、計測の一部ではNovaが競合例。NovaはCamtekを実名で挙げている。OntoとKLAは両社の公表装置との比較で、欠陥検査と高さ・寸法計測を区別する。",
-      "relationships": "半導体工場と組立・検査会社へ装置を供給し、外部メーカーから光学・機械・電子部品を調達して組み立てる。"
+      "relationships": "半導体工場と組立・検査会社へ装置を供給し、外部メーカーから光学・機械・電子部品を調達して組み立てる。 自社FY2025年次報告書によると、台湾上場のChroma ATEは2026年3月5日現在でCamtek普通株の16.79%を保有。2019年に締結した三角測量プラットフォームのライセンスを含む技術協力契約も開示する。持分は基準日時点であり、新規の2026年出資と扱わない。"
     },
     "en": {
       "business": "Makes inspection and metrology systems that image semiconductor surfaces to find defects and measure fine dimensions and height, with emphasis on advanced packaging, HBM and compound semiconductors.",
@@ -16579,7 +16651,7 @@
       "strength": "Combines high-throughput 2D inspection and 3D metrology to check defects and height across increasingly complex packages.",
       "risks": "Results depend on fab spending, large customers, export controls, Israeli geopolitical conditions and a limited supplier base; qualification delays can shift revenue timing.",
       "competition": "Examples include Onto Innovation and KLA in advanced-packaging inspection and metrology, and Nova in selected metrology applications. Nova explicitly names Camtek. Onto and KLA are editorial comparisons of disclosed tools, distinguishing defect inspection from dimensional and height measurement.",
-      "relationships": "Supplies systems to wafer fabs and assembly-and-test providers and sources optical, mechanical and electronic components from external manufacturers."
+      "relationships": "Supplies systems to wafer fabs and assembly-and-test providers and sources optical, mechanical and electronic components from external manufacturers. Its FY2025 annual report states that Taiwan-listed Chroma ATE held 16.79% of Camtek ordinary shares on March 5, 2026. It also discloses a 2019 technology-cooperation agreement including triangulation-platform licensing. The dated holding is not a new 2026 investment."
     },
     "maps": {
       "competition": [
@@ -16647,6 +16719,30 @@
           "label": {
             "ja": "装置部品を調達",
             "en": "Optical and equipment components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Chroma ATE",
+          "role": "investor",
+          "label": {
+            "ja": "2026年3月5日現在：Camtek普通株の16.79%を保有",
+            "en": "As of March 5, 2026: holds 16.79% of Camtek ordinary shares"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Chroma ATE",
+          "role": "partner",
+          "label": {
+            "ja": "FY2025開示：三角測量技術のライセンスを含む技術協力契約",
+            "en": "FY2025 disclosure: technology cooperation including triangulation-platform licensing"
           },
           "sourceIndexes": [
             0
@@ -16787,7 +16883,7 @@
       "ACLS"
     ],
     "name": "Axcelis Technologies",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Ion implantation / Customers / Competition / Supply chain / Risk factors",
@@ -16800,7 +16896,7 @@
       "strength": "高電流から高エネルギーまで共通設計のPurionシリーズでカバーし、パワー半導体や成熟工程の量産にも対応する。",
       "risks": "設備投資と中国需要、大口顧客、輸出規制、長い認定期間、少数の重要部品供給元に左右される。",
       "competition": "イオン注入装置ではApplied Materialsが主な競合。Axcelis自身は両社が一通りの注入方式を扱うと説明し、住友重機械イオンテクノロジーと日新イオン機器も実名で挙げている。注入エネルギーや電流、対象材料によって競合する装置は異なる。",
-      "relationships": "半導体メーカーへイオン注入装置を供給し、磁石、電源、真空、制御部品を外部供給元から調達する。"
+      "relationships": "半導体メーカーへイオン注入装置を供給し、磁石、電源、真空、制御部品を外部供給元から調達する。 FY2025自社年次報告書はSMICを主要な中国顧客の一社として実名開示。成熟プロセス工場向け装置の輸出許可を得てきたと説明しており、全用途の無制限な供給や匿名顧客の売上比率をSMICに割り当てることはできない。"
     },
     "en": {
       "business": "Develops and manufactures ion-implantation systems that inject ions into wafers to set semiconductor electrical characteristics.",
@@ -16808,7 +16904,7 @@
       "strength": "Its common-platform Purion family spans high-current through high-energy implantation and serves high-volume power and mature-node production.",
       "risks": "Fab spending and China demand, large customers, export controls, long qualifications and limited sources for critical components affect results.",
       "competition": "Axcelis identifies Applied Materials as its main ion-implant competitor and also names Sumitomo Heavy Industries Ion Technology and Nissin Ion Equipment. Implant energy, current and wafer material determine which tools overlap.",
-      "relationships": "Supplies implantation systems to semiconductor manufacturers and buys magnets, power, vacuum and control components from external suppliers."
+      "relationships": "Supplies implantation systems to semiconductor manufacturers and buys magnets, power, vacuum and control components from external suppliers. Its FY2025 annual report names SMIC as a major Chinese customer and describes licenses obtained for mature-process fabs. This does not establish unrestricted supply for every use or identify SMIC as any anonymous revenue-concentration figure."
     },
     "maps": {
       "competition": [
@@ -16872,6 +16968,18 @@
           "label": {
             "ja": "装置部品を調達",
             "en": "Vacuum and power components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Semiconductor Manufacturing International",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：成熟プロセス工場向けの主要中国顧客、輸出許可条件付き",
+            "en": "FY2025: major Chinese customer for mature-process fabs, subject to export licensing"
           },
           "sourceIndexes": [
             0
@@ -17157,7 +17265,7 @@
       "ASX"
     ],
     "name": "ASE Technology Holding",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · ATM and EMS businesses / Customers / Competition / Risk factors",
@@ -17178,6 +17286,10 @@
       {
         "label": "Flex FY2026 Form 10-K · Manufacturing and cloud/power infrastructure",
         "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm"
+      },
+      {
+        "url": "https://news.siemens.com/nl-nl/siemens-ase-3dblox-for-vipack/",
+        "label": "Siemens — ASE VIPack / 3Dblox collaboration, September 25, 2025"
       }
     ],
     "ja": {
@@ -17186,7 +17298,7 @@
       "strength": "世界最大級の生産規模と、先端パッケージ、テスト、基板・完成品組立を一社でつなげられる工程範囲が強み。",
       "risks": "半導体・電子機器需要、大口顧客、工場稼働率、設備投資、台湾海峡の地政学、為替、電力・水供給に左右される。",
       "competition": "半導体のパッケージ・テスト受託ではAmkor、USIが担う電子機器の設計・製造ではJabilとFlexが競合例。AmkorはASEを実名で列挙。JabilとFlexはUSIおよび各社の公表する製造サービスを比較したもので、半導体後工程と完成機器の製造は区別する。",
-      "relationships": "半導体会社から組立・テストを、電子機器ブランドから基板・完成品製造を受託し、材料・装置会社から生産資材を調達する。"
+      "relationships": "半導体会社から組立・テストを、電子機器ブランドから基板・完成品製造を受託し、材料・装置会社から生産資材を調達する。 Siemensは2025年9月、ASEのVIPack向けにInnovator3D ICを用いた3Dblox設計ワークフローの協業・検証を発表。上場親会社SiemensのEDA技術協力として表示し、工場装置の購入や出資とは区別する。"
     },
     "en": {
       "business": "Provides semiconductor assembly, packaging and test plus electronics manufacturing services for circuit boards and finished devices.",
@@ -17194,7 +17306,7 @@
       "strength": "Combines very large manufacturing scale with advanced packaging, test, board assembly and finished-product manufacturing under one group.",
       "risks": "Semiconductor and electronics demand, large customers, factory utilization, capital spending, Taiwan Strait geopolitics, currencies and power and water availability affect results.",
       "competition": "Examples include Amkor in outsourced semiconductor packaging and test, and Jabil and Flex in the electronics design and manufacturing services provided by ASE subsidiary USI. Amkor explicitly names ASE; the EMS examples are editorial comparisons of disclosed services, separate from chip packaging.",
-      "relationships": "Performs packaging and test for chip companies and board and finished-product manufacturing for electronics brands, sourcing materials and equipment externally."
+      "relationships": "Performs packaging and test for chip companies and board and finished-product manufacturing for electronics brands, sourcing materials and equipment externally. Siemens announced collaboration and validation of 3Dblox workflows using Innovator3D IC for ASE VIPack in September 2025. This is EDA collaboration with listed parent Siemens, distinct from factory-equipment purchasing or equity investment."
     },
     "maps": {
       "competition": [
@@ -17266,6 +17378,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Siemens",
+          "role": "partner",
+          "label": {
+            "ja": "2025年9月：VIPack向け3Dblox・Innovator3D IC設計ワークフロー協業",
+            "en": "September 2025: VIPack 3Dblox / Innovator3D IC design-workflow collaboration"
+          },
+          "sourceIndexes": [
+            5
+          ]
         }
       ]
     }
@@ -17285,6 +17409,10 @@
       {
         "label": "Tower FY2025 Form 20-F · named specialty foundry competition",
         "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm"
+      },
+      {
+        "url": "https://gf.com/news-and-events/news/globalfoundries-and-renesas-expand-partnership-to-accelerate-us-semiconductor-manufacturing/",
+        "label": "GlobalFoundries / Renesas — manufacturing partnership, February 2026"
       }
     ],
     "ja": {
@@ -17293,7 +17421,7 @@
       "strength": "RF、シリコンフォトニクス、FDX、車載など差別化工程と、米欧を含む製造拠点を持ち、長期供給を求める顧客に対応する。",
       "risks": "巨額設備投資と高い固定費、工場稼働率、大口顧客、補助金条件、輸出規制、材料・装置供給、需要予測のずれに左右される。",
       "competition": "半導体の受託生産ではTSMC、UMC、SMIC、特殊工程ではTower Semiconductorなどが競合例。GlobalFoundries自身が実名を挙げている。微細化の最先端をすべて同じ条件で比べるのではなく、RF・電源・車載などで重なる工程と生産能力を比べる。",
-      "relationships": "ファブレス企業とIDMの設計をウエハーに製造し、半導体装置・材料会社から生産設備と材料を調達する。"
+      "relationships": "ファブレス企業とIDMの設計をウエハーに製造し、半導体装置・材料会社から生産設備と材料を調達する。 2026年2月の共同発表は、東証6723のRenesas Electronicsとの製造提携拡大を明記。FDX・BCD・不揮発メモリー等を対象とし、当初のテープアウトは2026年半ばの計画だった。後続確認なしに全計画の製造・提供完了とは扱わない。"
     },
     "en": {
       "business": "Manufactures chips designed by other companies, focusing on differentiated RF, power, automotive and IoT processes rather than leading-edge scaling.",
@@ -17301,7 +17429,7 @@
       "strength": "Offers differentiated RF, silicon photonics, FDX and automotive platforms and a manufacturing footprint that includes the United States and Europe.",
       "risks": "Heavy capital needs and fixed costs, utilization, large customers, subsidy conditions, export controls, equipment and material supply and forecast errors affect results.",
       "competition": "GlobalFoundries explicitly names TSMC, UMC, SMIC and specialty foundry Tower Semiconductor among its competitors. The overlap concerns outsourced wafer manufacturing and available specialty processes for RF, power and automotive applications, rather than equivalence across every leading-edge node.",
-      "relationships": "Fabricates customer designs for fabless companies and IDMs and buys production tools and materials from semiconductor equipment and material suppliers."
+      "relationships": "Fabricates customer designs for fabless companies and IDMs and buys production tools and materials from semiconductor equipment and material suppliers. A February 2026 joint release expands the manufacturing partnership with Renesas Electronics, listed on the Tokyo Stock Exchange as 6723, across FDX, BCD and nonvolatile-memory platforms. Initial tape-outs were planned for mid-2026; this does not confirm completion of the full manufacturing roadmap."
     },
     "maps": {
       "competition": [
@@ -17384,6 +17512,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Renesas Electronics",
+          "role": "customer",
+          "label": {
+            "ja": "2026年2月：FDX・BCD・不揮発メモリー等の製造提携拡大",
+            "en": "February 2026: expanded manufacturing partnership for FDX, BCD and nonvolatile-memory platforms"
+          },
+          "sourceIndexes": [
+            2
+          ]
         }
       ]
     }
@@ -17399,6 +17539,10 @@
       {
         "label": "FY2025 Form 20-F · Specialty analog foundry / Customers / Competition / Fabs / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm"
+      },
+      {
+        "url": "https://ir.towersemi.com/news-releases/news-release-details/tower-semiconductor-teams-nvidia-advance-ai-infrastructure-16t/",
+        "label": "Tower Semiconductor — NVIDIA silicon-photonics collaboration, February 5, 2026"
       }
     ],
     "ja": {
@@ -17407,7 +17551,7 @@
       "strength": "用途別に調整した特殊工程と設計支援を持ち、製品寿命が長いアナログ・RF部品を複数拠点で量産できる。",
       "risks": "工場稼働率、大口顧客、設備投資、イスラエルの地政学、電力・水・材料供給、外貨、工場再編に左右される。",
       "competition": "特殊アナログ工程ではGlobalFoundries、とくにRF工程が競合し、X-FABも競合例。TSMCとUMCは特殊工程を提供する範囲で重なる。いずれもTower自身が実名を挙げており、最先端ロジック工場の全製品と同じ事業だとは扱わない。",
-      "relationships": "ファブレス企業とIDMのアナログ・RF製品を受託生産し、装置・材料会社から工場設備と生産材料を調達する。"
+      "relationships": "ファブレス企業とIDMのアナログ・RF製品を受託生産し、装置・材料会社から工場設備と生産材料を調達する。 2026年2月にNVIDIAとの1.6T光モジュール向けシリコンフォトニクス協業を発表。同じ自社開示はSTMicroelectronicsとのAgrate 300mm工場共有とIntel米ニューメキシコ工場の300mm能力へのアクセスも記載する。協業・工場共有・能力調達を区別し、購入数量や法的合弁・買収を推定しない。"
     },
     "en": {
       "business": "Operates a specialty analog foundry for RF, power, sensors, SiGe, silicon photonics and other differentiated semiconductors.",
@@ -17415,7 +17559,7 @@
       "strength": "Pairs application-specific specialty processes with design support and can manufacture long-lived analog and RF products across multiple sites.",
       "risks": "Fab utilization, large customers, capital spending, Israeli geopolitics, power, water and material supply, currencies and fab restructuring affect results.",
       "competition": "Tower explicitly names GlobalFoundries, particularly in RF, and X-FAB as specialty-foundry competitors. It also names TSMC and UMC where their specialty process offerings overlap. These comparisons do not make Tower equivalent to a leading-edge logic foundry across its entire portfolio.",
-      "relationships": "Fabricates analog and RF designs for fabless companies and IDMs and sources fab tools and production materials from equipment and material suppliers."
+      "relationships": "Fabricates analog and RF designs for fabless companies and IDMs and sources fab tools and production materials from equipment and material suppliers. A February 2026 release announces NVIDIA silicon-photonics collaboration for 1.6T optical modules. It also identifies the shared Agrate 300mm fab with STMicroelectronics and access to Intel New Mexico 300mm capacity. These are distinct collaboration and fabrication-access roles without inferred purchase volumes or equity transactions."
     },
     "maps": {
       "competition": [
@@ -17497,6 +17641,45 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年2月：1.6T光モジュール向けシリコンフォトニクス技術協業",
+            "en": "February 2026: silicon-photonics collaboration for 1.6T optical modules"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "STMicroelectronics",
+          "role": "partner",
+          "label": {
+            "ja": "2026年2月開示：イタリアAgrateの300mm工場を共有",
+            "en": "February 2026 disclosure: shared 300mm Agrate fab in Italy"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "STM"
+        },
+        {
+          "kind": "company",
+          "name": "Intel",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年2月開示：Intel米ニューメキシコ工場の300mm生産能力へアクセス",
+            "en": "February 2026 disclosure: access to a 300mm capacity corridor at Intel New Mexico"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "INTC"
         }
       ]
     }
@@ -20078,7 +20261,7 @@
       "GLW"
     ],
     "name": "Corning",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Products / Customers / Competition / Risk factors",
@@ -20087,6 +20270,10 @@
       {
         "label": "NGK · Corporate name changed in spring 2026",
         "url": "https://www.ngk-global.com/info/message/"
+      },
+      {
+        "url": "https://www.corning.com/emea/en/about-us/news-events/news-releases/2026/01/corning-and-meta-announce-multiyear-up-to-6-billion-agreement-to-accelerate-us-data-center-buildout.html",
+        "label": "Corning / Meta — multiyear optical supply agreement, January 27, 2026"
       }
     ],
     "ja": {
@@ -20095,7 +20282,7 @@
       "strength": "ガラス・セラミック・光学の材料科学と独自製造工程を組み合わせ、顧客仕様の高性能部材を大規模生産できる。",
       "risks": "大口顧客、通信・ディスプレー需要、価格交渉、エネルギー・原材料、工場稼働率、為替と設備投資に左右される。",
       "competition": "光通信ではAmphenol、表示ガラスではAGCや日本電気硝子、排ガス浄化用セラミックではNGK、研究・医療用製品ではThermo FisherやDanaherが競合例。Corningの年次報告が分野別に実名で列挙している。旧・日本ガイシは2026年にNGKへ改称した。",
-      "relationships": "通信・データセンター、端末・表示、自動車・研究機器会社へ材料と部品を供給し、原材料と製造装置を調達する。"
+      "relationships": "通信・データセンター、端末・表示、自動車・研究機器会社へ材料と部品を供給し、原材料と製造装置を調達する。 CorningとMetaは2026年1月、米国データセンター向け光ファイバー・ケーブル・接続製品を複数年で最大60億ドル供給する契約を共同発表。金額は上限であり売上実績ではなく、生産能力拡張も完了済みと断定しない。"
     },
     "en": {
       "business": "Makes optical fiber, display glass, device cover glass and ceramic substrates used for emissions control and other applications.",
@@ -20103,7 +20290,7 @@
       "strength": "Combines glass, ceramic and optical materials science with proprietary processes to mass-produce demanding customer-specific components.",
       "risks": "Large customers, network and display demand, pricing, energy and raw materials, utilization, currency and capital investment affect results.",
       "competition": "Corning names Amphenol in optical communications, AGC and Nippon Electric Glass in display glass, NGK in automotive ceramics, and Thermo Fisher and Danaher in life sciences. Its filing uses NGK’s former name, NGK Insulators; the company renamed itself NGK Corporation in 2026.",
-      "relationships": "Supplies materials and components to network, device, display, auto and life-science customers and sources raw materials and production equipment."
+      "relationships": "Supplies materials and components to network, device, display, auto and life-science customers and sources raw materials and production equipment. Corning and Meta jointly announced a multiyear agreement in January 2026 for up to $6 billion of optical fiber, cable and connectivity for US data centers. The ceiling is not realized revenue, and announced capacity expansion is not assumed complete."
     },
     "maps": {
       "competition": [
@@ -20212,6 +20399,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "role": "customer",
+          "label": {
+            "ja": "2026年1月：米国データセンター向け光接続製品を複数年・最大60億ドル供給",
+            "en": "January 2026: multiyear US data-center optical-connectivity supply agreement, up to $6 billion"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "META"
         }
       ]
     }
@@ -20222,7 +20422,7 @@
       "TEL"
     ],
     "name": "TE Connectivity",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Products / Customers / Competition / Risk factors",
@@ -20231,6 +20431,10 @@
       {
         "label": "TE Connectivity FY2025 Annual Report · Segment competitors",
         "url": "https://www.te.com/content/dam/te-com/documents/about-te/our-company/global/annual-report/te-connectivity-annual-report-2025.pdf"
+      },
+      {
+        "url": "https://www.te.com/en/about-te/news-center/ofc-2023.html",
+        "label": "TE Connectivity — OFC 2023 partner demonstrations, March 8, 2023"
       }
     ],
     "ja": {
@@ -20239,7 +20443,7 @@
       "strength": "厳しい温度・振動・小型化条件に合わせて接続部品を設計し、顧客製品へ認定された部品を世界各地で量産できる。",
       "risks": "自動車・産業需要、顧客プログラム、原材料価格、関税、工場移管、品質、買収統合と販売代理店在庫に左右される。",
       "competition": "接続部品ではAmphenolとMolexが競合例。TE自身の年次報告が輸送・産業の両分野で実名を挙げている。データ機器、自動車、工場などでは用途・認定条件が異なり、全てのコネクターやセンサーで競うわけではない。",
-      "relationships": "自動車・産業・通信機器メーカーへ接続部品を供給し、金属、樹脂、電子部品と製造設備を外部調達する。"
+      "relationships": "自動車・産業・通信機器メーカーへ接続部品を供給し、金属、樹脂、電子部品と製造設備を外部調達する。 TE Connectivityの2023年3月OFC発表は、BroadcomブースでTEの800Gアクティブ電気ケーブルを実演すると明記。発表年を付した技術展示の関係であり、現行の購入契約量や出資を示すものではない。"
     },
     "en": {
       "business": "Makes connectors, sensors and relays that carry power and data in vehicles, factories, aerospace and communications equipment.",
@@ -20247,7 +20451,7 @@
       "strength": "Engineers connections for harsh temperature, vibration and space constraints, qualifies into customer platforms and manufactures globally.",
       "risks": "Auto and industrial demand, customer programs, materials, tariffs, factory transfers, quality, acquisitions and channel inventory affect results.",
       "competition": "TE names Amphenol and Molex among competitors in both transportation and industrial markets. Connectivity requirements differ across data networks, vehicles and factories; this does not equate all connector, sensor and relay products.",
-      "relationships": "Supplies connectivity products to automotive, industrial and communications makers and sources metals, resins, electronics and equipment."
+      "relationships": "Supplies connectivity products to automotive, industrial and communications makers and sources metals, resins, electronics and equipment. TE Connectivity’s March 2023 OFC announcement identifies its 800G active electrical cable demonstration at the Broadcom booth. This dated technology demonstration does not establish current contract volumes or an equity investment."
     },
     "maps": {
       "competition": [
@@ -20303,6 +20507,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "partner",
+          "label": {
+            "ja": "2023年3月：OFCでTEの800G AECをBroadcomブースが実演",
+            "en": "March 2023: Broadcom booth demonstrates TE 800G AEC at OFC"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "AVGO"
         }
       ]
     }

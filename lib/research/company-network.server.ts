@@ -72,6 +72,15 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "TEL") return {"3": {"ja": "接続技術の展示協力", "en": "Connectivity demonstration collaboration"}, "4": {"ja": "コネクター・接続部品", "en": "Connectors & connectivity"}};
+  if (root === "GLW") return {"4": {"ja": "光接続・機能性ガラス・材料", "en": "Optical connectivity, glass & materials"}, "6": {"ja": "光接続製品の顧客", "en": "Optical-connectivity customer"}, "7": {"ja": "研究・医療向け製品", "en": "Laboratory & healthcare products"}};
+  if (root === "TSEM") return {"1": {"ja": "受託製造・工場共有・生産能力調達", "en": "Foundries, shared fab & capacity access"}, "3": {"ja": "シリコンフォトニクスの技術協業", "en": "Silicon-photonics collaboration"}};
+  if (root === "GFS") return {"1": {"ja": "半導体の受託製造", "en": "Semiconductor foundries"}, "3": {"ja": "製造提携の半導体顧客", "en": "Chip customer / manufacturing alliance"}};
+  if (root === "ASX") return {"0": {"ja": "先端包装のEDA設計協業", "en": "Advanced-packaging EDA collaboration"}, "2": {"ja": "半導体の包装・検査", "en": "Semiconductor packaging & test"}, "5": {"ja": "電子機器の製造受託", "en": "Electronics contract manufacturing"}};
+  if (root === "ACLS") return {"0": {"ja": "イオン注入装置", "en": "Ion implantation"}, "1": {"ja": "成熟プロセス工場の顧客", "en": "Mature-process fab customer"}};
+  if (root === "CAMT") return {"0": {"ja": "検査・計測・技術協力・出資元", "en": "Inspection, metrology, technology & investor"}};
+  if (root === "TER") return {"0": {"ja": "半導体・電子機器の試験", "en": "Semiconductor & electronics test"}, "5": {"ja": "テスト装置の製造委託・ロボティクス", "en": "Test-system manufacturing & robotics"}};
+  if (root === "ONTO") return {"0": {"ja": "検査・計測装置", "en": "Inspection & metrology"}, "1": {"ja": "受託製造の顧客", "en": "Foundry customer"}, "2": {"ja": "HBM生産の顧客", "en": "HBM-production customer"}};
   if (root === "ICHR") return {"0": {"ja": "流体システム・精密加工", "en": "Fluid systems & precision machining"}, "1": {"ja": "流体システム等の装置顧客", "en": "Equipment customers for fluid systems / parts"}};
   if (root === "UCTT") return {"0": {"ja": "装置サブシステム・洗浄", "en": "Equipment subsystems & cleaning"}, "1": {"ja": "装置向けサブシステムの顧客", "en": "Equipment-subsystem customers"}};
   if (root === "FORM") return {"0": {"ja": "プローブ・計測・温度制御", "en": "Probes, measurement & thermal control"}, "2": {"ja": "メモリー分野の顧客", "en": "Memory customers"}};
@@ -144,7 +153,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "RDDT") return { 6: { ja: "クラウド・AI・データ提携", en: "Cloud, AI & data partnerships" }, 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
   if (root === "PINS") return { 6: { ja: "クラウド・ログイン・広告提携", en: "Cloud, login & ad partnerships" }, 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
   if (root === "SNAP") return { 6: { ja: "クラウド・OS・配信基盤", en: "Cloud, OS & distribution" }, 7: { ja: "動画・交流・広告", en: "Video, communication & ads" } };
-  if (root === "ENTG") return { 0: { ja: "半導体用の高純度化・材料", en: "Semiconductor purity & materials" } };
+  if (root === "ENTG") return {"0": {"ja": "半導体材料・汚染管理", "en": "Semiconductor materials & purity"}, "1": {"ja": "材料・汚染管理製品の顧客", "en": "Materials / purity customer"}};
   if (root === "MTSI") return { 3: { ja: "RF・光接続・アナログ半導体", en: "RF, optical connectivity & analog" } };
   if (root === "POWI") return { 3: { ja: "電源制御・モーター駆動半導体", en: "Power control & motor-drive chips" } };
   if (root === "ZM") return { 7: { ja: "会議・共同作業・顧客対応", en: "Meetings, collaboration & contact centers" } };
@@ -3038,8 +3047,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "ENTG": {
       "layer": 0,
       "businessLabel": {
-        "ja": "半導体用の高純度化・材料",
-        "en": "Semiconductor purity & materials"
+        "ja": "Entegris｜材料・汚染管理",
+        "en": "Entegris | materials / purity"
       }
     },
     "Pall": {
@@ -3054,6 +3063,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Merck KGaA・電子材料",
         "en": "Merck KGaA electronic materials"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC｜FY2025売上16%の顧客",
+        "en": "TSMC | FY2025 customer, 16%"
       }
     }
   },
@@ -5571,6 +5587,283 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "SK-Electronics | photomasks"
       }
     }
+  },
+  "ONTO": {
+    "ONTO": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Onto｜検査・計測",
+        "en": "Onto | inspection / metrology"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SK hynix｜HBM生産の顧客",
+        "en": "SK hynix | HBM customer"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC｜生産支援の顧客",
+        "en": "TSMC | production-support customer"
+      }
+    }
+  },
+  "TER": {
+    "TER": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Teradyne｜試験・ロボティクス",
+        "en": "Teradyne | test / robotics"
+      }
+    },
+    "FLEX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Flex｜テスト装置の製造委託",
+        "en": "Flex | test-system manufacturer"
+      }
+    },
+    "PLXS": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Plexus｜テスト装置の製造委託",
+        "en": "Plexus | test-system manufacturer"
+      }
+    },
+    "Advantest": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Advantest｜半導体テスト",
+        "en": "Advantest | semiconductor test"
+      }
+    },
+    "COHU": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Cohu｜半導体テスト",
+        "en": "Cohu | semiconductor test"
+      }
+    },
+    "KEYS": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Keysight｜電子計測・試験",
+        "en": "Keysight | electronic test"
+      }
+    },
+    "Doosan Robotics": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Doosan Robotics｜協働ロボット",
+        "en": "Doosan Robotics | cobots"
+      }
+    },
+    "Omron": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Omron｜産業ロボット",
+        "en": "Omron | industrial robots"
+      }
+    }
+  },
+  "CAMT": {
+    "CAMT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Camtek｜検査・計測",
+        "en": "Camtek | inspection / metrology"
+      }
+    },
+    "Chroma ATE": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Chroma｜出資元・技術協力",
+        "en": "Chroma | investor / technology"
+      }
+    }
+  },
+  "ACLS": {
+    "ACLS": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Axcelis｜イオン注入装置",
+        "en": "Axcelis | ion implantation"
+      }
+    },
+    "Semiconductor Manufacturing International": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "SMIC｜成熟プロセスの顧客",
+        "en": "SMIC | mature-process customer"
+      }
+    }
+  },
+  "ASX": {
+    "ASX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "ASE｜包装・検査・製造受託",
+        "en": "ASE | packaging / test / EMS"
+      }
+    },
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor｜包装・検査",
+        "en": "Amkor | packaging / test"
+      }
+    },
+    "JBL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Jabil｜電子機器の製造受託",
+        "en": "Jabil | electronics manufacturing"
+      }
+    },
+    "FLEX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Flex｜電子機器の製造受託",
+        "en": "Flex | electronics manufacturing"
+      }
+    },
+    "Siemens": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Siemens｜VIPack設計の協業",
+        "en": "Siemens | VIPack EDA collaboration"
+      }
+    }
+  },
+  "GFS": {
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries｜半導体受託製造",
+        "en": "GlobalFoundries | foundry"
+      }
+    },
+    "Renesas Electronics": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Renesas｜製造提携の顧客",
+        "en": "Renesas | manufacturing customer"
+      }
+    },
+    "Semiconductor Manufacturing International": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "SMIC｜半導体受託製造",
+        "en": "SMIC | semiconductor foundry"
+      }
+    }
+  },
+  "TSEM": {
+    "TSEM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Tower｜特殊半導体の受託製造",
+        "en": "Tower | specialty foundry"
+      }
+    },
+    "INTC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Intel｜300mm生産能力の調達先",
+        "en": "Intel | 300mm capacity access"
+      }
+    },
+    "STM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "STMicroelectronics｜Agrate工場共有",
+        "en": "STMicroelectronics | shared fab"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜1.6T光技術の協業",
+        "en": "NVIDIA | 1.6T optical collaboration"
+      }
+    }
+  },
+  "GLW": {
+    "GLW": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Corning｜光接続・機能性ガラス",
+        "en": "Corning | optical / glass"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta｜光接続製品の顧客",
+        "en": "Meta | optical-connectivity customer"
+      }
+    },
+    "APH": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Amphenol｜光接続製品",
+        "en": "Amphenol | optical connectivity"
+      }
+    },
+    "AGC": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "AGC｜表示ガラス・特殊材料",
+        "en": "AGC | display glass / materials"
+      }
+    },
+    "Nippon Electric Glass": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "日本電気硝子｜表示ガラス",
+        "en": "Nippon Electric Glass | display glass"
+      }
+    },
+    "NGK Corporation": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "NGK｜自動車用セラミック",
+        "en": "NGK | automotive ceramics"
+      }
+    },
+    "TMO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Thermo Fisher｜研究・医療製品",
+        "en": "Thermo Fisher | lab / healthcare"
+      }
+    },
+    "DHR": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Danaher｜研究・医療製品",
+        "en": "Danaher | lab / healthcare"
+      }
+    }
+  },
+  "TEL": {
+    "TEL": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "TE Connectivity｜接続部品",
+        "en": "TE Connectivity | connectivity"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom｜2023年800G AEC実演",
+        "en": "Broadcom | 2023 800G AEC demo"
+      }
+    }
   }
 };
 
@@ -5634,7 +5927,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
