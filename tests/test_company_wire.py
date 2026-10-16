@@ -161,3 +161,11 @@ class TranslationTests(unittest.TestCase):
         env = {**self.env, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '1'}
         company_wire.translate_once(self.path, transport=self.transport({}), env=env, now_ts=self.now.timestamp())
         self.assertEqual(company_wire.translate_once(self.path, transport=self.transport({}), env=env, now_ts=self.now.timestamp() + 1), 'budget')
+
+
+class JapaneseNameTests(unittest.TestCase):
+    def test_translators_are_told_one_japanese_spelling_for_each_watched_company(self):
+        import headline_translation
+        for text in (company_wire.POLICY, headline_translation.POLICY):
+            self.assertIn('GE Vernova = GEベルノバ', text)
+            self.assertIn('Bloom Energy = ブルーム・エナジー', text)
