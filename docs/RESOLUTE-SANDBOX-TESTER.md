@@ -47,3 +47,31 @@ The latest supplied initial order was independently checked: JPY 7,980 paid at
 2026-10-16 05:27:42 UTC, one active initial grant and one grant audit entry.
 The read-only ledger report did not expose its member ID, so the order-to-tester
 identity match has not yet been independently verified.
+
+## Acceptance update — October 16, 2026 06:05 UTC
+
+This supersedes the earlier pending PRO-payment statements above.
+The owner-only setup completed at 05:52:45 UTC and its read-back succeeded.
+The setup release passed all GitHub checks, including PostgreSQL concurrency.
+The user then completed both PRO renewal flows. Each supplied order was checked
+separately against the actual Sandbox ledger using the read-only verifier:
+
+| Renewal | Paid at (UTC) | Prior expiry / new start (UTC) | New expiry (UTC) |
+| --- | --- | --- | --- |
+| JPY 3,980 / pro | 2026-10-16 05:57:21 | 2027-10-16 05:27:42 | 2028-10-16 05:27:42 |
+| USD 29.00 / pro | 2026-10-16 06:03:40 | 2028-10-16 05:27:42 | 2029-10-16 05:27:42 |
+
+Both orders: paid, product resolute_v1, payment/capture IDs present, exactly one
+active renewal grant and one SANDBOX_ACCESS_GRANTED audit record. Each extends
+from the preceding expiry with no gap. Inspections performed zero writes.
+The verifier does not disclose member IDs; do not claim an independently read
+order-to-Clerk-ID match from this output alone.
+
+Sandbox paid-order coverage now includes Japanese and English launch purchases,
+FREE renewals and PRO renewals. This does not establish live-sale readiness.
+Live entitlement projection, actual email/alert delivery, fixed-link retirement,
+payment-table backup/restore and dispute delivery/reconciliation still need their
+own acceptance evidence. Do not enable live charges, new paid plans or email
+delivery without the applicable authorization. Tester admission and temporary
+PRO qualification expire at their existing configured deadline; setup does not
+extend that deadline. No further purchase is needed for these six price cases.
