@@ -7,6 +7,7 @@ export type NetworkMode = "direct" | "two" | "all";
 // A missing US ticker does not imply private ownership. These names identify
 // listed overseas issuers; unresolved names stay out of the stock map.
 const listedOverseas = new Set([
+  "FOCI Fiber Optic Communications", "Accton Technology",
   "Renesas Electronics",
   "Panasonic Holdings", "CATL", "BMW AG", "Volkswagen AG",
   "BJ's Wholesale Club", "Target", "Avnet", "Arrow Electronics", "Phison", "InnoLight", "RS",

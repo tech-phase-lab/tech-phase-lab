@@ -72,6 +72,17 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "VIAV") return {"0": {"ja": "通信ネットワーク試験", "en": "Network test & validation"}, "3": {"ja": "AI-RAN試験・シミュレーション協業", "en": "AI-RAN testing / simulation collaboration"}, "4": {"ja": "光学材料・特殊光製品", "en": "Optical materials & specialty optics"}};
+  if (root === "MXL") return {"3": {"ja": "接続・通信・信号処理半導体", "en": "Connectivity & signal-processing silicon"}, "5": {"ja": "エッジネットワーク技術協業", "en": "Edge-network collaboration"}};
+  if (root === "LSCC") return {"3": {"ja": "FPGA・物理AIプラットフォーム協業", "en": "FPGAs & physical-AI platform collaboration"}};
+  if (root === "PI") return {"3": {"ja": "RFID半導体・識別技術", "en": "RFID chips & identification"}, "7": {"ja": "RFID製品の採用先", "en": "RFID product adopter"}};
+  if (root === "INDI") return {"1": {"ja": "レーダーSoCの製造技術協業", "en": "Radar-SoC manufacturing collaboration"}, "3": {"ja": "車載レーダー・電源半導体", "en": "Automotive radar & power semiconductors"}};
+  if (root === "AMBA") return {"1": {"ja": "半導体の製造供給元", "en": "Semiconductor foundry supplier"}, "3": {"ja": "エッジAI・車載・映像SoC", "en": "Edge AI, automotive & vision SoCs"}};
+  if (root === "SYNA") return {"3": {"ja": "エッジ半導体・接続・MLコア協業", "en": "Edge silicon, connectivity & ML collaboration"}};
+  if (root === "CRUS") return {"1": {"ja": "ウエハー製造の供給元", "en": "Wafer foundry suppliers"}, "3": {"ja": "音声・制御半導体", "en": "Audio & control semiconductors"}, "7": {"ja": "製造受託会社経由の最終顧客", "en": "End customer via contract manufacturers"}};
+  if (root === "HIMX") return {"3": {"ja": "表示・画像用半導体", "en": "Display & imaging semiconductors"}, "4": {"ja": "CPOの共同開発", "en": "CPO co-development"}};
+  if (root === "STM") return {"3": {"ja": "半導体・車載・電源・センサー", "en": "Semiconductors, automotive, power & sensors"}, "6": {"ja": "データセンター向け半導体の顧客", "en": "Data-center semiconductor customer"}};
+  if (root === "UMC") return {"1": {"ja": "受託製造・12nm開発協業", "en": "Foundries & 12nm development"}};
   if (root === "TEL") return {"3": {"ja": "接続技術の展示協力", "en": "Connectivity demonstration collaboration"}, "4": {"ja": "コネクター・接続部品", "en": "Connectors & connectivity"}};
   if (root === "GLW") return {"4": {"ja": "光接続・機能性ガラス・材料", "en": "Optical connectivity, glass & materials"}, "6": {"ja": "光接続製品の顧客", "en": "Optical-connectivity customer"}, "7": {"ja": "研究・医療向け製品", "en": "Laboratory & healthcare products"}};
   if (root === "TSEM") return {"1": {"ja": "受託製造・工場共有・生産能力調達", "en": "Foundries, shared fab & capacity access"}, "3": {"ja": "シリコンフォトニクスの技術協業", "en": "Silicon-photonics collaboration"}};
@@ -5864,6 +5875,273 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Broadcom | 2023 800G AEC demo"
       }
     }
+  },
+  "UMC": {
+    "UMC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "UMC｜半導体の受託製造",
+        "en": "UMC | semiconductor foundry"
+      }
+    },
+    "INTC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Intel｜12nm開発協業",
+        "en": "Intel | 12nm development"
+      }
+    }
+  },
+  "STM": {
+    "STM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "STMicroelectronics｜半導体",
+        "en": "STMicroelectronics | semiconductors"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon / AWS｜半導体の顧客",
+        "en": "Amazon / AWS | chip customer"
+      }
+    },
+    "Infineon Technologies": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Infineon｜電源・車載半導体",
+        "en": "Infineon | power / automotive"
+      }
+    }
+  },
+  "HIMX": {
+    "HIMX": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Himax｜表示・画像半導体",
+        "en": "Himax | display / imaging"
+      }
+    },
+    "FOCI Fiber Optic Communications": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "FOCI｜CPOの共同開発",
+        "en": "FOCI | CPO co-development"
+      }
+    },
+    "Novatek Microelectronics": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Novatek｜表示半導体",
+        "en": "Novatek | display chips"
+      }
+    },
+    "FocalTech Systems": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "FocalTech｜表示・タッチ",
+        "en": "FocalTech | display / touch"
+      }
+    },
+    "Ilitek": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Ilitek｜表示・タッチ",
+        "en": "Ilitek | display / touch"
+      }
+    }
+  },
+  "CRUS": {
+    "CRUS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Cirrus Logic｜音声・制御半導体",
+        "en": "Cirrus Logic | audio / control"
+      }
+    },
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries｜製造供給元",
+        "en": "GlobalFoundries | wafer supplier"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC｜製造供給元",
+        "en": "TSMC | wafer supplier"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple｜FY2026最終顧客",
+        "en": "Apple | FY2026 end customer"
+      }
+    }
+  },
+  "SYNA": {
+    "SYNA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Synaptics｜エッジAI・接続",
+        "en": "Synaptics | edge AI / connectivity"
+      }
+    },
+    "GOOG": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Google｜MLコア技術協業",
+        "en": "Google | ML-core collaboration"
+      }
+    },
+    "Infineon Technologies": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Infineon｜IoT無線半導体",
+        "en": "Infineon | IoT wireless"
+      }
+    }
+  },
+  "AMBA": {
+    "AMBA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Ambarella｜エッジAI映像SoC",
+        "en": "Ambarella | edge-AI vision SoCs"
+      }
+    },
+    "Samsung": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Samsung｜主要ファウンドリー",
+        "en": "Samsung | principal foundry"
+      }
+    },
+    "Novatek Microelectronics": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Novatek｜映像処理SoC",
+        "en": "Novatek | vision SoCs"
+      }
+    }
+  },
+  "INDI": {
+    "INDI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "indie｜車載半導体",
+        "en": "indie | automotive chips"
+      }
+    },
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries｜22FDX協業",
+        "en": "GlobalFoundries | 22FDX collaboration"
+      }
+    }
+  },
+  "PI": {
+    "PI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Impinj｜RAIN RFID",
+        "en": "Impinj | RAIN RFID"
+      }
+    },
+    "AVY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Avery Dennison｜RFID製品採用",
+        "en": "Avery Dennison | RFID adopter"
+      }
+    }
+  },
+  "LSCC": {
+    "LSCC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Lattice｜低消費電力FPGA",
+        "en": "Lattice | low-power FPGAs"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜Halos開発協業",
+        "en": "NVIDIA | Halos collaboration"
+      }
+    },
+    "Altera": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Altera｜低消費電力FPGA",
+        "en": "Altera | low-power FPGAs"
+      }
+    }
+  },
+  "MXL": {
+    "MXL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "MaxLinear｜接続・通信半導体",
+        "en": "MaxLinear | connectivity silicon"
+      }
+    },
+    "Accton Technology": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Accton / Edgecore｜通信協業",
+        "en": "Accton / Edgecore | networking"
+      }
+    }
+  },
+  "VIAV": {
+    "VIAV": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "VIAVI｜通信試験・光技術",
+        "en": "VIAVI | network test / optics"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA｜AI-RAN共同デモ",
+        "en": "NVIDIA | AI-RAN joint demos"
+      }
+    },
+    "KEYS": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Keysight｜ネットワーク試験",
+        "en": "Keysight | network test"
+      }
+    },
+    "Anritsu": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Anritsu｜通信試験",
+        "en": "Anritsu | network test"
+      }
+    },
+    "CXT": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Crane NXT｜特殊光・認証技術",
+        "en": "Crane NXT | optics / authentication"
+      }
+    },
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Coherent｜特殊光製品",
+        "en": "Coherent | specialty optics"
+      }
+    }
   }
 };
 
@@ -5927,7 +6205,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.

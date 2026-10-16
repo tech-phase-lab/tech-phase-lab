@@ -18195,7 +18195,7 @@
       "UMC"
     ],
     "name": "United Microelectronics",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Foundry services / Technologies / Customers / Competition / Risk factors",
@@ -18216,6 +18216,10 @@
       {
         "label": "TSMC · 28nm foundry process",
         "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_28nm"
+      },
+      {
+        "url": "https://www.umc.com/en/Product/technologies/Index/logic",
+        "label": "UMC — 12nm joint development with Intel; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -18224,7 +18228,7 @@
       "strength": "量産実績の長い成熟工程に加え、組み込み不揮発メモリー、RF、電源管理など用途別の特殊工程を持つ。",
       "risks": "工場稼働率、半導体需要、大口顧客、巨額設備投資、台湾海峡の地政学、輸出規制、電力・水・材料供給に左右される。",
       "competition": "成熟・特殊工程の半導体受託生産ではGlobalFoundries、Tower Semiconductor、TSMCが競合例。前2社は相手側の実名開示とUMCの工程範囲を照合し、TSMCは両社の公表工程を比べた編集上の比較。最先端ロジックの全工程が重なるという意味ではない。",
-      "relationships": "ファブレス企業とIDMの設計を製造し、半導体装置・材料会社から工場設備とウエハー材料を調達する。"
+      "relationships": "ファブレス企業とIDMの設計を製造し、半導体装置・材料会社から工場設備とウエハー材料を調達する。 公式技術ページはIntel Foundryと12nm FinFETを共同開発し、米アリゾナ州Ocotilloでの生産を2027年に予定すると説明。開発協業として表示し、量産開始済みとは扱わない。"
     },
     "en": {
       "business": "A Taiwan-based foundry that manufactures chips designed by other companies, centered on mature and specialty processes such as 22/28 nanometers.",
@@ -18232,7 +18236,7 @@
       "strength": "Pairs long-proven mature-node production with specialty processes for embedded nonvolatile memory, RF, power management and other applications.",
       "risks": "Fab utilization, semiconductor demand, large customers, heavy capital spending, Taiwan Strait geopolitics, export controls and power, water and material supply affect results.",
       "competition": "Examples in mature/specialty wafer manufacturing include GlobalFoundries and Tower, which name UMC in their own filings, and TSMC through an editorial comparison of disclosed process portfolios. UMC’s official process scope is checked separately; leading-edge logic nodes are not assumed equivalent.",
-      "relationships": "Manufactures designs for fabless companies and IDMs and buys fab equipment and wafer materials from semiconductor suppliers."
+      "relationships": "Manufactures designs for fabless companies and IDMs and buys fab equipment and wafer materials from semiconductor suppliers. Its technology page describes joint 12nm FinFET development with Intel Foundry and planned 2027 production at Ocotillo, Arizona. This is development collaboration, without assuming volume production has begun."
     },
     "maps": {
       "competition": [
@@ -18305,6 +18309,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Intel",
+          "role": "partner",
+          "label": {
+            "ja": "公式技術ページ：米アリゾナ向け12nm FinFETを共同開発、量産は2027年予定",
+            "en": "Official technology page: joint 12nm FinFET development for Arizona; production planned in 2027"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "INTC"
         }
       ]
     }
@@ -18315,7 +18332,7 @@
       "STM"
     ],
     "name": "STMicroelectronics",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Product groups / Markets / Manufacturing / Competition / Risk factors",
@@ -18340,6 +18357,10 @@
       {
         "label": "Analog Devices · MEMS inertial sensors",
         "url": "https://www.analog.com/en/product-category/sensors.html"
+      },
+      {
+        "url": "https://newsroom.st.com/media-center/press-item.html/c3385.html",
+        "label": "STMicroelectronics — AWS semiconductor supply / warrants, February 9, 2026"
       }
     ],
     "ja": {
@@ -18348,7 +18369,7 @@
       "strength": "マイコンからSiC電源半導体、MEMSセンサーまで幅広く持ち、設計と自社工場を組み合わせて長期の車載・産業案件に対応する。",
       "risks": "車載・産業需要と顧客在庫、工場稼働率、巨額設備投資、SiC需要、欧州・アジアの生産、輸出規制に左右される。",
       "competition": "車載マイコンではNXP、SiC電力半導体ではInfineonとNavitas、MEMS慣性センサーではAnalog Devicesが競合例。Navitasは相手側の実名開示、他は両社の公表製品を照合した編集上の比較。製品分野ごとに競争相手を分けて示す。",
-      "relationships": "自動車・産業・電子機器メーカーへ半導体を供給し、外部の装置・材料会社と一部ファウンドリーを生産に利用する。"
+      "relationships": "自動車・産業・電子機器メーカーへ半導体を供給し、外部の装置・材料会社と一部ファウンドリーを生産に利用する。 2026年2月の自社発表はAWSへの接続・マイコン・アナログ電源半導体の複数年供給を明記。AWS向け最大2,480万株のワラントは購入支払い等に連動して権利確定する条件付きで、全株式を取得済みとは扱わない。"
     },
     "en": {
       "business": "A European integrated semiconductor manufacturer designing and producing MCUs, analog, power chips and sensors, with emphasis on automotive and industrial markets.",
@@ -18356,7 +18377,7 @@
       "strength": "Spans MCUs, SiC power devices and MEMS sensors and combines design with internal fabs to support long automotive and industrial programs.",
       "risks": "Automotive and industrial demand and inventory, fab utilization, heavy capital spending, SiC demand, European and Asian manufacturing and export controls affect results.",
       "competition": "Examples include NXP in automotive MCUs, Infineon and Navitas in SiC power devices, and Analog Devices in MEMS inertial sensors. Navitas explicitly names ST; the other examples are editorial comparisons of official portfolios. These are separate product scopes, not whole-company equivalence.",
-      "relationships": "Supplies chips to automotive, industrial and electronics manufacturers and uses equipment, material and selected external-foundry partners in production."
+      "relationships": "Supplies chips to automotive, industrial and electronics manufacturers and uses equipment, material and selected external-foundry partners in production. A February 2026 release names AWS semiconductor supply across connectivity, MCUs and analog / power. Warrants for up to 24.8 million shares vest substantially with AWS purchases; the full amount is not assumed exercised or owned."
     },
     "maps": {
       "competition": [
@@ -18442,6 +18463,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "customer",
+          "label": {
+            "ja": "2026年2月：AWS向け接続・マイコン・電源半導体の複数年供給契約",
+            "en": "February 2026: multiyear AWS connectivity, MCU and power-semiconductor supply engagement"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -18452,7 +18486,7 @@
       "HIMX"
     ],
     "name": "Himax Technologies",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Display drivers / Non-driver products / Customers / Manufacturing / Competition / Risk factors",
@@ -18461,6 +18495,10 @@
       {
         "label": "Himax FY2025 annual report · display-driver and in-cell TDDI competitors",
         "url": "https://www.himax.com.tw/wp-content/uploads/2026/06/Himax_2025_Annual_Report.pdf"
+      },
+      {
+        "url": "https://www.himax.com.tw/wp-content/uploads/2026/01/PR-Himax-Confirm-CPO-Collaboration-and-Strategic-Partnership-with-FOCI-Remain-Ongoing-and-Unchanged.pdf",
+        "label": "Himax — FOCI CPO collaboration clarification, January 5, 2026"
       }
     ],
     "ja": {
@@ -18469,7 +18507,7 @@
       "strength": "表示駆動とタッチ制御を一体化した製品、車載向けの長期供給、小型カメラ・光学技術を組み合わせられる。",
       "risks": "ディスプレイ需要と価格、大口顧客、中国市場、外部ファウンドリーと組立会社、在庫調整、製品移行に左右される。",
       "competition": "表示駆動ICと画面内タッチ統合のTDDIではNovatek、FocalTech、Ilitekが競合例。Himax自身が実名を挙げている。テレビ、携帯、車載では重なる製品が異なり、画像センサーやAR用の小型表示まで同じ競争相手だと一括りにしない。",
-      "relationships": "パネル・電子機器メーカーへ表示・画像用半導体を供給し、ウエハー製造と組立・検査を外部会社へ委託する。"
+      "relationships": "パネル・電子機器メーカーへ表示・画像用半導体を供給し、ウエハー製造と組立・検査を外部会社へ委託する。 2026年1月、台湾上場のFOCIとのCPO協業継続を自社が確認。HimaxのWLO技術を用いる初代製品は顧客・協力先による検証段階で、2026年の量産準備が目標。全量産完了や匿名顧客の社名は推定しない。"
     },
     "en": {
       "business": "A fabless company making display-driver ICs that control screen pixels plus touch controllers, image sensors and optical and AI-related chips.",
@@ -18477,7 +18515,7 @@
       "strength": "Combines display driving and touch control, supports long automotive programs and extends into miniature cameras and optics.",
       "risks": "Display demand and pricing, large customers, China exposure, external foundries and assembly providers, inventory corrections and product transitions affect results.",
       "competition": "Himax explicitly names Novatek, FocalTech and Ilitek in display-driver and in-cell TDDI competition. Overlap differs across TV, mobile and automotive products. These examples do not assume identical competitors for image sensors or AR microdisplays.",
-      "relationships": "Supplies display and imaging chips to panel and device makers and outsources wafer fabrication, assembly and test."
+      "relationships": "Supplies display and imaging chips to panel and device makers and outsources wafer fabrication, assembly and test. Himax confirmed continuing CPO collaboration with Taiwan-listed FOCI in January 2026. The first WLO-based solution was undergoing customer / partner validation, targeting production readiness in 2026; completion and unnamed customer identities are not inferred."
     },
     "maps": {
       "competition": [
@@ -18543,6 +18581,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "FOCI Fiber Optic Communications",
+          "role": "partner",
+          "label": {
+            "ja": "2026年1月：WLOを使うCPO共同開発継続、初代製品は検証段階",
+            "en": "January 2026: ongoing WLO-based CPO collaboration; first-generation solution in validation"
+          },
+          "sourceIndexes": [
+            2
           ]
         }
       ]
@@ -18663,7 +18713,7 @@
       "CRUS"
     ],
     "name": "Cirrus Logic",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Audio and mixed-signal products / Customers / Manufacturing / Competition / Risk factors",
@@ -18688,7 +18738,7 @@
       "strength": "低消費電力の音声処理、アンプ、電源・触覚制御を一つの機器向けに統合し、大量生産製品へ深く組み込まれる。",
       "risks": "一社の大口顧客への依存、スマートフォン販売、設計採用の入れ替え、外部製造、在庫、輸出規制に業績が左右される。",
       "competition": "オーディオ用の変換・信号処理ICではAKMとAnalog Devices、音声アンプや触覚制御ではTexas Instrumentsが競合例。Cirrus Logic自身が3社を列挙し、製品分野は各社の公式製品で照合した。全製品で同じ競合がいるわけではない。",
-      "relationships": "電子機器メーカーへ音声・制御用半導体を供給し、ウエハー製造、組立、検査は外部パートナーへ委託する。"
+      "relationships": "電子機器メーカーへ音声・制御用半導体を供給し、ウエハー製造、組立、検査は外部パートナーへ委託する。 FY2026のApple向けは製造受託会社を通じた最終顧客売上で約91%。主要ウエハー供給元はGlobalFoundriesとTSMC。GlobalFoundriesの能力予約・供給契約は暦年2026年までで、製造受託会社との直接売上をApple直接取引と混同しない。"
     },
     "en": {
       "business": "Makes audio chips that process and amplify sound in smartphones and other devices plus high-performance mixed-signal chips for power and haptic control.",
@@ -18696,7 +18746,7 @@
       "strength": "Integrates low-power audio processing, amplification, power and haptic control and becomes deeply designed into high-volume devices.",
       "risks": "Dependence on one major customer, smartphone sales, design-win changes, outsourced manufacturing, inventory and export controls affect results.",
       "competition": "Examples include AKM and Analog Devices in audio conversion and signal-processing ICs, and Texas Instruments in audio amplifiers and haptic drivers. Cirrus Logic names all three; product scopes are checked against official portfolios rather than inferred solely from the broad competitor list.",
-      "relationships": "Supplies audio and control chips to device makers and outsources wafer fabrication, assembly and test."
+      "relationships": "Supplies audio and control chips to device makers and outsources wafer fabrication, assembly and test. Apple was the end customer for about 91% of FY2026 net sales through contract manufacturers. Principal wafer suppliers include GlobalFoundries and TSMC; the GlobalFoundries reservation agreement runs through calendar 2026. End-customer attribution is distinct from direct invoicing."
     },
     "maps": {
       "competition": [
@@ -18768,6 +18818,45 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "customer",
+          "label": {
+            "ja": "FY2026：製造受託会社経由で購入する最終顧客、売上約91%",
+            "en": "FY2026: end customer purchasing through contract manufacturers, about 91% of net sales"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "GlobalFoundries",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2026開示：主要ウエハー供給元、能力予約契約は暦年2026年まで",
+            "en": "FY2026 disclosure: major wafer supplier; capacity reservation agreement runs through calendar 2026"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GFS"
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2026開示：主要ウエハー供給元の一社",
+            "en": "FY2026 disclosure: one of the principal wafer foundry suppliers"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
         }
       ]
     }
@@ -18778,7 +18867,7 @@
       "SYNA"
     ],
     "name": "Synaptics",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Core IoT / Enterprise and automotive / Customers / Manufacturing / Competition / Risk factors",
@@ -18795,6 +18884,14 @@
       {
         "label": "Silicon Labs · Wi-Fi and Bluetooth IoT SoCs",
         "url": "https://www.silabs.com/wireless/wi-fi"
+      },
+      {
+        "url": "https://www.synaptics.com/company/news/synaptics-and-google-collaborate-on-edge-ai-for-the-iot",
+        "label": "Synaptics — Google edge-AI collaboration, January 2, 2025"
+      },
+      {
+        "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-and-synaptics-announce-revised-merger-agreement",
+        "label": "onsemi / Synaptics — amended pending acquisition, October 1, 2026"
       }
     ],
     "ja": {
@@ -18803,7 +18900,7 @@
       "strength": "演算、無線接続、音声・映像、タッチを一つのIoT基盤へまとめ、機器メーカーの設計を簡単にできる。",
       "risks": "IoT・PC需要、大口顧客、販売会社の在庫、外部ファウンドリー、製品移行、価格競争、買収統合に左右される。",
       "competition": "Wi-Fi・BluetoothなどのIoT接続ではTexas InstrumentsのSimpleLink、InfineonのAIROC、Silicon LabsのSiWx製品が競合例。各社の公式製品を照合した編集上の比較。Broadcomからの技術取得・ライセンスと、接続製品での競争を混同しない。",
-      "relationships": "IoT・企業・車載機器メーカーへ半導体とソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
+      "relationships": "IoT・企業・車載機器メーカーへ半導体とソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。 2025年1月、GoogleのMLコアとSynaptics Astraを組み合わせるIoT向けエッジAI協業を発表。Google Cloud容量購入とは区別する。onsemiによる買収契約は2026年10月1日に現金取引へ改定され、完了は2027年半ば予定・承認条件付き。買収完了済みとは扱わない。"
     },
     "en": {
       "business": "Makes low-power processors, Wi-Fi and Bluetooth connectivity, audio, touch and display chips and software for IoT devices.",
@@ -18811,7 +18908,7 @@
       "strength": "Combines compute, wireless connectivity, audio and video and touch into IoT platforms that simplify device design.",
       "risks": "IoT and PC demand, large customers, distributor inventory, external foundries, product transitions, pricing and acquisition integration affect results.",
       "competition": "Examples in IoT Wi-Fi/Bluetooth connectivity include TI SimpleLink, Infineon AIROC and Silicon Labs SiWx products. These are editorial comparisons of official products. Synaptics’ Broadcom asset/licensing transaction is not itself evidence of product competition.",
-      "relationships": "Supplies chips and software to IoT, enterprise and automotive device makers and outsources fabrication and assembly."
+      "relationships": "Supplies chips and software to IoT, enterprise and automotive device makers and outsources fabrication and assembly. The January 2025 Google collaboration combines its ML core with Synaptics Astra for IoT edge AI, rather than cloud-capacity purchasing. The onsemi acquisition agreement was amended to cash on October 1, 2026; closing remains planned for mid-2027, subject to approvals."
     },
     "maps": {
       "competition": [
@@ -18883,6 +18980,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "2025年1月：GoogleのMLコアとAstraを組み合わせるエッジAI技術協業",
+            "en": "January 2025: Google ML-core / Astra edge-AI technology collaboration"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "GOOG"
         }
       ]
     }
@@ -18893,7 +19003,7 @@
       "AMBA"
     ],
     "name": "Ambarella",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Edge AI and video SoCs / Markets / Customers / Manufacturing / Competition / Risk factors",
@@ -18906,7 +19016,7 @@
       "strength": "低消費電力の映像圧縮と独自のCVflow AI演算を組み合わせ、高画質映像と物体認識を一つのチップで処理できる。",
       "risks": "設計採用から量産までの長さ、大口顧客、車載案件の遅延、中国需要、外部ファウンドリー、AI競争に左右される。",
       "competition": "IoT向けの映像・エッジAIではNVIDIA、Qualcomm、Novatek、車載カメラではこれらに加えてMobileyeが競合例。Ambarellaの開示がIoTと車載を分けて実名を挙げている。GPU全般の市場ではなく、カメラ映像の処理・認識に重なる範囲を示す。",
-      "relationships": "カメラ・自動車・ロボットメーカーへAI映像SoCとソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
+      "relationships": "カメラ・自動車・ロボットメーカーへAI映像SoCとソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。 FY2026の自社年次報告書はSamsungを主要ファウンドリーとして明記。半導体製造の供給元であり、Samsung製端末への全製品採用や独占数量を示すものではない。"
     },
     "en": {
       "business": "A fabless chip company making edge-AI SoCs that analyze camera video inside vehicles, security cameras, robots and other devices.",
@@ -18914,7 +19024,7 @@
       "strength": "Combines low-power video compression with proprietary CVflow AI compute to process high-quality video and object recognition on one chip.",
       "risks": "Long design-to-production cycles, large customers, automotive delays, China demand, external foundries and AI competition affect results.",
       "competition": "Ambarella names NVIDIA, Qualcomm and Novatek in IoT video/edge AI, and those companies plus Mobileye in automotive cameras. The overlap concerns camera processing and perception, not the whole GPU market. Its filing distinguishes IoT from automotive competition.",
-      "relationships": "Supplies AI vision SoCs and software to camera, automotive and robotics manufacturers and outsources fabrication and assembly."
+      "relationships": "Supplies AI vision SoCs and software to camera, automotive and robotics manufacturers and outsources fabrication and assembly. Its FY2026 annual report identifies Samsung as its principal foundry supplier. This is fabrication supply, without implying adoption across Samsung devices or exclusive purchase volumes."
     },
     "maps": {
       "competition": [
@@ -18996,6 +19106,18 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Samsung",
+          "role": "supplier",
+          "label": {
+            "ja": "FY2026開示：半導体製造の主要ファウンドリー",
+            "en": "FY2026 disclosure: principal semiconductor foundry supplier"
+          },
+          "sourceIndexes": [
+            0
+          ]
         }
       ]
     }
@@ -19006,7 +19128,7 @@
       "INDI"
     ],
     "name": "indie Semiconductor",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Automotive semiconductors / Products / Customers / Manufacturing / Competition / Risk factors",
@@ -19023,6 +19145,10 @@
       {
         "label": "Monolithic Power Systems · Automotive power management and charging products",
         "url": "https://www.monolithicpower.com/en/products/automotive.html"
+      },
+      {
+        "url": "https://investors.indie.inc/news/news-details/2025/indie-Semiconductor-and-GlobalFoundries-Announce-Strategic-Collaboration-to-Accelerate-Automotive-Radar-Adoption/default.aspx",
+        "label": "indie — GlobalFoundries radar collaboration, March 4, 2025"
       }
     ],
     "ja": {
@@ -19031,7 +19157,7 @@
       "strength": "複数のセンサー、前処理、通信、ソフトを車載品質で組み合わせ、複数年の車種別設計採用に入り込む。",
       "risks": "量産前の設計採用が多く、売上化の遅延や中止、赤字と資金需要、買収統合、大口顧客、外部製造に左右される。",
       "competition": "車載レーダーの半導体ではNXP、車載電源・充電制御ではMonolithic Power Systemsが競合例。indie自身の実名開示と各社の公式製品で範囲を照合した。ADASセンサーと車内の電源機能を分け、縮小中の低付加価値照明へ競争範囲を広げない。",
-      "relationships": "自動車部品会社と車載システムメーカーへ半導体・ソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
+      "relationships": "自動車部品会社と車載システムメーカーへ半導体・ソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。 2025年3月、GlobalFoundriesの22FDXを使う77GHz・120GHzレーダーSoCの開発協業を発表。77GHzの設計採用段階や120GHzの初期サンプルを、全車種への量産採用完了とは扱わない。"
     },
     "en": {
       "business": "A fabless supplier of ADAS radar, vision and lidar technologies plus automotive connectivity and power chips/software. It is reducing lower-value interior lighting and prioritizing sensing and software-enabled platforms.",
@@ -19039,7 +19165,7 @@
       "strength": "Combines automotive-grade sensing, preprocessing, connectivity and software and wins multi-year vehicle-platform designs.",
       "risks": "Many wins precede production, so delays or cancellations, ongoing losses and funding needs, acquisition integration, large customers and outsourced manufacturing affect results.",
       "competition": "NXP is an example in automotive radar chips and Monolithic Power Systems in automotive power/charging controls. indie explicitly names both; official products support the scoped overlap. ADAS sensing and in-cabin power are distinct, while lower-value interior lighting is being reduced.",
-      "relationships": "Supplies chips and software to automotive suppliers and system manufacturers and outsources fabrication, assembly and test."
+      "relationships": "Supplies chips and software to automotive suppliers and system manufacturers and outsources fabrication, assembly and test. A March 2025 announcement covers 77GHz / 120GHz radar-SoC collaboration on GlobalFoundries 22FDX. Design-in and initial samples are distinct from completed volume adoption across vehicles."
     },
     "maps": {
       "competition": [
@@ -19098,6 +19224,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "GlobalFoundries",
+          "role": "partner",
+          "label": {
+            "ja": "2025年3月：22FDX上の77GHz・120GHz車載レーダーSoC開発協業",
+            "en": "March 2025: 22FDX collaboration for 77GHz / 120GHz automotive radar SoCs"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "GFS"
         }
       ]
     }
@@ -19108,7 +19247,7 @@
       "PI"
     ],
     "name": "Impinj",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · RAIN RFID platform / Products / Partners / Competition / Manufacturing / Risk factors",
@@ -19117,6 +19256,10 @@
       {
         "label": "Impinj FY2025 Annual Report · Product-specific competition, printed page 12",
         "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526159065/2026_ars.pdf"
+      },
+      {
+        "url": "https://www.impinj.com/library/partner-solutions/avery-dennison-intelligent-logistics-solutions-opt",
+        "label": "Impinj — Avery Dennison logistics solution; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -19125,7 +19268,7 @@
       "strength": "タグ側とリーダー側の半導体、機器、ソフトを一つの基盤で提供し、大量の物品データを継続的に読み取れる。",
       "risks": "小売・物流の導入速度、大口顧客、タグ価格、在庫変動、外部製造、無線規格、知的財産訴訟に左右される。",
       "competition": "RAIN RFIDのタグ用ICではNXPとAlien Technology、読み取りICではPhychips、タグ試験・生産システムではCISC Semiconductorが競合例。Impinj自身が製品別に実名を記載している。読み取り機器の多くは同社基盤を利用するため、導入先を一律に競合扱いしない。",
-      "relationships": "タグ・ラベル会社へICを供給し、リーダー・ソフトのパートナーを通じて小売、物流、製造現場の物品を接続する。"
+      "relationships": "タグ・ラベル会社へICを供給し、リーダー・ソフトのパートナーを通じて小売、物流、製造現場の物品を接続する。 自社の公式物流事例は、Avery DennisonがImpinjのRFIDタグIC・リーダーIC・リーダーを採用すると明記。製品採用先として表示し、現在の購入量や全物流事業者への直接売上を推測しない。"
     },
     "en": {
       "business": "Makes RAIN RFID endpoint ICs, reader ICs, readers and software that wirelessly identify individual apparel items, parcels, parts and other objects.",
@@ -19133,7 +19276,7 @@
       "strength": "Provides tag-side and reader-side chips, devices and software as one platform that continuously reads data from very large populations of items.",
       "risks": "Retail and logistics adoption, large customers, tag pricing, inventory swings, outsourced manufacturing, radio standards and IP litigation affect results.",
       "competition": "Impinj names NXP and Alien Technology in endpoint/tag ICs, Phychips in reader ICs, and CISC Semiconductor in tag and production systems. Its filing separates these product areas and notes that many reader/gateway suppliers use its platform; customers are not automatically competitors.",
-      "relationships": "Supplies ICs to tag and label companies and uses reader and software partners to connect items across retail, logistics and manufacturing."
+      "relationships": "Supplies ICs to tag and label companies and uses reader and software partners to connect items across retail, logistics and manufacturing. An official logistics case identifies Avery Dennison using Impinj tag ICs, reader ICs and readers. This establishes product adoption without current volumes or inferred direct sales to every logistics operator."
     },
     "maps": {
       "competition": [
@@ -19213,6 +19356,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Avery Dennison",
+          "role": "customer",
+          "label": {
+            "ja": "公式ソリューション事例：RFIDタグIC・リーダーIC・リーダーを採用",
+            "en": "Official solution case: adopts RFID tag ICs, reader ICs and readers"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "AVY"
         }
       ]
     }
@@ -19223,7 +19379,7 @@
       "LSCC"
     ],
     "name": "Lattice Semiconductor",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · FPGAs / Markets / Customers / Manufacturing / Competition / Risk factors",
@@ -19244,6 +19400,10 @@
       {
         "label": "Altera · September 2025 Silver Lake majority investment completed",
         "url": "https://www.altera.com/newsroom/altera-silver-lake"
+      },
+      {
+        "url": "https://www.latticesemi.com/en/About/Newsroom/PressReleases/2026/Lattice-Joins-NVIDIA-Halos-Ecosystem-to-Advance-Safety-for-Physical-AI-with-Holoscan-Sensor-Bridge",
+        "label": "Lattice — NVIDIA Halos participation, March 16, 2026"
       }
     ],
     "ja": {
@@ -19252,7 +19412,7 @@
       "strength": "小型・低消費電力のFPGAに集中し、機器の制御、接続、セキュリティ、エッジAI機能を短期間で変更できる。",
       "risks": "産業・通信需要、大口販売会社、在庫、外部ファウンドリー、製品世代交代、輸出規制、より大規模な競合に左右される。",
       "competition": "低消費電力・小中規模のFPGAではAMDのSpartan・Artix系、MicrochipのPolarFire、AlteraのMAX 10などが競合例。各社の公表製品を照合した編集上の比較。AlteraはSilver Lakeが過半数を取得した会社として表示し、Intelの現在の子会社や独立した上場銘柄としては扱わない。",
-      "relationships": "機器メーカーへFPGA、設計ソフト、IPを供給し、ウエハー製造と組立・検査は外部会社へ委託する。"
+      "relationships": "機器メーカーへFPGA、設計ソフト、IPを供給し、ウエハー製造と組立・検査は外部会社へ委託する。 2026年3月にNVIDIA Halosエコシステム参加を発表し、Holoscan Sensor Bridgeを使う設計開発を計画。参加・開発協業を、全設計の安全認定取得済みやGPU購入契約と混同しない。"
     },
     "en": {
       "business": "A fabless company making low-power FPGAs whose logic can be reprogrammed after purchase, together with design software and IP.",
@@ -19260,7 +19420,7 @@
       "strength": "Focuses on small, low-power FPGAs that let customers quickly change control, connectivity, security and edge-AI functions.",
       "risks": "Industrial and communications demand, major distributors, inventory, external foundries, product transitions, export controls and larger rivals affect results.",
       "competition": "Examples in low-power and small/mid-range programmable logic include AMD Spartan/Artix families, Microchip PolarFire and Altera MAX 10. This is an editorial comparison of official products. Altera is majority-owned by Silver Lake, with Intel retaining a minority stake; no separate public ticker is assigned.",
-      "relationships": "Supplies FPGAs, design software and IP to equipment makers and outsources wafer fabrication, assembly and test."
+      "relationships": "Supplies FPGAs, design software and IP to equipment makers and outsources wafer fabrication, assembly and test. The March 2026 release announces NVIDIA Halos ecosystem participation and planned Holoscan Sensor Bridge designs. Participation and development do not establish completed safety certification for every design or a GPU purchase contract."
     },
     "maps": {
       "competition": [
@@ -19333,6 +19493,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：Halosエコシステム参加とHoloscan Sensor Bridge設計開発計画",
+            "en": "March 2026: Halos ecosystem participation and planned Holoscan Sensor Bridge designs"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
@@ -19343,7 +19516,7 @@
       "MXL"
     ],
     "name": "MaxLinear",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Communications ICs / Markets / Customers / Manufacturing / Competition / Risk factors",
@@ -19364,6 +19537,10 @@
       {
         "label": "Texas Instruments · Power-management products",
         "url": "https://www.ti.com/product-category/power-management/products.html"
+      },
+      {
+        "url": "https://www.maxlinear.com/news/press-releases/2026/maxlinear-and-edgecore-networks-announce-strategic-partnership-to-advance-edge-networks-for-enterpri",
+        "label": "MaxLinear — Edgecore / Accton collaboration, May 26, 2026"
       }
     ],
     "ja": {
@@ -19372,7 +19549,7 @@
       "strength": "RFからデジタル信号処理、ネットワーク、電源までを一つのチップへ統合し、通信機器の部品数と消費電力を減らせる。",
       "risks": "通信設備投資、顧客在庫、大口顧客、中国需要、外部ファウンドリー、価格競争、製品認定の長期化に左右される。",
       "competition": "ブロードバンド用半導体ではBroadcom、Wi-Fi接続ではQualcomm、高速光接続用DSPではCredo、電源管理ICではTexas Instrumentsが競合例。MaxLinear自身が4社を競合として列挙しており、製品ごとの範囲は両社の公表製品を照合した編集上の比較。",
-      "relationships": "通信・ネットワーク機器メーカーへ半導体を供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。"
+      "relationships": "通信・ネットワーク機器メーカーへ半導体を供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。 2026年5月、Accton Technology完全子会社Edgecoreとのエッジネットワーク技術協業を発表。台湾上場親会社Acctonのカードに事業子会社名と役割を明示し、別の非上場会社カードは作らない。発表した開発計画の全面提供完了は推定しない。"
     },
     "en": {
       "business": "A fabless company making RF, analog, DSP, networking and power chips that receive, convert and transmit wired and wireless communications signals.",
@@ -19380,7 +19557,7 @@
       "strength": "Integrates RF, digital signal processing, networking and power functions to reduce component count and power consumption in communications equipment.",
       "risks": "Communications spending, customer inventory, large customers, China demand, external foundries, pricing and long qualifications affect results.",
       "competition": "Examples include Broadcom in broadband chips, Qualcomm in Wi-Fi connectivity, Credo in high-speed optical DSPs and Texas Instruments in power-management ICs. MaxLinear explicitly names all four; the product-specific scopes are editorial comparisons of disclosed portfolios.",
-      "relationships": "Supplies chips to communications and networking equipment makers and outsources fabrication, assembly and test."
+      "relationships": "Supplies chips to communications and networking equipment makers and outsources fabrication, assembly and test. A May 2026 release announces edge-network collaboration with Edgecore, a wholly owned Accton Technology subsidiary. The listed-parent card identifies Edgecore and its role; announced development is not assumed fully delivered."
     },
     "maps": {
       "competition": [
@@ -19466,6 +19643,18 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Accton Technology",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：完全子会社Edgecoreと企業向けエッジネットワーク技術協業",
+            "en": "May 2026: enterprise edge-network collaboration with wholly owned subsidiary Edgecore"
+          },
+          "sourceIndexes": [
+            5
           ]
         }
       ]
@@ -20148,11 +20337,15 @@
       "VIAV"
     ],
     "name": "Viavi Solutions",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Segments / Products / Markets / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm"
+      },
+      {
+        "url": "https://blog.viavisolutions.com/2026/03/01/accelerating-ai-native-networks-with-nvidia-ai-ran-platforms/",
+        "label": "VIAVI — NVIDIA AI-RAN demonstrations, March 1, 2026"
       }
     ],
     "ja": {
@@ -20161,7 +20354,7 @@
       "strength": "高速通信を現場から研究所まで測る技術と、精密な光学・色制御、測位・時刻技術を複数市場へ展開できる。",
       "risks": "通信設備投資、顧客集中、買収統合、政府予算、部品供給、製品移行、輸出規制と工場稼働率に左右される。",
       "competition": "通信網の試験・監視ではKeysightとAnritsu、紙幣などの偽造防止技術ではCrane NXT、受動光部品ではCoherentが競合例。VIAVI自身の開示を製品別に整理しており、通信計測と特殊光学部材を同じ市場として扱わない。",
-      "relationships": "通信・データセンター、航空宇宙防衛、偽造防止・表示機器会社へ測定装置や光学部材を供給し、電子・光学部品を調達する。"
+      "relationships": "通信・データセンター、航空宇宙防衛、偽造防止・表示機器会社へ測定装置や光学部材を供給し、電子・光学部品を調達する。 2026年3月の自社記事はNVIDIAとのAI-RAN試験・シミュレーションの共同デモを発表。TM500やTeraVMとNVIDIA基盤を組み合わせる技術協力で、NVIDIAからの調達量やVIAVIへの出資を示すものではない。"
     },
     "en": {
       "business": "Makes network test and assurance tools, positioning and timing products, and specialty optics for security and display uses.",
@@ -20169,7 +20362,7 @@
       "strength": "Combines field-to-lab high-speed network measurement with precision optical, color, positioning and timing technologies across markets.",
       "risks": "Telecom spending, customer concentration, acquisition integration, government budgets, components, transitions, export controls and utilization affect results.",
       "competition": "VIAVI names Keysight and Anritsu in network test and monitoring, Crane NXT in anti-counterfeiting technologies, and Coherent in passive optical components. These examples separate network measurement from optical security and components; they are not an exhaustive list.",
-      "relationships": "Supplies test systems and optics to communications, data-center, defense and secure-document or display customers and sources optical-electronic parts."
+      "relationships": "Supplies test systems and optics to communications, data-center, defense and secure-document or display customers and sources optical-electronic parts. A March 2026 company article announces NVIDIA joint AI-RAN test and simulation demonstrations using TM500 / TeraVM and NVIDIA platforms. This is technical collaboration without inferred procurement volumes or investment."
     },
     "maps": {
       "competition": [
@@ -20251,6 +20444,19 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：MWCのAI-RAN試験・デジタルツイン共同デモを発表",
+            "en": "March 2026: announced joint MWC AI-RAN testing / digital-twin demonstrations"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NVDA"
         }
       ]
     }
