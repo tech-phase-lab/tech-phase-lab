@@ -340,3 +340,12 @@ class FactualValidationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MixedDirectionHeadlineTests(unittest.TestCase):
+    def test_a_headline_with_two_stocks_moving_opposite_ways_is_accepted_with_either_wording(self):
+        validation.validate_semantics('PC向けチップでインテルとAMDが下落する中、エヌビディアは0.4%上昇',
+                                      'Nvidia Rises 0.4% as Intel, AMD Slide on PC Chip')
+        for ja, en in (('インテル株は決算後に下落', 'Intel shares rise after earnings'), ('AMD、見通しを受けて上昇', 'AMD slides after guidance')):
+            with self.assertRaises(ValueError):
+                validation.validate_semantics(ja, en)
