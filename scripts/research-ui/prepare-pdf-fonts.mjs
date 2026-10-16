@@ -15,3 +15,9 @@ for (const block of css.matchAll(/@font-face\s*\{([^}]+)\}/g)) {
 await copyFile(path.join(source, 'LICENSE'), path.join(target, 'LICENSE'));
 await writeFile(path.join(target, 'manifest.json'), JSON.stringify(manifest));
 console.log(`Prepared ${manifest.length} local PDF font subsets`);
+
+const viewer = path.resolve('public/research-pdf-viewer');
+await mkdir(viewer, { recursive: true });
+const { version } = JSON.parse(await readFile('node_modules/pdfjs-dist/package.json', 'utf8'));
+await copyFile('node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs', path.join(viewer, `pdf.worker-${version}.min.mjs`));
+await copyFile('node_modules/pdfjs-dist/LICENSE', path.join(viewer, 'LICENSE'));

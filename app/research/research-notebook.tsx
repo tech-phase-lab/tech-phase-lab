@@ -1,9 +1,9 @@
 "use client";
 
-import { Children, cloneElement, isValidElement, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Children, cloneElement, isValidElement, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { eraseAnnotationRanges, inkColors, markedSegments, maxAnnotations, parseAnnotations, textBlockId, type Annotation, type InkColor, type InkKind, type InkPart } from "@/lib/research/annotations";
 import styles from "./research-notebook.module.css";
-import { saveNotebookPdf } from "@/lib/research/save-notebook-pdf";
+import NotebookPdfPreview, { type PdfSnapshot } from "./notebook-pdf-preview";
 import { mergeSavedDocuments } from "@/lib/research/saved-document";
 
 function inkStyle(mark: Annotation): CSSProperties {
@@ -89,12 +89,8 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
   const [draft, setDraft] = useState<{ id?: string; original?: string; parts: InkPart[]; text: string } | null>(null);
   const [history, setHistory] = useState<{ before: Annotation[]; after: Annotation[] }[]>([]);
   const [error, setError] = useState("");
-  const [pdfRetry, setPdfRetry] = useState(0);
-  const [pdfSharing, setPdfSharing] = useState(false);
-  const pdfKey = useMemo(() => ({ raw, visible, title, lang, children, enabled, pdfRetry }), [raw, visible, title, lang, children, enabled, pdfRetry]);
-  const [pdfResult, setPdfResult] = useState<{ key: object; file?: File; url?: string; failed?: boolean } | null>(null);
-  const pdfReady = pdfResult?.key === pdfKey && !!pdfResult.file;
-  const pdfFailed = pdfResult?.key === pdfKey && pdfResult.failed;
+  const [pdfPreview, setPdfPreview] = useState<PdfSnapshot | null>(null);
+  const closePdfPreview = useCallback(() => setPdfPreview(null), []);
   const draftConflict = Boolean(draft?.id && JSON.stringify(marks.find(mark => mark.id === draft.id)) !== draft.original);
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDetailsElement>(null);
@@ -219,40 +215,18 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
     savedRange.current = range;
     restoreSelection();
   }
-  useEffect(() => {
-    if (!enabled) return;
-    let cancelled = false;
-    let url: string | undefined;
-    // Prepare before the tap: file sharing must run within the user's gesture.
-    // A new article, language or annotation invalidates the previous PDF immediately.
-    const timer = setTimeout(async () => {
-      try {
-        const { generateNotebookPdf } = await import("@/lib/research/notebook-pdf-browser");
-        if (cancelled || !root.current) return;
-        const blocks = new Map(Array.from(root.current.querySelectorAll<HTMLElement>("[data-ink-block]")).map(el => [el.dataset.inkBlock!, el.textContent ?? ""]));
-        const matching = visible ? marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote)) : [];
-        const blob = await generateNotebookPdf(root.current, matching, title, lang);
-        if (cancelled) return;
-        const file = new File([blob], `Tech-Phase-${title.replace(/[\\/:*?"<>|]/g, "").slice(0, 80)}.pdf`, { type: "application/pdf" });
-        url = URL.createObjectURL(file);
-        setPdfResult({ key: pdfKey, file, url });
-      } catch { if (!cancelled) setPdfResult({ key: pdfKey, failed: true }); }
-    }, 250);
-    return () => { cancelled = true; clearTimeout(timer); if (url) URL.revokeObjectURL(url); };
-  }, [pdfKey, enabled, marks, visible, title, lang]);
   return <div className={styles.notebook} data-enabled={enabled}>
+    {pdfPreview && <NotebookPdfPreview snapshot={pdfPreview} onClose={closePdfPreview} />}
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
         <button className={styles.writeAction} aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("書き込む", "Annotate")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><path d="m16 3 5 5-12 12-6 1 1-6L16 3ZM13 6l5 5M4 15l5 5" /></svg></button>
-        <button disabled={(!pdfReady && !pdfFailed) || pdfSharing} onClick={async () => {
-          setError("");
-          if (pdfFailed) { setPdfRetry(value => value + 1); return; }
-          if (!pdfReady || !pdfResult?.file || !pdfResult.url) return;
-          setPdfSharing(true);
-          try { await saveNotebookPdf(pdfResult.file, pdfResult.url, title); }
-          catch (error) { if (!(error instanceof DOMException && error.name === "AbortError")) setError(t("PDFを保存できませんでした。もう一度お試しください。", "Could not save the PDF. Please try again.")); }
-          finally { setPdfSharing(false); }
-        }}>{pdfFailed ? t("PDF再試行", "Retry PDF") : !pdfReady ? t("PDF準備中…", "Preparing PDF…") : t("PDF保存", "Save PDF")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2" /><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h5" /></svg></button>
+        <button onClick={() => {
+          if (!root.current) return;
+          const blocks = new Map(Array.from(root.current.querySelectorAll<HTMLElement>("[data-ink-block]")).map(el => [el.dataset.inkBlock!, el.textContent ?? ""]));
+          const matching = visible ? marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote)) : [];
+          setEditing(false);
+          setPdfPreview({ content: root.current.cloneNode(true) as HTMLElement, marks: matching, title, lang });
+        }}>{t("PDF保存", "Save PDF")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2" /><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h5" /></svg></button>
         {marks.length > 0 && <details className={styles.moreActions}>
           <summary>{t("その他", "More")} <span aria-hidden="true">⋯</span></summary>
           <div>

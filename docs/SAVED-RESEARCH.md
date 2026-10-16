@@ -145,3 +145,9 @@
 - Replaced the extra Download PDF / Save / Share row with one Save PDF action. The currently rendered article is prepared locally in advance, so file-capable browsers enter native sharing directly from the tap. Cancellation leaves the article and scroll position intact. Other browsers download with a separate-tab target, never replacing the research page or invoking print.
 - Article/language/annotation/visibility changes immediately invalidate the prepared file; obsolete generation results are discarded and object URLs released. Preparation errors offer retry on the same button. Real iPhone share-sheet behavior remains a physical-device check.
 - Initial account loading uses one quiet article placeholder instead of duplicate checking messages and a misleading zero count. Authentication, no-store fetches, account isolation and saved-data writes are unchanged; the initial network wait is not represented as eliminated.
+
+## 2026-10-16: inspect the actual PDF before saving
+- Save PDF now opens a full-screen in-page preview with Close and Save in its fixed header. Generation starts only after the action, never when opening an article. The article button keeps its normal label.
+- PDF.js renders the exact generated PDF, including real pagination and annotations; every page is available in the scrollable preview with a page count. Only canvases near the viewport are retained to limit phone memory. The viewer and versioned worker are loaded on demand and hosted locally.
+- Native file sharing/download requires an explicit Save click after a preview page has rendered. There is no automatic print or share call. Close/Escape restores the underlying article and scroll position; failures offer a retry. The preview uses a snapshot captured on opening, and is discarded with the notebook when changing account/article/language.
+- Physical iPhone preview/share verification is separate from browser and automated checks.

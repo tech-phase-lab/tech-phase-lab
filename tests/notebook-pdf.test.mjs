@@ -35,3 +35,22 @@ test('English PDF includes clickable source links and rejects missing fonts', as
   assert.equal(pdf.catalog.get(PDFName.of('Lang')).decodeText(), 'en-US');
   await assert.rejects(createNotebookPdf(blocks, 'Research', manifest, async () => {throw new Error('unavailable');}), /unavailable/);
 });
+
+test('the preview reader renders the same Japanese PDF and pagination that will be saved', async () => {
+  const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  const { createCanvas } = await import('@napi-rs/canvas');
+  const bytes = await createNotebookPdf([{ runs: [{ text: '保存前に確認する日本語のメモ。' }] }], 'Preview', manifest, load);
+  const loading = getDocument({ data: new Uint8Array(bytes), useWasm: false, disableFontFace: true });
+  try {
+    const preview = await loading.promise;
+    const saved = await PDFDocument.load(bytes);
+    assert.equal(preview.numPages, saved.getPageCount());
+    const page = await preview.getPage(1);
+    const text = (await page.getTextContent()).items.map(item => item.str).join('');
+    assert.match(text, /保存前に確認する日本語のメモ/);
+    const viewport = page.getViewport({ scale: 1 });
+    const canvas = createCanvas(viewport.width, viewport.height);
+    await page.render({ canvas, canvasContext: canvas.getContext('2d'), viewport }).promise;
+    assert.ok(canvas.toBuffer('image/png').length > 1000);
+  } finally { await loading.destroy(); }
+});

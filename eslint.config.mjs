@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "public/intro/viewer.js",
+    "public/research-pdf-viewer/**", // Generated third-party PDF.js worker.
     "next-env.d.ts",
   ]),
 ]);
