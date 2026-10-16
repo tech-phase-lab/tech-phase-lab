@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 166 issuers with published competitor corrections and 0 remaining
+records 176 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -703,3 +703,9 @@ Switches, retimers, active electrical cables, network packet brokers, power/cool
 Reviewed SIMO / AAOI / GEV / IREN / LRCX / KLAC / SMCI / CSCO (8 existing records) plus AMAT / CDNS selected-map layout follow-ups. Earlier named competitors are retained. Supermicro's earlier prose names Foxconn and Quanta now also appear on its map. No new issuers or non-competition relationships were added. Controller chips are distinguished from NAND itself; datacom transceivers from CATV equipment; generation, wind and grid automation from one another; GPU cloud from mining; and network equipment from endpoint defense and web meetings. Named-company disclosures and editorial product matching are distinguished.
 
 AMAT and CDNS competitors now share the selected company's existing process/design layer. LRCX/KLAC likewise use their existing equipment layer. ASML-related KLA competition concerns metrology/inspection, not equivalent EUV exposure tools. Only selected-map contexts change; global categories and the frozen NVDA graph remain unchanged. Eight new coverage records bring the correction log to 166, with 49 outside the log still requiring triage rather than automatic repair. Additional products and counterpart leads remain open. Reviewed 2026-10-16.
+
+## 2026-10-16 · cloud, software, embedded, networking and platform coverage review
+
+Reviewed CRWV / ORCL / PANW / NOW / NXPI / MPWR / CIEN / FTNT / UBER / APP (10 existing records). Earlier map names and prose names SAP, Infineon, ZTE, Microsoft and Unity remain represented. Official products refine scoped comparisons: GPU cloud differs from applications/databases; automotive Ethernet from general chips; PMICs from CPUs/memory; optical systems from components; advertising from game engines; ride-hailing from delivery/freight. Own named disclosures and editorial product comparisons are distinguished, including CRWV whose filing does not individually name the four retained hyperscalers.
+
+Selected-map captions/layers follow the compared products; corporate global categories and all other facts stay intact. Internal workflows, public transit and direct merchant orders remain real alternatives in prose. Ten new coverage records bring the correction log to 176, with 39 outside the log requiring triage, not automatic repair. ON source retrieval is deferred in the research record rather than presented as verified. No new issuers or non-competition relationships were added. Product-scope/counterpart audits remain open. Reviewed 2026-10-16.

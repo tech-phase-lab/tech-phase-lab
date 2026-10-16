@@ -4673,11 +4673,31 @@
       "CRWV"
     ],
     "name": "CoreWeave",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Platform / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm"
+      },
+      {
+        "label": "CoreWeave · GPU compute",
+        "url": "https://coreweave.com/products/gpu-compute"
+      },
+      {
+        "label": "AWS · EC2 P5 GPU compute",
+        "url": "https://aws.amazon.com/ec2/instance-types/p5/"
+      },
+      {
+        "label": "Google Cloud · Compute Engine GPUs",
+        "url": "https://docs.cloud.google.com/compute/docs/gpus/"
+      },
+      {
+        "label": "Microsoft Azure · NVIDIA GPU compute",
+        "url": "https://learn.microsoft.com/en-us/azure/virtual-machines/accelerator-technologies/cuda-overview"
+      },
+      {
+        "label": "Oracle Cloud · GPU compute",
+        "url": "https://www.oracle.com/cloud/compute/gpu/"
       }
     ],
     "ja": {
@@ -4685,7 +4705,7 @@
       "revenue": "GPU計算能力、保存容量、ネットワーク、関連ソフトを主に複数年契約で提供し、利用料を受け取る。",
       "strength": "NVIDIAの新しいGPUを大規模に早く導入し、AI処理向けに設備と運用ソフトをまとめて最適化する。",
       "risks": "設備建設に巨額の資金と電力が必要で、2025年はMicrosoftへの売上集中も大きい。GPU調達やデータセンター完成の遅れも契約履行を脅かす。",
-      "competition": "AWS、Google Cloud、Microsoft Azure、Oracleなどの大手クラウドと、AI計算に特化したクラウド各社が競合。",
+      "competition": "CoreWeave自身の開示は大手クラウドと専門クラウドの競争を説明する。公式GPU製品を照合した編集上の比較例はAWS EC2、Google Cloud、Microsoft Azure、Oracle Cloud。専用容量契約と一般向けGPUインスタンスでは運用条件が異なる。Microsoftへの設備提供とAzureとの競争は併存する。",
       "relationships": "NVIDIAのGPUを採用。Microsoft、Meta、OpenAIとは開示済みの契約に基づきAI計算設備を提供する。"
     },
     "en": {
@@ -4693,7 +4713,7 @@
       "revenue": "Provides GPU compute, storage, networking and software mainly through multi-year capacity contracts.",
       "strength": "Deploys new NVIDIA architectures quickly and optimizes both infrastructure and software for large AI workloads.",
       "risks": "The model requires heavy capital and power, 2025 revenue was highly concentrated in Microsoft, and GPU or construction delays can hinder contracts.",
-      "competition": "Competes with AWS, Google Cloud, Microsoft Azure, Oracle and other specialized AI clouds.",
+      "competition": "CoreWeave describes competition from hyperscalers and specialized clouds. Editorial comparisons of official GPU services include AWS EC2, Google Cloud, Microsoft Azure and Oracle Cloud. Dedicated-capacity contracts and general GPU instances differ in operating terms. Microsoft capacity sales coexist with Azure competition.",
       "relationships": "Uses NVIDIA GPUs and provides contracted AI capacity to Microsoft, Meta and OpenAI."
     },
     "maps": {
@@ -4701,54 +4721,58 @@
         {
           "kind": "company",
           "name": "Amazon / AWS",
-          "ticker": "AMZN",
           "role": "competitor",
           "label": {
-            "ja": "AIクラウドで競合",
-            "en": "AI cloud"
+            "ja": "EC2 GPU計算。公式製品の編集比較",
+            "en": "EC2 GPU compute; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            1,
+            2
+          ],
+          "ticker": "AMZN"
         },
         {
           "kind": "company",
           "name": "Google Cloud",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "AIクラウドで競合",
-            "en": "AI cloud"
+            "ja": "GPU計算。公式製品の編集比較",
+            "en": "GPU compute; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            1,
+            3
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
           "name": "Microsoft Azure",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "クラウド基盤で競合",
-            "en": "Cloud infrastructure"
+            "ja": "Azure GPU計算。公式製品の編集比較",
+            "en": "Azure GPU compute; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            1,
+            4
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "Oracle Cloud",
-          "ticker": "ORCL",
           "role": "competitor",
           "label": {
-            "ja": "GPUクラウドで競合",
-            "en": "GPU cloud"
+            "ja": "OCI GPU計算。公式製品の編集比較",
+            "en": "OCI GPU compute; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            1,
+            5
+          ],
+          "ticker": "ORCL"
         }
       ],
       "relationships": [
@@ -4812,11 +4836,39 @@
       "ORCL"
     ],
     "name": "Oracle",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Cloud and software / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm"
+      },
+      {
+        "label": "Oracle Cloud · GPU compute",
+        "url": "https://www.oracle.com/cloud/compute/gpu/"
+      },
+      {
+        "label": "AWS · EC2 P5 GPU compute",
+        "url": "https://aws.amazon.com/ec2/instance-types/p5/"
+      },
+      {
+        "label": "Google Cloud · Compute Engine GPUs",
+        "url": "https://docs.cloud.google.com/compute/docs/gpus/"
+      },
+      {
+        "label": "Oracle · Fusion Cloud Applications",
+        "url": "https://www.oracle.com/applications/"
+      },
+      {
+        "label": "Salesforce · Service Cloud",
+        "url": "https://www.salesforce.com/service/cloud/"
+      },
+      {
+        "label": "SAP · Enterprise applications",
+        "url": "https://www.sap.com/products/a-z.html"
+      },
+      {
+        "label": "IBM · Db2 database",
+        "url": "https://www.ibm.com/products/db2"
       }
     ],
     "ja": {
@@ -4824,7 +4876,7 @@
       "revenue": "クラウド利用料とソフトのサポート契約が中心。新規ライセンス、専用機器、導入・保守サービスでも稼ぐ。",
       "strength": "長年使われるデータベースと業務ソフトを持ち、同じ製品を顧客の社内設備とOracle Cloudの両方で動かせる。",
       "risks": "AIデータセンターへの先行投資が大きく、需要や建設が計画を下回ると採算が悪化する。クラウド移行と強い価格競争にも左右される。",
-      "competition": "クラウド基盤ではAWS、Microsoft、Google、業務ソフトではSalesforceやSAPなどと競う。",
+      "competition": "Oracle自身が挙げるAWS・Microsoft・Google・Salesforce・SAP・IBMを、公式製品と分野別に照合した。OCIの比較はクラウド基盤、Fusionの比較は顧客対応・ERP等の業務ソフト、IBM Db2の比較はデータベース。クラウド、業務アプリ、データベースの全機能が相互に同等という意味ではない。",
       "relationships": "企業や公共機関にデータベース、業務アプリ、OCIの計算能力を提供し、導入企業や販売・技術パートナーが周辺を支える。"
     },
     "en": {
@@ -4832,7 +4884,7 @@
       "revenue": "Cloud services and software support lead revenue, supplemented by licenses, engineered systems and implementation services.",
       "strength": "A large database and application installed base can run across customer premises and Oracle Cloud.",
       "risks": "Heavy AI data-center commitments can hurt returns if demand or construction lags, while cloud migration and price competition remain intense.",
-      "competition": "Competes with AWS, Microsoft and Google in infrastructure and Salesforce and SAP in enterprise applications.",
+      "competition": "Oracle names AWS, Microsoft, Google, Salesforce, SAP and IBM. Official-product matching separates OCI cloud infrastructure, Fusion customer-service/ERP applications, and IBM Db2 databases. These are scoped comparisons, not claims that clouds, business applications and databases are interchangeable across all features.",
       "relationships": "Supplies databases, applications and OCI capacity to enterprises and public agencies through direct and partner channels."
     },
     "maps": {
@@ -4840,54 +4892,89 @@
         {
           "kind": "company",
           "name": "Amazon / AWS",
-          "ticker": "AMZN",
           "role": "competitor",
           "label": {
-            "ja": "クラウド基盤で競合",
-            "en": "Cloud infrastructure"
+            "ja": "クラウド基盤。Oracle自身の実名開示",
+            "en": "Cloud infrastructure; named by Oracle"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            2
+          ],
+          "ticker": "AMZN"
         },
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "クラウド・業務ソフトで競合",
-            "en": "Cloud and applications"
+            "ja": "Azure・業務アプリ。自社開示と分野照合",
+            "en": "Azure/business applications; named peer and scope check"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "Google Cloud",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "クラウド基盤で競合",
-            "en": "Cloud infrastructure"
+            "ja": "クラウド基盤。Oracle自身の実名開示",
+            "en": "Cloud infrastructure; named by Oracle"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            3
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
           "name": "Salesforce",
-          "ticker": "CRM",
           "role": "competitor",
           "label": {
-            "ja": "企業向け業務ソフトで競合",
-            "en": "Enterprise applications"
+            "ja": "顧客対応アプリ。自社開示と製品照合",
+            "en": "Customer-service applications; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4,
+            5
+          ],
+          "ticker": "CRM"
+        },
+        {
+          "kind": "company",
+          "name": "SAP",
+          "role": "competitor",
+          "label": {
+            "ja": "ERP等の業務ソフト。自社開示と製品照合",
+            "en": "ERP/business applications; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            6
+          ],
+          "ticker": "SAP"
+        },
+        {
+          "kind": "company",
+          "name": "IBM",
+          "role": "competitor",
+          "label": {
+            "ja": "Db2データベース。自社開示と製品照合",
+            "en": "Db2 database; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            7
+          ],
+          "ticker": "IBM"
         }
       ],
       "relationships": [
@@ -5123,11 +5210,31 @@
       "PANW"
     ],
     "name": "Palo Alto Networks",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Platforms / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm"
+      },
+      {
+        "label": "Cisco · Secure Firewall",
+        "url": "https://www.cisco.com/site/us/en/products/security/firewalls/index.html"
+      },
+      {
+        "label": "Palo Alto Networks · Network security",
+        "url": "https://www.paloaltonetworks.com/network-security"
+      },
+      {
+        "label": "Microsoft · Defender for Endpoint security policies",
+        "url": "https://learn.microsoft.com/en-us/defender-endpoint/endpoint-security-policies-configure"
+      },
+      {
+        "label": "CrowdStrike · Falcon endpoint security",
+        "url": "https://www.crowdstrike.com/en-us/platform/endpoint-security/"
+      },
+      {
+        "label": "Fortinet · FortiGate next-generation firewall",
+        "url": "https://www.fortinet.com/products/next-generation-firewall"
       }
     ],
     "ja": {
@@ -5135,7 +5242,7 @@
       "revenue": "防御機器の販売に加え、クラウド型セキュリティ機能と保守の複数年契約で継続的に稼ぐ。",
       "strength": "ネットワーク、クラウド、監視センターの情報を共通基盤へ集め、攻撃の発見から自動対応までまとめられる。",
       "risks": "攻撃手法が急速に変わり、製品の欠陥や障害が信用に直結する。複数製品を一体化する販売戦略は契約時期と利益率を一時的に揺らす。",
-      "competition": "ネットワーク防御、クラウド保護、端末監視ごとにCisco、Microsoft、CrowdStrike、Fortinetなどと競う。",
+      "competition": "Palo Alto Networks自身が挙げるCisco・Microsoft・CrowdStrike・Fortinetを、公式製品で分野別に照合した。ネットワーク防御はCisco Secure Firewall・Fortinet FortiGate、端末防御はMicrosoft Defender・CrowdStrike Falconが比較例。クラウド上での保護・連携と競争は併存し、全製品の同等性を意味しない。",
       "relationships": "AWSやMicrosoft Azure上の利用環境も保護し、企業・公共機関へ製品を直販と販売パートナーの両方で提供する。"
     },
     "en": {
@@ -5143,7 +5250,7 @@
       "revenue": "Sells security appliances and earns recurring subscriptions and support under multi-year contracts.",
       "strength": "Combines network, cloud and security-operations data to detect attacks and automate response across one platform.",
       "risks": "Fast-changing threats and product failures can damage trust, while platform-bundling transitions can shift contract timing and margins.",
-      "competition": "Competes by security category with Cisco, Microsoft, CrowdStrike, Fortinet and many specialists.",
+      "competition": "Palo Alto Networks names Cisco, Microsoft, CrowdStrike and Fortinet. Official products scope the examples: Cisco Secure Firewall/Fortinet FortiGate for network defense, and Microsoft Defender/CrowdStrike Falcon for endpoints. Cloud protection and interoperability can coexist with competition; whole portfolios are not assumed equivalent.",
       "relationships": "Protects workloads on AWS and Microsoft Azure and sells to enterprises and public agencies directly and through channel partners."
     },
     "maps": {
@@ -5151,53 +5258,59 @@
         {
           "kind": "company",
           "name": "Cisco",
-          "ticker": "CSCO",
           "role": "competitor",
           "label": {
-            "ja": "ネットワーク防御で競合",
-            "en": "Network security"
+            "ja": "Secure Firewall。自社開示と製品照合",
+            "en": "Secure Firewall; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            2
+          ],
+          "ticker": "CSCO"
         },
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "クラウド・端末防御で競合",
-            "en": "Cloud and endpoint security"
+            "ja": "Defender端末防御。自社開示と製品照合",
+            "en": "Defender endpoint defense; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "CrowdStrike",
-          "ticker": "CRWD",
           "role": "competitor",
           "label": {
-            "ja": "端末・監視で競合",
-            "en": "Endpoint and security operations"
+            "ja": "Falcon端末防御。自社開示と製品照合",
+            "en": "Falcon endpoint protection; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4
+          ],
+          "ticker": "CRWD"
         },
         {
           "kind": "company",
           "name": "Fortinet",
           "role": "competitor",
           "label": {
-            "ja": "ネットワーク防御で競合",
-            "en": "Network security"
+            "ja": "FortiGateネットワーク防御。自社開示と照合",
+            "en": "FortiGate network defense; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            5
+          ],
+          "ticker": "FTNT"
         }
       ],
       "relationships": [
@@ -5942,11 +6055,31 @@
       "NOW"
     ],
     "name": "ServiceNow",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · AI platform / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm"
+      },
+      {
+        "label": "Microsoft · Power Automate",
+        "url": "https://www.microsoft.com/en-us/power-platform/products/power-automate"
+      },
+      {
+        "label": "Oracle · Fusion Cloud Applications",
+        "url": "https://www.oracle.com/applications/"
+      },
+      {
+        "label": "Salesforce · Service Cloud",
+        "url": "https://www.salesforce.com/service/cloud/"
+      },
+      {
+        "label": "SAP · Build Process Automation",
+        "url": "https://help.sap.com/docs/r/p/PROCESS_AUTOMATION"
+      },
+      {
+        "label": "Workday · Human Capital Management",
+        "url": "https://www.workday.com/en-us/products/human-capital-management/overview.html"
       }
     ],
     "ja": {
@@ -5954,7 +6087,7 @@
       "revenue": "Now Platformと業務別機能の定額契約が中心。高度なサポートと、導入・設計を支える専門サービスも提供する。",
       "strength": "部署や既存システムをまたぐ作業手順を共通データへつなぎ、AIを使った受付、判断、実行まで一体化できる。",
       "risks": "大企業向けは契約まで長く、更新や追加購入に成長が左右される。AIの誤動作、機密データ、基盤障害への責任も重い。",
-      "competition": "Microsoft、Oracle、Salesforce、SAP、Workdayなどの企業向けソフトと、特定業務の専門ツールが競合。",
+      "competition": "ServiceNow自身がMicrosoft・Oracle・Salesforce・SAP・Workdayを競合に挙げる。公式製品の比較例はPower Automateの業務自動化、Service Cloudの顧客対応、Oracle・SAPの企業業務、Workdayの人事業務。IT・顧客・人事ワークフローでは範囲が異なり、自社開発の仕組みも代替になる。クラウド連携と競争は併存する。",
       "relationships": "企業・公共機関に定額契約で基盤を提供し、コンサル会社や導入パートナーが顧客ごとの業務設計と接続を支える。"
     },
     "en": {
@@ -5962,7 +6095,7 @@
       "revenue": "Now Platform subscriptions lead revenue, supplemented by premium support and professional implementation services.",
       "strength": "Connects workflows and data across departments and existing systems, then applies AI from intake through decision and action.",
       "risks": "Large-enterprise sales cycles are long and growth depends on renewals and expansion; AI errors, sensitive data and outages also carry risk.",
-      "competition": "Competes with Microsoft, Oracle, Salesforce, SAP, Workday and specialist workflow tools.",
+      "competition": "ServiceNow names Microsoft, Oracle, Salesforce, SAP and Workday. Official-product examples include Power Automate workflows, Service Cloud customer service, Oracle/SAP enterprise processes and Workday HR. IT, customer and employee workflows differ; in-house systems remain alternatives. Cloud collaboration can coexist with competition.",
       "relationships": "Sells subscriptions to enterprises and public agencies, with consultants and implementation partners tailoring workflows and integrations."
     },
     "maps": {
@@ -5970,65 +6103,72 @@
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "業務自動化で競合",
-            "en": "Workflow automation"
+            "ja": "Power Automate業務自動化。自社開示と照合",
+            "en": "Power Automate workflows; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "Oracle",
-          "ticker": "ORCL",
           "role": "competitor",
           "label": {
-            "ja": "企業向け業務ソフトで競合",
-            "en": "Enterprise applications"
+            "ja": "Fusion企業業務。自社開示と製品照合",
+            "en": "Fusion enterprise processes; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "ORCL"
         },
         {
           "kind": "company",
           "name": "Salesforce",
-          "ticker": "CRM",
           "role": "competitor",
           "label": {
-            "ja": "顧客対応・業務基盤で競合",
-            "en": "Service and workflow platforms"
+            "ja": "Service Cloud顧客対応。自社開示と照合",
+            "en": "Service Cloud customer service; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "CRM"
         },
         {
           "kind": "company",
           "name": "SAP",
           "role": "competitor",
           "label": {
-            "ja": "企業向け業務ソフトで競合",
-            "en": "Enterprise applications"
+            "ja": "Build業務自動化。自社開示と製品照合",
+            "en": "Build process automation; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4
+          ],
+          "ticker": "SAP"
         },
         {
           "kind": "company",
           "name": "Workday",
           "role": "competitor",
           "label": {
-            "ja": "人事業務などで競合",
-            "en": "HR workflows"
+            "ja": "人事業務。自社開示と公式HCM照合",
+            "en": "HR processes; named peer/HCM product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            5
+          ],
+          "ticker": "WDAY"
         }
       ],
       "relationships": [
@@ -6582,11 +6722,19 @@
       "NXPI"
     ],
     "name": "NXP Semiconductors",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Manufacturing / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
+      },
+      {
+        "label": "Broadcom · Automotive Ethernet",
+        "url": "https://www.broadcom.com/products/ethernet-connectivity/automotive"
+      },
+      {
+        "label": "Qualcomm · Snapdragon Digital Chassis",
+        "url": "https://www.qualcomm.com/automotive/solutions/snapdragon-digital-chassis"
       }
     ],
     "ja": {
@@ -6594,7 +6742,7 @@
       "revenue": "自動車、産業・IoT、通信インフラ、モバイル向けに販売。2025年は販売代理店Avnetが売上の23％を占めた。",
       "strength": "車載の長期認証、セキュリティ、無線・レーダー、組み込みソフトを組み合わせ、単品ではなくシステム全体を提案できる。",
       "risks": "自動車・産業需要の減速、Avnetへの販売集中、外部工場と自社工場の稼働、貿易規制が売上と供給へ影響する。",
-      "competition": "車載・産業半導体でAnalog Devices、Broadcom、Microchip、Qualcomm、Texas Instrumentsなどと競う。",
+      "competition": "NXP自身が挙げるAnalog Devices・Broadcom・Microchip・Qualcomm・Texas Instrumentsを分野別に読む。アナログ・組み込み半導体、マイコン、接続製品が比較対象で、公式製品ではBroadcomの車載Ethernet、Qualcommの車載プラットフォームが例。車載製品すべてや全チップの互換性を示すものではない。",
       "relationships": "Apple、Samsung、Boschなどが主要最終顧客。TSMCとの共同工場や持分投資を通じて、将来の300mm製造能力も確保する。"
     },
     "en": {
@@ -6602,7 +6750,7 @@
       "revenue": "Sells into automotive, industrial and IoT, communications infrastructure and mobile; Avnet represented 23% of 2025 revenue.",
       "strength": "Combines long automotive qualifications, security, wireless, radar and embedded software to offer system-level solutions.",
       "risks": "Automotive and industrial slowdowns, Avnet concentration, internal and external fab execution and trade restrictions can affect revenue and supply.",
-      "competition": "Competes in automotive and industrial chips with Analog Devices, Broadcom, Microchip, Qualcomm and Texas Instruments, among others.",
+      "competition": "NXP names Analog Devices, Broadcom, Microchip, Qualcomm and Texas Instruments. Relevant fields include analog/embedded chips, microcontrollers and connectivity. Official examples include Broadcom automotive Ethernet and Qualcomm automotive platforms; this does not imply equivalence across all automotive products or interchangeable chips.",
       "relationships": "Apple, Samsung and Bosch are among its largest end customers; TSMC joint manufacturing supports future 300mm capacity."
     },
     "maps": {
@@ -6610,67 +6758,69 @@
         {
           "kind": "company",
           "name": "Analog Devices",
-          "ticker": "ADI",
           "role": "competitor",
           "label": {
-            "ja": "車載・産業向け半導体で競合",
-            "en": "Automotive and industrial chips"
+            "ja": "アナログ・車載産業用半導体。NXP自身の開示",
+            "en": "Analog/automotive-industrial chips; named by NXP"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "ADI"
         },
         {
           "kind": "company",
           "name": "Broadcom",
-          "ticker": "AVGO",
           "role": "competitor",
           "label": {
-            "ja": "通信・接続半導体で競合",
-            "en": "Connectivity semiconductors"
+            "ja": "車載Ethernet。自社開示と公式製品照合",
+            "en": "Automotive Ethernet; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "AVGO"
         },
         {
           "kind": "company",
           "name": "Microchip Technology",
-          "ticker": "MCHP",
           "role": "competitor",
           "label": {
-            "ja": "マイコン・組み込み製品で競合",
-            "en": "Microcontrollers and embedded products"
+            "ja": "マイコン・組み込み半導体。NXP自身の開示",
+            "en": "MCUs/embedded chips; named by NXP"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MCHP"
         },
         {
           "kind": "company",
           "name": "Qualcomm",
-          "ticker": "QCOM",
           "role": "competitor",
           "label": {
-            "ja": "車載・接続製品で競合",
-            "en": "Automotive and connectivity"
+            "ja": "車載プラットフォーム。自社開示と製品照合",
+            "en": "Automotive platforms; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "QCOM"
         },
         {
           "kind": "company",
           "name": "Texas Instruments",
-          "ticker": "TXN",
           "role": "competitor",
           "label": {
-            "ja": "アナログ・組み込み半導体で競合",
-            "en": "Analog and embedded chips"
+            "ja": "アナログ・組み込み半導体。NXP自身の開示",
+            "en": "Analog/embedded chips; named by NXP"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "TXN"
         }
       ],
       "relationships": [
@@ -6836,11 +6986,19 @@
       "MPWR"
     ],
     "name": "Monolithic Power Systems",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products and end markets / Sales / Competition / Concentration",
         "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm"
+      },
+      {
+        "label": "NXP · PMICs and system basis chips",
+        "url": "https://www.nxp.com/products/power-management/pmics-and-sbcs%3APOWR_MAN_USER_INTERFACE"
+      },
+      {
+        "label": "Infineon · Power supply ICs",
+        "url": "https://www.infineon.com/products/power/power-supply-ics"
       }
     ],
     "ja": {
@@ -6848,7 +7006,7 @@
       "revenue": "ストレージ・コンピューティング、企業データ、車載、産業、通信、民生向けに半導体を販売する。",
       "strength": "小型・高集積・低消費電力の設計と、顧客の回路設計を支援する技術者を組み合わせ、電源回路全体を提案できる。",
       "risks": "外部のウエハー製造・組立会社へ依存する。2025年は上位3代理店だけで売上の54％を占め、需要予測や在庫のずれが大きくなりやすい。",
-      "competition": "Analog Devices、Infineon、NXP、onsemi、Texas Instrumentsなどと電源・混載半導体で競う。",
+      "competition": "MPS自身はAnalog Devices・Infineon・NXP・onsemi・Texas Instrumentsなどを競合に挙げる。電源管理・混載半導体の比較で、公式製品ではNXPのPMIC、Infineonの電源ICが例。電圧変換、制御、電力段は役割が異なり、CPU・GPUやNANDメモリー自体との比較ではない。",
       "relationships": "データセンター、車載、産業機器メーカーへ電源管理製品を供給し、販売代理店を通じて幅広い顧客へ届ける。"
     },
     "en": {
@@ -6856,7 +7014,7 @@
       "revenue": "Sells semiconductors into storage and computing, enterprise data, automotive, industrial, communications and consumer markets.",
       "strength": "Combines compact, highly integrated and efficient designs with application engineers who help customers optimize complete power systems.",
       "risks": "Relies on outside wafer fabs and assembly; its top three distributors represented 54% of 2025 revenue, increasing forecast and inventory exposure.",
-      "competition": "Competes in power and mixed-signal chips with Analog Devices, Infineon, NXP, onsemi and Texas Instruments, among others.",
+      "competition": "MPS names Analog Devices, Infineon, NXP, onsemi and Texas Instruments among its competitors. The comparison concerns power-management and mixed-signal chips, with official examples including NXP PMICs and Infineon power-supply ICs. Conversion, control and power stages differ; these are not CPU/GPU or NAND-memory comparisons.",
       "relationships": "Supplies power-management products to data-center, automotive and industrial equipment makers through a distributor-heavy channel."
     },
     "maps": {
@@ -6864,53 +7022,67 @@
         {
           "kind": "company",
           "name": "Analog Devices",
-          "ticker": "ADI",
           "role": "competitor",
           "label": {
-            "ja": "電源・混載半導体で競合",
-            "en": "Power and mixed-signal chips"
+            "ja": "電源・混載半導体。MPS自身の開示",
+            "en": "Power/mixed-signal chips; named by MPS"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "ADI"
         },
         {
           "kind": "company",
           "name": "NXP Semiconductors",
-          "ticker": "NXPI",
           "role": "competitor",
           "label": {
-            "ja": "車載・産業向け電源で競合",
-            "en": "Automotive and industrial power"
+            "ja": "PMIC電源管理。自社開示と製品照合",
+            "en": "PMIC power management; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "NXPI"
         },
         {
           "kind": "company",
           "name": "onsemi",
-          "ticker": "ON",
           "role": "competitor",
           "label": {
-            "ja": "電源変換製品で競合",
-            "en": "Power conversion products"
+            "ja": "電源変換製品。MPS自身の開示",
+            "en": "Power-conversion products; named by MPS"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "ON"
         },
         {
           "kind": "company",
           "name": "Texas Instruments",
-          "ticker": "TXN",
           "role": "competitor",
           "label": {
-            "ja": "電源管理半導体で競合",
-            "en": "Power-management chips"
+            "ja": "電源管理半導体。MPS自身の開示",
+            "en": "Power-management chips; named by MPS"
           },
           "sourceIndexes": [
             0
+          ],
+          "ticker": "TXN"
+        },
+        {
+          "kind": "company",
+          "name": "Infineon",
+          "role": "competitor",
+          "label": {
+            "ja": "電源IC。自社開示と公式製品照合",
+            "en": "Power-supply ICs; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
         }
       ],
@@ -7944,11 +8116,15 @@
       "CIEN"
     ],
     "name": "Ciena",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm"
+      },
+      {
+        "label": "HPE · Juniper MX Series routers",
+        "url": "https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-routing-solutions/juniper-mx-series-universal-routers/p/1014920254"
       }
     ],
     "ja": {
@@ -7956,7 +8132,7 @@
       "revenue": "高速光通信装置とネットワーク機器の販売に加え、ソフトウェア、保守、導入支援から稼ぐ。",
       "strength": "光伝送とネットワーク制御を一体で提供し、既存回線の容量を増やしながら大規模ネットワークを自動化できる。",
       "risks": "大口顧客の設備投資時期で売上が振れやすく、部品供給、輸出規制、通信会社の統合、価格競争も業績を左右する。",
-      "competition": "Nokia、Huawei、Cisco、HPE、ZTEなどと、光伝送性能、制御ソフト、価格、導入実績で競う。",
+      "competition": "Ciena自身がNokia・Huawei・Cisco・HPE・ZTEを競合に挙げる。光伝送とルーティングが主な比較分野で、HPEは傘下Juniperのルーター製品を照合した。光伝送装置、ルーター、運用自動化ソフトは別の製品で、光部品メーカーとの関係や全製品の互換性を示すものではない。",
       "relationships": "クラウド会社、通信事業者、海底ケーブル事業者、企業・政府へ光通信設備とネットワークソフトを納入する。"
     },
     "en": {
@@ -7964,7 +8140,7 @@
       "revenue": "Earns from optical transport and routing hardware, software, maintenance and deployment services.",
       "strength": "Combines high-capacity optical transport with software control to expand existing fiber capacity and automate large networks.",
       "risks": "Results depend on large customers' capital-spending cycles and face component supply, export-control, carrier-consolidation and pricing risks.",
-      "competition": "Competes with Nokia, Huawei, Cisco, HPE and ZTE on optical performance, software control, price and deployment history.",
+      "competition": "Ciena names Nokia, Huawei, Cisco, HPE and ZTE. Optical transport and routing are key comparison fields; HPE is matched to its Juniper router portfolio. Optical transport systems, routers and operations-automation software are distinct products, not evidence of component-vendor relationships or universal interchangeability.",
       "relationships": "Supplies optical systems and network software to cloud providers, telecom carriers, submarine-network operators, enterprises and governments."
     },
     "maps": {
@@ -7974,8 +8150,8 @@
           "name": "Nokia",
           "role": "competitor",
           "label": {
-            "ja": "光通信・ネットワーク機器で競合",
-            "en": "Optical and network equipment"
+            "ja": "光伝送・ネットワーク。Ciena自身の開示",
+            "en": "Optical transport/networking; named by Ciena"
           },
           "sourceIndexes": [
             0
@@ -7984,36 +8160,49 @@
         {
           "kind": "company",
           "name": "Cisco",
-          "ticker": "CSCO",
           "role": "competitor",
           "label": {
-            "ja": "ルーター・光通信で競合",
-            "en": "Routing and optical networking"
+            "ja": "ルーティング・光通信。Ciena自身の開示",
+            "en": "Routing/optical networking; named by Ciena"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CSCO"
         },
         {
           "kind": "company",
           "name": "Hewlett Packard Enterprise",
-          "ticker": "HPE",
           "role": "competitor",
           "label": {
-            "ja": "ネットワーク基盤で競合",
-            "en": "Network infrastructure"
+            "ja": "Juniperルーター。自社開示と製品照合",
+            "en": "Juniper routers; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "HPE"
         },
         {
           "kind": "company",
           "name": "Huawei",
           "role": "competitor",
           "label": {
-            "ja": "通信設備で競合",
-            "en": "Telecom equipment"
+            "ja": "通信・光伝送設備。Ciena自身の開示",
+            "en": "Telecom/optical transport; named by Ciena"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ZTE",
+          "role": "competitor",
+          "label": {
+            "ja": "光伝送・ネットワーク。Ciena自身の開示",
+            "en": "Optical transport/networking; named by Ciena"
           },
           "sourceIndexes": [
             0
@@ -8393,11 +8582,39 @@
       "FTNT"
     ],
     "name": "Fortinet",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm"
+      },
+      {
+        "label": "Fortinet · FortiGate next-generation firewall",
+        "url": "https://www.fortinet.com/products/next-generation-firewall"
+      },
+      {
+        "label": "Cisco · Secure Firewall",
+        "url": "https://www.cisco.com/site/us/en/products/security/firewalls/index.html"
+      },
+      {
+        "label": "Palo Alto Networks · Network security",
+        "url": "https://www.paloaltonetworks.com/network-security"
+      },
+      {
+        "label": "Fortinet · FortiEDR endpoint protection",
+        "url": "https://www.fortinet.com/products/endpoint-security/fortiedr"
+      },
+      {
+        "label": "CrowdStrike · Falcon endpoint security",
+        "url": "https://www.crowdstrike.com/en-us/platform/endpoint-security/"
+      },
+      {
+        "label": "Zscaler · Internet Access security service edge",
+        "url": "https://www.zscaler.com/products-and-solutions/zscaler-internet-access"
+      },
+      {
+        "label": "Microsoft · Defender for Endpoint security policies",
+        "url": "https://learn.microsoft.com/en-us/defender-endpoint/endpoint-security-policies-configure"
       }
     ],
     "ja": {
@@ -8405,7 +8622,7 @@
       "revenue": "FortiGateなどの機器・ソフト販売と、FortiGuardのセキュリティ購読、FortiCare保守、クラウドサービスから稼ぐ。",
       "strength": "独自ASICを使う機器と多数のセキュリティ機能を同じOSで統合し、拠点・クラウド・端末を一括管理できる。",
       "risks": "機器更新の波、競合の値下げ・無料バンドル、製品の脆弱性、契約更新、クラウド運用費の増加が業績に影響する。",
-      "competition": "Cisco、Palo Alto Networks、CrowdStrike、Microsoft、Zscalerなどと、ネットワーク・クラウド・端末防御で競う。",
+      "competition": "Fortinet自身が挙げるCisco・Palo Alto Networks・CrowdStrike・Microsoft・Zscalerを公式製品と照合した。FortiGateはファイアウォール、FortiEDRは端末保護、Zscaler Internet Accessはクラウド経由の安全な接続の比較例。ネットワーク、端末、クラウド接続では用途が異なり、各社の全製品が同等という意味ではない。",
       "relationships": "企業、通信事業者、公共機関へ、販売代理店やサービス事業者を通じて機器と継続課金の防御サービスを提供する。"
     },
     "en": {
@@ -8413,7 +8630,7 @@
       "revenue": "Earns from FortiGate and other hardware and software, FortiGuard security subscriptions, FortiCare support and cloud services.",
       "strength": "Combines proprietary-ASIC appliances and many security functions under one operating system to manage branches, cloud and endpoints together.",
       "risks": "Hardware refresh cycles, competitor discounting and bundling, vulnerabilities, renewals and rising cloud-delivery costs can affect results.",
-      "competition": "Competes with Cisco, Palo Alto Networks, CrowdStrike, Microsoft and Zscaler across network, cloud and endpoint security.",
+      "competition": "Fortinet names Cisco, Palo Alto Networks, CrowdStrike, Microsoft and Zscaler. Official-product matching separates FortiGate firewalls, FortiEDR endpoint protection and Zscaler Internet Access cloud-delivered secure access. Network, endpoint and cloud-access use cases differ; entire portfolios are not equivalent.",
       "relationships": "Sells appliances and recurring protection services to enterprises, carriers and public organizations through distributors and service providers."
     },
     "maps": {
@@ -8421,54 +8638,76 @@
         {
           "kind": "company",
           "name": "Cisco",
-          "ticker": "CSCO",
           "role": "competitor",
           "label": {
-            "ja": "ネットワーク防御で競合",
-            "en": "Network security"
+            "ja": "Secure Firewall。自社開示と製品照合",
+            "en": "Secure Firewall; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            2
+          ],
+          "ticker": "CSCO"
         },
         {
           "kind": "company",
           "name": "Palo Alto Networks",
-          "ticker": "PANW",
           "role": "competitor",
           "label": {
-            "ja": "ファイアウォール・クラウド防御で競合",
-            "en": "Firewall and cloud security"
+            "ja": "ネットワーク防御。自社開示と製品照合",
+            "en": "Network defense; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1,
+            3
+          ],
+          "ticker": "PANW"
         },
         {
           "kind": "company",
           "name": "CrowdStrike",
-          "ticker": "CRWD",
           "role": "competitor",
           "label": {
-            "ja": "端末・運用監視で競合",
-            "en": "Endpoint and security operations"
+            "ja": "Falcon端末保護。自社開示と製品照合",
+            "en": "Falcon endpoint protection; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4,
+            5
+          ],
+          "ticker": "CRWD"
         },
         {
           "kind": "company",
           "name": "Zscaler",
-          "ticker": "ZS",
           "role": "competitor",
           "label": {
-            "ja": "クラウド型SASEで競合",
-            "en": "Cloud-delivered SASE"
+            "ja": "Internet Access安全な接続。自社開示と照合",
+            "en": "Internet Access secure access; named peer/product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            6
+          ],
+          "ticker": "ZS"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "Defender端末防御。自社開示と製品照合",
+            "en": "Defender endpoint security; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            7
+          ],
+          "ticker": "MSFT"
         }
       ],
       "relationships": [
@@ -9359,7 +9598,7 @@
       "UBER"
     ],
     "name": "Uber Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Mobility / Delivery / Freight / Revenue / Competition",
@@ -9371,7 +9610,7 @@
       "revenue": "乗客・注文者の支払額から運転手や店舗への支払いを除いた手数料、広告、会員サービス、貨物輸送から稼ぐ。",
       "strength": "乗客、運転手、配達員、店舗を同じ需要予測と決済基盤で結び、移動と配送の稼働を相互に高められる。",
       "risks": "運転手の雇用区分、各国規制、保険・事故、値下げ競争、自動運転への移行、地域ごとの競合が利益を左右する。",
-      "competition": "配車ではLyft、Didi、Bolt、Olaなどと競い、配送では専門アプリ、貨物では仲介会社や運送会社と競う。",
+      "competition": "Uber自身は配車のLyft・Didi・Bolt・Ola、配送のDoorDash、貨物仲介のC.H. Robinsonを競合に挙げる。配車、商品配送、貨物手配は市場と地域が異なる。自家用車・タクシー・公共交通や、店への直接注文も代替手段。自動運転の潜在競争とは区別して読む。",
       "relationships": "運転手・配達員と乗客・注文者、店舗を仲介し、荷主と運送会社をUber Freightでつなぐ。"
     },
     "en": {
@@ -9379,7 +9618,7 @@
       "revenue": "Earns platform fees after driver and merchant payouts, plus advertising, memberships and freight services.",
       "strength": "Uses one demand, dispatch and payments platform to connect riders, drivers, couriers and merchants and improve utilization across mobility and delivery.",
       "risks": "Worker classification, regulation, insurance and accidents, discounting, autonomous vehicles and local competitors can affect profitability.",
-      "competition": "Competes with Lyft, Didi, Bolt and Ola in rides, specialist delivery apps, and freight brokers and carriers.",
+      "competition": "Uber names Lyft, Didi, Bolt and Ola in mobility, DoorDash in delivery, and C.H. Robinson in freight brokerage. Ride-hailing, product delivery and freight differ by market and geography. Personal cars, taxis, public transit and direct merchant ordering remain alternatives, separate from potential autonomous-vehicle rivalry.",
       "relationships": "Connects drivers and couriers with riders and orderers, merchants with delivery demand, and shippers with carriers through Uber Freight."
     },
     "maps": {
@@ -9387,23 +9626,23 @@
         {
           "kind": "company",
           "name": "Lyft",
-          "ticker": "LYFT",
           "role": "competitor",
           "label": {
-            "ja": "北米の配車で競合",
-            "en": "North American ride-hailing"
+            "ja": "配車。Uber自身の分野別開示",
+            "en": "Ride-hailing; Uber field-specific disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "LYFT"
         },
         {
           "kind": "company",
           "name": "Didi",
           "role": "competitor",
           "label": {
-            "ja": "海外の配車で競合",
-            "en": "International ride-hailing"
+            "ja": "海外の配車。Uber自身の開示",
+            "en": "International ride-hailing; named by Uber"
           },
           "sourceIndexes": [
             0
@@ -9414,8 +9653,8 @@
           "name": "Bolt",
           "role": "competitor",
           "label": {
-            "ja": "配車・配送で競合",
-            "en": "Ride-hailing and delivery"
+            "ja": "地域別の配車。Uber自身の開示",
+            "en": "Regional ride-hailing; named by Uber"
           },
           "sourceIndexes": [
             0
@@ -9426,12 +9665,38 @@
           "name": "Ola",
           "role": "competitor",
           "label": {
-            "ja": "インドの配車で競合",
-            "en": "Indian ride-hailing"
+            "ja": "インドの配車。Uber自身の開示",
+            "en": "Indian ride-hailing; named by Uber"
           },
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "DoorDash",
+          "role": "competitor",
+          "label": {
+            "ja": "商品配送。Uber自身の分野別開示",
+            "en": "Product delivery; Uber field-specific disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "DASH"
+        },
+        {
+          "kind": "company",
+          "name": "C.H. Robinson",
+          "role": "competitor",
+          "label": {
+            "ja": "貨物仲介。Uber自身の分野別開示",
+            "en": "Freight brokerage; Uber field-specific disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CHRW"
         }
       ],
       "relationships": [
@@ -10895,11 +11160,15 @@
       "APP"
     ],
     "name": "AppLovin",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Axon advertising platform / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm"
+      },
+      {
+        "label": "Unity · User acquisition campaign goals",
+        "url": "https://docs.unity.com/en-us/grow/acquire/campaigns/types"
       }
     ],
     "ja": {
@@ -10907,7 +11176,7 @@
       "revenue": "Axon Ads Managerによる広告収益がほぼ全てで、広告主の需要とアプリ・Web・CTVの広告枠を自動で組み合わせる。",
       "strength": "大規模な広告入札データがAxon AIの推薦精度を高め、成果が上がるほど広告主と広告枠が増える循環を作る。",
       "risks": "AppleやGoogleなどの規約・識別子変更、個人情報規制、広告需要、推定精度、少数の配信基盤への依存が業績を大きく動かす。",
-      "competition": "広告主の予算と広告枠をめぐり、Google、Meta、Amazon、Unityなど大手広告・アプリ基盤と競う。",
+      "competition": "AppLovin自身はGoogle・Meta・Amazon・Unityを広告分野の競合に挙げる。広告主の予算、利用者の獲得、アプリ等の広告枠が比較対象で、Unityは公式の広告獲得製品を照合した。ゲーム制作エンジンそのものとの比較ではなく、広告仲介、計測、CTVでは製品範囲が異なる。競合が取引相手を兼ねる場合もある。",
       "relationships": "広告主の入札をアプリ・Web・CTVの広告枠へつなぎ、AppleやGoogleなどの配信基盤の規約下でサービスを動かす。"
     },
     "en": {
@@ -10915,7 +11184,7 @@
       "revenue": "Almost all revenue comes from Axon Ads Manager, which matches advertiser demand with app, web and connected-TV inventory.",
       "strength": "Large-scale auction data improves Axon AI recommendations, creating a cycle in which better results attract more advertisers and inventory.",
       "risks": "Apple or Google policy and identifier changes, privacy rules, ad demand, model performance and dependence on a few distribution platforms can move results sharply.",
-      "competition": "Competes for advertiser budgets and inventory with major advertising and app platforms including Google, Meta, Amazon and Unity.",
+      "competition": "AppLovin names Google, Meta, Amazon and Unity in advertising. Comparisons concern advertiser budgets, user acquisition and advertising inventory; Unity is matched to official user-acquisition products, not its game-development engine. Mediation, measurement and CTV differ in scope, and competitors may also be counterparties.",
       "relationships": "Matches advertiser bids to app, web and CTV inventory while operating under the policies of distribution platforms such as Apple and Google."
     },
     "maps": {
@@ -10923,41 +11192,55 @@
         {
           "kind": "company",
           "name": "Alphabet",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "デジタル広告で競合",
-            "en": "Digital advertising"
+            "ja": "Google広告。AppLovin自身の実名開示",
+            "en": "Google advertising; named by AppLovin"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
           "name": "Meta",
-          "ticker": "META",
           "role": "competitor",
           "label": {
-            "ja": "広告主の予算で競合",
-            "en": "Advertiser budgets"
+            "ja": "広告主予算・広告獲得。AppLovin自身の開示",
+            "en": "Advertiser budgets/user acquisition; named by AppLovin"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "META"
         },
         {
           "kind": "company",
           "name": "Amazon",
-          "ticker": "AMZN",
           "role": "competitor",
           "label": {
-            "ja": "広告配信で競合",
-            "en": "Advertising platforms"
+            "ja": "広告配信。AppLovin自身の開示",
+            "en": "Advertising platforms; named by AppLovin"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Unity",
+          "role": "competitor",
+          "label": {
+            "ja": "広告による利用者獲得。自社開示と製品照合",
+            "en": "Advertising user acquisition; named peer/product check"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "U"
         }
       ],
       "relationships": [

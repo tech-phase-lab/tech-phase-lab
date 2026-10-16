@@ -72,6 +72,37 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "CRWV") return {
+    6: { ja: "GPU計算・AIクラウド", en: "GPU compute & AI cloud" },
+  };
+  if (root === "ORCL") return {
+    6: { ja: "クラウド計算基盤", en: "Cloud computing infrastructure" },
+    7: { ja: "業務アプリ・データベース", en: "Business applications & databases" },
+  };
+  if (root === "PANW") return {
+    7: { ja: "ネットワーク・端末防御", en: "Network & endpoint security" },
+  };
+  if (root === "NOW") return {
+    6: { ja: "企業業務・ワークフロー", en: "Enterprise processes & workflows" },
+  };
+  if (root === "NXPI") return {
+    3: { ja: "車載・組み込み半導体", en: "Automotive & embedded chips" },
+  };
+  if (root === "MPWR") return {
+    3: { ja: "電源管理・混載半導体", en: "Power management & mixed-signal chips" },
+  };
+  if (root === "CIEN") return {
+    4: { ja: "光伝送・ルーティング", en: "Optical transport & routing" },
+  };
+  if (root === "FTNT") return {
+    6: { ja: "ネットワーク・端末・安全な接続", en: "Network, endpoint & secure access" },
+  };
+  if (root === "UBER") return {
+    7: { ja: "配車・配送・貨物仲介", en: "Mobility, delivery & freight brokerage" },
+  };
+  if (root === "APP") return {
+    7: { ja: "デジタル広告・利用者獲得", en: "Digital advertising & user acquisition" },
+  };
   if (root === "SIMO") return {
     3: { ja: "SSD・NAND制御半導体", en: "SSD & NAND controller chips" },
   };
@@ -1997,6 +2028,439 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Web会議",
         "en": "Web meetings"
+      }
+    }
+  },
+  "CRWV": {
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "専用GPUクラウド",
+        "en": "Specialized GPU cloud"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS GPU計算",
+        "en": "AWS GPU compute"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud GPU計算",
+        "en": "Google Cloud GPU compute"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure・GPU容量の顧客",
+        "en": "Azure & GPU-capacity customer"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OCI GPU計算",
+        "en": "OCI GPU compute"
+      }
+    }
+  },
+  "ORCL": {
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OCI・データベース・業務アプリ",
+        "en": "OCI, databases & applications"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWSクラウド基盤",
+        "en": "AWS cloud infrastructure"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud基盤",
+        "en": "Google Cloud infrastructure"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure・企業業務アプリ",
+        "en": "Azure & enterprise applications"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "顧客対応アプリ",
+        "en": "Customer-service applications"
+      }
+    },
+    "SAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ERP・業務アプリ",
+        "en": "ERP & business applications"
+      }
+    },
+    "IBM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Db2データベース",
+        "en": "Db2 databases"
+      }
+    }
+  },
+  "PANW": {
+    "PANW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ネットワーク・クラウド・端末防御",
+        "en": "Network, cloud & endpoint security"
+      }
+    },
+    "CSCO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Secure Firewall",
+        "en": "Secure Firewall"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Defender・Azure保護の連携",
+        "en": "Defender & Azure protection ecosystem"
+      }
+    },
+    "CRWD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Falcon端末保護",
+        "en": "Falcon endpoint protection"
+      }
+    },
+    "FTNT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "FortiGateファイアウォール",
+        "en": "FortiGate firewalls"
+      }
+    }
+  },
+  "NOW": {
+    "NOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IT・顧客・人事ワークフロー",
+        "en": "IT, customer & employee workflows"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Power Automate・クラウド連携",
+        "en": "Power Automate & cloud collaboration"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Fusion企業業務",
+        "en": "Fusion enterprise processes"
+      }
+    },
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Service Cloud顧客対応",
+        "en": "Service Cloud customer service"
+      }
+    },
+    "SAP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Build業務自動化",
+        "en": "Build process automation"
+      }
+    },
+    "WDAY": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "人事業務・HCM",
+        "en": "HR processes & HCM"
+      }
+    }
+  },
+  "NXPI": {
+    "NXPI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "車載・産業用組み込み半導体",
+        "en": "Automotive/industrial embedded chips"
+      }
+    },
+    "ADI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "アナログ・車載産業用半導体",
+        "en": "Analog/automotive-industrial chips"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "車載Ethernet",
+        "en": "Automotive Ethernet"
+      }
+    },
+    "MCHP": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "マイコン・組み込み半導体",
+        "en": "MCUs & embedded chips"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "車載プラットフォーム",
+        "en": "Automotive platforms"
+      }
+    },
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "アナログ・組み込み半導体",
+        "en": "Analog & embedded chips"
+      }
+    }
+  },
+  "MPWR": {
+    "MPWR": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電源管理・電力変換",
+        "en": "Power management & conversion"
+      }
+    },
+    "ADI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電源・混載半導体",
+        "en": "Power & mixed-signal chips"
+      }
+    },
+    "NXPI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "PMIC電源管理",
+        "en": "PMIC power management"
+      }
+    },
+    "ON": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電源変換製品",
+        "en": "Power conversion products"
+      }
+    },
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電源管理半導体",
+        "en": "Power-management chips"
+      }
+    },
+    "Infineon": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "電源IC",
+        "en": "Power-supply ICs"
+      }
+    }
+  },
+  "CIEN": {
+    "CIEN": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光伝送装置・ルーター",
+        "en": "Optical transport systems & routers"
+      }
+    },
+    "Nokia": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光伝送・ネットワーク",
+        "en": "Optical transport & networking"
+      }
+    },
+    "CSCO": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "ルーティング・光通信",
+        "en": "Routing & optical networking"
+      }
+    },
+    "HPE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Juniperルーター",
+        "en": "Juniper routers"
+      }
+    },
+    "Huawei": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "通信・光伝送設備",
+        "en": "Telecom & optical transport"
+      }
+    },
+    "ZTE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光伝送・ネットワーク",
+        "en": "Optical transport & networking"
+      }
+    }
+  },
+  "FTNT": {
+    "FTNT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "FortiGate・FortiEDR・安全な接続",
+        "en": "FortiGate, FortiEDR & secure access"
+      }
+    },
+    "CSCO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Secure Firewall",
+        "en": "Secure Firewall"
+      }
+    },
+    "PANW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ファイアウォール・防御",
+        "en": "Firewalls & network defense"
+      }
+    },
+    "CRWD": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Falcon端末保護",
+        "en": "Falcon endpoint protection"
+      }
+    },
+    "ZS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Internet Access安全な接続",
+        "en": "Internet Access secure access"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Defender端末防御",
+        "en": "Defender endpoint security"
+      }
+    }
+  },
+  "UBER": {
+    "UBER": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "配車・配送・貨物仲介",
+        "en": "Mobility, delivery & freight brokerage"
+      }
+    },
+    "LYFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "配車アプリ",
+        "en": "Ride-hailing app"
+      }
+    },
+    "Didi": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "海外の配車",
+        "en": "International ride-hailing"
+      }
+    },
+    "Bolt": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "地域別の配車",
+        "en": "Regional ride-hailing"
+      }
+    },
+    "Ola": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "インドの配車",
+        "en": "Indian ride-hailing"
+      }
+    },
+    "DASH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "商品配送",
+        "en": "Product delivery"
+      }
+    },
+    "CHRW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "貨物仲介",
+        "en": "Freight brokerage"
+      }
+    }
+  },
+  "APP": {
+    "APP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Axon広告・媒体収益化",
+        "en": "Axon advertising & monetization"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google広告",
+        "en": "Google advertising"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "広告配信・利用者獲得",
+        "en": "Advertising & user acquisition"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "広告配信",
+        "en": "Advertising platforms"
+      }
+    },
+    "U": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "広告による利用者獲得",
+        "en": "Advertising user acquisition"
       }
     }
   }
