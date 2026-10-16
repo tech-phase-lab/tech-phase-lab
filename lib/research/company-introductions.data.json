@@ -8143,7 +8143,7 @@
       "MPWR"
     ],
     "name": "Monolithic Power Systems",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products and end markets / Sales / Competition / Concentration",
@@ -8156,6 +8156,10 @@
       {
         "label": "Infineon · Power supply ICs",
         "url": "https://www.infineon.com/products/power/power-supply-ics"
+      },
+      {
+        "url": "https://gf.com/news-and-events/news/gf-and-mps-form-manufacturing-partnership-to-scale-high-performance-power-solutions/",
+        "label": "MPWR / GlobalFoundries — official dated disclosure; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -8164,7 +8168,7 @@
       "strength": "小型・高集積・低消費電力の設計と、顧客の回路設計を支援する技術者を組み合わせ、電源回路全体を提案できる。",
       "risks": "外部のウエハー製造・組立会社へ依存する。2025年は上位3代理店だけで売上の54％を占め、需要予測や在庫のずれが大きくなりやすい。",
       "competition": "MPS自身はAnalog Devices・Infineon・NXP・onsemi・Texas Instrumentsなどを競合に挙げる。電源管理・混載半導体の比較で、公式製品ではNXPのPMIC、Infineonの電源ICが例。電圧変換、制御、電力段は役割が異なり、CPU・GPUやNANDメモリー自体との比較ではない。",
-      "relationships": "データセンター、車載、産業機器メーカーへ電源管理製品を供給し、販売代理店を通じて幅広い顧客へ届ける。"
+      "relationships": "データセンター、車載、産業機器メーカーへ電源管理製品を供給し、販売代理店を通じて幅広い顧客へ届ける。 2026年9月9日、GlobalFoundriesと長期製造契約を発表。MPS独自プロセスをシンガポールの300mm工場へ導入し、2027年初めに電源管理半導体の製造能力を拡張する計画。発表時点の計画であり、量産開始済み・確定数量や特定GPU企業への販売を示すものではない。"
     },
     "en": {
       "business": "Designs highly integrated power-management chips that efficiently convert and control power in data centers, vehicles and industrial equipment.",
@@ -8172,7 +8176,7 @@
       "strength": "Combines compact, highly integrated and efficient designs with application engineers who help customers optimize complete power systems.",
       "risks": "Relies on outside wafer fabs and assembly; its top three distributors represented 54% of 2025 revenue, increasing forecast and inventory exposure.",
       "competition": "MPS names Analog Devices, Infineon, NXP, onsemi and Texas Instruments among its competitors. The comparison concerns power-management and mixed-signal chips, with official examples including NXP PMICs and Infineon power-supply ICs. Conversion, control and power stages differ; these are not CPU/GPU or NAND-memory comparisons.",
-      "relationships": "Supplies power-management products to data-center, automotive and industrial equipment makers through a distributor-heavy channel."
+      "relationships": "Supplies power-management products to data-center, automotive and industrial equipment makers through a distributor-heavy channel. On September 9, 2026 MPS and GlobalFoundries announced a long-term manufacturing agreement to deploy MPS processes at GF’s Singapore 300mm fab, with capacity expansion planned for early 2027. This does not establish completed volume production, a committed quantity or sales to a particular GPU company."
     },
     "maps": {
       "competition": [
@@ -8281,6 +8285,19 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "GlobalFoundries",
+          "ticker": "GFS",
+          "role": "partner",
+          "label": {
+            "ja": "2026年9月：GlobalFoundriesと長期製造契約、2027年初めの能力拡張を計画",
+            "en": "September 2026: GlobalFoundries long-term manufacturing agreement; capacity expansion planned for early 2027"
+          },
+          "sourceIndexes": [
+            3
           ]
         }
       ]
@@ -16434,7 +16451,7 @@
       "SWKS"
     ],
     "name": "Skyworks Solutions",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Manufacturing / Risk factors",
@@ -16467,7 +16484,7 @@
       "strength": "複数の無線部品を小型モジュールへまとめる設計力と製造技術、端末メーカーでの長い認定実績が強み。",
       "risks": "スマートフォンと大口顧客への依存が大きく、機種変更や販売不振が直撃する。価格競争、在庫調整、中国需要、製造歩留まりも影響する。Qorvo事業の統合負担や買収資金の負債も確認が必要。",
       "competition": "携帯・Wi-Fi向けのRFモジュールやフィルターではBroadcom、Qualcomm、村田製作所が競合例。統合前の実名開示と公式製品を照合した。Qorvoとは2026年10月5日に統合を完了しており、現在の独立した競合としては扱わない。",
-      "relationships": "スマートフォン、通信機器、自動車、産業機器メーカーへ無線・アナログ部品を供給し、外部の製造・組立会社も利用する。"
+      "relationships": "スマートフォン、通信機器、自動車、産業機器メーカーへ無線・アナログ部品を供給し、外部の製造・組立会社も利用する。 FY2025の自社開示ではApple向けが売上の67%。代理店・製造受託会社を経由する販売と直接販売の合計で、Appleへの直接請求だけの比率ではない。2025年10月3日期の統合前Skyworksの数値であり、Qorvo統合後の現在の合算売上比率に置き換えない。"
     },
     "en": {
       "business": "Makes RF and analog semiconductors for wireless signals. Completed the Qorvo combination on October 5, 2026, broadening its automotive, industrial and defense portfolio.",
@@ -16475,7 +16492,7 @@
       "strength": "Combines multiple radio functions in compact modules, backed by manufacturing know-how and long qualification histories with device makers.",
       "risks": "Heavy smartphone and major-customer exposure makes model changes and weak sell-through important; pricing, inventory corrections, China demand and manufacturing yields also matter. Qorvo integration and acquisition financing add execution and debt risks.",
       "competition": "Broadcom, Qualcomm and Murata are examples in mobile/Wi-Fi RF modules and filters, checked against pre-combination named disclosures and official products. The Qorvo combination closed on October 5, 2026; Qorvo is no longer presented as an independent rival.",
-      "relationships": "Supplies wireless and analog components to smartphone, network, automotive and industrial manufacturers and also uses external manufacturing and assembly providers."
+      "relationships": "Supplies wireless and analog components to smartphone, network, automotive and industrial manufacturers and also uses external manufacturing and assembly providers. Its FY2025 filing attributes 67% of revenue to Apple, combining distributor, contract-manufacturer and direct sales. This is not a direct-billing-only share. The figure covers pre-combination Skyworks for the year ended October 3, 2025, rather than the current combined Skyworks/Qorvo business."
     },
     "maps": {
       "competition": [
@@ -16546,6 +16563,19 @@
           "label": {
             "ja": "アナログ・接続部品を供給",
             "en": "Analog and connectivity products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "customer",
+          "label": {
+            "ja": "FY2025：Apple向けが売上67%、代理店・製造受託会社経由と直接販売の合計",
+            "en": "FY2025: Apple represented 67% of revenue, including distributors, contract manufacturers and direct sales"
           },
           "sourceIndexes": [
             0
@@ -21699,7 +21729,7 @@
       "BHE"
     ],
     "name": "Benchmark Electronics",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Services / Markets / Customers / Competition / Risk factors",
@@ -21708,6 +21738,10 @@
       {
         "label": "Benchmark FY2025 Annual Report · Services and Competition, printed pages 2–8",
         "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526161736/2025_ars.pdf"
+      },
+      {
+        "url": "https://ir.bench.com/news/news-details/2026/HPE-Names-Benchmark-as-Its-Manufacturing-Partner-of-the-Year/default.aspx",
+        "label": "Benchmark / HPE manufacturing disclosure June17,2026; checked October17,2026"
       }
     ],
     "ja": {
@@ -21716,7 +21750,7 @@
       "strength": "高精度加工と電子組立を組み合わせ、規制や品質要求が厳しい少量多品種の複雑製品を一貫支援できる。",
       "risks": "顧客集中、製品計画と受注時期、工場稼働率、部品不足、品質・規制認定、関税と固定費に左右される。",
       "competition": "複雑な電子機器の設計・製造ではJabil、Flex、Sanminaが競合例。Benchmark自身が年次報告で実名を列挙している。医療・防衛などの認証や生産数量によって条件が異なり、受託製造の競合を精密加工の全製品へ一律に当てはめない。",
-      "relationships": "半導体装置・防衛・産業・通信・医療機器会社から設計製造を受託し、電子部品と加工材料を外部調達する。"
+      "relationships": "半導体装置・防衛・産業・通信・医療機器会社から設計製造を受託し、電子部品と加工材料を外部調達する。 2026年6月17日の自社発表は、HPE向け高電力・液冷サーバーブレードの組立・試験・検証と米国生産支援を明記。2026年の製造パートナー表彰の根拠となった商業関係で、HPE全製品の製造、独占契約や非開示の契約金額は推定しない。"
     },
     "en": {
       "business": "A product-realization company handling complex electronics from design and prototypes through precision machining, assembly, test, production and repair.",
@@ -21724,7 +21758,7 @@
       "strength": "Combines precision machining and electronics assembly to support complex, lower-volume products with demanding quality and regulatory needs.",
       "risks": "Customer concentration, program timing, utilization, shortages, quality and regulatory approvals, tariffs and fixed costs affect results.",
       "competition": "Benchmark names Jabil, Flex and Sanmina among its competitors in electronics design and manufacturing services. Qualifications and volumes differ across medical, defense and other programs; this does not equate every precision-machining capability.",
-      "relationships": "Provides design and manufacturing to equipment makers and sources electronic components and precision materials externally."
+      "relationships": "Provides design and manufacturing to equipment makers and sources electronic components and precision materials externally. Its June 17, 2026 announcement identifies HPE high-power liquid-cooled server-blade assembly, testing, validation and U.S. production support, recognized by HPE’s 2026 manufacturing-partner award. This does not establish manufacturing of every HPE product, exclusivity or an undisclosed contract value."
     },
     "maps": {
       "competition": [
@@ -21793,6 +21827,19 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Hewlett Packard Enterprise",
+          "ticker": "HPE",
+          "role": "customer",
+          "label": {
+            "ja": "2026年6月：HPE向け液冷サーバーブレードの組立・試験・検証を開示",
+            "en": "June 2026: disclosed HPE liquid-cooled server-blade assembly, testing and validation"
+          },
+          "sourceIndexes": [
+            2
           ]
         }
       ]
@@ -28987,7 +29034,7 @@
       "KVYO"
     ],
     "name": "Klaviyo",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -29000,6 +29047,10 @@
       {
         "url": "https://www.klaviyo.com/blog/klaviyo-data-in-claude",
         "label": "Klaviyo — remote MCP and Claude Connector directory, January 23, 2026"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1594805/000119312526377123/xslSCHEDULE_13D_X02/primary_doc.xml",
+        "label": "KVYO / Shopify — official dated disclosure; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -29008,7 +29059,7 @@
       "strength": "購買・行動・連絡への同意を同じ顧客データにまとめ、案内の作成から送信、結果の確認までつなげる。Shopifyを含む多数の既存システムと接続し、企業が自社のデータを使える。",
       "risks": "Shopifyとの連携・販促契約への依存があり、条件変更は顧客獲得に影響する。消費の減速、個人情報の規制、メールやメッセージの届きにくさも利用量と成果を左右する。",
       "competition": "マーケティング配信ではMailchimpやBraze、広範な販売促進ソフトではAdobeやSalesforceと競う。データを蓄積するだけでなく、顧客への働きかけへ使えるかが比較のポイント。",
-      "relationships": "Shopifyとデータ連携・販促の提携を行い、Klaviyoが契約に基づく収益分配を支払う。Google、Meta、Toastなどとも製品連携し、小売・飲食などへ提供する。連携を取引先の購入とは扱わない。 2026年1月にはOpenAIのChatGPTアプリとAnthropicのClaude向けMCP接続を発表。利用者が許可した顧客・販促情報の接続であり、AI各社によるKlaviyoの購入契約ではない。"
+      "relationships": "Shopifyとデータ連携・販促の提携を行い、Klaviyoが契約に基づく収益分配を支払う。Google、Meta、Toastなどとも製品連携し、小売・飲食などへ提供する。連携を取引先の購入とは扱わない。 2026年1月にはOpenAIのChatGPTアプリとAnthropicのClaude向けMCP接続を発表。利用者が許可した顧客・販促情報の接続であり、AI各社によるKlaviyoの購入契約ではない。 Shopifyの2026年8月31日付Schedule 13D/Aは、完全子会社SSH 3がKlaviyo Series B株17,317,491株を直接保有すると開示。別枠の未行使Investment Optionと、10月28日に権利確定予定のワラントは発行済み保有株に含めない。開示上の20.83%はこれらを含むSeries A実質保有の計算であり、全発行済み株式の単純な持分比率ではない。"
     },
     "en": {
       "business": "Provides customer-data-driven marketing and service software. Combines purchase history and behavior to personalize email, SMS, WhatsApp and other customer interactions.",
@@ -29016,7 +29067,7 @@
       "strength": "Unifies purchases, behavior and consent, connecting campaign creation, delivery and measurement. Integrations with Shopify and other systems let businesses activate their own first-party data.",
       "risks": "Depends partly on Shopify integration and marketing agreements. Changes in terms, weaker consumer spending, privacy regulation and message deliverability can affect acquisition and usage.",
       "competition": "Competes with Mailchimp and Braze in marketing communications and Adobe and Salesforce in broader marketing platforms. Turning stored data into relevant customer interactions is a key distinction.",
-      "relationships": "Partners with Shopify on interoperability and marketing, paying a contractual revenue share. Integrates with Google, Meta and Toast and serves retail, restaurants and other businesses. Integrations do not establish purchases. January 2026 announcements add a ChatGPT app and Claude MCP connectivity for authorized customer / marketing data; these integrations do not establish purchases by the AI providers."
+      "relationships": "Partners with Shopify on interoperability and marketing, paying a contractual revenue share. Integrates with Google, Meta and Toast and serves retail, restaurants and other businesses. Integrations do not establish purchases. January 2026 announcements add a ChatGPT app and Claude MCP connectivity for authorized customer / marketing data; these integrations do not establish purchases by the AI providers. Shopify’s August 31, 2026 Schedule 13D/A identifies 17,317,491 Klaviyo Series B shares held directly by its wholly owned SSH 3 subsidiary. The separate unexercised Investment Option and warrants scheduled to vest October 28 are excluded from that issued-share holding. The reported 20.83% is a Series A beneficial-ownership calculation including those instruments, rather than a simple percentage of all issued shares."
     },
     "maps": {
       "competition": [
@@ -29161,6 +29212,19 @@
           },
           "sourceIndexes": [
             2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Shopify",
+          "ticker": "SHOP",
+          "role": "investor",
+          "label": {
+            "ja": "2026年8月31日開示：Shopify傘下がKlaviyo Series B株17,317,491株を保有",
+            "en": "August 31, 2026 filing: Shopify subsidiary held 17,317,491 Klaviyo Series B shares"
+          },
+          "sourceIndexes": [
+            3
           ]
         }
       ]

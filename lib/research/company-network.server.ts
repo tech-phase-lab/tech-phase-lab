@@ -72,6 +72,8 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "BHE") return {"5":{"ja":"電子機器受託製造・サーバー供給先","en":"Electronics manufacturing & server customer"}};
+  if (root === "SWKS") return {"3": {"ja": "RF・アナログ半導体", "en": "RF & analog semiconductors"}, "7": {"ja": "半導体製品の顧客", "en": "Semiconductor customers"}};
   if (root === "RDW") return {"5": {"ja": "宇宙・防衛システムと機器供給先", "en": "Space / defense systems & hardware customers"}, "7": {"ja": "宇宙・防衛の関連企業", "en": "Related space & defense companies"}};
   if (root === "KTOS") return {"5": {"ja": "無人機・防衛システムの開発協力", "en": "Uncrewed / defense systems & collaboration"}, "7": {"ja": "宇宙・防衛の関連企業", "en": "Related space & defense companies"}};
   if (root === "AVAV") return {"5": {"ja": "無人機・防衛システム・ペイロード対応", "en": "Uncrewed / defense systems & payload integration"}, "7": {"ja": "防衛システムの関連企業", "en": "Related defense-system companies"}};
@@ -148,7 +150,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "RNG") return {"6": {"ja": "通信の販売提携・技術供給", "en": "Communications distribution & technology"}, "7": {"ja": "企業通信・顧客対応", "en": "Business communications & contact centers"}};
   if (root === "MNDY") return {"6": {"ja": "クラウド基盤・AIモデル対応", "en": "Cloud hosting & AI model access"}, "7": {"ja": "業務管理・共同作業", "en": "Work management & collaboration"}};
   if (root === "FRSH") return {"6": {"ja": "クラウド基盤・販売協業", "en": "Cloud hosting & distribution"}, "7": {"ja": "IT運用・顧客対応ソフト", "en": "IT operations & customer-service tools"}};
-  if (root === "KVYO") return {"6": {"ja": "EC・データ・AIツールの連携", "en": "Commerce, data & AI-tool integration"}, "7": {"ja": "顧客情報・マーケティング", "en": "Customer data & marketing"}};
+  if (root === "KVYO") return {"7": {"ja": "通販・広告・製品連携・出資元", "en": "Commerce, advertising, integrations & investor"}};
   if (root === "BRZE") return {"6": {"ja": "データ・AIモデルの技術連携", "en": "Data & AI-model interoperability"}, "7": {"ja": "顧客体験・マーケティング配信", "en": "Customer journeys & marketing messages"}};
   if (root === "SPT") return {"6": {"ja": "SNS・クラウド・CRM連携と採用", "en": "Social, cloud & CRM integration / adoption"}, "7": {"ja": "SNS運用・分析ソフト", "en": "Social management & analytics"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "6": {"ja": "クラウド・AI・販売経路の協業", "en": "Cloud, AI & channel collaboration"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
@@ -220,9 +222,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "NXPI") return {
     3: { ja: "車載・組み込み半導体", en: "Automotive & embedded chips" },
   };
-  if (root === "MPWR") return {
-    3: { ja: "電源管理・混載半導体", en: "Power management & mixed-signal chips" },
-  };
+  if (root === "MPWR") return {"1": {"ja": "製造能力拡張の契約先", "en": "Manufacturing-capacity agreement"}, "3": {"ja": "電源管理半導体", "en": "Power-management semiconductors"}};
   if (root === "CIEN") return {
     4: { ja: "光伝送・ルーティング", en: "Optical transport & routing" },
   };
@@ -2633,43 +2633,50 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "MPWR": {
       "layer": 3,
       "businessLabel": {
-        "ja": "電源管理・電力変換",
-        "en": "Power management & conversion"
+        "ja": "Monolithic Power Systems | 電源管理・電力変換",
+        "en": "Monolithic Power Systems | Power management & conversion"
       }
     },
     "ADI": {
       "layer": 3,
       "businessLabel": {
-        "ja": "電源・混載半導体",
-        "en": "Power & mixed-signal chips"
+        "ja": "Analog Devices | 電源・混載半導体",
+        "en": "Analog Devices | Power & mixed-signal chips"
       }
     },
     "NXPI": {
       "layer": 3,
       "businessLabel": {
-        "ja": "PMIC電源管理",
-        "en": "PMIC power management"
+        "ja": "NXP Semiconductors | PMIC電源管理",
+        "en": "NXP Semiconductors | PMIC power management"
       }
     },
     "ON": {
       "layer": 3,
       "businessLabel": {
-        "ja": "電源変換製品",
-        "en": "Power conversion products"
+        "ja": "onsemi | 電源変換製品",
+        "en": "onsemi | Power conversion products"
       }
     },
     "TXN": {
       "layer": 3,
       "businessLabel": {
-        "ja": "電源管理半導体",
-        "en": "Power-management chips"
+        "ja": "Texas Instruments | 電源管理半導体",
+        "en": "Texas Instruments | Power-management chips"
       }
     },
     "Infineon": {
       "layer": 3,
       "businessLabel": {
-        "ja": "電源IC",
-        "en": "Power-supply ICs"
+        "ja": "Infineon | 電源IC",
+        "en": "Infineon | Power-supply ICs"
+      }
+    },
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries｜製造契約・2027年能力拡張計画",
+        "en": "GlobalFoundries | manufacturing agreement / 2027 plan"
       }
     }
   },
@@ -5044,10 +5051,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "SHOP": {
-      "layer": 6,
+      "layer": 7,
       "businessLabel": {
-        "ja": "Shopify｜通販データ・販促連携",
-        "en": "Shopify | commerce / marketing"
+        "ja": "Shopify｜製品連携・日付付き株式保有",
+        "en": "Shopify | product integration / dated shareholding"
       }
     },
     "GOOG": {
@@ -7425,6 +7432,80 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Boeing | ISS solar-array customer"
       }
     }
+  },
+  "SWKS": {
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom",
+        "en": "Broadcom"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Qualcomm",
+        "en": "Qualcomm"
+      }
+    },
+    "SWKS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Skyworks Solutions",
+        "en": "Skyworks Solutions"
+      }
+    },
+    "Murata Manufacturing": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Murata Manufacturing",
+        "en": "Murata Manufacturing"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple｜FY2025売上の67%を占める顧客",
+        "en": "Apple | 67% of FY2025 revenue"
+      }
+    }
+  },
+  "BHE": {
+    "JBL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Jabil",
+        "en": "Jabil"
+      }
+    },
+    "FLEX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Flex",
+        "en": "Flex"
+      }
+    },
+    "SANM": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Sanmina",
+        "en": "Sanmina"
+      }
+    },
+    "BHE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Benchmark Electronics",
+        "en": "Benchmark Electronics"
+      }
+    },
+    "HPE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "HPE｜液冷サーバーブレードの製造先",
+        "en": "HPE | liquid-cooled server-blade customer"
+      }
+    }
   }
 };
 
@@ -7488,7 +7569,7 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC", "MTSI", "POWI", "SITM", "RMBS", "DIOD", "SLAB", "CEVA", "NVTS", "IPGP", "IONQ", "RGTI", "QBTS", "QUBT", "ASTS", "PL", "BKSY", "AVAV", "KTOS", "RDW"].includes(root)) {
+  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC", "MTSI", "POWI", "SITM", "RMBS", "DIOD", "SLAB", "CEVA", "NVTS", "IPGP", "IONQ", "RGTI", "QBTS", "QUBT", "ASTS", "PL", "BKSY", "AVAV", "KTOS", "RDW", "MPWR", "SWKS", "KVYO", "BHE"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
