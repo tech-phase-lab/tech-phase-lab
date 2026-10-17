@@ -32813,7 +32813,7 @@
       "BIDU"
     ],
     "name": "Baidu",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Baidu FY2025 Form 20-F · Business / Competition / Risk factors",
@@ -32822,6 +32822,10 @@
       {
         "label": "Baidu Q2 2026 results · AI cloud and Apollo Go operating updates",
         "url": "https://ir.baidu.com/news-releases/news-release-details/baidu-announces-second-quarter-2026-results"
+      },
+      {
+        "url": "https://www.tencent.com/products/tencent-marketing-solution/",
+        "label": "Tencent Marketing Solution official advertising scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -32829,7 +32833,7 @@
       "revenue": "広告、クラウド・AIサービス、動画配信など。広告事業の減少をAI関連の拡大で補う転換期にある。",
       "strength": "検索で培った利用者基盤と、AI基盤・モデル・アプリを組み合わせて企業へ提供できる。",
       "risks": "広告需要の低下、AI投資の負担、先端半導体の調達制限、自動運転の安全性・許認可が課題。",
-      "competition": "Alibaba、Tencent、ByteDanceなどと広告・AIで競争。クラウドではHuaweiなども競合となる。",
+      "competition": "Alibaba、Tencent、ByteDanceなどと広告・AIで競争。クラウドではHuaweiなども競合となる。 Tencentは中国のオンライン広告・利用時間を争う範囲で比較する。Tencent Marketing Solutionの広告商品を照合しており、百度の年次報告が挙げるAIクラウド専業競合やiQIYIの動画競合と同一視しない。",
       "relationships": "Apollo GoでUber・Lyftと協業。ロンドンの公道試験と、ドバイのUber経由の商用提供は段階が異なる。"
     },
     "en": {
@@ -32837,7 +32841,7 @@
       "revenue": "Earns advertising, cloud, AI-service and video revenue, while AI growth offsets pressure on advertising.",
       "strength": "Combines search distribution with AI infrastructure, models and applications.",
       "risks": "Advertising weakness, AI investment, chip-access restrictions and driving safety or permits create risks.",
-      "competition": "Competes with Alibaba, Tencent and ByteDance; Huawei also competes in cloud.",
+      "competition": "Competes with Alibaba, Tencent and ByteDance; Huawei also competes in cloud. Tencent is compared in China online advertising and user attention, corroborated by Tencent Marketing Solution. This is distinct from the annual report’s AI-cloud-specific list and iQIYI video competitors.",
       "relationships": "Works with Uber and Lyft. London road testing differs from commercial Uber availability in Dubai."
     },
     "maps": {
@@ -32877,6 +32881,19 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Tencent",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示：Tencentと中国の広告予算・利用時間を競う",
+            "en": "Company disclosure: Tencent / China advertising budgets and user attention"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
         }
       ],
