@@ -40,7 +40,7 @@
 .srOnly { position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap; }
 .listForm button { min-height:44px;padding:8px 12px;border:0;border-radius:7px;background:transparent;color:#a8cdbf;font:inherit;font-size:13px;cursor:pointer; }
 
-.listForm { display:flex;gap:4px;align-items:center;width:min(100%,360px);margin:0 0 10px auto; }
+.listForm { display:flex;gap:8px;align-items:center;width:min(100%,480px);margin:0 0 10px; }
 .listForm input { flex:1;min-width:0;width:0;height:40px;box-sizing:border-box;background:#11222a;border:1px solid #436057;border-radius:3px;padding:6px 8px;font-size:16px;color:#e4eeeb; }
 .listForm button { flex-shrink:0;padding-inline:8px; }
 .listForm span { flex:1;font-size:13px; }
@@ -151,3 +151,5 @@
 .trendHeading small { min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
 .trendHeading strong { flex-shrink:0; }
 .price { line-height:1.15; }
+
+.page .listForm input:focus { outline:none;outline-offset:0;border-color:#9bd9c2;box-shadow:0 0 0 2px #9bd9c218; }
