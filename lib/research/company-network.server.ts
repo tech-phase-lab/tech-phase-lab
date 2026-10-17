@@ -73,7 +73,7 @@ const catalog = buildNetwork();
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
   if (root === "TSM") return {2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}};
-  if (root === "GOOG") return {3:{ja:"GPU・TPU供給・AI技術連携",en:"GPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・サービス連携・競合",en:"Cloud customers, service partners & competition"}};
+  if (root === "GOOG") return {3:{ja:"GPU・CPU・TPU供給・AI技術連携",en:"GPU / CPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・XR/眼鏡・競合",en:"Cloud customers, XR / eyewear & competition"}};
   if (root === "AMZN") return {3:{ja:"半導体・配送車の供給元",en:"Chip and delivery-van suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}};
 
   if (root === "TENB") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・技術連携", en: "Cloud and technology integration" }, 7: { ja: "脆弱性管理・クラウド防御", en: "Vulnerability management and cloud security" } };
@@ -184,7 +184,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "DDOG") return {"6": {"ja": "監視・セキュリティ・クラウド連携", "en": "Observability, security & cloud collaboration"}};
   if (root === "ZS") return {"6": {"ja": "安全な接続・防御AI・運用連携", "en": "Secure access, defensive AI & SecOps"}};
 
-  if (root === "MSFT") return {1:{ja:"自社AI半導体の製造工程",en:"Own AI-chip manufacturing process"},3:{ja:"GPU・CPU供給とAzure利用",en:"GPU / CPU supply and Azure use"},"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM・ゲーム機","en":"PC OS, sales CRM & game consoles"}};
+  if (root === "MSFT") return {5:{ja:"計算基盤のサーバー供給網",en:"Server supply for compute infrastructure"},1:{ja:"自社AI半導体の製造工程",en:"Own AI-chip manufacturing process"},3:{ja:"GPU・CPU供給とAzure利用",en:"GPU / CPU supply and Azure use"},"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM・ゲーム機","en":"PC OS, sales CRM & game consoles"}};
   if (root === "ADBE") return {"6": {"ja": "制作・AIモデル・3Dの技術協業", "en": "Creative AI-model & 3D collaboration"}, "7": {"ja": "制作・文書・マーケティング", "en": "Creative, documents & marketing"}};
   if (root === "CRM") return {"6": {"ja": "営業・顧客対応・マーケティング・AI", "en": "Sales, customer service, marketing & AI"}};
   if (root === "BOX") return {"6": {"ja": "企業コンテンツ・AI連携", "en": "Enterprise content & AI integration"}, "7": {"ja": "会議・共同作業", "en": "Meetings & collaboration"}};
@@ -195,7 +195,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
 
   if (root === "AAPL") return { 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・衛星・機能連携", en: "AI, satellite & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
-  if (root === "META") return {4:{ja:"データセンターの光接続供給",en:"Data-center optical connectivity"}, 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・動画・広告", en: "Social, video & ads" } };
+  if (root === "META") return {5:{ja:"計算基盤のサーバー供給網",en:"Server supply for compute infrastructure"},4:{ja:"データセンターの光接続供給",en:"Data-center optical connectivity"}, 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・広告・XR/AIグラス", en: "Social, ads, XR & AI glasses" } };
   if (root === "ON") return { 1: { ja: "GaN工程・製造協業", en: "GaN process & manufacturing collaboration" }, 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
 
   if (root === "RDDT") return { 6: { ja: "クラウド・AI・データ提携", en: "Cloud, AI & data partnerships" }, 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
@@ -3823,6 +3823,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Globalstar：条件付き買収合意・衛星網",
         "en": "Globalstar: conditional acquisition / satellite network"
       }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD：EC2 M8a系のCPU採用元",
+        "en": "AMD: CPUs adopted in EC2 M8a families"
+      }
+    },
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Intel：EC2 M8i系のCPU採用元",
+        "en": "Intel: CPUs adopted in EC2 M8i families"
+      }
     }
   },
   "GOOG": {
@@ -3902,6 +3916,48 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Apple：PCC基盤顧客・AI共同開発",
         "en": "Apple: PCC cloud customer / AI co-development"
       }
+    },
+    "BX": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Blackstone：TPUクラウド合弁の提携先",
+        "en": "Blackstone: TPU-cloud joint-venture partner"
+      }
+    },
+    "Samsung": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Samsung：Android XR・眼鏡開発協業",
+        "en": "Samsung: Android XR / eyewear development"
+      }
+    },
+    "QCOM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Qualcomm：Android XR共同開発",
+        "en": "Qualcomm: Android XR co-development"
+      }
+    },
+    "WRBY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Warby Parker：Gemini眼鏡の開発提携",
+        "en": "Warby Parker: Gemini-eyewear development"
+      }
+    },
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Intel：Google Cloud VMのCPU採用元",
+        "en": "Intel: CPUs adopted in Google Cloud VMs"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD：Google Cloud C4DのCPU採用元",
+        "en": "AMD: CPUs adopted in Google Cloud C4D"
+      }
     }
   },
   "META": {
@@ -3974,6 +4030,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Qualcomm：Quest 3半導体・共同開発",
         "en": "Qualcomm: Quest 3 chips / co-development"
       }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "CoreWeave：AI計算容量の調達先",
+        "en": "CoreWeave: AI-compute capacity supplier"
+      }
     }
   },
   "MSFT": {
@@ -3987,8 +4050,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "OpenAI": {
       "layer": 6,
       "businessLabel": {
-        "ja": "OpenAI：モデル協業・出資先",
-        "en": "OpenAI: model collaboration / investee"
+        "ja": "OpenAI：Azure顧客・モデル協業・出資先",
+        "en": "OpenAI: Azure customer / model partner / investee"
       }
     },
     "Anthropic": {
@@ -4080,6 +4143,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "TSMC：Maia 300の製造工程",
         "en": "TSMC: Maia300 process technology"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Nebius：契約GPU計算容量の供給元",
+        "en": "Nebius: contracted GPU-capacity supplier"
+      }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "CoreWeave：AI計算容量の供給元",
+        "en": "CoreWeave: AI-compute capacity supplier"
+      }
+    },
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Intel：Azure Dsv7のCPU採用元",
+        "en": "Intel: CPUs adopted in Azure Dsv7"
       }
     }
   },
