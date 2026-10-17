@@ -16,7 +16,7 @@ function harness(lang='ja', editable=true, ready=true, status='synced') {
   if(id==='react')return {useEffect:()=>{},useRef:()=>({current:null}),useState:initial=>{const key=index++;if(!(key in slots))slots[key]=initial;return [slots[key],v=>{slots[key]=v;}];}};
   if(id==='react/jsx-runtime')return require(id);
   if(id==='./use-favorite-lists')return {useFavoriteLists:()=>({...state,editable,ready,status,update:change=>{writes++;state=change(state);return true;}})};
-  if(id==='./pending-rows')return {PendingRows:'pending-rows'};
+  if(id==='../loading')return {default:'research-loading'};
   if(id==='./use-watchlist-selection')return {useWatchlistSelection:()=>['default',()=>{}]};
   if(id==='../use-research-language')return {useResearchLanguage:()=>[lang,()=>{}]};
   if(id==='@/lib/research/price-alert-settings')return alerts;
@@ -51,15 +51,15 @@ test('uneditable watchlists cannot trigger a removal or confirmation',()=>{
  const h=harness('ja',false);h.accept();assert.equal(h.remove(),false);assert.equal(h.writes,0);assert.deepEqual(h.messages,[]);
 });
 
-test('pending watchlist keeps loading placeholders instead of flashing an empty list',()=>{
+test('pending watchlist uses the shared branded loading screen without flashing an empty list',()=>{
  const h=harness('ja',false,false,'loading');
- assert.equal(h.nodes().filter(n=>n.type==='pending-rows').length,1);
+ assert.equal(h.nodes().filter(n=>n.type==='research-loading').length,1);
  assert.equal(h.nodes().filter(n=>n.type==='h2').length,0);
  assert.equal(h.nodes().filter(n=>n.props?.removeLabel).length,0);
  assert.equal(h.writes,0);
 });
 test('failed initial watchlist load keeps an explicit error rather than a stuck placeholder',()=>{
  const h=harness('en',false,false,'error');
- assert.equal(h.nodes().filter(n=>n.type==='pending-rows').length,0);
+ assert.equal(h.nodes().filter(n=>n.type==='research-loading').length,0);
  assert.ok(h.nodes().some(n=>n.props?.children==='Your saved watchlist is unavailable'));
 });

@@ -7,7 +7,7 @@ import { useWatchlistSelection } from "./use-watchlist-selection";
 import { watchlistSlots, sortFavorites, addFavoriteToList, favoriteListLimit, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import WatchlistFrame from "./watchlist-frame";
-import { PendingRows } from "./pending-rows";
+import ResearchLoading from "../loading";
 import ResearchToolShell from "../research-tool-shell";
 import { TradingViewChart } from "../stocks/tradingview-chart";
 import { favoriteIntradayChart } from "@/lib/research/watchlist-chart";
@@ -125,6 +125,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const sharedSession = sessionView !== "auto" ? sessionView : quoteSessions.length === 1 ? quoteSessions[0] : null;
   const ordered = sortFavorites(favorites, displayedQuotes, sort);
   const monitored = companies.some(item => item.ticker === active);
+  if (!ready && status === "loading") return <ResearchLoading />;
   return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
@@ -145,7 +146,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         if (update(current => ({ ...current, lists: watchlistSlots(current.lists).map(item => item.id === list.id ? { ...item, name } : item) }))) setListAction(null);
       }}>
         <input autoFocus aria-label={t("リスト名", "List name")} value={listName} onChange={event => setListName(event.target.value)} maxLength={40} required />
-        <button type="submit">{t("保存", "Save")}</button><button type="button" onClick={() => setListAction(null)}>{t("取消", "Cancel")}</button>
+        <div className={styles.renameActions}><button type="submit">{t("保存", "Save")}</button><button type="button" onClick={() => setListAction(null)}>{t("取消", "Cancel")}</button></div>
       </form>}
       <div className={styles.controls}>
       <section className={styles.searchPanel} aria-label={t("銘柄を追加", "Add stock")}>
@@ -165,7 +166,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </div>}
       {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のお気に入りを取り込む", "Import this device’s favorites")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
-      {!ready ? status === "loading" ? <PendingRows lang={lang} /> : <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
+      {!ready ? <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
 
         <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>
