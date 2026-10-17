@@ -25,7 +25,7 @@ const comments:RizelQuote[]=[
  en:{title:'I don’t treat a proposal as a done deal.',reasons:['These comments are about a proposed restriction. They don’t mean the bill has passed.','We still need to see what any restrictions would cover and when they would take effect.']}},
 ];
 export const RISK_PREVIEW_DETAILS = {
- ['3'.repeat(64)]:{ja:'AI株の評価',en:'AI stocks',comment:comments[0]},
- ['4'.repeat(64)]:{ja:'Dell・HPE',en:'Dell / HPE',comment:comments[1]},
- ['5'.repeat(64)]:{ja:'対中輸出',en:'China sales',comment:comments[2]},
+ ['3'.repeat(64)]:{ja:'AI株の評価',en:'AI stocks',homeJa:'AI株の魅力が低下とJefferiesが指摘',homeEn:'Jefferies sees less appeal in AI stocks',comment:comments[0]},
+ ['4'.repeat(64)]:{ja:'Dell・HPE',en:'Dell / HPE',homeJa:'Dell・HPEなどの投資判断を引き下げ',homeEn:'Barclays downgrades Dell, HPE and NetApp',comment:comments[1]},
+ ['5'.repeat(64)]:{ja:'対中輸出',en:'China sales',homeJa:'ASMLが対中輸出を制限する米法案に反対',homeEn:'ASML opposes US bill limiting China sales',comment:comments[2]},
 };

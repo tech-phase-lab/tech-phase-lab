@@ -3,6 +3,7 @@ import {useEffect,useState,type CSSProperties} from 'react';
 import ToolShell from '../tool-shell';
 import {ReviewLink as Link,useReview,useNotificationClient} from '../review-context';
 import {useRisk,riskStatus} from '../features/use-risk';
+import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
 import {validateSnapshot} from '@/lib/resolute/transport';
 import s from './reference.module.css';
 type Snapshot=ReturnType<typeof validateSnapshot>;
@@ -41,7 +42,7 @@ export function Home({locale,entitlement}:{locale:'ja'|'en';entitlement:Snapshot
   <section className={s.sec}><div className={s.lab}>TODAY</div>
    <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2>{en?'Today’s news risk':'今日の危険度'}</h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?`See all ${feed.articles.length} →`:`${feed.articles.length}件すべて見る →`}</Link>:null}</div>
     {locked?<div className={s.lock}><p>🔒 {en?'The news risk checker is included while your alerts access is active.':'危険度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of daily news risk updates.':'更新すると、また毎朝の危険度を確認できます。'}</p><button className={s.primary} disabled>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</button><p className={s.sub}>{en?'Renewal checkout is not open yet.':'更新の受付は準備中です。'}</p></div>:<>
-     {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={{'--c':colors[a.stars]} as CSSProperties}><span>{a[locale].title}</span><b aria-label={`${a.stars}/5`}>{Array.from({length:a.stars},(_,i)=><i key={i} aria-hidden="true">★</i>)}<span aria-hidden="true">{'☆'.repeat(5-a.stars)}</span></b></li>)}</ul><div className={`${s.today} ${high?s.warn:''}`}>{en?'What to do today: ':'今日やること: '}{high?<Link href="/resolute/notebook">{en?'Reread your rules':'ルールを読み返す'}</Link>:(en?'Nothing for now':'なし')}</div></>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}
+     {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={{'--c':colors[a.stars]} as CSSProperties}><span className={s.headline}>{displaySample?(RISK_PREVIEW_DETAILS[a.id]?.[en?'homeEn':'homeJa']??a[locale].title):a[locale].title}</span><b aria-label={`${a.stars}/5`}>{Array.from({length:a.stars},(_,i)=><i key={i} aria-hidden="true">★</i>)}<span aria-hidden="true">{'☆'.repeat(5-a.stars)}</span></b></li>)}</ul><div className={`${s.today} ${high?s.warn:''}`}>{en?'What to do today: ':'今日やること: '}{high?<Link href="/resolute/notebook">{en?'Reread your rules':'ルールを読み返す'}</Link>:displaySample?<Link href="/resolute/notebook">{en?'Check your first price level':'最初のラインを確認する'}</Link>:(en?'Nothing for now':'なし')}</div></>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}
      {displaySample?<p className={s.notice}>{feed?.date} · {en?'Display sample':'表示見本'}</p>:null}
     </>}
    </div>

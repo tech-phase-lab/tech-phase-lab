@@ -59,3 +59,7 @@
 
 .kv dd{white-space:pre-line}.tabs .tab{font-size:13px;padding:11px 4px}.draft{display:block;font-family:var(--font);font-size:11px;letter-spacing:0;color:var(--sub);margin-top:4px}
 @media(max-width:380px){.kv div{grid-template-columns:1fr;gap:4px}.card{padding:20px 16px}}
+
+.meter .scale { gap:12px; flex-wrap:wrap; }
+.meter .rnote { margin:0; }
+.today .v { text-wrap:balance; }
