@@ -175,7 +175,10 @@ class TriageTests(unittest.TestCase):
     def test_community_posts_and_promos_are_noise(self):
         for title in ('$NVIDIA (NVDA.US)$$SK hynix (SKHY.US)$ where is my favorite dinosaur?',
                       '3 Stocks to Buy Before Year End', "Don't miss this memory stock",
-                      'Better AI Stock: Nvidia or Micron?'):
+                      'Better AI Stock: Nvidia or Micron?',
+                      'If you only have $1,000, buy this one ETF and hold for 20 years',
+                      'If the stock market crashes, history shows these 3 ETFs are the smartest buys',
+                      'Disney to pay 66 Character.AI employees $60M a year - Alphabet (NASDAQ:GOOGL)'):
             self.assertTrue(company_wire.NOISE.search(title), title)
         self.assertFalse(company_wire.NOISE.search('Micron raises fiscal Q1 guidance on HBM demand'))
 

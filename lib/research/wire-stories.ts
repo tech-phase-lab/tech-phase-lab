@@ -14,6 +14,9 @@ const NOT_NEWS = [
   /\bZacks (?:Analyst Blog|Investment Ideas)\b|\bTake five\b|\blifetime access\b|\bfor one \$\d+ payment\b|\bBC-Most Active\b/i,
   /\bForecast\s+[—–-]\s+Price Target\b|\bPrediction for 20\d\d\b/i,
   /\b\d+ (?:Top |Best )?(?:AI |Tech |Dividend |Growth )?Stocks? (?:to Buy|You Can)\b|\bBest .{0,24}Stocks? to Buy\b|\bBetter (?:AI |Tech )?Stock:|\bToo Late to Buy\b|\bBuy Now and Hold\b|\bShould You Buy\b|\bDon.t miss\b/i,
+  /\bETFs?\b.{0,50}\b(?:buy|buys|smartest|best)\b|\b(?:buy|buys)\b.{0,30}\bETFs?\b|\b(?:if|when) (?:you|the stock market).{0,40}(?:\$1,?000\b|\bcrash|\bplunge)|\bhistory shows\b/i, // "buy these ETFs" advice: no detail to open
+  /\bDisney\b.{0,40}\bCharacter\.AI\b/i,
+  /株式市場の暴落.{0,20}ETF|ETFを買い|ETFが最も賢い|ディズニー.{0,10}Character\.AI/,
   /逃した[?？]|見逃さない(?:よう|で)|お気に入りの恐竜/,
 ];
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));

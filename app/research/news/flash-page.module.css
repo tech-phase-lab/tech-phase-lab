@@ -18,3 +18,4 @@
 .panel{--live:#5dffb4;--live-soft:rgba(93,255,180,.14);--hair:rgba(255,255,255,.07);border:1px solid #26334a;border-radius:20px;background:linear-gradient(180deg,#111826 0%,#0e131c 38%);padding:8px 0}
 .ticker{font:600 12px ui-monospace,monospace;letter-spacing:.08em;color:#d6e0f0}
 .earnings{color:#d9b46a}
+.twoLines{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}

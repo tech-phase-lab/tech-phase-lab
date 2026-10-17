@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts/research'))
 import market_results as results
 import monitor
@@ -392,6 +392,18 @@ class ResultWindowTests(unittest.TestCase):
         with monitor.connect(self.path) as db:
             self.assertEqual(db.execute('SELECT count(*) FROM market_result_publications').fetchone()[0], 1)
             self.assertEqual([item['id'] for item in results.public_feed(db, self.reference)], ['1'])
+
+    def test_earnings_flash_outlives_the_day_when_asked(self):
+        self.add(1)
+        results.run_once(self.path, signals.SOURCES, self.reference)
+        later = self.reference + timedelta(days=3)
+        with monitor.connect(self.path) as db:
+            first = results.public_feed(db, self.reference)
+            self.assertEqual([item['id'] for item in first], ['1'])
+            kind = first[0]['kind']
+            self.assertEqual(results.public_feed(db, later), [])
+            kept = [item['id'] for item in results.public_feed(db, later, earnings_hours=24 * 7)]
+            self.assertEqual(kept, ['1'] if kind == 'earnings' else [])
 
     def test_already_published_rows_are_not_reprocessed(self):
         from unittest.mock import patch

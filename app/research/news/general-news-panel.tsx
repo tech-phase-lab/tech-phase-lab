@@ -128,7 +128,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
         if (update.kind === "original-preview") return <OriginalPreviewCard key={update.item.id} item={update.item} lang={lang} />;
         if (update.kind === "wire") {
           const story = update.story;
-          return <article key={`wire-${story.id}`}><TimelineRow now={receivedMs} at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.join(" · ")} title={story.title} lang={lang}
+          return <article key={`wire-${story.id}`}><TimelineRow now={receivedMs} at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.join(" · ")} title={story.title} lang={lang} jaLimit={36}
             publication={`${lang === "ja" ? "発表" : "Published"} ${format(story.at)}`} /></TimelineRow></article>;
         }
         if (update.kind === "market") {

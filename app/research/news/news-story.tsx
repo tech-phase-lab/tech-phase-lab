@@ -74,12 +74,12 @@ function addsInformation(title: string, text: string): boolean {
  * Opened, the detail continues right after the headline and the date moves to
  * the end. A ``concise`` company story instead replaces its headline with the
  * full story text (cut at a sentence boundary) when opened (owner, Oct 7). */
-export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false }: {
-  label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean;
+export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false, jaLimit = 60 }: {
+  label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean; jaLimit?: number;
 }) {
   // A headline with nothing more to add stays a plain line, unless it is long:
-  // then it shows two lines and the ＋ opens the whole text (owner, Oct 13).
-  const headlineOnly = () => title.length <= (/[぀-ヿ㐀-鿿]/.test(title) ? 60 : 120)
+  // then it shows two lines and the ＋ opens the whole text (owner, Oct 13; never four lines, Oct 17).
+  const headlineOnly = () => title.length <= (/[぀-ヿ㐀-鿿]/.test(title) ? jaLimit : 120)
     ? <div className={styles.shortStory}><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>
     : <details className={`${styles.story} ${styles.replaces}`}>
       <summary><span className={styles.tickers}>{label}</span><span className={`${styles.headline} ${styles.clamped} ${styles.closedOnly}`} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>

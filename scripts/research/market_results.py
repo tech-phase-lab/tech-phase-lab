@@ -560,14 +560,25 @@ def latest_source_posts(items):
     return [item for item in items if latest[identity(item)] is item]
 
 
-def public_feed(db, reference=None):
+def julianday_before(value, cutoff):
+    try:
+        return datetime.fromisoformat(value) < datetime.fromisoformat(cutoff)
+    except (TypeError, ValueError):
+        return False
+
+
+def public_feed(db, reference=None, earnings_hours=24):
+    """Result flashes of the last 24 hours; earnings flashes stay for earnings_hours so the
+    calendar's released-earnings list does not lose a company a day after it reported (owner, Oct 17)."""
     schema(db)
-    cutoff = ((reference or datetime.now(timezone.utc))-timedelta(hours=24)).isoformat()
+    now = reference or datetime.now(timezone.utc)
+    cutoff = (now-timedelta(hours=max(24, earnings_hours))).isoformat()
+    recent = (now-timedelta(hours=24)).isoformat()
     rows = db.execute('''SELECT p.payload,p.published_at,p.processing_ms,e.observed_at,e.published_at AS source_at,d.text AS body,e.tickers_json
       FROM market_result_publications p JOIN signal_documents d
       ON d.source_id=p.source_id AND d.url=p.url AND d.sha=p.sha
       JOIN signal_events e ON e.id=p.event_id
-      WHERE julianday(e.published_at)>=julianday(?) ORDER BY julianday(e.published_at) DESC LIMIT 20''',(cutoff,))
+      WHERE julianday(e.published_at)>=julianday(?) ORDER BY julianday(e.published_at) DESC LIMIT ?''',(cutoff,20 if earnings_hours <= 24 else 60))
     items = []
     for row in rows:
         item = json.loads(row['payload'])
@@ -580,12 +591,14 @@ def public_feed(db, reference=None):
         if current is None:
             continue
         item.update(current)
+        if earnings_hours > 24 and item.get('kind') != 'earnings' and julianday_before(row['source_at'], recent):
+            continue
         item['publicAt'] = row['published_at']
         item['processingMs'] = row['processing_ms']
         item['sourceToDetectionMs'] = monitor.stored_latency_ms(row['source_at'],row['observed_at'])
         item['detectionToPublicMs'] = monitor.stored_latency_ms(row['observed_at'],row['published_at'])
         items.append(item)
-    return latest_source_posts(items)
+    return latest_source_posts(items)[:20]
 
 
 def diagnostics(db):
