@@ -161,6 +161,13 @@
     "lastCheckedOn": "2026-10-02"
   },
   {
+    "ticker": "IBM",
+    "name": "IBM",
+    "sourceUrl": "https://www.ibm.com/investor",
+    "lastAttemptedOn": "2026-10-17",
+    "lastCheckedOn": "2026-10-17"
+  },
+  {
     "ticker": "IONQ",
     "name": "IonQ",
     "sourceUrl": "https://investors.ionq.com/",

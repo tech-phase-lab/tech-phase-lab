@@ -194,19 +194,21 @@ test("FOMC meetings stay date-only until the Federal Reserve publishes clock tim
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 3);
 });
 
-test("calendar coverage tracks 49 unique companies (all 37 roster stocks included) and only conclusive checks advance", async () => {
+test("calendar coverage tracks 50 unique companies (all 38 roster stocks included) and only conclusive checks advance", async () => {
   const { providers, earningsOnlyProviders } = await import("../lib/research/intake.ts");
-  assert.equal(coverage.length, 49);
-  assert.equal(new Set(coverage.map((company) => company.ticker)).size, 49);
-  // Owner, Oct 15: every roster stock (22 watched + 15 earnings-only) is always listed.
+  assert.equal(coverage.length, 50);
+  assert.equal(new Set(coverage.map((company) => company.ticker)).size, 50);
+  // Owner, Oct 15: every roster stock (22 watched + 16 earnings-only) is always listed.
   const listed = new Set(coverage.map((company) => company.ticker));
   assert.deepEqual([...providers, ...earningsOnlyProviders].map(provider => provider.ticker).filter(ticker => !listed.has(ticker)), []);
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
-  assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-0[12]|10-15)$/.test(company.lastAttemptedOn)));
+  assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-0[12]|10-1[57])$/.test(company.lastAttemptedOn)));
   for (const ticker of ["ADBE", "ASML", "COHR", "CRM", "CRWD", "DELL", "GEV", "INTC", "KLAC", "LRCX", "MU", "NBIS", "NFLX", "ORCL", "PANW", "PLTR", "QCOM", "SNDK", "SNOW", "TSM", "VRT"]) assert.equal(checked[ticker], "2026-10-02");
   // Oct 15: dates read from the company's own release or SEC filing.
   for (const ticker of ["AMD", "ANET", "ARM", "BE", "LITE", "MSFT", "SKHY", "TSLA", "VST", "META", "STX"]) assert.equal(checked[ticker], "2026-10-15");
+  // Oct 17: IBM's own newsroom announced the Q3 call (Oct 21, 5:00 p.m. ET).
+  assert.equal(checked.IBM, "2026-10-17");
   assert.equal(checked.AMAT, "2026-09-25");
   for (const ticker of ["AAPL", "AMZN", "AVGO", "CRDO", "CRWV", "GOOGL", "MRVL", "NOW", "NVDA", "ALAB", "AAOI", "IREN", "APH", "SOFI", "IONQ", "CEG"]) assert.equal(checked[ticker], null);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-30").length, 0);
@@ -220,7 +222,7 @@ test("calendar coverage tracks 49 unique companies (all 37 roster stocks include
     "ORCL", "PANW", "PLTR", "QCOM", "SNDK", "SNOW", "TSM", "VRT",
   ]);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
-  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 33);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 34);
   assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 16);
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SNOW", "VRT"]) {
     assert.match(byTicker[ticker].sourceUrl, /(?:events|investor-hub|category\/ir)/i);
