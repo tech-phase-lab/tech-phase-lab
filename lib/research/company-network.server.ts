@@ -181,7 +181,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "ZS") return {"6": {"ja": "安全な接続・防御AI・運用連携", "en": "Secure access, defensive AI & SecOps"}};
 
   if (root === "MSFT") return {"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM・ゲーム機","en":"PC OS, sales CRM & game consoles"}};
-  if (root === "ADBE") return {"6": {"ja": "制作ツールのAIモデル連携", "en": "AI model integration in creative tools"}, "7": {"ja": "制作・文書・マーケティング", "en": "Creative, documents & marketing"}};
+  if (root === "ADBE") return {"6": {"ja": "制作・AIモデル・3Dの技術協業", "en": "Creative AI-model & 3D collaboration"}, "7": {"ja": "制作・文書・マーケティング", "en": "Creative, documents & marketing"}};
   if (root === "CRM") return {"6": {"ja": "営業・顧客対応・マーケティング・AI", "en": "Sales, customer service, marketing & AI"}};
   if (root === "BOX") return {"6": {"ja": "企業コンテンツ・AI連携", "en": "Enterprise content & AI integration"}, "7": {"ja": "会議・共同作業", "en": "Meetings & collaboration"}};
   if (root === "WDAY") return {"6": {"ja": "クラウド・業務AI連携", "en": "Cloud & workflow AI integration"}, "7": {"ja": "人事・財務・給与", "en": "HR, finance & payroll"}};
@@ -189,10 +189,10 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "HPE") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ネットワーク", "en": "Servers & networking"}, "6": {"ja": "クラウド・ハイブリッド基盤", "en": "Cloud & hybrid infrastructure"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
 
-  if (root === "AAPL") return { 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
+  if (root === "AAPL") return { 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
   if (root === "META") return { 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・動画・広告", en: "Social, video & ads" } };
-  if (root === "ON") return { 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
+  if (root === "ON") return { 1: { ja: "GaN工程・製造協業", en: "GaN process & manufacturing collaboration" }, 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
 
   if (root === "RDDT") return { 6: { ja: "クラウド・AI・データ提携", en: "Cloud, AI & data partnerships" }, 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
   if (root === "PINS") return { 6: { ja: "クラウド・ログイン・広告提携", en: "Cloud, login & ad partnerships" }, 7: { ja: "商品・画像の発見・広告", en: "Product/visual discovery & ads" } };
@@ -3506,6 +3506,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "NVIDIA｜800VDC電源技術の協業",
         "en": "NVIDIA | 800 VDC power collaboration"
       }
+    },
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries：GaN工程・製造協業",
+        "en": "GlobalFoundries: GaN process / manufacturing"
+      }
+    },
+    "SYNA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Synaptics：条件付き買収契約",
+        "en": "Synaptics: conditional acquisition agreement"
+      }
     }
   },
   "AAPL": {
@@ -3538,10 +3552,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "Samsung": {
-      "layer": 5,
+      "layer": 3,
       "businessLabel": {
-        "ja": "Galaxyスマートフォン",
-        "en": "Galaxy smartphones"
+        "ja": "Samsung Electronics：半導体製造技術",
+        "en": "Samsung Electronics: chip-process technology"
       }
     },
     "GRMN": {
@@ -3556,6 +3570,97 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Spotify Premium｜音楽定額配信",
         "en": "Spotify Premium | music subscription"
+      }
+    },
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Applied Materials：半導体製造装置の協業",
+        "en": "Applied Materials: chip-equipment collaboration"
+      }
+    },
+    "TXN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Texas Instruments：基盤半導体",
+        "en": "Texas Instruments: foundational chips"
+      }
+    },
+    "GLW": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Corning：端末カバーガラス",
+        "en": "Corning: device cover glass"
+      }
+    },
+    "CRUS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Cirrus Logic：音声・混載IC供給",
+        "en": "Cirrus Logic: audio / mixed-signal ICs"
+      }
+    },
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Coherent：Face ID等のVCSEL",
+        "en": "Coherent: Face ID / other VCSELs"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：先端半導体の受託製造",
+        "en": "TSMC: advanced-chip foundry"
+      }
+    },
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries：半導体製造・工程開発",
+        "en": "GlobalFoundries: chip manufacturing / processes"
+      }
+    },
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor：半導体の包装・試験計画",
+        "en": "Amkor: chip packaging / test plan"
+      }
+    },
+    "MP": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "MP Materials：レアアース磁石",
+        "en": "MP Materials: rare-earth magnets"
+      }
+    },
+    "GlobalWafers": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "GlobalWafers：GWAのシリコンウエハー",
+        "en": "GlobalWafers: GWA silicon wafers"
+      }
+    },
+    "TDK": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "TDK：TMRセンサー供給",
+        "en": "TDK: TMR sensors"
+      }
+    },
+    "Q": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Qnity Electronics：半導体材料の協業",
+        "en": "Qnity Electronics: semiconductor materials"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Meta：QuestのVR・複合現実端末",
+        "en": "Meta: Quest VR / mixed-reality devices"
       }
     }
   },
@@ -3811,6 +3916,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Nemetschek / Maxon｜3Dソフト提携",
         "en": "Nemetschek / Maxon | 3D software bundle"
+      }
+    },
+    "NVDA": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "NVIDIA：Firefly・3D・AI開発協業",
+        "en": "NVIDIA: Firefly / 3D / AI collaboration"
+      }
+    },
+    "WMT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Walmart：Fireflyを使う制作業務",
+        "en": "Walmart: Firefly creative operations"
       }
     }
   },
@@ -6362,6 +6481,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "SMIC｜半導体受託製造",
         "en": "SMIC | semiconductor foundry"
       }
+    },
+    "ON": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "onsemi：GaNパワー製品の共同開発",
+        "en": "onsemi: GaN power-device development"
+      }
     }
   },
   "TSEM": {
@@ -6601,6 +6727,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Infineon｜IoT無線半導体",
         "en": "Infineon | IoT wireless"
+      }
+    },
+    "ON": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "onsemi：条件付き買収契約",
+        "en": "onsemi: conditional acquisition agreement"
       }
     }
   },

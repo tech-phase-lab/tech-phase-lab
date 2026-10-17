@@ -3051,6 +3051,58 @@
       {
         "url": "https://www.spotify.com/us/premium/",
         "label": "Spotify official product / listing; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-joins-apple-and-texas-instruments",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.apple.com/newsroom/2025/08/apple-corning-to-manufacture-all-iphone-apple-watch-cover-glass-in-kentucky/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.apple.com/newsroom/2026/03/apple-adds-new-partners-to-its-american-manufacturing-program/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.sas-globalwafers.com/en/investor/shareholder-service_en/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.tdk.com/en/ir/faq/index.html",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000028/exhibit991supplementalsche.htm",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.apple.com/apple-vision-pro/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://developers.meta.com/vr/essentials/compare-devices/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.apple.com/newsroom/2026/07/apple-to-increase-spend-with-broadcom-to-produce-billions-more-us-chips/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "label": "Apple — MP Materials multiyear magnet procurement, July15,2025",
+        "url": "https://www.apple.com/newsroom/2025/07/apple-expands-us-supply-chain-with-500-million-usd-commitment/"
+      },
+      {
+        "url": "https://www.sas-globalwafers.com/en/gwc_news_en_20250807/",
+        "label": "GlobalWafers — US subsidiary GWA / Apple partnership, August6,2025"
       }
     ],
     "ja": {
@@ -3058,16 +3110,16 @@
       "revenue": "iPhoneなどの製品販売と、App Store、クラウド、音楽・動画などのサービス。",
       "strength": "端末・基本ソフト・サービスを一体で設計し、製品同士を使いやすく連携させる。",
       "risks": "iPhoneの需要変動、海外の製造網への依存、アプリ配信などをめぐる規制。",
-      "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。 音楽サービスは、Spotify PremiumとApple Musicの定額聴取を両社公式製品で編集比較する。楽曲構成、対応端末、音質機能、料金や地域条件の一致を示すものではない。",
-      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。"
+      "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。 音楽サービスは、Spotify PremiumとApple Musicの定額聴取を両社公式製品で編集比較する。楽曲構成、対応端末、音質機能、料金や地域条件の一致を示すものではない。 Meta QuestとApple Vision ProのVR・複合現実端末も公式製品で編集比較する。性能・用途・価格や全機能の同等性を示すものではなく、両社の提携を意味しない。",
+      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。 米国製造計画ではApplied Materials、Texas Instruments、Corning、Coherent、TSMC、GlobalFoundries、Amkor、Samsung、MP Materials、GlobalWafers、Cirrus Logic、TDK、Qnityとの関係を公式発表に基づき区別する。装置・材料の製造協業、部品供給、将来工場の包装・試験計画は同じ役割ではない。Broadcomの2026年7月の追加契約も含め、予定投資・調達を売上実績や全計画稼働済みと扱わず、現在の会社別調達量や株式保有を推定しない。"
     },
     "en": {
       "business": "Creates iPhone, Mac and other devices, with their software and services.",
       "revenue": "Device sales and services including the App Store, cloud storage, music and video.",
       "strength": "Integrates hardware, operating systems and services across its products.",
       "risks": "iPhone demand shifts, overseas manufacturing dependence and regulation of its platforms.",
-      "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features. Music services add an editorial comparison of Spotify Premium and Apple Music subscriptions using both official product pages. Catalogs, supported devices, audio features, pricing and regional terms can differ.",
-      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established."
+      "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features. Music services add an editorial comparison of Spotify Premium and Apple Music subscriptions using both official product pages. Catalogs, supported devices, audio features, pricing and regional terms can differ. Official products also support an editorial Meta Quest / Apple Vision Pro VR and mixed-reality comparison, without equating performance, use cases, price or all functions, or establishing a partnership.",
+      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established. Official US-manufacturing announcements separately identify Applied Materials, Texas Instruments, Corning, Coherent, TSMC, GlobalFoundries, Amkor, Samsung, MP Materials, GlobalWafers, Cirrus Logic, TDK and Qnity. Equipment/materials collaboration, component supply and planned packaging/test capacity are distinct roles. The July2026 Broadcom expansion is a future procurement commitment, not realized revenue, completed capacity or equity ownership."
     },
     "maps": {
       "competition": [
@@ -3125,6 +3177,20 @@
             9
           ],
           "ticker": "SPOT"
+        },
+        {
+          "kind": "company",
+          "name": "Meta Platforms",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：Meta QuestとApple Vision ProのVR・複合現実端末",
+            "en": "Editorial comparison: Meta Quest / Apple Vision Pro VR and mixed-reality devices"
+          },
+          "sourceIndexes": [
+            18,
+            19
+          ],
+          "ticker": "META"
         }
       ],
       "relationships": [
@@ -3172,11 +3238,12 @@
           "name": "Broadcom",
           "role": "supplier",
           "label": {
-            "ja": "2023年5月：5G RF・FBARなどの複数年契約",
-            "en": "May 2023: multiyear 5G RF / FBAR component agreement"
+            "ja": "Broadcom：2023年RF/FBAR契約。2026年7月に米国製チップの複数年調達拡張を発表",
+            "en": "Broadcom: 2023 RF/FBAR agreement; July2026 multiyear US-chip procurement expansion"
           },
           "sourceIndexes": [
-            3
+            3,
+            20
           ],
           "ticker": "AVGO"
         },
@@ -3191,6 +3258,182 @@
           "sourceIndexes": [
             4
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "partner",
+          "label": {
+            "ja": "2025年AMP：Applied Materialsと米国の半導体装置製造を拡大",
+            "en": "2025 AMP: Applied Materials US chip-equipment manufacturing collaboration"
+          },
+          "sourceIndexes": [
+            10,
+            11
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年AMP：Texas Instrumentsの米国製造能力・基盤半導体で協力",
+            "en": "2025 AMP: Texas Instruments foundational chips / US capacity collaboration"
+          },
+          "sourceIndexes": [
+            10,
+            11
+          ],
+          "ticker": "TXN"
+        },
+        {
+          "kind": "company",
+          "name": "Corning",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年発表：CorningのiPhone・Watch用カバーガラスと米国製造拡張",
+            "en": "2025 announcement: Corning iPhone / Watch cover glass and US manufacturing expansion"
+          },
+          "sourceIndexes": [
+            12
+          ],
+          "ticker": "GLW"
+        },
+        {
+          "kind": "company",
+          "name": "Cirrus Logic",
+          "role": "supplier",
+          "label": {
+            "ja": "Cirrus LogicがApple向け供給を開示。2026年AMPで混載IC工程を共同開発",
+            "en": "Cirrus Logic discloses Apple supply; 2026 AMP mixed-signal IC process development"
+          },
+          "sourceIndexes": [
+            13,
+            14
+          ],
+          "ticker": "CRUS"
+        },
+        {
+          "kind": "company",
+          "name": "Coherent",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年発表：CoherentのFace ID等向けVCSELで複数年契約",
+            "en": "2025 announcement: multiyear Coherent VCSEL agreement for Face ID and other functions"
+          },
+          "sourceIndexes": [
+            10
+          ],
+          "ticker": "COHR"
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年公式開示：TSMCアリゾナ工場でApple向け先端半導体を製造",
+            "en": "2025 official disclosure: TSMC Arizona manufactures advanced chips for Apple"
+          },
+          "sourceIndexes": [
+            10,
+            14
+          ],
+          "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "GlobalFoundries",
+          "role": "supplier",
+          "label": {
+            "ja": "2025～26年発表：GFSの無線・電源管理とCirrus Logic向け工程協業",
+            "en": "2025–26 announcements: GFS wireless / power-management and Cirrus process collaboration"
+          },
+          "sourceIndexes": [
+            10,
+            14
+          ],
+          "ticker": "GFS"
+        },
+        {
+          "kind": "company",
+          "name": "Amkor Technology",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年発表：Amkorのアリゾナ新工場でApple siliconの包装・試験を行う計画",
+            "en": "2025 announcement: planned Apple-silicon packaging / test at Amkor Arizona"
+          },
+          "sourceIndexes": [
+            10
+          ],
+          "ticker": "AMKR"
+        },
+        {
+          "kind": "company",
+          "name": "Samsung",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年発表：Samsung AustinでApple製品向け新チップ製造技術を導入する計画",
+            "en": "2025 announcement: planned Samsung Austin chip-process technology for Apple products"
+          },
+          "sourceIndexes": [
+            10
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MP Materials",
+          "role": "supplier",
+          "label": {
+            "ja": "2025年発表：MP Materialsの米国製レアアース磁石を購入する複数年契約",
+            "en": "2025 announcement: multiyear purchase commitment for MP Materials US rare-earth magnets"
+          },
+          "sourceIndexes": [
+            10,
+            21
+          ],
+          "ticker": "MP"
+        },
+        {
+          "kind": "company",
+          "name": "GlobalWafers",
+          "role": "partner",
+          "label": {
+            "ja": "2025年AMP：GlobalWafers Americaの米国製300mmウエハーで協力",
+            "en": "2025 AMP: collaboration on GlobalWafers America US-made 300mm wafers"
+          },
+          "sourceIndexes": [
+            10,
+            15,
+            22
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "TDK",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年3月：TDKのTMRセンサーを米国で製造する計画",
+            "en": "March2026: planned US manufacturing of TDK TMR sensors"
+          },
+          "sourceIndexes": [
+            14,
+            16
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Qnity Electronics",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：QnityとHD MicroSystemsの半導体材料・技術で協業",
+            "en": "March2026: collaboration on Qnity / HD MicroSystems semiconductor materials"
+          },
+          "sourceIndexes": [
+            14,
+            17
+          ],
+          "ticker": "Q"
         }
       ]
     }
@@ -8441,7 +8684,7 @@
       "ON"
     ],
     "name": "onsemi",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Customers / End markets / Competition",
@@ -8470,6 +8713,14 @@
       {
         "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-collaborates-with-nvidia-to-accelerate-transition-to-800-vdc-power-solutions-for-next-generation-ai-data-centers",
         "label": "onsemi — NVIDIA 800 VDC architecture collaboration, July 29, 2025"
+      },
+      {
+        "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-to-develop-next-generation-gan-power-devices-with-globalfoundries",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-and-synaptics-announce-revised-merger-agreement",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
       }
     ],
     "ja": {
@@ -8478,7 +8729,7 @@
       "strength": "シリコン、SiC、GaNの電力変換と車載画像センサーを持ち、設計から製造・パッケージまで一体で最適化できる。",
       "risks": "自動車・産業需要の減速、SiC工場の稼働率、代理店在庫に左右される。2025年には工場再編と在庫処分で大きな費用も計上した。",
       "competition": "電力製品ではInfineonやSTMicroelectronics、アナログではTexas InstrumentsやAnalog Devices、画像ではSonyやSamsungと競う。",
-      "relationships": "NIOの2026年4月のEliteSiC採用に加え、BMW AGとは2023年3月、Volkswagen AGとは2024年7月にEV駆動系向けSiCの供給契約を発表した。NVIDIAとは2025年7月にAIデータセンターの800VDC電源技術で協業を発表。発表時点の用途・契約範囲を示し、全車種への供給や現在の調達量、出資を意味しない。"
+      "relationships": "NIOの2026年4月のEliteSiC採用に加え、BMW AGとは2023年3月、Volkswagen AGとは2024年7月にEV駆動系向けSiCの供給契約を発表した。NVIDIAとは2025年7月にAIデータセンターの800VDC電源技術で協業を発表。発表時点の用途・契約範囲を示し、全車種への供給や現在の調達量、出資を意味しない。 GlobalFoundriesとは2025年12月に650V GaNの開発・製造協業契約を発表した。2026年前半のサンプル予定から量産完了や現在の供給量を推定しない。Synaptics買収契約は2026年10月に現金123ドル/株へ改定され、2027年半ば予定・承認条件付きで未完了。"
     },
     "en": {
       "business": "Makes power semiconductors for EVs, renewable energy and AI data centers and image sensors for vehicles and factories.",
@@ -8486,7 +8737,7 @@
       "strength": "Combines silicon, SiC and GaN power conversion with automotive imaging and integrates design, manufacturing and packaging.",
       "risks": "Automotive and industrial demand, SiC fab utilization and distributor inventory matter; 2025 also included sizable manufacturing realignment and inventory charges.",
       "competition": "Competes with Infineon and STMicroelectronics in power, Texas Instruments and Analog Devices in analog, and Sony and Samsung in imaging.",
-      "relationships": "Alongside NIO’s April 2026 EliteSiC adoption, onsemi announced EV-drivetrain SiC supply agreements with BMW AG in March 2023 and Volkswagen AG in July 2024. A July 2025 NVIDIA collaboration concerns 800 VDC power technology for AI data centers. These dated scopes do not establish all-model supply, current purchase volumes or equity investment."
+      "relationships": "Alongside NIO’s April 2026 EliteSiC adoption, onsemi announced EV-drivetrain SiC supply agreements with BMW AG in March 2023 and Volkswagen AG in July 2024. A July 2025 NVIDIA collaboration concerns 800 VDC power technology for AI data centers. These dated scopes do not establish all-model supply, current purchase volumes or equity investment. A December2025 GlobalFoundries agreement covers 650V GaN development and manufacturing; the announced H1-2026 sampling schedule does not prove completed volume production or current quantities. The Synaptics agreement was amended in October2026 to $123/share cash, with a conditional mid-2027 closing target, not completed ownership."
     },
     "maps": {
       "competition": [
@@ -8697,6 +8948,32 @@
             6
           ],
           "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "GlobalFoundries",
+          "role": "partner",
+          "label": {
+            "ja": "2025年12月：GFSと650V GaNの開発・製造協業契約。量産完了は未確認",
+            "en": "December2025: GFS 650V GaN development / manufacturing agreement; volume completion unconfirmed"
+          },
+          "sourceIndexes": [
+            7
+          ],
+          "ticker": "GFS"
+        },
+        {
+          "kind": "company",
+          "name": "Synaptics",
+          "role": "partner",
+          "label": {
+            "ja": "2026年10月改定：Synapticsを現金123ドル/株で買収する契約。2027年半ば予定・条件付き",
+            "en": "October2026 amendment: Synaptics $123/share cash acquisition agreement; conditional mid-2027 target"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "SYNA"
         }
       ]
     }
@@ -11037,23 +11314,47 @@
       {
         "url": "https://ir.nemetschek.com/stock?url_redirect=true",
         "label": "Nemetschek official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://news.adobe.com/news/2026/03/adobe-and-nvidia-announce-strategic-partnership",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://business.adobe.com/summit/2026/sessions/walmart-unlocking-creative-excellence-at-scale-wit-s913.html",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://blog.adobe.com/en/publish/2021/07/27/adobe-walmart-partner-integrate-fulfillment-technologies-marketplace-adobe-commerce",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://experienceleague.adobe.com/en/docs/discontinued/using/commerce-store-fulfillment",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://news.adobe.com/news/2026/04/adobe-completes-semrush-acquisition",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1831840/000114036126017299/ef20071354_8k.htm",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
       }
     ],
     "ja": {
-      "business": "画像・動画・文書制作のCreative Cloud、PDFのDocument Cloud、企業向けマーケティング基盤を提供するソフト会社。",
+      "business": "画像・動画・文書制作のCreative Cloud、PDFのDocument Cloud、企業向けマーケティング基盤を提供するソフト会社。 2026年4月に取得したSemrushの検索・ブランド可視性事業も持つ。",
       "revenue": "Photoshop、Illustrator、Acrobatなどの個人・法人サブスクと、企業向けデータ・マーケティングサービスから稼ぐ。",
       "strength": "制作ソフトの定番製品群、PDF規格、企業の制作・承認・配信までつなぐ環境と、権利に配慮した生成AIを持つ。",
       "risks": "生成AIや無料ツールによる代替、契約更新、価格への反発、著作権・学習データ規制、競合への人材流出がリスク。",
       "competition": "動画編集はApple Final Cut ProとPremiere Pro、動画作成はMicrosoft ClipchampとAdobe Express、顧客データ・マーケティングではSalesforceとAdobe Experience Platformを比較する。これらは公式製品を照合した編集上の比較。電子署名のDocusignとマーケティングのKlaviyoは相手側年次報告がAdobeを競合として挙げている。",
-      "relationships": "2025年10月のAdobe MAXでは、FireflyでGoogleとOpenAIの生成AIモデルを選択・利用できる機能を公表した。これは制作ツールへのモデル連携で、両社がAdobeの計算容量を購入する契約ではない。製品・機能ごとに提供範囲が異なる。 Adobe公式の2026年5月1日更新ページは、NemetschekグループのMaxonとSubstance 3D/Maxon Oneをセットで提供する提携を説明している。更新日は契約締結日ではなく、出資・独占・売上金額は示さない。"
+      "relationships": "2025年10月のAdobe MAXでは、FireflyでGoogleとOpenAIの生成AIモデルを選択・利用できる機能を公表した。これは制作ツールへのモデル連携で、両社がAdobeの計算容量を購入する契約ではない。製品・機能ごとに提供範囲が異なる。 Adobe公式の2026年5月1日更新ページは、NemetschekグループのMaxonとSubstance 3D/Maxon Oneをセットで提供する提携を説明している。更新日は契約締結日ではなく、出資・独占・売上金額は示さない。 NVIDIAとは2026年3月にFirefly・Omniverse等の戦略協業方針を公表したが、合意は非拘束で全開発完了を示さない。Walmartの2026年公式事例はFireflyによる制作業務を紹介する。一方、2021年発表のWalmart Store Fulfillment拡張・Marketplace統合は2024年2月に終了しており、現在の提供機能としない。Semrushは2026年4月28日に取得完了したAdobeの事業で、独立した現行上場の提携先ではない。"
     },
     "en": {
-      "business": "Provides Creative Cloud for images and video, Document Cloud for PDF and enterprise customer-experience and marketing software.",
+      "business": "Provides Creative Cloud for images and video, Document Cloud for PDF and enterprise customer-experience and marketing software. Its search and brand-visibility business includes Semrush, acquired in April2026.",
       "revenue": "Earns from individual and enterprise subscriptions to products such as Photoshop, Illustrator and Acrobat and from enterprise data and marketing services.",
       "strength": "Combines standard creative tools, the PDF ecosystem, end-to-end enterprise content workflows and commercially safer generative AI.",
       "risks": "Generative AI and free tools, renewals, pricing resistance, copyright and training-data rules and talent competition can weaken results.",
       "competition": "Official-product comparisons cover Apple Final Cut Pro versus Premiere Pro, Microsoft Clipchamp versus Adobe Express video creation, and Salesforce versus Adobe Experience Platform in customer data/marketing. Docusign e-signatures and Klaviyo marketing are separately supported by those peers’ filings naming Adobe.",
-      "relationships": "Adobe MAX in October 2025 described Google and OpenAI model options in Firefly. These are creative-tool model integrations, not contracts for those companies to buy Adobe compute capacity. Availability differs by product and feature. Adobe’s page updated May 1, 2026 describes a Substance 3D / Maxon One bundle partnership with Maxon in the Nemetschek group. The update date is not a contract signing date; no equity investment, exclusivity or revenue amount is inferred."
+      "relationships": "Adobe MAX in October 2025 described Google and OpenAI model options in Firefly. These are creative-tool model integrations, not contracts for those companies to buy Adobe compute capacity. Availability differs by product and feature. Adobe’s page updated May 1, 2026 describes a Substance 3D / Maxon One bundle partnership with Maxon in the Nemetschek group. The update date is not a contract signing date; no equity investment, exclusivity or revenue amount is inferred. A March2026 NVIDIA announcement sets out a non-binding Firefly / Omniverse collaboration, not completion of all development. Adobe’s 2026 Walmart example describes Firefly creative operations. The older Walmart Store Fulfillment extension and Marketplace integration ended in February2024 and are not current services. Semrush was acquired on April28,2026 and is an Adobe business, not an independently listed current partner."
     },
     "maps": {
       "competition": [
@@ -11217,6 +11518,32 @@
             10,
             11
           ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月：NVIDIAとのFirefly・Omniverse戦略協業方針。非拘束合意",
+            "en": "March2026: NVIDIA Firefly / Omniverse strategic collaboration; non-binding agreement"
+          },
+          "sourceIndexes": [
+            12
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Walmart",
+          "role": "customer",
+          "label": {
+            "ja": "2026年公式事例：WalmartのFirefly活用。契約額・購入量は非開示",
+            "en": "2026 official example: Walmart uses Firefly; contract value / volume not disclosed"
+          },
+          "sourceIndexes": [
+            13
+          ],
+          "ticker": "WMT"
         }
       ]
     }
@@ -18261,7 +18588,7 @@
       "GFS"
     ],
     "name": "GlobalFoundries",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Technology platforms / Customers / Competition / Manufacturing / Risk factors",
@@ -18274,6 +18601,10 @@
       {
         "url": "https://gf.com/news-and-events/news/globalfoundries-and-renesas-expand-partnership-to-accelerate-us-semiconductor-manufacturing/",
         "label": "GlobalFoundries / Renesas — manufacturing partnership, February 2026"
+      },
+      {
+        "url": "https://gf.com/news-and-events/news/onsemi-to-develop-next-generation-gan-power-devices-with-globalfoundries/",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
       }
     ],
     "ja": {
@@ -18282,7 +18613,7 @@
       "strength": "RF、シリコンフォトニクス、FDX、車載など差別化工程と、米欧を含む製造拠点を持ち、長期供給を求める顧客に対応する。",
       "risks": "巨額設備投資と高い固定費、工場稼働率、大口顧客、補助金条件、輸出規制、材料・装置供給、需要予測のずれに左右される。",
       "competition": "半導体の受託生産ではTSMC、UMC、SMIC、特殊工程ではTower Semiconductorなどが競合例。GlobalFoundries自身が実名を挙げている。微細化の最先端をすべて同じ条件で比べるのではなく、RF・電源・車載などで重なる工程と生産能力を比べる。",
-      "relationships": "ファブレス企業とIDMの設計をウエハーに製造し、半導体装置・材料会社から生産設備と材料を調達する。 2026年2月の共同発表は、東証6723のRenesas Electronicsとの製造提携拡大を明記。FDX・BCD・不揮発メモリー等を対象とし、当初のテープアウトは2026年半ばの計画だった。後続確認なしに全計画の製造・提供完了とは扱わない。"
+      "relationships": "ファブレス企業とIDMの設計をウエハーに製造し、半導体装置・材料会社から生産設備と材料を調達する。 2026年2月の共同発表は、東証6723のRenesas Electronicsとの製造提携拡大を明記。FDX・BCD・不揮発メモリー等を対象とし、当初のテープアウトは2026年半ばの計画だった。後続確認なしに全計画の製造・提供完了とは扱わない。 自社も2025年12月にonsemiとの650V GaN開発・製造協業契約を発表した。サンプル・能力拡大の計画を量産完了や現在の受注量としない。"
     },
     "en": {
       "business": "Manufactures chips designed by other companies, focusing on differentiated RF, power, automotive and IoT processes rather than leading-edge scaling.",
@@ -18290,7 +18621,7 @@
       "strength": "Offers differentiated RF, silicon photonics, FDX and automotive platforms and a manufacturing footprint that includes the United States and Europe.",
       "risks": "Heavy capital needs and fixed costs, utilization, large customers, subsidy conditions, export controls, equipment and material supply and forecast errors affect results.",
       "competition": "GlobalFoundries explicitly names TSMC, UMC, SMIC and specialty foundry Tower Semiconductor among its competitors. The overlap concerns outsourced wafer manufacturing and available specialty processes for RF, power and automotive applications, rather than equivalence across every leading-edge node.",
-      "relationships": "Fabricates customer designs for fabless companies and IDMs and buys production tools and materials from semiconductor equipment and material suppliers. A February 2026 joint release expands the manufacturing partnership with Renesas Electronics, listed on the Tokyo Stock Exchange as 6723, across FDX, BCD and nonvolatile-memory platforms. Initial tape-outs were planned for mid-2026; this does not confirm completion of the full manufacturing roadmap."
+      "relationships": "Fabricates customer designs for fabless companies and IDMs and buys production tools and materials from semiconductor equipment and material suppliers. A February 2026 joint release expands the manufacturing partnership with Renesas Electronics, listed on the Tokyo Stock Exchange as 6723, across FDX, BCD and nonvolatile-memory platforms. Initial tape-outs were planned for mid-2026; this does not confirm completion of the full manufacturing roadmap. Its own December2025 release also confirms the onsemi 650V GaN development/manufacturing agreement. Sampling and capacity plans do not establish completed volume production or current orders."
     },
     "maps": {
       "competition": [
@@ -18385,6 +18716,19 @@
           "sourceIndexes": [
             2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "role": "partner",
+          "label": {
+            "ja": "2025年12月：onsemiと650V GaNの開発・製造協業契約。量産完了は未確認",
+            "en": "December2025: onsemi 650V GaN development / manufacturing agreement; volume completion unconfirmed"
+          },
+          "sourceIndexes": [
+            3
+          ],
+          "ticker": "ON"
         }
       ]
     }
@@ -19832,6 +20176,10 @@
       {
         "url": "https://www.onsemi.com/company/newsroom/news-and-insights/onsemi-and-synaptics-announce-revised-merger-agreement",
         "label": "onsemi / Synaptics — amended pending acquisition, October 1, 2026"
+      },
+      {
+        "url": "https://synaptics.gcs-web.com/news-releases/news-release-details/onsemi-and-synaptics-announce-revised-merger-agreement",
+        "label": "Official commercial / product / listing disclosure; checked October17,2026"
       }
     ],
     "ja": {
@@ -19933,6 +20281,19 @@
             4
           ],
           "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "role": "partner",
+          "label": {
+            "ja": "2026年10月改定：onsemiによる現金123ドル/株の買収契約。2027年半ば予定・条件付き",
+            "en": "October2026 amendment: onsemi $123/share cash acquisition agreement; conditional mid-2027 target"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "ON"
         }
       ]
     }

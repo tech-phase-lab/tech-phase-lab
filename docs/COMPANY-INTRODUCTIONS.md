@@ -840,3 +840,7 @@ R27 also records Roku and FOX’s June15,2026 conditional acquisition agreement 
 ### Existing infrastructure and content comparisons scoped 2026-10-17 (R28)
 
 Nutanix, Box and OpenText retain all twelve existing named competitor entries, with exact product scopes and verified official-product evidence. These are editorial comparisons, not assertions that current annual narrative recovery succeeded. Virtualization compatibility can coexist with rivalry; Oracle Process Automation concerns functionality within Integration 3 Enterprise Edition. Preserve prior annual sources internally, non-competition fields, all graph sets and frozen NVDA. No new issuer or exhaustive research claim.
+
+### Material commercial omissions corrected, 2026-10-17 (R30)
+
+The user identified major omissions in Apple, Adobe and onsemi. Competitor coverage or one named relationship never certifies commercial completeness. Add individually sourced component suppliers, manufacturing collaborations, customer product use and conditional transaction facts; GlobalFoundries and Synaptics counterpart releases were independently read. Adobe/NVIDIA is non-binding; Semrush was acquired in April2026 and is not a separate listed partner; Walmart Commerce integration ended in February2024, separate from the 2026 Firefly example. Apple AMP commitments do not prove completed capacity or equity investment. Keep the existing215 records, all prior named facts, frozen NVDA and explicit research holds. New introduction research is not published.
