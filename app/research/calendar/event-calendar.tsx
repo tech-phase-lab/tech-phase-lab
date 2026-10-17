@@ -92,7 +92,7 @@ export default function EventCalendar() {
         <div className={calendarStyles.coverageList} tabIndex={0} role="region" aria-label={t("決算の追跡対象一覧", "Companies covered")}><ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul></div>
       </details>
     </section>
-    <p className={calendarStyles.publicationNote}>{t("公式発表の確認結果と数値速報を掲載。市場予想との比較・自動通知には対応していません。", "Officially verified results and early figures are shown. Consensus comparisons and automatic notifications are not supported.")}</p>
+    <p className={calendarStyles.publicationNote}>{t("公式発表の確認結果と数値速報を掲載。決算速報のスマホ通知はPRO会員向けです。", "Officially verified results and early figures are shown. Earnings push notifications are available to PRO members.")}</p>
     <p className={styles.footnote}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
   </ResearchToolShell>;
 }
