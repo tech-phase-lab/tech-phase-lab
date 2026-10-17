@@ -116,7 +116,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "HIMX") return {"3": {"ja": "表示・画像用半導体", "en": "Display & imaging semiconductors"}, "4": {"ja": "CPOの共同開発", "en": "CPO co-development"}};
   if (root === "STM") return {"3": {"ja": "半導体・車載・電源・センサー", "en": "Semiconductors, automotive, power & sensors"}, "6": {"ja": "データセンター向け半導体の顧客", "en": "Data-center semiconductor customer"}};
   if (root === "UMC") return {"1": {"ja": "受託製造・12nm開発協業", "en": "Foundries & 12nm development"}};
-  if (root === "TEL") return {"3": {"ja": "接続技術の展示協力", "en": "Connectivity demonstration collaboration"}, "4": {"ja": "コネクター・接続部品", "en": "Connectors & connectivity"}};
+  if (root === "TEL") return {"3": {"ja": "接続技術の展示協力", "en": "Connectivity demonstration collaboration"}, "4": {"ja": "接続部品・輸送機器向けセンサー", "en": "Connectivity & transportation sensors"}};
   if (root === "GLW") return {"4": {"ja": "光接続・機能性ガラス・材料", "en": "Optical connectivity, glass & materials"}, "6": {"ja": "光接続製品の顧客", "en": "Optical-connectivity customer"}, "7": {"ja": "研究・医療向け製品", "en": "Laboratory & healthcare products"}};
   if (root === "TSEM") return {"1": {"ja": "受託製造・工場共有・生産能力調達", "en": "Foundries, shared fab & capacity access"}, "3": {"ja": "シリコンフォトニクスの技術協業", "en": "Silicon-photonics collaboration"}};
   if (root === "GFS") return {"1": {"ja": "半導体の受託製造", "en": "Semiconductor foundries"}, "3": {"ja": "製造提携の半導体顧客", "en": "Chip customer / manufacturing alliance"}};
@@ -180,16 +180,16 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "DDOG") return {"6": {"ja": "監視・セキュリティ・クラウド連携", "en": "Observability, security & cloud collaboration"}};
   if (root === "ZS") return {"6": {"ja": "安全な接続・防御AI・運用連携", "en": "Secure access, defensive AI & SecOps"}};
 
-  if (root === "MSFT") return {"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM","en":"PC operating systems & sales CRM"}};
+  if (root === "MSFT") return {"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM・ゲーム機","en":"PC OS, sales CRM & game consoles"}};
   if (root === "ADBE") return {"6": {"ja": "制作ツールのAIモデル連携", "en": "AI model integration in creative tools"}, "7": {"ja": "制作・文書・マーケティング", "en": "Creative, documents & marketing"}};
-  if (root === "CRM") return {"6": {"ja": "営業CRM・マーケティング・AI連携", "en": "Sales CRM, marketing & AI integration"}};
+  if (root === "CRM") return {"6": {"ja": "営業・顧客対応・マーケティング・AI", "en": "Sales, customer service, marketing & AI"}};
   if (root === "BOX") return {"6": {"ja": "企業コンテンツ・AI連携", "en": "Enterprise content & AI integration"}, "7": {"ja": "会議・共同作業", "en": "Meetings & collaboration"}};
   if (root === "WDAY") return {"6": {"ja": "クラウド・業務AI連携", "en": "Cloud & workflow AI integration"}, "7": {"ja": "人事・財務・給与", "en": "HR, finance & payroll"}};
   if (root === "DELL") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ラック", "en": "Servers & racks"}, "6": {"ja": "ラックを導入するクラウド企業", "en": "Cloud companies adopting racks"}};
   if (root === "HPE") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ネットワーク", "en": "Servers & networking"}, "6": {"ja": "クラウド・ハイブリッド基盤", "en": "Cloud & hybrid infrastructure"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
 
-  if (root === "AAPL") return { 5: { ja: "端末・PC・スマートフォン", en: "Devices, PCs & smartphones" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
+  if (root === "AAPL") return { 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
   if (root === "META") return { 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・動画・広告", en: "Social, video & ads" } };
   if (root === "ON") return { 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
@@ -3543,6 +3543,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Galaxyスマートフォン",
         "en": "Galaxy smartphones"
       }
+    },
+    "GRMN": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Garmin｜Venuスマートウォッチ",
+        "en": "Garmin | Venu smartwatches"
+      }
     }
   },
   "AMZN": {
@@ -3719,6 +3726,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Dynamics 365 Salesと営業CRM",
         "en": "Sales CRM versus Dynamics 365 Sales"
       }
+    },
+    "SONY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Sony｜PlayStation 5ゲーム機",
+        "en": "Sony | PlayStation 5 consoles"
+      }
+    },
+    "Nintendo": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Nintendo｜Switch 2ゲーム機",
+        "en": "Nintendo | Switch 2 consoles"
+      }
     }
   },
   "ADBE": {
@@ -3841,6 +3862,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Experience Platformの顧客データ",
         "en": "Experience Platform customer data"
+      }
+    },
+    "NOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ServiceNow｜顧客対応・ケース管理",
+        "en": "ServiceNow | customer service cases"
       }
     }
   },
@@ -4357,6 +4385,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Claudeエージェント・MCP連携計画",
         "en": "Claude-agent / MCP integration plans"
+      }
+    },
+    "ADP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ADP｜RUNの米国給与計算",
+        "en": "ADP | RUN US payroll"
       }
     }
   },
@@ -6344,8 +6379,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "TEL": {
       "layer": 4,
       "businessLabel": {
-        "ja": "TE Connectivity｜接続部品",
-        "en": "TE Connectivity | connectivity"
+        "ja": "TE Connectivity｜接続部品・センサー",
+        "en": "TE Connectivity | connectivity / sensors"
       }
     },
     "AVGO": {
@@ -6353,6 +6388,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Broadcom｜2023年800G AEC実演",
         "en": "Broadcom | 2023 800G AEC demo"
+      }
+    },
+    "ST": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Sensata｜輸送機器向け圧力センサー",
+        "en": "Sensata | transportation pressure sensors"
       }
     }
   },
@@ -6827,6 +6869,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Microsoft｜会話AI開発協業",
         "en": "Microsoft | conversational AI"
+      }
+    },
+    "BAND": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Bandwidth｜プログラム可能な音声API",
+        "en": "Bandwidth | programmable voice"
       }
     }
   },
@@ -8346,6 +8395,15 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Tencent｜Tencent",
         "en": "Tencent"
+      }
+    }
+  },
+  "TSM": {
+    "UMC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "UMC｜成熟プロセス受託製造",
+        "en": "UMC | mature-node foundry"
       }
     }
   }

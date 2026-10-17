@@ -1262,7 +1262,7 @@
       "MSFT"
     ],
     "name": "Microsoft",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors",
@@ -1315,6 +1315,18 @@
       {
         "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
         "label": "Salesforce FY2026 Form 10-K — Sales and Marketing products"
+      },
+      {
+        "url": "https://www.xbox.com/en-US/consoles",
+        "label": "Sony official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.playstation.com/en-us/ps5/",
+        "label": "Sony official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.nintendo.com/us/gaming-systems/switch-2/",
+        "label": "Nintendo official product / disclosure / listing scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -1322,7 +1334,7 @@
       "revenue": "業務ソフトの契約料やAzureの利用料、Windowsのライセンス、ゲームなどの販売。",
       "strength": "企業が日常的に使う業務ソフトとクラウドを組み合わせ、既存の仕事にAIを取り入れやすい。",
       "risks": "データセンターへの巨額投資、AIサービスの価格競争、サイバー攻撃や情報流出。",
-      "competition": "クラウド基盤ではAWSとGoogle Cloud、PC用OSではAppleのmacOS、営業CRMではSalesforceとDynamics 365 Salesを比較する。これらは公式製品を照合した編集上の比較。Snowflakeのデータ分析、SentinelOneの端末防御、Pegasystemsの顧客対応・業務自動化は相手側の年次報告がMicrosoftを競合として挙げる分野で、全事業の同等性を意味しない。",
+      "competition": "クラウド基盤ではAWSとGoogle Cloud、PC用OSではAppleのmacOS、営業CRMではSalesforceとDynamics 365 Salesを比較する。これらは公式製品を照合した編集上の比較。Snowflakeのデータ分析、SentinelOneの端末防御、Pegasystemsの顧客対応・業務自動化は相手側の年次報告がMicrosoftを競合として挙げる分野で、全事業の同等性を意味しない。 ゲーム機ではSonyのPlayStation 5、Nintendo Switch 2とXboxを公式製品に基づいて編集比較する。ゲームの互換性や性能が同じという意味ではなく、Microsoftの年次報告が今回この2社を実名列挙したという主張でもない。",
       "relationships": "OpenAIとは2026年4月に契約を改定し、Microsoftは主要クラウド提携先を維持する一方、IPライセンスは非独占となり、OpenAIは他のクラウドでも製品を提供できる。Anthropicは2025年11月にAzure計算容量の購入を約束し、Claudeの提供連携も公表した。容量の約束や投資計画を全て実行済みとは扱わない。"
     },
     "en": {
@@ -1330,7 +1342,7 @@
       "revenue": "Business-software subscriptions, Azure usage fees, Windows licenses and gaming sales.",
       "strength": "Combines widely used workplace software and cloud services to bring AI into existing workflows.",
       "risks": "Heavy data-center investment, AI pricing pressure, cyberattacks and data breaches.",
-      "competition": "Official-product comparisons cover AWS and Google Cloud versus Azure, Apple macOS versus Windows, and Salesforce sales CRM versus Dynamics 365 Sales. Snowflake data analytics, SentinelOne endpoint protection and Pegasystems customer-engagement/workflow overlaps are separately supported by those peers’ filings; the companies are not equivalent across all businesses.",
+      "competition": "Official-product comparisons cover AWS and Google Cloud versus Azure, Apple macOS versus Windows, and Salesforce sales CRM versus Dynamics 365 Sales. Snowflake data analytics, SentinelOne endpoint protection and Pegasystems customer-engagement/workflow overlaps are separately supported by those peers’ filings; the companies are not equivalent across all businesses. Console gaming adds editorial comparisons of Xbox with Sony PlayStation 5 and Nintendo Switch 2 based on official products. This does not equate game compatibility or performance, or claim a newly verified Microsoft annual disclosure naming both.",
       "relationships": "The April 2026 amended OpenAI agreement retains Microsoft as a primary cloud partner while making its IP license non-exclusive and allowing OpenAI products on other clouds. Anthropic announced Azure compute purchase commitments and Claude integration in November 2025; committed capacity and investment plans are not all completed deployments."
     },
     "maps": {
@@ -1429,6 +1441,33 @@
             12
           ],
           "ticker": "CRM"
+        },
+        {
+          "kind": "company",
+          "name": "Sony",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：Sony PlayStation 5とXboxのゲーム機",
+            "en": "Editorial comparison: Sony PlayStation 5 / Xbox consoles"
+          },
+          "sourceIndexes": [
+            13,
+            14
+          ],
+          "ticker": "SONY"
+        },
+        {
+          "kind": "company",
+          "name": "Nintendo",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：Nintendo Switch 2とXboxのゲーム機",
+            "en": "Editorial comparison: Nintendo Switch 2 / Xbox consoles"
+          },
+          "sourceIndexes": [
+            13,
+            15
+          ]
         }
       ],
       "relationships": [
@@ -1766,7 +1805,7 @@
       "TSM"
     ],
     "name": "TSMC",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Business / Risk factors",
@@ -1783,6 +1822,14 @@
       {
         "label": "TSMC FY2025 Annual Report · Foundry services / Competition",
         "url": "https://investor.tsmc.com/sites/ir/annual-report/2025/2025%20TSMC%20Annual%20Report.E.pdf"
+      },
+      {
+        "url": "https://investor.tsmc.com/sites/ir/sec-filings/2025_20F%20Report.pdf",
+        "label": "UMC official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.umc.com/ja-JP/Product/technologies/Detail/mature_technologies",
+        "label": "UMC official product / disclosure / listing scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -1790,7 +1837,7 @@
       "revenue": "半導体の製造代金が中心。複数のチップを組み合わせる先端パッケージングなども手がける。",
       "strength": "微細な回路を大量生産する技術と生産規模。設計会社が製品を量産するための仕組みも整える。",
       "risks": "台湾への生産集中、地震や電力・水の供給障害、大口顧客の需要変動と設備投資の負担。",
-      "competition": "先端半導体の受託製造ではIntel FoundryとSamsungが競合例。IntelはTSMCを先端プロセスの主要競合と明記している。Samsungは両社の公表する製造事業を比較したもの。製造技術の世代や量産規模、先端パッケージングで競争条件は異なる。",
+      "competition": "先端半導体の受託製造ではIntel FoundryとSamsungが競合例。IntelはTSMCを先端プロセスの主要競合と明記している。Samsungは両社の公表する製造事業を比較したもの。製造技術の世代や量産規模、先端パッケージングで競争条件は異なる。 成熟プロセスの受託製造ではUMCも公式開示・技術資料による編集比較の対象。最先端ノードや先端パッケージングまで同等とするものではなく、製造能力やシェアを推定しない。",
       "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。"
     },
     "en": {
@@ -1798,7 +1845,7 @@
       "revenue": "Primarily wafer fabrication, plus advanced packaging and related services.",
       "strength": "Leading-edge manufacturing expertise, production scale and support for customers moving designs into volume production.",
       "risks": "Taiwan concentration, earthquakes, utility disruptions, major-customer demand changes and high capital spending.",
-      "competition": "Examples in leading-edge foundry services include Intel Foundry and Samsung. Intel explicitly names TSMC as a leading-edge competitor. Samsung is a comparison of disclosed manufacturing businesses. Technology generation, manufacturing scale and packaging capabilities differ.",
+      "competition": "Examples in leading-edge foundry services include Intel Foundry and Samsung. Intel explicitly names TSMC as a leading-edge competitor. Samsung is a comparison of disclosed manufacturing businesses. Technology generation, manufacturing scale and packaging capabilities differ. UMC is an editorial comparison in mature-node wafer foundry using official disclosures and technology materials. It is not equated with leading-edge nodes or advanced packaging, and no capacity or share is inferred.",
       "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers."
     },
     "maps": {
@@ -1828,6 +1875,20 @@
             3,
             2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "UMC",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：UMCと成熟プロセスの半導体受託製造",
+            "en": "Editorial comparison: UMC / mature-node wafer foundry"
+          },
+          "sourceIndexes": [
+            4,
+            5
+          ],
+          "ticker": "UMC"
         }
       ],
       "relationships": [
@@ -2949,7 +3010,7 @@
       "AAPL"
     ],
     "name": "Apple",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Risk factors",
@@ -2970,6 +3031,18 @@
       {
         "label": "OpenAI — Apple partnership, June 10, 2024",
         "url": "https://openai.com/index/openai-and-apple-announce-partnership/"
+      },
+      {
+        "url": "https://www.apple.com/watch/",
+        "label": "Garmin official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www8.garmin.com/manuals/webhelp/GUID-2CF5620C-E585-4E0A-9CC3-9565533EEE4D/EN-US/Venu_4_OM_EN-US.pdf",
+        "label": "Garmin official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.garmin.com/en-US/newsroom/press-release/corporate/garmin-ltd-schedules-second-quarter-2026-earnings-call/",
+        "label": "Garmin official product / disclosure / listing scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -2977,7 +3050,7 @@
       "revenue": "iPhoneなどの製品販売と、App Store、クラウド、音楽・動画などのサービス。",
       "strength": "端末・基本ソフト・サービスを一体で設計し、製品同士を使いやすく連携させる。",
       "risks": "iPhoneの需要変動、海外の製造網への依存、アプリ配信などをめぐる規制。",
-      "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。",
+      "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。",
       "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。"
     },
     "en": {
@@ -2985,7 +3058,7 @@
       "revenue": "Device sales and services including the App Store, cloud storage, music and video.",
       "strength": "Integrates hardware, operating systems and services across its products.",
       "risks": "iPhone demand shifts, overseas manufacturing dependence and regulation of its platforms.",
-      "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services.",
+      "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features.",
       "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established."
     },
     "maps": {
@@ -3015,6 +3088,21 @@
             1
           ],
           "ticker": "HPQ"
+        },
+        {
+          "kind": "company",
+          "name": "Garmin",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：Garmin VenuとApple Watchの運動向けスマートウォッチ",
+            "en": "Editorial comparison: Garmin Venu / Apple Watch fitness smartwatches"
+          },
+          "sourceIndexes": [
+            5,
+            6,
+            7
+          ],
+          "ticker": "GRMN"
         }
       ],
       "relationships": [
@@ -6901,7 +6989,7 @@
       "CRM"
     ],
     "name": "Salesforce",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Agentforce 360 / Revenue model / Competition / Risk factors",
@@ -6938,6 +7026,14 @@
       {
         "url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm",
         "label": "Adobe FY2025 Form 10-K — Express, Premiere Pro and Experience Platform"
+      },
+      {
+        "url": "https://www.salesforce.com/service/",
+        "label": "ServiceNow official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.servicenow.com/products/customer-service-management.html/index.html",
+        "label": "ServiceNow official product / disclosure / listing scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -6945,7 +7041,7 @@
       "revenue": "Sales、Service、Data Cloud、Slackなどの利用契約とサポートが中心。導入支援や研修からも収入を得る。",
       "strength": "顧客情報を共通基盤へ集め、営業や問い合わせ対応の流れとAIを同じ権限・データ管理の下で動かせる。",
       "risks": "企業のIT予算と契約更新に左右され、生成AIの品質・費用・個人情報管理が導入速度を決める。製品統合が複雑になるリスクもある。",
-      "competition": "営業CRMではMicrosoft Dynamics 365 Sales、Oracle CX、SAP Sales Cloud V2、HubSpot Sales Hub、顧客データ・マーケティングではAdobe Experience Platformが比較例。Salesforceの年次報告と各社の公式製品を照合した編集上の比較で、Salesforce自身が全社を実名列挙したという意味ではない。Pegasystemsの顧客対応・業務自動化は同社の年次報告による実名開示。",
+      "competition": "営業CRMではMicrosoft Dynamics 365 Sales、Oracle CX、SAP Sales Cloud V2、HubSpot Sales Hub、顧客データ・マーケティングではAdobe Experience Platformが比較例。Salesforceの年次報告と各社の公式製品を照合した編集上の比較で、Salesforce自身が全社を実名列挙したという意味ではない。Pegasystemsの顧客対応・業務自動化は同社の年次報告による実名開示。 顧客対応ではServiceNow Customer Service ManagementとSalesforceのケース管理を公式製品で編集比較する。営業CRM、IT運用管理、全AI基盤を一括で同等とはしない。",
       "relationships": "Anthropicとは2026年8月にClaudeforceを発表し、ClaudeからSalesforceのデータ・業務操作を扱う連携を説明した。OpenAIとは2025年10月にAgentforce・ChatGPT・Slackの連携拡大を発表。公表済み機能と今後の統合計画を分けて捉える。"
     },
     "en": {
@@ -6953,7 +7049,7 @@
       "revenue": "Subscriptions and support for Sales, Service, Data Cloud, Slack and other products lead revenue, with services and training also contributing.",
       "strength": "Unifies customer data, workflows and AI under shared permissions and governance across front-office teams.",
       "risks": "Enterprise budgets and renewals matter, while generative-AI quality, cost and privacy can slow adoption and product integration can add complexity.",
-      "competition": "Sales-CRM comparisons cover Microsoft Dynamics 365 Sales, Oracle CX, SAP Sales Cloud V2 and HubSpot Sales Hub; Adobe Experience Platform overlaps in customer data/marketing. These editorial comparisons use Salesforce’s filing and official products, not a claim that Salesforce explicitly lists every company. Pegasystems independently names Salesforce in customer engagement/workflow automation.",
+      "competition": "Sales-CRM comparisons cover Microsoft Dynamics 365 Sales, Oracle CX, SAP Sales Cloud V2 and HubSpot Sales Hub; Adobe Experience Platform overlaps in customer data/marketing. These editorial comparisons use Salesforce’s filing and official products, not a claim that Salesforce explicitly lists every company. Pegasystems independently names Salesforce in customer engagement/workflow automation. Customer service adds an editorial comparison with ServiceNow Customer Service Management in case handling using official products. Sales CRM, IT operations and entire AI platforms are not equated.",
       "relationships": "Salesforce announced Claudeforce with Anthropic in August 2026, connecting Claude with Salesforce data and governed business actions. An October 2025 OpenAI announcement expanded Agentforce, ChatGPT and Slack integration. Announced available features are distinct from further integration plans."
     },
     "maps": {
@@ -7040,6 +7136,20 @@
             8
           ],
           "ticker": "ADBE"
+        },
+        {
+          "kind": "company",
+          "name": "ServiceNow",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：ServiceNow CSMとSalesforceの顧客対応・ケース管理",
+            "en": "Editorial comparison: ServiceNow CSM / Salesforce customer-service cases"
+          },
+          "sourceIndexes": [
+            9,
+            10
+          ],
+          "ticker": "NOW"
         }
       ],
       "relationships": [
@@ -11064,7 +11174,7 @@
       "INTU"
     ],
     "name": "Intuit",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Products / Revenue / Competition / Risks",
@@ -11089,6 +11199,14 @@
       {
         "url": "https://investors.intuit.com/news-events/press-releases/detail/1305/intuit-and-anthropic-partner-to-bring-trusted-financial-intelligence-and-custom-ai-agents-to-consumers-and-businesses",
         "label": "Intuit — Anthropic multi-year agent partnership, February 24, 2026"
+      },
+      {
+        "url": "https://quickbooks.intuit.com/compare/quickbooks-vs-adp/",
+        "label": "ADP official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.adp.com/compare/adp-vs-quickbooks.aspx",
+        "label": "ADP official product / disclosure / listing scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -11096,7 +11214,7 @@
       "revenue": "会計・給与・税務ソフトのサブスク、決済手数料、融資、確定申告支援、金融商品の送客、マーケティングサービスから稼ぐ。",
       "strength": "会計、給与、決済、税務、融資を同じ顧客データでつなぎ、専門家支援とAIを組み合わせられる。",
       "risks": "無料の税務・会計サービス、政府の直接申告、税制変更、信用・決済損失、重要な税務シーズンの障害が業績に影響する。",
-      "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILL、メール販促・自動化ではMailchimpとHubSpotが競合例。税務は公表製品の比較、BILLは相手側の開示、HubSpotはMailchimp自身の比較資料が根拠。製品分野を分けて見る。",
+      "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILL、メール販促・自動化ではMailchimpとHubSpotが競合例。税務は公表製品の比較、BILLは相手側の開示、HubSpotはMailchimp自身の比較資料が根拠。製品分野を分けて見る。 米国の小規模企業向け給与計算ではQuickBooks WorkforceとRUN Powered by ADPを両社の公式比較資料で照合する。国別条件、料金、全HCM機能が同じという意味ではない。",
       "relationships": "OpenAI・AnthropicとAIモデル利用やChatGPT・Claudeでの金融ツール連携を進める。Anthropicとの2026年2月発表にはClaude Agent SDKによる業務エージェント、MCP連携、Claude Code採用を含む。段階展開の計画と提供済み機能を区別し、両社との売上分配や全体展開完了を推定しない。"
     },
     "en": {
@@ -11104,7 +11222,7 @@
       "revenue": "Earns from accounting, payroll and tax subscriptions, payments, lending, assisted tax, financial-product referrals and marketing services.",
       "strength": "Connects accounting, payroll, payments, tax and lending on shared customer data and combines software with experts and AI.",
       "risks": "Free tax and accounting tools, government direct filing, tax-law changes, credit and payment losses and peak-season outages can affect results.",
-      "competition": "Examples include H&R Block versus TurboTax in tax preparation, BILL versus QuickBooks bill payment, and HubSpot versus Mailchimp in email marketing and automation. Tax is a disclosed-product comparison, BILL is peer-side disclosure, and Mailchimp publishes its own HubSpot comparison. These are separate product markets.",
+      "competition": "Examples include H&R Block versus TurboTax in tax preparation, BILL versus QuickBooks bill payment, and HubSpot versus Mailchimp in email marketing and automation. Tax is a disclosed-product comparison, BILL is peer-side disclosure, and Mailchimp publishes its own HubSpot comparison. These are separate product markets. US small-business payroll compares QuickBooks Workforce with RUN Powered by ADP using both companies’ official comparisons. Country terms, pricing and the full HCM portfolios are not equated.",
       "relationships": "Intuit works with OpenAI and Anthropic on model use and financial-tool integration in ChatGPT and Claude. Its February 2026 Anthropic announcement includes Claude Agent SDK workflows, MCP integrations and Claude Code adoption. Phased rollout plans do not establish completed delivery of all features or revenue-sharing arrangements."
     },
     "maps": {
@@ -11149,6 +11267,20 @@
             0,
             3
           ]
+        },
+        {
+          "kind": "company",
+          "name": "ADP",
+          "role": "competitor",
+          "label": {
+            "ja": "自社製品比較：ADP RUNとQuickBooks Workforceの米国給与計算",
+            "en": "Own-product comparison: ADP RUN / QuickBooks Workforce US payroll"
+          },
+          "sourceIndexes": [
+            6,
+            7
+          ],
+          "ticker": "ADP"
         }
       ],
       "relationships": [
@@ -12471,6 +12603,18 @@
       {
         "url": "https://investors.twilio.com/node/13691/pdf",
         "label": "TWLO / Microsoft — primary relationship source; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.twilio.com/en-us/voice",
+        "label": "Bandwidth official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.bandwidth.com/use-cases/voice-api-for-voice-ai-platforms/",
+        "label": "Bandwidth official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://investors.bandwidth.com/shareholder-services/investor-faqs",
+        "label": "Bandwidth official product / disclosure / listing scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -12478,7 +12622,7 @@
       "revenue": "通信APIの利用量課金が中心で、電話番号、メール、認証、Segmentの顧客データ基盤の契約料金も得る。",
       "strength": "多国間の通信網をAPIで扱え、メッセージ送信から顧客データ活用まで開発者が一つの基盤で組み込める。",
       "risks": "通信会社への接続費、迷惑通信規制、顧客の利用減、障害・不正利用、大手クラウドや通信APIとの価格競争が利益を圧迫する。",
-      "competition": "通信APIや顧客窓口向けサービスでは8x8が競合例。8x8自身の年次報告がTwilioを実名で挙げている。電話・メッセージなどをアプリへ組み込む機能と、顧客窓口の機能では比較する製品が異なり、全製品が同じという意味ではない。",
+      "competition": "通信APIや顧客窓口向けサービスでは8x8が競合例。8x8自身の年次報告がTwilioを実名で挙げている。電話・メッセージなどをアプリへ組み込む機能と、顧客窓口の機能では比較する製品が異なり、全製品が同じという意味ではない。 音声APIではBandwidthとTwilio Programmable Voiceを公式製品で編集比較する。通信容量の購入・供給契約や全コンタクトセンター機能の同等性を意味しない。",
       "relationships": "通信会社やメール網から接続を仕入れ、企業のアプリやコンタクトセンターへメッセージ、通話、認証を届ける。 2025年5月にMicrosoftとAzure AI Foundryを使う会話AIの複数年開発提携を発表。音声・メッセージ・担当者支援の開発計画で、全計画の提供完了やクラウドの契約額を推定しない。"
     },
     "en": {
@@ -12486,7 +12630,7 @@
       "revenue": "Earns mainly usage-based communications fees, plus phone numbers, email, verification and Segment customer-data subscriptions.",
       "strength": "Developers can use one platform to reach communications networks across countries and connect customer interactions with data.",
       "risks": "Carrier fees, messaging regulation, lower customer usage, outages, abuse and price competition from clouds and API rivals can pressure margins.",
-      "competition": "8x8 is one example in overlapping communications API and contact-center markets. Its annual report explicitly names Twilio. Embedding communications in applications and operating contact-center workflows are different product scopes, rather than a match across every offering.",
+      "competition": "8x8 is one example in overlapping communications API and contact-center markets. Its annual report explicitly names Twilio. Embedding communications in applications and operating contact-center workflows are different product scopes, rather than a match across every offering. Programmable voice APIs add an editorial comparison with Bandwidth using official products. This does not establish purchased network capacity, a supply contract or equivalent full contact-center portfolios.",
       "relationships": "Buys connectivity from carriers and email networks, then delivers messaging, calls and verification into enterprise apps and contact centers. A May 2025 announcement establishes a multiyear Microsoft conversational-AI development partnership using Azure AI Foundry. Voice, messaging and agent-assistance plans do not establish completed rollout of every feature or a disclosed cloud contract value."
     },
     "maps": {
@@ -12504,6 +12648,21 @@
             1
           ],
           "ticker": "EGHT"
+        },
+        {
+          "kind": "company",
+          "name": "Bandwidth",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：BandwidthとTwilioのプログラム可能な音声API",
+            "en": "Editorial comparison: Bandwidth / Twilio programmable voice APIs"
+          },
+          "sourceIndexes": [
+            3,
+            4,
+            5
+          ],
+          "ticker": "BAND"
         }
       ],
       "relationships": [
@@ -21262,7 +21421,7 @@
       "TEL"
     ],
     "name": "TE Connectivity",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Products / Customers / Competition / Risk factors",
@@ -21275,6 +21434,18 @@
       {
         "url": "https://www.te.com/en/about-te/news-center/ofc-2023.html",
         "label": "TE Connectivity — OFC 2023 partner demonstrations, March 8, 2023"
+      },
+      {
+        "url": "https://www.te.com/en/products/sensors/pressure-sensors.html",
+        "label": "Sensata Technologies official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.sensata.com/products/pressure-sensors/oil-pressure-and-temperature",
+        "label": "Sensata Technologies official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://investors.sensata.com/news/news-details/2026/Sensata-Technologies-to-Release-Second-Quarter-2026-Financial-Results-on-July-29-2026/default.aspx",
+        "label": "Sensata Technologies official product / disclosure / listing scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -21282,7 +21453,7 @@
       "revenue": "輸送機器、産業機器、通信・データ機器メーカーへ接続部品、センサー、工具を大量供給して稼ぐ。",
       "strength": "厳しい温度・振動・小型化条件に合わせて接続部品を設計し、顧客製品へ認定された部品を世界各地で量産できる。",
       "risks": "自動車・産業需要、顧客プログラム、原材料価格、関税、工場移管、品質、買収統合と販売代理店在庫に左右される。",
-      "competition": "接続部品ではAmphenolとMolexが競合例。TE自身の年次報告が輸送・産業の両分野で実名を挙げている。データ機器、自動車、工場などでは用途・認定条件が異なり、全てのコネクターやセンサーで競うわけではない。",
+      "competition": "接続部品ではAmphenolとMolexが競合例。TE自身の年次報告が輸送・産業の両分野で実名を挙げている。データ機器、自動車、工場などでは用途・認定条件が異なり、全てのコネクターやセンサーで競うわけではない。 TEのTransportation Solutions競合開示にあるSensataは、輸送機器向け圧力センサーの製品範囲を照合して比較する。全コネクターや全センサーが同じという意味ではない。",
       "relationships": "自動車・産業・通信機器メーカーへ接続部品を供給し、金属、樹脂、電子部品と製造設備を外部調達する。 TE Connectivityの2023年3月OFC発表は、BroadcomブースでTEの800Gアクティブ電気ケーブルを実演すると明記。発表年を付した技術展示の関係であり、現行の購入契約量や出資を示すものではない。"
     },
     "en": {
@@ -21290,7 +21461,7 @@
       "revenue": "Supplies high volumes of connectivity parts, sensors and tooling to transportation, industrial and communications-equipment manufacturers.",
       "strength": "Engineers connections for harsh temperature, vibration and space constraints, qualifies into customer platforms and manufactures globally.",
       "risks": "Auto and industrial demand, customer programs, materials, tariffs, factory transfers, quality, acquisitions and channel inventory affect results.",
-      "competition": "TE names Amphenol and Molex among competitors in both transportation and industrial markets. Connectivity requirements differ across data networks, vehicles and factories; this does not equate all connector, sensor and relay products.",
+      "competition": "TE names Amphenol and Molex among competitors in both transportation and industrial markets. Connectivity requirements differ across data networks, vehicles and factories; this does not equate all connector, sensor and relay products. Sensata, named in TE’s Transportation Solutions competition disclosure, is scoped here to transportation pressure sensors using official products. This does not equate every connector or sensor.",
       "relationships": "Supplies connectivity products to automotive, industrial and communications makers and sources metals, resins, electronics and equipment. TE Connectivity’s March 2023 OFC announcement identifies its 800G active electrical cable demonstration at the Broadcom booth. This dated technology demonstration does not establish current contract volumes or an equity investment."
     },
     "maps": {
@@ -21319,6 +21490,22 @@
           "sourceIndexes": [
             1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Sensata Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Sensataと輸送機器向け圧力センサー",
+            "en": "Company disclosure / product scope: Sensata / transportation pressure sensors"
+          },
+          "sourceIndexes": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "ticker": "ST"
         }
       ],
       "relationships": [
