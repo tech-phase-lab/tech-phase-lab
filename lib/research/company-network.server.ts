@@ -3724,6 +3724,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "NVIDIA：AWS向けGPU供給",
         "en": "NVIDIA: AWS GPU hardware"
       }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google：Compute Engineのクラウド競合",
+        "en": "Google: Compute Engine cloud competition"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft：Azure VMのクラウド競合",
+        "en": "Microsoft: Azure VM cloud competition"
+      }
     }
   },
   "GOOG": {
@@ -3782,6 +3796,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Broadcom：TPU・ネットワーク供給",
         "en": "Broadcom: TPU / networking supply"
       }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon：AWS EC2のクラウド競合",
+        "en": "Amazon: AWS EC2 cloud competition"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft：Azure VMのクラウド競合",
+        "en": "Microsoft: Azure VM cloud competition"
+      }
     }
   },
   "META": {
@@ -3839,6 +3867,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Broadcom：MTIA設計・半導体供給",
         "en": "Broadcom: MTIA design / semiconductor supply"
+      }
+    },
+    "EssilorLuxottica": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "EssilorLuxottica：AIグラスの共同展開",
+        "en": "EssilorLuxottica: AI-glasses partnership"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Qualcomm：Quest 3半導体・共同開発",
+        "en": "Qualcomm: Quest 3 chips / co-development"
       }
     }
   },
@@ -4544,6 +4586,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "香港3750・電池セル供給元",
         "en": "HKEX 3750 / battery-cell supplier"
+      }
+    },
+    "Samsung": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Samsung：AI半導体の製造協業",
+        "en": "Samsung: AI-chip manufacturing collaboration"
+      }
+    },
+    "SPCX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SpaceX：Megapack顧客・出資先",
+        "en": "SpaceX: Megapack customer / investee"
+      }
+    },
+    "F": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Ford：EV競合・充電ネットワーク連携",
+        "en": "Ford: EV competition / charging access"
+      }
+    },
+    "GM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "GM：EV競合・充電ネットワーク連携",
+        "en": "GM: EV competition / charging access"
       }
     }
   },
@@ -8745,6 +8815,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Microsoft：Maia 300製造の採用計画",
         "en": "Microsoft: Maia300 manufacturing plan"
+      }
+    },
+    "ARM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Arm：AGI CPU製造の顧客",
+        "en": "Arm: AGI CPU manufacturing customer"
       }
     }
   },
