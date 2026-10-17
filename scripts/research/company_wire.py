@@ -210,7 +210,9 @@ NOISE = re.compile(
     r'\bNet ETF (?:Buying|Selling)\b|\bETFs? Are (?:Buying|Selling)\b|^Lobbying Update\b'
     r'|\b(?:ETF|Trust|Fund)\b.{0,60}\b(?:Buys|Sells|Bought|Sold)\b.{0,60}\bon\b'
     r'|\bZacks (?:Analyst Blog|Investment Ideas)\b|\bTake five\b|\blifetime access\b|\bfor one \$\d+ payment\b'
-    r'|\bForecast\s+[—–-]\s+Price Target\b|\bPrediction for 20\d\d\b|\bBC-Most Active\b', re.I)
+    r'|\bForecast\s+[—–-]\s+Price Target\b|\bPrediction for 20\d\d\b|\bBC-Most Active\b'
+    r'|\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$|\b\d+ (?:Top |Best )?Stocks? to Buy\b|\bBetter AI Stock:|\bToo Late to Buy\b'
+    r'|\bBuy Now and Hold\b|\bShould You Buy\b|\bDon.t miss\b|\bmissed out on\b.{0,60}\bstock', re.I)
 MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
                    r'the information|nikkei|investor.s business|seeking alpha|yahoo finance|benzinga|the verge|ars technica|tom.s hardware', re.I)
 STOPWORDS = frozenset('the and for with from that this its are was has have will into over after than more new how why what '

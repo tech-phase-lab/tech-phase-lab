@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed, type InitialNewsSnapshot } from "@/lib/research/general-news";
 import { listedOfficialNews, listedOriginalPreviews } from "@/lib/research/home-today";
@@ -9,6 +9,9 @@ import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-di
 import { clockTime, lateDetection, officialTime, recentPublication } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
+import { serverWireSnapshot, subscribeWire, wireSnapshot } from "@/lib/research/wire-store";
+import { WATCH_TICKERS } from "@/lib/research/flash-rows";
+import { wireStories } from "@/lib/research/wire-stories";
 import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
@@ -41,6 +44,8 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
   const receivedAt = useSeed ? seed.at : fetchedAt;
   const panel = useRef<HTMLElement>(null);
   const [page, setPage] = useState(1);
+  // Company headlines join the list, as they do on 速報 and in the top strip (owner, Oct 17: this list alone did not move).
+  const wire = useSyncExternalStore(subscribeWire, wireSnapshot, serverWireSnapshot);
   useEffect(() => {
     const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
     if (cached) {
@@ -96,6 +101,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
     ...official.map(item => { const time = officialTime(item), shown = clockTime(time.at, time.kind, item.observedAt);
       return { kind: "official" as const, item, publication: { ...shown, dated: time.kind }, at: shown.kind === "date" ? `${shown.at}T00:00:00Z` : shown.at }; }),
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
+    ...(officialOnly ? [] : wireStories(wire, lang, WATCH_TICKERS).map(story => ({ kind: "wire" as const, story, at: story.at }))),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   const pages = Math.max(1, Math.ceil((updates.length + news.length) / 5));
   const current = Math.min(page, pages), start = (current - 1) * 5;
@@ -120,6 +126,11 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
     {!!visibleUpdates.length && <section aria-label={lang === "ja" ? "ニュース速報" : "News updates"}>
       <div className={styles.items}>{visibleUpdates.map(update => {
         if (update.kind === "original-preview") return <OriginalPreviewCard key={update.item.id} item={update.item} lang={lang} />;
+        if (update.kind === "wire") {
+          const story = update.story;
+          return <article key={`wire-${story.id}`}><TimelineRow now={receivedMs} at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.join(" · ")} title={story.title} lang={lang}
+            publication={`${lang === "ja" ? "発表" : "Published"} ${format(story.at)}`} /></TimelineRow></article>;
+        }
         if (update.kind === "market") {
           const item = update.item;
           const display = marketNewsDisplay(item, lang);

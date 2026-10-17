@@ -6,6 +6,7 @@ import { earningsResults, isEarningsRelated } from "./earnings-results.ts";
 import { analystNewsDisplay } from "./analyst-news.ts";
 import { officialNewsDisplay, shownInLanguage, socialChatter } from "./news-presentation.ts";
 import { NEWS_MAX_AGE_MS, officialTime } from "./news-time.ts";
+import { wireStories } from "./wire-stories.ts";
 
 /** The 速報 page: one newest-first timeline of what each watched company's
  * live monitor shows (the 22 stocks) and earnings results (those 22 plus the
@@ -52,12 +53,9 @@ export function flashRows(feed: Partial<GeneralNewsFeed> | null | undefined, wir
     const title = ja ? item.summaryJa : item.summaryEn;
     if (tickers.length && title) rows.push({ id: `news:${item.id}`, kind: "news", tickers, title, body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, timeKind: "published", observedAt: item.observedAt });
   }
-  for (const [ticker, list] of Object.entries(wire)) {
-    if (!WATCH_TICKERS.has(ticker)) continue;
-    for (const item of list) {
-      const title = ja ? item.titleJa : item.titleEn;
-      if (title) rows.push({ id: `wire:${item.id}`, kind: "news", tickers: [ticker], title, url: item.url, source: item.publisher, at: item.publishedAt, timeKind: "published" });
-    }
+  // One story is one row, naming every watched company it concerns (owner, Oct 17).
+  for (const story of wireStories(wire, lang, WATCH_TICKERS)) {
+    rows.push({ id: `wire:${story.id}`, kind: "news", tickers: story.tickers, title: story.title, url: story.url, source: story.publisher, at: story.at, timeKind: "published" });
   }
   for (const row of earningsResults(official, briefs)) {
     const result = ja ? row.result.ja : row.result.en;
