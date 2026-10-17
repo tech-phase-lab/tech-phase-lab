@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import ToolShell from "../tool-shell";
+import {useReview} from "../review-context";
 import FlowNavigation from "../flow-navigation";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import styles from "../diagnosis.module.css";
@@ -20,21 +21,22 @@ export default function ThermometerScreen({ identityReady = true }: { identityRe
   return <ToolShell identityReady={identityReady}>{locale => <MarketGauge locale={locale}/>}</ToolShell>;
 }
 function MarketGauge({ locale }: { locale: DiagnosisLocale }) {
+  const review=useReview(), sample=!!review&&review.scenario!=='live';
   const [selected, setSelected] = useState<number | null>(null);
   const en = locale === "en", t = (ja: string, eng: string) => en ? eng : ja;
   return <div className={styles.section}>
     <header className={styles.toolHeading}><h1>{t("相場の温度計", "Market gauge")}</h1><p className={styles.muted}>{t("いまの相場の位置を、ひと目でつかむ", "See where the market stands at a glance")}</p></header>
     <section className={`${styles.card} ${styles.hero} ${styles.gaugeHero}`}>
       <span className={styles.eyebrow}>MARKET THERMOMETER</span>
-      <svg className={styles.gauge} viewBox="0 0 300 170" role="img" aria-label={t("相場の温度計。現在値は準備中です。", "Market gauge. Current reading is not available yet.")}>
-        {colors.map((color, i) => <path key={color} d={segment(i)} fill={color} opacity=".28"/>)}
+      <svg className={styles.gauge} viewBox="0 0 300 170" role="img" aria-label={sample?t("かなり熱い・表示見本", "Very hot · Display sample"):t("相場の温度計。現在値は準備中です。", "Market gauge. Current reading is not available yet.")}>
+        {colors.map((color, i) => <path key={color} d={segment(i)} fill={color} opacity={sample?1:.28}/>)}
         {Array.from({length:21},(_,k)=>{const a=(180-k*9)*Math.PI/180,r=k%5===0?80:84;return <line key={k} x1={150+88*Math.cos(a)} y1={150-88*Math.sin(a)} x2={150+r*Math.cos(a)} y2={150-r*Math.sin(a)} stroke="#9aa8b8" strokeOpacity={k%5===0?.7:.35} strokeWidth={k%5===0?1.5:1}/>;})}
-        <path d="M146.5 150 L150 52 L153.5 150 Z" fill="#9aa8b8" opacity=".3"/>
+        <path d="M146.5 150 L150 52 L153.5 150 Z" fill={sample?"#f3dfae":"#9aa8b8"} opacity={sample?1:.3} transform={sample?"rotate(64.8 150 150)":undefined}/>
         <circle cx="150" cy="150" r="9" fill="#0a1018" stroke="#d8b36a" strokeWidth="2"/>
         <text x="15" y="165" fill="currentColor" fontSize="12">{t("冷えている", "Cool")}</text><text x="285" y="165" textAnchor="end" fill="currentColor" fontSize="12">{t("熱い", "Hot")}</text>
       </svg>
-      <p className={styles.gaugeEmpty}>—</p><p className={styles.status}>{t("準備中です。", "Coming soon.")}</p>
-      <p className={styles.muted}>{t("現在の相場の判定はまだ表示していません。", "Current market readings are not available yet.")}</p>
+      <p className={styles.gaugeEmpty}>{sample?t("かなり熱い", "Very hot"):"—"}</p><p className={styles.status}>{sample?t("表示見本", "Display sample"):t("準備中です。", "Coming soon.")}</p>
+      {!sample?<p className={styles.muted}>{t("現在の相場の判定はまだ表示していません。", "Current market readings are not available yet.")}</p>:null}
     </section>
     <section className={styles.card}><h2>{t("4つの位置", "Four ways the market can look")}</h2><p className={styles.muted}>{t("マスを押すと、説明が出ます。", "Tap a box to see what it means.")}</p>
       <div className={styles.mapAxis}><span>{t("◀ 冷えている", "◀ Cool")}</span><span>{t("行き過ぎ", "Temperature")}</span><span>{t("熱い ▶", "Hot ▶")}</span></div>

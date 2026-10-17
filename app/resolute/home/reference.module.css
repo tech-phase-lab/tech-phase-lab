@@ -54,8 +54,7 @@
 .notice { font-size:12px; color:var(--sub); text-align:center; }
 /* 動き: 開いたとき順に浮かぶ。そのあとも、ゆっくり動き続ける。 */
 @keyframes rise { from { opacity:0; transform:translateY(26px) scale(.98); } to { opacity:1; transform:none; } }
-@keyframes star { from { opacity:0; transform:scale(.4) rotate(-30deg); } to { opacity:1; transform:none; } }
-@keyframes twinkle { 0%,86%,100% { transform:none; filter:none; } 92% { transform:scale(1.35); filter:drop-shadow(0 0 6px #f3dfae); } }
+@keyframes breathe { 0%,100% { opacity:1; } 50% { opacity:.75; } }
 @keyframes drift { from { transform:translate3d(-2%,-1%,0) scale(1); } to { transform:translate3d(2%,2%,0) scale(1.08); } }
 @keyframes dust { from { opacity:.15; } to { opacity:.7; } }
  .root::before { content:""; position:absolute; inset:-10%; z-index:0; pointer-events:none;
@@ -75,7 +74,7 @@
 .wrap > *, .sec > * { animation:rise .9s cubic-bezier(.2,.7,.2,1) both; }
 .wrap > :nth-child(2){animation-delay:.1s} .sec:nth-of-type(1) > .card{animation-delay:.25s}
 .sec:nth-of-type(1) > .card:nth-child(3){animation-delay:.45s} .sec:nth-of-type(2) > *{animation-delay:.65s} .sec:nth-of-type(3) > *{animation-delay:.85s}
-.news b i { font-style:normal; display:inline-block; animation:star .5s ease var(--d) both, twinkle 6s ease-in-out calc(var(--d) + 2.5s) infinite; }
+.news b i { font-style:normal; display:inline-block;  }
 .root h1 { animation:rise 1s ease both; display:flex; align-items:center; justify-content:center; gap:14px; }
 .root h1 .anc { width:34px; height:34px; flex:none; fill:none; stroke:var(--gold); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 8px rgba(216,179,106,.4)); }
 .card, .tile { position:relative; overflow:hidden; }
@@ -99,3 +98,10 @@
 .row{flex-wrap:wrap}.date{min-height:24px}.notice{margin:0}.foot a,.foot button{min-height:36px}.root .track{opacity:.45}.root .big{font-size:18px;color:var(--sub)}
 @media(max-width:360px){.root h1{font-size:25px;gap:8px}.tile b{font-size:15px}.card{padding:16px}.more{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.root *,.root *::before,.root *::after,.root::before,.root::after{animation:none!important;transition:none!important;transform:none!important}}
+
+.news b { animation:breathe 5s ease-in-out 1; }
+.high .news b { animation:none; }
+.root .sample .track { opacity:1; }
+.root .sample .big { font-size:22px; color:var(--gold2); }
+.needle { position:absolute; left:86%; top:-5px; width:3px; height:18px; border-radius:2px; background:#f3dfae; box-shadow:0 0 8px #f3dfae88; }
+.sampleLabel { font-size:11px; color:var(--sub); font-weight:400; }

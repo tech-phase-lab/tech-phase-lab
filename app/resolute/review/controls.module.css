@@ -11,3 +11,8 @@
 .panel{font-family:var(--font-resolute-sans),sans-serif}
 
 .links button[aria-pressed="true"] { background:#5a4724; outline:2px solid #d9b56f; outline-offset:1px; }
+
+.panel summary { min-height:44px; display:list-item; align-content:center; cursor:pointer; color:#f2dfb2; }
+.panel summary:focus-visible { outline:2px solid #d9b56f; outline-offset:3px; }
+.panel details[open] summary { margin-bottom:12px; }
+.panel { padding-block:4px; }

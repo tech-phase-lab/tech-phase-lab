@@ -77,6 +77,7 @@ function Workspace() {
  const en = locale === "en";
  return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale,scenario,setScenario,showRizel}}>
   <aside className={controls.panel} aria-label={en?"Owner preview shortcuts":"運営者用の確認ショートカット"}>
+   <details><summary>{en?"Preview settings":"表示確認の設定"}</summary>
    <p>{en?"Skip the quiz and preview any tool. Your saved rules are used when available. Otherwise, a fictional sample plan is loaded.":"30問に答えずに各画面を確認できます。保存済みのルールがあれば使い、なければ架空のサンプル計画で開きます"}</p>
    <p>{en?"Display tests only. These do not change real ratings, access or publication.":"表示確認専用です。実際の危険度・利用権・公開状態は変わりません。"}</p>
    <div className={controls.links} aria-label={en?"Preview state":"確認する状態"}>
@@ -92,6 +93,7 @@ function Workspace() {
     {en?"Keep saved preview rules and settings on this device":"保存した確認用ルールと設定をこの端末に残す"}</label>
    <p className={controls.note}>{en?"This includes your financial amounts and answers. Use only on your own device. Uncheck to remove the saved copy. Unfinished quiz answers won’t be kept.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の未保存の回答は残りません"}</p>
    {persistence.error?<p role="status">{en?"We couldn’t save or remove the copy on this device. Your changes are still here in this tab.":"端末への保存・削除を確認できませんでした。この画面内の入力は保持しています"}</p>:null}
+   </details>
   </aside>
   {path === "/resolute" ? <HomeScreen/> : null}
   <div hidden={path !== "/resolute/diagnosis"}><DiagnosisScreen key={planVersion}/></div>
