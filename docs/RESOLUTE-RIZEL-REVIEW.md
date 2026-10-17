@@ -70,3 +70,31 @@ by the code; actual Railway running costs have not been measured.
 Unfinished: migration application, real feed dry run, cron activation and actual
 07:00 execution verification. The risk scoring rubric still needs a separate
 public-operation decision. RIZEL publication remains withheld after approval.
+
+## Real source inspection — 2026-10-17
+
+Read-only inspection through the authenticated preview endpoint succeeded:
+81 official updates, 56 with body text and 14 with publication timestamps.
+The general-news `enabled` flag was false, independently of official updates.
+The collector now respects that lane distinction, ignores disabled general
+items, and rejects malformed/unavailable feeds.
+
+Private daily intake additionally accepts a validated publishedOn date when
+publishedAt is missing. It preserves YYYY-MM-DD without manufacturing a time.
+Freshness uses the earliest possible instant across UTC offsets; future checks
+use the latest possible instant. This intentionally delays uncertain recent
+dates and excludes uncertain old dates. Public collection remains timestamp-only.
+A malformed supplied timestamp is never repaired from a fallback date.
+
+Observed positive announcements were matching risk terms in their bodies.
+Intake now requires a downside term in the headline too. This conservative filter
+can miss indirectly worded headlines; it does not establish a risk rating.
+Summary evidence validation and owner review remain mandatory.
+
+No paid model call or customer publication occurred during source inspection.
+Unattended source authentication, migration 013, scheduler activation and actual
+07:00 operation remain pending. The existing monitor token also grants other
+operations: do not extract a protected token or hand broad credentials to a new
+worker just to make intake work. A dedicated read-only connection is still needed.
+Twelve Data is not contracted; the owner plans to subscribe in mid-November.
+Price-dependent verification waits until access is available.

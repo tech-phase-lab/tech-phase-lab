@@ -33,3 +33,14 @@ test('source outage and unsupported summaries fail closed without an automatic p
 test('fresh successful empty intake is distinguishable from failure',async()=>{
  const db=await setup();try{assert.equal((await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({...feed,items:[]})})).count,0);}finally{await db.close();}
 });
+
+test('private daily review keeps a source date unchanged and excludes uncertain freshness',async()=>{
+ const db=await setup(),seen=[];
+ const dateItem={...feed.items[0],publishedAt:undefined,publishedOn:'2026-10-13'};
+ try{
+ const result=await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({ok:true,enabled:false,items:[],officialUpdates:[dateItem,{...dateItem,url:'https://example.com/old',publishedOn:'2026-10-10'}]}),
+ summarize:async c=>{seen.push(c.publishedAt);return {...RISK_VISUAL_FIXTURE.articles[0],id:c.id,url:c.url,publishedAt:c.publishedAt};},
+ select:async x=>({state:'selected',publication:'withheld',articleId:x.article.id,articleRevision:'private-date'})});
+ assert.deepEqual(seen,['2026-10-13']);assert.equal(result.count,1);
+ }finally{await db.close();}
+});

@@ -4,17 +4,33 @@ import {riskPool,hash,boundedJSON} from './risk-store.mjs';
 import {riskStars,parseRiskArticle,riskDate} from '../../lib/resolute/risk.ts';
 const relevant=/\b(AI|semiconductor|NVIDIA|NVDA|AMD|TSMC|Micron|MU|ASML|AVGO|NBIS|HBM|chip|export controls?)\b|半導体|人工知能|輸出規制|エヌビディア|マイクロン/i;
 const negative=/risk|fall|cut|delay|halt|ban|restrict|loss|warn|declin|default|lawsuit|shortage|不安|懸念|下落|引き下げ|遅延|停止|規制|損失|減益|警告|不足/i;
-export function candidatesFromFeed(feed,now=new Date()){
- if(!feed||feed.ok!==true||feed.enabled!==true||!Array.isArray(feed.items)||feed.items.length>500)throw Error('SOURCE_UNAVAILABLE');
- const raw=[...feed.items,...(feed.officialUpdates??[])];if(raw.length>1000)throw Error('SOURCE_LIMIT');const unique=new Map();
- for(const a of raw){if(a.pendingResearch||a.brief||a.confidence==='low')continue;const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');if(typeof title!=='string'||!body||body.length<100||body.length>24000||!relevant.test(title+' '+body)||!negative.test(title+' '+body))continue;
- const date=new Date(a.publishedAt);if(!Number.isFinite(date.getTime())||date>now||now-date>7*86400000)continue;
+// Date-only intake is opt-in for private review. Keep the original date string;
+// bounds cover all UTC offsets rather than pretending the source published at midnight.
+export function publicationBounds(value){
+ if(typeof value!=='string')return null;
+ if(/^\d{4}-\d{2}-\d{2}$/.test(value)){
+  const time=Date.parse(value+'T00:00:00Z');
+  if(!Number.isFinite(time)||new Date(time).toISOString().slice(0,10)!==value)return null;
+  return {earliest:time-14*3600000,latest:time+36*3600000};
+ }
+ if(!/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+-]\d{2}:\d{2})$/.test(value))return null;
+ const time=Date.parse(value);return Number.isFinite(time)?{earliest:time,latest:time}:null;
+}
+export function candidatesFromFeed(feed,now=new Date(),{allowDateOnly=false}={}){
+ if(!feed||feed.ok!==true||typeof feed.enabled!=='boolean'||!Array.isArray(feed.items)||feed.items.length>500)throw Error('SOURCE_UNAVAILABLE');
+ // enabled controls only the general-news lane; officialUpdates remains independent.
+ if(feed.officialUpdates!==undefined&&!Array.isArray(feed.officialUpdates))throw Error('SOURCE_UNAVAILABLE');
+ if(!feed.enabled&&feed.officialUpdates===undefined)throw Error('SOURCE_UNAVAILABLE');
+ const raw=[...(feed.enabled?feed.items:[]),...(feed.officialUpdates??[])];if(raw.length>1000)throw Error('SOURCE_LIMIT');const unique=new Map();
+ for(const a of raw){if(a.pendingResearch||a.brief||a.confidence==='low')continue;const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');if(typeof title!=='string'||!body||body.length<100||body.length>24000||!relevant.test(title+' '+body)||!negative.test(title))continue;
+ const publishedAt=a.publishedAt??(allowDateOnly?a.publishedOn:undefined),bounds=publicationBounds(publishedAt);
+ if(!bounds||!allowDateOnly&&publishedAt.length===10||bounds.latest>now.getTime()||now.getTime()-bounds.earliest>7*86400000)continue;
  let u;try{u=new URL(a.url);}catch{continue;}if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048)continue;u.hash='';for(const key of [...u.searchParams.keys()])if(key.startsWith('utm_'))u.searchParams.delete(key);
  // Official status requires a primary-source host, not merely placement in officialUpdates.
  const host=u.hostname.replace(/^www\./,''),sns=['x.com','twitter.com'].includes(host);
  const primary=['nvidia.com','investor.nvidia.com','ir.micron.com','micron.com','tsmc.com','pr.tsmc.com','asml.com','nebius.com','ir.amd.com','amd.com','sec.gov','bis.gov','federalreserve.gov'].includes(host);
  const id=hash(u.href),fingerprint=hash(title.normalize('NFKC').replace(/\s/g,''));
- unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:date.toISOString(),source:primary?'official':sns?'sns':'report',fingerprint});
+ unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:publishedAt.length===10?publishedAt:new Date(publishedAt).toISOString(),source:primary?'official':sns?'sns':'report',fingerprint});
  }return [...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
 }
 const strings={type:'string'};

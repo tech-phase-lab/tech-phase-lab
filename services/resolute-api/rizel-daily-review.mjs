@@ -1,4 +1,4 @@
-import {candidatesFromFeed,generate} from './risk-job.mjs';
+import {candidatesFromFeed,generate,publicationBounds} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
@@ -17,9 +17,9 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
  if(!claim.rows.length)return {state:'already-claimed',day};
  const refs=[];
  try{
-  const candidates=candidatesFromFeed(await readFeed(),now),seen=new Set();
+  const candidates=candidatesFromFeed(await readFeed(),now,{allowDateOnly:true}),seen=new Set();
   const selected=candidates.filter(c=>{
-   if(now-new Date(c.publishedAt)>96*3600000||seen.has(c.fingerprint))return false;
+   if(now.getTime()-publicationBounds(c.publishedAt).earliest>96*3600000||seen.has(c.fingerprint))return false;
    seen.add(c.fingerprint);return true;
   }).slice(0,3);
   await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET candidate_count=$2 WHERE day=$1',[day,selected.length]);
