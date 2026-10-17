@@ -7,6 +7,9 @@ import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 export const reviewPaths = ["/resolute", "/resolute/diagnosis", "/resolute/simulation", "/resolute/alerts", "/resolute/morning", "/resolute/thermometer", "/resolute/tax", "/resolute/notebook", "/resolute/wall", "/resolute/tonight", "/resolute/news"] as const;
 export type ReviewPath = typeof reviewPaths[number];
 export type ReviewWorkspace = {
+ scenario?: import("@/lib/resolute/review-scenarios").ReviewScenario;
+ setScenario?: (scenario: import("@/lib/resolute/review-scenarios").ReviewScenario) => void;
+ showRizel?: boolean;
  path: ReviewPath; navigate: (path: ReviewPath) => void;
  locale: DiagnosisLocale; setLocale: (locale: DiagnosisLocale) => void;
  requestPlan: typeof requestPlan; requestNotificationSettings: typeof requestNotificationSettings;

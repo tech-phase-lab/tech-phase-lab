@@ -1514,3 +1514,41 @@ Vercel使用料の相談を受け、小刻みな公開を控え、変更をま�
 ## 2026-10-16 07:21 UTC — 実バックアップで決済台帳の復元確認
 
 既存バックアップ ac7a5ff8-0107-4d72-a70d-cd6f888077bf が成功（暗号化20,148 bytes、dump19,948 bytes）。更新した既存隔離復元サービス a5e7b373-11fe-4296-bbb1-407c6f890d12 で RESOLUTE_RESTORE_OK を確認。注文11件、利用権7件、イベント8件、監査32件、通知待ち7件を読み、sandbox_payment_integrityを含む全検査が成功した。両deploymentはSUCCESS、monitor_ping_sentはtrue。本体DBへの復元・メール送信・本番決済・課金設定変更は行っていない。復元サービスの実行コードだけを更新し、既存の週次スケジュールと隔離構成を維持した。これは本番販売や独立削除履歴の復元確認を意味しない。
+
+## 2026-10-17 — RIZEL private selection and review switches (local, NOT deployed)
+
+Owner approved JA/EN 90 entries, excluding D-executive-03 and including seven
+English price-level corrections. Private Library bank/review now version 1;
+raw copy is outside this public repository. See RESOLUTE-RIZEL-SELECTION.md.
+Local selection engine/AI adapter/audit SQL and owner-only scenario controls
+added. No migration, hosting bank installation, AI spending, publish or email.
+User requires a brief change summary before preview-site reflection. Keep main
+untouched; baseline was remote 78a1139, preserving colleague's watchlist work.
+Private approval admin is mock only, not a completed editing/publish interface.
+
+Validation: Node 982 passed, Python 2474 passed, lint 0 errors (2 pre-existing
+warnings), Next production build passed, compileall and diff check passed.
+Browser visual QA remains incomplete: Playwright Chromium download failed.
+A local-only harness in /tmp/rizel-qa is available for subsequent checks, but is
+not a deliverable and must never be published (contains private test copy).
+Latest logs: /tmp/rizel-node-final.log, /tmp/rizel-python.log,
+/tmp/rizel-build.log, /tmp/rizel-lint.log. No live model calls were made.
+
+## 2026-10-17 — Preview reflection authorized, private text upload blocked
+
+User authorized deploying review switches to codex/research-preview, not public
+RIZEL publication. Integrated ee168dd without overwriting colleague changes.
+The preview reader now accepts a 12-entry layout-only, server-only secret named
+RESOLUTE_RIZEL_LAYOUT_PREVIEW_JSON, scoped to the preview branch. Full bank,
+AI calls and private DB remain disconnected as requested.
+
+Automatic approval review rejected uploading the 12 unpublished texts to Vercel:
+destination-specific disclosure authorization is required. No upload took place.
+Do not retry through another channel; ask the owner explicitly before storing
+these unpublished excerpts on Vercel. Until then the review checkbox reaches the
+private preview endpoint but displays the unconfigured message, not the text.
+
+Smartphone check: reviewed wrapping and widths in controls/home/news CSS at the
+320/375px constraints. Chromium preparation was retried and failed downloading;
+actual visual rendering, overlaps and authenticated owner interaction were NOT
+verified. No visual pass should be claimed. Public comments remain suppressed.

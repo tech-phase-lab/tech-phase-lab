@@ -3,7 +3,6 @@ import {useEffect,useState,type CSSProperties} from 'react';
 import ToolShell from '../tool-shell';
 import {ReviewLink as Link,useReview,useNotificationClient} from '../review-context';
 import {useRisk,riskStatus} from '../features/use-risk';
-import {RISK_VISUAL_FIXTURE} from '@/lib/resolute/risk-preview';
 import {validateSnapshot} from '@/lib/resolute/transport';
 import s from './reference.module.css';
 type Snapshot=ReturnType<typeof validateSnapshot>;
@@ -13,10 +12,11 @@ export default function HomeScreen({identityReady=true}:{identityReady?:boolean}
 }
 export function Home({locale,entitlement}:{locale:'ja'|'en';entitlement:Snapshot|null}) {
  const en=locale==='en',review=useReview(),live=useRisk();
- const feed=review?RISK_VISUAL_FIXTURE:live.feed,status=review?'ready':live.status;
+ const {feed,status}=live;
  const available=status==='ready'&&feed?.state==='ready';
  const high=available&&feed.articles.some(a=>a.stars>=4);
- const locked=!review&&entitlement!==null&&!entitlement.canReceiveNotifications;
+ const previewExpired=review?.scenario==='expired';
+ const locked=previewExpired||!review&&entitlement!==null&&!entitlement.canReceiveNotifications;
  const requestSettings=useNotificationClient();
  const [morning,setMorning]=useState<boolean|null>(null),[date,setDate]=useState<string|null>(null);
  const [offer,setOffer]=useState<{ja:number;en:number}|null>(null);
@@ -25,7 +25,8 @@ export function Home({locale,entitlement}:{locale:'ja'|'en';entitlement:Snapshot
   void load();const timer=setInterval(()=>void load(),60000);return()=>{c.abort();clearInterval(timer);};
  },[requestSettings]);
  useEffect(()=>{const update=()=>setDate(new Intl.DateTimeFormat(en?'en-US':'ja-JP',{dateStyle:'full',timeZone:'Asia/Tokyo'}).format(new Date()));update();const timer=setInterval(update,60000);return()=>clearInterval(timer);},[en]);
- useEffect(()=>{if(!locked)return;const c=new AbortController();void fetch('/api/resolute/renewal-offer',{cache:'no-store',credentials:'same-origin',signal:c.signal}).then(async r=>{if(!r.ok)throw Error();const v=await r.json();if((v.ja===5980&&v.en===39)||(v.ja===3980&&v.en===29))setOffer(v);}).catch(()=>{});return()=>c.abort();},[locked]);
+ useEffect(()=>{if(!locked||review)return;const c=new AbortController();void fetch('/api/resolute/renewal-offer',{cache:'no-store',credentials:'same-origin',signal:c.signal}).then(async r=>{if(!r.ok)throw Error();const v=await r.json();if((v.ja===5980&&v.en===39)||(v.ja===3980&&v.en===29))setOffer(v);}).catch(()=>{});return()=>c.abort();},[locked,review]);
+ const displayOffer=previewExpired?{ja:5980,en:39}:offer;
  const expiry=entitlement?.alerts.expiresAt;
  const tiles=[
   ['notebook','迷った日の一冊','Your rulebook','ルールを一冊に','Your rules in one place','M24 12c-4-3-10-4-17-3v26c7-1 13 0 17 3 4-3 10-4 17-3V9c-7-1-13 0-17 3zM24 12v26'],
@@ -38,7 +39,7 @@ export function Home({locale,entitlement}:{locale:'ja'|'en';entitlement:Snapshot
   <div className={s.date}>{date??'—'}</div>
   <section className={s.sec}><div className={s.lab}>TODAY</div>
    <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2>{en?'Today’s news risk':'今日の危険度'}</h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?`See all ${feed.articles.length} →`:`${feed.articles.length}件すべて見る →`}</Link>:null}</div>
-    {locked?<div className={s.lock}><p>🔒 {en?'The news risk checker is included while your alerts access is active.':'危険度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of daily news risk updates.':'更新すると、また毎朝の危険度を確認できます。'}</p><button className={s.primary} disabled>{en?'Renew for one year':'1年分を更新する'}{offer?`　${en?'$'+offer.en:offer.ja.toLocaleString('ja-JP')+'円'}`:''}</button><p className={s.sub}>{en?'Renewal checkout is not open yet.':'更新の受付は準備中です。'}</p></div>:<>
+    {locked?<div className={s.lock}><p>🔒 {en?'The news risk checker is included while your alerts access is active.':'危険度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of daily news risk updates.':'更新すると、また毎朝の危険度を確認できます。'}</p><button className={s.primary} disabled>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</button><p className={s.sub}>{en?'Renewal checkout is not open yet.':'更新の受付は準備中です。'}</p></div>:<>
      {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map((a,index)=><li key={a.id} style={{'--c':colors[a.stars]} as CSSProperties}><span>{a[locale].title}</span><b aria-label={`${a.stars}/5`}>{Array.from({length:a.stars},(_,i)=><i key={i} style={{'--d':`${.6+index*.35+i*.12}s`} as CSSProperties} aria-hidden="true">★</i>)}<span aria-hidden="true">{'☆'.repeat(5-a.stars)}</span></b></li>)}</ul><div className={`${s.today} ${high?s.warn:''}`}>{en?'What to do today: ':'今日やること: '}{high?<Link href="/resolute/notebook">{en?'Reread your rules':'ルールを読み返す'}</Link>:(en?'Nothing for now':'なし')}</div></>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}
      {review?<p className={s.notice}>{en?'October 14 news sample · provisional risk levels · not a live update':'10月14日のニュース見本・危険度は仮基準（自動更新ではありません）'}</p>:null}
     </>}

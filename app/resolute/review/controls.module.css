@@ -9,3 +9,5 @@
 @media(max-width:640px) { .panel { margin:12px 16px 0; } }
 
 .panel{font-family:var(--font-resolute-sans),sans-serif}
+
+.links button[aria-pressed="true"] { background:#5a4724; outline:2px solid #d9b56f; outline-offset:1px; }

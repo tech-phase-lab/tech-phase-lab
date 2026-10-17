@@ -52,6 +52,8 @@ function Workspace() {
  const persistence = useSyncExternalStore(store.subscribe,store.getPersistence,store.getPersistence);
  const [planVersion,setPlanVersion] = useState(0);
  const [opening,setOpening] = useState(false);
+ const [scenario,setScenario] = useState<import("@/lib/resolute/review-scenarios").ReviewScenario>("sample");
+ const [showRizel,setShowRizel] = useState(false);
  const [path,setPath] = useState<ReviewPath>("/resolute");
  const [notificationsVisited,setNotificationsVisited]=useState(false);
  const [locale,setLocale] = useState<DiagnosisLocale>("ja");
@@ -73,9 +75,14 @@ function Workspace() {
   } finally { setOpening(false); }
  }
  const en = locale === "en";
- return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale}}>
+ return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale,scenario,setScenario,showRizel}}>
   <aside className={controls.panel} aria-label={en?"Owner preview shortcuts":"運営者用の確認ショートカット"}>
    <p>{en?"Skip the quiz and preview any tool. Your saved rules are used when available. Otherwise, a fictional sample plan is loaded.":"30問に答えずに各画面を確認できます。保存済みのルールがあれば使い、なければ架空のサンプル計画で開きます"}</p>
+   <p>{en?"Display tests only. These do not change real ratings, access or publication.":"表示確認専用です。実際の危険度・利用権・公開状態は変わりません。"}</p>
+   <div className={controls.links} aria-label={en?"Preview state":"確認する状態"}>
+    {([['sample','ニュース見本','News sample'],['low','★1〜2の日','★1–2 day'],['medium','★3の日','★3 day'],['high','★4〜5の日','★4–5 day'],['expired','1年がすぎた後','After one year'],['failed','ニュース取得失敗','News unavailable'],['live','実際の接続状態','Live feed status']] as const).map(([value,ja,eng])=><button key={value} aria-pressed={scenario===value} onClick={()=>setScenario(value)}>{en?eng:ja}</button>)}
+   </div>
+   <label><input type="checkbox" checked={showRizel} onChange={e=>{setShowRizel(e.target.checked);if(e.target.checked){if(scenario==='failed'||scenario==='expired')setScenario('sample');void openFeature('/resolute/news');}}}/>{en?'Show RIZEL’s comment (private preview only)':'RIZELの一言を表示（確認用のみ・非公開）'}</label>
    <div className={controls.links}>
     {([["/resolute/news",en?"News risk checker":"危険度チェッカーを見る"],["/resolute/wall",en?"Rules wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment to breathe":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
      <button key={target} disabled={opening} onClick={()=>void openFeature(target)}>{label}</button>)}
