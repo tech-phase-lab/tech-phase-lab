@@ -66,6 +66,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const [sessionView, setSessionView] = useState<WatchlistSession>("auto");
   const [revealed, setRevealed] = useState("");
   function remove(ticker: string) {
+    if (!editable || !window.confirm(lang === "ja" ? `${ticker}をこのリストから削除しますか？` : `Remove ${ticker} from this list?`)) return false;
     return update(current => ({ ...current, lists: current.lists.map(item => item.id === list.id ? { ...item, tickers: item.tickers.filter(value => value !== ticker) } : item) }));
   }
   const [sort, setSort] = useState("saved");
@@ -142,7 +143,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         const name = listName.trim(); if (!name) return;
         if (update(current => ({ ...current, lists: watchlistSlots(current.lists).map(item => item.id === list.id ? { ...item, name } : item) }))) setListAction(null);
       }}>
-        <input aria-label={t("リスト名", "List name")} value={listName} onChange={event => setListName(event.target.value)} maxLength={40} required />
+        <input autoFocus aria-label={t("リスト名", "List name")} value={listName} onChange={event => setListName(event.target.value)} maxLength={40} required />
         <button type="submit">{t("保存", "Save")}</button><button type="button" onClick={() => setListAction(null)}>{t("取消", "Cancel")}</button>
       </form>}
       <div className={styles.controls}>
