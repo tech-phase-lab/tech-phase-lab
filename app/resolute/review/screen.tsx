@@ -6,6 +6,7 @@ import controls from "./controls.module.css";
 import { createReviewStore } from "@/lib/resolute/review-store";
 import { ReviewContext, type ReviewPath } from "../review-context";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
+import HomeScreen from "../home/screen";
 import DiagnosisScreen from "../screen";
 import SimulationScreen from "../simulation/screen";
 import NotificationScreen from "../notifications-screen";
@@ -85,7 +86,8 @@ function Workspace() {
    <p className={controls.note}>{en?"This includes your financial amounts and answers. Use only on your own device. Uncheck to remove the saved copy. Unfinished quiz answers won’t be kept.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の未保存の回答は残りません"}</p>
    {persistence.error?<p role="status">{en?"We couldn’t save or remove the copy on this device. Your changes are still here in this tab.":"端末への保存・削除を確認できませんでした。この画面内の入力は保持しています"}</p>:null}
   </aside>
-  <div hidden={path !== "/resolute"}><DiagnosisScreen key={planVersion}/></div>
+  {path === "/resolute" ? <HomeScreen/> : null}
+  <div hidden={path !== "/resolute/diagnosis"}><DiagnosisScreen key={planVersion}/></div>
   {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
    path === "/resolute/wall" ? <WallScreen/> : path === "/resolute/tonight" ? <TonightScreen/> : path === "/resolute/news" ? <NewsScreen/> : path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
   {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}

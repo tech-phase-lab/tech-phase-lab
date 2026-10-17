@@ -49,7 +49,7 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <p className={styles.muted}>{t("相場が上下に急変動したら資産はどれぐらい動くのか？現在の保有額を入れて実際に検証してみましょう。将来の予測ではありません。","How would a sudden market drop or rally affect your portfolio? Enter your current holdings and try it out. This is not a forecast.")}</p>
   {state!=="ready"?<section className={styles.card}><p role="status">{state==="loading"?t("保存済みの計画を読み込んでいます…","Loading your saved plan…"):state==="empty"?t("先にルールを保存してください。","Save your rules first."):t("計画を読み込めませんでした。","Couldn’t load your plan.")}</p>
    {state==="error"?<button className={styles.secondary} onClick={()=>{setState("loading");setAttempt(n=>n+1);}}>{t("再読込","Try again")}</button>:null}
-   <Link href="/resolute" prefetch={false} className={styles.secondary}>{t("① ルール診断へ戻る","① Back to your rules")}</Link>
+   <Link href="/resolute/diagnosis" prefetch={false} className={styles.secondary}>{t("① ルール診断へ戻る","① Back to your rules")}</Link>
   </section>:null}
   {plan?<>
    <div className={styles.tabs} role="group" aria-label={t("試算の種類","Scenario")}><button aria-pressed={tab==="drop"} onClick={()=>setTab("drop")}>{t("下落時","If it falls")}</button><button aria-pressed={tab==="surge"} onClick={()=>setTab("surge")}>{t("上昇時","If it rises")}</button></div>

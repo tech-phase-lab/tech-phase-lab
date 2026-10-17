@@ -144,6 +144,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <section className={styles.card}><p className={styles.muted}>{result.disclaimer}</p>
    {!result.buyLines.length&&draft.answers.q24!=="none"?<p className={styles.muted}>{c.later}</p>:null}
    {bodyMessage}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
+   {saved?<Link className={styles.secondary} href="/resolute/wall" prefetch={false}>{locale==="en"?"Make your rules wallpaper":"ルールのお守りを作る"}</Link>:null}
    {saved?<Link className={`${styles.primary} ${styles.continueButton}`} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
    <button type="button" className={styles.secondary} disabled={busy||loading} onClick={()=>{setMode("questions");setSaved(false);setMessage(null);}}>{c.edit}</button>
    {!snapshot||locked?reloadButton:null}<p className={styles.muted}>{c.check}</p>

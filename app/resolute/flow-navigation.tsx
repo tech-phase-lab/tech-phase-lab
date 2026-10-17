@@ -3,7 +3,7 @@ import { ReviewLink as Link } from "./review-context";
 import styles from "./diagnosis.module.css";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 const steps=[
- ["/resolute","① 診断","① Quiz"], ["/resolute/simulation","② シミュレーション","② Simulator"],
+ ["/resolute/diagnosis","① 診断","① Quiz"], ["/resolute/simulation","② シミュレーション","② Simulator"],
  ["/resolute/alerts","③ 終値アラート","③ Closing-price alerts"], ["/resolute/morning","④ 翌朝のひとこと","④ Morning note"],
  ["/resolute/thermometer","⑤ 相場の温度計","⑤ Market gauge"], ["/resolute/tax","⑥ 税金の目安","⑥ Tax estimate"]
 ];

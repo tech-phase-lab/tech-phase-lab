@@ -318,3 +318,5 @@
 .chapterPractice ol{margin:0;padding-left:1.4em;font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2;text-wrap:pretty}
 .chapterPractice li+li{margin-top:12px}
 @media(max-width:360px){.chapterMetrics>div[data-text=true]{grid-template-columns:1fr;gap:2px}.chapterMetrics>div[data-text=true] dd{font-size:17px}}
+
+.homePage{padding:0}.homeWrap{display:flex;flex-direction:column}.homeControls{order:2;padding:16px;max-width:600px;width:100%;margin:auto}.homeWrap>nav{order:3}.homeWrap>footer,.homeWrap>p{order:4;padding:16px;max-width:600px;margin:auto}

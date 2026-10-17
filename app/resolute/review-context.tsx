@@ -4,7 +4,7 @@ import { createContext, useContext, type ComponentProps } from "react";
 import { requestPlan } from "@/lib/resolute/plan-client";
 import { requestNotificationSettings } from "@/lib/resolute/notification-client";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
-export const reviewPaths = ["/resolute", "/resolute/simulation", "/resolute/alerts", "/resolute/morning", "/resolute/thermometer", "/resolute/tax", "/resolute/notebook", "/resolute/wall", "/resolute/tonight", "/resolute/news"] as const;
+export const reviewPaths = ["/resolute", "/resolute/diagnosis", "/resolute/simulation", "/resolute/alerts", "/resolute/morning", "/resolute/thermometer", "/resolute/tax", "/resolute/notebook", "/resolute/wall", "/resolute/tonight", "/resolute/news"] as const;
 export type ReviewPath = typeof reviewPaths[number];
 export type ReviewWorkspace = {
  path: ReviewPath; navigate: (path: ReviewPath) => void;

@@ -43,7 +43,7 @@ function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  }
  function download(){if(!snapshot?.plan)return;const blob=new Blob([notebookDocument(snapshot.plan,locale)],{type:"text/html;charset=utf-8"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`RESOLUTE-my-rules-${snapshot.plan.updatedAt.slice(0,10)}.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  if(!snapshot)return <section className={styles.card}><h1>{en?"My rulebook":"マイルール"}</h1><p role="status">{notice[message]||(en?"Opening your saved rules…":"保存済みのルールを開いています…")}</p>{message?<button className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>{en?"Try again":"再確認"}</button>:null}</section>;
- if(!snapshot.plan)return <section className={styles.card}><h1>{en?"Your rulebook starts here":"自分だけの一冊をつくる"}</h1><p>{en?"Complete the quiz and save your rules first.":"①の診断でルールを保存するとここにまとまります"}</p><Link href="/resolute" className={styles.primary}>{en?"Start the quiz":"① 診断を開く"}</Link></section>;
+ if(!snapshot.plan)return <section className={styles.card}><h1>{en?"Your rulebook starts here":"自分だけの一冊をつくる"}</h1><p>{en?"Complete the quiz and save your rules first.":"①の診断でルールを保存するとここにまとまります"}</p><Link href="/resolute/diagnosis" className={styles.primary}>{en?"Start the quiz":"① 診断を開く"}</Link></section>;
  const plan=snapshot.plan,result=notebookResult(plan,locale),settings=notifications?.settings;
  let preview:ReturnType<typeof notebookResult>|null=null;
  if(edits)try{preview=notebookResult(adjustNotebook(plan,edits),locale);}catch{/* Invalid edits remain editable. */}
