@@ -3673,6 +3673,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Meta：QuestのVR・複合現実端末",
         "en": "Meta: Quest VR / mixed-reality devices"
       }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：PCC機密推論GPU・共同開発",
+        "en": "NVIDIA: PCC confidential-inference GPUs / co-development"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google：PCC基盤・AIモデル共同開発",
+        "en": "Google: PCC cloud infrastructure / AI-model co-development"
+      }
+    },
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Intel：Google Cloud上PCCのTDX CPU",
+        "en": "Intel: TDX CPUs for PCC on Google Cloud"
+      }
     }
   },
   "AMZN": {
@@ -3809,6 +3830,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Microsoft：Azure VMのクラウド競合",
         "en": "Microsoft: Azure VM cloud competition"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple：PCC基盤顧客・AI共同開発",
+        "en": "Apple: PCC cloud customer / AI co-development"
       }
     }
   },
@@ -3972,8 +4000,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "NVDA": {
       "layer": 3,
       "businessLabel": {
-        "ja": "NVIDIA：GPU採用・AI技術協業",
-        "en": "NVIDIA: GPUs / AI collaboration"
+        "ja": "NVIDIA：GPU基盤・Azure/Windows協業",
+        "en": "NVIDIA: GPU infrastructure / Azure and Windows collaboration"
       }
     },
     "AMD": {

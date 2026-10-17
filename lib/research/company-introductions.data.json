@@ -1343,6 +1343,10 @@
       {
         "label": "Official commercial disclosure; checked October17,2026",
         "url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/"
+      },
+      {
+        "label": "Microsoft Windows official collaboration disclosure; checked October 17, 2026",
+        "url": "https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/"
       }
     ],
     "ja": {
@@ -1351,7 +1355,7 @@
       "strength": "企業が日常的に使う業務ソフトとクラウドを組み合わせ、既存の仕事にAIを取り入れやすい。",
       "risks": "データセンターへの巨額投資、AIサービスの価格競争、サイバー攻撃や情報流出。",
       "competition": "クラウド基盤ではAWSとGoogle Cloud、PC用OSではAppleのmacOS、営業CRMではSalesforceとDynamics 365 Salesを比較する。これらは公式製品を照合した編集上の比較。Snowflakeのデータ分析、SentinelOneの端末防御、Pegasystemsの顧客対応・業務自動化は相手側の年次報告がMicrosoftを競合として挙げる分野で、全事業の同等性を意味しない。 ゲーム機ではSonyのPlayStation 5、Nintendo Switch 2とXboxを公式製品に基づいて編集比較する。ゲームの互換性や性能が同じという意味ではなく、Microsoftの年次報告が今回この2社を実名列挙したという主張でもない。",
-      "relationships": "OpenAIとは2026年4月に契約を改定し、Microsoftは主要クラウド提携先を維持する一方、IPライセンスは非独占となり、OpenAIは他のクラウドでも製品を提供できる。Anthropicは2025年11月にAzure計算容量の購入を約束し、Claudeの提供連携も公表した。容量の約束や投資計画を全て実行済みとは扱わない。 2026年3月自社開示：NVIDIA Grace Blackwellを展開。Vera Rubinは当時ラボ検証・今後展開。2026年3月：NVIDIA Nemotron・Dynamo・OmniverseとFoundry/Fabricを技術統合。2026年7月：AMD Helios・次世代EPYCのAzure採用計画。全展開完了ではない。2026年7月公式事例：AMDがAzure HXを半導体設計の計算に利用。2026年10月：Maia 300の演算チップレットはTSMC N2P。製品展開は2027年予定。"
+      "relationships": "OpenAIとは2026年4月に契約を改定し、Microsoftは主要クラウド提携先を維持する一方、IPライセンスは非独占となり、OpenAIは他のクラウドでも製品を提供できる。Anthropicは2025年11月にAzure計算容量の購入を約束し、Claudeの提供連携も公表した。容量の約束や投資計画を全て実行済みとは扱わない。 2026年3月自社開示：NVIDIA Grace Blackwellを展開。Vera Rubinは当時ラボ検証・今後展開。2026年3月：NVIDIA Nemotron・Dynamo・OmniverseとFoundry/Fabricを技術統合。2026年7月：AMD Helios・次世代EPYCのAzure採用計画。全展開完了ではない。2026年7月公式事例：AMDがAzure HXを半導体設計の計算に利用。2026年10月：Maia 300の演算チップレットはTSMC N2P。製品展開は2027年予定。 2026年3月Foundry/Fabric連携と5月Windows/RTX Spark共同最適化。秋の製品提供計画を全展開完了としない。"
     },
     "en": {
       "business": "Provides Windows, Microsoft 365 and Azure cloud services, alongside AI and gaming products.",
@@ -1359,7 +1363,7 @@
       "strength": "Combines widely used workplace software and cloud services to bring AI into existing workflows.",
       "risks": "Heavy data-center investment, AI pricing pressure, cyberattacks and data breaches.",
       "competition": "Official-product comparisons cover AWS and Google Cloud versus Azure, Apple macOS versus Windows, and Salesforce sales CRM versus Dynamics 365 Sales. Snowflake data analytics, SentinelOne endpoint protection and Pegasystems customer-engagement/workflow overlaps are separately supported by those peers’ filings; the companies are not equivalent across all businesses. Console gaming adds editorial comparisons of Xbox with Sony PlayStation 5 and Nintendo Switch 2 based on official products. This does not equate game compatibility or performance, or claim a newly verified Microsoft annual disclosure naming both.",
-      "relationships": "The April 2026 amended OpenAI agreement retains Microsoft as a primary cloud partner while making its IP license non-exclusive and allowing OpenAI products on other clouds. Anthropic announced Azure compute purchase commitments and Claude integration in November 2025; committed capacity and investment plans are not all completed deployments. March2026 Microsoft disclosure: NVIDIA Grace Blackwell deployed; Vera Rubin then in labs / rollout planned. March2026: NVIDIA Nemotron / Dynamo / Omniverse integration with Foundry / Fabric. July2026: Azure adoption plan for AMD Helios / next-generation EPYC, not completed fleet rollout. July2026 official example: AMD uses Azure HX for semiconductor-design computing. October2026: Maia300 compute chiplets use TSMC N2P; production deployment planned for2027."
+      "relationships": "The April 2026 amended OpenAI agreement retains Microsoft as a primary cloud partner while making its IP license non-exclusive and allowing OpenAI products on other clouds. Anthropic announced Azure compute purchase commitments and Claude integration in November 2025; committed capacity and investment plans are not all completed deployments. March2026 Microsoft disclosure: NVIDIA Grace Blackwell deployed; Vera Rubin then in labs / rollout planned. March2026: NVIDIA Nemotron / Dynamo / Omniverse integration with Foundry / Fabric. July2026: Azure adoption plan for AMD Helios / next-generation EPYC, not completed fleet rollout. July2026 official example: AMD uses Azure HX for semiconductor-design computing. October2026: Maia300 compute chiplets use TSMC N2P; production deployment planned for2027. March2026 Foundry / Fabric integration and May Windows / RTX Spark co-optimization; fall product availability plans are not a completed full rollout."
     },
     "maps": {
       "competition": [
@@ -1555,11 +1559,12 @@
           "name": "NVIDIA",
           "role": "partner",
           "label": {
-            "ja": "2026年3月：NVIDIA Nemotron・Dynamo・OmniverseとFoundry/Fabricを技術統合",
-            "en": "March2026: NVIDIA Nemotron / Dynamo / Omniverse integration with Foundry / Fabric"
+            "ja": "2026年3月Foundry/Fabric連携と5月Windows/RTX Spark共同最適化。秋の製品提供計画を全展開完了としない",
+            "en": "March2026 Foundry / Fabric integration and May Windows / RTX Spark co-optimization; fall product availability plans are not a completed full rollout"
           },
           "sourceIndexes": [
-            16
+            16,
+            20
           ],
           "ticker": "NVDA"
         },
@@ -3177,6 +3182,10 @@
       {
         "label": "Official commercial disclosure; checked October 17, 2026",
         "url": "https://cloud.google.com/products/compute?hl=en"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://security.apple.com/blog/expanding-pcc/"
       }
     ],
     "ja": {
@@ -3185,7 +3194,7 @@
       "strength": "検索・動画・スマホを通じて利用者に届き、広告主や開発者を集められる。",
       "risks": "AIによる検索習慣の変化、広告への依存、競争法や個人情報をめぐる規制。",
       "competition": "Google Cloudのデータ処理・分析ではSnowflakeが競合例。Snowflakeの年次報告書はGoogle Cloudを競合として明記し、同時に自社サービスの稼働基盤としても利用すると説明している。検索・広告の競合とは分けて考える。 Compute EngineとAmazon EC2のクラウド仮想マシンを比較。Google公式比較で、全サービス・性能の同等性ではない。Compute EngineとAzure Virtual Machinesを比較。Google公式比較で、全Microsoft製品の同等性ではない。",
-      "relationships": "AnthropicはGoogle CloudのTPU計算を利用し、2026年4月にはGoogle・Broadcomとの追加容量契約を発表した。新容量は2027年からの稼働予定。Redditとは2024年2月にData APIとVertex AIの提携を発表しており、広告競合と協業は併存する。 Snapも自社の年次報告でGoogle Cloudの基盤利用を開示している。 2026年3月：Google Cloud G4がNVIDIA Blackwell GPUを採用。2026年3月：NVIDIA DynamoとGKE、NemotronとVertex AIの技術連携。2026年3月Google公式事例：SalesforceがVertex AIのGB200計算基盤を利用。2026年3月Google公式事例：General MotorsがG4を走行シミュレーションに利用。 Broadcom側2026年4月8-K：Google向けTPU・ネットワーク部品の開発供給契約、最長2031年。"
+      "relationships": "AnthropicはGoogle CloudのTPU計算を利用し、2026年4月にはGoogle・Broadcomとの追加容量契約を発表した。新容量は2027年からの稼働予定。Redditとは2024年2月にData APIとVertex AIの提携を発表しており、広告競合と協業は併存する。 Snapも自社の年次報告でGoogle Cloudの基盤利用を開示している。 2026年3月：Google Cloud G4がNVIDIA Blackwell GPUを採用。2026年3月：NVIDIA DynamoとGKE、NemotronとVertex AIの技術連携。2026年3月Google公式事例：SalesforceがVertex AIのGB200計算基盤を利用。2026年3月Google公式事例：General MotorsがG4を走行シミュレーションに利用。 Broadcom側2026年4月8-K：Google向けTPU・ネットワーク部品の開発供給契約、最長2031年。 Apple側2026年6月一次資料：新しいApple Intelligenceワークロード向けPCCをGoogle Cloudで実行。契約量は未開示。Apple側自社開示：Gemini技術を活用するApple Foundation ModelsとPCCをGoogleと共同開発。"
     },
     "en": {
       "business": "Alphabet's Google operates Search, YouTube, Android and cloud services. The listed shares represent parent Alphabet.",
@@ -3193,7 +3202,7 @@
       "strength": "Search, video and mobile reach connect users with advertisers and developers.",
       "risks": "AI-driven changes in search habits, advertising dependence and competition or privacy regulation.",
       "competition": "Snowflake is a named example in Google Cloud data processing and analytics. Its annual report explicitly identifies Google Cloud as both a competitor and infrastructure provider. This comparison concerns cloud data products rather than search or advertising. Compute Engine versus Amazon EC2 virtual machines, using Google’s official comparison; not equivalence of all services or performance. Compute Engine versus Azure Virtual Machines, using Google’s official comparison; not equivalence of all Microsoft products.",
-      "relationships": "Anthropic uses Google Cloud TPU compute and announced additional capacity with Google and Broadcom in April 2026, expected to come online from 2027. Google and Reddit announced a Data API / Vertex AI partnership in February 2024; advertising competition and collaboration coexist. Snap also discloses Google Cloud infrastructure use in its own filing. March2026: Google Cloud G4 uses NVIDIA Blackwell GPUs. March2026: NVIDIA Dynamo / GKE and Nemotron / Vertex AI integration. March2026 Google example: Salesforce uses GB200-powered Vertex AI training infrastructure. March2026 Google example: General Motors uses G4 for driving simulation. Broadcom April 2026 8-K: Google TPU / networking development and supply agreements, extending up to 2031."
+      "relationships": "Anthropic uses Google Cloud TPU compute and announced additional capacity with Google and Broadcom in April 2026, expected to come online from 2027. Google and Reddit announced a Data API / Vertex AI partnership in February 2024; advertising competition and collaboration coexist. Snap also discloses Google Cloud infrastructure use in its own filing. March2026: Google Cloud G4 uses NVIDIA Blackwell GPUs. March2026: NVIDIA Dynamo / GKE and Nemotron / Vertex AI integration. March2026 Google example: Salesforce uses GB200-powered Vertex AI training infrastructure. March2026 Google example: General Motors uses G4 for driving simulation. Broadcom April 2026 8-K: Google TPU / networking development and supply agreements, extending up to 2031. Apple June2026 primary disclosure: PCC on Google Cloud runs new Apple Intelligence workloads; contract quantities undisclosed. Apple discloses co-development with Google of Apple Foundation Models using Gemini technologies and PCC."
     },
     "maps": {
       "competition": [
@@ -3379,6 +3388,32 @@
             6
           ],
           "ticker": "AVGO"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "customer",
+          "label": {
+            "ja": "Apple側2026年6月一次資料：新しいApple Intelligenceワークロード向けPCCをGoogle Cloudで実行。契約量は未開示",
+            "en": "Apple June2026 primary disclosure: PCC on Google Cloud runs new Apple Intelligence workloads; contract quantities undisclosed"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "partner",
+          "label": {
+            "ja": "Apple側自社開示：Gemini技術を活用するApple Foundation ModelsとPCCをGoogleと共同開発",
+            "en": "Apple discloses co-development with Google of Apple Foundation Models using Gemini technologies and PCC"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "AAPL"
         }
       ]
     }
@@ -3482,6 +3517,14 @@
       {
         "url": "https://www.sas-globalwafers.com/en/gwc_news_en_20250807/",
         "label": "GlobalWafers — US subsidiary GWA / Apple partnership, August6,2025"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://security.apple.com/blog/expanding-pcc/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://blogs.nvidia.com/blog/nvidia-confidential-computing-apple-private-cloud-compute/"
       }
     ],
     "ja": {
@@ -3490,7 +3533,7 @@
       "strength": "端末・基本ソフト・サービスを一体で設計し、製品同士を使いやすく連携させる。",
       "risks": "iPhoneの需要変動、海外の製造網への依存、アプリ配信などをめぐる規制。",
       "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。 音楽サービスは、Spotify PremiumとApple Musicの定額聴取を両社公式製品で編集比較する。楽曲構成、対応端末、音質機能、料金や地域条件の一致を示すものではない。 Meta QuestとApple Vision ProのVR・複合現実端末も公式製品で編集比較する。性能・用途・価格や全機能の同等性を示すものではなく、両社の提携を意味しない。",
-      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。 米国製造計画ではApplied Materials、Texas Instruments、Corning、Coherent、TSMC、GlobalFoundries、Amkor、Samsung、MP Materials、GlobalWafers、Cirrus Logic、TDK、Qnityとの関係を公式発表に基づき区別する。装置・材料の製造協業、部品供給、将来工場の包装・試験計画は同じ役割ではない。Broadcomの2026年7月の追加契約も含め、予定投資・調達を売上実績や全計画稼働済みと扱わず、現在の会社別調達量や株式保有を推定しない。"
+      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。 米国製造計画ではApplied Materials、Texas Instruments、Corning、Coherent、TSMC、GlobalFoundries、Amkor、Samsung、MP Materials、GlobalWafers、Cirrus Logic、TDK、Qnityとの関係を公式発表に基づき区別する。装置・材料の製造協業、部品供給、将来工場の包装・試験計画は同じ役割ではない。Broadcomの2026年7月の追加契約も含め、予定投資・調達を売上実績や全計画稼働済みと扱わず、現在の会社別調達量や株式保有を推定しない。 2026年6月Apple自社発表：Google Cloud上のPrivate Cloud Compute拡張をNVIDIA・Googleと共同開発。Apple自社開示：Google Cloud上のPCCにNVIDIA GPU・Confidential Computingを採用。Appleの直接購入数量ではない。2026年6月Apple自社発表：Googleと次世代Apple Foundation Models・Google Cloud上のPCCを共同開発。Apple自社開示：新しいApple Intelligenceワークロード向けにPCCをGoogle Cloudへ拡張。全機能移行や契約量は断定しない。2026年6月Apple自社開示：Google Cloud上のPCC基盤でTDX対応Intel CPUを利用。Mac全機種への採用ではない。"
     },
     "en": {
       "business": "Creates iPhone, Mac and other devices, with their software and services.",
@@ -3498,7 +3541,7 @@
       "strength": "Integrates hardware, operating systems and services across its products.",
       "risks": "iPhone demand shifts, overseas manufacturing dependence and regulation of its platforms.",
       "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features. Music services add an editorial comparison of Spotify Premium and Apple Music subscriptions using both official product pages. Catalogs, supported devices, audio features, pricing and regional terms can differ. Official products also support an editorial Meta Quest / Apple Vision Pro VR and mixed-reality comparison, without equating performance, use cases, price or all functions, or establishing a partnership.",
-      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established. Official US-manufacturing announcements separately identify Applied Materials, Texas Instruments, Corning, Coherent, TSMC, GlobalFoundries, Amkor, Samsung, MP Materials, GlobalWafers, Cirrus Logic, TDK and Qnity. Equipment/materials collaboration, component supply and planned packaging/test capacity are distinct roles. The July2026 Broadcom expansion is a future procurement commitment, not realized revenue, completed capacity or equity ownership."
+      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established. Official US-manufacturing announcements separately identify Applied Materials, Texas Instruments, Corning, Coherent, TSMC, GlobalFoundries, Amkor, Samsung, MP Materials, GlobalWafers, Cirrus Logic, TDK and Qnity. Equipment/materials collaboration, component supply and planned packaging/test capacity are distinct roles. The July2026 Broadcom expansion is a future procurement commitment, not realized revenue, completed capacity or equity ownership. June2026 Apple disclosure: co-developed Private Cloud Compute expansion on Google Cloud with NVIDIA and Google. Apple discloses NVIDIA GPUs / Confidential Computing in PCC on Google Cloud; not a claim of Apple direct purchase quantities. June2026 Apple disclosure: co-development with Google of next-generation Apple Foundation Models and PCC on Google Cloud. Apple discloses PCC expansion to Google Cloud for new Apple Intelligence workloads, without claiming migration of all features or contract quantities. June2026 Apple disclosure: Intel CPUs with TDX in PCC on Google Cloud; not adoption across all Mac models."
     },
     "maps": {
       "competition": [
@@ -3813,6 +3856,73 @@
             17
           ],
           "ticker": "Q"
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月Apple自社発表：Google Cloud上のPrivate Cloud Compute拡張をNVIDIA・Googleと共同開発",
+            "en": "June2026 Apple disclosure: co-developed Private Cloud Compute expansion on Google Cloud with NVIDIA and Google"
+          },
+          "sourceIndexes": [
+            23,
+            24
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "supplier",
+          "label": {
+            "ja": "Apple自社開示：Google Cloud上のPCCにNVIDIA GPU・Confidential Computingを採用。Appleの直接購入数量ではない",
+            "en": "Apple discloses NVIDIA GPUs / Confidential Computing in PCC on Google Cloud; not a claim of Apple direct purchase quantities"
+          },
+          "sourceIndexes": [
+            23,
+            24
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月Apple自社発表：Googleと次世代Apple Foundation Models・Google Cloud上のPCCを共同開発",
+            "en": "June2026 Apple disclosure: co-development with Google of next-generation Apple Foundation Models and PCC on Google Cloud"
+          },
+          "sourceIndexes": [
+            23
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "supplier",
+          "label": {
+            "ja": "Apple自社開示：新しいApple Intelligenceワークロード向けにPCCをGoogle Cloudへ拡張。全機能移行や契約量は断定しない",
+            "en": "Apple discloses PCC expansion to Google Cloud for new Apple Intelligence workloads, without claiming migration of all features or contract quantities"
+          },
+          "sourceIndexes": [
+            23
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Intel",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年6月Apple自社開示：Google Cloud上のPCC基盤でTDX対応Intel CPUを利用。Mac全機種への採用ではない",
+            "en": "June2026 Apple disclosure: Intel CPUs with TDX in PCC on Google Cloud; not adoption across all Mac models"
+          },
+          "sourceIndexes": [
+            23
+          ],
+          "ticker": "INTC"
         }
       ]
     }
