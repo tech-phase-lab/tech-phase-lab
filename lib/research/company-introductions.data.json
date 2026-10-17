@@ -1347,6 +1347,10 @@
       {
         "label": "Microsoft Windows official collaboration disclosure; checked October 17, 2026",
         "url": "https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
       }
     ],
     "ja": {
@@ -1355,7 +1359,7 @@
       "strength": "企業が日常的に使う業務ソフトとクラウドを組み合わせ、既存の仕事にAIを取り入れやすい。",
       "risks": "データセンターへの巨額投資、AIサービスの価格競争、サイバー攻撃や情報流出。",
       "competition": "クラウド基盤ではAWSとGoogle Cloud、PC用OSではAppleのmacOS、営業CRMではSalesforceとDynamics 365 Salesを比較する。これらは公式製品を照合した編集上の比較。Snowflakeのデータ分析、SentinelOneの端末防御、Pegasystemsの顧客対応・業務自動化は相手側の年次報告がMicrosoftを競合として挙げる分野で、全事業の同等性を意味しない。 ゲーム機ではSonyのPlayStation 5、Nintendo Switch 2とXboxを公式製品に基づいて編集比較する。ゲームの互換性や性能が同じという意味ではなく、Microsoftの年次報告が今回この2社を実名列挙したという主張でもない。",
-      "relationships": "OpenAIとは2026年4月に契約を改定し、Microsoftは主要クラウド提携先を維持する一方、IPライセンスは非独占となり、OpenAIは他のクラウドでも製品を提供できる。Anthropicは2025年11月にAzure計算容量の購入を約束し、Claudeの提供連携も公表した。容量の約束や投資計画を全て実行済みとは扱わない。 2026年3月自社開示：NVIDIA Grace Blackwellを展開。Vera Rubinは当時ラボ検証・今後展開。2026年3月：NVIDIA Nemotron・Dynamo・OmniverseとFoundry/Fabricを技術統合。2026年7月：AMD Helios・次世代EPYCのAzure採用計画。全展開完了ではない。2026年7月公式事例：AMDがAzure HXを半導体設計の計算に利用。2026年10月：Maia 300の演算チップレットはTSMC N2P。製品展開は2027年予定。 2026年3月Foundry/Fabric連携と5月Windows/RTX Spark共同最適化。秋の製品提供計画を全展開完了としない。"
+      "relationships": "OpenAIとは2026年4月に契約を改定し、Microsoftは主要クラウド提携先を維持する一方、IPライセンスは非独占となり、OpenAIは他のクラウドでも製品を提供できる。Anthropicは2025年11月にAzure計算容量の購入を約束し、Claudeの提供連携も公表した。容量の約束や投資計画を全て実行済みとは扱わない。 2026年3月自社開示：NVIDIA Grace Blackwellを展開。Vera Rubinは当時ラボ検証・今後展開。2026年3月：NVIDIA Nemotron・Dynamo・OmniverseとFoundry/Fabricを技術統合。2026年7月：AMD Helios・次世代EPYCのAzure採用計画。全展開完了ではない。2026年7月公式事例：AMDがAzure HXを半導体設計の計算に利用。2026年10月：Maia 300の演算チップレットはTSMC N2P。製品展開は2027年予定。 2026年3月Foundry/Fabric連携と5月Windows/RTX Spark共同最適化。秋の製品提供計画を全展開完了としない。 Microsoftの2026年4月改定契約はOpenAIの主要株主であることを明記。6月期自社決算でも投資を確認し、現在の厳密持分比率は推定しない。Microsoftの2026年6月期自社決算でAnthropicへの投資と投資関連利益を確認。Azure顧客とは別の資本関係で、保有比率や投資予定額の全額実行を推定しない。"
     },
     "en": {
       "business": "Provides Windows, Microsoft 365 and Azure cloud services, alongside AI and gaming products.",
@@ -1363,7 +1367,7 @@
       "strength": "Combines widely used workplace software and cloud services to bring AI into existing workflows.",
       "risks": "Heavy data-center investment, AI pricing pressure, cyberattacks and data breaches.",
       "competition": "Official-product comparisons cover AWS and Google Cloud versus Azure, Apple macOS versus Windows, and Salesforce sales CRM versus Dynamics 365 Sales. Snowflake data analytics, SentinelOne endpoint protection and Pegasystems customer-engagement/workflow overlaps are separately supported by those peers’ filings; the companies are not equivalent across all businesses. Console gaming adds editorial comparisons of Xbox with Sony PlayStation 5 and Nintendo Switch 2 based on official products. This does not equate game compatibility or performance, or claim a newly verified Microsoft annual disclosure naming both.",
-      "relationships": "The April 2026 amended OpenAI agreement retains Microsoft as a primary cloud partner while making its IP license non-exclusive and allowing OpenAI products on other clouds. Anthropic announced Azure compute purchase commitments and Claude integration in November 2025; committed capacity and investment plans are not all completed deployments. March2026 Microsoft disclosure: NVIDIA Grace Blackwell deployed; Vera Rubin then in labs / rollout planned. March2026: NVIDIA Nemotron / Dynamo / Omniverse integration with Foundry / Fabric. July2026: Azure adoption plan for AMD Helios / next-generation EPYC, not completed fleet rollout. July2026 official example: AMD uses Azure HX for semiconductor-design computing. October2026: Maia300 compute chiplets use TSMC N2P; production deployment planned for2027. March2026 Foundry / Fabric integration and May Windows / RTX Spark co-optimization; fall product availability plans are not a completed full rollout."
+      "relationships": "The April 2026 amended OpenAI agreement retains Microsoft as a primary cloud partner while making its IP license non-exclusive and allowing OpenAI products on other clouds. Anthropic announced Azure compute purchase commitments and Claude integration in November 2025; committed capacity and investment plans are not all completed deployments. March2026 Microsoft disclosure: NVIDIA Grace Blackwell deployed; Vera Rubin then in labs / rollout planned. March2026: NVIDIA Nemotron / Dynamo / Omniverse integration with Foundry / Fabric. July2026: Azure adoption plan for AMD Helios / next-generation EPYC, not completed fleet rollout. July2026 official example: AMD uses Azure HX for semiconductor-design computing. October2026: Maia300 compute chiplets use TSMC N2P; production deployment planned for2027. March2026 Foundry / Fabric integration and May Windows / RTX Spark co-optimization; fall product availability plans are not a completed full rollout. Microsoft April 2026 amended agreement identifies it as a major OpenAI shareholder, corroborated by June-year-end results; no exact current ownership percentage inferred. Microsoft June 2026 results identify an Anthropic investment and related gain, separately from Azure customer activity; no ownership percentage, full planned funding or cash realization inferred."
     },
     "maps": {
       "competition": [
@@ -1607,6 +1611,31 @@
             19
           ],
           "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "investee",
+          "label": {
+            "ja": "Microsoftの2026年4月改定契約はOpenAIの主要株主であることを明記。6月期自社決算でも投資を確認し、現在の厳密持分比率は推定しない",
+            "en": "Microsoft April 2026 amended agreement identifies it as a major OpenAI shareholder, corroborated by June-year-end results; no exact current ownership percentage inferred"
+          },
+          "sourceIndexes": [
+            4,
+            21
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "investee",
+          "label": {
+            "ja": "Microsoftの2026年6月期自社決算でAnthropicへの投資と投資関連利益を確認。Azure顧客とは別の資本関係で、保有比率や投資予定額の全額実行を推定しない",
+            "en": "Microsoft June 2026 results identify an Anthropic investment and related gain, separately from Azure customer activity; no ownership percentage, full planned funding or cash realization inferred"
+          },
+          "sourceIndexes": [
+            21
+          ]
         }
       ]
     }
@@ -1965,6 +1994,42 @@
       {
         "label": "Official commercial disclosure; checked October 17, 2026",
         "url": "https://www.viseratech.com/faq/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.xintec.com.tw/eng/CCD/IR_FAQ.html"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.tpex.org.tw/storage/about_otc_news/2026/01/1767335679244_1037_news.pdf"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.taifex.com.tw/file/taifex/eng/eng11/3374en_20260624.pdf"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://links.sgx.com/FileOpen/Vanguard%20International%20Semiconductor%20Corporation%20-%20Final%20Offering%20Circular%20dated%2028%20January%202026.ashx?App=Prospectus&FileID=68506"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://global.canon/en/ir/share/name.html"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.advantest.com/en/investors/individual-investors/faq/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.screen.co.jp/ir/stock"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://hdjp-corporateweb-files.screen.co.jp/8017/8123/8975/SCREEN_GroupProfile2026.pdf"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.shinetsu.co.jp/en/ir/ir-faq/"
       }
     ],
     "ja": {
@@ -1973,7 +2038,7 @@
       "strength": "微細な回路を大量生産する技術と生産規模。設計会社が製品を量産するための仕組みも整える。",
       "risks": "台湾への生産集中、地震や電力・水の供給障害、大口顧客の需要変動と設備投資の負担。",
       "competition": "先端半導体の受託製造ではIntel FoundryとSamsungが競合例。IntelはTSMCを先端プロセスの主要競合と明記している。Samsungは両社の公表する製造事業を比較したもの。製造技術の世代や量産規模、先端パッケージングで競争条件は異なる。 成熟プロセスの受託製造ではUMCも公式開示・技術資料による編集比較の対象。最先端ノードや先端パッケージングまで同等とするものではなく、製造能力やシェアを推定しない。",
-      "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。 2026年2月Apple側開示：TSMCアリゾナ製チップを購入。年間予定数量を実績にしない。2026年10月Microsoft側開示：Maia 300にTSMC N2Pを採用。展開は2027年予定。 2026年3月Arm側6-KのTSMC公式コメント：Arm AGI CPUの製造を担当。数量は未開示。 TSMC自身が2025年11月の供給元表彰でASMLを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でApplied Materialsを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でLam Researchを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でKLAを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でOnto Innovationを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。2026年5月11日：TSMCとApplied MaterialsがEPICで材料・装置・工程を共同開発する提携。全開発・量産完了ではない。TSMC自身の2025年末保有：Global Unichip株46,687,859株・34.84%。新規2026年取得や現在比率を推定しない。2026年6月16日の10年契約：TSMCがAmkorの先端包装・試験を調達する協業枠組み。アリゾナ能力拡張の全稼働・数量は未確定。TSMCとAmkorが米アリゾナの先端包装・試験で10年協業を共同発表。TSMC自身の公式コメントを個別確認。 AMDのFY2025自社開示：HPC・FPGA・adaptive SoC等のウエハー製造にTSMCを利用。TSMC側の顧客名開示と混同しない。 BroadcomのFY2025自社開示：TSMCをウエハー製造と組立・試験の委託先に列挙。全製品・全数量の独占委託ではない。 QualcommのFY2025自社開示：QCTのデジタル・混載・RF・電源ICの主要製造先にTSMCを含む。全製品の単独供給とはしない。 TSMCの2026年6月期連結財務諸表：VisEraを約67%保有の子会社として開示。新規2026年出資や現在の厳密比率とはしない。TSMCの2026年6月期財務諸表：GUC向け売上と売掛金を実名開示。米国子会社経由を含み、全額を親会社直接請求や出資とはしない。"
+      "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。 2026年2月Apple側開示：TSMCアリゾナ製チップを購入。年間予定数量を実績にしない。2026年10月Microsoft側開示：Maia 300にTSMC N2Pを採用。展開は2027年予定。 2026年3月Arm側6-KのTSMC公式コメント：Arm AGI CPUの製造を担当。数量は未開示。 TSMC自身が2025年11月の供給元表彰でASMLを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でApplied Materialsを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でLam Researchを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でKLAを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でOnto Innovationを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。2026年5月11日：TSMCとApplied MaterialsがEPICで材料・装置・工程を共同開発する提携。全開発・量産完了ではない。TSMC自身の2025年末保有：Global Unichip株46,687,859株・34.84%。新規2026年取得や現在比率を推定しない。2026年6月16日の10年契約：TSMCがAmkorの先端包装・試験を調達する協業枠組み。アリゾナ能力拡張の全稼働・数量は未確定。TSMCとAmkorが米アリゾナの先端包装・試験で10年協業を共同発表。TSMC自身の公式コメントを個別確認。 AMDのFY2025自社開示：HPC・FPGA・adaptive SoC等のウエハー製造にTSMCを利用。TSMC側の顧客名開示と混同しない。 BroadcomのFY2025自社開示：TSMCをウエハー製造と組立・試験の委託先に列挙。全製品・全数量の独占委託ではない。 QualcommのFY2025自社開示：QCTのデジタル・混載・RF・電源ICの主要製造先にTSMCを含む。全製品の単独供給とはしない。 TSMCの2026年6月期連結財務諸表：VisEraを約67%保有の子会社として開示。新規2026年出資や現在の厳密比率とはしない。TSMCの2026年6月期財務諸表：GUC向け売上と売掛金を実名開示。米国子会社経由を含み、全額を親会社直接請求や出資とはしない。 TSMCの2026年6月期連結財務諸表：Xintecを約41%保有する関連会社として開示。新規出資や現在の厳密比率ではない。TSMCの2026年6月期開示：5月にVIS株1億5200万株を売却し保有約19%へ。重要な影響力を失い、全株売却ではない。TSMCの2026年上半期財務諸表はVISからの購入取引を実名開示。現在の発注量や全製品の調達を示すものではない。TSMCの2026年上半期財務諸表はVIS向け売上を実名開示。購入・保有株式とは別の取引で、出資から顧客を推定していない。TSMC自身の2025年11月供給元表彰：Canonの生産支援を確認。装置の特定機種・現在の発注量・独占供給は未確認。TSMC自身の2025年11月供給元表彰：Advantestの生産支援を確認。特定の試験装置機種や現在の調達量は未確認。TSMCの2025年11月表彰はSCREEN Semiconductor Solutionsの生産支援を確認。上場親会社SCREEN Holdingsで表示し、現在の機種別発注量は未確認。TSMCの2025年11月表彰は信越半導体の技術開発・生産支援を確認。上場親会社信越化学で表示し、現在の購入量や独占供給は未確認。"
     },
     "en": {
       "business": "Manufactures chips designed by customers rather than competing with them through its own chip brand.",
@@ -1981,7 +2046,7 @@
       "strength": "Leading-edge manufacturing expertise, production scale and support for customers moving designs into volume production.",
       "risks": "Taiwan concentration, earthquakes, utility disruptions, major-customer demand changes and high capital spending.",
       "competition": "Examples in leading-edge foundry services include Intel Foundry and Samsung. Intel explicitly names TSMC as a leading-edge competitor. Samsung is a comparison of disclosed manufacturing businesses. Technology generation, manufacturing scale and packaging capabilities differ. UMC is an editorial comparison in mature-node wafer foundry using official disclosures and technology materials. It is not equated with leading-edge nodes or advanced packaging, and no capacity or share is inferred.",
-      "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers. February2026 Apple disclosure: purchases chips made at TSMC Arizona; annual planned quantities not actuals. October2026 Microsoft disclosure: Maia300 uses TSMC N2P; rollout planned for2027. March 2026 Arm 6-K includes TSMC statement as Arm AGI CPU manufacturer; quantities undisclosed. TSMC names ASML in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Applied Materials in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Lam Research in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names KLA in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Onto Innovation in its November2025 supplier awards; evidence of support in that period, not current order quantities. May11,2026: TSMC / Applied Materials EPIC partnership for materials, equipment and process co-development; not completed development or volume ramp. TSMC reported46,687,859 Global Unichip shares /34.84% at December2025 year-end; not a new2026 purchase or current percentage. June16,2026 ten-year agreement: framework for TSMC to procure Amkor advanced packaging / test; Arizona capacity ramp and quantities are not completed commitments. TSMC / Amkor jointly announce a ten-year Arizona advanced-packaging / test partnership; TSMC official statement independently reviewed. AMD FY2025 disclosure identifies TSMC wafer manufacturing for HPC / FPGA / adaptive SoCs; attributed to AMD, not TSMC naming the customer. Broadcom FY2025 disclosure names TSMC for wafer manufacturing and assembly / test; not exclusive outsourcing of every product or quantity. Qualcomm FY2025 disclosure includes TSMC among primary QCT foundries for digital / mixed-signal / RF / power ICs; not sole supplier for all products. TSMC June 2026 consolidated financials report VisEra as an approximately 67%-owned subsidiary; not a new 2026 investment or exact current percentage. TSMC June 2026 financials name GUC sales / receivables, including US subsidiary transactions; not all parent-billed sales or equity funding."
+      "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers. February2026 Apple disclosure: purchases chips made at TSMC Arizona; annual planned quantities not actuals. October2026 Microsoft disclosure: Maia300 uses TSMC N2P; rollout planned for2027. March 2026 Arm 6-K includes TSMC statement as Arm AGI CPU manufacturer; quantities undisclosed. TSMC names ASML in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Applied Materials in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Lam Research in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names KLA in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Onto Innovation in its November2025 supplier awards; evidence of support in that period, not current order quantities. May11,2026: TSMC / Applied Materials EPIC partnership for materials, equipment and process co-development; not completed development or volume ramp. TSMC reported46,687,859 Global Unichip shares /34.84% at December2025 year-end; not a new2026 purchase or current percentage. June16,2026 ten-year agreement: framework for TSMC to procure Amkor advanced packaging / test; Arizona capacity ramp and quantities are not completed commitments. TSMC / Amkor jointly announce a ten-year Arizona advanced-packaging / test partnership; TSMC official statement independently reviewed. AMD FY2025 disclosure identifies TSMC wafer manufacturing for HPC / FPGA / adaptive SoCs; attributed to AMD, not TSMC naming the customer. Broadcom FY2025 disclosure names TSMC for wafer manufacturing and assembly / test; not exclusive outsourcing of every product or quantity. Qualcomm FY2025 disclosure includes TSMC among primary QCT foundries for digital / mixed-signal / RF / power ICs; not sole supplier for all products. TSMC June 2026 consolidated financials report VisEra as an approximately 67%-owned subsidiary; not a new 2026 investment or exact current percentage. TSMC June 2026 financials name GUC sales / receivables, including US subsidiary transactions; not all parent-billed sales or equity funding. TSMC June 2026 financials report an approximately 41% interest in Xintec; a dated associate holding, not a new investment or exact current percentage. TSMC June 2026 disclosure: May sale of 152m VIS shares reduced its holding to about 19%, with loss of significant influence; not a complete exit. TSMC first-half 2026 financials name purchases from VIS; dated semiconductor transactions, not current order volumes or procurement for every product. TSMC first-half 2026 financials name sales to VIS, separately from purchases and shareholding; customer transactions are not inferred from equity ownership. TSMC November 2025 supplier award names Canon for production support; specific equipment models, current order volumes and exclusivity are not established. TSMC November 2025 supplier award names Advantest for production support; specific test-system models and current procurement volumes are not established. TSMC November 2025 award names SCREEN Semiconductor Solutions for production support, shown through listed parent SCREEN Holdings; current model-specific orders are not established. TSMC November 2025 award names Shin-Etsu Handotai for technology development and production support, shown through listed parent Shin-Etsu Chemical; no current volumes or exclusivity inferred."
     },
     "maps": {
       "competition": [
@@ -2272,6 +2337,113 @@
           "sourceIndexes": [
             16,
             11
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Xintec",
+          "role": "investee",
+          "label": {
+            "ja": "TSMCの2026年6月期連結財務諸表：Xintecを約41%保有する関連会社として開示。新規出資や現在の厳密比率ではない",
+            "en": "TSMC June 2026 financials report an approximately 41% interest in Xintec; a dated associate holding, not a new investment or exact current percentage"
+          },
+          "sourceIndexes": [
+            16,
+            18,
+            19,
+            20
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Vanguard International Semiconductor",
+          "role": "investee",
+          "label": {
+            "ja": "TSMCの2026年6月期開示：5月にVIS株1億5200万株を売却し保有約19%へ。重要な影響力を失い、全株売却ではない",
+            "en": "TSMC June 2026 disclosure: May sale of 152m VIS shares reduced its holding to about 19%, with loss of significant influence; not a complete exit"
+          },
+          "sourceIndexes": [
+            16,
+            21
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Vanguard International Semiconductor",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMCの2026年上半期財務諸表はVISからの購入取引を実名開示。現在の発注量や全製品の調達を示すものではない",
+            "en": "TSMC first-half 2026 financials name purchases from VIS; dated semiconductor transactions, not current order volumes or procurement for every product"
+          },
+          "sourceIndexes": [
+            16,
+            21
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Vanguard International Semiconductor",
+          "role": "customer",
+          "label": {
+            "ja": "TSMCの2026年上半期財務諸表はVIS向け売上を実名開示。購入・保有株式とは別の取引で、出資から顧客を推定していない",
+            "en": "TSMC first-half 2026 financials name sales to VIS, separately from purchases and shareholding; customer transactions are not inferred from equity ownership"
+          },
+          "sourceIndexes": [
+            16,
+            21
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Canon",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMC自身の2025年11月供給元表彰：Canonの生産支援を確認。装置の特定機種・現在の発注量・独占供給は未確認",
+            "en": "TSMC November 2025 supplier award names Canon for production support; specific equipment models, current order volumes and exclusivity are not established"
+          },
+          "sourceIndexes": [
+            9,
+            22
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Advantest",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMC自身の2025年11月供給元表彰：Advantestの生産支援を確認。特定の試験装置機種や現在の調達量は未確認",
+            "en": "TSMC November 2025 supplier award names Advantest for production support; specific test-system models and current procurement volumes are not established"
+          },
+          "sourceIndexes": [
+            9,
+            23
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "SCREEN",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMCの2025年11月表彰はSCREEN Semiconductor Solutionsの生産支援を確認。上場親会社SCREEN Holdingsで表示し、現在の機種別発注量は未確認",
+            "en": "TSMC November 2025 award names SCREEN Semiconductor Solutions for production support, shown through listed parent SCREEN Holdings; current model-specific orders are not established"
+          },
+          "sourceIndexes": [
+            9,
+            24,
+            25
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Shin-Etsu Chemical",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMCの2025年11月表彰は信越半導体の技術開発・生産支援を確認。上場親会社信越化学で表示し、現在の購入量や独占供給は未確認",
+            "en": "TSMC November 2025 award names Shin-Etsu Handotai for technology development and production support, shown through listed parent Shin-Etsu Chemical; no current volumes or exclusivity inferred"
+          },
+          "sourceIndexes": [
+            9,
+            26
           ]
         }
       ]

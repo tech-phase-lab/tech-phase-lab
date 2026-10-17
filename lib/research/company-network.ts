@@ -7,6 +7,7 @@ export type NetworkMode = "direct" | "two" | "all";
 // A missing US ticker does not imply private ownership. These names identify
 // listed overseas issuers; unresolved names stay out of the stock map.
 const listedOverseas = new Set([
+  "Xintec", "Vanguard International Semiconductor", "Shin-Etsu Chemical",
   "VisEra Technologies",
   "Global Unichip",
   "EssilorLuxottica",

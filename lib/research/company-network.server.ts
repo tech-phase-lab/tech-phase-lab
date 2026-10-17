@@ -3987,15 +3987,15 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "OpenAI": {
       "layer": 6,
       "businessLabel": {
-        "ja": "主要クラウド提携・非独占IP",
-        "en": "Primary cloud partnership / non-exclusive IP"
+        "ja": "OpenAI：モデル協業・出資先",
+        "en": "OpenAI: model collaboration / investee"
       }
     },
     "Anthropic": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Azure計算容量の購入を約束",
-        "en": "Azure compute purchase commitment"
+        "ja": "Anthropic：Azure顧客・出資先",
+        "en": "Anthropic: Azure customer / investee"
       }
     },
     "SNOW": {
@@ -8991,6 +8991,49 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "VisEra：光学半導体・出資先",
         "en": "VisEra: optical chips / investee"
+      }
+    },
+    "Xintec": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Xintec：ウエハー級包装・出資先",
+        "en": "Xintec: wafer-level packaging / investee"
+      }
+    },
+    "Vanguard International Semiconductor": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "VIS：半導体取引・保有株式",
+        "en": "VIS: semiconductor transactions / holding"
+      },
+      "name": "VIS"
+    },
+    "Canon": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Canon：TSMC生産支援の供給元",
+        "en": "Canon: TSMC production-support supplier"
+      }
+    },
+    "Advantest": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Advantest：TSMC生産支援の供給元",
+        "en": "Advantest: TSMC production-support supplier"
+      }
+    },
+    "SCREEN": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "SCREEN：半導体製造の生産支援",
+        "en": "SCREEN: semiconductor production support"
+      }
+    },
+    "Shin-Etsu Chemical": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Shin-Etsu：半導体ウエハー供給グループ",
+        "en": "Shin-Etsu: semiconductor-wafer supplier group"
       }
     }
   },
