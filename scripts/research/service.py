@@ -2988,6 +2988,10 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(payload)
 
     def authorized(self):
+        # A dedicated news reader must never inherit legacy token-free access.
+        reader = os.environ.get("RESOLUTE_NEWS_READ_TOKEN", "")
+        if reader and hmac.compare_digest(self.headers.get("Authorization", ""), "Bearer " + reader):
+            return False
         token = os.environ.get("RESEARCH_API_TOKEN")
         if not token:
             return True
@@ -3062,6 +3066,20 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlsplit(self.path)
         path = parsed.path
+        if path == "/internal/resolute/news":
+            token = os.environ.get("RESOLUTE_NEWS_READ_TOKEN", "")
+            privileged = [os.environ.get(key, "") for key in ("RESEARCH_API_TOKEN", "RESEARCH_EDITOR_TOKEN")]
+            if len(token) < 32 or token in privileged or not hmac.compare_digest(self.headers.get("Authorization", ""), "Bearer " + token):
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            if parsed.query:
+                self.send_json(400, {"ok": False, "error": "invalid-query"})
+                return
+            try:
+                self.send_json(200, self.app.public_news())
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "news-unavailable"})
+            return
         if path == "/watch-earnings":
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
                 self.send_json(401, {"ok": False})
@@ -3268,6 +3286,10 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(503, {"ok": False, "error": "snapshot-unavailable"})
 
     def do_POST(self):
+        reader = os.environ.get("RESOLUTE_NEWS_READ_TOKEN", "")
+        if reader and hmac.compare_digest(self.headers.get("Authorization", ""), "Bearer " + reader):
+            self.send_json(403, {"ok": False, "error": "read-only"})
+            return
         path = urlsplit(self.path).path
         if path == "/saved-research":
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():

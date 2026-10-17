@@ -98,3 +98,26 @@ operations: do not extract a protected token or hand broad credentials to a new
 worker just to make intake work. A dedicated read-only connection is still needed.
 Twelve Data is not contracted; the owner plans to subscribe in mid-November.
 Price-dependent verification waits until access is available.
+
+## Dedicated read-only source connection
+
+The private worker now reads the monitor directly through GET
+`/internal/resolute/news`, using `RESOLUTE_NEWS_READ_TOKEN` on both services and
+`RESOLUTE_NEWS_ORIGIN` pointing to the intended monitor's HTTPS root. The new
+reader token must be independently generated (at least 32 characters), not the
+general API or editor credential. No value belongs in this repository or logs.
+The endpoint fails closed when unconfigured, rejects query options, and returns
+only the existing published feed. Reader credentials are rejected on POST and
+cannot use the general API authorization path. Existing monitor callers remain
+unchanged when the new setting is absent. The worker sanitizes the result with
+the site's shared feed builder; original preview items remain excluded.
+
+Implementation does not install a token, deploy the monitor, apply migration 013
+or enable a schedule. Those operational steps and a real authenticated read are
+still required. Keep customer publication withheld throughout the private run.
+
+Operational follow-up: a new independent reader credential has been configured
+on the intended staging monitor and RESOLUTE API, with redeployment skipped.
+Its value is not stored in this repository. This does not confirm that running
+processes have loaded it, nor that a reader request succeeds. No worker schedule
+or publication flag was enabled.
