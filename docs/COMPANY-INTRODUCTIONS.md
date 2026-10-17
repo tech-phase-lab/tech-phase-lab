@@ -24,7 +24,7 @@ hiding a placeholder does not complete that review. The working chat's audit
 records 186 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
-Finish these quality corrections before adding new issuers.
+Continue product-specific quality corrections alongside source-reviewed new issuers, as authorized by the user on 2026-10-18.
 
 A published correction batch reviewed COST, MSFT, GOOG/GOOGL, AMZN, AVGO, DELL,
 ETN, CRWD, CRM, TXN, ADI, MCHP and SNPS (13 existing issuers; no additions).
@@ -890,3 +890,31 @@ Google distinguishes Blackstone TPU-cloud jointventure collaboration, Samsung an
 ### Top-ten commercial audit, 2026-10-17 (R41)
 
 Three separately assigned research audits reconcile 30 commercial roles across AAPL, TSM, GOOG, MSFT, AMZN, META, AVGO and TSLA. Official company / counterparty disclosures and current listed identities are recorded individually. Supplier awards retain November2025 dates; power purchases, conditional development, semiconductor MOUs and future regional rollouts are not completed delivery or equity purchases. Apple US leasing/carrier channels, Surface silicon adoption and co-development, cloud database/data partnerships, Meta power and compute procurement, VMware customer renewal, Rivian investment and Grok integration retain distinct roles. Foreign listed parents have no fabricated US tickers. Rivian and SpaceX captions retain existing roles. Unresolved legal entities and anonymous counterparties remain held; NVDA saved41/61 graph is unchanged. This batch does not complete every top-ten category or all215 issuers.
+
+
+### 2026-10-18: combined new introductions and commercial follow-up (R42)
+
+The user authorized resumed publication and new issuers alongside the continuing
+quality audit. This does not declare the existing audit complete. Add Paylocity
+(Nasdaq PCTY; CIK1591698) and Fox Corporation (Nasdaq FOXA/FOX share classes;
+CIK1754301) using complete annual reports and reviewed official product sources.
+Paylocity separates UPS printed-check delivery from retirement/identity data
+integrations. Fox separates AWS procurement, platform compatibility, content
+customers and sports/video competition. The Roku acquisition remains conditional.
+
+The same batch adds 34 reviewed roles across Apple, Alphabet, Amazon and TSMC,
+preserving prior prose, named relationships and source indexes. Search-distribution
+payments run from Google to Apple. Overseas listings retain their own issuer
+identities; German Merck KGaA is not US Merck. TSMC's new direct relationships
+take priority within the existing 41-card ceiling. Some optional Nvidia-context
+cards consequently disappear from TSMC's limited map, without deleting their
+original profiles, relationship records or the frozen Nvidia graph. Original
+Nvidia 41/61 payload, LITE/AAOI and 12px competitor-scroll spacing stay fixed.
+
+A public 375px English review also found the stock-search heading overflowing;
+allow its mobile title to wrap. Verify all changed/affected maps on the final
+integrated tree, including the inherited R41 roles, before consuming drafts.
+
+The Resonac parent-identity candidate stays on hold: mirrored documents have not
+been authenticated against an issuer or exchange original. It is not classified
+as private, and its supplier-award research remains in the audit inventory.

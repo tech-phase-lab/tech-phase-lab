@@ -6,7 +6,8 @@ export type CompanyNetwork = { root: string; nodes: NetworkNode[]; edges: Networ
 export type NetworkMode = "direct" | "two" | "all";
 // A missing US ticker does not imply private ownership. These names identify
 // listed overseas issuers; unresolved names stay out of the stock map.
-const listedOverseas = new Set(["DISCO","EBARA","KOKUSAI ELECTRIC","SUMCO","Asahi Kasei","Reliance Industries","London Stock Exchange Group",
+const listedOverseas = new Set(["All Ring Tech", "China Steel Structure", "Jentech", "Marketech International", "ULVAC", "DENSO", "Toyota Motor", "Telefónica", "Veolia Environnement", "Telenor", "TGS",
+  "DISCO","EBARA","KOKUSAI ELECTRIC","SUMCO","Asahi Kasei","Reliance Industries","London Stock Exchange Group",
   "Xintec", "Vanguard International Semiconductor", "Shin-Etsu Chemical",
   "VisEra Technologies",
   "Global Unichip",

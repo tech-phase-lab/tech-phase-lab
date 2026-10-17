@@ -72,9 +72,11 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
-  if (root === "TSM") return {0:{ja:"半導体材料・製造装置",en:"Semiconductor materials & equipment"},2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}};
-  if (root === "GOOG") return {3:{ja:"GPU・CPU・TPU供給・AI技術連携",en:"GPU / CPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・XR/眼鏡・競合",en:"Cloud customers, XR / eyewear & competition"}};
-  if (root === "AMZN") return {3:{ja:"半導体・配送車の供給元",en:"Chip and delivery-van suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}};
+  if (root === "PCTY") return {6: {ja: "年金・IDのデータ連携と配送サービス", en: "Retirement / identity integrations and delivery services"}, 7: {ja: "人事・給与・支出・IT管理", en: "HR, payroll, spend & IT management"}};
+  if (root === "FOXA") return {7: {ja: "ニュース・スポーツ・配信と関連サービス", en: "News, sports, streaming & related services"}};
+  if (root === "TSM") return { ...{0:{ja:"半導体材料・製造装置",en:"Semiconductor materials & equipment"},2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}}, ...{"0": {"ja": "半導体材料・装置・工場建設の供給元", "en": "Semiconductor materials, equipment & fab-construction suppliers"}, "1": {"ja": "受託製造・製造合弁/画像センサーの協業", "en": "Foundries, manufacturing JVs & image-sensor collaboration"}} };
+  if (root === "GOOG") return { ...{3:{ja:"GPU・CPU・TPU供給・AI技術連携",en:"GPU / CPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・XR/眼鏡・競合",en:"Cloud customers, XR / eyewear & competition"}}, ...{"5": {"ja": "宇宙・衛星事業への出資先", "en": "Space / satellite investees"}, "7": {"ja": "顧客・検索配信先・XR/眼鏡・競合", "en": "Customers, search distribution, XR / eyewear & competition"}} };
+  if (root === "AMZN") return { ...{3:{ja:"半導体・配送車の供給元",en:"Chip and delivery-van suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}}, ...{"3": {"ja": "半導体・配送車の供給元と開発協業", "en": "Chip / delivery-van suppliers & development"}, "5": {"ja": "通信網・衛星接続・計測基盤の取引先", "en": "Network, satellite-connectivity & metering relationships"}, "6": {"ja": "AWS・データAIの顧客/協業・出資先・競合", "en": "AWS / data-AI customers, partners, investees & rivals"}, "7": {"ja": "通販・広告・業務/消費者サービスの顧客", "en": "Commerce, ads & enterprise / consumer-service customers"}} };
 
   if (root === "TENB") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・技術連携", en: "Cloud and technology integration" }, 7: { ja: "脆弱性管理・クラウド防御", en: "Vulnerability management and cloud security" } };
   if (root === "QTWO") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・金融技術の連携", en: "Cloud and financial technology integration" }, 7: { ja: "銀行ソフト・融資・組込金融", en: "Banking software, lending and embedded finance" } };
@@ -193,7 +195,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "HPE") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ネットワーク", "en": "Servers & networking"}, "6": {"ja": "クラウド・ハイブリッド基盤", "en": "Cloud & hybrid infrastructure"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
 
-  if (root === "AAPL") return { 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・衛星・販売/回線連携", en: "AI, satellite & sales / carrier integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
+  if (root === "AAPL") return { ...{ 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・衛星・販売/回線連携", en: "AI, satellite & sales / carrier integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } }, ...{"7": {"ja": "端末・サービス・検索配信の取引先と比較製品", "en": "Devices, services, search distribution & competing products"}} };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
   if (root === "META") return {5:{ja:"サーバー・電力供給網",en:"Server and power supply"},4:{ja:"データセンターの光接続供給",en:"Data-center optical connectivity"}, 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・広告・XR/AIグラス", en: "Social, ads, XR & AI glasses" } };
   if (root === "ON") return { 1: { ja: "GaN工程・製造協業", en: "GaN process & manufacturing collaboration" }, 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
@@ -3685,8 +3687,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "GOOG": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Google：PCC基盤・AIモデル共同開発",
-        "en": "Google: PCC cloud infrastructure / AI-model co-development"
+        "ja": "Google：PCC基盤・AIモデル共同開発・検索配信料の支払顧客",
+        "en": "Google: PCC cloud infrastructure / AI-model co-development / search-distribution fee payer"
       }
     },
     "INTC": {
@@ -3813,8 +3815,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "NVDA": {
       "layer": 3,
       "businessLabel": {
-        "ja": "NVIDIA：AWS向けGPU供給",
-        "en": "NVIDIA: AWS GPU hardware"
+        "ja": "NVIDIA：AWS向けGPU供給・AI基盤の共同開発",
+        "en": "NVIDIA: AWS GPU hardware / AI-infrastructure co-development"
       }
     },
     "GOOG": {
@@ -3890,8 +3892,120 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "NFLX": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Netflix：AWS計算・保存の顧客",
-        "en": "Netflix: AWS compute / storage customer"
+        "ja": "Netflix：AWS計算・保存の顧客・Prime Videoと競合",
+        "en": "Netflix: AWS compute / storage customer / Prime Video rival"
+      }
+    },
+    "UBER": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Uber：AWS顧客・Zoox配車の計画提携",
+        "en": "Uber: AWS customer / planned Zoox dispatch partner"
+      }
+    },
+    "DAL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Delta：AWS顧客・Leo機内接続の導入予定",
+        "en": "Delta: AWS customer / planned Leo in-flight connectivity"
+      }
+    },
+    "VOD": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Vodafone：Leo基地局接続の契約先",
+        "en": "Vodafone: Leo cell-site connectivity agreement"
+      }
+    },
+    "SNOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Snowflake：AWS顧客・データAI協業・競合",
+        "en": "Snowflake: AWS customer / data-AI partner / rival"
+      }
+    },
+    "USB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "U.S. Bancorp：傘下銀行のAWS・顧客対応AI",
+        "en": "U.S. Bancorp: bank AWS / customer-service AI"
+      }
+    },
+    "FOXA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Fox：FOX OneのAWS配信・AI顧客",
+        "en": "Fox: FOX One AWS streaming / AI customer"
+      }
+    },
+    "LUV": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Southwest：AWS・Kiroの顧客、移行計画",
+        "en": "Southwest: AWS / Kiro customer, migration plan"
+      }
+    },
+    "T": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AT&T：AWS顧客・光回線供給・接続協業",
+        "en": "AT&T: AWS customer / fiber supplier / connectivity partner"
+      }
+    },
+    "DXC": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "DXC：Quick社内採用・企業向け導入支援",
+        "en": "DXC: Quick internal customer / implementation partner"
+      }
+    },
+    "NOK": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Nokia：O2向けAWS上の5Gコア協業",
+        "en": "Nokia: O2 5G-core collaboration on AWS"
+      }
+    },
+    "Telefónica": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Telefónica：O2ドイツのAWS顧客",
+        "en": "Telefónica: O2 Germany AWS customer"
+      }
+    },
+    "NTT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "NTT / DOCOMO：AWSの5Gコア顧客",
+        "en": "NTT / DOCOMO: AWS 5G-core customer"
+      }
+    },
+    "Veolia Environnement": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Veolia：水道・ガス計測基盤のAWS提携",
+        "en": "Veolia: AWS smart-metering partner"
+      }
+    },
+    "Telenor": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Telenor：北欧TV配信のAWS顧客",
+        "en": "Telenor: Nordic TV AWS customer"
+      }
+    },
+    "TGS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "TGS：地震探査計算・AIのAWS顧客",
+        "en": "TGS: seismic HPC / AI AWS customer"
+      }
+    },
+    "CBRS": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Cerebras：Trainium・Bedrock推論の開発協業",
+        "en": "Cerebras: Trainium / Bedrock inference development"
       }
     }
   },
@@ -3969,8 +4083,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "AAPL": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Apple：PCC基盤顧客・AI共同開発",
-        "en": "Apple: PCC cloud customer / AI co-development"
+        "ja": "Apple：PCC基盤顧客・AI共同開発・検索配信を受託・Googleから対価受領",
+        "en": "Apple: PCC cloud customer / AI co-development / search-distribution supplier paid by Google"
       }
     },
     "BX": {
@@ -4027,6 +4141,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Oracle：Database@Google Cloud協業",
         "en": "Oracle: Database@Google Cloud collaboration"
+      }
+    },
+    "SPCX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "SpaceX：株式保有の出資先",
+        "en": "SpaceX: equity investee"
       }
     }
   },
@@ -9295,6 +9416,69 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "旭化成：先端包装向けPIMEL材料",
         "en": "Asahi Kasei: PIMEL packaging materials"
       }
+    },
+    "All Ring Tech": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "All Ring Tech：2025年の生産支援",
+        "en": "All Ring Tech: 2025 production support"
+      }
+    },
+    "China Steel Structure": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "China Steel Structure：2025年の新工場建設支援",
+        "en": "China Steel Structure: 2025 new-fab construction"
+      }
+    },
+    "Jentech": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Jentech：2025年の生産支援",
+        "en": "Jentech: 2025 production support"
+      }
+    },
+    "Marketech International": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Marketech（帆宣）：2025年の工場建設支援",
+        "en": "Marketech: 2025 fab-construction support"
+      }
+    },
+    "Merck": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Merck KGaA：2025年の環境配慮型製造支援",
+        "en": "Merck KGaA: 2025 greener-manufacturing support"
+      }
+    },
+    "ULVAC": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "アルバック：2025年の生産支援",
+        "en": "ULVAC: 2025 production support"
+      }
+    },
+    "SONY": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Sony：JASM共同出資・別の画像センサー開発計画",
+        "en": "Sony: JASM co-investment / separate image-sensor development plan"
+      }
+    },
+    "DENSO": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "DENSO：JASM共同出資の協業先",
+        "en": "DENSO: JASM co-investment partner"
+      }
+    },
+    "Toyota Motor": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Toyota：JASM少数出資の参加発表",
+        "en": "Toyota: announced JASM minority participation"
+      }
     }
   },
   "JD": {
@@ -9354,6 +9538,115 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "LSEG：VMware基盤・サービス顧客",
         "en": "LSEG: VMware platform / services customer"
+      }
+    }
+  },
+  "PCTY": {
+    "PCTY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Paylocity：人事・給与・支出・IT管理",
+        "en": "Paylocity: HR, payroll, spend & IT"
+      }
+    },
+    "ADP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ADP Workforce Now：人事・給与",
+        "en": "ADP Workforce Now: HR & payroll"
+      }
+    },
+    "PAYX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Paychex Flex：人事・給与",
+        "en": "Paychex Flex: HR & payroll"
+      }
+    },
+    "PAYC": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Paycom：人事・給与",
+        "en": "Paycom: HR & payroll"
+      }
+    },
+    "PFG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Principal：退職年金データ連携",
+        "en": "Principal: retirement-data integration"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft Entra ID：ID・SSO対応",
+        "en": "Microsoft Entra ID: identity / SSO"
+      }
+    },
+    "UPS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "UPS：印刷小切手の配送サービス",
+        "en": "UPS: printed-check delivery service"
+      }
+    }
+  },
+  "FOXA": {
+    "FOXA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Fox：ニュース・スポーツ・娯楽配信",
+        "en": "Fox: news, sports & entertainment"
+      }
+    },
+    "DIS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Disney / ESPN：スポーツ放送・配信",
+        "en": "Disney / ESPN: sports broadcasting / streaming"
+      }
+    },
+    "NFLX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Netflix：映像配信・番組制作顧客",
+        "en": "Netflix: video streaming / content customer"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Amazon：AWS供給・配信対応・番組制作顧客・競合",
+        "en": "Amazon: AWS supply, distribution, content customer & competitor"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple：配信端末対応・番組制作顧客",
+        "en": "Apple: platform support / content customer"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google：FOX Oneの配信端末対応",
+        "en": "Google: FOX One platform support"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft：FOX OneのXbox対応",
+        "en": "Microsoft: FOX One Xbox support"
+      }
+    },
+    "ROKU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Roku：配信対応・条件付き買収契約",
+        "en": "Roku: platform support / conditional acquisition"
       }
     }
   }
@@ -9419,14 +9712,18 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     const scoped = productScopedNodes(root, ownNodes).map(n => included.has(n.id) ? n : { ...n, layer: 6 });
     return { root, nodes: scoped, edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
   }
-  if (["PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC", "MTSI", "POWI", "SITM", "RMBS", "DIOD", "SLAB", "CEVA", "NVTS", "IPGP", "IONQ", "RGTI", "QBTS", "QUBT", "ASTS", "PL", "BKSY", "AVAV", "KTOS", "RDW", "MPWR", "SWKS", "KVYO", "BHE"].includes(root)) {
+  if (["PCTY", "FOXA", "PINS", "SNAP", "AMAT", "MRVL", "VRT", "ALAB", "ON", "AAPL", "AMZN", "GOOG", "META", "MSFT", "ADBE", "CRM", "BOX", "WDAY", "DELL", "HPE", "ADSK", "TXN", "ADI", "DDOG", "ZS", "TSLA", "IBM", "APH", "CRWD", "NET", "ORCL", "NOW", "SNOW", "INTU", "SAP", "ADP", "PAYX", "NTNX", "ADSK", "PTC", "BSY", "VEEV", "MANH", "HUBS", "TEAM", "DT", "OTEX", "COST", "PEGA", "NICE", "DBX", "FIVN", "RNG", "MNDY", "FRSH", "KVYO", "BRZE", "SPT", "CSCO", "ETN", "PLTR", "WDC", "STX", "CDNS", "KEYS", "FLEX", "FTNT", "EGHT", "CIEN", "ICHR", "UCTT", "FORM", "AMKR", "JBL", "COHU", "SANM", "ARW", "AVT", "PLAB", "ONTO", "TER", "ENTG", "CAMT", "ACLS", "ASX", "GFS", "TSEM", "GLW", "TEL", "UMC", "STM", "HIMX", "CRUS", "SYNA", "AMBA", "INDI", "PI", "LSCC", "MXL", "VIAV", "UBER", "NFLX", "SHOP", "APP", "ABNB", "SPOT", "ROKU", "TTD", "DASH", "MELI", "PYPL", "XYZ", "AKAM", "OKTA", "S", "CHKP", "TWLO", "DOCU", "SOFI", "DUOL", "APPF", "QLYS", "WMT", "PAYC", "MTSI", "POWI", "SITM", "RMBS", "DIOD", "SLAB", "CEVA", "NVTS", "IPGP", "IONQ", "RGTI", "QBTS", "QUBT", "ASTS", "PL", "BKSY", "AVAV", "KTOS", "RDW", "MPWR", "SWKS", "KVYO", "BHE"].includes(root)) {
     // Supplier context may explain an upstream dependency. It must not import
     // that supplier's unrelated customers or turn an AI partner into NVIDIA's
     // entire customer network. Competition is never an expansion bridge.
     const suppliers = new Set(introduction.maps.relationships.filter(e => e.kind === "company" && e.role === "supplier").map(e => e.ticker ?? e.name));
     const extra = context.edges.filter(e => e.kind === "supply" && suppliers.has(e.to) && e.from !== root && !ownEdges.some(own => own.id === e.id));
     const ids = new Set([...included, ...extra.flatMap(e => [e.from, e.to])]);
-    return { root, nodes: productScopedNodes(root, catalog.nodes.filter(n => ids.has(n.id))), edges: [...ownEdges, ...extra], layerLabels: sectorLayerLabels(root) };
+    // Amazon's expanded direct relationships keep the anonymous categories in
+    // its source profile; they are not companies in this limited company map.
+    const nodes = productScopedNodes(root, catalog.nodes.filter(n => ids.has(n.id) && (root !== "AMZN" || n.kind === "company")));
+    const visibleIds = new Set(nodes.map(n => n.id));
+    return { root, nodes, edges: [...ownEdges, ...extra].filter(e => visibleIds.has(e.from) && visibleIds.has(e.to)), layerLabels: sectorLayerLabels(root) };
   }
   const depth = new Map<string, number>([[root, 0]]);
   for (const edge of ownEdges) if (edge.kind !== "competition") depth.set(edge.from === root ? edge.to : edge.from, 1);

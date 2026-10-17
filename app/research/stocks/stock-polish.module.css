@@ -37,7 +37,7 @@
 .profileBody dd small{display:block;color:#728696;margin-top:4px;font-size:.68rem}
 @media(max-width:650px){
   .desktopTitle{display:none}
-  .mobileTitle{display:block;white-space:nowrap;font-size:clamp(2.1rem,11vw,2.55rem);letter-spacing:-.04em}
+  .mobileTitle{display:block;white-space:normal;overflow-wrap:anywhere;font-size:clamp(2.1rem,11vw,2.55rem);letter-spacing:-.04em}
   .resultHint{margin-bottom:8px}
   .resultGuide{align-items:flex-start;margin-bottom:8px}
   .resultGuide button{font-size:.68rem}
