@@ -42,3 +42,31 @@ mandatory. Approved wording is unchanged, and insufficient compatible reasons
 produce a conclusion alone. The policy revision prevents old cached selections
 from being reused when an article is explicitly processed again. Existing saved
 reviews are not silently rewritten and remain unpublished.
+
+## Private morning preparation (not activated)
+
+`node services/resolute-api/rizel-daily-review-cli.mjs` is a separate private path.
+It defaults to disabled. It reads the existing HTTPS news endpoint, filters and
+summarizes at most three recent candidates, then selects approved copy and saves
+pending Japanese/English reviews. It never writes risk_days, risk_quotes or a
+publication switch. No email or customer display occurs.
+
+Migration 013 records a once-per-JST-day claim, source failure versus a verified
+empty intake, and references to saved selections. Claims survive failure so an
+automatic retry cannot repeat paid summaries. Partial selections remain private
+and auditable. No D conditions are inferred from an AI summary: trusted evidence
+integration remains pending. Word/meaning filtering still applies.
+
+Deployment prerequisites: apply additive migration 013; provide the existing
+scoped RIZEL and risk database connections, existing OpenAI key, and an approved
+RESOLUTE_NEWS_ORIGIN reachable by the worker. Set
+RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED=true only after the private dry run and cost
+review. The intended scheduler expression is `0 22 * * 0-4` UTC (weekdays 07:00
+JST). The worker also rejects weekends and hours outside 07:00–07:59 JST.
+This code does not create or enable a scheduler. The monthly shared USD 5 budget
+continues to apply to summaries and selections. No new subscription is required
+by the code; actual Railway running costs have not been measured.
+
+Unfinished: migration application, real feed dry run, cron activation and actual
+07:00 execution verification. The risk scoring rubric still needs a separate
+public-operation decision. RIZEL publication remains withheld after approval.
