@@ -72,7 +72,7 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
-  if (root === "TSM") return {2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}};
+  if (root === "TSM") return {0:{ja:"半導体材料・製造装置",en:"Semiconductor materials & equipment"},2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}};
   if (root === "GOOG") return {3:{ja:"GPU・CPU・TPU供給・AI技術連携",en:"GPU / CPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・XR/眼鏡・競合",en:"Cloud customers, XR / eyewear & competition"}};
   if (root === "AMZN") return {3:{ja:"半導体・配送車の供給元",en:"Chip and delivery-van suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}};
 
@@ -184,7 +184,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "DDOG") return {"6": {"ja": "監視・セキュリティ・クラウド連携", "en": "Observability, security & cloud collaboration"}};
   if (root === "ZS") return {"6": {"ja": "安全な接続・防御AI・運用連携", "en": "Secure access, defensive AI & SecOps"}};
 
-  if (root === "MSFT") return {5:{ja:"計算基盤のサーバー供給網",en:"Server supply for compute infrastructure"},1:{ja:"自社AI半導体の製造工程",en:"Own AI-chip manufacturing process"},3:{ja:"GPU・CPU供給とAzure利用",en:"GPU / CPU supply and Azure use"},"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM・ゲーム機","en":"PC OS, sales CRM & game consoles"}};
+  if (root === "MSFT") return {5:{ja:"計算基盤のサーバー供給網",en:"Server supply for compute infrastructure"},1:{ja:"自社AI半導体の製造工程",en:"Own AI-chip manufacturing process"},3:{ja:"GPU・CPU・Surface半導体とAzure利用",en:"GPU / CPU / Surface chips and Azure use"},"6": {"ja": "クラウド・企業ソフト・AI提携", "en": "Cloud, enterprise software & AI partnerships"}, "7": {"ja":"PC用OS・営業CRM・ゲーム機","en":"PC OS, sales CRM & game consoles"}};
   if (root === "ADBE") return {"6": {"ja": "制作・AIモデル・3Dの技術協業", "en": "Creative AI-model & 3D collaboration"}, "7": {"ja": "制作・文書・マーケティング", "en": "Creative, documents & marketing"}};
   if (root === "CRM") return {"6": {"ja": "営業・顧客対応・マーケティング・AI", "en": "Sales, customer service, marketing & AI"}};
   if (root === "BOX") return {"6": {"ja": "企業コンテンツ・AI連携", "en": "Enterprise content & AI integration"}, "7": {"ja": "会議・共同作業", "en": "Meetings & collaboration"}};
@@ -193,9 +193,9 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "HPE") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ネットワーク", "en": "Servers & networking"}, "6": {"ja": "クラウド・ハイブリッド基盤", "en": "Cloud & hybrid infrastructure"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
 
-  if (root === "AAPL") return { 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・衛星・機能連携", en: "AI, satellite & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
+  if (root === "AAPL") return { 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・衛星・販売/回線連携", en: "AI, satellite & sales / carrier integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
-  if (root === "META") return {5:{ja:"計算基盤のサーバー供給網",en:"Server supply for compute infrastructure"},4:{ja:"データセンターの光接続供給",en:"Data-center optical connectivity"}, 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・広告・XR/AIグラス", en: "Social, ads, XR & AI glasses" } };
+  if (root === "META") return {5:{ja:"サーバー・電力供給網",en:"Server and power supply"},4:{ja:"データセンターの光接続供給",en:"Data-center optical connectivity"}, 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・広告・XR/AIグラス", en: "Social, ads, XR & AI glasses" } };
   if (root === "ON") return { 1: { ja: "GaN工程・製造協業", en: "GaN process & manufacturing collaboration" }, 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
 
   if (root === "RDDT") return { 6: { ja: "クラウド・AI・データ提携", en: "Cloud, AI & data partnerships" }, 7: { ja: "交流・情報探索・広告", en: "Communities, discovery & ads" } };
@@ -404,7 +404,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "DUOL") return {"6": {"ja": "学習用AIモデル技術", "en": "AI models for learning"}, "7": {"ja": "語学学習・語学評価", "en": "Language learning & assessment"}};
   if (root === "TSLA") return {
     2: { ja: "電池セル供給元", en: "Battery-cell suppliers" },
-    7: { ja: "自動車・蓄電システム", en: "Vehicles & energy storage" },
+    7: { ja: "自動車・蓄電・車内AI連携", en: "Vehicles, energy storage & in-car AI" },
   };
   if (["IONQ", "RGTI", "QBTS", "QUBT"].includes(root)) return {
     6: { ja: "量子計算システム", en: "Quantum computing systems" },
@@ -3737,6 +3737,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Qualcomm：対象端末向けモデム供給",
         "en": "Qualcomm: modems for eligible devices"
       }
+    },
+    "KLAR": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Klarna：米国Apple Upgradeリース",
+        "en": "Klarna: US Apple Upgrade leasing"
+      }
+    },
+    "T": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AT&T：米国iPhone販売・回線連携",
+        "en": "AT&T: US iPhone sales / carrier channel"
+      }
+    },
+    "VZ": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Verizon：米国iPhone販売・回線連携",
+        "en": "Verizon: US iPhone sales / carrier channel"
+      }
+    },
+    "TMUS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "T-Mobile：米国iPhone販売・回線連携",
+        "en": "T-Mobile: US iPhone sales / carrier channel"
+      }
     }
   },
   "AMZN": {
@@ -3806,8 +3834,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "RIVN": {
       "layer": 3,
       "businessLabel": {
-        "ja": "Rivian：配送車供給・データサービス顧客",
-        "en": "Rivian: van supplier / data-services customer"
+        "ja": "Rivian：配送車供給・AWS顧客・出資先",
+        "en": "Rivian: van supplier / AWS customer / investee"
       }
     },
     "AAPL": {
@@ -3836,6 +3864,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Intel：EC2 M8i系のCPU採用元",
         "en": "Intel: CPUs adopted in EC2 M8i families"
+      }
+    },
+    "SAP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SAP：業務AI・クラウド展開協業",
+        "en": "SAP: business-AI / cloud rollout collaboration"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle：Database@AWS協業",
+        "en": "Oracle: Database@AWS collaboration"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta：Graviton計算基盤の顧客",
+        "en": "Meta: Graviton compute customer"
+      }
+    },
+    "NFLX": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Netflix：AWS計算・保存の顧客",
+        "en": "Netflix: AWS compute / storage customer"
       }
     }
   },
@@ -3958,6 +4014,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "AMD：Google Cloud C4DのCPU採用元",
         "en": "AMD: CPUs adopted in Google Cloud C4D"
       }
+    },
+    "SAP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SAP：BDC・BigQueryデータ連携",
+        "en": "SAP: BDC / BigQuery data collaboration"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle：Database@Google Cloud協業",
+        "en": "Oracle: Database@Google Cloud collaboration"
+      }
     }
   },
   "META": {
@@ -4036,6 +4106,41 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "CoreWeave：AI計算容量の調達先",
         "en": "CoreWeave: AI-compute capacity supplier"
+      }
+    },
+    "VST": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Vistra：原子力電力の調達先",
+        "en": "Vistra: nuclear power supplier"
+      }
+    },
+    "CEG": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Constellation：Clinton原子力の電力契約",
+        "en": "Constellation: Clinton nuclear PPA"
+      }
+    },
+    "OKLO": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Oklo：将来の原子力開発協業",
+        "en": "Oklo: planned nuclear development partner"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon AWS：Graviton計算基盤の調達先",
+        "en": "Amazon AWS: Graviton compute supplier"
+      }
+    },
+    "Reliance Industries": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Reliance：Indiaデータセンター賃借先",
+        "en": "Reliance: India data-center lessor"
       }
     }
   },
@@ -4164,6 +4269,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Intel：Azure Dsv7のCPU採用元",
         "en": "Intel: CPUs adopted in Azure Dsv7"
+      }
+    },
+    "SAP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SAP：Azure・業務AI連携",
+        "en": "SAP: Azure / business-AI collaboration"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle：Database@Azure・HSM協業",
+        "en": "Oracle: Database@Azure / HSM collaboration"
+      }
+    },
+    "MRVL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Marvell：Tessera HSM共同開発",
+        "en": "Marvell: Tessera HSM co-development"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Qualcomm：Surface用SoC採用・共同開発",
+        "en": "Qualcomm: Surface SoC adoption / co-development"
       }
     }
   },
@@ -4774,8 +4907,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "SPCX": {
       "layer": 7,
       "businessLabel": {
-        "ja": "SpaceX：Megapack顧客・出資先",
-        "en": "SpaceX: Megapack customer / investee"
+        "ja": "SpaceX：Megapack顧客・出資先・Grok連携",
+        "en": "SpaceX: Megapack customer / investee / Grok"
       }
     },
     "F": {
@@ -4790,6 +4923,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "GM：EV競合・充電ネットワーク連携",
         "en": "GM: EV competition / charging access"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD：対象車の情報娯楽プロセッサ",
+        "en": "AMD: eligible-car infotainment processor"
       }
     }
   },
@@ -9119,6 +9259,42 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Shin-Etsu：半導体ウエハー供給グループ",
         "en": "Shin-Etsu: semiconductor-wafer supplier group"
       }
+    },
+    "DISCO": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "ディスコ：TSMCの生産支援供給元",
+        "en": "DISCO: production-support supplier"
+      }
+    },
+    "EBARA": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "荏原製作所：TSMCの生産支援供給元",
+        "en": "EBARA: production-support supplier"
+      }
+    },
+    "KOKUSAI ELECTRIC": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "KOKUSAI ELECTRIC：TSMCの生産支援供給元",
+        "en": "KOKUSAI ELECTRIC: production-support supplier"
+      },
+      "name": "Kokusai Electric"
+    },
+    "SUMCO": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "SUMCO：TSMCの生産支援供給元",
+        "en": "SUMCO: production-support supplier"
+      }
+    },
+    "Asahi Kasei": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "旭化成：先端包装向けPIMEL材料",
+        "en": "Asahi Kasei: PIMEL packaging materials"
+      }
     }
   },
   "JD": {
@@ -9164,6 +9340,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Anthropic：将来のTPU容量利用計画",
         "en": "Anthropic: planned future TPU compute access"
+      }
+    },
+    "Samsung": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Samsung：メモリー・製造・FWA協業",
+        "en": "Samsung: memory / foundry / FWA partner"
+      }
+    },
+    "London Stock Exchange Group": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "LSEG：VMware基盤・サービス顧客",
+        "en": "LSEG: VMware platform / services customer"
       }
     }
   }
