@@ -52,3 +52,15 @@ QA images and harness: `/tmp/resolute-home-qa/`; logs `/tmp/resolute-home-*.log`
   Existing secure Sandbox member-order flow and payment checks were not changed.
 - Need reconcile approved RIZEL wording with source approval flags before claiming
   RIZEL comments are finished. Do not invent new comments or mark drafts approved.
+
+## 2026-10-18 JST — Match Claude's original star animation
+
+Replaced the approximate text-shadow animation on home and news with the supplied
+`resolute-reference-v2/home/index.html` star/twinkle keyframes: 0.5s entrance,
+6s sparkle cycle, original easing, 1.35 scale and 6px pale-gold drop shadow.
+Adjacent stars start 0.12s apart (previous approximation: 0.28s). Home row start
+times match the reference: 0.60s first row, 0.95s second normal row, 1.30s second
+high-risk row. Reduced-motion still disables animation. No copy, publication,
+pricing, or private review configuration changes. Source keyframes and animation
+parameters compared directly with the supplied HTML. Browser launch unavailable
+(missing Chromium); mobile visual motion is not claimed verified.

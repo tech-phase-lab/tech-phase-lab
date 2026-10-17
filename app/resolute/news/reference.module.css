@@ -64,6 +64,12 @@
 .meter .rnote { margin:0; }
 .today .v { text-wrap:balance; }
 
-@keyframes starLight{0%,14%,100%{text-shadow:none}7%{text-shadow:0 0 10px currentColor,0 0 18px currentColor}}
-.s i{font-style:normal;animation:starLight 4.8s ease-in-out infinite}.s i:nth-child(2){animation-delay:.28s}.s i:nth-child(3){animation-delay:.56s}.s i:nth-child(4){animation-delay:.84s}.s i:nth-child(5){animation-delay:1.12s}
+/* Claude home reference: 120ms between stars, including the original entrance and sparkle. */
+@keyframes star { from { opacity:0; transform:scale(.4) rotate(-30deg); } to { opacity:1; transform:none; } }
+@keyframes twinkle { 0%,86%,100% { transform:none; filter:none; } 92% { transform:scale(1.35); filter:drop-shadow(0 0 6px #f3dfae); } }
+.s i { --base:.60s; --offset:0s; --d:calc(var(--base) + var(--offset)); font-style:normal; display:inline-block; animation:star .5s ease var(--d) both, twinkle 6s ease-in-out calc(var(--d) + 2.5s) infinite; }
+.s i:nth-child(2) { --offset:.12s; }
+.s i:nth-child(3) { --offset:.24s; }
+.s i:nth-child(4) { --offset:.36s; }
+.s i:nth-child(5) { --offset:.48s; }
 @media(prefers-reduced-motion:reduce){.s i{animation:none!important}}
