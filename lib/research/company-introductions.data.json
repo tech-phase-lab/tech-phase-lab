@@ -1957,6 +1957,14 @@
       {
         "label": "Qualcomm FY2025 annual disclosure; manufacturing scope independently read October17,2026",
         "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investor.tsmc.com/sites/ir/financial-report/2026/TSMC%202026Q2%20Consolidated%20Financial%20Statements_E_2.pdf"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.viseratech.com/faq/"
       }
     ],
     "ja": {
@@ -1965,7 +1973,7 @@
       "strength": "微細な回路を大量生産する技術と生産規模。設計会社が製品を量産するための仕組みも整える。",
       "risks": "台湾への生産集中、地震や電力・水の供給障害、大口顧客の需要変動と設備投資の負担。",
       "competition": "先端半導体の受託製造ではIntel FoundryとSamsungが競合例。IntelはTSMCを先端プロセスの主要競合と明記している。Samsungは両社の公表する製造事業を比較したもの。製造技術の世代や量産規模、先端パッケージングで競争条件は異なる。 成熟プロセスの受託製造ではUMCも公式開示・技術資料による編集比較の対象。最先端ノードや先端パッケージングまで同等とするものではなく、製造能力やシェアを推定しない。",
-      "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。 2026年2月Apple側開示：TSMCアリゾナ製チップを購入。年間予定数量を実績にしない。2026年10月Microsoft側開示：Maia 300にTSMC N2Pを採用。展開は2027年予定。 2026年3月Arm側6-KのTSMC公式コメント：Arm AGI CPUの製造を担当。数量は未開示。 TSMC自身が2025年11月の供給元表彰でASMLを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でApplied Materialsを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でLam Researchを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でKLAを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でOnto Innovationを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。2026年5月11日：TSMCとApplied MaterialsがEPICで材料・装置・工程を共同開発する提携。全開発・量産完了ではない。TSMC自身の2025年末保有：Global Unichip株46,687,859株・34.84%。新規2026年取得や現在比率を推定しない。2026年6月16日の10年契約：TSMCがAmkorの先端包装・試験を調達する協業枠組み。アリゾナ能力拡張の全稼働・数量は未確定。TSMCとAmkorが米アリゾナの先端包装・試験で10年協業を共同発表。TSMC自身の公式コメントを個別確認。 AMDのFY2025自社開示：HPC・FPGA・adaptive SoC等のウエハー製造にTSMCを利用。TSMC側の顧客名開示と混同しない。 BroadcomのFY2025自社開示：TSMCをウエハー製造と組立・試験の委託先に列挙。全製品・全数量の独占委託ではない。 QualcommのFY2025自社開示：QCTのデジタル・混載・RF・電源ICの主要製造先にTSMCを含む。全製品の単独供給とはしない。"
+      "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。 2026年2月Apple側開示：TSMCアリゾナ製チップを購入。年間予定数量を実績にしない。2026年10月Microsoft側開示：Maia 300にTSMC N2Pを採用。展開は2027年予定。 2026年3月Arm側6-KのTSMC公式コメント：Arm AGI CPUの製造を担当。数量は未開示。 TSMC自身が2025年11月の供給元表彰でASMLを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でApplied Materialsを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でLam Researchを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でKLAを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でOnto Innovationを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。2026年5月11日：TSMCとApplied MaterialsがEPICで材料・装置・工程を共同開発する提携。全開発・量産完了ではない。TSMC自身の2025年末保有：Global Unichip株46,687,859株・34.84%。新規2026年取得や現在比率を推定しない。2026年6月16日の10年契約：TSMCがAmkorの先端包装・試験を調達する協業枠組み。アリゾナ能力拡張の全稼働・数量は未確定。TSMCとAmkorが米アリゾナの先端包装・試験で10年協業を共同発表。TSMC自身の公式コメントを個別確認。 AMDのFY2025自社開示：HPC・FPGA・adaptive SoC等のウエハー製造にTSMCを利用。TSMC側の顧客名開示と混同しない。 BroadcomのFY2025自社開示：TSMCをウエハー製造と組立・試験の委託先に列挙。全製品・全数量の独占委託ではない。 QualcommのFY2025自社開示：QCTのデジタル・混載・RF・電源ICの主要製造先にTSMCを含む。全製品の単独供給とはしない。 TSMCの2026年6月期連結財務諸表：VisEraを約67%保有の子会社として開示。新規2026年出資や現在の厳密比率とはしない。TSMCの2026年6月期財務諸表：GUC向け売上と売掛金を実名開示。米国子会社経由を含み、全額を親会社直接請求や出資とはしない。"
     },
     "en": {
       "business": "Manufactures chips designed by customers rather than competing with them through its own chip brand.",
@@ -1973,7 +1981,7 @@
       "strength": "Leading-edge manufacturing expertise, production scale and support for customers moving designs into volume production.",
       "risks": "Taiwan concentration, earthquakes, utility disruptions, major-customer demand changes and high capital spending.",
       "competition": "Examples in leading-edge foundry services include Intel Foundry and Samsung. Intel explicitly names TSMC as a leading-edge competitor. Samsung is a comparison of disclosed manufacturing businesses. Technology generation, manufacturing scale and packaging capabilities differ. UMC is an editorial comparison in mature-node wafer foundry using official disclosures and technology materials. It is not equated with leading-edge nodes or advanced packaging, and no capacity or share is inferred.",
-      "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers. February2026 Apple disclosure: purchases chips made at TSMC Arizona; annual planned quantities not actuals. October2026 Microsoft disclosure: Maia300 uses TSMC N2P; rollout planned for2027. March 2026 Arm 6-K includes TSMC statement as Arm AGI CPU manufacturer; quantities undisclosed. TSMC names ASML in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Applied Materials in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Lam Research in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names KLA in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Onto Innovation in its November2025 supplier awards; evidence of support in that period, not current order quantities. May11,2026: TSMC / Applied Materials EPIC partnership for materials, equipment and process co-development; not completed development or volume ramp. TSMC reported46,687,859 Global Unichip shares /34.84% at December2025 year-end; not a new2026 purchase or current percentage. June16,2026 ten-year agreement: framework for TSMC to procure Amkor advanced packaging / test; Arizona capacity ramp and quantities are not completed commitments. TSMC / Amkor jointly announce a ten-year Arizona advanced-packaging / test partnership; TSMC official statement independently reviewed. AMD FY2025 disclosure identifies TSMC wafer manufacturing for HPC / FPGA / adaptive SoCs; attributed to AMD, not TSMC naming the customer. Broadcom FY2025 disclosure names TSMC for wafer manufacturing and assembly / test; not exclusive outsourcing of every product or quantity. Qualcomm FY2025 disclosure includes TSMC among primary QCT foundries for digital / mixed-signal / RF / power ICs; not sole supplier for all products."
+      "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers. February2026 Apple disclosure: purchases chips made at TSMC Arizona; annual planned quantities not actuals. October2026 Microsoft disclosure: Maia300 uses TSMC N2P; rollout planned for2027. March 2026 Arm 6-K includes TSMC statement as Arm AGI CPU manufacturer; quantities undisclosed. TSMC names ASML in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Applied Materials in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Lam Research in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names KLA in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Onto Innovation in its November2025 supplier awards; evidence of support in that period, not current order quantities. May11,2026: TSMC / Applied Materials EPIC partnership for materials, equipment and process co-development; not completed development or volume ramp. TSMC reported46,687,859 Global Unichip shares /34.84% at December2025 year-end; not a new2026 purchase or current percentage. June16,2026 ten-year agreement: framework for TSMC to procure Amkor advanced packaging / test; Arizona capacity ramp and quantities are not completed commitments. TSMC / Amkor jointly announce a ten-year Arizona advanced-packaging / test partnership; TSMC official statement independently reviewed. AMD FY2025 disclosure identifies TSMC wafer manufacturing for HPC / FPGA / adaptive SoCs; attributed to AMD, not TSMC naming the customer. Broadcom FY2025 disclosure names TSMC for wafer manufacturing and assembly / test; not exclusive outsourcing of every product or quantity. Qualcomm FY2025 disclosure includes TSMC among primary QCT foundries for digital / mixed-signal / RF / power ICs; not sole supplier for all products. TSMC June 2026 consolidated financials report VisEra as an approximately 67%-owned subsidiary; not a new 2026 investment or exact current percentage. TSMC June 2026 financials name GUC sales / receivables, including US subsidiary transactions; not all parent-billed sales or equity funding."
     },
     "maps": {
       "competition": [
@@ -2238,6 +2246,32 @@
           },
           "sourceIndexes": [
             15
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "VisEra Technologies",
+          "role": "investee",
+          "label": {
+            "ja": "TSMCの2026年6月期連結財務諸表：VisEraを約67%保有の子会社として開示。新規2026年出資や現在の厳密比率とはしない",
+            "en": "TSMC June 2026 consolidated financials report VisEra as an approximately 67%-owned subsidiary; not a new 2026 investment or exact current percentage"
+          },
+          "sourceIndexes": [
+            16,
+            17
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Global Unichip",
+          "role": "customer",
+          "label": {
+            "ja": "TSMCの2026年6月期財務諸表：GUC向け売上と売掛金を実名開示。米国子会社経由を含み、全額を親会社直接請求や出資とはしない",
+            "en": "TSMC June 2026 financials name GUC sales / receivables, including US subsidiary transactions; not all parent-billed sales or equity funding"
+          },
+          "sourceIndexes": [
+            16,
+            11
           ]
         }
       ]
@@ -3737,6 +3771,18 @@
       {
         "label": "Official commercial disclosure; checked October 17, 2026",
         "url": "https://investors.globalstar.com/news-releases/news-release-details/globalstar-announces-second-quarter-2026-financial-results"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000086/qcom-20260628.htm"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investor.qualcomm.com/news-events/press-releases/news-details/2023/Qualcomm-Announces-Agreement-with-Apple-for-Chip-Supply-09-11-2023/default.aspx"
       }
     ],
     "ja": {
@@ -3745,7 +3791,7 @@
       "strength": "端末・基本ソフト・サービスを一体で設計し、製品同士を使いやすく連携させる。",
       "risks": "iPhoneの需要変動、海外の製造網への依存、アプリ配信などをめぐる規制。",
       "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。 音楽サービスは、Spotify PremiumとApple Musicの定額聴取を両社公式製品で編集比較する。楽曲構成、対応端末、音質機能、料金や地域条件の一致を示すものではない。 Meta QuestとApple Vision ProのVR・複合現実端末も公式製品で編集比較する。性能・用途・価格や全機能の同等性を示すものではなく、両社の提携を意味しない。",
-      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。 米国製造計画ではApplied Materials、Texas Instruments、Corning、Coherent、TSMC、GlobalFoundries、Amkor、Samsung、MP Materials、GlobalWafers、Cirrus Logic、TDK、Qnityとの関係を公式発表に基づき区別する。装置・材料の製造協業、部品供給、将来工場の包装・試験計画は同じ役割ではない。Broadcomの2026年7月の追加契約も含め、予定投資・調達を売上実績や全計画稼働済みと扱わず、現在の会社別調達量や株式保有を推定しない。 2026年6月Apple自社発表：Google Cloud上のPrivate Cloud Compute拡張をNVIDIA・Googleと共同開発。Apple自社開示：Google Cloud上のPCCにNVIDIA GPU・Confidential Computingを採用。Appleの直接購入数量ではない。2026年6月Apple自社発表：Googleと次世代Apple Foundation Models・Google Cloud上のPCCを共同開発。Apple自社開示：新しいApple Intelligenceワークロード向けにPCCをGoogle Cloudへ拡張。全機能移行や契約量は断定しない。2026年6月Apple自社開示：Google Cloud上のPCC基盤でTDX対応Intel CPUを利用。Mac全機種への採用ではない。 Apple Cardの決済ネットワークはMastercard。米国の対象利用者向けで、世界の全Apple Pay取引を意味しない。Goldman Sachs傘下銀行が米国Apple Cardを発行・運営。Chaseへの条件付き移管完了までは継続。2026年1月7日ChaseへのApple Card移管を発表。約24か月予定・当局承認等が条件で、移管済みではない。 2026年4月共同発表：Globalstarが対象iPhone・Apple Watchの衛星サービスを提供。地域・機種条件あり。共同発表がAppleとの衛星サービス協業を明示。Amazonによる買収は2027年予定・条件付き未完了。2026年4月：対象iPhone・Watchの衛星接続と将来Amazon Leoサービスの協業契約。全計画稼働済みではない。"
+      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。 米国製造計画ではApplied Materials、Texas Instruments、Corning、Coherent、TSMC、GlobalFoundries、Amkor、Samsung、MP Materials、GlobalWafers、Cirrus Logic、TDK、Qnityとの関係を公式発表に基づき区別する。装置・材料の製造協業、部品供給、将来工場の包装・試験計画は同じ役割ではない。Broadcomの2026年7月の追加契約も含め、予定投資・調達を売上実績や全計画稼働済みと扱わず、現在の会社別調達量や株式保有を推定しない。 2026年6月Apple自社発表：Google Cloud上のPrivate Cloud Compute拡張をNVIDIA・Googleと共同開発。Apple自社開示：Google Cloud上のPCCにNVIDIA GPU・Confidential Computingを採用。Appleの直接購入数量ではない。2026年6月Apple自社発表：Googleと次世代Apple Foundation Models・Google Cloud上のPCCを共同開発。Apple自社開示：新しいApple Intelligenceワークロード向けにPCCをGoogle Cloudへ拡張。全機能移行や契約量は断定しない。2026年6月Apple自社開示：Google Cloud上のPCC基盤でTDX対応Intel CPUを利用。Mac全機種への採用ではない。 Apple Cardの決済ネットワークはMastercard。米国の対象利用者向けで、世界の全Apple Pay取引を意味しない。Goldman Sachs傘下銀行が米国Apple Cardを発行・運営。Chaseへの条件付き移管完了までは継続。2026年1月7日ChaseへのApple Card移管を発表。約24か月予定・当局承認等が条件で、移管済みではない。 2026年4月共同発表：Globalstarが対象iPhone・Apple Watchの衛星サービスを提供。地域・機種条件あり。共同発表がAppleとの衛星サービス協業を明示。Amazonによる買収は2027年予定・条件付き未完了。2026年4月：対象iPhone・Watchの衛星接続と将来Amazon Leoサービスの協業契約。全計画稼働済みではない。 Qualcomm自社開示：Apple向け薄型モデムを供給。2024〜26年発売機向け契約で、Apple製モデム採用も併存し全機種独占ではない。"
     },
     "en": {
       "business": "Creates iPhone, Mac and other devices, with their software and services.",
@@ -3753,7 +3799,7 @@
       "strength": "Integrates hardware, operating systems and services across its products.",
       "risks": "iPhone demand shifts, overseas manufacturing dependence and regulation of its platforms.",
       "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features. Music services add an editorial comparison of Spotify Premium and Apple Music subscriptions using both official product pages. Catalogs, supported devices, audio features, pricing and regional terms can differ. Official products also support an editorial Meta Quest / Apple Vision Pro VR and mixed-reality comparison, without equating performance, use cases, price or all functions, or establishing a partnership.",
-      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established. Official US-manufacturing announcements separately identify Applied Materials, Texas Instruments, Corning, Coherent, TSMC, GlobalFoundries, Amkor, Samsung, MP Materials, GlobalWafers, Cirrus Logic, TDK and Qnity. Equipment/materials collaboration, component supply and planned packaging/test capacity are distinct roles. The July2026 Broadcom expansion is a future procurement commitment, not realized revenue, completed capacity or equity ownership. June2026 Apple disclosure: co-developed Private Cloud Compute expansion on Google Cloud with NVIDIA and Google. Apple discloses NVIDIA GPUs / Confidential Computing in PCC on Google Cloud; not a claim of Apple direct purchase quantities. June2026 Apple disclosure: co-development with Google of next-generation Apple Foundation Models and PCC on Google Cloud. Apple discloses PCC expansion to Google Cloud for new Apple Intelligence workloads, without claiming migration of all features or contract quantities. June2026 Apple disclosure: Intel CPUs with TDX in PCC on Google Cloud; not adoption across all Mac models. Mastercard is the Apple Card payment network for eligible US users, not every Apple Pay transaction worldwide. Goldman Sachs Bank USA issues / operates US Apple Card until the conditional transition to Chase is completed. January7,2026: Apple Card transition to Chase announced, expected in about24months subject to regulatory and closing conditions; not completed. April2026 joint announcement: Globalstar provides satellite services for supported iPhone / Apple Watch models, subject to device and regional conditions. Joint announcement explicitly identifies Apple satellite-services collaboration; Amazon acquisition expected2027 remains conditional and incomplete. April2026: agreement for eligible iPhone / Watch satellite connectivity and future Amazon Leo collaboration, not completed deployment of all plans."
+      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established. Official US-manufacturing announcements separately identify Applied Materials, Texas Instruments, Corning, Coherent, TSMC, GlobalFoundries, Amkor, Samsung, MP Materials, GlobalWafers, Cirrus Logic, TDK and Qnity. Equipment/materials collaboration, component supply and planned packaging/test capacity are distinct roles. The July2026 Broadcom expansion is a future procurement commitment, not realized revenue, completed capacity or equity ownership. June2026 Apple disclosure: co-developed Private Cloud Compute expansion on Google Cloud with NVIDIA and Google. Apple discloses NVIDIA GPUs / Confidential Computing in PCC on Google Cloud; not a claim of Apple direct purchase quantities. June2026 Apple disclosure: co-development with Google of next-generation Apple Foundation Models and PCC on Google Cloud. Apple discloses PCC expansion to Google Cloud for new Apple Intelligence workloads, without claiming migration of all features or contract quantities. June2026 Apple disclosure: Intel CPUs with TDX in PCC on Google Cloud; not adoption across all Mac models. Mastercard is the Apple Card payment network for eligible US users, not every Apple Pay transaction worldwide. Goldman Sachs Bank USA issues / operates US Apple Card until the conditional transition to Chase is completed. January7,2026: Apple Card transition to Chase announced, expected in about24months subject to regulatory and closing conditions; not completed. April2026 joint announcement: Globalstar provides satellite services for supported iPhone / Apple Watch models, subject to device and regional conditions. Joint announcement explicitly identifies Apple satellite-services collaboration; Amazon acquisition expected2027 remains conditional and incomplete. April2026: agreement for eligible iPhone / Watch satellite connectivity and future Amazon Leo collaboration, not completed deployment of all plans. Qualcomm discloses Apple thin-modem purchases and agreement for 2024–26 launches; Apple’s own modems coexist, not exclusive supply for every model."
     },
     "maps": {
       "competition": [
@@ -4223,6 +4269,21 @@
             29
           ],
           "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Qualcomm",
+          "role": "supplier",
+          "label": {
+            "ja": "Qualcomm自社開示：Apple向け薄型モデムを供給。2024〜26年発売機向け契約で、Apple製モデム採用も併存し全機種独占ではない",
+            "en": "Qualcomm discloses Apple thin-modem purchases and agreement for 2024–26 launches; Apple’s own modems coexist, not exclusive supply for every model"
+          },
+          "sourceIndexes": [
+            32,
+            33,
+            34
+          ],
+          "ticker": "QCOM"
         }
       ]
     }

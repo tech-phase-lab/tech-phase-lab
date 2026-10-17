@@ -3730,6 +3730,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Amazon：対象端末の衛星接続契約",
         "en": "Amazon: satellite-connectivity agreement"
       }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Qualcomm：対象端末向けモデム供給",
+        "en": "Qualcomm: modems for eligible devices"
+      }
     }
   },
   "AMZN": {
@@ -8947,8 +8954,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "Global Unichip": {
       "layer": 3,
       "businessLabel": {
-        "ja": "Global Unichip：ASIC設計・出資先",
-        "en": "Global Unichip: ASIC design / investee"
+        "ja": "Global Unichip：ASIC顧客・出資先",
+        "en": "Global Unichip: ASIC customer / investee"
       }
     },
     "AMKR": {
@@ -8977,6 +8984,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Qualcomm：QCT半導体製造の顧客",
         "en": "Qualcomm: QCT manufacturing customer"
+      }
+    },
+    "VisEra Technologies": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "VisEra：光学半導体・出資先",
+        "en": "VisEra: optical chips / investee"
       }
     }
   },
