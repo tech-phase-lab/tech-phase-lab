@@ -244,11 +244,11 @@ test("calendar handoff remains reviewable UTF-8 markdown", () => {
   assert.doesNotMatch(handoff, /[\u0000-\u0008\u000B\u000C\u000E-\u001F]/);
 });
 
-test("calendar UI distinguishes a completed source check from an inconclusive review", () => {
-  assert.match(eventCalendarSource, /公式確認済み・確定日なし/);
-  assert.match(eventCalendarSource, /公式確認試行済み・確認継続/);
-  assert.match(eventCalendarSource, /company\.lastCheckedOn !== null/);
-  assert.match(eventCalendarSource, /company\.lastAttemptedOn/);
+test("calendar coverage shows company names and sources without internal review statuses", () => {
+  assert.match(eventCalendarSource, /href=\{company\.sourceUrl\}/);
+  assert.match(eventCalendarSource, /\{company\.name\}/);
+  assert.doesNotMatch(eventCalendarSource, /予定掲載済み|日付のみ確認|公式確認済み・確定日なし|公式確認試行済み・確認継続/);
+  assert.doesNotMatch(eventCalendarSource, /company\.lastCheckedOn|company\.lastAttemptedOn/);
 });
 
 test("favorite calendar includes only followed earnings while retaining economic releases", async () => {

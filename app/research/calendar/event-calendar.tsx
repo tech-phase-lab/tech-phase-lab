@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { calendarDateKey, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
+import { calendarDateKey, dateOnlyEvents, selectDateOnlyEvents, calendarEvents, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
 import { useCalendarClock } from "../use-calendar-clock";
 import coverage from "@/lib/research/calendar-coverage.json";
 import { useResearchLanguage } from "../use-research-language";
@@ -45,15 +45,7 @@ export default function EventCalendar() {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, period, now, zone).filter(event => !resultPosted(event));
   const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, period, now);
-  const reviewedCompanies = coverage.filter((company) => company.lastCheckedOn !== null).length;
-  const pendingCompanies = coverage.length - reviewedCompanies;
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
-  const coverageStatus = (company: (typeof coverage)[number]) => {
-    if (calendarEvents.some((event) => event.ticker === company.ticker && (now === null || Date.parse(event.startsAt) >= now))) return t("予定掲載済み", "Schedule listed");
-    if (now !== null && selectDateOnlyEarnings("upcoming", now).some((event) => event.ticker === company.ticker)) return t("日付のみ確認", "Date confirmed; time pending");
-    if (company.lastCheckedOn !== null) return t(`公式確認済み・確定日なし（${company.lastCheckedOn}）`, `Official source checked; no confirmed date (${company.lastCheckedOn})`);
-    return t(`公式確認試行済み・確認継続（${company.lastAttemptedOn}）`, `Official check attempted; still under review (${company.lastAttemptedOn})`);
-  };
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("today-upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")}>
     <div className={calendarStyles.filters}>
       <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => setKind(value)}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
@@ -88,11 +80,9 @@ export default function EventCalendar() {
 
       <details className={calendarStyles.coverage}>
         <summary>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</summary>
-        <p className={styles.description}>{t(`確認済み ${reviewedCompanies}社 · 確認継続 ${pendingCompanies}社。日程は公式確認後に掲載。`, `${reviewedCompanies} sources checked · ${pendingCompanies} under review. Dates are added after official confirmation.`)}</p>
-        <div className={calendarStyles.coverageList} tabIndex={0} role="region" aria-label={t("決算の追跡対象一覧", "Companies covered")}><ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul></div>
+        <div className={calendarStyles.coverageList} tabIndex={0} role="region" aria-label={t("決算の追跡対象一覧", "Companies covered")}><ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer">{company.name}</a></li>)}</ul></div>
       </details>
     </section>
     <p className={calendarStyles.publicationNote}>{t("公式発表の確認結果と数値速報を掲載。決算速報のスマホ通知はPRO会員向けです。", "Officially verified results and early figures are shown. Earnings push notifications are available to PRO members.")}</p>
-    <p className={styles.footnote}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
   </ResearchToolShell>;
 }

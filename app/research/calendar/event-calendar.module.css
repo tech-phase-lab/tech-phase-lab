@@ -15,15 +15,15 @@
 
 .coverage{border:1px solid #334c54;border-radius:10px;padding:14px 16px;background:#111d26}
 .coverage>summary{cursor:pointer;color:var(--text);font-size:14px;line-height:1.6;min-height:28px}
-.coverage>p{margin:8px 0 12px;font-size:12px;line-height:1.6}
-.coverageList{max-height:360px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:auto;scrollbar-color:#6c9c94 #152a32;scrollbar-gutter:stable;padding:4px 12px;background:#050b11;border:1px solid #45636c;border-radius:8px;box-shadow:inset 0 2px 12px #0006}
+.coverageList{margin-top:10px;max-height:360px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:auto;scrollbar-color:#6c9c94 #152a32;scrollbar-gutter:stable;padding:4px 12px;background:#050b11;border:1px solid #45636c;border-radius:8px;box-shadow:inset 0 2px 12px #0006}
 .coverageList::-webkit-scrollbar{width:10px}
 .coverageList::-webkit-scrollbar-track{background:#152a32;border-radius:8px}
 .coverageList::-webkit-scrollbar-thumb{background:#6c9c94;border:2px solid #152a32;border-radius:8px}
 .coverageList:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:4px}
-.coverageList ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:0 20px}
-.coverageList li{min-width:0;display:grid;gap:3px;padding:10px 0;border-top:1px solid var(--line)}
-.coverageList a{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;min-height:28px;color:var(--text);font-size:12px;overflow-wrap:anywhere}
-.coverageList strong{color:var(--mint);font-size:13px}
-.coverageList small{color:var(--muted);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.coverageList ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
+.coverageList li{min-width:0;border-bottom:1px solid var(--line)}
+.coverageList a{display:flex;align-items:center;min-height:48px;height:100%;padding:8px 0;box-sizing:border-box;color:var(--text);font-size:13px;font-weight:500;line-height:1.5;overflow-wrap:anywhere;text-decoration:none}
+.coverageList a:hover{color:var(--mint);text-decoration:underline;text-underline-offset:3px}
+.coverageList a:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:3px}
+@media(max-width:350px){.coverageList ul{grid-template-columns:1fr}}
 .publicationNote{margin:20px 0 8px;padding-left:12px;border-left:2px solid var(--line);color:var(--muted);font-size:12px;line-height:1.8;max-width:75ch}
