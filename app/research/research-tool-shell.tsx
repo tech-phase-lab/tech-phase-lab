@@ -3,7 +3,7 @@
 import Link from "next/link";
 import SiteHeader from "./site-header";
 import { usePathname } from "next/navigation";
-import NavigationIcon from "./navigation-icon";
+import HomeSidebar from "./home-sidebar";
 import type { ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import base from "./research.module.css";
@@ -14,17 +14,9 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#tool-main">{lang === "ja" ? "本文へ移動" : "Skip to content"}</a>
     <SiteHeader lang={lang} setLang={setLang} />
+    <div className={!desk && showTools ? styles.withSidebar : undefined}>
+    {!desk && showTools && <aside className={styles.toolSidebar}><HomeSidebar lang={lang} tab={pathname === "/research/calendar" ? "metrics" : "home"} standalone pathname={pathname} /></aside>}
     <main id="tool-main" className={`${styles.main} ${desk ? styles.desk : ""}`}>
-      {!desk && showTools && <nav className={styles.links} aria-label={lang === "ja" ? "便利な機能" : "Research tools"}>
-        <Link href="/research/stocks" aria-current={pathname === "/research/stocks" ? "page" : undefined}><NavigationIcon name="search" />{lang === "ja" ? "銘柄検索" : "Stock search"}</Link>
-        <Link href="/research/watchlist" aria-current={pathname === "/research/watchlist" ? "page" : undefined}><NavigationIcon name="favorite" />{lang === "ja" ? "ウォッチリスト" : "Watchlist"}</Link>
-        <Link href="/research/calendar" aria-current={pathname === "/research/calendar" ? "page" : undefined}><NavigationIcon name="calendar" />{lang === "ja" ? "カレンダー" : "Calendar"}</Link>
-        <Link href="/research/market" aria-current={pathname === "/research/market" ? "page" : undefined}><NavigationIcon name="metrics" />{lang === "ja" ? "マーケット" : "Markets"}</Link>
-        <Link href="/research/learn" aria-current={pathname === "/research/learn" ? "page" : undefined}><NavigationIcon name="saved" />{lang === "ja" ? "米国株の基礎" : "Stock basics"}</Link>
-        <Link href="/research/faq" aria-current={pathname === "/research/faq" ? "page" : undefined}><NavigationIcon name="changes" />{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</Link>
-        <Link href="/research/compare" aria-current={pathname === "/research/compare" ? "page" : undefined}><NavigationIcon name="companies" />{lang === "ja" ? "銘柄比較 · PRO" : "Compare · PRO"}</Link>
-        <Link href="/research/columns" aria-current={pathname === "/research/columns" ? "page" : undefined}><NavigationIcon name="pro" />{lang === "ja" ? "PRO記事・週刊" : "PRO articles & weekly"}</Link>
-      </nav>}
       {desk && <div className={styles.deskSignature}><span>RIZEL’S DESK</span><small>TECH PHASE PRO</small></div>}
       {showHeading && <><h1>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
       {desk && <nav className={styles.deskNav} aria-label={lang === "ja" ? "RIZEL’S DESKメニュー" : "RIZEL’S DESK navigation"}>
@@ -34,5 +26,6 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
       </nav>}
       {children}
     </main>
+    </div>
   </div>;
 }

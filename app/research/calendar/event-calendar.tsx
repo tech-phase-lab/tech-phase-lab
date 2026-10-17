@@ -61,16 +61,14 @@ export default function EventCalendar() {
     return t(`公式確認試行済み・確認継続（${company.lastAttemptedOn}）`, `Official check attempted; still under review (${company.lastAttemptedOn})`);
   };
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("today-upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("公式発表で確認した予定を、日本時間と米国東部時間で。", "Official schedules in U.S. Eastern and Japan time.")}>
-    <details className={calendarStyles.status}><summary>{t("公式確認", "Verified")} · {calendarReviewedOn}<span>{t("掲載方針", "About this calendar")}</span></summary><p>{t("公式確認済みの予定を掲載。未確認の企業は下の追跡対象に表示します。日程は変更される場合があります。", "Verified schedules only. Companies awaiting date confirmation are listed below. Dates may change.")}</p></details>
-    {stale && <p role="status" className={styles.error}>{t("確認から7日以上経過しています。参加・視聴前に公式日程を再確認してください。", "This schedule was checked over 7 days ago. Recheck the official source before attending.")}</p>}
     <div className={calendarStyles.filters}>
       <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => setKind(value)}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
       <label>{t("期間", "Period")} ({zoneLabel(zone)})<select value={period} onChange={(event) => setPeriod(event.target.value)}><option value="today-upcoming">{t("今日・今後の予定", "Today & upcoming")}</option><option value="upcoming">{t("今後の予定", "Upcoming")}</option>{months.map((month) => <option key={month} value={month}>{month}</option>)}</select></label>
       <label>{t("表示時間", "Time zone")}<select value={zone} onChange={(event) => { setZoneOverride(event.target.value); setPeriod("today-upcoming"); }}><option value="Asia/Tokyo">{t("日本時間", "Japan · JST")}</option><option value="America/New_York">{t("米国東部", "U.S. Eastern · ET")}</option></select></label>
     </div>
     <div className={calendarStyles.watchFilter}>
-      <label><input type="checkbox" checked={favoritesOnly} onChange={(event) => setFavoritesOnly(event.target.checked)} />{t("お気に入り＋経済指標", "Favorites + economic events")}</label>
-      <Link href="/research/watchlist">{t("銘柄を編集", "Edit favorites")}</Link>
+      <label><input type="checkbox" checked={favoritesOnly} onChange={(event) => setFavoritesOnly(event.target.checked)} />{t("登録銘柄の決算に絞る", "Only watchlist earnings")}</label>
+      <Link href="/research/watchlist">{t("リストを編集", "Edit watchlist")}</Link>
     </div>
     {favoritesOnly && favorites.length === 0 && <p role="status" className={styles.description}>{t("お気に入りがまだありません。銘柄を追加すると、その決算予定も表示します。", "No favorites yet. Add companies to include their earnings schedules.")}</p>}
     <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
@@ -106,6 +104,8 @@ export default function EventCalendar() {
         <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul>
       </details>
     </section>
+    <details className={calendarStyles.status}><summary>{t("予定の掲載情報", "Schedule information")} · {calendarReviewedOn}<span>{t("掲載方針", "About this calendar")}</span></summary><p>{t("公式確認済みの予定を掲載。未確認の企業は下の追跡対象に表示します。日程は変更される場合があります。", "Verified schedules only. Companies awaiting date confirmation are listed below. Dates may change.")}</p></details>
+    {stale && <p role="status" className={styles.error}>{t("確認から7日以上経過しています。参加・視聴前に公式日程を再確認してください。", "This schedule was checked over 7 days ago. Recheck the official source before attending.")}</p>}
     <p className={styles.notice}>{t("公式本文と照合した結果と、投稿から取得した数値速報を掲載しています。市場予想との比較・自動通知は未対応です。", "Results checked against official releases and numeric flashes from source posts are shown here. Consensus comparisons and automatic notifications are not yet available.")}</p>
     <p className={styles.footnote}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
   </ResearchToolShell>;

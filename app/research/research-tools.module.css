@@ -77,3 +77,6 @@
 .desk>article,.desk>section{border-color:#967d4c48;background:linear-gradient(125deg,#1c1c1c,#111820 75%);box-shadow:inset 0 1px 0 #edd9a509,0 12px 35px #00000018}
 .desk>article>p:first-child{color:#bda982;font-size:11px;letter-spacing:.05em}
 @media(max-width:700px){.desk{padding-top:24px;min-height:calc(100dvh - 64px)}.deskSignature{font-size:10px}.deskNav{gap:6px;margin:20px 0 24px}.deskNav a{font-size:12px;padding:11px 2px}}
+
+.toolSidebar{display:none}
+@media(min-width:1100px){.withSidebar{display:grid;grid-template-columns:256px minmax(0,1fr);max-width:1920px;margin:auto}.withSidebar>.main{width:100%;min-width:0;box-sizing:border-box}.toolSidebar{display:block;position:sticky;top:84px;height:calc(100dvh - 84px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;box-sizing:border-box;padding:24px 14px;border-right:1px solid var(--line);background:#0b1118}}

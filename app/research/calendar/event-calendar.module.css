@@ -10,3 +10,7 @@
 @media(max-width:600px){.eventDetails{padding-left:12px}.insights{grid-template-columns:1fr;gap:3px}.insights dd{margin-bottom:7px}}
 
 .plainRow{display:grid;grid-template-columns:104px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:64px;padding:10px 4px}.rowLinks{display:flex;flex-direction:column;gap:4px;font-size:12px}.rowLinks a{color:var(--muted)}.facts{list-style:none;margin:0 0 8px;padding:0}.facts li{margin:0 0 3px}@media(max-width:600px){.plainRow{grid-template-columns:83px minmax(0,1fr) auto;gap:8px;min-height:62px}}
+
+.filters{gap:10px 12px;margin:18px 0 4px}.filters label{display:flex;align-items:center;gap:8px;white-space:nowrap}.filters select{flex:1;width:auto;min-height:40px;border-color:#31464b;background:#101e25;border-radius:7px}.filters>div{margin-bottom:2px}.filters select:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+@media(min-width:760px){.filters{grid-template-columns:minmax(240px,1fr) 200px 170px}}
+@media(max-width:600px){.filters label{flex-direction:column;align-items:stretch;gap:4px}.filters select{font-size:16px}.watchFilter{gap:12px}.watchFilter label{font-size:12px}}

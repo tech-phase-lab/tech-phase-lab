@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
-import type { ResearchView } from "@/lib/research/navigation";
+import { researchViewHashes, type ResearchView } from "@/lib/research/navigation";
 import { useAlertsUnread } from "./use-alerts-unread";
 import styles from "./home-sidebar.module.css";
 
@@ -29,8 +29,8 @@ const icons = {
 type Item = { key: string; icon: ReactNode; label: string; href?: string; onClick?: () => void; current?: boolean; badge?: ReactNode; pro?: boolean };
 
 /** Desktop left menu of the home (owner, Oct 14). Links are the existing ones. */
-export default function HomeSidebar({ lang, tab, companyCount, savedCount, openView }: {
-  lang: Language; tab: ResearchView; companyCount: number; savedCount: number; openView: (view: ResearchView) => void;
+export default function HomeSidebar({ lang, tab, companyCount, savedCount, openView, standalone = false, pathname }: {
+  lang: Language; tab: ResearchView; companyCount?: number; savedCount?: number; openView?: (view: ResearchView) => void; standalone?: boolean; pathname?: string;
 }) {
   const ja = lang === "ja";
   const t = (jaText: string, en: string) => ja ? jaText : en;
@@ -44,13 +44,15 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     { key: "targets", icon: icons.target, label: t("目標株価", "Price targets"), href: "/research/price-targets" },
   ];
   const research: Item[] = [
-    { key: "watch", icon: icons.watch, label: t("監視22銘柄", "22-stock watch"), onClick: () => openView("companies"), current: tab === "companies", badge: <em className={styles.count}>{companyCount}</em> },
-    { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & data"), onClick: () => openView("metrics"), current: tab === "metrics" },
+    { key: "watch", icon: icons.watch, label: t("監視22銘柄", "22-stock watch"), onClick: () => openView?.("companies"), current: tab === "companies", badge: companyCount === undefined ? null : <em className={styles.count}>{companyCount}</em> },
+    { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & data"), onClick: () => openView?.("metrics"), current: tab === "metrics" },
     { key: "map", icon: icons.map, label: t("資本マップ", "Capital map"), href: "/research/capital-map" },
     { key: "compare", icon: icons.compare, label: t("銘柄比較", "Compare stocks"), href: "/research/compare", pro: true },
-    { key: "saved", icon: icons.saved, label: t("保存したリサーチ", "Saved research"), onClick: () => openView("saved"), current: tab === "saved", badge: <em className={styles.count}>{savedCount}</em> },
+    { key: "saved", icon: icons.saved, label: t("保存したリサーチ", "Saved research"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
   ];
-  const row = (item: Item) => {
+  const destinations: Record<string, string> = { watch: "/research" + researchViewHashes.companies, metrics: "/research/calendar", saved: "/research" + researchViewHashes.saved };
+  const row = (original: Item) => {
+    const item = standalone ? { ...original, href: original.href ?? destinations[original.key], current: original.href ? original.href === pathname && original.key !== "alerts" : original.current } : original;
     const inner = <>{item.icon}<span>{item.label}</span>{item.badge}{item.pro && <b className={styles.tag}>PRO</b>}</>;
     const props = { className: `${styles.item} ${item.current ? styles.on : ""}`, "aria-current": item.current ? "page" as const : undefined };
     return item.href ? <Link key={item.key} href={item.href} {...props}>{inner}</Link> : <button key={item.key} type="button" onClick={item.onClick} {...props}>{inner}</button>;
@@ -59,7 +61,7 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     <div className={styles.group}><p className={styles.eyebrow}>QUICK</p>{quick.map(row)}</div>
     <div className={styles.group}><p className={styles.eyebrow}>RESEARCH</p>{research.map(row)}</div>
     <div className={styles.group}>
-      <button type="button" className={`${styles.item} ${styles.proLine} ${tab === "pro" ? styles.on : ""}`} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView("pro")}>{icons.gem}<span>Tech Phase PRO</span></button>
+      {standalone ? <Link href={"/research" + researchViewHashes.pro} className={[styles.item, styles.proLine].join(" ")}>{icons.gem}<span>Tech Phase PRO</span></Link> : <button type="button" className={`${styles.item} ${styles.proLine} ${tab === "pro" ? styles.on : ""}`} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView?.("pro")}>{icons.gem}<span>Tech Phase PRO</span></button>}
       <Link href="/resolute" className={`${styles.item} ${styles.rzLine}`}>{icons.anchor}<span>RESOLUTE</span></Link>
     </div>
     <div className={styles.foot}>
