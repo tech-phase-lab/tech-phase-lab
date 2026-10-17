@@ -24978,7 +24978,7 @@
       "WDAY"
     ],
     "name": "Workday",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -24987,6 +24987,14 @@
       {
         "url": "https://newsroom.workday.com/2026-05-28-Workday-and-Google-Cloud-Expand-Strategic-Partnership-to-Bring-AI-Agents-for-HR-and-Finance-Into-Employees-Daily-Workflows",
         "label": "Workday — Google Cloud expanded partnership, May 28, 2026"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/dynamics-365/products/finance",
+        "label": "Microsoft official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.servicenow.com/products/hr-service-delivery.html",
+        "label": "ServiceNow official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -24994,7 +25002,7 @@
       "revenue": "継続的なソフト利用契約が主な収益源。導入や設定の支援でも稼ぎ、既存顧客へ人事以外の機能を広げて契約を増やす。",
       "strength": "人材と財務の情報を共通基盤で扱い、実績を予算や人員計画へ反映しやすい。導入後の基幹業務に深く組み込まれる。",
       "risks": "基幹システムの入れ替えは商談と導入が長期化しやすい。機密性の高い人事・財務データの保護と、新しいAI機能の信頼性も重要になる。",
-      "competition": "OracleやSAPと人事・財務の基幹ソフトで競う。給与ではADPなど、用途ごとの専門会社とも競合する。",
+      "competition": "OracleやSAPと人事・財務の基幹ソフトで競う。給与ではADPなど、用途ごとの専門会社とも競合する。 自社開示に含まれるMicrosoftとServiceNowは、それぞれDynamics 365 Financeの財務管理、HR Service Deliveryの人事サービス業務の範囲で比較する。給与計算や全ERPが同等という意味ではない。",
       "relationships": "AWS・Google Cloudとの提携とADPの給与連携を持つ。2026年5月にはGoogleとの協業拡大を公表し、Sana Self-Service AgentのGemini Enterpriseでの提供とSanaでのGemini採用を説明した。追加エージェントの展開計画を全て提供済みとは扱わない。"
     },
     "en": {
@@ -25002,7 +25010,7 @@
       "revenue": "Primarily earns subscriptions, with implementation services and expansion into additional customer functions.",
       "strength": "A shared people-and-finance data foundation connects transactions with workforce and budget planning.",
       "risks": "Core-system replacements involve long sales and deployment cycles. Sensitive records and AI reliability raise operational risks.",
-      "competition": "Competes with Oracle and SAP in core enterprise applications and ADP in payroll-related areas.",
+      "competition": "Competes with Oracle and SAP in core enterprise applications and ADP in payroll-related areas. Microsoft and ServiceNow are self-named competitors, scoped here to Dynamics 365 Finance financial management and HR Service Delivery workflows. The comparison does not equate all payroll or ERP functionality.",
       "relationships": "Workday partners with AWS and Google Cloud and integrates payroll with ADP. Its May 2026 Google expansion describes Sana Self-Service Agent availability in Gemini Enterprise and Gemini adoption in Sana. Further planned agents are not all treated as delivered."
     },
     "maps": {
@@ -25045,6 +25053,34 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Microsoft Dynamics 365 Financeと財務管理を比較",
+            "en": "Company disclosure / product scope: Microsoft Dynamics 365 Finance / financial management"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "ServiceNow",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：ServiceNow HR Service Deliveryと人事サービス業務を比較",
+            "en": "Company disclosure / product scope: ServiceNow HR Service Delivery / HR service workflows"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "NOW"
         }
       ],
       "relationships": [
@@ -25747,7 +25783,7 @@
       "VEEV"
     ],
     "name": "Veeva Systems",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
@@ -25760,6 +25796,14 @@
       {
         "url": "https://www.veeva.com/meet-veeva/partners/product/",
         "label": "Veeva — named Microsoft product / AI partner directory, checked October 16, 2026"
+      },
+      {
+        "url": "https://www.3ds.com/products/biovia",
+        "label": "Dassault Systèmes official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.opentext.com/products/documentum-content-management",
+        "label": "OpenText official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -25767,7 +25811,7 @@
       "revenue": "ソフトとデータの継続利用料が中心で、導入支援やコンサルティングも収益になる。製品群を追加してもらうことで、同じ顧客から得る利用料を広げる。",
       "strength": "医薬品の規制や現場の手順に合わせた機能があり、研究・品質・営業の記録を共有できる。業界特有の文書管理や検証が必要なため、汎用ソフトだけでは置き換えにくい。",
       "risks": "製薬業界の予算や規制変更に影響され、機密の治験・患者関連データの保護も不可欠。従来CRMからVault CRMへの移行が遅れると、競合への切り替えや支援費用の増加につながる。",
-      "competition": "製薬企業の営業管理ではSalesforce、業界データ・分析ではIQVIAと競う。研究・品質管理ではOracleなどの既存製品や顧客の内製システムが代替になる。",
+      "competition": "製薬企業の営業管理ではSalesforce、業界データ・分析ではIQVIAと競う。研究・品質管理ではOracleなどの既存製品や顧客の内製システムが代替になる。 自社はDevelopment Cloud・Quality Cloudの一部分でDassault SystèmesとOpenTextを競合に明記。BIOVIAの研究・品質・規制対応、Documentumの規制対象文書管理を比較し、生命科学CRM全体の同等性を示すものではない。",
       "relationships": "AWSはVaultの稼働基盤、Salesforceは従来Veeva CRMの基盤で競合も併存する。公式製品パートナー一覧はMicrosoft技術とVaultアプリの連携も実名で記載する。従来CRMの支援は2029年12月までの計画で、製品連携を全顧客の移行完了や計算容量購入とは混同しない。"
     },
     "en": {
@@ -25775,7 +25819,7 @@
       "revenue": "Earns recurring software and data subscriptions plus implementation and consulting fees. Additional applications expand spending within existing customers.",
       "strength": "Industry-specific processes and regulated document management connect research, quality and commercial records, making generic software a less straightforward substitute.",
       "risks": "Pharmaceutical budgets, regulation and sensitive-data protection matter. Delays migrating legacy CRM users to Vault CRM create switching and support risks.",
-      "competition": "Competes with Salesforce in life-sciences CRM and IQVIA in data and analytics; Oracle and internal systems provide alternatives in regulated operations.",
+      "competition": "Competes with Salesforce in life-sciences CRM and IQVIA in data and analytics; Oracle and internal systems provide alternatives in regulated operations. Veeva names Dassault Systèmes and OpenText in selected Development Cloud and Quality Cloud applications. BIOVIA scientific quality/compliance and Documentum regulated content management are scoped comparisons, not equivalence across all life-sciences CRM.",
       "relationships": "AWS hosts Vault, while Salesforce supports legacy Veeva CRM and also competes. Veeva’s product-partner directory names Microsoft technology / Vault application collaboration. Legacy CRM support is planned through December 2029; integration does not establish completed migration of every customer or compute-capacity purchases."
     },
     "maps": {
@@ -25818,6 +25862,33 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Dassault Systèmes",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Dassault Systèmes BIOVIAと研究・品質・規制対応を比較",
+            "en": "Company disclosure / product scope: Dassault Systèmes BIOVIA / scientific quality and compliance"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenText",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：OpenText Documentumと規制対象の文書管理を比較",
+            "en": "Company disclosure / product scope: OpenText Documentum / regulated content management"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "OTEX"
         }
       ],
       "relationships": [
@@ -29348,6 +29419,14 @@
       {
         "url": "https://www.sec.gov/Archives/edgar/data/1594805/000119312526377123/xslSCHEDULE_13D_X02/primary_doc.xml",
         "label": "KVYO / Shopify — official dated disclosure; checked October 17, 2026"
+      },
+      {
+        "url": "https://investors.intuit.com/news-events/press-releases/detail/1320/intuit-reports-fourth-quarter-and-full-year-fiscal-2026-results-sets-fiscal-2027-guidance",
+        "label": "Intuit official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.intuit.com/blog/news-social/intuit-completes-acquisition-of-mailchimp/",
+        "label": "Intuit completed Mailchimp acquisition; current scope corroborated by FY2026 results; checked October17,2026"
       }
     ],
     "ja": {
@@ -29355,7 +29434,7 @@
       "revenue": "クラウドソフトの継続利用料が中心。顧客データの規模、送信量、利用する機能などに応じて料金が増え、マーケティングに加え顧客対応・分析などへ利用を広げる。",
       "strength": "購買・行動・連絡への同意を同じ顧客データにまとめ、案内の作成から送信、結果の確認までつなげる。Shopifyを含む多数の既存システムと接続し、企業が自社のデータを使える。",
       "risks": "Shopifyとの連携・販促契約への依存があり、条件変更は顧客獲得に影響する。消費の減速、個人情報の規制、メールやメッセージの届きにくさも利用量と成果を左右する。",
-      "competition": "マーケティング配信ではMailchimpやBraze、広範な販売促進ソフトではAdobeやSalesforceと競う。データを蓄積するだけでなく、顧客への働きかけへ使えるかが比較のポイント。",
+      "competition": "マーケティング配信ではMailchimpやBraze、広範な販売促進ソフトではAdobeやSalesforceと競う。データを蓄積するだけでなく、顧客への働きかけへ使えるかが比較のポイント。 自社が挙げるMailchimpは上場親会社Intuitの事業として、メール配信・顧客向けマーケティングを比較する。Intuitの2026年通期決算でもMailchimp事業を確認し、独立した非上場株のカードにはしない。",
       "relationships": "Shopifyとデータ連携・販促の提携を行い、Klaviyoが契約に基づく収益分配を支払う。Google、Meta、Toastなどとも製品連携し、小売・飲食などへ提供する。連携を取引先の購入とは扱わない。 2026年1月にはOpenAIのChatGPTアプリとAnthropicのClaude向けMCP接続を発表。利用者が許可した顧客・販促情報の接続であり、AI各社によるKlaviyoの購入契約ではない。 Shopifyの2026年8月31日付Schedule 13D/Aは、完全子会社SSH 3がKlaviyo Series B株17,317,491株を直接保有すると開示。別枠の未行使Investment Optionと、10月28日に権利確定予定のワラントは発行済み保有株に含めない。開示上の20.83%はこれらを含むSeries A実質保有の計算であり、全発行済み株式の単純な持分比率ではない。"
     },
     "en": {
@@ -29363,7 +29442,7 @@
       "revenue": "Earns recurring cloud subscription fees that vary with customer-data scale, messaging volumes and features. Expands into service, analytics and additional marketing capabilities.",
       "strength": "Unifies purchases, behavior and consent, connecting campaign creation, delivery and measurement. Integrations with Shopify and other systems let businesses activate their own first-party data.",
       "risks": "Depends partly on Shopify integration and marketing agreements. Changes in terms, weaker consumer spending, privacy regulation and message deliverability can affect acquisition and usage.",
-      "competition": "Competes with Mailchimp and Braze in marketing communications and Adobe and Salesforce in broader marketing platforms. Turning stored data into relevant customer interactions is a key distinction.",
+      "competition": "Competes with Mailchimp and Braze in marketing communications and Adobe and Salesforce in broader marketing platforms. Turning stored data into relevant customer interactions is a key distinction. Self-named Mailchimp is represented through listed parent Intuit in email and customer marketing. Intuit's FY2026 results confirm the business; Mailchimp is not shown as an independent private stock.",
       "relationships": "Partners with Shopify on interoperability and marketing, paying a contractual revenue share. Integrates with Google, Meta and Toast and serves retail, restaurants and other businesses. Integrations do not establish purchases. January 2026 announcements add a ChatGPT app and Claude MCP connectivity for authorized customer / marketing data; these integrations do not establish purchases by the AI providers. Shopify’s August 31, 2026 Schedule 13D/A identifies 17,317,491 Klaviyo Series B shares held directly by its wholly owned SSH 3 subsidiary. The separate unexercised Investment Option and warrants scheduled to vest October 28 are excluded from that issued-share holding. The reported 20.83% is a Series A beneficial-ownership calculation including those instruments, rather than a simple percentage of all issued shares."
     },
     "maps": {
@@ -29419,6 +29498,21 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Intuit",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Intuit Mailchimpとメール・顧客向け配信を比較",
+            "en": "Company disclosure / product scope: Intuit Mailchimp / email and customer marketing"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            5
+          ],
+          "ticker": "INTU"
         }
       ],
       "relationships": [
@@ -30711,11 +30805,23 @@
       "QTWO"
     ],
     "name": "Q2 Holdings",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm"
+      },
+      {
+        "url": "https://tech.sofi.com/news/galileo-financial-technologies-rebranding-to-sofi-tech-solutions/",
+        "label": "SoFi official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://tech.sofi.com/news/sofi-to-adopt-galileos-cyberbank-core-for-commercial-payment-services-and-sponsor-banking/",
+        "label": "Galileo owned and operated by SoFi; independently confirmed parent identity; checked October17,2026"
+      },
+      {
+        "url": "https://investors.sofi.com/news/news-details/2026/SoFi-Schedules-2026-Annual-Meeting-of-Stockholders/default.aspx",
+        "label": "SoFi Nasdaq SOFI and Galileo platform in2026; checked October17,2026"
       }
     ],
     "ja": {
@@ -30723,7 +30829,7 @@
       "revenue": "金融機関の契約と登録利用者数などに基づく継続利用料が中心。請求書払いなどの取引件数に応じた収入や導入サービスもある。利用者が預けたお金をそのまま売上にするわけではない。",
       "strength": "銀行の基幹システムと各種外部サービスをつなぎ、個人向けから法人向けまで展開できる。金融機関が自社ブランドの画面を用意し、追加機能を組み込みやすい。",
       "risks": "銀行の合併で顧客契約が失われたり、利用者数や決済件数の伸びが鈍ったりすると売上に影響する。送金や機密情報を扱うため障害・不正対策が重要で、導入時の接続作業も重い。",
-      "competition": "ネット銀行画面ではAlkamiやFiservなど、融資支援ではnCinoと競う。金融機能の組み込みではGalileoなどが競合し、用途ごとに相手が変わる。",
+      "competition": "ネット銀行画面ではAlkamiやFiservなど、融資支援ではnCinoと競う。金融機能の組み込みではGalileoなどが競合し、用途ごとに相手が変わる。 自社開示のGalileoは上場親会社SoFiの技術事業として表示し、2026年4月発表のSoFi Tech Solutionsへのブランド移行を区別する。比較はHelixの組込金融であり、SoFiの個人向け銀行・証券サービス全体ではない。",
       "relationships": "AWSとMicrosoft Azureが主なクラウド基盤を提供する。銀行・信用組合やフィンテック企業がソフトを利用し、外部の決済・基幹システムとは接続してサービスを届ける。"
     },
     "en": {
@@ -30731,7 +30837,7 @@
       "revenue": "Earns recurring fees linked to contracts and registered users, transaction-related revenue such as bill payments, and implementation fees. Customers’ deposits are not its revenue.",
       "strength": "Connects core banking systems and external services across retail and commercial workflows, letting institutions offer branded experiences and add functionality.",
       "risks": "Bank mergers, slower user growth and lower transaction volumes can reduce revenue. Payments and sensitive data demand reliable security, while integrations make deployments complex.",
-      "competition": "Competes with Alkami and Fiserv in digital banking, nCino in lending software and Galileo in embedded finance; rivals differ by product.",
+      "competition": "Competes with Alkami and Fiserv in digital banking, nCino in lending software and Galileo in embedded finance; rivals differ by product. Self-named Galileo is represented through listed parent SoFi, distinguishing the April2026 transition to the SoFi Tech Solutions brand. The comparison concerns Helix embedded finance, not all SoFi consumer banking or brokerage.",
       "relationships": "AWS and Microsoft Azure provide primary cloud infrastructure. Financial institutions and fintechs use its software, which integrates external payment and core-processing systems."
     },
     "maps": {
@@ -30786,6 +30892,22 @@
           "sourceIndexes": [
             0
           ]
+        },
+        {
+          "kind": "company",
+          "name": "SoFi",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：SoFi Tech Solutions（旧Galileo）と組込金融を比較",
+            "en": "Company disclosure / product scope: SoFi Tech Solutions, formerly Galileo / embedded finance"
+          },
+          "sourceIndexes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "ticker": "SOFI"
         }
       ],
       "relationships": [
@@ -30995,11 +31117,19 @@
       "TENB"
     ],
     "name": "Tenable",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm"
+      },
+      {
+        "url": "https://cloud.google.com/blog/products/identity-security/google-completes-acquisition-of-wiz",
+        "label": "Google official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/security/business/threat-protection/microsoft-defender-vulnerability-management",
+        "label": "Microsoft official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -31007,7 +31137,7 @@
       "revenue": "検査・管理する機器やシステムの範囲に応じたソフト利用料が中心。Nessusなどの個別製品からTenable Oneへ対象を広げる契約拡大や更新が収益につながる。",
       "strength": "弱点の発見だけでなく、攻撃の経路や重要な業務への影響を結び付けて優先順位をつける。社内設備とクラウドをまとめて把握でき、対策の抜けを減らしやすい。",
       "risks": "新しい攻撃手法やAIの利用が広がる速さに検査を追いつかせる必要がある。見落としや誤検知は信用を損ね、大手のセキュリティ一括販売やクラウドへの接続制限も競争上のリスクになる。",
-      "competition": "Qualys、Rapid7とは弱点の発見・管理で競う。CrowdStrikeは端末の検査機能、Palo Alto Networksはクラウド保護の領域で重なり、すべて同じ製品を売っているわけではない。",
+      "competition": "Qualys、Rapid7とは弱点の発見・管理で競う。CrowdStrikeは端末の検査機能、Palo Alto Networksはクラウド保護の領域で重なり、すべて同じ製品を売っているわけではない。 自社開示のWizは2026年3月11日にGoogleによる取得が完了した事業としてクラウドセキュリティを比較する。Microsoft Defender Vulnerability Managementは脆弱性評価・管理の範囲で、全クラウド計算能力を比べるものではない。",
       "relationships": "企業・公共機関がシステムの弱点を把握するために利用する。AWSなど外部基盤に依存する部分があり、販売代理店や運用支援会社を通じても製品を届ける。"
     },
     "en": {
@@ -31015,7 +31145,7 @@
       "revenue": "Earns mainly recurring software fees tied to the scope of assets assessed. Renewals and expansion from products such as Nessus to Tenable One support revenue.",
       "strength": "Connects discovered weaknesses with attack paths and business importance to prioritize remediation across internal and cloud environments.",
       "risks": "Must keep pace with emerging attacks and AI usage. Missed weaknesses or false positives damage trust; bundled security suites and restricted cloud access can weaken its position.",
-      "competition": "Competes with Qualys and Rapid7 in vulnerability management, CrowdStrike in endpoint assessment and Palo Alto Networks in cloud security. Overlap varies by product.",
+      "competition": "Competes with Qualys and Rapid7 in vulnerability management, CrowdStrike in endpoint assessment and Palo Alto Networks in cloud security. Overlap varies by product. Self-named Wiz is compared in cloud security under Google following acquisition completion on March11,2026. Microsoft Defender Vulnerability Management concerns vulnerability assessment, not the full cloud-compute market.",
       "relationships": "Businesses and public agencies use its assessments. Parts of delivery depend on external infrastructure including AWS, with resellers and service providers extending distribution."
     },
     "maps": {
@@ -31071,6 +31201,34 @@
             0
           ],
           "ticker": "PANW"
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Google傘下Wizとクラウドセキュリティを比較",
+            "en": "Company disclosure / product scope: Google Wiz / cloud security"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Microsoft Defender Vulnerability Managementと脆弱性管理を比較",
+            "en": "Company disclosure / product scope: Microsoft Defender Vulnerability Management / exposure assessment"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "MSFT"
         }
       ],
       "relationships": [
@@ -31461,6 +31619,10 @@
       {
         "url": "https://notifications.qualys.com/product/2026/07/20/qualys-totalcloud-2-26-0-release-updates",
         "label": "QLYS / Alphabet — primary relationship source; checked October 17, 2026"
+      },
+      {
+        "url": "https://cloud.google.com/blog/products/identity-security/google-completes-acquisition-of-wiz",
+        "label": "Google official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -31468,7 +31630,7 @@
       "revenue": "クラウド上のセキュリティ製品の継続利用料で稼ぐ。既存顧客が追加の保護機能を契約することと、新規顧客の獲得が収益を広げる。販売代理店や運用会社を経由する売上も大きい。",
       "strength": "機器に入れた小さなプログラムや検査用センサーから情報を集め、同じ基盤で資産把握から弱点の修正・確認まで進められる。別々のツールを使う作業をまとめやすい。",
       "risks": "競合の一括販売による価格圧力と、追加機能を顧客に使ってもらえるかが課題。新しい脆弱性への対応が遅れたり、共通クラウド基盤で障害が起きたりすると、多くの顧客へ影響が及ぶ。",
-      "competition": "Tenable、Rapid7とは弱点の検査・管理で競う。CrowdStrikeやPalo Alto Networksとも一部の保護機能が重なり、顧客が内製した検査・管理ツールの置き換えも狙う。",
+      "competition": "Tenable、Rapid7とは弱点の検査・管理で競う。CrowdStrikeやPalo Alto Networksとも一部の保護機能が重なり、顧客が内製した検査・管理ツールの置き換えも狙う。 年次報告が競合として挙げるWizは、2026年3月11日にGoogleによる取得が完了。Google傘下のクラウドセキュリティ事業として比較し、年次報告時点の買収予定を現在の未完了取引としない。",
       "relationships": "企業や公共機関に保護機能を提供し、販売代理店・監視運用会社が顧客への導入を支援する。サービスは外部のデータセンターやクラウド環境でも稼働しており、供給元の安定運営に依存する。 2026年7月の自社TotalCloud 2.26告知はGoogle Cloud接続でWIF認証をサポートすると説明。ただしこの機能は申請により有効化するベータであり、全顧客の一般提供完了やGoogleからの調達量とは扱わない。"
     },
     "en": {
@@ -31476,7 +31638,7 @@
       "revenue": "Earns recurring cloud-security subscription fees. New customers and additional applications expand revenue, with substantial sales through resellers and service providers.",
       "strength": "Collects information through agents and sensors, bringing asset discovery, assessment, remediation and verification into one platform.",
       "risks": "Faces pricing pressure from bundled competitors and must persuade customers to adopt additional applications. Slow vulnerability coverage or shared-platform outages can affect many customers.",
-      "competition": "Competes with Tenable and Rapid7 in vulnerability management, overlaps with CrowdStrike and Palo Alto Networks, and seeks to replace internally developed tools.",
+      "competition": "Competes with Tenable and Rapid7 in vulnerability management, overlaps with CrowdStrike and Palo Alto Networks, and seeks to replace internally developed tools. Wiz, named as a competitor in the annual filing, became part of Google on March11,2026. It is compared as Google's cloud-security business; the filing's earlier pending-acquisition description is not treated as its current status.",
       "relationships": "Serves enterprises and public agencies through direct sales, resellers and managed-security providers. External data centers and cloud environments support service delivery. Its July 2026 TotalCloud 2.26 notice describes Google Cloud connector WIF authentication as a beta enabled on request. This is technical compatibility, without assuming general availability to every customer or a Google procurement volume."
     },
     "maps": {
@@ -31532,6 +31694,20 @@
             0
           ],
           "ticker": "PANW"
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Google傘下Wizとクラウドセキュリティを比較",
+            "en": "Company disclosure / product scope: Google Wiz / cloud security"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "GOOG"
         }
       ],
       "relationships": [
@@ -33016,7 +33192,7 @@
       "TTWO"
     ],
     "name": "Take-Two Interactive",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Take-Two FY2026 Form 10-K",
@@ -33025,6 +33201,14 @@
       {
         "label": "Take-Two fiscal Q1 2027 results",
         "url": "https://www.take2games.com/ir/news/take-two-interactive-software-inc-reports-results-fiscal-first-6"
+      },
+      {
+        "url": "https://www.nintendo.co.jp/ir/en/stock/information/index.html",
+        "label": "Nintendo official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.tencent.com/Investors/",
+        "label": "Tencent official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -33032,7 +33216,7 @@
       "revenue": "ゲーム本体に加え、追加コンテンツ、仮想アイテム、ゲーム内広告など。販売後も遊んでもらう継続消費が大きい。",
       "strength": "長年育てた作品と開発組織を持ち、家庭用ゲーム機・PC・スマホへ展開できる。",
       "risks": "大型作品の延期や不振、開発費、集客費、配信プラットフォームへの依存が業績を揺らす。",
-      "competition": "Roblox、Sony、Microsoftなどのゲーム事業と競争。プラットフォーム企業は販売先でもあり、競争と協力が併存する。",
+      "competition": "Roblox、Sony、Microsoftなどのゲーム事業と競争。プラットフォーム企業は販売先でもあり、競争と協力が併存する。 自社はNintendoとTencentをゲームソフトの販売・開発分野の競合として明記。Nintendoは対応プラットフォームの役割と区別し、東証7974と香港0700の上場企業を米国ティッカーで偽装しない。",
       "relationships": "Apple・Googleのストア、Sony・Microsoftの家庭用機基盤で配信。配信先への手数料と、競合作品との関係を区別する。"
     },
     "en": {
@@ -33040,7 +33224,7 @@
       "revenue": "Earns game sales, add-on content, virtual-item spending and advertising.",
       "strength": "Established franchises and development teams span consoles, PC and mobile.",
       "risks": "Release delays, hit dependence, development and acquisition costs, and platform dependence create risk.",
-      "competition": "Competes with Roblox, Sony and Microsoft, among others; platform partners also publish rival games.",
+      "competition": "Competes with Roblox, Sony and Microsoft, among others; platform partners also publish rival games. Take-Two names Nintendo and Tencent in game development/publishing competition. Nintendo's platform role is distinct. Tokyo7974 and HongKong0700 are listed issuers; no US ticker is invented.",
       "relationships": "Distributes through Apple, Google, Sony and Microsoft platforms, with associated fees and licensing arrangements."
     },
     "maps": {
@@ -33082,6 +33266,32 @@
           },
           "sourceIndexes": [
             0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Nintendo",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Nintendoとゲームソフト販売を比較、対応プラットフォーム提供とは別の役割",
+            "en": "Company disclosure / product scope: Nintendo / game publishing, distinct from platform supply"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Tencent",
+          "role": "competitor",
+          "label": {
+            "ja": "自社開示・製品範囲：Tencentとゲームソフト販売を比較、全ゲームの機能同等ではない",
+            "en": "Company disclosure / product scope: Tencent / game publishing, not equivalent individual games"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         }
       ],

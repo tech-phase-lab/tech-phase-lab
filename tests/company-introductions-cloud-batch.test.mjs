@@ -9,7 +9,7 @@ test('cloud batch retains exact issuer identity and a fixed map root', () => {
     const record = companyIntroductionFor({ ticker, cik });
     assert.ok(record, ticker);
     // Completed product-scope or named-relationship re-reviews advance the date.
-    assert.equal(record.reviewedOn, ['NTNX', 'PATH', 'GTLB', 'NTAP', 'ZM', 'DOCN', 'ESTC', 'FROG', 'BOX', 'WDAY'].includes(ticker) ? '2026-10-16' : '2026-10-14');
+    assert.equal(record.reviewedOn, ticker === 'WDAY' ? '2026-10-17' : ['NTNX', 'PATH', 'GTLB', 'NTAP', 'ZM', 'DOCN', 'ESTC', 'FROG', 'BOX'].includes(ticker) ? '2026-10-16' : '2026-10-14');
     assert.equal(companyIntroductionFor({ ticker, cik: 1 }), null);
     const graph = companyNetworkFor({ ticker, cik });
     assert.equal(graph.root, ticker);

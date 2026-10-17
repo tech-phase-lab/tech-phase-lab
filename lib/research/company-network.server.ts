@@ -72,6 +72,9 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "TENB") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・技術連携", en: "Cloud and technology integration" }, 7: { ja: "脆弱性管理・クラウド防御", en: "Vulnerability management and cloud security" } };
+  if (root === "QTWO") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・金融技術の連携", en: "Cloud and financial technology integration" }, 7: { ja: "銀行ソフト・融資・組込金融", en: "Banking software, lending and embedded finance" } };
+  if (root === "TTWO") return { 5: { ja: "関連する端末・計算基盤", en: "Related devices and computing infrastructure" }, 6: { ja: "クラウド・プラットフォーム連携", en: "Cloud and platform relationships" }, 7: { ja: "ゲーム開発・販売・配信", en: "Game development, publishing and distribution" } };
   if (root === "BHE") return {"5":{"ja":"電子機器受託製造・サーバー供給先","en":"Electronics manufacturing & server customer"}};
   if (root === "SWKS") return {"3": {"ja": "RF・アナログ半導体", "en": "RF & analog semiconductors"}, "7": {"ja": "半導体製品の顧客", "en": "Semiconductor customers"}};
   if (root === "RDW") return {"5": {"ja": "宇宙・防衛システムと機器供給先", "en": "Space / defense systems & hardware customers"}, "7": {"ja": "宇宙・防衛の関連企業", "en": "Related space & defense companies"}};
@@ -3903,43 +3906,57 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "WDAY": {
       "layer": 7,
       "businessLabel": {
-        "ja": "人事・財務・業務AI",
-        "en": "HR, finance & workflow AI"
+        "ja": "Workday | 人事・財務・業務AI",
+        "en": "Workday | HR, finance & workflow AI"
       }
     },
     "GOOG": {
       "layer": 6,
       "businessLabel": {
-        "ja": "Sana・Gemini Enterprise連携",
-        "en": "Sana / Gemini Enterprise integration"
+        "ja": "Google | Sana・Gemini Enterprise連携",
+        "en": "Google | Sana / Gemini Enterprise integration"
       }
     },
     "AMZN": {
       "layer": 6,
       "businessLabel": {
-        "ja": "AWSクラウド提携",
-        "en": "AWS cloud partnership"
+        "ja": "Amazon | AWSクラウド提携",
+        "en": "Amazon | AWS cloud partnership"
       }
     },
     "ADP": {
       "layer": 7,
       "businessLabel": {
-        "ja": "給与連携・人事給与の競合",
-        "en": "Payroll integration; HR / payroll rivalry"
+        "ja": "Automatic Data Processing | 給与連携・人事給与の競合",
+        "en": "Automatic Data Processing | Payroll integration; HR / payroll rivalry"
       }
     },
     "ORCL": {
       "layer": 7,
       "businessLabel": {
-        "ja": "基幹人事・財務アプリ",
-        "en": "Core HR & finance applications"
+        "ja": "Oracle | 基幹人事・財務アプリ",
+        "en": "Oracle | Core HR & finance applications"
       }
     },
     "SAP": {
       "layer": 7,
       "businessLabel": {
-        "ja": "基幹人事・財務アプリ",
-        "en": "Core HR & finance applications"
+        "ja": "SAP | 基幹人事・財務アプリ",
+        "en": "SAP | Core HR & finance applications"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft｜Microsoft Dynamics 365 Finance",
+        "en": "Microsoft Dynamics 365 Finance"
+      }
+    },
+    "NOW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ServiceNow｜ServiceNow HR Service Delivery",
+        "en": "ServiceNow HR Service Delivery"
       }
     }
   },
@@ -4488,6 +4505,62 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "VaultアプリとMicrosoft技術の連携",
         "en": "Vault / Microsoft technology collaboration"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA",
+        "en": "NVIDIA"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon",
+        "en": "Amazon"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle",
+        "en": "Oracle"
+      }
+    },
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Salesforce",
+        "en": "Salesforce"
+      }
+    },
+    "VEEV": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Veeva Systems",
+        "en": "Veeva Systems"
+      }
+    },
+    "IQV": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "IQVIA",
+        "en": "IQVIA"
+      }
+    },
+    "Dassault Systèmes": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Dassault Systèmes｜Dassault Systèmes BIOVIA",
+        "en": "Dassault Systèmes BIOVIA"
+      }
+    },
+    "OTEX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "OpenText｜OpenText Documentum",
+        "en": "OpenText Documentum"
       }
     }
   },
@@ -5307,6 +5380,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Anthropic｜Claude・MCP接続",
         "en": "Anthropic | Claude / MCP connection"
+      }
+    },
+    "INTU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Intuit｜Intuit Mailchimp",
+        "en": "Intuit Mailchimp"
       }
     }
   },
@@ -6963,10 +7043,10 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "GOOG": {
-      "layer": 6,
+      "layer": 7,
       "businessLabel": {
-        "ja": "Google｜Cloud接続・認証対応",
-        "en": "Google | Cloud connector"
+        "ja": "Google｜Google傘下Wiz",
+        "en": "Google Wiz"
       }
     }
   },
@@ -7784,6 +7864,488 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "HPE｜液冷サーバーブレードの製造先",
         "en": "HPE | liquid-cooled server-blade customer"
+      }
+    }
+  },
+  "QTWO": {
+    "LITE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Lumentum",
+        "en": "Lumentum"
+      }
+    },
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Coherent",
+        "en": "Coherent"
+      }
+    },
+    "VRT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Vertiv",
+        "en": "Vertiv"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft",
+        "en": "Microsoft"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Nebius",
+        "en": "Nebius"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC",
+        "en": "TSMC"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA",
+        "en": "NVIDIA"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Micron",
+        "en": "Micron"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google",
+        "en": "Google"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon",
+        "en": "Amazon"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta",
+        "en": "Meta"
+      }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "CoreWeave",
+        "en": "CoreWeave"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle",
+        "en": "Oracle"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SK hynix",
+        "en": "SK hynix"
+      }
+    },
+    "Samsung": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Samsung",
+        "en": "Samsung"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Dell",
+        "en": "Dell"
+      }
+    },
+    "SMCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Supermicro",
+        "en": "Supermicro"
+      }
+    },
+    "NCNO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "nCino",
+        "en": "nCino"
+      }
+    },
+    "QTWO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Q2 Holdings",
+        "en": "Q2 Holdings"
+      }
+    },
+    "ALKT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Alkami Technology",
+        "en": "Alkami Technology"
+      }
+    },
+    "FISV": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Fiserv",
+        "en": "Fiserv"
+      }
+    },
+    "Galileo Financial Technologies": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Galileo Financial Technologies",
+        "en": "Galileo Financial Technologies"
+      }
+    },
+    "SOFI": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SoFi｜SoFi Tech Solutions（旧Galileo）",
+        "en": "SoFi Tech Solutions, formerly Galileo"
+      }
+    }
+  },
+  "TENB": {
+    "LITE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Lumentum",
+        "en": "Lumentum"
+      }
+    },
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Coherent",
+        "en": "Coherent"
+      }
+    },
+    "VRT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Vertiv",
+        "en": "Vertiv"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft｜Microsoft Defender Vulnerability Management",
+        "en": "Microsoft Defender Vulnerability Management"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Nebius",
+        "en": "Nebius"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC",
+        "en": "TSMC"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA",
+        "en": "NVIDIA"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Micron",
+        "en": "Micron"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google｜Google傘下Wiz",
+        "en": "Google Wiz"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon",
+        "en": "Amazon"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta",
+        "en": "Meta"
+      }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "CoreWeave",
+        "en": "CoreWeave"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle",
+        "en": "Oracle"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SK hynix",
+        "en": "SK hynix"
+      }
+    },
+    "Samsung": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Samsung",
+        "en": "Samsung"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Dell",
+        "en": "Dell"
+      }
+    },
+    "SMCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Supermicro",
+        "en": "Supermicro"
+      }
+    },
+    "PANW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Palo Alto Networks",
+        "en": "Palo Alto Networks"
+      }
+    },
+    "CRWD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "CrowdStrike",
+        "en": "CrowdStrike"
+      }
+    },
+    "TENB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Tenable",
+        "en": "Tenable"
+      }
+    },
+    "RPD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Rapid7",
+        "en": "Rapid7"
+      }
+    },
+    "QLYS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Qualys",
+        "en": "Qualys"
+      }
+    }
+  },
+  "TTWO": {
+    "LITE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Lumentum",
+        "en": "Lumentum"
+      }
+    },
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "Coherent",
+        "en": "Coherent"
+      }
+    },
+    "VRT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Vertiv",
+        "en": "Vertiv"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft",
+        "en": "Microsoft"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Nebius",
+        "en": "Nebius"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC",
+        "en": "TSMC"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA",
+        "en": "NVIDIA"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Micron",
+        "en": "Micron"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google",
+        "en": "Google"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon",
+        "en": "Amazon"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta",
+        "en": "Meta"
+      }
+    },
+    "CRWV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "CoreWeave",
+        "en": "CoreWeave"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle",
+        "en": "Oracle"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SK hynix",
+        "en": "SK hynix"
+      }
+    },
+    "Samsung": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Samsung",
+        "en": "Samsung"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Dell",
+        "en": "Dell"
+      }
+    },
+    "SMCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Supermicro",
+        "en": "Supermicro"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple",
+        "en": "Apple"
+      }
+    },
+    "RBLX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Roblox",
+        "en": "Roblox"
+      }
+    },
+    "SONY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Sony Group",
+        "en": "Sony Group"
+      }
+    },
+    "TTWO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Take-Two Interactive",
+        "en": "Take-Two Interactive"
+      }
+    },
+    "Nintendo": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Nintendo｜Nintendo",
+        "en": "Nintendo"
+      }
+    },
+    "Tencent": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Tencent｜Tencent",
+        "en": "Tencent"
       }
     }
   }
