@@ -24759,7 +24759,7 @@
       "NTNX"
     ],
     "name": "Nutanix",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -24768,6 +24768,22 @@
       {
         "url": "https://www.nutanix.com/press-releases/2026/nutanix-and-netapp-form-strategic-alliance",
         "label": "Nutanix — NetApp strategic alliance and planned integration, April 7, 2026"
+      },
+      {
+        "url": "https://www.nutanix.com/products/nutanix-cloud-infrastructure",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.vmware.com/docs/vmw-cloud-foundation-datasheet",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.redhat.com/en/technologies/cloud-computing/openshift/virtualization",
+        "label": "Official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -24775,7 +24791,7 @@
       "revenue": "一定期間のソフト利用契約が中心で、更新や保守も含む。顧客は対応サーバーを機器メーカーや販売会社から別途購入する場合が多い。",
       "strength": "分散した設備を一つの管理画面と運用方法で扱える。機器やクラウドの選択肢があり、既存設備を生かしながら段階的に移行できる。",
       "risks": "販売代理店への依存と、対応サーバーの価格・納期の影響を受ける。顧客が従来の仮想化基盤から移行するには検証と時間が必要になる。",
-      "competition": "Broadcom傘下のVMwareやMicrosoft、IBM傘下のRed Hatと基盤ソフトで競合。クラウドや機器メーカーとも用途により競う。",
+      "competition": "Nutanix AHV/NCIは、Broadcom傘下VMware Cloud Foundation、Microsoft Hyper-V、IBM傘下Red Hat OpenShift Virtualizationと仮想マシン基盤の範囲で公式製品を編集比較する。NCIの他社ハイパーバイザー対応やRed Hatとの統合は競合する範囲と併存し、全クラウド製品の同等性や容量購入を意味しない。",
       "relationships": "Cisco・Dell・HPEの対応システムと、AWS・Azure・Google Cloud向けNC2で協力する。NetAppとは2026年4月にONTAP基盤とNCPの統合を発表したが、同資料での提供時期は年内の計画。提携発表だけで全統合が提供済みとは扱わない。"
     },
     "en": {
@@ -24783,7 +24799,7 @@
       "revenue": "Primarily sells term subscriptions including support; customers often buy compatible hardware separately.",
       "strength": "Common management across hardware and clouds supports gradual modernization while retaining infrastructure choices.",
       "risks": "Channel dependence, hardware prices and lead times affect sales. Migration from existing virtualization requires validation and time.",
-      "competition": "Competes with Broadcom's VMware, Microsoft and IBM's Red Hat, plus cloud and systems vendors.",
+      "competition": "Official products are compared editorially in virtual-machine infrastructure: Nutanix AHV/NCI versus Broadcom VMware Cloud Foundation, Microsoft Hyper-V and IBM Red Hat OpenShift Virtualization. NCI support for other hypervisors and Red Hat integration can coexist with product overlap; this does not equate all cloud products or establish capacity procurement.",
       "relationships": "Existing Cisco, Dell and HPE systems and NC2 on AWS, Azure and Google Cloud remain. The April 2026 NetApp alliance plans ONTAP/NCP integration later that year; the announcement alone does not establish completed availability of every integration."
     },
     "maps": {
@@ -24794,11 +24810,12 @@
           "ticker": "AVGO",
           "role": "competitor",
           "label": {
-            "ja": "VMwareの仮想化・クラウド基盤と競合",
-            "en": "VMware virtualization and cloud infrastructure"
+            "ja": "編集比較：Broadcom傘下VMware Cloud FoundationとNutanixの仮想化基盤",
+            "en": "Editorial comparison: Broadcom VMware Cloud Foundation / Nutanix virtualization"
           },
           "sourceIndexes": [
-            0
+            2,
+            3
           ]
         },
         {
@@ -24807,11 +24824,12 @@
           "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "仮想化・クラウド基盤で競合",
-            "en": "Virtualization and cloud infrastructure"
+            "ja": "編集比較：Microsoft Hyper-VとNutanix AHVの仮想マシン実行",
+            "en": "Editorial comparison: Microsoft Hyper-V / Nutanix AHV virtual machines"
           },
           "sourceIndexes": [
-            0
+            2,
+            4
           ]
         },
         {
@@ -24820,11 +24838,12 @@
           "ticker": "IBM",
           "role": "competitor",
           "label": {
-            "ja": "Red Hatの基盤ソフトと競合",
-            "en": "Red Hat infrastructure software"
+            "ja": "編集比較：IBM傘下Red Hat OpenShift Virtualizationと仮想マシン基盤",
+            "en": "Editorial comparison: IBM Red Hat OpenShift Virtualization / virtual-machine infrastructure"
           },
           "sourceIndexes": [
-            0
+            2,
+            5
           ]
         }
       ],
@@ -25169,7 +25188,7 @@
       "BOX"
     ],
     "name": "Box",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -25186,6 +25205,30 @@
       {
         "url": "https://blog.box.com/box-chatgpt-enterprise-content-integration",
         "label": "Box — ChatGPT enterprise-content integration, September 10, 2026"
+      },
+      {
+        "url": "https://www.box.com/cloud-content-management",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/microsoft-365/onedrive/online-cloud-storage",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://workspace.google.com/products/drive/",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.dropbox.com/features/share",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.opentext.com/products/documentum-content-management",
+        "label": "Official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -25193,7 +25236,7 @@
       "revenue": "利用人数と機能プランに応じた契約料が中心。上位のサポート契約や導入支援サービスも提供する。",
       "strength": "ファイルを置くだけでなく、社外との共有から承認、保存期限、安全管理まで扱える。AI機能にも既存のアクセス権限を引き継げる。",
       "risks": "MicrosoftやGoogleの一括契約に含まれる保存機能と競う。機密文書を預かるため、漏洩や権限設定の不備は大きな信用リスクになる。",
-      "competition": "文書管理ではMicrosoft SharePointやOpenText、ファイル共有ではOneDrive、Google Drive、Dropboxと競合する。",
+      "competition": "文書管理・共有ではMicrosoft SharePoint/OneDrive、Google Drive、Dropbox、OpenText Documentumと公式製品を編集比較する。文書管理とファイル保存・共有の重複に限り、全AI・CRM機能、規制認証、価格や対応環境の同等性を示さない。",
       "relationships": "Microsoft・Google・AWS経由のAIモデル連携とZoomの会議・資料共有連携を持つ。2026年9月にはOpenAIとの提携拡大を公表し、Boxの権限を保ったままChatGPTでファイルを閲覧・参照・操作する機能を説明した。"
     },
     "en": {
@@ -25201,7 +25244,7 @@
       "revenue": "Primarily earns seat- and plan-based subscriptions, plus premium support and implementation services.",
       "strength": "Connects sharing, approvals and governance; AI respects existing content-access permissions.",
       "risks": "Bundled Microsoft and Google storage pressures pricing. Sensitive documents make breaches and permission failures costly.",
-      "competition": "Competes with SharePoint and OpenText in content management, and OneDrive, Google Drive and Dropbox in file sharing.",
+      "competition": "Official products are compared editorially with Microsoft SharePoint/OneDrive, Google Drive, Dropbox and OpenText Documentum in content management, file storage and sharing. This does not equate all AI/CRM functions, regulatory certifications, pricing or deployment environments.",
       "relationships": "Box integrates AI models through Microsoft, Google and AWS and connects meetings and shared content with Zoom. Its September 2026 expanded OpenAI partnership enables browsing, referencing and supported actions on Box files within ChatGPT while retaining Box permissions."
     },
     "maps": {
@@ -25212,11 +25255,13 @@
           "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "SharePoint・OneDriveで文書管理・共有を競う",
-            "en": "SharePoint and OneDrive"
+            "ja": "編集比較：Microsoft SharePoint・OneDriveとBoxの文書管理・共有",
+            "en": "Editorial comparison: Microsoft SharePoint / OneDrive and Box content sharing"
           },
           "sourceIndexes": [
-            0
+            4,
+            5,
+            6
           ]
         },
         {
@@ -25225,11 +25270,12 @@
           "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "Driveでファイル共有を競う",
-            "en": "Drive file sharing"
+            "ja": "編集比較：Google DriveとBoxのファイル保存・共有",
+            "en": "Editorial comparison: Google Drive / Box file storage and sharing"
           },
           "sourceIndexes": [
-            0
+            4,
+            7
           ]
         },
         {
@@ -25238,11 +25284,12 @@
           "ticker": "DBX",
           "role": "competitor",
           "label": {
-            "ja": "企業のファイル共有で競合",
-            "en": "Enterprise file sharing"
+            "ja": "編集比較：DropboxとBoxの企業向けファイル共有",
+            "en": "Editorial comparison: Dropbox / Box business file sharing"
           },
           "sourceIndexes": [
-            0
+            4,
+            8
           ]
         },
         {
@@ -25251,11 +25298,12 @@
           "ticker": "OTEX",
           "role": "competitor",
           "label": {
-            "ja": "Documentumで文書管理を競う",
-            "en": "Documentum content management"
+            "ja": "編集比較：OpenText DocumentumとBoxの文書管理",
+            "en": "Editorial comparison: OpenText Documentum / Box content management"
           },
           "sourceIndexes": [
-            0
+            4,
+            9
           ]
         }
       ],
@@ -29044,7 +29092,7 @@
       "OTEX"
     ],
     "name": "OpenText",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -29053,6 +29101,38 @@
       {
         "url": "https://www.opentext.com/partners/opentext-on-google-cloud",
         "label": "OpenText — Google Cloud partnership / integration directory, checked October 16, 2026"
+      },
+      {
+        "url": "https://www.opentext.com/products/content-management",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.ibm.com/products/filenet-content-manager",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.opentext.com/products/process-automation",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://docs.oracle.com/en/cloud/paas/application-integration/oracle-integration-oci/use-process-automation.html",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.opentext.com/uk/products/service-management",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.servicenow.com/products/itsm.html",
+        "label": "Official product scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.box.com/cloud-content-management",
+        "label": "Official product scope; checked October17,2026"
       }
     ],
     "ja": {
@@ -29060,7 +29140,7 @@
       "revenue": "クラウドサービスの継続料金、導入済みソフトの保守・サポート料、ソフトのライセンス、導入支援で稼ぐ。クラウド利用だけでなく、企業が自社設備で動かすソフトの契約も収益源になる。",
       "strength": "文書の取り込みから保存・検索・廃棄までを管理し、会計や顧客管理の業務と結び付けられる。長年蓄積した情報や承認手順を扱うため、顧客が別製品へ移るにはデータ移行と業務の見直しが必要。",
       "risks": "買収した多くの製品を統合しながら、保守・ライセンス中心の顧客をクラウドへ移す必要がある。買収に伴う負債、大手のAI・業務ソフトとの競争、重要文書の漏えいも経営上の制約になる。",
-      "competition": "企業情報や業務ソフトではIBM、Microsoft、Oracle、ServiceNow、文書管理ではBoxやHylandなどと競う。Microsoftは競合であると同時に連携先でもあり、競争する製品とつながる製品は異なる。",
+      "competition": "文書管理ではIBM FileNet、Microsoft SharePoint、Boxを、業務フローではOracle Integration内のProcess Automationを、ITサービス管理ではServiceNow ITSMをOpenTextの対応製品と公式資料で編集比較する。Oracleの比較はIntegration 3 Enterprise Edition内の機能に限り、終了した独立サービスを復活扱いにしない。Microsoftとの連携と製品競合は併存し、全ERP・CRM・AI製品が同等という意味ではない。",
       "relationships": "SAP・Salesforce・Microsoftとの情報管理連携に加え、公式ページはGoogle Cloudとの文書管理、Vertex AI・Gemini、Marketplaceでの共同提供を説明する。企業向け情報管理の連携で、全製品の対応完了やGoogleによるOpenTextサービスの購入量を示すものではない。"
     },
     "en": {
@@ -29068,7 +29148,7 @@
       "revenue": "Earns cloud subscription fees, support renewals for installed software, software-license revenue and implementation fees. Customers can operate products on their own infrastructure as well as use hosted services.",
       "strength": "Manages information from capture through retention and disposal, linking it with business systems. Moving historical content and established approval processes to another vendor can require substantial work.",
       "risks": "Must integrate acquired products and migrate customers toward cloud services. Acquisition-related debt, competition from large AI and business-software providers, and sensitive-document breaches are risks.",
-      "competition": "Competes with IBM, Microsoft, Oracle and ServiceNow in enterprise software and with Box and Hyland in content management. Microsoft is also an integration partner; the roles depend on the product.",
+      "competition": "Official products are compared editorially by scope: IBM FileNet, Microsoft SharePoint and Box for content management; Process Automation in Oracle Integration for workflows; and ServiceNow ITSM for IT service management. The Oracle comparison concerns functionality within Integration 3 Enterprise Edition, not revival of an ended standalone service. Microsoft integration can coexist with product rivalry; this does not equate all ERP, CRM or AI products.",
       "relationships": "Alongside SAP, Salesforce and Microsoft information-management integrations, OpenText names Google Cloud collaboration around content management, Vertex AI / Gemini and Marketplace delivery. This does not establish completed support for every product or procurement volumes by Google."
     },
     "maps": {
@@ -29079,11 +29159,12 @@
           "ticker": "IBM",
           "role": "competitor",
           "label": {
-            "ja": "企業向け情報・業務ソフトで競合",
-            "en": "Enterprise information and business software"
+            "ja": "編集比較：IBM FileNetとOpenText Content Managementの文書管理",
+            "en": "Editorial comparison: IBM FileNet / OpenText Content Management"
           },
           "sourceIndexes": [
-            0
+            2,
+            3
           ]
         },
         {
@@ -29092,11 +29173,12 @@
           "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "業務・情報管理で競合",
-            "en": "Business and information management"
+            "ja": "編集比較：Microsoft SharePointとOpenTextの文書共有・管理",
+            "en": "Editorial comparison: Microsoft SharePoint / OpenText document collaboration"
           },
           "sourceIndexes": [
-            0
+            2,
+            4
           ]
         },
         {
@@ -29105,11 +29187,12 @@
           "ticker": "ORCL",
           "role": "competitor",
           "label": {
-            "ja": "企業向け業務ソフトで競合",
-            "en": "Enterprise business software"
+            "ja": "編集比較：Oracle Integration内Process AutomationとOpenTextの業務フロー",
+            "en": "Editorial comparison: Process Automation in Oracle Integration / OpenText workflows"
           },
           "sourceIndexes": [
-            0
+            5,
+            6
           ]
         },
         {
@@ -29118,11 +29201,12 @@
           "ticker": "NOW",
           "role": "competitor",
           "label": {
-            "ja": "企業向け業務ソフトで競合",
-            "en": "Enterprise workflows"
+            "ja": "編集比較：ServiceNow ITSMとOpenText Service ManagementのITサービス管理",
+            "en": "Editorial comparison: ServiceNow ITSM / OpenText Service Management"
           },
           "sourceIndexes": [
-            0
+            7,
+            8
           ]
         },
         {
@@ -29131,11 +29215,12 @@
           "ticker": "BOX",
           "role": "competitor",
           "label": {
-            "ja": "文書・情報管理で競合",
-            "en": "Content management"
+            "ja": "編集比較：BoxとOpenText Content Managementの文書管理",
+            "en": "Editorial comparison: Box / OpenText Content Management"
           },
           "sourceIndexes": [
-            0
+            2,
+            9
           ]
         }
       ],

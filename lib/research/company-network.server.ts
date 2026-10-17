@@ -3895,17 +3895,17 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "MSFT": {
-      "layer": 6,
+      "layer": 7,
       "businessLabel": {
-        "ja": "SharePoint・OneDrive競合／AI連携",
-        "en": "SharePoint / OneDrive rivals; AI integration"
+        "ja": "Microsoft｜SharePoint・OneDrive文書共有",
+        "en": "Microsoft | SharePoint / OneDrive files"
       }
     },
     "GOOG": {
-      "layer": 6,
+      "layer": 7,
       "businessLabel": {
-        "ja": "Drive競合／AI連携",
-        "en": "Drive rival; AI integration"
+        "ja": "Google Drive｜ファイル保存・共有",
+        "en": "Google Drive | file storage / sharing"
       }
     },
     "AMZN": {
@@ -3930,17 +3930,17 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       }
     },
     "DBX": {
-      "layer": 6,
+      "layer": 7,
       "businessLabel": {
-        "ja": "企業向けファイル共有",
-        "en": "Enterprise file sharing"
+        "ja": "Dropbox｜ファイル共有",
+        "en": "Dropbox | file sharing"
       }
     },
     "OTEX": {
-      "layer": 6,
+      "layer": 7,
       "businessLabel": {
-        "ja": "Documentum文書管理",
-        "en": "Documentum content management"
+        "ja": "OpenText Documentum｜文書管理",
+        "en": "OpenText Documentum | content management"
       }
     }
   },
@@ -4427,8 +4427,22 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "AVGO": {
       "layer": 6,
       "businessLabel": {
-        "ja": "VMware仮想化ソフト",
-        "en": "VMware virtualization software"
+        "ja": "Broadcom / VMware Cloud Foundation｜仮想化基盤",
+        "en": "Broadcom / VMware Cloud Foundation | virtualization"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft Hyper-V｜サーバー仮想化",
+        "en": "Microsoft Hyper-V | server virtualization"
+      }
+    },
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IBM / Red Hat｜OpenShift仮想化",
+        "en": "IBM / Red Hat | OpenShift Virtualization"
       }
     }
   },
@@ -4816,6 +4830,41 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "文書管理・Vertex AI・Marketplace連携",
         "en": "Content, Vertex AI & Marketplace integration"
+      }
+    },
+    "IBM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "IBM FileNet｜文書・コンテンツ管理",
+        "en": "IBM FileNet | content management"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft SharePoint｜文書共有・管理",
+        "en": "Microsoft SharePoint | document collaboration"
+      }
+    },
+    "ORCL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Oracle｜Integration内の業務フロー",
+        "en": "Oracle | process workflows in Integration"
+      }
+    },
+    "NOW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ServiceNow ITSM｜ITサービス管理",
+        "en": "ServiceNow ITSM | IT service management"
+      }
+    },
+    "BOX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Box｜文書・コンテンツ管理",
+        "en": "Box | content management"
       }
     }
   },
