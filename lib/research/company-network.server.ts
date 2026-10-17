@@ -97,14 +97,14 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "WMT") return {"6": {"ja": "AIを使うコマース連携", "en": "AI-commerce integrations"}, "7": {"ja": "小売・通販", "en": "Retail & commerce"}};
   if (root === "QLYS") return {"6": {"ja": "クラウド接続・認証対応", "en": "Cloud connectors & authentication"}, "7": {"ja": "脆弱性・サイバーリスク管理", "en": "Vulnerability & cyber-risk management"}};
   if (root === "APPF") return {"6": {"ja": "クラウド基盤・AIモデル対応", "en": "Cloud infrastructure & AI models"}, "7": {"ja": "不動産管理ソフトウェア", "en": "Property-management software"}};
-  if (root === "TWLO") return {"6": {"ja": "会話AIの開発協業", "en": "Conversational-AI development"}, "7": {"ja": "通信・顧客対応基盤", "en": "Communications & customer engagement"}};
+  if (root === "TWLO") return {"6": {"ja": "会話AIの開発協業", "en": "Conversational-AI development"}, "7": {"ja": "通信・顧客対応・顧客データ基盤", "en": "Communications, engagement & customer data"}};
   if (root === "AKAM") return {"3": {"ja": "GPU供給元と上流", "en": "GPU supplier & upstream"}, "6": {"ja": "クラウド・CDN・防御サービス", "en": "Cloud, CDN & security"}, "7": {"ja": "CPUクラウド容量の顧客", "en": "CPU cloud-capacity customer"}};
   if (root === "XYZ") return {"7": {"ja": "決済・店舗・注文連携", "en": "Payments, merchants & order integration"}};
   if (root === "PYPL") return {"7": {"ja": "決済・ウォレット・コマース連携", "en": "Payments, wallets & commerce"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
   if (root === "TTD") return {"7": {"ja": "広告購入・媒体在庫連携", "en": "Ad buying & publisher inventory"}};
   if (root === "ROKU") return {"7": {"ja": "TV配信・CTV広告", "en": "TV streaming & CTV advertising"}};
   if (root === "SHOP") return {"7": {"ja": "コマース基盤・販売チャネル", "en": "Commerce platforms & channels"}, "6": {"ja": "クラウド・AI・コマース技術連携", "en": "Cloud, AI & commerce technology"}};
-  if (root === "NFLX") return {"7": {"ja": "動画配信・番組配信協業", "en": "Streaming & program distribution"}};
+  if (root === "NFLX") return {"7": {"ja": "動画・ゲーム配信と番組協業", "en": "Video, games & program distribution"}};
   if (root === "VIAV") return {"0": {"ja": "通信ネットワーク試験", "en": "Network test & validation"}, "3": {"ja": "AI-RAN試験・シミュレーション協業", "en": "AI-RAN testing / simulation collaboration"}, "4": {"ja": "光学材料・特殊光製品", "en": "Optical materials & specialty optics"}};
   if (root === "MXL") return {"3": {"ja": "接続・通信・信号処理半導体", "en": "Connectivity & signal-processing silicon"}, "5": {"ja": "エッジネットワーク技術協業", "en": "Edge-network collaboration"}};
   if (root === "LSCC") return {"3": {"ja": "FPGA・物理AIプラットフォーム協業", "en": "FPGAs & physical-AI platform collaboration"}};
@@ -169,7 +169,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
 
   if (root === "CRWD") return {"6": {"ja": "端末・クラウド防御・AI研究協力", "en": "Endpoint / cloud security & AI research"}};
   if (root === "NET") return {"6": {"ja": "配信・安全な接続・AI検索研究", "en": "Delivery, secure access & AI-search research"}};
-  if (root === "INTU") return {"6": {"ja": "金融ツールのAIモデル連携", "en": "AI model integration in financial tools"}, "7": {"ja": "会計・税務・給与・マーケティング", "en": "Accounting, tax, payroll & marketing"}};
+  if (root === "INTU") return {"6": {"ja": "金融ツールのAIモデル連携", "en": "AI model integration in financial tools"}, "7": {"ja": "会計・税務・給与・販促・個人金融", "en": "Accounting, tax, payroll, marketing & personal finance"}};
   if (root === "SAP") return {"6": {"ja": "クラウド・データ・AI連携", "en": "Cloud, data & AI collaboration"}, "7": {"ja": "企業の業務アプリ・導入支援", "en": "Enterprise applications & implementation"}};
   if (root === "PAYX") return {"6": {"ja": "人事情報の業務ツール連携", "en": "HR intelligence in workflow tools"}, "7": {"ja": "給与・人事・福利厚生", "en": "Payroll, HR & benefits"}};
   if (root === "NTNX") return {"5": {"ja": "対応サーバー・ストレージ連携", "en": "Compatible servers & storage integration"}, "6": {"ja": "仮想化・クラウド基盤", "en": "Virtualization & cloud infrastructure"}};
@@ -3550,6 +3550,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Garmin｜Venuスマートウォッチ",
         "en": "Garmin | Venu smartwatches"
       }
+    },
+    "SPOT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Spotify Premium｜音楽定額配信",
+        "en": "Spotify Premium | music subscription"
+      }
     }
   },
   "AMZN": {
@@ -4399,6 +4406,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "ADP｜RUNの米国給与計算",
         "en": "ADP | RUN US payroll"
+      }
+    },
+    "Experian": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Experian｜米国の信用スコア閲覧",
+        "en": "Experian | US credit-score access"
       }
     }
   },
@@ -6693,6 +6707,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Spotify｜動画ポッドキャスト協業",
         "en": "Spotify | video-podcast collaboration"
       }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple Arcade｜モバイルゲーム定額利用",
+        "en": "Apple Arcade | mobile-game subscription"
+      }
     }
   },
   "SHOP": {
@@ -6731,6 +6752,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Amazon｜DSP協業・TV配信",
         "en": "Amazon | DSP collaboration / TV"
+      }
+    },
+    "FOXA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Fox｜条件付き買収契約",
+        "en": "Fox | conditional acquisition agreement"
       }
     }
   },
@@ -6890,6 +6918,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Bandwidth｜プログラム可能な音声API",
         "en": "Bandwidth | programmable voice"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Salesforce Data 360｜顧客データ統合",
+        "en": "Salesforce Data 360 | unified customer data"
       }
     }
   },

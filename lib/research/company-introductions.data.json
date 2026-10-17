@@ -3043,6 +3043,14 @@
       {
         "url": "https://www.garmin.com/en-US/newsroom/press-release/corporate/garmin-ltd-schedules-second-quarter-2026-earnings-call/",
         "label": "Garmin official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://images.apple.com/apple-music/",
+        "label": "Spotify official product / listing; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.spotify.com/us/premium/",
+        "label": "Spotify official product / listing; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -3050,7 +3058,7 @@
       "revenue": "iPhoneなどの製品販売と、App Store、クラウド、音楽・動画などのサービス。",
       "strength": "端末・基本ソフト・サービスを一体で設計し、製品同士を使いやすく連携させる。",
       "risks": "iPhoneの需要変動、海外の製造網への依存、アプリ配信などをめぐる規制。",
-      "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。",
+      "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。 音楽サービスは、Spotify PremiumとApple Musicの定額聴取を両社公式製品で編集比較する。楽曲構成、対応端末、音質機能、料金や地域条件の一致を示すものではない。",
       "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。"
     },
     "en": {
@@ -3058,7 +3066,7 @@
       "revenue": "Device sales and services including the App Store, cloud storage, music and video.",
       "strength": "Integrates hardware, operating systems and services across its products.",
       "risks": "iPhone demand shifts, overseas manufacturing dependence and regulation of its platforms.",
-      "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features.",
+      "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features. Music services add an editorial comparison of Spotify Premium and Apple Music subscriptions using both official product pages. Catalogs, supported devices, audio features, pricing and regional terms can differ.",
       "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established."
     },
     "maps": {
@@ -3103,6 +3111,20 @@
             7
           ],
           "ticker": "GRMN"
+        },
+        {
+          "kind": "company",
+          "name": "Spotify",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：Spotify PremiumとApple Musicの音楽定額配信",
+            "en": "Editorial comparison: Spotify Premium / Apple Music subscriptions"
+          },
+          "sourceIndexes": [
+            8,
+            9
+          ],
+          "ticker": "SPOT"
         }
       ],
       "relationships": [
@@ -11238,6 +11260,18 @@
       {
         "url": "https://www.adp.com/compare/adp-vs-quickbooks.aspx",
         "label": "ADP official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.creditkarma.com/free-credit-score",
+        "label": "Experian official product / listing; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.experian.com/credit/credit-score/",
+        "label": "Experian official product / listing; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.experianplc.com/investors/shareholders",
+        "label": "Experian official product / listing; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -11245,7 +11279,7 @@
       "revenue": "会計・給与・税務ソフトのサブスク、決済手数料、融資、確定申告支援、金融商品の送客、マーケティングサービスから稼ぐ。",
       "strength": "会計、給与、決済、税務、融資を同じ顧客データでつなぎ、専門家支援とAIを組み合わせられる。",
       "risks": "無料の税務・会計サービス、政府の直接申告、税制変更、信用・決済損失、重要な税務シーズンの障害が業績に影響する。",
-      "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILL、メール販促・自動化ではMailchimpとHubSpotが競合例。税務は公表製品の比較、BILLは相手側の開示、HubSpotはMailchimp自身の比較資料が根拠。製品分野を分けて見る。 米国の小規模企業向け給与計算ではQuickBooks WorkforceとRUN Powered by ADPを両社の公式比較資料で照合する。国別条件、料金、全HCM機能が同じという意味ではない。",
+      "competition": "税務申告ではTurboTaxとH&R Block、請求書決済ではQuickBooksとBILL、メール販促・自動化ではMailchimpとHubSpotが競合例。税務は公表製品の比較、BILLは相手側の開示、HubSpotはMailchimp自身の比較資料が根拠。製品分野を分けて見る。 米国の小規模企業向け給与計算ではQuickBooks WorkforceとRUN Powered by ADPを両社の公式比較資料で照合する。国別条件、料金、全HCM機能が同じという意味ではない。 個人金融では、Credit KarmaとExperianの米国向け無料信用スコア閲覧を公式サービスで編集比較する。Credit KarmaはTransUnion/EquifaxのVantageScore 3.0、ExperianはExperianデータに基づくFICO Score 8で、スコア方式は異なる。上場親会社はロンドン上場のExperian plc（EXPN）。",
       "relationships": "OpenAI・AnthropicとAIモデル利用やChatGPT・Claudeでの金融ツール連携を進める。Anthropicとの2026年2月発表にはClaude Agent SDKによる業務エージェント、MCP連携、Claude Code採用を含む。段階展開の計画と提供済み機能を区別し、両社との売上分配や全体展開完了を推定しない。"
     },
     "en": {
@@ -11253,7 +11287,7 @@
       "revenue": "Earns from accounting, payroll and tax subscriptions, payments, lending, assisted tax, financial-product referrals and marketing services.",
       "strength": "Connects accounting, payroll, payments, tax and lending on shared customer data and combines software with experts and AI.",
       "risks": "Free tax and accounting tools, government direct filing, tax-law changes, credit and payment losses and peak-season outages can affect results.",
-      "competition": "Examples include H&R Block versus TurboTax in tax preparation, BILL versus QuickBooks bill payment, and HubSpot versus Mailchimp in email marketing and automation. Tax is a disclosed-product comparison, BILL is peer-side disclosure, and Mailchimp publishes its own HubSpot comparison. These are separate product markets. US small-business payroll compares QuickBooks Workforce with RUN Powered by ADP using both companies’ official comparisons. Country terms, pricing and the full HCM portfolios are not equated.",
+      "competition": "Examples include H&R Block versus TurboTax in tax preparation, BILL versus QuickBooks bill payment, and HubSpot versus Mailchimp in email marketing and automation. Tax is a disclosed-product comparison, BILL is peer-side disclosure, and Mailchimp publishes its own HubSpot comparison. These are separate product markets. US small-business payroll compares QuickBooks Workforce with RUN Powered by ADP using both companies’ official comparisons. Country terms, pricing and the full HCM portfolios are not equated. Consumer finance adds an editorial comparison of US free credit-score access from Credit Karma and Experian. Credit Karma uses TransUnion/Equifax VantageScore 3.0, while Experian offers FICO Score 8 based on Experian data; these are different scoring models. The listed parent is Experian plc, London Stock Exchange EXPN.",
       "relationships": "Intuit works with OpenAI and Anthropic on model use and financial-tool integration in ChatGPT and Claude. Its February 2026 Anthropic announcement includes Claude Agent SDK workflows, MCP integrations and Claude Code adoption. Phased rollout plans do not establish completed delivery of all features or revenue-sharing arrangements."
     },
     "maps": {
@@ -11312,6 +11346,20 @@
             7
           ],
           "ticker": "ADP"
+        },
+        {
+          "kind": "company",
+          "name": "Experian",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：ExperianとCredit Karmaの米国向け信用スコア閲覧",
+            "en": "Editorial comparison: Experian / Credit Karma US credit-score access"
+          },
+          "sourceIndexes": [
+            8,
+            9,
+            10
+          ]
         }
       ],
       "relationships": [
@@ -11601,6 +11649,14 @@
       {
         "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001065280/5c943b10-61c2-4e9a-a175-f61e2391fa78.pdf",
         "label": "Netflix — January 20, 2026 shareholder letter, page 7"
+      },
+      {
+        "url": "https://www.netflix.com/tudum/games",
+        "label": "Apple official product / listing; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.apple.com/apple-arcade/",
+        "label": "Apple official product / listing; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -11608,7 +11664,7 @@
       "revenue": "中心は月額会員料金で、広告付きプランの広告、消費者向け商品、ライブ体験なども一部収益になる。",
       "strength": "世界規模の会員基盤と視聴データを使い、各地域の作品を制作・調達して世界へ配信できる。",
       "risks": "作品費の上昇、会員の解約、値上げへの反発、ヒット作不足、為替、規制、制作遅延が利益に影響する。",
-      "competition": "動画配信ではAmazonのPrime VideoとDisney+、動画の視聴時間や広告予算ではAlphabetのYouTubeが競合例。Netflixの競争分野と各社の公式サービスを照合した編集上の比較。定額の映画・ドラマ配信と、投稿動画を含むYouTubeは収益モデルが異なる。",
+      "competition": "動画配信ではAmazonのPrime VideoとDisney+、動画の視聴時間や広告予算ではAlphabetのYouTubeが競合例。Netflixの競争分野と各社の公式サービスを照合した編集上の比較。定額の映画・ドラマ配信と、投稿動画を含むYouTubeは収益モデルが異なる。 ゲームでは、Netflix会員に含まれるモバイルゲームとApple Arcadeの定額利用を公式サービスで編集比較する。作品群、Android/Apple端末の対応、テレビゲームや料金体系は同一ではなく、動画配信との競争とは分ける。",
       "relationships": "制作会社や権利者から作品を調達・共同制作し、通信・端末事業者と配信・料金回収を行い、広告主へ視聴枠を販売する。 2026年1月20日の株主書簡はSpotify / The Ringerとの提携による動画ポッドキャストの提供開始を明記。対象番組の配信提携であり、Spotifyの全音楽カタログの権利取得や会社買収とは区別する。"
     },
     "en": {
@@ -11616,7 +11672,7 @@
       "revenue": "Earns mainly from monthly memberships, with smaller contributions from advertising, consumer products and live experiences.",
       "strength": "Uses a global member base and viewing data to produce and license local content and distribute it worldwide.",
       "risks": "Rising content costs, churn, pricing resistance, weak titles, currencies, regulation and production delays can affect profits.",
-      "competition": "Examples include Amazon Prime Video and Disney+ in streaming entertainment, and Alphabet’s YouTube for viewing time and video advertising. This editorial comparison uses Netflix’s competitive scope and official peer services. Subscription films/series and YouTube’s mix of uploaded content have different business models.",
+      "competition": "Examples include Amazon Prime Video and Disney+ in streaming entertainment, and Alphabet’s YouTube for viewing time and video advertising. This editorial comparison uses Netflix’s competitive scope and official peer services. Subscription films/series and YouTube’s mix of uploaded content have different business models. Games add an editorial comparison of mobile games included with Netflix membership and Apple Arcade subscription access. Catalogs, Android/Apple device support, TV gaming and pricing structures differ; this scope is separate from video streaming competition.",
       "relationships": "Licenses and co-produces content with studios and rights holders, distributes and bills through telecom and device partners, and sells viewing inventory to advertisers. Its January 20, 2026 shareholder letter reports starting video podcasts through the Spotify / The Ringer partnership. This is selected-program distribution, without implying rights to Spotify’s entire music catalog or a company acquisition."
     },
     "maps": {
@@ -11662,6 +11718,20 @@
             3
           ],
           "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：Apple ArcadeとNetflix会員向けモバイルゲーム",
+            "en": "Editorial comparison: Apple Arcade / Netflix membership mobile games"
+          },
+          "sourceIndexes": [
+            5,
+            6
+          ],
+          "ticker": "AAPL"
         }
       ],
       "relationships": [
@@ -12646,6 +12716,14 @@
       {
         "url": "https://investors.bandwidth.com/shareholder-services/investor-faqs",
         "label": "Bandwidth official product / disclosure / listing scope; checked October17,2026"
+      },
+      {
+        "url": "https://www.twilio.com/docs/segment/unify",
+        "label": "Salesforce official product / listing; checked October 17, 2026"
+      },
+      {
+        "url": "https://www.salesforce.com/data/",
+        "label": "Salesforce official product / listing; checked October 17, 2026"
       }
     ],
     "ja": {
@@ -12653,7 +12731,7 @@
       "revenue": "通信APIの利用量課金が中心で、電話番号、メール、認証、Segmentの顧客データ基盤の契約料金も得る。",
       "strength": "多国間の通信網をAPIで扱え、メッセージ送信から顧客データ活用まで開発者が一つの基盤で組み込める。",
       "risks": "通信会社への接続費、迷惑通信規制、顧客の利用減、障害・不正利用、大手クラウドや通信APIとの価格競争が利益を圧迫する。",
-      "competition": "通信APIや顧客窓口向けサービスでは8x8が競合例。8x8自身の年次報告がTwilioを実名で挙げている。電話・メッセージなどをアプリへ組み込む機能と、顧客窓口の機能では比較する製品が異なり、全製品が同じという意味ではない。 音声APIではBandwidthとTwilio Programmable Voiceを公式製品で編集比較する。通信容量の購入・供給契約や全コンタクトセンター機能の同等性を意味しない。",
+      "competition": "通信APIや顧客窓口向けサービスでは8x8が競合例。8x8自身の年次報告がTwilioを実名で挙げている。電話・メッセージなどをアプリへ組み込む機能と、顧客窓口の機能では比較する製品が異なり、全製品が同じという意味ではない。 音声APIではBandwidthとTwilio Programmable Voiceを公式製品で編集比較する。通信容量の購入・供給契約や全コンタクトセンター機能の同等性を意味しない。 顧客データでは、Segment UnifyとSalesforce Data 360（旧Data Cloud）の顧客ID・プロファイル統合を公式製品で編集比較する。UnifyはConnections Businessへの追加機能で、一部の活用にはEngageも必要。全CRM機能の同等性や両社間の購入契約を意味しない。",
       "relationships": "通信会社やメール網から接続を仕入れ、企業のアプリやコンタクトセンターへメッセージ、通話、認証を届ける。 2025年5月にMicrosoftとAzure AI Foundryを使う会話AIの複数年開発提携を発表。音声・メッセージ・担当者支援の開発計画で、全計画の提供完了やクラウドの契約額を推定しない。"
     },
     "en": {
@@ -12661,7 +12739,7 @@
       "revenue": "Earns mainly usage-based communications fees, plus phone numbers, email, verification and Segment customer-data subscriptions.",
       "strength": "Developers can use one platform to reach communications networks across countries and connect customer interactions with data.",
       "risks": "Carrier fees, messaging regulation, lower customer usage, outages, abuse and price competition from clouds and API rivals can pressure margins.",
-      "competition": "8x8 is one example in overlapping communications API and contact-center markets. Its annual report explicitly names Twilio. Embedding communications in applications and operating contact-center workflows are different product scopes, rather than a match across every offering. Programmable voice APIs add an editorial comparison with Bandwidth using official products. This does not establish purchased network capacity, a supply contract or equivalent full contact-center portfolios.",
+      "competition": "8x8 is one example in overlapping communications API and contact-center markets. Its annual report explicitly names Twilio. Embedding communications in applications and operating contact-center workflows are different product scopes, rather than a match across every offering. Programmable voice APIs add an editorial comparison with Bandwidth using official products. This does not establish purchased network capacity, a supply contract or equivalent full contact-center portfolios. Customer data adds an editorial comparison of Segment Unify and Salesforce Data 360, formerly Data Cloud, for customer identity and profile unification. Unify is an add-on to Connections Business, with Engage also required for selected activation features. This does not equate all CRM functions or establish a purchase agreement.",
       "relationships": "Buys connectivity from carriers and email networks, then delivers messaging, calls and verification into enterprise apps and contact centers. A May 2025 announcement establishes a multiyear Microsoft conversational-AI development partnership using Azure AI Foundry. Voice, messaging and agent-assistance plans do not establish completed rollout of every feature or a disclosed cloud contract value."
     },
     "maps": {
@@ -12694,6 +12772,20 @@
             5
           ],
           "ticker": "BAND"
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：Salesforce Data 360とSegment Unifyの顧客ID・データ統合",
+            "en": "Editorial comparison: Salesforce Data 360 / Segment Unify customer profiles"
+          },
+          "sourceIndexes": [
+            6,
+            7
+          ],
+          "ticker": "CRM"
         }
       ],
       "relationships": [
@@ -14515,6 +14607,18 @@
       {
         "url": "https://advertising.amazon.com/library/news/roku-amazon-ads-partnership",
         "label": "Amazon Ads / Roku — US CTV integration, June 16, 2025"
+      },
+      {
+        "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-corporation-to-acquire-roku-inc/",
+        "label": "FOX / Roku acquisition agreement and listing; checked October17,2026"
+      },
+      {
+        "url": "https://www.roku.com/blog/roku-fox",
+        "label": "FOX / Roku acquisition agreement and listing; checked October17,2026"
+      },
+      {
+        "url": "https://investor.foxcorporation.com/stock-information/stock-quote-chart/foxa/",
+        "label": "FOX / Roku acquisition agreement and listing; checked October17,2026"
       }
     ],
     "ja": {
@@ -14523,7 +14627,7 @@
       "strength": "テレビのホーム画面と視聴データ、多数の動画サービスへの入口、OSから広告まで一体で運営する点が強い。",
       "risks": "広告市況、動画会社との契約更新、個人情報規制、機器の低採算、テレビメーカーや大手端末基盤との競争が弱点。",
       "competition": "テレビ向け端末・OSではAmazonのFire TV、AppleのApple TV端末、AlphabetのGoogle TV・Android TV、Walmart傘下のVIZIO・Onnが競合例。Roku自身が実名を記載している。VIZIOは独立した別会社として重複追加せず、動画広告や番組の競争とは分けて示す。",
-      "relationships": "テレビメーカーや小売を通じて端末を広げ、動画会社を利用者へ配信し、広告主へテレビ広告枠を販売する。 2025年6月のAmazon Ads / Roku共同発表は、Amazon DSPを通じる米国CTVの認証済み到達・広告測定連携を説明し、2025年第四半期までの提供を予定した。特定の広告機能の提携で、全Roku広告の独占販売や全地域への提供完了とは扱わない。"
+      "relationships": "テレビメーカーや小売を通じて端末を広げ、動画会社を利用者へ配信し、広告主へテレビ広告枠を販売する。 2025年6月のAmazon Ads / Roku共同発表は、Amazon DSPを通じる米国CTVの認証済み到達・広告測定連携を説明し、2025年第四半期までの提供を予定した。特定の広告機能の提携で、全Roku広告の独占販売や全地域への提供完了とは扱わない。 2026年6月15日にRokuとFox Corporation（Nasdaq FOXA/FOX）は買収契約を公表した。現金とFOX株式を組み合わせる取引で、発表時は2027年前半の完了予定と通常の完了条件を示した。契約発表を買収完了や現時点の株式保有とは扱わない。"
     },
     "en": {
       "business": "A TV streaming platform combining an operating system, discovery interface, advertising, its own channel and player devices.",
@@ -14531,7 +14635,7 @@
       "strength": "Control of the TV home screen, viewing data, broad service discovery and integrated OS-to-ad operations are key advantages.",
       "risks": "Ad cycles, content-contract renewals, privacy limits, low-margin devices and competition from TV makers and larger device ecosystems are risks.",
       "competition": "Roku explicitly names Amazon Fire TV, Apple TV devices, Google/Android TV and Walmart’s VIZIO/Onn products in streaming-device and TV-OS competition. VIZIO is represented under Walmart rather than as another independent issuer. This scope is distinct from video-content and advertising competition.",
-      "relationships": "TV makers and retailers distribute devices, streaming services reach viewers through Roku, and advertisers buy connected-TV inventory. The June 2025 Amazon Ads / Roku announcement describes authenticated US CTV reach and measurement through Amazon DSP, planned by Q4 2025. The partnership concerns specified advertising capabilities, without implying exclusive sale of all Roku ads or completed worldwide availability."
+      "relationships": "TV makers and retailers distribute devices, streaming services reach viewers through Roku, and advertisers buy connected-TV inventory. The June 2025 Amazon Ads / Roku announcement describes authenticated US CTV reach and measurement through Amazon DSP, planned by Q4 2025. The partnership concerns specified advertising capabilities, without implying exclusive sale of all Roku ads or completed worldwide availability. On June 15, 2026, Roku and Fox Corporation (Nasdaq FOXA/FOX) announced an acquisition agreement involving cash and FOX shares. The announcement expected closing in the first half of 2027, subject to customary conditions. An agreement announcement is not a completed acquisition or proof of current share ownership."
     },
     "maps": {
       "competition": [
@@ -14640,6 +14744,21 @@
             1
           ],
           "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Fox Corporation",
+          "ticker": "FOXA",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月発表：Foxとの条件付き買収契約。発表時は2027年前半完了予定",
+            "en": "June 2026 announcement: conditional acquisition agreement with Fox; closing then expected in H1 2027"
+          },
+          "sourceIndexes": [
+            2,
+            3,
+            4
+          ]
         }
       ]
     }

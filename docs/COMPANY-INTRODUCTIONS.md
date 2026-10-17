@@ -830,3 +830,9 @@ Twelve issuers triaged; seven revised with eight comparisons: Microsoft consoles
 ### Selected 3D software and product scopes reviewed 2026-10-17 (R25)
 
 Six scopes triaged using the R24 research memo; three existing issuers revised. Adobe adds its own documented Maxon Substance3D/MaxonOne bundle partnership under listed parent Nemetschek; May1,2026 is the page update, not a contract signing date. Cohu adds a scoped editorial Yamaichi semiconductor test-contactor comparison; JD adds SF Holding in China contract warehousing/distribution. Overseas identifiers are independently verified; no invented US ticker or private subsidiary card. Preserve prior names, other bilingual answers, relationships, NVDA41/61, LITE AAOI12px and NBIS. TSM packaging, ONTO current lithography text and PLTR named government product peer remain open; no forced additions. No new introductions or full-quality claim.
+
+### Selected subscription and customer-data scopes reviewed 2026-10-17 (R27)
+
+Four existing introductions add editorial comparisons of official products: Apple Music / Spotify Premium, Credit Karma / Experian US credit-score access, Segment Unify / Salesforce Data 360, and Netflix mobile games / Apple Arcade. Different score models, device/catalog coverage and plan conditions are retained. Experian plc is verified as LSE EXPN; no invented US ticker. Preserve previous competitors, non-competition answers, NVDA41/61, LITE AAOI12px and NBIS. No new issuer introductions or exhaustive quality claim.
+
+R27 also records Roku and FOX’s June15,2026 conditional acquisition agreement under listed FOXA. The announcement’s H1 2027 expectation is attributed to that announcement, not a completed acquisition or current equity stake. Do not add a private Tubi card or substitute a competitor-only narrative for the transaction. Later shareholder/regulatory milestones require separate current evidence.
