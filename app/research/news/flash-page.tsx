@@ -121,7 +121,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
     <div className={timeline.entry}>
       <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
       {row.url
-        ? <p className={timeline.headline} lang={lang}>{row.title}</p>
+        ? <p className={`${timeline.headline} ${styles.twoLines}`} lang={lang}>{row.title}</p>
         : <NewsStory lang={lang} label="" title={row.title} body={row.body} publication={publication(row)} />}
     </div>
   </article>;
