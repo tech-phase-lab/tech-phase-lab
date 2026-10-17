@@ -83,6 +83,14 @@
       "approximate": true
     },
     {
+      "id": "ibm-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "IBM",
+      "phase": "call",
+      "at": "2026-10-21T21:00:00.000Z",
+      "titleJa": "IBM 決算説明会（2026年Q3）"
+    },
+    {
       "id": "lrcx-september-2026-call",
       "kind": "earnings",
       "ticker": "LRCX",

@@ -4075,3 +4075,10 @@ No calendar event changed.
 Continue with MSFT, MU, NFLX, AAPL, AMZN, ANET, ARM, AVGO, BE and COHR.
 Inaccessible, historical-only, projected and empty dynamic states remain
 inconclusive and must not be promoted to forecast dates.
+
+## 2026-10-18: IBM added at the owner's request
+
+- Coverage list: 50 companies, with IBM added to the existing 49. Existing source checks and the 37-stock acquisition roster are unchanged.
+- Official source: https://newsroom.ibm.com/2026-10-07-ibm-to-announce-third-quarter-2026-financial-results (read 2026-10-18 JST).
+- Q3 2026 call: October 21, 17:00 ET = October 22, 06:00 JST. The release is due before the call; no exact release time is stated, so no release timestamp is invented.
+- Regenerated release_schedule.json from the calendar. Acquisition/translation/delivery code and the monitored-stock roster are not expanded by this UI/calendar change; ongoing IBM acquisition remains for the pipeline owner to assess.

@@ -79,7 +79,7 @@ export default function EventCalendar() {
       </details></li>)}</ol></>}
 
       <details className={calendarStyles.coverage}>
-        <summary>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</summary>
+        <summary><span>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</span></summary>
         <div className={calendarStyles.coverageList} tabIndex={0} role="region" aria-label={t("決算の追跡対象一覧", "Companies covered")}><ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer">{company.name}</a></li>)}</ul></div>
       </details>
     </section>
