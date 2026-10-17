@@ -80,8 +80,9 @@
 @media(max-width:760px) { .listName { font-size:12px; } }
 @media(max-width:380px) { .listName { font-size:11px; } }
 
-.renameForm { display:grid;grid-template-columns:min(62%,360px) minmax(0,1fr);gap:12px;width:100%;margin-bottom:16px; }
-.renameForm input { width:100%;background:transparent;border:0;border-bottom:1px solid #53666c;border-radius:0; }
+.renameForm { display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;width:100%;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #53666c; }
+.renameForm:focus-within { border-bottom-color:#9bd9c2; }
+.renameForm input { width:100%;background:transparent;border:0;border-radius:0; }
 .page .renameForm input:focus { border-color:#9bd9c2;box-shadow:none; }
 .renameForm button { min-height:40px;padding:7px 12px;border:1px solid #4c6268;border-radius:5px;color:#cedbdc;white-space:nowrap; }
 .renameForm button[type=submit] { background:#a6ddc7;border-color:#a6ddc7;color:#102b22;font-weight:650; }
@@ -93,4 +94,6 @@
 @media(max-width:760px) { .renameForm button { padding-inline:6px;font-size:12px; } }
 
 .renameActions { display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0; }
-@media(max-width:360px) { .renameActions { grid-column:1 / -1; } }
+
+
+.listPicker > button { margin-left:10px; }
