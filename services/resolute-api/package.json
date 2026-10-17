@@ -1,0 +1,8 @@
+{
+  "name": "resolute-api",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "engines": { "node": ">=24" },
+  "dependencies": { "@clerk/backend": "3.20.1", "pg": "8.23.1" }
+}

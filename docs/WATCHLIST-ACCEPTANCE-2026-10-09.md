@@ -1,0 +1,153 @@
+# Watchlist verification — 2026-10-09 JST
+
+## Confirmed by the user's actual devices
+
+- The user renamed list 2 to `同期確認` and added AAPL. The list and AAPL appeared on their PC as well. Changing the displayed plan retained the list (reported 01:17 JST).
+- After the pending-save recovery release `b2d51ae`, the user followed the deletion check: remove AAPL on PC, immediately visit Home, return to the watchlist, and check the phone. They reported that AAPL was absent and there was no problem (02:24 JST).
+- These reports cover those operations only; they do not establish all account, browser, or connection scenarios.
+
+## Price-alert settings — 19:30 JST
+
+- In the signed-in cloud browser, AAPL in list 2 (同期確認) retained 200.1234 USD above after reload; editing to 210 USD above, adding 180 USD below, and removing only the below condition succeeded. A fresh tab read back only 210 USD above.
+- The user changed this setting on their phone to 220 USD above. The existing cloud-browser page displayed 220 USD above without signing out. This confirms this round trip between those devices, not every failure/offline scenario.
+- AAPL and the 220 USD above test setting remain in 同期確認. Delivery remains inactive.
+
+## Automated coverage
+
+`tests/favorite-sync.test.mjs` exercises delayed reads, serialized edits, lost responses, account isolation, conflicts, and tab-local pending-save recovery after controller disposal/remount. Additional resume coverage checks retrying a failed save on page return, overlapping wake-ups, and preserving conflicting edits without automatic writes.
+
+Pending changes use account-scoped `sessionStorage`, separate from guest favorites. A fresh server response must establish the account before restoring its pending changes. Recovery only continues against the same revision or an exact matching previous save. Other changes remain in conflict until the user explicitly discards the pending draft in favor of the saved list.
+
+## Still unverified / limits
+
+- Real-device offline editing and reconnection; simulated transport tests are not device verification.
+- Real-device simultaneous edits and account switching with unsaved changes.
+- Tab closure or browser/process termination recovery: the tab-local journal is not a durable cross-session backup.
+- Stock-price data: Twelve Data is not connected. Normal missing prices remain `—`; sample prices/charts are fictional.
+- Price-alert delivery is not running. Only settings are stored.
+
+## Scope boundary
+
+Claude owns news, target prices, and the current Home/menu decoration work. Do not modify those as part of watchlist reliability work. Work on `codex/research-preview`, preserving collaborator changes and following `AGENTS.md` publication checks.
+
+## Signed-in follow-up — 2026-10-10 00:12–00:18 JST
+
+Verified through the existing authenticated cloud-browser session; no logout,
+cookie clearing, new account, payment, or notification delivery was performed.
+
+- A new browser tab initially showed the loading placeholder, then loaded the
+  account's saved lists. It did not display guest tickers in that initial view.
+- Renamed list 2 to `同期確認・保存テスト`, clicked Home immediately after Save,
+  returned, and read the saved name and AAPL / 220 USD above setting. The existing
+  tab also received the changed name. Restored the name to `同期確認`.
+- Switched to English: the same list, AAPL, sector, and 220 USD above setting
+  remained; the alert explicitly said delivery was not live.
+- Used the preview's own no-billing membership controls: FREE could save an
+  above-price setting of 221.1234 USD. Reloading after switching to PRO retained
+  the exact value. Restored 220 USD above.
+- Used the one-minute expiry test. After expiry, the header became FREE and a
+  newly opened PRO columns page showed the membership gate instead of full
+  bodies. Reloading the watchlist retained list 2, AAPL, and 220 USD above.
+- Found that the account card could keep its old PRO label after the shared
+  header expired. Manual Refresh membership corrected it. The account screen
+  now re-reads the server at expiry and on resume/membership changes, and
+  cancels stale responses. Post-deployment verification passed below.
+- Returned the test account to owner mode and the language to Japanese.
+
+Limits: these are same-session cloud-browser checks, not new phone/device,
+real billing, offline reconnection, or account-switching acceptance. The prior
+user-confirmed phone round trip above remains the separate cross-device evidence.
+
+### Concurrent-tab conflict — 00:19–00:21 JST
+
+Two tabs submitted different temporary names for list 2 concurrently. One saved
+`同期確認・競合B`; the other retained its draft `同期確認・競合A` with the explicit
+conflict notice and disabled editing. Using the saved-list recovery action
+returned the latter tab to the B version without overwriting it. Renamed the
+list back to `同期確認`; AAPL and 220 USD above stayed present. This verifies this
+actual same-browser race, not simultaneous edits across separate devices.
+
+### Post-deployment account expiry — 00:25–00:28 JST
+
+- Application commit: `577210673377d0c6a03f99507dba7cca15e1faf5`. Vercel
+  deployment `dpl_7sA4rpK5u5D5DzgjB1VuqSVHB7wP` reached READY.
+- Reloaded the account page to load this release and started the one-minute
+  expiry test. Without clicking Refresh membership or reloading, the account
+  card and header changed to FREE; the card said the free plan was active.
+- Restored owner mode, verified `TECH PHASE Owner` in English, and returned to
+  Japanese. Reloaded the watchlist and confirmed 同期確認 / AAPL / 220 USD above.
+  The signed-in watchlist tab remains open.
+- Local release gates: lint 0 errors / 2 existing warnings; 613 JS tests; 2355
+  Python tests; production build; compileall; diff check. The initial hook-based
+  attempt failed two existing isolated account test loaders; the released
+  implementation uses account-local expiry/resume listeners and passed the
+  complete suite without changing those tests.
+- No changes to news, target prices, or Home/menu decoration. Real billing,
+  offline recovery, phone layout, and alternate-account login were not tested.
+
+### Stock-page stars and account watchlist — 2026-10-10 JST
+
+- Reproduced on the signed-in preview: MRVL was in list 1, but stock search
+  displayed its star as unregistered. The stock-page hook used browser-local
+  storage, whereas the watchlist used the account favorites API.
+- Stock search and company stars now reuse the watchlist sync controller. Stars
+  read and edit only the default / first list, retaining other lists, names and
+  price-alert settings. They are disabled until the saved account is verified
+  and while there is an unresolved conflict. Guest edits retain the local path.
+- Added tests for default-list-only edits, preserving names/alerts/other lists,
+  updates against the latest document, and blocking unverified/conflicting edits.
+- Local release gates passed: lint 0 errors / 2 existing warnings, 617 JS
+  tests, 2355 Python tests, production build, compileall and diff check.
+- Application commit `8dce481b4f7e105f160eb8139f83e3f4a558e530`, Vercel
+  `dpl_GqT2hURh44hq6aNJK9NXz578VgVB` READY. After reloading stock search,
+  MRVL correctly showed registered / aria-pressed=true.
+- Added test-only TSM using the search star. A fresh watchlist tab loaded TSM
+  from account storage, and reloading retained it. Removed only this test
+  addition using the same search star and verified TSM disappeared.
+- List 2 still had the name 同期確認, AAPL, and 220 USD above. The MRVL
+  company-page star also read registered / aria-pressed=true.
+- Returned the retained signed-in tab to the watchlist. These are same-browser
+  account-storage checks; no new phone/device, offline or alternate-account test.
+  Price delivery remains inactive and normal watchlist quotes remain unconnected.
+
+### Recovery and gesture checks — 2026-10-10 01:22–01:25 JST
+
+- Re-ran `npm test`: 617 passed. Existing production-controller tests cover
+  failed saves, lost save acknowledgements, resume/remount with queued edits,
+  account isolation and conflicting revisions. These are simulated transport
+  tests, not physical offline-device acceptance. No application changes needed.
+- The cloud-browser interface did not expose working offline/viewport controls.
+  DevTools and zoom shortcuts did not change the page. Login remained active.
+- On the published sample, a real pointer drag left on MRVL revealed the trash
+  action without expanding the row or deleting it. Clicking trash removed only
+  that fictional sample row; reloading restored the sample.
+- Filtered AAOI and expanded its chart in Japanese and English. Long company
+  name, sector, chart and explicit fictional-data labels remained visible at
+  desktop width. Restored Japanese and the original unfiltered sample.
+- On the signed-in normal page, ArrowLeft revealed the MRVL removal action and
+  Escape hid it. No account stocks or price-alert settings were edited.
+
+Next physical-device acceptance (still pending):
+1. Load the normal signed-in watchlist while online. In list 2 (同期確認), keep
+   the page open, turn off cellular/Wi-Fi, rename it to 同期確認・テスト and save.
+   Verify that failure is shown rather than a saved success and the draft stays.
+2. Restore connectivity, retry if necessary, then reload. Verify the temporary
+   name remains and AAPL / 220 USD above are intact; rename back to 同期確認.
+3. In the fictional sample, inspect AAOI at phone width, swipe to reveal trash,
+   test vertical scrolling and detail open/close. Reload to reset sample edits.
+Do not count these phone steps as passed until the user confirms the outcome.
+
+### User phone checks and price spacing — 2026-10-10 01:30–01:41 JST
+
+The user confirmed that saving with airplane mode and Wi-Fi off showed failure,
+then the changed list name persisted after reconnecting and reloading. This
+verifies that phone round trip; other offline/account cases remain unverified.
+The user also confirmed the long company name did not overlap the graph on
+phone, but the graph and price felt too close and four-digit prices were a risk.
+
+Adjusted only the watchlist/sample mobile columns: more space between chart and
+price, an intrinsic-width price column and slightly smaller type for formatted
+prices of eight or more characters. Kept the recent vertical spacing. Added
+ASML with explicitly fictional 1,234.56 USD / pre-market 1,245.67 USD prices to
+the isolated sample, using the same thousands separator as the normal page.
+Post-change phone layout and phone swipe/vertical-scroll checks are still pending.

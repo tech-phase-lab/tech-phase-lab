@@ -1,0 +1,133 @@
+<title>RESOLUTE ルールのお守り</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap">
+<style>
+/* 濃紺と金。上に小さな画面。下に設定。 */
+:root { --bg:#0a1018; --bg2:#101a27; --panel:#131d2b; --ink:#f1ece1; --sub:#9aa8b8; --line:#263447; --gold:#d8b36a; --gold2:#f3dfae; --gold-ink:#1a1306;
+  --font:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif; --serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; color-scheme:dark; }
+* { box-sizing:border-box; }
+html,body { overflow-x:hidden; }
+body { margin:0; background:radial-gradient(1200px 600px at 50% -200px,#1b2c44 0%,var(--bg) 60%) fixed var(--bg); color:var(--ink); font-family:var(--font); font-size:16px; line-height:1.8; padding-inline:16px; padding-block:20px 40px; }
+.wrap { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:16px; align-items:center; }
+.brand { font-family:var(--serif); letter-spacing:.32em; font-size:12px; color:var(--gold); }
+h1 { font-family:var(--serif); font-size:28px; line-height:1.4; margin:0; text-align:center; color:var(--gold2); }
+.lead { margin:0; text-align:center; color:var(--sub); font-size:15px; }
+.stage { width:234px; height:494px; }
+.phone { width:300px; height:633px; transform:scale(.78); transform-origin:top left; border-radius:34px; border:1px solid var(--line); overflow:hidden; position:relative; box-shadow:0 24px 70px rgba(0,0,0,.55); --g1:#f3dfae; --g2:#d8b36a; --g3:#b98f45; --fg:#f1ece1; background-size:cover; background-position:center; }
+.phone::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(45deg,rgba(216,179,106,.045) 0 1px,transparent 1px 7px); }
+.clock { position:absolute; top:10%; left:0; right:0; text-align:center; font-weight:500; font-size:62px; line-height:1; color:var(--fg); opacity:.55; }
+.date { position:absolute; top:6.5%; left:0; right:0; text-align:center; font-size:13px; color:var(--fg); opacity:.55; }
+.frame { position:absolute; left:9%; right:9%; top:30%; bottom:7%; border:1px solid var(--g2); }
+.frame::before { content:""; position:absolute; inset:5px; border:1px solid var(--g2); opacity:.4; }
+.in { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; padding:7% 9% 6%; text-align:center; }
+.emb { width:44px; height:44px; transform:rotate(45deg); border:1px solid var(--g2); display:grid; place-items:center; margin:6px 0 10px; position:relative; }
+.emb::before { content:""; position:absolute; width:34px; height:34px; border:1px solid var(--g2); opacity:.5; }
+.emb b { transform:rotate(-45deg); font-family:var(--serif); font-style:italic; font-size:22px; font-weight:500; color:var(--g1); }
+.nm { font-family:var(--serif); letter-spacing:.34em; font-size:12px; color:var(--g1); margin-right:-.34em; }
+.ed { font-family:var(--serif); letter-spacing:.22em; font-size:8px; color:var(--g2); margin:3px -.22em 10px 0; }
+.rl { width:100%; display:flex; flex-direction:column; flex:1; justify-content:center; }
+.r { padding:9px 0; border-top:1px solid rgba(216,179,106,.32); }
+.r:last-child { border-bottom:1px solid rgba(216,179,106,.32); }
+.r small { display:block; font-size:9px; letter-spacing:.2em; color:var(--g2); margin-right:-.2em; }
+.r span { font-family:var(--serif); font-size:15px; color:var(--fg); }
+.r span i { font-style:normal; font-size:20px; font-weight:700; background:linear-gradient(135deg,var(--g1),var(--g2) 60%,var(--g3)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.ft { font-family:var(--serif); font-size:12px; color:var(--g1); letter-spacing:.12em; padding-top:8px; }
+/* 背景 */
+.t0 { background-image:linear-gradient(180deg,#16263f,#0a1018 75%); }
+.t1 { background-image:linear-gradient(180deg,#141414,#030303 75%); --fg:#ece8df; }
+.t2 { background-image:linear-gradient(180deg,#f6f1e6,#e3d8bf 80%); --g1:#8a6a24; --g2:#7d5f22; --g3:#5e4514; --fg:#1d2530; }
+.t2::before { background:repeating-linear-gradient(45deg,rgba(125,95,34,.06) 0 1px,transparent 1px 7px); }
+.t3 { background-color:#0a1018; --fg:#fff; }
+.t3::before { background:linear-gradient(180deg,rgba(5,8,12,.35),rgba(5,8,12,.72)); }
+/* 大きさ: 全タイプで同じ高さの枠に揃える */
+.s0 .frame { top:30%; bottom:7%; left:9%; right:9%; }
+.s1 .frame { top:48%; bottom:7%; left:9%; right:9%; }
+.s2 .frame { top:64%; bottom:6%; left:10%; right:10%; }
+.s1 .emb, .s1 .ed, .s2 .emb, .s2 .ed, .s2 .nm, .s2 .ft, .s1 .r small, .s2 .r small { display:none; }
+.s1 .in { padding:5% 8%; } .s2 .in { padding:3% 8%; justify-content:center; }
+.s1 .nm { margin-bottom:6px; } .s1 .r { padding:5px 0; } .s1 .r span { font-size:14px; } .s1 .r span i { font-size:18px; }
+.s2 .r { padding:6px 0; } .s2 .r span { font-size:13px; } .s2 .r span i { font-size:16px; }
+/* シンプル: 線は上と下だけ */
+.ty1 .frame { border:0; border-top:1px solid var(--g2); border-bottom:1px solid var(--g2); }
+.ty1 .frame::before, .ty1 .emb, .ty1 .ed, .ty1 .ft { display:none; }
+.ty1 .r { border:0 !important; }
+.ty1 .in { justify-content:center; }
+.ty1 .nm { margin-bottom:8px; font-size:11px; }
+/* 囲み枠: 項目ごとに枠 */
+.ty2 .frame { border:0; }
+.ty2 .frame::before, .ty2 .emb, .ty2 .ed, .ty2 .ft { display:none; }
+.ty2 .in { justify-content:center; padding-top:4%; padding-bottom:4%; }
+.ty2 .nm { margin-bottom:10px; font-size:11px; }
+.ty2 .rl { flex:none; gap:10px; }
+.ty2 .r { border:1px solid var(--g2) !important; border-radius:10px; padding:10px 14px; background:rgba(0,0,0,.14); }
+.ty2.s1 .rl { gap:7px; } .ty2.s1 .r { padding:6px 12px; }
+.ty2.s2 .rl { gap:6px; } .ty2.s2 .r { padding:4px 10px; }
+/* 一言: 大きな数字を主役にする */
+.big { display:none; }
+.ty3 .rl, .ty3 .emb, .ty3 .ed, .ty3 .ft, .ty3 .nm { display:none; }
+.ty3 .frame { border:0; }
+.ty3 .frame::before { display:none; }
+.ty3 .big { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; height:100%; width:100%; }
+.big small { font-size:11px; letter-spacing:.24em; color:var(--g2); margin-right:-.24em; }
+.big strong { font-family:var(--serif); font-size:78px; line-height:1.1; font-weight:700; background:linear-gradient(135deg,var(--g1),var(--g2) 60%,var(--g3)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.big em { font-style:normal; font-family:var(--serif); font-size:20px; letter-spacing:.14em; color:var(--fg); }
+.big u { text-decoration:none; font-size:11px; color:var(--g2); letter-spacing:.1em; margin-top:14px; }
+.ty3.s1 .big strong { font-size:56px; } .ty3.s1 .big em { font-size:17px; } .ty3.s1 .big u, .ty3.s2 .big u { display:none; }
+.ty3.s2 .big strong { font-size:42px; } .ty3.s2 .big em { font-size:15px; } .ty3.s2 .big small { display:none; } .ty3.s2 .big { gap:0; }
+/* 設定 */
+.ctl { width:100%; background:linear-gradient(180deg,var(--panel),var(--bg2)); border:1px solid var(--line); border-radius:18px; padding:14px; display:flex; flex-direction:column; gap:10px; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+.grp { display:flex; align-items:center; gap:10px; }
+.grp > b { font-family:var(--serif); font-size:11.5px; color:var(--gold); letter-spacing:.08em; font-weight:500; width:3.6em; flex:none; white-space:nowrap; }
+.rail { display:flex; flex:1; min-width:0; padding:3px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.03); }
+.rail button { flex:1; min-width:0; border:0; background:none; color:var(--sub); font-family:inherit; font-size:12px; padding:9px 2px; border-radius:9px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; white-space:nowrap; -webkit-tap-highlight-color:transparent; }
+.rail button[aria-pressed="true"] { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:var(--gold-ink); font-weight:700; }
+#sbg button:last-child { flex:1.35; }
+.rail .dot { width:10px; height:10px; border-radius:50%; border:1px solid rgba(255,255,255,.35); flex:none; }
+.primary { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:var(--gold-ink); border:0; border-radius:999px; padding:15px 34px; font-weight:700; font-family:inherit; font-size:17px; letter-spacing:.08em; cursor:pointer; width:100%; box-shadow:0 8px 24px rgba(216,179,106,.25); }
+.hint { font-size:13px; color:var(--sub); text-align:center; margin:0; }
+.notice { font-size:12px; color:var(--sub); text-align:center; }
+:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+</style>
+<div class="wrap">
+  <div class="brand">RESOLUTE</div>
+  <h1>ルールのお守り</h1>
+  <p class="lead">ロック画面の壁紙を作ります。</p>
+  <div class="stage"><div class="phone t0 ty0 s0" id="ph">
+    <div class="date">1月15日(木)</div><div class="clock">9:41</div>
+    <div class="frame"><div class="in">
+      <div class="emb"><b>R</b></div>
+      <div class="nm">RESOLUTE</div><div class="ed">THE PERSONAL EDITION</div>
+      <div class="rl">
+        <div class="r"><small>許容できる下落</small><span><i>−30%</i> まで</span></div>
+        <div class="r"><small>1銘柄の上限</small><span>資産の <i>10%</i> まで</span></div>
+        <div class="r"><small>買い増し</small><span><i>−10%</i> と <i>−20%</i></span></div>
+      </div>
+      <div class="ft">迷ったら、ルールに戻る。</div>
+      <div class="big"><small>許容できる下落</small><strong>−30%</strong><em>までは想定内。</em><u>買い増し −10% と −20%</u></div>
+    </div></div>
+  </div></div>
+  <div class="ctl">
+    <div class="grp"><b>タイプ</b><div class="rail" id="sty"></div></div>
+    <div class="grp"><b>大きさ</b><div class="rail" id="ssz"></div></div>
+    <div class="grp"><b>背景</b><div class="rail" id="sbg"></div></div>
+    <input type="file" id="file" accept="image/*" hidden>
+  </div>
+  <button class="primary" type="button">この画像を保存</button>
+  <p class="hint">保存した画像を、ロック画面の壁紙に設定してください。写真は端末の中だけで使い、送信しません。</p>
+  <div class="notice">確認用の見本です。数字は例です。</div>
+</div>
+<script>
+const T = ["本の表紙","シンプル","囲み枠","一言"], Z = ["大","中","小"], B = [["紺","#14233a"],["黒","#050505"],["ベージュ","#e6dcc6"],["写真を選択",""]];
+const $ = (q) => document.querySelector(q);
+let ty = 0, sz = 0, bg = 0, photo = "";
+const rail = (id, arr, get, set, label) => { $(id).innerHTML = arr.map((t, i) => `<button type="button" data-i="${i}" aria-pressed="${i === get()}">${label(t)}</button>`).join(""); $(id).querySelectorAll("[data-i]").forEach((b) => (b.onclick = () => { set(+b.dataset.i); draw(); })); };
+function draw() {
+  rail("#sty", T, () => ty, (v) => (ty = v), (t) => t);
+  rail("#ssz", Z, () => sz, (v) => (sz = v), (t) => t);
+  rail("#sbg", B, () => bg, (v) => { if (v === 3 && !photo) $("#file").click(); bg = v; }, (t) => (t[1] ? `<i class="dot" style="background:${t[1]}"></i>${t[0]}` : t[0]));
+  const ph = $("#ph");
+  ph.className = `phone t${bg} ty${ty} s${sz}`;
+  ph.style.backgroundImage = bg === 3 && photo ? `url(${photo})` : "";
+}
+$("#file").onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { photo = r.result; bg = 3; draw(); }; r.readAsDataURL(f); };
+draw();
+</script>

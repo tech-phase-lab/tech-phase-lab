@@ -1,0 +1,18 @@
+.panel { max-width:600px; margin:16px auto 0; padding:16px; border:1px solid #bca26b55; border-radius:12px; background:#101c30; color:#eee5d1; font-size:13px; line-height:1.7; }
+.panel p { margin:0 0 10px; }
+.links { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.links button { flex:1 1 120px; min-height:44px; padding:9px 12px; border:1px solid #bca26b; border-radius:7px; background:#20304a; color:#f2dfb2; cursor:pointer; }
+.links button:active { transform:translateY(1px); }
+.panel label { display:flex; align-items:flex-start; gap:8px; cursor:pointer; }
+.panel input { margin-top:6px; accent-color:#bca26b; }
+.note { color:#c6c0b4; font-size:12px; }
+@media(max-width:640px) { .panel { margin:12px 16px 0; } }
+
+.panel{font-family:var(--font-resolute-sans),sans-serif}
+
+.links button[aria-pressed="true"] { background:#5a4724; outline:2px solid #d9b56f; outline-offset:1px; }
+
+.panel summary { min-height:44px; display:list-item; align-content:center; cursor:pointer; color:#f2dfb2; }
+.panel summary:focus-visible { outline:2px solid #d9b56f; outline-offset:3px; }
+.panel details[open] summary { margin-bottom:12px; }
+.panel { padding-block:4px; }

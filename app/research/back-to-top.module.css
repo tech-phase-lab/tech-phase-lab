@@ -1,0 +1,55 @@
+.dock {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.home {
+  display: flex; align-items: center; gap: 7px;
+  min-height: 44px; padding: 0 14px; border-radius: 24px;
+  color: #c4e9df; background: #13232ef2; border: 1px solid #405965;
+  box-shadow: 0 4px 18px #0005; text-decoration: none;
+  font: 600 12px/1.2 Arial, sans-serif;
+}
+.home:hover { background: #203844; }
+.home:focus-visible { outline: 2px solid #8be6bf; outline-offset: 4px; }
+.button {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #598570;
+  border-radius: 50%;
+  background: #14271f;
+  color: #a7f0d1;
+  font: 26px/1 Arial, sans-serif;
+  box-shadow: 0 4px 16px #0006;
+  cursor: pointer;
+}
+.button:hover { background: #203e31; }
+.glyph { display: inline; }
+.arrow, .label { display: none; }
+.button:not(.show) { display: none; }
+.button:focus-visible { outline: 2px solid #8be6bf; outline-offset: 4px; }
+
+/* Phone: a slim pill "↑ 先頭へ", 14px above the bottom menu, floating up when it appears (owner, Oct 14). */
+@media (max-width:760px) {
+  .dock { right:max(18px, env(safe-area-inset-right)); bottom:calc(104px + env(safe-area-inset-bottom)); }
+  .button, .button:not(.show) {
+    display:flex; align-items:center; gap:6px; width:auto; height:34px; padding:0 14px 0 11px; border-radius:999px;
+    border:1px solid #2a3a52; background:#0d1420e6; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    color:#7fd6b0; font:700 12px/1 var(--font-geist-sans),sans-serif; letter-spacing:.06em; box-shadow:0 8px 20px -8px #000;
+    opacity:0; transform:translateY(10px); pointer-events:none; transition:opacity .25s, transform .25s;
+  }
+  .button.show { opacity:1; transform:none; pointer-events:auto; }
+  .button:hover { background:#0d1420e6; }
+  .glyph { display:none; }
+  .arrow { display:block; width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .label { display:inline; }
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce) { .button, .button:not(.show) { transition:none; } }
+
+@media(max-width:760px){:global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .dock{display:none}}

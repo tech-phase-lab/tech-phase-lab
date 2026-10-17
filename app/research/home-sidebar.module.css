@@ -1,0 +1,29 @@
+.menu{display:flex;flex-direction:column;gap:22px;min-height:100%}
+.group{display:flex;flex-direction:column;gap:2px}
+.eyebrow{margin:0;padding:0 12px 8px;font:10px var(--font-geist-mono),monospace;letter-spacing:.22em;color:#566174}
+.item{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:0;border-radius:12px;background:none;color:#8c98ab;font-size:14px;font-weight:500;line-height:1.6;font-family:inherit;text-align:left;text-decoration:none;position:relative;cursor:pointer;transition:background .15s,color .15s}
+.item svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.item>span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .count,.item .tag{flex:none}
+.item:hover{background:rgba(255,255,255,.04);color:#eef2f8}
+.item.on{background:rgba(127,214,176,.10);color:#7fd6b0}
+.item.on::before{content:"";position:absolute;left:-14px;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:#7fd6b0;box-shadow:0 0 12px #7fd6b0}
+.item:focus-visible,.pro:focus-visible,.rz:focus-visible{outline:2px solid #7fd6b0;outline-offset:2px}
+.count{font:11px var(--font-geist-mono),monospace;font-style:normal;color:#566174;background:#141c29;border:1px solid #1a2332;border-radius:999px;padding:0 8px;line-height:18px}
+.count.fresh{color:#5dffb4;border-color:rgba(93,255,180,.4);font-size:9.5px;letter-spacing:.1em}
+.tag{font:9px var(--font-geist-mono),monospace;letter-spacing:.14em;color:#d9b46a;border:1px solid rgba(217,180,106,.45);border-radius:5px;padding:0 6px;line-height:16px;font-weight:400}
+
+.foot{margin-top:auto;display:flex;flex-direction:column;gap:14px}
+.foot .item{padding:8px 12px;font-size:13px}
+.source{padding:14px 12px 0;border-top:1px solid #1a2332}
+.source b{display:block;font:500 10px var(--font-geist-mono),monospace;letter-spacing:.22em;color:#7fd6b0}
+.source p{margin:6px 0 0;font-size:11.5px;line-height:1.6;color:#566174}
+
+/* Every row the same: 14px text, 18px icon, 44px high (owner, Oct 14). */
+.menu .item{box-sizing:border-box;min-height:44px;height:44px;padding:0 12px;font-size:14px;line-height:1.2}
+.menu .item>span{font-size:14px;line-height:1.2}
+.menu .item svg{width:18px;height:18px}
+.menu .foot .item{min-height:44px;height:44px;padding:0 12px;font-size:14px}
+.proLine,.proLine:hover{color:#d9b46a}
+.rzLine,.rzLine:hover{color:#ee8f4f}
+.proLine.on{color:#f0d79a}

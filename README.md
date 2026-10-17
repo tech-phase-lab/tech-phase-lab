@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tech Phase Research
 
-## Getting Started
+Bilingual Japanese-English research preview for U.S. technology stocks. The site brings together official-source research, company pages, stock lookup, a schedule calendar, and a local favorites list.
 
-First, run the development server:
+## Current stage
+
+Development and previews run from `codex/research-preview`. The preview contains historical, source-linked research and manually maintained official schedules. Automatic member delivery, billing, push notifications, and real-time licensed news distribution are not enabled. Market cards use the separately labeled TradingView data source.
+
+## Local development
+
+Requirements: Node.js 22+, Python 3.12+, and the PDF parser listed in `scripts/research/requirements.txt`.
 
 ```bash
+npm ci
+python -m pip install -r scripts/research/requirements.txt
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Quality checks
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The preview branch runs these gates on every push and pull request targeting `codex/research-preview`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm test
+npm run test:python
+npm run build
+```
 
-## Learn More
+No deployment secrets are needed for these checks. The workflow has read-only repository permissions and does not deploy or publish to production.
 
-To learn more about Next.js, take a look at the following resources:
+## Research monitor and environment variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See [`scripts/research/README.md`](scripts/research/README.md) and [`.env.example`](.env.example) for the monitor architecture, fail-closed review APIs, and disabled-by-default options. Copy example values only for local setup; never use the example placeholders as production secrets. Keep `.env.local` and credentials out of Git.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A readiness sequence for choosing and connecting a branded domain is in [`docs/LAUNCH-READINESS.md`](docs/LAUNCH-READINESS.md). Domain purchase, production aliases, paid access, licensed feeds, and external delivery require their own explicit launch decisions.

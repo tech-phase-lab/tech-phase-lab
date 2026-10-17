@@ -1,0 +1,1789 @@
+{
+  "root": "NVDA",
+  "nodes": [
+    {
+      "id": "LITE",
+      "ticker": "LITE",
+      "name": "Lumentum",
+      "kind": "company",
+      "layer": 4,
+      "summary": {
+        "ja": "光でデータを送る部品や装置を作る会社。AIデータセンター向けの光通信に加え、加工用レーザーも扱う。",
+        "en": "Makes optical components and systems for data transmission, including AI data centers, alongside industrial lasers."
+      }
+    },
+    {
+      "id": "COHR",
+      "ticker": "COHR",
+      "name": "Coherent",
+      "kind": "company",
+      "layer": 4,
+      "summary": {
+        "ja": "光通信やレーザー加工を支える会社。光信号の送受信モジュールから、レーザーや特殊な材料まで作る。",
+        "en": "Makes optical transceivers, lasers and engineered materials for communications and industrial applications."
+      }
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "kind": "company",
+      "layer": 0,
+      "summary": {
+        "ja": "半導体工場で使う製造装置の会社。材料の膜を作る工程や削る工程、検査、チップの接続などを支える。",
+        "en": "Builds semiconductor manufacturing tools for deposition, etching, inspection and advanced packaging."
+      }
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "Arista Networks",
+      "kind": "company",
+      "layer": 5,
+      "summary": {
+        "ja": "データセンターや企業内の機器を高速につなぐ通信機器と、そのネットワークを動かすソフトを作る会社。",
+        "en": "Builds high-speed networking equipment and software for data centers and enterprise networks."
+      }
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "kind": "company",
+      "layer": 3,
+      "summary": {
+        "ja": "データを高速に送り、処理し、保存するための半導体を設計する会社。顧客専用のAI半導体も手がける。",
+        "en": "Designs chips that move, process and store data, including custom AI silicon."
+      }
+    },
+    {
+      "id": "VRT",
+      "ticker": "VRT",
+      "name": "Vertiv",
+      "kind": "company",
+      "layer": 5,
+      "summary": {
+        "ja": "データセンターなどに電気を安定して届け、機器の熱を逃がす電源・冷却設備を提供する会社。",
+        "en": "Provides power and cooling equipment that keeps data centers and other critical facilities operating."
+      }
+    },
+    {
+      "id": "ALAB",
+      "ticker": "ALAB",
+      "name": "Astera Labs",
+      "kind": "company",
+      "layer": 3,
+      "summary": {
+        "ja": "AIサーバーのGPUやメモリーを高速につなぐ半導体を作る会社。信号の乱れやデータ転送の詰まりを減らす。",
+        "en": "Develops chips that connect GPUs, memory and other AI-server components while reducing signal degradation and data bottlenecks."
+      }
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "kind": "company",
+      "layer": 6,
+      "summary": {
+        "ja": "WindowsやMicrosoft 365、企業向けクラウドAzureなどを提供する会社。AIサービスやゲームも展開する。",
+        "en": "Provides Windows, Microsoft 365 and Azure cloud services, alongside AI and gaming products."
+      }
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius",
+      "kind": "company",
+      "layer": 6,
+      "summary": {
+        "ja": "AIの学習や実行に必要な計算設備を、クラウド経由で企業や開発者に提供する会社。",
+        "en": "Provides cloud computing infrastructure for AI training and inference."
+      }
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "kind": "company",
+      "layer": 1,
+      "summary": {
+        "ja": "顧客が設計した半導体を工場で製造する会社。自社ブランドの半導体で顧客と競わない受託生産が基本。",
+        "en": "Manufactures chips designed by customers rather than competing with them through its own chip brand."
+      }
+    },
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "ASML",
+      "kind": "company",
+      "layer": 0,
+      "summary": {
+        "ja": "半導体に微細な回路の模様を光で転写する「露光装置」を作る会社。検査・計測装置も扱う。",
+        "en": "Builds lithography machines that transfer tiny circuit patterns onto chips, plus metrology and inspection tools."
+      }
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "kind": "company",
+      "layer": 3,
+      "summary": {
+        "ja": "通信やAI向けの半導体と、VMwareなど企業のシステムを動かす基盤ソフトを提供する会社。",
+        "en": "Supplies networking and AI chips alongside infrastructure software, including VMware."
+      }
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "kind": "company",
+      "layer": 3,
+      "summary": {
+        "ja": "パソコンやサーバーのCPU、映像処理やAIの計算を担うGPUなどを設計する会社。",
+        "en": "Designs CPUs for PCs and servers, GPUs for graphics and AI, and other computing chips."
+      }
+    },
+    {
+      "id": "ARM",
+      "ticker": "ARM",
+      "name": "Arm",
+      "kind": "company",
+      "layer": 3,
+      "summary": {
+        "ja": "半導体の計算の仕組みやCPU設計を他社に提供する会社。自社設計のチップ製品にも事業を広げている。",
+        "en": "Licenses processor architecture and CPU designs, and is expanding into Arm-designed chip products."
+      }
+    },
+    {
+      "id": "CRDO",
+      "ticker": "CRDO",
+      "name": "Credo",
+      "kind": "company",
+      "layer": 3,
+      "summary": {
+        "ja": "データセンターの機器同士を高速につなぐ半導体や、信号を整える回路入りケーブルを開発する会社。",
+        "en": "Develops chips and cables with signal-conditioning electronics that connect data-center systems at high speed."
+      }
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "kind": "company",
+      "layer": 3,
+      "summary": {
+        "ja": "AIの計算やゲームの映像処理を担うGPUと、関連ソフトを開発する会社。",
+        "en": "Develops GPUs for AI computing and gaming, alongside supporting software."
+      }
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "kind": "company",
+      "layer": 2,
+      "summary": {
+        "ja": "データを一時的に扱うDRAMや、保存するNANDなどのメモリー半導体を作る会社。",
+        "en": "Makes DRAM for working memory and NAND for data storage."
+      }
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "kind": "company",
+      "layer": 6,
+      "summary": {
+        "ja": "Alphabet傘下で、検索、YouTube、Android、クラウドなどを展開する。上場株は親会社Alphabetの株式。",
+        "en": "Alphabet's Google operates Search, YouTube, Android and cloud services. The listed shares represent parent Alphabet."
+      }
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "kind": "company",
+      "layer": 6,
+      "summary": {
+        "ja": "ネット通販に加え、企業向けクラウドAWSや広告、動画配信などを展開する会社。",
+        "en": "Runs online retail, AWS cloud computing, advertising and streaming services."
+      }
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta",
+      "kind": "company",
+      "layer": 6,
+      "summary": {
+        "ja": "Facebook、Instagram、WhatsAppなどを運営し、AIやスマートグラスも開発する会社。",
+        "en": "Operates Facebook, Instagram and WhatsApp, and develops AI and smart glasses."
+      }
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "kind": "company",
+      "layer": 0
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco",
+      "kind": "company",
+      "layer": 5
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "HPE",
+      "kind": "company",
+      "layer": 5
+    },
+    {
+      "id": "Schneider Electric",
+      "name": "Schneider Electric",
+      "kind": "company",
+      "layer": 5
+    },
+    {
+      "id": "ETN",
+      "ticker": "ETN",
+      "name": "Eaton",
+      "kind": "company",
+      "layer": 5
+    },
+    {
+      "id": "Legrand",
+      "name": "Legrand",
+      "kind": "company",
+      "layer": 5
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "kind": "company",
+      "layer": 6
+    },
+    {
+      "id": "Crusoe",
+      "name": "Crusoe",
+      "kind": "company",
+      "layer": 6
+    },
+    {
+      "id": "Lambda",
+      "name": "Lambda",
+      "kind": "company",
+      "layer": 6
+    },
+    {
+      "id": "Nikon",
+      "name": "Nikon",
+      "kind": "company",
+      "layer": 0
+    },
+    {
+      "id": "Canon",
+      "name": "Canon",
+      "kind": "company",
+      "layer": 0
+    },
+    {
+      "id": "Carl Zeiss SMT",
+      "name": "Carl Zeiss SMT",
+      "kind": "company",
+      "layer": 0
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "kind": "company",
+      "layer": 3
+    },
+    {
+      "id": "SoftBank",
+      "name": "SoftBank",
+      "kind": "company",
+      "layer": 7
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "kind": "company",
+      "layer": 6
+    },
+    {
+      "id": "SK hynix",
+      "name": "SK hynix",
+      "kind": "company",
+      "layer": 2
+    },
+    {
+      "id": "Samsung",
+      "name": "Samsung",
+      "kind": "company",
+      "layer": 2
+    },
+    {
+      "id": "Kioxia",
+      "name": "Kioxia",
+      "kind": "company",
+      "layer": 2
+    },
+    {
+      "id": "SNDK",
+      "ticker": "SNDK",
+      "name": "Sandisk",
+      "kind": "company",
+      "layer": 2
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell",
+      "kind": "company",
+      "layer": 5
+    },
+    {
+      "id": "SMCI",
+      "ticker": "SMCI",
+      "name": "Supermicro",
+      "kind": "company",
+      "layer": 5
+    }
+  ],
+  "edges": [
+    {
+      "id": "investment:NVDA:LITE",
+      "from": "NVDA",
+      "to": "LITE",
+      "kind": "investment",
+      "evidence": [
+        {
+          "about": "LITE",
+          "label": {
+            "ja": "NVIDIAからの出資",
+            "en": "Investment from NVIDIA"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors / NVIDIA investment",
+              "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "partner:COHR:NVDA",
+      "from": "COHR",
+      "to": "NVDA",
+      "kind": "partner",
+      "evidence": [
+        {
+          "about": "COHR",
+          "label": {
+            "ja": "光技術の開発・供給契約",
+            "en": "Optics development & supply"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors / NVIDIA agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AMAT:LRCX",
+      "from": "AMAT",
+      "to": "LRCX",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "AMAT",
+          "label": {
+            "ja": "成膜・エッチングで競合",
+            "en": "Deposition & etching"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "Lam Research FY2026 Form 10-K · Competition",
+              "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ANET:CSCO",
+      "from": "ANET",
+      "to": "CSCO",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ANET",
+          "label": {
+            "ja": "ネットワーク機器で競合",
+            "en": "Networking equipment"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ANET:HPE",
+      "from": "ANET",
+      "to": "HPE",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ANET",
+          "label": {
+            "ja": "ネットワーク機器で競合",
+            "en": "Networking equipment"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ANET:NVDA",
+      "from": "ANET",
+      "to": "NVDA",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ANET",
+          "label": {
+            "ja": "AIネットワークで競合",
+            "en": "AI networking"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:AVGO:ANET",
+      "from": "AVGO",
+      "to": "ANET",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "ANET",
+          "label": {
+            "ja": "主要半導体の調達・開発連携",
+            "en": "Switching chips & development"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AVGO:MRVL",
+      "from": "AVGO",
+      "to": "MRVL",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "MRVL",
+          "label": {
+            "ja": "通信・専用半導体で競合",
+            "en": "Networking & custom silicon"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:CRDO:MRVL",
+      "from": "CRDO",
+      "to": "MRVL",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "MRVL",
+          "label": {
+            "ja": "高速接続で競合",
+            "en": "High-speed connectivity"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm"
+            }
+          ]
+        },
+        {
+          "about": "CRDO",
+          "label": {
+            "ja": "高速接続で競合",
+            "en": "High-speed connectivity"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ALAB:MRVL",
+      "from": "ALAB",
+      "to": "MRVL",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "MRVL",
+          "label": {
+            "ja": "接続用半導体で競合",
+            "en": "Connectivity chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm"
+            }
+          ]
+        },
+        {
+          "about": "ALAB",
+          "label": {
+            "ja": "接続用半導体で競合",
+            "en": "Connectivity chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:Schneider Electric:VRT",
+      "from": "Schneider Electric",
+      "to": "VRT",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "VRT",
+          "label": {
+            "ja": "電源・冷却設備で競合",
+            "en": "Power & cooling"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors / Partnerships",
+              "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ETN:VRT",
+      "from": "ETN",
+      "to": "VRT",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "VRT",
+          "label": {
+            "ja": "電源設備などで競合",
+            "en": "Power infrastructure"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors / Partnerships",
+              "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:Legrand:VRT",
+      "from": "Legrand",
+      "to": "VRT",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "VRT",
+          "label": {
+            "ja": "データセンター設備で競合",
+            "en": "Data-center infrastructure"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors / Partnerships",
+              "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "partner:NVDA:VRT",
+      "from": "NVDA",
+      "to": "VRT",
+      "kind": "partner",
+      "evidence": [
+        {
+          "about": "VRT",
+          "label": {
+            "ja": "AI向け電源・冷却で協力",
+            "en": "AI power & cooling collaboration"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors / Partnerships",
+              "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ALAB:AVGO",
+      "from": "ALAB",
+      "to": "AVGO",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ALAB",
+          "label": {
+            "ja": "接続用半導体で競合",
+            "en": "Connectivity chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ALAB:CRDO",
+      "from": "ALAB",
+      "to": "CRDO",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ALAB",
+          "label": {
+            "ja": "高速接続で競合",
+            "en": "High-speed connectivity"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm"
+            }
+          ]
+        },
+        {
+          "about": "CRDO",
+          "label": {
+            "ja": "接続用半導体で競合",
+            "en": "Connectivity chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:CRWV:NBIS",
+      "from": "CRWV",
+      "to": "NBIS",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "AIクラウドで競合",
+            "en": "AI cloud"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:Crusoe:NBIS",
+      "from": "Crusoe",
+      "to": "NBIS",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "AIクラウドで競合",
+            "en": "AI cloud"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:Lambda:NBIS",
+      "from": "Lambda",
+      "to": "NBIS",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "AIクラウドで競合",
+            "en": "AI cloud"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AMZN:NBIS",
+      "from": "AMZN",
+      "to": "NBIS",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "大手クラウドとして競合",
+            "en": "Large cloud platform"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:GOOG:NBIS",
+      "from": "GOOG",
+      "to": "NBIS",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "大手クラウドとして競合",
+            "en": "Large cloud platform"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:NBIS",
+      "from": "NVDA",
+      "to": "NBIS",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "GPUの調達・技術協力",
+            "en": "GPU supply & technical collaboration"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NBIS:MSFT",
+      "from": "NBIS",
+      "to": "MSFT",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "契約に基づく計算設備の提供",
+            "en": "Contracted compute capacity"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NBIS:META",
+      "from": "NBIS",
+      "to": "META",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NBIS",
+          "label": {
+            "ja": "契約に基づく計算設備の提供",
+            "en": "Contracted compute capacity"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 20-F · Business / Risk factors / Customer agreements",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:TSM:NVDA",
+      "from": "TSM",
+      "to": "NVDA",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "TSM",
+          "label": {
+            "ja": "半導体の製造を受託",
+            "en": "Chip manufacturing customer"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "NVIDIA FY2026 Form 10-K · Manufacturing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        },
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "半導体の製造委託先",
+            "en": "Chip manufacturing supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ASML:Nikon",
+      "from": "ASML",
+      "to": "Nikon",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ASML",
+          "label": {
+            "ja": "DUV露光装置で競合",
+            "en": "DUV lithography"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Annual Report · Products / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ASML:Canon",
+      "from": "ASML",
+      "to": "Canon",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ASML",
+          "label": {
+            "ja": "DUV露光装置で競合",
+            "en": "DUV lithography"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Annual Report · Products / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:Carl Zeiss SMT:ASML",
+      "from": "Carl Zeiss SMT",
+      "to": "ASML",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "ASML",
+          "label": {
+            "ja": "重要な光学部品の調達先",
+            "en": "Critical optical-component supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Annual Report · Products / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:TSM:AVGO",
+      "from": "TSM",
+      "to": "AVGO",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "AVGO",
+          "label": {
+            "ja": "半導体の製造委託先",
+            "en": "Chip manufacturing supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AMD:INTC",
+      "from": "AMD",
+      "to": "INTC",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "AMD",
+          "label": {
+            "ja": "CPUで競合",
+            "en": "CPUs"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AMD:NVDA",
+      "from": "AMD",
+      "to": "NVDA",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "AMD",
+          "label": {
+            "ja": "GPUで競合",
+            "en": "GPUs"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm"
+            }
+          ]
+        },
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "GPUなどで競合",
+            "en": "GPUs and other chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:TSM:AMD",
+      "from": "TSM",
+      "to": "AMD",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "AMD",
+          "label": {
+            "ja": "半導体の製造委託先",
+            "en": "Chip manufacturing supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2025 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:ARM:INTC",
+      "from": "ARM",
+      "to": "INTC",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ARM",
+          "label": {
+            "ja": "x86方式が競合",
+            "en": "Competing x86 architecture"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 20-F · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AMD:ARM",
+      "from": "AMD",
+      "to": "ARM",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "ARM",
+          "label": {
+            "ja": "x86方式が競合",
+            "en": "Competing x86 architecture"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 20-F · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "investment:SoftBank:ARM",
+      "from": "SoftBank",
+      "to": "ARM",
+      "kind": "investment",
+      "evidence": [
+        {
+          "about": "ARM",
+          "label": {
+            "ja": "支配株主",
+            "en": "Controlling shareholder"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 20-F · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AVGO:CRDO",
+      "from": "AVGO",
+      "to": "CRDO",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "CRDO",
+          "label": {
+            "ja": "高速接続で競合",
+            "en": "High-speed connectivity"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "partner:CRDO:ORCL",
+      "from": "CRDO",
+      "to": "ORCL",
+      "kind": "partner",
+      "evidence": [
+        {
+          "about": "CRDO",
+          "label": {
+            "ja": "光接続の信頼性向上を共同開発",
+            "en": "Optical-reliability development"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:INTC:NVDA",
+      "from": "INTC",
+      "to": "NVDA",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "計算用半導体で競合",
+            "en": "Computing chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:GOOG:NVDA",
+      "from": "GOOG",
+      "to": "NVDA",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "独自のAI半導体",
+            "en": "Custom AI chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:AMZN:NVDA",
+      "from": "AMZN",
+      "to": "NVDA",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "独自のAI半導体",
+            "en": "Custom AI chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:MU:NVDA",
+      "from": "MU",
+      "to": "NVDA",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "メモリーの調達先",
+            "en": "Memory supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        },
+        {
+          "about": "MU",
+          "label": {
+            "ja": "メモリーを供給",
+            "en": "Memory customer"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "NVIDIA FY2026 Form 10-K · Manufacturing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:SK hynix:NVDA",
+      "from": "SK hynix",
+      "to": "NVDA",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "メモリーの調達先",
+            "en": "Memory supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:Samsung:NVDA",
+      "from": "Samsung",
+      "to": "NVDA",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "メモリーの調達先",
+            "en": "Memory supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:MU:Samsung",
+      "from": "MU",
+      "to": "Samsung",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "MU",
+          "label": {
+            "ja": "メモリーで競合",
+            "en": "Memory chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:MU:SK hynix",
+      "from": "MU",
+      "to": "SK hynix",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "MU",
+          "label": {
+            "ja": "メモリーで競合",
+            "en": "Memory chips"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:Kioxia:MU",
+      "from": "Kioxia",
+      "to": "MU",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "MU",
+          "label": {
+            "ja": "NANDで競合",
+            "en": "NAND flash"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "competition:MU:SNDK",
+      "from": "MU",
+      "to": "SNDK",
+      "kind": "competition",
+      "evidence": [
+        {
+          "about": "MU",
+          "label": {
+            "ja": "NANDで競合",
+            "en": "NAND flash"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "FY2026 Form 10-K · Business / Risk factors",
+              "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:ASML:TSM",
+      "from": "ASML",
+      "to": "TSM",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "ASML",
+          "label": {
+            "ja": "TSMCが製造を支える供給企業として公表",
+            "en": "Named by TSMC as a manufacturing supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "TSMC · 2025 supplier awards",
+              "url": "https://pr.tsmc.com/english/news/3274"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:AMAT:TSM",
+      "from": "AMAT",
+      "to": "TSM",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "AMAT",
+          "label": {
+            "ja": "TSMCが製造を支える供給企業として公表",
+            "en": "Named by TSMC as a manufacturing supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "TSMC · 2025 supplier awards",
+              "url": "https://pr.tsmc.com/english/news/3274"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:LRCX:TSM",
+      "from": "LRCX",
+      "to": "TSM",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "LRCX",
+          "label": {
+            "ja": "TSMCが製造を支える供給企業として公表",
+            "en": "Named by TSMC as a manufacturing supplier"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "TSMC · 2025 supplier awards",
+              "url": "https://pr.tsmc.com/english/news/3274"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "partner:AMAT:TSM",
+      "from": "AMAT",
+      "to": "TSM",
+      "kind": "partner",
+      "evidence": [
+        {
+          "about": "AMAT",
+          "label": {
+            "ja": "EPIC Centerで材料・装置・製造工程を共同開発",
+            "en": "Joint materials, equipment and process development at EPIC"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "Applied Materials · TSMC partnership, May 2026",
+              "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-tsmc-partner-epic-center-accelerate-ai/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:CRWV",
+      "from": "NVDA",
+      "to": "CRWV",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "CoreWeaveがGB200システムをクラウドに導入",
+            "en": "CoreWeave deploys GB200 systems in its cloud"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "NVIDIA · CoreWeave Blackwell deployment",
+              "url": "https://blogs.nvidia.com/blog/coreweave-grace-blackwell-gb200-nvl72/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:DELL",
+      "from": "NVDA",
+      "to": "DELL",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "DellのGB300搭載システムをCoreWeaveが導入",
+            "en": "CoreWeave deploys Dell systems built on NVIDIA GB300"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "CoreWeave · GB300 deployment, July 2025",
+              "url": "https://coreweave.com/news/coreweave-becomes-first-cloud-provider-to-deploy-nvidia-gb300-nvl72-platform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:DELL:CRWV",
+      "from": "DELL",
+      "to": "CRWV",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "DELL",
+          "label": {
+            "ja": "GB300搭載ラックシステムの導入で協力",
+            "en": "Rack systems for the GB300 deployment"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "CoreWeave · GB300 deployment, July 2025",
+              "url": "https://coreweave.com/news/coreweave-becomes-first-cloud-provider-to-deploy-nvidia-gb300-nvl72-platform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "partner:CRWV:VRT",
+      "from": "CRWV",
+      "to": "VRT",
+      "kind": "partner",
+      "evidence": [
+        {
+          "about": "VRT",
+          "label": {
+            "ja": "GB300システムの初期導入で協力",
+            "en": "Collaboration on the initial GB300 deployment"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "CoreWeave · GB300 deployment, July 2025",
+              "url": "https://coreweave.com/news/coreweave-becomes-first-cloud-provider-to-deploy-nvidia-gb300-nvl72-platform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:SMCI",
+      "from": "NVDA",
+      "to": "SMCI",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "SupermicroがBlackwell Ultra搭載サーバーを出荷",
+            "en": "Supermicro ships servers using Blackwell Ultra"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "Supermicro · Blackwell Ultra shipments",
+              "url": "https://ir.supermicro.com/news/news-details/2025/Supermicro-Begins-Volume-Shipments-of-NVIDIA-Blackwell-Ultra-Systems-and-Rack-Plug-and-Play-Data-Center-Scale-Solutions/default.aspx"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:AMZN",
+      "from": "NVDA",
+      "to": "AMZN",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "AWSがNVIDIA B200をEC2 P6に採用",
+            "en": "AWS uses NVIDIA B200 GPUs in EC2 P6 instances"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "AWS · EC2 P6-B200 availability",
+              "url": "https://aws.amazon.com/about-aws/whats-new/2025/05/amazon-ec2-p6-b200-instances-nvidia-b200-gpus/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:GOOG",
+      "from": "NVDA",
+      "to": "GOOG",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "Google CloudがGB200搭載A4Xを提供",
+            "en": "Google Cloud offers GB200-powered A4X VMs"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "Google Cloud · A4X availability",
+              "url": "https://cloud.google.com/blog/products/compute/new-a4x-vms-powered-by-nvidia-gb200-gpus"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:MSFT",
+      "from": "NVDA",
+      "to": "MSFT",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "AzureがNVIDIA H100搭載VMを提供",
+            "en": "Azure offers VMs powered by NVIDIA H100 GPUs"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "Microsoft Azure · NVIDIA infrastructure",
+              "url": "https://azure.microsoft.com/en-us/blog/microsoft-and-nvidia-partnership-continues-to-deliver-on-the-promise-of-ai/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply:NVDA:ORCL",
+      "from": "NVDA",
+      "to": "ORCL",
+      "kind": "supply",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "OCIがNVIDIA B200・GB200搭載設備を提供",
+            "en": "OCI offers infrastructure using NVIDIA B200 and GB200"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "Oracle · OCI Supercluster",
+              "url": "https://www.oracle.com/apac/a/ocom/docs/cloud/accelerate-ai-with-oci-supercluster-apac.pdf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "partner:META:NVDA",
+      "from": "META",
+      "to": "NVDA",
+      "kind": "partner",
+      "evidence": [
+        {
+          "about": "NVDA",
+          "label": {
+            "ja": "GPU・CPU・ネットワークを含む複数年のAI基盤提携",
+            "en": "Multi-year AI infrastructure partnership across GPUs, CPUs and networking"
+          },
+          "reviewedOn": "2026-10-13",
+          "sources": [
+            {
+              "label": "NVIDIA · Meta partnership, February 2026",
+              "url": "https://nvidianews.nvidia.com/news/meta-builds-ai-infrastructure-with-nvidia"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

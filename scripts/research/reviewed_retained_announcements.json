@@ -1,0 +1,1064 @@
+{
+  "policy": "reviewed-retained-announcement-v1",
+  "startsAt": "2026-10-04T00:00:00+00:00",
+  "expiresAt": "2026-10-05T00:00:00+00:00",
+  "announcements": [
+    {
+      "sourceId": "primary-ir-NVDA",
+      "ticker": "NVDA",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-a-150-billion-share-repurchase-authorization-increase",
+      "title": "NVIDIA Announces a $150 Billion Share Repurchase Authorization Increase",
+      "publishedOn": "2026-09-28",
+      "observedAt": "2026-09-28T11:05:29.215000+00:00",
+      "bodyTextSha": "f34631ef55ea4e22b1b01fda91db238c6f23966f899d6bafebc630a68220b07b",
+      "bodyChars": 1007,
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "copy": {
+        "title": {
+          "ja": "NVIDIA、自社株買い承認枠の1500億ドル増額を発表",
+          "en": "NVIDIA announces a $150 billion share repurchase authorization increase",
+          "anchors": [
+            "NVIDIA Announces a $150 Billion"
+          ]
+        },
+        "summary": {
+          "ja": "NVIDIA取締役会は自社株買い承認枠を1500億ドル追加し、残る承認枠は2350億ドルとなった。",
+          "en": "NVIDIA’s board authorized an additional $150 billion for share repurchases, bringing the remaining authorization to $235 billion.",
+          "anchors": [
+            "NVIDIA today announced"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "取締役会は自社株買い承認枠を1500億ドル増額した。",
+            "en": "The board increased the share repurchase authorization by $150 billion.",
+            "anchors": [
+              "NVIDIA today announced"
+            ]
+          },
+          {
+            "ja": "自社株買い承認枠の残額は2350億ドルとなった。",
+            "en": "The remaining share repurchase authorization totals $235 billion.",
+            "anchors": [
+              "NVIDIA today announced"
+            ]
+          },
+          {
+            "ja": "会社は、残る自社株買い計画を2028会計年度にかけて実行する見込みとしている。",
+            "en": "The company expects to execute the remaining share repurchase program through fiscal year 2028.",
+            "anchors": [
+              "The company expects"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "会社は、資金創出力により技術への投資と株主への資本還元を行えるとしている。",
+          "en": "The company says its cash generation gives it capacity to invest in technology and return capital to shareholders.",
+          "anchors": [
+            "“NVIDIA’s growth"
+          ]
+        }
+      }
+    },
+    {
+      "eventId": 1233,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/products-and-platforms/products/gemini/automate-tasks-with-skills/",
+      "title": "Let skills in Gemini tackle your most repetitive tasks",
+      "publishedOn": "2026-09-30",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "27ccb1e4791eb39128975a279eeb408b2e55d2a8ccf4792703ee498484bda71e",
+      "sourceRevision": "3fe66e944fa15db475bbf0eb30901a423dbec78d84e03e514cfc953ec746ab56",
+      "bodyTextSha": "b9a948794ff133f12b8cb798afab2e29c036b5139e1afe72915a35fe59e103ae",
+      "bodyChars": 3016,
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "replacement": {
+        "reason": "changed-rollout-status",
+        "payloadSha": "ec3e7220c5c351fb4869f1b99a715d936ffc6a0e98a5954644c75c8d59b5d35b",
+        "bodySha": "b9a948794ff133f12b8cb798afab2e29c036b5139e1afe72915a35fe59e103ae",
+        "startedAt": "2026-10-04T02:10:22.945377+00:00",
+        "publicAt": "2026-10-04T02:10:32.951+00:00",
+        "generationMs": 6203,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "Google、Geminiチャットでスキルの世界展開を開始",
+          "en": "Google begins global rollout of skills in Gemini chat",
+          "anchors": [
+            "Today, we’re rolling out skills"
+          ]
+        },
+        "summary": {
+          "ja": "Googleは9月30日、指示を保存して再利用できるスキルのGeminiチャットへの世界展開を開始した。Workspaceのビジネス・エンタープライズ・非営利・教育向けには今後数週間で提供する。Gemini Sparkではすでに利用できる。",
+          "en": "Google began rolling out reusable skills globally in Gemini chat on Sept. 30. Workspace business, enterprise, nonprofit and education customers will receive them in the coming weeks. Skills are already available in Gemini Spark.",
+          "anchors": [
+            "Sep 30, 2026",
+            "customers in the coming weeks."
+          ]
+        },
+        "facts": [
+          {
+            "ja": "提供対象はGoogle AIの全サブスクリプション階層で、現時点では18歳以上。18歳未満への提供は近日中を予定する。",
+            "en": "Skills are available across all Google AI subscription tiers, currently for users aged 18 and over. Access for users younger than 18 is coming soon.",
+            "anchors": [
+              "Available to all Google AI subscription tiers"
+            ]
+          },
+          {
+            "ja": "プロンプトバーに「/」とスキル名を入力して呼び出せる。チャットからの作成、対応するプロンプトでの自動実行、複数スキルの併用が可能で、テキスト文書・PDF・画像も参照ファイルにできる。",
+            "en": "Invoke a skill with / and its name in the prompt bar. Gemini can help create skills from chats, run them for matching prompts and combine multiple skills. Reference files can include text documents, PDFs and images.",
+            "anchors": [
+              "Once you create a skill",
+              "you can create skills that include reference files"
+            ]
+          },
+          {
+            "ja": "今後数週間で、スキルの共有、Google Driveのファイル追加、Gemini Notebookのノートブック追加に対応する。",
+            "en": "Sharing skills and adding Google Drive files and Gemini Notebook notebooks are planned for the coming weeks.",
+            "anchors": [
+              "skills will have the features you loved in Gems"
+            ]
+          },
+          {
+            "ja": "Gemsのサポート終了は、個人アカウントが11月、Workspaceのビジネス・エンタープライズ・非営利向けが2027年3月、教育向けが2027年6月から始まる。",
+            "en": "Google will begin removing Gems support in November for personal accounts, March 2027 for Workspace business, enterprise and nonprofit customers, and June 2027 for Workspace education customers.",
+            "anchors": [
+              "skills will have the features you loved in Gems"
+            ]
+          },
+          {
+            "ja": "Gemsの終了時にはスキルへ自動移行する。ただしGems by Google Labsは終了しても移行されない。ミニアプリ作成の実験サービスOpalも11月に終了する。",
+            "en": "Gems will migrate automatically to skills when retired. Gems by Google Labs will shut down without migrating. Opal, Google’s experiment for building mini apps, will also shut down in November.",
+            "anchors": [
+              "As part of this change, Opal",
+              "these will not migrate into skills."
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "繰り返し使う指示をスキルとして保存し、同じプロンプトを何度も入力する手間を減らす。",
+          "en": "Skills save frequently used instructions so users can repeat tasks without retyping the same prompts.",
+          "anchors": [
+            "With skills, you can save your most-used instructions"
+          ]
+        }
+      }
+    },
+    {
+      "eventId": 1238,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synthid-bio/",
+      "title": "We’re introducing SynthID Bio, bringing our watermarking technology to synthetic biology.",
+      "publishedOn": "2026-09-30",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "de1dae9aecfef671d28c17f028909b563c551a8a36ba19d9fe35474ef3a726af",
+      "sourceRevision": "8cfa17c6d323833cf9944d6bf4fe086e252a0f5a75662bdf3bec03eefd382449",
+      "bodyTextSha": "a5815377202b2e2d2a2703854798e41c02f51c551892f27f18f3e0a47edf307a",
+      "bodyChars": 1182,
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "eab0b09040f65eb5d861dff416bab38086a7b039c3e43fb0829af2b88fcc9069",
+        "bodySha": "a5815377202b2e2d2a2703854798e41c02f51c551892f27f18f3e0a47edf307a",
+        "startedAt": "2026-10-04T02:10:03.279411+00:00",
+        "publicAt": "2026-10-04T02:10:12.145+00:00",
+        "generationMs": 3945,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "合成生物学に透かし技術を導入するSynthID Bioを発表",
+          "en": "Introducing SynthID Bio, Bringing Watermarking Technology to Synthetic Biology",
+          "anchors": [
+            "We’re introducing SynthID Bio,"
+          ]
+        },
+        "summary": {
+          "ja": "Googleは、生物機能を保ちながらAI設計のタンパク質に透かしを埋め込み、バイオセキュリティの強化を目指すSynthID Bioを発表した。",
+          "en": "Google introduced SynthID Bio to watermark AI-designed proteins while preserving biological function, with the aim of strengthening biosecurity.",
+          "anchors": [
+            "Today, we’re introducing SynthID Bio,",
+            "In laboratory tests across target proteins,"
+          ]
+        },
+        "purpose": {
+          "ja": "SynthID Bioは、生物設計に透かしを埋め込み、オープンサイエンスデータベースの整合性を保ちつつバイオセキュリティを強化することを目的としている。",
+          "en": "SynthID Bio aims to embed watermarks into biological designs to strengthen biosecurity and preserve the integrity of open scientific databases.",
+          "anchors": [
+            "SynthID Bio embeds an imperceptible,",
+            "In laboratory tests across target proteins,"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "SynthID BioはAI生成のタンパク質配列や予測3D構造に目立たない透かしを直接埋め込む技術である。",
+            "en": "SynthID Bio is a technology that embeds an imperceptible, verifiable watermark directly into AI-generated protein sequences and predicted 3D structures.",
+            "anchors": [
+              "SynthID Bio embeds an imperceptible,"
+            ]
+          },
+          {
+            "ja": "実験室試験で、透かし入りのタンパク質設計は非透かし入りのタンパク質と同等の性能と自然多様性を示した。",
+            "en": "In laboratory tests across target proteins, watermarked designs matched the performance and natural diversity of unwatermarked versions.",
+            "anchors": [
+              "In laboratory tests across target proteins,"
+            ]
+          },
+          {
+            "ja": "透かし入りと透かしなしのタンパク質設計について、3つのターゲットで結合親和性をKDで比較した。",
+            "en": "Binding affinity, measured as KD, was compared between watermarked and unwatermarked protein designs across three targets.",
+            "anchors": [
+              "Binding affinity, measured as KD,"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "eventId": 1242,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/products-and-platforms/devices/googlebook/henry-cavill-googlebook-video-game/",
+      "title": "Game on: Henry Cavill is putting Googlebook to the test",
+      "publishedOn": "2026-09-29",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "9548bf89690dd7f407ed1abf1d30859f4d0b39d6c5361d671b8f41700c85a6cd",
+      "sourceRevision": "d63a9deed4f4710aa59bb9edba296a379a7a96b7f269882d0cac0ee02c297b40",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "d63a9deed4f4710aa59bb9edba296a379a7a96b7f269882d0cac0ee02c297b40",
+      "bodyTextSha": "d1b5ab6e1983b3c770ee4b1ccdea6e445e23307314a66dd40363ff174c1c92f6",
+      "bodyChars": 1756,
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "28356b69dc7d914ec33e2f6d3ed6d6aee43cc35885b6cb7c1cab39455aee5679",
+        "bodySha": "d63a9deed4f4710aa59bb9edba296a379a7a96b7f269882d0cac0ee02c297b40",
+        "startedAt": "2026-10-03T14:04:38.147746+00:00",
+        "publicAt": "2026-10-03T14:04:48.345+00:00",
+        "generationMs": 5194,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "ヘンリー・カヴィル、Googlebookでゲーム開発に挑戦へ",
+          "en": "Henry Cavill Partners with Googlebook to Develop Video Game",
+          "anchors": [
+            "Henry Cavill is partnering with Googlebook"
+          ]
+        },
+        "summary": {
+          "ja": "俳優のヘンリー・カヴィルは2026年11月にGoogleと協力し、次世代ラップトップのGooglebookを使ってビデオゲームを制作する予定だ。",
+          "en": "Actor Henry Cavill will team up with Google in November 2026 to build a video game using the next-generation Googlebook laptop.",
+          "anchors": [
+            "Sep 29, 2026",
+            "This November, Henry is teaming up"
+          ]
+        },
+        "purpose": {
+          "ja": "Googlebookの性能と独自ソフトウェア機能を活用して創作を支援し、ラップトップの新たな可能性を示すこと。",
+          "en": "To showcase Googlebook's powerful hardware and unique software experiences in supporting creative projects and redefining laptop capabilities.",
+          "anchors": [
+            "Laptops need to keep up with our growing",
+            "This November, Henry is teaming up"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "ヘンリー・カヴィルは2026年11月にGoogleと協力し、Googlebookを使ってビデオゲームを制作する予定だ。",
+            "en": "Henry Cavill will team up with Google in November 2026 to build a video game using Googlebook.",
+            "anchors": [
+              "Sep 29, 2026",
+              "This November, Henry is teaming up"
+            ]
+          },
+          {
+            "ja": "GooglebookはGemini Intelligence対応の高性能ラップトップで、電話連携のContinue on phone syncingや音声からテキスト変換のRambler speech-to-text、Antigravityなどの独自ソフトウェア体験を備えている。",
+            "en": "Googlebook is a high-performance laptop crafted for Gemini Intelligence, featuring unique software experiences like Continue on phone syncing, Rambler speech-to-text, and Antigravity.",
+            "anchors": [
+              "Laptops need to keep up with our growing"
+            ]
+          },
+          {
+            "ja": "ヘンリー・カヴィルは俳優、プロデューサー、技術愛好家として複数の事業を管理しつつ、ゲーム、ファンタジー、ハイパフォーマンス技術への情熱を持っている。",
+            "en": "Henry Cavill, an actor, producer, and tech enthusiast, manages multiple ventures and maintains a passion for gaming, fantasy lore, and high-performance technology.",
+            "anchors": [
+              "Laptops need to keep up with our growing",
+              "We recently met with Henry"
+            ]
+          },
+          {
+            "ja": "今回のパートナーシップを通じて、ヘンリー自身のクリエイティブなプロジェクトをGooglebookで実現し、次世代ラップトップの可能性を示す。",
+            "en": "Through this partnership, Henry is realizing his creative projects on Googlebook, demonstrating the potential of next-generation laptops.",
+            "anchors": [
+              "Laptops need to keep up with our growing",
+              "We recently met with Henry"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "eventId": 1240,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-september-2026/",
+      "title": "The latest AI news we announced in September 2026",
+      "publishedOn": "2026-10-02",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "67ba280e645caa3ad3654dfd93aac588394931c08052a9654273a2061a24aa3c",
+      "sourceRevision": "c3d6b5872910be9119b93e8cfb07f83fa46d3e8875a8321d1210f9df8e18fabe",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "c3d6b5872910be9119b93e8cfb07f83fa46d3e8875a8321d1210f9df8e18fabe",
+      "bodyTextSha": "10818d2e2370521373eea55ddfc0300819ac1f8f7bbef1c01ead54b14e213b28",
+      "bodyChars": 10246,
+      "reviewedPayloadSha": "65dbaf91f551d5a401eede1afa38ab596085ebe0bf03696574871d1045bf6d4c",
+      "replacement": {
+        "reason": "unsupported-comparison-baseline",
+        "payloadSha": "9afb945834bbffaa64d37e3022cf40b0db742f6a229482398aecdbd5c46042f8",
+        "bodySha": "c3d6b5872910be9119b93e8cfb07f83fa46d3e8875a8321d1210f9df8e18fabe",
+        "startedAt": "2026-10-03T14:07:22.252439+00:00",
+        "publicAt": "2026-10-03T14:07:31.021+00:00",
+        "generationMs": 6077,
+        "jobAttempts": 3
+      },
+      "copy": {
+        "title": {
+          "ja": "2026年9月に発表されたGoogleの最新AIアップデート概要",
+          "en": "Recap of Google's Latest AI Announcements in September 2026",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1706,
+            "sha256": "c24bf0dea4d3adfcb41e5301d7570accbe119ea50709af8ebb2f5ff5b4921c72"
+          }
+        },
+        "summary": {
+          "ja": "Googleは2026年9月にGemini 4 Argonなど複数の先端AIモデルや科学的マイルストーンを発表した。",
+          "en": "In September 2026, Google announced multiple advanced AI models including Gemini 4 Argon and significant scientific milestones.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1706,
+            "sha256": "c24bf0dea4d3adfcb41e5301d7570accbe119ea50709af8ebb2f5ff5b4921c72"
+          }
+        },
+        "purpose": {
+          "ja": "Googleは20年を超える期間、AIの研究・ツール・インフラに投資し、医療や危機対応、教育など多様な分野でAIの恩恵を解放することを目指している。",
+          "en": "Google aims to unlock AI benefits across diverse fields such as healthcare, crisis response, and education through over 20 years of investment in AI research, tools, and infrastructure.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1706,
+            "sha256": "c24bf0dea4d3adfcb41e5301d7570accbe119ea50709af8ebb2f5ff5b4921c72"
+          }
+        },
+        "facts": [
+          {
+            "ja": "新たなフロンティアモデルであるGemini 4 Argonは高度な推論能力と100万トークンの出力制限を備え、特にサイバーセキュリティ防御に強みを持つ。現在はFairwindプログラムを通じて信頼されるサイバー防御者に限定公開されている。",
+            "en": "The new frontier model Gemini 4 Argon offers advanced reasoning and a 1-million-token output limit, excelling in cybersecurity defense; currently rolling out to trusted cyber defenders via the Fairwind Program.",
+            "evidenceSpan": {
+              "start": 1306,
+              "end": 2975,
+              "sha256": "362b52c1260de66157dbc0dc30e5124b54b738d8bd39e0c4a79a7dc4015264ad"
+            }
+          },
+          {
+            "ja": "Gemini 3.8 Flashは3.7 Flashと同じ速度と低コストを保ち、ソフトウェア工学や多段階問題解決に進化し、3.8 Flash Cyberは自動的に脆弱性を発見しコード修正を行う機能を備える。",
+            "en": "Gemini 3.8 Flash delivers improved reasoning and coding performance at the same speed and low cost as 3.7 Flash; 3.8 Flash Cyber offers autonomous vulnerability discovery and automated code patching.",
+            "evidenceSpan": {
+              "start": 1306,
+              "end": 2975,
+              "sha256": "362b52c1260de66157dbc0dc30e5124b54b738d8bd39e0c4a79a7dc4015264ad"
+            }
+          },
+          {
+            "ja": "Gemini 3.8 Liveおよび3.8 Live Extended Thinkingは自然な音声対話が可能な音声モデルで、Google AI Studioや複数のGoogleサービスで利用可能となっている。",
+            "en": "Gemini 3.8 Live and 3.8 Live Extended Thinking are natural language audio models available to developers and users across various Google platforms.",
+            "evidenceSpan": {
+              "start": 2575,
+              "end": 3913,
+              "sha256": "cbfe83d3fc2da5f3f56b8981c92a06bb781d5290d0f1c9e5eca0373f594d4453"
+            }
+          },
+          {
+            "ja": "AlphaGenome Atlasはヒトゲノムの90億の可能な単一ヌクレオチド変異の効果を予測するデータベースで、希少疾患研究や複雑な遺伝学の突破口となっている。NASAとの協力により開発されたMAPL-EMITは宇宙から世界のメタン漏出を追跡し、人間の専門家より50％多い排出を検出、これまで地図化されていなかった23,000を超えるプルームを明らかにした。",
+            "en": "AlphaGenome Atlas predicts effects of all 9 billion possible single nucleotide variants in the human genome, accelerating rare disease research. MAPL-EMIT, developed with NASA, tracks global methane leaks from space detecting 50% more emissions than human experts and over 23,000 previously unmapped plumes.",
+            "evidenceSpan": {
+              "start": 7352,
+              "end": 8695,
+              "sha256": "e00ddb72da9778da4e5ca86f4e5af6e0cfa3040794a7d7f9f51b24ac8c130a26"
+            }
+          },
+          {
+            "ja": "Project SuncatcherはGoogle TPUsの宇宙環境での動作を検証する実験衛星を打ち上げる予定で、宇宙でのAIインフラ構築の可能性を探るプロジェクトである。",
+            "en": "Project Suncatcher will launch a test satellite to evaluate Google TPUs under space conditions and explore long-term AI infrastructure possibilities.",
+            "evidenceSpan": {
+              "start": 5961,
+              "end": 7752,
+              "sha256": "44ca2769182fe9fd75f56e2ca14ad8764217ab706ca89909968913e29d562330"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "eventId": 1212,
+      "sourceId": "primary-ir-NVDA",
+      "ticker": "NVDA",
+      "url": "https://blogs.nvidia.com/blog/gpus-openai-gpt-6-astra-ultrafast/",
+      "title": "How NVIDIA GPUs Help Accelerate OpenAI’s GPT-6 Astra Ultrafast",
+      "publishedOn": "2026-10-01",
+      "observedAt": "2026-10-01T23:46:19.836+00:00",
+      "eventSha": "0661108721ec9965b75451445f59c8bcf970ac3daf6b1676ab23d30d10d7dd87",
+      "sourceRevision": "57e080d6a552dfd14c46e9aaacf7acd64ae7f601b5fb5e3697d4e20140bf2de1",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "57e080d6a552dfd14c46e9aaacf7acd64ae7f601b5fb5e3697d4e20140bf2de1",
+      "bodyTextSha": "9af7a253f3a960c1439be7b9422fd58aaf2545c679ae7dc5ed40f22ac7585869",
+      "bodyChars": 2531,
+      "reviewedPayloadSha": "3bfc75bcb6acf4d56f793969aaeee47c50f20ad71f69aed875f6b1bfd26a3f6d",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "88de79415cdbcd7a738ccac99142501a5be2c49272616e7b9b98e66dd78ac3f9",
+        "bodySha": "57e080d6a552dfd14c46e9aaacf7acd64ae7f601b5fb5e3697d4e20140bf2de1",
+        "startedAt": "2026-10-02T18:05:30.303762+00:00",
+        "publicAt": "2026-10-02T18:05:37.045+00:00",
+        "generationMs": 6237,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "NVIDIA GPUがOpenAIのGPT-6 Astra Ultrafastを加速",
+          "en": "How NVIDIA GPUs Help Accelerate OpenAI’s GPT-6 Astra Ultrafast",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1719,
+            "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+          }
+        },
+        "summary": {
+          "ja": "OpenAIのGPT-6 Astra UltrafastはNVIDIA Blackwell GPU上で動作し、標準モードに比べて最大8倍速いトークン生成を実現している。",
+          "en": "OpenAI's GPT-6 Astra Ultrafast runs on NVIDIA Blackwell GPUs, offering up to 8x faster token generation compared to the standard mode.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1719,
+            "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+          }
+        },
+        "purpose": {
+          "ja": "NVIDIAのプラットフォームの柔軟性とOpenAIの継続的最適化により、AIの応答速度とインフラの生産性を向上させることを目的としている。",
+          "en": "The purpose is to enhance AI response speeds and infrastructure productivity through NVIDIA's flexible platform and OpenAI's ongoing optimizations.",
+          "evidenceSpan": {
+            "start": 1319,
+            "end": 2531,
+            "sha256": "4d9cbb703c125df951500b081bb9b12fef24003b96380d8adb9529c2529c5259"
+          }
+        },
+        "facts": [
+          {
+            "ja": "GPT-6 Astra UltrafastはNVIDIA Blackwell GPUs上で動作し、標準モードに比べ最大8倍速いトークン生成を提供する。",
+            "en": "GPT-6 Astra Ultrafast runs on NVIDIA Blackwell GPUs and offers up to 8x faster token generation than the Astra Standard mode.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1719,
+              "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+            }
+          },
+          {
+            "ja": "この高速化は、コードの編集・テスト・デバッグのサイクルを短縮し、インタラクティブアプリケーションの応答性を高める可能性がある。",
+            "en": "The acceleration can shorten coding agents’ edit-test-debug cycles and make interactive applications feel more responsive.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1719,
+              "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+            }
+          },
+          {
+            "ja": "OpenAIは自身のモデルを用いてNVIDIA GPU上で動作する推論ソフトウェアの最適化を続けており、性能の向上を図っている。",
+            "en": "OpenAI uses its own models to help refine inference software running on NVIDIA GPUs; that ongoing work can improve response speed and infrastructure productivity over time.",
+            "evidenceSpan": {
+              "start": 1319,
+              "end": 2531,
+              "sha256": "4d9cbb703c125df951500b081bb9b12fef24003b96380d8adb9529c2529c5259"
+            }
+          },
+          {
+            "ja": "NVIDIAのプログラマブルなプラットフォームにより、開発者はトレーニング、推論、強化学習で同じインフラを再利用でき、需要に応じて計算資源の活用を最適化できる。",
+            "en": "NVIDIA’s programmable platform allows developers to reuse infrastructure across training, inference, and reinforcement learning, optimizing compute resource utilization as demand changes.",
+            "evidenceSpan": {
+              "start": 1319,
+              "end": 2531,
+              "sha256": "4d9cbb703c125df951500b081bb9b12fef24003b96380d8adb9529c2529c5259"
+            }
+          },
+          {
+            "ja": "GPT-6 Astra Ultrafastは現在、OpenAIのAPIやChatGPT Work、Codexの対象ユーザーに提供されている。",
+            "en": "GPT-6 Astra Ultrafast is now available through OpenAI’s API and to eligible ChatGPT Work and Codex users.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1719,
+              "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "eventId": 1216,
+      "sourceId": "primary-ir-NVDA",
+      "ticker": "NVDA",
+      "url": "https://blogs.nvidia.com/blog/coreweave-agentic-ai-vera-rubin/",
+      "title": "From Training to Production, NVIDIA and CoreWeave Close the Loop on Agentic AI",
+      "publishedOn": "2026-09-30",
+      "observedAt": "2026-09-30T15:11:01.984+00:00",
+      "eventSha": "a0fa91c1d98a37e4b93fcec904bc2aa1c15b5c0206a86439a227d320a6a1ea30",
+      "sourceRevision": "2db2bd6d219ed5aa54c64aeb0ab841bd6178774cfc6f537e2fcffa00a744362e",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "2db2bd6d219ed5aa54c64aeb0ab841bd6178774cfc6f537e2fcffa00a744362e",
+      "bodyTextSha": "66bb3f7b0050006c13a52eb59736a25cb767e8602d61320b686ad9bcb94b9812",
+      "bodyChars": 8409,
+      "reviewedPayloadSha": "d68ab30c4358d8fbc8b0768f8342ce84e0d3476ba4d08e42fe3ef760130c0814",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "edbd114105067cd2a11dd67a2f86be1233fe1e84465c357726f891229b1b3eb7",
+        "bodySha": "2db2bd6d219ed5aa54c64aeb0ab841bd6178774cfc6f537e2fcffa00a744362e",
+        "startedAt": "2026-10-02T18:06:21.173328+00:00",
+        "publicAt": "2026-10-02T18:06:30.813+00:00",
+        "generationMs": 8573,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "トレーニングから本番運用まで：NVIDIAとCoreWeaveがエージェントAIにおいて連携を完結",
+          "en": "From Training to Production: NVIDIA and CoreWeave Close the Loop on Agentic AI",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1603,
+            "sha256": "db6102e261916157b3623994e7f6933fe6aca5cf53ab0924b4d26973a7d1cbf6"
+          }
+        },
+        "summary": {
+          "ja": "CoreWeaveはNVIDIA Vera Rubin NVL72システムの提供開始を発表し、応用AI研究所Cognitionが本番ワークロードを実行している。Vera CPUも今後提供する予定で、NVIDIAとの共同開発によりAIの学習・強化学習・推論を支える基盤を提供する。",
+          "en": "CoreWeave announced availability of NVIDIA Vera Rubin NVL72 systems, with Cognition running production workloads on Vera Rubin. CoreWeave also plans to offer NVIDIA Vera CPU; its collaboration with NVIDIA supports AI training, reinforcement learning and inference.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1603,
+            "sha256": "db6102e261916157b3623994e7f6933fe6aca5cf53ab0924b4d26973a7d1cbf6"
+          }
+        },
+        "purpose": {
+          "ja": "NVIDIAとCoreWeaveは共同開発した包括的なAIプラットフォームを通じて、トレーニングから評価、推論、本番運用までのAIモデル及びエージェントの継続的改善サイクルを加速し、多様なAI需要に応えることを目的としている。",
+          "en": "NVIDIA and CoreWeave aim to accelerate the continuous improvement cycle of AI models and agents from training to evaluation, inference, and production through a co-engineered comprehensive AI platform, addressing diverse AI workload requirements.",
+          "evidenceSpan": {
+            "start": 4788,
+            "end": 6514,
+            "sha256": "94e37f0e943f6d831364ae6859275e5fa05dc18235c9ac7bdcf363528339436c"
+          }
+        },
+        "facts": [
+          {
+            "ja": "CognitionはCoreWeave上でDevin向けのトレーニング、強化学習、本番推論を実行している。また、Vera Rubin上で本番ワークロードを実行する最初の顧客となった。",
+            "en": "Cognition runs training, reinforcement learning and production inference for Devin on CoreWeave. It is also the first customer running production workloads on Vera Rubin.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1603,
+              "sha256": "db6102e261916157b3623994e7f6933fe6aca5cf53ab0924b4d26973a7d1cbf6"
+            }
+          },
+          {
+            "ja": "Cognitionの初期テストでは、SWE-2推論ワークロードでVera Rubin NVL72の総トークンスループットがGB200 NVL72比で最大4.8倍となった。NVIDIAの発表は、Devinでのリアルタイムコード生成の高速化や多段推論の応答性向上につながるとしている。",
+            "en": "In early tests on SWE-2 inference workloads, Cognition recorded up to a 4.8x increase in total token throughput on Vera Rubin NVL72 over GB200 NVL72. The announcement links those gains to faster real-time code generation and more responsive multistep reasoning for Devin.",
+            "evidenceSpan": {
+              "start": 1203,
+              "end": 2788,
+              "sha256": "0de6196aac23618d8b26b9d72a9f0931c9032eb7db0dfa42e806202bf636accb"
+            }
+          },
+          {
+            "ja": "CoreWeaveのVera構成は単一ラックに128 CPU・11,264コアを搭載し、各一コアなら11,000超の独立したエージェント環境を同時実行できる。テストでは、Vera CPU上でエージェント用サンドボックスの起動が3倍超高速化した。",
+            "en": "CoreWeave’s Vera configuration provides 128 CPUs and 11,264 cores per rack, enough for more than 11,000 concurrent isolated agent environments at one core each. In testing, CoreWeave achieved more than 3x faster agent sandbox startup times on Vera CPUs.",
+            "evidenceSpan": {
+              "start": 3421,
+              "end": 5188,
+              "sha256": "cd625a85958c277bae782b2439b765e2041818cb0a11bd1cff2a1668e41d9845"
+            }
+          },
+          {
+            "ja": "CoreWeaveはWeights & BiasesやOpenPipeとの連携によるCoreWeave Forgeを提供し、モデル・エージェントの継続的改善環境を一元化、ユーザーはサーバーレスの強化学習や微調整で自前のトレーニングレシピを試行可能となっている。",
+            "en": "CoreWeave launched CoreWeave Forge, a unified environment integrating Weights & Biases, OpenPipe, enabling continuous model and agent improvement with serverless supervised fine-tuning and reinforcement learning to experiment with user training recipes.",
+            "evidenceSpan": {
+              "start": 4788,
+              "end": 6514,
+              "sha256": "94e37f0e943f6d831364ae6859275e5fa05dc18235c9ac7bdcf363528339436c"
+            }
+          },
+          {
+            "ja": "CoreWeaveは医療や大手企業を含む多数のAIラボへサービス提供し、MLPerfにおける全ラウンドで記録的な結果を達成。NVIDIAと共同で実証済みの堅牢かつ便利なAIインフラ基盤を提供している。",
+            "en": "CoreWeave serves many AI labs including healthcare and major enterprises, achieving record MLPerf results in all rounds, providing a proven robust and user-friendly AI infrastructure jointly developed with NVIDIA.",
+            "evidenceSpan": {
+              "start": 7487,
+              "end": 8409,
+              "sha256": "f59ff1d989289cb82cfad81b1737bed1464dfb9234f0378d0ae03c0cc10ed7d7"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "eventId": 1113,
+      "sourceId": "microsoft-blog",
+      "ticker": "MSFT",
+      "url": "https://blogs.microsoft.com/blog/2026/10/01/microsoft-365-and-linkedin-leadership-update/",
+      "title": "Microsoft 365 and LinkedIn leadership update",
+      "publishedOn": null,
+      "publishedAt": "2026-10-01T15:03:27+00:00",
+      "observedAt": "2026-10-01T15:05:14.219+00:00",
+      "eventSha": "ee84aa16b08a2d1ac1aad895501aa452eb4b1372c11155b9d272d391e918ab76",
+      "sourceRevision": "ee84aa16b08a2d1ac1aad895501aa452eb4b1372c11155b9d272d391e918ab76",
+      "acquisitionTextSha": "adfa10bb7ea0760f8bd4c78800165c5b1317d077da8796760175c530ca4721c0",
+      "acquisitionChars": 5817,
+      "bodyTextSha": "1c2e8a0f8927cde1ee74da21448a76ba543f9403086c01b0d495dd121f7721e8",
+      "bodyChars": 5716,
+      "provenance": "signal-article",
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "bodyPublishedOn": "2026-10-01",
+      "bodyFetchedAt": "2026-10-04T18:52:44.696874+00:00",
+      "rawContentSha": "2028286961d8d4cd9c6eda4d4be1f5a4935e935772daf4c09c037dc973495abc",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "d5ff576fdea89cf8e3ea9c2c082c140cfe4b2d2021963491f3fd8ca2e4a20502",
+        "bodySha": "1c2e8a0f8927cde1ee74da21448a76ba543f9403086c01b0d495dd121f7721e8",
+        "startedAt": "2026-10-04T14:22:30.568500+00:00",
+        "publicAt": "2026-10-04T14:22:41.035+00:00",
+        "generationMs": 8406,
+        "jobAttempts": 3
+      },
+      "reviewedPayloadSha": "769bf76d260aba59ea07792e26530dde733a16170fedafaf6f7387868bb19e63",
+      "amendment": {
+        "field": "facts[4]",
+        "language": "ja",
+        "beforeSha": "f28c3c965ced6fe3e9ee20da0a06162bf83c0460972c8eb48ff1ec54ef33e1f4",
+        "text": "Dan Shapero氏はLinkedInのCEOを、Mohak Shroff氏は現在の役職をそれぞれ継続し、両氏ともSatya Nadella氏に報告する。",
+        "evidenceSpan": {
+          "start": 0,
+          "end": 1731,
+          "sha256": "bb0af47c9e8833f754d79b550af8827ae6ca3e8a0c1458f0bfe5d4d2eb6d06fe"
+        }
+      },
+      "allowSameBodyRefetch": true
+    }
+  ],
+  "retryArticles": [
+    {
+      "eventId": 1089,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/company-news/outreach-and-initiatives/google-org/educause-2026/",
+      "title": "Supporting AI readiness in higher education",
+      "publishedOn": "2026-09-30",
+      "publishedAt": null,
+      "observedAt": "2026-09-30T16:44:01.734+00:00",
+      "eventSha": "db913424d88d0587bb75047416cd6b88fdb746aee921b20240674d8e01423462",
+      "sourceRevision": "b8e4e4478f143c5d8092df26cc2c812d472773a3667feb1dd57c8b0cbbd1d816",
+      "bodyTextSha": "a4c561ef8ad0666d36082d9e0e9baa365e916a5108ab0620c7960a4e23c2cfb5",
+      "bodyChars": 4085,
+      "provenance": "primary-article",
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "reviewedFailure": {
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T05:19:44.400747+00:00",
+        "payloadSha": "b21e33ebaa9859cb96b0502eb60f73aa57191b1e52345ea4d96d19c99623e06a"
+      },
+      "failure": {
+        "attempts": 6,
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T09:19:46.244919+00:00",
+        "payloadSha": "2c9abddf9d706bbc0699cb5ec22da069fa77ac3f493968f6bde7dce25a3253b5"
+      },
+      "copy": {
+        "title": {
+          "ja": "Google.org、高等教育のAI活用準備を支援",
+          "en": "Google.org supports AI readiness in higher education",
+          "anchors": [
+            "At the EDUCAUSE annual conference,"
+          ]
+        },
+        "summary": {
+          "ja": "Google.orgはEDUCAUSE年次会議で、倫理的なAI活用の準備、大学の戦略的計画の刷新、学生の成功を支える高等教育の取り組みへの支援を発表した。",
+          "en": "At the EDUCAUSE annual conference, Google.org announced support for higher education initiatives covering ethical AI readiness, institutional planning and student success.",
+          "anchors": [
+            "At the EDUCAUSE annual conference,"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "USUはGoogle.orgの支援で、Grow with Googleの教材とAIを組み込んだ授業を専門能力開発の認定プログラムに取り入れている。30大学の教育者が今後、成人学習者の支援手法を試す。",
+            "en": "With Google.org support, USU is incorporating Grow with Google resources and AI-integrated lessons into its professional development certification. Educators across 30 universities will test the methods for supporting adult learners.",
+            "anchors": [
+              "Supported by Google.org, USU is integrating"
+            ]
+          },
+          {
+            "ja": "USUはAIを活用したキャリア重視の地域コミュニティ学習を広げるため、今後15カ月で加盟大学の10モデルを収集・質的分析し、事例集の公表と研究・実践の方針を検討する作業部会の設置を予定する。",
+            "en": "USU plans to collect and qualitatively analyze 10 models at member institutions over the next 15 months, publish case studies and convene a working group to develop a research and practice agenda for AI-enhanced, career-focused community-based learning.",
+            "anchors": [
+              "To meet this moment, USU is leading"
+            ]
+          },
+          {
+            "ja": "Education Design LabはGoogle.orgの支援を受け、Reimagining Community Collegesを通じてコミュニティカレッジの戦略的計画を刷新し、学生を将来の仕事に備えさせる取り組みを進めている。",
+            "en": "With support from Google.org, Education Design Lab is using Reimagining Community Colleges to transform strategic planning at community colleges and prepare students for the future of work.",
+            "anchors": [
+              "Strategic planning at community colleges is often treated"
+            ]
+          },
+          {
+            "ja": "2027年初頭には、州単位のコミュニティカレッジ制度を対象に、技術を活用して学生支援を改善する取り組みの全国コンペティションを開始する予定。",
+            "en": "A national competition will launch in early 2027 for a state-level community college system to undertake an initiative using technology-enabled solutions to better serve students.",
+            "anchors": [
+              "Following a successful summit of educators this week"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "教育者を中心に据えて高等教育でのAI活用を支援する。",
+          "en": "To support AI use in higher education with educators at the center.",
+          "anchors": [
+            "To help close this gap, Google.org is supporting"
+          ]
+        }
+      }
+    },
+    {
+      "eventId": 1184,
+      "sourceId": "nebius-blog",
+      "ticker": "NBIS",
+      "url": "https://nebius.com/blog/posts/in-agentic-rl-faster-tokens-are-not-enough",
+      "title": "In agentic RL, faster tokens are not enough",
+      "publishedOn": null,
+      "publishedAt": "2026-09-28T00:00:00+00:00",
+      "observedAt": "2026-10-02T13:07:50.294+00:00",
+      "eventSha": "60dec6e3c655c008730bfdee6f97ca7aec3ac0ba91c40ddf2594561268e02cad",
+      "sourceRevision": "60dec6e3c655c008730bfdee6f97ca7aec3ac0ba91c40ddf2594561268e02cad",
+      "bodyTextSha": "990f6b18ed6ac6c4579648c92ce8a6164b630585c48bc7cd839ec77f57ed290b",
+      "bodyChars": 22262,
+      "provenance": "signal-document",
+      "reviewedFailure": {
+        "reason": "invalid-copy",
+        "failedAt": "2026-10-04T05:18:12.402305+00:00",
+        "payloadSha": "3e1712099fd117351a564f5110ad20d7a40e0c65282c4ac65f4cddd6dcf3bcb3"
+      },
+      "failure": {
+        "attempts": 6,
+        "reason": "invalid-copy",
+        "failedAt": "2026-10-04T09:18:14.458034+00:00",
+        "payloadSha": "9ca8a54a37c7a9d6f5a6194476a368dfd2546aa5dfc18f61792a9695ae7ef557"
+      },
+      "copy": {
+        "title": {
+          "ja": "Nebius、エージェント強化学習のバッチ収集時間短縮を報告",
+          "en": "Nebius reports shorter batch collection time for agentic RL",
+          "anchors": [
+            "On a Terminal-Bench-based workload,"
+          ]
+        },
+        "summary": {
+          "ja": "NebiusのTerminal-Benchベースの実験では、重みを固定した条件で256軌跡のバッチ収集時間が591.8秒から196.1秒に短縮し、66.9%削減された。",
+          "en": "In Nebius’s Terminal-Bench-based experiment, fixed-weight collection of a batch of 256 trajectories fell from 591.8 to 196.1 seconds, a 66.9% reduction.",
+          "anchors": [
+            "66.9% less time to collect a training batch",
+            "On a Terminal-Bench-based workload,"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "固定重みの比較では、ルーティング、サンドボックスの配置、候補軌跡の供給量を変え、バッチ収集時間を測定した。重み切り替えは含まれない。",
+            "en": "The fixed-weight comparison measured batch collection while varying routing, sandbox placement and candidate supply. It did not include a serving-weight transition.",
+            "anchors": [
+              "With the serving stack in place,",
+              "Holding weights fixed isolates"
+            ]
+          },
+          {
+            "ja": "段階的な重み更新と、古いポリシーで始めた作業をK=8まで適格とする条件の組み合わせにより、重み切り替えを含む反復ステップは240.1秒となり、全エンジン停止方式より43.7%短縮した。どちらか単独の効果ではない。",
+            "en": "Combining staged weight updates with longer work eligibility under K=8 brought the repeating step, including the weight transition, to 240.1 seconds, a 43.7% reduction in interval time compared with pausing all engines. The gain cannot be attributed to either change alone.",
+            "anchors": [
+              "Updating one of four engines at a time produced",
+              "It should not be attributed to either change alone."
+            ]
+          },
+          {
+            "ja": "SWE-Benchでは、固定重みと段階的な物理更新を同じ負荷条件で比較し、それぞれ六つの区間を測定した。平均ステップ時間は固定重みで383.5秒、段階的な物理更新で427.8秒となり、ライブ更新による時間増加は約11%だった。",
+            "en": "On SWE-Bench, six intervals per run under the same workload contract averaged 383.5 seconds with fixed weights and 427.8 seconds with progressive physical updates, an added step-time cost of about 11%.",
+            "anchors": [
+              "Figure 4. SWE-Bench warm step time",
+              "Five of the six progressive intervals stayed below"
+            ]
+          },
+          {
+            "ja": "段階的な公開経路で更新したのは、全actorパラメータではなくチェックポイント由来のtargetと投機デコーダーのセンチネルテンソル。訓練の逆伝播・最適化処理も計測外で、完全な端から端までの訓練ループは未検証。",
+            "en": "The progressive path updated checkpoint-backed target and speculative-decoder sentinel tensors rather than every actor parameter. Trainer backward and optimizer compute were excluded, so the complete end-to-end training loop remains unvalidated.",
+            "anchors": [
+              "The progressive path exercises the full publication machinery"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "長期エージェント強化学習で、次の訓練可能なバッチが届くまでの待ち時間を短縮する。",
+          "en": "To shorten the wait for the next usable training batch in long-horizon agentic RL.",
+          "anchors": [
+            "Your model is generating tokens faster,",
+            "We set out to shorten that wait."
+          ]
+        }
+      }
+    },
+    {
+      "eventId": 1239,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+      "title": "Gemini 4 Argon: our next era of frontier intelligence",
+      "publishedOn": "2026-09-30",
+      "publishedAt": null,
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "c22181a9871c320d11d719c09c4cbafc7fa59b0c068860cf6a8d9d5209e97a65",
+      "sourceRevision": "fa3545e0a29030764e1c6bc08526915a73da594a28a89a7b8976f32b833ca00d",
+      "bodyTextSha": "b0745badf7f449190978629199e473909c0ee901042b9cc9467d5f3071010816",
+      "bodyChars": 10333,
+      "provenance": "primary-article",
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "reviewedFailure": {
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T05:13:15.206638+00:00",
+        "payloadSha": "0c5785054793e6055c930173084609bd631beb9ea117a0a3e0e945cf796a4103"
+      },
+      "failure": {
+        "attempts": 6,
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T09:13:24.721870+00:00",
+        "payloadSha": "aa82f4fc0abf7f016e040e0d989daa117cf60b3508ed7b7f0489d305f4f61d9d"
+      },
+      "copy": {
+        "title": {
+          "ja": "Google、Gemini 4 Argonを発表、Fairwindのサイバー防御担当者へ展開",
+          "en": "Google announces Gemini 4 Argon rollout to Fairwind cyber defenders",
+          "anchors": [
+            "Today, we’re announcing our new frontier model,"
+          ]
+        },
+        "summary": {
+          "ja": "GoogleはGemini 4 ArgonをFairwind Programの信頼されたサイバー防御担当者へ展開中。導入価格は入力100万トークンあたり$2、出力100万トークンあたり$10で、キャッシュ済み入力は入力料金から95%割引となる予定。",
+          "en": "Google is rolling out Gemini 4 Argon to trusted cyber defenders through its Fairwind Program. It will launch at an introductory price of $2 per million input tokens and $10 per million output tokens, with cached input priced at 95% off the input token price.",
+          "anchors": [
+            "Today, we’re announcing our new frontier model,",
+            "of $2 per million input tokens"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "導入期間終了後は、入力100万トークンあたり$4、出力100万トークンあたり$20の料金を適用する。",
+            "en": "After the introductory period, pricing will be $4 per 1M input tokens and $20 per 1M output tokens.",
+            "anchors": [
+              "After the introductory period expires,"
+            ]
+          },
+          {
+            "ja": "出力トークン上限を従来の64Kから1Mへ拡大し、長く複雑な処理で深い推論を支える。",
+            "en": "The output token limit is being expanded from 64K to 1M to support deeper reasoning in longer, more complex workflows.",
+            "anchors": [
+              "To support Gemini 4 Argon’s capabilities across longer,"
+            ]
+          },
+          {
+            "ja": "ArgonエージェントがGoogleのデータセンターでメモリ最適化を特定・適用した。展開後に解放されるメモリは300 TiB超、総削減量の見込みは500 TiB〜1 PiBとしている。",
+            "en": "Argon agents identified and applied memory optimizations across Google’s data centers, freeing over 300 TiB once rolled out, with total savings estimated at 500 TiB to 1 PiB.",
+            "anchors": [
+              "Memory efficiency: A team of Argon agents"
+            ]
+          },
+          {
+            "ja": "誤用防止の安全策は内部・外部のレッドチームが手動・自動の攻撃手法で耐性を試験した。プロンプトインジェクション対策では、自動レッドチーミングと敵対的訓練を用いている。",
+            "en": "Misuse safeguards underwent robustness testing by internal and external red teams using manual and automated attacks. Prompt-injection defenses use automated red teaming and adversarial training.",
+            "anchors": [
+              "Defending against misuse:",
+              "Defending against prompt injection attacks:"
+            ]
+          },
+          {
+            "ja": "高リスクの訓練や評価を始める前に環境を隔離・封鎖することで、サンドボックスの堅牢化を進めている。",
+            "en": "Google is hardening sandbox environments by isolating and sealing them before high-risk training or evaluations begin.",
+            "anchors": [
+              "Hardening systems:"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "初期利用者の評価とフィードバックでシステムを強化してから、開発者・企業・消費者へ展開する計画だ。最初の対象は有料API顧客とGoogle AI Ultra加入者を予定する。",
+          "en": "Google plans to strengthen its systems with early-user evaluations and feedback before releasing to developers, enterprises and consumers, starting with paid API customers and Google AI Ultra subscribers.",
+          "anchors": [
+            "We built Gemini 4 Argon with frontier-level capabilities"
+          ]
+        }
+      }
+    },
+    {
+      "eventId": 1139,
+      "sourceId": "skhynix-news",
+      "ticker": "SKHY",
+      "url": "https://news.skhynix.com/en/skhynix-ventures-story/",
+      "title": "From identifying promising technologies to creating new business opportunities: How SK hynix Ventures finds the path forward",
+      "publishedOn": null,
+      "publishedAt": "2026-10-02T00:59:17+00:00",
+      "observedAt": "2026-10-02T01:00:23.204+00:00",
+      "eventSha": "2be59ac892f1bcb89912d6744ef6c3aaf75d122e9c92fdd7e680a24aaa299813",
+      "sourceRevision": "2be59ac892f1bcb89912d6744ef6c3aaf75d122e9c92fdd7e680a24aaa299813",
+      "bodyTextSha": "77a533eee6d9d8e6a10ff4775c4404a42989f1b4f2623ded227d4de8c252f954",
+      "bodyChars": 11036,
+      "provenance": "signal-document",
+      "reviewedFailure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T17:33:50.008628+00:00",
+        "payloadSha": "d006318238c1a9cfedde0422dc3c22daf991337d6eb06764307db392fba84223"
+      },
+      "copy": {
+        "title": {
+          "ja": "SK hynix Venturesが技術発見から新事業創出までの道を切り拓く方法",
+          "en": "How SK hynix Ventures Advances from Identifying Technologies to Creating New Business",
+          "anchors": [
+            "Over the past decade, SK hynix has gained"
+          ]
+        },
+        "summary": {
+          "ja": "SK hynixのCVC活動は、技術や企業の早期発見から、それらを製品や事業に結び付ける道を探る取り組みへと発展してきた。",
+          "en": "SK hynix’s corporate venture capital activities have evolved from identifying emerging technologies and companies early to seeking ways to connect them to products and businesses.",
+          "anchors": [
+            "Over the past decade, SK hynix has gained"
+          ]
+        },
+        "purpose": {
+          "ja": "SK hynix Venturesは、技術発見にとどまらず社内の研究開発や製造現場の課題解決に資する技術を見出し、長期的な連携を通じて技術を製品化・事業化し、スタートアップとのパートナーシップを強化することを目的とする。",
+          "en": "SK hynix Ventures aims not only to discover technologies but to identify those that address internal R&D and manufacturing challenges, collaborate long-term to translate technologies into products and businesses, and strengthen partnerships with startups.",
+          "anchors": [
+            "The biggest lesson we have learned",
+            "What we aim to do"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "SK hynixのベンチャー投資活動は「技術センシング」から「パスファインディング」へ進化し、技術の早期発見だけでなく、それらを製品や事業に結び付ける道を模索している。",
+            "en": "SK hynix’s venture investment activities have evolved from 'tech sensing,' focused on early identification of emerging technologies and companies, to 'path finding,' which seeks ways to connect those technologies to products and businesses.",
+            "anchors": [
+              "Over the past decade, SK hynix has gained"
+            ]
+          },
+          {
+            "ja": "製造現場の課題に対応するため、SK hynixはFemtoMetrixの第二高調波発生（SHG）技術をDRAM・HBMプロセスで評価し、各工場に複数台の装置を設置することを決定した。また、InfinitesimaのRapid Probe Microscope（RPM）技術をDRAM製造プロセスのパターン監視に適用して有用性を確認し、複数システムの導入計画を確定した。",
+            "en": "To address manufacturing challenges, SK hynix evaluated FemtoMetrix’s Second Harmonic Generation (SHG) technology in DRAM and HBM processes and decided to install multiple tools per fab. It also demonstrated the utility of Infinitesima’s Rapid Probe Microscope (RPM) technology in DRAM pattern monitoring and confirmed plans to deploy multiple systems.",
+            "anchors": [
+              "As semiconductor structures",
+              "Infinitesima drew attention"
+            ]
+          },
+          {
+            "ja": "MemVerge社との連携では、当初のメモリプーリング技術検証から始まり、市場進展に応じてAIの長期記憶管理技術の共同開発へと研究領域を拡大し、共同でAI長期記憶エージェントやメモリ管理フレームワークを開発している。",
+            "en": "SK hynix’s collaboration with MemVerge began with evaluating memory pooling technology and expanded into joint research on AI long-term memory management, including developing an AI long-term memory agent and memory management software framework.",
+            "anchors": [
+              "SK hynix researchers applied",
+              "As the market evolved"
+            ]
+          },
+          {
+            "ja": "SK hynix Venturesは、従来の半導体・メモリ周辺技術に加え、AIインフラや関連産業への投資範囲を拡大し、グローバルのベンチャーキャピタルや専門ファンドとの共同投資も強化している。",
+            "en": "SK hynix Ventures is broadening its investment focus beyond semiconductors and memory-adjacent technologies to AI infrastructure and related industries, while strengthening co-investment with global venture capital firms and specialized funds.",
+            "anchors": [
+              "In response to these changes"
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T17:33:50.008628+00:00",
+        "payloadSha": "d006318238c1a9cfedde0422dc3c22daf991337d6eb06764307db392fba84223",
+        "attempts": 3
+      },
+      "reviewedPayloadSha": "61daadb4f9dc5998d39bb59f886ec0bd783af108c5068fdf15f5b8d69110d02a",
+      "requireFreshCategory": true
+    },
+    {
+      "eventId": 1250,
+      "sourceId": "prnewswire-public",
+      "ticker": "ORCL",
+      "url": "https://www.prnewswire.com/news-releases/oracle-announces-10-million-partnership-with-the-nashville-symphony-302897808.html",
+      "title": "Oracle Announces $10 Million Partnership with the Nashville Symphony",
+      "publishedOn": null,
+      "publishedAt": "2026-10-04T22:00:00+00:00",
+      "observedAt": "2026-10-04T22:05:55.065+00:00",
+      "eventSha": "c3a1d8f6b0ec9ed0d1a0b527e9ef133395c219e55ee5c10597e2b53fa273fdae",
+      "sourceRevision": "c3a1d8f6b0ec9ed0d1a0b527e9ef133395c219e55ee5c10597e2b53fa273fdae",
+      "bodyTextSha": "b990eb4d5488e1fdac3df756314afb24b7e6111d230fa2bccb7f8116206e0186",
+      "bodyChars": 3398,
+      "bodyFetchedAt": "2026-10-04T22:06:01.662567+00:00",
+      "provenance": "issuer-business-document",
+      "issuer": "Oracle",
+      "reviewedFailure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T22:09:24.309796+00:00",
+        "payloadSha": "d130d7513bed8285b99807cf748ad5b3c39d8a60e31dbe053f9363afd375f0b8"
+      },
+      "failure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T22:09:24.309796+00:00",
+        "payloadSha": "d130d7513bed8285b99807cf748ad5b3c39d8a60e31dbe053f9363afd375f0b8",
+        "attempts": 3
+      },
+      "copy": {
+        "title": {
+          "ja": "Oracle、ナッシュビル交響楽団との1,000万ドルの提携を発表",
+          "en": "Oracle announces $10 million partnership with Nashville Symphony",
+          "anchors": [
+            "NASHVILLE, Tenn., Oct. 4, 2026"
+          ]
+        },
+        "summary": {
+          "ja": "Oracleはナッシュビル交響楽団を支えるため、1,000万ドルを投資し、戦略的提携を結ぶと発表した。支援は同楽団の当面の資金需要への対応と、2026-27年シーズンの開催を後押しする。",
+          "en": "Oracle announced a $10 million investment and a strategic partnership to support the Nashville Symphony. The support will help meet its near-term funding needs and proceed with the 2026-27 season.",
+          "anchors": [
+            "NASHVILLE, Tenn., Oct. 4, 2026"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "この支援によって、ナッシュビル交響楽団は2026-27年シーズンを再開できるようになる。",
+            "en": "The support will make it possible for the Nashville Symphony to reinstate the 2026-27 season.",
+            "anchors": [
+              "The investment will allow Music City's orchestra"
+            ]
+          },
+          {
+            "ja": "提携により、財政危機のため10月18日から休業予定だった常勤職員と全楽団員の復帰が可能になる。",
+            "en": "The partnership enables the return of full-time staff and all orchestra members who were scheduled to be furloughed on October 18 because of a financial emergency.",
+            "anchors": [
+              "The partnership enables the Symphony"
+            ]
+          },
+          {
+            "ja": "OracleのCEOクレイ・マゴイアークは、ナッシュビルの文化施設が住民にとって重要だとし、地域の課題解決を支える考えを示した。",
+            "en": "Oracle CEO Clay Magouyrk said cultural institutions matter to Nashville residents and expressed the company's intention to help address local problems.",
+            "anchors": [
+              "Nashville is a city that understands"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "再建を進めるナッシュビル交響楽団の当面の資金需要を支え、演奏活動の継続を後押しすることを目指す。",
+          "en": "The support aims to help the Nashville Symphony meet immediate financial needs and sustain performances while it restructures.",
+          "anchors": [
+            "NASHVILLE, Tenn., Oct. 4, 2026"
+          ]
+        }
+      },
+      "issuerBusinessPolicy": "issuer-business-news-v1",
+      "reviewedPayloadSha": "bdec029baf19b2e338e425a647c9ab2b16287b8b9afa80065f96c5dc9625fd25"
+    }
+  ]
+}
