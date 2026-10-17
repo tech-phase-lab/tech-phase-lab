@@ -3798,6 +3798,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "顧客データ・マーケティング",
         "en": "Customer data / marketing"
       }
+    },
+    "Nemetschek": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Nemetschek / Maxon｜3Dソフト提携",
+        "en": "Nemetschek / Maxon | 3D software bundle"
+      }
     }
   },
   "CRM": {
@@ -6005,6 +6012,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Jabil｜テスト装置の製造委託",
         "en": "Jabil | test-system manufacturer"
+      }
+    },
+    "Yamaichi Electronics": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "山一電機｜テスト用コンタクター",
+        "en": "Yamaichi | semiconductor test contactors"
       }
     }
   },
@@ -8404,6 +8418,15 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "UMC｜成熟プロセス受託製造",
         "en": "UMC | mature-node foundry"
+      }
+    }
+  },
+  "JD": {
+    "SF Holding": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SF Holding｜中国の契約倉庫・配送",
+        "en": "SF Holding | China contract logistics"
       }
     }
   }

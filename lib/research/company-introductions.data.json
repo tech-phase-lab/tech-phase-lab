@@ -10966,7 +10966,7 @@
       "ADBE"
     ],
     "name": "Adobe",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Subscription revenue / Competition / AI risks",
@@ -10999,6 +10999,22 @@
       {
         "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
         "label": "Salesforce FY2026 Form 10-K — Sales and Marketing products"
+      },
+      {
+        "url": "https://experienceleague.adobe.com/en/docs/substance-3d/ecosystem/partnerships/maxon-and-substance-3d",
+        "label": "Nemetschek official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://experienceleague.adobe.com/en/docs/substance-3d/ecosystem/3d-applications/cinema-4d/cinema-4d",
+        "label": "Nemetschek official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://www.nemetschek.com/de/loesungen/media-entertainment-0",
+        "label": "Nemetschek official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://ir.nemetschek.com/stock?url_redirect=true",
+        "label": "Nemetschek official product / group / listing; checked October17,2026"
       }
     ],
     "ja": {
@@ -11007,7 +11023,7 @@
       "strength": "制作ソフトの定番製品群、PDF規格、企業の制作・承認・配信までつなぐ環境と、権利に配慮した生成AIを持つ。",
       "risks": "生成AIや無料ツールによる代替、契約更新、価格への反発、著作権・学習データ規制、競合への人材流出がリスク。",
       "competition": "動画編集はApple Final Cut ProとPremiere Pro、動画作成はMicrosoft ClipchampとAdobe Express、顧客データ・マーケティングではSalesforceとAdobe Experience Platformを比較する。これらは公式製品を照合した編集上の比較。電子署名のDocusignとマーケティングのKlaviyoは相手側年次報告がAdobeを競合として挙げている。",
-      "relationships": "2025年10月のAdobe MAXでは、FireflyでGoogleとOpenAIの生成AIモデルを選択・利用できる機能を公表した。これは制作ツールへのモデル連携で、両社がAdobeの計算容量を購入する契約ではない。製品・機能ごとに提供範囲が異なる。"
+      "relationships": "2025年10月のAdobe MAXでは、FireflyでGoogleとOpenAIの生成AIモデルを選択・利用できる機能を公表した。これは制作ツールへのモデル連携で、両社がAdobeの計算容量を購入する契約ではない。製品・機能ごとに提供範囲が異なる。 Adobe公式の2026年5月1日更新ページは、NemetschekグループのMaxonとSubstance 3D/Maxon Oneをセットで提供する提携を説明している。更新日は契約締結日ではなく、出資・独占・売上金額は示さない。"
     },
     "en": {
       "business": "Provides Creative Cloud for images and video, Document Cloud for PDF and enterprise customer-experience and marketing software.",
@@ -11015,7 +11031,7 @@
       "strength": "Combines standard creative tools, the PDF ecosystem, end-to-end enterprise content workflows and commercially safer generative AI.",
       "risks": "Generative AI and free tools, renewals, pricing resistance, copyright and training-data rules and talent competition can weaken results.",
       "competition": "Official-product comparisons cover Apple Final Cut Pro versus Premiere Pro, Microsoft Clipchamp versus Adobe Express video creation, and Salesforce versus Adobe Experience Platform in customer data/marketing. Docusign e-signatures and Klaviyo marketing are separately supported by those peers’ filings naming Adobe.",
-      "relationships": "Adobe MAX in October 2025 described Google and OpenAI model options in Firefly. These are creative-tool model integrations, not contracts for those companies to buy Adobe compute capacity. Availability differs by product and feature."
+      "relationships": "Adobe MAX in October 2025 described Google and OpenAI model options in Firefly. These are creative-tool model integrations, not contracts for those companies to buy Adobe compute capacity. Availability differs by product and feature. Adobe’s page updated May 1, 2026 describes a Substance 3D / Maxon One bundle partnership with Maxon in the Nemetschek group. The update date is not a contract signing date; no equity investment, exclusivity or revenue amount is inferred."
     },
     "maps": {
       "competition": [
@@ -11163,6 +11179,21 @@
           },
           "sourceIndexes": [
             4
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Nemetschek",
+          "role": "partner",
+          "label": {
+            "ja": "MaxonとSubstance 3D/Maxon Oneのセット提供。上場親会社Nemetschek",
+            "en": "Maxon / Substance 3D and Maxon One bundle; listed parent Nemetschek"
+          },
+          "sourceIndexes": [
+            8,
+            9,
+            10,
+            11
           ]
         }
       ]
@@ -17674,7 +17705,7 @@
       "COHU"
     ],
     "name": "Cohu",
-    "reviewedOn": "2026-10-16",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Test and inspection / Products / Customers / Competition / Risk factors",
@@ -17683,6 +17714,22 @@
       {
         "url": "https://ir.cohu.com/static-files/766a4e2b-4bca-425a-8148-e32fa3d3ba1f",
         "label": "Cohu — FY2025 Form 10-K, Jabil manufacturing dependency"
+      },
+      {
+        "url": "https://www.cohu.com/test-contactors",
+        "label": "Yamaichi Electronics official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://www.yamaichi.de/test-solutions/contacting-semiconductors",
+        "label": "Yamaichi Electronics official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://www.yamaichi.co.jp/en/aboutus/production/",
+        "label": "Yamaichi Electronics official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://www.yamaichi.co.jp/wordpress/wp-content/uploads/2026/05/2026%E5%B9%B43%E6%9C%88%E6%9C%9F%E6%B1%BA%E7%AE%97%E7%9F%AD%E4%BF%A1%E3%80%94%E6%97%A5%E6%9C%AC%E5%9F%BA%E6%BA%96%E3%80%95%EF%BC%88%E9%80%A3%E7%B5%90%EF%BC%89.pdf",
+        "label": "Yamaichi Electronics official product / group / listing; checked October17,2026"
       }
     ],
     "ja": {
@@ -17690,7 +17737,7 @@
       "revenue": "半導体メーカーと組立・検査会社への装置販売、交換頻度の高いソケット・接触部品、保守と部品で稼ぐ。",
       "strength": "テスター、ハンドラー、画像検査、接触部品をまとめて提供し、車載・産業・通信向けチップの量産工程を一式で支えられる。",
       "risks": "半導体の生産量と設備投資、大口顧客、買収統合、部品供給、価格競争、地政学と輸出規制に左右される。",
-      "competition": "半導体テストではAdvantestとTeradyne、テスト時の搬送・自動化ではHon Precision、検査・計測ではKLAが競合例。Cohu自身が年次報告で実名を挙げている。テスター、搬送装置、検査装置、接触部品を同じ製品としては扱わない。",
+      "competition": "半導体テストではAdvantestとTeradyne、テスト時の搬送・自動化ではHon Precision、検査・計測ではKLAが競合例。Cohu自身が年次報告で実名を挙げている。テスター、搬送装置、検査装置、接触部品を同じ製品としては扱わない。 半導体テスト用コンタクターでは山一電機のY-RED等とCohu製品を公式資料で編集比較する。全テスター・搬送装置の同等性や同一仕様を示すものではなく、Cohu自社開示の実名列挙とも区別する。",
       "relationships": "半導体メーカーと組立・検査会社へテスト工程の装置と消耗部品を供給し、電子・機械部品を外部から調達する。 FY2025年次報告書は、半導体テスト装置の大部分をマレーシアのJabil拠点に製造委託すると明記。製造受託先としての関係であり、CohuからJabilへの出資を示すものではない。"
     },
     "en": {
@@ -17698,7 +17745,7 @@
       "revenue": "Earns from equipment sales to chipmakers and OSATs, recurring sockets and contactors, service and spare parts.",
       "strength": "Combines testers, handlers, vision inspection and interface products to support complete production-test cells for automotive, industrial and communications chips.",
       "risks": "Semiconductor unit volume and capital spending, large customers, acquisition integration, component supply, pricing, geopolitics and export controls affect results.",
-      "competition": "Cohu names Advantest, Teradyne, Hon Precision and KLA among its competitors. Examples span semiconductor testing, test automation, inspection and metrology. Testers, handlers, inspection tools and contact interfaces serve different functions.",
+      "competition": "Cohu names Advantest, Teradyne, Hon Precision and KLA among its competitors. Examples span semiconductor testing, test automation, inspection and metrology. Testers, handlers, inspection tools and contact interfaces serve different functions. Semiconductor test contactors add an editorial comparison with Yamaichi Electronics Y-RED and related products using both official portfolios. This does not equate all testers, handlers or specifications, or claim Cohu explicitly named Yamaichi.",
       "relationships": "Supplies production-test equipment and consumables to chipmakers and OSATs and sources electronic and mechanical components externally. Its FY2025 annual report identifies Jabil in Malaysia as the contract manufacturer for most semiconductor test systems. This manufacturing relationship does not establish an equity investment in Jabil."
     },
     "maps": {
@@ -17752,6 +17799,21 @@
             0
           ],
           "ticker": "KLAC"
+        },
+        {
+          "kind": "company",
+          "name": "Yamaichi Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：山一電機と半導体テスト用コンタクター",
+            "en": "Editorial comparison: Yamaichi Electronics / semiconductor test contactors"
+          },
+          "sourceIndexes": [
+            2,
+            3,
+            4,
+            5
+          ]
         }
       ],
       "relationships": [
@@ -33272,7 +33334,7 @@
       "JD"
     ],
     "name": "JD.com",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-17",
     "sources": [
       {
         "label": "JD.com FY2025 Form 20-F",
@@ -33289,6 +33351,18 @@
       {
         "label": "Meituan FY2025 Annual Report · Food delivery and quick commerce",
         "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042400179.pdf"
+      },
+      {
+        "url": "https://ir.jd.com/system/files-encrypted/nasdaq_kms/assets/2026/04/17/11-33-24/Form%2020-F%20for%20JD%20filed%2004162026.pdf",
+        "label": "SF Holding official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://www.sf-express.com/chn/sc/express/warehouse/warehouse_ecommerce",
+        "label": "SF Holding official product / group / listing; checked October17,2026"
+      },
+      {
+        "url": "https://www.sf-express.com/chn/sc/about",
+        "label": "SF Holding official product / group / listing; checked October17,2026"
       }
     ],
     "ja": {
@@ -33296,7 +33370,7 @@
       "revenue": "主に商品の直販売上。出店者の販売・広告手数料、物流などのサービス収入もある。取扱高や顧客の決済額とは異なる。",
       "strength": "調達から倉庫・配送まで運営し、商品管理と配達品質をまとめて改善できる。",
       "risks": "価格競争、在庫と物流費、食品配達など新規事業への投資が負担。消費の弱さや規制にも左右される。",
-      "competition": "中国の総合通販ではAlibabaとPDD傘下のPinduoduo、食品配達・即時配送ではMeituanが競合例。JDはAlibabaを競合として明記。PinduoduoとMeituanは両社の公表サービスの比較で、商品販売と食品配達は異なる分野として見る。",
+      "competition": "中国の総合通販ではAlibabaとPDD傘下のPinduoduo、食品配達・即時配送ではMeituanが競合例。JDはAlibabaを競合として明記。PinduoduoとMeituanは両社の公表サービスの比較で、商品販売と食品配達は異なる分野として見る。 物流では連結子会社JD Logisticsの倉庫・配送一体サービスと、順豊控股の中国の契約倉配を公式資料で編集比較する。通販全体、全地域、配送速度や全物流商品の同等性を示さず、JDの年次報告による順豊の実名列挙とは区別する。",
       "relationships": "メーカーや卸から商品を調達。TencentとはWeixinへの入口、クラウド、広告などで協業する。"
     },
     "en": {
@@ -33304,7 +33378,7 @@
       "revenue": "Primarily product sales, alongside marketplace, advertising and logistics fees; transaction volume is not revenue.",
       "strength": "Controls procurement, warehouses and delivery to coordinate product quality and fulfillment.",
       "risks": "Price competition, inventory, logistics costs, new-business investment and weak consumption pressure results.",
-      "competition": "Examples include Alibaba and PDD’s Pinduoduo in Chinese e-commerce, and Meituan in food delivery and quick commerce. JD explicitly names Alibaba. Pinduoduo and Meituan are comparisons of disclosed service portfolios across distinct retail and delivery markets.",
+      "competition": "Examples include Alibaba and PDD’s Pinduoduo in Chinese e-commerce, and Meituan in food delivery and quick commerce. JD explicitly names Alibaba. Pinduoduo and Meituan are comparisons of disclosed service portfolios across distinct retail and delivery markets. Logistics adds an editorial comparison of consolidated subsidiary JD Logistics with SF Holding in China contract warehousing and distribution, using official materials. This does not equate all e-commerce, regions, delivery speeds or logistics products, or claim JD’s annual filing explicitly named SF.",
       "relationships": "Buys from manufacturers and distributors. Tencent cooperates on Weixin access, cloud, advertising and other services."
     },
     "maps": {
@@ -33347,6 +33421,20 @@
           "sourceIndexes": [
             1,
             3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "SF Holding",
+          "role": "competitor",
+          "label": {
+            "ja": "編集比較：順豊控股と中国の契約倉庫・配送一体サービス",
+            "en": "Editorial comparison: SF Holding / China contract warehousing and distribution"
+          },
+          "sourceIndexes": [
+            4,
+            5,
+            6
           ]
         }
       ],
