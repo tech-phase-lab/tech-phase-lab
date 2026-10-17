@@ -100,8 +100,8 @@
 @media(prefers-reduced-motion:reduce){.root *,.root *::before,.root *::after,.root::before,.root::after{animation:none!important;transition:none!important;transform:none!important}}
 
 @keyframes starLight {0%,14%,100%{text-shadow:none}7%{text-shadow:0 0 10px currentColor,0 0 18px currentColor}}
-.news b i{animation:starLight 6s ease-in-out infinite}
-.news b i:nth-child(2){animation-delay:.35s}.news b i:nth-child(3){animation-delay:.7s}.news b i:nth-child(4){animation-delay:1.05s}.news b i:nth-child(5){animation-delay:1.4s}
+.news b i{animation:starLight 4.8s ease-in-out infinite}
+.news b i:nth-child(2){animation-delay:.28s}.news b i:nth-child(3){animation-delay:.56s}.news b i:nth-child(4){animation-delay:.84s}.news b i:nth-child(5){animation-delay:1.12s}
 .root .sample .track { opacity:1; }
 .root .sample .big { font-size:22px; color:var(--gold2); }
 .needle { position:absolute; left:86%; top:-5px; width:3px; height:18px; border-radius:2px; background:#f3dfae; box-shadow:0 0 8px #f3dfae88; }

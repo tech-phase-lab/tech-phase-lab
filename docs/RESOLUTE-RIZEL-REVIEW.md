@@ -121,3 +121,33 @@ on the intended staging monitor and RESOLUTE API, with redeployment skipped.
 Its value is not stored in this repository. This does not confirm that running
 processes have loaded it, nor that a reader request succeeds. No worker schedule
 or publication flag was enabled.
+
+Verified operationally after e5cbd221: the preview alias is READY on this commit.
+The intended staging monitor deployment c3c456e5-c212-47eb-b81b-8fd808b1f4e3
+reached SUCCESS. Its dedicated authenticated GET returned HTTP 200 with 81
+published official updates. Shared feed sanitization and the private 96-hour
+filter accepted the payload but found zero eligible risk candidates. No AI
+request, daily DB claim, migration or publication was performed. Local gates:
+1007 Node tests, 2478 Python tests, lint (two existing warnings), build,
+compileall and diff check passed. Next: apply migration 013 using the existing
+provisioning workflow, then verify private daily recording before enabling cron.
+
+## 2026-10-18 JST — private daily storage provisioned
+
+Applied migration 013 in the RESOLUTE database through the existing temporary
+provisioning service. The scoped RIZEL writer successfully inserted and read a
+private daily record, rejected a duplicate claim, and could not change the
+publication constraint. The synthetic record was rolled back and confirmed
+absent. Ordinary API readers and the risk writer have no access to this table.
+Verification deployment: 0433b400-8b07-477a-b2aa-2ee7d7d35de6 (SUCCESS;
+RIZEL_DAILY_STORAGE_VERIFIED). No model calls or emails occurred. This validates
+storage, not an actual 07:00 run or persistence of a real article selection.
+The temporary scoped DB reference was cleared. Auto-review rejected restoring
+the original code because it also reads the unrelated PayPal Sandbox ledger.
+Instead, the service was parked with an inert no-read/no-write script; the
+original code was not restored. Scheduling and customer publication remain disabled.
+
+Star animation on home and news now uses a 4.8-second cycle and 0.28-second
+stagger (previously 6 seconds / 0.35 seconds). Color, shadow strength, order and
+reduced-motion suppression are unchanged. Browser visual verification was not
+possible: the local Playwright Chromium executable is missing.
