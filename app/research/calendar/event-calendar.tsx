@@ -1,11 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { calendarDateKey, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, calendarReviewedOn, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
-import { filterFavoriteEvents } from "@/lib/research/favorites";
-import { useStockFavorites } from "../use-stock-favorites";
+import { calendarDateKey, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
 import { useCalendarClock } from "../use-calendar-clock";
-import Link from "next/link";
 import coverage from "@/lib/research/calendar-coverage.json";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
@@ -31,8 +28,6 @@ function IndicatorGuide({ id, lang }: { id: string; lang: "ja" | "en" }) {
 
 export default function EventCalendar() {
   const [lang, setLang] = useResearchLanguage();
-  const { favorites } = useStockFavorites();
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [kind, setKind] = useState<"all" | CalendarEvent["kind"]>("all");
   const [zoneOverride, setZoneOverride] = useState<string | null>(null);
   const zone = zoneOverride ?? (lang === "ja" ? "Asia/Tokyo" : "America/New_York");
@@ -48,11 +43,10 @@ export default function EventCalendar() {
   const resultPosted = (event: CalendarEvent) => { const key = resultKey(event); return !!key && reported.some(row => row.ticker === key && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000); };
   const now = useCalendarClock();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const visible = now === null ? [] : selectCalendarEvents(favoritesOnly ? filterFavoriteEvents(calendarEvents, favorites) : calendarEvents, kind, period, now, zone).filter(event => !resultPosted(event));
-  const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(favoritesOnly ? filterFavoriteEvents(dateOnlyEvents, favorites) : dateOnlyEvents, kind, period, now);
+  const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, period, now, zone).filter(event => !resultPosted(event));
+  const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, period, now);
   const reviewedCompanies = coverage.filter((company) => company.lastCheckedOn !== null).length;
   const pendingCompanies = coverage.length - reviewedCompanies;
-  const stale = now !== null && now - Date.parse(`${calendarReviewedOn}T00:00:00+09:00`) > 7 * 86400000;
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
   const coverageStatus = (company: (typeof coverage)[number]) => {
     if (calendarEvents.some((event) => event.ticker === company.ticker && (now === null || Date.parse(event.startsAt) >= now))) return t("予定掲載済み", "Schedule listed");
@@ -60,18 +54,12 @@ export default function EventCalendar() {
     if (company.lastCheckedOn !== null) return t(`公式確認済み・確定日なし（${company.lastCheckedOn}）`, `Official source checked; no confirmed date (${company.lastCheckedOn})`);
     return t(`公式確認試行済み・確認継続（${company.lastAttemptedOn}）`, `Official check attempted; still under review (${company.lastAttemptedOn})`);
   };
-  return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("today-upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("公式発表で確認した予定を、日本時間と米国東部時間で。", "Official schedules in U.S. Eastern and Japan time.")}>
+  return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("today-upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")}>
     <div className={calendarStyles.filters}>
       <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => setKind(value)}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
       <label>{t("期間", "Period")} ({zoneLabel(zone)})<select value={period} onChange={(event) => setPeriod(event.target.value)}><option value="today-upcoming">{t("今日・今後の予定", "Today & upcoming")}</option><option value="upcoming">{t("今後の予定", "Upcoming")}</option>{months.map((month) => <option key={month} value={month}>{month}</option>)}</select></label>
       <label>{t("表示時間", "Time zone")}<select value={zone} onChange={(event) => { setZoneOverride(event.target.value); setPeriod("today-upcoming"); }}><option value="Asia/Tokyo">{t("日本時間", "Japan · JST")}</option><option value="America/New_York">{t("米国東部", "U.S. Eastern · ET")}</option></select></label>
     </div>
-    <div className={calendarStyles.watchFilter}>
-      <label><input type="checkbox" checked={favoritesOnly} onChange={(event) => setFavoritesOnly(event.target.checked)} />{t("登録銘柄の決算に絞る", "Only watchlist earnings")}</label>
-      <Link href="/research/watchlist">{t("リストを編集", "Edit watchlist")}</Link>
-    </div>
-    {favoritesOnly && favorites.length === 0 && <p role="status" className={styles.description}>{t("お気に入りがまだありません。銘柄を追加すると、その決算予定も表示します。", "No favorites yet. Add companies to include their earnings schedules.")}</p>}
-    <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
     <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} />
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
       <details>
@@ -98,15 +86,13 @@ export default function EventCalendar() {
           <IndicatorGuide id={event.id} lang={lang} />{event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}<p>{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")}</p><details className={calendarStyles.sourceDetails}><summary>{t("日付・出典", "Date & source")}</summary><small>{event.date}</small><a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></details></div>
       </details></li>)}</ol></>}
 
-      <details className={styles.coverage}>
+      <details className={calendarStyles.coverage}>
         <summary>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</summary>
-        <p className={styles.description}>{t(`公式照合済み ${reviewedCompanies}社 · 確認継続 ${pendingCompanies}社。確定日がない企業を予想日で埋めず、公式確認後に追加します。`, `${reviewedCompanies} official sources checked · ${pendingCompanies} still under review. We add confirmed dates rather than filling gaps with estimates.`)}</p>
-        <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul>
+        <p className={styles.description}>{t(`確認済み ${reviewedCompanies}社 · 確認継続 ${pendingCompanies}社。日程は公式確認後に掲載。`, `${reviewedCompanies} sources checked · ${pendingCompanies} under review. Dates are added after official confirmation.`)}</p>
+        <div className={calendarStyles.coverageList} tabIndex={0} role="region" aria-label={t("決算の追跡対象一覧", "Companies covered")}><ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul></div>
       </details>
     </section>
-    <details className={calendarStyles.status}><summary>{t("予定の掲載情報", "Schedule information")} · {calendarReviewedOn}<span>{t("掲載方針", "About this calendar")}</span></summary><p>{t("公式確認済みの予定を掲載。未確認の企業は下の追跡対象に表示します。日程は変更される場合があります。", "Verified schedules only. Companies awaiting date confirmation are listed below. Dates may change.")}</p></details>
-    {stale && <p role="status" className={styles.error}>{t("確認から7日以上経過しています。参加・視聴前に公式日程を再確認してください。", "This schedule was checked over 7 days ago. Recheck the official source before attending.")}</p>}
-    <p className={styles.notice}>{t("公式本文と照合した結果と、投稿から取得した数値速報を掲載しています。市場予想との比較・自動通知は未対応です。", "Results checked against official releases and numeric flashes from source posts are shown here. Consensus comparisons and automatic notifications are not yet available.")}</p>
+    <p className={calendarStyles.publicationNote}>{t("公式発表の確認結果と数値速報を掲載。市場予想との比較・自動通知には対応していません。", "Officially verified results and early figures are shown. Consensus comparisons and automatic notifications are not supported.")}</p>
     <p className={styles.footnote}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
   </ResearchToolShell>;
 }
