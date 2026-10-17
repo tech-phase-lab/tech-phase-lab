@@ -72,6 +72,7 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "TSM") return {2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}};
   if (root === "GOOG") return {3:{ja:"GPU・TPU供給・AI技術連携",en:"GPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・サービス連携・競合",en:"Cloud customers, service partners & competition"}};
   if (root === "AMZN") return {3:{ja:"半導体・配送車の供給元",en:"Chip and delivery-van suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}};
 

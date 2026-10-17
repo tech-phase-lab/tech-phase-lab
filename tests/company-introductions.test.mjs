@@ -100,6 +100,14 @@ test('selected-sector maps render relevant headings without changing the reviewe
   const targets = new Set(['WDAY','VEEV','TENB','QLYS','KVYO','QTWO','TTWO','PAYC','DBX','FIVN','EGHT','PEGA','NICE','ADSK','PTC','BSY','MANH','BHE','MPWR','SWKS','KVYO','IONQ','RGTI','QBTS','QUBT','ASTS','PL','BKSY','AVAV','KTOS','RDW','MTSI','POWI','SITM','RMBS','DIOD','SLAB','CEVA','NVTS','IPGP','AKAM','OKTA','S','CHKP','TWLO','DOCU','SOFI','DUOL','APPF','QLYS','WMT','PAYC','UBER','NFLX','SHOP','APP','ABNB','SPOT','ROKU','TTD','DASH','MELI','PYPL','XYZ','UMC','STM','HIMX','CRUS','SYNA','AMBA','INDI','PI','LSCC','MXL','VIAV','ONTO','TER','ENTG','CAMT','ACLS','ASX','GFS','TSEM','GLW','TEL','ICHR','UCTT','FORM','AMKR','JBL','COHU','SANM','ARW','AVT','PLAB','ETN','PLTR','KEYS','FLEX','EGHT','PEGA','NICE','DBX','FIVN','RNG','MNDY','FRSH','KVYO','BRZE','SPT','PTC','BSY','VEEV','MANH','HUBS','TEAM','DT','OTEX','COST','NTNX','CRWD','NET','INTU','TXN','ADI','DDOG','ZS','MSFT','ADBE','CRM','BOX','WDAY','DELL','HPE','ADSK','AAPL','AMZN','GOOG','META','ON','IONQ','RGTI','QBTS','QUBT','RKLB','ASTS','PL','BKSY','AVAV','KTOS','RDW','BE','VST','MELI','SOFI','DUOL','TSLA','WDC','STX','HPQ','SNOW','IBM','OKTA','S','CHKP','DOCU','ABNB','SPOT','ASAN','DIS','GTLB','NTAP','PAYX','ADP','BILL','APPN','NCNO','ALKT','RPD','SAP','AMAT','AMD','ARM','QCOM','CDNS','RBLX','DASH','SONY','V','MA','APH','ANET','MRVL','VRT','ALAB','NBIS','ASML','CRDO','MU','INTC','SIMO','AAOI','GEV','IREN','LRCX','KLAC','SMCI','CSCO','CRWV','ORCL','PANW','NOW','NXPI','MPWR','CIEN','FTNT','UBER','APP','LITE','RDDT','PINS','SNAP','ENTG','MTSI','POWI','ZM','DOCN','ESTC','FROG']);
   for (const introduction of companyIntroductions) {
     const graph = companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]});
+    if (graph.root === "TSM") {
+      assert.deepEqual(graph.layerLabels, {2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}});
+      for (const lang of ['ja','en']) {
+        const html = renderToStaticMarkup(createElement(networkComponent.CompanyNetworkMap,{graph,lang}));
+        assert.ok(html.includes(graph.layerLabels[2][lang].replaceAll('&','&amp;')), 'TSMC packaging/test heading');
+      }
+      continue;
+    }
     if (!targets.has(graph.root)) {
       assert.equal(graph.layerLabels, undefined, graph.root);
       continue;
