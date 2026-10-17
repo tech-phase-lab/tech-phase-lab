@@ -2195,6 +2195,22 @@
       {
         "label": "Official commercial disclosure; checked October17,2026",
         "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526295589/d84378d8k.htm"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526144028/d87999d8k.htm"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-unveil-llm-optimized-intelligence-processor"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/"
       }
     ],
     "ja": {
@@ -2203,7 +2219,7 @@
       "strength": "高速通信の技術と、顧客の用途に合わせた専用AI半導体の設計。基盤ソフトにも事業を持つ。",
       "risks": "大口顧客や製造委託先への依存、専用チップの計画変更、ソフト契約の更新・移行に伴う顧客離れ。",
       "competition": "半導体ではNXP、端末保護ソフトではSentinelOneが競合例。NXPはBroadcomを主要競合の一社とし、製品群の一部で競うと説明。SentinelOneはBroadcom傘下のCarbon BlackとSymantecを名指ししている。VMwareや専用AI半導体全体の比較ではない。",
-      "relationships": "クラウド事業者などと専用半導体を開発し、製造の多くをTSMCなどに委託する。 2026年7月6日自社8-K：Apple向けカスタムASICの開発・供給を2031年まで拡張。"
+      "relationships": "クラウド事業者などと専用半導体を開発し、製造の多くをTSMCなどに委託する。 2026年7月6日自社8-K：Apple向けカスタムASICの開発・供給を2031年まで拡張。 2026年4月6日自社8-K：Google向けTPU開発・供給とAIラック用部品の契約。最長2031年。2026年4月14日自社発表：Metaと複数世代のMTIA・Ethernet技術を共同開発。2026年4月自社発表：Meta向けMTIA・ネットワーク技術を供給。2029年までの拡張は計画。2026年6月24日：OpenAIとJalapeñoを共同開発・発表。サンプル検証と今後の展開を区別。OpenAI向けAI半導体の開発・供給契約。2026年6月は試作検証、初期展開は年末目標。2026年4月自社8-K：Anthropicが2027年からBroadcom経由で約3.5GWのTPU計算容量を利用する計画。商業成功の条件付き。"
     },
     "en": {
       "business": "Supplies networking and AI chips alongside infrastructure software, including VMware.",
@@ -2211,7 +2227,7 @@
       "strength": "High-speed networking and custom AI-chip design, alongside an established infrastructure-software business.",
       "risks": "Customer and supplier concentration, custom-project changes and customer losses during software renewals or transitions.",
       "competition": "NXP names Broadcom among semiconductor rivals, with overlap limited to some product lines. SentinelOne separately names Broadcom’s Carbon Black and Symantec in endpoint security. These examples do not describe the whole VMware or custom AI-chip business.",
-      "relationships": "Develops custom silicon with cloud and other customers; outsources much of manufacturing to TSMC and others. July6,2026 Broadcom8-K: Apple custom-ASIC development / supply agreements extended through2031."
+      "relationships": "Develops custom silicon with cloud and other customers; outsources much of manufacturing to TSMC and others. July6,2026 Broadcom8-K: Apple custom-ASIC development / supply agreements extended through2031. April 6, 2026 Broadcom 8-K: Google TPU development / supply and AI-rack component agreements extend up to 2031. April 14, 2026 Broadcom disclosure: multigeneration MTIA and Ethernet co-development with Meta. April 2026 Broadcom disclosure: supplies MTIA / networking technology to Meta, with expansion through 2029 planned. June 24, 2026: OpenAI and Broadcom unveil co-developed Jalapeño; engineering-sample testing is distinct from future rollout. AI-accelerator development / supply agreements for OpenAI; June 2026 samples in testing, initial rollout targeted by year-end. April 2026 Broadcom 8-K: Anthropic plans about 3.5GW of TPU compute access through Broadcom from 2027, conditional on continued commercial success."
     },
     "maps": {
       "competition": [
@@ -2281,6 +2297,82 @@
             3
           ],
           "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "customer",
+          "label": {
+            "ja": "2026年4月6日自社8-K：Google向けTPU開発・供給とAIラック用部品の契約。最長2031年",
+            "en": "April 6, 2026 Broadcom 8-K: Google TPU development / supply and AI-rack component agreements extend up to 2031"
+          },
+          "sourceIndexes": [
+            4
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Meta Platforms",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月14日自社発表：Metaと複数世代のMTIA・Ethernet技術を共同開発",
+            "en": "April 14, 2026 Broadcom disclosure: multigeneration MTIA and Ethernet co-development with Meta"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "Meta Platforms",
+          "role": "customer",
+          "label": {
+            "ja": "2026年4月自社発表：Meta向けMTIA・ネットワーク技術を供給。2029年までの拡張は計画",
+            "en": "April 2026 Broadcom disclosure: supplies MTIA / networking technology to Meta, with expansion through 2029 planned"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "partner",
+          "label": {
+            "ja": "2026年6月24日：OpenAIとJalapeñoを共同開発・発表。サンプル検証と今後の展開を区別",
+            "en": "June 24, 2026: OpenAI and Broadcom unveil co-developed Jalapeño; engineering-sample testing is distinct from future rollout"
+          },
+          "sourceIndexes": [
+            6
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "customer",
+          "label": {
+            "ja": "OpenAI向けAI半導体の開発・供給契約。2026年6月は試作検証、初期展開は年末目標",
+            "en": "AI-accelerator development / supply agreements for OpenAI; June 2026 samples in testing, initial rollout targeted by year-end"
+          },
+          "sourceIndexes": [
+            7,
+            6
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Anthropic",
+          "role": "customer",
+          "label": {
+            "ja": "2026年4月自社8-K：Anthropicが2027年からBroadcom経由で約3.5GWのTPU計算容量を利用する計画。商業成功の条件付き",
+            "en": "April 2026 Broadcom 8-K: Anthropic plans about 3.5GW of TPU compute access through Broadcom from 2027, conditional on continued commercial success"
+          },
+          "sourceIndexes": [
+            4
+          ]
         }
       ]
     }
@@ -3060,6 +3152,10 @@
       {
         "label": "Official commercial disclosure; checked October17,2026",
         "url": "https://cloud.google.com/blog/products/compute/google-cloud-ai-infrastructure-at-nvidia-gtc-2026/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526144028/d87999d8k.htm"
       }
     ],
     "ja": {
@@ -3068,7 +3164,7 @@
       "strength": "検索・動画・スマホを通じて利用者に届き、広告主や開発者を集められる。",
       "risks": "AIによる検索習慣の変化、広告への依存、競争法や個人情報をめぐる規制。",
       "competition": "Google Cloudのデータ処理・分析ではSnowflakeが競合例。Snowflakeの年次報告書はGoogle Cloudを競合として明記し、同時に自社サービスの稼働基盤としても利用すると説明している。検索・広告の競合とは分けて考える。",
-      "relationships": "AnthropicはGoogle CloudのTPU計算を利用し、2026年4月にはGoogle・Broadcomとの追加容量契約を発表した。新容量は2027年からの稼働予定。Redditとは2024年2月にData APIとVertex AIの提携を発表しており、広告競合と協業は併存する。 Snapも自社の年次報告でGoogle Cloudの基盤利用を開示している。 2026年3月：Google Cloud G4がNVIDIA Blackwell GPUを採用。2026年3月：NVIDIA DynamoとGKE、NemotronとVertex AIの技術連携。2026年3月Google公式事例：SalesforceがVertex AIのGB200計算基盤を利用。2026年3月Google公式事例：General MotorsがG4を走行シミュレーションに利用。"
+      "relationships": "AnthropicはGoogle CloudのTPU計算を利用し、2026年4月にはGoogle・Broadcomとの追加容量契約を発表した。新容量は2027年からの稼働予定。Redditとは2024年2月にData APIとVertex AIの提携を発表しており、広告競合と協業は併存する。 Snapも自社の年次報告でGoogle Cloudの基盤利用を開示している。 2026年3月：Google Cloud G4がNVIDIA Blackwell GPUを採用。2026年3月：NVIDIA DynamoとGKE、NemotronとVertex AIの技術連携。2026年3月Google公式事例：SalesforceがVertex AIのGB200計算基盤を利用。2026年3月Google公式事例：General MotorsがG4を走行シミュレーションに利用。 Broadcom側2026年4月8-K：Google向けTPU・ネットワーク部品の開発供給契約、最長2031年。"
     },
     "en": {
       "business": "Alphabet's Google operates Search, YouTube, Android and cloud services. The listed shares represent parent Alphabet.",
@@ -3076,7 +3172,7 @@
       "strength": "Search, video and mobile reach connect users with advertisers and developers.",
       "risks": "AI-driven changes in search habits, advertising dependence and competition or privacy regulation.",
       "competition": "Snowflake is a named example in Google Cloud data processing and analytics. Its annual report explicitly identifies Google Cloud as both a competitor and infrastructure provider. This comparison concerns cloud data products rather than search or advertising.",
-      "relationships": "Anthropic uses Google Cloud TPU compute and announced additional capacity with Google and Broadcom in April 2026, expected to come online from 2027. Google and Reddit announced a Data API / Vertex AI partnership in February 2024; advertising competition and collaboration coexist. Snap also discloses Google Cloud infrastructure use in its own filing. March2026: Google Cloud G4 uses NVIDIA Blackwell GPUs. March2026: NVIDIA Dynamo / GKE and Nemotron / Vertex AI integration. March2026 Google example: Salesforce uses GB200-powered Vertex AI training infrastructure. March2026 Google example: General Motors uses G4 for driving simulation."
+      "relationships": "Anthropic uses Google Cloud TPU compute and announced additional capacity with Google and Broadcom in April 2026, expected to come online from 2027. Google and Reddit announced a Data API / Vertex AI partnership in February 2024; advertising competition and collaboration coexist. Snap also discloses Google Cloud infrastructure use in its own filing. March2026: Google Cloud G4 uses NVIDIA Blackwell GPUs. March2026: NVIDIA Dynamo / GKE and Nemotron / Vertex AI integration. March2026 Google example: Salesforce uses GB200-powered Vertex AI training infrastructure. March2026 Google example: General Motors uses G4 for driving simulation. Broadcom April 2026 8-K: Google TPU / networking development and supply agreements, extending up to 2031."
     },
     "maps": {
       "competition": [
@@ -3223,6 +3319,19 @@
             5
           ],
           "ticker": "GM"
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "supplier",
+          "label": {
+            "ja": "Broadcom側2026年4月8-K：Google向けTPU・ネットワーク部品の開発供給契約、最長2031年",
+            "en": "Broadcom April 2026 8-K: Google TPU / networking development and supply agreements, extending up to 2031"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "AVGO"
         }
       ]
     }
@@ -3963,6 +4072,30 @@
       {
         "label": "Official commercial disclosure; checked October17,2026",
         "url": "https://about.fb.com/news/2026/01/meta-6-billion-agreement-corning-support-us-manufacturing/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://about.fb.com/news/2026/02/meta-nvidia-announce-long-term-infrastructure-partnership/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://about.fb.com/news/2026/03/meta-partners-with-arm-to-develop-new-class-of-data-center-silicon/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.arm.com/node/7946/html"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://about.fb.com/news/2026/04/meta-partners-with-broadcom-to-co-develop-custom-ai-silicon/amp/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://about.fb.com/news/2026/02/meta-amd-partner-longterm-ai-infrastructure-agreement/amp/"
       }
     ],
     "ja": {
@@ -3971,7 +4104,7 @@
       "strength": "多くの利用者が集まるアプリと、投稿や広告を届けるAIの仕組み。",
       "risks": "広告への依存、個人情報の規制やスマホ側の仕様変更、AI・次世代端末への投資負担。",
       "competition": "利用者の時間ではTikTokやSnapchat、広告ではGoogleとAppLovinが競合例。MetaはTikTokとの競争を開示し、SnapとAppLovinもMetaを競合として挙げる。Googleは両社の広告事業の比較であり、検索や動画などの提供方法には違いがある。",
-      "relationships": "NVIDIAとは2026年2月にCPU・GPU・ネットワークの複数年協業を発表。AMDとも同月、最大6GWのInstinct GPU計画とロードマップ連携を発表し、初回出荷は2026年後半の計画とされた。計画上の全容量を導入済みとは扱わない。 Nebiusは2026年3月にMetaへの計算容量契約を公表し、新容量の提供は2027年初めからの予定としている。 2026年1月27日：Corningと最大60億ドルの複数年光ファイバー調達契約。上限は売上実績ではない。"
+      "relationships": "NVIDIAとは2026年2月にCPU・GPU・ネットワークの複数年協業を発表。AMDとも同月、最大6GWのInstinct GPU計画とロードマップ連携を発表し、初回出荷は2026年後半の計画とされた。計画上の全容量を導入済みとは扱わない。 Nebiusは2026年3月にMetaへの計算容量契約を公表し、新容量の提供は2027年初めからの予定としている。 2026年1月27日：Corningと最大60億ドルの複数年光ファイバー調達契約。上限は売上実績ではない。 2026年2月：NVIDIAのAI基盤技術を調達しSpectrum-X等を採用。将来展開量は未確定。2026年3月24日：Arm AGI CPUの主導パートナーとして共同開発。複数世代の展開計画。2026年4月：BroadcomとMTIAの設計・先端包装・ネットワークを共同開発。2026年4月：MTIAとEthernet技術をBroadcomから調達。初期1GW超のコミットメントは全稼働ではない。2026年2月：AMDと半導体・システム・ソフトウェアの計画を共同調整。最大6GWの契約は全稼働ではない。"
     },
     "en": {
       "business": "Operates Facebook, Instagram and WhatsApp, and develops AI and smart glasses.",
@@ -3979,7 +4112,7 @@
       "strength": "Large app audiences and AI systems for content discovery and advertising.",
       "risks": "Advertising dependence, privacy rules, mobile-platform changes and expensive AI and hardware investments.",
       "competition": "Examples include TikTok and Snap’s Snapchat for engagement, plus Google and AppLovin for advertising. Meta discusses TikTok, while Snap and AppLovin explicitly name Meta. Google is a comparison of the companies’ disclosed advertising businesses, whose formats and distribution differ.",
-      "relationships": "Meta announced a multiyear NVIDIA CPU, GPU and networking collaboration in February 2026. Its AMD agreement that month outlined up to 6 GW of Instinct GPUs and roadmap alignment, with initial shipments planned for the second half of 2026. Planned total capacity is not deployed capacity. Nebius announced a Meta compute-capacity agreement in March 2026, with new capacity delivery planned from early 2027. January27,2026: up-to$6bn multiyear Corning fiber-optic supply agreement; ceiling not realized revenue."
+      "relationships": "Meta announced a multiyear NVIDIA CPU, GPU and networking collaboration in February 2026. Its AMD agreement that month outlined up to 6 GW of Instinct GPUs and roadmap alignment, with initial shipments planned for the second half of 2026. Planned total capacity is not deployed capacity. Nebius announced a Meta compute-capacity agreement in March 2026, with new capacity delivery planned from early 2027. January27,2026: up-to$6bn multiyear Corning fiber-optic supply agreement; ceiling not realized revenue. February 2026: Meta adopts NVIDIA AI infrastructure technology, including Spectrum-X; future rollout quantities are not completed deliveries. March 24, 2026: Meta is lead partner and co-developer of Arm AGI CPU, with a multigeneration roadmap. April 2026: Meta and Broadcom co-develop MTIA chip design, advanced packaging and networking. April 2026: Broadcom supplies MTIA and Ethernet technology; initial commitment above 1GW is not fully operational capacity. February 2026: AMD and Meta align silicon, systems and software roadmaps; up-to-6GW agreement is not all operational."
     },
     "maps": {
       "competition": [
@@ -4127,6 +4260,73 @@
             7
           ],
           "ticker": "GLW"
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年2月：NVIDIAのAI基盤技術を調達しSpectrum-X等を採用。将来展開量は未確定",
+            "en": "February 2026: Meta adopts NVIDIA AI infrastructure technology, including Spectrum-X; future rollout quantities are not completed deliveries"
+          },
+          "sourceIndexes": [
+            8
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "Arm",
+          "role": "partner",
+          "label": {
+            "ja": "2026年3月24日：Arm AGI CPUの主導パートナーとして共同開発。複数世代の展開計画",
+            "en": "March 24, 2026: Meta is lead partner and co-developer of Arm AGI CPU, with a multigeneration roadmap"
+          },
+          "sourceIndexes": [
+            9,
+            10
+          ],
+          "ticker": "ARM"
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月：BroadcomとMTIAの設計・先端包装・ネットワークを共同開発",
+            "en": "April 2026: Meta and Broadcom co-develop MTIA chip design, advanced packaging and networking"
+          },
+          "sourceIndexes": [
+            11
+          ],
+          "ticker": "AVGO"
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年4月：MTIAとEthernet技術をBroadcomから調達。初期1GW超のコミットメントは全稼働ではない",
+            "en": "April 2026: Broadcom supplies MTIA and Ethernet technology; initial commitment above 1GW is not fully operational capacity"
+          },
+          "sourceIndexes": [
+            11,
+            12
+          ],
+          "ticker": "AVGO"
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "role": "partner",
+          "label": {
+            "ja": "2026年2月：AMDと半導体・システム・ソフトウェアの計画を共同調整。最大6GWの契約は全稼働ではない",
+            "en": "February 2026: AMD and Meta align silicon, systems and software roadmaps; up-to-6GW agreement is not all operational"
+          },
+          "sourceIndexes": [
+            13
+          ],
+          "ticker": "AMD"
         }
       ]
     }

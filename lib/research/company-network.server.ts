@@ -72,7 +72,7 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
-  if (root === "GOOG") return {3:{ja:"GPU供給・AI技術連携",en:"GPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・サービス連携・競合",en:"Cloud customers, service partners & competition"}};
+  if (root === "GOOG") return {3:{ja:"GPU・TPU供給・AI技術連携",en:"GPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・サービス連携・競合",en:"Cloud customers, service partners & competition"}};
   if (root === "AMZN") return {3:{ja:"AWS向け半導体供給",en:"AWS chip suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}};
 
   if (root === "TENB") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・技術連携", en: "Cloud and technology integration" }, 7: { ja: "脆弱性管理・クラウド防御", en: "Vulnerability management and cloud security" } };
@@ -3775,6 +3775,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "General Motors：G4計算顧客",
         "en": "General Motors: G4 compute customer"
       }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom：TPU・ネットワーク供給",
+        "en": "Broadcom: TPU / networking supply"
+      }
     }
   },
   "META": {
@@ -3788,15 +3795,15 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "AMD": {
       "layer": 3,
       "businessLabel": {
-        "ja": "Instinct GPUの容量計画",
-        "en": "Instinct GPU capacity plan"
+        "ja": "AMD：GPU供給・システム共同開発",
+        "en": "AMD: GPU supply / systems co-development"
       }
     },
     "NVDA": {
       "layer": 3,
       "businessLabel": {
-        "ja": "CPU・GPU・通信基盤の協業",
-        "en": "CPU / GPU / networking partner"
+        "ja": "NVIDIA：AI基盤の供給・共同開発",
+        "en": "NVIDIA: AI infrastructure supply / co-development"
       }
     },
     "GOOG": {
@@ -3818,6 +3825,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Corning：データセンターの光接続",
         "en": "Corning: data-center optical connectivity"
+      }
+    },
+    "ARM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Arm：データセンターCPUの共同開発",
+        "en": "Arm: data-center CPU co-development"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom：MTIA設計・半導体供給",
+        "en": "Broadcom: MTIA design / semiconductor supply"
       }
     }
   },
@@ -8742,6 +8763,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Apple：カスタム半導体の供給顧客",
         "en": "Apple: custom-chip customer"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Google：TPU・ネットワークの顧客",
+        "en": "Google: TPU / networking customer"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Meta：MTIA顧客・開発パートナー",
+        "en": "Meta: MTIA customer / development partner"
+      }
+    },
+    "OpenAI": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "OpenAI：AI半導体の顧客・共同開発",
+        "en": "OpenAI: AI-chip customer / co-development"
+      }
+    },
+    "Anthropic": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Anthropic：将来のTPU容量利用計画",
+        "en": "Anthropic: planned future TPU compute access"
       }
     }
   }
