@@ -105,3 +105,26 @@ test('known source and unknown personal criteria cannot receive unsupported fact
  assert.deepEqual(eligibleCopies(b,article,[]).map(e=>e.id),['a1']);
  assert.deepEqual(eligibleCopies(b,article,[{condition:'source_unverified',articleRevision:'v1',source:'reviewer',reference:'checked-report',verifiedBy:'editor'}]).map(e=>e.id),['A-reason-07','a1']);
 });
+test('reject repeated news and today even when the model ranks them first',async()=>{
+ const b=structuredClone(bank);
+ b[0].text='私はこのニュースでは動かない';
+ b.find(x=>x.id==='r1').text='ニュースは毎日変わります。ルールは変わりません。';
+ const result=await selectRizel({...base,bank:b});
+ assert.deepEqual(result.ids,['a1','r2','r3','r4']);
+ assert.ok(result.audit.rejectedCombinations.some(x=>x.id==='r1'&&x.issues.includes('word:ニュース')));
+ b[0].text='今日は動かない日';b.find(x=>x.id==='r1').text='今日は何も決めなくて大丈夫です。';
+ const today=await selectRizel({...base,bank:b});
+ assert.deepEqual(today.ids,['a1','r2','r3','r4']);
+ assert.ok(today.audit.rejectedCombinations.some(x=>x.issues.includes('word:今日')));
+});
+test('reject a paraphrased conclusion and two reasons with the same message',async()=>{
+ const b=structuredClone(bank);
+ b[0].text='私は何もしない、ルール通り動く';
+ b.find(x=>x.id==='r1').text='続報で見え方が変わることもあります。今日は決めません。';
+ const result=await selectRizel({...base,bank:b});
+ assert.deepEqual(result.ids,['a1','r2','r3','r4']);
+ assert.ok(result.audit.rejectedCombinations.some(x=>x.issues.includes('meaning:inaction')));
+ b[0].text='一度深呼吸する';b.find(x=>x.id==='r1').text='ラインに届くまでは何もしません。';
+ b.find(x=>x.id==='r2').text='基準は、価格がラインに届いたかどうかです。';
+ assert.deepEqual((await selectRizel({...base,bank:b})).ids,['a1','r1','r3','r4']);
+});

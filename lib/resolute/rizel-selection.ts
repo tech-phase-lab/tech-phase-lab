@@ -18,6 +18,24 @@ export function eligibleCopies(bank:CopyEntry[],article:SelectionArticle,evidenc
  const verified=new Set(evidence.filter(e=>e.articleRevision===article.revision&&e.source&&e.reference&&(e.verifiedBy==='data'||e.verifiedBy==='editor'&&!numeric.has(e.condition))).map(e=>e.condition));
  return bank.filter(e=>e.approval==='approved'&&e.english?.approval==='approved'&&e.id!=='D-executive-03'&&(e.group===group&&(!factualCopyConditions[e.id]||verified.has(factualCopyConditions[e.id]))||e.group==='D'&&e.kind==='reason'&&conditions[e.id]&&verified.has(conditions[e.id])));
 }
+/** Editorial checks operate on immutable approved wording, never rewrite it. */
+export function repetitionIssues(entries:CopyEntry[]) {
+ const issues:string[]=[];
+ for(const term of ['ルール','ニュース','今日']) {
+  if(entries.reduce((n,e)=>n+e.text.split(term).length-1,0)>1)issues.push('word:'+term);
+ }
+ // Conservative known paraphrases: do not present the same advice as its own reason.
+ const meanings:[string,RegExp][]=[
+  ['inaction',/動かない|何もしない|何も決めなく|今日は決めません|ただ見るだけ/],
+  ['unchanged-plan',/ルールを変えない|ルールは変わりません|ルールを変える理由はありません|予定は変わらない|計画は変えません/],
+  ['read-rules',/ルールを読み返|ルールを読む|ルールを読んで|ルールに戻/],
+  ['wait-until-tomorrow',/明日の朝|判断を明日に|一晩置いて/],
+  ['price-level',/価格がラインに|ラインに届く/],
+  ['do-not-rush',/慌てる必要なし|急ぐ理由|慌てない|焦らない|慌てて動く|慌てず/],
+ ];
+ for(const [meaning,pattern] of meanings)if(entries.filter(e=>pattern.test(e.text)).length>1)issues.push('meaning:'+meaning);
+ return issues;
+}
 /** AI ranks relevant IDs, including alternatives. It cannot supply prose or facts. */
 export type Ranker = (input:{article:SelectionArticle;candidates:{id:string;kind:string;text:string}[]})=>Promise<unknown>;
 export async function selectRizel({bank,article,evidence,history,rank,now=new Date()}:{bank:CopyEntry[];article:SelectionArticle;evidence:Evidence[];history:History;rank:Ranker;now?:Date}) {
@@ -35,12 +53,18 @@ export async function selectRizel({bank,article,evidence,history,rank,now=new Da
  const cutoff=(days:number)=>{const day=new Date(now.getTime()+9*3600000).toISOString().slice(0,10);return Date.parse(day+'T00:00:00+09:00')-(days-1)*86400000;};
  const choose=(pool:CopyEntry[],days:number)=>pool.find(e=>last(e.id)<cutoff(days))??[...pool].sort((a,b)=>last(a.id)-last(b.id))[0];
  const ruleCount=(e:CopyEntry)=>(e.text.match(/ルール/g)??[]).length;
- const conclusion=choose(conclusions.filter(e=>ruleCount(e)<=1),7);
+ const conclusion=choose(conclusions.filter(e=>repetitionIssues([e]).length===0),7);
  const selected:CopyEntry[]=[];
+ const rejectedCombinations:{id:string;issues:string[]}[]=[];
  for(let i=0;i<3;i++){
-  const remaining=reasons.filter(e=>!selected.includes(e)&&
-   ruleCount(e)+(conclusion?ruleCount(conclusion):0)+selected.reduce((n,c)=>n+ruleCount(c),0)<=1&&
-   e.text!==conclusion?.text&&!selected.some(c=>c.text===e.text));
+  const remaining=reasons.filter(e=>{
+   if(selected.includes(e))return false;
+   const combination=[...(conclusion?[conclusion]:[]),...selected,e];
+   const issues=repetitionIssues(combination);
+   if(e.text===conclusion?.text||selected.some(c=>c.text===e.text))issues.push('identical-text');
+   if(issues.length)rejectedCombinations.push({id:e.id,issues});
+   return issues.length===0;
+  });
   // Respect the no-repeat window across ALL suitable reasons first.
   // Among fresh candidates prioritize D; only exhaustion permits LRU reuse.
   const fresh=remaining.filter(e=>last(e.id)<cutoff(10));
@@ -52,5 +76,5 @@ export async function selectRizel({bank,article,evidence,history,rank,now=new Da
  return {articleId:article.id,articleRevision:article.revision,createdAt:now.toISOString(),publication:'withheld' as const,
   state:conclusion?'selected':'no-relevant-conclusion',ids:used.map(e=>e.id),
   copy:used.map(e=>({id:e.id,revision:e.revision,ja:e.text,en:e.english!.text,jaHash:e.textSha256,enHash:e.english!.textSha256})),
-  audit:{article,evidence,eligibleIds:eligible.map(e=>e.id),ai:output,history,reasonCount:used.length===4?3:0,ruleOccurrences:used.reduce((n,e)=>n+ruleCount(e),0)}};
+  audit:{article,evidence,rejectedCombinations,eligibleIds:eligible.map(e=>e.id),ai:output,history,reasonCount:used.length===4?3:0,ruleOccurrences:used.reduce((n,e)=>n+ruleCount(e),0)}};
 }

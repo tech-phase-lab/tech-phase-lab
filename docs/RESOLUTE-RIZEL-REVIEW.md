@@ -31,3 +31,14 @@ fixture, separately identified with review-sample: IDs; these are not live news.
 Private SQL migrations 009, 011 and 012 are additive. Runtime roles are limited;
 ordinary entitlement readers and the risk writer cannot read the copy bank.
 Private approved wording and secrets are not part of the repository.
+
+Editorial repetition guard (v3): the selected Japanese conclusion and reasons
+may each contain ルール, ニュース and 今日 at most once in total. Known
+paraphrases of inaction, unchanged plans, rereading rules, waiting until
+tomorrow, price levels and avoiding haste are rejected when repeated.
+Rejected combinations and their reasons are saved in the selection audit.
+These conservative checks do not prove semantic quality; owner review remains
+mandatory. Approved wording is unchanged, and insufficient compatible reasons
+produce a conclusion alone. The policy revision prevents old cached selections
+from being reused when an article is explicitly processed again. Existing saved
+reviews are not silently rewritten and remain unpublished.
