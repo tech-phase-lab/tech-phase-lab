@@ -418,7 +418,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
 
 // A diversified peer's product in this comparison can differ from its category
 // in the fixed semiconductor context (for example Canon printers versus optics).
-const productContexts: Record<string, Record<string, { layer: number; businessLabel: NetworkText }>> = {
+const productContexts: Record<string, Record<string, { layer: number; businessLabel: NetworkText; name?: string }>> = {
   "SNOW": {
     "AMZN": {
       "layer": 6,
@@ -6477,6 +6477,7 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     },
     "Semiconductor Manufacturing International": {
       "layer": 1,
+      "name": "SMIC",
       "businessLabel": {
         "ja": "SMIC｜半導体受託製造",
         "en": "SMIC | semiconductor foundry"
