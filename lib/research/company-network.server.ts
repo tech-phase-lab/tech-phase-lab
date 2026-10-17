@@ -73,7 +73,7 @@ const catalog = buildNetwork();
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
   if (root === "GOOG") return {3:{ja:"GPU・TPU供給・AI技術連携",en:"GPU / TPU supply & AI integration"},6:{ja:"Google Cloud・AI・検索",en:"Google Cloud, AI & search"},7:{ja:"クラウド顧客・サービス連携・競合",en:"Cloud customers, service partners & competition"}};
-  if (root === "AMZN") return {3:{ja:"AWS向け半導体供給",en:"AWS chip suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}};
+  if (root === "AMZN") return {3:{ja:"半導体・配送車の供給元",en:"Chip and delivery-van suppliers"},6:{ja:"AWS顧客・開発協業・出資先",en:"AWS customers, development & investees"},7:{ja:"通販・広告・クラウド利用企業",en:"Commerce, ads & cloud customers"}};
 
   if (root === "TENB") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・技術連携", en: "Cloud and technology integration" }, 7: { ja: "脆弱性管理・クラウド防御", en: "Vulnerability management and cloud security" } };
   if (root === "QTWO") return { 5: { ja: "関連する計算基盤", en: "Related computing infrastructure" }, 6: { ja: "クラウド・金融技術の連携", en: "Cloud and financial technology integration" }, 7: { ja: "銀行ソフト・融資・組込金融", en: "Banking software, lending and embedded finance" } };
@@ -3694,6 +3694,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Intel：Google Cloud上PCCのTDX CPU",
         "en": "Intel: TDX CPUs for PCC on Google Cloud"
       }
+    },
+    "MA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Mastercard：米国Apple Card決済網",
+        "en": "Mastercard: US Apple Card payment network"
+      }
+    },
+    "GS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Goldman Sachs：Apple Card発行・移管中",
+        "en": "Goldman Sachs: Apple Card issuer during transition"
+      }
+    },
+    "JPM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "JPMorgan Chase：Apple Card移管予定先",
+        "en": "JPMorgan Chase: planned Apple Card successor issuer"
+      }
     }
   },
   "AMZN": {
@@ -3758,6 +3779,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Microsoft：Azure VMのクラウド競合",
         "en": "Microsoft: Azure VM cloud competition"
+      }
+    },
+    "RIVN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Rivian：配送車供給・データサービス顧客",
+        "en": "Rivian: van supplier / data-services customer"
       }
     }
   },
