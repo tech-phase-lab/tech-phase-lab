@@ -3541,6 +3541,18 @@
       {
         "label": "Official commercial disclosure; checked October 17, 2026",
         "url": "https://www.jpmorganchase.com/ir/news/2026/chase-to-become-new-issuer-of-apple-card"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.globalstar.com/news-releases/news-release-details/amazon-acquire-globalstar-and-expand-amazon-leo-satellite/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://press.aboutamazon.com/2026/4/amazon-to-acquire-globalstar-and-expand-amazon-leo-satellite-network"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.globalstar.com/news-releases/news-release-details/globalstar-announces-second-quarter-2026-financial-results"
       }
     ],
     "ja": {
@@ -3549,7 +3561,7 @@
       "strength": "端末・基本ソフト・サービスを一体で設計し、製品同士を使いやすく連携させる。",
       "risks": "iPhoneの需要変動、海外の製造網への依存、アプリ配信などをめぐる規制。",
       "competition": "スマートフォンではSamsungのGalaxy、PCではHPが競合例。GalaxyとiPhoneは両社の公式製品説明から比較し、HPの年次報告はAppleをPersonal Systemsの主要競合に挙げている。端末ごとに製品の特徴や使う基本ソフトが異なる。 ウェアラブルではApple WatchとGarmin Venuの運動向けスマートウォッチを公式製品・取扱説明書で編集比較する。医療性能、測定精度、対応端末や全機能の同等性は示さない。 音楽サービスは、Spotify PremiumとApple Musicの定額聴取を両社公式製品で編集比較する。楽曲構成、対応端末、音質機能、料金や地域条件の一致を示すものではない。 Meta QuestとApple Vision ProのVR・複合現実端末も公式製品で編集比較する。性能・用途・価格や全機能の同等性を示すものではなく、両社の提携を意味しない。",
-      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。 米国製造計画ではApplied Materials、Texas Instruments、Corning、Coherent、TSMC、GlobalFoundries、Amkor、Samsung、MP Materials、GlobalWafers、Cirrus Logic、TDK、Qnityとの関係を公式発表に基づき区別する。装置・材料の製造協業、部品供給、将来工場の包装・試験計画は同じ役割ではない。Broadcomの2026年7月の追加契約も含め、予定投資・調達を売上実績や全計画稼働済みと扱わず、現在の会社別調達量や株式保有を推定しない。 2026年6月Apple自社発表：Google Cloud上のPrivate Cloud Compute拡張をNVIDIA・Googleと共同開発。Apple自社開示：Google Cloud上のPCCにNVIDIA GPU・Confidential Computingを採用。Appleの直接購入数量ではない。2026年6月Apple自社発表：Googleと次世代Apple Foundation Models・Google Cloud上のPCCを共同開発。Apple自社開示：新しいApple Intelligenceワークロード向けにPCCをGoogle Cloudへ拡張。全機能移行や契約量は断定しない。2026年6月Apple自社開示：Google Cloud上のPCC基盤でTDX対応Intel CPUを利用。Mac全機種への採用ではない。 Apple Cardの決済ネットワークはMastercard。米国の対象利用者向けで、世界の全Apple Pay取引を意味しない。Goldman Sachs傘下銀行が米国Apple Cardを発行・運営。Chaseへの条件付き移管完了までは継続。2026年1月7日ChaseへのApple Card移管を発表。約24か月予定・当局承認等が条件で、移管済みではない。"
+      "relationships": "Broadcomとは2023年5月に5G向けRF・FBARフィルターなどの複数年契約を発表。OpenAIとは2024年6月にSiriやWriting ToolsへのChatGPT統合を発表した。前者は部品調達、後者はAI機能連携であり、契約の独占性は断定しない。 米国製造計画ではApplied Materials、Texas Instruments、Corning、Coherent、TSMC、GlobalFoundries、Amkor、Samsung、MP Materials、GlobalWafers、Cirrus Logic、TDK、Qnityとの関係を公式発表に基づき区別する。装置・材料の製造協業、部品供給、将来工場の包装・試験計画は同じ役割ではない。Broadcomの2026年7月の追加契約も含め、予定投資・調達を売上実績や全計画稼働済みと扱わず、現在の会社別調達量や株式保有を推定しない。 2026年6月Apple自社発表：Google Cloud上のPrivate Cloud Compute拡張をNVIDIA・Googleと共同開発。Apple自社開示：Google Cloud上のPCCにNVIDIA GPU・Confidential Computingを採用。Appleの直接購入数量ではない。2026年6月Apple自社発表：Googleと次世代Apple Foundation Models・Google Cloud上のPCCを共同開発。Apple自社開示：新しいApple Intelligenceワークロード向けにPCCをGoogle Cloudへ拡張。全機能移行や契約量は断定しない。2026年6月Apple自社開示：Google Cloud上のPCC基盤でTDX対応Intel CPUを利用。Mac全機種への採用ではない。 Apple Cardの決済ネットワークはMastercard。米国の対象利用者向けで、世界の全Apple Pay取引を意味しない。Goldman Sachs傘下銀行が米国Apple Cardを発行・運営。Chaseへの条件付き移管完了までは継続。2026年1月7日ChaseへのApple Card移管を発表。約24か月予定・当局承認等が条件で、移管済みではない。 2026年4月共同発表：Globalstarが対象iPhone・Apple Watchの衛星サービスを提供。地域・機種条件あり。共同発表がAppleとの衛星サービス協業を明示。Amazonによる買収は2027年予定・条件付き未完了。2026年4月：対象iPhone・Watchの衛星接続と将来Amazon Leoサービスの協業契約。全計画稼働済みではない。"
     },
     "en": {
       "business": "Creates iPhone, Mac and other devices, with their software and services.",
@@ -3557,7 +3569,7 @@
       "strength": "Integrates hardware, operating systems and services across its products.",
       "risks": "iPhone demand shifts, overseas manufacturing dependence and regulation of its platforms.",
       "competition": "Examples include Samsung Galaxy smartphones versus iPhone, and HP in PCs. The smartphone comparison uses the companies’ official products; HP explicitly names Apple in Personal Systems. The comparison is product-specific rather than a match across all Apple services. Wearables add an editorial comparison of Apple Watch and Garmin Venu fitness smartwatches using official products and manuals, without equating medical performance, accuracy, supported phones or all features. Music services add an editorial comparison of Spotify Premium and Apple Music subscriptions using both official product pages. Catalogs, supported devices, audio features, pricing and regional terms can differ. Official products also support an editorial Meta Quest / Apple Vision Pro VR and mixed-reality comparison, without equating performance, use cases, price or all functions, or establishing a partnership.",
-      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established. Official US-manufacturing announcements separately identify Applied Materials, Texas Instruments, Corning, Coherent, TSMC, GlobalFoundries, Amkor, Samsung, MP Materials, GlobalWafers, Cirrus Logic, TDK and Qnity. Equipment/materials collaboration, component supply and planned packaging/test capacity are distinct roles. The July2026 Broadcom expansion is a future procurement commitment, not realized revenue, completed capacity or equity ownership. June2026 Apple disclosure: co-developed Private Cloud Compute expansion on Google Cloud with NVIDIA and Google. Apple discloses NVIDIA GPUs / Confidential Computing in PCC on Google Cloud; not a claim of Apple direct purchase quantities. June2026 Apple disclosure: co-development with Google of next-generation Apple Foundation Models and PCC on Google Cloud. Apple discloses PCC expansion to Google Cloud for new Apple Intelligence workloads, without claiming migration of all features or contract quantities. June2026 Apple disclosure: Intel CPUs with TDX in PCC on Google Cloud; not adoption across all Mac models. Mastercard is the Apple Card payment network for eligible US users, not every Apple Pay transaction worldwide. Goldman Sachs Bank USA issues / operates US Apple Card until the conditional transition to Chase is completed. January7,2026: Apple Card transition to Chase announced, expected in about24months subject to regulatory and closing conditions; not completed."
+      "relationships": "Apple announced a multiyear Broadcom agreement for 5G RF, FBAR filters and related connectivity in May 2023. Its June 2024 OpenAI partnership announced ChatGPT integration with Siri and Writing Tools. Component procurement and AI integration are distinct relationships; exclusivity is not established. Official US-manufacturing announcements separately identify Applied Materials, Texas Instruments, Corning, Coherent, TSMC, GlobalFoundries, Amkor, Samsung, MP Materials, GlobalWafers, Cirrus Logic, TDK and Qnity. Equipment/materials collaboration, component supply and planned packaging/test capacity are distinct roles. The July2026 Broadcom expansion is a future procurement commitment, not realized revenue, completed capacity or equity ownership. June2026 Apple disclosure: co-developed Private Cloud Compute expansion on Google Cloud with NVIDIA and Google. Apple discloses NVIDIA GPUs / Confidential Computing in PCC on Google Cloud; not a claim of Apple direct purchase quantities. June2026 Apple disclosure: co-development with Google of next-generation Apple Foundation Models and PCC on Google Cloud. Apple discloses PCC expansion to Google Cloud for new Apple Intelligence workloads, without claiming migration of all features or contract quantities. June2026 Apple disclosure: Intel CPUs with TDX in PCC on Google Cloud; not adoption across all Mac models. Mastercard is the Apple Card payment network for eligible US users, not every Apple Pay transaction worldwide. Goldman Sachs Bank USA issues / operates US Apple Card until the conditional transition to Chase is completed. January7,2026: Apple Card transition to Chase announced, expected in about24months subject to regulatory and closing conditions; not completed. April2026 joint announcement: Globalstar provides satellite services for supported iPhone / Apple Watch models, subject to device and regional conditions. Joint announcement explicitly identifies Apple satellite-services collaboration; Amazon acquisition expected2027 remains conditional and incomplete. April2026: agreement for eligible iPhone / Watch satellite connectivity and future Amazon Leo collaboration, not completed deployment of all plans."
     },
     "maps": {
       "competition": [
@@ -3983,6 +3995,50 @@
             28
           ],
           "ticker": "JPM"
+        },
+        {
+          "kind": "company",
+          "name": "Globalstar",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年4月共同発表：Globalstarが対象iPhone・Apple Watchの衛星サービスを提供。地域・機種条件あり",
+            "en": "April2026 joint announcement: Globalstar provides satellite services for supported iPhone / Apple Watch models, subject to device and regional conditions"
+          },
+          "sourceIndexes": [
+            29,
+            30,
+            31
+          ],
+          "ticker": "GSAT"
+        },
+        {
+          "kind": "company",
+          "name": "Globalstar",
+          "role": "partner",
+          "label": {
+            "ja": "共同発表がAppleとの衛星サービス協業を明示。Amazonによる買収は2027年予定・条件付き未完了",
+            "en": "Joint announcement explicitly identifies Apple satellite-services collaboration; Amazon acquisition expected2027 remains conditional and incomplete"
+          },
+          "sourceIndexes": [
+            29,
+            30,
+            31
+          ],
+          "ticker": "GSAT"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月：対象iPhone・Watchの衛星接続と将来Amazon Leoサービスの協業契約。全計画稼働済みではない",
+            "en": "April2026: agreement for eligible iPhone / Watch satellite connectivity and future Amazon Leo collaboration, not completed deployment of all plans"
+          },
+          "sourceIndexes": [
+            30,
+            29
+          ],
+          "ticker": "AMZN"
         }
       ]
     }
@@ -4050,6 +4106,18 @@
       {
         "label": "Official commercial disclosure; checked October 17, 2026",
         "url": "https://www.aboutamazon.com/news/transportation/everything-you-need-to-know-about-amazons-electric-delivery-vans-from-rivian"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://press.aboutamazon.com/2026/4/amazon-to-acquire-globalstar-and-expand-amazon-leo-satellite-network"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.globalstar.com/news-releases/news-release-details/amazon-acquire-globalstar-and-expand-amazon-leo-satellite/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://investors.globalstar.com/news-releases/news-release-details/globalstar-announces-second-quarter-2026-financial-results"
       }
     ],
     "ja": {
@@ -4058,7 +4126,7 @@
       "strength": "品揃えと配送網を組み合わせた通販と、幅広い機能を持つAWS。",
       "risks": "激しい価格競争、物流・人件費の上昇、データセンター投資の負担。",
       "competition": "AWSのデータ処理・分析ではSnowflake、商品販売ではCostcoが競合例。SnowflakeとCostcoがそれぞれの年次報告書でAWSとAmazonを競合として挙げている。クラウドと小売では競う製品も顧客も異なる。 AWS EC2とGoogle Compute Engineの仮想マシンを比較。Google側の公式比較に基づく。AWS EC2とAzure Virtual Machinesを比較。Microsoft側の公式製品比較に基づく。",
-      "relationships": "AnthropicはAWSのTrainiumを利用する実名の計算顧客。2026年4月には最大5GWの計算容量契約を発表し、段階的な拡大を計画する。AmazonのAnthropicへの投資は、この計算サービス供給とは別の資本関係であり、全容量の稼働済みを意味しない。 Pinterest・Snapは自社の年次報告でAWS利用を開示し、MarvellはAWS向け半導体の供給契約を公表している。 2026年2月発表：OpenAIのAWS契約を8年間1000億ドル拡張。2GWのTrainium利用契約。2026年2月：OpenAIとBedrock向け実行環境を共同開発。全提供完了とはしない。2026年6月末287億ドル投資、期末後の213億ドル拠出も自社10-Qで確認。計500億ドル。2026年第2四半期：Anthropic非議決権優先株に100億ドルを投資。AWS契約と別の資本関係。2025年5月：AWSがNVIDIA B200搭載EC2 P6-B200を一般提供。地域条件あり。 Rivian側2026年6月期10-Q：Amazon向け電動配送車等の売上を確認。2030年目標を全納入済みとしない。Amazon自社説明：Rivianと専用電動配送車を共同設計・展開。全将来発注量の納入完了ではない。Rivian自身2026年6月期10-Q：Amazonのホスティング・ストレージ・計算サービスを利用。車両販売とは別取引。"
+      "relationships": "AnthropicはAWSのTrainiumを利用する実名の計算顧客。2026年4月には最大5GWの計算容量契約を発表し、段階的な拡大を計画する。AmazonのAnthropicへの投資は、この計算サービス供給とは別の資本関係であり、全容量の稼働済みを意味しない。 Pinterest・Snapは自社の年次報告でAWS利用を開示し、MarvellはAWS向け半導体の供給契約を公表している。 2026年2月発表：OpenAIのAWS契約を8年間1000億ドル拡張。2GWのTrainium利用契約。2026年2月：OpenAIとBedrock向け実行環境を共同開発。全提供完了とはしない。2026年6月末287億ドル投資、期末後の213億ドル拠出も自社10-Qで確認。計500億ドル。2026年第2四半期：Anthropic非議決権優先株に100億ドルを投資。AWS契約と別の資本関係。2025年5月：AWSがNVIDIA B200搭載EC2 P6-B200を一般提供。地域条件あり。 Rivian側2026年6月期10-Q：Amazon向け電動配送車等の売上を確認。2030年目標を全納入済みとしない。Amazon自社説明：Rivianと専用電動配送車を共同設計・展開。全将来発注量の納入完了ではない。Rivian自身2026年6月期10-Q：Amazonのホスティング・ストレージ・計算サービスを利用。車両販売とは別取引。 Amazon自社4月発表：Appleと対象iPhone・Watch向け衛星接続を契約し将来サービスを共同開発。Amazon自社6月期10-Q：Globalstar買収完了後にAppleへサービス提供する契約。買収・全提供完了や契約数量は断定しない。2026年4月の買収合意、8月公式更新でも2027年予定・当局承認と衛星マイルストーン等の条件付き。取得済みではない。"
     },
     "en": {
       "business": "Runs online retail, AWS cloud computing, advertising and streaming services.",
@@ -4066,7 +4134,7 @@
       "strength": "Combines retail selection and delivery infrastructure with a broad AWS service range.",
       "risks": "Price competition, logistics and labor costs, and heavy data-center investment.",
       "competition": "Examples include Snowflake in AWS data processing and analytics, and Costco in merchandise retail. Snowflake names AWS and Costco names Amazon in their annual reports. These are separate cloud and retail markets. AWS EC2 versus Google Compute Engine virtual machines, based on Google’s official product comparison. AWS EC2 versus Azure Virtual Machines, based on Microsoft’s official product comparison.",
-      "relationships": "Anthropic is a named AWS Trainium compute customer. An April 2026 announcement described an agreement for up to 5 GW with a staged capacity expansion. Amazon’s investment in Anthropic is a separate capital relationship; the announcement does not establish that all capacity is operational. Pinterest and Snap disclose AWS use in their own filings, while Marvell announces a chip-supply agreement with AWS. February2026: OpenAI AWS agreement expanded by$100bn over8years;2GW Trainium commitment. February2026: OpenAI / Bedrock stateful-runtime joint development; not all delivery complete. Amazon10-Q: $28.7bn invested byJune30,2026 plus$21.3bn funded afterward; $50bn total. Q22026: $10bn invested in Anthropic nonvoting preferred stock, separate from AWS service commitments. May2025: AWS makes NVIDIA B200-powered EC2 P6-B200 generally available in selected regions. Rivian June2026 10-Q identifies sales to Amazon, primarily electric delivery vans; the2030 fleet goal is not fully delivered. Amazon discloses collaboration with Rivian to design / deploy custom electric delivery vans, not completed delivery of every future order. Rivian June2026 10-Q discloses Amazon hosting, storage and compute use, a separate transaction from vehicle sales."
+      "relationships": "Anthropic is a named AWS Trainium compute customer. An April 2026 announcement described an agreement for up to 5 GW with a staged capacity expansion. Amazon’s investment in Anthropic is a separate capital relationship; the announcement does not establish that all capacity is operational. Pinterest and Snap disclose AWS use in their own filings, while Marvell announces a chip-supply agreement with AWS. February2026: OpenAI AWS agreement expanded by$100bn over8years;2GW Trainium commitment. February2026: OpenAI / Bedrock stateful-runtime joint development; not all delivery complete. Amazon10-Q: $28.7bn invested byJune30,2026 plus$21.3bn funded afterward; $50bn total. Q22026: $10bn invested in Anthropic nonvoting preferred stock, separate from AWS service commitments. May2025: AWS makes NVIDIA B200-powered EC2 P6-B200 generally available in selected regions. Rivian June2026 10-Q identifies sales to Amazon, primarily electric delivery vans; the2030 fleet goal is not fully delivered. Amazon discloses collaboration with Rivian to design / deploy custom electric delivery vans, not completed delivery of every future order. Rivian June2026 10-Q discloses Amazon hosting, storage and compute use, a separate transaction from vehicle sales. Amazon April2026 disclosure: Apple satellite-connectivity agreement for eligible iPhone / Watch models and collaboration on future services. Amazon June2026 10-Q: agreement to provide services to Apple after the Globalstar acquisition closes; no completed acquisition / full rollout or quantities asserted. April2026 acquisition agreement; August issuer update retains expected2027 closing subject to regulatory / satellite milestone conditions, not completed ownership."
     },
     "maps": {
       "competition": [
@@ -4329,6 +4397,51 @@
             12
           ],
           "ticker": "RIVN"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "partner",
+          "label": {
+            "ja": "Amazon自社4月発表：Appleと対象iPhone・Watch向け衛星接続を契約し将来サービスを共同開発",
+            "en": "Amazon April2026 disclosure: Apple satellite-connectivity agreement for eligible iPhone / Watch models and collaboration on future services"
+          },
+          "sourceIndexes": [
+            14,
+            15
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "customer",
+          "label": {
+            "ja": "Amazon自社6月期10-Q：Globalstar買収完了後にAppleへサービス提供する契約。買収・全提供完了や契約数量は断定しない",
+            "en": "Amazon June2026 10-Q: agreement to provide services to Apple after the Globalstar acquisition closes; no completed acquisition / full rollout or quantities asserted"
+          },
+          "sourceIndexes": [
+            8,
+            14,
+            15
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Globalstar",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月の買収合意、8月公式更新でも2027年予定・当局承認と衛星マイルストーン等の条件付き。取得済みではない",
+            "en": "April2026 acquisition agreement; August issuer update retains expected2027 closing subject to regulatory / satellite milestone conditions, not completed ownership"
+          },
+          "sourceIndexes": [
+            8,
+            14,
+            15,
+            16
+          ],
+          "ticker": "GSAT"
         }
       ]
     }

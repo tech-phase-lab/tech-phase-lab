@@ -192,7 +192,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "HPE") return {"3": {"ja": "サーバー用GPU・CPU", "en": "Server GPUs & CPUs"}, "5": {"ja": "サーバー・ネットワーク", "en": "Servers & networking"}, "6": {"ja": "クラウド・ハイブリッド基盤", "en": "Cloud & hybrid infrastructure"}};
   if (root === "ADSK") return {"5": {"ja": "ソフトウェアの販売・流通", "en": "Software sales & distribution"}, "7": {"ja": "設計・製造・建設ソフト", "en": "Design, manufacturing & construction software"}};
 
-  if (root === "AAPL") return { 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・機能連携", en: "AI & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
+  if (root === "AAPL") return { 0: { ja: "製造装置・材料の協業", en: "Manufacturing equipment & materials" }, 1: { ja: "半導体の受託製造・工程協業", en: "Foundries & process collaboration" }, 2: { ja: "半導体の包装・試験計画", en: "Chip packaging & test plans" }, 4: { ja: "カバーガラス・光部品供給", en: "Cover glass & optical components" }, 5: { ja: "端末・PC・スマートフォン・時計", en: "Devices, PCs, phones & watches" }, 3: { ja: "通信・半導体部品", en: "Connectivity & semiconductor components" }, 6: { ja: "AI・衛星・機能連携", en: "AI, satellite & feature integration" }, 7: { ja: "端末・サービスと比較製品", en: "Devices, services & competing products" } };
   if (["GOOG", "AMZN"].includes(root)) return { 6: { ja: "クラウド・AI・複合サービス", en: "Cloud, AI & diversified services" }, 7: { ja: "検索・通販・広告・サービス", en: "Search, commerce, ads & services" } };
   if (root === "META") return {4:{ja:"データセンターの光接続供給",en:"Data-center optical connectivity"}, 3: { ja: "AI半導体・基盤協業", en: "AI chips & infrastructure collaboration" }, 6: { ja: "クラウド・計算基盤", en: "Cloud & compute infrastructure" }, 7: { ja: "交流・動画・広告", en: "Social, video & ads" } };
   if (root === "ON") return { 1: { ja: "GaN工程・製造協業", en: "GaN process & manufacturing collaboration" }, 5: { ja: "AIデータセンターの電源技術連携", en: "AI data-center power collaboration" }, 3: { ja: "電力・アナログ・画像半導体", en: "Power, analog & imaging chips" }, 7: { ja: "EV向け採用・供給契約", en: "EV adoption & supply agreements" } };
@@ -3715,6 +3715,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "JPMorgan Chase：Apple Card移管予定先",
         "en": "JPMorgan Chase: planned Apple Card successor issuer"
       }
+    },
+    "GSAT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Globalstar：対象端末向け衛星サービス",
+        "en": "Globalstar: satellite services for eligible devices"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon：対象端末の衛星接続契約",
+        "en": "Amazon: satellite-connectivity agreement"
+      }
     }
   },
   "AMZN": {
@@ -3786,6 +3800,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Rivian：配送車供給・データサービス顧客",
         "en": "Rivian: van supplier / data-services customer"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Apple：衛星サービス契約・共同開発",
+        "en": "Apple: satellite-service agreement / co-development"
+      }
+    },
+    "GSAT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Globalstar：条件付き買収合意・衛星網",
+        "en": "Globalstar: conditional acquisition / satellite network"
       }
     }
   },
