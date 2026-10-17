@@ -73,9 +73,9 @@ export default function WatchlistSample() {
     <div className={styles.page}>
       <header className={styles.heading}>
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>
-        <div className={styles.listPicker}><span aria-hidden="true">▼</span><select aria-label={t("マイリストを選択", "Choose list")} value={listIndex} onChange={e => { setListIndex(Number(e.target.value)); setRenaming(false); setRevealed(""); setExpanded(""); }}>
+        <div className={styles.listPicker}><span aria-hidden="true">▼</span><label className={styles.listChoice}><span className={styles.listName} aria-hidden="true">{listName(listIndex)}</span><select aria-label={t("マイリストを選択", "Choose list")} value={listIndex} onChange={e => { setListIndex(Number(e.target.value)); setRenaming(false); setRevealed(""); setExpanded(""); }}>
           {names.map((_, index) => <option key={index} value={index}>{listName(index)}</option>)}
-        </select><button aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={renaming} onClick={() => { setDraftName(listName(listIndex)); setRenaming(!renaming); }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z" /></svg></button></div>
+        </select></label><button aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={renaming} onClick={() => { setDraftName(listName(listIndex)); setRenaming(!renaming); }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="m3 16.5 3.8 3.8L3 21l.7-3.8ZM5 15l10-10 4 4L9 19ZM16.4 3.6l1-1a2 2 0 0 1 2.8 0l1.2 1.2a2 2 0 0 1 0 2.8l-1 1Z" /></svg></button></div>
       </header>
       <p className={styles.notice}>{t("表示サンプル · 架空データ／リスト操作はこの画面内のみ", "Display sample · Simulated data / list edits stay on this page")}</p>
       {renaming && <form className={styles.renameForm} onSubmit={e => { e.preventDefault(); if (!draftName.trim()) return; setNames(current => current.map((name, index) => index === listIndex ? draftName.trim() : name)); setRenaming(false); setRevealed(""); setExpanded(""); }}><input autoFocus aria-label={t("リスト名", "List name")} maxLength={40} required value={draftName} onChange={e => setDraftName(e.target.value)} /><button type="submit">{t("保存", "Save")}</button><button type="button" onClick={() => setRenaming(false)}>{t("取消", "Cancel")}</button></form>}

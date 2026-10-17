@@ -7,6 +7,7 @@ import { useWatchlistSelection } from "./use-watchlist-selection";
 import { watchlistSlots, sortFavorites, addFavoriteToList, favoriteListLimit, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import WatchlistFrame from "./watchlist-frame";
+import { PendingRows } from "./pending-rows";
 import ResearchToolShell from "../research-tool-shell";
 import { TradingViewChart } from "../stocks/tradingview-chart";
 import { favoriteIntradayChart } from "@/lib/research/watchlist-chart";
@@ -130,11 +131,11 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>
         <div className={styles.listPicker}>
           <span className={styles.pickerArrow} aria-hidden="true">▼</span>
-          <select aria-label={t("マイリストを選択", "Choose list")} value={list.id} onChange={event => { setListId(event.target.value); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }}>
+          <label className={styles.listChoice}><span className={styles.listName} aria-hidden="true">{list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)}</span><select aria-label={t("マイリストを選択", "Choose list")} value={list.id} onChange={event => { setListId(event.target.value); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }}>
             {slots.map((item, index) => <option key={item.id} value={item.id}>{item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`)}</option>)}
-          </select>
+          </select></label>
           <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z" /></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="m3 16.5 3.8 3.8L3 21l.7-3.8ZM5 15l10-10 4 4L9 19ZM16.4 3.6l1-1a2 2 0 0 1 2.8 0l1.2 1.2a2 2 0 0 1 0 2.8l-1 1Z" /></svg>
           </button>
         </div>
       </header>
@@ -164,7 +165,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </div>}
       {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のお気に入りを取り込む", "Import this device’s favorites")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
-      {!ready ? <div className={styles.loading} role="status" aria-busy={status === "loading"}>{status === "loading" ? t("ウォッチリストを読み込み中…", "Loading your watchlist…") : t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
+      {!ready ? status === "loading" ? <PendingRows lang={lang} /> : <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
 
         <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>

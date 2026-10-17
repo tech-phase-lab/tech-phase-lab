@@ -8,14 +8,15 @@ import * as freshness from '../lib/research/watchlist-freshness.ts';
 import * as alerts from '../lib/research/price-alert-settings.ts';
 const require = createRequire(import.meta.url);
 const compiled = ts.transpileModule(readFileSync(new URL('../app/research/watchlist/watchlist.tsx', import.meta.url), 'utf8'), {compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
-function harness(lang='ja', editable=true) {
+function harness(lang='ja', editable=true, ready=true, status='synced') {
  let state={lists:[{id:'default',name:'First',tickers:['MU','NVDA']},{id:'my-list-2',name:'Second',tickers:['MU']}],names:{MU:'Micron'},alerts:[{ticker:'MU',price:200,direction:'above',currency:'USD'}]}, writes=0,index=0,tree;
  const slots=[], messages=[]; let accepted=false;
  const target={exports:{}};
  new Function('require','module','exports','window',compiled)(id=>{
   if(id==='react')return {useEffect:()=>{},useRef:()=>({current:null}),useState:initial=>{const key=index++;if(!(key in slots))slots[key]=initial;return [slots[key],v=>{slots[key]=v;}];}};
   if(id==='react/jsx-runtime')return require(id);
-  if(id==='./use-favorite-lists')return {useFavoriteLists:()=>({...state,editable,ready:true,status:'synced',update:change=>{writes++;state=change(state);return true;}})};
+  if(id==='./use-favorite-lists')return {useFavoriteLists:()=>({...state,editable,ready,status,update:change=>{writes++;state=change(state);return true;}})};
+  if(id==='./pending-rows')return {PendingRows:'pending-rows'};
   if(id==='./use-watchlist-selection')return {useWatchlistSelection:()=>['default',()=>{}]};
   if(id==='../use-research-language')return {useResearchLanguage:()=>[lang,()=>{}]};
   if(id==='@/lib/research/price-alert-settings')return alerts;
@@ -48,4 +49,17 @@ test('expanded detail removal uses the same confirmation in English',()=>{
 });
 test('uneditable watchlists cannot trigger a removal or confirmation',()=>{
  const h=harness('ja',false);h.accept();assert.equal(h.remove(),false);assert.equal(h.writes,0);assert.deepEqual(h.messages,[]);
+});
+
+test('pending watchlist keeps loading placeholders instead of flashing an empty list',()=>{
+ const h=harness('ja',false,false,'loading');
+ assert.equal(h.nodes().filter(n=>n.type==='pending-rows').length,1);
+ assert.equal(h.nodes().filter(n=>n.type==='h2').length,0);
+ assert.equal(h.nodes().filter(n=>n.props?.removeLabel).length,0);
+ assert.equal(h.writes,0);
+});
+test('failed initial watchlist load keeps an explicit error rather than a stuck placeholder',()=>{
+ const h=harness('en',false,false,'error');
+ assert.equal(h.nodes().filter(n=>n.type==='pending-rows').length,0);
+ assert.ok(h.nodes().some(n=>n.props?.children==='Your saved watchlist is unavailable'));
 });
