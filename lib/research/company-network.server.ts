@@ -8907,6 +8907,76 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Arm：AGI CPU製造の顧客",
         "en": "Arm: AGI CPU manufacturing customer"
       }
+    },
+    "ASML": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "ASML：製造装置の供給・生産支援",
+        "en": "ASML: equipment supply / production support"
+      }
+    },
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Applied Materials：製造装置・開発協業",
+        "en": "Applied Materials: equipment / process collaboration"
+      }
+    },
+    "LRCX": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Lam Research：製造装置の供給・開発支援",
+        "en": "Lam Research: equipment / development support"
+      }
+    },
+    "KLAC": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "KLA：製造装置の供給・生産支援",
+        "en": "KLA: equipment supply / production support"
+      }
+    },
+    "ONTO": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Onto Innovation：製造装置の供給・生産支援",
+        "en": "Onto Innovation: equipment / production support"
+      }
+    },
+    "Global Unichip": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Global Unichip：ASIC設計・出資先",
+        "en": "Global Unichip: ASIC design / investee"
+      }
+    },
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor：先端包装・試験の調達先",
+        "en": "Amkor: advanced-packaging / test procurement"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD：半導体製造の顧客",
+        "en": "AMD: chip-manufacturing customer"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom：ウエハー・後工程の顧客",
+        "en": "Broadcom: wafer / backend customer"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Qualcomm：QCT半導体製造の顧客",
+        "en": "Qualcomm: QCT manufacturing customer"
+      }
     }
   },
   "JD": {

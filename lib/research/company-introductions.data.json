@@ -1929,6 +1929,34 @@
       {
         "label": "Official commercial disclosure; checked October 17, 2026",
         "url": "https://investors.arm.com/node/7946/html"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://pr.tsmc.com/system/files/newspdf/attachment/083b1ab2191856b8e0f31b46a40dcadafc595e8e/2025%20Supply%20Chain%20Management%20Forum%20Press%20Release%20%28E%29_final_wmn.pdf"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-tsmc-partner-epic-center-accelerate-ai/"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://www.guc-asic.com/tw/investor/shareholder?shareholder-tab=option2"
+      },
+      {
+        "label": "Official commercial disclosure; checked October 17, 2026",
+        "url": "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership"
+      },
+      {
+        "label": "AMD FY2025 annual disclosure; manufacturing scope independently read October17,2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm"
+      },
+      {
+        "label": "Broadcom FY2025 annual disclosure; manufacturing scope independently read October17,2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+      },
+      {
+        "label": "Qualcomm FY2025 annual disclosure; manufacturing scope independently read October17,2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm"
       }
     ],
     "ja": {
@@ -1937,7 +1965,7 @@
       "strength": "微細な回路を大量生産する技術と生産規模。設計会社が製品を量産するための仕組みも整える。",
       "risks": "台湾への生産集中、地震や電力・水の供給障害、大口顧客の需要変動と設備投資の負担。",
       "competition": "先端半導体の受託製造ではIntel FoundryとSamsungが競合例。IntelはTSMCを先端プロセスの主要競合と明記している。Samsungは両社の公表する製造事業を比較したもの。製造技術の世代や量産規模、先端パッケージングで競争条件は異なる。 成熟プロセスの受託製造ではUMCも公式開示・技術資料による編集比較の対象。最先端ノードや先端パッケージングまで同等とするものではなく、製造能力やシェアを推定しない。",
-      "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。 2026年2月Apple側開示：TSMCアリゾナ製チップを購入。年間予定数量を実績にしない。2026年10月Microsoft側開示：Maia 300にTSMC N2Pを採用。展開は2027年予定。 2026年3月Arm側6-KのTSMC公式コメント：Arm AGI CPUの製造を担当。数量は未開示。"
+      "relationships": "NVIDIAなどの設計会社から製造を受託。製造装置、材料、設計ソフトの企業とも連携する。 2026年2月Apple側開示：TSMCアリゾナ製チップを購入。年間予定数量を実績にしない。2026年10月Microsoft側開示：Maia 300にTSMC N2Pを採用。展開は2027年予定。 2026年3月Arm側6-KのTSMC公式コメント：Arm AGI CPUの製造を担当。数量は未開示。 TSMC自身が2025年11月の供給元表彰でASMLを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でApplied Materialsを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でLam Researchを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でKLAを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。TSMC自身が2025年11月の供給元表彰でOnto Innovationを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明。2026年5月11日：TSMCとApplied MaterialsがEPICで材料・装置・工程を共同開発する提携。全開発・量産完了ではない。TSMC自身の2025年末保有：Global Unichip株46,687,859株・34.84%。新規2026年取得や現在比率を推定しない。2026年6月16日の10年契約：TSMCがAmkorの先端包装・試験を調達する協業枠組み。アリゾナ能力拡張の全稼働・数量は未確定。TSMCとAmkorが米アリゾナの先端包装・試験で10年協業を共同発表。TSMC自身の公式コメントを個別確認。 AMDのFY2025自社開示：HPC・FPGA・adaptive SoC等のウエハー製造にTSMCを利用。TSMC側の顧客名開示と混同しない。 BroadcomのFY2025自社開示：TSMCをウエハー製造と組立・試験の委託先に列挙。全製品・全数量の独占委託ではない。 QualcommのFY2025自社開示：QCTのデジタル・混載・RF・電源ICの主要製造先にTSMCを含む。全製品の単独供給とはしない。"
     },
     "en": {
       "business": "Manufactures chips designed by customers rather than competing with them through its own chip brand.",
@@ -1945,7 +1973,7 @@
       "strength": "Leading-edge manufacturing expertise, production scale and support for customers moving designs into volume production.",
       "risks": "Taiwan concentration, earthquakes, utility disruptions, major-customer demand changes and high capital spending.",
       "competition": "Examples in leading-edge foundry services include Intel Foundry and Samsung. Intel explicitly names TSMC as a leading-edge competitor. Samsung is a comparison of disclosed manufacturing businesses. Technology generation, manufacturing scale and packaging capabilities differ. UMC is an editorial comparison in mature-node wafer foundry using official disclosures and technology materials. It is not equated with leading-edge nodes or advanced packaging, and no capacity or share is inferred.",
-      "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers. February2026 Apple disclosure: purchases chips made at TSMC Arizona; annual planned quantities not actuals. October2026 Microsoft disclosure: Maia300 uses TSMC N2P; rollout planned for2027. March 2026 Arm 6-K includes TSMC statement as Arm AGI CPU manufacturer; quantities undisclosed."
+      "relationships": "Manufactures for designers including NVIDIA and works with equipment, materials and design-software providers. February2026 Apple disclosure: purchases chips made at TSMC Arizona; annual planned quantities not actuals. October2026 Microsoft disclosure: Maia300 uses TSMC N2P; rollout planned for2027. March 2026 Arm 6-K includes TSMC statement as Arm AGI CPU manufacturer; quantities undisclosed. TSMC names ASML in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Applied Materials in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Lam Research in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names KLA in its November2025 supplier awards; evidence of support in that period, not current order quantities. TSMC names Onto Innovation in its November2025 supplier awards; evidence of support in that period, not current order quantities. May11,2026: TSMC / Applied Materials EPIC partnership for materials, equipment and process co-development; not completed development or volume ramp. TSMC reported46,687,859 Global Unichip shares /34.84% at December2025 year-end; not a new2026 purchase or current percentage. June16,2026 ten-year agreement: framework for TSMC to procure Amkor advanced packaging / test; Arizona capacity ramp and quantities are not completed commitments. TSMC / Amkor jointly announce a ten-year Arizona advanced-packaging / test partnership; TSMC official statement independently reviewed. AMD FY2025 disclosure identifies TSMC wafer manufacturing for HPC / FPGA / adaptive SoCs; attributed to AMD, not TSMC naming the customer. Broadcom FY2025 disclosure names TSMC for wafer manufacturing and assembly / test; not exclusive outsourcing of every product or quantity. Qualcomm FY2025 disclosure includes TSMC among primary QCT foundries for digital / mixed-signal / RF / power ICs; not sole supplier for all products."
     },
     "maps": {
       "competition": [
@@ -2055,6 +2083,162 @@
             8
           ],
           "ticker": "ARM"
+        },
+        {
+          "kind": "company",
+          "name": "ASML",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMC自身が2025年11月の供給元表彰でASMLを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明",
+            "en": "TSMC names ASML in its November2025 supplier awards; evidence of support in that period, not current order quantities"
+          },
+          "sourceIndexes": [
+            9
+          ],
+          "ticker": "ASML"
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMC自身が2025年11月の供給元表彰でApplied Materialsを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明",
+            "en": "TSMC names Applied Materials in its November2025 supplier awards; evidence of support in that period, not current order quantities"
+          },
+          "sourceIndexes": [
+            9
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "Lam Research",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMC自身が2025年11月の供給元表彰でLam Researchを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明",
+            "en": "TSMC names Lam Research in its November2025 supplier awards; evidence of support in that period, not current order quantities"
+          },
+          "sourceIndexes": [
+            9
+          ],
+          "ticker": "LRCX"
+        },
+        {
+          "kind": "company",
+          "name": "KLA",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMC自身が2025年11月の供給元表彰でKLAを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明",
+            "en": "TSMC names KLA in its November2025 supplier awards; evidence of support in that period, not current order quantities"
+          },
+          "sourceIndexes": [
+            9
+          ],
+          "ticker": "KLAC"
+        },
+        {
+          "kind": "company",
+          "name": "Onto Innovation",
+          "role": "supplier",
+          "label": {
+            "ja": "TSMC自身が2025年11月の供給元表彰でOnto Innovationを明記。受賞年の生産・技術支援の根拠で、現在の発注量は不明",
+            "en": "TSMC names Onto Innovation in its November2025 supplier awards; evidence of support in that period, not current order quantities"
+          },
+          "sourceIndexes": [
+            9
+          ],
+          "ticker": "ONTO"
+        },
+        {
+          "kind": "company",
+          "name": "Applied Materials",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月11日：TSMCとApplied MaterialsがEPICで材料・装置・工程を共同開発する提携。全開発・量産完了ではない",
+            "en": "May11,2026: TSMC / Applied Materials EPIC partnership for materials, equipment and process co-development; not completed development or volume ramp"
+          },
+          "sourceIndexes": [
+            10
+          ],
+          "ticker": "AMAT"
+        },
+        {
+          "kind": "company",
+          "name": "Global Unichip",
+          "role": "investee",
+          "label": {
+            "ja": "TSMC自身の2025年末保有：Global Unichip株46,687,859株・34.84%。新規2026年取得や現在比率を推定しない",
+            "en": "TSMC reported46,687,859 Global Unichip shares /34.84% at December2025 year-end; not a new2026 purchase or current percentage"
+          },
+          "sourceIndexes": [
+            3,
+            11
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amkor Technology",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年6月16日の10年契約：TSMCがAmkorの先端包装・試験を調達する協業枠組み。アリゾナ能力拡張の全稼働・数量は未確定",
+            "en": "June16,2026 ten-year agreement: framework for TSMC to procure Amkor advanced packaging / test; Arizona capacity ramp and quantities are not completed commitments"
+          },
+          "sourceIndexes": [
+            12
+          ],
+          "ticker": "AMKR"
+        },
+        {
+          "kind": "company",
+          "name": "Amkor Technology",
+          "role": "partner",
+          "label": {
+            "ja": "TSMCとAmkorが米アリゾナの先端包装・試験で10年協業を共同発表。TSMC自身の公式コメントを個別確認",
+            "en": "TSMC / Amkor jointly announce a ten-year Arizona advanced-packaging / test partnership; TSMC official statement independently reviewed"
+          },
+          "sourceIndexes": [
+            12
+          ],
+          "ticker": "AMKR"
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "ticker": "AMD",
+          "role": "customer",
+          "label": {
+            "ja": "AMDのFY2025自社開示：HPC・FPGA・adaptive SoC等のウエハー製造にTSMCを利用。TSMC側の顧客名開示と混同しない",
+            "en": "AMD FY2025 disclosure identifies TSMC wafer manufacturing for HPC / FPGA / adaptive SoCs; attributed to AMD, not TSMC naming the customer"
+          },
+          "sourceIndexes": [
+            13
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "role": "customer",
+          "label": {
+            "ja": "BroadcomのFY2025自社開示：TSMCをウエハー製造と組立・試験の委託先に列挙。全製品・全数量の独占委託ではない",
+            "en": "Broadcom FY2025 disclosure names TSMC for wafer manufacturing and assembly / test; not exclusive outsourcing of every product or quantity"
+          },
+          "sourceIndexes": [
+            14
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Qualcomm",
+          "ticker": "QCOM",
+          "role": "customer",
+          "label": {
+            "ja": "QualcommのFY2025自社開示：QCTのデジタル・混載・RF・電源ICの主要製造先にTSMCを含む。全製品の単独供給とはしない",
+            "en": "Qualcomm FY2025 disclosure includes TSMC among primary QCT foundries for digital / mixed-signal / RF / power ICs; not sole supplier for all products"
+          },
+          "sourceIndexes": [
+            15
+          ]
         }
       ]
     }
