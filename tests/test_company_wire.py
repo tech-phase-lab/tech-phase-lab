@@ -172,6 +172,13 @@ class JapaneseNameTests(unittest.TestCase):
 
 
 class TriageTests(unittest.TestCase):
+    def test_community_posts_and_promos_are_noise(self):
+        for title in ('$NVIDIA (NVDA.US)$$SK hynix (SKHY.US)$ where is my favorite dinosaur?',
+                      '3 Stocks to Buy Before Year End', "Don't miss this memory stock",
+                      'Better AI Stock: Nvidia or Micron?'):
+            self.assertTrue(company_wire.NOISE.search(title), title)
+        self.assertFalse(company_wire.NOISE.search('Micron raises fiscal Q1 guidance on HBM demand'))
+
     def setUp(self):
         import tempfile, os
         self.dir = tempfile.TemporaryDirectory()

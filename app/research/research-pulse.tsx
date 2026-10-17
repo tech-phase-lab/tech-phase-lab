@@ -6,6 +6,7 @@ import { newsPulseItems } from "@/lib/research/news-pulse-items";
 import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { pulseClock } from "@/lib/research/news-time";
+import { publishWire } from "@/lib/research/wire-store";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
 // The headline is 13.5px in the stylesheet; measuring at another size made some lines overflow and others look bigger (owner, Oct 16).
@@ -84,7 +85,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     void (async () => {
       try {
         const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
-        if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) setWire(items); }
+        if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) { setWire(items); publishWire(items); } }
       } catch { /* keep the previous list */ }
     })();
     return () => { alive = false; };
