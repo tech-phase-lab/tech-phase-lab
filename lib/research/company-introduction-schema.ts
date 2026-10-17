@@ -5,7 +5,7 @@ export type CompanyConnection = {
   name: string;
   nameJa?: string;
   ticker?: string;
-  role: "competitor" | "supplier" | "customer" | "partner" | "investor" | "ecosystem";
+  role: "competitor" | "supplier" | "customer" | "partner" | "investor" | "investee" | "ecosystem";
   label: { ja: string; en: string };
   sourceIndexes: number[];
 };
@@ -65,7 +65,7 @@ export function validateCompanyIntroductions(value: unknown): asserts value is C
         check(entry.nameJa === undefined || text(entry.nameJa), `${cik}: invalid localized name`);
         check(entry.ticker === undefined || (entry.kind === "company" && typeof entry.ticker === "string" && /^[A-Z][A-Z0-9.-]{0,14}$/.test(entry.ticker)), `${cik}: invalid entity ticker`);
         check(!entry.ticker || !item.tickers.includes(entry.ticker), `${cik}: self connection`);
-        check(["competitor", "supplier", "customer", "partner", "investor", "ecosystem"].includes(String(entry.role)), `${cik}: invalid role`);
+        check(["competitor", "supplier", "customer", "partner", "investor", "investee", "ecosystem"].includes(String(entry.role)), `${cik}: invalid role`);
         check(topic === "competition" ? entry.role === "competitor" : entry.role !== "competitor", `${cik}: role in wrong map`);
         check(object(entry.label) && text(entry.label.ja) && text(entry.label.en), `${cik}: missing bilingual relation`);
         check(Array.isArray(entry.sourceIndexes) && entry.sourceIndexes.length > 0 && entry.sourceIndexes.every(i => Number.isInteger(i) && i >= 0 && i < (item.sources as unknown[]).length), `${cik}: missing relation evidence`);
