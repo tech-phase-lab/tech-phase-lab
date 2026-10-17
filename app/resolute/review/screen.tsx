@@ -77,6 +77,7 @@ function Workspace() {
  const en = locale === "en";
  return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale,scenario,setScenario,showRizel}}>
   <aside className={controls.panel} aria-label={en?"Owner preview shortcuts":"運営者用の確認ショートカット"}>
+   <a href="/resolute/rizel-admin">RIZELの一言を確認・承認する</a>
    <details><summary>{en?"Preview settings":"表示確認の設定"}</summary>
    <p>{en?"Skip the quiz and preview any tool. Your saved rules are used when available. Otherwise, a fictional sample plan is loaded.":"30問に答えずに各画面を確認できます。保存済みのルールがあれば使い、なければ架空のサンプル計画で開きます"}</p>
    <p>{en?"Display tests only. These do not change real ratings, access or publication.":"表示確認専用です。実際の危険度・利用権・公開状態は変わりません。"}</p>

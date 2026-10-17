@@ -14,6 +14,7 @@ export async function saveRizelSelection(pool,input) {
   const history=rows.rows.flatMap(({result})=>result.ids.map(id=>({id,usedAt:result.createdAt})));
   const result=await selectRizel({...input,history});
   await client.query('INSERT INTO resolute_rizel_selections(article_id,article_revision,result,created_at) VALUES($1,$2,$3,$4)',[input.article.id,input.article.revision,JSON.stringify(result),result.createdAt]);
+  await client.query("INSERT INTO resolute_rizel_reviews(article_id,article_revision,locale) VALUES($1,$2,'ja'),($1,$2,'en') ON CONFLICT DO NOTHING",[input.article.id,input.article.revision]);
   await client.query('COMMIT');return result;
  } catch(error){await client.query('ROLLBACK');throw error;} finally {client.release();}
 }

@@ -9,17 +9,18 @@ import { PlanAccessDenied, PlanConflict } from '../../lib/resolute/plan-database
 const headers={'Cache-Control':'private, no-store','Content-Type':'application/json',
   'X-Content-Type-Options':'nosniff'};
 const json=(value,status=200,extra={})=>Response.json(value,{status,headers:{...headers,...extra}});
-export function createHandler(config, read, verify=authenticate, plans, notifications, risk) {
+export function createHandler(config, read, verify=authenticate, plans, notifications, risk, rizel) {
   const windows=new Map(); let active=0;
   return async request => {
     const url=new URL(request.url);
+    const isRizel=url.pathname==='/internal/v1/rizel/owner';
     const isRisk=['/internal/v1/risk','/internal/v1/risk/owner'].includes(url.pathname);
     const isPlan=url.pathname==='/internal/v1/plan';
     const isNotification=url.pathname==='/internal/v1/notification-settings';
-    if(!((isRisk ? ['GET','POST'] : isPlan ? ['GET','PUT','DELETE'] : isNotification ? ['GET','PUT'] : ['GET']).includes(request.method)))
+    if(!((isRisk || isRizel ? ['GET','POST'] : isPlan ? ['GET','PUT','DELETE'] : isNotification ? ['GET','PUT'] : ['GET']).includes(request.method)))
       return json({error:'METHOD_NOT_ALLOWED'},405,{Allow:isPlan?'GET, PUT, DELETE':isNotification?'GET, PUT':'GET'});
     if(url.pathname==='/healthz' && !url.search)return json({status:'ok'});
-    if((url.pathname!=='/internal/v1/entitlements' && !isPlan && !isNotification && !isRisk) || url.search)return json({error:'NOT_FOUND'},404);
+    if((url.pathname!=='/internal/v1/entitlements' && !isPlan && !isNotification && !isRisk && !isRizel) || url.search)return json({error:'NOT_FOUND'},404);
     const userId=await verify(request.headers,config);
     if(!userId)return json({error:'AUTH_REQUIRED'},401);
     const now=Date.now();
@@ -30,6 +31,7 @@ export function createHandler(config, read, verify=authenticate, plans, notifica
       return json({error:'RATE_LIMITED'},429,{'Retry-After':'60'});
     w.count++;windows.set(userId,w);active++;
     try{
+      if(isRizel){if(!rizel)return json({error:'RIZEL_UNAVAILABLE'},503);return await rizel(request,userId,read);}
       if(isRisk){if(!risk)return json({error:"RISK_UNAVAILABLE"},503);return await risk(request,userId,read);}
       if(isNotification){
         if(!notifications)return json({error:'NOTIFICATION_UNAVAILABLE'},503);

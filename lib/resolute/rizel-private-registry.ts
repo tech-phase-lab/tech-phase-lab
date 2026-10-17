@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import type {CopyEntry} from './rizel-selection';
-export const RIZEL_LAYOUT_IDS=['A','B','C'].flatMap(group=>[`${group}-conclusion-01`,...['01','02','03'].map(n=>`${group}-reason-${n}`)]);
+export const RIZEL_LAYOUT_IDS=['A-conclusion-01','A-reason-01','A-reason-06','A-reason-13','B-conclusion-01','B-reason-01','B-reason-08','B-reason-12','C-conclusion-02','C-reason-03','C-reason-06','C-reason-09'];
 /** Validates exact approved text without copying it into public source files. */
 export function parsePrivateRizelRegistry(raw:string,layoutOnly=false):CopyEntry[] {
  if(raw.length>200000)throw Error('INVALID_PRIVATE_BANK');

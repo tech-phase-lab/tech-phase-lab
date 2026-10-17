@@ -35,6 +35,7 @@ test('no invented reasons when fewer than three are relevant',async()=>{
 });
 test('article revision is idempotent and audit survives a database round trip',async()=>{
  const db=new PGlite();await db.exec(await readFile(new URL('../db/resolute/011_rizel_selections.sql',import.meta.url),'utf8'));
+ await db.exec(await readFile(new URL('../db/resolute/012_rizel_review.sql',import.meta.url),'utf8'));
  // PGlite has one connection, no competing workers. PostgreSQL uses advisory lock.
  const pool={connect:async()=>({query:(sql,args)=>sql.includes('pg_advisory_xact_lock')?Promise.resolve({rows:[]}):db.query(sql,args),release(){}})};
  try{let calls=0;const input={...base,rank:async x=>{calls++;return rank(x);}};
@@ -90,4 +91,17 @@ test('layout registry accepts only twelve intact bilingual approved examples',as
  const unapproved=structuredClone(entries);unapproved[0].english.approval='draft';assert.throws(()=>parsePrivateRizelRegistry(JSON.stringify({entries:unapproved}),true));
  const extra=structuredClone(entries);extra[0].id='D-executive-03';assert.throws(()=>parsePrivateRizelRegistry(JSON.stringify({entries:extra}),true));
  assert.throws(()=>parsePrivateRizelRegistry(JSON.stringify({entries:entries.slice(1)}),true));
+});
+
+ test('rule count is a hard limit across conclusion and all reasons',async()=>{
+ const b=structuredClone(bank);b[0].text='ルールを確認';b.find(x=>x.id==='r1').text='ルールに戻る';
+ const result=await selectRizel({...base,bank:b});assert.deepEqual(result.ids,['a1','r2','r3','r4']);assert.equal(result.audit.ruleOccurrences,1);
+ b.find(x=>x.id==='r2').text='ルールルール';
+ const short=await selectRizel({...base,bank:b});assert.deepEqual(short.ids,['a1']);assert.equal(short.audit.reasonCount,0);
+ });
+
+test('known source and unknown personal criteria cannot receive unsupported factual reasons',()=>{
+ const b=[entry('A-reason-07'),entry('A-reason-03'),entry('a1','conclusion')];
+ assert.deepEqual(eligibleCopies(b,article,[]).map(e=>e.id),['a1']);
+ assert.deepEqual(eligibleCopies(b,article,[{condition:'source_unverified',articleRevision:'v1',source:'reviewer',reference:'checked-report',verifiedBy:'editor'}]).map(e=>e.id),['A-reason-07','a1']);
 });

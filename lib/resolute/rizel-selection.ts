@@ -10,12 +10,13 @@ export const conditions:Record<string,string> = {
  'D-policy-01':'policy_proposal','D-policy-02':'policy_just_announced','D-policy-03':'policy',
  'D-rates-fx-01':'rates_rose','D-rates-fx-02':'rates_caused_price_fall','D-rates-fx-03':'fx_large_move','D-rates-fx-04':'rates_rose',
 };
-const numeric=new Set(['target_changed','target_lowered','earnings_slight_miss','guidance_large_cut','rates_rose','rates_caused_price_fall','fx_large_move']);
+const factualCopyConditions:Record<string,string>={'A-reason-07':'source_unverified','A-reason-03':'personal_criteria_not_met'};
+const numeric=new Set(['personal_criteria_not_met','target_changed','target_lowered','earnings_slight_miss','guidance_large_cut','rates_rose','rates_caused_price_fall','fx_large_move']);
 export function eligibleCopies(bank:CopyEntry[],article:SelectionArticle,evidence:Evidence[]) {
  if(!Number.isInteger(article.stars)||article.stars<1||article.stars>5||!article.id||!article.revision)throw Error('INVALID_ARTICLE');
  const group=article.stars<=2?'A':article.stars===3?'B':'C';
  const verified=new Set(evidence.filter(e=>e.articleRevision===article.revision&&e.source&&e.reference&&(e.verifiedBy==='data'||e.verifiedBy==='editor'&&!numeric.has(e.condition))).map(e=>e.condition));
- return bank.filter(e=>e.approval==='approved'&&e.english?.approval==='approved'&&e.id!=='D-executive-03'&&(e.group===group||e.group==='D'&&e.kind==='reason'&&conditions[e.id]&&verified.has(conditions[e.id])));
+ return bank.filter(e=>e.approval==='approved'&&e.english?.approval==='approved'&&e.id!=='D-executive-03'&&(e.group===group&&(!factualCopyConditions[e.id]||verified.has(factualCopyConditions[e.id]))||e.group==='D'&&e.kind==='reason'&&conditions[e.id]&&verified.has(conditions[e.id])));
 }
 /** AI ranks relevant IDs, including alternatives. It cannot supply prose or facts. */
 export type Ranker = (input:{article:SelectionArticle;candidates:{id:string;kind:string;text:string}[]})=>Promise<unknown>;
@@ -33,10 +34,13 @@ export async function selectRizel({bank,article,evidence,history,rank,now=new Da
  const last=(id:string)=>Math.max(0,...history.filter(h=>h.id===id).map(h=>Date.parse(h.usedAt)).filter(Number.isFinite));
  const cutoff=(days:number)=>{const day=new Date(now.getTime()+9*3600000).toISOString().slice(0,10);return Date.parse(day+'T00:00:00+09:00')-(days-1)*86400000;};
  const choose=(pool:CopyEntry[],days:number)=>pool.find(e=>last(e.id)<cutoff(days))??[...pool].sort((a,b)=>last(a.id)-last(b.id))[0];
- const conclusion=choose(conclusions,7);
+ const ruleCount=(e:CopyEntry)=>(e.text.match(/ルール/g)??[]).length;
+ const conclusion=choose(conclusions.filter(e=>ruleCount(e)<=1),7);
  const selected:CopyEntry[]=[];
  for(let i=0;i<3;i++){
-  const remaining=reasons.filter(e=>!selected.includes(e));
+  const remaining=reasons.filter(e=>!selected.includes(e)&&
+   ruleCount(e)+(conclusion?ruleCount(conclusion):0)+selected.reduce((n,c)=>n+ruleCount(c),0)<=1&&
+   e.text!==conclusion?.text&&!selected.some(c=>c.text===e.text));
   // Respect the no-repeat window across ALL suitable reasons first.
   // Among fresh candidates prioritize D; only exhaustion permits LRU reuse.
   const fresh=remaining.filter(e=>last(e.id)<cutoff(10));
@@ -48,5 +52,5 @@ export async function selectRizel({bank,article,evidence,history,rank,now=new Da
  return {articleId:article.id,articleRevision:article.revision,createdAt:now.toISOString(),publication:'withheld' as const,
   state:conclusion?'selected':'no-relevant-conclusion',ids:used.map(e=>e.id),
   copy:used.map(e=>({id:e.id,revision:e.revision,ja:e.text,en:e.english!.text,jaHash:e.textSha256,enHash:e.english!.textSha256})),
-  audit:{article,evidence,eligibleIds:eligible.map(e=>e.id),ai:output,history,reasonCount:selected.length===3?3:0}};
+  audit:{article,evidence,eligibleIds:eligible.map(e=>e.id),ai:output,history,reasonCount:used.length===4?3:0,ruleOccurrences:used.reduce((n,e)=>n+ruleCount(e),0)}};
 }

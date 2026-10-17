@@ -1,3 +1,4 @@
+import {rizelReviewRequest} from './rizel-review-store.mjs';
 import { paymentRuntime } from './payments/runtime.mjs';
 import {riskRequest} from './risk-store.mjs';
 import { operateNotificationSettings } from '../../lib/resolute/notification-database.ts';
@@ -13,7 +14,7 @@ const config=authConfig(process.env);
 const db=resoluteDatabaseConfig(process.env.ENTITLEMENT_DB_URL);
 if(new URL(db.connectionString).username!=='resolute_api_reader')throw Error('Read-only DB role required');
 const payments=paymentRuntime(process.env,config);
-const handler=createHandler(config,getResoluteEntitlementsForUser,undefined,operateResolutePlan,operateNotificationSettings,riskRequest);
+const handler=createHandler(config,getResoluteEntitlementsForUser,undefined,operateResolutePlan,operateNotificationSettings,riskRequest,rizelReviewRequest);
 const server=createServer({maxHeaderSize:24576},async(req,res)=>{
   try {
     const request=new Request('http://service.invalid'+req.url,{method:req.method,headers:req.headers,
