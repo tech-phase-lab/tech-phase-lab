@@ -162,8 +162,8 @@
 @media(max-width:760px) { .listName { font-size:12px; } }
 @media(max-width:380px) { .listName { font-size:11px; } }
 
-.listForm { margin-bottom:16px; }
-.listForm input { background:transparent;border:0;border-bottom:1px solid #53666c;border-radius:0; }
+.listForm { display:grid;grid-template-columns:min(62%,360px) max-content max-content;gap:6px;width:100%;margin-bottom:16px; }
+.listForm input { width:100%;background:transparent;border:0;border-bottom:1px solid #53666c;border-radius:0; }
 .page .listForm input:focus { border-color:#9bd9c2;box-shadow:none; }
 .listForm button { min-height:40px;padding:7px 12px;border:1px solid #4c6268;border-radius:5px;color:#cedbdc;white-space:nowrap; }
 .listForm button[type=submit] { background:#a6ddc7;border-color:#a6ddc7;color:#102b22;font-weight:650; }
@@ -172,3 +172,5 @@
 .searchRow { border-color:#699d90;background:#152c30;box-shadow:0 2px 8px #0002; }
 .searchRow input::placeholder { color:#c0d5d1; }
 .searchRow:focus-within { border-color:#b2edd6;box-shadow:0 0 0 2px #9bd9c22b; }
+
+@media(max-width:760px) { .listForm button { padding-inline:6px;font-size:12px; } }

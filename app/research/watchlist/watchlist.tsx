@@ -135,7 +135,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
             {slots.map((item, index) => <option key={item.id} value={item.id}>{item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`)}</option>)}
           </select></label>
           <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="m3 16.5 3.8 3.8L3 21l.7-3.8ZM5 15l10-10 4 4L9 19ZM16.4 3.6l1-1a2 2 0 0 1 2.8 0l1.2 1.2a2 2 0 0 1 0 2.8l-1 1Z" /></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z" /></svg>
           </button>
         </div>
       </header>

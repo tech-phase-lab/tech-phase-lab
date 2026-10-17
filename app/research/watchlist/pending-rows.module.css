@@ -1,6 +1,1 @@
-.rows { padding-top:20px; }
-.row { display:flex;align-items:center;gap:16px;height:64px;border-bottom:1px solid #213239; }
-.row span { height:10px;border-radius:3px;background:#20343a; }
-.row span:first-child { width:24%; }
-.row span:nth-child(2) { width:18%;margin-left:auto; }
-.row span:last-child { width:16%; }
+.loading { display:flex;align-items:center;justify-content:center;min-height:180px;color:#8fa5b0;font-size:12px; }
