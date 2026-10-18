@@ -1,0 +1,558 @@
+{
+  "root": {
+    "ticker": "AMD",
+    "name": "AMD"
+  },
+  "rows": [
+    {
+      "ja": "供給元(製造・部品)",
+      "en": "Suppliers (manufacturing & parts)",
+      "above": true
+    },
+    {
+      "ja": "顧客・導入先",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partnerships, investments & deals"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "INTC",
+    "NVDA",
+    "MRVL",
+    "AVGO",
+    "LSCC"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "7nm以下のマイクロプロセッサ・GPUのウエハーは全てTSMCに依存(年次報告)",
+          "text_en": "Relies on TSMC for all wafers of microprocessors and GPUs at 7nm or smaller nodes (annual report)",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We rely on Taiwan Semiconductor Manufacturing Company Limited (TSMC) for the production of all wafers for microprocessor and GPU products at 7 nanometer (nm) or smaller nodes"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TSMC会長が「AMDはTSMC N2とアリゾナ工場の主要なHPC顧客」と発言(2025年4月)",
+          "text_en": "TSMC’s chairman said AMD is a lead HPC customer for TSMC N2 and the Arizona fab (April 2025)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-achieves-first-tsmc-n2-product-silicon-milesto/",
+            "level": "official",
+            "date": "2025-04-14",
+            "quote": "We are proud to have AMD be a lead HPC customer for our advanced 2nm (N2) process technology and TSMC Arizona fab"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "7nmより大きいノードのマイクロプロセッサ・GPUのウエハーは主にGlobalFoundriesに依存",
+          "text_en": "Relies primarily on GlobalFoundries for wafers at nodes larger than 7nm",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "we rely primarily on GLOBALFOUNDRIES Inc. (GF) for wafers for microprocessor and GPU products manufactured at process nodes larger than 7 nm"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "UMC(聯電)",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "プログラマブルロジック製品の製造にUMC(TSMC・Samsungとあわせて)を使用",
+          "text_en": "Uses UMC (with TSMC and Samsung) to produce programmable logic devices",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We also utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for our integrated circuits (IC) in the form of programmable logic devices"
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "メモリー・製造",
+      "sub_en": "Memory & foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "プログラマブルロジック製品の製造にSamsung Electronics(TSMC・UMCとあわせて)を使用",
+          "text_en": "Uses Samsung Electronics (with TSMC and UMC) to produce programmable logic devices",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We also utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for our integrated circuits (IC) in the form of programmable logic devices"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Instinct MI455X向けHBM4の主要供給で整合する覚書(MOU)を締結(2026年3月18日)",
+          "text_en": "MOU to align on primary HBM4 supply for AMD Instinct MI455X (March 18, 2026)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/samsung-and-amd-expand-strategic-collaboratio/",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "Under the MOU, Samsung and AMD will align on primary HBM4 supply for the next-generation AMD AI accelerator, the AMD Instinct MI455X GPU",
+            "note": "覚書の段階で、確定した供給契約ではありません。",
+            "note_en": "An MOU, not a definitive supply contract."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLS",
+      "ticker": "CLS",
+      "name": "Celestica",
+      "sub": "ネットワーク機器製造",
+      "sub_en": "Network hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Heliosラックのスケールアップ向けネットワークスイッチの開発・設計・製造を担当(2026年3月)",
+          "text_en": "Will handle R&D, design and manufacturing of scale-up networking switches for the AMD Helios rack (March 2026)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-and-celestica-announce-collaboration-to-a/",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Celestica will undertake the R&D, design and manufacturing of scale-up networking switches in the AMD \"Helios\" rack-scale AI architecture",
+            "note": "Heliosの提供は2026年後半の予定です。",
+            "note_en": "Helios is due late 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大6GWのAMD Instinct GPUを複数世代にわたって導入する契約(2026年2月24日)",
+          "text_en": "6-gigawatt agreement to power Meta AI infrastructure across multiple generations of AMD Instinct GPUs (February 24, 2026)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-and-meta-announce-expanded-strategic-partnersh/",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "AMD (NASDAQ: AMD) and Meta today announced a 6-gigawatt agreement to power Meta's next generation of AI infrastructure across multiple generations of AMD Instinct GPUs.",
+            "note": "最初の1GW分の出荷は2026年後半の予定です。",
+            "note_en": "Shipments for the first gigawatt are scheduled for 2H 2026."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Metaに最大1.6億株を1株0.01ドルで買える新株予約権を発行(購入の節目ごとに権利確定)",
+          "text_en": "Issued Meta a warrant for up to 160 million AMD shares at $0.01 per share, vesting on purchase milestones",
+          "source": {
+            "label": "AMD 10-Q(2026年第2四半期)",
+            "label_en": "AMD 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "issued warrants to OpenAI OpCo, LLC (OpenAI) and Meta Platforms, Inc. (Meta), each entitling the holder the right to purchase up to 160 million shares of the Company's common stock at an exercise price of $0.01 per share",
+            "note": "購入の節目に応じて段階的に権利確定します。",
+            "note_en": "Vests in tranches only on specified purchase milestones."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ゲーム",
+      "sub_en": "Cloud & gaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AzureにAMD Helios(ラック型AI基盤)とEPYCを導入(2026年7月20日)",
+          "text_en": "Microsoft will deploy AMD Helios for frontier-model AI inference on Azure and add AMD EPYC (July 20, 2026)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/microsoft-azure-ai-infrastructure/",
+            "level": "official",
+            "date": "2026-07-20",
+            "quote": "Microsoft will deploy the AMD Helios Rackscale Solution, to power frontier model AI inference for Microsoft, its AI customers and support Azure AI services.",
+            "note": "Heliosの出荷は2026年後半からです。",
+            "note_en": "Helios shipments begin in 2H 2026."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Xbox Series S・XにAMDのセミカスタムSoCを採用(年次報告)",
+          "text_en": "AMD semi-custom SoCs power the Xbox Series S and X (annual report)",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "AMD semi-custom SoC products power the Sony PlayStation ® 5, the Microsoft ® Xbox Series S™ and X™ game consoles"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "Sony Group",
+      "sub": "ゲーム機",
+      "sub_en": "Game consoles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "PlayStation 5にAMDのセミカスタムSoCを採用(年次報告)",
+          "text_en": "AMD semi-custom SoCs power the PlayStation 5 (annual report)",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "AMD semi-custom SoC products power the Sony PlayStation ® 5, the Microsoft ® Xbox Series S™ and X™ game consoles"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "OCIがInstinct MI450搭載のAIスーパークラスターの立ち上げパートナーに(2025年10月14日)",
+          "text_en": "OCI will be a launch partner for a public AI supercluster powered by AMD Instinct MI450 (October 14, 2025)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/oracle-and-amd-expand-partnership-to-help-customers-ach/",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "OCI) will be a launch partner for the first publicly available AI supercluster powered by AMD Instinct",
+            "note": "導入は計画で、拡大は2027年以降です。",
+            "note_en": "Planned deployment; expansion in 2027 and beyond."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AMD Helios(ラック型AI基盤)を最初に採用するシステムベンダーの1社(2025年12月2日)",
+          "text_en": "Among the first system providers to adopt AMD Helios (December 2, 2025)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-and-hpe-expand-collaboration-to-advance-open-r/",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "HPE will become one of the first system providers to adopt the AMD \"Helios\" rack-scale AI architecture"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTNX",
+      "ticker": "NTNX",
+      "name": "Nutanix",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Nutanixの普通株に1.5億ドルを出資し、共同開発に最大1億ドルを拠出(2026年2月25日)",
+          "text_en": "$150M strategic investment in Nutanix common stock and up to $100M for joint engineering (February 25, 2026)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-and-nutanix-announce-strategic-partnership-to/",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "AMD will make a strategic investment of $150 million in Nutanix common stock at a purchase price of $36.26 per share, and fund up to $100 million for Nutanix"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AMD・Cisco・HUMAINで、2030年までに最大1GWのAIインフラを展開する合弁を計画(2025年11月19日)",
+          "text_en": "AMD, Cisco and HUMAIN plan a joint venture to deploy up to 1GW of AI infrastructure by 2030 (November 19, 2025)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-cisco-and-humain-to-form-joint-venture/",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "AMD, Cisco and HUMAIN to invest in a joint venture and serve as its exclusive technology partners",
+            "note": "計画の段階で、稼働は2026年開始の見込みです。",
+            "note_en": "Planned; operations expected to begin in 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SANM",
+      "ticker": "SANM",
+      "name": "Sanmina",
+      "sub": "電子機器製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZT Manufacturing事業をSanminaへ24億ドルの現金とSanmina株で売却(2025年10月完了)",
+          "text_en": "Sold the ZT Manufacturing business to Sanmina for $2.4B in cash plus Sanmina shares (completed October 2025)",
+          "source": {
+            "label": "AMD 10-Q(2026年第2四半期)",
+            "label_en": "AMD 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
+            "level": "official",
+            "date": "2025-10",
+            "quote": "the Company completed the sale of the ZT Manufacturing Business to Sanmina Corporation (Sanmina) for $ 2.4 billion in cash"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AMDが年次報告で、データセンター事業の主な競合としてIntelとNVIDIAを挙げている",
+          "text_en": "AMD’s annual report says its Data Center segment competes primarily against Intel and NVIDIA",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "In the Data Center segment, we compete primarily against Intel Corporation (Intel) and Nvidia Corporation (Nvidia"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Intelが年次報告で、クライアント向け事業の主な競合としてAMDを挙げている",
+          "text_en": "Intel’s annual report names AMD as a primary competitor in its client computing business",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "Competition CCG's primary competitor is AMD, which like us designs processors based on the x86 architecture."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AMDが年次報告で、データセンター事業の主な競合としてIntelとNVIDIAを挙げている",
+          "text_en": "AMD’s annual report says its Data Center segment competes primarily against Intel and NVIDIA",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "In the Data Center segment, we compete primarily against Intel Corporation (Intel) and Nvidia Corporation (Nvidia"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NVIDIAが年次報告で、GPU・高速計算の競合としてAMDを挙げている",
+          "text_en": "NVIDIA’s annual report lists AMD among competitors in GPUs and accelerated computing",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "suppliers and licensors of hardware and software for discrete and integrated GPUs, custom chips and other accelerated computing solutions, including solutions offered for AI, such as Advanced Micro Devices, Inc., or AMD"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AMDが年次報告で、組み込み事業の競合するASSPメーカーとしてMarvellを挙げている",
+          "text_en": "AMD’s annual report names Marvell among ASSP vendors competing in its Embedded segment",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "from ASSP vendors such as Broadcom Corporation, Marvell Technology Group, Ltd., Analog Devices, Texas Instruments Incorporated, NXP Semiconductors N.V., Qualcomm Incorporated and NVIDIA"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvellが年次報告で、直接競合する企業としてAMDを挙げている",
+          "text_en": "Marvell’s annual report lists AMD among companies that compete directly with its businesses",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Companies that compete directly with our businesses include, but are not limited to, Advanced Micro Devices, Inc. (\"AMD\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AMDが年次報告で、組み込み事業の競合するASSPメーカーとしてBroadcomを挙げている",
+          "text_en": "AMD’s annual report names Broadcom among ASSP vendors competing in its Embedded segment",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "from ASSP vendors such as Broadcom Corporation, Marvell Technology Group, Ltd., Analog Devices, Texas Instruments Incorporated, NXP Semiconductors N.V., Qualcomm Incorporated and NVIDIA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSCC",
+      "ticker": "LSCC",
+      "name": "Lattice Semiconductor",
+      "sub": "FPGA",
+      "sub_en": "FPGAs",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AMDが年次報告で、FPGAの主な競合としてLatticeを挙げている",
+          "text_en": "AMD’s annual report names Lattice among its primary FPGA competitors",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We expect continued competition from our primary FPGA competitors such as Altera, Lattice Semiconductor Corporation and Microsemi Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

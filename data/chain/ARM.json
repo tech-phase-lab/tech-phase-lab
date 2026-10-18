@@ -1,0 +1,499 @@
+{
+  "root": {
+    "ticker": "ARM",
+    "name": "Arm"
+  },
+  "rows": [
+    {
+      "ja": "供給元・製造",
+      "en": "Suppliers & manufacturing",
+      "above": true
+    },
+    {
+      "ja": "親会社・IP事業",
+      "en": "Parent & IP business"
+    },
+    {
+      "ja": "ライセンス先・導入企業",
+      "en": "Licensees & adopters"
+    },
+    {
+      "ja": "Arm AGI CPUの提携先",
+      "en": "Arm AGI CPU partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CEVA"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Arm AGI CPUの製造を3nmプロセスでTSMCが担う(TSMC幹部のコメント、2026年3月24日)",
+          "text_en": "TSMC manufactures the Arm AGI CPU on its 3nm process (TSMC executive quote, March 24, 2026)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "As the Arm AGI CPU manufacturer, we are excited to support this breakthrough platform. By leveraging our advanced 3nm process technology"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "Amkor Technology",
+      "sub": "パッケージ・テスト",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arm AGI CPUプラットフォーム向けのパッケージ・テスト技術を共同開発(Amkorのコメント)",
+          "text_en": "Co-developed packaging and test solutions for the Arm AGI CPU platform (Amkor’s comment)",
+          "source": {
+            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label_en": "Arm AGI CPU ecosystem page (arm.com)",
+            "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Amkor co-developed innovative packaging and test solutions supported by world class scalable manufacturing factories to ensure the Arm AGI CPU platform meets"
+          }
+        }
+      ]
+    },
+    {
+      "id": "9984",
+      "ticker": "SoftBank",
+      "name": "SoftBank Group",
+      "sub": "親会社",
+      "sub_en": "Parent",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "発行済み株式の約86.4%を実質的に保有する支配株主(20-F)",
+          "text_en": "Beneficially owns about 86.4% of Arm’s issued share capital (controlling shareholder, 20-F)",
+          "source": {
+            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "date": "2026-05",
+            "quote": "As of May 21, 2026, SoftBank Group beneficially owns approximately 86.4% of our total issued and outstanding share capital, representing a majority of the total voting power of our ordinary shares."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDNS",
+      "ticker": "CDNS",
+      "name": "Cadence Design Systems",
+      "sub": "半導体設計ツール",
+      "sub_en": "Chip design tools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Artisanファウンデーション IP事業をCadenceへ売却(2025年8月26日完了)",
+          "text_en": "Completed the sale of its Artisan foundation IP business to Cadence (August 26, 2025)",
+          "source": {
+            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "date": "2025-08-26",
+            "quote": "On August 26, 2025, the Company completed the sale of its Artisan foundation IP business, consisting of standard cell libraries, memory compilers, and general-purpose I/Os to Cadence Design Systems, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Cadenceが年次報告で、Artisan事業をArm Limitedから取得したと記載",
+          "text_en": "Cadence’s annual report says it acquired the Artisan foundation IP business from Arm Limited",
+          "source": {
+            "label": "Cadence Form 10-K(2025年度)",
+            "label_en": "Cadence Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2025-08-26",
+            "quote": "On August 26, 2025, Cadence acquired the Artisan foundation IP business from Arm Limited. Cadence paid aggregate purchase consideration of $ 128.5 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Armと「アーキテクチャ ライセンス契約」を結ぶが、ライセンスをめぐり係争中(20-F)",
+          "text_en": "Holds an Architecture License Agreement with Arm; the two are in pending litigation over licensing (20-F)",
+          "source": {
+            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "date": "2026-05",
+            "quote": "Qualcomm asserted that we failed to satisfy certain delivery obligations under Qualcomm's Architecture License Agreement with us (the \"Qualcomm ALA\")",
+            "note": "関係は係争中です。",
+            "note_en": "The relationship is disputed; the two are in pending litigation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド(AWS)",
+      "sub_en": "Cloud (AWS)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AWSがGraviton CPUの開発でArmと緊密に連携(AWSのコメント)",
+          "text_en": "AWS partnered closely with Arm in building its Graviton CPUs (AWS quote)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "we've partnered closely with Arm in building Graviton here at AWS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Google独自のAxion CPUはArmアーキテクチャで構築(Google Cloudのコメント)",
+          "text_en": "Google’s custom Axion CPUs are built on the Arm architecture (Google Cloud quote)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Google's custom Axion CPUs, built on the Arm architecture"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Azure CobaltはArm Neoverse CSSで構築(Microsoftのコメント)",
+          "text_en": "Azure Cobalt CPUs are built on Arm Neoverse CSS (Microsoft quote)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Microsoft's Azure Cobalt family of CPUs, built on Neoverse CSS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arm AGI CPUの主導パートナー・共同開発者(2026年3月24日)",
+          "text_en": "Lead partner and co-developer of the Arm AGI CPU (March 24, 2026)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Meta serves as the lead partner and co-developer , leveraging Arm AGI CPU to optimize infrastructure for its family of apps"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NET",
+      "ticker": "NET",
+      "name": "Cloudflare",
+      "sub": "ネットワーク・セキュリティ",
+      "sub_en": "Network & security",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
+          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Alongside Meta, Arm has confirmed additional commercial momentum with partners including Cerebras, Cloudflare, F5, OpenAI, Positron, Rebellions, SAP, and SK Telecom. These customers will deploy the Arm AGI CPU",
+            "note": "導入は将来の予定として書かれています。",
+            "note_en": "Deployment is stated in the future tense."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FFIV",
+      "ticker": "FFIV",
+      "name": "F5",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
+          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Alongside Meta, Arm has confirmed additional commercial momentum with partners including Cerebras, Cloudflare, F5, OpenAI, Positron, Rebellions, SAP, and SK Telecom. These customers will deploy the Arm AGI CPU",
+            "note": "導入は将来の予定として書かれています。",
+            "note_en": "Deployment is stated in the future tense."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
+          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Alongside Meta, Arm has confirmed additional commercial momentum with partners including Cerebras, Cloudflare, F5, OpenAI, Positron, Rebellions, SAP, and SK Telecom. These customers will deploy the Arm AGI CPU",
+            "note": "導入は将来の予定として書かれています。",
+            "note_en": "Deployment is stated in the future tense."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKT",
+      "ticker": "SK Telecom",
+      "name": "SK Telecom",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
+          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Alongside Meta, Arm has confirmed additional commercial momentum with partners including Cerebras, Cloudflare, F5, OpenAI, Positron, Rebellions, SAP, and SK Telecom. These customers will deploy the Arm AGI CPU",
+            "note": "導入は将来の予定として書かれています。",
+            "note_en": "Deployment is stated in the future tense."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LNVGY",
+      "ticker": "Lenovo",
+      "name": "Lenovo",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arm AGI CPUシステムの主要なOEM・ODMパートナーとしてArmが記載",
+          "text_en": "Named by Arm among lead OEM/ODM partners for Arm AGI CPU systems",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Arm is partnering with lead OEMs and ODMs including ASRock Rack, Lenovo, Quanta Computer, and Supermicro"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QUANTA",
+      "ticker": "Quanta",
+      "name": "Quanta Computer",
+      "sub": "サーバー製造",
+      "sub_en": "Server maker",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arm AGI CPUシステムの主要なOEM・ODMパートナーとしてArmが記載",
+          "text_en": "Named by Arm among lead OEM/ODM partners for Arm AGI CPU systems",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Arm is partnering with lead OEMs and ODMs including ASRock Rack, Lenovo, Quanta Computer, and Supermicro"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMCI",
+      "ticker": "SMCI",
+      "name": "Super Micro Computer",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arm AGI CPUシステムの主要なOEM・ODMパートナーとしてArmが記載",
+          "text_en": "Named by Arm among lead OEM/ODM partners for Arm AGI CPU systems",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Arm is partnering with lead OEMs and ODMs including ASRock Rack, Lenovo, Quanta Computer, and Supermicro"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Armとの提携は約20年前に始まり、Armは同社の各プラットフォームに組み込まれているとNVIDIAのCEOが発言",
+          "text_en": "NVIDIA’s CEO says the Arm partnership began nearly two decades ago and Arm is integrated across NVIDIA platforms",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Our partnership began nearly two decades ago and since then, Arm's adaptability has made it possible for us to integrate Arm across all of our platforms"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Armとの提携でXPUとネットワーク製品を構築できたとBroadcomが説明",
+          "text_en": "Broadcom says its partnership with Arm has enabled it to build XPU and networking solutions",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "our partnership with Arm has enabled us to move with unmatched intent and speed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "半導体IP",
+      "sub_en": "Semiconductor IP",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAが年次報告で、競合するDSP・NPU・プロセッサIPベンダーとしてArmを挙げている",
+          "text_en": "CEVA’s annual report lists Arm among DSP, NPU and processor IP vendors it competes with",
+          "source": {
+            "label": "CEVA Form 10-K(2025年度)",
+            "label_en": "CEVA Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "DSP, NPU, and processor IP vendors, including Arm, Cadence, Imagination Technologies, VeriSilicon, Andes Technology, SiFive"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

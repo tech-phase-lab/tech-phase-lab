@@ -1,0 +1,227 @@
+{
+  "root": {
+    "ticker": "LITE",
+    "name": "Lumentum"
+  },
+  "rows": [
+    {
+      "ja": "供給元(材料)",
+      "en": "Suppliers (materials)",
+      "above": true
+    },
+    {
+      "ja": "出資・提携・買収",
+      "en": "Investments, partnerships & deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NVDA",
+    "IPGP",
+    "AAOI",
+    "MKSI"
+  ],
+  "companies": [
+    {
+      "id": "AXTI",
+      "ticker": "AXTI",
+      "name": "AXT Inc",
+      "sub": "半導体基板",
+      "sub_en": "Semiconductor substrates",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "リン化インジウム(InP)基板の供給で生産能力の確保契約(2026年7月)",
+          "text_en": "Capacity Reservation Agreement for indium phosphide wafer substrates (July 2026)",
+          "source": {
+            "label": "AXT 8-K(2026-07-29)",
+            "label_en": "AXT 8-K (2026-07-29)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051627/000143774926024883/axti20260715_8k.htm",
+            "level": "official",
+            "date": "2026-07-26",
+            "quote": "entered into a Capacity Reservation Agreement (the \"Agreement\") for the supply and capacity reservation of indium phosphide (\"InP\") wafer substrates",
+            "note": "6年間の契約で、Lumentumが前払い金を支払います。",
+            "note_en": "Six-year term with deposits paid by Lumentum."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "複数年の戦略契約を結び、NVIDIAがLumentumに20億ドルを出資(2026年3月)",
+          "text_en": "Multi-year strategic agreements; NVIDIA is investing $2B in Lumentum (March 2026)",
+          "source": {
+            "label": "Lumentum 8-K Ex.99.1(joint の発表)",
+            "label_en": "Lumentum 8-K Ex.99.1 (joint press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526085412/d41019dex991.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "NVIDIA is investing $2 billion in Lumentum to support R&D, future capacity and operations"
+          }
+        },
+        {
+          "type": "down",
+          "text": "非独占の契約で、数十億ドル規模の購入コミットメントと将来の生産枠の権利を含む",
+          "text_en": "The non-exclusive agreement includes a multi-billion purchase commitment and future capacity access rights",
+          "source": {
+            "label": "Lumentum 8-K Ex.99.1(joint の発表)",
+            "label_en": "Lumentum 8-K Ex.99.1 (joint press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526085412/d41019dex991.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The non-exclusive agreement includes an NVIDIA multi-billion purchase commitment and future capacity access rights for advanced laser components.",
+            "note": "非独占の契約です。",
+            "note_en": "Non-exclusive."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "シリーズA転換優先株をNVIDIAに20億ドルの現金で発行(完了)",
+          "text_en": "Completed the sale of Series A Convertible Preferred Stock to NVIDIA for $2.0B in cash",
+          "source": {
+            "label": "Lumentum 10-K(2026年度)",
+            "label_en": "Lumentum 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The shares of Preferred Stock were sold at a price of $ 695.31 per share for an aggregate purchase price of $ 2.0 billion in cash."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NVIDIAが年次報告で、ネットワーク製品の競合としてLumentumを挙げている",
+          "text_en": "NVIDIA’s annual report lists Lumentum among competitors in networking products",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Hewlett Packard Enterprise Company, Huawei, Intel, Lumentum Holdings Inc., and Marvell Technology, Inc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPGP",
+      "ticker": "IPGP",
+      "name": "IPG Photonics",
+      "sub": "レーザー",
+      "sub_en": "Lasers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IPG Photonicsの通信用伝送製品ラインを買収(2022年の買収として記載)",
+          "text_en": "Acquired IPG Photonics’ telecom transmission product lines (listed among 2022 acquisitions)",
+          "source": {
+            "label": "Lumentum 10-K(2026年度)",
+            "label_en": "Lumentum 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm",
+            "level": "official",
+            "quote": "NeoPhotonics Corporation and IPG Photonics' telecom transmission product lines in 2022"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IPGが年次報告で、材料加工用レーザーの競合としてLumentumを挙げている",
+          "text_en": "IPG’s annual report lists Lumentum among laser makers it competes with in materials processing",
+          "source": {
+            "label": "IPG Photonics 10-K(2025年度)",
+            "label_en": "IPG Photonics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "JPT Opto-Electronics Co. Ltd., Laserline GmbH, Lumentum Holdings Inc., Maxphotonics Co., Ltd., MKS Instruments, Inc., nLight, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "Viavi Solutions",
+      "sub": "元の親会社",
+      "sub_en": "Former parent",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JDS Uniphase(現Viavi)から分離独立。2015年7月31日に税務事項契約を締結",
+          "text_en": "Spun off from JDS Uniphase (now Viavi); Tax Matters Agreement dated July 31, 2015",
+          "source": {
+            "label": "Viavi 10-K(2026年度)",
+            "label_en": "Viavi 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2015-07-31",
+            "quote": "Tax Matters Agreement, dated as of July 31, 2015, by and between JDS Uniphase Corporation and Lumentum Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAOI",
+      "ticker": "AAOI",
+      "name": "Applied Optoelectronics",
+      "sub": "光通信部品",
+      "sub_en": "Optical components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Applied Optoelectronicsが年次報告で、主な競合としてLumentumを挙げている",
+          "text_en": "Applied Optoelectronics’ annual report lists Lumentum among its major competitors",
+          "source": {
+            "label": "Applied Optoelectronics 10-K(2025年度)",
+            "label_en": "Applied Optoelectronics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774926005875/aaoi20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Intel Corporation, Lumentum Holdings, Inc., Mitsubishi, Molex, LLC, Source Photonics, Inc. and Sumitomo Electric Industries, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKS",
+      "sub": "レーザー・装置",
+      "sub_en": "Lasers & tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MKSが年次報告で、レーザー製品の競合としてLumentumを挙げている",
+          "text_en": "MKS’s annual report lists Lumentum among companies whose products compete with its laser products",
+          "source": {
+            "label": "MKS 10-K(2025年度)",
+            "label_en": "MKS 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In PSD, Trumpf Group, Lumentum Holdings Inc., IPG Photonics Corporation, EdgeWave GmbH and Amplitude Laser Group offer products that compete with our laser products."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

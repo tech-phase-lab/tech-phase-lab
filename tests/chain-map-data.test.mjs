@@ -9,7 +9,7 @@ const data = chain.chainDataFor('NVDA');
 const hasJapanese = text => /[぀-ヿ㐀-鿿]/.test(text);
 
 test('the NVDA chain map data keeps its companies, rows and two-step links', () => {
-  assert.equal(chain.chainDataFor('AMD'), null);
+  assert.equal(chain.chainDataFor('AAPL'), null);
   assert.equal(data.companies.length, 20);
   assert.equal(data.far.length, 3);
   assert.deepEqual(data.rows.map(row => row.ja), ['供給元(上流)', '光通信・半導体', 'サーバー・ネットワーク', 'クラウド・AI基盤']);
@@ -71,9 +71,10 @@ test('the map shows suppliers first, no range buttons, a card per company with s
 const BATCH = {
   NFLX: [14, 18], LRCX: [22, 24], TSLA: [17, 19], IBM: [26, 39], META: [33, 37],
   BE: [6, 9], SKHY: [14, 16], GEV: [18, 19], MSFT: [22, 25], KLAC: [8, 10],
+  SNDK: [7, 15], AMD: [18, 25], ANET: [16, 22], ARM: [19, 20], LITE: [6, 10],
 };
 
-test('the ten earnings-ordered companies use the same format with an official source on every relation', () => {
+test('the earnings-ordered companies use the same format with an official source on every relation', () => {
   for (const [ticker, [companies, relations]] of Object.entries(BATCH)) {
     const item = chain.chainDataFor(ticker);
     assert.ok(item, ticker);

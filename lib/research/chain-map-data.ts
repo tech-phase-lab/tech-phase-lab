@@ -9,6 +9,11 @@ import skhy from "../../data/chain/SKHY.json" with { type: "json" };
 import gev from "../../data/chain/GEV.json" with { type: "json" };
 import msft from "../../data/chain/MSFT.json" with { type: "json" };
 import klac from "../../data/chain/KLAC.json" with { type: "json" };
+import sndk from "../../data/chain/SNDK.json" with { type: "json" };
+import amd from "../../data/chain/AMD.json" with { type: "json" };
+import anet from "../../data/chain/ANET.json" with { type: "json" };
+import arm from "../../data/chain/ARM.json" with { type: "json" };
+import lite from "../../data/chain/LITE.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -31,6 +36,7 @@ const available: Record<string, ChainMapData> = {
   NVDA: nvda as ChainMapData, NFLX: nflx as ChainMapData, LRCX: lrcx as ChainMapData,
   TSLA: tsla as ChainMapData, IBM: ibm as ChainMapData, META: meta as ChainMapData,
   BE: be as ChainMapData, SKHY: skhy as ChainMapData, GEV: gev as ChainMapData, MSFT: msft as ChainMapData, KLAC: klac as ChainMapData,
+  SNDK: sndk as ChainMapData, AMD: amd as ChainMapData, ANET: anet as ChainMapData, ARM: arm as ChainMapData, LITE: lite as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 
