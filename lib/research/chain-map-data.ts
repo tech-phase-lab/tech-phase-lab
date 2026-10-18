@@ -4,6 +4,11 @@ import lrcx from "../../data/chain/LRCX.json" with { type: "json" };
 import tsla from "../../data/chain/TSLA.json" with { type: "json" };
 import ibm from "../../data/chain/IBM.json" with { type: "json" };
 import meta from "../../data/chain/META.json" with { type: "json" };
+import be from "../../data/chain/BE.json" with { type: "json" };
+import skhy from "../../data/chain/SKHY.json" with { type: "json" };
+import gev from "../../data/chain/GEV.json" with { type: "json" };
+import msft from "../../data/chain/MSFT.json" with { type: "json" };
+import klac from "../../data/chain/KLAC.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -25,6 +30,7 @@ export type ChainMapData = {
 const available: Record<string, ChainMapData> = {
   NVDA: nvda as ChainMapData, NFLX: nflx as ChainMapData, LRCX: lrcx as ChainMapData,
   TSLA: tsla as ChainMapData, IBM: ibm as ChainMapData, META: meta as ChainMapData,
+  BE: be as ChainMapData, SKHY: skhy as ChainMapData, GEV: gev as ChainMapData, MSFT: msft as ChainMapData, KLAC: klac as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 

@@ -1,0 +1,419 @@
+{
+  "root": {
+    "ticker": "SKHY",
+    "name": "SK hynix"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客(AI半導体)",
+      "en": "Customers (AI chips)"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partnerships, investments & acquisitions"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "005930",
+    "MU",
+    "SNDK",
+    "KIOXIA",
+    "CXMT"
+  ],
+  "companies": [
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "ASML",
+      "sub": "露光装置",
+      "sub_en": "Lithography",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最新のHigh-NA EUV露光装置(EXE:5200B)を量産向けに初めて組み立て(M16、2025年9月)",
+          "text_en": "Assembled the industry’s first High-NA EUV system (EXE:5200B) for mass production at M16 (September 2025)",
+          "source": {
+            "label": "SK hynix ニュースルーム(2025年9月)",
+            "label_en": "SK hynix Newsroom (Sep 2025)",
+            "url": "https://news.skhynix.com/sk-hynix-introduces-industrys-first-commercial-high-na-euv/",
+            "level": "official",
+            "date": "2025-09-03",
+            "quote": "Brings ASML’s EXE:5200B, critical system for next-generation chips, to M16 fab"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lam Researchが年次報告で、最も重要な顧客の1社としてSK hynixを挙げている",
+          "text_en": "Lam Research’s annual report lists SK hynix among its most significant customers",
+          "source": {
+            "label": "Lam Research 10-K(2026年度)",
+            "label_en": "Lam Research 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "date": "2026-08",
+            "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FORM",
+      "ticker": "FORM",
+      "name": "FormFactor",
+      "sub": "検査装置",
+      "sub_en": "Probe cards",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "FormFactorが年次報告で、売上の10%超を占める顧客としてSK hynixを挙げている",
+          "text_en": "FormFactor’s annual report reports SK hynix as a 10%+ customer",
+          "source": {
+            "label": "FormFactor 10-K(2025年度)",
+            "label_en": "FormFactor 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "The following customers represented 10% or more of our quarterly revenues for the quarters indicated: Fiscal Quarters Ended Dec 27, 2025 Sep 27, 2025 Jun 28, 2025 Mar 29, 2025 Dec 28, 2024 Sep 28, 2024 Jun 29, 2024 Mar 30, 2024 SK hynix Inc. 19.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "Rambus",
+      "sub": "メモリー用チップ",
+      "sub_en": "Memory interface chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Rambusが年次報告で、メモリーインターフェース用チップの販売先にSK hynixを挙げている",
+          "text_en": "Rambus’ annual report says its memory interface chips are sold to DRAM makers including SK hynix",
+          "source": {
+            "label": "Rambus 10-K(2025年度)",
+            "label_en": "Rambus 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our memory interface chips are sold to major DRAM manufacturers, Micron, Samsung and SK hynix"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NVIDIAが年次報告で、SK hynixからメモリーを購入していると記載",
+          "text_en": "NVIDIA’s annual report states it purchases memory from SK hynix",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "次世代メモリーと供給拡大の複数年の技術提携(2026年6月)",
+          "text_en": "Multi-year technology partnership for next-generation memory and expanded supply (June 2026)",
+          "source": {
+            "label": "SK hynix ニュースルーム(2026年6月)",
+            "label_en": "SK hynix Newsroom (Jun 2026)",
+            "url": "https://news.skhynix.com/en/multi-year-tech-partnership-with-nvidia/",
+            "level": "official",
+            "date": "2026-06-07",
+            "quote": "Collaboration Supports Next-Generation Memory Co-development With NVIDIA’s AI Infrastructure Roadmap and Expands Supply for the Accelerating Global AI Factory Buildout."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TSMCの先端ロジックとCoWoSパッケージを使い、HBM4を共同開発する覚書(2024年4月)",
+          "text_en": "MOU to co-develop HBM4 using TSMC’s advanced logic and CoWoS packaging (April 2024)",
+          "source": {
+            "label": "SK hynix ニュースルーム(2024年4月)",
+            "label_en": "SK hynix Newsroom (Apr 2024)",
+            "url": "https://news.skhynix.com/en/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/",
+            "level": "official",
+            "date": "2024-04-19",
+            "quote": "SK hynix and TSMC signed an MOU to co-develop HBM4 using TSMC’s advanced logic and CoWoS packaging",
+            "note": "覚書の段階です。",
+            "note_en": "MOU stage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "次世代DRAM・HBMで長期の共同開発契約(2026年3月)",
+          "text_en": "Long-term collaboration agreement on next-generation DRAM and HBM (March 2026)",
+          "source": {
+            "label": "Applied Materials の発表(2026年3月、MFN配信)",
+            "label_en": "Applied Materials press release (Mar 2026, GlobeNewswire via MFN)",
+            "url": "https://mfn.se/all/a/applied-materials/applied-materials-and-sk-hynix-announce-long-term-randd-partnership-to-accelerate-ai-memory-innovation-at-epic-center-in-silicon-valley-f6618bb2",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Applied Materials, Inc. today announced a long-term collaboration agreement with SK hynix Inc. to accelerate the development and deployment of next-generation DRAM and high-bandwidth memory (HBM) essential for AI and high-performance computing.",
+            "note": "Applied Materialsの発表を配信サービス(MFN)経由で確認しています。",
+            "note_en": "Confirmed via the company release as distributed on MFN."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DDR5・CXLメモリーがAMD EPYC 9004シリーズで動作確認済みと発表(2022年11月)",
+          "text_en": "DDR5 and CXL solutions validated with AMD EPYC 9004 Series processors (November 2022)",
+          "source": {
+            "label": "SK hynix ニュースルーム(2022年11月)",
+            "label_en": "SK hynix Newsroom (Nov 2022)",
+            "url": "https://news.skhynix.com/en/sk-hynix-ddr5-cxl-solutions-validated-with-amd-epyc-9004-series-processors/",
+            "level": "official",
+            "date": "2022-11-11",
+            "quote": "SK hynix has worked closely with AMD to provide fully compatible memory solutions for the 4 th Gen AMD EPYC processors.",
+            "note": "2022年の発表で、EPYC 9004世代の話です。",
+            "note_en": "Dated 2022; EPYC 9004 generation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IntelがNAND事業をSK hynixに売却(2回目の取引完了は2025年3月27日、年次報告)",
+          "text_en": "Intel sold its NAND business to SK hynix; second closing on March 27, 2025 (annual report)",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "We sold our NAND memory technology and manufacturing business to SK hynix, which we deconsolidated upon closing the first phase of the transaction on December 29, 2021. On March 27, 2025, we closed the second phase of the transaction.",
+            "note": "売却は完了しています(Solidigm事業)。",
+            "note_en": "Completed (Solidigm business)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKSQ",
+      "ticker": "SK square",
+      "name": "SK square",
+      "sub": "持株会社",
+      "sub_en": "Holding company",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "最大株主として20.5%を保有(2026年3月31日時点、目論見書)",
+          "text_en": "Largest shareholder with a 20.5% interest as of March 31, 2026 (prospectus)",
+          "source": {
+            "label": "SK hynix 目論見書(Form 424B4, 2026)",
+            "label_en": "SK hynix prospectus (Form 424B4, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "As of March 31, 2026, SK square, which was demerged from SK Telecom in 2021, held a 20.5% interest in us."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KIOXIA",
+      "ticker": "Kioxia",
+      "name": "Kioxia",
+      "sub": "NAND",
+      "sub_en": "NAND flash",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年6月、SPC 1がキオクシアの残りの持分をすべて売却したと開示(目論見書)",
+          "text_en": "Disclosed that in June 2026 SPC 1 sold all of its remaining equity interest in Kioxia (prospectus)",
+          "source": {
+            "label": "SK hynix 目論見書(Form 424B4, 2026)",
+            "label_en": "SK hynix prospectus (Form 424B4, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "In June 2026, SPC 1 completed the sale of all of its remaining equity interest in Kioxia.",
+            "note": "現在の保有ではなく、売却済みの投資です。",
+            "note_en": "This is a completed sale, not a current holding."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NAND市場の主要な競合としてKIOXIAとSandiskを挙げている(目論見書)",
+          "text_en": "Names KIOXIA and Sandisk among major NAND competitors (prospectus)",
+          "source": {
+            "label": "SK hynix 目論見書(Form 424B4, 2026)",
+            "label_en": "SK hynix prospectus (Form 424B4, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
+            "level": "official",
+            "quote": "Our major competitors in the NAND flash memory market include Samsung Electronics, KIOXIA Holdings Corporation (“Kioxia” and formerly Toshiba Memory Corporation), Micron Technology and Sandisk Corporation (“Sandisk”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DRAMとNANDの主要な競合としてSamsung Electronicsを挙げている(目論見書)",
+          "text_en": "Names Samsung Electronics a major competitor in DRAM and NAND (prospectus)",
+          "source": {
+            "label": "SK hynix 目論見書(Form 424B4, 2026)",
+            "label_en": "SK hynix prospectus (Form 424B4, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
+            "level": "official",
+            "quote": "Our major competitors in the DRAM market include Samsung Electronics Co., Ltd. (“Samsung Electronics”), Micron Technology, Inc. (“Micron Technology”) and ChangXin Memory Technologies (“CXMT”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Micronが年次報告で、メモリーの競合としてSK hynixを挙げている",
+          "text_en": "Micron’s annual report lists SK hynix among its memory competitors",
+          "source": {
+            "label": "Micron 10-K(2026年度)",
+            "label_en": "Micron 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "We face intense competition in the semiconductor memory and storage markets from a number of companies, including Samsung Electronics Co., Ltd.; SK hynix Inc.;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNDK",
+      "ticker": "SNDK",
+      "name": "Sandisk",
+      "sub": "NAND",
+      "sub_en": "NAND flash",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sandiskが年次報告で、垂直統合型のフラッシュ競合としてSK hynixを挙げている",
+          "text_en": "Sandisk’s annual report lists SK hynix among vertically integrated flash competitors",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-08",
+            "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CXMT",
+      "ticker": "CXMT",
+      "name": "CXMT(長鑫存儲)",
+      "sub": "DRAM",
+      "sub_en": "DRAM",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DRAMの主要な競合としてChangXin Memory Technologiesを挙げている(目論見書)",
+          "text_en": "Names ChangXin Memory Technologies a major DRAM competitor (prospectus)",
+          "source": {
+            "label": "SK hynix 目論見書(Form 424B4, 2026)",
+            "label_en": "SK hynix prospectus (Form 424B4, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
+            "level": "official",
+            "quote": "Our major competitors in the DRAM market include Samsung Electronics Co., Ltd. (“Samsung Electronics”), Micron Technology, Inc. (“Micron Technology”) and ChangXin Memory Technologies (“CXMT”).",
+            "note": "非上場です。",
+            "note_en": "Not publicly listed."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

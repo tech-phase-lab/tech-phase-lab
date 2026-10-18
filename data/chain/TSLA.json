@@ -6,25 +6,33 @@
   "rows": [
     {
       "ja": "電池・半導体の供給元",
-      "en": "Battery & chip suppliers"
+      "en": "Battery & chip suppliers",
+      "above": true
     },
     {
       "ja": "蓄電・宇宙・AIの取引先",
       "en": "Energy storage, space & AI counterparts"
     },
     {
-      "ja": "充電ネットワーク",
-      "en": "Charging network"
+      "ja": "充電ネットワーク(NACS)",
+      "en": "Charging network (NACS)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [
     "FLNC",
-    "ENPH"
+    "ENPH",
+    "SEDG",
+    "EOSE",
+    "ALB"
   ],
   "companies": [
     {
       "id": "6752",
-      "ticker": "6752",
+      "ticker": "Panasonic",
       "name": "Panasonic Holdings",
       "sub": "電池セル",
       "sub_en": "Battery cells",
@@ -48,7 +56,7 @@
     },
     {
       "id": "3750",
-      "ticker": "3750",
+      "ticker": "CATL",
       "name": "CATL",
       "sub": "電池セル",
       "sub_en": "Battery cells",
@@ -72,7 +80,7 @@
     },
     {
       "id": "005930",
-      "ticker": "005930",
+      "ticker": "Samsung",
       "name": "Samsung Electronics",
       "sub": "半導体製造",
       "sub_en": "Chip manufacturing",
@@ -170,7 +178,7 @@
       "name": "Fluence Energy",
       "sub": "大規模蓄電",
       "sub_en": "Utility-scale storage",
-      "row": 1,
+      "row": 3,
       "relations": [
         {
           "type": "rival",
@@ -192,7 +200,7 @@
       "name": "Enphase Energy",
       "sub": "家庭用蓄電",
       "sub_en": "Home storage",
-      "row": 1,
+      "row": 3,
       "relations": [
         {
           "type": "rival",
@@ -231,11 +239,258 @@
           }
         }
       ]
+    },
+    {
+      "id": "xAI",
+      "ticker": "xAI",
+      "name": "xAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Megapackの購入で、2025年にTeslaが4.3億ドルの売上を計上(関連当事者取引)",
+          "text_en": "Tesla recognized $430M of revenue in 2025 from xAI’s Megapack purchases (related-party transaction)",
+          "source": {
+            "label": "Tesla 10-K(2025年度)(注記15)",
+            "label_en": "Tesla 10-K FY2025 (Note 15)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "we recognized $ 430 million of revenues and $ 285 million of cost of revenues from xAI for its purchase of our Megapack products in the ordinary course of business.",
+            "note": "関連当事者との取引です。xAIはその後SpaceXと統合されたと、Teslaの10-Qにあります。",
+            "note_en": "Related-party transaction; xAI was later combined with SpaceX per Tesla’s 10-Q."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Ford車がTesla Superchargerを使えると発表(2024年春から)",
+          "text_en": "Ford EV customers gain Tesla Supercharger access (from spring 2024)",
+          "source": {
+            "label": "Ford の発表(2024年1月)",
+            "label_en": "Ford press release (Jan 2024)",
+            "url": "https://media.ford.com/content/fordmedia/fna/us/en/news/2024/01/31/ford-to-offer-complimentary-tesla-supercharger-adapter-to-eligib.html",
+            "level": "official",
+            "date": "2024-01-31",
+            "quote": "Last year, Ford announced that its EV customers would gain access to Tesla Superchargers across the U.S. and Canada beginning in Spring 2024.",
+            "note": "対象車種はアダプター利用で、2025年からNACSポートに移行します。",
+            "note_en": "Eligible models use an adapter; NACS ports from 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIVN",
+      "ticker": "RIVN",
+      "name": "Rivian",
+      "sub": "EV",
+      "sub_en": "EV maker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rivian車がTesla Superchargerを利用可能に(2024年3月)",
+          "text_en": "Rivian owners can use the Tesla Supercharger network (March 2024)",
+          "source": {
+            "label": "Rivian Stories(2024年3月)",
+            "label_en": "Rivian Stories (Mar 2024)",
+            "url": "https://rivian.com/stories/supercharger-network-access",
+            "level": "official",
+            "date": "2024-03-18",
+            "quote": "Rivian owners now have access to the Tesla Supercharger network and will start receiving NACS DC adapters in April.",
+            "note": "古い車種はNACS用アダプターが必要です。",
+            "note_en": "Earlier models need a NACS DC adapter."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "Honda",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米向けEVで2025年からNACS採用でTeslaと合意(2023年9月発表)",
+          "text_en": "Agreed with Tesla to adopt NACS on North American EVs from 2025 (announced September 2023)",
+          "source": {
+            "label": "Honda の発表(2023年9月)",
+            "label_en": "Honda press release (Sep 2023)",
+            "url": "https://hondanews.com/en-US/releases/honda-to-adopt-north-american-charging-standard-nacs-for-its-ev-models-in-north-america",
+            "level": "official",
+            "date": "2023-09-07",
+            "quote": "Honda Motor Co., Ltd. today announced that it has reached an agreement with Tesla, Inc. to adopt Tesla's North American Charging Standard (NACS) for the charging port of its EV models",
+            "note": "発表時点の将来計画です。",
+            "note_en": "Forward-looking as of the announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSANY",
+      "ticker": "NSANY",
+      "name": "Nissan",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年からNACS採用でTeslaと合意(2023年7月発表)",
+          "text_en": "Agreed with Tesla to adopt NACS from 2025 (announced July 2023)",
+          "source": {
+            "label": "Nissan USA の発表(2023年7月)",
+            "label_en": "Nissan USA press release (Jul 2023)",
+            "url": "https://usa.nissannews.com/en-US/releases/nissan-to-adopt-north-american-charging-standard-nacs-for-ariya-and-future-ev-models",
+            "level": "official",
+            "date": "2023-07-19",
+            "quote": "Nissan has reached an agreement with Tesla to adopt the North American Charging Standard (NACS) beginning in 2025, providing Nissan customers even more choices when it comes to charging their electric vehicle.",
+            "note": "発表時点の将来計画です。",
+            "note_en": "Forward-looking as of the announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米向けのバッテリーEVで2025年からNACS採用でTeslaと合意(2023年10月発表)",
+          "text_en": "Agreed with Tesla to adopt NACS on its battery EVs from 2025 (announced October 2023)",
+          "source": {
+            "label": "Toyota USA ニュースルーム(2023年10月)",
+            "label_en": "Toyota USA Newsroom (Oct 2023)",
+            "url": "https://pressroom.toyota.com/toyota-adopts-the-north-american-charging-standard-to-expand-customer-charging-options/",
+            "level": "official",
+            "date": "2023-10-19",
+            "quote": "Toyota Motor North America, Inc. (TMNA) today announced it has reached an agreement with Tesla, Inc. to adopt the North American Charging Standard (NACS) on its battery electric vehicles (BEVs) beginning in 2025.",
+            "note": "発表時点の将来計画です。",
+            "note_en": "Forward-looking as of the announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LCID",
+      "ticker": "LCID",
+      "name": "Lucid",
+      "sub": "EV",
+      "sub_en": "EV maker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lucid車が2025年1月31日からTeslaの充電網を利用可能(Lucidの年次報告)",
+          "text_en": "Lucid customers gained access to Tesla’s Supercharger network on January 31, 2025 (Lucid annual report)",
+          "source": {
+            "label": "Lucid 10-K(2025年度)",
+            "label_en": "Lucid 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "quote": "On January 31, 2025, our customers gained access to Tesla’s supercharging network in addition to the vast CCS infrastructure",
+            "note": "Airはアダプター利用、Gravityは最初からNACSポート付きです。",
+            "note_en": "Air uses an adapter; Gravity has a native NACS port."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEDG",
+      "ticker": "SEDG",
+      "name": "SolarEdge",
+      "sub": "太陽光・蓄電",
+      "sub_en": "Solar & storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SolarEdgeの年次報告が、北米の住宅用インバーターの競合としてTeslaを挙げている",
+          "text_en": "SolarEdge’s annual report names Tesla as a competitor in North American residential solar inverters",
+          "source": {
+            "label": "SolarEdge 10-K(2025年度)",
+            "label_en": "SolarEdge 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "we compete with manufacturers such as Tesla Inc. with traditional string-based solutions",
+            "note": "北米の住宅用に限った記載です。",
+            "note_en": "Limited to the North American residential market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EOSE",
+      "ticker": "EOSE",
+      "name": "Eos Energy",
+      "sub": "蓄電池",
+      "sub_en": "Batteries",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Eos Energyの年次報告が、競合としてTeslaを挙げている",
+          "text_en": "Eos Energy’s annual report names Tesla among competitors",
+          "source": {
+            "label": "Eos Energy 10-K(2025年度)",
+            "label_en": "Eos Energy 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1805077/000162828026011961/eose-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our Znyth ™ battery system competes with products from traditional Li-ion battery manufacturers and solution providers such as Fluence Energy, Panasonic, Samsung Electronics Co. Ltd., LG Chem Ltd., Tesla, BYD, Sungrow and Contemporary Amperex Technology Co. Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALB",
+      "ticker": "ALB",
+      "name": "Albemarle",
+      "sub": "リチウム",
+      "sub_en": "Lithium",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Albemarleの年次報告が、リチウム化合物の主要な競合としてTeslaを挙げている",
+          "text_en": "Albemarle’s annual report lists Tesla among major competitors in lithium compounds",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Major competitors in lithium compounds include Sociedad Quimica y Minera de Chile S.A., Sichuan Tianqi Lithium, Jiangxi Ganfeng Lithium, Rio Tinto plc, Pilbara Minerals, Tesla",
+            "note": "Teslaが自社で行う精製との競合です。",
+            "note_en": "Competition with Tesla’s in-house refining."
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・8-K)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q and 8-K) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
   }
 }

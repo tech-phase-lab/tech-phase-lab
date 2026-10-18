@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "KLAC",
+    "name": "KLA"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客(半導体メーカー)",
+      "en": "Customers (chipmakers)"
+    },
+    {
+      "ja": "競合(検査・計測装置)",
+      "en": "Competitors (inspection & metrology)"
+    }
+  ],
+  "rivals": [
+    "AMAT",
+    "ASML",
+    "HHT",
+    "6920",
+    "ONTO",
+    "NVMI",
+    "COHU",
+    "PDFS"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%超を占める顧客としてTSMCを記載(年次報告)",
+          "text_en": "Lists TSMC as a customer accounting for more than 10% of total revenues, primarily in semiconductor process control",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "The following customer accounted for more than 10% of our total revenues, primarily in our Semiconductor Process Control segment, for the indicated periods: Year Ended June 30, 2026 2025 2024 Taiwan Semiconductor Manufacturing Company Limited",
+            "note": "10%超の顧客として名前が挙がるのはTSMCだけです。",
+            "note_en": "TSMC is the only >10% customer named."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として実名で記載(年次報告)",
+          "text_en": "Named among competitors (annual report)",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc., some of which"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "ASML",
+      "sub": "露光装置",
+      "sub_en": "Lithography",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として実名で記載(年次報告)",
+          "text_en": "Named among competitors (annual report)",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc., some of which"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ASMLが年次報告(20-F)で、複雑なパターニングを支えるアプリケーションの競合の例としてKLAを挙げている",
+          "text_en": "ASML’s annual report (20-F) names KLA among competitors for patterning-support applications",
+          "source": {
+            "label": "ASML 20-F / Annual Report 2025",
+            "label_en": "ASML 20-F / Annual Report 2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also compete with providers of applications that support or enhance complex patterning solutions, such as Applied Materials Inc. and KLA-Tencor Corporation.",
+            "note": "パターニングを支える製品に限った記載です。",
+            "note_en": "Limited to patterning-support applications."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HHT",
+      "ticker": "Hitachi High-Tech",
+      "name": "日立ハイテク",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として実名で記載(年次報告)",
+          "text_en": "Named among competitors (annual report)",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc., some of which"
+          }
+        }
+      ]
+    },
+    {
+      "id": "6920",
+      "ticker": "Lasertec",
+      "name": "レーザーテック",
+      "sub": "検査装置",
+      "sub_en": "Inspection tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として実名で記載(年次報告)",
+          "text_en": "Named among competitors (annual report)",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc., some of which"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONTO",
+      "ticker": "ONTO",
+      "name": "Onto Innovation",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として実名で記載(年次報告)",
+          "text_en": "Named among competitors (annual report)",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc., some of which"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Ontoが年次報告で、OCD計測と先端パッケージ検査の主要な競合としてKLAを挙げている",
+          "text_en": "Onto’s annual report names KLA a principal competitor in OCD metrology and advanced packaging inspection",
+          "source": {
+            "label": "Onto Innovation 10-K(2025年度)",
+            "label_en": "Onto Innovation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We principally compete with KLA, Nova, Camtek, Ushio, Canon, GigaVis Co. Ltd. and PDF Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVMI",
+      "ticker": "NVMI",
+      "name": "Nova",
+      "sub": "計測装置",
+      "sub_en": "Metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Novaが年次報告(20-F)で、主な競合としてOntoとKLAを挙げている",
+          "text_en": "Nova’s annual report (20-F) says it competes mainly with Onto Innovation and KLA",
+          "source": {
+            "label": "Nova 20-F(2025年度)",
+            "label_en": "Nova 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We compete mainly with Onto Innovation Inc., and KLA Corp., which manufacture and sell CD, thin films and chemical metrology and process control systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COHU",
+      "ticker": "COHU",
+      "name": "Cohu",
+      "sub": "テスト・検査",
+      "sub_en": "Test & inspection",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cohuが年次報告で、半導体の検査の主要な競合としてKLAを挙げている",
+          "text_en": "Cohu’s annual report lists KLA among its primary competitors in semiconductor test and inspection",
+          "source": {
+            "label": "Cohu 10-K(2025年度)",
+            "label_en": "Cohu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PDFS",
+      "ticker": "PDFS",
+      "name": "PDF Solutions",
+      "sub": "歩留まり管理",
+      "sub_en": "Yield management",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PDF Solutionsが年次報告で、歩留まり管理システムの競合としてKLAを挙げている",
+          "text_en": "PDF Solutions’ annual report lists KLA among its competitors in yield management systems",
+          "source": {
+            "label": "PDF Solutions 10-K(2025年度)",
+            "label_en": "PDF Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "direct competition from providers of: o yield management and/or prediction systems, such as KLA Corporation (“KLA”), Onto Innovation, Inc. (“Onto”), and Synopsys, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}
