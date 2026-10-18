@@ -918,3 +918,50 @@ integrated tree, including the inherited R41 roles, before consuming drafts.
 The Resonac parent-identity candidate stays on hold: mirrored documents have not
 been authenticated against an issuer or exchange original. It is not classified
 as private, and its supplier-award research remains in the audit inventory.
+
+### Priority 50 reconciliation, October 18, 2026 (R43)
+
+The finite scope is the current 50-company earnings roster, including all 22
+monitored issuers and the principal megatechs. Add the previously absent CEG,
+SK hynix and Sandisk introductions; retain the already prepared SPCX addition.
+This is a source-bounded reconciliation, not a claim that every possible commercial
+relationship or every page of every annual report was read.
+
+Separate product rivalry from commercial roles: Micron is primarily DRAM/HBM,
+with Sandisk/Kioxia overlap limited to NAND/SSDs. Its AMD design-in/co-engineering,
+Qualcomm automotive qualification, Applied/Lam development work and NVIDIA
+custom-HBM4E roadmap each retain their own scope and evidence. Qualcomm
+qualification does not establish a direct Qualcomm purchase contract.
+
+Reconcile 112 agent-reviewed operations across 32 existing issuers (including four
+source-label corrections), in addition to the root memory/cloud corrections.
+The finite cross-root pass adds 18 previously missing roles across 12 issuers
+from explicit bilateral collaboration or procurement evidence, including the
+AMD/Micron, Qualcomm/Micron, TSMC/SK hynix and Dell/IREN pairs. Matching roles
+are not duplicated. Oracle/Bloom's opposite-root candidate stays on hold until
+the relevant agreement body is checked; it is not treated as a completed delivery.
+Retain original source records, prose and valid roles. Correct Brookfield's
+partnership identity to BAM; subsidiary investment in Coherent's SiC operation
+is not ownership of the listed Coherent parent. Announcements, milestones,
+future delivery and executed share purchases remain distinguishable.
+
+The selected maps use their own issuer's named direct evidence instead of
+importing unrelated customers from the NVIDIA context. Anonymous categories
+remain in the source introductions. NVIDIA's original 41/61 payload and Nebius's
+specific supplier-context layout remain preserved. TSM has 42 independently
+sourced counterparties plus the selected company: allow exactly 43 cards for
+that one map rather than dropping a direct customer. Other maps retain their
+41-card/61-edge bound. Tests require all TSM direct peers, exact 43/48 inventory,
+and card geometry at 375/1280 in all modes. No general capacity relaxation.
+
+When multiple roles share one issuer/edge kind, combine their explanations and
+source links for the inspector. SK hynix's NVIDIA memory co-development and
+PhysicsNeMo simulation adoption both remain visible; aggregation must not mutate
+the original introduction labels or the frozen NVIDIA graph.
+
+The integration audit retains identity, body ranges read, date/stage conditions
+and unresolved parent/product/source-access items. Failed annual retrieval is
+not evidence that no commercial relationship exists. Public browser verification
+remains pending under the previously recorded URL-policy refusal; local renders
+and geometry checks are not public UI checks. R41/R42 pending draft history is
+not consumed by this data update.

@@ -24,7 +24,20 @@ function buildNetwork() {
     if (!evidence.sources.length || evidence.sources.some(source => !source.url.startsWith("https://"))) throw new Error("Missing company network evidence");
     const id = `${kind}:${from}:${to}`;
     const existing = edges.get(id);
-    if (existing) existing.evidence.push(evidence);
+    if (existing) {
+      const sameIssuer = existing.evidence.find(item => item.about === evidence.about);
+      if (sameIssuer) {
+        // The inspector selects one explanation per issuer and edge. Keep all
+        // coexisting roles (for example co-development and software adoption)
+        // in that explanation without mutating the introduction's own labels.
+        const label = {
+          ja: sameIssuer.label.ja === evidence.label.ja ? sameIssuer.label.ja : `${sameIssuer.label.ja} / ${evidence.label.ja}`,
+          en: sameIssuer.label.en === evidence.label.en ? sameIssuer.label.en : `${sameIssuer.label.en} / ${evidence.label.en}`,
+        };
+        const sources = [...new Map([...sameIssuer.sources, ...evidence.sources].map(source => [source.url, source])).values()];
+        existing.evidence = existing.evidence.map(item => item === sameIssuer ? { ...item, label, sources } : item);
+      } else existing.evidence.push(evidence);
+    }
     else edges.set(id, { id, from, to, kind, evidence: [evidence] });
   };
   for (const item of companyIntroductions) {
@@ -72,6 +85,16 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "COHR") return {
+    1: {ja: "SiC子会社への出資者", en: "Investors in SiC subsidiary"},
+    3: {ja: "光技術の顧客・提携・出資", en: "Optics customers, partners & investors"},
+    4: {ja: "光通信・レーザー・SiC材料", en: "Optics, lasers & SiC materials"},
+  };
+  if (root === "MU") return {"0": {"ja": "製造技術の協業先", "en": "Process-technology collaborators"}, "2": {"ja": "DRAM・HBM／NAND・SSD", "en": "DRAM/HBM and NAND/SSDs"}, "3": {"ja": "HBM納入先・車載認定の協業", "en": "HBM recipients & auto qualification"}};
+  if (root === "SNDK") return {"0": {"ja": "組立・試験の製造合弁", "en": "Assembly / test manufacturing JV"}, "2": {"ja": "NAND・SSDと製造協業", "en": "NAND, SSDs & manufacturing"}};
+  if (root === "SKHY") return {"0": {"ja": "製造装置の供給元", "en": "Manufacturing-equipment supplier"}, "1": {"ja": "受託製造協業・上場株主", "en": "Foundry collaboration & listed shareholder"}, "2": {"ja": "DRAM・HBM／NAND・SSD", "en": "DRAM/HBM and NAND/SSDs"}, "3": {"ja": "メモリー納入先・技術協業", "en": "Memory recipients & technology partners"}};
+  if (root === "CEG") return {"5": {"ja": "発電・電力販売", "en": "Power generation & sales"}, "6": {"ja": "データセンター向け将来電力契約", "en": "Future data-center power agreements"}, "7": {"ja": "小売向け将来電力契約", "en": "Future retail power agreement"}};
+  if (root === "SPCX") return {"0": {"ja": "GPU・設備・モデルの供給", "en": "GPU, equipment and model supply"}, "1": {"ja": "出資者・電力合弁・開発協力", "en": "Shareholders, power JV and development"}, "2": {"ja": "打ち上げサービスと顧客", "en": "Launch services and customers"}, "3": {"ja": "Starlinkの航空・海上・陸上接続", "en": "Starlink aviation, maritime and land connectivity"}, "4": {"ja": "SpaceX：宇宙・通信・AI", "en": "SpaceX: space, connectivity and AI"}, "5": {"ja": "衛星と携帯端末の接続", "en": "Satellite-to-mobile connectivity"}, "6": {"ja": "AI計算・モデル・SNS", "en": "AI compute, models and social platforms"}};
   if (root === "PCTY") return {6: {ja: "年金・IDのデータ連携と配送サービス", en: "Retirement / identity integrations and delivery services"}, 7: {ja: "人事・給与・支出・IT管理", en: "HR, payroll, spend & IT management"}};
   if (root === "FOXA") return {7: {ja: "ニュース・スポーツ・配信と関連サービス", en: "News, sports, streaming & related services"}};
   if (root === "TSM") return { ...{0:{ja:"半導体材料・製造装置",en:"Semiconductor materials & equipment"},2:{ja:"メモリー・先端包装・試験",en:"Memory, advanced packaging & test"}}, ...{"0": {"ja": "半導体材料・装置・工場建設の供給元", "en": "Semiconductor materials, equipment & fab-construction suppliers"}, "1": {"ja": "受託製造・製造合弁/画像センサーの協業", "en": "Foundries, manufacturing JVs & image-sensor collaboration"}} };
@@ -302,6 +325,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   if (root === "INTC") return {
     1: { ja: "半導体受託製造", en: "Foundry manufacturing" },
     3: { ja: "CPU・AIアクセラレーター", en: "CPUs & AI accelerators" },
+    7: { ja: "資本提携の出資者", en: "Equity investment partner" },
   };
   if (root === "AMAT") return {
     0: { ja: "半導体製造装置・検査", en: "Semiconductor process tools & inspection" },
@@ -312,6 +336,7 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
   };
   if (root === "ARM") return {
     3: { ja: "CPU・プロセッサー設計IP", en: "CPUs & processor design IP" },
+    7: { ja: "支配株主", en: "Controlling shareholder" },
   };
   if (root === "QCOM") return {
     3: { ja: "スマホ・PCの演算・通信半導体", en: "Phone/PC compute & connectivity chips" },
@@ -475,6 +500,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Cortex AIのモデル提供",
         "en": "Models available in Cortex AI"
       }
+    },
+    "SNOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データ・AI基盤",
+        "en": "Data & AI platform"
+      }
     }
   },
   "IBM": {
@@ -546,6 +578,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "顧客向けソリューションの戦略提携",
         "en": "Strategic customer-solution partner"
+      }
+    },
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ソフト・コンサル・基盤",
+        "en": "Software, consulting & infrastructure"
+      }
+    },
+    "PANW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "戦略パートナーとして顧客支援",
+        "en": "Strategic customer-solution partnership"
+      }
+    },
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "戦略パートナーとして顧客支援",
+        "en": "Strategic customer-solution partnership"
       }
     }
   },
@@ -1334,6 +1387,48 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "検査・計測",
         "en": "Inspection & metrology"
       }
+    },
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "半導体製造・包装装置",
+        "en": "Chip fabrication & packaging tools"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom：EPICで先端包装技術を共同研究",
+        "en": "Broadcom: Advanced-packaging R&D through EPIC"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Micron：DRAM・HBM・NANDのEPIC共同研究",
+        "en": "Micron: EPIC R&D for DRAM, HBM and NAND"
+      }
+    },
+    "SKHY": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SK hynix：DRAM・HBMと先端包装の長期共同研究",
+        "en": "SK hynix: Long-term DRAM/HBM and advanced-packaging R&D"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Samsung Electronics：EPICで先端工程を共同研究",
+        "en": "Samsung Electronics: Advanced-process joint R&D at EPIC"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：2025年供給元表彰の生産・技術支援",
+        "en": "TSMC: Production/technology support evidenced by2025 supplier award"
+      }
     }
   },
   "AMD": {
@@ -1378,6 +1473,69 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Microsoft：半導体顧客・Azure供給元",
         "en": "Microsoft: chip customer / Azure provider"
       }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "CPU・GPU・FPGA",
+        "en": "CPUs, GPUs & FPGAs"
+      }
+    },
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries：12nm・14nm製品などのウエハーを調達",
+        "en": "GlobalFoundries: Wafer supply including 12nm and14nm products"
+      }
+    },
+    "UMC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "UMC：プログラマブルロジックICの製造委託先",
+        "en": "UMC: Programmable-logic IC foundry"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Samsung Electronics：プログラマブルロジックICの製造委託先",
+        "en": "Samsung Electronics: Programmable-logic IC foundry"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI：6GWのAMD GPU導入に向けた複数年購入契約",
+        "en": "OpenAI: Multi-year agreement for deployment of6GW of AMD GPUs"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta Platforms：最大6GWのInstinct GPU導入契約 / Meta Platforms：HeliosとGPU・CPU・ソフトの共同開発",
+        "en": "Meta Platforms: Agreement for up to6GW of Instinct GPUs / Meta Platforms: Helios and GPU/CPU/software co-development"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "半導体の製造委託先",
+        "en": "Chip manufacturing supplier"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Micron：MI350向けHBM3E・共同最適化",
+        "en": "Micron: MI350 HBM3E and joint optimization"
+      }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arista：ラック規模AIネットワーク協業",
+        "en": "Arista: rack-scale AI networking"
+      }
     }
   },
   "ARM": {
@@ -1408,6 +1566,90 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "ARC・ARC-V設計IP",
         "en": "ARC & ARC-V processor IP"
       }
+    },
+    "ARM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "CPU設計・IP",
+        "en": "CPU designs & IP"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta Platforms：Arm AGI CPUの共同開発",
+        "en": "Meta Platforms: Arm AGI CPU co-development"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：Arm AGI CPUを3nmで製造",
+        "en": "TSMC: 3nm manufacturing for Arm AGI CPU"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI：Arm AGI CPUの導入予定先",
+        "en": "OpenAI: Planned Arm AGI CPU adopter"
+      }
+    },
+    "NET": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Cloudflare：Arm AGI CPUの導入予定先",
+        "en": "Cloudflare: Planned Arm AGI CPU adopter"
+      }
+    },
+    "FFIV": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "F5：Arm AGI CPUの導入予定先",
+        "en": "F5: Planned Arm AGI CPU adopter"
+      }
+    },
+    "SAP": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SAP：Arm AGI CPUの導入予定先",
+        "en": "SAP: Planned Arm AGI CPU adopter"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon：AWS GravitonのArm技術協業",
+        "en": "Amazon: Arm technology collaboration for AWS Graviton"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft：Azure CobaltのNeoverse CSS採用",
+        "en": "Microsoft: Neoverse CSS adoption in Azure Cobalt"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：NVIDIA基盤へのArm技術統合",
+        "en": "NVIDIA: Arm integration in NVIDIA platforms"
+      }
+    },
+    "SoftBank": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "支配株主",
+        "en": "Controlling shareholder"
+      }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arista：ラック規模AIネットワーク協業",
+        "en": "Arista: rack-scale AI networking"
+      }
     }
   },
   "QCOM": {
@@ -1421,8 +1663,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "Samsung Electronics": {
       "layer": 3,
       "businessLabel": {
-        "ja": "Exynosモバイル半導体",
-        "en": "Exynos mobile processors"
+        "ja": "端末顧客・ウエハ供給・競合",
+        "en": "Device customer, wafer supplier & rival"
       }
     },
     "AAPL": {
@@ -1444,6 +1686,62 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Ryzen PC用CPU",
         "en": "Ryzen PC processors"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "通信・端末・車載半導体",
+        "en": "Connectivity, device & auto chips"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：各種ICの主要ウエハー供給元",
+        "en": "TSMC: Major wafer supplier for QCOM ICs"
+      }
+    },
+    "GFS": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "GlobalFoundries：各種ICの主要ウエハー供給元",
+        "en": "GlobalFoundries: Major wafer supplier for QCOM ICs"
+      }
+    },
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor：主要な半導体組立・試験先",
+        "en": "Amkor: Major assembly/test supplier"
+      }
+    },
+    "ASX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "ASE Technology Holding：ASE・Siliconwareによる組立・試験",
+        "en": "ASE Technology Holding: Assembly/testing through ASE and Siliconware"
+      }
+    },
+    "Xiaomi": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "スマホ向けの大口顧客",
+        "en": "Major mobile customer"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Micron：Snapdragon車載メモリー認定",
+        "en": "Micron: Snapdragon automotive-memory qualification"
+      }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arista：ラック規模AIネットワーク協業",
+        "en": "Arista: rack-scale AI networking"
       }
     }
   },
@@ -1732,6 +2030,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "USFPコネクター等の開発計画",
         "en": "USFP connector development plans"
       }
+    },
+    "APH": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "接続・センサー製品",
+        "en": "Interconnects & sensors"
+      }
     }
   },
   "ANET": {
@@ -1769,6 +2074,62 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Visionパケットブローカー",
         "en": "Vision network packet brokers"
       }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Ethernet通信機器",
+        "en": "Ethernet networking"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AristaのFY2025自社開示はDell/EMCをデータセンター・キャンパス通信機器の競合に列挙。Dellのサーバー・ストレージを含む全製品の同等性を示さない。",
+        "en": "Arista’s FY2025 filing names Dell/EMC in data-center/campus networking competition, not equivalence across Dell’s entire server, storage and other product portfolio."
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD：Pensando Vulcanoとラック規模AIネットワークを連携",
+        "en": "AMD: Rack-scale AI networking with Pensando Vulcano"
+      }
+    },
+    "ARM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Arm：オープンなラック規模AIネットワークの技術協業",
+        "en": "Arm: Open rack-scale AI-networking collaboration"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Broadcom：ESUNのラック規模Ethernet接続を共同開発",
+        "en": "Broadcom: ESUN rack-scale Ethernet collaboration"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta Platforms：102.4T scale-out基盤のラックネットワーク協業",
+        "en": "Meta Platforms: Rack-networking collaboration for102.4T scale-out"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft：Maia向けscale-upネットワークを共同設計",
+        "en": "Microsoft: Co-design of scale-up networking for Maia"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Qualcomm：ラック規模AIネットワークの技術連携",
+        "en": "Qualcomm: Rack-scale AI-networking collaboration"
+      }
     }
   },
   "MRVL": {
@@ -1798,6 +2159,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "AWS：半導体顧客・EDA基盤",
         "en": "AWS: chip customer / EDA compute"
+      }
+    },
+    "MRVL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "データ基盤向け半導体",
+        "en": "Data-infrastructure chips"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：先端ノードのウエハーを製造委託",
+        "en": "TSMC: Sole foundry for advanced-node wafers"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：NVLink Fusion・シリコンフォトニクスの技術協業 / NVIDIA：2026年3月に20億ドルの優先株出資を完了",
+        "en": "NVIDIA: NVLink Fusion and silicon-photonics collaboration / NVIDIA: Completed $2bn preferred-stock investment in March2026"
       }
     }
   },
@@ -1835,6 +2217,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "GB300導入の協力先",
         "en": "GB300 deployment collaborator"
+      }
+    },
+    "VRT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "電源・冷却・ラック設備",
+        "en": "Power, cooling & rack equipment"
+      }
+    },
+    "OKLO": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Oklo：VertivのFY2025年次報告はOkloとの協力を、将来のデータセンター向け代替エネルギーの検討と説明する",
+        "en": "Oklo: Vertiv describes its Oklo collaboration in its FY2025 report as exploring alternative energy for future data centers"
+      }
+    },
+    "CAT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Caterpillar：VertivのFY2025年次報告はCaterpillarとの分散型発電・バックアップ電源の協力を記載する",
+        "en": "Caterpillar: Vertiv names Caterpillar as a collaboration partner for distributed generation and backup power in its FY2025 report, without disclosing rollout across all sites or contract value"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AI向け電源・冷却で協力",
+        "en": "AI power & cooling collaboration"
       }
     }
   },
@@ -1879,6 +2289,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "支払い連動の顧客ワラント",
         "en": "Payment-linked customer warrants"
+      }
+    },
+    "ALAB": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AIサーバー接続半導体",
+        "en": "AI-server connectivity chips"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：全ICの製造委託先",
+        "en": "TSMC: Sole IC foundry"
+      }
+    },
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor：ICの組立・包装・試験を委託",
+        "en": "Amkor: IC assembly, packaging and testing"
+      }
+    },
+    "ASX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "ASE Technology Holding：傘下ASEへIC組立・包装・試験を委託",
+        "en": "ASE Technology Holding: IC assembly, packaging and testing through ASE"
       }
     }
   },
@@ -1942,8 +2380,8 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "NVDA": {
       "layer": 1,
       "businessLabel": {
-        "ja": "GPU基盤の供給・技術協力",
-        "en": "GPU infrastructure & engineering"
+        "ja": "GPU供給・提携・出資発表",
+        "en": "GPU supply, partnership & investment plan"
       }
     },
     "META": {
@@ -2017,6 +2455,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "露光装置向け光学部品",
         "en": "Lithography optical components"
       }
+    },
+    "ASML": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "EUV・DUV露光装置",
+        "en": "EUV / DUV lithography"
+      }
+    },
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Intel：米国拠点がIntel向け顧客支援を提供",
+        "en": "Intel: US operations provide Intel customer support"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：2025年の生産・技術支援 / TSMC：High NA EUV用12インチマスクを共同開発",
+        "en": "TSMC: production/technology support in2025 / TSMC: Joint12-inch-mask initiative for High NA EUV"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Samsung Electronics：High NA EUV・12インチマスクの協業拡大",
+        "en": "Samsung Electronics: Expanded High NA EUV and 12-inch-mask collaboration"
+      }
     }
   },
   "CRDO": {
@@ -2047,35 +2513,140 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "アクティブ電気ケーブル",
         "en": "Active electrical cables"
       }
+    },
+    "CRDO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AEC・高速接続半導体",
+        "en": "AECs & connectivity chips"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "TSMC：FY2026の全ウエハー製造委託先",
+        "en": "TSMC: FY2026 sole wafer foundry"
+      }
+    },
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor：IC包装の外注先",
+        "en": "Amkor: IC packaging supplier"
+      }
+    },
+    "ASX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "ASE Technology Holding：傘下ASEによるIC包装",
+        "en": "ASE Technology Holding: IC packaging through ASE subsidiary"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Microsoft：ネットワーク管理dual-ToR向けスイッチケーブルを共同開発",
+        "en": "Microsoft: Joint switch-cable development for network-managed dual-ToR"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Amazon：購入額に連動する顧客ワラント契約 / Amazon：FY2026末までに顧客ワラントを全行使",
+        "en": "Amazon: Purchase-linked customer warrant agreement / Amazon: Customer warrant fully exercised by FY2026 end"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "光接続の信頼性向上を共同開発",
+        "en": "Optical-reliability development"
+      }
     }
   },
   "MU": {
     "Samsung": {
       "layer": 2,
       "businessLabel": {
-        "ja": "DRAM・HBM・NAND",
-        "en": "DRAM, HBM & NAND"
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
       }
     },
     "SK hynix": {
       "layer": 2,
       "businessLabel": {
-        "ja": "DRAM・HBM・NAND",
-        "en": "DRAM, HBM & NAND"
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
       }
     },
     "Kioxia": {
       "layer": 2,
       "businessLabel": {
-        "ja": "NANDフラッシュ・SSD",
-        "en": "NAND flash & SSDs"
+        "ja": "NAND・SSDのみ",
+        "en": "NAND / SSDs only"
       }
     },
     "SNDK": {
       "layer": 2,
       "businessLabel": {
-        "ja": "NANDフラッシュ・SSD",
-        "en": "NAND flash & SSDs"
+        "ja": "NAND・SSDのみ",
+        "en": "NAND / SSDs only"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "SKHY": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "HBMの納入・共同開発先",
+        "en": "HBM recipient & co-development"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "MI350向けHBM3E・共同検証",
+        "en": "MI350 HBM3E & joint validation"
+      }
+    },
+    "QCOM": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "車載LPDDR・UFSの認定協業",
+        "en": "Automotive LPDDR / UFS qualification"
+      }
+    },
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "DRAM・HBM・NANDの開発協業",
+        "en": "DRAM / HBM / NAND process R&D"
+      }
+    },
+    "LRCX": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Boiseでの研究・製造協力",
+        "en": "Boise R&D / manufacturing support"
       }
     }
   },
@@ -2121,6 +2692,41 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "半導体受託製造",
         "en": "Foundry manufacturing"
       }
+    },
+    "INTC": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "CPU・受託製造",
+        "en": "CPUs & foundry"
+      }
+    },
+    "SoftBank Group": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SoftBank Group：2025年9月に20億ドルの普通株出資を完了",
+        "en": "SoftBank Group: Completed $2bn common-stock investment in September2025"
+      }
+    },
+    "MBLY": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Mobileye：FY2025末時点の連結対象・過半数保有子会社",
+        "en": "Mobileye: Majority-owned consolidated subsidiary at FY2025 end"
+      }
+    },
+    "UMC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "UMC：12nm製造プロセスを共同開発",
+        "en": "UMC: Joint development of12nm manufacturing process"
+      }
+    },
+    "FTNT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Fortinet：SP6向け設計・包装・製造技術を共同開発",
+        "en": "Fortinet: SP6 design/packaging/manufacturing collaboration"
+      }
     }
   },
   "SIMO": {
@@ -2159,6 +2765,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "光トランシーバー",
         "en": "Optical transceivers"
+      }
+    },
+    "AAOI": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光トランシーバー・レーザー",
+        "en": "Optical transceivers & lasers"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データセンター向け光通信製品",
+        "en": "Data-center optical products"
+      }
+    },
+    "Digicomm": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ケーブル通信向け製品",
+        "en": "Cable-network products"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "製品購入に連動するワラント付き取引契約",
+        "en": "Product-purchase agreement with purchase-linked warrants"
       }
     }
   },
@@ -2203,6 +2837,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "AWS電力協力・クラウド利用",
         "en": "AWS power initiatives & cloud"
+      }
+    },
+    "GEV": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電・送電・風力設備",
+        "en": "Power, grid & wind equipment"
+      }
+    },
+    "Mitsubishi Heavy Industries": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電設備。GE Vernova自身の開示 / 三菱重工のMitsubishi Powerブランドの火力発電システムを、GE VernovaのPower分野と比較する。GE Vernova自身の実名競合開示と三菱重工への事業統合を確認し、風力・全電化製品まで同等とはしない。",
+        "en": "Power generation equipment; named by GE Vernova / Compare Mitsubishi Heavy Industries’ Mitsubishi Power thermal generation systems with GE Vernova Power. GE Vernova names the brand as a competitor; MHI confirms the business integration. This does not extend to all wind or electrification products."
       }
     }
   },
@@ -2255,6 +2903,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "GPUサーバー調達",
         "en": "GPU server systems"
       }
+    },
+    "IREN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データセンター・AIクラウド",
+        "en": "Data centers & AI cloud"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "GPU供給・AIクラウド契約",
+        "en": "GPU supply & AI-cloud contract"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AI向けGPU基盤を採用",
+        "en": "AI GPU platforms"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "契約報道：2026年10月にAnthropicとの複数年クラウド契約が報じられた。会社発表による相手名・金額の確認は未了。8月公表の匿名契約への追加売上とは断定しない",
+        "en": "Reported contract: October 2026 reporting identifies a multiyear Anthropic cloud deal. Counterparty name/value are not confirmed in company announcements; no claim of revenue additional to the unnamed August contract"
+      }
     }
   },
   "LRCX": {
@@ -2277,6 +2953,48 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "エッチング・湿式洗浄",
         "en": "Etch & wet clean"
+      }
+    },
+    "LRCX": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "エッチング・成膜装置",
+        "en": "Etch & deposition equipment"
+      }
+    },
+    "Hitachi": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "LamのFY2026自社開示はHitachiを半導体エッチング装置の競合に明記。日立の全事業との同等性を示さず、上場親会社は日立製作所（東証6501）として扱う。",
+        "en": "Lam’s FY2026 filing explicitly names Hitachi in semiconductor etch-equipment competition, not equivalence across Hitachi’s entire business; identify the listed parent as Hitachi Ltd.(TSE6501)."
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "半導体製造装置と保守の主要顧客",
+        "en": "Major equipment and support customer"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "メモリー製造を支える主要顧客",
+        "en": "Major memory manufacturing customer"
+      }
+    },
+    "Samsung": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "半導体製造装置の主要顧客",
+        "en": "Major semiconductor equipment customer"
+      }
+    },
+    "SK hynix": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "メモリー製造を支える主要顧客",
+        "en": "Major memory manufacturing customer"
       }
     }
   },
@@ -2314,6 +3032,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "検査・計測",
         "en": "Inspection & metrology"
+      }
+    },
+    "KLAC": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "半導体検査・計測",
+        "en": "Chip inspection & metrology"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "検査・測定装置などの大口顧客",
+        "en": "Major customer for process-control equipment"
       }
     }
   },
@@ -2447,6 +3179,41 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "OCI GPU計算",
         "en": "OCI GPU compute"
       }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：CoreWeaveのFY2025年次報告は、NVIDIAが2026年1月に同社Class A株へ20億ドルを投資したと記載する",
+        "en": "NVIDIA: CoreWeave’s FY2025 report records NVIDIA’s $2 billion investment in its Class A shares in January2026 at $87"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Dell：CoreWeaveは2025年7月、Dellと協力したNVIDIA GB300 NVL72の初期導入を発表した",
+        "en": "Dell: CoreWeave named Dell in the initial NVIDIA GB300 NVL72 deployment announced in July2025"
+      }
+    },
+    "VRT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Vertiv：CoreWeaveは2025年7月、Vertivとの協力によるNVIDIA GB300 NVL72システムの初期導入を発表した",
+        "en": "Vertiv: CoreWeave named Vertiv as a collaborator for its initial NVIDIA GB300 NVL72 deployment in July2025, without a completed worldwide rollout or disclosed order value"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "契約済みAI計算設備を提供",
+        "en": "Contracted AI capacity"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "複数年契約でAI計算設備を提供",
+        "en": "Multi-year AI-capacity contract"
+      }
     }
   },
   "ORCL": {
@@ -2505,6 +3272,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Stargate計算容量・GPTモデル連携",
         "en": "Stargate capacity / GPT model integration"
       }
+    },
+    "PLTR": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Palantir：OCI上のFoundry・AIP",
+        "en": "Palantir: Foundry / AIP on OCI"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：OCI向けGPU採用",
+        "en": "NVIDIA: GPUs adopted in OCI"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD：OCIのInstinct GPU採用",
+        "en": "AMD: Instinct GPUs in OCI"
+      }
     }
   },
   "PANW": {
@@ -2541,6 +3329,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "FortiGateファイアウォール",
         "en": "FortiGate firewalls"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud：セキュリティ統合・販売連携",
+        "en": "Google Cloud: security / Marketplace"
+      }
+    },
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IBM：SOC・クラウド防御の共同提供",
+        "en": "IBM: joint SOC / cloud defense"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS上のアプリを保護",
+        "en": "Secures workloads on AWS"
       }
     }
   },
@@ -2599,6 +3408,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "モデル・音声エージェント連携計画",
         "en": "Model / voice-agent collaboration plans"
+      }
+    },
+    "Siemens": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Siemens：HR・業務サービスの利用顧客",
+        "en": "Siemens: HR / business-services customer"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド連携とAI機能で協力",
+        "en": "Cloud interoperability and AI collaboration"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド連携とAI機能で協力",
+        "en": "Cloud interoperability and AI collaboration"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AI機能の強化で協力",
+        "en": "AI technology collaboration"
       }
     }
   },
@@ -2956,6 +3793,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "2022年DML採用発表",
         "en": "2022 DML adoption announcement"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：先端レーザー部品の複数年購入コミットメント / NVIDIA：次世代データセンター光技術の共同研究",
+        "en": "NVIDIA: Multi-year advanced-laser purchase commitment / NVIDIA: Next-generation datacenter-optics R&D collaboration"
       }
     }
   },
@@ -4007,6 +4851,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Cerebras：Trainium・Bedrock推論の開発協業",
         "en": "Cerebras: Trainium / Bedrock inference development"
       }
+    },
+    "COST": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "商品販売で競合（Costcoの開示）",
+        "en": "Merchandise retail; disclosed by Costco"
+      }
+    },
+    "WMT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Walmart.com・Walmart店舗の米国日用品/一般商品の通販・オムニチャネル小売と競合。AWS等の全事業比較ではない",
+        "en": "Overlaps with Walmart.com and Walmart stores in US everyday/general-merchandise e-commerce and omnichannel retail, not AWS or all businesses"
+      }
+    },
+    "CRM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Salesforce：Quick・Slack・データ協業",
+        "en": "Salesforce: Quick / Slack / data alliance"
+      }
     }
   },
   "GOOG": {
@@ -4149,6 +5014,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "SpaceX：株式保有の出資先",
         "en": "SpaceX: equity investee"
       }
+    },
+    "SNOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウドのデータ処理・分析で競合（Snowflakeの開示）",
+        "en": "Cloud data processing and analytics; disclosed by Snowflake"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "MetaのFacebook・Instagram等の広告枠と、Google Search・YouTube等のデジタル広告予算を争う。全AI・全製品の同等性ではない",
+        "en": "Meta advertising across Facebook / Instagram competes for digital-ad budgets with Google Search / YouTube; no equivalence of all AI or products"
+      }
+    },
+    "IBM": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IBM：Gemini・企業AI導入の協業",
+        "en": "IBM: Gemini / enterprise AI delivery"
+      }
     }
   },
   "META": {
@@ -4262,6 +5148,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Reliance：Indiaデータセンター賃借先",
         "en": "Reliance: India data-center lessor"
+      }
+    },
+    "TikTok": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "短編動画などで利用時間を競う。Metaの開示に競合サービスとして記載",
+        "en": "Short-video engagement; Meta identifies TikTok as a competing service"
+      }
+    },
+    "SNAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SnapchatとInstagramなどで競合。Snapの年次報告がMetaを列挙",
+        "en": "Snapchat versus Instagram and related engagement; Snap names Meta"
+      }
+    },
+    "APP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "モバイルなどの広告配信で競合。AppLovinの開示",
+        "en": "Mobile and related advertising; AppLovin names Meta"
+      }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arista：ラック規模AIネットワーク協業",
+        "en": "Arista: rack-scale AI networking"
       }
     }
   },
@@ -4419,6 +5333,20 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Qualcomm：Surface用SoC採用・共同開発",
         "en": "Qualcomm: Surface SoC adoption / co-development"
       }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arista：ラック規模AIネットワーク協業",
+        "en": "Arista: rack-scale AI networking"
+      }
+    },
+    "CEG": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Constellation：Crane再稼働後の電力契約",
+        "en": "Constellation: future Crane power PPA"
+      }
     }
   },
   "ADBE": {
@@ -4498,6 +5426,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Walmart：Fireflyを使う制作業務",
         "en": "Walmart: Firefly creative operations"
       }
+    },
+    "Canva": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Adobe Expressとコンテンツ作成で競合。Adobe自身の製品比較",
+        "en": "Content creation versus Adobe Express; Adobe’s own product comparison"
+      }
     }
   },
   "CRM": {
@@ -4569,6 +5504,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "ServiceNow｜顧客対応・ケース管理",
         "en": "ServiceNow | customer service cases"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AWS：Quick・Slack・データ連携 / AWS：Hyperforce・Bedrock基盤",
+        "en": "AWS: Quick / Slack / data integration / AWS: Hyperforce / Bedrock"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Google Cloud：Gemini・Agentforce連携 / Google Cloud：Hyperforce基盤・提供拡張予定",
+        "en": "Google Cloud: Gemini / Agentforce / Google Cloud: Hyperforce / planned expansion"
+      }
+    },
+    "CRWD": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "CrowdStrike：Agentforce利用顧客",
+        "en": "CrowdStrike: Agentforce customer"
       }
     }
   },
@@ -4715,6 +5671,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "サーバー・計算システム",
         "en": "Servers & compute systems"
+      }
+    },
+    "P": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Everpure（旧Pure Storage）のFlashArrayなどのフラッシュストレージをDell PowerStoreの比較対象とする。Dell自身がPurity製品群を実名比較しており、全サーバーやPCの競合ではない。",
+        "en": "Everpure, formerly Pure Storage, provides FlashArray storage compared with Dell PowerStore. Dell names its Purity portfolio in a storage comparison; this is not a comparison across all servers or PCs."
+      }
+    },
+    "NTAP": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "NetAppのONTAPベースの企業向けストレージを、Dell PowerStoreなどのストレージ製品と比較する。Dell自身の実名比較で、PCや全サーバー製品まで同等とはしない。",
+        "en": "Compare NetApp’s ONTAP-based enterprise storage with Dell storage products including PowerStore. Dell directly names this storage competitor; the comparison does not extend to PCs or every server product."
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "AMD：DellはAMD EPYCプロセッサーを採用するPowerEdgeサーバーを提供する",
+        "en": "AMD: Dell offers PowerEdge servers using AMD EPYC processors"
+      }
+    },
+    "IREN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "IREN：Dell製GPUシステムの調達契約",
+        "en": "IREN: agreements to purchase Dell GPU systems"
       }
     }
   },
@@ -5052,6 +6036,34 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "AMD：対象車の情報娯楽プロセッサ",
         "en": "AMD: eligible-car infotainment processor"
       }
+    },
+    "TSLA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "EV・蓄電・発電",
+        "en": "EVs, storage & generation"
+      }
+    },
+    "BYD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "SEALION 7の乗用EV。販売地域は車種別",
+        "en": "SEALION 7 passenger EV; availability varies by market"
+      }
+    },
+    "FLNC": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Gridstackの大規模蓄電。Megapackと用途を比較",
+        "en": "Gridstack utility-scale storage compared with Megapack use cases"
+      }
+    },
+    "ENPH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "IQ Batteryの家庭用蓄電。Powerwallと用途を比較",
+        "en": "IQ Battery home storage compared with Powerwall use cases"
+      }
     }
   },
   "CRWD": {
@@ -5095,6 +6107,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "端末防御の競合・Marketplace計画",
         "en": "Endpoint rival / Marketplace distribution plans"
+      }
+    },
+    "PANW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Palo Alto Networks Cortex XDRとFalconの端末防御・検知対応を比較。全ネットワーク機器や全製品の同等性ではない",
+        "en": "Palo Alto Networks Cortex XDR and Falcon overlap in endpoint protection and detection/response, not all networking or security products"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：AI実行環境・SIEM連携",
+        "en": "NVIDIA: AI-runtime security / SIEM"
+      }
+    },
+    "OpenAI": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OpenAI：Codex防御・Falconモデル連携",
+        "en": "OpenAI: Codex defense / Falcon AI"
       }
     }
   },
@@ -6432,6 +7465,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Microsoft｜Xbox共同設計",
         "en": "Microsoft | Xbox co-design"
       }
+    },
+    "STX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "HDD・ストレージ",
+        "en": "HDDs & storage"
+      }
     }
   },
   "ETN": {
@@ -6456,6 +7496,55 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Nebius｜主権AI基盤の提携",
         "en": "Nebius | sovereign-AI alliance"
+      }
+    },
+    "PLTR": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データ統合・業務AI",
+        "en": "Data integration & operational AI"
+      }
+    },
+    "Databricks": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データ・AI基盤で競合。公表製品の編集比較",
+        "en": "Data and AI platform; editorial product comparison"
+      }
+    },
+    "SNOW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データ統合・分析・AI基盤で競合。公表製品の編集比較",
+        "en": "Data integration, analytics and AI; editorial product comparison"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Oracle：Foundry・AIPのOCI基盤 / Oracle：Foundry・AIP提供の提携",
+        "en": "Oracle: OCI for Foundry / AIP / Oracle: Foundry / AIP partnership"
+      }
+    },
+    "Airbus": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Airbus：Skywise開発・運用の協業",
+        "en": "Airbus: Skywise platform partnership"
+      }
+    },
+    "GE": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GE Aerospace：AIP利用顧客",
+        "en": "GE Aerospace: AIP customer"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：Sovereign AI OS共同展開",
+        "en": "NVIDIA: Sovereign AI OS collaboration"
       }
     }
   },
@@ -7498,6 +8587,27 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "Apple Arcade｜モバイルゲーム定額利用",
         "en": "Apple Arcade | mobile-game subscription"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Prime Videoの映画・番組配信で競合。公表サービスの編集比較",
+        "en": "Prime Video streaming films and TV; editorial service comparison"
+      }
+    },
+    "DIS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Disney+の映画・番組配信で競合。公表サービスの編集比較",
+        "en": "Disney+ streaming films and TV; editorial service comparison"
+      }
+    },
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "YouTubeと視聴時間・動画広告を争う。公表事業の編集比較",
+        "en": "YouTube viewing time and video ads; editorial business comparison"
       }
     }
   },
@@ -9479,6 +10589,62 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "Toyota：JASM少数出資の参加発表",
         "en": "Toyota: announced JASM minority participation"
       }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "半導体の受託製造",
+        "en": "Semiconductor foundry"
+      }
+    },
+    "INTC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "先端プロセスの受託製造で競合。IntelがTSMCを明記",
+        "en": "Leading-edge foundry services; Intel explicitly names TSMC"
+      }
+    },
+    "Samsung": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "先端半導体の受託製造で競合。公表事業の比較",
+        "en": "Leading-edge foundry services; comparison of disclosed businesses"
+      }
+    },
+    "MRVL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Marvell：先端ノードのウエハー製造を受託",
+        "en": "Marvell: Advanced-node wafer manufacturing customer"
+      }
+    },
+    "CRDO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Credo：FY2026のウエハー製造を受託",
+        "en": "Credo: FY2026 wafer manufacturing customer"
+      }
+    },
+    "ALAB": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Astera Labs：ICのウエハー製造を受託",
+        "en": "Astera Labs: IC wafer manufacturing customer"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "半導体の製造を受託",
+        "en": "Chip manufacturing customer"
+      }
+    },
+    "SKHY": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SK hynix：HBM4・CoWoS共同開発",
+        "en": "SK hynix: HBM4/CoWoS co-development"
+      }
     }
   },
   "JD": {
@@ -9538,6 +10704,76 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "LSEG：VMware基盤・サービス顧客",
         "en": "LSEG: VMware platform / services customer"
+      }
+    },
+    "AVGO": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "半導体・VMware基盤",
+        "en": "Semiconductors & VMware"
+      }
+    },
+    "NXPI": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "半導体の一部製品群で競合（NXPの開示）",
+        "en": "Selected semiconductor product lines; disclosed by NXP"
+      }
+    },
+    "S": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "端末の攻撃検知・防御で競合（SentinelOneの開示）",
+        "en": "Endpoint threat detection and protection; disclosed by SentinelOne"
+      }
+    },
+    "MRVL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "両社公式製品に基づく編集比較：AI・クラウド向けEthernetスイッチ半導体で比較。Broadcom自身の競合名開示ではなく、全製品の同等性も示さない。",
+        "en": "Editorial comparison of official products: AI/cloud Ethernet switch-silicon comparison. This is not Broadcom naming the competitor or an equivalence claim across either portfolio."
+      }
+    },
+    "NTNX": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "両社公式製品に基づく編集比較：AHVとVMware vSphere/VCFの仮想化を比較。Broadcom自身の競合名開示ではなく、全製品の同等性も示さない。",
+        "en": "Editorial comparison of official products: AHV versus VMware vSphere/VCF virtualization. This is not Broadcom naming the competitor or an equivalence claim across either portfolio."
+      }
+    },
+    "AMKR": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Amkor：半導体の組立・試験を委託",
+        "en": "Amkor: Semiconductor assembly and testing"
+      }
+    },
+    "ASX": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "ASE Technology Holding：ASE・Siliconwareを通じた組立・試験",
+        "en": "ASE Technology Holding: Assembly/testing through ASE and Siliconware"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "半導体の製造委託先",
+        "en": "Chip manufacturing supplier"
+      }
+    },
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Applied Materials：EPIC先端包装研究",
+        "en": "Applied Materials: EPIC advanced-packaging R&D"
+      }
+    },
+    "ANET": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Arista：ラック規模AIネットワーク協業",
+        "en": "Arista: rack-scale AI networking"
       }
     }
   },
@@ -9649,6 +10885,622 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "en": "Roku: platform support / conditional acquisition"
       }
     }
+  },
+  "SPCX": {
+    "SPCX": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "SpaceX：打ち上げ・Starlink・AI",
+        "en": "SpaceX: launch / Starlink / AI"
+      }
+    },
+    "SES": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "SES：打ち上げ顧客",
+        "en": "SES: launch customer"
+      }
+    },
+    "UAL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "United：Starlink機内接続",
+        "en": "United: Starlink in-flight"
+      }
+    },
+    "CCL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Carnival：Starlink船上接続",
+        "en": "Carnival: Starlink maritime"
+      }
+    },
+    "Maersk": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Maersk：Starlink企業接続",
+        "en": "Maersk: Starlink enterprise"
+      }
+    },
+    "AAL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "American：Starlink機内接続",
+        "en": "American: Starlink in-flight"
+      }
+    },
+    "LUV": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Southwest：Starlink機内接続",
+        "en": "Southwest: Starlink in-flight"
+      }
+    },
+    "Lufthansa Group": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Lufthansa：Starlink機内接続",
+        "en": "Lufthansa: Starlink in-flight"
+      }
+    },
+    "ALK": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Alaska/Hawaiian：Starlink機内接続",
+        "en": "Alaska/Hawaiian: Starlink in-flight"
+      }
+    },
+    "RCL": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Royal Caribbean Group：Starlink船上接続",
+        "en": "Royal Caribbean Group: Starlink maritime"
+      }
+    },
+    "NCLH": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Norwegian Cruise Line Holdings：Starlink船上接続",
+        "en": "Norwegian Cruise Line Holdings: Starlink maritime"
+      }
+    },
+    "TMUS": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "T-Mobile：衛星携帯接続提携",
+        "en": "T-Mobile US: satellite-mobile partner"
+      }
+    },
+    "Singtel": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Singtel傘下Optus：衛星携帯接続提携",
+        "en": "Singtel / Optus: satellite-mobile partner"
+      }
+    },
+    "Telstra": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Telstra：衛星携帯接続提携",
+        "en": "Telstra Group: satellite-mobile partner"
+      }
+    },
+    "RCI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Rogers：衛星携帯接続提携",
+        "en": "Rogers Communications: satellite-mobile partner"
+      }
+    },
+    "KDDI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "KDDI：衛星携帯接続提携",
+        "en": "KDDI: satellite-mobile partner"
+      }
+    },
+    "KYIV": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Kyivstar Group傘下JSC Kyivstar：衛星携帯接続提携",
+        "en": "Kyivstar Group: satellite-mobile partner"
+      }
+    },
+    "TSLA": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Tesla：Megapack供給・開発協力・株主・広告顧客",
+        "en": "Tesla: Megapack supplier / development partner / shareholder / ad customer"
+      }
+    },
+    "INTC": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Intel：Terafab開発参加",
+        "en": "Intel: Terafab development"
+      }
+    },
+    "Anthropic": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Anthropic：計算基盤顧客・AIモデル競合",
+        "en": "Anthropic: compute customer / AI-model competitor"
+      }
+    },
+    "Eutelsat": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Eutelsat / OneWeb：打ち上げ顧客・衛星通信競合",
+        "en": "Eutelsat / OneWeb: launch customer / connectivity competitor"
+      }
+    },
+    "GOOG": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Alphabet：SpaceX株主・AIモデル競合",
+        "en": "Alphabet: SpaceX shareholder / AI-model competitor"
+      }
+    },
+    "SEI": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Solaris：データセンター電力の合弁",
+        "en": "Solaris: data-center power JV"
+      }
+    },
+    "NVDA": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "NVIDIA・COLOSSUSのGPU採用",
+        "en": "NVIDIA / COLOSSUS GPU adoption"
+      }
+    },
+    "DE": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Deere / John Deere：Starlink陸上利用",
+        "en": "Deere / John Deere: Starlink land mobility"
+      }
+    },
+    "International Airlines Group": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "IAG / British Airways：Starlink機内接続",
+        "en": "IAG / British Airways: Starlink in-flight connectivity"
+      }
+    },
+    "Infratil": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Infratil傘下One NZ：衛星携帯接続提携",
+        "en": "Infratil's One NZ: satellite-mobile partner"
+      }
+    },
+    "Entel Chile": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Entel Chile：Starlink Mobile提携",
+        "en": "Entel Chile: Starlink Mobile partner"
+      }
+    },
+    "LBTYA": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Liberty Global：VMO2共同保有を通じた提携",
+        "en": "Liberty Global: via jointly owned VMO2"
+      }
+    },
+    "Telefónica": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Telefónica：VMO2共同保有を通じた提携",
+        "en": "Telefónica: via jointly owned VMO2"
+      }
+    },
+    "OpenAI": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "OpenAI：Cursorモデル供給・終了予定・AI競合",
+        "en": "OpenAI: Cursor model supply / wind-down / AI competitor"
+      }
+    },
+    "RKLB": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Rocket Lab：小型ロケット打ち上げ・中型へ拡張",
+        "en": "Rocket Lab: small-lift launch / medium-lift expansion"
+      }
+    },
+    "FLY": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "Firefly Aerospace：ロケット打ち上げサービス",
+        "en": "Firefly Aerospace: launch services"
+      }
+    },
+    "AMZN": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Amazon Leo：衛星ブロードバンド計画・提供範囲を比較",
+        "en": "Amazon Leo: satellite broadband; stage and coverage differ"
+      }
+    },
+    "VSAT": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "Viasat：衛星ブロードバンド接続",
+        "en": "Viasat: satellite broadband connectivity"
+      }
+    },
+    "ASTS": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "AST SpaceMobile：衛星と携帯端末の直接接続",
+        "en": "AST SpaceMobile: direct satellite-to-phone connectivity"
+      }
+    },
+    "GSAT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Globalstar：衛星と携帯端末の直接接続",
+        "en": "Globalstar: direct satellite-to-phone connectivity"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Meta：AIモデル・Threads等のSNS",
+        "en": "Meta: AI models and social networks including Threads"
+      }
+    },
+    "RDDT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Reddit：Xと比較するSNS・広告プラットフォーム",
+        "en": "Reddit: social / advertising platform compared with X"
+      }
+    }
+  },
+  "BE": {
+    "BE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "定置用燃料電池",
+        "en": "Stationary fuel cells"
+      }
+    },
+    "CAT": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "ガスエンジンの常用・連続発電。公式製品の比較",
+        "en": "Gas-engine prime/continuous power; editorial product comparison"
+      }
+    },
+    "CMI": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "データセンター向けガス発電。公式製品の比較",
+        "en": "Data-center gas generation; editorial product comparison"
+      }
+    },
+    "GEV": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "オンサイト用ガスタービン。公式製品の比較",
+        "en": "Onsite gas turbines; editorial product comparison"
+      }
+    },
+    "FCEL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "炭酸塩型の分散電源用燃料電池。方式は異なる",
+        "en": "Carbonate distributed-generation fuel cells; different architecture"
+      }
+    },
+    "BAM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Brookfield Asset Management：Bloom EnergyとBrookfield Asset Managementは2025年10月、AIインフラ向け燃料電池導入で最大50億ドルの協力枠組みを発表した",
+        "en": "Brookfield Asset Management: Bloom Energy and Brookfield Asset Management announced an up-to-$5 billion fuel-cell deployment partnership for AI infrastructure in October2025"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "OCI向け燃料電池設備の導入・拡張",
+        "en": "Fuel-cell deployments and expansion for OCI"
+      }
+    }
+  },
+  "CEG": {
+    "CEG": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電・電力販売",
+        "en": "Power generation & sales"
+      }
+    },
+    "VST": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電・電力販売",
+        "en": "Power generation & sales"
+      }
+    },
+    "NRG": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電・電力販売",
+        "en": "Power generation & sales"
+      }
+    },
+    "TLN": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電・電力販売",
+        "en": "Power generation & sales"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "将来の原子力電力契約",
+        "en": "Future nuclear-power agreement"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "将来の原子力電力契約",
+        "en": "Future nuclear-power agreement"
+      }
+    },
+    "WMT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "将来176MWの電力契約",
+        "en": "Future 176MW power agreement"
+      }
+    }
+  },
+  "COHR": {
+    "COHR": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光通信・レーザー・材料",
+        "en": "Optics, lasers & materials"
+      }
+    },
+    "LITE": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "光通信部品・トランシーバーと産業用レーザー。両社の公表製品から比較",
+        "en": "Optical components, transceivers and industrial lasers; comparison of both disclosed product portfolios"
+      }
+    },
+    "AAOI": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "データセンター向け光トランシーバーなどで競合。AAOIがCoherentを実名で列挙",
+        "en": "Data-center optical transceivers and related products; AAOI explicitly names Coherent"
+      }
+    },
+    "IPGP": {
+      "layer": 4,
+      "businessLabel": {
+        "ja": "材料加工向けレーザー。IPGの年次報告がCoherentを競合に列挙",
+        "en": "Materials-processing lasers; IPG explicitly names Coherent as a competitor"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "NVIDIA：複数年の光製品購入コミットメント / NVIDIA：2026年3月に20億ドルの普通株出資を実行",
+        "en": "NVIDIA: Multi-year optical-product purchase commitment / NVIDIA: Completed $2bn common-equity investment in March2026"
+      }
+    },
+    "Denso": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Denso：SiC子会社に12.5%を保有",
+        "en": "Denso: Owns 12.5% of SiC subsidiary"
+      }
+    },
+    "Mitsubishi Electric": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "Mitsubishi Electric：SiC子会社に12.5%を保有",
+        "en": "Mitsubishi Electric: Owns 12.5% of SiC subsidiary"
+      }
+    }
+  },
+  "SKHY": {
+    "SKHY": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "Samsung": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "SNDK": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSDのみ",
+        "en": "NAND / SSDs only"
+      }
+    },
+    "Kioxia": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSDのみ",
+        "en": "NAND / SSDs only"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "DRAM・HBM／NAND・SSD",
+        "en": "DRAM/HBM and NAND/SSDs"
+      }
+    },
+    "NVDA": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "メモリー供給・共同開発・AI活用",
+        "en": "Memory supply, co-development & AI"
+      }
+    },
+    "AMD": {
+      "layer": 3,
+      "businessLabel": {
+        "ja": "2019年EPYC7002検証協業",
+        "en": "2019 EPYC7002 validation"
+      }
+    },
+    "ASML": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "High-NA EUV製造装置",
+        "en": "High-NA EUV equipment"
+      }
+    },
+    "TSM": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "HBM4ベースダイ・包装MOU",
+        "en": "HBM4 base-die / packaging MOU"
+      }
+    },
+    "SK square": {
+      "layer": 1,
+      "businessLabel": {
+        "ja": "上場大株主（2026年3月時点）",
+        "en": "Listed shareholder, March2026"
+      }
+    },
+    "AMAT": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "Applied Materials：EPICメモリー共同研究",
+        "en": "Applied Materials: EPIC memory R&D"
+      }
+    }
+  },
+  "SNDK": {
+    "SNDK": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSD",
+        "en": "NAND & SSDs"
+      }
+    },
+    "Samsung": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSD",
+        "en": "NAND / SSDs"
+      }
+    },
+    "SKHY": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSD",
+        "en": "NAND / SSDs"
+      }
+    },
+    "MU": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSD",
+        "en": "NAND / SSDs"
+      }
+    },
+    "Kioxia": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND競合・製造合弁・ウェハ供給",
+        "en": "NAND rival, manufacturing JV & wafers"
+      }
+    },
+    "SK hynix": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSD",
+        "en": "NAND / SSDs"
+      }
+    },
+    "Samsung Electronics": {
+      "layer": 2,
+      "businessLabel": {
+        "ja": "NAND・SSD",
+        "en": "NAND / SSDs"
+      }
+    },
+    "JCET Group": {
+      "layer": 0,
+      "businessLabel": {
+        "ja": "合弁SDSSによる組立・試験",
+        "en": "SDSS venture assembly / test"
+      }
+    }
+  },
+  "VST": {
+    "VST": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "発電・電力販売",
+        "en": "Power generation & sales"
+      }
+    },
+    "CEG": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "卸・小売電力。Calpine取得完了後の企業範囲で比較",
+        "en": "Wholesale/retail power; includes completed Calpine acquisition"
+      }
+    },
+    "NRG": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "卸電力とReliant・Direct Energy等の小売。地域別の比較",
+        "en": "Wholesale power and Reliant/Direct Energy retail; regional comparison"
+      }
+    },
+    "TLN": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "PJMの発電・卸電力。小売全般の競合とはしない",
+        "en": "PJM generation/wholesale power; not blanket retail competition"
+      }
+    },
+    "META": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "原子力電力の20年契約。購入開始は2026年末予定",
+        "en": "20-year nuclear PPAs; purchases scheduled to begin in late 2026"
+      }
+    }
   }
 };
 
@@ -9704,6 +11556,14 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
     if (edge.to === root) included.add(edge.from);
   }
   const context = reviewedNvidia as CompanyNetwork;
+  if (["AAOI", "AAPL", "ADBE", "ALAB", "AMAT", "AMD", "AMZN", "ANET", "APH", "ARM", "ASML", "AVGO", "BE", "CEG", "COHR", "CRDO", "CRM", "CRWD", "CRWV", "DELL", "GEV", "GOOG", "IBM", "INTC", "IONQ", "IREN", "KLAC", "LITE", "LRCX", "META", "MRVL", "MSFT", "MU", "NFLX", "NOW", "ORCL", "PANW", "PLTR", "QCOM", "SKHY", "SNDK", "SNOW", "SOFI", "STX", "TSLA", "TSM", "VRT", "VST"].includes(root)) {
+    const nodes = productScopedNodes(root, catalog.nodes.filter(n => included.has(n.id) && n.kind === "company"));
+    const ids = new Set(nodes.map(n => n.id));
+    return {root, nodes, edges: ownEdges.filter(e => ids.has(e.from) && ids.has(e.to)), layerLabels: sectorLayerLabels(root)};
+  }
+  if (root === "SPCX") {
+    return { root, nodes: productScopedNodes(root, catalog.nodes.filter(n => included.has(n.id))), edges: ownEdges, layerLabels: sectorLayerLabels(root) };
+  }
   if (root === "NBIS") {
     const suppliers = new Set(introduction.maps.relationships.filter(e => e.kind === "company" && e.role === "supplier").map(e => e.ticker ?? e.name));
     const extra = context.edges.filter(e => e.kind === "supply" && suppliers.has(e.to) && !included.has(e.from));
