@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { stripTypeScriptTypes } from "node:module";
 
 const source = (await readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"))
-  .replaceAll("@/lib/research/company-network.server", new URL("../lib/research/company-network.server.ts", import.meta.url).href)
+  .replaceAll("@/lib/research/chain-network.server", new URL("../lib/research/chain-network.server.ts", import.meta.url).href)
   .replaceAll("@/lib/research/company-introductions", new URL("../lib/research/company-introductions.ts", import.meta.url).href)
   .replaceAll("@/lib/research/annual-filing-briefs", new URL("../lib/research/annual-filing-briefs.ts", import.meta.url).href)
   .replaceAll("@/lib/research/stock-directory", new URL("../lib/research/stock-directory.ts", import.meta.url).href);

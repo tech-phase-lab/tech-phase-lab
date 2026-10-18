@@ -1,0 +1,3 @@
+// Synthetic UI fixture: not company evidence and never consumed by the application.
+export const expansionGraph={root:'BE',nodes:['BE','NBIS','ORCL','PLTR','NVDA','AMZN','MSFT'].map(id=>({id,ticker:id,name:id,kind:'company',layer:3})),edges:[['BE','NBIS'],['BE','ORCL'],['NBIS','PLTR'],['NBIS','NVDA'],['ORCL','AMZN'],['AMZN','MSFT']].map(([from,to],i)=>({id:`fixture-${i}`,from,to,kind:'partner',evidence:[{about:from,label:{ja:'検査用の共同開発契約',en:'Synthetic test relationship'},reviewedOn:'2026-01-01',evidence_quote:'Synthetic UI fixture only.',sources:[{label:'Fixture',url:'https://example.com/fixture'}]}]}))};
+export const sparseGraph={...expansionGraph,nodes:expansionGraph.nodes.slice(0,3),edges:expansionGraph.edges.slice(0,2)};

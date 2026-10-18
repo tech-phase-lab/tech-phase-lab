@@ -1,4 +1,4 @@
-import { companyNetworkFor } from "@/lib/research/company-network.server";
+import { companyNetworkFor } from "@/lib/research/chain-network.server";
 import { createHash } from "node:crypto";
 import { companyIntroductionFor } from "@/lib/research/company-introductions";
 import { approvedAnnualFilingBrief, validateAnnualFilingBrief } from "@/lib/research/annual-filing-briefs";

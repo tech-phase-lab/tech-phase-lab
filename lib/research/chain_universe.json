@@ -1,0 +1,982 @@
+{
+  "version": 1,
+  "frozenOn": "2026-10-18",
+  "policy": "Frozen snapshot: 50 roster companies plus 60 frequent counterparties. No runtime additions. Future index expansion requires an explicit universe revision.",
+  "selection": "Counterparty frequency across the existing 50 graphs, canonicalized; BAM reserved explicitly.",
+  "limits": {
+    "direct": 12,
+    "competition": 4,
+    "two": 20
+  },
+  "companies": [
+    {
+      "id": "AAOI",
+      "name": "Applied Optoelectronics",
+      "aliases": [
+        "Applied Optoelectronics",
+        "AAOI"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "AAPL",
+      "name": "Apple",
+      "aliases": [
+        "Apple",
+        "AAPL"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "ADBE",
+      "name": "Adobe",
+      "aliases": [
+        "Adobe",
+        "ADBE"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "ALAB",
+      "name": "Astera Labs",
+      "aliases": [
+        "Astera Labs",
+        "ALAB"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "AMAT",
+      "name": "Applied Materials",
+      "aliases": [
+        "Applied Materials",
+        "AMAT"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "AMD",
+      "name": "AMD",
+      "aliases": [
+        "AMD"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "AMZN",
+      "name": "Amazon",
+      "aliases": [
+        "Amazon",
+        "AMZN"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "ANET",
+      "name": "Arista Networks",
+      "aliases": [
+        "Arista Networks",
+        "ANET"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "APH",
+      "name": "Amphenol",
+      "aliases": [
+        "Amphenol",
+        "APH"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "ARM",
+      "name": "Arm",
+      "aliases": [
+        "Arm",
+        "ARM"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "ASML",
+      "name": "ASML",
+      "aliases": [
+        "ASML"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "AVGO",
+      "name": "Broadcom",
+      "aliases": [
+        "Broadcom",
+        "AVGO"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "BE",
+      "name": "Bloom Energy",
+      "aliases": [
+        "Bloom Energy",
+        "BE",
+        "Bloom"
+      ],
+      "group": "root",
+      "aliasEvidence": {
+        "Bloom": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2.8-gw-to-accelerate-ai-infrastructure-build-out/"
+      }
+    },
+    {
+      "id": "CEG",
+      "name": "Constellation Energy",
+      "aliases": [
+        "Constellation Energy",
+        "CEG"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "COHR",
+      "name": "Coherent",
+      "aliases": [
+        "Coherent",
+        "COHR"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "CRDO",
+      "name": "Credo",
+      "aliases": [
+        "Credo",
+        "CRDO"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "CRM",
+      "name": "Salesforce",
+      "aliases": [
+        "Salesforce",
+        "CRM"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "CRWD",
+      "name": "CrowdStrike",
+      "aliases": [
+        "CrowdStrike",
+        "CRWD"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "CRWV",
+      "name": "CoreWeave",
+      "aliases": [
+        "CoreWeave",
+        "CRWV"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "DELL",
+      "name": "Dell",
+      "aliases": [
+        "Dell Technologies",
+        "DELL",
+        "Dell"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "GEV",
+      "name": "GE Vernova",
+      "aliases": [
+        "GE Vernova",
+        "GEV"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "GOOG",
+      "name": "Google",
+      "aliases": [
+        "Google",
+        "GOOG"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "IBM",
+      "name": "IBM",
+      "aliases": [
+        "IBM"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "INTC",
+      "name": "Intel",
+      "aliases": [
+        "Intel",
+        "INTC"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "IONQ",
+      "name": "IonQ",
+      "aliases": [
+        "IonQ",
+        "IONQ"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "IREN",
+      "name": "IREN",
+      "aliases": [
+        "IREN"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "KLAC",
+      "name": "KLA",
+      "aliases": [
+        "KLA",
+        "KLAC"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "LITE",
+      "name": "Lumentum",
+      "aliases": [
+        "Lumentum",
+        "LITE"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "LRCX",
+      "name": "Lam Research",
+      "aliases": [
+        "Lam Research",
+        "LRCX"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "META",
+      "name": "Meta",
+      "aliases": [
+        "Meta",
+        "META"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "MRVL",
+      "name": "Marvell",
+      "aliases": [
+        "Marvell",
+        "MRVL"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "MSFT",
+      "name": "Microsoft",
+      "aliases": [
+        "Microsoft",
+        "MSFT"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "MU",
+      "name": "Micron",
+      "aliases": [
+        "Micron",
+        "MU"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "NBIS",
+      "name": "Nebius",
+      "aliases": [
+        "Nebius",
+        "NBIS"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "NFLX",
+      "name": "Netflix",
+      "aliases": [
+        "Netflix",
+        "NFLX"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "NOW",
+      "name": "ServiceNow",
+      "aliases": [
+        "ServiceNow",
+        "NOW"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "NVDA",
+      "name": "NVIDIA",
+      "aliases": [
+        "NVIDIA",
+        "NVDA"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "ORCL",
+      "name": "Oracle",
+      "aliases": [
+        "Oracle",
+        "ORCL"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "PANW",
+      "name": "Palo Alto Networks",
+      "aliases": [
+        "Palo Alto Networks",
+        "PANW"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "PLTR",
+      "name": "Palantir",
+      "aliases": [
+        "Palantir",
+        "PLTR"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "QCOM",
+      "name": "Qualcomm",
+      "aliases": [
+        "Qualcomm",
+        "QCOM"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "SKHY",
+      "name": "SK hynix",
+      "aliases": [
+        "SK hynix",
+        "SKHY"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "SNDK",
+      "name": "Sandisk",
+      "aliases": [
+        "Sandisk",
+        "SNDK"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "SNOW",
+      "name": "Snowflake",
+      "aliases": [
+        "Snowflake",
+        "SNOW"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "SOFI",
+      "name": "SoFi Technologies",
+      "aliases": [
+        "SoFi Technologies",
+        "SOFI"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "STX",
+      "name": "Seagate Technology",
+      "aliases": [
+        "Seagate Technology",
+        "STX"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "TSLA",
+      "name": "Tesla",
+      "aliases": [
+        "Tesla",
+        "TSLA"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "TSM",
+      "name": "TSMC",
+      "aliases": [
+        "TSMC",
+        "TSM"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "VRT",
+      "name": "Vertiv",
+      "aliases": [
+        "Vertiv",
+        "VRT"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "VST",
+      "name": "Vistra",
+      "aliases": [
+        "Vistra",
+        "VST"
+      ],
+      "group": "root"
+    },
+    {
+      "id": "BAM",
+      "name": "Brookfield Asset Management",
+      "aliases": [
+        "Brookfield Asset Management",
+        "BAM",
+        "Brookfield"
+      ],
+      "group": "connector",
+      "aliasEvidence": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-announce-5-billion-strategic-ai-infrastructure-partnership/"
+    },
+    {
+      "id": "Samsung Electronics",
+      "name": "Samsung",
+      "aliases": [
+        "Samsung Electronics",
+        "Samsung"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "OpenAI",
+      "name": "OpenAI",
+      "aliases": [
+        "OpenAI"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Anthropic",
+      "name": "Anthropic",
+      "aliases": [
+        "Anthropic"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "SAP",
+      "name": "SAP",
+      "aliases": [
+        "SAP"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "AMKR",
+      "name": "Amkor Technology",
+      "aliases": [
+        "Amkor Technology",
+        "AMKR"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "ASX",
+      "name": "ASE Technology Holding",
+      "aliases": [
+        "ASE Technology Holding",
+        "ASX"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "CSCO",
+      "name": "Cisco",
+      "aliases": [
+        "Cisco",
+        "CSCO"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "GLW",
+      "name": "Corning",
+      "aliases": [
+        "Corning",
+        "GLW"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Kioxia",
+      "name": "Kioxia",
+      "aliases": [
+        "Kioxia"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "SoftBank Group",
+      "name": "SoftBank Group",
+      "aliases": [
+        "SoftBank",
+        "SoftBank Group"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Canon",
+      "name": "Canon",
+      "aliases": [
+        "Canon"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "GFS",
+      "name": "GlobalFoundries",
+      "aliases": [
+        "GlobalFoundries",
+        "GFS"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "HPE",
+      "name": "HPE",
+      "aliases": [
+        "Hewlett Packard Enterprise",
+        "HPE"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "S",
+      "name": "SentinelOne",
+      "aliases": [
+        "SentinelOne",
+        "S"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Schneider Electric",
+      "name": "Schneider Electric",
+      "aliases": [
+        "Schneider Electric"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "SNAP",
+      "name": "Snap",
+      "aliases": [
+        "Snap",
+        "SNAP"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "UMC",
+      "name": "United Microelectronics",
+      "aliases": [
+        "United Microelectronics",
+        "UMC"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "WMT",
+      "name": "Walmart",
+      "aliases": [
+        "Walmart",
+        "WMT"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "ASM International",
+      "name": "ASM International",
+      "aliases": [
+        "ASM International"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Carl Zeiss SMT",
+      "name": "Carl Zeiss SMT",
+      "aliases": [
+        "Carl Zeiss SMT"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "CAT",
+      "name": "Caterpillar",
+      "aliases": [
+        "Caterpillar",
+        "CAT"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Crusoe",
+      "name": "Crusoe",
+      "aliases": [
+        "Crusoe"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Databricks",
+      "name": "Databricks",
+      "aliases": [
+        "Databricks"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "ETN",
+      "name": "Eaton",
+      "aliases": [
+        "Eaton",
+        "ETN"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "FTNT",
+      "name": "Fortinet",
+      "aliases": [
+        "Fortinet",
+        "FTNT"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "GM",
+      "name": "General Motors",
+      "aliases": [
+        "General Motors",
+        "GM"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "GSAT",
+      "name": "Globalstar",
+      "aliases": [
+        "Globalstar",
+        "GSAT"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Hitachi",
+      "name": "Hitachi",
+      "aliases": [
+        "Hitachi"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "IPGP",
+      "name": "IPG Photonics",
+      "aliases": [
+        "IPG Photonics",
+        "IPGP"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Lambda",
+      "name": "Lambda",
+      "aliases": [
+        "Lambda"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Legrand",
+      "name": "Legrand",
+      "aliases": [
+        "Legrand"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "MA",
+      "name": "Mastercard",
+      "aliases": [
+        "Mastercard",
+        "MA"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "MCHP",
+      "name": "Microchip Technology",
+      "aliases": [
+        "Microchip Technology",
+        "MCHP"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Nikon",
+      "name": "Nikon",
+      "aliases": [
+        "Nikon"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "NRG",
+      "name": "NRG Energy",
+      "aliases": [
+        "NRG Energy",
+        "NRG"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "OKLO",
+      "name": "Oklo",
+      "aliases": [
+        "Oklo",
+        "OKLO"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "ONTO",
+      "name": "Onto Innovation",
+      "aliases": [
+        "Onto Innovation",
+        "ONTO"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "PEGA",
+      "name": "Pegasystems",
+      "aliases": [
+        "Pegasystems",
+        "PEGA"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "SMCI",
+      "name": "Supermicro",
+      "aliases": [
+        "Supermicro",
+        "SMCI"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "SONY",
+      "name": "Sony Group",
+      "aliases": [
+        "Sony Group",
+        "SONY"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "SPCX",
+      "name": "SpaceX",
+      "aliases": [
+        "SpaceX",
+        "SPCX"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "SPOT",
+      "name": "Spotify Technology",
+      "aliases": [
+        "Spotify Technology",
+        "SPOT"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "T",
+      "name": "AT&T",
+      "aliases": [
+        "AT&T",
+        "T"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "TLN",
+      "name": "Talen Energy",
+      "aliases": [
+        "Talen Energy",
+        "TLN"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Tokyo Electron",
+      "name": "Tokyo Electron",
+      "aliases": [
+        "Tokyo Electron"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "ACN",
+      "name": "Accenture",
+      "aliases": [
+        "Accenture",
+        "ACN"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Advantest",
+      "name": "Advantest",
+      "aliases": [
+        "Advantest"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "AEP",
+      "name": "American Electric Power",
+      "aliases": [
+        "American Electric Power",
+        "AEP"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Airbus",
+      "name": "Airbus",
+      "aliases": [
+        "Airbus"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "All Ring Tech",
+      "name": "All Ring Tech",
+      "aliases": [
+        "All Ring Tech"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Altera",
+      "name": "Altera",
+      "aliases": [
+        "Altera"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "APP",
+      "name": "AppLovin",
+      "aliases": [
+        "AppLovin",
+        "APP"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Asahi Kasei",
+      "name": "Asahi Kasei",
+      "aliases": [
+        "Asahi Kasei"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "BX",
+      "name": "Blackstone",
+      "aliases": [
+        "Blackstone",
+        "BX"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "BYD",
+      "name": "BYD",
+      "aliases": [
+        "BYD"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Canva",
+      "name": "Canva",
+      "aliases": [
+        "Canva"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "Capgemini",
+      "name": "Capgemini",
+      "aliases": [
+        "Capgemini"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "CATL",
+      "name": "CATL",
+      "aliases": [
+        "CATL"
+      ],
+      "group": "connector"
+    },
+    {
+      "id": "CBRS",
+      "name": "Cerebras Systems",
+      "aliases": [
+        "Cerebras Systems",
+        "CBRS"
+      ],
+      "group": "connector"
+    }
+  ]
+}

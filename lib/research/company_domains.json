@@ -1,0 +1,497 @@
+{
+  "AAOI": {
+    "domains": [
+      {
+        "host": "ao-inc.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774926005875/aaoi20251231_10k.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "AAPL": {
+    "domains": [
+      {
+        "host": "apple.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "ADBE": {
+    "domains": [
+      {
+        "host": "adobe.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "ALAB": {
+    "domains": [
+      {
+        "host": "asteralabs.com",
+        "source_url": "https://ir.asteralabs.com/",
+        "method": "issuer IR page, issuer name verified"
+      }
+    ]
+  },
+  "AMAT": {
+    "domains": [
+      {
+        "host": "appliedmaterials.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "AMD": {
+    "domains": [
+      {
+        "host": "amd.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "ANET": {
+    "domains": [
+      {
+        "host": "arista.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "APH": {
+    "domains": [
+      {
+        "host": "amphenol.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "ARM": {
+    "domains": [
+      {
+        "host": "arm.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "ASML": {
+    "domains": [
+      {
+        "host": "asml.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "AVGO": {
+    "domains": [
+      {
+        "host": "broadcom.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "BE": {
+    "domains": [
+      {
+        "host": "bloomenergy.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "CEG": {
+    "domains": [
+      {
+        "host": "constellationenergy.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000104/ceg-20260630.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "COHR": {
+    "domains": [
+      {
+        "host": "coherent.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "CRDO": {
+    "domains": [
+      {
+        "host": "credosemi.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "CRM": {
+    "domains": [
+      {
+        "host": "salesforce.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "CRWD": {
+    "domains": [
+      {
+        "host": "crowdstrike.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "CRWV": {
+    "domains": [
+      {
+        "host": "coreweave.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "DELL": {
+    "domains": [
+      {
+        "host": "delltechnologies.com",
+        "source_url": "https://investors.delltechnologies.com/news-events/upcoming-events",
+        "method": "issuer IR page, issuer name verified"
+      }
+    ]
+  },
+  "GEV": {
+    "domains": [
+      {
+        "host": "gevernova.com",
+        "source_url": "https://www.gevernova.com/investors/events",
+        "method": "issuer IR page, issuer name verified"
+      }
+    ]
+  },
+  "GOOG": {
+    "domains": [
+      {
+        "host": "abc.xyz",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "IBM": {
+    "domains": [
+      {
+        "host": "ibm.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "INTC": {
+    "domains": [
+      {
+        "host": "intc.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "IONQ": {
+    "domains": [
+      {
+        "host": "ionq.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "IREN": {
+    "domains": [
+      {
+        "host": "iren.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "KLAC": {
+    "domains": [
+      {
+        "host": "kla.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "LITE": {
+    "domains": [
+      {
+        "host": "lumentum.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "LRCX": {
+    "domains": [
+      {
+        "host": "lamresearch.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "META": {
+    "domains": [
+      {
+        "host": "atmeta.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "MRVL": {
+    "domains": [
+      {
+        "host": "marvell.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "MSFT": {
+    "domains": [
+      {
+        "host": "microsoft.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "MU": {
+    "domains": [
+      {
+        "host": "micron.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "NBIS": {
+    "domains": [
+      {
+        "host": "nebius.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "NFLX": {
+    "domains": [
+      {
+        "host": "netflix.net",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "NOW": {
+    "domains": [
+      {
+        "host": "servicenow.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "NVDA": {
+    "domains": [
+      {
+        "host": "nvidia.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "ORCL": {
+    "domains": [
+      {
+        "host": "oracle.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "PANW": {
+    "domains": [
+      {
+        "host": "paloaltonetworks.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "PLTR": {
+    "domains": [
+      {
+        "host": "palantir.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "QCOM": {
+    "domains": [
+      {
+        "host": "qualcomm.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "SKHY": {
+    "domains": [
+      {
+        "host": "news.skhynix.com",
+        "source_url": "https://news.skhynix.com/en/category/ir/",
+        "method": "issuer IR page, issuer name verified"
+      }
+    ]
+  },
+  "SNDK": {
+    "domains": [
+      {
+        "host": "sandisk.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "SNOW": {
+    "domains": [
+      {
+        "host": "snowflake.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "SOFI": {
+    "domains": [
+      {
+        "host": "sofi.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1818874/000181887426000013/sofi-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "STX": {
+    "domains": [
+      {
+        "host": "seagate.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "TSLA": {
+    "domains": [
+      {
+        "host": "tesla.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "TSM": {
+    "domains": [
+      {
+        "host": "tsmc.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "VRT": {
+    "domains": [
+      {
+        "host": "vertiv.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "VST": {
+    "domains": [
+      {
+        "host": "vistracorp.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000006/vistra-20251231.htm",
+        "method": "issuer SEC filing contains corporate/IR domain"
+      }
+    ]
+  },
+  "AMZN": {
+    "domains": [
+      {
+        "host": "amazon.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+        "method": "issuer cached FY2025 Form 10-K explicitly identifies its investor relations website",
+        "proof": {
+          "quote": "Our investor relations website is amazon.com/ir",
+          "status": 200,
+          "verification": "existing SEC cache only; no new SEC request"
+        }
+      },
+      {
+        "host": "aboutamazon.com",
+        "source_url": "https://www.aboutamazon.com/about-us/amazon-reports",
+        "method": "issuer corporate reports page links its Investor Relations site and Press Center on the same official domain",
+        "proof": {
+          "title": "Amazon reports: Sustainability, employees, community, and business",
+          "quote": "Our Investor Relations site provides our annual reports, quarterly earnings, shareholder letters, corporate governance documentation, and more.",
+          "links": [
+            {
+              "text": "Investor Relations site",
+              "url": "https://ir.aboutamazon.com/overview/default.aspx"
+            },
+            {
+              "text": "Press Center",
+              "url": "https://press.aboutamazon.com/"
+            }
+          ],
+          "status": 200
+        }
+      }
+    ]
+  },
+  "BAM": {
+    "domains": [
+      {
+        "host": "bam.brookfield.com",
+        "source_url": "https://bam.brookfield.com/reports-sec-filings/investor-document-center",
+        "method": "Brookfield Asset Management issuer IR document center identifies BAM in its title and links its own press releases",
+        "proof": {
+          "title": "Investor Document Center | Brookfield Asset Management (BAM)",
+          "links": [
+            {
+              "text": "Press Releases",
+              "url": "https://bam.brookfield.com/events-news/press-releases"
+            }
+          ],
+          "status": 200,
+          "scope": "BAM IR hostname only; Brookfield Corporation and other Brookfield affiliates are not implicitly approved"
+        }
+      }
+    ]
+  }
+}

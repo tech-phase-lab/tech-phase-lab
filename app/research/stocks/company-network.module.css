@@ -1,4 +1,17 @@
 .network { --section-inset: 16px; margin-top: 16px; border: 1px solid #2c3a4d; border-radius: 14px; background: #0e1824; color: #e9eef5; }
+.quotedMap .titleRow { flex-wrap: wrap; }
+.quotedMap .node { justify-content: flex-start; padding: 10px; overflow: visible; gap: 6px; }
+.quotedMap .node strong { white-space: normal; overflow: visible; overflow-wrap: anywhere; font-size: 16px; line-height: 20px; }
+.quotedMap .node > span { display: block; max-height: none; overflow: visible; white-space: normal; overflow-wrap: anywhere; line-height: 16px; font-size: 11px; }
+.quotedMap .node > .companyName { font-size: 12px; line-height: 17px; color: #e5ebf4; }
+.quotedMap .node[data-tone="selected"] { background: #273b53; border-color: #fff; }
+.quotedMap .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+.quotedMap .tags span { border: 1px solid #52718c; border-radius: 6px; padding: 3px 7px; font-size: 11px; }
+.quotedMap .connectionTitle, .quotedMap .selection { overflow-wrap: anywhere; }
+.quotedMap .selectedName { justify-content: flex-start; text-align: left; }
+.quotedMap blockquote { margin: 8px 0; white-space: normal; overflow-wrap: anywhere; }
+.quotedMap .allControl { padding: 12px 16px; }
+.quotedMap .allControl button { background: #263e55; color: #fff; border: 1px solid #57738c; border-radius: 7px; padding: 7px 12px; }
 .toolbar { padding: 14px 16px 12px; border-radius: 14px 14px 0 0; border-bottom: 1px solid #2b3b4d; background: #101c29; box-shadow: 0 8px 16px #06101b66; }
 .titleRow, .selection { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
 .network h3 { display: flex; align-items: baseline; gap: 8px; margin: 0; font-size: 16px; line-height: 1.5; }

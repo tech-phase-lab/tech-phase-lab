@@ -1,0 +1,200 @@
+[
+  {
+    "from": "NBIS",
+    "to": "PLTR",
+    "type": "提携・出資・技術対応",
+    "text_ja": "PLTRと主権AI基盤の提供",
+    "source_url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers",
+    "source_date": "2026-09-08",
+    "evidence_quote": "Palantir and Nebius partner to deliver a complete sovereign AI stack to Palantir customers"
+  },
+  {
+    "from": "ORCL",
+    "to": "AMZN",
+    "type": "提携・出資・技術対応",
+    "text_ja": "AMZNとDatabase@AWSへの移行促進",
+    "source_url": "https://www.oracle.com/apac/news/announcement/oracle-and-aws-deepen-strategic-collaboration-as-enterprise-adoption-of-oracle-ai-database-at-aws-accelerates-2026-08-13/",
+    "source_date": "2026-08-13",
+    "evidence_quote": "Oracle and Amazon Web Services (AWS) also signed an expanded, long-term strategic collaboration agreement focused on accelerating customer migration to Oracle AI Database@AWS."
+  },
+  {
+    "from": "NBIS",
+    "to": "NVDA",
+    "type": "提携・出資・技術対応",
+    "text_ja": "NVDAとロボット向けクラウド基盤構築",
+    "source_url": "https://nebius.com/newsroom/nebius-launches-physical-ai-living-lab-for-uk-and-european-robotics-startups-built-with-nvidia-technologies",
+    "source_date": "2026-06-09",
+    "evidence_quote": "The Lab builds on Nebius and NVIDIA’s collaboration to create a cloud platform for robotics and physical AI."
+  },
+  {
+    "from": "NVDA",
+    "to": "SKHY",
+    "type": "提携・出資・技術対応",
+    "text_ja": "SKHYと次世代メモリー技術開発で複数年提携",
+    "source_url": "https://nvidianews.nvidia.com/news/sk-hynix-ai-factory",
+    "source_date": "2026-06-07",
+    "evidence_quote": "NVIDIA and SK hynix today announced a multiyear technology partnership to advance next-generation memory for the global AI factory buildout and accelerate semiconductor design and manufacturing."
+  },
+  {
+    "from": "CRWV",
+    "to": "NVDA",
+    "type": "提携・出資・技術対応",
+    "text_ja": "NVDAがCRWVに20億ドル出資",
+    "source_url": "https://coreweave.com/news/nvidia-and-coreweave-strengthen-collaboration-to-accelerate-buildout-of-ai-factories",
+    "source_date": "2026-05-20",
+    "evidence_quote": "In addition, NVIDIA has invested $2 billion in CoreWeave Class A common stock at a purchase price of $87.20 per share."
+  },
+  {
+    "from": "NBIS",
+    "to": "BE",
+    "type": "提携・出資・技術対応",
+    "text_ja": "BEとAI基盤への電力供給",
+    "source_url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+    "source_date": "2026-05-20",
+    "evidence_quote": "Nebius and Bloom Energy partner to power AI infrastructure build-out"
+  },
+  {
+    "from": "NVDA",
+    "to": "IREN",
+    "type": "提携・出資・技術対応",
+    "text_ja": "IRENと最大5GWAI基盤の導入を計画",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-iren-announce-strategic-partnership-to-accelerate-deployment-of-up-to-5-gigawatts-of-ai-infrastructure",
+    "source_date": "2026-05-07",
+    "evidence_quote": "As part of the partnership: NVIDIA and IREN intend to support deployment of up to 5 gigawatts of NVIDIA DSX-aligned AI infrastructure across IREN’s global data center pipeline over time."
+  },
+  {
+    "from": "BE",
+    "to": "ORCL",
+    "type": "納入・採用先",
+    "text_ja": "ORCLが最大2.8GW燃料電池の調達を計画",
+    "source_url": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2-8-gw-to-accelerate-ai-infrastructure-build-out/",
+    "source_date": "2026-04-13",
+    "evidence_quote": "Under a master services agreement, Oracle intends to procure up to 2.8 gigawatts (GW) of Bloom’s fuel cell systems."
+  },
+  {
+    "from": "BE",
+    "to": "ORCL",
+    "type": "提携・出資・技術対応",
+    "text_ja": "ORCLと最大2.8GW導入でAI基盤拡張",
+    "source_url": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2-8-gw-to-accelerate-ai-infrastructure-build-out/",
+    "source_date": "2026-04-13",
+    "evidence_quote": "Bloom Energy and Oracle Expand Strategic Partnership to Deploy up to 2.8 GW to Accelerate AI Infrastructure Build-Out"
+  },
+  {
+    "from": "NVDA",
+    "to": "MRVL",
+    "type": "提携・出資・技術対応",
+    "text_ja": "NVDAがMRVLに20億ドル出資",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-ai-ecosystem-expands-as-marvell-joins-forces-through-nvlink-fusion",
+    "source_date": "2026-03-31",
+    "evidence_quote": "In addition, NVIDIA has invested $2 billion in Marvell."
+  },
+  {
+    "from": "NVDA",
+    "to": "NBIS",
+    "type": "納入・採用先",
+    "text_ja": "NBISとGPU健全性監視・ソフト推奨を導入",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud",
+    "source_date": "2026-03-11",
+    "evidence_quote": "Fleet management: Optimizing Nebius’s holistic fleet health by deploying NVIDIA’s latest GPU health monitoring and software recommendations."
+  },
+  {
+    "from": "NVDA",
+    "to": "LITE",
+    "type": "提携・出資・技術対応",
+    "text_ja": "NVDAがLITEに20億ドル出資",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology",
+    "source_date": "2026-03-02",
+    "evidence_quote": "In addition, NVIDIA is investing $2 billion in Lumentum to support R&D, future capacity and operations as the company builds out its U.S.-based manufacturing capabilities in a new fab."
+  },
+  {
+    "from": "NVDA",
+    "to": "COHR",
+    "type": "提携・出資・技術対応",
+    "text_ja": "NVDAがCOHRに20億ドル出資",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture",
+    "source_date": "2026-03-02",
+    "evidence_quote": "In addition, NVIDIA is investing $2 billion in Coherent to support research and development, future capacity and operations as Coherent builds out its U.S.-based manufacturing capabilities."
+  },
+  {
+    "from": "NVDA",
+    "to": "INTC",
+    "type": "提携・出資・技術対応",
+    "text_ja": "INTCとデータセンター・PC製品共同開発",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000228/q3fy26pr.htm",
+    "source_date": "2025-11-19",
+    "evidence_quote": "•Announced a collaboration with Intel to jointly develop multiple generations of custom data center and PC products with NVIDIA NVLink."
+  },
+  {
+    "from": "NVDA",
+    "to": "OpenAI",
+    "type": "提携・出資・技術対応",
+    "text_ja": "OpenAIと10GW以上システムの導入",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000228/q3fy26pr.htm",
+    "source_date": "2025-11-19",
+    "evidence_quote": "•Announced a strategic partnership with OpenAI to deploy at least 10 gigawatts of NVIDIA systems for OpenAI’s next-generation AI infrastructure."
+  },
+  {
+    "from": "BE",
+    "to": "BAM",
+    "type": "納入・採用先",
+    "text_ja": "BAMが最大50億ドルで燃料電池導入予定",
+    "source_url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-announce-5-billion-strategic-ai-infrastructure-partnership/",
+    "source_date": "2025-10-13",
+    "evidence_quote": "At the center of the new partnership, Brookfield will invest up to $5 billion to deploy Bloom’s advanced fuel cell technology."
+  },
+  {
+    "from": "BE",
+    "to": "BAM",
+    "type": "提携・出資・技術対応",
+    "text_ja": "BAMと50億ドル規模のAI基盤提携",
+    "source_url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-announce-5-billion-strategic-ai-infrastructure-partnership/",
+    "source_date": "2025-10-13",
+    "evidence_quote": "Brookfield and Bloom Energy Announce $5 Billion Strategic AI Infrastructure Partnership"
+  },
+  {
+    "from": "AMAT",
+    "to": "Kioxia",
+    "type": "提携・出資・技術対応",
+    "text_ja": "Kioxiaと次世代メモリー技術開発",
+    "source_url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-kioxia-partner-epic-center-advance-next",
+    "source_date": "2026-09-29",
+    "evidence_quote": "Applied Materials and KIOXIA Partner at the EPIC Center to Advance Next-Generation Memory Technology"
+  },
+  {
+    "from": "AVGO",
+    "to": "AMD",
+    "type": "提携・出資・技術対応",
+    "text_ja": "AMDとVMware製AI基盤を提供",
+    "source_url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-vmware-ai-factory-enabling-faster-time",
+    "source_date": "2026-08-31",
+    "evidence_quote": "Broadcom and AMD are collaborating to deliver a VMware AI Factory that pairs VCF with AMD Instinct GPUs and the open AMD ROCm software ecosystem."
+  },
+  {
+    "from": "AMD",
+    "to": "Anthropic",
+    "type": "提携・出資・技術対応",
+    "text_ja": "Anthropicと最大2GWGPUの導入",
+    "source_url": "https://newsroom.amd.com/news/amd-anthropic-strategic-partnership/",
+    "source_date": "2026-07-22",
+    "evidence_quote": "AMD and Anthropic Announce Strategic Partnership to Deploy up to 2 Gigawatts of AMD Instinct MI450 Series GPUs"
+  },
+  {
+    "from": "AMD",
+    "to": "OpenAI",
+    "type": "提携・出資・技術対応",
+    "text_ja": "OpenAIと6GWGPUの導入",
+    "source_url": "https://newsroom.amd.com/news/amd-and-openai-announce-strategic-partnership-to-d/",
+    "source_date": "2025-10-06",
+    "evidence_quote": "AMD and OpenAI Announce Partnership to Deploy 6 Gigawatts of AMD GPUs Share Terms Download image Please read through and acknowledge the Terms & Conditions before downloading."
+  },
+  {
+    "from": "IONQ",
+    "to": "Airbus",
+    "type": "提携・出資・技術対応",
+    "text_ja": "Airbusと貨物積載・配送向け量子アルゴリズム開発",
+    "source_url": "https://www.ionq.com/news/ionq-and-desy-research-highlights-quantums-potential-benefits-for-airport",
+    "source_date": "2025-03-14",
+    "evidence_quote": "In 2022, IonQ and Airbus partnered on a project to develop smarter algorithms based on quantum computers to achieve cost savings due to more efficient cargo loading and distribution."
+  }
+]

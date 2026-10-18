@@ -1,6 +1,6 @@
 import type { CompanyIntroduction, CompanyIntroductionField } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
-import { CompanyNetworkMap } from "./company-network";
+import { CompanyNetworkMap } from "./chain-map";
 import styles from "./company-introduction.module.css";
 
 const headings: [CompanyIntroductionField, string, string][] = [
