@@ -19,10 +19,10 @@ function Source({ source, lang }: { source: ChainSource; lang: "ja" | "en" }) {
 }
 
 /** A card is one company: a one-line text and its sources behind a tap. Several relations share one card. */
-function Card({ company, lang, flash }: { company: ChainCompany; lang: "ja" | "en"; flash: boolean }) {
+function Card({ company, lang, anchor = true }: { company: ChainCompany; lang: "ja" | "en"; anchor?: boolean }) {
   const ja = lang === "ja";
   const many = company.relations.length > 1;
-  return <div className={`${styles.it} ${flash ? styles.flash : ""}`} id={CARD + company.id}>
+  return <div className={styles.it} id={anchor ? CARD + company.id : undefined} data-tone={company.relations[0].type}>
     <div className={styles.itHead}><b>{company.ticker}</b><span>{company.name}</span>
       {chainKinds(company).map(kind => <span key={kind} className={styles.tg} data-tone={kind}>{chainText(kind, "tag", lang)}</span>)}</div>
     <p className={styles.ln}>{ja ? company.relations[0].text : company.relations[0].text_en}</p>
@@ -46,6 +46,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
   const root = data.root.ticker;
   const byId = useMemo(() => new Map(data.companies.map(company => [company.id, company])), [data]);
   const counts = chainCounts(data);
+  const picked = sel ? byId.get(sel) ?? null : null;
   const related = (id: string) => !!sel && (id === sel || data.far.some(link => (link.from === sel && link.to === id) || (link.to === sel && link.from === id)));
 
   const draw = useCallback(() => {
@@ -95,9 +96,8 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
   }, [draw]);
 
   function select(id: string | null) {
-    const next = id && sel === id ? null : id;
-    setSel(next);
-    if (next) document.getElementById(CARD + next)?.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    // The page does not move (owner, Oct 18): the tapped company's card opens just under the map instead.
+    setSel(id && sel === id ? null : id);
   }
 
   const rowChips = (row: number) => data.companies.filter(company => company.row === row).map(company => {
@@ -122,6 +122,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
           <span className={styles.cnt}>{ja ? `${counts.companies}社 · ${counts.relations}の関係` : `${counts.companies} companies · ${counts.relations} relationships`}</span></div>
         <div className={styles.legend}>{([...CHAIN_KINDS, "far"] as ChainTone[]).map(tone => <span key={tone} data-tone={tone}><i />{chainText(tone, "legend", lang)}</span>)}</div>
       </div>
+      <div className={styles.mapWrap}>
       <div className={`${styles.map} ${sel ? styles.hasSel : ""}`} ref={map}>
         <svg viewBox={`0 0 ${box.width} ${box.height}`} aria-hidden="true">
           {lines.map((line, index) => <path key={index} className={`${styles.p} ${line.on ? styles.lineOn : ""}`} data-tone={line.tone} d={line.d} />)}
@@ -132,13 +133,18 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
         </div></section>
         {[1, 2, 3].map(row => <section className={styles.row} key={row}><h4>{ja ? data.rows[row].ja : data.rows[row].en}</h4><div className={styles.chips}>{rowChips(row)}</div></section>)}
       </div>
+      {picked && <div className={styles.picked} role="status">
+        <button type="button" className={styles.close} onClick={() => setSel(null)} aria-label={t("閉じる", "Close")}>×</button>
+        <Card company={picked} lang={lang} anchor={false} />
+      </div>}
+      </div>
       <div className={styles.lists}>
         <h3>{t(`${root}との関係`, `Relationships with ${root}`)}</h3>
         {CHAIN_KINDS.map((kind: ChainKind) => {
           const members = chainGroup(data, kind);
           return members.length > 0 && <div className={styles.grp} data-tone={kind} key={kind}>
             <h4 className={styles.gh}><i />{chainText(kind, "group", lang)} <small>{ja ? `${members.length}社` : members.length}</small></h4>
-            <div className={styles.items}>{members.map(company => <Card key={company.id} company={company} lang={lang} flash={sel === company.id} />)}</div>
+            <div className={styles.items}>{members.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
           </div>;
         })}
         <div className={styles.grp} data-tone="far">
