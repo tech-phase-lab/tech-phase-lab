@@ -125,3 +125,31 @@
 
 .quotedMap .evidence { margin-top: 4px; }
 .quotedMap .inspector li { padding: 8px 10px; }
+
+/* Reference palette: the same relationship color on lines, boxes and details. */
+.quotedMap [data-tone="upstream"] { --tone: #7fb3d1; }
+.quotedMap [data-tone="downstream"] { --tone: #ddc38b; }
+.quotedMap [data-tone="partner"] { --tone: #90c9b8; }
+.quotedMap [data-tone="competition"] { --tone: #bba1d4; }
+.quotedMap [data-tone="indirect"] { --tone: #75869e; }
+.quotedMap [data-tone="selected"] { --tone: #ddc38b; }
+.quotedMap .node[aria-current="true"] { border-color: #ddc38b; background: #303333; color: #ddc38b; box-shadow: none; }
+.quotedMap .node[aria-current="true"] > .companyName { color: #a9bacd; }
+.quotedMap .node[data-tone="downstream"] { background: #192635; }
+.quotedMap .node[data-competitor="true"] { border: 2px dashed #bba1d4; background: #242333; }
+.quotedMap .lines path { stroke-width: 2; opacity: 1; stroke-linecap: round; }
+.quotedMap .lines path[data-direct="true"] { stroke-width: 2.8; }
+.quotedMap .lines path[data-tone="competition"] { stroke-dasharray: 4 5; }
+.quotedMap .lines circle { fill: var(--tone); }
+.quotedMap .legend span::before { border-top-width: 3px; }
+.quotedMap .competitors { border-top: 1px solid #2b3b4d; }
+.quotedMap .competitors > div { padding-bottom: 0; flex-wrap: wrap; }
+.quotedMap .competitor { border: 2px dashed #bba1d4; color: #ded1f3; }
+.relationshipGroup { margin-top: 18px; }
+.relationshipGroup h4 { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; color: var(--tone); font-size: 12px; line-height: 1.5; }
+.relationshipGroup h4::before { content: ""; width: 17px; border-top: 3px solid var(--tone); }
+.relationshipGroup[data-tone="competition"] h4::before { border-top-style: dashed; }
+.relationshipGroup > ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 600px) {
+  .relationshipGroup > ul { grid-template-columns: minmax(0, 1fr); }
+}

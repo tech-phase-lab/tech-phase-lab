@@ -22,7 +22,7 @@ const css=bundle.outputFiles.find(f=>f.path.endsWith('.css'))?.text??'',js=bundl
 const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,args:['--disable-extensions']});
 const page=await browser.newPage();await page.route('**/*',r=>r.abort());const results=[];
 const same=(a,b)=>JSON.stringify([...a].sort())===JSON.stringify([...b].sort());
-const expectedEdges=(graph,focus)=>focus.edges.map(e=>`${e.from}|${e.to}|${e.kind==='competition'?'competition':e.kind==='supply'?e.to===graph.root?'upstream':e.from===graph.root?'downstream':'indirect':'partner'}`);
+const expectedEdges=(graph,focus)=>focus.edges.map(e=>`${e.from}|${e.to}|${e.kind==='competition'?'competition':e.from!==graph.root&&e.to!==graph.root?'indirect':e.kind==='supply'?e.to===graph.root?'upstream':'downstream':'partner'}`);
 const textLayout=()=>{
  const failures=[],rects=[],walker=document.createTreeWalker(document.querySelector('section'),NodeFilter.SHOW_TEXT);
  while(walker.nextNode()){
@@ -43,7 +43,7 @@ const textLayout=()=>{
 try{
  for(const graph of graphs)for(const width of (process.argv.find(a=>a.startsWith('--widths='))?.slice(9).split(',').map(Number)??[360,1280])){
   await page.setViewportSize({width,height:1000});await page.setContent(`<html lang="ja"><meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;background:#0e1824;font-family:Arial,'Yu Gothic',sans-serif}${css}</style><div id="app"></div><script>${js.replaceAll('</script','<\\/script')}</script></html>`);
-  await page.evaluate(g=>window.showGraph(g),graph);await page.locator('section').waitFor();
+  await page.evaluate(g=>window.showGraph(g),graph);await page.locator('section[data-mode]').waitFor();
   for(const mode of ['direct','two','all']){
    if(mode==='all'&&!graph.edges.length){results.push({root:graph.root,width,mode,status:'skipped',reason:'No all-mode control for an empty graph',failures:[]});continue;}
    if(mode==='two')await page.getByRole('button',{name:'2段先まで',exact:true}).click();
@@ -59,6 +59,11 @@ try{
     const ids=[...document.querySelectorAll('[data-company-detail]')].map(n=>n.dataset.companyDetail);if(new Set(ids).size!==ids.length)fails.push({type:'duplicate_detail_card'});
     if(document.documentElement.scrollWidth>innerWidth)fails.push({type:'horizontal_overflow'});
     const paths=[...document.querySelectorAll('svg path')],root=cards[0]?.dataset.company;
+    const palette={upstream:'rgb(127, 179, 209)',downstream:'rgb(221, 195, 139)',partner:'rgb(144, 201, 184)',indirect:'rgb(117, 134, 158)',competition:'rgb(187, 161, 212)'};
+    for(const path of paths){const css=getComputedStyle(path);if(css.stroke!==palette[path.dataset.tone])fails.push({type:'incorrect_line_color',tone:path.dataset.tone});if(path.dataset.tone==='competition'&&css.strokeDasharray==='none')fails.push({type:'competition_line_not_dashed'});if(path.parentElement.querySelectorAll('circle').length!==2)fails.push({type:'missing_connection_dots'});}
+    for(const card of cards.filter(c=>c.dataset.competitor==='true')){const css=getComputedStyle(card);if(css.borderTopStyle!=='dashed'||css.borderTopColor!==palette.competition)fails.push({type:'competition_card_not_purple_dashed'});}
+    const selected=cards.find(c=>c.getAttribute('aria-current')==='true');if(selected&&(getComputedStyle(selected).borderTopColor!==palette.downstream||getComputedStyle(selected).borderTopStyle!=='solid'))fails.push({type:'selected_card_not_gold_solid'});
+    for(const detail of document.querySelectorAll('[data-company-detail]'))if(detail.closest('[data-relationship-group]')?.dataset.relationshipGroup!==detail.dataset.tone)fails.push({type:'incorrect_relationship_section'});
     const connected=kind=>new Set(paths.filter(p=>(p.dataset.tone==='competition')===kind).flatMap(p=>[p.dataset.from,p.dataset.to]).filter(id=>id&&id!==root)).size;
     return {cards:cards.length,companyIds:cards.map(c=>c.dataset.company),detailCards:ids.length,detailIds:ids,edges:paths.length,edgeKeys:paths.map(p=>`${p.dataset.from}|${p.dataset.to}|${p.dataset.tone}`),actualMode:document.querySelector('section').dataset.mode,directCompanies:connected(false),competitorCompanies:connected(true),failures:fails};
    });
@@ -72,7 +77,7 @@ try{
    if(mode==='direct'&&check.directCompanies>12)check.failures.push({type:'direct_company_cap'});
    if(mode==='direct'&&check.competitorCompanies>4)check.failures.push({type:'competition_cap'});
    if(mode==='two'&&check.cards>21)check.failures.push({type:'two_cap'});
-   if(fixture){const expected=graph===expansionGraph?{direct:3,two:6,all:7}[mode]:3;if(check.cards!==expected)check.failures.push({type:'fixture_node_count',expected,actual:check.cards});const edgeCount=await page.locator('svg path').count();const expectedEdges=graph===expansionGraph?{direct:2,two:5,all:6}[mode]:2;if(edgeCount!==expectedEdges)check.failures.push({type:'fixture_edge_count',expected:expectedEdges,actual:edgeCount});if(await page.locator('section').getAttribute('data-mode')!==mode)check.failures.push({type:'mode_state'});if(mode!=='direct'&&graph===sparseGraph&&!(await page.getByRole('status').textContent()).includes('この銘柄は、2段先の関係がまだありません'))check.failures.push({type:'missing_no_expansion_notice'});if(check.detailCards!==expected-1)check.failures.push({type:'fixture_detail_count'});}
+   if(fixture){const expected=graph===expansionGraph?{direct:3,two:6,all:7}[mode]:3;if(check.cards!==expected)check.failures.push({type:'fixture_node_count',expected,actual:check.cards});const edgeCount=await page.locator('svg path').count();const expectedEdges=graph===expansionGraph?{direct:2,two:5,all:6}[mode]:2;if(edgeCount!==expectedEdges)check.failures.push({type:'fixture_edge_count',expected:expectedEdges,actual:edgeCount});if(await page.locator('section[data-mode]').getAttribute('data-mode')!==mode)check.failures.push({type:'mode_state'});if(mode!=='direct'&&graph===sparseGraph&&!(await page.getByRole('status').textContent()).includes('この銘柄は、2段先の関係がまだありません'))check.failures.push({type:'missing_no_expansion_notice'});if(check.detailCards!==expected-1)check.failures.push({type:'fixture_detail_count'});}
    check.failures.push(...await page.evaluate(textLayout));
    await page.evaluate(()=>document.querySelectorAll('details').forEach(d=>{d.open=true}));
    check.failures.push(...(await page.evaluate(textLayout)).map(f=>({...f,type:`expanded_evidence_${f.type}`})));
