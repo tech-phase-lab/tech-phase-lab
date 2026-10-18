@@ -2326,6 +2326,10 @@
       {
         "label": "Nebius / NVIDIA · strategic partnership and announced investment, March 11, 2026",
         "url": "https://nebius.com/newsroom/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud"
+      },
+      {
+        "url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+        "label": "Nebius / Bloom — joint announcement, May 20, 2026"
       }
     ],
     "ja": {
@@ -2560,6 +2564,32 @@
           "sourceIndexes": [
             14
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Bloom Energy",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年5月：米国AI拠点向け燃料電池で提携。初期328MWは同年稼働予定として発表。",
+            "en": "May 2026: US AI-site fuel-cell partnership; initial 328MW targeted for operation that year."
+          },
+          "sourceIndexes": [
+            15
+          ],
+          "ticker": "BE"
+        },
+        {
+          "kind": "company",
+          "name": "Bloom Energy",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：米国AI拠点向け燃料電池で提携。初期328MWは同年稼働予定として発表。",
+            "en": "May 2026: US AI-site fuel-cell partnership; initial 328MW targeted for operation that year."
+          },
+          "sourceIndexes": [
+            15
+          ],
+          "ticker": "BE"
         }
       ]
     }
@@ -8766,23 +8796,39 @@
       {
         "label": "FuelCell Energy · Carbonate distributed-generation systems",
         "url": "https://www.fuelcellenergy.com/platform/fuel-cell-power-plants"
+      },
+      {
+        "url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+        "label": "Nebius / Bloom — joint announcement, May 20, 2026"
+      },
+      {
+        "url": "https://group.softbank/en/news/press/20130718",
+        "label": "SoftBank — Japan JV formation, July 2013"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828023004301/be-20221231.htm",
+        "label": "Bloom FY2022 10-K — Japan JV buyout, July 2021"
+      },
+      {
+        "url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-expand-ai-infrastructure-partnership/",
+        "label": "Bloom / Brookfield — expanded financing framework, June 30, 2026"
       }
     ],
     "ja": {
-      "business": "燃料電池を使い、データセンターや工場の敷地内で発電する設備を作る会社。",
+      "business": "燃料電池を使い、データセンターや工場の敷地内で発電する設備を作る会社。 同じ固体酸化物技術で、水から水素を作る電解装置も開発・提供する。",
       "revenue": "発電設備の販売・設置・保守と、一部契約での電力販売。",
       "strength": "必要な場所に段階的に増設できるモジュール型の発電設備。",
-      "risks": "導入資金や工事の遅れ、大口案件への依存、燃料価格や制度変更が採算に響く。",
+      "risks": "導入資金や工事の遅れ、大口案件への依存、燃料価格や制度変更が採算に響く。 特殊部材の供給先が限られ、一部は単一供給元に依存する。",
       "competition": "オンサイト電源の選択肢として、CaterpillarとCumminsのガスエンジン発電機、GE Vernovaのガスタービン、FuelCell Energyの炭酸塩型燃料電池を比較する。Bloomの開示する競合分野と各社の公式製品を照合した編集上の競合例で、燃料電池と燃焼式発電を同じ方式・性能とは扱わない。系統電力の購入も代替手段になる。",
-      "relationships": "Oracle向けの発電設備を展開し、Brookfieldとは案件の資金面で協力する。 Brookfield Asset Management：Bloom EnergyとBrookfield Asset Managementは2025年10月、AIインフラ向け燃料電池導入で最大50億ドルの協力枠組みを発表した。上限枠を全額実行済み投資やBloomによるBAM株の保有としない。"
+      "relationships": "Oracle・AEP・Nebiusへの燃料電池導入と提携、Brookfieldとの案件資金調達。ソフトバンクとの日本合弁は過去の関係。"
     },
     "en": {
-      "business": "Builds fuel-cell systems that generate power on site at data centers and factories.",
+      "business": "Builds fuel-cell systems that generate power on site at data centers and factories. Also develops and offers solid-oxide electrolyzers for hydrogen production.",
       "revenue": "Equipment sales, installation, maintenance and electricity sales under some contracts.",
       "strength": "Modular systems allow customers to add on-site power in stages.",
-      "risks": "Financing, installation delays, large-project concentration, fuel costs and policy changes affect returns.",
+      "risks": "Financing, installation delays, large-project concentration, fuel costs and policy changes affect returns. Specialized components can depend on limited or sole suppliers.",
       "competition": "Onsite-power alternatives include Caterpillar and Cummins gas-engine gensets, GE Vernova gas turbines and FuelCell Energy carbonate fuel cells. These are editorial comparisons of official products against Bloom’s disclosed competitive categories, not a claim that Bloom names each supplier or that the technologies perform identically. Grid purchases are another alternative.",
-      "relationships": "Deploys systems for Oracle and works with Brookfield on project financing. Brookfield Asset Management: Bloom Energy and Brookfield Asset Management announced an up-to-$5 billion fuel-cell deployment partnership for AI infrastructure in October2025. The ceiling is not fully invested capital and does not mean Bloom owns BAM shares."
+      "relationships": "Fuel-cell deployment partners include Oracle, AEP and Nebius; Brookfield provides project-financing collaboration. The SoftBank Japan JV is historical."
     },
     "maps": {
       "competition": [
@@ -8849,8 +8895,8 @@
           "name": "Oracle",
           "role": "customer",
           "label": {
-            "ja": "OCI向け燃料電池設備の導入・拡張",
-            "en": "Fuel-cell deployments and expansion for OCI"
+            "ja": "OCI向け燃料電池設備の導入・拡張 / 2026年4月13日：Oracle向け燃料電池の調達枠は最大2.8GW、うち1.2GWを契約し導入中。全量納入済みではない。",
+            "en": "Fuel-cell deployments and expansion for OCI / April 13, 2026: Oracle fuel-cell procurement framework up to 2.8GW; 1.2GW contracted and deploying, not fully delivered."
           },
           "sourceIndexes": [
             1
@@ -8862,13 +8908,92 @@
           "name": "Brookfield Asset Management",
           "role": "partner",
           "label": {
-            "ja": "発電設備案件の資金調達・開発で協力 / Bloom EnergyとBrookfield Asset Managementは2025年10月、AIインフラ向け燃料電池導入で最大50億ドルの協力枠組みを発表した。上限枠を全額実行済み投資やBloomによるBAM株の保有としない。",
-            "en": "Project financing and development partnership / Bloom Energy and Brookfield Asset Management announced an up-to-$5 billion fuel-cell deployment partnership for AI infrastructure in October2025. The ceiling is not fully invested capital and does not mean Bloom owns BAM shares."
+            "ja": "Brookfieldと電源案件の資金調達で協力。2026年6月に枠組みを最大250億ドルへ拡大。全額実行済みではない。",
+            "en": "Brookfield power-project financing framework expanded to up to $25bn in June 2026; not fully invested."
           },
           "sourceIndexes": [
-            2
+            2,
+            10
           ],
           "ticker": "BAM"
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月13日：Oracle向け燃料電池の調達枠は最大2.8GW、うち1.2GWを契約し導入中。全量納入済みではない。",
+            "en": "April 13, 2026: Oracle fuel-cell procurement framework up to 2.8GW; 1.2GW contracted and deploying, not fully delivered."
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "American Electric Power",
+          "ticker": "AEP",
+          "role": "customer",
+          "label": {
+            "ja": "2025年末開示：AEP向け燃料電池の調達枠は最大1GW、当初注文100MW。販売・資金面でも協力し、上限全量の納入完了とは扱わない。",
+            "en": "Year-end 2025 disclosure: AEP fuel-cell procurement up to 1GW, initially 100MW ordered; channel/financing collaboration, not full-ceiling delivery."
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "American Electric Power",
+          "ticker": "AEP",
+          "role": "partner",
+          "label": {
+            "ja": "2025年末開示：AEP向け燃料電池の調達枠は最大1GW、当初注文100MW。販売・資金面でも協力し、上限全量の納入完了とは扱わない。",
+            "en": "Year-end 2025 disclosure: AEP fuel-cell procurement up to 1GW, initially 100MW ordered; channel/financing collaboration, not full-ceiling delivery."
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Nebius",
+          "role": "customer",
+          "label": {
+            "ja": "2026年5月：米国AI拠点向け燃料電池で提携。初期328MWは同年稼働予定として発表。",
+            "en": "May 2026: US AI-site fuel-cell partnership; initial 328MW targeted for operation that year."
+          },
+          "sourceIndexes": [
+            7
+          ],
+          "ticker": "NBIS"
+        },
+        {
+          "kind": "company",
+          "name": "Nebius",
+          "role": "partner",
+          "label": {
+            "ja": "2026年5月：米国AI拠点向け燃料電池で提携。初期328MWは同年稼働予定として発表。",
+            "en": "May 2026: US AI-site fuel-cell partnership; initial 328MW targeted for operation that year."
+          },
+          "sourceIndexes": [
+            7
+          ],
+          "ticker": "NBIS"
+        },
+        {
+          "kind": "company",
+          "name": "SoftBank Group",
+          "role": "partner",
+          "label": {
+            "ja": "旧日本合弁：2013年設立。2021年7月にBloomが相手持分を取得し完全子会社化。",
+            "en": "Historical Japan JV, formed in 2013; Bloom acquired the partner stake in July 2021."
+          },
+          "sourceIndexes": [
+            8,
+            9
+          ]
         }
       ]
     }
@@ -10471,6 +10596,10 @@
       {
         "label": "Alphabet / Google Cloud / ORCL · official disclosure reviewed October 18, 2026",
         "url": "https://www.oracle.com/cloud/google/oracle-database-at-google-cloud/"
+      },
+      {
+        "label": "Bloom Energy / Oracle — master-services agreement and deployment stages, April 13, 2026",
+        "url": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2.8-gw-to-accelerate-ai-infrastructure-build-out/"
       }
     ],
     "ja": {
@@ -10479,7 +10608,7 @@
       "strength": "長年使われるデータベースと業務ソフトを持ち、同じ製品を顧客の社内設備とOracle Cloudの両方で動かせる。",
       "risks": "AIデータセンターへの先行投資が大きく、需要や建設が計画を下回ると採算が悪化する。クラウド移行と強い価格競争にも左右される。",
       "competition": "Oracle自身が挙げるAWS・Microsoft・Google・Salesforce・SAP・IBMを、公式製品と分野別に照合した。OCIの比較はクラウド基盤、Fusionの比較は顧客対応・ERP等の業務ソフト、IBM Db2の比較はデータベース。クラウド、業務アプリ、データベースの全機能が相互に同等という意味ではない。",
-      "relationships": "OpenAIとは2025年7月にStargateの追加4.5GWを開発する合意を公表した。計画容量を全て稼働済みとは扱わない。別に同年8月、Oracleのデータベース・業務アプリへのGPT-5組み込みを発表し、計算容量の提供とモデル利用の役割が併存する。 Palantir：PalantirとOCI上のFoundry・AIP提供で提携。構成・導入は顧客ごとに調整する Microsoft：MicrosoftとOracle AI Database@Azureを共同提供。Azure内のOCIでOracleデータベースを運用する Amazon / AWS：2026年8月13日：AWSとDatabase@AWSの長期協業契約を拡張。データベース提供・移行を支援する NVIDIA：Oracle自社の現行製品説明でOCIへのNVIDIA Blackwell・Hopper GPU採用を確認。規模上限を実際の購入台数としない AMD：Oracle自社の現行製品説明でOCIのAMD Instinct MI300X採用を確認。全OCI計算基盤がAMD製という意味ではない Alphabet / Google Cloud：Google CloudとOracle AI Database@Google Cloudを共同提供。Oracle管理のOCI基盤をGoogleのデータセンター内で運用する"
+      "relationships": "OpenAIとは2025年7月にStargateの追加4.5GWを開発する合意を公表した。計画容量を全て稼働済みとは扱わない。別に同年8月、Oracleのデータベース・業務アプリへのGPT-5組み込みを発表し、計算容量の提供とモデル利用の役割が併存する。 Palantir：PalantirとOCI上のFoundry・AIP提供で提携。構成・導入は顧客ごとに調整する Microsoft：MicrosoftとOracle AI Database@Azureを共同提供。Azure内のOCIでOracleデータベースを運用する Amazon / AWS：2026年8月13日：AWSとDatabase@AWSの長期協業契約を拡張。データベース提供・移行を支援する NVIDIA：Oracle自社の現行製品説明でOCIへのNVIDIA Blackwell・Hopper GPU採用を確認。規模上限を実際の購入台数としない AMD：Oracle自社の現行製品説明でOCIのAMD Instinct MI300X採用を確認。全OCI計算基盤がAMD製という意味ではない Alphabet / Google Cloud：Google CloudとOracle AI Database@Google Cloudを共同提供。Oracle管理のOCI基盤をGoogleのデータセンター内で運用する 2026年4月13日：Oracle向け燃料電池の調達枠は最大2.8GW、うち1.2GWを契約し導入中。全量納入済みではない。"
     },
     "en": {
       "business": "Provides databases and enterprise applications and operates Oracle Cloud Infrastructure for computing workloads.",
@@ -10487,7 +10616,7 @@
       "strength": "A large database and application installed base can run across customer premises and Oracle Cloud.",
       "risks": "Heavy AI data-center commitments can hurt returns if demand or construction lags, while cloud migration and price competition remain intense.",
       "competition": "Oracle names AWS, Microsoft, Google, Salesforce, SAP and IBM. Official-product matching separates OCI cloud infrastructure, Fusion customer-service/ERP applications, and IBM Db2 databases. These are scoped comparisons, not claims that clouds, business applications and databases are interchangeable across all features.",
-      "relationships": "OpenAI announced a July 2025 agreement with Oracle to develop an additional 4.5GW of Stargate capacity; development capacity is not all delivered capacity. Separately, Oracle announced GPT-5 integration in database and business applications in August 2025. Compute provision and model integration are different roles. Palantir: Partners with Palantir on Foundry and AIP SaaS on OCI, with customer-specific deployment and integration Microsoft: Partners with Microsoft on Oracle AI Database@Azure, operating Oracle databases on OCI colocated within Azure Amazon / AWS: August 13, 2026: expands its long-term AWS agreement for Oracle AI Database@AWS availability and migration NVIDIA: Oracle identifies NVIDIA Blackwell and Hopper GPUs in OCI offerings; supported cluster limits are not actual purchased quantities AMD: Oracle identifies AMD Instinct MI300X in OCI offerings, without implying all OCI compute uses AMD Alphabet / Google Cloud: Partners with Google Cloud on Oracle AI Database@Google Cloud, with Oracle-managed OCI infrastructure inside Google data centers"
+      "relationships": "OpenAI announced a July 2025 agreement with Oracle to develop an additional 4.5GW of Stargate capacity; development capacity is not all delivered capacity. Separately, Oracle announced GPT-5 integration in database and business applications in August 2025. Compute provision and model integration are different roles. Palantir: Partners with Palantir on Foundry and AIP SaaS on OCI, with customer-specific deployment and integration Microsoft: Partners with Microsoft on Oracle AI Database@Azure, operating Oracle databases on OCI colocated within Azure Amazon / AWS: August 13, 2026: expands its long-term AWS agreement for Oracle AI Database@AWS availability and migration NVIDIA: Oracle identifies NVIDIA Blackwell and Hopper GPUs in OCI offerings; supported cluster limits are not actual purchased quantities AMD: Oracle identifies AMD Instinct MI300X in OCI offerings, without implying all OCI compute uses AMD Alphabet / Google Cloud: Partners with Google Cloud on Oracle AI Database@Google Cloud, with Oracle-managed OCI infrastructure inside Google data centers April 13, 2026: Oracle fuel-cell procurement framework up to 2.8GW; 1.2GW contracted and deploying, not fully delivered."
     },
     "maps": {
       "competition": [
@@ -10720,6 +10849,32 @@
             13
           ],
           "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Bloom Energy",
+          "ticker": "BE",
+          "role": "supplier",
+          "label": {
+            "ja": "2026年4月13日：Oracle向け燃料電池の調達枠は最大2.8GW、うち1.2GWを契約し導入中。全量納入済みではない。",
+            "en": "April 13, 2026: Oracle fuel-cell procurement framework up to 2.8GW; 1.2GW contracted and deploying, not fully delivered."
+          },
+          "sourceIndexes": [
+            14
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bloom Energy",
+          "ticker": "BE",
+          "role": "partner",
+          "label": {
+            "ja": "2026年4月13日：Oracle向け燃料電池の調達枠は最大2.8GW、うち1.2GWを契約し導入中。全量納入済みではない。",
+            "en": "April 13, 2026: Oracle fuel-cell procurement framework up to 2.8GW; 1.2GW contracted and deploying, not fully delivered."
+          },
+          "sourceIndexes": [
+            14
+          ]
         }
       ]
     }

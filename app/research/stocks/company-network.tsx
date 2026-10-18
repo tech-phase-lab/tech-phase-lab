@@ -112,12 +112,14 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
     </div>
     <div className={styles.inspector}>
       <h3>{t(`${selected.ticker ?? selected.name}との関係`, `Connections with ${selected.ticker ?? selected.name}`)}</h3>
+      {graph.root === "BE" && <p className={styles.partnerSummary}>{t("パートナー企業：オラクル、AEP、NBIS、Brookfield。ソフトバンクは旧日本合弁。", "Partners: Oracle, AEP, NBIS and Brookfield. SoftBank: former Japan JV.")}</p>}
       <ul>{relationships.map(edge => {
         const other = byId.get(edge.from === selected.id ? edge.to : edge.from)!;
         const evidence = edge.evidence.find(item => item.about === selected.id) ?? edge.evidence[0];
         return <li key={edge.id} data-tone={edgeTone(edge)}>
           <div className={styles.connectionTitle}><strong>{other.ticker ?? label(other, lang)}</strong><small>{graph.root === "NBIS" && ["Anthropic", "OpenAI"].includes(other.id) ? t("技術対応", "Compatibility") : graph.root === "IREN" && other.id === "Anthropic" ? t("顧客・契約報道", "Reported customer") : edge.kind === "supply" ? (edge.to === selected.id ? t("供給・採用元", "Supplier") : t("納入・採用先", "Recipient")) : edge.kind === "competition" ? t("競合", "Competitor") : edge.kind === "investment" ? t("出資", "Investment") : t("提携・連携", "Collaboration")}</small></div>
-          <p className={styles.relationshipText}>{evidence.about !== selected.id && <span>{byId.get(evidence.about)?.name ?? evidence.about}: </span>}{evidence.label[lang]}</p>
+          <p className={styles.relationshipText}>{other.businessLabel?.[lang] ?? (other.ticker ? label(other, lang) : businessLabels[other.layer][lang])}</p>
+          <details className={styles.relationshipDetails}><summary>{t("関係の詳細", "Relationship details")}</summary><p className={styles.relationshipText}>{evidence.about !== selected.id && <span>{byId.get(evidence.about)?.name ?? evidence.about}: </span>}{evidence.label[lang]}</p></details>
         </li>;
       })}</ul>
       <details className={styles.evidence}><summary>{t("関係の出典", "Relationship sources")}</summary>

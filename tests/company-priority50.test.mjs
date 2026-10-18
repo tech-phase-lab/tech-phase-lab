@@ -58,6 +58,17 @@ test('commercial relationships retain separate directions and the correct invest
  assert.ok(relation('NBIS','NVDA','investor'));assert.ok(relation('NBIS','NVDA','supplier'));
  assert.ok(relation('CRWV','NVDA','investor'));assert.ok(relation('MRVL','NVDA','investor'));
  assert.ok(relation('BE','BAM','partner'));assert.equal(Boolean(relation('BE','BN','partner')),false);
+ assert.ok(relation('BE','ORCL','customer'));assert.ok(relation('BE','ORCL','partner'));
+ assert.ok(relation('ORCL','BE','supplier'));assert.ok(relation('ORCL','BE','partner'));
+ assert.match(relation('ORCL','BE','supplier').label.en,/1\.2GW contracted and deploying, not fully delivered/);
+ assert.equal(Boolean(relation('BE','ORCL','investor')),false,'warrant issuance alone does not establish exercised common-share ownership');
+ assert.match(issuer('BE').en.business,/electrolyzers/);
+ assert.ok(relation('BE','AEP','customer'));assert.ok(relation('BE','AEP','partner'));
+ assert.match(relation('BE','AEP','customer').label.en,/initially 100MW ordered/);
+ assert.ok(relation('BE','NBIS','customer'));assert.ok(relation('BE','NBIS','partner'));
+ assert.ok(relation('NBIS','BE','supplier'));assert.ok(relation('NBIS','BE','partner'));
+ assert.match(relation('BE','SoftBank Group','partner').label.en,/Historical.*2021/);
+ for(const n of graph('BE').nodes){assert.ok(n.businessLabel.en.length<=45,n.id);assert.ok(n.businessLabel.ja.length<=24,n.id);}
  for(const t of ['ALAB','CRDO','QCOM'])for(const id of ['TSM','AMKR','ASX'])assert.ok(relation(t,id,'supplier'),`${t}:${id}`);
  const q=graph('QCOM');assert.equal(q.nodes.filter(n=>/Samsung/.test(n.name)).length,1);
  assert.ok(relation('QCOM','Samsung Electronics','customer'));

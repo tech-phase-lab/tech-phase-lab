@@ -2418,6 +2418,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
         "ja": "専用GPU計算容量",
         "en": "Dedicated GPU capacity"
       }
+    },
+    "BE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "燃料電池の電源設備",
+        "en": "Fuel-cell power systems"
+      }
     }
   },
   "ASML": {
@@ -3292,6 +3299,13 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "AMD：OCIのInstinct GPU採用",
         "en": "AMD: Instinct GPUs in OCI"
+      }
+    },
+    "BE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "データセンター用の燃料電池設備",
+        "en": "Data-center fuel-cell systems"
       }
     }
   },
@@ -11165,50 +11179,71 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
     "BE": {
       "layer": 5,
       "businessLabel": {
-        "ja": "定置用燃料電池",
-        "en": "Stationary fuel cells"
+        "ja": "燃料電池・水素製造",
+        "en": "Fuel cells & hydrogen"
       }
     },
     "CAT": {
       "layer": 5,
       "businessLabel": {
-        "ja": "ガスエンジンの常用・連続発電。公式製品の比較",
-        "en": "Gas-engine prime/continuous power; editorial product comparison"
+        "ja": "ガスエンジン発電",
+        "en": "Gas-engine power"
       }
     },
     "CMI": {
       "layer": 5,
       "businessLabel": {
-        "ja": "データセンター向けガス発電。公式製品の比較",
-        "en": "Data-center gas generation; editorial product comparison"
+        "ja": "ガス発電設備",
+        "en": "Gas generators"
       }
     },
     "GEV": {
       "layer": 5,
       "businessLabel": {
-        "ja": "オンサイト用ガスタービン。公式製品の比較",
-        "en": "Onsite gas turbines; editorial product comparison"
+        "ja": "ガスタービン発電",
+        "en": "Gas turbines"
       }
     },
     "FCEL": {
       "layer": 5,
       "businessLabel": {
-        "ja": "炭酸塩型の分散電源用燃料電池。方式は異なる",
-        "en": "Carbonate distributed-generation fuel cells; different architecture"
+        "ja": "定置用燃料電池",
+        "en": "Stationary fuel cells"
       }
     },
     "BAM": {
       "layer": 7,
       "businessLabel": {
-        "ja": "Brookfield Asset Management：Bloom EnergyとBrookfield Asset Managementは2025年10月、AIインフラ向け燃料電池導入で最大50億ドルの協力枠組みを発表した",
-        "en": "Brookfield Asset Management: Bloom Energy and Brookfield Asset Management announced an up-to-$5 billion fuel-cell deployment partnership for AI infrastructure in October2025"
+        "ja": "案件の資金調達",
+        "en": "Project financing"
       }
     },
     "ORCL": {
       "layer": 6,
       "businessLabel": {
-        "ja": "OCI向け燃料電池設備の導入・拡張",
-        "en": "Fuel-cell deployments and expansion for OCI"
+        "ja": "燃料電池の導入",
+        "en": "Fuel-cell deployment"
+      }
+    },
+    "AEP": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "電源調達・販売協力",
+        "en": "Power procurement"
+      }
+    },
+    "NBIS": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "AI拠点の電源",
+        "en": "AI-site power"
+      }
+    },
+    "SoftBank Group": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "旧日本合弁（2021年終了）",
+        "en": "Former JV; ended 2021"
       }
     }
   },

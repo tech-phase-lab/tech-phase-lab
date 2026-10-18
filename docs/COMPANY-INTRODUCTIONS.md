@@ -965,3 +965,17 @@ not evidence that no commercial relationship exists. Public browser verification
 remains pending under the previously recorded URL-policy refusal; local renders
 and geometry checks are not public UI checks. R41/R42 pending draft history is
 not consumed by this data update.
+
+### BE card overflow and partner corrections, October 18, 2026 (R44)
+
+Keep card captions short and clamp names/captions inside the fixed card bounds.
+Show brief partner descriptions first, with full contractual explanations in
+collapsed details and the original source links retained. Local static browser
+rendering at 375/1280, JA/EN and all depth modes checks actual text bounds and
+heading intersections; it is separate from public deployment verification.
+
+BE adds AEP and Nebius procurement/partnership evidence and the electrolyzer
+product. Oracle's contracted capacity is distinct from the overall framework.
+Brookfield's June 2026 financing expansion updates the earlier disclosure.
+The SoftBank Japan venture is historical: its partner stake was acquired in
+2021. Do not present that venture as a current joint ownership arrangement.
