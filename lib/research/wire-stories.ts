@@ -1,5 +1,6 @@
 import type { Language } from "./data";
 import type { CompanyWireItem } from "./company-wire.ts";
+import { tidyJapanese } from "./ja-text.ts";
 
 /** Company headlines as stories (owner, Oct 17): the same story arrives for several companies and from
  * several publishers, and the lists showed it five times. One story is one row, listing every company it
@@ -17,6 +18,8 @@ const NOT_NEWS = [
   /\bETFs?\b.{0,50}\b(?:buy|buys|smartest|best)\b|\b(?:buy|buys)\b.{0,30}\bETFs?\b|\b(?:if|when) (?:you|the stock market).{0,40}(?:\$1,?000\b|\bcrash|\bplunge)|\bhistory shows\b/i, // "buy these ETFs" advice: no detail to open
   /\bDisney\b.{0,40}\bCharacter\.AI\b/i,
   /株式市場の暴落.{0,20}ETF|ETFを買い|ETFが最も賢い|ディズニー.{0,10}Character\.AI/,
+  /\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\b(?:and )?why\b.{0,80}\b(?:reasons?)\b/i, // teasers whose answer is not in the headline
+  /理由$|その理由|理由とは|なぜ.{0,40}[？?]$/,
   /逃した[?？]|見逃さない(?:よう|で)|お気に入りの恐竜/,
 ];
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
@@ -35,7 +38,7 @@ function similar(a: Set<string>, b: Set<string>) {
 export function wireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
   const ja = lang === "ja";
   const items = Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
-    const title = ja ? item.titleJa : item.titleEn;
+    const title = ja ? (item.titleJa && tidyJapanese(item.titleJa)) : item.titleEn;
     return title && !isNotNews(item.titleEn) && !isNotNews(title) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
   type Cluster = { key: string; words: Set<string>; first: number; tickers: string[]; best: (typeof items)[number] };

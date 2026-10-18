@@ -178,7 +178,8 @@ class TriageTests(unittest.TestCase):
                       'Better AI Stock: Nvidia or Micron?',
                       'If you only have $1,000, buy this one ETF and hold for 20 years',
                       'If the stock market crashes, history shows these 3 ETFs are the smartest buys',
-                      'Disney to pay 66 Character.AI employees $60M a year - Alphabet (NASDAQ:GOOGL)'):
+                      'Disney to pay 66 Character.AI employees $60M a year - Alphabet (NASDAQ:GOOGL)',
+                      "35 analysts cover SpaceX. Here's why their targets have little to do with rockets"):
             self.assertTrue(company_wire.NOISE.search(title), title)
         self.assertFalse(company_wire.NOISE.search('Micron raises fiscal Q1 guidance on HBM demand'))
 

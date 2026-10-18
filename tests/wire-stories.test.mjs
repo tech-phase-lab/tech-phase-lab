@@ -48,3 +48,18 @@ test('headlines that are not news about the company are left out', () => {
     'マイクロンとサンディスクを逃した？このメモリ株を見逃さないようにしよう。']) assert.equal(isNotNews(title), true, title);
   for (const title of ['Germany to unveil Nvidia AI agreement next week', 'StoneX maintains Buy rating on Microsoft, $600 price target', 'Micron raises its dividend']) assert.equal(isNotNews(title), false, title);
 });
+
+test('teaser headlines with no answer are left out', () => {
+  for (const title of ['35 analysts cover SpaceX. Here\'s why their price targets have little to do with rockets', 'This is why Nvidia stock moved', 'The reason why memory prices keep rising',
+    '35人のアナリストがスペースXをカバー。彼らの目標株価がロケットとはほとんど関係ない理由']) assert.equal(isNotNews(title), true, title);
+});
+
+test('Japanese headlines drop the comma after a bracket and keep a name with its ticker together', async () => {
+  const { tidyJapanese } = await import('../lib/research/ja-text.ts');
+  const out = tidyJapanese('アルファベット（GOOGL）、2028年までにトロントでロボタクシーサービスを計画');
+  assert.ok(!out.includes('）、'));
+  assert.equal(out.replaceAll('⁠', ''), 'アルファベット（GOOGL）2028年までにトロントでロボタクシーサービスを計画');
+  assert.ok(out.startsWith('ア⁠ル'));
+  assert.equal(tidyJapanese(out), out);
+  assert.equal(tidyJapanese('Alphabet (GOOGL), plans robotaxis'), 'Alphabet (GOOGL), plans robotaxis');
+});
