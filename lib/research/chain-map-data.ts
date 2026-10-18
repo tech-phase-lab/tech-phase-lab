@@ -14,6 +14,11 @@ import amd from "../../data/chain/AMD.json" with { type: "json" };
 import anet from "../../data/chain/ANET.json" with { type: "json" };
 import arm from "../../data/chain/ARM.json" with { type: "json" };
 import lite from "../../data/chain/LITE.json" with { type: "json" };
+import vst from "../../data/chain/VST.json" with { type: "json" };
+import adbe from "../../data/chain/ADBE.json" with { type: "json" };
+import mu from "../../data/chain/MU.json" with { type: "json" };
+import asml from "../../data/chain/ASML.json" with { type: "json" };
+import tsm from "../../data/chain/TSM.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -37,6 +42,7 @@ const available: Record<string, ChainMapData> = {
   TSLA: tsla as ChainMapData, IBM: ibm as ChainMapData, META: meta as ChainMapData,
   BE: be as ChainMapData, SKHY: skhy as ChainMapData, GEV: gev as ChainMapData, MSFT: msft as ChainMapData, KLAC: klac as ChainMapData,
   SNDK: sndk as ChainMapData, AMD: amd as ChainMapData, ANET: anet as ChainMapData, ARM: arm as ChainMapData, LITE: lite as ChainMapData,
+  VST: vst as ChainMapData, ADBE: adbe as ChainMapData, MU: mu as ChainMapData, ASML: asml as ChainMapData, TSM: tsm as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 

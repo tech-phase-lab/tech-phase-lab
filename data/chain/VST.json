@@ -1,0 +1,179 @@
+{
+  "root": {
+    "ticker": "VST",
+    "name": "Vistra"
+  },
+  "rows": [
+    {
+      "ja": "供給元(送配電)",
+      "en": "Suppliers (power delivery)",
+      "above": true
+    },
+    {
+      "ja": "電力の販売先(データセンター・AI)",
+      "en": "Power buyers (data centers & AI)"
+    },
+    {
+      "ja": "出資・提携",
+      "en": "Investments & partnerships"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AEP",
+      "ticker": "AEP",
+      "name": "American Electric Power(AEP Texas)",
+      "sub": "送配電",
+      "sub_en": "Power delivery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AEP Texasが年次報告で、主要な顧客としてNRGとVistraを挙げている(送配電サービスの提供)",
+          "text_en": "AEP Texas lists NRG and Vistra as its significant customers for delivery services",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "Significant Customers of AEP Texas: NRG Energy and Vistra Corp 2025 2024 2023 Percentage of Total Revenues 38 %",
+            "note": "NRGとVistraの合計で、AEP Texasの売上の38%(2025年)です。",
+            "note_en": "NRG and Vistra are reported combined (38% of AEP Texas revenue in 2025)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNP",
+      "ticker": "CNP",
+      "name": "CenterPoint Energy",
+      "sub": "送配電",
+      "sub_en": "Power delivery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CenterPoint Houstonが年次報告で、Vistra関連会社を主要な外部顧客として記載(2025年に6.93億ドルの収入)",
+          "text_en": "CenterPoint Houston lists affiliates of Vistra as a major external customer ($693M of revenue in 2025)",
+          "source": {
+            "label": "CenterPoint Energy 10-K(2025年度)",
+            "label_en": "CenterPoint Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130310/000113031026000008/cnp-20251231.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "Affiliates of NRG $ 1,229 $ 1,169 $ 1,106 Affiliates of Vistra Energy Corp. 693 605 539",
+            "note": "Vistraの小売電力会社への送配電サービスです。",
+            "note_en": "Delivery services to Vistra’s retail electricity providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "PJMの原子力発電所から、2,609MWの電力・容量を供給する20年の電力購入契約(2026年1月)",
+          "text_en": "20-year PPAs to supply 2,609MW of carbon-free power and capacity from its PJM nuclear plants (January 2026)",
+          "source": {
+            "label": "Vistra 10-K(2025年度)",
+            "label_en": "Vistra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000006/vistra-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "we had entered into 20-year PPAs with Meta Platforms, Inc. (Meta) to supply 2,609 MW of carbon-free power and capacity from our PJM nuclear power plants",
+            "note": "段階的に供給します。増強分(433MW)はこれから建設します。",
+            "note_en": "Delivery is staged; the 433MW uprate capacity is still to be built."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Comanche Peak原子力発電所から1,200MWを供給する20年の電力購入契約(2025年9月)",
+          "text_en": "20-year PPA to supply 1,200MW from the Comanche Peak nuclear plant (September 2025)",
+          "source": {
+            "label": "Vistra 10-K(2025年度)",
+            "label_en": "Vistra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000006/vistra-20251231.htm",
+            "level": "official",
+            "date": "2025-09",
+            "quote": "entered into a 20-year power purchase agreement (PPA) (with options to extend for up to an additional 20 years) with Amazon Web Services (AWS) to supply 1,200 MW of carbon-free power from our Comanche Peak Nuclear Power Plant",
+            "note": "供給開始は2027年第4四半期の見込みで、2032年までに全量に拡大します。",
+            "note_en": "Delivery expected to begin in Q4 2027 and ramp to full capacity by 2032."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIFR",
+      "ticker": "CIFR",
+      "name": "Cipher Digital",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cipherが年次報告で、Odessa施設の電力をVistra子会社のLuminantから電力購入契約で調達と記載",
+          "text_en": "Cipher’s annual report says it buys power for its Odessa facility from Vistra subsidiary Luminant under a PPA",
+          "source": {
+            "label": "Cipher Digital 10-K(2025年度)",
+            "label_en": "Cipher Digital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000009/cifr-20251231.htm",
+            "level": "official",
+            "date": "2021-06",
+            "quote": "In June 2021, we entered into a power purchase agreement with Luminant for the supply of electric power to the Odessa Facility",
+            "note": "契約の相手は子会社のLuminant ET Services Company LLCです。",
+            "note_en": "The counterparty named is Luminant ET Services Company LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KKR",
+      "ticker": "KKR",
+      "name": "KKR",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AI向け資産(データセンターなど)に投資するKKR運用のファンドへ出資を約束(2026年6月)",
+          "text_en": "Committed to invest in a KKR-managed fund targeting AI-enabling assets such as data centers (June 2026)",
+          "source": {
+            "label": "Vistra 10-Q(2026年第2四半期)",
+            "label_en": "Vistra 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000019/vistra-20260630.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "KKR Helix C L.P. (the Helix Fund), an open-ended investment fund managed by affiliates of KKR & Co. Inc. (KKR)",
+            "note": "最大10億ドルの約束で、初回5億ドルと追加5億ドルです。",
+            "note_en": "Up to $1B: $500M initial plus $500M subject to conditions."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

@@ -1,0 +1,290 @@
+{
+  "root": {
+    "ticker": "MU",
+    "name": "Micron"
+  },
+  "rows": [
+    {
+      "ja": "供給元(装置・IP)",
+      "en": "Suppliers (equipment & IP)",
+      "above": true
+    },
+    {
+      "ja": "顧客・提携",
+      "en": "Customers & partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "005930",
+    "SK hynix",
+    "Kioxia",
+    "SNDK"
+  ],
+  "companies": [
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lam Researchが年次報告で、最も重要な顧客の1社としてMicronを挙げている(Lamが装置を販売)",
+          "text_en": "Lam Research’s annual report lists Micron among its most significant customers (Lam sells equipment to Micron)",
+          "source": {
+            "label": "Lam Research 10-K(2026年度)",
+            "label_en": "Lam Research 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "date": "2026-08",
+            "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc.,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "Rambus",
+      "sub": "メモリー用チップ・特許",
+      "sub_en": "Memory interface chips & IP",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Rambusが年次報告で、メモリーインターフェース用チップの販売先にMicronを挙げている",
+          "text_en": "Rambus’ annual report says its memory interface chips are sold to DRAM makers including Micron",
+          "source": {
+            "label": "Rambus 10-K(2025年度)",
+            "label_en": "Rambus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our memory interface chips are sold to major DRAM manufacturers, Micron, Samsung and SK hynix,"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Rambusが年次報告で、特許のライセンスを受けた半導体会社の1社としてMicronを挙げている",
+          "text_en": "Rambus’ annual report lists Micron among semiconductor companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K(2025年度)",
+            "label_en": "Rambus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NVIDIAが年次報告で、SK hynix・Micron・Samsungからメモリーを購入していると記載",
+          "text_en": "NVIDIA’s annual report says it buys memory from SK hynix, Micron and Samsung",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PENG",
+      "ticker": "PENG",
+      "name": "Penguin Solutions",
+      "sub": "サーバー・メモリー",
+      "sub_en": "Servers & memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Penguin Solutionsが年次報告で、メモリーの供給元の1社としてMicronを挙げている",
+          "text_en": "Penguin Solutions’ annual report lists Micron among its memory suppliers",
+          "source": {
+            "label": "Penguin Solutions 10-K(2025年度)",
+            "label_en": "Penguin Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616533/000161653325000061/peng-20250829.htm",
+            "level": "official",
+            "date": "2025-10",
+            "quote": "Samsung Semiconductor, Inc., Micron Technology, Inc., SK hynix, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSMC",
+      "ticker": "PSMC",
+      "name": "Powerchip(PSMC)",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "台湾・苗栗県銅鑼のウエハー製造工場をPowerchipから取得(2026年3月完了)",
+          "text_en": "Completed the acquisition of a wafer fab in Tongluo, Miaoli County, Taiwan from Powerchip (March 2026)",
+          "source": {
+            "label": "Micron 10-K(2026年度)",
+            "label_en": "Micron 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "In March 2026, we completed the acquisition of a wafer fabrication facility in Tongluo, Miaoli County, Taiwan, from Powerchip Semiconductor Manufacturing Corporation for cash consideration of $1.8 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Micronが年次報告で、メモリー・ストレージの競合としてSamsung Electronicsを挙げている",
+          "text_en": "Micron’s annual report names Samsung Electronics as a competitor in memory and storage",
+          "source": {
+            "label": "Micron 10-K(2026年度)",
+            "label_en": "Micron 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+            "level": "official",
+            "date": "2026-09",
+            "quote": "We face intense competition in the semiconductor memory and storage markets from a number of companies, including Samsung Electronics Co., Ltd.; SK hynix Inc.;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SK hynix",
+      "ticker": "SK hynix",
+      "name": "SK hynix",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Micronが年次報告で、メモリー・ストレージの競合としてSK hynixを挙げている",
+          "text_en": "Micron’s annual report names SK hynix as a competitor in memory and storage",
+          "source": {
+            "label": "Micron 10-K(2026年度)",
+            "label_en": "Micron 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+            "level": "official",
+            "date": "2026-09",
+            "quote": "SK hynix Inc.; Kioxia Holdings Corporation; Sandisk Corporation;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kioxia",
+      "ticker": "Kioxia",
+      "name": "Kioxia",
+      "sub": "NAND",
+      "sub_en": "NAND flash",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Micronが年次報告で、メモリー・ストレージの競合としてKioxiaを挙げている",
+          "text_en": "Micron’s annual report names Kioxia as a competitor in memory and storage",
+          "source": {
+            "label": "Micron 10-K(2026年度)",
+            "label_en": "Micron 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+            "level": "official",
+            "date": "2026-09",
+            "quote": "SK hynix Inc.; Kioxia Holdings Corporation; Sandisk Corporation;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNDK",
+      "ticker": "SNDK",
+      "name": "Sandisk",
+      "sub": "NAND",
+      "sub_en": "NAND flash",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Micronが年次報告で、メモリー・ストレージの競合としてSandiskを挙げている",
+          "text_en": "Micron’s annual report names Sandisk as a competitor in memory and storage",
+          "source": {
+            "label": "Micron 10-K(2026年度)",
+            "label_en": "Micron 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+            "level": "official",
+            "date": "2026-09",
+            "quote": "Kioxia Holdings Corporation; Sandisk Corporation; ChangXin Memory Technologies"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてMicronを挙げている",
+          "text_en": "Sandisk’s annual report names Micron among its vertically integrated flash competitors",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-08",
+            "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRAM",
+      "ticker": "MRAM",
+      "name": "Everspin Technologies",
+      "sub": "MRAM",
+      "sub_en": "MRAM",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Everspinが年次報告で、STT-MRAMが競合するDRAM・NVSRAMメーカーの1社としてMicronを挙げている",
+          "text_en": "Everspin’s annual report names Micron among DRAM and NVSRAM suppliers its STT-MRAM products compete with",
+          "source": {
+            "label": "Everspin 10-K(2025年度)",
+            "label_en": "Everspin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438423/000162828026014733/mram-20251231.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "compete with DRAM and NVSRAM suppliers such as Hynix, Micron, Winbond, Samsung"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}
