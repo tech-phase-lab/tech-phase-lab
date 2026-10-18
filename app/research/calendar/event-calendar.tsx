@@ -62,7 +62,7 @@ export default function EventCalendar() {
       <select aria-label={t("時間帯", "Time zone")} value={zone} onChange={event => { setZoneOverride(event.target.value); setPeriod("all"); }}><option value="Asia/Tokyo">JST</option><option value="America/New_York">ET</option></select>
     </div>
     <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} active={view === "results"} />
-    {view === "upcoming" && <>
+    {view === "upcoming" && <div className={calendarStyles.upcomingContent}>
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
       <details>
         <summary>
@@ -89,7 +89,7 @@ export default function EventCalendar() {
       </details></li>)}</ol></>}
 
     </section>
-    </>}
+    </div>}
     <section className={styles.section}>
       <details className={calendarStyles.coverage}>
         <summary><span>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</span></summary>
