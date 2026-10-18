@@ -447,6 +447,29 @@
           }
         }
       ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Adobe Fireflyが、提携先のモデルの1つとしてOpenAIのモデルを提供(2026年の委任状説明書)",
+          "text_en": "Adobe Firefly offers OpenAI models among its partner models (2026 proxy statement)",
+          "source": {
+            "label": "Adobe 2026 Proxy Statement(DEF 14A)",
+            "label_en": "Adobe 2026 Proxy Statement (DEF 14A)",
+            "url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000043/adbe-20260227.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "over 25 leading partner models, including Google, OpenAI, Black Forest Labs, Luma, Runway, Topaz Labs and ElevenLabs"
+          }
+        }
+      ]
     }
   ],
   "far": [],

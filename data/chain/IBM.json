@@ -511,6 +511,29 @@
       ]
     },
     {
+      "id": "ANTH",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMのソフトウェアにClaudeを組み込む戦略的提携(2025年10月)",
+          "text_en": "Strategic partnership to integrate Claude into select IBM software (October 2025)",
+          "source": {
+            "label": "IBM ニュースルーム(2025年10月)",
+            "label_en": "IBM newsroom (Oct 2025)",
+            "url": "https://newsroom.ibm.com/2025-10-07-2025-ibm-and-anthropic-partner-to-advance-enterprise-software-development-with-proven-security-and-governance",
+            "level": "official",
+            "date": "2025-10-07",
+            "quote": "IBM (NYSE: IBM) and Anthropic today announced a strategic partnership to accelerate the development of enterprise-ready AI by infusing Anthropic’s Claude"
+          }
+        }
+      ]
+    },
+    {
       "id": "CSCO",
       "ticker": "CSCO",
       "name": "Cisco",

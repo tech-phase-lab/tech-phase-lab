@@ -548,6 +548,86 @@
           }
         }
       ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AMD Instinct GPUを6GW分導入する、複数年・複数世代の正式契約(2025年10月6日)",
+          "text_en": "Definitive multi-year, multi-generation agreement to deploy 6GW of AMD Instinct GPUs (October 6, 2025)",
+          "source": {
+            "label": "AMD IR の発表",
+            "label_en": "AMD IR press release",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1260/amd-and-openai-announce-strategic-partnership-to-deploy-6-gigawatts-of-amd-gpus",
+            "level": "official",
+            "date": "2025-10-06",
+            "quote": "Under this definitive agreement, OpenAI will work with AMD as a core strategic compute partner to drive large-scale deployments of AMD technology starting with the AMD Instinct MI450 series",
+            "note": "最初の1GW分は2026年後半に開始し、6GWまで段階的に拡大します。",
+            "note_en": "The first 1GW starts in 2H 2026; scale to 6GW is staged."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "OpenAIに最大1.6億株を買える新株予約権を発行(導入の節目ごとに権利確定)",
+          "text_en": "Issued OpenAI a warrant for up to 160 million AMD shares, vesting with deployment milestones",
+          "source": {
+            "label": "AMD IR の発表",
+            "label_en": "AMD IR press release",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1260/amd-and-openai-announce-strategic-partnership-to-deploy-6-gigawatts-of-amd-gpus",
+            "level": "official",
+            "date": "2025-10-06",
+            "quote": "AMD has issued OpenAI a warrant for up to 160 million shares of AMD common stock, structured to vest as specific milestones are achieved.",
+            "note": "権利確定は節目に左右されます。",
+            "note_en": "Vesting depends on milestones."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AMD Helios(ラック型AI基盤)で、AMD Instinct MI450 GPUを最大2GW分導入(2026年7月22日)",
+          "text_en": "Will deploy up to 2GW of AMD Instinct MI450 GPUs in AMD Helios racks (July 22, 2026)",
+          "source": {
+            "label": "AMD IR の発表",
+            "label_en": "AMD IR press release",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Anthropic to deploy up to 2 gigawatts of MI450 Series GPUs in AMD Helios rack-scale solutions, with deployment of the first gigawatt beginning in the first half of 2027",
+            "note": "「最大」2GWで、最初のGWは2027年前半に開始します。",
+            "note_en": "'Up to' 2GW; the first GW starts in 1H 2027."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Anthropicに最大50億ドルを戦略的に出資すると約束(2026年7月22日)",
+          "text_en": "Committed to a strategic equity investment of up to $5B in Anthropic (July 22, 2026)",
+          "source": {
+            "label": "AMD IR の発表",
+            "label_en": "AMD IR press release",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "AMD has committed to make a strategic equity investment of up to $5 billion in Anthropic.",
+            "note": "「最大」50億ドルです。",
+            "note_en": "'Up to' $5B."
+          }
+        }
+      ]
     }
   ],
   "far": [],
