@@ -1,0 +1,241 @@
+{
+  "root": {
+    "ticker": "TSLA",
+    "name": "Tesla"
+  },
+  "rows": [
+    {
+      "ja": "電池・半導体の供給元",
+      "en": "Battery & chip suppliers"
+    },
+    {
+      "ja": "蓄電・宇宙・AIの取引先",
+      "en": "Energy storage, space & AI counterparts"
+    },
+    {
+      "ja": "充電ネットワーク",
+      "en": "Charging network"
+    }
+  ],
+  "rivals": [
+    "FLNC",
+    "ENPH"
+  ],
+  "companies": [
+    {
+      "id": "6752",
+      "ticker": "6752",
+      "name": "Panasonic Holdings",
+      "sub": "電池セル",
+      "sub_en": "Battery cells",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電池セルの供給元として実名で記載",
+          "text_en": "Named as a battery-cell supplier",
+          "source": {
+            "label": "Tesla 10-K(2025年12月期)",
+            "label_en": "Tesla 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+            "level": "official",
+            "quote": "Currently, we rely on suppliers such as Panasonic and Contemporary Amperex Technology Co. Limited (CATL) for these cells.",
+            "note": "上場親会社はPanasonic Holdings(東証6752)です。",
+            "note_en": "Listed parent is Panasonic Holdings (TSE: 6752)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "3750",
+      "ticker": "3750",
+      "name": "CATL",
+      "sub": "電池セル",
+      "sub_en": "Battery cells",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電池セルの供給元として実名で記載",
+          "text_en": "Named as a battery-cell supplier",
+          "source": {
+            "label": "Tesla 10-K(2025年12月期)",
+            "label_en": "Tesla 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+            "level": "official",
+            "quote": "Currently, we rely on suppliers such as Panasonic and Contemporary Amperex Technology Co. Limited (CATL) for these cells.",
+            "note": "香港上場(3750)です。",
+            "note_en": "Listed in Hong Kong (3750)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "005930",
+      "name": "Samsung Electronics",
+      "sub": "半導体製造",
+      "sub_en": "Chip manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AI向け先端半導体を米国で製造する協業を発表",
+          "text_en": "Announced a collaboration to manufacture advanced AI chips in the U.S.",
+          "source": {
+            "label": "Tesla 10-K(2025年12月期)",
+            "label_en": "Tesla 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+            "level": "official",
+            "quote": "announced a new collaboration with Samsung to manufacture advanced semiconductors for AI inference and training in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "車載プロセッサ",
+      "sub_en": "In-car processors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "車内体験向けのプロセッサ・SoCを提供(AMDがTeslaを技術パートナーとして記載)",
+          "text_en": "Provides processors and SoCs for in-cabin experiences (AMD lists Tesla as a technology partner)",
+          "source": {
+            "label": "AMD 車載ソリューションのページ",
+            "label_en": "AMD automotive in-vehicle experience page",
+            "url": "https://www.amd.com/en/solutions/automotive/in-vehicle-experience.html",
+            "level": "official",
+            "quote": "processors and adaptive SoCs powering unique in-cabin experiences from technology partners such as Tesla and Daimler",
+            "note": "全車種や運転用AI半導体にまで広げて読むことはできません。",
+            "note_en": "Not to be read as covering every model or self-driving chips."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "SpaceX",
+      "sub": "宇宙・AI",
+      "sub_en": "Space & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SpaceX向けのMegapack売上が2026年6月期の半年で4.05億ドル(第2四半期は3.18億ドル)",
+          "text_en": "Megapack sales to SpaceX were $405M for the first half to June 2026 ($318M in Q2)",
+          "source": {
+            "label": "Tesla 10-Q(2026年6月30日終了の四半期)",
+            "label_en": "Tesla 10-Q (quarter ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+            "level": "official"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年3月、SpaceXの普通株に20億ドルを投資(当時1%未満)",
+          "text_en": "Invested $2B in SpaceX common stock in March 2026 (under 1% at the time)",
+          "source": {
+            "label": "Tesla 10-Q(2026年6月30日終了の四半期)",
+            "label_en": "Tesla 10-Q (quarter ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+            "level": "official",
+            "note": "現在の持分比率は推定していません。",
+            "note_en": "Current ownership is not estimated."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MacrohardのAI開発とTerafab構想を共同で推進(SpaceXの目論見書)",
+          "text_en": "Jointly pursuing the Macrohard AI effort and the Terafab plan (SpaceX prospectus)",
+          "source": {
+            "label": "SpaceX 目論見書(2026年6月5日)",
+            "label_en": "SpaceX prospectus (June 5, 2026)",
+            "url": "https://content.spacex.com/cms-assets/FINAL_Documents%20and%20Updates/SpaceX%20-%20EU%20Prospectus%20%28Approved%20by%20Bafin%29%20-%20June%205%2C%202026.pdf",
+            "level": "official",
+            "date": "2026-06-05",
+            "note": "開発・構想の段階の話で、完成した製品や確定した調達量ではありません。",
+            "note_en": "Describes development and plans, not finished products or confirmed purchase volumes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLNC",
+      "ticker": "FLNC",
+      "name": "Fluence Energy",
+      "sub": "大規模蓄電",
+      "sub_en": "Utility-scale storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fluenceが年次報告でTeslaを主要な競合に挙げている",
+          "text_en": "Fluence names Tesla as a key competitor in its annual report",
+          "source": {
+            "label": "Fluence 10-K(2025年9月期)",
+            "label_en": "Fluence 10-K (fiscal year ended September 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868941/000186894125000081/flnc-20250930.htm",
+            "level": "official",
+            "quote": "Our key competitors currently include, but are not limited to, Tesla, Inc., Wärtsilä, Sungrow, and Contemporary Amperex Technology Co., Limited (“CATL”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENPH",
+      "ticker": "ENPH",
+      "name": "Enphase Energy",
+      "sub": "家庭用蓄電",
+      "sub_en": "Home storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Enphaseが年次報告で蓄電市場の競合にTeslaを挙げている",
+          "text_en": "Enphase names Tesla as a competitor in the storage market in its annual report",
+          "source": {
+            "label": "Enphase 10-K(2025年12月期)",
+            "label_en": "Enphase 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "quote": "Competitors in the storage market include Tesla, SolarEdge, Huawei, BYD Company Limited (“BYD”), Franklin Solar Battery and other producers of battery cells and integrated storage systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GMの充電アプリがTesla Superchargerでの充電に対応",
+          "text_en": "GM’s charging app supports charging at Tesla Superchargers",
+          "source": {
+            "label": "GM の発表(2026年8月)",
+            "label_en": "GM announcement (August 2026)",
+            "url": "https://news.gm.com/home.detail.html/Pages/topic/us/en/2026/aug/0813-electric-vehicle-nacs-charging.html",
+            "level": "official",
+            "quote": "Tesla Supercharger, IONNA, Electrify America, and ChargePoint are supported today",
+            "note": "北米の対象車が対象で、全車種・全拠点が無条件で使えるわけではありません。",
+            "note_en": "Applies to eligible North American vehicles; not every model or site is covered unconditionally."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・8-K)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q and 8-K) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

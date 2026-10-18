@@ -1,0 +1,82 @@
+{
+  "root": {
+    "ticker": "NFLX",
+    "name": "Netflix"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)"
+    },
+    {
+      "ja": "提携先",
+      "en": "Partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド(AWS)",
+      "sub_en": "Cloud (AWS)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "配信サービスの一部の運用にAmazon Web Services(AWS)を利用",
+          "text_en": "Uses Amazon Web Services (AWS) to run parts of its service",
+          "source": {
+            "label": "Netflix 10-K(2025年12月期)",
+            "label_en": "Netflix 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm",
+            "level": "official",
+            "quote": "We rely upon Amazon Web Services to operate certain aspects of our service"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音声・ポッドキャスト",
+      "sub_en": "Audio & podcasts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Spotify/The Ringerの動画ポッドキャストをNetflixで提供開始(2026年1月)",
+          "text_en": "Video podcasts from Spotify / The Ringer launched on Netflix (January 2026)",
+          "source": {
+            "label": "Netflix 株主向けレター(2026年1月20日)",
+            "label_en": "Netflix shareholder letter (January 20, 2026)",
+            "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001065280/5c943b10-61c2-4e9a-a175-f61e2391fa78.pdf",
+            "level": "official",
+            "date": "2026-01-20",
+            "note": "Netflixの自社報告です。",
+            "note_en": "Reported by Netflix itself."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "「On Purpose」の動画を両社で配信(2026年7月13日開始予定と発表)",
+          "text_en": "Video of “On Purpose” to be offered on both platforms (announced to start July 13)",
+          "source": {
+            "label": "Spotify の発表(2026年5月27日)",
+            "label_en": "Spotify announcement (May 27, 2026)",
+            "url": "https://newsroom.spotify.com/2026-05-27/on-purpose-jay-shetty-video-spotify-netflix/",
+            "level": "official",
+            "date": "2026-05-27"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・8-K)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q and 8-K) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

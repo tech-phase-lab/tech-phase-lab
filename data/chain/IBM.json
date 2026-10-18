@@ -1,0 +1,355 @@
+{
+  "root": {
+    "ticker": "IBM",
+    "name": "IBM"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)"
+    },
+    {
+      "ja": "クラウド・企業向けソフト",
+      "en": "Cloud & enterprise software"
+    },
+    {
+      "ja": "サーバー・インフラ",
+      "en": "Servers & infrastructure"
+    },
+    {
+      "ja": "コンサルティング",
+      "en": "Consulting"
+    }
+  ],
+  "rivals": [
+    "GOOG",
+    "AMZN",
+    "MSFT",
+    "ORCL",
+    "DELL",
+    "HPE",
+    "ACN",
+    "CAP"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略パートナーとして実名で記載",
+          "text_en": "Named as a strategic partner",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ソフトウェア事業の主要な競合として実名で記載",
+          "text_en": "Named as a principal competitor in its software business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Google Cloudと企業のAI導入・基幹システム刷新で協業(2026年6月)",
+          "text_en": "Partners with Google Cloud on enterprise AI adoption and core-system modernization (June 2026)",
+          "source": {
+            "label": "IBM の発表(2026年6月4日)",
+            "label_en": "IBM announcement (June 4, 2026)",
+            "url": "https://newsroom.ibm.com/2026-06-04-ibm-and-google-cloud-announce-strategic-partnership-to-scale-ai-with-human-expertise-and-ai-powered-delivery",
+            "level": "official",
+            "date": "2026-06-04",
+            "note": "専任体制の発足と今後の展開を区別して読む必要があります。",
+            "note_en": "The newly formed practice and future rollout should be read separately."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ソフトウェア事業の主要な競合として実名で記載",
+          "text_en": "Named as a principal competitor in its software business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド(AWS)",
+      "sub_en": "Cloud (AWS)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略パートナーとして実名で記載",
+          "text_en": "Named as a strategic partner",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ソフトウェア事業の主要な競合として実名で記載",
+          "text_en": "Named as a principal competitor in its software business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "データベース・ソフト",
+      "sub_en": "Database & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略パートナーとして実名で記載",
+          "text_en": "Named as a strategic partner",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ソフトウェア事業の主要な競合として実名で記載",
+          "text_en": "Named as a principal competitor in its software business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "Palo Alto Networks",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略パートナーとして実名で記載",
+          "text_en": "Named as a strategic partner",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略パートナーとして実名で記載",
+          "text_en": "Named as a strategic partner",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "Adobe",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略パートナーとして実名で記載",
+          "text_en": "Named as a strategic partner",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略パートナーとして実名で記載",
+          "text_en": "Named as a strategic partner",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インフラ事業の主要な競合として実名で記載",
+          "text_en": "Named as a principal competitor in its infrastructure business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage as well as original device manufacturers (ODMs) who provide systems that are re-branded."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インフラ事業の主要な競合として実名で記載",
+          "text_en": "Named as a principal competitor in its infrastructure business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage as well as original device manufacturers (ODMs) who provide systems that are re-branded."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "Accenture",
+      "sub": "ITコンサル",
+      "sub_en": "IT consulting",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コンサルティング事業の競合として実名で記載",
+          "text_en": "Named as a competitor in its consulting business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our competitors include global firms such as Accenture, Capgemini, India-based service providers, management consulting firms, the consulting practices of public accounting firms, engineering service providers, and niche specialists."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAP",
+      "ticker": "CAP",
+      "name": "Capgemini",
+      "sub": "ITコンサル",
+      "sub_en": "IT consulting",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コンサルティング事業の競合として実名で記載",
+          "text_en": "Named as a competitor in its consulting business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our competitors include global firms such as Accenture, Capgemini, India-based service providers, management consulting firms, the consulting practices of public accounting firms, engineering service providers, and niche specialists."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・8-K)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q and 8-K) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

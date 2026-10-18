@@ -67,3 +67,46 @@ test('the map shows suppliers first, no range buttons, a card per company with s
     if (lang === 'en') assert.ok(!hasJapanese(visible.replace(/<[^>]+>/g, ' ')), 'English view has Japanese text');
   }
 });
+
+const BATCH = { NFLX: [2, 3], LRCX: [8, 10], TSLA: [8, 10], IBM: [12, 16], META: [18, 22] };
+
+test('the five next companies (NFLX, LRCX, TSLA, IBM, META) use the same format with an official source on every relation', () => {
+  for (const [ticker, [companies, relations]] of Object.entries(BATCH)) {
+    const item = chain.chainDataFor(ticker);
+    assert.ok(item, ticker);
+    assert.equal(item.root.ticker, ticker);
+    assert.deepEqual(chain.chainCounts(item), { companies, relations }, ticker);
+    const ids = new Set(item.companies.map(company => company.id));
+    assert.equal(ids.size, companies, ticker);
+    for (const id of item.rivals) assert.ok(ids.has(id), `${ticker} rival ${id}`);
+    assert.equal(item.far.length, 0);
+    for (const company of item.companies) {
+      assert.ok(company.row >= 0 && company.row < item.rows.length, company.id);
+      assert.ok(company.sub && company.sub_en && !hasJapanese(company.sub_en), company.id);
+      for (const relation of company.relations) {
+        assert.ok(relation.text && hasJapanese(relation.text), relation.text);
+        assert.ok(relation.text_en && !hasJapanese(relation.text_en), relation.text_en);
+        const source = relation.source;
+        assert.match(source.url, /^https:\/\//);
+        assert.equal(source.level, 'official', `${ticker} ${company.id}`);
+        assert.ok(source.label && source.label_en && !hasJapanese(source.label_en), source.label);
+        if (source.note) assert.ok(source.note_en && !hasJapanese(source.note_en));
+      }
+    }
+  }
+});
+
+test('a map without suppliers, rivals or two-step links leaves those parts out, and META puts three rows above the root', () => {
+  const lrcx = chain.chainDataFor('LRCX'), nflx = chain.chainDataFor('NFLX'), meta = chain.chainDataFor('META');
+  assert.ok(chain.chainAbove(lrcx, 0) && !chain.chainAbove(lrcx, 1));
+  assert.deepEqual([0, 1, 2, 3].map(row => chain.chainAbove(meta, row)), [true, true, true, false]);
+  const html = renderToStaticMarkup(createElement(StockChainMap, { data: lrcx, lang: 'ja' }));
+  assert.ok(!html.includes('供給元(上流)'), 'an empty supplier row is not drawn');
+  assert.ok(html.indexOf('顧客(半導体メーカー)') > html.indexOf('LRCX</b>'));
+  assert.ok(html.includes('8社 · 10の関係') && !html.includes('さらに先の関係'));
+  const plain = renderToStaticMarkup(createElement(StockChainMap, { data: nflx, lang: 'en' }));
+  assert.ok(!plain.includes('Who competes with it?') && !plain.includes('Further links') && !plain.includes('Competitors'));
+  const metaHtml = renderToStaticMarkup(createElement(StockChainMap, { data: meta, lang: 'en' }));
+  assert.ok(metaHtml.indexOf('Power') < metaHtml.indexOf('META</b>') && metaHtml.indexOf('META</b>') < metaHtml.indexOf('Glasses, social'));
+  assert.equal((metaHtml.match(/id="chain-card-/g) ?? []).length, 18);
+});

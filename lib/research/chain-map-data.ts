@@ -1,4 +1,9 @@
 import nvda from "../../data/chain/NVDA.json" with { type: "json" };
+import nflx from "../../data/chain/NFLX.json" with { type: "json" };
+import lrcx from "../../data/chain/LRCX.json" with { type: "json" };
+import tsla from "../../data/chain/TSLA.json" with { type: "json" };
+import ibm from "../../data/chain/IBM.json" with { type: "json" };
+import meta from "../../data/chain/META.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -9,14 +14,18 @@ export type ChainCompany = { id: string; ticker: string; name: string; sub: stri
 export type ChainFar = { from: string; to: string; text: string; text_en: string; source: ChainSource };
 export type ChainMapData = {
   root: { ticker: string; name: string };
-  rows: { ja: string; en: string }[];
+  /** Row 0 sits above the root by default; `above: true` puts further supplier rows above it too. Rows without companies are not drawn. */
+  rows: { ja: string; en: string; above?: boolean }[];
   rivals: string[];
   companies: ChainCompany[];
   far: ChainFar[];
   note: { ja: string; en: string };
 };
 
-const available: Record<string, ChainMapData> = { NVDA: nvda as ChainMapData };
+const available: Record<string, ChainMapData> = {
+  NVDA: nvda as ChainMapData, NFLX: nflx as ChainMapData, LRCX: lrcx as ChainMapData,
+  TSLA: tsla as ChainMapData, IBM: ibm as ChainMapData, META: meta as ChainMapData,
+};
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 
 export const CHAIN_KINDS: ChainKind[] = ["up", "down", "tie", "rival"];
@@ -36,4 +45,6 @@ export const chainCounts = (data: ChainMapData) => ({
   companies: data.companies.length,
   relations: data.companies.reduce((sum, company) => sum + company.relations.length, 0) + data.far.length,
 });
+/** Whether a row sits above the root chip (suppliers) or below it. */
+export const chainAbove = (data: ChainMapData, row: number) => data.rows[row]?.above ?? row === 0;
 export const chainKinds = (company: ChainCompany): ChainKind[] => [...new Set(company.relations.map(relation => relation.type))];
