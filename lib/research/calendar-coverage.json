@@ -154,18 +154,18 @@
     "lastCheckedOn": null
   },
   {
+    "ticker": "IBM",
+    "name": "IBM",
+    "sourceUrl": "https://www.ibm.com/investor",
+    "lastAttemptedOn": "2026-10-18",
+    "lastCheckedOn": "2026-10-18"
+  },
+  {
     "ticker": "INTC",
     "name": "Intel",
     "sourceUrl": "https://www.intc.com/news-events/ir-calendar",
     "lastAttemptedOn": "2026-10-02",
     "lastCheckedOn": "2026-10-02"
-  },
-  {
-    "ticker": "IBM",
-    "name": "IBM",
-    "sourceUrl": "https://www.ibm.com/investor",
-    "lastAttemptedOn": "2026-10-17",
-    "lastCheckedOn": "2026-10-17"
   },
   {
     "ticker": "IONQ",

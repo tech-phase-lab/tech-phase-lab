@@ -46,6 +46,13 @@ const blsReleases = [
   ["ppi", "2026-12-15T08:30:00-05:00"],
 ];
 export const calendarEvents: CalendarEvent[] = [
+  // IBM official announcement checked on 2026-10-18 (JST); owner requested a 50th company.
+  {
+    id: "ibm-q3-2026-call", ticker: "IBM", kind: "earnings" as const, title: { ja: "IBM 決算説明会（2026年Q3）", en: "IBM Q3 2026 earnings call" },
+    startsAt: "2026-10-21T17:00:00-04:00", sourceTimezone: "America/New_York", sourceName: "IBM Newsroom",
+    sourceUrl: "https://newsroom.ibm.com/2026-10-07-ibm-to-announce-third-quarter-2026-financial-results",
+    note: { ja: "説明会の開始予定です。決算資料は説明会前に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. The earnings release is due before the webcast; no exact publication time was announced." },
+  },
   ...blsReleases.map(([type, startsAt]) => ({ id: `${type}-${startsAt.slice(0, 10)}`, kind: "economic" as const, title: labels[type], startsAt, sourceTimezone: "America/New_York", sourceName: "BLS", sourceUrl: blsUrl })),
   ...[
     ["2026-08", "2026-09-30T08:30:00-04:00"],
