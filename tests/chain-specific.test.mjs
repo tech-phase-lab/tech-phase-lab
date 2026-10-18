@@ -6,6 +6,12 @@ const other={id:'ORCL',name:'Oracle',aliases:['Oracle'],cik:2};
 const universe=new Map([[issuer.id,issuer],[other.id,other]]);
 const source=body=>({url:'https://bloom.example/news/a',date:'2026-01-01',body});
 const rows=(body,extra={})=>candidatesFromSource({source:source(body),issuer,universe,...extra});
+test('new product facts keep capacity and deployment product without an English sentence',()=>{
+ const text=concreteJapanese('AMD and Meta agree to a definitive multi-year, multi-generation partnership to deploy up to 6 gigawatts of AMD Instinct™ GPUs.',{id:'META'},'提携・出資・技術対応',{id:'AMD',name:'AMD',aliases:[]});
+ assert.equal(text,'METAと最大6GWのInstinct製GPU導入');
+ assert.ok(Array.from(text).length<=30);
+ assert.equal(concreteJapanese('AMD and Meta announced a partnership.',{id:'META'},'提携・出資・技術対応',{id:'AMD',name:'AMD',aliases:[]}),null);
+});
 test('specific description preserves quantity, product, and action',()=>{
  const [r]=rows('Bloom Energy and Oracle partner to deploy up to 2.8 GW of fuel cells.');
  assert.equal(r.text_ja,'ORCLと最大2.8GW燃料電池の導入');assert.deepEqual(r.reasons,[]);

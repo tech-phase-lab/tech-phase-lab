@@ -16,7 +16,7 @@ const allRoots=universe.companies.filter(c=>c.group==='root').map(c=>c.id);
 const roots=process.argv.includes('--all-roots')?allRoots:process.argv.find(a=>a.startsWith('--roots='))?.slice(8).split(',')??['BE','NVDA','NBIS','ORCL','MU'];
 if(new Set(roots).size!==roots.length)throw new Error('Duplicate root tickers');
 if(process.argv.includes('--all-roots')&&(allRoots.length!==50||new Set(roots).size!==50))throw new Error('Expected the fixed 50 root companies');
-const graphs=fixture?[expansionGraph,sparseGraph]:roots.map(t=>{const c=companyIntroductions.find(c=>c.tickers.includes(t));return companyNetworkFor({ticker:t,cik:c.cik})});
+const graphs=fixture?[expansionGraph,sparseGraph]:roots.map(t=>{const c=companyIntroductions.find(c=>c.tickers.includes(t))??universe.companies.find(c=>c.id===t);const graph=companyNetworkFor({ticker:t,cik:c?.cik});if(!graph)throw Error(`No registered map issuer: ${t}`);return graph;});
 const bundle=await build({stdin:{contents:`import React from 'react';import {createRoot} from 'react-dom/client';import {CompanyNetworkMap} from './app/research/stocks/chain-map';const r=createRoot(document.getElementById('app'));window.showGraph=g=>r.render(React.createElement(CompanyNetworkMap,{key:g.root,graph:g,lang:'ja'}));`,resolveDir:base,loader:'tsx'},bundle:true,write:false,outdir:'out',platform:'browser',format:'iife',tsconfig:path.join(base,'tsconfig.json')});
 const css=bundle.outputFiles.find(f=>f.path.endsWith('.css'))?.text??'',js=bundle.outputFiles.find(f=>f.path.endsWith('.js')).text;
 const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,args:['--disable-extensions']});

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
 import { CompanyIntroductionPanel } from "./company-introduction";
+import { CompanyNetworkMap } from "./chain-map";
 import { TradingViewChart } from "./tradingview-chart";
 import styles from "./market-workspace.module.css";
 
@@ -33,5 +34,6 @@ export function MarketWorkspace({ ticker, exchange, name, lang, favoriteControl,
     </div>
 
     {introduction && <CompanyIntroductionPanel introduction={introduction} network={network} lang={lang} />}
+    {!introduction && network && <CompanyNetworkMap key={network.root} graph={network} lang={lang} />}
   </section>;
 }

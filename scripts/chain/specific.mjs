@@ -96,6 +96,34 @@ export function concreteJapanese(quote, counterparty, type, issuer) {
   // Bind each translated action to its own object. Independent occurrence of
   // e.g. "AI factory" and "manufacturing" is not AI-factory manufacturing.
   let fact=null;
+  // These actions name the actual product, use or contractual delivery in the
+  // quote. Broad "announced a relationship" descriptions remain rejected.
+  if(/speed agentic creation/i.test(q))fact='AIエージェントによる制作を高速化';
+  else if(/rearchitect Adobe Premiere and Photoshop for RTX Spark/i.test(q))fact='RTX Spark向け制作ソフトを再設計';
+  else if(/deliver a native Windows experience for personal agents/i.test(q))fact='Windows向け個人用AIエージェント提供';
+  else if(/use Claude to accelerate AMD software development/i.test(q))fact='ClaudeでAMDソフト開発を加速';
+  else if(/optimize the full AI stack, from silicon to software/i.test(q))fact='半導体からソフトまでAI基盤を最適化';
+  else if(/Accelerate Chipmaking Innovations for AI-Driven Computing/i.test(q))fact='AI計算向け半導体製造技術の革新を促進';
+  else if(/to deploy AMD Instinct MI300X accelerators as a service on IBM Cloud/i.test(q))fact='IBMクラウドでMI300Xを提供';
+  else if(/models using NVIDIA Nemotron open models in collaboration with NVIDIA/i.test(q))fact='NemotronでAIモデルを構築';
+  else if(/help enterprises scale hybrid and local agentic AI/i.test(q))fact='企業内・ハイブリッド型AIエージェント拡張';
+  else if(/collaboration on an integrated platform for distributed AI workloads/i.test(q))fact='分散AI処理向け統合基盤で協業';
+  else if(/collaborated to bring additional layers of security and control to the agent stack/i.test(q))fact='AIエージェントの安全性・制御を強化';
+  else if(/Long-Term Partnership to Strengthen US Manufacturing for AI Infrastructure/i.test(q))fact='AI基盤向け米国製造業を長期提携で強化';
+  else if(/collaborating to expand NVIDIA Confidential Compute capabilities beyond WhatsApp/i.test(q))fact='WhatsApp以外にも機密計算機能を拡張';
+  else if(/bring advanced AI and autonomy to equipment and job sites in construction and mining/i.test(q))fact='建設・採掘の機械と現場にAI・自律機能導入';
+  else if(/Collaborate to Help Enterprises Accelerate Agentic AI Inference/i.test(q))fact='企業のAIエージェント推論を高速化';
+  else if(/collaborating on next-generation vehicles, factories and robots using AI, simulation and accelerated computing/i.test(q))fact='車両・工場・ロボットにAIと模擬実験を活用';
+  else if(/collaborating on the development of next-generation materials, process technologies and architectures for advanced DRAM, HBM, and NAND for AI applications/i.test(q))fact='AI向けDRAM・HBM・NAND技術開発';
+  else if(/including HBM4 supply for AMD Instinct MI455X GPUs/i.test(q))fact='MI455X向けHBM4供給で協業';
+  else if(/commercial devices shipping with AMD Ryzen AI PRO processors/i.test(q))fact='法人PCにRyzen製AI PROを搭載';
+  else if(/Partner to Accelerate AI-Powered Photonics/i.test(q))fact='AIを活用した光技術の開発を促進';
+  else if(/collaboration with Snowflake to bring AI-native security and enterprise data together at scale/i.test(q))fact='AI型セキュリティと企業データを統合';
+  else if(/Partner to Power the Secure AI Cloud for the Agentic Era/i.test(q))fact='AIエージェント向けクラウドの安全性を強化';
+  else if(/collaboration with Broadcom on Wi-Fi 8 for our next generation of HPE Networking Self-Driving solutions/i.test(q))fact='自律ネットワーク製品向けWi-Fi8で協業';
+  else if(/expanded partnership to integrate Claude models more deeply into the ServiceNow AI Platform/i.test(q))fact='ServiceNow製AI基盤にClaudeを統合';
+  const instinctCapacity=q.match(/deploy up to (\d+(?:\.\d+)?) gigawatts of AMD Instinct[™]? GPUs/i);
+  if(instinctCapacity)fact=`最大${instinctCapacity[1]}GWのInstinct製GPU導入`;
   const partnershipAmount=q.match(/\$\s*(\d+(?:\.\d+)?)\s*(billion|million)\s+(?:strategic\s+)?AI infrastructure partnership/i);
   if(partnershipAmount){const amount=Number((Number(partnershipAmount[1])*(/billion/i.test(partnershipAmount[2])?10:0.01)).toFixed(6));fact=`${amount}億ドル規模のAI基盤提携`;}
   if(/deliver\s+a\s+VMware AI Factory\s+that\s+pairs\s+VCF\s+with\s+AMD Instinct GPUs/i.test(q))fact='VMware製AI基盤を提供';
@@ -144,7 +172,7 @@ export function concreteJapanese(quote, counterparty, type, issuer) {
   let connector='と';
   if(type==='納入・採用先'&&fact&&/調達/.test(fact))connector='が';
   const text=fact?`${label}${connector}${fact}`:null;
-  return text && lengthOK(text) ? text : null;
+  return text && lengthOK(text) ? text : fact && lengthOK(fact) ? fact : null;
 }
 
 function relationType(q, issuer, other, competition, ownFiling=false) {
@@ -188,11 +216,12 @@ export function candidatesFromSource({source, issuer, universe, filing}) {
     }
   }
   const statements=[...new Set(sentences)];
+  const issuerStatements=statements.filter(s=>contains(s,issuer)&&!irrelevant.test(s)&&(partnership.test(s)||investment.test(s)||transaction.test(s)||competitive.test(s)));
   const own10k = filing?.form === '10-K' && Number(filing.cik) === Number(issuer.cik);
   const rows = [];
   for (const other of companies) {
     if (other.id === issuer.id || !contains(body, other)) continue;
-    const proposals = statements.filter(s => contains(s, issuer) && contains(s, other) && !irrelevant.test(s) && (partnership.test(s) || investment.test(s) || transaction.test(s) || competitive.test(s)));
+    const proposals = issuerStatements.filter(s => contains(s, other));
     for (const statement of proposals) {
       const quote = independentQuote(statement, issuer, other);
       const claim=quote??statement;

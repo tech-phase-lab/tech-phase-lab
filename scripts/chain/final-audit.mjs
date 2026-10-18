@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';import path from 'node:path';import {fileURLToPath} from 'node:url';import {createHash,randomInt} from 'node:crypto';
 import {validateRow,bodyOf,competitionSections,releaseDate} from './evidence.mjs';
-const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..'),out=path.resolve(root,'../../outputs/v4'),data=path.join(root,'lib/research');
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..'),out=process.env.CHAIN_OUTPUT_DIR?path.resolve(process.env.CHAIN_OUTPUT_DIR):path.resolve(root,'../../outputs/v4'),data=path.join(root,'lib/research');
 const read=async p=>JSON.parse(await fs.readFile(p,'utf8'));const write=async(n,v)=>fs.writeFile(path.join(out,n),JSON.stringify(v,null,2)+'\n');
 const rows=await read(path.join(data,'chain_relations.json')),fixed=await read(path.join(data,'chain_universe.json')),profiles=await read(path.join(data,'company-introductions.data.json')),domains=await read(path.join(data,'company_domains.json'));
-const universe=new Map(fixed.companies.map(c=>[c.id,{...c,cik:profiles.find(p=>p.tickers.includes(c.id))?.cik}]));
+const universe=new Map(fixed.companies.map(c=>[c.id,{...c,cik:c.cik??profiles.find(p=>p.tickers.includes(c.id))?.cik}]));
 const documents=await read(path.join(out,'source-documents.json')),docByUrl=new Map(documents.map(d=>[d.url,d]));
 const rejected=[],valid=[],descriptions=new Set();
 for(const row of rows){

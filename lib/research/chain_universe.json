@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "frozenOn": "2026-10-18",
-  "policy": "Frozen snapshot: 50 roster companies plus 60 frequent counterparties. No runtime additions. Future index expansion requires an explicit universe revision.",
+  "policy": "Explicit Nasdaq-100 root expansion requested by owner, official roster snapshot in outputs/v5/expansion-queue.json. No automatic counterparty additions. Original 50 roots retained; only scheduled index roots added.",
   "selection": "Counterparty frequency across the existing 50 graphs, canonicalized; BAM reserved explicitly.",
   "limits": {
     "direct": 12,
@@ -527,9 +527,11 @@
       "name": "Cisco",
       "aliases": [
         "Cisco",
-        "CSCO"
+        "CSCO",
+        "CISCO SYSTEMS, INC."
       ],
-      "group": "connector"
+      "group": "index_root",
+      "cik": 858877
     },
     {
       "id": "GLW",
@@ -883,9 +885,11 @@
       "name": "American Electric Power",
       "aliases": [
         "American Electric Power",
-        "AEP"
+        "AEP",
+        "AMERICAN ELECTRIC POWER CO INC"
       ],
-      "group": "connector"
+      "group": "index_root",
+      "cik": 4904
     },
     {
       "id": "Airbus",
@@ -916,9 +920,11 @@
       "name": "AppLovin",
       "aliases": [
         "AppLovin",
-        "APP"
+        "APP",
+        "AppLovin Corp"
       ],
-      "group": "connector"
+      "group": "index_root",
+      "cik": 1751008
     },
     {
       "id": "Asahi Kasei",
@@ -977,6 +983,193 @@
         "CBRS"
       ],
       "group": "connector"
+    },
+    {
+      "id": "ABNB",
+      "name": "Airbnb, Inc.",
+      "aliases": [
+        "Airbnb, Inc.",
+        "Airbnb, Inc.",
+        "ABNB"
+      ],
+      "group": "index_root",
+      "cik": 1559720
+    },
+    {
+      "id": "ADI",
+      "name": "Analog Devices, Inc.",
+      "aliases": [
+        "Analog Devices, Inc.",
+        "ANALOG DEVICES INC",
+        "ADI"
+      ],
+      "group": "index_root",
+      "cik": 6281
+    },
+    {
+      "id": "ADP",
+      "name": "Automatic Data Processing, Inc.",
+      "aliases": [
+        "Automatic Data Processing, Inc.",
+        "AUTOMATIC DATA PROCESSING INC",
+        "ADP"
+      ],
+      "group": "index_root",
+      "cik": 8670
+    },
+    {
+      "id": "ADSK",
+      "name": "Autodesk, Inc.",
+      "aliases": [
+        "Autodesk, Inc.",
+        "Autodesk, Inc.",
+        "ADSK"
+      ],
+      "group": "index_root",
+      "cik": 769397
+    },
+    {
+      "id": "ALNY",
+      "name": "Alnylam Pharmaceuticals, Inc.",
+      "aliases": [
+        "Alnylam Pharmaceuticals, Inc.",
+        "ALNYLAM PHARMACEUTICALS, INC.",
+        "ALNY"
+      ],
+      "group": "index_root",
+      "cik": 1178670
+    },
+    {
+      "id": "AMGN",
+      "name": "Amgen Inc.",
+      "aliases": [
+        "Amgen Inc.",
+        "AMGEN INC",
+        "AMGN"
+      ],
+      "group": "index_root",
+      "cik": 318154
+    },
+    {
+      "id": "AXON",
+      "name": "Axon Enterprise, Inc.",
+      "aliases": [
+        "Axon Enterprise, Inc.",
+        "AXON ENTERPRISE, INC.",
+        "AXON"
+      ],
+      "group": "index_root",
+      "cik": 1069183
+    },
+    {
+      "id": "BKNG",
+      "name": "Booking Holdings Inc.",
+      "aliases": [
+        "Booking Holdings Inc.",
+        "Booking Holdings Inc.",
+        "BKNG"
+      ],
+      "group": "index_root",
+      "cik": 1075531
+    },
+    {
+      "id": "BKR",
+      "name": "Baker Hughes Company",
+      "aliases": [
+        "Baker Hughes Company",
+        "Baker Hughes Co",
+        "BKR"
+      ],
+      "group": "index_root",
+      "cik": 1701605
+    },
+    {
+      "id": "CCEP",
+      "name": "Coca-Cola Europacific Partners plc",
+      "aliases": [
+        "Coca-Cola Europacific Partners plc",
+        "COCA-COLA EUROPACIFIC PARTNERS plc",
+        "CCEP"
+      ],
+      "group": "index_root",
+      "cik": 1650107
+    },
+    {
+      "id": "CDNS",
+      "name": "Cadence Design Systems, Inc.",
+      "aliases": [
+        "Cadence Design Systems, Inc.",
+        "CADENCE DESIGN SYSTEMS INC",
+        "CDNS"
+      ],
+      "group": "index_root",
+      "cik": 813672
+    },
+    {
+      "id": "CMCSA",
+      "name": "Comcast Corporation",
+      "aliases": [
+        "Comcast Corporation",
+        "COMCAST CORP",
+        "CMCSA"
+      ],
+      "group": "index_root",
+      "cik": 1166691
+    },
+    {
+      "id": "COST",
+      "name": "Costco Wholesale Corporation",
+      "aliases": [
+        "Costco Wholesale Corporation",
+        "COSTCO WHOLESALE CORP /NEW",
+        "COST"
+      ],
+      "group": "index_root",
+      "cik": 909832
+    },
+    {
+      "id": "CPRT",
+      "name": "Copart, Inc. (DE)",
+      "aliases": [
+        "Copart, Inc. (DE)",
+        "COPART INC",
+        "CPRT"
+      ],
+      "group": "index_root",
+      "cik": 900075
+    },
+    {
+      "id": "CSX",
+      "name": "CSX Corporation",
+      "aliases": [
+        "CSX Corporation",
+        "CSX CORP",
+        "CSX"
+      ],
+      "group": "index_root",
+      "cik": 277948
+    },
+    {
+      "id": "CTAS",
+      "name": "Cintas Corporation",
+      "aliases": [
+        "Cintas Corporation",
+        "CINTAS CORP",
+        "CTAS"
+      ],
+      "group": "index_root",
+      "cik": 723254
+    },
+    {
+      "id": "DASH",
+      "name": "DoorDash, Inc.",
+      "aliases": [
+        "DoorDash, Inc.",
+        "DoorDash, Inc.",
+        "DASH"
+      ],
+      "group": "index_root",
+      "cik": 1792789
     }
   ]
 }

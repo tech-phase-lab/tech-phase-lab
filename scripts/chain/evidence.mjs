@@ -8,7 +8,7 @@ const {parse}=require('node-html-parser');
 export const normalize=s=>s.replace(/\s+/g,' ').trim();
 const escape=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 export const aliases=c=>[...new Set([c.name,...c.aliases,c.id])].filter(a=>a.length>=3);
-export function hits(text,c){return aliases(c).flatMap(a=>[...text.matchAll(new RegExp(`(?<![A-Za-z0-9])${escape(normalize(a))}(?![A-Za-z0-9])`,'gi'))].map(m=>({start:m.index,end:m.index+m[0].length}))).sort((a,b)=>a.start-b.start)}
+export function hits(text,c){return aliases(c).flatMap(a=>[...text.matchAll(new RegExp(`(?<![A-Za-z0-9])${escape(normalize(a))}(?![A-Za-z0-9])`,a===c.id&&/^[A-Z.]+$/.test(a)?'g':'gi'))].filter(m=>a!==c.id||!['NOW','APP','ALL','COST','FAST','TEAM'].includes(a)||/(?:NASDAQ|NYSE|ticker|symbol)\s*[:：]?\s*$|\(\s*$|\$$/i.test(text.slice(Math.max(0,m.index-20),m.index))).map(m=>({start:m.index,end:m.index+m[0].length}))).sort((a,b)=>a.start-b.start)}
 export const contains=(text,c)=>hits(text,c).length>0;
 export function bodyOf(html){const dom=parse(html);dom.querySelectorAll('script,style,nav,footer,aside,noscript,button,form,[aria-hidden="true"]').forEach(n=>n.remove());const heading=normalize((dom.querySelector('article h1')??dom.querySelector('main h1')??dom.querySelector('h1'))?.structuredText??'');dom.querySelectorAll('header').forEach(n=>n.remove());const body=normalize((dom.querySelector('article')??dom.querySelector('main')??dom).structuredText);return heading&&!body.includes(heading)?heading+' '+body:body;}
 export function competitionSections(html){

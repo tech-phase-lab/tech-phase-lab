@@ -9,15 +9,6 @@
     "evidence_quote": "Palantir and Nebius partner to deliver a complete sovereign AI stack to Palantir customers"
   },
   {
-    "from": "ORCL",
-    "to": "AMZN",
-    "type": "提携・出資・技術対応",
-    "text_ja": "AMZNとDatabase@AWSへの移行促進",
-    "source_url": "https://www.oracle.com/apac/news/announcement/oracle-and-aws-deepen-strategic-collaboration-as-enterprise-adoption-of-oracle-ai-database-at-aws-accelerates-2026-08-13/",
-    "source_date": "2026-08-13",
-    "evidence_quote": "Oracle and Amazon Web Services (AWS) also signed an expanded, long-term strategic collaboration agreement focused on accelerating customer migration to Oracle AI Database@AWS."
-  },
-  {
     "from": "NBIS",
     "to": "NVDA",
     "type": "提携・出資・技術対応",
@@ -43,15 +34,6 @@
     "source_url": "https://coreweave.com/news/nvidia-and-coreweave-strengthen-collaboration-to-accelerate-buildout-of-ai-factories",
     "source_date": "2026-05-20",
     "evidence_quote": "In addition, NVIDIA has invested $2 billion in CoreWeave Class A common stock at a purchase price of $87.20 per share."
-  },
-  {
-    "from": "NBIS",
-    "to": "BE",
-    "type": "提携・出資・技術対応",
-    "text_ja": "BEとAI基盤への電力供給",
-    "source_url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
-    "source_date": "2026-05-20",
-    "evidence_quote": "Nebius and Bloom Energy partner to power AI infrastructure build-out"
   },
   {
     "from": "NVDA",
@@ -180,6 +162,15 @@
     "evidence_quote": "AMD and Anthropic Announce Strategic Partnership to Deploy up to 2 Gigawatts of AMD Instinct MI450 Series GPUs"
   },
   {
+    "from": "AMZN",
+    "to": "OpenAI",
+    "type": "提携・出資・技術対応",
+    "text_ja": "AMZNがOpenAIに500億ドル出資予定",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926021050/tm267374d1_ex99-1.htm",
+    "source_date": "2026-02-27",
+    "evidence_quote": "Amazon will invest $50 billion in OpenAI"
+  },
+  {
     "from": "AMD",
     "to": "OpenAI",
     "type": "提携・出資・技術対応",
@@ -196,5 +187,221 @@
     "source_url": "https://www.ionq.com/news/ionq-and-desy-research-highlights-quantums-potential-benefits-for-airport",
     "source_date": "2025-03-14",
     "evidence_quote": "In 2022, IonQ and Airbus partnered on a project to develop smarter algorithms based on quantum computers to achieve cost savings due to more efficient cargo loading and distribution."
+  },
+  {
+    "from": "NVDA",
+    "to": "ADBE",
+    "type": "提携・出資・技術対応",
+    "text_ja": "ADBEとAIエージェントによる制作を高速化",
+    "source_url": "https://nvidianews.nvidia.com/news/adobe-and-nvidia-expand-collaboration-to-speed-agentic-creation",
+    "source_date": "2026-10-15",
+    "evidence_quote": "Adobe and NVIDIA Expand Collaboration to Speed Agentic Creation"
+  },
+  {
+    "from": "NVDA",
+    "to": "MSFT",
+    "type": "提携・出資・技術対応",
+    "text_ja": "MSFTとWindows向け個人用AIエージェント提供",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-microsoft-windows-pcs-agents-rtx-spark",
+    "source_date": "2026-05-31",
+    "evidence_quote": "NVIDIA and Microsoft collaborate to deliver a native Windows experience for personal agents, including new security primitives and NVIDIA OpenShell to run agents securely on primary devices."
+  },
+  {
+    "from": "AMAT",
+    "to": "INTC",
+    "type": "提携・出資・技術対応",
+    "text_ja": "INTCとAI計算向け半導体製造技術の革新を促進",
+    "source_url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-intel-collaborate-accelerate-chipmaking",
+    "source_date": "2026-10-06",
+    "evidence_quote": "Applied Materials and Intel Collaborate to Accelerate Chipmaking Innovations for AI-Driven Computing"
+  },
+  {
+    "from": "CRWD",
+    "to": "NVDA",
+    "type": "提携・出資・技術対応",
+    "text_ja": "NVDAとNemotronでAIモデルを構築",
+    "source_url": "https://ir.crowdstrike.com/news-releases/news-release-details/crowdstrike-launches-frontier-models-cybersecurity-created",
+    "source_date": "2026-09-01",
+    "evidence_quote": "CrowdStrike builds the models using NVIDIA Nemotron open models in collaboration with NVIDIA, its AI design partner."
+  },
+  {
+    "from": "AMD",
+    "to": "META",
+    "type": "提携・出資・技術対応",
+    "text_ja": "METAと最大6GWのInstinct製GPU導入",
+    "source_url": "https://newsroom.amd.com/news/amd-and-meta-announce-expanded-strategic-partnersh/",
+    "source_date": "2026-02-24",
+    "evidence_quote": "AMD and Meta agree to a definitive multi-year, multi-generation partnership to deploy up to 6 gigawatts of AMD Instinct™ GPUs."
+  },
+  {
+    "from": "AMD",
+    "to": "IBM",
+    "type": "提携・出資・技術対応",
+    "text_ja": "IBMとIBMクラウドでMI300Xを提供",
+    "source_url": "https://newsroom.amd.com/news/ibm-and-amd-collaborate-with-zyphra-on-next-generation/",
+    "source_date": "2025-10-02",
+    "evidence_quote": "IBM and AMD Unlocking a New Era in AI Training Infrastructure Last year, IBM and AMD announced a collaboration to deploy AMD Instinct MI300X accelerators as a service on IBM Cloud."
+  },
+  {
+    "from": "ORCL",
+    "to": "AMZN",
+    "type": "提携・出資・技術対応",
+    "text_ja": "AMZNとDatabase@AWSへの移行促進",
+    "source_url": "https://www.oracle.com/apac/news/announcement/oracle-and-aws-deepen-strategic-collaboration-as-enterprise-adoption-of-oracle-ai-database-at-aws-accelerates-2026-08-13/",
+    "source_date": "2026-08-13",
+    "evidence_quote": "Oracle and Amazon Web Services (AWS) also signed an expanded, long-term strategic collaboration agreement focused on accelerating customer migration to Oracle AI Database@AWS."
+  },
+  {
+    "from": "NBIS",
+    "to": "BE",
+    "type": "提携・出資・技術対応",
+    "text_ja": "BEとAI基盤への電力供給",
+    "source_url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+    "source_date": "2026-05-20",
+    "evidence_quote": "Nebius and Bloom Energy partner to power AI infrastructure build-out"
+  },
+  {
+    "from": "AMD",
+    "to": "CSCO",
+    "type": "提携・出資・技術対応",
+    "text_ja": "CSCOと企業内・ハイブリッド型AIエージェント拡張",
+    "source_url": "https://newsroom.amd.com/news/aai-2026-cisco-client-partnership-update/",
+    "source_date": "2026-07-23",
+    "evidence_quote": "AMD and Cisco are collaborating to help enterprises scale hybrid and local agentic AI with the performance, security, visibility and centralized control needed for production deployments."
+  },
+  {
+    "from": "INTC",
+    "to": "CSCO",
+    "type": "提携・出資・技術対応",
+    "text_ja": "CSCOと分散AI処理向け統合基盤で協業",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000009/q425earningsrelease.htm",
+    "source_date": "2026-01-22",
+    "evidence_quote": "▪Intel and Cisco announced a collaboration on an integrated platform for distributed AI workloads."
+  },
+  {
+    "from": "NVDA",
+    "to": "Anthropic",
+    "type": "提携・出資・技術対応",
+    "text_ja": "AnthropicとAIエージェントの安全性・制御を強化",
+    "source_url": "https://nvidianews.nvidia.com/news/open-agent-safety-platform",
+    "source_date": "2026-09-28",
+    "evidence_quote": "Industry Leaders Strengthen Agent Security With NVIDIA Anthropic and NVIDIA have collaborated to bring additional layers of security and control to the agent stack."
+  },
+  {
+    "from": "NVDA",
+    "to": "GLW",
+    "type": "提携・出資・技術対応",
+    "text_ja": "GLWとAI基盤向け米国製造業を長期提携で強化",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-corning-announce-long-term-partnership-to-strengthen-us-manufacturing-for-ai-infrastructure",
+    "source_date": "2026-05-06",
+    "evidence_quote": "NVIDIA and Corning Announce Long-Term Partnership to Strengthen US Manufacturing for AI Infrastructure"
+  },
+  {
+    "from": "NVDA",
+    "to": "META",
+    "type": "提携・出資・技術対応",
+    "text_ja": "METAとWhatsApp以外にも機密計算機能を拡張",
+    "source_url": "https://nvidianews.nvidia.com/news/meta-builds-ai-infrastructure-with-nvidia",
+    "source_date": "2026-02-17",
+    "evidence_quote": "NVIDIA and Meta are collaborating to expand NVIDIA Confidential Compute capabilities beyond WhatsApp to emerging use cases across Meta’s portfolio, supporting privacy-enhanced AI at scale."
+  },
+  {
+    "from": "NVDA",
+    "to": "CAT",
+    "type": "提携・出資・技術対応",
+    "text_ja": "CATと建設・採掘の機械と現場にAI・自律機能導入",
+    "source_url": "https://nvidianews.nvidia.com/news/nvidia-releases-new-physical-ai-models-as-global-partners-unveil-next-generation-robots",
+    "source_date": "2026-01-05",
+    "evidence_quote": "In addition, Caterpillar is expanding its collaboration with NVIDIA to bring advanced AI and autonomy to equipment and job sites in construction and mining."
+  },
+  {
+    "from": "NVDA",
+    "to": "ORCL",
+    "type": "提携・出資・技術対応",
+    "text_ja": "ORCLと企業のAIエージェント推論を高速化",
+    "source_url": "https://nvidianews.nvidia.com/news/oracle-and-nvidia-collaborate-to-help-enterprises-accelerate-agentic-ai-inference",
+    "source_date": "2025-03-18",
+    "evidence_quote": "Oracle and NVIDIA Collaborate to Help Enterprises Accelerate Agentic AI Inference"
+  },
+  {
+    "from": "NVDA",
+    "to": "GM",
+    "type": "提携・出資・技術対応",
+    "text_ja": "GMと車両・工場・ロボットにAIと模擬実験を活用",
+    "source_url": "https://nvidianews.nvidia.com/news/general-motors-and-nvidia-collaborate-on-ai-for-next-generation-vehicle-experience-and-manufacturing",
+    "source_date": "2025-03-18",
+    "evidence_quote": "GTC—General Motors and NVIDIA today announced they are collaborating on next-generation vehicles, factories and robots using AI, simulation and accelerated computing."
+  },
+  {
+    "from": "AMD",
+    "to": "Samsung Electronics",
+    "type": "提携・出資・技術対応",
+    "text_ja": "MI455X向けHBM4供給で協業",
+    "source_url": "https://newsroom.amd.com/news/amd-reports-first-quarter-2026-financial-results/",
+    "source_date": "2026-05-05",
+    "evidence_quote": "AMD and Samsung are collaborating on next-generation AI memory and compute technologies, including HBM4 supply for AMD Instinct MI455X GPUs and advanced DRAM solutions for 6th Gen AMD EPYC CPUs."
+  },
+  {
+    "from": "AMAT",
+    "to": "MU",
+    "type": "提携・出資・技術対応",
+    "text_ja": "MUとAI向けDRAM・HBM・NAND技術開発",
+    "source_url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-micron-partner-advance-us-innovation-next",
+    "source_date": "2026-03-10",
+    "evidence_quote": "Teams from Applied Materials and Micron are collaborating on the development of next-generation materials, process technologies and architectures for advanced DRAM, HBM, and NAND for AI applications."
+  },
+  {
+    "from": "AMAT",
+    "to": "GFS",
+    "type": "提携・出資・技術対応",
+    "text_ja": "GFSとAIを活用した光技術の開発を促進",
+    "source_url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-globalfoundries-partner-accelerate-ai",
+    "source_date": "2025-09-23",
+    "evidence_quote": "Applied Materials and GlobalFoundries Partner to Accelerate AI-Powered Photonics"
+  },
+  {
+    "from": "AMD",
+    "to": "DELL",
+    "type": "提携・出資・技術対応",
+    "text_ja": "DELLと法人PCにRyzen製AI PROを搭載予定",
+    "source_url": "https://newsroom.amd.com/news/amd-announces-first-dell-commercial-pcs-powered-by/",
+    "source_date": "2025-01-06",
+    "evidence_quote": "These new PCs will be the first Dell commercial devices shipping with AMD Ryzen AI PRO processors, marking a significant milestone in the strategic collaboration between AMD and Dell."
+  },
+  {
+    "from": "CRWD",
+    "to": "SNOW",
+    "type": "提携・出資・技術対応",
+    "text_ja": "SNOWとAI型セキュリティと企業データを統合",
+    "source_url": "https://ir.crowdstrike.com/news-releases/news-release-details/crowdstrike-brings-falcon-platform-snowflake-unifying-security",
+    "source_date": "2026-08-31",
+    "evidence_quote": "31, 2026-- Fal.Con 2026--CrowdStrike (NASDAQ: CRWD) today announced a new collaboration with Snowflake to bring AI-native security and enterprise data together at scale."
+  },
+  {
+    "from": "CRWV",
+    "to": "CRWD",
+    "type": "提携・出資・技術対応",
+    "text_ja": "CRWDとAIエージェント向けクラウドの安全性を強化",
+    "source_url": "https://coreweave.com/news/crowdstrike-and-coreweave-partner-to-power-the-secure-ai-cloud-for-the-agentic-era",
+    "source_date": "2026-05-20",
+    "evidence_quote": "CrowdStrike and CoreWeave Partner to Power the Secure AI Cloud for the Agentic Era AUSTIN, Texas and Livingston, N.J."
+  },
+  {
+    "from": "AVGO",
+    "to": "HPE",
+    "type": "提携・出資・技術対応",
+    "text_ja": "HPEと自律ネットワーク製品向けWi-Fi8で協業",
+    "source_url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-industrys-first-enterprise-wi-fi-8-access",
+    "source_date": "2026-02-03",
+    "evidence_quote": "Sanjoy Dey, VP of Wireless Product Management, HPE “HPE is proud to continue our collaboration with Broadcom on Wi-Fi 8 for our next generation of HPE Networking Self-Driving solutions."
+  },
+  {
+    "from": "NOW",
+    "to": "Anthropic",
+    "type": "提携・出資・技術対応",
+    "text_ja": "ServiceNow製AI基盤にClaudeを統合",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000005/erq4fy25.htm",
+    "source_date": "2026-01-28",
+    "evidence_quote": "Recent Business Highlights Partner Updates •Today, ServiceNow and Anthropic announced an expanded partnership to integrate Claude models more deeply into the ServiceNow AI Platform."
   }
 ]

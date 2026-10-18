@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';import path from 'node:path';import {fileURLToPath} from 'node:url';import {fetcher} from './evidence.mjs';import {discover} from './discover.mjs';
-const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..'),out=path.resolve(root,'../../outputs/v4'),data=path.join(root,'lib/research');
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..'),out=process.env.CHAIN_OUTPUT_DIR?path.resolve(process.env.CHAIN_OUTPUT_DIR):path.resolve(root,'../../outputs/v4'),data=path.join(root,'lib/research');
 const read=async p=>JSON.parse(await fs.readFile(p,'utf8'));
 const fixed=await read(path.join(data,'chain_universe.json')),profiles=await read(path.join(data,'company-introductions.data.json')),domains=await read(path.join(data,'company_domains.json'));
-const universe=new Map(fixed.companies.map(c=>[c.id,{...c,cik:profiles.find(p=>p.tickers.includes(c.id))?.cik}]));
+const universe=new Map(fixed.companies.map(c=>[c.id,{...c,cik:c.cik??profiles.find(p=>p.tickers.includes(c.id))?.cik}]));
 const roots=process.argv.find(a=>a.startsWith('--roots='))?.slice(8).split(',')??['AMZN','BAM'];
 const get=fetcher(path.resolve(root,'../chain-source-cache'));
 const prior=await read(path.join(out,'source-preflight.json')),documents=await read(path.join(out,'source-documents.json'));

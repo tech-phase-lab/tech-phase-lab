@@ -493,5 +493,207 @@
         }
       }
     ]
+  },
+  "ABNB": {
+    "domains": [
+      {
+        "host": "airbnb.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "ADI": {
+    "domains": [
+      {
+        "host": "analog.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "ADP": {
+    "domains": [
+      {
+        "host": "adp.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "ADSK": {
+    "domains": [
+      {
+        "host": "autodesk.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "AEP": {
+    "domains": [
+      {
+        "host": "aep.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "ALNY": {
+    "domains": [
+      {
+        "host": "alnylam.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "AMGN": {
+    "domains": [
+      {
+        "host": "amgen.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "APP": {
+    "domains": [
+      {
+        "host": "applovin.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      },
+      {
+        "host": "investors.applovin.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "AXON": {
+    "domains": [
+      {
+        "host": "investor.axon.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "BKR": {
+    "domains": [
+      {
+        "host": "bakerhughes.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "CDNS": {
+    "domains": [
+      {
+        "host": "cadence.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "CMCSA": {
+    "domains": [
+      {
+        "host": "comcastcorporation.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "COST": {
+    "domains": [
+      {
+        "host": "costco.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "CPRT": {
+    "domains": [
+      {
+        "host": "copart.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "CSCO": {
+    "domains": [
+      {
+        "host": "cisco.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      },
+      {
+        "host": "investor.cisco.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "CSX": {
+    "domains": [
+      {
+        "host": "csx.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "CTAS": {
+    "domains": [
+      {
+        "host": "cintas.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/723254/000072325426000028/ctas-20260531.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "DASH": {
+    "domains": [
+      {
+        "host": "doordash.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1792789/000179278926000013/dash-20251231.htm",
+        "method": "Issuer 10-K explicitly states corporate website",
+        "registeredOn": "2026-10-18"
+      }
+    ]
+  },
+  "BKNG": {
+    "domains": [
+      {
+        "host": "bookingholdings.com",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000009/bkng-20251231.htm",
+        "method": "Issuer 10-K Company Websites and Investor Relations statement",
+        "proof": "We intend to use the Investor Relations page of our website (ir.bookingholdings.com) to disclose material information for purposes of the SEC's Regulation Fair Disclosure. We encourage our invest"
+      }
+    ]
   }
 }
