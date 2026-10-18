@@ -1,0 +1,571 @@
+{
+  "root": {
+    "ticker": "NVDA",
+    "name": "NVIDIA"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)"
+    },
+    {
+      "ja": "光通信・半導体",
+      "en": "Optics & semiconductors"
+    },
+    {
+      "ja": "サーバー・ネットワーク",
+      "en": "Servers & networking"
+    },
+    {
+      "ja": "クラウド・AI基盤",
+      "en": "Cloud & AI infrastructure"
+    }
+  ],
+  "rivals": [
+    "INTC",
+    "ANET",
+    "AVGO",
+    "AMD"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "台湾積体電路",
+      "sub_en": "Taiwan Semiconductor Manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "チップの製造とCoWoS先端パッケージ",
+          "text_en": "Chip manufacturing and CoWoS advanced packaging",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "quote": "such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "sub": "メモリ",
+      "sub_en": "Memory",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AI向けメモリの購入先",
+          "text_en": "Source of memory purchased for AI",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKHY",
+      "ticker": "SKHY",
+      "name": "SK hynix",
+      "sub": "メモリ",
+      "sub_en": "Memory",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AI向けメモリの購入先",
+          "text_en": "Source of memory purchased for AI",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAMSUNG",
+      "ticker": "Samsung",
+      "name": "Samsung",
+      "sub": "サムスン電子",
+      "sub_en": "Samsung Electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "チップ製造の委託先でメモリの購入先",
+          "text_en": "Contract chip manufacturer and source of memory purchased",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LITE",
+      "ticker": "LITE",
+      "name": "Lumentum",
+      "sub": "光部品",
+      "sub_en": "Optical components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "20億ドルを出資。光部品の購入契約も結ぶ",
+          "text_en": "Invested $2 billion; also signed a purchase agreement for optical components",
+          "source": {
+            "label": "Lumentum 8-K 添付の発表文",
+            "label_en": "Press release attached to Lumentum 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526085412/d41019dex991.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "NVIDIA is investing $2 billion in Lumentum to support R&D, future capacity and operations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COHR",
+      "ticker": "COHR",
+      "name": "Coherent",
+      "sub": "光部品",
+      "sub_en": "Optical components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "20億ドルを出資。光部品の購入契約も結ぶ",
+          "text_en": "Invested $2 billion; also signed a purchase agreement for optical components",
+          "source": {
+            "label": "SiliconANGLE の報道",
+            "label_en": "SiliconANGLE report",
+            "url": "https://siliconangle.com/2026/03/02/nvidia-invests-4b-co-packaged-optics-suppliers-lumentum-coherent/",
+            "level": "press",
+            "date": "2026-03-02"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "sub": "カスタムチップ",
+      "sub_en": "Custom chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "20億ドルを出資。NVLink Fusionで連携",
+          "text_en": "Invested $2 billion; works together through NVLink Fusion",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell announcement",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/1019/nvidia-ai-ecosystem-expands-as-marvell-joins-forces-through-nvlink-fusion",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "In addition, NVIDIA has invested $2 billion in Marvell."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "CPU",
+      "sub_en": "CPU",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "50億ドルを出資。x86とRTXの一体チップを開発",
+          "text_en": "Invested $5 billion; developing chips that combine x86 and RTX",
+          "source": {
+            "label": "The Decoder の報道",
+            "label_en": "The Decoder report",
+            "url": "https://the-decoder.com/nvidia-and-intel-strike-partnership-on-x86-chips-with-5-billion-investment/",
+            "level": "press",
+            "date": "2025-09-18"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "計算用半導体で競合",
+          "text_en": "Competes in computing chips",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "quote": "such as Advanced Micro Devices, Inc., or AMD, Huawei Technologies Co. Ltd., or Huawei, and Intel Corporation, or Intel;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NVIDIA搭載のAIサーバー「Dell AI Factory」を提供",
+          "text_en": "Offers NVIDIA-based AI servers, \"Dell AI Factory\"",
+          "source": {
+            "label": "Dell の発表",
+            "label_en": "Dell announcement",
+            "url": "https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-factory-with-nvidia-delivers-proven-path-to-enterprise-ai-roi.htm",
+            "level": "official",
+            "date": "2026-03-16"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "Arista",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットワーク機器で競合",
+          "text_en": "Competes in networking equipment",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "note": "競合の項目に社名の記載あり",
+            "note_en": "The company is named in the competition section"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットワーク機器で競合",
+          "text_en": "Competes in networking equipment",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "note": "競合の項目に社名の記載あり",
+            "note_en": "The company is named in the competition section"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "通信チップ",
+      "sub_en": "Networking chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットワーク用チップで競合",
+          "text_en": "Competes in networking chips",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "note": "競合の項目に社名の記載あり",
+            "note_en": "The company is named in the competition section"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "CPU・GPU",
+      "sub_en": "CPU & GPU",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GPUなどで競合",
+          "text_en": "Competes in GPUs and other products",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "quote": "such as Advanced Micro Devices, Inc., or AMD, Huawei Technologies Co. Ltd., or Huawei, and Intel Corporation, or Intel;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AzureにGB300 NVL72の大規模クラスタを構築",
+          "text_en": "Built a large-scale GB300 NVL72 cluster on Azure",
+          "source": {
+            "label": "Microsoft Azure ブログ",
+            "label_en": "Microsoft Azure blog",
+            "url": "https://azure.microsoft.com/en-us/blog/microsoft-azure-delivers-the-first-large-scale-cluster-with-nvidia-gb300-nvl72-for-openai-workloads/",
+            "level": "official"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "自社設計のAIチップで競合",
+          "text_en": "Competes with its own AI chip designs",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "note": "競合の項目に社名の記載あり",
+            "note_en": "The company is named in the competition section"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AWSがGB200搭載のP6eサーバーを提供",
+          "text_en": "AWS offers P6e servers with GB200",
+          "source": {
+            "label": "AWS ブログ",
+            "label_en": "AWS blog",
+            "url": "https://aws.amazon.com/blogs/aws/new-amazon-ec2-p6e-gb200-ultraservers-powered-by-nvidia-grace-blackwell-gpus-for-the-highest-ai-performance/",
+            "level": "official"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "自社設計のAIチップで競合",
+          "text_en": "Competes with its own AI chip designs",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "note": "競合の項目に社名の記載あり",
+            "note_en": "The company is named in the competition section"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "OCIでBlackwell搭載のスーパークラスタを提供",
+          "text_en": "Offers Blackwell-based superclusters on OCI",
+          "source": {
+            "label": "Oracle ブログ",
+            "label_en": "Oracle blog",
+            "url": "https://blogs.oracle.com/cloud-infrastructure/supercluster-nvidia-blackwell-dedicated-alloy",
+            "level": "official"
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta",
+      "sub": "AI・広告",
+      "sub_en": "AI & advertising",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "数百万個のBlackwell・Rubin GPUを複数年で導入",
+          "text_en": "Deploying millions of Blackwell and Rubin GPUs over several years",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA announcement",
+            "url": "https://investor.nvidia.com/news/press-release-details/2026/Meta-Builds-AI-Infrastructure-With-NVIDIA/",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "This partnership will enable the large-scale deployment of NVIDIA CPUs and millions of NVIDIA Blackwell and Rubin GPUs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "AI専用クラウド",
+      "sub_en": "AI-focused cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "20億ドルを出資。5GW超のAI工場を計画",
+          "text_en": "Invested $2 billion; plans AI factories of more than 5 GW",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000044/crwv-20260123.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "to accelerate the Company's buildout of more than 5 gigawatts of artificial intelligence factories by 2030"
+          }
+        },
+        {
+          "type": "down",
+          "text": "NVIDIAのGPUプラットフォームでAI工場を運営",
+          "text_en": "Runs AI factories on NVIDIA's GPU platform",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000044/crwv-20260123.htm",
+            "level": "official",
+            "date": "2026-01-23"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius",
+      "sub": "AI専用クラウド",
+      "sub_en": "AI-focused cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約20億ドルを出資。Rubinなどを先行して提供",
+          "text_en": "Invested about $2 billion; offers Rubin and other products early",
+          "source": {
+            "label": "The Next Web の報道",
+            "label_en": "The Next Web report",
+            "url": "https://thenextweb.com/news/nvidia-invests-2-billion-in-nebius",
+            "level": "press",
+            "date": "2026-03-12"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自社設計のAIチップで競合",
+          "text_en": "Competes with its own AI chip designs",
+          "source": {
+            "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
+            "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "note": "競合の項目に社名の記載あり",
+            "note_en": "The company is named in the competition section"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [
+    {
+      "from": "DELL",
+      "to": "CRWV",
+      "text": "DellがGB300 NVL72を初めてCoreWeaveへ出荷",
+      "text_en": "Dell shipped the first GB300 NVL72 to CoreWeave",
+      "source": {
+        "label": "CoreWeave の発表(2025年7月)",
+        "label_en": "CoreWeave announcement (July 2025)",
+        "url": "https://investors.coreweave.com/news/news-details/2025/CoreWeave-Becomes-First-Hyperscaler-to-Deploy-NVIDIA-GB300-NVL72-Platform/default.aspx",
+        "level": "official"
+      }
+    },
+    {
+      "from": "META",
+      "to": "CRWV",
+      "text": "MetaがCoreWeaveと約142億ドルのクラウド契約",
+      "text_en": "Meta signed a cloud contract of about $14.2 billion with CoreWeave",
+      "source": {
+        "label": "CoreWeave 8-K",
+        "label_en": "CoreWeave 8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000050/crwv-20250925.htm",
+        "level": "official",
+        "date": "2025-09-25"
+      }
+    },
+    {
+      "from": "MSFT",
+      "to": "NBIS",
+      "text": "MicrosoftがNebiusと約174億ドルのGPU契約",
+      "text_en": "Microsoft signed a GPU contract of about $17.4 billion with Nebius",
+      "source": {
+        "label": "報道(RCPmag)",
+        "label_en": "Report (RCPmag)",
+        "url": "https://rcpmag.com/articles/2025/09/12/microsoft-nebius-ai-infrastructure-deal.aspx",
+        "level": "press",
+        "date": "2025-09-12"
+      }
+    }
+  ],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・8-K)で確認できた関係だけを載せています。「報道」と付いたものは、公式発表での再確認がまだです。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K and 8-K) are shown. Items marked \"Press\" have not yet been re-confirmed in an official announcement. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}
