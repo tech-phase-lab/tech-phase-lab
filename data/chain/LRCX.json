@@ -1,0 +1,238 @@
+{
+  "root": {
+    "ticker": "LRCX",
+    "name": "Lam Research"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)"
+    },
+    {
+      "ja": "顧客(半導体メーカー)",
+      "en": "Customers (chipmakers)"
+    },
+    {
+      "ja": "競合(製造装置)",
+      "en": "Competitors (equipment makers)"
+    }
+  ],
+  "rivals": [
+    "AMAT",
+    "ASM",
+    "8035",
+    "6501"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の1社(過去3会計年度)",
+          "text_en": "One of its most significant customers (past three fiscal years)",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company."
+          }
+        },
+        {
+          "type": "down",
+          "text": "TSMCが2025年の供給元表彰でLam Researchを公表",
+          "text_en": "Named among suppliers recognized in TSMC’s 2025 supplier awards",
+          "source": {
+            "label": "TSMC の発表(2025年の供給元表彰)",
+            "label_en": "TSMC announcement (2025 supplier awards)",
+            "url": "https://pr.tsmc.com/english/news/3274",
+            "level": "official",
+            "note": "受賞年の実績の根拠で、現在の発注量は示されていません。",
+            "note_en": "Evidence for the award year only; current order volume is not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の1社(過去3会計年度)",
+          "text_en": "One of its most significant customers (past three fiscal years)",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Boise拠点で先端メモリーの研究開発・量産技術を支援(2026年2月)",
+          "text_en": "Supports advanced-memory R&D and production technology at its Boise site (February 2026)",
+          "source": {
+            "label": "Lam Research の発表(2026年2月17日)",
+            "label_en": "Lam Research announcement (February 17, 2026)",
+            "url": "https://investor.lamresearch.com/2026-02-17-Lam-Research-Deepens-Investment-in-Boise-to-Support-Projected-Growth-in-U-S-Semiconductor-Manufacturing",
+            "level": "official",
+            "date": "2026-02-17",
+            "note": "技術協力の内容で、発注金額は示されていません。",
+            "note_en": "Describes technical cooperation; order value is not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "005930",
+      "name": "Samsung Electronics",
+      "sub": "メモリー・受託製造",
+      "sub_en": "Memory & foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の1社(過去3会計年度)",
+          "text_en": "One of its most significant customers (past three fiscal years)",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "000660",
+      "ticker": "000660",
+      "name": "SK hynix",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の1社(過去3会計年度)",
+          "text_en": "One of its most significant customers (past three fiscal years)",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "成膜とエッチングで主要な競合として実名で記載",
+          "text_en": "Named as a primary competitor in deposition and etch",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "Our primary competitor in the dielectric and metals deposition market is Applied Materials, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASM",
+      "ticker": "ASM",
+      "name": "ASM International",
+      "sub": "成膜装置",
+      "sub_en": "Deposition tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ALD・PECVD(成膜)で競合として実名で記載",
+          "text_en": "Named as a competitor in ALD and PECVD deposition",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "For ALD and PECVD, we also compete against ASM International and Wonik IPS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "8035",
+      "ticker": "8035",
+      "name": "Tokyo Electron",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エッチングと湿式洗浄で主要な競合として実名で記載",
+          "text_en": "Named as a primary competitor in etch and wet clean",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "In the etch market, our primary competitors are Applied Materials, Inc.; Hitachi, Ltd.; and Tokyo Electron, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6501",
+      "ticker": "6501",
+      "name": "Hitachi",
+      "sub": "日立製作所",
+      "sub_en": "Hitachi, Ltd.",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エッチングで主要な競合として実名で記載",
+          "text_en": "Named as a primary competitor in etch",
+          "source": {
+            "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
+            "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "quote": "In the etch market, our primary competitors are Applied Materials, Inc.; Hitachi, Ltd.; and Tokyo Electron, Ltd.",
+            "note": "Hitachi, Ltd.(日立製作所・東証6501)の記載です。日立の全事業との同等性を示すものではありません。",
+            "note_en": "Refers to Hitachi, Ltd. (TSE: 6501); does not imply equivalence with all of Hitachi’s businesses."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・8-K)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q and 8-K) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}
