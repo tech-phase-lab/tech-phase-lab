@@ -105,6 +105,29 @@ class TranslationTests(unittest.TestCase):
         self.assertEqual(by_title['Credo Expands Portfolio'], 'Credoがポートフォリオを拡大')
         self.assertIsNone(by_title['Why Credo stock slid'])
 
+    def test_headline_the_model_calls_not_news_is_never_published_or_retried(self):
+        seen = {}
+
+        def send(payload, key):
+            seen['schema'] = payload['text']['format']['schema']['properties']['items']['items']
+            seen['policy'] = payload['instructions']
+            items = self.json.loads(payload['input'])
+            out = [{'id': i['id'], 'titleJa': 'Credoがポートフォリオを拡大', 'kind': 'not-news' if i['title'] == 'Why Credo stock slid' else 'news'}
+                   for i in items]
+            return {'status': 'completed', 'output': [{'type': 'message', 'content': [
+                {'type': 'output_text', 'text': self.json.dumps({'items': out}, ensure_ascii=False)}]}]}
+        self.assertEqual(company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp()), 'done')
+        self.assertIn('kind', seen['schema']['required'])
+        self.assertIn('not-news', seen['policy'])
+        with company_wire.connect(self.path) as db:
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+            titles = {i['titleEn']: i['titleJa'] for i in feed['items']['CRDO']}
+            self.assertEqual(titles['Credo Expands Portfolio'], 'Credoがポートフォリオを拡大')
+            self.assertNotIn('Why Credo stock slid', titles)
+            self.assertEqual([r['title'] for r in company_wire.pending_rows(db, self.now.timestamp() + 99999)], [])
+            reasons = db.execute("SELECT reason FROM company_wire_attempts").fetchall()
+        self.assertEqual([r[0] for r in reasons], ['not-news'])
+
     def test_rejected_headline_is_retried_later_and_given_up_after_three(self):
         send = self.transport({})
         for n in range(4):

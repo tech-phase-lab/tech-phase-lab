@@ -19,6 +19,8 @@ const NOT_NEWS = [
   /\bDisney\b.{0,40}\bCharacter\.AI\b/i,
   /株式市場の暴落.{0,20}ETF|ETFを買い|ETFが最も賢い|ディズニー.{0,10}Character\.AI/,
   /\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\b(?:and )?why\b.{0,80}\b(?:reasons?)\b/i, // teasers whose answer is not in the headline
+  /\?\s*$/, // a headline that asks a question has no fact in it
+  /[？?]\s*$/,
   /理由$|その理由|理由とは|なぜ.{0,40}[？?]$/,
   /逃した[?？]|見逃さない(?:よう|で)|お気に入りの恐竜/,
 ];
