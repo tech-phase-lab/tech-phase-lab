@@ -41,7 +41,7 @@ const textLayout=()=>{
  return failures;
 };
 try{
- for(const graph of graphs)for(const width of [360,1280]){
+ for(const graph of graphs)for(const width of (process.argv.find(a=>a.startsWith('--widths='))?.slice(9).split(',').map(Number)??[360,1280])){
   await page.setViewportSize({width,height:1000});await page.setContent(`<html lang="ja"><meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;background:#0e1824;font-family:Arial,'Yu Gothic',sans-serif}${css}</style><div id="app"></div><script>${js.replaceAll('</script','<\\/script')}</script></html>`);
   await page.evaluate(g=>window.showGraph(g),graph);await page.locator('section').waitFor();
   for(const mode of ['direct','two','all']){
@@ -52,8 +52,10 @@ try{
    const check=await page.evaluate(()=>{
     const fails=[],cards=[...document.querySelectorAll('[data-company]')];
     const overlap=(a,b)=>a.left<b.right-.5&&a.right>b.left+.5&&a.top<b.bottom-.5&&a.bottom>b.top+.5;
-    for(const card of cards){const cr=card.getBoundingClientRect();const rects=[];for(const child of card.children){const range=document.createRange();range.selectNodeContents(child);const rs=[...range.getClientRects()];for(const r of rs)if(r.left<cr.left-.5||r.right>cr.right+.5||r.top<cr.top-.5||r.bottom>cr.bottom+.5)fails.push({company:card.dataset.company,type:'text_outside_card'});rects.push(child.getBoundingClientRect());}for(let i=0;i<rects.length;i++)for(let j=i+1;j<rects.length;j++)if(overlap(rects[i],rects[j]))fails.push({company:card.dataset.company,type:'text_overlap'});}
+    for(const card of cards){const cr=card.getBoundingClientRect();if(cr.height>84)fails.push({type:'oversized_graph_card'});if(card.children.length>2)fails.push({type:'description_in_graph_card'});const rects=[];for(const child of card.children){const range=document.createRange();range.selectNodeContents(child);const rs=[...range.getClientRects()];for(const r of rs)if(r.left<cr.left-.5||r.right>cr.right+.5||r.top<cr.top-.5||r.bottom>cr.bottom+.5)fails.push({company:card.dataset.company,type:'text_outside_card'});rects.push(child.getBoundingClientRect());}for(let i=0;i<rects.length;i++)for(let j=i+1;j<rects.length;j++)if(overlap(rects[i],rects[j]))fails.push({company:card.dataset.company,type:'text_overlap'});}
     for(let i=0;i<cards.length;i++)for(let j=i+1;j<cards.length;j++)if(overlap(cards[i].getBoundingClientRect(),cards[j].getBoundingClientRect()))fails.push({type:'card_overlap'});
+    if(cards.length&&!document.querySelector('[data-layer]'))fails.push({type:'missing_sector_layers'});
+    for(const detail of document.querySelectorAll('[data-company-detail]'))if(!detail.dataset.tone||getComputedStyle(detail).borderLeftColor==='rgba(0, 0, 0, 0)')fails.push({type:'missing_relationship_color'});
     const ids=[...document.querySelectorAll('[data-company-detail]')].map(n=>n.dataset.companyDetail);if(new Set(ids).size!==ids.length)fails.push({type:'duplicate_detail_card'});
     if(document.documentElement.scrollWidth>innerWidth)fails.push({type:'horizontal_overflow'});
     const paths=[...document.querySelectorAll('svg path')],root=cards[0]?.dataset.company;

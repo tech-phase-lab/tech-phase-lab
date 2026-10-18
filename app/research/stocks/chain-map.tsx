@@ -1,7 +1,7 @@
 "use client";
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {chainFocus} from '@/lib/research/chain-network';
-import {networkEdgePath} from '@/lib/research/company-network';
+import {layoutCompanyNetwork,networkLayers,networkEdgePath} from '@/lib/research/company-network';
 import type {CompanyNetwork,NetworkEdge,NetworkMode} from '@/lib/research/company-network';
 import styles from './company-network.module.css';
 type Props={graph:CompanyNetwork;lang:'ja'|'en'};
@@ -16,11 +16,10 @@ export function CompanyNetworkMap({graph}:Props){
  const byId=new Map(graph.nodes.map(n=>[n.id,n]));
  const root=byId.get(graph.root)!;
  const tone=(e:NetworkEdge)=>e.kind==='competition'?'competition':e.kind==='supply'?e.to===graph.root?'upstream':e.from===graph.root?'downstream':'indirect':'partner';
- const tag=(e:NetworkEdge)=>({competition:'競合',upstream:'供給・採用元',downstream:'納入・採用先',indirect:'さらに先の関係',partner:'提携・出資・技術対応'}[tone(e)]);
- const columns=width<500?2:Math.min(5,Math.max(2,Math.floor(width/180))),gap=12,pad=12;
- const cardWidth=(width-pad*2-gap*(columns-1))/columns,cardHeight=154;
- const positions=Object.fromEntries(focus.nodes.map((n,i)=>[n.id,{x:pad+(i%columns)*(cardWidth+gap),y:pad+Math.floor(i/columns)*(cardHeight+32),width:cardWidth,height:cardHeight}]));
- const height=24+Math.ceil(focus.nodes.length/columns)*(cardHeight+32);
+ const primary=(edges:NetworkEdge[])=>edges.find(e=>e.kind==='supply'&&e.to===graph.root)??edges.find(e=>e.kind==='supply'&&e.from===graph.root)??edges.find(e=>e.kind==='competition')??edges.find(e=>e.from===graph.root||e.to===graph.root)??edges[0];
+ const tag=(e:NetworkEdge)=>({competition:'競合',upstream:'供給',downstream:'納入',indirect:'間接',partner:e.evidence.some(v=>v.label.ja.includes('出資'))?'出資':'提携'}[tone(e)]);
+ const {positions,height,layers}=layoutCompanyNetwork(focus.nodes,width);
+ const edgePath=(edge:NetworkEdge,index:number)=>{const peers=focus.edges.filter(e=>(e.from===edge.from&&e.to===edge.to)||(e.from===edge.to&&e.to===edge.from));const shift=(peers.indexOf(edge)-(peers.length-1)/2)*5;return networkEdgePath({...positions[edge.from],x:positions[edge.from].x+shift},{...positions[edge.to],x:positions[edge.to].x+shift},index%4*2)};
  const groups=new Map<string,NetworkEdge[]>();
  for(const n of focus.nodes){if(n.id===graph.root)continue;const edges=focus.edges.filter(e=>e.from===n.id||e.to===n.id);if(edges.length)groups.set(n.id,edges);}
  useEffect(()=>{if(!board.current)return;const el=board.current;const measure=()=>setWidth(Math.floor(el.getBoundingClientRect().width));measure();const ro=new ResizeObserver(measure);ro.observe(el);return()=>ro.disconnect()},[graph.edges.length]);
@@ -33,14 +32,15 @@ export function CompanyNetworkMap({graph}:Props){
   {graph.edges.length===0?<p className={styles.hint}>{graph.status==='no_verified_relations'?'公式の情報から確認できる関係は、現時点ではありません':'この銘柄の連鎖マップは準備中です'}</p>:<>
    <div className={styles.legend}>{[['upstream','供給・採用元'],['downstream','納入・採用先'],['partner','提携・出資・技術対応'],['indirect','さらに先の関係'],...(hasCompetition?[['competition','競合']]:[])].map(([color,label])=><span key={color} data-tone={color}>{label}</span>)}</div>
    <div className={styles.board} ref={board} style={{height}}>
-    <svg className={styles.lines} width="100%" height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true">{focus.edges.map(e=><path key={e.id} d={networkEdgePath(positions[e.from],positions[e.to])} data-tone={tone(e)} data-from={e.from} data-to={e.to}/>)}</svg>
-    {focus.nodes.map(n=>{const p=positions[n.id],edges=focus.edges.filter(e=>e.from===n.id||e.to===n.id),own=edges.find(e=>e.from===graph.root||e.to===graph.root)??edges[0];return <div key={n.id} className={styles.node} data-company={n.id} data-tone={n.id===graph.root?'selected':own?tone(own):'indirect'} style={{left:p.x,top:p.y,width:p.width,height:p.height}} aria-label={n.name}>
-     {n.ticker&&<strong>{n.ticker}</strong>}<span className={styles.companyName}>{n.name}</span><span>{n.id===graph.root?'起点の企業':own?.evidence[0].label.ja}</span>
+    {layers.map(layer=><div key={layer.index} className={styles.layer} data-layer={layer.index} style={{top:layer.y}}>{networkLayers[layer.index].ja}</div>)}
+    <svg className={styles.lines} width="100%" height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true">{focus.edges.map((e,index)=><path key={e.id} d={edgePath(e,index)} data-tone={tone(e)} data-direct={e.from===graph.root||e.to===graph.root} data-from={e.from} data-to={e.to}/>)}</svg>
+    {focus.nodes.map(n=>{const p=positions[n.id],edges=focus.edges.filter(e=>e.from===n.id||e.to===n.id),own=primary(edges);return <div key={n.id} className={styles.node} data-company={n.id} data-symbol={Boolean(n.ticker)} data-competitor={edges.some(e=>e.kind==='competition')} aria-current={n.id===graph.root} data-tone={n.id===graph.root?'selected':own?tone(own):'indirect'} style={{left:p.x,top:p.y,width:p.width,height:p.height}} aria-label={n.name}>
+     <strong>{n.ticker??n.name}</strong>{n.ticker&&<span className={styles.companyName}>{n.name}</span>}
     </div>})}
    </div>
-   <div className={styles.inspector}><h3>{root.ticker??root.name}{mode==='direct'?'との関係':'を起点とした関係'}</h3><ul>{[...groups].map(([id,edges])=><li key={id} data-company-detail={id}>
-    <div className={styles.connectionTitle}><strong>{byId.get(id)?.name}</strong></div><div className={styles.tags}>{[...new Set(edges.map(tag))].map(t=><span key={t}>{t}</span>)}</div>
-    {edges.map(e=><div key={e.id}>{mode!=='direct'&&<p className={styles.relationshipText}>{byId.get(e.from)?.name} → {byId.get(e.to)?.name}</p>}<p className={styles.relationshipText}>{e.evidence[0].label.ja}</p><details className={styles.evidence}><summary>出典・引用・発表日</summary>{e.evidence.map((v,i)=><div key={i}><time dateTime={v.reviewedOn}>{v.reviewedOn}</time><blockquote>{v.evidence_quote}</blockquote>{v.sources.map(s=><a key={s.url} href={s.url} target="_blank" rel="noreferrer">公式資料を開く ↗</a>)}</div>)}</details></div>)}
+   <div className={styles.inspector}><h3>{root.ticker??root.name}{mode==='direct'?'との関係':'を起点とした関係'}</h3><ul>{[...groups].map(([id,edges])=><li key={id} data-company-detail={id} data-tone={tone(primary(edges))}>
+    <div className={styles.connectionTitle}><strong>{byId.get(id)?.ticker??byId.get(id)?.name}</strong><div className={styles.tags}>{[...new Map(edges.map(e=>[tag(e),tone(e)])).entries()].map(([label,color])=><span key={label} data-tone={color}>{label}</span>)}</div></div>
+    <p className={styles.relationshipText}>{primary(edges).evidence[0].label.ja}</p><details className={styles.evidence}><summary>出典・引用・発表日</summary>{edges.map(e=><div key={e.id}>{e.evidence.map((v,i)=><div key={i}><p className={styles.relationshipText}>{v.label.ja}</p><time dateTime={v.reviewedOn}>{v.reviewedOn}</time><blockquote>{v.evidence_quote}</blockquote>{v.sources.map(s=><a key={s.url} href={s.url} target="_blank" rel="noreferrer">公式資料を開く ↗</a>)}</div>)}</div>)}</details>
    </li>)}</ul></div>
    <div className={styles.allControl}><button type="button" onClick={()=>setMode(mode==='all'?'direct':'all')}>{mode==='all'?'直接の関係に戻る':'全体を見る'}</button></div>
   </>}
