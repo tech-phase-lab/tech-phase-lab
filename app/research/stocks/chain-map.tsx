@@ -3,11 +3,13 @@ import {useEffect,useMemo,useRef,useState} from 'react';
 import {chainFocus} from '@/lib/research/chain-network';
 import {layoutCompanyNetwork,networkLayers,networkEdgePath} from '@/lib/research/company-network';
 import type {CompanyNetwork,NetworkEdge,NetworkMode} from '@/lib/research/company-network';
-import {NvidiaCompanyNetworkMap} from './nvidia-network';
+import {chainDataFor} from '@/lib/research/chain-map-data';
+import {StockChainMap} from './stock-chain-map';
 import styles from './company-network.module.css';
 type Props={graph:CompanyNetwork;lang:'ja'|'en'};
 export function CompanyNetworkMap(props:Props){
- if(props.graph.root==='NVDA')return <NvidiaCompanyNetworkMap {...props}/>;
+ const chain=chainDataFor(props.graph.root);
+ if(chain)return <StockChainMap data={chain} lang={props.lang}/>;
  return <ChainCompanyNetworkMap {...props}/>;
 }
 function ChainCompanyNetworkMap({graph}:Props){
