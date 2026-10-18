@@ -1,0 +1,58 @@
+{
+  "NBIS": {
+    "kind": "partner",
+    "ja": "GPU採用先でもある戦略提携先。2026年3月11日にAI基盤の共同開発とNVIDIAによる20億ドルの出資を発表。",
+    "en": "A GPU adopter and strategic partner. On March 11, 2026, the companies announced AI infrastructure collaboration and a $2 billion NVIDIA investment.",
+    "sources": [
+      {
+        "label": "NVIDIA / Nebius · Strategic partnership, March 11, 2026",
+        "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Nebius-Partner-to-Scale-Full-Stack-AI-Cloud/"
+      },
+      {
+        "label": "Nebius · Strategic partnership, March 11, 2026",
+        "url": "https://nebius.com/newsroom/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud"
+      }
+    ]
+  },
+  "ANET": {
+    "kind": "competition",
+    "ja": "AIデータセンターのネットワーク製品で競合。GPUの競合ではない。",
+    "en": "Competes in AI data-center networking, rather than GPUs.",
+    "sources": [
+      {
+        "label": "NVIDIA FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+      },
+      {
+        "label": "Arista FY2025 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+      }
+    ]
+  },
+  "INTC": {
+    "kind": "competition",
+    "ja": "GPU・AIアクセラレーターなどの計算用半導体で競合。",
+    "en": "Competes in GPUs, AI accelerators and other computing chips.",
+    "sources": [
+      {
+        "label": "NVIDIA FY2026 Form 10-K · Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+      }
+    ]
+  },
+  "AVGO": {
+    "kind": "competition",
+    "ja": "AI専用半導体（ASIC）・ネットワークで競合。GPU製品同士の比較ではない。",
+    "en": "Competes through custom AI accelerators (ASICs) and networking, rather than a GPU-to-GPU comparison.",
+    "sources": [
+      {
+        "label": "NVIDIA FY2026 Form 10-K · SoC and networking competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+      },
+      {
+        "label": "Broadcom · Custom AI accelerator announcement, June 24, 2026",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-unveil-llm-optimized-intelligence-processor"
+      }
+    ]
+  }
+}

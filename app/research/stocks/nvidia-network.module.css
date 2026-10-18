@@ -18,7 +18,7 @@
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .legend span::before { content: ""; width: 17px; border-top: 2px solid var(--tone); }
 .network [data-tone="upstream"] { --tone: #58caff; }
-.network [data-tone="downstream"] { --tone: #ffb65c; }
+.network [data-tone="downstream"] { --tone: #b8a27c; }
 .network [data-tone="partner"] { --tone: #56e0b1; }
 .network [data-tone="competition"] { --tone: #d1a3ff; }
 .network [data-tone="indirect"] { --tone: #a4b8d1; }
@@ -44,7 +44,7 @@
 .node[data-relevant="false"] { background: #111c2a; border-color: #2b394a; color: #aebed0; }
 .node[data-relevant="false"] > span { color: #9aaec4; }
 .node[data-tone="upstream"] { background: #1c344a; }
-.node[data-tone="downstream"] { background: #302d26; }
+.node[data-tone="downstream"] { background: #172435; }
 .node[data-tone="partner"] { background: #1b332f; }
 .node[data-competitor="true"] { border-style: dashed; }
 .node[aria-current="true"] { border: 2px solid #ffffff; background: #e7f1fc; color: #122334; box-shadow: 0 0 0 3px #ffffff24; }
@@ -123,3 +123,6 @@
 .mapHeading { border-top: 1px solid #2b3b4d; }
 @media (max-width:600px) { .network .competitor { font-size: 12px; } }
 @media (prefers-reduced-motion:reduce) { .competitor { transition: none; } }
+
+.network .competitor { flex-direction: column; gap: 2px; }
+.competitor small { color: #bdafcf; font-size: 9px; font-weight: 400; line-height: 1.3; }

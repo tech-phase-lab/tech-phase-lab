@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { layoutCompanyNetwork, networkEdgePath, networkFocus, networkLayers } from "@/lib/research/company-network";
 import type { CompanyNetwork, NetworkEdge, NetworkMode, NetworkNode } from "@/lib/research/company-network";
-import { nvidiaNetworkView } from "@/lib/research/nvidia-network";
+import { nvidiaCompetitorProduct, nvidiaNetworkView } from "@/lib/research/nvidia-network";
 import styles from "./nvidia-network.module.css";
 
 type Props = { graph: CompanyNetwork; lang: "ja" | "en" };
@@ -86,7 +86,7 @@ export function NvidiaCompanyNetworkMap({ graph: sourceGraph, lang }: Props) {
       <h3><span>05</span>{t("競合は？", "Who competes with it?")}</h3>
       <div>{[...focus.competitors].map(id => {
         const node = byId.get(id)!;
-        return <button type="button" key={id} className={styles.competitor} data-flashed={flashed === id} onClick={() => flash(id)}>{node.ticker ?? label(node, lang)}</button>;
+        return <button type="button" key={id} className={styles.competitor} data-flashed={flashed === id} onClick={() => flash(id)}>{node.ticker ?? label(node, lang)}{nvidiaCompetitorProduct(id, lang) && <small>{nvidiaCompetitorProduct(id, lang)}</small>}</button>;
       })}{focus.competitors.size === 0 && <span>{t("具体的な競合は未収録", "No named competitors recorded")}</span>}</div>
     </div>
     <h3 className={styles.mapHeading}><span>06</span>{t("どこと繋がる？", "Who does it work with?")}</h3>
@@ -120,7 +120,7 @@ export function NvidiaCompanyNetworkMap({ graph: sourceGraph, lang }: Props) {
         const other = byId.get(edge.from === selected.id ? edge.to : edge.from)!;
         const evidence = edge.evidence.find(item => item.about === selected.id) ?? edge.evidence[0];
         return <li key={edge.id} data-tone={edgeTone(edge)}>
-          <div className={styles.connectionTitle}><strong>{other.ticker ?? label(other, lang)}</strong><small>{edge.kind === "supply" ? (edge.to === selected.id ? t("供給・採用元", "Supplier") : t("納入・採用先", "Recipient")) : edge.kind === "competition" ? t("競合", "Competitor") : edge.kind === "investment" ? t("出資", "Investment") : t("提携・連携", "Collaboration")}</small></div>
+          <div className={styles.connectionTitle}><strong>{other.ticker ?? label(other, lang)}</strong><small>{other.id === "NBIS" ? t("提携・出資・採用先", "Partner, investment & adopter") : edge.kind === "supply" ? (edge.to === selected.id ? t("供給・採用元", "Supplier") : t("納入・採用先", "Recipient")) : edge.kind === "competition" ? t("競合", "Competitor") : edge.kind === "investment" ? t("出資", "Investment") : t("提携・連携", "Collaboration")}</small></div>
           <p className={styles.relationshipText}>{evidence.about !== selected.id && <span>{byId.get(evidence.about)?.name ?? evidence.about}: </span>}{evidence.label[lang]}</p>
         </li>;
       })}</ul></section>;

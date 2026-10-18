@@ -11,7 +11,7 @@ test('live company profile uses the complete reviewed NVIDIA map',()=>{
  assert.equal(companyNetworkFor({ticker:'NVDA',cik:1}),null);
 });
 
-import {nvidiaNetworkView} from '../lib/research/nvidia-network.ts';
+import {nvidiaNetworkView, nvidiaReviewedNetwork, nvidiaCompetitorProduct} from '../lib/research/nvidia-network.ts';
 import {networkFocus} from '../lib/research/company-network.ts';
 test('NVDA display is limited to eight cards directly and twenty at two steps including the root',()=>{
  const source=companyNetworkFor({ticker:'NVDA',cik:1045810});
@@ -22,11 +22,23 @@ test('NVDA display is limited to eight cards directly and twenty at two steps in
   assert.equal(new Set(view.nodes.map(n=>n.id)).size,view.nodes.length);
   const ids=new Set(view.nodes.map(n=>n.id));
   assert.ok(view.edges.every(e=>ids.has(e.from)&&ids.has(e.to)));
-  const allowed=networkFocus(source,'NVDA',mode);
+  const allowed=networkFocus(nvidiaReviewedNetwork(source),'NVDA',mode);
   assert.ok(view.nodes.every(n=>allowed.distances.has(n.id)||allowed.competitors.has(n.id)));
  }
  assert.equal(nvidiaNetworkView(source,'direct').nodes.length,8);
  assert.equal(nvidiaNetworkView(source,'two').nodes.length,20);
  assert.equal(source.nodes.length,41);
  assert.equal(source.edges.length,61);
+});
+
+test('NVDA separates GPU, custom-chip and networking rivalry and shows the Nebius partnership',()=>{
+ const source=companyNetworkFor({ticker:'NVDA',cik:1045810});
+ const view=nvidiaNetworkView(source,'direct');
+ for(const peer of ['NBIS','AMD','INTC','AVGO'])assert.ok(view.nodes.some(n=>n.id===peer));
+ const nbis=view.edges.find(e=>e.to==='NBIS'||e.from==='NBIS');
+ assert.equal(nbis.kind,'partner');
+ assert.ok(nbis.evidence[0].sources.some(s=>s.url.includes('NVIDIA-and-Nebius-Partner')));
+ assert.match(nvidiaCompetitorProduct('ANET','en'),/Networking/);
+ assert.match(nvidiaCompetitorProduct('AVGO','en'),/ASICs/);
+ assert.equal(source.edges.some(e=>e.id.includes('review20261018')),false);
 });
