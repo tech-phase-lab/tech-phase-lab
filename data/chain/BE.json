@@ -204,29 +204,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "SKE",
-      "ticker": "SK ecoplant",
-      "name": "SK ecoplant",
-      "sub": "韓国の販売提携先",
-      "sub_en": "Korea distribution partner",
-      "row": 2,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "2018年から戦略的な販売パートナーで、韓国で装置を組み立てる合弁事業もある(年次報告)",
-          "text_en": "Strategic distribution partner since 2018, with a joint venture assembling Energy Servers in South Korea (annual report)",
-          "source": {
-            "label": "Bloom Energy 10-K(2025年度)",
-            "label_en": "Bloom Energy 10-K (FY2025)",
-            "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm",
-            "level": "official",
-            "date": "2026-02-09",
-            "quote": "SK ecoplant in the Republic of Korea remains a strategic partner for distribution of our Energy Server."
-          }
-        }
-      ]
     }
   ],
   "far": [],

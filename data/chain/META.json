@@ -34,20 +34,11 @@
     }
   ],
   "rivals": [
-    "SNAP",
-    "APP",
-    "TikTok",
-    "AAPL",
     "GOOGL",
+    "AAPL",
+    "SNAP",
     "PINS",
-    "RDDT",
-    "RBLX",
-    "MTCH",
-    "BMBL",
-    "U",
-    "YELP",
-    "SPOT",
-    "INTC"
+    "RDDT"
   ],
   "companies": [
     {
@@ -504,28 +495,6 @@
       ]
     },
     {
-      "id": "TikTok",
-      "ticker": "TikTok",
-      "name": "TikTok",
-      "sub": "短編動画",
-      "sub_en": "Short video",
-      "row": 3,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "競合サービスとしてTikTokを実名で記載",
-          "text_en": "Names TikTok as a competing service",
-          "source": {
-            "label": "Meta 10-K(2025年12月期)",
-            "label_en": "Meta 10-K (fiscal year ended December 2025)",
-            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
-            "level": "official",
-            "quote": "competitive products and services, such as TikTok, that have reduced some users' engagement with our products and services"
-          }
-        }
-      ]
-    },
-    {
       "id": "OWL",
       "ticker": "OWL",
       "name": "Blue Owl Capital",
@@ -601,56 +570,6 @@
       ]
     },
     {
-      "id": "TERRA",
-      "ticker": "TerraPower",
-      "name": "TerraPower",
-      "sub": "原子力開発",
-      "sub_en": "Nuclear development",
-      "row": 2,
-      "relations": [
-        {
-          "type": "up",
-          "text": "Natriumの新型炉2基(最大690MW)の開発に資金を提供(2026年1月)",
-          "text_en": "Funding for development of two new Natrium units (up to 690MW) (January 2026)",
-          "source": {
-            "label": "Meta ニュースルーム(2026年1月)",
-            "label_en": "Meta newsroom (Jan 2026)",
-            "url": "https://about.fb.com/news/2026/01/meta-nuclear-energy-projects-power-american-ai-leadership/",
-            "level": "official",
-            "date": "2026-01-09",
-            "quote": "Our agreement with TerraPower will provide funding that supports the development of two new Natrium® units capable of generating up to 690 MW of firm power with delivery as early as 2032.",
-            "note": "最大の数字で、開発中の計画です。TerraPowerは非上場です。",
-            "note_en": "Up-to figures for units under development; TerraPower is private."
-          }
-        }
-      ]
-    },
-    {
-      "id": "SAGE",
-      "ticker": "Sage Geosystems",
-      "name": "Sage Geosystems",
-      "sub": "地熱発電",
-      "sub_en": "Geothermal",
-      "row": 2,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "データセンター向けに地熱発電を拡大する提携(2024年8月)",
-          "text_en": "Partnership to expand geothermal power for its data centers (August 2024)",
-          "source": {
-            "label": "Meta ニュースルーム(2024年8月)",
-            "label_en": "Meta newsroom (Aug 2024)",
-            "url": "https://about.fb.com/news/2024/08/new-geothermal-energy-project-to-support-our-data-centers/",
-            "level": "official",
-            "date": "2024-08-26",
-            "quote": "We’re partnering with Sage Geosystems on a first-of-its-kind project to significantly expand the use of geothermal energy in the US.",
-            "note": "最大150MWの計画で、初期段階は2027年稼働を目指しています。非上場です。",
-            "note_en": "Plan of up to 150MW; first phase aimed to be online in 2027; Sage is private."
-          }
-        }
-      ]
-    },
-    {
       "id": "NEE",
       "ticker": "NEE",
       "name": "NextEra Energy",
@@ -670,31 +589,6 @@
             "quote": "PNM and NextEra Energy Resources on a 190 MW solar facility paired with a 50 MW 4-hour battery energy storage system in New Mexico",
             "note": "取引日は示されておらず、2024年末時点の状況を示すページです。",
             "note_en": "No deal date is given; the page states status as of end of 2024."
-          }
-        }
-      ]
-    },
-    {
-      "id": "SCALE",
-      "ticker": "Scale AI",
-      "name": "Scale AI",
-      "sub": "AIデータ",
-      "sub_en": "AI data",
-      "row": 4,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "Scale AIへ138億ドルの少数株主として出資(2025年中に完了、年次報告)",
-          "text_en": "Minority investment of $13.80B in Scale AI, closed during 2025 (annual report)",
-          "source": {
-            "label": "Meta 10-K(2025年度)",
-            "label_en": "Meta 10-K (FY2025)",
-            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
-            "level": "official",
-            "date": "2026-01-29",
-            "quote": "our minority investments in Scale AI for $ 13.80 billion, which was closed during 2025",
-            "note": "重要な影響力を持たない少数出資です。Scale AIは非上場です。",
-            "note_en": "A minority investment without significant influence; Scale AI is private."
           }
         }
       ]
@@ -720,31 +614,6 @@
             "quote": "has announced a strategic collaboration with Meta to provide personalized training insights and alerts",
             "note": "一部のGarmin機器との連携機能です。",
             "note_en": "Features pair with select Garmin devices."
-          }
-        }
-      ]
-    },
-    {
-      "id": "BFL",
-      "ticker": "Black Forest Labs",
-      "name": "Black Forest Labs",
-      "sub": "画像生成AI",
-      "sub_en": "Image-generation AI",
-      "row": 4,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "Black Forest Labsが、Metaなどのパートナーが同社のモデルで新しい体験を作っていると説明(2025年12月)",
-          "text_en": "Black Forest Labs says partners including Meta are building on its models (December 2025)",
-          "source": {
-            "label": "Black Forest Labs ブログ(2025年12月)",
-            "label_en": "Black Forest Labs blog (Dec 2025)",
-            "url": "https://bfl.ai/blog/our-300m-series-b",
-            "level": "official",
-            "date": "2025-12-01",
-            "quote": "Partners from Adobe and Canva to Meta and Microsoft are building on our models to power new creative experiences.",
-            "note": "契約の条件は示されていません。非上場です。",
-            "note_en": "No contract terms disclosed; the company is private."
           }
         }
       ]

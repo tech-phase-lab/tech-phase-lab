@@ -26,8 +26,7 @@
     "FLNC",
     "ENPH",
     "SEDG",
-    "EOSE",
-    "ALB"
+    "EOSE"
   ],
   "companies": [
     {
@@ -236,31 +235,6 @@
             "quote": "Tesla Supercharger, IONNA, Electrify America, and ChargePoint are supported today",
             "note": "北米の対象車が対象で、全車種・全拠点が無条件で使えるわけではありません。",
             "note_en": "Applies to eligible North American vehicles; not every model or site is covered unconditionally."
-          }
-        }
-      ]
-    },
-    {
-      "id": "xAI",
-      "ticker": "xAI",
-      "name": "xAI",
-      "sub": "AI",
-      "sub_en": "AI",
-      "row": 1,
-      "relations": [
-        {
-          "type": "down",
-          "text": "Megapackの購入で、2025年にTeslaが4.3億ドルの売上を計上(関連当事者取引)",
-          "text_en": "Tesla recognized $430M of revenue in 2025 from xAI’s Megapack purchases (related-party transaction)",
-          "source": {
-            "label": "Tesla 10-K(2025年度)(注記15)",
-            "label_en": "Tesla 10-K FY2025 (Note 15)",
-            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
-            "level": "official",
-            "date": "2025-12",
-            "quote": "we recognized $ 430 million of revenues and $ 285 million of cost of revenues from xAI for its purchase of our Megapack products in the ordinary course of business.",
-            "note": "関連当事者との取引です。xAIはその後SpaceXと統合されたと、Teslaの10-Qにあります。",
-            "note_en": "Related-party transaction; xAI was later combined with SpaceX per Tesla’s 10-Q."
           }
         }
       ]

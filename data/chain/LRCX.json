@@ -24,14 +24,8 @@
   ],
   "rivals": [
     "AMAT",
-    "ASM",
     "8035",
-    "6501",
-    "WONIK",
-    "SCREEN",
-    "SEMES",
-    "ACMR",
-    "NVMI"
+    "6501"
   ],
   "companies": [
     {
@@ -461,29 +455,6 @@
       ]
     },
     {
-      "id": "SEMES",
-      "ticker": "SEMES",
-      "name": "Semes",
-      "sub": "洗浄装置",
-      "sub_en": "Cleaning tools",
-      "row": 2,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "湿式洗浄の主要な競合として実名で記載",
-          "text_en": "Named as a primary competitor in wet clean",
-          "source": {
-            "label": "Lam 10-K(2026年度)",
-            "label_en": "Lam 10-K (fiscal 2026)",
-            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
-            "level": "official",
-            "date": "2026-08-07",
-            "quote": "our primary competitors in the wet clean market are Screen Holding Co., Ltd.; Semes Co., Ltd.; and Tokyo Electron, Ltd."
-          }
-        }
-      ]
-    },
-    {
       "id": "ACMR",
       "ticker": "ACMR",
       "name": "ACM Research",
@@ -532,31 +503,6 @@
       ]
     },
     {
-      "id": "JSR",
-      "ticker": "JSR",
-      "name": "JSR / Inpria",
-      "sub": "フォトレジスト",
-      "sub_en": "Photoresists",
-      "row": 3,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "EUVドライレジストなど次世代パターニングで、特許のクロスライセンスと協業契約(2025年9月15日)",
-          "text_en": "Cross-licensing and collaboration agreement on next-generation patterning including EUV dry resist (September 15, 2025)",
-          "source": {
-            "label": "Lam の発表(2025年9月15日)",
-            "label_en": "Lam press release (Sep 15, 2025)",
-            "url": "https://newsroom.lamresearch.com/2025-09-15-Lam-Research-and-JSR-Corporation-Inpria-Corporation-Enter-Cross-Licensing,-Collaboration-Agreement-to-Advance-Semiconductor-Manufacturing",
-            "level": "official",
-            "date": "2025-09-15",
-            "quote": "Lam and JSR/Inpria have entered into a non-exclusive cross-licensing and collaboration agreement to advance leading-edge semiconductor manufacturing.",
-            "note": "非独占の契約で、訴訟の取り下げには裁判所の承認が必要です。",
-            "note_en": "Non-exclusive; dismissal of litigation subject to court approvals."
-          }
-        }
-      ]
-    },
-    {
       "id": "IBM",
       "ticker": "IBM",
       "name": "IBM",
@@ -577,31 +523,6 @@
             "quote": "IBM (NYSE: IBM ) and Lam Research Corp. (NASDAQ: LRCX ) today announced a collaboration aimed at developing new processes and materials to support sub-1nm logic scaling.",
             "note": "研究協力で、期間は5年です。",
             "note_en": "A research collaboration under a five-year agreement."
-          }
-        }
-      ]
-    },
-    {
-      "id": "LETI",
-      "ticker": "CEA-Leti",
-      "name": "CEA-Leti",
-      "sub": "研究機関",
-      "sub_en": "Research institute",
-      "row": 3,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "次世代の特殊技術デバイスの開発で複数年の契約(2026年2月2日)",
-          "text_en": "New multi-year agreement to develop next-generation specialty technology devices (February 2, 2026)",
-          "source": {
-            "label": "Lam の発表(2026年2月2日)",
-            "label_en": "Lam press release (Feb 2, 2026)",
-            "url": "https://newsroom.lamresearch.com/2026-02-02-Lam-Research-and-CEA-Leti-Expand-Research-and-Development-Collaboration-to-Advance-Fabrication-of-Specialty-Technologies",
-            "level": "official",
-            "date": "2026-02-02",
-            "quote": "today announced a new multi-year agreement to advance the development of next-generation Specialty Technology devices",
-            "note": "研究協力です。",
-            "note_en": "A research collaboration."
           }
         }
       ]
@@ -652,31 +573,6 @@
             "quote": "The collaboration spans expertise at Lam Research (process), ASML (lithography), and imec (integration and validation).",
             "note": "技術の共同研究(共同論文)で、供給契約ではありません。",
             "note_en": "A technical research collaboration (joint paper), not a commercial supply agreement."
-          }
-        }
-      ]
-    },
-    {
-      "id": "IMEC",
-      "ticker": "imec",
-      "name": "imec",
-      "sub": "研究機関",
-      "sub_en": "Research institute",
-      "row": 3,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "ASML・imecとHigh-NA EUVのパターニングに関する共同論文を発表(2026年7月14日)",
-          "text_en": "Joint paper with ASML and imec on High-NA EUV patterning (July 14, 2026)",
-          "source": {
-            "label": "Lam ニュースルームのブログ(2026年7月14日)",
-            "label_en": "Lam newsroom blog (Jul 14, 2026)",
-            "url": "https://newsroom.lamresearch.com/lam-asml-imec-advance-high-na-euv-patterning",
-            "level": "official",
-            "date": "2026-07-14",
-            "quote": "The collaboration spans expertise at Lam Research (process), ASML (lithography), and imec (integration and validation).",
-            "note": "技術の共同研究(共同論文)です。",
-            "note_en": "A technical research collaboration (joint paper)."
           }
         }
       ]

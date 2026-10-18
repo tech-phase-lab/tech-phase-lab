@@ -22,8 +22,7 @@
     "CMCSA",
     "CHTR",
     "AMCX",
-    "RBLX",
-    "FOXA"
+    "RBLX"
   ],
   "companies": [
     {
@@ -307,75 +306,6 @@
             "level": "official",
             "date": "2026-02-25",
             "quote": "content rights agreements with distribution partners including Netflix, ESPN, Versant, and the CW for its weekly programs, Raw, SmackDown and NXT"
-          }
-        }
-      ]
-    },
-    {
-      "id": "NFL",
-      "ticker": "NFL",
-      "name": "NFL(米プロフットボール)",
-      "sub": "スポーツ中継",
-      "sub_en": "Sports broadcast",
-      "row": 1,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "クリスマスの試合を配信(2024年は初のNFL中継、制作はCBS Sports)",
-          "text_en": "Streamed the Christmas Day games (2024 was its first NFL broadcast, produced by CBS Sports)",
-          "source": {
-            "label": "Netflix の発表(2024年12月)",
-            "label_en": "Netflix newsroom (Dec 2024)",
-            "url": "https://about.netflix.com/en/news/nfl-christmas-gameday-live-comes-to-netflix",
-            "level": "official",
-            "date": "2024-12-23",
-            "quote": "marks Netflix’s first-ever NFL broadcast. Produced by CBS Sports"
-          }
-        }
-      ]
-    },
-    {
-      "id": "FIFA",
-      "ticker": "FIFA",
-      "name": "FIFA(国際サッカー連盟)",
-      "sub": "スポーツ中継",
-      "sub_en": "Sports broadcast",
-      "row": 1,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "2030年W杯のスペイン・アンドラでの独占権と、2027年・2031年女子W杯の米国・カナダの権利を取得",
-          "text_en": "Exclusive Spain/Andorra rights to the 2030 World Cup and U.S./Canada rights to the 2027 and 2031 Women’s World Cups",
-          "source": {
-            "label": "Netflix ニュースルーム(2026年10月)",
-            "label_en": "Netflix newsroom (Oct 2026)",
-            "url": "https://about.netflix.com/en/news/netflix-secures-exclusive-rights-in-spain-and-andorra-to-the-fifa-world-cup-2030-tm",
-            "level": "official",
-            "date": "2026-10-13",
-            "quote": "Netflix also holds broadcast rights to the FIFA Women’s World Cup 2027 and 2031 in the US and Canada"
-          }
-        }
-      ]
-    },
-    {
-      "id": "WBC",
-      "ticker": "WBC",
-      "name": "ワールド・ベースボール・クラシック",
-      "sub": "スポーツ中継",
-      "sub_en": "Sports broadcast",
-      "row": 1,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "2026年大会の日本での独占放映権で提携(2025年8月発表)",
-          "text_en": "Exclusive media-rights partnership for the 2026 World Baseball Classic in Japan (announced August 2025)",
-          "source": {
-            "label": "Netflix ニュースルーム(2025年8月)",
-            "label_en": "Netflix newsroom (Aug 2025)",
-            "url": "https://about.netflix.com/en/news/world-baseball-classic-inc-and-netflix-exclusive-partnership",
-            "level": "official",
-            "date": "2025-08-25",
-            "quote": "Netflix will become the new home of the 2026 World Baseball Classic in Japan, as part of an exclusive media rights partnership with World Baseball Classic, Inc. (WBCI)"
           }
         }
       ]

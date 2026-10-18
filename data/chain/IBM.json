@@ -31,24 +31,11 @@
     }
   ],
   "rivals": [
-    "GOOG",
     "AMZN",
+    "GOOG",
     "MSFT",
     "ORCL",
-    "DELL",
-    "HPE",
-    "ACN",
-    "CAP",
-    "CRM",
-    "SAP",
-    "AVGO",
-    "CSCO",
-    "INTC",
-    "NTAP",
-    "PSTG",
-    "MDB",
-    "PEGA",
-    "CTSH"
+    "ACN"
   ],
   "companies": [
     {
@@ -476,31 +463,6 @@
       ]
     },
     {
-      "id": "TGAI",
-      "ticker": "Together AI",
-      "name": "Together AI",
-      "sub": "AIクラウド",
-      "sub_en": "AI cloud",
-      "row": 4,
-      "relations": [
-        {
-          "type": "down",
-          "text": "2億4,000万ドルの複数年契約で、IBM CloudのNVIDIA HGX B300クラスターをオープンソースモデル向けに利用(2026年8月)",
-          "text_en": "Multi-year $240M agreement: IBM to deploy an NVIDIA HGX B300 cluster on IBM Cloud for Together AI’s open-source models (August 2026)",
-          "source": {
-            "label": "IBM ニュースルーム(2026年8月)",
-            "label_en": "IBM newsroom (Aug 2026)",
-            "url": "https://newsroom.ibm.com/2026-08-11-IBM-and-Together-AI-Sign-Multi-Year-Agreement-to-Scale-Open-Source-AI-Inference-with-NVIDIA-AI-Infrastructure-on-IBM-Cloud",
-            "level": "official",
-            "date": "2026-08-11",
-            "quote": "Under a multi-year $240M agreement between IBM and Together AI, IBM is positioned to deploy a large cluster of NVIDIA HGX B300 systems on IBM Cloud with expected availability in Q1 2027.",
-            "note": "提供開始は2027年第1四半期の見込みです。",
-            "note_en": "Availability expected in Q1 2027."
-          }
-        }
-      ]
-    },
-    {
       "id": "AMD",
       "ticker": "AMD",
       "name": "AMD",
@@ -544,54 +506,6 @@
             "level": "official",
             "date": "2026-03-16",
             "quote": "IBM (NYSE: IBM ) today announced at GTC 2026 an expanded collaboration with NVIDIA to help enterprises operationalize AI at scale."
-          }
-        }
-      ]
-    },
-    {
-      "id": "ANTH",
-      "ticker": "Anthropic",
-      "name": "Anthropic",
-      "sub": "AI",
-      "sub_en": "AI",
-      "row": 4,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "IBMのソフトウェアにClaudeを組み込む戦略的提携(2025年10月)",
-          "text_en": "Strategic partnership to integrate Claude into select IBM software (October 2025)",
-          "source": {
-            "label": "IBM ニュースルーム(2025年10月)",
-            "label_en": "IBM newsroom (Oct 2025)",
-            "url": "https://newsroom.ibm.com/2025-10-07-2025-ibm-and-anthropic-partner-to-advance-enterprise-software-development-with-proven-security-and-governance",
-            "level": "official",
-            "date": "2025-10-07",
-            "quote": "IBM (NYSE: IBM) and Anthropic today announced a strategic partnership to accelerate the development of enterprise-ready AI by infusing Anthropic’s Claude"
-          }
-        }
-      ]
-    },
-    {
-      "id": "GROQ",
-      "ticker": "Groq",
-      "name": "Groq",
-      "sub": "AI半導体",
-      "sub_en": "AI chips",
-      "row": 4,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "GroqCloudの推論をwatsonx Orchestrateで使えるようにする提携(2025年10月)",
-          "text_en": "Partnership giving IBM clients GroqCloud inference on watsonx Orchestrate (October 2025)",
-          "source": {
-            "label": "IBM ニュースルーム(2025年10月)",
-            "label_en": "IBM newsroom (Oct 2025)",
-            "url": "https://newsroom.ibm.com/2025-10-20-ibm-and-groq-partner-to-accelerate-enterprise-ai-deployment-with-speed-and-scale",
-            "level": "official",
-            "date": "2025-10-20",
-            "quote": "IBM (NYSE: IBM ) and Groq today announced a strategic go-to-market and technology partnership designed to give clients immediate access to Groq's inference technology, GroqCloud , on watsonx Orchestrate",
-            "note": "vLLMとGroq LPUの統合などは計画の段階です。",
-            "note_en": "Integration of vLLM with Groq LPU is described as planned."
           }
         }
       ]
@@ -761,30 +675,6 @@
       ]
     },
     {
-      "id": "BMC",
-      "ticker": "BMC",
-      "name": "BMC Software",
-      "sub": "企業向けソフト",
-      "sub_en": "Enterprise software",
-      "row": 1,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
-          "source": {
-            "label": "IBM 10-K(2025年12月期)",
-            "label_en": "IBM 10-K (fiscal year ended December 2025)",
-            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
-            "level": "official",
-            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company.",
-            "note": "BMCは非上場です。",
-            "note_en": "BMC is not publicly listed."
-          }
-        }
-      ]
-    },
-    {
       "id": "INTC",
       "ticker": "INTC",
       "name": "Intel",
@@ -895,52 +785,6 @@
             "level": "official",
             "date": "2026-02",
             "quote": "Our direct competitors include, among others, Accenture, Atos, Capgemini, CGI, Deloitte Digital, DXC Technology, EPAM Systems, Genpact, HCL Technologies, IBM Consulting"
-          }
-        }
-      ]
-    },
-    {
-      "id": "CFLT",
-      "ticker": "CFLT",
-      "name": "Confluent",
-      "sub": "データ基盤",
-      "sub_en": "Data streaming",
-      "row": 5,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "Confluentの全株式を取得して買収(2026年3月17日完了、総額116億ドル)",
-          "text_en": "Completed the acquisition of Confluent on March 17, 2026 (total consideration $11.6B)",
-          "source": {
-            "label": "IBM 10-Q Q2 2026",
-            "label_en": "IBM 10-Q Q2 2026",
-            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000078/ibm-20260630.htm",
-            "level": "official",
-            "date": "2026-03-17",
-            "quote": "On March 17, 2026, the company completed the acquisition of all of the outstanding shares of Confluent."
-          }
-        }
-      ]
-    },
-    {
-      "id": "HCP",
-      "ticker": "HashiCorp",
-      "name": "HashiCorp",
-      "sub": "クラウド管理",
-      "sub_en": "Cloud automation",
-      "row": 5,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "HashiCorpを買収(2025年2月27日完了)",
-          "text_en": "Acquired HashiCorp on February 27, 2025",
-          "source": {
-            "label": "IBM 10-K(2025年度)",
-            "label_en": "IBM 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
-            "level": "official",
-            "date": "2025-02-27",
-            "quote": "in connection with the company's acquisition of HashiCorp, Inc. on February 27, 2025"
           }
         }
       ]

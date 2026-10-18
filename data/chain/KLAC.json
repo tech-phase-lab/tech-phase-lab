@@ -21,12 +21,8 @@
   "rivals": [
     "AMAT",
     "ASML",
-    "HHT",
     "6920",
-    "ONTO",
-    "NVMI",
-    "COHU",
-    "PDFS"
+    "ONTO"
   ],
   "companies": [
     {
@@ -111,29 +107,6 @@
             "quote": "We also compete with providers of applications that support or enhance complex patterning solutions, such as Applied Materials Inc. and KLA-Tencor Corporation.",
             "note": "パターニングを支える製品に限った記載です。",
             "note_en": "Limited to patterning-support applications."
-          }
-        }
-      ]
-    },
-    {
-      "id": "HHT",
-      "ticker": "Hitachi High-Tech",
-      "name": "日立ハイテク",
-      "sub": "検査・計測装置",
-      "sub_en": "Inspection & metrology",
-      "row": 2,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "競合として実名で記載(年次報告)",
-          "text_en": "Named among competitors (annual report)",
-          "source": {
-            "label": "KLA 10-K(2026年度)",
-            "label_en": "KLA 10-K (fiscal 2026)",
-            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
-            "level": "official",
-            "date": "2026-08-06",
-            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc., some of which"
           }
         }
       ]
