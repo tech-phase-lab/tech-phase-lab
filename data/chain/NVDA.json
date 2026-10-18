@@ -522,6 +522,86 @@
           }
         }
       ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "少なくとも10GW分のNVIDIA製システムをOpenAI向けに導入する基本合意書(2025年9月22日)",
+          "text_en": "Letter of intent to deploy at least 10GW of NVIDIA systems for OpenAI (September 22, 2025)",
+          "source": {
+            "label": "NVIDIA ニュースルーム の発表",
+            "label_en": "NVIDIA Newsroom press release",
+            "url": "https://nvidianews.nvidia.com/news/openai-and-nvidia-announce-strategic-partnership-to-deploy-10gw-of-nvidia-systems",
+            "level": "official",
+            "date": "2025-09-22",
+            "quote": "OpenAI and NVIDIA today announced a letter of intent for a landmark strategic partnership to deploy at least 10 gigawatts of NVIDIA systems for OpenAI's next-generation AI infrastructure",
+            "note": "基本合意書の段階で、確定した契約ではありません。導入は段階的です。",
+            "note_en": "A letter of intent, not a definitive agreement; deployment is phased."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "システムの導入に合わせて、OpenAIに最大1,000億ドルを出資する意向(2025年9月22日)",
+          "text_en": "Intends to invest up to $100B in OpenAI as NVIDIA systems are deployed (September 22, 2025)",
+          "source": {
+            "label": "NVIDIA ニュースルーム の発表",
+            "label_en": "NVIDIA Newsroom press release",
+            "url": "https://nvidianews.nvidia.com/news/openai-and-nvidia-announce-strategic-partnership-to-deploy-10gw-of-nvidia-systems",
+            "level": "official",
+            "date": "2025-09-22",
+            "quote": "NVIDIA intends to invest up to $100 billion in OpenAI as the new NVIDIA systems are deployed.",
+            "note": "「意向」「最大」の記載で、基本合意書の段階です。",
+            "note_en": "'Intends' / 'up to'; letter-of-intent stage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NVIDIAのGrace Blackwell・Vera Rubinシステムで、最大1GWの計算容量を利用すると約束(2025年11月18日、Anthropicの発表)",
+          "text_en": "Committed to compute capacity of up to 1GW on NVIDIA Grace Blackwell and Vera Rubin systems (November 18, 2025, Anthropic announcement)",
+          "source": {
+            "label": "Anthropic announcement",
+            "label_en": "Anthropic announcement",
+            "url": "https://www.anthropic.com/news/microsoft-nvidia-anthropic-announce-strategic-partnerships",
+            "level": "official",
+            "date": "2025-11-18",
+            "quote": "Anthropic's compute commitment will initially be up to one gigawatt of compute capacity with NVIDIA Grace Blackwell and Vera Rubin systems.",
+            "note": "「最大」1GWの記載です。",
+            "note_en": "'Up to' one gigawatt."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Anthropicに最大100億ドルを出資する契約(NVIDIAの10-Q、2025年11月19日)",
+          "text_en": "Agreement to invest up to $10B in Anthropic (NVIDIA 10-Q, November 19, 2025)",
+          "source": {
+            "label": "NVIDIA 10-Q(quarter ended 2025-10-26)",
+            "label_en": "NVIDIA 10-Q (quarter ended 2025-10-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "In November 2025, we entered into an agreement, subject to certain closing conditions, to invest up to $ 10 billion in Anthropic.",
+            "note": "「最大」の記載で、完了条件があります。",
+            "note_en": "'Up to'; subject to closing conditions."
+          }
+        }
+      ]
     }
   ],
   "far": [

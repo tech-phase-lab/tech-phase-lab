@@ -489,6 +489,31 @@
           }
         }
       ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Arm AGI CPUをヘッドノードとして組み込む顧客の1社としてOpenAIを挙げている(2026年5月、Armの決算資料)",
+          "text_en": "Arm says OpenAI is among customers integrating the Arm AGI CPU as head nodes (May 2026, Arm results release)",
+          "source": {
+            "label": "Arm 6-K Ex.99.2(Q4 FY26 results)",
+            "label_en": "Arm 6-K Ex.99.2 (Q4 FY26 results)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000062/exhibit992fye26q431-marx26.htm",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "Cerebras, OpenAI, Positron, and Rebellions are among many that are doing the same with Arm AGI CPU.",
+            "note": "「組み込んでいる」顧客の一覧で、数量や契約内容は示されていません。",
+            "note_en": "A list of customers integrating the chip; volumes and contract terms are not stated."
+          }
+        }
+      ]
     }
   ],
   "far": [],

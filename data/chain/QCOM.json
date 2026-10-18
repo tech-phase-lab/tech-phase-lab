@@ -1,0 +1,475 @@
+{
+  "root": {
+    "ticker": "QCOM",
+    "name": "Qualcomm"
+  },
+  "rows": [
+    {
+      "ja": "供給元(製造・後工程・IP)",
+      "en": "Suppliers (manufacturing, packaging & IP)",
+      "above": true
+    },
+    {
+      "ja": "顧客・提携",
+      "en": "Customers & partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "INTC",
+    "NVDA",
+    "AVGO",
+    "MediaTek"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主な製造委託先として実名で記載(年次報告)",
+          "text_en": "Named as a primary foundry supplier (annual report)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "The primary foundry suppliers for our various digital, analog/mixed-signal, RF and PM integrated circuits include Taiwan Semiconductor Manufacturing Company (TSMC)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主な製造委託先として実名で記載(年次報告)",
+          "text_en": "Named as a primary foundry supplier (annual report)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Samsung Electronics and Global Foundries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "Amkor Technology",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "半導体の組み立て・テストの主な委託先として実名で記載(年次報告)",
+          "text_en": "Named as a primary assembly and test supplier (annual report)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Our primary semiconductor assembly and test suppliers are Advanced Semiconductor Engineering, Amkor Technology, Siliconware Precision Industries and STATSChipPAC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASE",
+      "ticker": "ASE",
+      "name": "ASE Technology",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "半導体の組み立て・テストの主な委託先として実名で記載(年次報告)",
+          "text_en": "Named as a primary assembly and test supplier (annual report)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Our primary semiconductor assembly and test suppliers are Advanced Semiconductor Engineering, Amkor Technology, Siliconware Precision Industries and STATSChipPAC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARM",
+      "ticker": "ARM",
+      "name": "Arm Holdings",
+      "sub": "半導体設計",
+      "sub_en": "Chip design",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社のカスタムコアとSoCは、アーキテクチャ ライセンス契約などで全面的にライセンスを受けていると記載(10-Q)",
+          "text_en": "Says its custom cores and SoCs are fully licensed under its Architecture License Agreement and related agreements (10-Q)",
+          "source": {
+            "label": "Qualcomm 10-Q(Q3 2026年度)",
+            "label_en": "Qualcomm 10-Q (Q3 FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000086/qcom-20260628.htm",
+            "level": "official",
+            "date": "2026-07",
+            "quote": "are fully licensed under our existing Architecture License Agreement with Arm (the Qualcomm ALA) and Technology License Agreement with Arm (the Qualcomm TLA)",
+            "note": "Armとは訴訟が続いています。",
+            "note_en": "Subject of ongoing Arm v. Qualcomm litigation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "PC・スマホ",
+      "sub_en": "PCs & phones",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "薄型モデム(MDM)製品をAppleへ販売。2025年度に売上の10%超を占める顧客(年次報告)",
+          "text_en": "Sells thin modem (MDM) products to Apple; Apple was a 10%+ revenue customer in fiscal 2025 (annual report)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Apple purchases our MDM (or thin modem) products, which do not include our integrated application processor technology, and which have lower revenue and margin contributions",
+            "note": "Appleは自社製モデムを増やす見込みと記載しています。",
+            "note_en": "Qualcomm expects Apple to increasingly use its own modems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "スマホ・製造",
+      "sub_en": "Phones & foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年度の連結売上の10%以上を占める顧客(年次報告)",
+          "text_en": "Revenues from Samsung comprised 10% or more of consolidated revenues in fiscal 2025 (annual report)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "In fiscal 2025, revenues from Apple, Samsung and Xiaomi each comprised 10% or more of our consolidated revenues."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Galaxy S26 Ultraは、Galaxy向けにカスタマイズしたSnapdragon 8 Elite Gen 5を搭載(Samsungの発表)",
+          "text_en": "Galaxy S26 Ultra is powered by a customized Snapdragon 8 Elite Gen 5 for Galaxy (Samsung newsroom)",
+          "source": {
+            "label": "Samsung Global ニュースルーム(Galaxy S26)",
+            "label_en": "Samsung Global Newsroom (Galaxy S26)",
+            "url": "https://news.samsung.com/global/samsung-galaxy-s26-series",
+            "level": "official",
+            "quote": "powered by a customized mobile processor — Snapdragon® 8 Elite Gen 5 Mobile Platform for Galaxy",
+            "note": "Galaxy S26 Ultraについての記載です。",
+            "note_en": "Applies to the Galaxy S26 Ultra as described by Samsung."
+          }
+        },
+        {
+          "type": "up",
+          "text": "主な製造委託先としてSamsung Electronicsを実名で記載(TSMC・GlobalFoundriesとあわせて)",
+          "text_en": "Named as a primary foundry supplier, alongside TSMC and GlobalFoundries",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "The primary foundry suppliers for our various digital, analog/mixed-signal, RF and PM integrated circuits include Taiwan Semiconductor Manufacturing Company (TSMC), Samsung Electronics and Global Foundries."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "競合する半導体メーカーの1社としてSamsungを挙げている(戦略的パートナーでもある場合あり)",
+          "text_en": "Lists Samsung among competitors in integrated circuit products, some also strategic partners",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Examples (some of which are strategic partners of ours in other areas) include Broadcom, HiSilicon, MediaTek, Mobileye, Nvidia, NXP Semiconductors, Qorvo, Samsung, Skyworks, Texas Instruments and UNISOC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Xiaomi",
+      "ticker": "Xiaomi",
+      "name": "Xiaomi",
+      "sub": "スマホ",
+      "sub_en": "Phones",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年度の連結売上の10%以上を占める顧客(年次報告)",
+          "text_en": "Revenues from Xiaomi comprised 10% or more of consolidated revenues in fiscal 2025 (annual report)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "In fiscal 2025, revenues from Apple, Samsung and Xiaomi each comprised 10% or more of our consolidated revenues.",
+            "note": "Xiaomiが自社でチップを開発していることにも言及しています。",
+            "note_en": "Qualcomm notes Xiaomi develops its own integrated circuits."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Transsion",
+      "ticker": "Transsion",
+      "name": "Transsion",
+      "sub": "スマホ",
+      "sub_en": "Phones",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4G・5Gの包括ライセンス契約を締結し、係争をすべて取り下げ(2025年度第2四半期)",
+          "text_en": "Entered comprehensive 4G and 5G license agreements, dismissing all outstanding disputes (fiscal Q2 2025)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "entered into comprehensive 4G and 5G license agreements with Transsion (a growing, China-headquartered OEM that sells primarily in developing regions)",
+            "note": "特許ライセンス事業の関係です。",
+            "note_en": "A patent licensing relationship."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Amazonのサーバー用チップ購入に連動する、最大2,500万株の新株予約権をAmazonに発行(2026年9月3日の8-K)",
+          "text_en": "Issued Amazon a warrant for up to 25 million shares tied to Amazon purchases of Qualcomm server chip products (8-K, September 3, 2026)",
+          "source": {
+            "label": "Qualcomm 8-K(Sept 3, 2026)",
+            "label_en": "Qualcomm 8-K (Sept 3, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000110465926105718/tm2623289d1_8k.htm",
+            "level": "official",
+            "date": "2026-09",
+            "quote": "related to the purchase of certain QTI server chip products, technology, systems and manufacturing services by Amazon, the Company issued a warrant",
+            "note": "拘束力のある発注があった分だけ権利確定します。",
+            "note_en": "Warrant shares vest only with binding purchase orders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "PC・クラウド",
+      "sub_en": "PCs & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "最初のMicrosoft Copilot+ PCが、Snapdragon X Elite・X Plusを搭載(2024年5月)",
+          "text_en": "The first Microsoft Copilot+ PCs launched with Snapdragon X Elite and X Plus processors (May 2024)",
+          "source": {
+            "label": "Microsoft ブログ(Copilot+ PCs)",
+            "label_en": "Microsoft blog (Copilot+ PCs)",
+            "url": "https://blogs.microsoft.com/blog/2024/05/20/introducing-copilot-pcs/",
+            "level": "official",
+            "date": "2024-05",
+            "quote": "The first Copilot+ PCs will launch with both the Snapdragon® X Elite and Snapdragon® X Plus processors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Intelが年次報告で、競合としてQualcommとAMDを挙げている",
+          "text_en": "Intel’s annual report names Qualcomm and AMD among its platform-product competitors",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Our competitors include companies offering platform products, such as AMD and Qualcomm;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NVIDIAが年次報告で、車載・ゲームなどのSoCの競合としてQualcommを挙げている",
+          "text_en": "NVIDIA’s annual report lists Qualcomm among SoC competitors for automotive, autonomous machines and gaming",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "such as Ambarella, Inc., AMD, Broadcom, Intel, Qualcomm Incorporated, Renesas Electronics Corporation, and Samsung"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qualcommが年次報告で、半導体の競合としてBroadcomを挙げている",
+          "text_en": "Qualcomm’s annual report lists Broadcom among competitors in integrated circuit products",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Examples (some of which are strategic partners of ours in other areas) include Broadcom, HiSilicon, MediaTek, Mobileye, Nvidia, NXP Semiconductors, Qorvo, Samsung, Skyworks, Texas Instruments and UNISOC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MediaTek",
+      "ticker": "MediaTek",
+      "name": "MediaTek",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qualcommが年次報告で、半導体の競合としてMediaTekを挙げている",
+          "text_en": "Qualcomm’s annual report lists MediaTek among competitors in integrated circuit products",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Examples (some of which are strategic partners of ours in other areas) include Broadcom, HiSilicon, MediaTek, Mobileye, Nvidia, NXP Semiconductors, Qorvo, Samsung, Skyworks, Texas Instruments and UNISOC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBLY",
+      "ticker": "MBLY",
+      "name": "Mobileye",
+      "sub": "自動運転",
+      "sub_en": "Autonomous driving",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qualcommが年次報告で、車載分野の競合としてMobileyeを挙げている",
+          "text_en": "Qualcomm’s annual report lists Mobileye among competitors (automotive)",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Examples (some of which are strategic partners of ours in other areas) include Broadcom, HiSilicon, MediaTek, Mobileye, Nvidia, NXP Semiconductors, Qorvo, Samsung, Skyworks, Texas Instruments and UNISOC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "Skyworks",
+      "sub": "高周波半導体",
+      "sub_en": "RF chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Skyworksが年次報告で、競合としてQualcommを挙げている",
+          "text_en": "Skyworks’ annual report lists Qualcomm among its competitors",
+          "source": {
+            "label": "Skyworks 10-K(2025年度)",
+            "label_en": "Skyworks 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Our competitors include Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

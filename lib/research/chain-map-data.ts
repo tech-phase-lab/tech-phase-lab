@@ -19,6 +19,11 @@ import adbe from "../../data/chain/ADBE.json" with { type: "json" };
 import mu from "../../data/chain/MU.json" with { type: "json" };
 import asml from "../../data/chain/ASML.json" with { type: "json" };
 import tsm from "../../data/chain/TSM.json" with { type: "json" };
+import intc from "../../data/chain/INTC.json" with { type: "json" };
+import qcom from "../../data/chain/QCOM.json" with { type: "json" };
+import googl from "../../data/chain/GOOGL.json" with { type: "json" };
+import aapl from "../../data/chain/AAPL.json" with { type: "json" };
+import amzn from "../../data/chain/AMZN.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -43,6 +48,7 @@ const available: Record<string, ChainMapData> = {
   BE: be as ChainMapData, SKHY: skhy as ChainMapData, GEV: gev as ChainMapData, MSFT: msft as ChainMapData, KLAC: klac as ChainMapData,
   SNDK: sndk as ChainMapData, AMD: amd as ChainMapData, ANET: anet as ChainMapData, ARM: arm as ChainMapData, LITE: lite as ChainMapData,
   VST: vst as ChainMapData, ADBE: adbe as ChainMapData, MU: mu as ChainMapData, ASML: asml as ChainMapData, TSM: tsm as ChainMapData,
+  INTC: intc as ChainMapData, QCOM: qcom as ChainMapData, GOOGL: googl as ChainMapData, AAPL: aapl as ChainMapData, AMZN: amzn as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 

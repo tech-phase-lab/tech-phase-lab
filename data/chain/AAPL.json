@@ -1,0 +1,521 @@
+{
+  "root": {
+    "ticker": "AAPL",
+    "name": "Apple"
+  },
+  "rows": [
+    {
+      "ja": "供給元(半導体・製造)",
+      "en": "Suppliers (chips & manufacturing)",
+      "above": true
+    },
+    {
+      "ja": "供給元(材料・部品・通信)",
+      "en": "Suppliers (materials, parts & connectivity)",
+      "above": true
+    },
+    {
+      "ja": "AI・サービスの提携先",
+      "en": "AI & services partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SPOT",
+    "GRMN",
+    "ROKU"
+  ],
+  "companies": [
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "カスタム半導体と無線接続技術の設計・製造で複数年のコミットメント(2026年7月)",
+          "text_en": "Multiyear commitment with Broadcom to design and produce custom silicon and wireless connectivity (July 2026)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2026/07/apple-to-increase-spend-with-broadcom-to-produce-billions-more-us-chips/",
+            "level": "official",
+            "date": "2026-07-08",
+            "quote": "Apple today announced a new multiyear commitment with Broadcom to design and produce custom silicon components and cutting-edge wireless connectivity technologies for a wide range of Apple products. The new agreement, expected to exceed $30 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国での半導体製造を増やす契約(ニューヨーク州マルタ工場、2025年8月)",
+          "text_en": "Agreement to bring more semiconductor manufacturing to the U.S. at the Malta, New York fab (August 2025)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "GlobalFoundries and Apple have also entered an agreement to bring more semiconductor manufacturing to the United States"
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "テキサス州オースティン工場で、Apple向けの新しいチップ製造技術を立ち上げる協業(2025年8月)",
+          "text_en": "Working with Samsung at its Austin, Texas fab to launch a new chip-making technology for Apple products (August 2025)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "Apple is also working with Samsung at its fab in Austin, Texas, to launch an innovative new technology for making chips"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アリゾナ工場がApple向けに数千万個のチップを生産。Appleが最初で最大の顧客(2025年8月)",
+          "text_en": "TSMC’s Arizona fab is producing tens of millions of chips for Apple, its first and largest customer (August 2025)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "TSMC in Arizona, which is producing tens of millions of chips for Apple using one of the most advanced process technologies in America. Apple is this factory’s first and largest customer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国の半導体製造装置の生産を増やすため、Applied Materialsと直接提携(2025年8月)",
+          "text_en": "Partnering directly with Applied Materials to boost U.S. production of semiconductor manufacturing equipment (August 2025)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "Apple is also partnering directly with Applied Materials to boost the production of semiconductor manufacturing equipment in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "Amkor Technology",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Amkorの2025年売上の29.8%がAppleへの直接販売(Amkorの年次報告)",
+          "text_en": "Direct sales to Apple were 29.8% of Amkor’s 2025 net sales (Amkor annual report)",
+          "source": {
+            "label": "Amkor 10-K(2025年度)",
+            "label_en": "Amkor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Direct sales to Apple and Qualcomm accounted for 29.8% and 11.1% of our net sales, respectively, for the year ended December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Qualcommが年次報告で、2025年度の売上の10%以上を占める顧客・ライセンス先の1社としてAppleを挙げている",
+          "text_en": "Qualcomm’s annual report lists Apple among customers/licensees each accounting for 10% or more of fiscal 2025 revenues",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "In fiscal 2025, revenues from Apple, Samsung and Xiaomi each comprised 10% or more of our consolidated revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRUS",
+      "ticker": "CRUS",
+      "name": "Cirrus Logic",
+      "sub": "音声用半導体",
+      "sub_en": "Audio chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Cirrusの2026年度売上の約91%が、Appleという1社の最終顧客(Cirrusの年次報告)",
+          "text_en": "Apple is Cirrus Logic’s one end customer, about 91% of fiscal 2026 net sales (Cirrus annual report)",
+          "source": {
+            "label": "Cirrus Logic 10-K(2026年度)",
+            "label_en": "Cirrus Logic 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05",
+            "quote": "we had one end customer, Apple Inc., who purchased through multiple contract manufacturers and represented approximately 91 percent",
+            "note": "Cirrusの売上全体に対する割合です。",
+            "note_en": "Percentage is of Cirrus Logic’s total net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLW",
+      "ticker": "GLW",
+      "name": "Corning",
+      "sub": "ガラス",
+      "sub_en": "Glass",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "iPhoneとApple Watchのカバーガラスをすべて、ケンタッキー州ハロッズバーグのCorning工場で製造する25億ドルのコミットメント(2025年8月)",
+          "text_en": "$2.5B commitment to produce all iPhone and Apple Watch cover glass at Corning’s Harrodsburg, Kentucky facility (August 2025)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-corning-to-manufacture-all-iphone-apple-watch-cover-glass-in-kentucky/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "Apple is committing $2.5 billion to produce all of the cover glass for iPhone and Apple Watch in Corning’s Harrodsburg, Kentucky, manufacturing facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MP",
+      "ticker": "MP",
+      "name": "MP Materials",
+      "sub": "レアアース",
+      "sub_en": "Rare earths",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国産のレアアース磁石を購入する、5億ドルの複数年契約(2025年7月)",
+          "text_en": "$500M multiyear deal to buy American-made rare earth magnets from MP Materials (July 2025)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/07/apple-expands-us-supply-chain-with-500-million-usd-commitment/",
+            "level": "official",
+            "date": "2025-07-15",
+            "quote": "Today Apple announced a new commitment of $500 million with MP Materials, the only fully integrated rare earth producer in the United States"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COHR",
+      "ticker": "COHR",
+      "name": "Coherent",
+      "sub": "レーザー部品",
+      "sub_en": "Laser components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Face ID用のVCSELレーザーの供給で、新たな複数年契約(2025年8月)",
+          "text_en": "New multiyear agreement with Coherent, supplier of VCSEL lasers used for Face ID (August 2025)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "Apple has also entered into a new multiyear agreement with Coherent, a long-standing partner that produces the VCSEL lasers that enable multiple features — including Face ID"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TDK",
+      "ticker": "TDK",
+      "name": "TDK",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "TDKは長年の供給元で、米国で初めてApple向けのセンサーを製造(2026年3月26日)",
+          "text_en": "Calls TDK a longtime supplier that will manufacture sensors for Apple in the U.S. for the first time (March 26, 2026)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2026/03/apple-adds-new-partners-to-its-american-manufacturing-program/",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Longtime Apple supplier TDK will manufacture sensors for Apple in the U.S. for the very first time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSAT",
+      "ticker": "GSAT",
+      "name": "Globalstar",
+      "sub": "衛星通信",
+      "sub_en": "Satellite connectivity",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Appleへ、サービス契約にもとづき衛星の通信容量を卸売で提供(Globalstarの年次報告)",
+          "text_en": "Provides wholesale satellite capacity services to Apple under service agreements (Globalstar annual report)",
+          "source": {
+            "label": "Globalstar 10-K(2025年度)",
+            "label_en": "Globalstar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1366868/000136686826000012/gsat-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We provide certain services to Apple Inc. (the \"Customer\") pursuant to a service agreement and certain related ancillary agreements"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "検索・AI",
+      "sub_en": "Search & AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "次世代のApple Foundation ModelsをGoogleのGeminiを基盤にする複数年の協業(2026年1月12日、共同声明)",
+          "text_en": "Multi-year collaboration: next-generation Apple Foundation Models will be based on Google’s Gemini (January 12, 2026, joint statement)",
+          "source": {
+            "label": "Google ブログ: Joint statement from Google and Apple",
+            "label_en": "Google blog: Joint statement from Google and Apple",
+            "url": "https://blog.google/company-news/inside-google/company-announcements/joint-statement-google-apple/",
+            "level": "official",
+            "date": "2026-01-12",
+            "quote": "Apple and Google have entered into a multi-year collaboration under which the next generation of Apple Foundation Models will be based on Google's Gemini models and cloud technology."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Apple製品でGoogle検索を提供するライセンスの収入を得ていると記載(年次報告)",
+          "text_en": "Earns revenue from licensing arrangements with Google to offer Google search on Apple platforms (annual report)",
+          "source": {
+            "label": "Apple 10-K(2025年度)",
+            "label_en": "Apple 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+            "level": "official",
+            "date": "2025-10",
+            "quote": "the Company earns revenue from licensing arrangements with Google LLC (“Google”) and other companies to offer their search services on the Company’s platforms and applications",
+            "note": "米司法省の訴訟の判決や控訴の影響を受けます。",
+            "note_en": "Subject to the DOJ v. Google remedies order and appeal."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Apple IntelligenceにChatGPT(GPT-4o)を統合(iOS 18・macOS Sequoiaなど、2024年6月10日)",
+          "text_en": "Announced ChatGPT (GPT-4o) integration into Apple Intelligence across iOS 18, iPadOS 18 and macOS Sequoia (June 10, 2024)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2024/06/introducing-apple-intelligence-for-iphone-ipad-and-mac/",
+            "level": "official",
+            "date": "2024-06-10",
+            "quote": "ChatGPT will come to iOS 18, iPadOS 18, and macOS Sequoia later this year, powered by GPT-4o.",
+            "note": "利用者が有効にするかを選べます。",
+            "note_en": "Users choose whether to enable the integration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Xcode 26.3が、AnthropicのClaude Agentによるエージェント型コーディングに対応(2026年2月3日)",
+          "text_en": "Xcode 26.3 supports agentic coding with Anthropic’s Claude Agent (February 3, 2026)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2026/02/xcode-26-point-3-unlocks-the-power-of-agentic-coding/",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Xcode 26.3 introduces support for agentic coding, a new way in Xcode for developers to build apps using coding agents such as Anthropic’s Claude Agent and OpenAI’s Codex.",
+            "note": "開発ツールへの統合で、モデルの供給契約ではありません。",
+            "note_en": "A developer-tool integration, not a model-supply deal."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Apple Cardの新しい発行会社になると発表(JPMorganの年次報告)",
+          "text_en": "Announced it will become the new issuer of Apple Card (JPMorgan Chase annual report)",
+          "source": {
+            "label": "JPMorgan Chase 10-K(2025年度)",
+            "label_en": "JPMorgan Chase 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "On January 7, 2026, JPMorganChase announced that Chase will become the new issuer of Apple Card.",
+            "note": "取引の完了が条件です。",
+            "note_en": "Subject to closing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音楽配信",
+      "sub_en": "Audio streaming",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Spotifyが年次報告で、競合として機器に自社サービスを事前搭載する企業の1社にAppleを挙げている",
+          "text_en": "Spotify’s annual report names Apple among competitors with devices that preload competing audio services",
+          "source": {
+            "label": "Spotify 20-F(2025年度)",
+            "label_en": "Spotify 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Some of our competitors, including Apple, Alphabet, and Amazon, have developed, and are continuing to develop, devices for which their audio streaming services are preloaded"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRMN",
+      "ticker": "GRMN",
+      "name": "Garmin",
+      "sub": "スポーツウォッチ",
+      "sub_en": "Sports watches",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Garminが年次報告で、フィットネス・アウトドア製品の主な競合としてAppleを挙げている",
+          "text_en": "Garmin’s annual report lists Apple among its principal competitors in fitness and outdoor products",
+          "source": {
+            "label": "Garmin 10-K(2025年度)",
+            "label_en": "Garmin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Garmin believes that its principal competitors for fitness products are Apple, Bryton, Coros"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "動画端末",
+      "sub_en": "Streaming devices",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rokuが年次報告で、競合するTV向けストリーミング端末を出す企業としてAppleを挙げている",
+          "text_en": "Roku’s annual report says Apple offers TV streaming devices that compete with Roku devices",
+          "source": {
+            "label": "Roku 10-K(2025年度)",
+            "label_en": "Roku 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Large companies such as Amazon, Apple, and Google offer TV streaming devices that compete with Roku streaming devices"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}
