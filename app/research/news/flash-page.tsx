@@ -120,9 +120,8 @@ export default function FlashPage({ lang }: { lang: Language }) {
     <span className={timeline.when}>{timeCell(row)}</span><span className={timeline.node} aria-hidden="true" />
     <div className={timeline.entry}>
       <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
-      {row.url
-        ? <p className={`${timeline.headline} ${styles.twoLines}`} lang={lang}>{row.title}</p>
-        : <NewsStory lang={lang} label="" title={row.title} body={row.body} publication={publication(row)} />}
+      {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). */}
+      <NewsStory lang={lang} label="" title={row.title} body={row.body} publication={publication(row)} jaLimit={36} />
     </div>
   </article>;
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>

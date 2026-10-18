@@ -201,7 +201,7 @@ class XApiTests(unittest.TestCase):
         added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
                  "AMAT", "SIMO", "AAOI", "META"}
         # Oct 11: earnings-only companies join the X scope for earnings and targets.
-        earnings_only = {"AAPL", "AMZN", "TSLA", "SOFI", "IONQ", "STX", "CEG"}
+        earnings_only = {"AAPL", "AMZN", "TSLA", "SOFI", "IONQ", "STX", "CEG", "IBM"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
                          {"tipranks", "wallstengine", "nebiusai", "aistocksavvy", "trade_the_news"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
@@ -224,7 +224,7 @@ class XApiTests(unittest.TestCase):
             # Oct 11: LITE and ALAB joined the roster; DELL and ORCL became earnings-only.
             self.assertEqual(set(source["extraTickers"]),
                              (added - {"LITE", "ALAB"}) | earnings_only | {"DELL", "ORCL"})
-            self.assertEqual(len(source["tickers"]), 40)
+            self.assertEqual(len(source["tickers"]), 41)
             if source["id"] != "x-wallstengine":
                 self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))
             self.assertEqual(source["intervalSeconds"], 30 if source["id"] == "x-wallstengine" else 60)

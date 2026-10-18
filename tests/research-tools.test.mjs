@@ -194,11 +194,11 @@ test("FOMC meetings stay date-only until the Federal Reserve publishes clock tim
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 3);
 });
 
-test("calendar coverage tracks 50 unique companies (all 37 roster stocks included) and only conclusive checks advance", async () => {
+test("calendar coverage tracks 50 unique companies (all 38 roster stocks included) and only conclusive checks advance", async () => {
   const { providers, earningsOnlyProviders } = await import("../lib/research/intake.ts");
   assert.equal(coverage.length, 50);
   assert.equal(new Set(coverage.map((company) => company.ticker)).size, 50);
-  // Owner, Oct 15: every roster stock (22 watched + 15 earnings-only) is always listed.
+  // Owner, Oct 15: every roster stock (22 watched + 16 earnings-only) is always listed.
   const listed = new Set(coverage.map((company) => company.ticker));
   assert.deepEqual([...providers, ...earningsOnlyProviders].map(provider => provider.ticker).filter(ticker => !listed.has(ticker)), []);
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));

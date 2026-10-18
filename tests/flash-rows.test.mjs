@@ -7,10 +7,10 @@ import { earningsOnlyProviders } from '../lib/research/intake.ts';
 const base = { url: 'https://www.example.com/a', publisher: 'Co', observedAt: '2026-10-14T01:00:00Z' };
 const wireItem = (id, titleJa, publishedAt) => ({ id, titleEn: `en ${id}`, titleJa, publisher: 'Wire', origin: 'wire', url: `https://example.com/${id}`, publishedAt });
 
-test('the roster is the 22 watched stocks plus the 15 earnings-only stocks', () => {
+test('the roster is the 22 watched stocks plus the 16 earnings-only stocks', () => {
   assert.equal(WATCH_TICKERS.size, 22);
-  assert.equal(earningsOnlyProviders.length, 15);
-  assert.equal(FLASH_TICKERS.length, 37);
+  assert.equal(earningsOnlyProviders.length, 16);
+  assert.equal(FLASH_TICKERS.length, 38);
   assert.ok(earningsOnlyProviders.every(p => FLASH_TICKERS.includes(p.ticker) && !WATCH_TICKERS.has(p.ticker)));
 });
 
