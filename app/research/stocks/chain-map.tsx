@@ -3,9 +3,14 @@ import {useEffect,useMemo,useRef,useState} from 'react';
 import {chainFocus} from '@/lib/research/chain-network';
 import {layoutCompanyNetwork,networkLayers,networkEdgePath} from '@/lib/research/company-network';
 import type {CompanyNetwork,NetworkEdge,NetworkMode} from '@/lib/research/company-network';
+import {NvidiaCompanyNetworkMap} from './nvidia-network';
 import styles from './company-network.module.css';
 type Props={graph:CompanyNetwork;lang:'ja'|'en'};
-export function CompanyNetworkMap({graph}:Props){
+export function CompanyNetworkMap(props:Props){
+ if(props.graph.root==='NVDA')return <NvidiaCompanyNetworkMap {...props}/>;
+ return <ChainCompanyNetworkMap {...props}/>;
+}
+function ChainCompanyNetworkMap({graph}:Props){
  const [mode,setMode]=useState<NetworkMode>('direct'),[width,setWidth]=useState(640);
  const board=useRef<HTMLDivElement>(null);
  const focus=useMemo(()=>chainFocus(graph,mode),[graph,mode]);

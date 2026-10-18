@@ -979,3 +979,8 @@ product. Oracle's contracted capacity is distinct from the overall framework.
 Brookfield's June 2026 financing expansion updates the earlier disclosure.
 The SoftBank Japan venture is historical: its partner stake was acquired in
 2021. Do not present that venture as a current joint ownership arrangement.
+
+
+## 2026-10-18: NVDA-only presentation restoration
+
+Route the live NVIDIA profile back to the exact reviewed 95b5b29 graph (41 nodes, 61 relationships, unchanged digest). Use its original layered presentation in an isolated NVDA component and stylesheet. Following the supplied compact reference, default to direct relationships and cap the displayed cards at 8 in direct mode and 20 in two-step/all modes, including NVDA. Filter edges, competitor labels and the relationship list to the displayed companies; keep the full reviewed source graph internally. Group the displayed direct relationships under supplier, recipient, partnership/investment and competition headings. Relationship cards have the same neutral navy interior; only their left border and role text carry the category color. Highlight the searched NVDA card in gold. Other issuers continue using the current chain map, data and styling. Research automation remains paused.

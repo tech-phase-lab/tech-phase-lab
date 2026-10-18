@@ -1,3 +1,4 @@
+import reviewedNvidia from './company-network-nvda-reviewed.data.json' with {type:'json'};
 import {chainLayers} from './chain-presentation.ts';
 import universe from './chain_universe.json' with {type:'json'};
 import relations from './chain_relations.json' with {type:'json'};
@@ -7,6 +8,7 @@ import type {CompanyNetwork,NetworkEdge,NetworkNode} from './company-network.ts'
 const companyById=new Map(universe.companies.map(c=>[c.id,c]));
 export function companyNetworkFor(issuer:{cik:number;ticker:string}):CompanyNetwork|null{
  const profile=companyIntroductionFor(issuer);
+ if(issuer.ticker.trim().toUpperCase()==='NVDA')return profile ? reviewedNvidia as CompanyNetwork : null;
  const registered=companyById.get(profile?.tickers[0]??issuer.ticker.trim().toUpperCase());
  if(!registered)return null;
  const registeredCik=(registered as typeof registered & {cik?:number}).cik;
