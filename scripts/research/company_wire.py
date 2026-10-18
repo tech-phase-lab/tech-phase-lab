@@ -185,6 +185,8 @@ Use only names, tickers and Latin-script words that appear in the headline; writ
 Do not turn "a", "one" or "per share" into a digit (1株, 1社, 1カ所) unless the headline gives that number.
 Keep every number exactly as written (convert units only exactly, e.g. $1.2 billion = 12億ドル); never add, drop or round a figure.
 Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an item has previousRejection, that was why the last translation was rejected; avoid it.
+Also judge each headline (kind). "news" is something that happened or was announced about the company: results, guidance, a deal, order, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move with its stated cause.
+"not-news" is anything the reader cannot learn a fact from: investment advice or opinion ("should you buy", "which stock is better", "X vs Y"), comparisons and listicles, price predictions and forecasts, questions, teasers that hide their answer ("here is why"), what-if or past-returns pieces, and promotional or community posts. When in doubt, use "news".
 """ + japanese_names.policy_line()
 
 
@@ -312,11 +314,13 @@ def translate_once(path, transport=None, env=None, now_ts=None):
         'text': {'format': {'type': 'json_schema', 'name': 'company_wire_translation', 'strict': True, 'schema': {
             'type': 'object', 'additionalProperties': False, 'required': ['items'], 'properties': {'items': {
                 'type': 'array', 'items': {'type': 'object', 'additionalProperties': False,
-                                           'required': ['id', 'titleJa'],
-                                           'properties': {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}}}}}}}},
+                                           'required': ['id', 'titleJa', 'kind'],
+                                           'properties': {'id': {'type': 'string'}, 'titleJa': {'type': 'string'},
+                                                          'kind': {'type': 'string', 'enum': ['news', 'not-news']}}}}}}}},
     }
     translated = {}
     reasons = {}
+    skipped = set()
     outage = ''
     try:
         response = transport(payload, key)
@@ -325,7 +329,11 @@ def translate_once(path, transport=None, env=None, now_ts=None):
         result = json.loads(brief_generator.output_text(response))
         for item in result['items']:
             row = by_id.get(item.get('id'))
-            if row is None or row['key'] in translated:
+            if row is None or row['key'] in translated or row['key'] in skipped:
+                continue
+            # Oct 18: the model also says when a headline carries no fact; it is never published or retried.
+            if item.get('kind') == 'not-news':
+                skipped.add(row['key'])
                 continue
             try:
                 translated[row['key']] = validated_translation(item.get('titleJa'), row['title'])
@@ -333,6 +341,7 @@ def translate_once(path, transport=None, env=None, now_ts=None):
                 reasons[row['key']] = str(error)[:40] or 'invalid'
     except Exception as error:
         translated = {}
+        skipped = set()
         outage = 'model-' + type(error).__name__[:30]
     stamp = datetime.fromtimestamp(now_ts, timezone.utc).isoformat()
     with connect(path) as db, db:
@@ -341,11 +350,14 @@ def translate_once(path, transport=None, env=None, now_ts=None):
             if row['key'] in translated:
                 db.execute('INSERT OR IGNORE INTO company_wire_ja VALUES(?,?,?,?)',
                            (row['key'], translated[row['key']], model, stamp))
+            elif row['key'] in skipped:
+                db.execute("""INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,?,?,'not-news') ON CONFLICT(key) DO UPDATE SET
+                  attempts=excluded.attempts, next_at=excluded.next_at, reason='not-news'""", (row['key'], TRANSLATION_ATTEMPTS, now_ts))
             else:
                 reason = outage or reasons.get(row['key'], 'not-returned')
                 db.execute('''INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,1,?,?) ON CONFLICT(key) DO UPDATE SET
                   attempts=attempts+1, next_at=excluded.next_at, reason=excluded.reason''', (row['key'], now_ts + TRANSLATION_RETRY_SECONDS, reason))
-    return 'done' if translated else 'retry'
+    return 'done' if translated or skipped else 'retry'
 
 
 def public_feed(db, now_ts=None):
@@ -357,8 +369,8 @@ def public_feed(db, now_ts=None):
     items = {}
     for ticker in roster():
         rows = db.execute('''SELECT w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja
-          FROM company_wire w LEFT JOIN company_wire_ja j USING(key)
-          WHERE w.ticker=? AND w.published_at>=? ORDER BY w.published_at DESC LIMIT 120''',
+          FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
+          WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'')<>'not-news' ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
         rows = [r for r in rows if not truncated(r['title'])]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
