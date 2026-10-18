@@ -32,42 +32,10 @@
   ],
   "rivals": [
     "ENR",
-    "7011",
-    "WEC",
     "VWS",
-    "SGRE",
-    "HEN",
-    "SU",
-    "ABBN",
-    "SIE",
-    "6503",
-    "CAT",
-    "BW"
+    "ABBN"
   ],
   "companies": [
-    {
-      "id": "CRUSOE",
-      "ticker": "Crusoe",
-      "name": "Crusoe",
-      "sub": "AIデータセンター",
-      "sub_en": "AI data centers",
-      "row": 1,
-      "relations": [
-        {
-          "type": "down",
-          "text": "AIデータセンター向けにLM2500XPRESSガスタービン29基を納入する契約(2025年7月)",
-          "text_en": "Deal to deliver 29 LM2500XPRESS gas turbine packages to Crusoe’s AI data centers (July 2025)",
-          "source": {
-            "label": "GE Vernova の発表(2025年7月)",
-            "label_en": "GE Vernova press release (Jul 2025)",
-            "url": "https://www.gevernova.com/news/press-releases/ge-vernova-crusoe-announce-major-29-unit-aeroderivative-gas-turbine-deliver-ai-data-centers",
-            "level": "official",
-            "date": "2025-07-22",
-            "quote": "The announced order of 19 units, booked in June 2025, builds on the first series of 10 units Crusoe ordered in December 2024, and combined, is expected to provide nearly 1GW of electricity."
-          }
-        }
-      ]
-    },
     {
       "id": "NRG",
       "ticker": "NRG",
@@ -162,54 +130,6 @@
             "quote": "The first projects, which the companies refer to as “power foundries”, are expected to leverage seven U.S. made GE Vernova 7HA natural gas turbines, secured under a slot reservation agreement",
             "note": "計画・枠の予約の段階で、確定注文ではありません。",
             "note_en": "Expected/planned; slot reservations, not final orders."
-          }
-        }
-      ]
-    },
-    {
-      "id": "TIC",
-      "ticker": "Kiewit",
-      "name": "Kiewit(TIC)",
-      "sub": "建設",
-      "sub_en": "Construction",
-      "row": 2,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "NRGとの最大5.4GWのガス火力開発で、GE Vernovaと組んで建設を担う(Kiewit傘下のTIC)",
-          "text_en": "Kiewit’s subsidiary TIC develops and builds up to 5.4GW of gas-fired projects with GE Vernova for NRG",
-          "source": {
-            "label": "NRG Energy 10-K(2025年度)",
-            "label_en": "NRG Energy 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm",
-            "level": "official",
-            "date": "2025-02-13",
-            "quote": "NRG signed a strategic Project Development Agreement with GE Vernova (“GEV”) and Kiewit’s subsidiary, TIC, to develop and construct up to 5.4 GW",
-            "note": "最大5.4GWの計画です。",
-            "note_en": "Up to 5.4GW."
-          }
-        }
-      ]
-    },
-    {
-      "id": "PROLEC",
-      "ticker": "Prolec GE",
-      "name": "Prolec GE(Xignux)",
-      "sub": "変圧器",
-      "sub_en": "Transformers",
-      "row": 2,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "合弁会社Prolec GEの残り50%を52.75億ドルで取得し完全子会社化(2026年2月2日完了)",
-          "text_en": "Completed acquisition of the remaining 50% of Prolec GE, the former joint venture with Xignux, for $5.275B (February 2, 2026)",
-          "source": {
-            "label": "GE Vernova の発表(2026年2月)",
-            "label_en": "GE Vernova press release (Feb 2026)",
-            "url": "https://www.gevernova.com/news/press-releases/ge-vernova-completes-prolec-ge-acquisition",
-            "level": "official",
-            "date": "2026-02-02",
-            "quote": "today announced it has completed the acquisition of the remaining 50% stake of Prolec GE, its former unconsolidated joint venture with Xignux"
           }
         }
       ]
@@ -320,77 +240,6 @@
       ]
     },
     {
-      "id": "7011",
-      "ticker": "MHI",
-      "name": "三菱重工(Mitsubishi Power)",
-      "sub": "発電機器",
-      "sub_en": "Power equipment",
-      "row": 3,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "電力事業の主要な競合として「Mitsubishi Power」を実名で記載",
-          "text_en": "Named as a key Power-segment competitor (as Mitsubishi Power)",
-          "source": {
-            "label": "GE Vernova 10-K(2025年度)",
-            "label_en": "GE Vernova 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
-            "level": "official",
-            "date": "2026-01",
-            "quote": "Key Power segment competitors include Siemens Energy, Mitsubishi Power, Westinghouse , Framatome, and Rolls-Royce.",
-            "note": "年次報告の記載は「Mitsubishi Power」で、三菱重工との関係は同じ記載の中では示されていません。",
-            "note_en": "The filing names Mitsubishi Power; its link to Mitsubishi Heavy Industries is not stated there."
-          }
-        }
-      ]
-    },
-    {
-      "id": "WEC",
-      "ticker": "Westinghouse",
-      "name": "Westinghouse",
-      "sub": "原子力",
-      "sub_en": "Nuclear",
-      "row": 3,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "電力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Power-segment competitor (annual report)",
-          "source": {
-            "label": "GE Vernova 10-K(2025年度)",
-            "label_en": "GE Vernova 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
-            "level": "official",
-            "date": "2026-01",
-            "quote": "Key Power segment competitors include Siemens Energy, Mitsubishi Power, Westinghouse , Framatome, and Rolls-Royce."
-          }
-        }
-      ]
-    },
-    {
-      "id": "FRA",
-      "ticker": "Framatome",
-      "name": "Framatome",
-      "sub": "原子力",
-      "sub_en": "Nuclear",
-      "row": 3,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "電力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Power-segment competitor (annual report)",
-          "source": {
-            "label": "GE Vernova 10-K(2025年度)",
-            "label_en": "GE Vernova 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
-            "level": "official",
-            "date": "2026-01",
-            "quote": "Key Power segment competitors include Siemens Energy, Mitsubishi Power, Westinghouse , Framatome, and Rolls-Royce."
-          }
-        }
-      ]
-    },
-    {
       "id": "RR",
       "ticker": "Rolls-Royce",
       "name": "Rolls-Royce",
@@ -437,55 +286,9 @@
       ]
     },
     {
-      "id": "SGRE",
-      "ticker": "Siemens Gamesa",
-      "name": "Siemens Gamesa",
-      "sub": "風力発電",
-      "sub_en": "Wind power",
-      "row": 4,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "風力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Wind-segment competitor (annual report)",
-          "source": {
-            "label": "GE Vernova 10-K(2025年度)",
-            "label_en": "GE Vernova 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
-            "level": "official",
-            "date": "2026-01",
-            "quote": "Key Wind segment competitors include Vestas, Siemens-Gamesa, Nordex, Envision, and Goldwind."
-          }
-        }
-      ]
-    },
-    {
       "id": "NDX1",
       "ticker": "Nordex",
       "name": "Nordex",
-      "sub": "風力発電",
-      "sub_en": "Wind power",
-      "row": 4,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "風力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Wind-segment competitor (annual report)",
-          "source": {
-            "label": "GE Vernova 10-K(2025年度)",
-            "label_en": "GE Vernova 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
-            "level": "official",
-            "date": "2026-01",
-            "quote": "Key Wind segment competitors include Vestas, Siemens-Gamesa, Nordex, Envision, and Goldwind."
-          }
-        }
-      ]
-    },
-    {
-      "id": "ENVISION",
-      "ticker": "Envision",
-      "name": "Envision",
       "sub": "風力発電",
       "sub_en": "Wind power",
       "row": 4,
@@ -524,29 +327,6 @@
             "level": "official",
             "date": "2026-01",
             "quote": "Key Wind segment competitors include Vestas, Siemens-Gamesa, Nordex, Envision, and Goldwind."
-          }
-        }
-      ]
-    },
-    {
-      "id": "HEN",
-      "ticker": "Hitachi Energy",
-      "name": "Hitachi Energy",
-      "sub": "送配電",
-      "sub_en": "Grid equipment",
-      "row": 5,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "電化事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Electrification competitor (annual report)",
-          "source": {
-            "label": "GE Vernova 10-K(2025年度)",
-            "label_en": "GE Vernova 10-K FY2025",
-            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
-            "level": "official",
-            "date": "2026-01",
-            "quote": "Key Electrification segment competitors include Hitachi Energy, Siemens Energy, Siemens, Schneider Electric, Mitsubishi Electric, and ABB."
           }
         }
       ]

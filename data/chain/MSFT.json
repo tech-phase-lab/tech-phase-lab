@@ -19,22 +19,11 @@
     }
   ],
   "rivals": [
-    "NVDA",
-    "INTC",
     "ORCL",
-    "SNOW",
-    "S",
-    "PEGA",
-    "OKTA",
     "NOW",
+    "SNOW",
     "WDAY",
-    "ZM",
-    "DDOG",
-    "PANW",
-    "FTNT",
-    "MDB",
-    "BOX",
-    "DBX"
+    "PANW"
   ],
   "companies": [
     {
@@ -232,82 +221,6 @@
             "quote": "announced today the signing of a 20-year power purchase agreement with Microsoft that will pave the way for the launch of the Crane Clean Energy Center (CCEC) and restart of Three Mile Island Unit 1",
             "note": "再稼働には規制当局の承認が必要です。",
             "note_en": "Restart is subject to regulatory approvals."
-          }
-        }
-      ]
-    },
-    {
-      "id": "OPENAI",
-      "ticker": "OpenAI",
-      "name": "OpenAI",
-      "sub": "AI",
-      "sub_en": "AI",
-      "row": 1,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "OpenAIと長期の戦略的提携。持分法投資で、出資比率は約25%(Microsoftの年次報告)",
-          "text_en": "Long-term strategic partnership with OpenAI; equity-method investment of about 25% (Microsoft annual report)",
-          "source": {
-            "label": "Microsoft 10-K(2026年度)",
-            "label_en": "Microsoft 10-K (FY2026)",
-            "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
-            "level": "official",
-            "date": "2026-07-29",
-            "quote": "We have an investment accounted for under the equity method that represents an approximate 25 % interest on an as-converted basis.",
-            "note": "OpenAIは非上場で、再編や追加の資金調達で持分は薄まっています。",
-            "note_en": "OpenAI is private; ownership is diluted by recapitalization and funding."
-          }
-        },
-        {
-          "type": "tie",
-          "text": "2026年4月に契約を見直し、Microsoftは引き続きOpenAIの主要クラウドで、新製品はまずAzureで提供",
-          "text_en": "April 2026 amendment: Microsoft remains OpenAI’s primary cloud partner and products ship first on Azure",
-          "source": {
-            "label": "Microsoft ブログ(2026年4月)",
-            "label_en": "Microsoft blog (Apr 2026)",
-            "url": "https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/",
-            "level": "official",
-            "date": "2026-04-27",
-            "quote": "Microsoft remains OpenAI’s primary cloud partner, and OpenAI products will ship first on Azure"
-          }
-        },
-        {
-          "type": "down",
-          "text": "OpenAIがAzureを追加で2,500億ドル分購入すると契約(2025年10月)",
-          "text_en": "OpenAI contracted to purchase an incremental $250B of Azure services (October 2025)",
-          "source": {
-            "label": "Microsoft ブログ(2025年10月)",
-            "label_en": "Microsoft blog (Oct 2025)",
-            "url": "https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/",
-            "level": "official",
-            "date": "2025-10-28",
-            "quote": "OpenAI has contracted to purchase an incremental $250B of Azure services"
-          }
-        }
-      ]
-    },
-    {
-      "id": "ANTH",
-      "ticker": "Anthropic",
-      "name": "Anthropic",
-      "sub": "AI",
-      "sub_en": "AI",
-      "row": 1,
-      "relations": [
-        {
-          "type": "tie",
-          "text": "AnthropicがAzureの計算容量を300億ドル分購入すると約束し、Microsoftは最大50億ドルを出資(2025年11月)",
-          "text_en": "Anthropic committed to buy $30B of Azure compute; Microsoft to invest up to $5B (November 2025)",
-          "source": {
-            "label": "Microsoft ブログ(2025年11月)",
-            "label_en": "Microsoft blog (Nov 2025)",
-            "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/",
-            "level": "official",
-            "date": "2025-11-18",
-            "quote": "NVIDIA and Microsoft are committing to invest up to $10 billion and up to $5 billion respectively in Anthropic.",
-            "note": "出資額は「最大」の数字で、Anthropicは非上場です。",
-            "note_en": "“Up to” investment amount; Anthropic is private."
           }
         }
       ]

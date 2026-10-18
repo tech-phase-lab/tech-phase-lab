@@ -9,7 +9,7 @@ const data = chain.chainDataFor('NVDA');
 const hasJapanese = text => /[぀-ヿ㐀-鿿]/.test(text);
 
 test('the NVDA chain map data keeps its companies, rows and two-step links', () => {
-  assert.equal(chain.chainDataFor('AMD'), null);
+  assert.equal(chain.chainDataFor('AAPL'), null);
   assert.equal(data.companies.length, 20);
   assert.equal(data.far.length, 3);
   assert.deepEqual(data.rows.map(row => row.ja), ['供給元(上流)', '光通信・半導体', 'サーバー・ネットワーク', 'クラウド・AI基盤']);
@@ -69,11 +69,12 @@ test('the map shows suppliers first, no range buttons, a card per company with s
 });
 
 const BATCH = {
-  NFLX: [17, 21], LRCX: [26, 28], TSLA: [18, 20], IBM: [32, 45], META: [38, 42],
-  BE: [7, 10], SKHY: [15, 17], GEV: [27, 28], MSFT: [24, 29], KLAC: [9, 11],
+  NFLX: [14, 18], LRCX: [22, 24], TSLA: [17, 19], IBM: [26, 39], META: [33, 37],
+  BE: [6, 9], SKHY: [14, 16], GEV: [18, 19], MSFT: [22, 25], KLAC: [8, 10],
+  SNDK: [7, 15], AMD: [18, 25], ANET: [16, 22], ARM: [19, 20], LITE: [6, 10],
 };
 
-test('the ten earnings-ordered companies use the same format with an official source on every relation', () => {
+test('the earnings-ordered companies use the same format with an official source on every relation', () => {
   for (const [ticker, [companies, relations]] of Object.entries(BATCH)) {
     const item = chain.chainDataFor(ticker);
     assert.ok(item, ticker);
@@ -108,11 +109,22 @@ test('a map without suppliers, rivals or two-step links leaves those parts out, 
   const html = renderToStaticMarkup(createElement(StockChainMap, { data: be, lang: 'ja' }));
   assert.ok(!html.includes('供給元(上流)'), 'an empty supplier row is not drawn');
   assert.ok(html.indexOf('AIデータセンター・IT企業') > html.indexOf('BE</b>'));
-  assert.ok(html.includes('7社 · 10の関係') && !html.includes('さらに先の関係') && !html.includes('競合は？'));
+  assert.ok(html.includes('6社 · 9の関係') && !html.includes('さらに先の関係') && !html.includes('競合は？'));
   const plain = renderToStaticMarkup(createElement(StockChainMap, { data: be, lang: 'en' }));
   assert.ok(!plain.includes('Who competes with it?') && !plain.includes('Further links') && !plain.includes('Competitors'));
   const metaHtml = renderToStaticMarkup(createElement(StockChainMap, { data: meta, lang: 'en' }));
   assert.ok(metaHtml.indexOf('Power') < metaHtml.indexOf('META</b>') && metaHtml.indexOf('META</b>') < metaHtml.indexOf('Glasses, social'));
   assert.ok(metaHtml.indexOf('AI &amp; device partners') < metaHtml.indexOf('META</b>'));
-  assert.equal((metaHtml.match(/id="chain-card-/g) ?? []).length, 38);
+  assert.equal((metaHtml.match(/id="chain-card-/g) ?? []).length, 33);
+});
+
+test('the "who competes" row stays on one line (main rivals only), and unlisted companies are not shown', () => {
+  const UNLISTED = ['TikTok', 'OpenAI', 'Anthropic', 'xAI', 'Groq', 'Scale AI', 'Crusoe', 'Westinghouse', 'Framatome', 'BMC', 'Semes', 'CXMT', 'imec', 'SK ecoplant'];
+  for (const ticker of Object.keys(BATCH)) {
+    const item = chain.chainDataFor(ticker);
+    const labels = item.rivals.map(id => item.companies.find(company => company.id === id).ticker);
+    const width = labels.reduce((sum, label) => sum + label.length * 7.8 + 24, 0) + 8 * Math.max(0, labels.length - 1);
+    assert.ok(width <= 320, `${ticker} rivals row ${Math.round(width)}px`);
+    for (const company of item.companies) assert.ok(!UNLISTED.includes(company.ticker) && !UNLISTED.includes(company.name), `${ticker} ${company.id}`);
+  }
 });

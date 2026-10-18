@@ -26,8 +26,7 @@
     "005930",
     "MU",
     "SNDK",
-    "KIOXIA",
-    "CXMT"
+    "KIOXIA"
   ],
   "companies": [
     {
@@ -382,30 +381,6 @@
             "level": "official",
             "date": "2026-08",
             "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc."
-          }
-        }
-      ]
-    },
-    {
-      "id": "CXMT",
-      "ticker": "CXMT",
-      "name": "CXMT(長鑫存儲)",
-      "sub": "DRAM",
-      "sub_en": "DRAM",
-      "row": 3,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "DRAMの主要な競合としてChangXin Memory Technologiesを挙げている(目論見書)",
-          "text_en": "Names ChangXin Memory Technologies a major DRAM competitor (prospectus)",
-          "source": {
-            "label": "SK hynix 目論見書(Form 424B4, 2026)",
-            "label_en": "SK hynix prospectus (Form 424B4, 2026)",
-            "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
-            "level": "official",
-            "quote": "Our major competitors in the DRAM market include Samsung Electronics Co., Ltd. (“Samsung Electronics”), Micron Technology, Inc. (“Micron Technology”) and ChangXin Memory Technologies (“CXMT”).",
-            "note": "非上場です。",
-            "note_en": "Not publicly listed."
           }
         }
       ]

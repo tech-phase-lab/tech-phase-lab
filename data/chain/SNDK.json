@@ -1,0 +1,305 @@
+{
+  "root": {
+    "ticker": "SNDK",
+    "name": "Sandisk"
+  },
+  "rows": [
+    {
+      "ja": "供給元(ウエハー・DRAM)",
+      "en": "Suppliers (wafers & DRAM)",
+      "above": true
+    },
+    {
+      "ja": "提携・資本関係",
+      "en": "Partnerships & ownership"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MU",
+    "005930",
+    "SK hynix",
+    "Kioxia"
+  ],
+  "companies": [
+    {
+      "id": "Kioxia",
+      "ticker": "Kioxia",
+      "name": "Kioxia",
+      "sub": "NAND(合弁相手)",
+      "sub_en": "NAND (JV partner)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "フラッシュメモリーはすべてKioxiaとの合弁事業から調達(ウエハーの供給)",
+          "text_en": "All of its flash memory comes from the joint ventures with Kioxia, which supply the wafers",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-07-03",
+            "quote": "All of our flash-based memory is obtained from our joint ventures with Kioxia, which provide us with leading-edge, high-quality flash memory wafers."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "四日市工場の合弁契約をさらに5年延長(2034年まで、2026年1月)",
+          "text_en": "Extended the Yokkaichi joint venture agreements by five years, through 2034 (January 2026)",
+          "source": {
+            "label": "Sandisk/Kioxia joint の発表",
+            "label_en": "Sandisk/Kioxia joint press release",
+            "url": "https://www.sandisk.com/company/newsroom/press-releases/2026/2026-01-29-kioxia-and-sandisk-extend-yokkaichi-joint-venture-agreement-through-2034",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "extension of their joint venture agreements at Kioxia's Yokkaichi Plant for an additional five years"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "3つの合弁事業(Flash Ventures)で、日本の8つのフラッシュ製造施設を運営",
+          "text_en": "Operates three ventures (Flash Ventures) across eight flash manufacturing facilities in Japan",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-07-03",
+            "quote": "We and Kioxia currently operate three business ventures, Flash Partners Ltd., Flash Alliance Ltd. and Flash Forward Ltd., (collectively, \"Flash Ventures\")"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてKioxiaを挙げている",
+          "text_en": "Sandisk’s annual report names Kioxia among the vertically integrated flash suppliers it competes with",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-07-03",
+            "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Nanya",
+      "ticker": "Nanya",
+      "name": "Nanya Technology",
+      "sub": "DRAM",
+      "sub_en": "DRAM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SandiskにDRAMを供給する複数年の戦略的な供給契約(2026年3月)",
+          "text_en": "Multi-year strategic arrangement to supply Sandisk with DRAM products (March 2026)",
+          "source": {
+            "label": "Sandisk 8-K(2026-03-25)",
+            "label_en": "Sandisk 8-K (2026-03-25)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000119312526122705/d136592d8k.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Nanya will supply the Company with DRAM products."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Sandiskの子会社がNanyaの株式約1.39億株(約10億ドル、完全希薄化後で約3.9%)を取得する契約",
+          "text_en": "A Sandisk subsidiary agreed to buy about 139 million Nanya shares for about $1.0B (about 3.9% fully diluted)",
+          "source": {
+            "label": "Sandisk 8-K(2026-03-25)",
+            "label_en": "Sandisk 8-K (2026-03-25)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000119312526122705/d136592d8k.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "agreed to purchase approximately 139 million shares of Nanya common stock for an aggregate purchase price of approximately $1.0 billion",
+            "note": "取得後の届出と3年間の売却制限が条件です。",
+            "note_en": "Subject to post-closing filings and a three-year statutory lock-up."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WDC",
+      "ticker": "WDC",
+      "name": "Western Digital",
+      "sub": "元の親会社",
+      "sub_en": "Former parent",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年2月21日に分離が完了するまで、Western Digitalの完全子会社だった",
+          "text_en": "Wholly owned by Western Digital until the separation completed on February 21, 2025",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Prior to February 21, 2025, we were wholly owned by Western Digital Corporation"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "分離時に、Western DigitalがSandisk株2,880万株を保有",
+          "text_en": "At the separation, Western Digital initially retained 28.8 million Sandisk shares",
+          "source": {
+            "label": "Western Digital 10-K(2026年度)",
+            "label_en": "Western Digital 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "As part of the Separation, we initially retained 28.8 million shares of Sandisk common stock.",
+            "note": "その後、Western Digitalは株式の一部を現金化しています。",
+            "note_en": "Western Digital later monetized shares; the current holding is not stated here."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JCET",
+      "ticker": "JCET",
+      "name": "JCET Group",
+      "sub": "組み立て・テスト",
+      "sub_en": "Assembly & test",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "組み立て・テスト合弁のSDSSは、Sandisk 20%・JCETの子会社80%の持分",
+          "text_en": "The SDSS assembly and test venture is owned 20% by Sandisk and 80% by a JCET subsidiary",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2024-09-28",
+            "quote": "a venture that is owned 20% by Sandisk and 80% by JCET Management Co., Ltd."
+          }
+        },
+        {
+          "type": "down",
+          "text": "SanDisk ChinaがSDSS持分の80%をJCETへ売却(2024年9月28日完了)",
+          "text_en": "SanDisk China sold 80% of its equity interest in SDSS to JCET (closed September 28, 2024)",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2024-09-28",
+            "quote": "The Transaction closed on September 28, 2024, and SanDisk China completed the sale of 80 % of its equity interest in SDSS to JCET."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SK hynix",
+      "ticker": "SK hynix",
+      "name": "SK hynix",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高帯域フラッシュ(HBF)の仕様づくりで覚書(MOU)を締結(2025年8月)",
+          "text_en": "MOU to establish the specification for High Bandwidth Flash (August 2025)",
+          "source": {
+            "label": "Sandisk の発表",
+            "label_en": "Sandisk press release",
+            "url": "https://www.sandisk.com/company/newsroom/press-releases/2025/2025-08-06-sandisk-to-collaborate-with-sk-hynix-to-drive-standardization-of-high-bandwidth-flash-memory-technology",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "signed a landmark Memorandum of Understanding (MOU) with SK hynix to work together to establish the specification for High Bandwidth Flash",
+            "note": "覚書の段階で、仕様の標準化は「見込み」とされています。",
+            "note_en": "MOU stage; standardization is described as expected."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてSK hynixを挙げている",
+          "text_en": "Sandisk’s annual report names SK hynix among the vertically integrated flash suppliers it competes with",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-07-03",
+            "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてMicronを挙げている",
+          "text_en": "Sandisk’s annual report names Micron among its vertically integrated flash competitors",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-07-03",
+            "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Micronが年次報告で、競合としてSandiskを挙げている",
+          "text_en": "Micron’s annual report lists Sandisk among its memory and storage competitors",
+          "source": {
+            "label": "Micron 10-K(2026年度)",
+            "label_en": "Micron 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+            "level": "official",
+            "date": "2026-10-09",
+            "quote": "Samsung Electronics Co., Ltd.; SK hynix Inc.; Kioxia Holdings Corporation; Sandisk Corporation;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてSamsung Electronicsを挙げている",
+          "text_en": "Sandisk’s annual report names Samsung Electronics among the vertically integrated flash suppliers it competes with",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-07-03",
+            "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}
