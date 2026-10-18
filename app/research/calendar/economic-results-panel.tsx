@@ -12,7 +12,7 @@ import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
 
-export default function EconomicResultsPanel({ lang, zone, period, kind = "all", onReported }: { lang: "ja" | "en"; zone: string; period: string; kind?: "all" | "earnings" | "economic"; onReported?: (rows: { ticker: string; at: number }[]) => void }) {
+export default function EconomicResultsPanel({ lang, zone, period, kind = "all", active = true, onReported }: { lang: "ja" | "en"; zone: string; period: string; active?: boolean; kind?: "all" | "earnings" | "economic"; onReported?: (rows: { ticker: string; at: number }[]) => void }) {
   const [updates, setUpdates] = useState<OfficialUpdate[]>([]);
   const [briefs, setBriefs] = useState<ResultBrief[]>([]);
   const [failed, setFailed] = useState(false);
@@ -41,11 +41,13 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
     const economic = mergeEconomicResults(updates, briefs).filter(row => !ja || row.title.ja).map(row => ({ ticker: `econ:${/^[a-z]+/.exec(row.id)?.[0]}`, at: Date.parse(row.releasedAt) }));
     onReported?.([...earningsResults(updates, briefs).filter(row => !ja || row.result.ja).map(row => ({ ticker: row.ticker, at: Date.parse(row.releasedAt) })), ...economic]);
   }, [updates, briefs, ja, onReported]);
-  const results = mergeEconomicResults(updates, briefs).filter(event => (period === "upcoming" || period === "today-upcoming") || calendarDateKey(event.releasedAt, zone).startsWith(period));
+  if (!active) return null;
+  const results = mergeEconomicResults(updates, briefs).filter(event => period === "all" || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
-  const inPeriod = (at: string) => period === "upcoming" || period === "today-upcoming" || calendarDateKey(at, zone).startsWith(period);
+  const inPeriod = (at: string) => period === "all" || calendarDateKey(at, zone).startsWith(period);
   // Japanese view never shows English: a release without a checked Japanese title is left out there.
   const earnings = kind === "economic" ? [] : earningsResults(updates, briefs).filter(row => inPeriod(row.releasedAt) && (!ja || row.result.ja)).slice(0, 30);
+  if (!earnings.length && (kind === "earnings" || !results.length)) return <p role="status" className={styles.description}>{failed ? (ja ? "結果を取得できません。しばらくしてから再度お試しください。" : "Results are unavailable. Please try again shortly.") : (ja ? "この条件に該当する結果はありません。" : "No results match these filters.")}</p>;
   const time = (at: string) => <time dateTime={at}>{calendarDateKey(at, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(at))} {zoneLabel}</small></time>;
   const earningsSection = !!earnings.length && <section className={styles.section} aria-label={ja ? "決算の結果" : "Earnings results"}>
     <h2>{ja ? "決算の結果" : "Earnings results"}</h2>

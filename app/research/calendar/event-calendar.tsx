@@ -33,26 +33,36 @@ export default function EventCalendar() {
   const zone = zoneOverride ?? (lang === "ja" ? "Asia/Tokyo" : "America/New_York");
   const otherZone = zone === "Asia/Tokyo" ? "America/New_York" : "Asia/Tokyo";
   const zoneLabel = (value: string) => value === "Asia/Tokyo" ? "JST" : "ET";
-  const months = [...new Set([...calendarEvents.map((event) => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...dateOnlyEvents.map((event) => event.date.slice(0, 7))])].sort();
-  const [period, setPeriod] = useState("today-upcoming");
+  const [view, setView] = useState<"upcoming" | "results">("upcoming");
+  const [period, setPeriod] = useState("all");
   const [reported, setReported] = useState<{ ticker: string; at: number }[]>([]);
   const onReported = useCallback((rows: { ticker: string; at: number }[]) => setReported(rows), []);
-  // A company whose result is already in the "released" list above no longer keeps its call row (owner, Oct 15).
+  // A company whose result is already in the results view no longer keeps its call row (owner, Oct 15).
   // The same goes for an economic release (jobs, CPI, PPI, PCE) once its result is posted.
   const resultKey = (event: CalendarEvent) => event.ticker ?? (event.kind === "economic" ? `econ:${/^[a-z]+/.exec(event.id)?.[0]}` : undefined);
   const resultPosted = (event: CalendarEvent) => { const key = resultKey(event); return !!key && reported.some(row => row.ticker === key && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000); };
   const now = useCalendarClock();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, period, now, zone).filter(event => !resultPosted(event));
-  const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, period, now);
+  const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, "today-upcoming", now, zone).filter(event => period === "all" || calendarDateKey(event.startsAt, zone).startsWith(period)).filter(event => !resultPosted(event));
+  const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, "today-upcoming", now).filter(event => period === "all" || event.date.startsWith(period));
+  const months = [...new Set(view === "results"
+    ? reported.map(row => calendarDateKey(new Date(row.at).toISOString(), zone).slice(0, 7))
+    : now === null ? [] : [...selectCalendarEvents(calendarEvents, kind, "today-upcoming", now, zone).map(event => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...selectDateOnlyEvents(dateOnlyEvents, kind, "today-upcoming", now).map(event => event.date.slice(0, 7))])].sort();
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
-  return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("today-upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")}>
+  return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("all"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")}>
     <div className={calendarStyles.filters}>
-      <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => setKind(value)}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
-      <label>{t("期間", "Period")} ({zoneLabel(zone)})<select value={period} onChange={(event) => setPeriod(event.target.value)}><option value="today-upcoming">{t("今日・今後の予定", "Today & upcoming")}</option><option value="upcoming">{t("今後の予定", "Upcoming")}</option>{months.map((month) => <option key={month} value={month}>{month}</option>)}</select></label>
-      <label>{t("表示時間", "Time zone")}<select value={zone} onChange={(event) => { setZoneOverride(event.target.value); setPeriod("today-upcoming"); }}><option value="Asia/Tokyo">{t("日本時間", "Japan · JST")}</option><option value="America/New_York">{t("米国東部", "U.S. Eastern · ET")}</option></select></label>
+      <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => { setKind(value); setPeriod("all"); }}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
     </div>
-    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} />
+    <div className={calendarStyles.viewSwitch} role="group" aria-label={t("表示内容", "Calendar view")}>
+      <button aria-pressed={view === "upcoming"} onClick={() => { setView("upcoming"); setPeriod("all"); }}>{t("今後の予定", "Upcoming")}</button>
+      <button aria-pressed={view === "results"} onClick={() => { setView("results"); setPeriod("all"); }}>{t("発表済みの結果", "Results")}</button>
+    </div>
+    <div className={calendarStyles.displayOptions}>
+      <select aria-label={t("表示月", "Month")} value={period} onChange={event => setPeriod(event.target.value)}><option value="all">{t("すべての月", "All months")}</option>{months.map(month => <option key={month} value={month}>{month}</option>)}</select>
+      <select aria-label={t("時間帯", "Time zone")} value={zone} onChange={event => { setZoneOverride(event.target.value); setPeriod("all"); }}><option value="Asia/Tokyo">JST</option><option value="America/New_York">ET</option></select>
+    </div>
+    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} active={view === "results"} />
+    {view === "upcoming" && <>
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
       <details>
         <summary>
@@ -78,6 +88,9 @@ export default function EventCalendar() {
           <IndicatorGuide id={event.id} lang={lang} />{event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}<p>{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")}</p><details className={calendarStyles.sourceDetails}><summary>{t("日付・出典", "Date & source")}</summary><small>{event.date}</small><a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></details></div>
       </details></li>)}</ol></>}
 
+    </section>
+    </>}
+    <section className={styles.section}>
       <details className={calendarStyles.coverage}>
         <summary><span>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</span></summary>
         <div className={calendarStyles.coverageList} tabIndex={0} role="region" aria-label={t("決算の追跡対象一覧", "Companies covered")}><ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer">{company.name}</a></li>)}</ul></div>
