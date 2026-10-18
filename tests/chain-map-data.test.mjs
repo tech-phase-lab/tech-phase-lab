@@ -119,7 +119,7 @@ test('a map without suppliers, rivals or two-step links leaves those parts out, 
   assert.equal((metaHtml.match(/id="chain-card-/g) ?? []).length, 33);
 });
 
-test('the "who competes" row stays on one line (main rivals only), and unlisted companies are not shown (OpenAI and Anthropic are the owner's exceptions)', () => {
+test('the "who competes" row stays on one line (main rivals only), and unlisted companies are not shown', () => {
   const UNLISTED = ['TikTok', 'xAI', 'Groq', 'Scale AI', 'Crusoe', 'Westinghouse', 'Framatome', 'BMC', 'Semes', 'CXMT', 'imec', 'SK ecoplant'];
   for (const ticker of Object.keys(BATCH)) {
     const item = chain.chainDataFor(ticker);
