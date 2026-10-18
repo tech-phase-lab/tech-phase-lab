@@ -1,0 +1,237 @@
+{
+  "root": {
+    "ticker": "BE",
+    "name": "Bloom Energy"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "AIデータセンター・IT企業",
+      "en": "AI data centers & IT"
+    },
+    {
+      "ja": "電力会社・提携先",
+      "en": "Utilities & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大2.8GWの燃料電池を購入する意向(うち初期1.2GWは契約済み、2026年4月)",
+          "text_en": "Intends to procure up to 2.8GW of fuel cells, with an initial 1.2GW contracted (April 2026)",
+          "source": {
+            "label": "Bloom Energy の発表(2026年4月)",
+            "label_en": "Bloom Energy press release (Apr 2026)",
+            "url": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2-8-gw-to-accelerate-ai-infrastructure-build-out/",
+            "level": "official",
+            "date": "2026-04-13",
+            "quote": "Under a master services agreement, Oracle intends to procure up to 2.8 gigawatts (GW) of Bloom’s fuel cell systems.",
+            "note": "2.8GWは購入の意向で、契約済みは初期の1.2GWです。",
+            "note_en": "Up to 2.8GW is an intent; the initial 1.2GW is contracted."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "提携に伴う新株予約権をOracleに発行(2026年5月1日に行使)",
+          "text_en": "Issued Oracle a warrant tied to the partnership; exercised on May 1, 2026",
+          "source": {
+            "label": "Bloom Energy 10-Q(2026年第2四半期)",
+            "label_en": "Bloom Energy 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026050247/be-20260630.htm",
+            "level": "official",
+            "date": "2026-05-01",
+            "quote": "On May 1, 2026 (the “Exercise Date”), Oracle completed a cashless exercise of the Warrant, resulting in the issuance of 1,905,433 shares of our common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AIインフラ向けに燃料電池を導入する契約(最初の328MWは2026年稼働予定)",
+          "text_en": "Agreement to deploy fuel cells for AI infrastructure (first 328MW expected to run in 2026)",
+          "source": {
+            "label": "Nebius ニュースルーム(2026年5月)",
+            "label_en": "Nebius newsroom (May 2026)",
+            "url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "the first project with 328 MW of installed capacity is expected to be operational this year",
+            "note": "328MWは稼働予定で、稼働済みではありません。",
+            "note_en": "328MW is expected, not yet operating."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQIX",
+      "ticker": "EQIX",
+      "name": "Equinix",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国のデータセンター向けに100MW超(うち約75MWが稼働、約30MWが建設中)",
+          "text_en": "Over 100MW across U.S. data centers (about 75MW operating, 30MW under construction)",
+          "source": {
+            "label": "Bloom Energy の発表(2025年2月)",
+            "label_en": "Bloom Energy press release (Feb 2025)",
+            "url": "https://www.bloomenergy.com/news/bloom-energy-expands-data-center-power-agreement-with-equinix-surpassing-100mw/",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "The collaboration now exceeds 100MW of electricity capacity to support Equinix’s International Business ExchangeTM (IBX®) data centers across the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MiTAC",
+      "ticker": "MiTAC",
+      "name": "MiTAC Computing",
+      "sub": "AIサーバー製造",
+      "sub_en": "AI server maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米カリフォルニア州フリーモントのAIサーバー工場に、独立型マイクログリッドとして燃料電池を導入(2026年8月)",
+          "text_en": "Fuel cells for an islanded microgrid at its AI server campus in Fremont, California (August 2026)",
+          "source": {
+            "label": "Bloom Energy の発表(2026年8月)",
+            "label_en": "Bloom Energy press release (Aug 2026)",
+            "url": "https://www.bloomenergy.com/news/bloom-energy-continues-to-set-the-standard-for-ai-onsite-power-with-expanded-mitac-partnership/",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Bloom will deploy fuel cell systems for an islanded microgrid at MiTAC’s AI server manufacturing campus in Fremont, California."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEP",
+      "ticker": "AEP",
+      "name": "American Electric Power",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大1GWの供給契約(発表時の初回発注は100MW、2024年11月)",
+          "text_en": "Supply agreement for up to 1GW, with an initial 100MW order (November 2024)",
+          "source": {
+            "label": "Bloom Energy の発表(2024年11月)",
+            "label_en": "Bloom Energy press release (Nov 2024)",
+            "url": "https://www.bloomenergy.com/news/bloom-energy-announces-gigawatt-fuel-cell-procurement-agreement-with-aep-to-power-ai-data-centers/",
+            "level": "official",
+            "date": "2024-11-14",
+            "quote": "signed a supply agreement with American Electric Power (AEP) for up to 1 gigawatt (GW) of its products",
+            "note": "最大1GWの契約で、発表時に発注済みなのは100MWです。",
+            "note_en": "Up to 1GW; 100MW was ordered at announcement."
+          }
+        },
+        {
+          "type": "down",
+          "text": "AEPの年次報告が、固体酸化物形燃料電池100MWの購入契約を記載",
+          "text_en": "AEP’s annual report describes a purchase agreement for 100MW of solid oxide fuel cells",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Devco executed a purchase agreement with Bloom Energy, acquiring 100 MWs of solid oxide fuel cells."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAM",
+      "ticker": "BAM",
+      "name": "Brookfield Asset Management",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AIインフラ向けに最大50億ドルを投じる戦略的提携(2025年10月)",
+          "text_en": "Strategic partnership to invest up to $5B in Bloom fuel cells for AI infrastructure (October 2025)",
+          "source": {
+            "label": "Bloom Energy の発表(2025年10月)",
+            "label_en": "Bloom Energy press release (Oct 2025)",
+            "url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-announce-5-billion-strategic-ai-infrastructure-partnership/",
+            "level": "official",
+            "date": "2025-10-13",
+            "quote": "Brookfield will invest up to $5 billion to deploy Bloom’s advanced fuel cell technology."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "資金枠を50億ドルから250億ドルへ拡大(2026年6月)",
+          "text_en": "Financing framework raised from $5B to $25B (June 2026)",
+          "source": {
+            "label": "Bloom Energy の発表(2026年6月)",
+            "label_en": "Bloom Energy press release (Jun 2026)",
+            "url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-expand-ai-infrastructure-partnership/",
+            "level": "official",
+            "date": "2026-06-30",
+            "quote": "Brookfield increases its framework to finance power projects for AI infrastructure – from previously announced $5 billion to $25 billion",
+            "note": "資金枠であり、購入の確定注文ではありません。",
+            "note_en": "A financing framework, not a firm purchase order."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKE",
+      "ticker": "SK ecoplant",
+      "name": "SK ecoplant",
+      "sub": "韓国の販売提携先",
+      "sub_en": "Korea distribution partner",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年から戦略的な販売パートナーで、韓国で装置を組み立てる合弁事業もある(年次報告)",
+          "text_en": "Strategic distribution partner since 2018, with a joint venture assembling Energy Servers in South Korea (annual report)",
+          "source": {
+            "label": "Bloom Energy 10-K(2025年度)",
+            "label_en": "Bloom Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "SK ecoplant in the Republic of Korea remains a strategic partner for distribution of our Energy Server."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

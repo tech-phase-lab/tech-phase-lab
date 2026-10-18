@@ -5,15 +5,26 @@
   },
   "rows": [
     {
-      "ja": "供給元(上流)",
-      "en": "Suppliers (upstream)"
+      "ja": "供給元(広告・番組)",
+      "en": "Suppliers (ads & programming)",
+      "above": true
     },
     {
-      "ja": "提携先",
-      "en": "Partners"
+      "ja": "提携・配信",
+      "en": "Partners & distribution"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "CMCSA",
+    "CHTR",
+    "AMCX",
+    "RBLX",
+    "FOXA"
+  ],
   "companies": [
     {
       "id": "AMZN",
@@ -72,11 +83,399 @@
           }
         }
       ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "広告の技術・販売",
+      "sub_en": "Ad technology & sales",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "広告つきプランの広告技術・販売パートナーに選定(2022年7月)",
+          "text_en": "Chosen as global ad-tech and sales partner for the ad-supported plan (July 2022)",
+          "source": {
+            "label": "Netflix ニュースルーム(2022年7月)",
+            "label_en": "Netflix newsroom (Jul 2022)",
+            "url": "https://about.netflix.com/en/news/netflix-partners-with-microsoft",
+            "level": "official",
+            "date": "2022-07-13",
+            "quote": "we have selected Microsoft as our global advertising technology and sales partner",
+            "note": "2022年の発表で、その後Netflixは他の広告配信パートナーも加えています。",
+            "note_en": "2022 announcement; Netflix later added other programmatic partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTD",
+      "ticker": "TTD",
+      "name": "The Trade Desk",
+      "sub": "広告配信",
+      "sub_en": "Ad buying",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "広告主向けの主要な広告配信パートナーに加わると発表(2024年5月)",
+          "text_en": "Joins Microsoft as a main programmatic partner for advertisers (May 2024)",
+          "source": {
+            "label": "Netflix Upfront 2024(2024年5月)",
+            "label_en": "Netflix Upfront 2024 (May 2024)",
+            "url": "https://about.netflix.com/en/news/netflix-upfront-2024-the-year-of-growth-and-momentum",
+            "level": "official",
+            "date": "2024-05-15",
+            "quote": "The Trade Desk, Google's Display & Video 360, and Magnite who will join Microsoft as the main programmatic partners for advertisers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGNI",
+      "ticker": "MGNI",
+      "name": "Magnite",
+      "sub": "広告配信",
+      "sub_en": "Ad exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "広告主向けの主要な広告配信パートナーに加わると発表(2024年5月)",
+          "text_en": "Joins Microsoft as a main programmatic partner for advertisers (May 2024)",
+          "source": {
+            "label": "Netflix Upfront 2024(2024年5月)",
+            "label_en": "Netflix Upfront 2024 (May 2024)",
+            "url": "https://about.netflix.com/en/news/netflix-upfront-2024-the-year-of-growth-and-momentum",
+            "level": "official",
+            "date": "2024-05-15",
+            "quote": "The Trade Desk, Google's Display & Video 360, and Magnite who will join Microsoft as the main programmatic partners for advertisers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "広告配信(DV360)",
+      "sub_en": "Ad buying (DV360)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GoogleのDisplay & Video 360が主要な広告配信パートナーに加わると発表(2024年5月)",
+          "text_en": "Google’s Display & Video 360 joins as a main programmatic buying partner (May 2024)",
+          "source": {
+            "label": "Netflix Upfront 2024(2024年5月)",
+            "label_en": "Netflix Upfront 2024 (May 2024)",
+            "url": "https://about.netflix.com/en/news/netflix-upfront-2024-the-year-of-growth-and-momentum",
+            "level": "official",
+            "date": "2024-05-15",
+            "quote": "The Trade Desk, Google's Display & Video 360, and Magnite who will join Microsoft as the main programmatic partners for advertisers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "Sony Group",
+      "sub": "映画の供給",
+      "sub_en": "Film supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ソニー・ピクチャーズの映画を世界で配信する複数年の契約(2026年1月)",
+          "text_en": "Multi-year global Pay-1 licensing deal for Sony Pictures films (January 2026)",
+          "source": {
+            "label": "Netflix ニュースルーム(2026年1月)",
+            "label_en": "Netflix newsroom (Jan 2026)",
+            "url": "https://about.netflix.com/en/news/netflix-and-sony-pictures-entertainment-enter-new-global-pay-1-deal",
+            "level": "official",
+            "date": "2026-01-15",
+            "quote": "SPE's feature films will stream on Netflix worldwide — an industry-first for Pay-1 — following their full theatrical and home entertainment windows",
+            "note": "展開は2026年から段階的で、世界での提供は2029年初めの予定です。",
+            "note_en": "Rolls out gradually from 2026; full global availability in early 2029."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCX",
+      "ticker": "AMCX",
+      "name": "AMC Networks",
+      "sub": "番組の供給",
+      "sub_en": "Programming supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「ウォーキング・デッド」シリーズの世界配信権を共同独占で取得(2026年7月)",
+          "text_en": "Co-exclusive global streaming rights to The Walking Dead series (July 2026)",
+          "source": {
+            "label": "Netflix ニュースルーム(2026年7月)",
+            "label_en": "Netflix newsroom (Jul 2026)",
+            "url": "https://about.netflix.com/en/news/netflix-and-amc-global-media-announce-global-streaming-licensing-agreement-for-all-series-in-amcs-the-walking-dead-universe",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "Netflix and AMC Global Media announced a multi-year global licensing agreement under which the companies will have co-exclusive streaming rights"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "AMC Networksの年次報告が、競合する配信サービスとしてNetflixを挙げている",
+          "text_en": "AMC Networks’ annual report names Netflix among competing subscription streaming services",
+          "source": {
+            "label": "AMC Networks 10-K(2025年度)",
+            "label_en": "AMC Networks 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514991/000151499126000011/amcx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The continued growth of subscription streaming services, such as Netflix and Amazon Prime Video"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOXA",
+      "ticker": "FOXA",
+      "name": "Fox Corporation",
+      "sub": "番組の制作",
+      "sub_en": "Programming production",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Foxのスタジオが、Netflixを含む外部向けにオリジナル番組を制作・共同制作",
+          "text_en": "Fox’s studio produces or co-produces original content for third parties including Netflix",
+          "source": {
+            "label": "Fox Corp 10-K(2026年度)",
+            "label_en": "Fox Corp 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "produces or co-produces original content for third parties including many of the leading SVOD services (Netflix, Amazon Prime Video and Apple TV)"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Foxの年次報告が、競合する配信サービスとしてNetflixを挙げている",
+          "text_en": "Fox’s annual report names Netflix among competing streaming services",
+          "source": {
+            "label": "Fox Corp 10-K(2026年度)",
+            "label_en": "Fox Corp 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "direct-to-consumer streaming services such as ESPN, YouTube, Peacock, Amazon Prime Video, Netflix"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TKO",
+      "ticker": "TKO",
+      "name": "TKO Group(WWE)",
+      "sub": "スポーツエンタメ",
+      "sub_en": "Sports entertainment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "WWE「Raw」の米国・カナダ・英国・中南米での独占配信(2025年1月開始)",
+          "text_en": "Exclusive home of WWE Raw in the U.S., Canada, U.K. and Latin America from January 2025",
+          "source": {
+            "label": "Netflix ニュースルーム(2024年1月)",
+            "label_en": "Netflix newsroom (Jan 2024)",
+            "url": "https://about.netflix.com/en/news/netflix-to-become-new-home-of-wwe-raw-beginning-2025",
+            "level": "official",
+            "date": "2024-01-23",
+            "quote": "Beginning in January 2025, Netflix will be the exclusive new home of Raw in the U.S., Canada, U.K. and Latin America"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TKOの年次報告が、Netflixを配信先・放映権の提携先として記載",
+          "text_en": "TKO’s annual report lists Netflix among its distributors and rights partners",
+          "source": {
+            "label": "TKO Group 10-K(2025年度)",
+            "label_en": "TKO Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973266/000119312526071651/tko-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "content rights agreements with distribution partners including Netflix, ESPN, Versant, and the CW for its weekly programs, Raw, SmackDown and NXT"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFL",
+      "ticker": "NFL",
+      "name": "NFL(米プロフットボール)",
+      "sub": "スポーツ中継",
+      "sub_en": "Sports broadcast",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "クリスマスの試合を配信(2024年は初のNFL中継、制作はCBS Sports)",
+          "text_en": "Streamed the Christmas Day games (2024 was its first NFL broadcast, produced by CBS Sports)",
+          "source": {
+            "label": "Netflix の発表(2024年12月)",
+            "label_en": "Netflix newsroom (Dec 2024)",
+            "url": "https://about.netflix.com/en/news/nfl-christmas-gameday-live-comes-to-netflix",
+            "level": "official",
+            "date": "2024-12-23",
+            "quote": "marks Netflix’s first-ever NFL broadcast. Produced by CBS Sports"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIFA",
+      "ticker": "FIFA",
+      "name": "FIFA(国際サッカー連盟)",
+      "sub": "スポーツ中継",
+      "sub_en": "Sports broadcast",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2030年W杯のスペイン・アンドラでの独占権と、2027年・2031年女子W杯の米国・カナダの権利を取得",
+          "text_en": "Exclusive Spain/Andorra rights to the 2030 World Cup and U.S./Canada rights to the 2027 and 2031 Women’s World Cups",
+          "source": {
+            "label": "Netflix ニュースルーム(2026年10月)",
+            "label_en": "Netflix newsroom (Oct 2026)",
+            "url": "https://about.netflix.com/en/news/netflix-secures-exclusive-rights-in-spain-and-andorra-to-the-fifa-world-cup-2030-tm",
+            "level": "official",
+            "date": "2026-10-13",
+            "quote": "Netflix also holds broadcast rights to the FIFA Women’s World Cup 2027 and 2031 in the US and Canada"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WBC",
+      "ticker": "WBC",
+      "name": "ワールド・ベースボール・クラシック",
+      "sub": "スポーツ中継",
+      "sub_en": "Sports broadcast",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年大会の日本での独占放映権で提携(2025年8月発表)",
+          "text_en": "Exclusive media-rights partnership for the 2026 World Baseball Classic in Japan (announced August 2025)",
+          "source": {
+            "label": "Netflix ニュースルーム(2025年8月)",
+            "label_en": "Netflix newsroom (Aug 2025)",
+            "url": "https://about.netflix.com/en/news/world-baseball-classic-inc-and-netflix-exclusive-partnership",
+            "level": "official",
+            "date": "2025-08-25",
+            "quote": "Netflix will become the new home of the 2026 World Baseball Classic in Japan, as part of an exclusive media rights partnership with World Baseball Classic, Inc. (WBCI)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "動画端末",
+      "sub_en": "Streaming devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rokuの年次報告が、Netflixを主要なコンテンツパートナーとして記載",
+          "text_en": "Roku’s annual report calls Netflix one of its leading content partners",
+          "source": {
+            "label": "Roku 10-K(2025年度)",
+            "label_en": "Roku 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Some of our leading content partners, including Netflix, also have implemented similar features within their apps."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "Comcast",
+      "sub": "ケーブル・配信",
+      "sub_en": "Cable & streaming",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Comcastの年次報告が、競合する配信サービスとしてNetflixを挙げている",
+          "text_en": "Comcast’s annual report names Netflix among competing streaming services",
+          "source": {
+            "label": "Comcast 10-K(2025年度)",
+            "label_en": "Comcast 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "subscription-based services, such as Disney+ and Netflix, that offer online services that enable internet streaming and downloading of movies"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "Charter Communications",
+      "sub": "ケーブル",
+      "sub_en": "Cable",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Charterの年次報告が、競合する配信サービスとしてNetflixを挙げている",
+          "text_en": "Charter’s annual report lists Netflix among competing SVOD services",
+          "source": {
+            "label": "Charter 10-K(2025年度)",
+            "label_en": "Charter 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "subscription video on demand (“SVOD”) services such as Netflix, Apple TV+, Amazon Prime and Hulu"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBLX",
+      "ticker": "RBLX",
+      "name": "Roblox",
+      "sub": "ゲーム・コンテンツ",
+      "sub_en": "Games & content",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Robloxの年次報告が、ユーザーを奪い合う相手としてNetflixを挙げている",
+          "text_en": "Roblox’s annual report lists Netflix among platforms it competes with for users",
+          "source": {
+            "label": "Roblox 10-K(2025年度)",
+            "label_en": "Roblox 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "online content platforms such as Netflix, Spotify, and YouTube"
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・8-K)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q and 8-K) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
   }
 }

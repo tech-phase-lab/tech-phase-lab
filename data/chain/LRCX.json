@@ -5,8 +5,9 @@
   },
   "rows": [
     {
-      "ja": "供給元(上流)",
-      "en": "Suppliers (upstream)"
+      "ja": "供給元(部品・サブシステム)",
+      "en": "Suppliers (parts & subsystems)",
+      "above": true
     },
     {
       "ja": "顧客(半導体メーカー)",
@@ -15,13 +16,22 @@
     {
       "ja": "競合(製造装置)",
       "en": "Competitors (equipment makers)"
+    },
+    {
+      "ja": "共同研究・提携",
+      "en": "Research & partnerships"
     }
   ],
   "rivals": [
     "AMAT",
     "ASM",
     "8035",
-    "6501"
+    "6501",
+    "WONIK",
+    "SCREEN",
+    "SEMES",
+    "ACMR",
+    "NVMI"
   ],
   "companies": [
     {
@@ -42,19 +52,6 @@
             "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
             "level": "official",
             "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company."
-          }
-        },
-        {
-          "type": "down",
-          "text": "TSMCが2025年の供給元表彰でLam Researchを公表",
-          "text_en": "Named among suppliers recognized in TSMC’s 2025 supplier awards",
-          "source": {
-            "label": "TSMC の発表(2025年の供給元表彰)",
-            "label_en": "TSMC announcement (2025 supplier awards)",
-            "url": "https://pr.tsmc.com/english/news/3274",
-            "level": "official",
-            "note": "受賞年の実績の根拠で、現在の発注量は示されていません。",
-            "note_en": "Evidence for the award year only; current order volume is not disclosed."
           }
         }
       ]
@@ -92,12 +89,25 @@
             "note": "技術協力の内容で、発注金額は示されていません。",
             "note_en": "Describes technical cooperation; order value is not disclosed."
           }
+        },
+        {
+          "type": "down",
+          "text": "MicronのSupplier Dayで「優秀なフロントエンド装置サプライヤー」に選ばれた(2025年11月13日)",
+          "text_en": "Received Micron’s Outstanding Front End Equipment Supplier of the Year award (November 13, 2025)",
+          "source": {
+            "label": "Lam のブログ(2025年12月8日)",
+            "label_en": "Lam newsroom blog (Dec 8, 2025)",
+            "url": "https://newsroom.lamresearch.com/lam-earns-2025-micron-top-supplier-award",
+            "level": "official",
+            "date": "2025-12-08",
+            "quote": "Lam Research received Micron’s Outstanding Front End Equipment Supplier of the Year award at their Supplier Day event on November 13."
+          }
         }
       ]
     },
     {
       "id": "005930",
-      "ticker": "005930",
+      "ticker": "Samsung",
       "name": "Samsung Electronics",
       "sub": "メモリー・受託製造",
       "sub_en": "Memory & foundry",
@@ -119,7 +129,7 @@
     },
     {
       "id": "000660",
-      "ticker": "000660",
+      "ticker": "SK hynix",
       "name": "SK hynix",
       "sub": "メモリー",
       "sub_en": "Memory",
@@ -185,7 +195,7 @@
     },
     {
       "id": "8035",
-      "ticker": "8035",
+      "ticker": "Tokyo Electron",
       "name": "Tokyo Electron",
       "sub": "製造装置",
       "sub_en": "Equipment",
@@ -207,7 +217,7 @@
     },
     {
       "id": "6501",
-      "ticker": "6501",
+      "ticker": "Hitachi",
       "name": "Hitachi",
       "sub": "日立製作所",
       "sub_en": "Hitachi, Ltd.",
@@ -228,11 +238,453 @@
           }
         }
       ]
+    },
+    {
+      "id": "UCTT",
+      "ticker": "UCTT",
+      "name": "Ultra Clean Holdings",
+      "sub": "ガス・流体部品",
+      "sub_en": "Gas & fluid subsystems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ultra Cleanが年次報告で、売上の10%超を占める2大顧客の1社としてLam Researchを挙げている",
+          "text_en": "Ultra Clean’s annual report names Lam Research one of its two largest customers (over 10% of revenue each)",
+          "source": {
+            "label": "Ultra Clean 10-K(2025年度)",
+            "label_en": "Ultra Clean 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our two largest revenue customers in fiscal years 2025, 2024 and 2023 were Applied Materials, Inc. and Lam Research Corporation, each of which accounted for more than 10% of our total revenues in those three years.",
+            "note": "相手側の資料にもとづく関係です。",
+            "note_en": "Based on the counterparty’s filing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICHR",
+      "ticker": "ICHR",
+      "name": "Ichor Holdings",
+      "sub": "ガス・流体部品",
+      "sub_en": "Fluid delivery subsystems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ichorが年次報告で、最上位のOEM顧客・最大の顧客の1社としてLam Researchを挙げている",
+          "text_en": "Ichor’s annual report names Lam Research among its top-tier OEM customers and largest customers",
+          "source": {
+            "label": "Ichor 10-K(2025年度)",
+            "label_en": "Ichor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/ichr-20251226.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have long standing relationships with top tier OEM customers, including Lam Research, Applied Materials, and ASML which were our largest customers by sales in 2025.",
+            "note": "相手側の資料にもとづく関係です。",
+            "note_en": "Based on the counterparty’s filing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLS",
+      "ticker": "CLS",
+      "name": "Celestica",
+      "sub": "電子機器製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lamの2024年「サプライヤー優秀賞」の受賞企業に選ばれた(サプライヤー表彰)",
+          "text_en": "Named a recipient of Lam’s 2024 Supplier Excellence Awards",
+          "source": {
+            "label": "Lam の発表(2024年9月23日)",
+            "label_en": "Lam press release (Sep 23, 2024)",
+            "url": "https://newsroom.lamresearch.com/2024-09-23-Lam-Research-Honors-Global-Suppliers-with-2024-Excellence-Awards",
+            "level": "official",
+            "date": "2024-09-23",
+            "quote": "The two companies awarded were Celestica Electronics SDN. BHD and Texon Co. Ltd .",
+            "note": "表彰の記載で、供給の規模は示されていません。",
+            "note_en": "An award recognition; supply scale is not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IFCN",
+      "ticker": "IFCN",
+      "name": "INFICON",
+      "sub": "真空計測",
+      "sub_en": "Vacuum measurement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lamの2024年「サプライヤー優秀賞」の受賞企業に選ばれた(サプライヤー表彰)",
+          "text_en": "Named a recipient of Lam’s 2024 Supplier Excellence Awards",
+          "source": {
+            "label": "Lam の発表(2024年9月23日)",
+            "label_en": "Lam press release (Sep 23, 2024)",
+            "url": "https://newsroom.lamresearch.com/2024-09-23-Lam-Research-Honors-Global-Suppliers-with-2024-Excellence-Awards",
+            "level": "official",
+            "date": "2024-09-23",
+            "quote": "The three companies who received this honor were INFICON AG, TOKAI CARBON KOREA , and Times Microwave Systems, Inc., an Amphenol Company .",
+            "note": "表彰の記載で、供給の規模は示されていません。",
+            "note_en": "An award recognition; supply scale is not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APH",
+      "ticker": "APH",
+      "name": "Amphenol(Times Microwave)",
+      "sub": "コネクター・ケーブル",
+      "sub_en": "Connectors & cables",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lamの2024年「サプライヤー優秀賞」の受賞企業に選ばれた(サプライヤー表彰)",
+          "text_en": "Named a recipient of Lam’s 2024 Supplier Excellence Awards",
+          "source": {
+            "label": "Lam の発表(2024年9月23日)",
+            "label_en": "Lam press release (Sep 23, 2024)",
+            "url": "https://newsroom.lamresearch.com/2024-09-23-Lam-Research-Honors-Global-Suppliers-with-2024-Excellence-Awards",
+            "level": "official",
+            "date": "2024-09-23",
+            "quote": "The three companies who received this honor were INFICON AG, TOKAI CARBON KOREA , and Times Microwave Systems, Inc., an Amphenol Company .",
+            "note": "表彰の記載で、供給の規模は示されていません。",
+            "note_en": "An award recognition; supply scale is not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TOTO",
+      "ticker": "TOTO",
+      "name": "TOTO",
+      "sub": "セラミック部品",
+      "sub_en": "Ceramic parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lamの2024年「ESG優秀賞」の受賞企業に選ばれた(サプライヤー表彰)",
+          "text_en": "Named a recipient of Lam’s 2024 Supplier Excellence Awards",
+          "source": {
+            "label": "Lam の発表(2024年9月23日)",
+            "label_en": "Lam press release (Sep 23, 2024)",
+            "url": "https://newsroom.lamresearch.com/2024-09-23-Lam-Research-Honors-Global-Suppliers-with-2024-Excellence-Awards",
+            "level": "official",
+            "date": "2024-09-23",
+            "quote": "TOTO Ltd. was honored with the Environmental, Social and Governance (ESG) Excellence Award",
+            "note": "表彰の記載で、供給の規模は示されていません。",
+            "note_en": "An award recognition; supply scale is not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VACN",
+      "ticker": "VACN",
+      "name": "VAT Group",
+      "sub": "真空バルブ",
+      "sub_en": "Vacuum valves",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lamの2023年「サプライヤー優秀賞」の受賞企業に選ばれた(サプライヤー表彰)",
+          "text_en": "Named a recipient of Lam’s 2023 Supplier Excellence Awards",
+          "source": {
+            "label": "Lam の発表(2023年9月7日)",
+            "label_en": "Lam press release (Sep 7, 2023)",
+            "url": "https://newsroom.lamresearch.com/2023-09-07-Lam-Research-Recognizes-2023-Supplier-Excellence-Award-Winners",
+            "level": "official",
+            "date": "2023-09-07",
+            "quote": "The five honorees for this category were BizLink Technology, Inc. ; Faeth Group ; TOTO Ltd. ; Valqua America, Inc. ; and VAT Group AG .",
+            "note": "表彰の記載で、供給の規模は示されていません。",
+            "note_en": "An award recognition; supply scale is not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WONIK",
+      "ticker": "WONIK",
+      "name": "Wonik IPS",
+      "sub": "成膜装置",
+      "sub_en": "Deposition tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ALD・PECVDの競合として実名で記載",
+          "text_en": "Named as a competitor in ALD and PECVD",
+          "source": {
+            "label": "Lam 10-K(2026年度)",
+            "label_en": "Lam 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "For ALD and PECVD, we also compete against ASM International and Wonik IPS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCREEN",
+      "ticker": "SCREEN",
+      "name": "SCREENホールディングス",
+      "sub": "洗浄装置",
+      "sub_en": "Cleaning tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "湿式洗浄の主要な競合として実名で記載",
+          "text_en": "Named as a primary competitor in wet clean",
+          "source": {
+            "label": "Lam 10-K(2026年度)",
+            "label_en": "Lam 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "our primary competitors in the wet clean market are Screen Holding Co., Ltd.; Semes Co., Ltd.; and Tokyo Electron, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEMES",
+      "ticker": "SEMES",
+      "name": "Semes",
+      "sub": "洗浄装置",
+      "sub_en": "Cleaning tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "湿式洗浄の主要な競合として実名で記載",
+          "text_en": "Named as a primary competitor in wet clean",
+          "source": {
+            "label": "Lam 10-K(2026年度)",
+            "label_en": "Lam 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "our primary competitors in the wet clean market are Screen Holding Co., Ltd.; Semes Co., Ltd.; and Tokyo Electron, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACMR",
+      "ticker": "ACMR",
+      "name": "ACM Research",
+      "sub": "洗浄・めっき装置",
+      "sub_en": "Cleaning & plating tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ACM Researchが年次報告で、ウエハー洗浄・めっきなどの主要な競合としてLam Researchを挙げている",
+          "text_en": "ACM Research’s annual report lists Lam Research among its principal competitors in wafer cleaning and plating",
+          "source": {
+            "label": "ACM Research 10-K(2025年度)",
+            "label_en": "ACM Research 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We consider our principal competitors to be those companies that provide wafer cleaning, electrical plating and furnace products to the global market, including Lam Research Corporation, NAURA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVMI",
+      "ticker": "NVMI",
+      "name": "Nova",
+      "sub": "検査・計測",
+      "sub_en": "Metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Novaが年次報告で、工程内センサー・計測の競合としてLAM Researchを挙げている",
+          "text_en": "Nova’s annual report names LAM Research among competitors for in-situ sensors and metrology",
+          "source": {
+            "label": "Nova 20-F(2025年度)",
+            "label_en": "Nova 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In addition, we compete with process equipment manufacturers, such as ASML Holdings N.V., LAM Research, and Applied Materials Inc., which develop (or may acquire companies which develop) in-situ sensors and metrology products.",
+            "note": "工程内センサー・計測製品に限った記載です。",
+            "note_en": "Limited to in-situ sensors and metrology products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JSR",
+      "ticker": "JSR",
+      "name": "JSR / Inpria",
+      "sub": "フォトレジスト",
+      "sub_en": "Photoresists",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EUVドライレジストなど次世代パターニングで、特許のクロスライセンスと協業契約(2025年9月15日)",
+          "text_en": "Cross-licensing and collaboration agreement on next-generation patterning including EUV dry resist (September 15, 2025)",
+          "source": {
+            "label": "Lam の発表(2025年9月15日)",
+            "label_en": "Lam press release (Sep 15, 2025)",
+            "url": "https://newsroom.lamresearch.com/2025-09-15-Lam-Research-and-JSR-Corporation-Inpria-Corporation-Enter-Cross-Licensing,-Collaboration-Agreement-to-Advance-Semiconductor-Manufacturing",
+            "level": "official",
+            "date": "2025-09-15",
+            "quote": "Lam and JSR/Inpria have entered into a non-exclusive cross-licensing and collaboration agreement to advance leading-edge semiconductor manufacturing.",
+            "note": "非独占の契約で、訴訟の取り下げには裁判所の承認が必要です。",
+            "note_en": "Non-exclusive; dismissal of litigation subject to court approvals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "コンピューター",
+      "sub_en": "Computing",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "1nm未満のロジック微細化に向けた新工程・新材料で5年間の共同研究(2026年3月10日)",
+          "text_en": "Five-year collaboration on new processes and materials for sub-1nm logic scaling (March 10, 2026)",
+          "source": {
+            "label": "Lam/IBM の発表(2026年3月10日)",
+            "label_en": "Lam/IBM press release (Mar 10, 2026)",
+            "url": "https://newsroom.lamresearch.com/2026-03-10-IBM-and-Lam-Research-Announce-Collaboration-to-Advance-Sub-1nm-Logic-Scaling",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "IBM (NYSE: IBM ) and Lam Research Corp. (NASDAQ: LRCX ) today announced a collaboration aimed at developing new processes and materials to support sub-1nm logic scaling.",
+            "note": "研究協力で、期間は5年です。",
+            "note_en": "A research collaboration under a five-year agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LETI",
+      "ticker": "CEA-Leti",
+      "name": "CEA-Leti",
+      "sub": "研究機関",
+      "sub_en": "Research institute",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "次世代の特殊技術デバイスの開発で複数年の契約(2026年2月2日)",
+          "text_en": "New multi-year agreement to develop next-generation specialty technology devices (February 2, 2026)",
+          "source": {
+            "label": "Lam の発表(2026年2月2日)",
+            "label_en": "Lam press release (Feb 2, 2026)",
+            "url": "https://newsroom.lamresearch.com/2026-02-02-Lam-Research-and-CEA-Leti-Expand-Research-and-Development-Collaboration-to-Advance-Fabrication-of-Specialty-Technologies",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "today announced a new multi-year agreement to advance the development of next-generation Specialty Technology devices",
+            "note": "研究協力です。",
+            "note_en": "A research collaboration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENTG",
+      "ticker": "ENTG",
+      "name": "Entegris(Gelest)",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EUVドライフォトレジスト技術に使う前駆体化学品を安定して確保する戦略的協業(2022年7月12日)",
+          "text_en": "Strategic collaboration for reliable access to precursor chemicals for EUV dry photoresist technology (July 12, 2022)",
+          "source": {
+            "label": "Lam の発表(2022年7月12日)",
+            "label_en": "Lam press release (Jul 12, 2022)",
+            "url": "https://newsroom.lamresearch.com/2022-07-12-Lam-Research,-Entegris,-Gelest-Team-Up-to-Advance-EUV-Dry-Resist-Technology-Ecosystem",
+            "level": "official",
+            "date": "2022-07-12",
+            "quote": "today announced a strategic collaboration that will provide semiconductor manufacturers worldwide with reliable access to precursor chemicals for Lam's breakthrough dry photoresist technology",
+            "note": "2022年の発表です。",
+            "note_en": "A 2022 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "ASML",
+      "sub": "露光装置",
+      "sub_en": "Lithography",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASML・imecとHigh-NA EUVのパターニングに関する共同論文を発表(2026年7月14日)",
+          "text_en": "Joint paper with ASML and imec on High-NA EUV patterning (July 14, 2026)",
+          "source": {
+            "label": "Lam ニュースルームのブログ(2026年7月14日)",
+            "label_en": "Lam newsroom blog (Jul 14, 2026)",
+            "url": "https://newsroom.lamresearch.com/lam-asml-imec-advance-high-na-euv-patterning",
+            "level": "official",
+            "date": "2026-07-14",
+            "quote": "The collaboration spans expertise at Lam Research (process), ASML (lithography), and imec (integration and validation).",
+            "note": "技術の共同研究(共同論文)で、供給契約ではありません。",
+            "note_en": "A technical research collaboration (joint paper), not a commercial supply agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IMEC",
+      "ticker": "imec",
+      "name": "imec",
+      "sub": "研究機関",
+      "sub_en": "Research institute",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASML・imecとHigh-NA EUVのパターニングに関する共同論文を発表(2026年7月14日)",
+          "text_en": "Joint paper with ASML and imec on High-NA EUV patterning (July 14, 2026)",
+          "source": {
+            "label": "Lam ニュースルームのブログ(2026年7月14日)",
+            "label_en": "Lam newsroom blog (Jul 14, 2026)",
+            "url": "https://newsroom.lamresearch.com/lam-asml-imec-advance-high-na-euv-patterning",
+            "level": "official",
+            "date": "2026-07-14",
+            "quote": "The collaboration spans expertise at Lam Research (process), ASML (lithography), and imec (integration and validation).",
+            "note": "技術の共同研究(共同論文)です。",
+            "note_en": "A technical research collaboration (joint paper)."
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・8-K)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q and 8-K) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
   }
 }
