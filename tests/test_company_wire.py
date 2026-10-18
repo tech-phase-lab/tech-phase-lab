@@ -119,6 +119,8 @@ class TranslationTests(unittest.TestCase):
         self.assertEqual(company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp()), 'done')
         self.assertIn('kind', seen['schema']['required'])
         self.assertIn('not-news', seen['policy'])
+        self.assertIn('human-interest', seen['policy'])
+        self.assertIn('Why', seen['policy'])
         with company_wire.connect(self.path) as db:
             feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
             titles = {i['titleEn']: i['titleJa'] for i in feed['items']['CRDO']}
