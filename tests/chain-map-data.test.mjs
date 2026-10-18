@@ -69,8 +69,8 @@ test('the map shows suppliers first, no range buttons, a card per company with s
 });
 
 const BATCH = {
-  NFLX: [14, 18], LRCX: [22, 24], TSLA: [17, 19], IBM: [26, 39], META: [33, 37],
-  BE: [6, 9], SKHY: [14, 16], GEV: [18, 19], MSFT: [22, 25], KLAC: [8, 10],
+  NFLX: [14, 18], LRCX: [22, 24], TSLA: [17, 19], IBM: [27, 40], META: [33, 37],
+  BE: [6, 9], SKHY: [14, 16], GEV: [18, 19], MSFT: [24, 29], KLAC: [8, 10],
   SNDK: [7, 15], AMD: [18, 25], ANET: [16, 22], ARM: [19, 20], LITE: [6, 10],
   VST: [6, 6], ADBE: [18, 18], MU: [10, 12], ASML: [9, 12], TSM: [20, 23],
 };
@@ -119,8 +119,8 @@ test('a map without suppliers, rivals or two-step links leaves those parts out, 
   assert.equal((metaHtml.match(/id="chain-card-/g) ?? []).length, 33);
 });
 
-test('the "who competes" row stays on one line (main rivals only), and unlisted companies are not shown', () => {
-  const UNLISTED = ['TikTok', 'OpenAI', 'Anthropic', 'xAI', 'Groq', 'Scale AI', 'Crusoe', 'Westinghouse', 'Framatome', 'BMC', 'Semes', 'CXMT', 'imec', 'SK ecoplant'];
+test('the "who competes" row stays on one line (main rivals only), and unlisted companies are not shown (OpenAI and Anthropic are the owner's exceptions)', () => {
+  const UNLISTED = ['TikTok', 'xAI', 'Groq', 'Scale AI', 'Crusoe', 'Westinghouse', 'Framatome', 'BMC', 'Semes', 'CXMT', 'imec', 'SK ecoplant'];
   for (const ticker of Object.keys(BATCH)) {
     const item = chain.chainDataFor(ticker);
     const labels = item.rivals.map(id => item.companies.find(company => company.id === id).ticker);
