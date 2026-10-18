@@ -21,6 +21,8 @@ const NOT_NEWS = [
   /\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\b(?:and )?why\b.{0,80}\b(?:reasons?)\b/i, // teasers whose answer is not in the headline
   /\?\s*$/, // a headline that asks a question has no fact in it
   /[？?]\s*$/,
+  /^why\b/i, // "Why …" headlines give the reason only in the article
+  /^なぜ|のか$|でしょうか$|だろうか$/,
   /理由$|その理由|理由とは|なぜ.{0,40}[？?]$/,
   /逃した[?？]|見逃さない(?:よう|で)|お気に入りの恐竜/,
 ];

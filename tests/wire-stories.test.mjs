@@ -52,7 +52,8 @@ test('headlines that are not news about the company are left out', () => {
 test('teaser headlines with no answer are left out', () => {
   for (const title of ['35 analysts cover SpaceX. Here\'s why their price targets have little to do with rockets', 'This is why Nvidia stock moved', 'The reason why memory prices keep rising',
     '35人のアナリストがスペースXをカバー。彼らの目標株価がロケットとはほとんど関係ない理由',
-    'マイクロン・テクノロジー対サンディスク：どちらのAIメモリ株がより良い投資か？', 'Micron vs. Sandisk: Which AI Memory Stock Is the Better Buy?']) assert.equal(isNotNews(title), true, title);
+    'マイクロン・テクノロジー対サンディスク：どちらのAIメモリ株がより良い投資か？', 'Micron vs. Sandisk: Which AI Memory Stock Is the Better Buy?',
+    'Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today', 'なぜAMD、マイクロン、サンディスク、エヌビディアの株価が今日のプレマーケットで下落しているのか']) assert.equal(isNotNews(title), true, title);
 });
 
 test('Japanese headlines drop the comma after a bracket and keep a name with its ticker together', async () => {
