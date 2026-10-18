@@ -1,0 +1,457 @@
+{
+  "root": {
+    "ticker": "ADBE",
+    "name": "Adobe"
+  },
+  "rows": [
+    {
+      "ja": "供給元(クラウド基盤)",
+      "en": "Suppliers (cloud infrastructure)",
+      "above": true
+    },
+    {
+      "ja": "AI・クラウドの提携先",
+      "en": "AI & cloud partners"
+    },
+    {
+      "ja": "広告会社・導入企業",
+      "en": "Agencies & adopters"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ADSK",
+    "DOCU",
+    "ORCL",
+    "GETY",
+    "SSTK"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド(AWS)",
+      "sub_en": "Cloud (AWS)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "FireflyモデルをAWSのAmazon EC2 P5/P6インスタンスで学習(Adobeの説明、2025年12月)",
+          "text_en": "Firefly models are trained on Amazon EC2 P5/P6 instances on AWS (per Adobe, December 2025)",
+          "source": {
+            "label": "Amazon/AWS の発表(Adobe and Amazon collaboration)",
+            "label_en": "Amazon/AWS press release (Adobe and Amazon collaboration)",
+            "url": "https://press.aboutamazon.com/aws/2025/12/adobe-and-amazon-deepen-collaboration-to-reshape-creativity-and-marketing-in-the-ai-era",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "trained on Amazon EC2 P5 and P6 instances—with data stored in S3 and FSx for Lustre"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "次世代のFireflyモデルとエージェント型ワークフローで戦略的提携(2026年3月16日)",
+          "text_en": "Strategic partnership on next-generation Firefly models and agentic workflows (March 16, 2026)",
+          "source": {
+            "label": "Adobe の発表",
+            "label_en": "Adobe press release",
+            "url": "https://news.adobe.com/news/2026/03/adobe-and-nvidia-announce-strategic-partnership",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Adobe and NVIDIA today announced a strategic partnership to accelerate AI-powered creation, production and personalization",
+            "note": "今後の協業の話で、その後さらに拡大されています。",
+            "note_en": "A forward-looking collaboration that was expanded further."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Googleの生成AI(Gemini・Veo・Imagen)をAdobe製品へ取り込む提携を拡大(2025年10月28日)",
+          "text_en": "Expanded partnership to bring Google AI models (Gemini, Veo, Imagen) into Adobe products (October 28, 2025)",
+          "source": {
+            "label": "Adobe の発表",
+            "label_en": "Adobe press release",
+            "url": "https://news.adobe.com/news/2025/10/adobe-max-2025-google-cloud",
+            "level": "official",
+            "date": "2025-10-28",
+            "quote": "Adobe (Nasdaq:ADBE) and Google Cloud announced an expanded strategic partnership to deliver the next generation of AI-powered creative technologies",
+            "note": "一部の機能は提供時期が先です。",
+            "note_en": "Some capabilities are not yet available."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Adobe Experience CloudをMicrosoft Copilotに取り込む計画を発表(2024年3月26日)",
+          "text_en": "Plans to bring Adobe Experience Cloud workflows into Microsoft Copilot (March 26, 2024)",
+          "source": {
+            "label": "Microsoft News(joint の発表)",
+            "label_en": "Microsoft News (joint press release)",
+            "url": "https://news.microsoft.com/2024/03/26/adobe-and-microsoft-partner-to-bring-new-generative-ai-capabilities-to-marketers-as-they-work-in-microsoft-365-applications/",
+            "level": "official",
+            "date": "2024-03-26",
+            "quote": "Adobe (Nasdaq:ADBE) and Microsoft (Nasdaq:MSFT) announced plans to bring Adobe Experience Cloud workflows and insights to Microsoft Copilot for Microsoft 365",
+            "note": "2024年時点の計画の発表です。",
+            "note_en": "A 2024 announcement of plans."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・ソフト",
+      "sub_en": "IT & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMが年次報告で、戦略パートナーとしてAdobeを挙げている",
+          "text_en": "IBM’s annual report lists Adobe among its strategic partners",
+          "source": {
+            "label": "IBM 10-K(2025年度)",
+            "label_en": "IBM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others.",
+            "note": "IBMは、パートナーが別の分野では競合になりうると記載しています。",
+            "note_en": "IBM notes partners may also be competitors in some areas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "Accenture",
+      "sub": "ITコンサル",
+      "sub_en": "IT consulting",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Accenture SongとAdobeの技術で、エージェント型の顧客体験オーケストレーションの枠組みを共同開発(2026年6月22日)",
+          "text_en": "Accenture Song co-developed an agentic experience orchestration framework powered by Adobe technology (June 22, 2026)",
+          "source": {
+            "label": "Adobe の発表(Cannes Lions)",
+            "label_en": "Adobe press release (Cannes Lions)",
+            "url": "https://news.adobe.com/news/2026/06/adobe-accelerates-agentic-ai-adoption",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "Adobe and Accenture Song have co-developed a new agentic experience orchestration framework, powered by Adobe technology"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OMC",
+      "ticker": "OMC",
+      "name": "Omnicom",
+      "sub": "広告会社",
+      "sub_en": "Ad agency",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Adobeの技術を使ったAIエージェント型の運用モデルを発表(2026年6月22日)",
+          "text_en": "Unveiling an AI Agentic Operating Model enterprise solution powered by Adobe technology (June 22, 2026)",
+          "source": {
+            "label": "Adobe の発表(Cannes Lions)",
+            "label_en": "Adobe press release (Cannes Lions)",
+            "url": "https://news.adobe.com/news/2026/06/adobe-accelerates-agentic-ai-adoption",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "Omnicom is unveiling implementation architectures across automotive, pharmaceuticals, retail, and financial services of its AI Agentic Operating Model, a new enterprise solution powered by Adobe technology",
+            "note": "発表された内容で、規模は示されていません。",
+            "note_en": "Described as being unveiled; scale not stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WPP",
+      "ticker": "WPP",
+      "name": "WPP",
+      "sub": "広告会社",
+      "sub_en": "Ad agency",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Adobeのコンテンツ・データ・AI基盤を導入する広告会社の1社(2026年6月22日)",
+          "text_en": "Among agency partners deploying Adobe content, data and AI platforms (June 22, 2026)",
+          "source": {
+            "label": "Adobe の発表(Cannes Lions)",
+            "label_en": "Adobe press release (Cannes Lions)",
+            "url": "https://news.adobe.com/news/2026/06/adobe-accelerates-agentic-ai-adoption",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "Accenture, Omnicom, Stagwell’s Code and Theory and WPP are deploying Adobe's content, data and AI platforms to transform how global brands create, activate and measure customer experiences"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "The Home Depot",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Adobe Firefly Foundryでメディア制作に取り組んでいるとAdobeが説明(2026年1月22日)",
+          "text_en": "Adobe says The Home Depot is working with Adobe Firefly Foundry on media production (January 22, 2026)",
+          "source": {
+            "label": "Adobe Blog",
+            "label_en": "Adobe Blog",
+            "url": "https://blog.adobe.com/en/publish/2026/01/22/adobe-partners-artists-power-new-era-media-entertainment-firefly-foundry",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "Brands including The Home Depot, HUMAIN and Walt Disney Imagineering are already working with Firefly Foundry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "Walt Disney",
+      "sub": "エンタメ",
+      "sub_en": "Entertainment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Walt Disney ImagineeringがAdobe Firefly Foundryを利用しているとAdobeが説明(2026年1月22日)",
+          "text_en": "Adobe says Walt Disney Imagineering is working with Adobe Firefly Foundry (January 22, 2026)",
+          "source": {
+            "label": "Adobe Blog",
+            "label_en": "Adobe Blog",
+            "url": "https://blog.adobe.com/en/publish/2026/01/22/adobe-partners-artists-power-new-era-media-entertainment-firefly-foundry",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "Brands including The Home Depot, HUMAIN and Walt Disney Imagineering are already working with Firefly Foundry",
+            "note": "記載はDisneyの一部門(Walt Disney Imagineering)です。",
+            "note_en": "The source names Walt Disney Imagineering, a Disney division."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADSK",
+      "ticker": "ADSK",
+      "name": "Autodesk",
+      "sub": "設計ソフト",
+      "sub_en": "Design software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Autodeskが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "Autodesk’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "ADSK 10-K(2026年度)",
+            "label_en": "ADSK 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+            "level": "official",
+            "quote": "Our primary global competitors include Adobe Systems Incorporated, Bentley Systems, Inc., Dassault Systèmes S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRZE",
+      "ticker": "BRZE",
+      "name": "Braze",
+      "sub": "マーケティング",
+      "sub_en": "Marketing",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Brazeが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "Braze’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "BRZE 10-K(2026年度)",
+            "label_en": "BRZE 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1676238/000167623826000013/brze-20260131.htm",
+            "level": "official",
+            "quote": "We face competition from software companies that offer marketing solutions, such as Adobe, Salesforce, Iterable, and Klaviyo."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBX",
+      "ticker": "DBX",
+      "name": "Dropbox",
+      "sub": "ファイル共有・電子署名",
+      "sub_en": "File sharing & e-sign",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dropboxが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "Dropbox’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "DBX 10-K(2025年度)",
+            "label_en": "DBX 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "quote": "compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOCU",
+      "ticker": "DOCU",
+      "name": "DocuSign",
+      "sub": "電子署名",
+      "sub_en": "E-signature",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DocuSignが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "DocuSign’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "DOCU 10-K(2026年度)",
+            "label_en": "DOCU 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261333/000126133326000021/docu-20260131.htm",
+            "level": "official",
+            "quote": "Our primary global competitor for eSignature is currently Adobe, which offers an electronic signature solution known as Adobe Acrobat Sign."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GETY",
+      "ticker": "GETY",
+      "name": "Getty Images",
+      "sub": "画像・素材",
+      "sub_en": "Stock imagery",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Getty Imagesが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "Getty Images’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "GETY 10-K(2025年度)",
+            "label_en": "GETY 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1898496/000162828026018160/gety-20251231.htm",
+            "level": "official",
+            "quote": "our principal competitors for creative content include bundled offerings (e.g., Canva, Adobe)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KVYO",
+      "ticker": "KVYO",
+      "name": "Klaviyo",
+      "sub": "マーケティング",
+      "sub_en": "Marketing",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Klaviyoが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "Klaviyo’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "KVYO 10-K(2025年度)",
+            "label_en": "KVYO 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "quote": "Large, consolidated marketing automation software providers, such as Adobe and Salesforce"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oracleが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "Oracle’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "ORCL 10-K(2026年度)",
+            "label_en": "ORCL 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSTK",
+      "ticker": "SSTK",
+      "name": "Shutterstock",
+      "sub": "画像・素材",
+      "sub_en": "Stock imagery",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Shutterstockが年次報告で、競合としてAdobeを挙げている",
+          "text_en": "Shutterstock’s annual report names Adobe as a competitor",
+          "source": {
+            "label": "SSTK 10-K(2025年度)",
+            "label_en": "SSTK 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549346/000154934626000008/sstk-20251231.htm",
+            "level": "official",
+            "quote": "websites focused on providing creative workflow tools such as Adobe, Canva, Picsart and Bending Spoons"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
+    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+  }
+}

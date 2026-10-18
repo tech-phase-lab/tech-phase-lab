@@ -72,6 +72,7 @@ const BATCH = {
   NFLX: [14, 18], LRCX: [22, 24], TSLA: [17, 19], IBM: [26, 39], META: [33, 37],
   BE: [6, 9], SKHY: [14, 16], GEV: [18, 19], MSFT: [22, 25], KLAC: [8, 10],
   SNDK: [7, 15], AMD: [18, 25], ANET: [16, 22], ARM: [19, 20], LITE: [6, 10],
+  VST: [6, 6], ADBE: [18, 18], MU: [10, 12], ASML: [9, 12], TSM: [20, 23],
 };
 
 test('the earnings-ordered companies use the same format with an official source on every relation', () => {
