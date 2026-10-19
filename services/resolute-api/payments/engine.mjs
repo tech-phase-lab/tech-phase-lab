@@ -64,7 +64,8 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(remote.status === 'COMPLETED') await settle(order,remote);
       }
       const current=await owned(userId,id);
-      return { orderId:current.id,state:current.state,quote:current.quote,expiresAt:current.expires_at,sandbox };
+      return { orderId:current.id,state:current.state,quote:current.quote,expiresAt:current.expires_at,sandbox,
+        ...(!sandbox ? {approvalUrl:current.state === 'created' ? await paypal.approval(current.paypal_id) : null} : {}) };
     },
     async webhook(headers,event) {
       if(!await paypal.verify(headers,event)) { await store.flag(null,'INVALID_WEBHOOK_SIGNATURE'); reject('INVALID_SIGNATURE',400); }

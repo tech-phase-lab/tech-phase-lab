@@ -144,3 +144,21 @@ whole live integration, including webhooks.
 No live settings, credential, database-login permission or entitlement source is
 activated by this code change. The existing checkout UI remains Sandbox-only;
 its live presentation and real provider end-to-end validation are still pending.
+
+## Live checkout UI preparation (2026-10-19)
+
+`/resolute/checkout` now selects the live screen only from the server's
+`RESOLUTE_PAYPAL_LIVE_ENABLED` flag. While disabled, preview keeps the existing
+owner/tester Sandbox screen; non-preview shows closed checkout. Missing membership
+configuration also fails closed. No query parameter selects live payments.
+
+The live screen requires signed-in membership, uses only `/api/resolute/live-payments`,
+and disables create, approval and capture controls when sales are closed. Changing
+JA/EN only changes display once an order exists: its ID, purchase type, currency
+and amount remain server-owned. Retry after an unknown create failure reuses the
+same request key. Live order readback restores the same PayPal approval link;
+viewing the return page does not invoke capture. Account-session changes remount
+checkout so one member's state is not retained for another.
+
+No live settings or keys have been enabled. Real member-to-PayPal live checkout
+and smartphone browser rendering remain unverified until explicitly recorded.
