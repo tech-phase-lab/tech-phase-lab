@@ -37,7 +37,7 @@
         {
           "type": "up",
           "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先として台湾積体電路製造を挙げている",
-          "text_en": "The annual report lists 台湾積体電路製造 among foundries that provided foundry services in the past few years",
+          "text_en": "The annual report lists TSMC among foundries that provided foundry services in the past few years",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -63,7 +63,7 @@
         {
           "type": "up",
           "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてユナイテッド・マイクロエレクトロニクスを挙げている",
-          "text_en": "The annual report lists ユナイテッド・マイクロエレクトロニクス among foundries that provided foundry services in the past few years",
+          "text_en": "The annual report lists UMC among foundries that provided foundry services in the past few years",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -89,7 +89,7 @@
         {
           "type": "up",
           "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてグローバルファウンドリーズを挙げている",
-          "text_en": "The annual report lists グローバルファウンドリーズ among foundries that provided foundry services in the past few years",
+          "text_en": "The annual report lists GlobalFoundries among foundries that provided foundry services in the past few years",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -234,7 +234,7 @@
         {
           "type": "rival",
           "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ハイマックス’s annual report",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -258,7 +258,7 @@
         {
           "type": "rival",
           "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ハイマックス’s annual report",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -281,7 +281,7 @@
         {
           "type": "rival",
           "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ハイマックス’s annual report",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -304,7 +304,7 @@
         {
           "type": "rival",
           "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ハイマックス’s annual report",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -328,7 +328,7 @@
         {
           "type": "rival",
           "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ハイマックス’s annual report",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -352,7 +352,7 @@
         {
           "type": "rival",
           "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ハイマックス’s annual report",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",

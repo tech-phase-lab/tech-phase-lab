@@ -167,7 +167,7 @@
         {
           "type": "rival",
           "text": "マスターカードの年次報告が、ビザを競合として挙げている",
-          "text_en": "Names ビザ as a competitor in its annual report",
+          "text_en": "Names Visa as a competitor in its annual report",
           "source": {
             "label": "Mastercard 10-K",
             "label_en": "Mastercard 10-K",
@@ -190,7 +190,7 @@
         {
           "type": "rival",
           "text": "ビザの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ビザ’s annual report",
+          "text_en": "Named as a competitor in Visa’s annual report",
           "source": {
             "label": "Visa 10-K",
             "label_en": "Visa 10-K",
