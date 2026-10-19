@@ -66,7 +66,7 @@
           "text": "Arm AGI CPUプラットフォーム向けのパッケージ・テスト技術を共同開発(Amkorのコメント)",
           "text_en": "Co-developed packaging and test solutions for the Arm AGI CPU platform (Amkor’s comment)",
           "source": {
-            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
             "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
             "level": "official",
@@ -89,7 +89,7 @@
           "text": "発行済み株式の約86.4%を実質的に保有する支配株主",
           "text_en": "Beneficially owns about 86.4% of Arm’s issued share capital",
           "source": {
-            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label": "Arm 20-F(2026年3月31日終了年度)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
             "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
             "level": "official",
@@ -112,7 +112,7 @@
           "text": "Artisanファウンデーション IP事業をCadenceへ売却",
           "text_en": "Completed the sale of its Artisan foundation IP business to Cadence",
           "source": {
-            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label": "Arm 20-F(2026年3月31日終了年度)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
             "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
             "level": "official",
@@ -148,7 +148,7 @@
           "text": "Armと「アーキテクチャ ライセンス契約」を結ぶが、ライセンスをめぐり係争中",
           "text_en": "Holds an Architecture License Agreement with Arm; the two are in pending litigation over licensing",
           "source": {
-            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label": "Arm 20-F(2026年3月31日終了年度)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
             "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
             "level": "official",
@@ -503,7 +503,7 @@
           "text": "Arm AGI CPUをヘッドノードとして組み込む顧客の1社としてOpenAIを挙げている",
           "text_en": "Arm says OpenAI is among customers integrating the Arm AGI CPU as head nodes",
           "source": {
-            "label": "Arm 6-K Ex.99.2(Q4 FY26 results)",
+            "label": "Arm 6-K Ex.99.2(2026年度第4四半期決算)",
             "label_en": "Arm 6-K Ex.99.2 (Q4 FY26 results)",
             "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000062/exhibit992fye26q431-marx26.htm",
             "level": "official",
@@ -620,7 +620,7 @@
           "text": "SynopsysのCEOが、先端シリコンでArmと数十年にわたり協力してきたとコメント",
           "text_en": "Synopsys’ CEO says Synopsys and Arm have collaborated for decades on advanced silicon",
           "source": {
-            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
             "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
             "level": "official",
@@ -643,7 +643,7 @@
           "text": "Siemens EDAが、シミュレーション・検証・SoC実装にわたるArmとの長年の戦略的提携に言及",
           "text_en": "Siemens EDA states a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation",
           "source": {
-            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
             "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
             "level": "official",
@@ -666,7 +666,7 @@
           "text": "AristaのCEOが、エコシステムの提携先としてArm AGI CPUの発表を支持するコメント",
           "text_en": "Arista’s CEO is quoted as supporting the Arm AGI CPU launch as an ecosystem partner",
           "source": {
-            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
             "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
             "level": "official",
@@ -691,7 +691,7 @@
           "text": "MediaTekの社長が、Armのアーキテクチャ・エコシステムを評価し、協力を続けるとコメント",
           "text_en": "MediaTek’s president says it values Arm’s architecture ecosystem and continues collaboration with Arm",
           "source": {
-            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
             "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
             "level": "official",
@@ -714,7 +714,7 @@
           "text": "Intel Foundryが、Armなどのリーダーと協力することを楽しみにしているとコメント",
           "text_en": "Intel Foundry says it looks forward to working with leaders such as Arm",
           "source": {
-            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
             "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
             "level": "official",
@@ -739,7 +739,7 @@
           "text": "NXPが、Armとの数十年にわたる関係に言及",
           "text_en": "NXP cites a decades-long relationship with Arm",
           "source": {
-            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
             "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
             "level": "official",
@@ -762,7 +762,7 @@
           "text": "Armは1990年に、Acorn Computers・Apple Computer・VLSI Technologyの合弁会社として始まった",
           "text_en": "Arm began in 1990 as a joint venture between Acorn Computers, Apple Computer and VLSI Technology",
           "source": {
-            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label": "Arm 20-F(2026年3月31日終了年度)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
             "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
             "level": "official",

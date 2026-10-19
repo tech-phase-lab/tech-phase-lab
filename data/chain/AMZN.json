@@ -43,7 +43,7 @@
           "text": "2027〜2028年に、AWSの世界のインフラへNVIDIAのGPUを追加で200万基導入する計画",
           "text_en": "AWS and NVIDIA plan to deploy 2 million additional NVIDIA GPUs across AWS global infrastructure in 2027-2028",
           "source": {
-            "label": "Amazon News(aboutamazon.com)",
+            "label": "Amazon ニュース",
             "label_en": "Amazon News (aboutamazon.com)",
             "url": "https://www.aboutamazon.com/news/aws/aws-nvidia-2-million-gpus-ai",
             "level": "official",
@@ -261,7 +261,7 @@
           "text": "AWSの技術(TrainiumやGravitonなど)に10年で1,000億ドル超を支出すると約束",
           "text_en": "Committed to spend more than $100B over ten years on AWS technologies including Trainium and Graviton",
           "source": {
-            "label": "Anthropic announcement",
+            "label": "Anthropic の発表",
             "label_en": "Anthropic announcement",
             "url": "https://www.anthropic.com/news/anthropic-amazon-compute",
             "level": "official",
@@ -274,7 +274,7 @@
           "text": "Amazonが今回50億ドル、事業の節目に応じてさらに最大200億ドルをAnthropicに出資",
           "text_en": "Amazon agreed to invest $5B in Anthropic now and up to $20B more tied to commercial milestones",
           "source": {
-            "label": "Amazon News(aboutamazon.com)",
+            "label": "Amazon ニュース",
             "label_en": "Amazon News (aboutamazon.com)",
             "url": "https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai",
             "level": "official",
@@ -289,7 +289,7 @@
           "text": "Trainium2を使う計算クラスター「Project Rainier」を共同で構築",
           "text_en": "Built Project Rainier, a Trainium2 compute cluster with nearly half a million chips, in collaboration with Anthropic",
           "source": {
-            "label": "Amazon News(aboutamazon.com)",
+            "label": "Amazon ニュース",
             "label_en": "Amazon News (aboutamazon.com)",
             "url": "https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster",
             "level": "official",
@@ -312,7 +312,7 @@
           "text": "NVIDIA製チップを使うAWSの計算基盤を、OpenAIが利用できる380億ドルの複数年契約",
           "text_en": "$38B multi-year agreement giving OpenAI access to AWS compute built on NVIDIA chips",
           "source": {
-            "label": "Amazon News(aboutamazon.com)",
+            "label": "Amazon ニュース",
             "label_en": "Amazon News (aboutamazon.com)",
             "url": "https://www.aboutamazon.com/news/aws/aws-open-ai-workloads-compute-infrastructure",
             "level": "official",
@@ -335,7 +335,7 @@
           "text": "AWS Gravitonプロセッサーを大規模に導入する契約",
           "text_en": "Agreement to deploy AWS Graviton processors at scale, starting with tens of millions of cores",
           "source": {
-            "label": "Amazon Press Center",
+            "label": "Amazon プレスセンター",
             "label_en": "Amazon Press Center",
             "url": "https://press.aboutamazon.com/aws/2026/4/meta-signs-agreement-with-aws-to-power-agentic-ai-on-amazons-graviton-chips",
             "level": "official",
@@ -404,7 +404,7 @@
           "text": "ノースアナ原子力発電所の近くで、小型モジュール炉(SMR)の計画を検討する契約",
           "text_en": "Agreement to explore an SMR project near the North Anna nuclear station",
           "source": {
-            "label": "Amazon News(aboutamazon.com)",
+            "label": "Amazon ニュース",
             "label_en": "Amazon News (aboutamazon.com)",
             "url": "https://www.aboutamazon.com/news/sustainability/amazon-nuclear-small-modular-reactor-net-carbon-zero",
             "level": "official",
