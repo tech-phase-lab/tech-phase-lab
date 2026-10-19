@@ -1,0 +1,177 @@
+{
+  "root": {
+    "ticker": "AOSL",
+    "name": "アルファ・アンド・オメガ・セミコンダクター"
+  },
+  "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・ライセンス",
+      "en": "Partnerships & licensing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "DIOD",
+    "ON",
+    "MPWR"
+  ],
+  "companies": [
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要OEMのDellなどと直接の取引関係を築いており、多くは販売代理店とODM経由で供給している",
+          "text_en": "AOS has direct relationships with key OEMs including Dell, most of which it serves through distributors and ODMs",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "We have established direct relationships with key OEMs, including Dell Inc., Hewlett-Packard Company, Samsung Group, and Stanley Black & Decker, Inc., most of whom we serve through our distributors and ODMs."
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "Foxconn",
+      "ticker": "Foxconn",
+      "name": "鴻海精密工業",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ODMの顧客としてFoxconnを挙げている",
+          "text_en": "Foxconn is named among AOS's ODM customers",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our ODM customers include Compal Electronics, Inc., Foxconn, Quanta Computer Incorporated, Wistron Corporation and Delta Electronics."
+          }
+        }
+      ],
+      "name_en": "Foxconn (Hon Hai Precision)"
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "STMicroelectronicsとのライセンス契約に関する特許・技術権の無形資産を償却している",
+          "text_en": "AOS is amortizing intangible assets of patents and technology rights related to a license agreement with STMicroelectronics",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "The Company is amortizing intangible assets of patents and technology rights related to a license agreement with STMicroelectronics International N.V.",
+            "note": "ライセンス契約の記載のみです。",
+            "note_en": "License agreement mention only."
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "DIOD",
+      "ticker": "DIOD",
+      "name": "ダイオーズ",
+      "sub": "ディスクリート半導体",
+      "sub_en": "Discrete semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in アルファ・アンド・オメガ・セミコンダクター’s annual report",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors in power discretes include Infineon Technologies AG, ON Semiconductor Corp., STMicroelectronics N.V., Toshiba Corporation, Diodes Incorporated and Vishay Intertechnology, Inc."
+          }
+        }
+      ],
+      "name_en": "Diodes Incorporated"
+    },
+    {
+      "id": "ON",
+      "ticker": "ON",
+      "name": "onsemi",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in アルファ・アンド・オメガ・セミコンダクター’s annual report",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc. and Vishay Intertechnology, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPWR",
+      "ticker": "MPWR",
+      "name": "モノリシック・パワー・システムズ",
+      "sub": "パワーIC",
+      "sub_en": "Power ICs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in アルファ・アンド・オメガ・セミコンダクター’s annual report",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc. and Vishay Intertechnology, Inc.."
+          }
+        }
+      ],
+      "name_en": "Monolithic Power Systems"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -9,11 +9,14 @@ import c_adp from "../../data/chain/ADP.json" with { type: "json" };
 import c_adsk from "../../data/chain/ADSK.json" with { type: "json" };
 import c_akam from "../../data/chain/AKAM.json" with { type: "json" };
 import c_alab from "../../data/chain/ALAB.json" with { type: "json" };
+import c_alkt from "../../data/chain/ALKT.json" with { type: "json" };
 import c_amat from "../../data/chain/AMAT.json" with { type: "json" };
+import c_amba from "../../data/chain/AMBA.json" with { type: "json" };
 import c_amd from "../../data/chain/AMD.json" with { type: "json" };
 import c_amkr from "../../data/chain/AMKR.json" with { type: "json" };
 import c_amzn from "../../data/chain/AMZN.json" with { type: "json" };
 import c_anet from "../../data/chain/ANET.json" with { type: "json" };
+import c_aosl from "../../data/chain/AOSL.json" with { type: "json" };
 import c_aph from "../../data/chain/APH.json" with { type: "json" };
 import c_app from "../../data/chain/APP.json" with { type: "json" };
 import c_arm from "../../data/chain/ARM.json" with { type: "json" };
@@ -123,10 +126,12 @@ import c_txn from "../../data/chain/TXN.json" with { type: "json" };
 import c_uber from "../../data/chain/UBER.json" with { type: "json" };
 import c_umc from "../../data/chain/UMC.json" with { type: "json" };
 import c_v from "../../data/chain/V.json" with { type: "json" };
+import c_vrns from "../../data/chain/VRNS.json" with { type: "json" };
 import c_vrt from "../../data/chain/VRT.json" with { type: "json" };
 import c_vst from "../../data/chain/VST.json" with { type: "json" };
 import c_wday from "../../data/chain/WDAY.json" with { type: "json" };
 import c_wdc from "../../data/chain/WDC.json" with { type: "json" };
+import c_wk from "../../data/chain/WK.json" with { type: "json" };
 import c_wmt from "../../data/chain/WMT.json" with { type: "json" };
 import c_xyz from "../../data/chain/XYZ.json" with { type: "json" };
 import c_zs from "../../data/chain/ZS.json" with { type: "json" };
@@ -160,11 +165,14 @@ const available: Record<string, ChainMapData> = {
   ADSK: c_adsk as ChainMapData,
   AKAM: c_akam as ChainMapData,
   ALAB: c_alab as ChainMapData,
+  ALKT: c_alkt as ChainMapData,
   AMAT: c_amat as ChainMapData,
+  AMBA: c_amba as ChainMapData,
   AMD: c_amd as ChainMapData,
   AMKR: c_amkr as ChainMapData,
   AMZN: c_amzn as ChainMapData,
   ANET: c_anet as ChainMapData,
+  AOSL: c_aosl as ChainMapData,
   APH: c_aph as ChainMapData,
   APP: c_app as ChainMapData,
   ARM: c_arm as ChainMapData,
@@ -274,10 +282,12 @@ const available: Record<string, ChainMapData> = {
   UBER: c_uber as ChainMapData,
   UMC: c_umc as ChainMapData,
   V: c_v as ChainMapData,
+  VRNS: c_vrns as ChainMapData,
   VRT: c_vrt as ChainMapData,
   VST: c_vst as ChainMapData,
   WDAY: c_wday as ChainMapData,
   WDC: c_wdc as ChainMapData,
+  WK: c_wk as ChainMapData,
   WMT: c_wmt as ChainMapData,
   XYZ: c_xyz as ChainMapData,
   ZS: c_zs as ChainMapData,
