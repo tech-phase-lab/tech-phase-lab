@@ -1,4 +1,5 @@
 "use client";
+import CompactPicker from "../compact-picker";
 import { useState } from "react";
 import type { Language } from "@/lib/research/data";
 import styles from "./stock-theme-discovery.module.css";
@@ -35,7 +36,7 @@ export default function StockThemeDiscovery({lang,onSelect}:{lang:Language;onSel
  const selected=themes.find(theme=>theme.id===id)!;
  return <section className={styles.root} aria-labelledby="stock-themes-title">
   <div className={styles.heading}><h2 id="stock-themes-title">{lang==="ja"?"テーマから探す":"Explore by theme"}</h2>
-   <select value={id} onChange={event=>setId(event.target.value)} aria-label={lang==="ja"?"銘柄のテーマ":"Stock theme"}>{themes.map(theme=><option key={theme.id} value={theme.id}>{theme[lang]}</option>)}</select>
+   <CompactPicker lang={lang} label={lang === "ja" ? "銘柄のテーマ" : "Stock theme"} value={id} options={themes.map(theme => ({ value: theme.id, label: theme[lang] }))} onChange={setId} />
   </div>
   <ul className={styles.stocks}>{selected.stocks.map(([ticker,name])=><li key={ticker}><button onClick={()=>onSelect(ticker)}><StockLogo ticker={ticker} /><strong>{ticker}</strong><span>{name}</span><span className={styles.open} aria-hidden="true">›</span></button></li>)}</ul>
  </section>;
