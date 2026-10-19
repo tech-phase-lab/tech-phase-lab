@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IntelがDellなどに対し、Intel製CPUに関する特許侵害の主張からの補償を行っている(2026年度、10-Q)。DellがIntel製CPUを使うことを示す記載",
-          "text_en": "Intel supplies CPUs used in Dell products and is indemnifying Dell against patent claims over Intel CPUs (Q2 FY2026, 10-Q)",
+          "text": "IntelがDell製品に使われるIntel製CPUについて、特許侵害の主張からDellを補償している(2026年7月、10-Q)",
+          "text_en": "Intel supplies CPUs used in Dell products and is indemnifying Dell against patent claims over Intel CPUs (July 2026, 10-Q)",
           "source": {
             "label": "Intel 10-Q",
             "label_en": "Intel 10-Q (quarter ended 2026-06-27)",
@@ -420,8 +420,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pure Storage(Everpure)が年次報告で、Dell Technologiesを競合として挙げている(2026年8月2日期、10-Q)",
-          "text_en": "Pure Storage (Everpure) names Dell as a competitor in its quarter ended August 2, 2026 10-Q",
+          "text": "Pure Storage(Everpure)が年次報告で、Dell Technologiesを競合として挙げている(2026年9月、10-Q)",
+          "text_en": "Pure Storage (Everpure) names Dell as a competitor in its September 2026 10-Q",
           "source": {
             "label": "Pure Storage 10-Q",
             "label_en": "Pure Storage 10-Q (quarter ended 2026-08-02)",
