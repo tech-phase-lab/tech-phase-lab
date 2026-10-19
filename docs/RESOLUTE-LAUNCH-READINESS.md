@@ -44,3 +44,10 @@ production custody. Remaining blockers: non-delete protection-writer permission
 boundary, independent key custody/readback, production isolated replay and final
 storage activation review. Continue these before enabling saves or notification
 settings. Keep secrets out of this git-backed reconstruction.
+
+### Isolated writer continuation
+
+Prepared a separate encrypted-event PUT/GET writer and removed direct S3 access
+from application/retry runtime. See RESOLUTE-PROTECTION-WRITER.md. No deployment
+or credential provisioning was performed; local synthetic HTTP acceptance alone
+is not proof of production isolation or provider-enforced retention.

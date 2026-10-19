@@ -1613,3 +1613,14 @@ strict schema validation and exclusive mode0600 recovery output. Real age
 synthetic acceptance passed; see RESOLUTE-KEY-ESCROW.md. No production key,
 storage custody, permissions, feature flags or services changed. Remote custody
 and non-delete writer permissions remain blockers before enabling saves.
+
+## 2026-10-19 — Separate protection writer prepared
+
+Application/retry protection runtime now uses a narrow authenticated HTTPS writer,
+not S3 credentials. A separate dormant process accepts only exact encrypted event
+PUT/GET, authenticates envelope/name binding and always uses conditional S3 writes.
+No delete/list/copy route or direct bucket fallback. See
+RESOLUTE-PROTECTION-WRITER.md for deployment configuration and residual risk:
+this is application-level isolation, NOT provider object lock. Real isolated
+service credentials, independent key custody and production replay remain open.
+No service provision, production activation, reservation or morning-job change.
