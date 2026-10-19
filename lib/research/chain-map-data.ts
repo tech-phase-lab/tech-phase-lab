@@ -24,6 +24,11 @@ import qcom from "../../data/chain/QCOM.json" with { type: "json" };
 import googl from "../../data/chain/GOOGL.json" with { type: "json" };
 import aapl from "../../data/chain/AAPL.json" with { type: "json" };
 import amzn from "../../data/chain/AMZN.json" with { type: "json" };
+import vrt2 from "../../data/chain/VRT.json" with { type: "json" };
+import pltr from "../../data/chain/PLTR.json" with { type: "json" };
+import ceg from "../../data/chain/CEG.json" with { type: "json" };
+import aaoi from "../../data/chain/AAOI.json" with { type: "json" };
+import nbis from "../../data/chain/NBIS.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -49,6 +54,7 @@ const available: Record<string, ChainMapData> = {
   SNDK: sndk as ChainMapData, AMD: amd as ChainMapData, ANET: anet as ChainMapData, ARM: arm as ChainMapData, LITE: lite as ChainMapData,
   VST: vst as ChainMapData, ADBE: adbe as ChainMapData, MU: mu as ChainMapData, ASML: asml as ChainMapData, TSM: tsm as ChainMapData,
   INTC: intc as ChainMapData, QCOM: qcom as ChainMapData, GOOGL: googl as ChainMapData, AAPL: aapl as ChainMapData, AMZN: amzn as ChainMapData,
+  VRT: vrt2 as ChainMapData, PLTR: pltr as ChainMapData, CEG: ceg as ChainMapData, AAOI: aaoi as ChainMapData, NBIS: nbis as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 

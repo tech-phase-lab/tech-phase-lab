@@ -1,0 +1,356 @@
+{
+  "root": {
+    "ticker": "VRT",
+    "name": "Vertiv"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客(データセンター)",
+      "en": "Customers (data centers)"
+    },
+    {
+      "ja": "提携",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SU",
+    "ETN",
+    "Legrand",
+    "JCI"
+  ],
+  "companies": [
+    {
+      "id": "TGEN",
+      "ticker": "TGEN",
+      "name": "Tecogen",
+      "sub": "冷却装置",
+      "sub_en": "Chillers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "TecogenのDTxチラーをデータセンター冷却向けにVertivが販売する販売・マーケティング契約(2025年2月28日)",
+          "text_en": "Sales and marketing agreement under which Vertiv sells Tecogen DTx chillers for data center cooling (February 28, 2025)",
+          "source": {
+            "label": "Tecogen 10-K(2025年度)",
+            "label_en": "Tecogen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1537435/000153743526000013/tgen-20251231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "On February 28, 2025, we entered into a Sales and Marketing Agreement with Vertiv Corporation (\"Vertiv\") relating to sales of Tecogen DTx chillers for data center cooling applications",
+            "note": "期間は2年で、正式な供給契約はこれから詰める段階です。",
+            "note_en": "Two-year term; a definitive supply agreement is still to be negotiated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BITF",
+      "ticker": "BITF",
+      "name": "Bitfarms",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Vertivとのターンキー契約で、設備・資材に1.29億ドルを約束(Bitfarmsの年次報告)",
+          "text_en": "Committed $129M for equipment and materials under a turnkey agreement with Vertiv (Bitfarms annual report)",
+          "source": {
+            "label": "Bitfarms 10-K(2025年度)",
+            "label_en": "Bitfarms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1812477/000121390026037514/ea0282809-10k_bitfarms.htm",
+            "level": "official",
+            "quote": "Committed $129 million for critical equipment and building materials through a turnkey agreement with Vertiv Group (\"Vertiv\") at Moses Lake, our first HPC data center development project."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUT",
+      "ticker": "HUT",
+      "name": "Hut 8",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "River Bendキャンパス向けに、AIデータセンターのインフラをVertivと共同開発(Hut 8の年次報告)",
+          "text_en": "Co-developed an AI data center infrastructure solution with Vertiv for its River Bend campus (Hut 8 annual report)",
+          "source": {
+            "label": "Hut 8 10-K(2025年度)",
+            "label_en": "Hut 8 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1964789/000110465926019392/hut-20251231x10k.htm",
+            "level": "official",
+            "quote": "a new AI-optimized data center infrastructure solution we co-developed with Vertiv for our River Bend campus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Omniverse DSX Blueprintで、プレハブ式の「Vertiv OneCore Rubin DSX」AI工場インフラを構築(NVIDIAの発表、2026年3月16日)",
+          "text_en": "Uses the Omniverse DSX Blueprint to build its prefabricated Vertiv OneCore Rubin DSX AI factory infrastructure (NVIDIA press release, March 16, 2026)",
+          "source": {
+            "label": "NVIDIA ニュースルーム の発表",
+            "label_en": "NVIDIA newsroom press release",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-releases-vera-rubin-dsx-ai-factory-reference-design-and-omniverse-dsx-digital-twin-blueprint-with-broad-industry-support",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Vertiv is also using the Omniverse DSX Blueprint to build Vertiv OneCore Rubin DSX, a prefabricated, converged data center infrastructure solution designed to accelerate AI factory deployment and AI output per watt."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "次世代AI計算向けの電源・冷却インフラでNVIDIAと提携と記載(年次報告)",
+          "text_en": "Says its partnership with NVIDIA supports power and thermal infrastructure for next-generation AI computing (annual report)",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our partnership with NVIDIA supports the development of advanced power and thermal infrastructure aligned with next-generation AI and high-performance computing architectures"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKLO",
+      "ticker": "OKLO",
+      "name": "Oklo",
+      "sub": "原子力開発",
+      "sub_en": "Nuclear development",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "将来のデータセンター電源に向けた代替エネルギーでOkloと協力(年次報告)",
+          "text_en": "Collaborates with Oklo on alternative energy solutions for future data center power (annual report)",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "our collaboration with Oklo reflects exploration of alternative energy solutions that could support future data center power requirements",
+            "note": "検討段階の協力です。",
+            "note_en": "Described as exploratory."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "Caterpillar",
+      "sub": "建機・発電機",
+      "sub_en": "Machinery & generators",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分散型発電とバックアップ電源でCaterpillarと提携(年次報告)",
+          "text_en": "Partnership with Caterpillar for distributed power generation and backup solutions (annual report)",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "our partnership with Caterpillar strengthens our capabilities in distributed power generation and backup solutions for critical infrastructure applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SU",
+      "ticker": "Schneider",
+      "name": "Schneider Electric",
+      "sub": "電機・電力管理",
+      "sub_en": "Electrical equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vertivが年次報告で、世界規模の競合としてSchneider Electricを挙げている",
+          "text_en": "Vertiv’s annual report names Schneider Electric among large-scale global competitors",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "large-scale global competitors (e.g., Schneider Electric, S.E., Eaton Corporation Plc, Legrand SA, and Huawei Investment & Holding Co., Ltd.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ETN",
+      "ticker": "ETN",
+      "name": "Eaton",
+      "sub": "電機・電力管理",
+      "sub_en": "Electrical equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vertivが年次報告で、世界規模の競合としてEatonを挙げている",
+          "text_en": "Vertiv’s annual report names Eaton among large-scale global competitors",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "large-scale global competitors (e.g., Schneider Electric, S.E., Eaton Corporation Plc, Legrand SA, and Huawei Investment & Holding Co., Ltd.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Legrand",
+      "ticker": "Legrand",
+      "name": "Legrand",
+      "sub": "電気設備",
+      "sub_en": "Electrical equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vertivが年次報告で、世界規模の競合としてLegrandを挙げている",
+          "text_en": "Vertiv’s annual report names Legrand among large-scale global competitors",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "large-scale global competitors (e.g., Schneider Electric, S.E., Eaton Corporation Plc, Legrand SA, and Huawei Investment & Holding Co., Ltd.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Delta",
+      "ticker": "Delta",
+      "name": "Delta Electronics",
+      "sub": "電源",
+      "sub_en": "Power supplies",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vertivが年次報告で、製品ごとの競合としてDelta Electronicsを挙げている",
+          "text_en": "Vertiv’s annual report names Delta Electronics among niche offering-specific competitors",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "niche players (e.g., Delta Electronics, Inc., Stulz GmbH, Johnson Controls International PLC, and Socomec Holding SA)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JCI",
+      "ticker": "JCI",
+      "name": "Johnson Controls",
+      "sub": "空調・設備",
+      "sub_en": "HVAC & building systems",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Johnson Controlsが年次報告で、より大きな競合としてVertivを挙げている",
+          "text_en": "Johnson Controls’ annual report names Vertiv among larger competitors",
+          "source": {
+            "label": "Johnson Controls 10-K(2025年度)",
+            "label_en": "Johnson Controls 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/833444/000083344425000097/jci-20250930.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Larger competitors include Honeywell International, Inc.; Siemens Smart Infrastructure, an operating group of Siemens AG; Schneider Electric SA; Carrier Global Corporation; Trane Technologies plc; Vertiv Holdings Co., API Group and Daikin Industries, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAON",
+      "ticker": "AAON",
+      "name": "AAON",
+      "sub": "空調",
+      "sub_en": "HVAC",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AAONが年次報告で、熱管理製品の主な競合としてVertivを挙げている",
+          "text_en": "AAON’s annual report says its thermal management products primarily compete with Vertiv",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our thermal management products primarily compete with Vertiv (Vertiv Holdings Co.), STULZ (STULZ Air Technology Systems, Inc.), Munters, Silent Aire",
+            "note": "冷却・熱管理の分野に限った記載です。",
+            "note_en": "Cooling/thermal segment only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENS",
+      "ticker": "ENS",
+      "name": "EnerSys",
+      "sub": "蓄電池",
+      "sub_en": "Batteries",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EnerSysが年次報告で、エナジーシステム事業の競合としてVertivを挙げている",
+          "text_en": "EnerSys’ annual report names Vertiv among competitors in its Energy Systems segment",
+          "source": {
+            "label": "EnerSys 10-K(2026年度)",
+            "label_en": "EnerSys 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289308/000162828026036900/ens-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Energy Systems We compete principally with East Penn Manufacturing, Exide Technologies (Stryten), Fiamm, SAFT, Hoppecke, New Power, C&D Technologies Inc., Vertiv,",
+            "note": "エナジーシステム事業に限った記載です。",
+            "note_en": "Energy Systems segment only."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
