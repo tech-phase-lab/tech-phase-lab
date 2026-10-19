@@ -1,6 +1,7 @@
 """Dedicated RESOLUTE dump / isolated restore. Never log credentials or data."""
 import datetime as dt
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,10 @@ import tempfile
 import time
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
+
+_spec = importlib.util.spec_from_file_location('resolute_protection', Path(__file__).with_name('protection.py'))
+protection = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(protection)
 
 PREFIX = 'resolute/v1/'
 PROBE = "SELECT jsonb_agg(t ORDER BY id)::text FROM resolute_backup_probe.sample t"
@@ -135,7 +140,7 @@ def main():
     from botocore.config import Config
     started = time.monotonic()
     mode = os.environ['RESOLUTE_BACKUP_MODE']
-    if mode not in ('bootstrap', 'backup', 'restore'):
+    if mode not in ('bootstrap', 'backup', 'restore', 'protection-export'):
         raise RuntimeError('invalid mode')
     bucket = os.environ['BACKUP_BUCKET']
     s3 = boto3.client('s3', endpoint_url=os.environ['BACKUP_ENDPOINT'],
@@ -148,6 +153,12 @@ def main():
         root = Path(temp)
         dump = root / 'backup.dump'
         encrypted = root / 'backup.dump.age'
+        if mode == 'protection-export':
+            pin = protection.export_checkpoint(s3, bucket, root, run, psql_env(),
+                os.environ['BACKUP_AGE_RECIPIENT'])
+            # Digest identifies ciphertext only; no user IDs or settings are logged.
+            print(json.dumps({'event': 'RESOLUTE_PROTECTION_EXPORTED', 'checkpoint_sha256': pin}), flush=True)
+            return
         if mode in ('bootstrap', 'backup'):
             e = psql_env()
             if mode == 'bootstrap':
@@ -217,9 +228,17 @@ def main():
                 payment_counts = verify_restored_payments(e)
                 live_counts = verify_restored_live_payments(
                     e, required=os.environ.get('RESOLUTE_REQUIRE_LIVE_LEDGER') == 'true')
+                presence = run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c', protection.PRESENCE_SQL], env=e).decode().strip()
+                if presence not in ('true', 'false'):
+                    raise RuntimeError('invalid protected table presence result')
+                protection_result = {'state': 'not_installed'}
+                if presence == 'true' or os.environ.get('RESOLUTE_REQUIRE_PROTECTION') == 'true':
+                    protection_result = protection.restore_checkpoint(s3, bucket, root, run, e, identity,
+                        os.environ.get('RESOLUTE_PROTECTION_CHECKPOINT_SHA256'))
                 report = {'event': 'RESOLUTE_RESTORE_OK', 'bytes': manifest['bytes'],
                           'probe_rows': count, 'payment_rows': payment_counts,
                           'live_payment_ledger': live_counts,
+                          'data_protection': protection_result,
                           'checks': ['download','decrypt','checksums','pg_restore','probe_content','primary_key','sandbox_payment_integrity']}
                 if live_counts['state'] == 'verified':
                     report['checks'].append('live_payment_integrity')
@@ -239,10 +258,12 @@ def main():
 
 if __name__ == '__main__':
     try:
-        heartbeat('/start')
+        if os.environ.get('RESOLUTE_BACKUP_MODE') != 'protection-export':
+            heartbeat('/start')
         main()
     except Exception as exc:
-        heartbeat('/fail')
+        if os.environ.get('RESOLUTE_BACKUP_MODE') != 'protection-export':
+            heartbeat('/fail')
         # No exception details: third-party errors can embed secret material.
         print(json.dumps({'event':'RESOLUTE_JOB_FAILED','error_type':type(exc).__name__}), flush=True)
         raise SystemExit(1)

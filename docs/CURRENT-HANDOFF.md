@@ -1552,3 +1552,20 @@ Smartphone check: reviewed wrapping and widths in controls/home/news CSS at the
 320/375px constraints. Chromium preparation was retried and failed downloading;
 actual visual rendering, overlaps and authenticated owner interaction were NOT
 verified. No visual pass should be claimed. Public comments remain suppressed.
+
+## 2026-10-19 — RESOLUTE independent recovery checkpoint preparation
+
+Added migration017 for transactional notification OFF history and an encrypted,
+readback-verified maintenance checkpoint outside dump rotation. Restore now
+requires an independently pinned complete checkpoint whenever plans/settings
+are present, replays deletions/stops in the isolated DB, rejects incomplete
+history, and clears restored unaccepted notification tasks. Details and explicit
+remaining gates: `docs/RESOLUTE-RECOVERY-PROTECTION.md`.
+
+No Railway migration/job/configuration was applied in this batch. Online
+per-mutation independent durability is STILL pending: maintenance exports alone
+cannot guarantee deletion/stop completion between exports. Plan/settings APIs
+and writer logins must remain disabled. No sales, email, AI, RIZEL publication,
+UI/design, morning cron or verification reservation changed. October20 morning
+execution still needs its scheduled verification. Do not deploy backup.py alone;
+its sibling protection.py is now part of the job package.
