@@ -90,3 +90,36 @@ restore service so an older backup without that schema fails acceptance.
 A verified empty ledger is a schema/restore result, not proof of live payment
 processing. Database roles and ACLs are excluded from these data backups and
 must be provisioned separately before activation.
+
+## Live PayPal boundary (prepared, not routed)
+
+The existing HTTP runtime remains Sandbox-only. `live-services.mjs` is a dormant
+factory, not imported by API startup and not exposed as an HTTP endpoint. It uses
+a distinct live database URL and exact writer role, dedicated live PayPal keys,
+and the shared live entitlement source. The Sandbox credential names are never
+fallbacks. `RESOLUTE_PAYPAL_LIVE_ENABLED` prepares provider connectivity;
+`RESOLUTE_LIVE_SALES_ENABLED` separately permits creating/capturing orders.
+Neither flag is configured by this code. With sales disabled, verified adverse
+notifications can still stop existing grants. Check the sales flag again directly
+before the capture API call, even if a request began while sales were open.
+
+PayPal API, approval and certificate hosts use fixed environment-specific lists.
+The return URL is derived from a server-only HTTPS site origin and the fixed
+checkout path. No browser amount, API host or callback URL is accepted. Live
+responses do not claim to be Sandbox responses. Refund-link parsing is restricted
+to the selected provider environment and never fetches the supplied URL.
+
+Migration 015 and `provision-live-role.mjs` prepare a NOLOGIN role with no password.
+It may read/insert/update live orders and grants, append events/audit/alert entries,
+and read the entitlement view. It cannot delete/truncate, rewrite audit or event
+history, mark email delivery, or change schema. Before committing, the operator job
+rejects access to unrelated application tables. Role and ACL definitions are not
+inside the existing no-owner/no-ACL data backups; replay the reviewed role migration
+separately when restoring infrastructure. A future credential step is still needed.
+
+Remaining release work includes live credentials and merchant/webhook verification,
+permission readback on actual authenticated connections, frontend/HTTP wiring,
+explicit owner approval to open sales, and retirement of the old fixed links.
+No live API calls or real payments are implied by the local provider doubles.
+PayPal references: https://developer.paypal.com/api/rest/production/ and
+https://developer.paypal.com/api/rest/webhooks/rest/ (reviewed 2026-10-19).
