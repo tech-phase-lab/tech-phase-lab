@@ -1569,3 +1569,13 @@ and writer logins must remain disabled. No sales, email, AI, RIZEL publication,
 UI/design, morning cron or verification reservation changed. October20 morning
 execution still needs its scheduled verification. Do not deploy backup.py alone;
 its sibling protection.py is now part of the job package.
+
+## 2026-10-19 — Online RESOLUTE protection implementation
+
+Prepared transactional protection outbox, encrypted immutable publisher, completion
+barriers on storage operations, bounded retries and independent online restore
+manifest. Actual private-bucket conditional writes and real isolated PostgreSQL18
+restore passed with synthetic data (deployment594765aa). Details and remaining
+activation gates are in docs/RESOLUTE-RECOVERY-PROTECTION.md. Production schemas,
+writer credentials, API flags and retry scheduling remain disabled/unapplied.
+Existing 7AM job/reservation, payment activation, private RIZEL text and UI untouched.

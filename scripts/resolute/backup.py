@@ -14,6 +14,9 @@ from urllib.request import Request, urlopen
 _spec = importlib.util.spec_from_file_location('resolute_protection', Path(__file__).with_name('protection.py'))
 protection = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(protection)
+_events_spec = importlib.util.spec_from_file_location('resolute_protection_events', Path(__file__).with_name('protection_events.py'))
+protection_events = importlib.util.module_from_spec(_events_spec)
+_events_spec.loader.exec_module(protection_events)
 
 PREFIX = 'resolute/v1/'
 PROBE = "SELECT jsonb_agg(t ORDER BY id)::text FROM resolute_backup_probe.sample t"
@@ -233,8 +236,21 @@ def main():
                     raise RuntimeError('invalid protected table presence result')
                 protection_result = {'state': 'not_installed'}
                 if presence == 'true' or os.environ.get('RESOLUTE_REQUIRE_PROTECTION') == 'true':
-                    protection_result = protection.restore_checkpoint(s3, bucket, root, run, e, identity,
-                        os.environ.get('RESOLUTE_PROTECTION_CHECKPOINT_SHA256'))
+                    online = run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c',
+                        "SELECT (to_regclass('resolute.protection_outbox') IS NOT NULL)::text"], env=e).decode().strip()
+                    if online not in ('true', 'false'):
+                        raise RuntimeError('invalid online protection schema result')
+                    if online == 'true':
+                        ledger = protection_events.load_manifest(s3, bucket,
+                            bytes.fromhex(os.environ['RESOLUTE_PROTECTION_KEY_HEX']),
+                            os.environ.get('RESOLUTE_PROTECTION_EVENTS_MANIFEST_SHA256'), protection)
+                        run(['psql', '-Xq', '-v', 'ON_ERROR_STOP=1'], env=e,
+                            data=protection.restore_sql(ledger).encode())
+                        protection_result = {'state':'verified', 'source':'independent_online_manifest',
+                            'deletions':len(ledger['deletions']), 'suppressions':len(ledger['suppressions'])}
+                    else:
+                        protection_result = protection.restore_checkpoint(s3, bucket, root, run, e, identity,
+                            os.environ.get('RESOLUTE_PROTECTION_CHECKPOINT_SHA256'))
                 report = {'event': 'RESOLUTE_RESTORE_OK', 'bytes': manifest['bytes'],
                           'probe_rows': count, 'payment_rows': payment_counts,
                           'live_payment_ledger': live_counts,

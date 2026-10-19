@@ -1,3 +1,5 @@
+import { protectionRuntime } from "./protection-runtime.ts";
+import type { ProtectionBarrier } from "./protection-outbox.ts";
 import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
 import { Pool, type PoolClient } from "pg";
 import { resoluteDatabaseConfig } from "./database-config.ts";
@@ -14,11 +16,12 @@ function snapshot(row: Row | undefined): PlanSnapshot {
   return parsePlanSnapshot({ plan: row.plan === null ? null : { ...row.plan,
     createdAt: row.created_at?.toISOString(), updatedAt: row.updated_at?.toISOString() }, revision: Number(row.revision) });
 }
-export function createPlanStore(pool: Pick<Pool, "connect">, source: EntitlementSource = entitlementSource()) {
+export function createPlanStore(pool: Pick<Pool, "connect">, source: EntitlementSource = entitlementSource(), protect?: ProtectionBarrier) {
   return async (userId: string, method: "GET" | "PUT" | "DELETE", mutation?: { baseRevision: number; plan: PlanInput | null }) => {
     if (!/^user_[A-Za-z0-9]{1,128}$/.test(userId)) throw new Error("Invalid identity");
     const client: PoolClient = await pool.connect();
     try {
+      if (protect) await protect(client,userId);
       await client.query("BEGIN");
       // Serializes initial creation, updates and deletions, including absent rows.
       await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [userId]);
@@ -29,7 +32,7 @@ export function createPlanStore(pool: Pick<Pool, "connect">, source: Entitlement
       if (method !== "DELETE" && !active) throw new PlanAccessDenied();
       const result = await client.query<Row>("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1 FOR UPDATE", [userId]);
       const current = snapshot(result.rows[0]);
-      if (method === "GET") { await client.query("COMMIT"); return current; }
+      if (method === "GET") { await client.query("COMMIT"); if (protect) await protect(client,userId); return current; }
       if (!mutation) throw new Error("Missing mutation");
       if (current.revision !== mutation.baseRevision)
         throw new PlanConflict(active ? current : { plan: null, revision: current.revision });
@@ -50,8 +53,12 @@ export function createPlanStore(pool: Pick<Pool, "connect">, source: Entitlement
       }
       const saved = await client.query<Row>("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1", [userId]);
       const value = snapshot(saved.rows[0]);
-      await client.query("COMMIT"); return value;
-    } catch (error) { try { await client.query("ROLLBACK"); } catch {} throw error; }
+      await client.query("COMMIT");
+      if (protect) await protect(client,userId);
+      return value;
+    } catch (error) { try { await client.query("ROLLBACK"); } catch {}
+      if (error instanceof PlanConflict && protect) await protect(client,userId);
+      throw error; }
     finally { client.release(); }
   };
 }
@@ -62,7 +69,7 @@ export async function operateResolutePlan(userId: string, method: "GET" | "PUT" 
   if (!store) {
     const config = resoluteDatabaseConfig(process.env.RESOLUTE_PLAN_DB_URL);
     if (new URL(config.connectionString).username !== "resolute_plan_writer") throw new Error("Scoped writer required");
-    const pool = new Pool(config); pool.on("error", () => {}); store = createPlanStore(pool);
+    const pool = new Pool(config); pool.on("error", () => {}); store = createPlanStore(pool,entitlementSource(),protectionRuntime());
   }
   return store(userId, method, mutation);
 }

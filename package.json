@@ -14,6 +14,7 @@
     "predev": "node scripts/research-ui/prepare-pdf-fonts.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.1152.0",
     "@clerk/localizations": "^4.20.0",
     "@clerk/nextjs": "^7.9.7",
     "@fontsource/noto-sans-jp": "^5.3.1",

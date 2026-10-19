@@ -50,3 +50,6 @@ __pycache__/
 /public/research-pdf-fonts/
 
 /public/research-pdf-viewer/
+
+# Independently packaged RESOLUTE API dependencies
+/services/resolute-api/node_modules/
