@@ -138,6 +138,31 @@
           }
         }
       ]
+    },
+    {
+      "id": "NEE",
+      "ticker": "NEE",
+      "name": "NextEra Energy",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メイン州Wyman石油火力発電所の少数持分を保有。主な所有者NextEra Energy Resourcesが運営(2025年度、10-K)",
+          "text_en": "Constellation holds a minority stake in the Wyman (Maine) oil-fired plant, operated by principal owner NextEra Energy Resources (FY2025, 10-K)",
+          "source": {
+            "label": "Constellation 10-K(2025年度)",
+            "label_en": "Constellation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "except for Wyman, which is operated by the principal owner, NextEra Energy Resources LLC, a subsidiary of NextEra Energy, Inc.",
+            "note": "小規模な石油・ガス資産で、この文では持分割合は書かれていません。",
+            "note_en": "A small oil/gas asset; this sentence does not state the ownership percentage."
+          }
+        }
+      ]
     }
   ],
   "far": [],

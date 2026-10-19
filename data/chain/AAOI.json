@@ -16,6 +16,10 @@
     {
       "ja": "競合(AAOIの資料に記載)",
       "en": "Competitors (named in AAOI’s filing)"
+    },
+    {
+      "ja": "融資(銀行)",
+      "en": "Financing (banks)"
     }
   ],
   "rivals": [
@@ -255,6 +259,77 @@
             "level": "official",
             "date": "2026-02",
             "quote": "Mitsubishi, Molex, LLC, Source Photonics, Inc. and Sumitomo Electric Industries, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOKF",
+      "ticker": "BOKF",
+      "name": "BOK Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AAOIが3年・3,500万ドルの回転与信枠(増額で最大7,500万ドル)をBOK Financialを幹事として設定(2025年7月、8-K)",
+          "text_en": "AAOI entered a three-year $35M revolving credit facility (accordion to $75M) with BOKF, NA dba BOK Financial as agent (July 2025, 8-K)",
+          "source": {
+            "label": "AAOI Form 8-K(2025年8月6日)",
+            "label_en": "AAOI Form 8-K (Aug 6, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158114/000168316825005710/aaoi_8k.htm",
+            "level": "official",
+            "date": "2025-07-31",
+            "quote": "with BOKF, NA dba BOK Financial, as agent for secured parties. The Credit Facility provides the Company with a three-year, $35 million revolving line of credit.",
+            "note": "貸し手はBOK Financialの銀行子会社です。",
+            "note_en": "The lender is the bank subsidiary of BOK Financial Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "600000",
+      "ticker": "SPD Bank",
+      "name": "上海浦東発展銀行",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国子会社が上海浦東発展銀行と最大5億人民元の1年間の与信枠を設定(従来の2.5億人民元から拡大、2026年6月、8-K)",
+          "text_en": "AAOI’s China subsidiary entered a one-year credit line of up to RMB 500M with Shanghai Pudong Development Bank, replacing an RMB 250M facility (June 2026, 8-K)",
+          "source": {
+            "label": "AAOI Form 8-K(2026年6月16日)",
+            "label_en": "AAOI Form 8-K (Jun 16, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158114/000168316826004885/aaoi_8k.htm",
+            "level": "official",
+            "date": "2026-06-11",
+            "quote": "entered into a one-year credit line agreement with Shanghai Pudong Development Bank Co., Ltd. in Ningbo City, China"
+          }
+        }
+      ]
+    },
+    {
+      "id": "939",
+      "ticker": "CCB",
+      "name": "中国建設銀行",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国子会社が中国建設銀行と1.6226億人民元の5年間の回転与信枠を設定(2025年6月、8-K)",
+          "text_en": "AAOI’s China subsidiary entered a five-year RMB 162.26M revolving credit line with China Construction Bank (June 2025, 8-K)",
+          "source": {
+            "label": "AAOI Form 8-K(2025年7月1日)",
+            "label_en": "AAOI Form 8-K (Jul 1, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158114/000168316825004861/aaoi_8k.htm",
+            "level": "official",
+            "date": "2025-06-26",
+            "quote": "entered into a five-year revolving credit line agreement, totaling 162,260,000 RMB (the \"Credit Line\"), as well as a related security agreement (the \"Security Agreement\"), with China Construction Bank Co., Ltd."
           }
         }
       ]

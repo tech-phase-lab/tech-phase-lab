@@ -169,6 +169,19 @@
             "date": "2015-07-31",
             "quote": "Tax Matters Agreement, dated as of July 31, 2015, by and between JDS Uniphase Corporation and Lumentum Holdings Inc."
           }
+        },
+        {
+          "type": "tie",
+          "text": "LumentumはJDSU(現Viavi Solutions)から分離独立した会社(2026年度、10-K)",
+          "text_en": "Lumentum states it was spun off from JDSU, now Viavi Solutions (FY2026, 10-K)",
+          "source": {
+            "label": "Lumentum 10-K(2026年度)",
+            "label_en": "Lumentum 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm",
+            "level": "official",
+            "date": "2015-08",
+            "quote": "Since our spin-off from JDSU (now Viavi Solutions, Inc., or Viavi)"
+          }
         }
       ]
     },
@@ -214,6 +227,56 @@
             "level": "official",
             "date": "2026-02-24",
             "quote": "In PSD, Trumpf Group, Lumentum Holdings Inc., IPG Photonics Corporation, EdgeWave GmbH and Amplitude Laser Group offer products that compete with our laser products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "QualcommおよびCorningと、ECOC 2026で共同のダイ間光インターコネクトのデモを行うと発表(2026年9月21日、Lumentum発表)",
+          "text_en": "Lumentum announced a joint die-to-die optical interconnect demonstration with Qualcomm Technologies and Corning at ECOC 2026 (September 21, 2026, Lumentum release)",
+          "source": {
+            "label": "Lumentum の発表",
+            "label_en": "Lumentum press release",
+            "url": "https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Qualcomm-and-Corning-to-Demonstrate-High-Density-1060-nm-VCSEL-Optical-D2D-Connectivity-for-AI-Scale-Up-at-ECOC-2026/default.aspx",
+            "level": "official",
+            "date": "2026-09-21",
+            "quote": "announced plans for a joint demonstration together with Qualcomm Technologies, Inc. and Corning Incorporated (NYSE: GLW)",
+            "note": "実施予定のデモで、商用契約ではありません。",
+            "note_en": "A planned demonstration, not a commercial agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLW",
+      "ticker": "GLW",
+      "name": "Corning",
+      "sub": "光ファイバー・ガラス",
+      "sub_en": "Optical fiber & glass",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "QualcommおよびCorningと、ECOC 2026で共同のダイ間光インターコネクトのデモを行うと発表(2026年9月21日、Lumentum発表)",
+          "text_en": "Lumentum announced a joint die-to-die optical interconnect demonstration with Qualcomm Technologies and Corning at ECOC 2026 (September 21, 2026, Lumentum release)",
+          "source": {
+            "label": "Lumentum の発表",
+            "label_en": "Lumentum press release",
+            "url": "https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Qualcomm-and-Corning-to-Demonstrate-High-Density-1060-nm-VCSEL-Optical-D2D-Connectivity-for-AI-Scale-Up-at-ECOC-2026/default.aspx",
+            "level": "official",
+            "date": "2026-09-21",
+            "quote": "announced plans for a joint demonstration together with Qualcomm Technologies, Inc. and Corning Incorporated (NYSE: GLW)",
+            "note": "実施予定のデモで、商用契約ではありません。",
+            "note_en": "A planned demonstration, not a commercial agreement."
           }
         }
       ]

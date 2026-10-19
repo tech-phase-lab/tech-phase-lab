@@ -69,12 +69,12 @@ test('the map shows suppliers first, no range buttons, a card per company with s
 });
 
 const BATCH = {
-  NFLX: [14, 18], LRCX: [22, 24], TSLA: [17, 19], IBM: [27, 40], META: [33, 37],
-  BE: [6, 9], SKHY: [14, 16], GEV: [18, 19], MSFT: [24, 29], KLAC: [8, 10],
-  SNDK: [7, 15], AMD: [20, 29], ANET: [16, 22], ARM: [20, 21], LITE: [6, 10],
-  INTC: [16, 20], QCOM: [17, 20], GOOGL: [20, 23], AAPL: [20, 21], AMZN: [20, 24],
-  VRT: [13, 14], PLTR: [14, 14], CEG: [5, 5], AAOI: [10, 10], NBIS: [12, 13],
-  VST: [6, 6], ADBE: [19, 19], MU: [10, 12], ASML: [9, 12], TSM: [20, 23],
+  NFLX: [15, 19], LRCX: [22, 24], TSLA: [20, 22], IBM: [29, 42], META: [33, 37],
+  BE: [7, 10], SKHY: [14, 16], GEV: [19, 20], MSFT: [24, 29], KLAC: [8, 10],
+  SNDK: [7, 15], AMD: [24, 33], ANET: [17, 23], ARM: [31, 32], LITE: [8, 13],
+  INTC: [16, 20], QCOM: [17, 21], GOOGL: [21, 24], AAPL: [25, 26], AMZN: [21, 25],
+  VRT: [13, 15], PLTR: [24, 25], CEG: [6, 6], AAOI: [13, 13], NBIS: [14, 15],
+  VST: [6, 6], ADBE: [24, 24], MU: [10, 12], ASML: [11, 14], TSM: [26, 30],
 };
 
 test('the earnings-ordered companies use the same format with an official source on every relation', () => {
@@ -112,7 +112,7 @@ test('a map without suppliers, rivals or two-step links leaves those parts out, 
   const html = renderToStaticMarkup(createElement(StockChainMap, { data: be, lang: 'ja' }));
   assert.ok(!html.includes('供給元(上流)'), 'an empty supplier row is not drawn');
   assert.ok(html.indexOf('AIデータセンター・IT企業') > html.indexOf('BE</b>'));
-  assert.ok(html.includes('6社 · 9の関係') && !html.includes('さらに先の関係') && !html.includes('競合は？'));
+  assert.ok(html.includes('7社 · 10の関係') && !html.includes('さらに先の関係') && !html.includes('競合は？'));
   const plain = renderToStaticMarkup(createElement(StockChainMap, { data: be, lang: 'en' }));
   assert.ok(!plain.includes('Who competes with it?') && !plain.includes('Further links') && !plain.includes('Competitors'));
   const metaHtml = renderToStaticMarkup(createElement(StockChainMap, { data: meta, lang: 'en' }));

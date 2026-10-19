@@ -401,6 +401,31 @@
           }
         }
       ]
+    },
+    {
+      "id": "WBD",
+      "ticker": "WBD",
+      "name": "Warner Bros. Discovery",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Netflixは2025年12月にWBDのストリーミング・スタジオ事業の買収で合意(2026年1月修正)。WBDは2026年2月27日にこれを解消しParamount Skydanceと契約。Netflixは28億ドルの解消料を受け取った(2026年6月、10-Q)",
+          "text_en": "Netflix agreed in December 2025 (amended January 2026) to acquire WBD’s streaming and studios businesses; WBD terminated on February 27, 2026 to sign with Paramount Skydance, which paid Netflix a $2.8B termination fee (June 2026, 10-Q)",
+          "source": {
+            "label": "Netflix 10-Q(2026年6月)",
+            "label_en": "Netflix 10-Q (Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000212/nflx-20260630.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "PSKY, on behalf of WBD, paid a $ 2.8 billion termination fee owed to Netflix in accordance with the terms of the Amended and Restated Merger Agreement",
+            "note": "買収契約は解消され、取引は成立していません。",
+            "note_en": "The merger agreement was terminated; no transaction was completed."
+          }
+        }
+      ]
     }
   ],
   "far": [],

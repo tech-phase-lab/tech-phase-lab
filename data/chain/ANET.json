@@ -481,6 +481,31 @@
           }
         }
       ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Qualcomm幹部が、大規模なアクセラレーター導入向けのAristaのネットワーク製品を歓迎するコメント(2026年10月、Arista発表)",
+          "text_en": "A Qualcomm Technologies executive welcomed Arista networking solutions for large-scale accelerator deployments (October 2026, Arista release)",
+          "source": {
+            "label": "Arista Rack-Scale Architectures partner quotes(2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "We are pleased to see Arista deliver advanced networking solutions that ensure seamless interoperability",
+            "note": "提携先のコメントで、取引条件は書かれていません。",
+            "note_en": "A partner endorsement quote; no commercial terms are stated."
+          }
+        }
+      ]
     }
   ],
   "far": [],

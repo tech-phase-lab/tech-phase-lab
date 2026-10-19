@@ -553,6 +553,31 @@
           }
         }
       ]
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "ストリーミング端末",
+      "sub_en": "Streaming devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Amazon・Best Buy・Walmart・Targetの4社でRokuの端末売上の81%を占める。RokuはAmazonをストリーミング端末の競合とも記載(2025年度、10-K)",
+          "text_en": "Amazon, Best Buy, Walmart and Target together accounted for 81% of Roku’s Devices revenue; Roku also names Amazon as a streaming-device competitor (FY2025, 10-K)",
+          "source": {
+            "label": "Roku 10-K(2025年度)",
+            "label_en": "Roku 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Amazon, Best Buy, Target, and Walmart in total accounted for 81% of our Devices revenue for each of the years ended December 31, 2025 and 2024.",
+            "note": "4社の合計で、Amazon単独の割合は書かれていません。",
+            "note_en": "Combined figure for four retailers; Amazon alone is not stated."
+          }
+        }
+      ]
     }
   ],
   "far": [],

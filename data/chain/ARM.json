@@ -514,6 +514,264 @@
           }
         }
       ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell Technology",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellのCEOが、次世代AIインフラでArmと提携していることを誇りに思うとコメント(2026年3月24日、Armのニュースルーム)",
+          "text_en": "Marvell’s CEO says Marvell is proud to partner with Arm on next-generation AI infrastructure (March 24, 2026, Arm Newsroom)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "we are proud to partner with Arm to enable the next generation of AI infrastructure."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SamsungのCEOが、Armなど計算分野のリーダーとの長期的な協力に言及(2026年3月24日、Armのニュースルーム)",
+          "text_en": "Samsung’s CEO cites long-term collaboration with compute leaders like Arm (March 24, 2026, Arm Newsroom)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Samsung's broad semiconductor capabilities and long-term collaboration with compute leaders like Arm position us to support next-generation AI platforms at scale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "000660",
+      "ticker": "SK hynix",
+      "name": "SK hynix",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SK hynixのCEOが、Armとの継続的な提携を楽しみにしているとコメント(2026年3月24日、Armのニュースルーム)",
+          "text_en": "SK hynix’s CEO says it looks forward to continued partnership with Arm (March 24, 2026, Arm Newsroom)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "we look forward to continued partnership with Arm to advance the next generation of AI-driven infrastructure."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MicronのCEOが、Armとの長年の提携に言及(2026年3月24日、Armのニュースルーム)",
+          "text_en": "Micron’s CEO describes a longstanding partnership with Arm (March 24, 2026, Arm Newsroom)",
+          "source": {
+            "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
+            "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "That's why our longstanding partnership with Arm is so important."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "Synopsys",
+      "sub": "半導体設計ソフト",
+      "sub_en": "Chip design software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SynopsysのCEOが、先端シリコンでArmと数十年にわたり協力してきたとコメント(2026年3月24日、Armの特設ページ)",
+          "text_en": "Synopsys’ CEO says Synopsys and Arm have collaborated for decades on advanced silicon (March 24, 2026, Arm ecosystem page)",
+          "source": {
+            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label_en": "Arm AGI CPU ecosystem page (arm.com)",
+            "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Synopsys and Arm have collaborated for decades to empower customers to develop advanced silicon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIE",
+      "ticker": "Siemens",
+      "name": "Siemens(Siemens EDA)",
+      "sub": "半導体設計ソフト",
+      "sub_en": "Chip design software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Siemens EDAが、シミュレーション・検証・SoC実装にわたるArmとの長年の戦略的提携に言及(2026年3月24日、Armの特設ページ)",
+          "text_en": "Siemens EDA states a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation (March 24, 2026, Arm ecosystem page)",
+          "source": {
+            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label_en": "Arm AGI CPU ecosystem page (arm.com)",
+            "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Siemens has a longstanding strategic partnership with Arm spanning simulation, hardware assisted verification and SoC implementation solutions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "Arista Networks",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking gear",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AristaのCEOが、エコシステムの提携先としてArm AGI CPUの発表を支持するコメント(2026年3月24日、Armの特設ページ)",
+          "text_en": "Arista’s CEO is quoted as supporting the Arm AGI CPU launch as an ecosystem partner (March 24, 2026, Arm ecosystem page)",
+          "source": {
+            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label_en": "Arm AGI CPU ecosystem page (arm.com)",
+            "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "The new Arm AGI CPU is an important milestone for the entire ecosystem, enabling efficient and new AI experiences.\" Jayshree Ullal Chairperson and CEO for Arista Networks",
+            "note": "支持コメントのみで、取引条件は書かれていません。",
+            "note_en": "A supporting quote only; no commercial terms are stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "2454",
+      "ticker": "MediaTek",
+      "name": "MediaTek",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MediaTekの社長が、Armのアーキテクチャ・エコシステムを評価し、協力を続けるとコメント(2026年3月24日、Armの特設ページ)",
+          "text_en": "MediaTek’s president says it values Arm’s architecture ecosystem and continues collaboration with Arm (March 24, 2026, Arm ecosystem page)",
+          "source": {
+            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label_en": "Arm AGI CPU ecosystem page (arm.com)",
+            "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "We look forward to our continuing collaboration with Arm for delivering world-class performance and efficiency to our global customers and partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Intel Foundryが、Armなどのリーダーと協力することを楽しみにしているとコメント(2026年3月24日、Armの特設ページ)",
+          "text_en": "Intel Foundry says it looks forward to working with leaders such as Arm (March 24, 2026, Arm ecosystem page)",
+          "source": {
+            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label_en": "Arm AGI CPU ecosystem page (arm.com)",
+            "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Intel Foundry looks forward to working with leaders such as Arm to enable innovative future platforms",
+            "note": "今後の協力についての発言のみです。",
+            "note_en": "A forward-looking statement about collaboration only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXP Semiconductors",
+      "sub": "車載半導体",
+      "sub_en": "Auto chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NXPが、Armとの数十年にわたる関係に言及(2026年3月24日、Armの特設ページ)",
+          "text_en": "NXP cites a decades-long relationship with Arm (March 24, 2026, Arm ecosystem page)",
+          "source": {
+            "label": "Arm AGI CPU ecosystem page(arm.com)",
+            "label_en": "Arm AGI CPU ecosystem page (arm.com)",
+            "url": "https://www.arm.com/products/cloud-datacenter/arm-agi-cpu/ecosystem",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Building on our decades‑long relationship with Arm"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・PC",
+      "sub_en": "Devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Armは1990年に、Acorn Computers・Apple Computer・VLSI Technologyの合弁会社として始まった(2026年3月期、20-F)",
+          "text_en": "Arm began in 1990 as a joint venture between Acorn Computers, Apple Computer and VLSI Technology (FY ended March 31, 2026, 20-F)",
+          "source": {
+            "label": "Arm Form 20-F(FY ended 2026-03-31)",
+            "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "quote": "Established in 1990, Arm began as a joint venture between Acorn Computers, Apple Computer, and VLSI Technology.",
+            "note": "創業時の経緯で、現在の取引条件は書かれていません。",
+            "note_en": "Historical origin; no current commercial terms are stated."
+          }
+        }
+      ]
     }
   ],
   "far": [],

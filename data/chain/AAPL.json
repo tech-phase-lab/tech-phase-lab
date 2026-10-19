@@ -511,6 +511,125 @@
           }
         }
       ]
+    },
+    {
+      "id": "TXN",
+      "ticker": "TXN",
+      "name": "Texas Instruments",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AppleとTexas Instrumentsが提携を拡大し、Appleが米国内の生産能力を支える新たなコミットメントを表明(2025年8月、Apple発表)",
+          "text_en": "Apple and Texas Instruments are expanding their partnership with a new Apple commitment supporting U.S. capacity (August 2025, Apple Newsroom)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "Apple and Texas Instruments are expanding their partnership to increase future product collaboration and critical U.S. capacity for this work."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6488",
+      "ticker": "GlobalWafers",
+      "name": "GlobalWafers",
+      "sub": "シリコンウエハー",
+      "sub_en": "Silicon wafers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "テキサス州ShermanのGlobalWafers Americaと提携し、米国の工場向け先端ウエハーを生産(2025年8月、Apple発表)",
+          "text_en": "Apple is partnering with GlobalWafers America in Sherman, Texas to produce advanced wafers for U.S.-based fabs (August 2025, Apple Newsroom)",
+          "source": {
+            "label": "Apple ニュースルーム",
+            "label_en": "Apple Newsroom",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "Apple is partnering with GlobalWafers America in Sherman, Texas, to produce advanced wafers for use in U.S.-based semiconductor fabs for the first time.",
+            "note": "相手は子会社のGlobalWafers Americaです。",
+            "note_en": "The partner is GlobalWafers America, a subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "Skyworks Solutions",
+      "sub": "通信半導体",
+      "sub_en": "RF chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Skyworksが年次報告で、主要顧客の1社としてAppleを挙げている(2025年度、10-K)",
+          "text_en": "Skyworks lists Apple among its key customers (FY2025, 10-K)",
+          "source": {
+            "label": "Skyworks 10-K(2025年度)",
+            "label_en": "Skyworks 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Our key customers include Amazon, Apple Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Goldman SachsがApple Cardのカード発行元。2025年12月に別の発行会社へ移行する契約を結んだ(2025年度、10-K)",
+          "text_en": "Goldman Sachs currently issues Apple Card and agreed in December 2025 to transition the program to another issuer (FY2025, 10-K)",
+          "source": {
+            "label": "Goldman Sachs 10-K(2025年度)",
+            "label_en": "Goldman Sachs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/gs-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "In December 2025, we entered into an agreement to transition the Apple Card program to another issuer.",
+            "note": "移行にはおよそ24か月かかる見込みです。",
+            "note_en": "The transition is expected to take about 24 months."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNAP",
+      "ticker": "SNAP",
+      "name": "Snap",
+      "sub": "SNS",
+      "sub_en": "Social media",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Snapが年次報告で、競合する企業の1社としてAppleを挙げている(2025年度、10-K)",
+          "text_en": "Snap’s annual report names Apple among companies it competes with (FY2025, 10-K)",
+          "source": {
+            "label": "Snap 10-K(2025年度)",
+            "label_en": "Snap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "such as Alphabet (including Google and YouTube), Apple, ByteDance (TikTok and affiliated joint ventures), Meta (including Facebook, Instagram, Threads, and WhatsApp), Pinterest"
+          }
+        }
+      ]
     }
   ],
   "far": [],

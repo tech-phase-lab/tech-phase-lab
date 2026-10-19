@@ -327,6 +327,56 @@
           }
         }
       ]
+    },
+    {
+      "id": "HYMTF",
+      "ticker": "Hyundai",
+      "name": "Hyundai(現代)",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社Avrideが、自動運転プラットフォームの共同開発でHyundaiと戦略的提携(2025年3月、年次報告)",
+          "text_en": "Nebius subsidiary Avride entered a strategic partnership with Hyundai for joint development of an autonomous driving platform (March 2025, annual report)",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2025-03",
+            "quote": "In March 2025, Avride entered a strategic partnership with Hyundai for the joint development of an autonomous driving platform",
+            "note": "資料には「Hyundai」とだけあり、どの法人かは書かれていません。関係はAvrideを通じたものです。",
+            "note_en": "The source says only “Hyundai” without naming the legal entity; the relationship is at the Avride level."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUFG",
+      "ticker": "MUFG",
+      "name": "三菱UFJフィナンシャル・グループ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下の三菱UFJ銀行ロンドン支店が、Nebiusの約7.75億ドルの担保付きターム・ローンの主幹事・引受・ブックランナーを務める(2026年7月、6-K)",
+          "text_en": "MUFG Bank, London Branch acts as mandated lead arranger, underwriter and sole bookrunner on Nebius’s roughly $775M senior secured term loan (July 2026, 6-K)",
+          "source": {
+            "label": "Nebius 6-K(2026-07-17)",
+            "label_en": "Nebius 6-K (2026-07-17)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926084452/tm2620683d1_6k.htm",
+            "level": "official",
+            "date": "2026-07-10",
+            "quote": "MUFG Bank, Ltd., London Branch, as mandated lead arranger, underwriter, sole bookrunner and structuring agent",
+            "note": "融資関係で、他の銀行も参加するシンジケート型です。",
+            "note_en": "A lending relationship; the facility is syndicated with other banks."
+          }
+        }
+      ]
     }
   ],
   "far": [],

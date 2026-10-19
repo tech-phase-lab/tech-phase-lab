@@ -460,6 +460,79 @@
           }
         }
       ]
+    },
+    {
+      "id": "LI",
+      "ticker": "LI",
+      "name": "Li Auto",
+      "sub": "EVメーカー",
+      "sub_en": "EV maker",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Li Autoが年次報告で、20万人民元超の中国NEV市場でTeslaが支配的な地位にあると記載(2025年度、20-F)",
+          "text_en": "Li Auto states Tesla holds a dominant position in China’s NEV segment priced above RMB 200,000 (FY2025, 20-F)",
+          "source": {
+            "label": "Li Auto 20-F(2025年度)",
+            "label_en": "Li Auto 20-F FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926041705/li-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Tesla holds a dominant position in the segment for NEVs priced above RMB 200,000 (US$28,600)",
+            "note": "中国のNEV市場についての記述です。",
+            "note_en": "A statement about the China NEV market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPEV",
+      "ticker": "XPEV",
+      "name": "XPeng",
+      "sub": "EVメーカー",
+      "sub_en": "EV maker",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "XPengが年次報告で、中国に自社工場を建てた外国EVメーカーの例としてTeslaを挙げている(2025年度、20-F)",
+          "text_en": "XPeng cites Tesla as an example of a foreign EV competitor that built a wholly-owned factory in China (FY2025, 20-F)",
+          "source": {
+            "label": "XPeng 20-F(2025年度)",
+            "label_en": "XPeng 20-F FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1810997/000119312526157849/d36361d20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "foreign EV competitors could build wholly-owned facilities in China without the need for a domestic joint venture partner. For example, Tesla has constructed the Tesla Giga Shanghai factory in Shanghai without a joint venture partner.",
+            "note": "リスク要因の中での記述です。",
+            "note_en": "Stated in a risk-factor context."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FFIE",
+      "ticker": "FFAI",
+      "name": "Faraday Future",
+      "sub": "EVメーカー",
+      "sub_en": "EV maker",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Faraday Futureが年次報告で、EVを提供する主要自動車メーカーの1社としてTeslaを挙げている(2025年度、10-K)",
+          "text_en": "Faraday Future lists Tesla among major automakers offering electric vehicles (FY2025, 10-K)",
+          "source": {
+            "label": "Faraday Future 10-K(2025年度)",
+            "label_en": "Faraday Future 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1805521/000162828026022509/ffie-20251231.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "Many major automobile manufacturers, such as Tesla, Porsche, Mercedes-Benz, Rolls-Royce, and Audi, currently offer electric vehicles."
+          }
+        }
+      ]
     }
   ],
   "far": [],

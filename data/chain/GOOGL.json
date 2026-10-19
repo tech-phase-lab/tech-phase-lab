@@ -548,6 +548,31 @@
           }
         }
       ]
+    },
+    {
+      "id": "CAR",
+      "ticker": "CAR",
+      "name": "Avis Budget Group",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Avisが、Waymo(Alphabet傘下)との自動運転の提携が6月1日にダラスで始まったと説明(2026年7月28日、決算発表)",
+          "text_en": "Avis states its autonomous vehicle partnership with Waymo (Alphabet subsidiary) went live in Dallas on June 1 (July 28, 2026, earnings release)",
+          "source": {
+            "label": "Avis Budget Q2 2026 earnings release(8-K)",
+            "label_en": "Avis Budget Q2 2026 earnings release (8-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000037/a03-pressreleasexq2f26.htm",
+            "level": "official",
+            "date": "2026-07-28",
+            "quote": "Avis’ autonomous vehicle partnership with Waymo went live in Dallas, TX on June 1st",
+            "note": "提携の相手はAlphabet傘下のWaymoです。",
+            "note_en": "The partnership is with Waymo, an Alphabet subsidiary."
+          }
+        }
+      ]
     }
   ],
   "far": [],

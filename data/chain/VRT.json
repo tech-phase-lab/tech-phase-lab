@@ -131,6 +131,20 @@
             "date": "2026-02-13",
             "quote": "Our partnership with NVIDIA supports the development of advanced power and thermal infrastructure aligned with next-generation AI and high-performance computing architectures"
           }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAが、800VDCのAIファクトリー電源構想のデータセンター電源システムの提携先の1社としてVertivを掲載(NVIDIA技術ブログ)",
+          "text_en": "NVIDIA lists Vertiv among data center power system partners for its 800 VDC AI factory power architecture (NVIDIA Technical Blog)",
+          "source": {
+            "label": "NVIDIA Technical Blog(800 VDC)",
+            "label_en": "NVIDIA Technical Blog (800 VDC)",
+            "url": "https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/",
+            "level": "official",
+            "quote": "Data center power systems: Eaton, Schneider Electric, Vertiv",
+            "note": "ページは後日(7月)更新されており、公開日は確認できませんでした。",
+            "note_en": "The page was updated later (July); the publication date was not captured."
+          }
         }
       ]
     },
