@@ -1602,3 +1602,14 @@ in either direction. Login/admin/inherit attributes must remain disabled. No
 production apply, keys, runtime flags, cron or reservation changes. See
 RESOLUTE-STORAGE-PERMISSIONS.md for exact scope and remaining object-credential/
 key-custody gates. NOLOGIN alone is not proof of a complete recovery write fence.
+
+## 2026-10-19 — Offline recovery-key escrow and workspace recovery
+
+Recovered codex/research-preview at d445d163 after prior scratch directories were
+removed by workspace maintenance. The uncommitted original operations log was
+not recovered; docs/RESOLUTE-LAUNCH-READINESS.md is explicitly a reconstruction.
+Added offline age escrow with decrypt-before-publish, independent integrity pins,
+strict schema validation and exclusive mode0600 recovery output. Real age
+synthetic acceptance passed; see RESOLUTE-KEY-ESCROW.md. No production key,
+storage custody, permissions, feature flags or services changed. Remote custody
+and non-delete writer permissions remain blockers before enabling saves.
