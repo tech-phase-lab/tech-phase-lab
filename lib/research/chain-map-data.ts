@@ -82,6 +82,7 @@ import c_gev from "../../data/chain/GEV.json" with { type: "json" };
 import c_gfs from "../../data/chain/GFS.json" with { type: "json" };
 import c_glw from "../../data/chain/GLW.json" with { type: "json" };
 import c_googl from "../../data/chain/GOOGL.json" with { type: "json" };
+import c_gtlb from "../../data/chain/GTLB.json" with { type: "json" };
 import c_himx from "../../data/chain/HIMX.json" with { type: "json" };
 import c_hpe from "../../data/chain/HPE.json" with { type: "json" };
 import c_hpq from "../../data/chain/HPQ.json" with { type: "json" };
@@ -317,6 +318,7 @@ const available: Record<string, ChainMapData> = {
   GFS: c_gfs as ChainMapData,
   GLW: c_glw as ChainMapData,
   GOOGL: c_googl as ChainMapData,
+  GTLB: c_gtlb as ChainMapData,
   HIMX: c_himx as ChainMapData,
   HPE: c_hpe as ChainMapData,
   HPQ: c_hpq as ChainMapData,
