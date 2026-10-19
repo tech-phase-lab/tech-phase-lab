@@ -41,8 +41,8 @@ The restore function is not a production database cutover tool.
 ## Outstanding activation gates (must not be inferred complete)
 
 - Apply application migrations 002–005 and 017 with reviewed scoped permissions.
-- Deploy backup code **with protection.py and protection_events.py**, plus Python cryptography; the historical standalone
-  function bundle must not deploy backup.py alone. Preserve daily/weekly schedules.
+- Restore service now runs the three-module protected bundle and cryptography (evidence below).
+  Backup/export packaging remains separate; never deploy backup.py without both sibling modules.
 - Verify actual encrypted export and isolated pg_restore using synthetic rows and
   source connections fenced. No production DB overwrite or email.
 - Online deletion/stop code is now prepared as described below. Production
@@ -128,3 +128,36 @@ warnings, Next build, compileall and diff checks passed. Runtime store tests use
 PGlite; Node-to-Python encryption compatibility uses real AES-GCM. The remote
 fixture used the migration018 event core before the dormant retry-role grant was
 added; the final role grant is covered by local SQL tests, not a production apply.
+
+
+## Production restore job packaging — 2026-10-19
+
+Existing restore service c0eec3c0-cdd2-47da-bd48-fef21e30934b now runs the tested
+backup.py, protection.py and protection_events.py from db418e7. Deployment
+1c8654a4-7e53-4b90-ad82-1161c3a727dd reached SUCCESS and emitted both
+RESOLUTE_PROTECTED_BUNDLE_READY and RESOLUTE_RESTORE_OK at
+2026-10-19T11:03:27.540Z. The bundle payload SHA256 is
+`aab5c9ca86efbf2bc1af5ca7cd6d25c783aee9a9cbc0499b41c4ae555bc3c151`.
+
+The restore-only launcher uses a gzip/base64 JSON mapping of exactly those three
+filenames, verifies its embedded SHA256 and compiles each module before execution
+in a temporary directory. The new variable RESOLUTE_PROTECTED_JOB_B64 carries
+this package; the original RESOLUTE_JOB_B64 is retained unchanged. The start
+command uses the new variable and installs python3-cryptography alongside existing
+python3/python3-boto3/age. The image uses the equivalent canonical
+`docker.io/library/postgres:18-bookworm` name. No volume or source DB credentials.
+
+Actual restore: 68989 encrypted bytes, probe rows2, Sandbox orders11/grants7/
+events8/audit32/alert_outbox7, live ledger all five counts0; checksum, decryption,
+pg_restore, content, primary-key and payment integrity checks passed in2.38s.
+Existing monitor heartbeat succeeded. data_protection.state=not_installed is the
+expected current result because the source has no plan/settings schema. This is
+NOT a production deletion/stop replay pass; synthetic replay evidence is above.
+
+Weekly restore cron0 0 * * 1 unchanged. Daily backup service, 7AM service and its
+reservation untouched; 7AM cron0 22 * * 0-4 and pinned693c170b read back unchanged.
+Production schemas/credentials/key custody/API flags/retry scheduling remain
+pending. Do not apply plan/settings schemas until an independently complete
+recovery manifest can be supplied; the new restore code will fail closed without it.
+GitHub Actions39238948979 passed both validation and PostgreSQL concurrency jobs
+for db418e7; both Vercel status checks also succeeded.

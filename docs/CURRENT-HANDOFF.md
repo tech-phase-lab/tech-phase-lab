@@ -1579,3 +1579,15 @@ restore passed with synthetic data (deployment594765aa). Details and remaining
 activation gates are in docs/RESOLUTE-RECOVERY-PROTECTION.md. Production schemas,
 writer credentials, API flags and retry scheduling remain disabled/unapplied.
 Existing 7AM job/reservation, payment activation, private RIZEL text and UI untouched.
+
+
+## 2026-10-19 — Protected restore job installed
+
+Restore service now runs all three tested protection modules plus cryptography;
+deployment1c8654a4 emitted bundle identity and actual RESOLUTE_RESTORE_OK. Existing
+payment data restored correctly. data_protection=not_installed because production
+plan/settings migrations are still absent; never label storage as enabled.
+Schedules, morning service/reservation, API flags and original job bundle preserved.
+See RESOLUTE-RECOVERY-PROTECTION.md for exact evidence and remaining gates.
+db418e7 GitHub CI (both jobs) and both Vercel deployments passed. Integrated
+colleague ed2383f0 without modifying their chain-map changes.
