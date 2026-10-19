@@ -2,7 +2,8 @@
   "root": {
     "ticker": "PATH",
     "name": "ユーアイパス",
-    "name_en": "UiPath"
+    "name_en": "UiPath",
+    "cik": 1734722
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PLAB",
-    "name": "Photronics"
+    "name": "Photronics",
+    "cik": 810136
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "LRCX",
-    "name": "Lam Research"
+    "name": "Lam Research",
+    "cik": 707549
   },
   "rows": [
     {

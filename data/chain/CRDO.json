@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CRDO",
-    "name": "Credo Technology Group"
+    "name": "Credo Technology Group",
+    "cik": 1807794
   },
   "rows": [
     {

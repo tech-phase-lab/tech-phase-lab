@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SNAP",
-    "name": "Snap"
+    "name": "Snap",
+    "cik": 1564408
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ADBE",
-    "name": "Adobe"
+    "name": "Adobe",
+    "cik": 796343
   },
   "rows": [
     {

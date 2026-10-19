@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "COHU",
-    "name": "Cohu"
+    "name": "Cohu",
+    "cik": 21535
   },
   "rows": [
     {

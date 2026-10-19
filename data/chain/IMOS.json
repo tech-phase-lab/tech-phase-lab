@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "IMOS",
-    "name": "ChipMOS"
+    "name": "ChipMOS",
+    "cik": 1123134
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ACMR",
-    "name": "ACM Research"
+    "name": "ACM Research",
+    "cik": 1680062
   },
   "rows": [
     {

@@ -2,7 +2,8 @@
   "root": {
     "ticker": "LSCC",
     "name": "ラティスセミコンダクター",
-    "name_en": "Lattice Semiconductor"
+    "name_en": "Lattice Semiconductor",
+    "cik": 855658
   },
   "rows": [
     {

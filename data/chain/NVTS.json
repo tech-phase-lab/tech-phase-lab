@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NVTS",
-    "name": "Navitas Semiconductor"
+    "name": "Navitas Semiconductor",
+    "cik": 1821769
   },
   "rows": [
     {

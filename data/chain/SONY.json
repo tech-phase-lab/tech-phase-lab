@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SONY",
-    "name": "Sony Group"
+    "name": "Sony Group",
+    "cik": 313838
   },
   "rows": [
     {

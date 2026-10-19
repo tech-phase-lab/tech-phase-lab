@@ -2,7 +2,8 @@
   "root": {
     "ticker": "STM",
     "name": "STマイクロエレクトロニクス",
-    "name_en": "STMicroelectronics"
+    "name_en": "STMicroelectronics",
+    "cik": 932787
   },
   "rows": [
     {

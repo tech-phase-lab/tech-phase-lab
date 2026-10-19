@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "S",
-    "name": "SentinelOne"
+    "name": "SentinelOne",
+    "cik": 1583708
   },
   "rows": [
     {

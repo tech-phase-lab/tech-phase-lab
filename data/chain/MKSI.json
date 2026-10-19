@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MKSI",
-    "name": "MKS Inc."
+    "name": "MKS Inc.",
+    "cik": 1049502
   },
   "rows": [
     {

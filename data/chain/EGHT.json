@@ -2,7 +2,8 @@
   "root": {
     "ticker": "EGHT",
     "name": "エイトバイエイト",
-    "name_en": "8x8"
+    "name_en": "8x8",
+    "cik": 1023731
   },
   "rows": [
     {

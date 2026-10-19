@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MELI",
-    "name": "MercadoLibre"
+    "name": "MercadoLibre",
+    "cik": 1099590
   },
   "rows": [
     {

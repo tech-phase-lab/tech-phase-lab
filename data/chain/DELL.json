@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DELL",
-    "name": "Dell Technologies"
+    "name": "Dell Technologies",
+    "cik": 1571996
   },
   "rows": [
     {

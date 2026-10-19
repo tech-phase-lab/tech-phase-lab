@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AMKR",
-    "name": "Amkor Technology"
+    "name": "Amkor Technology",
+    "cik": 1047127
   },
   "rows": [
     {

@@ -2,7 +2,8 @@
   "root": {
     "ticker": "QTWO",
     "name": "Q2ホールディングス",
-    "name_en": "Q2 Holdings"
+    "name_en": "Q2 Holdings",
+    "cik": 1410384
   },
   "rows": [
     {

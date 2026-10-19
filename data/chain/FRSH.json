@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "FRSH",
-    "name": "Freshworks"
+    "name": "Freshworks",
+    "cik": 1544522
   },
   "rows": [
     {

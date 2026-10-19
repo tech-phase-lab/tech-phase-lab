@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ADP",
-    "name": "Automatic Data Processing"
+    "name": "Automatic Data Processing",
+    "cik": 8670
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CHKP",
-    "name": "Check Point Software Technologies"
+    "name": "Check Point Software Technologies",
+    "cik": 1015922
   },
   "rows": [
     {

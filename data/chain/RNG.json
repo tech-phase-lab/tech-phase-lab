@@ -2,7 +2,8 @@
   "root": {
     "ticker": "RNG",
     "name": "リングセントラル",
-    "name_en": "RingCentral"
+    "name_en": "RingCentral",
+    "cik": 1384905
   },
   "rows": [
     {

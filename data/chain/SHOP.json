@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SHOP",
-    "name": "Shopify"
+    "name": "Shopify",
+    "cik": 1594805
   },
   "rows": [
     {

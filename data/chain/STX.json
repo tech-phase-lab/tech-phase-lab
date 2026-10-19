@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "STX",
-    "name": "Seagate"
+    "name": "Seagate",
+    "cik": 1137789
   },
   "rows": [
     {

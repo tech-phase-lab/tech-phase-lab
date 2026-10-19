@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AMD",
-    "name": "AMD"
+    "name": "AMD",
+    "cik": 2488
   },
   "rows": [
     {

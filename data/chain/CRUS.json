@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CRUS",
-    "name": "Cirrus Logic"
+    "name": "Cirrus Logic",
+    "cik": 772406
   },
   "rows": [
     {

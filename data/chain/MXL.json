@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MXL",
-    "name": "MaxLinear"
+    "name": "MaxLinear",
+    "cik": 1288469
   },
   "rows": [
     {

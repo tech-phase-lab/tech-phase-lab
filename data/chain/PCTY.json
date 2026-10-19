@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PCTY",
-    "name": "Paylocity"
+    "name": "Paylocity",
+    "cik": 1591698
   },
   "rows": [
     {

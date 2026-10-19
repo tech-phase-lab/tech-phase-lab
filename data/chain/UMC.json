@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "UMC",
-    "name": "United Microelectronics"
+    "name": "United Microelectronics",
+    "cik": 1033767
   },
   "rows": [
     {

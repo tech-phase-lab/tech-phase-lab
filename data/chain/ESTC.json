@@ -2,7 +2,8 @@
   "root": {
     "ticker": "ESTC",
     "name": "エラスティック",
-    "name_en": "Elastic"
+    "name_en": "Elastic",
+    "cik": 1707753
   },
   "rows": [
     {

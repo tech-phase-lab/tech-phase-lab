@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "LITE",
-    "name": "Lumentum"
+    "name": "Lumentum",
+    "cik": 1633978
   },
   "rows": [
     {

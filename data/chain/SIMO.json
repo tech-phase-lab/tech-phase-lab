@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SIMO",
-    "name": "Silicon Motion"
+    "name": "Silicon Motion",
+    "cik": 1329394
   },
   "rows": [
     {

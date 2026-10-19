@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NVDA",
-    "name": "NVIDIA"
+    "name": "NVIDIA",
+    "cik": 1045810
   },
   "rows": [
     {

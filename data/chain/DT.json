@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DT",
-    "name": "Dynatrace"
+    "name": "Dynatrace",
+    "cik": 1773383
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "BKSY",
-    "name": "BlackSky"
+    "name": "BlackSky",
+    "cik": 1753539
   },
   "rows": [
     {

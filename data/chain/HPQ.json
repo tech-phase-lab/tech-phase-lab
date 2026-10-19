@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "HPQ",
-    "name": "HP"
+    "name": "HP",
+    "cik": 47217
   },
   "rows": [
     {

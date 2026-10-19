@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "RDDT",
-    "name": "Reddit"
+    "name": "Reddit",
+    "cik": 1713445
   },
   "rows": [
     {

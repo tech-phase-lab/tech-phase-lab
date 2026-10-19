@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "JD",
-    "name": "JD.com"
+    "name": "JD.com",
+    "cik": 1549802
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ASTS",
-    "name": "AST SpaceMobile"
+    "name": "AST SpaceMobile",
+    "cik": 1780312
   },
   "rows": [
     {

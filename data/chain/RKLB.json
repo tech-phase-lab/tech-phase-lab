@@ -2,7 +2,8 @@
   "root": {
     "ticker": "RKLB",
     "name": "ロケット・ラボ",
-    "name_en": "Rocket Lab"
+    "name_en": "Rocket Lab",
+    "cik": 1819994
   },
   "rows": [
     {

@@ -2,7 +2,8 @@
   "root": {
     "ticker": "CDNS",
     "name": "ケイデンス",
-    "name_en": "Cadence Design Systems"
+    "name_en": "Cadence Design Systems",
+    "cik": 813672
   },
   "rows": [
     {

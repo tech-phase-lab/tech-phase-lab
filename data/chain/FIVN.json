@@ -2,7 +2,8 @@
   "root": {
     "ticker": "FIVN",
     "name": "ファイブナイン",
-    "name_en": "Five9"
+    "name_en": "Five9",
+    "cik": 1288847
   },
   "rows": [
     {

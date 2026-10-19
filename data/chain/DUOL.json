@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DUOL",
-    "name": "Duolingo"
+    "name": "Duolingo",
+    "cik": 1562088
   },
   "rows": [
     {

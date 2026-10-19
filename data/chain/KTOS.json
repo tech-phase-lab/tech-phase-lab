@@ -2,7 +2,8 @@
   "root": {
     "ticker": "KTOS",
     "name": "クラトス・ディフェンス",
-    "name_en": "Kratos Defense"
+    "name_en": "Kratos Defense",
+    "cik": 1069258
   },
   "rows": [
     {

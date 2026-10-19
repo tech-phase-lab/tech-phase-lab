@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "IONQ",
-    "name": "IonQ"
+    "name": "IonQ",
+    "cik": 1824920
   },
   "rows": [
     {

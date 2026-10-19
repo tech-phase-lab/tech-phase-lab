@@ -2,7 +2,8 @@
   "root": {
     "ticker": "NTNX",
     "name": "ニュータニックス",
-    "name_en": "Nutanix"
+    "name_en": "Nutanix",
+    "cik": 1618732
   },
   "rows": [
     {

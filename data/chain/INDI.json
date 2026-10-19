@@ -2,7 +2,8 @@
   "root": {
     "ticker": "INDI",
     "name": "インディ・セミコンダクター",
-    "name_en": "indie Semiconductor"
+    "name_en": "indie Semiconductor",
+    "cik": 1841925
   },
   "rows": [
     {

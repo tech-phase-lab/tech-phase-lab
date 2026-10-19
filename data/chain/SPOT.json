@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SPOT",
-    "name": "Spotify Technology"
+    "name": "Spotify Technology",
+    "cik": 1639920
   },
   "rows": [
     {

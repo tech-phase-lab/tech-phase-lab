@@ -2,7 +2,8 @@
   "root": {
     "ticker": "NVMI",
     "name": "ノバ",
-    "name_en": "Nova"
+    "name_en": "Nova",
+    "cik": 1109345
   },
   "rows": [
     {

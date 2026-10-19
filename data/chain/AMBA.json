@@ -2,7 +2,8 @@
   "root": {
     "ticker": "AMBA",
     "name": "アンバレラ",
-    "name_en": "Ambarella"
+    "name_en": "Ambarella",
+    "cik": 1280263
   },
   "rows": [
     {

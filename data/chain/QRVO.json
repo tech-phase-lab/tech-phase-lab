@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "QRVO",
-    "name": "Qorvo"
+    "name": "Qorvo",
+    "cik": 1604778
   },
   "rows": [
     {

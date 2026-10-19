@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "BHE",
-    "name": "Benchmark Electronics"
+    "name": "Benchmark Electronics",
+    "cik": 863436
   },
   "rows": [
     {

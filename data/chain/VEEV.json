@@ -2,7 +2,8 @@
   "root": {
     "ticker": "VEEV",
     "name": "ヴィーヴァ・システムズ",
-    "name_en": "Veeva Systems"
+    "name_en": "Veeva Systems",
+    "cik": 1393052
   },
   "rows": [
     {

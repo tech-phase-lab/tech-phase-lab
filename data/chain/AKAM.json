@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AKAM",
-    "name": "Akamai"
+    "name": "Akamai",
+    "cik": 1086222
   },
   "rows": [
     {

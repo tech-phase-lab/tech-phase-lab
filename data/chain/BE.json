@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "BE",
-    "name": "Bloom Energy"
+    "name": "Bloom Energy",
+    "cik": 1664703
   },
   "rows": [
     {

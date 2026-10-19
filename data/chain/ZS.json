@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ZS",
-    "name": "Zscaler"
+    "name": "Zscaler",
+    "cik": 1713683
   },
   "rows": [
     {

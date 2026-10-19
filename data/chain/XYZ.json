@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "XYZ",
-    "name": "Block"
+    "name": "Block",
+    "cik": 1512673
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ASX",
-    "name": "ASE Technology Holding"
+    "name": "ASE Technology Holding",
+    "cik": 1122411
   },
   "rows": [
     {

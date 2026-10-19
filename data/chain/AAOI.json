@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AAOI",
-    "name": "Applied Optoelectronics"
+    "name": "Applied Optoelectronics",
+    "cik": 1158114
   },
   "rows": [
     {

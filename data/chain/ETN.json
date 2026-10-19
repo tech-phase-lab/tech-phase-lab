@@ -2,7 +2,8 @@
   "root": {
     "ticker": "ETN",
     "name": "イートン",
-    "name_en": "Eaton"
+    "name_en": "Eaton",
+    "cik": 1551182
   },
   "rows": [
     {

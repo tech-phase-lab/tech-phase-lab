@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "APP",
-    "name": "AppLovin"
+    "name": "AppLovin",
+    "cik": 1751008
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TXN",
-    "name": "Texas Instruments"
+    "name": "Texas Instruments",
+    "cik": 97476
   },
   "rows": [
     {

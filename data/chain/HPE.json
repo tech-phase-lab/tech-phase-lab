@@ -2,7 +2,8 @@
   "root": {
     "ticker": "HPE",
     "name": "ヒューレット・パッカード・エンタープライズ",
-    "name_en": "Hewlett Packard Enterprise"
+    "name_en": "Hewlett Packard Enterprise",
+    "cik": 1645590
   },
   "rows": [
     {

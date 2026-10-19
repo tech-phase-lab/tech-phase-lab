@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "BSY",
-    "name": "Bentley Systems"
+    "name": "Bentley Systems",
+    "cik": 1031308
   },
   "rows": [
     {

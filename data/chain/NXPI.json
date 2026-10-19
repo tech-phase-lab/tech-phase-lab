@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NXPI",
-    "name": "NXP Semiconductors"
+    "name": "NXP Semiconductors",
+    "cik": 1413447
   },
   "rows": [
     {

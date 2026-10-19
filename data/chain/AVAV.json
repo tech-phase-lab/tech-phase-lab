@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AVAV",
-    "name": "AeroVironment"
+    "name": "AeroVironment",
+    "cik": 1368622
   },
   "rows": [
     {

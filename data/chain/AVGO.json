@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AVGO",
-    "name": "Broadcom"
+    "name": "Broadcom",
+    "cik": 1730168
   },
   "rows": [
     {

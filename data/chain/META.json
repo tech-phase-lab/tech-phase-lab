@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "META",
-    "name": "Meta Platforms"
+    "name": "Meta Platforms",
+    "cik": 1326801
   },
   "rows": [
     {

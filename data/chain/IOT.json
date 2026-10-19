@@ -2,7 +2,8 @@
   "root": {
     "ticker": "IOT",
     "name": "サムサラ",
-    "name_en": "Samsara"
+    "name_en": "Samsara",
+    "cik": 1642896
   },
   "rows": [
     {

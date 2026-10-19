@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PL",
-    "name": "Planet Labs"
+    "name": "Planet Labs",
+    "cik": 1836833
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ASML",
-    "name": "ASML"
+    "name": "ASML",
+    "cik": 937966
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "WDAY",
-    "name": "Workday"
+    "name": "Workday",
+    "cik": 1327811
   },
   "rows": [
     {

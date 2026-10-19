@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CAMT",
-    "name": "Camtek"
+    "name": "Camtek",
+    "cik": 1109138
   },
   "rows": [
     {

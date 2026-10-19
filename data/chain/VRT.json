@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "VRT",
-    "name": "Vertiv"
+    "name": "Vertiv",
+    "cik": 1674101
   },
   "rows": [
     {

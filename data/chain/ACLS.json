@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ACLS",
-    "name": "Axcelis Technologies"
+    "name": "Axcelis Technologies",
+    "cik": 1113232
   },
   "rows": [
     {

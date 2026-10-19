@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "BOX",
-    "name": "Box"
+    "name": "Box",
+    "cik": 1372612
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ORCL",
-    "name": "Oracle"
+    "name": "Oracle",
+    "cik": 1341439
   },
   "rows": [
     {

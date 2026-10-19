@@ -2,7 +2,8 @@
   "root": {
     "ticker": "JBL",
     "name": "ジェイビル",
-    "name_en": "Jabil"
+    "name_en": "Jabil",
+    "cik": 898293
   },
   "rows": [
     {

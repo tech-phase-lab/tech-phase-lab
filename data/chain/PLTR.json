@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PLTR",
-    "name": "Palantir"
+    "name": "Palantir",
+    "cik": 1321655
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ON",
-    "name": "onsemi"
+    "name": "onsemi",
+    "cik": 1097864
   },
   "rows": [
     {

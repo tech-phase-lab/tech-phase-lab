@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PTC",
-    "name": "PTC"
+    "name": "PTC",
+    "cik": 857005
   },
   "rows": [
     {

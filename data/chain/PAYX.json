@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PAYX",
-    "name": "Paychex"
+    "name": "Paychex",
+    "cik": 723531
   },
   "rows": [
     {

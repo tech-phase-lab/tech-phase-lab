@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ARW",
-    "name": "Arrow Electronics"
+    "name": "Arrow Electronics",
+    "cik": 7536
   },
   "rows": [
     {

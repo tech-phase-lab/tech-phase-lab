@@ -2,7 +2,8 @@
   "root": {
     "ticker": "VIAV",
     "name": "ヴィアヴィ・ソリューションズ",
-    "name_en": "Viavi Solutions"
+    "name_en": "Viavi Solutions",
+    "cik": 912093
   },
   "rows": [
     {

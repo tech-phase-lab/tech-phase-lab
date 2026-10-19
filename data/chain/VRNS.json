@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "VRNS",
-    "name": "Varonis"
+    "name": "Varonis",
+    "cik": 1361113
   },
   "rows": [
     {

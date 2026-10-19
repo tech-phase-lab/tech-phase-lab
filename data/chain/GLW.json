@@ -2,7 +2,8 @@
   "root": {
     "ticker": "GLW",
     "name": "コーニング",
-    "name_en": "Corning"
+    "name_en": "Corning",
+    "cik": 24741
   },
   "rows": [
     {

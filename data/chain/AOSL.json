@@ -2,7 +2,8 @@
   "root": {
     "ticker": "AOSL",
     "name": "アルファ・アンド・オメガ・セミコンダクター",
-    "name_en": "Alpha and Omega Semiconductor"
+    "name_en": "Alpha and Omega Semiconductor",
+    "cik": 1387467
   },
   "rows": [
     {

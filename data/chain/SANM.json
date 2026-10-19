@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SANM",
-    "name": "Sanmina"
+    "name": "Sanmina",
+    "cik": 897723
   },
   "rows": [
     {

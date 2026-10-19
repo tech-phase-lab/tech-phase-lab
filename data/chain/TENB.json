@@ -2,7 +2,8 @@
   "root": {
     "ticker": "TENB",
     "name": "テナブル",
-    "name_en": "Tenable"
+    "name_en": "Tenable",
+    "cik": 1660280
   },
   "rows": [
     {

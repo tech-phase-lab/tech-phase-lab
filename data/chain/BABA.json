@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "BABA",
-    "name": "Alibaba"
+    "name": "Alibaba",
+    "cik": 1577552
   },
   "rows": [
     {

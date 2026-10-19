@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "APPN",
-    "name": "Appian"
+    "name": "Appian",
+    "cik": 1441683
   },
   "rows": [
     {

@@ -2,7 +2,8 @@
   "root": {
     "ticker": "ALKT",
     "name": "アルカミ・テクノロジー",
-    "name_en": "Alkami Technology"
+    "name_en": "Alkami Technology",
+    "cik": 1529274
   },
   "rows": [
     {
