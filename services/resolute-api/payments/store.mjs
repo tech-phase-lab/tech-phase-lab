@@ -18,7 +18,13 @@ export function paymentStore(pool) {
     if (alert && rows.length) await db.query(`INSERT INTO ${S}.alert_outbox(audit_id) VALUES ($1)`, [rows[0].id]);
   }
   async function rights(db, user, now) {
-    const { rows } = await db.query(`SELECT kind, starts_at, expires_at FROM ${S}.grants WHERE user_id=$1 AND state='active'`, [user]);
+    // Purchase eligibility must require the same verified ledger relationship as access.
+    // An active grant alone cannot override a held/refunded or mismatched order.
+    const { rows } = await db.query(`SELECT g.kind, g.starts_at, g.expires_at
+      FROM ${S}.grants g JOIN ${S}.orders o ON o.id=g.order_id
+      WHERE g.user_id=$1 AND o.user_id=$1 AND g.state='active' AND o.state='paid'
+        AND o.quote->>'product'='resolute_v1' AND o.quote->>'kind'=g.kind
+        AND o.capture_id IS NOT NULL AND o.paid_at IS NOT NULL`, [user]);
     return { use: rows.some(r => r.kind === 'initial' && Date.parse(r.starts_at) <= now),
       until: rows.reduce((max,r) => Math.max(max, Date.parse(r.expires_at)), 0) };
   }
