@@ -6,8 +6,15 @@ import styles from "./stock-chain-map.module.css";
 
 type Line = { d: string; tone: ChainTone; on: boolean };
 const CARD = "chain-card-";
-/** From this many rivals on, the rival group is drawn as a tag cloud. */
-const RIVAL_CLOUD = 6;
+/** From this many rivals on, only the main rivals show; the rest open behind a ＋. */
+const RIVAL_FOLD = 6;
+/** The main rivals first, topped up to five from the rest of the group. */
+function foldRivals(members: ChainCompany[], main: string[]) {
+  const first = members.filter(company => main.includes(company.id));
+  const rest = members.filter(company => !main.includes(company.id));
+  const shown = [...first, ...rest.slice(0, Math.max(0, 5 - first.length))];
+  return { shown, more: members.filter(company => !shown.includes(company)) };
+}
 
 function Source({ source, lang }: { source: ChainSource; lang: "ja" | "en" }) {
   const ja = lang === "ja";
@@ -41,7 +48,6 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
   const ja = lang === "ja";
   const t = (jaText: string, enText: string) => ja ? jaText : enText;
   const [sel, setSel] = useState<string | null>(null);
-  const [openRival, setOpenRival] = useState<string | null>(null);
   const [lines, setLines] = useState<Line[]>([]);
   const [box, setBox] = useState({ width: 0, height: 0 });
   const map = useRef<HTMLDivElement>(null);
@@ -151,13 +157,18 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
           const members = chainGroup(data, kind);
           return members.length > 0 && <div className={styles.grp} data-tone={kind} key={kind}>
             <h4 className={styles.gh}><i />{chainText(kind, "group", lang)} <small>{ja ? `${members.length}社` : members.length}</small></h4>
-            {kind === "rival" && members.length >= RIVAL_CLOUD
-              // Many rivals read as a cloud of small tags, not a wall of cards; tapping one opens its source (owner, Oct 19).
-              ? <>
-                <div className={styles.cloud}>{members.map(company => <button type="button" key={company.id} id={CARD + company.id} className={styles.cl}
-                  aria-pressed={openRival === company.id} onClick={() => setOpenRival(openRival === company.id ? null : company.id)}><b>{company.ticker}</b><span>{company.name}</span></button>)}</div>
-                {openRival && byId.get(openRival) && <Card company={byId.get(openRival)!} lang={lang} anchor={false} />}
-              </>
+            {kind === "rival" && members.length >= RIVAL_FOLD
+              // The main rivals (the "who competes" row) stay as cards; the rest open behind a ＋ (owner, Oct 19).
+              ? (() => {
+                const { shown, more } = foldRivals(members, data.rivals);
+                return <>
+                  <div className={styles.items}>{shown.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
+                  <details className={styles.more}>
+                    <summary>{ja ? `＋ 残り${more.length}社の競合を開く` : `+ Show ${more.length} more competitors`}</summary>
+                    <div className={styles.items}>{more.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
+                  </details>
+                </>;
+              })()
               : <div className={styles.items}>{members.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>}
           </div>;
         })}
