@@ -162,3 +162,17 @@ checkout so one member's state is not retained for another.
 
 No live settings or keys have been enabled. Real member-to-PayPal live checkout
 and smartphone browser rendering remain unverified until explicitly recorded.
+
+## Minimal consumer view permissions (2026-10-19)
+
+Migration016 grants only schema USAGE and SELECT on entitlement_periods to the
+API reader, plan writer and notification-settings writer. The API reader must
+already exist. Missing plan/settings roles are created NOLOGIN with no credentials
+or application-table permissions. Existing administrative roles are rejected.
+The explicit provision-live-readers operator script verifies no raw payment-table
+or view-write permissions and exercises the view as each consumer before commit.
+Application startup performs no migration. Runtime source and live sales stay off.
+
+The notification-delivery worker is not included: no deployed scoped worker role
+has been identified. Its permissions and actual delivery remain separate work;
+these three consumer grants do not mean mail or market-data jobs are operational.
