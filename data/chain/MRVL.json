@@ -455,7 +455,8 @@
             "label_en": "Marvell 10-K (FY2026)",
             "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
             "level": "official",
-            "date": "2026-03-11"
+            "date": "2026-03-11",
+            "quote": "Companies that compete directly with our businesses include, but are not limited to, Advanced Micro Devices, Inc."
           }
         },
         {
@@ -631,7 +632,7 @@
         {
           "type": "rival",
           "text": "Marvellが年次報告で、直接競合する企業の1社としてアルチップ・テクノロジーズを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names アルチップ・テクノロジーズ among companies that compete directly with its businesses",
+          "text_en": "Marvell’s FY2026 10-K names Alchip Technologies among companies that compete directly with its businesses",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -900,7 +901,7 @@
         {
           "type": "rival",
           "text": "Marvellが年次報告で、直接競合する企業の1社として群聯電子(Phison)を挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names 群聯電子(Phison) among companies that compete directly with its businesses",
+          "text_en": "Marvell’s FY2026 10-K names Phison Electronics among companies that compete directly with its businesses",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -1015,7 +1016,7 @@
         {
           "type": "rival",
           "text": "Marvellが年次報告で、直接競合する企業の1社としてソシオネクストを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names ソシオネクスト among companies that compete directly with its businesses",
+          "text_en": "Marvell’s FY2026 10-K names Socionext among companies that compete directly with its businesses",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
