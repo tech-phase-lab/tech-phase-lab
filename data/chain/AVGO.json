@@ -1,0 +1,623 @@
+{
+  "root": {
+    "ticker": "AVGO",
+    "name": "Broadcom"
+  },
+  "rows": [
+    {
+      "ja": "供給元(製造・後工程)",
+      "en": "Suppliers (foundry & packaging)",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・事業の売買・終了した契約",
+      "en": "Partnerships, deals & ended agreements"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NVDA",
+    "AMD",
+    "INTC",
+    "MRVL",
+    "QCOM"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Broadcomは前工程の製造の大半を外部ファウンドリーに委託し、TSMCが委託先製造会社の製造ウエハーの約95%を担った(2025年度、10-K)",
+          "text_en": "Broadcom outsources most front-end wafer manufacturing to external foundries; TSMC made about 95% of CM-produced wafers in FY2025 (10-K)",
+          "source": {
+            "label": "Broadcom 10-K(2025年度)",
+            "label_en": "Broadcom 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "The majority of our front-end wafer manufacturing operations is outsourced to external foundries, including Taiwan Semiconductor Manufacturing Company Limited (“TSMC”)."
+          }
+        },
+        {
+          "type": "up",
+          "text": "2026年度の第3四半期までの累計で、委託先製造会社の製造ウエハーの約95%をTSMCが担った(2026年9月10日、10-Q)",
+          "text_en": "TSMC produced about 95% of wafers made by Broadcom’s contract manufacturers in the first three fiscal quarters of FY2026 (September 10, 2026, 10-Q)",
+          "source": {
+            "label": "Broadcom 10-Q(Q3 2026年度)",
+            "label_en": "Broadcom 10-Q (Q3 FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+            "level": "official",
+            "date": "2026-09-10",
+            "quote": "During the three fiscal quarters ended August 2, 2026, approximately 95% of the wafers manufactured by our CMs were produced by Taiwan Semiconductor Manufacturing Company Limited (“TSMC”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASX",
+      "ticker": "ASX",
+      "name": "日月光(ASE)",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "組立・テストを担う外部の製造委託先の1社としてASEを挙げている(2025年度、10-K)",
+          "text_en": "Names ASE among its third-party contract manufacturers for assembly and test (FY2025 10-K)",
+          "source": {
+            "label": "Broadcom 10-K(2025年度)",
+            "label_en": "Broadcom 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "Amkor Technology",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "組立・テストを担う外部の製造委託先の1社としてAmkorを挙げている(2025年度、10-K)",
+          "text_en": "Names Amkor among its third-party contract manufacturers for assembly and test (FY2025 10-K)",
+          "source": {
+            "label": "Broadcom 10-K(2025年度)",
+            "label_en": "Broadcom 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Googleとの長期契約で、Googleの将来世代のカスタムTPUを開発・供給し、次世代AIラック向けにネットワーク等の部品を2031年まで供給する供給保証契約も結んだ(2026年4月6日、8-K)",
+          "text_en": "Entered a Long Term Agreement to develop and supply custom TPUs for Google, plus a Supply Assurance Agreement for networking and other components for Google’s next-gen AI racks through up to 2031 (April 6, 2026, 8-K)",
+          "source": {
+            "label": "Broadcom 8-K(2026年4月6日)",
+            "label_en": "Broadcom 8-K (Apr 6, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526144028/d87999d8k.htm",
+            "level": "official",
+            "date": "2026-04-06",
+            "quote": "Broadcom Inc. (“Broadcom”) and Google LLC (“Google”) have entered into a Long Term Agreement for Broadcom to develop and supply custom Tensor Processing Units (“TPUs”) for Google’s future generations of TPUs and a Supply Assurance Agreement for Broadcom to supply networking and other components to be used in Google’s next-generation AI racks through up to 2031."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・PC",
+      "sub_en": "Devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Appleと技術協力を2031年まで拡大し、Apple製品の複数世代向けカスタムASICを開発・供給する長期契約を結んだ(2026年7月6日、8-K)",
+          "text_en": "Agreed with Apple to expand their technology collaboration through 2031, with long-term agreements to develop and supply custom ASIC silicon for multiple generations of Apple products (July 6, 2026, 8-K)",
+          "source": {
+            "label": "Broadcom 8-K(2026年7月6日)",
+            "label_en": "Broadcom 8-K (Jul 6, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526295589/d84378d8k.htm",
+            "level": "official",
+            "date": "2026-07-06",
+            "quote": "Broadcom Inc. (“Broadcom”) and Apple Inc. (“Apple”) have agreed to expand their long-standing technology collaboration through 2031 by entering into new multi-year long-term agreements for Broadcom to develop and supply a range of custom ASIC silicon products for use in multiple generations of Apple products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "Arista Networks",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking gear",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Aristaが年次報告で、スイッチ用チップの主要な汎用シリコン供給元としてBroadcomに主に依存していると述べている(2025年度、10-K)",
+          "text_en": "Arista states it is primarily reliant on Broadcom as its predominant merchant silicon vendor for switching chips (FY2025 10-K)",
+          "source": {
+            "label": "Arista 10-K(2025年度)",
+            "label_en": "Arista 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In particular, we are primarily reliant upon our predominant merchant silicon vendor, Broadcom, for our switching chips.",
+            "note": "Arista側の記述です。AristaにとってBroadcomは供給元で、Broadcomから見れば顧客です。",
+            "note_en": "Stated from Arista’s side; for Broadcom, Arista is a customer."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AristaがBroadcomからVeloCloud事業を2025年6月30日に3億ドルの現金で取得(2025年度、Arista 10-K)",
+          "text_en": "Arista completed the acquisition of the VeloCloud business from Broadcom on June 30, 2025 for $300.0 million in cash (Arista FY2025 10-K)",
+          "source": {
+            "label": "Arista 10-K(2025年度)",
+            "label_en": "Arista 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "the VeloCloud business (\"VeloCloud\") from Broadcom",
+            "note": "BroadcomからAristaへの事業売却です。",
+            "note_en": "Divestiture by Broadcom to Arista."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "sub": "企業向けITインフラ",
+      "sub_en": "Enterprise IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "HPEが年次報告で、業界標準ASSPの単一供給元の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "HPE lists Broadcom among its single-source suppliers of industry-standard ASSPs (FY2025 10-K)",
+          "source": {
+            "label": "HPE 10-K(2025年度)",
+            "label_en": "HPE 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "In some instances, our single-source suppliers (e.g., Intel and AMD as suppliers of certain x86 processors Broadcom and others for industry standard Application-Specific Standard Product, or NVIDIA for Graphics Processing Units)",
+            "note": "HPE側の記述です。BroadcomはHPEの供給元で、Broadcomから見れば顧客です。",
+            "note_en": "HPE-side description; Broadcom is HPE’s supplier, so HPE is Broadcom’s customer."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "HPEが年次報告で、インフラ・クラウド管理ソフトの主な競合の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "HPE’s FY2025 10-K names Broadcom among its primary competitors in infrastructure and cloud management software",
+          "source": {
+            "label": "HPE 10-K(2025年度)",
+            "label_en": "HPE 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors are other infrastructure and cloud management software technology vendors, such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix, and Pure Storage"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Google、Anthropicと協力を拡大し、Anthropicは2027年から、Broadcom経由で約3.5ギガワットのTPU型AI計算能力を利用する(2026年4月6日、8-K)",
+          "text_en": "Expanded its collaboration with Google and Anthropic; beginning in 2027, Anthropic will access about 3.5 gigawatts of TPU-based AI compute through Broadcom (April 6, 2026, 8-K)",
+          "source": {
+            "label": "Broadcom 8-K(2026年4月6日)",
+            "label_en": "Broadcom 8-K (Apr 6, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526144028/d87999d8k.htm",
+            "level": "official",
+            "date": "2026-04-06",
+            "quote": "Separately, Broadcom, Google and Anthropic PBC (“Anthropic”) have expanded their current strategic collaboration under which Anthropic, beginning in 2027, will access through Broadcom approximately 3.5 gigawatts as part of the multiple gigawatts of next generation TPU-based AI compute capacity committed by Anthropic.",
+            "note": "Anthropicは未上場です。利用量はAnthropicの事業の成否に左右されます。",
+            "note_en": "Anthropic is not listed. Consumption depends on Anthropic’s continued commercial success."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STX",
+      "ticker": "STX",
+      "name": "Seagate Technology",
+      "sub": "ハードディスク",
+      "sub_en": "Hard drives",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Seagateが2024年4月23日付の資産購入契約で、SoCの設計・開発・製造に関する資産をBroadcom子会社に売却した(2026年度、Seagate 10-K)",
+          "text_en": "Seagate sold its SoC design, development and manufacture assets to a Broadcom subsidiary under an April 23, 2024 asset purchase agreement (Seagate FY2026 10-K)",
+          "source": {
+            "label": "Seagate 10-K(2026年度)",
+            "label_en": "Seagate 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "On April 23, 2024, the Company entered into an Asset Purchase Agreement with Avago Technologies International Sales Pte. Limited (“Purchaser”), a subsidiary of Broadcom Inc., and sold certain intellectual property, equipment and other assets related to the design, development and manufacture of its SoC products to Purchaser.",
+            "note": "2024年の過去の取引で、相手はBroadcomの子会社です。",
+            "note_en": "A historical (2024) transaction; the counterparty is a Broadcom subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Broadcomが2023年11月22日にVMwareを買収した後、DellはVMware単体製品を販売していた包括提携契約を終了した(2026年度、Dell 10-K)",
+          "text_en": "Dell terminated its Commercial Framework Agreement under which it distributed standalone VMware offerings after Broadcom acquired VMware on November 22, 2023 (Dell FY2026 10-K)",
+          "source": {
+            "label": "Dell 10-K(2026年度)",
+            "label_en": "Dell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "On November 22, 2023, VMware was acquired by Broadcom Inc. (“Broadcom”), and subsequently announced changes to its go-to-market approach for VMware offerings that impacted our commercial relationship with VMware.",
+            "note": "この契約は終了しています。Dellは以前に再販したVMware顧客の支援は続けています。",
+            "note_en": "This agreement has ended; Dell still supports previously resold VMware customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco Systems",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking gear",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ciscoが年次報告で、一部の製品・サービスでの競合としてBroadcomを挙げている(2026年度、10-K)",
+          "text_en": "Cisco’s FY2026 10-K lists Broadcom among its competitors for some products and services",
+          "source": {
+            "label": "Cisco 10-K(2026年度)",
+            "label_en": "Cisco 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+            "level": "official",
+            "date": "2026-09-02",
+            "quote": "Our competitors (in each case relative to only some of our products or services) include: Amazon Web Services LLC; Arista Networks, Inc.; Broadcom Inc.;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NVIDIAが年次報告で、ネットワーク製品の競合としてBroadcomを挙げている(2026年度、10-K)",
+          "text_en": "NVIDIA’s FY2026 10-K lists Broadcom among competitors in networking products",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "networking products consisting of switches, network adapters (including DPUs), and cable solutions (including optical modules) include such as AMD, Arista Networks, Broadcom, Cisco Systems, Inc.,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AMDが年次報告で、組み込み事業の競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "AMD’s FY2025 10-K lists Broadcom among competitors in its Embedded segment",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "and from ASSP vendors such as Broadcom Corporation, Marvell Technology Group, Ltd., Analog Devices,",
+            "note": "旧社名の「Broadcom Corporation」で記載されています。",
+            "note_en": "Uses the legacy name “Broadcom Corporation”."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Intelが年次報告で、カスタムASIC開発市場でBroadcomと競合すると述べている(2025年度、10-K)",
+          "text_en": "Intel’s FY2025 10-K states it competes with Broadcom in the custom ASIC development market",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "We also compete with Broadcom in the custom ASICs development market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell Technology",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvellが年次報告で、自社の事業と直接競合する企業の1社としてBroadcomを挙げている(2026年度、10-K)",
+          "text_en": "Marvell’s FY2026 10-K lists Broadcom among companies that compete directly with its businesses",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Broadcom Inc. (“Broadcom”), Cisco Systems, Inc. (“Cisco”),"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "スマホ向け半導体",
+      "sub_en": "Mobile chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qualcommが年次報告で、無線接続製品の競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "Qualcomm’s FY2025 10-K lists Broadcom as a competitor in wireless connectivity products",
+          "source": {
+            "label": "Qualcomm 10-K(2025年度)",
+            "label_en": "Qualcomm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11-05",
+            "quote": "Examples (some of which are strategic partners of ours in other areas) include Broadcom, HiSilicon, MediaTek,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALAB",
+      "ticker": "ALAB",
+      "name": "Astera Labs",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Astera Labsが年次報告で、主な競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "Astera Labs’ FY2025 10-K lists Broadcom as a principal competitor",
+          "source": {
+            "label": "Astera Labs 10-K(2025年度)",
+            "label_en": "Astera Labs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our principal competitors include Broadcom, Inc., Credo Technology Group Holding Ltd., Marvell Technology, Inc.,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRDO",
+      "ticker": "CRDO",
+      "name": "Credo Technology",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Credoが年次報告で、主な競合としてBroadcomを挙げている(2026年度、10-K)",
+          "text_en": "Credo’s FY2026 10-K lists Broadcom as a principal competitor",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Our principal competitors with respect to our products include Broadcom Ltd. (Broadcom), 14 Marvell Technology, Inc. (Marvell) and Astera Labs, Inc. (Astera)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "Ciena",
+      "sub": "光ネットワーク",
+      "sub_en": "Optical networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cienaが年次報告で、データセンター事業への拡大に伴いBroadcomとも競合する見込みだと述べている(2025年度、10-K)",
+          "text_en": "Ciena’s FY2025 10-K expects to compete with Broadcom as it expands into the data center",
+          "source": {
+            "label": "Ciena 10-K(2025年度)",
+            "label_en": "Ciena 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "we will begin to compete with additional competitors, including Marvell Technology Group, Credo Technology Group, and Broadcom.",
+            "note": "今後競合する見込み、という将来の記載です。",
+            "note_en": "Forward-looking: it expects to begin competing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "MACOM Technology",
+      "sub": "高周波・光半導体",
+      "sub_en": "RF & optical chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MACOMが年次報告で、主な競合の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "MACOM’s FY2025 10-K lists Broadcom among its primary competitors",
+          "source": {
+            "label": "MACOM 10-K(2025年度)",
+            "label_en": "MACOM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "We primarily compete with Analog Devices, Inc. (“ADI”), Broadcom Inc. (“Broadcom”), Credo Technology Group Holding Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "MaxLinear",
+      "sub": "通信半導体",
+      "sub_en": "Comms chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MaxLinearが年次報告で、主な汎用半導体の競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "MaxLinear’s FY2025 10-K lists Broadcom as a primary merchant semiconductor competitor",
+          "source": {
+            "label": "MaxLinear 10-K(2025年度)",
+            "label_en": "MaxLinear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom Inc., Qualcomm Incorporated,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "Skyworks Solutions",
+      "sub": "高周波半導体",
+      "sub_en": "RF chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Skyworksが年次報告で、競合の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text_en": "Skyworks’ FY2025 10-K lists Broadcom among its competitors",
+          "source": {
+            "label": "Skyworks 10-K(2025年度)",
+            "label_en": "Skyworks 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our competitors include Analog Devices, Broadcom, Cirrus Logic,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QRVO",
+      "ticker": "QRVO",
+      "name": "Qorvo",
+      "sub": "高周波半導体",
+      "sub_en": "RF chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qorvoが年次報告で、CSG事業(ACG事業も同様)は主にBroadcomと競合すると述べている(2026年度、10-K)",
+          "text_en": "Qorvo’s FY2026 10-K states its CSG segment competes primarily with Broadcom (and its ACG segment likewise)",
+          "source": {
+            "label": "Qorvo 10-K(2026年度)",
+            "label_en": "Qorvo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "CSG competes primarily with Broadcom Inc.; Murata Manufacturing Co., Ltd.;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
