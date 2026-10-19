@@ -1,0 +1,358 @@
+{
+  "root": {
+    "ticker": "AMAT",
+    "name": "Applied Materials"
+  },
+  "rows": [
+    {
+      "ja": "供給元(装置部品)",
+      "en": "Suppliers (equipment subsystems)",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "出資・提携",
+      "en": "Investments & partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LRCX",
+    "KLAC",
+    "ASML",
+    "ACLS"
+  ],
+  "companies": [
+    {
+      "id": "UCTT",
+      "ticker": "UCTT",
+      "name": "Ultra Clean Holdings",
+      "sub": "半導体装置の部品",
+      "sub_en": "Equipment subsystems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ultra Cleanが年次報告で、売上の10%超を占める2大顧客の1社としてApplied Materialsを挙げている(2023〜2025年度、10-K)",
+          "text_en": "Ultra Clean names Applied Materials as one of its two largest customers (over 10% of revenue each year, FY2023–FY2025, 10-K)",
+          "source": {
+            "label": "Ultra Clean Holdings 10-K(2025年度)",
+            "label_en": "Ultra Clean Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our two largest revenue customers in fiscal years 2025, 2024 and 2023 were Applied Materials, Inc. and Lam Research Corporation, each of which accounted for more than 10% of our total revenues in those three years.",
+            "note": "供給元(UCT)側の開示で、Applied自身の書類には名前が出ていません。",
+            "note_en": "Disclosed by the supplier (UCT); Applied’s own filings do not name it."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Applied MaterialsはUltra Cleanの2025年度売上の21.7%を占めた(10-K)",
+          "text_en": "Applied Materials accounted for 21.7% of Ultra Clean’s FY2025 revenue (10-K)",
+          "source": {
+            "label": "Ultra Clean Holdings 10-K(2025年度)",
+            "label_en": "Ultra Clean Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Lam Research Corporation 37.0 % 31.9 % 34.0 % Applied Materials, Inc. 21.7 22.6 23.4",
+            "note": "供給元(UCT)側の開示です。",
+            "note_en": "Disclosed by the supplier (UCT)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICHR",
+      "ticker": "ICHR",
+      "name": "Ichor Holdings",
+      "sub": "半導体装置の部品",
+      "sub_en": "Equipment subsystems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ichorが年次報告で、2025年の売上が最大の顧客の1社としてApplied Materialsを挙げている(2025年度、10-K)",
+          "text_en": "Ichor lists Applied Materials among its largest customers by sales in 2025 (FY2025 10-K)",
+          "source": {
+            "label": "Ichor Holdings 10-K(2025年度)",
+            "label_en": "Ichor Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/ichr-20251226.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have long standing relationships with top tier OEM customers, including Lam Research, Applied Materials, and ASML which were our largest customers by sales in 2025.",
+            "note": "供給元(Ichor)側の開示です。",
+            "note_en": "Disclosed by the supplier (Ichor)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATOM",
+      "ticker": "ATOM",
+      "name": "Atomera",
+      "sub": "半導体材料技術",
+      "sub_en": "Semiconductor materials tech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AtomeraはテンピのApplied MaterialsのCenturaエピタキシャル装置を、Applied Materialsからリースしている(2025年度、10-K)",
+          "text_en": "Atomera leases an Applied Materials Centura epitaxial reactor from Applied Materials, located at its Tempe facility (FY2025 10-K)",
+          "source": {
+            "label": "Atomera 10-K(2025年度)",
+            "label_en": "Atomera 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1420520/000168316826001291/atomera_i10k-123125.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "This dual-chamber tool is leased from Applied Materials and is located in a cleanroom in the same facility where we lease office space in Tempe, Arizona.",
+            "note": "小規模な装置のリースで、Atomera側の開示です。",
+            "note_en": "A small equipment lease, disclosed by Atomera."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BESI",
+      "ticker": "BESI",
+      "name": "BE Semiconductor Industries",
+      "sub": "半導体後工程装置",
+      "sub_en": "Back-end equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月にBesiの株式9%を取得し、2020年からBesiと一体型のハイブリッドボンディング装置を共同開発(2025年4月14日、8-K)",
+          "text_en": "Bought a 9% stake in Besi in April 2025 and co-develops an integrated hybrid bonding system with it (collaboration since 2020) (April 14, 2025, 8-K)",
+          "source": {
+            "label": "Applied Materials 8-K Ex. 99.1 の発表",
+            "label_en": "Applied Materials 8-K Ex. 99.1 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/6951/000119312525080269/d939298dex991.htm",
+            "level": "official",
+            "date": "2025-04-14",
+            "quote": "Applied and Besi have been successfully collaborating since 2020, and recently extended their agreement, to co-develop the industry’s first fully integrated equipment solution for die-based hybrid bonding."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "市場取引でBesiの発行済み普通株式の9%を取得(2025年4月14日、8-K)",
+          "text_en": "Purchased 9 percent of Besi’s outstanding common stock through market transactions (April 14, 2025, 8-K)",
+          "source": {
+            "label": "Applied Materials 8-K Ex. 99.1 の発表",
+            "label_en": "Applied Materials 8-K Ex. 99.1 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/6951/000119312525080269/d939298dex991.htm",
+            "level": "official",
+            "date": "2025-04-14",
+            "quote": "Applied Materials, Inc. today announced it has purchased 9 percent of the outstanding shares of the common stock of BE Semiconductor Industries N.V. (Besi)",
+            "note": "2025年4月時点の持分で、その後の変動は確認していません。",
+            "note_en": "The stake as of April 2025; later changes are not verified."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Lamが年次報告で、成膜(誘電体・金属)とエッチングの主な競合としてApplied Materialsを挙げている(2026年度、10-K)",
+          "text_en": "Lam Research states that Applied Materials is its primary competitor in dielectric and metals deposition and in etch (FY2026 10-K)",
+          "source": {
+            "label": "Lam Research 10-K(2026年度)",
+            "label_en": "Lam Research 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "Our primary competitor in the dielectric and metals deposition market is Applied Materials, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLAC",
+      "ticker": "KLAC",
+      "name": "KLA Corporation",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "KLAが年次報告で、各製品市場の競合の1社としてApplied Materialsを挙げている(2026年度、10-K)",
+          "text_en": "KLA lists Applied Materials among its competitors in each of its product markets (FY2026 10-K)",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "ASML Holding",
+      "sub": "露光装置",
+      "sub_en": "Lithography",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ASMLが年次報告で、パターン形成を補う用途の提供企業の1社としてApplied Materialsを競合に挙げている(2025年度、20-F)",
+          "text_en": "ASML states it competes with providers of patterning-enhancing applications such as Applied Materials (FY2025 20-F)",
+          "source": {
+            "label": "ASML 20-F / Annual Report(2025年度)",
+            "label_en": "ASML 20-F / Annual Report (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also compete with providers of applications that support or enhance complex patterning solutions, such as Applied Materials Inc. and KLA-Tencor Corporation.",
+            "note": "競合はパターン形成を補う用途に限られます。",
+            "note_en": "Competition is limited to patterning-enhancing applications."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACLS",
+      "ticker": "ACLS",
+      "name": "Axcelis Technologies",
+      "sub": "イオン注入装置",
+      "sub_en": "Ion implantation",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Axcelisが年次報告で、イオン注入装置で主にApplied Materialsと競合すると記載(2025年度、10-K)",
+          "text_en": "Axcelis states it mainly competes against Applied Materials in ion implantation systems (FY2025 10-K)",
+          "source": {
+            "label": "Axcelis Technologies 10-K(2025年度)",
+            "label_en": "Axcelis Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the market for ion implantation systems, we mainly compete against Applied Materials, Inc. (“Applied Materials”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VECO",
+      "ticker": "VECO",
+      "name": "Veeco Instruments",
+      "sub": "成膜・エッチング装置",
+      "sub_en": "Deposition & etch",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Veecoが年次報告で、主な競合の1社としてApplied Materialsを挙げている(2025年度、10-K)",
+          "text_en": "Veeco lists Applied Materials among its principal competitors (FY2025 10-K)",
+          "source": {
+            "label": "Veeco Instruments 10-K(2025年度)",
+            "label_en": "Veeco Instruments 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/veco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include: Aixtron; Applied Materials; Canon;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACMR",
+      "ticker": "ACMR",
+      "name": "ACM Research",
+      "sub": "洗浄・成膜装置",
+      "sub_en": "Cleaning & deposition",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ACM Researchが年次報告で、PECVD・Track製品の主な競合の1社としてApplied Materialsを挙げている(2025年度、10-K)",
+          "text_en": "ACM Research lists Applied Materials among principal competitors for its PECVD and Track products (FY2025 10-K)",
+          "source": {
+            "label": "ACM Research 10-K(2025年度)",
+            "label_en": "ACM Research 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Principal competitors for our PECVD and Track products also include Lam Research Corporation, Applied Materials, Inc., and Suzhou Jingtuo Semiconductor Technology Co., Ltd .",
+            "note": "PECVD・Track製品での競合です。",
+            "note_en": "Product-line specific (PECVD/Track)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PDFS",
+      "ticker": "PDFS",
+      "name": "PDF Solutions",
+      "sub": "製造データ解析ソフト",
+      "sub_en": "Manufacturing analytics",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PDF Solutionsが年次報告で、半導体製造ソフトと工程内検査・計測装置の競合としてApplied Materialsを挙げている(2025年度、10-K)",
+          "text_en": "PDF Solutions names Applied Materials as a competing provider of semiconductor manufacturing software and inline inspection/metrology equipment (FY2025 10-K)",
+          "source": {
+            "label": "PDF Solutions 10-K(2025年度)",
+            "label_en": "PDF Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "semiconductor manufacturing software, such as Applied Materials, Inc (“Applied Materials”), Synopsys, Invantest, Inc., Emerson Electric Co., Onto, and Siemens AG;",
+            "note": "ソフトと検査の分野での重なりです。",
+            "note_en": "Software/inspection overlap only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVMI",
+      "ticker": "NVMI",
+      "name": "Nova",
+      "sub": "計測装置",
+      "sub_en": "Metrology",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Novaが年次報告で、工程内センサー・計測製品を開発する装置メーカー(Applied Materialsなど)と競合すると記載(2025年度、20-F)",
+          "text_en": "Nova states it competes with process equipment makers such as Applied Materials that develop in-situ sensors and metrology products (FY2025 20-F)",
+          "source": {
+            "label": "Nova 20-F(2025年度)",
+            "label_en": "Nova 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In addition, we compete with process equipment manufacturers, such as ASML Holdings N.V., LAM Research, and Applied Materials Inc., which develop (or may acquire companies which develop) in-situ sensors and metrology products.",
+            "note": "工程内センサー・計測分野での重なりです。",
+            "note_en": "Metrology/in-situ sensor overlap only."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

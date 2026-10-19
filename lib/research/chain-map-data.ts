@@ -34,6 +34,11 @@ import nowMap from "../../data/chain/NOW.json" with { type: "json" };
 import stxMap from "../../data/chain/STX.json" with { type: "json" };
 import alabMap from "../../data/chain/ALAB.json" with { type: "json" };
 import ionqMap from "../../data/chain/IONQ.json" with { type: "json" };
+import sofiMap from "../../data/chain/SOFI.json" with { type: "json" };
+import crwvMap from "../../data/chain/CRWV.json" with { type: "json" };
+import irenMap from "../../data/chain/IREN.json" with { type: "json" };
+import cohrMap from "../../data/chain/COHR.json" with { type: "json" };
+import amatMap from "../../data/chain/AMAT.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -61,6 +66,7 @@ const available: Record<string, ChainMapData> = {
   INTC: intc as ChainMapData, QCOM: qcom as ChainMapData, GOOGL: googl as ChainMapData, AAPL: aapl as ChainMapData, AMZN: amzn as ChainMapData,
   VRT: vrt2 as ChainMapData, PLTR: pltr as ChainMapData, CEG: ceg as ChainMapData, AAOI: aaoi as ChainMapData, NBIS: nbis as ChainMapData,
   APH: aphMap as ChainMapData, NOW: nowMap as ChainMapData, STX: stxMap as ChainMapData, ALAB: alabMap as ChainMapData, IONQ: ionqMap as ChainMapData,
+  SOFI: sofiMap as ChainMapData, CRWV: crwvMap as ChainMapData, IREN: irenMap as ChainMapData, COHR: cohrMap as ChainMapData, AMAT: amatMap as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 
