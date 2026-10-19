@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Broadcomは前工程の製造の大半を外部ファウンドリーに委託し、TSMCが委託先製造会社の製造ウエハーの約95%を担った(2025年度、10-K)",
-          "text_en": "Broadcom outsources most front-end wafer manufacturing to external foundries; TSMC made about 95% of CM-produced wafers in FY2025 (10-K)",
+          "text": "Broadcomは前工程の製造の大半を外部ファウンドリーに委託し、TSMCが委託先製造会社の製造ウエハーの約95%を担った",
+          "text_en": "Broadcom outsources most front-end wafer manufacturing to external foundries; TSMC made about 95% of CM-produced wafers in FY2025",
           "source": {
             "label": "Broadcom 10-K(2025年度)",
             "label_en": "Broadcom 10-K (FY2025)",
@@ -53,8 +53,8 @@
         },
         {
           "type": "up",
-          "text": "2026年度の第3四半期までの累計で、委託先製造会社の製造ウエハーの約95%をTSMCが担った(2026年9月10日、10-Q)",
-          "text_en": "TSMC produced about 95% of wafers made by Broadcom’s contract manufacturers in the first three fiscal quarters of FY2026 (September 10, 2026, 10-Q)",
+          "text": "2026年度の第3四半期までの累計で、委託先製造会社の製造ウエハーの約95%をTSMCが担った",
+          "text_en": "TSMC produced about 95% of wafers made by Broadcom’s contract manufacturers in the first three fiscal quarters of FY2026",
           "source": {
             "label": "Broadcom 10-Q(Q3 2026年度)",
             "label_en": "Broadcom 10-Q (Q3 FY2026)",
@@ -76,8 +76,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "組立・テストを担う外部の製造委託先の1社としてASEを挙げている(2025年度、10-K)",
-          "text_en": "Names ASE among its third-party contract manufacturers for assembly and test (FY2025 10-K)",
+          "text": "組立・テストを担う外部の製造委託先の1社としてASEを挙げている",
+          "text_en": "Names ASE among its third-party contract manufacturers for assembly and test",
           "source": {
             "label": "Broadcom 10-K(2025年度)",
             "label_en": "Broadcom 10-K (FY2025)",
@@ -99,8 +99,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "組立・テストを担う外部の製造委託先の1社としてAmkorを挙げている(2025年度、10-K)",
-          "text_en": "Names Amkor among its third-party contract manufacturers for assembly and test (FY2025 10-K)",
+          "text": "組立・テストを担う外部の製造委託先の1社としてAmkorを挙げている",
+          "text_en": "Names Amkor among its third-party contract manufacturers for assembly and test",
           "source": {
             "label": "Broadcom 10-K(2025年度)",
             "label_en": "Broadcom 10-K (FY2025)",
@@ -122,8 +122,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Googleとの長期契約で、Googleの将来世代のカスタムTPUを開発・供給し、次世代AIラック向けにネットワーク等の部品を2031年まで供給する供給保証契約も結んだ(2026年4月6日、8-K)",
-          "text_en": "Entered a Long Term Agreement to develop and supply custom TPUs for Google, plus a Supply Assurance Agreement for networking and other components for Google’s next-gen AI racks through up to 2031 (April 6, 2026, 8-K)",
+          "text": "Googleとの長期契約で、Googleの将来世代のカスタムTPUを開発・供給し、次世代AIラック向けにネットワーク等の部品を2031年まで供給する供給保証契約も結んだ",
+          "text_en": "Entered a Long Term Agreement to develop and supply custom TPUs for Google, plus a Supply Assurance Agreement for networking and other components for Google’s next-gen AI racks through up to 2031",
           "source": {
             "label": "Broadcom 8-K(2026年4月6日)",
             "label_en": "Broadcom 8-K (Apr 6, 2026)",
@@ -145,8 +145,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Appleと技術協力を2031年まで拡大し、Apple製品の複数世代向けカスタムASICを開発・供給する長期契約を結んだ(2026年7月6日、8-K)",
-          "text_en": "Agreed with Apple to expand their technology collaboration through 2031, with long-term agreements to develop and supply custom ASIC silicon for multiple generations of Apple products (July 6, 2026, 8-K)",
+          "text": "Appleと技術協力を2031年まで拡大し、Apple製品の複数世代向けカスタムASICを開発・供給する長期契約を結んだ",
+          "text_en": "Agreed with Apple to expand their technology collaboration through 2031, with long-term agreements to develop and supply custom ASIC silicon for multiple generations of Apple products",
           "source": {
             "label": "Broadcom 8-K(2026年7月6日)",
             "label_en": "Broadcom 8-K (Jul 6, 2026)",
@@ -168,8 +168,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Aristaが年次報告で、スイッチ用チップの主要な汎用シリコン供給元としてBroadcomに主に依存していると述べている(2025年度、10-K)",
-          "text_en": "Arista states it is primarily reliant on Broadcom as its predominant merchant silicon vendor for switching chips (FY2025 10-K)",
+          "text": "Aristaが年次報告で、スイッチ用チップの主要な汎用シリコン供給元としてBroadcomに主に依存していると述べている",
+          "text_en": "Arista states it is primarily reliant on Broadcom as its predominant merchant silicon vendor for switching chips",
           "source": {
             "label": "Arista 10-K(2025年度)",
             "label_en": "Arista 10-K (FY2025)",
@@ -183,8 +183,8 @@
         },
         {
           "type": "tie",
-          "text": "AristaがBroadcomからVeloCloud事業を2025年6月30日に3億ドルの現金で取得(2025年度、Arista 10-K)",
-          "text_en": "Arista completed the acquisition of the VeloCloud business from Broadcom on June 30, 2025 for $300.0 million in cash (Arista FY2025 10-K)",
+          "text": "AristaがBroadcomからVeloCloud事業を2025年6月30日に3億ドルの現金で取得",
+          "text_en": "Arista completed the acquisition of the VeloCloud business from Broadcom on June 30, 2025 for $300.0 million in cash",
           "source": {
             "label": "Arista 10-K(2025年度)",
             "label_en": "Arista 10-K (FY2025)",
@@ -208,8 +208,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "HPEが年次報告で、業界標準ASSPの単一供給元の1社としてBroadcomを挙げている(2025年度、10-K)",
-          "text_en": "HPE lists Broadcom among its single-source suppliers of industry-standard ASSPs (FY2025 10-K)",
+          "text": "HPEが年次報告で、業界標準ASSPの単一供給元の1社としてBroadcomを挙げている",
+          "text_en": "HPE lists Broadcom among its single-source suppliers of industry-standard ASSPs",
           "source": {
             "label": "HPE 10-K(2025年度)",
             "label_en": "HPE 10-K (FY2025)",
@@ -223,7 +223,7 @@
         },
         {
           "type": "rival",
-          "text": "HPEが年次報告で、インフラ・クラウド管理ソフトの主な競合の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "HPEが年次報告で、インフラ・クラウド管理ソフトの主な競合の1社としてBroadcomを挙げている",
           "text_en": "HPE’s FY2025 10-K names Broadcom among its primary competitors in infrastructure and cloud management software",
           "source": {
             "label": "HPE 10-K(2025年度)",
@@ -246,8 +246,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Google、Anthropicと協力を拡大し、Anthropicは2027年から、Broadcom経由で約3.5ギガワットのTPU型AI計算能力を利用する(2026年4月6日、8-K)",
-          "text_en": "Expanded its collaboration with Google and Anthropic; beginning in 2027, Anthropic will access about 3.5 gigawatts of TPU-based AI compute through Broadcom (April 6, 2026, 8-K)",
+          "text": "Google、Anthropicと協力を拡大し、Anthropicは2027年から、Broadcom経由で約3.5ギガワットのTPU型AI計算能力を利用する",
+          "text_en": "Expanded its collaboration with Google and Anthropic; beginning in 2027, Anthropic will access about 3.5 gigawatts of TPU-based AI compute through Broadcom",
           "source": {
             "label": "Broadcom 8-K(2026年4月6日)",
             "label_en": "Broadcom 8-K (Apr 6, 2026)",
@@ -271,8 +271,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Seagateが2024年4月23日付の資産購入契約で、SoCの設計・開発・製造に関する資産をBroadcom子会社に売却した(2026年度、Seagate 10-K)",
-          "text_en": "Seagate sold its SoC design, development and manufacture assets to a Broadcom subsidiary under an April 23, 2024 asset purchase agreement (Seagate FY2026 10-K)",
+          "text": "Seagateが2024年4月23日付の資産購入契約で、SoCの設計・開発・製造に関する資産をBroadcom子会社に売却した",
+          "text_en": "Seagate sold its SoC design, development and manufacture assets to a Broadcom subsidiary under an April 23, 2024 asset purchase agreement",
           "source": {
             "label": "Seagate 10-K(2026年度)",
             "label_en": "Seagate 10-K (FY2026)",
@@ -296,8 +296,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Broadcomが2023年11月22日にVMwareを買収した後、DellはVMware単体製品を販売していた包括提携契約を終了した(2026年度、Dell 10-K)",
-          "text_en": "Dell terminated its Commercial Framework Agreement under which it distributed standalone VMware offerings after Broadcom acquired VMware on November 22, 2023 (Dell FY2026 10-K)",
+          "text": "Broadcomが2023年11月22日にVMwareを買収した後、DellはVMware単体製品を販売していた包括提携契約を終了した",
+          "text_en": "Dell terminated its Commercial Framework Agreement under which it distributed standalone VMware offerings after Broadcom acquired VMware on November 22, 2023",
           "source": {
             "label": "Dell 10-K(2026年度)",
             "label_en": "Dell 10-K (FY2026)",
@@ -321,7 +321,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Ciscoが年次報告で、一部の製品・サービスでの競合としてBroadcomを挙げている(2026年度、10-K)",
+          "text": "Ciscoが年次報告で、一部の製品・サービスでの競合としてBroadcomを挙げている",
           "text_en": "Cisco’s FY2026 10-K lists Broadcom among its competitors for some products and services",
           "source": {
             "label": "Cisco 10-K(2026年度)",
@@ -344,7 +344,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、ネットワーク製品の競合としてBroadcomを挙げている(2026年度、10-K)",
+          "text": "NVIDIAが年次報告で、ネットワーク製品の競合としてBroadcomを挙げている",
           "text_en": "NVIDIA’s FY2026 10-K lists Broadcom among competitors in networking products",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
@@ -367,7 +367,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDが年次報告で、組み込み事業の競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "AMDが年次報告で、組み込み事業の競合としてBroadcomを挙げている",
           "text_en": "AMD’s FY2025 10-K lists Broadcom among competitors in its Embedded segment",
           "source": {
             "label": "AMD 10-K(2025年度)",
@@ -392,7 +392,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Intelが年次報告で、カスタムASIC開発市場でBroadcomと競合すると述べている(2025年度、10-K)",
+          "text": "Intelが年次報告で、カスタムASIC開発市場でBroadcomと競合すると述べている",
           "text_en": "Intel’s FY2025 10-K states it competes with Broadcom in the custom ASIC development market",
           "source": {
             "label": "Intel 10-K(2025年度)",
@@ -415,7 +415,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、自社の事業と直接競合する企業の1社としてBroadcomを挙げている(2026年度、10-K)",
+          "text": "Marvellが年次報告で、自社の事業と直接競合する企業の1社としてBroadcomを挙げている",
           "text_en": "Marvell’s FY2026 10-K lists Broadcom among companies that compete directly with its businesses",
           "source": {
             "label": "Marvell 10-K(2026年度)",
@@ -438,7 +438,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualcommが年次報告で、無線接続製品の競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "Qualcommが年次報告で、無線接続製品の競合としてBroadcomを挙げている",
           "text_en": "Qualcomm’s FY2025 10-K lists Broadcom as a competitor in wireless connectivity products",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
@@ -461,7 +461,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合としてBroadcomを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K lists Broadcom as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -484,7 +484,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合としてBroadcomを挙げている(2026年度、10-K)",
+          "text": "Credoが年次報告で、主な競合としてBroadcomを挙げている",
           "text_en": "Credo’s FY2026 10-K lists Broadcom as a principal competitor",
           "source": {
             "label": "Credo 10-K(2026年度)",
@@ -507,7 +507,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cienaが年次報告で、データセンター事業への拡大に伴いBroadcomとも競合する見込みだと述べている(2025年度、10-K)",
+          "text": "Cienaが年次報告で、データセンター事業への拡大に伴いBroadcomとも競合する見込みだと述べている",
           "text_en": "Ciena’s FY2025 10-K expects to compete with Broadcom as it expands into the data center",
           "source": {
             "label": "Ciena 10-K(2025年度)",
@@ -532,7 +532,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MACOMが年次報告で、主な競合の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "MACOMが年次報告で、主な競合の1社としてBroadcomを挙げている",
           "text_en": "MACOM’s FY2025 10-K lists Broadcom among its primary competitors",
           "source": {
             "label": "MACOM 10-K(2025年度)",
@@ -555,7 +555,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearが年次報告で、主な汎用半導体の競合としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "MaxLinearが年次報告で、主な汎用半導体の競合としてBroadcomを挙げている",
           "text_en": "MaxLinear’s FY2025 10-K lists Broadcom as a primary merchant semiconductor competitor",
           "source": {
             "label": "MaxLinear 10-K(2025年度)",
@@ -578,7 +578,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Skyworksが年次報告で、競合の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "Skyworksが年次報告で、競合の1社としてBroadcomを挙げている",
           "text_en": "Skyworks’ FY2025 10-K lists Broadcom among its competitors",
           "source": {
             "label": "Skyworks 10-K(2025年度)",
@@ -601,7 +601,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qorvoが年次報告で、CSG事業(ACG事業も同様)は主にBroadcomと競合すると述べている(2026年度、10-K)",
+          "text": "Qorvoが年次報告で、CSG事業(ACG事業も同様)は主にBroadcomと競合すると述べている",
           "text_en": "Qorvo’s FY2026 10-K states its CSG segment competes primarily with Broadcom (and its ACG segment likewise)",
           "source": {
             "label": "Qorvo 10-K(2026年度)",

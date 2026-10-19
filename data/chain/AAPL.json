@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "カスタム半導体と無線接続技術の設計・製造で複数年のコミットメント(2026年7月)",
-          "text_en": "Multiyear commitment with Broadcom to design and produce custom silicon and wireless connectivity (July 2026)",
+          "text": "カスタム半導体と無線接続技術の設計・製造で複数年のコミットメント",
+          "text_en": "Multiyear commitment with Broadcom to design and produce custom silicon and wireless connectivity",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -62,8 +62,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "米国での半導体製造を増やす契約(ニューヨーク州マルタ工場、2025年8月)",
-          "text_en": "Agreement to bring more semiconductor manufacturing to the U.S. at the Malta, New York fab (August 2025)",
+          "text": "米国での半導体製造を増やす契約",
+          "text_en": "Agreement to bring more semiconductor manufacturing to the U.S. at the Malta, New York fab",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -85,8 +85,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "テキサス州オースティン工場で、Apple向けの新しいチップ製造技術を立ち上げる協業(2025年8月)",
-          "text_en": "Working with Samsung at its Austin, Texas fab to launch a new chip-making technology for Apple products (August 2025)",
+          "text": "テキサス州オースティン工場で、Apple向けの新しいチップ製造技術を立ち上げる協業",
+          "text_en": "Working with Samsung at its Austin, Texas fab to launch a new chip-making technology for Apple products",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -108,8 +108,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "アリゾナ工場がApple向けに数千万個のチップを生産。Appleが最初で最大の顧客(2025年8月)",
-          "text_en": "TSMC’s Arizona fab is producing tens of millions of chips for Apple, its first and largest customer (August 2025)",
+          "text": "アリゾナ工場がApple向けに数千万個のチップを生産。Appleが最初で最大の顧客",
+          "text_en": "TSMC’s Arizona fab is producing tens of millions of chips for Apple, its first and largest customer",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "米国の半導体製造装置の生産を増やすため、Applied Materialsと直接提携(2025年8月)",
-          "text_en": "Partnering directly with Applied Materials to boost U.S. production of semiconductor manufacturing equipment (August 2025)",
+          "text": "米国の半導体製造装置の生産を増やすため、Applied Materialsと直接提携",
+          "text_en": "Partnering directly with Applied Materials to boost U.S. production of semiconductor manufacturing equipment",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -154,8 +154,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Amkorの2025年売上の29.8%がAppleへの直接販売(Amkorの年次報告)",
-          "text_en": "Direct sales to Apple were 29.8% of Amkor’s 2025 net sales (Amkor annual report)",
+          "text": "Amkorの2025年売上の29.8%がAppleへの直接販売",
+          "text_en": "Direct sales to Apple were 29.8% of Amkor’s 2025 net sales",
           "source": {
             "label": "Amkor 10-K(2025年度)",
             "label_en": "Amkor 10-K (FY2025)",
@@ -200,8 +200,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Cirrusの2026年度売上の約91%が、Appleという1社の最終顧客(Cirrusの年次報告)",
-          "text_en": "Apple is Cirrus Logic’s one end customer, about 91% of fiscal 2026 net sales (Cirrus annual report)",
+          "text": "Cirrusの2026年度売上の約91%が、Appleという1社の最終顧客",
+          "text_en": "Apple is Cirrus Logic’s one end customer, about 91% of fiscal 2026 net sales",
           "source": {
             "label": "Cirrus Logic 10-K(2026年度)",
             "label_en": "Cirrus Logic 10-K (FY2026)",
@@ -225,8 +225,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "iPhoneとApple Watchのカバーガラスをすべて、ケンタッキー州ハロッズバーグのCorning工場で製造する25億ドルのコミットメント(2025年8月)",
-          "text_en": "$2.5B commitment to produce all iPhone and Apple Watch cover glass at Corning’s Harrodsburg, Kentucky facility (August 2025)",
+          "text": "iPhoneとApple Watchのカバーガラスをすべて、ケンタッキー州ハロッズバーグのCorning工場で製造する25億ドルのコミットメント",
+          "text_en": "$2.5B commitment to produce all iPhone and Apple Watch cover glass at Corning’s Harrodsburg, Kentucky facility",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -248,8 +248,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "米国産のレアアース磁石を購入する、5億ドルの複数年契約(2025年7月)",
-          "text_en": "$500M multiyear deal to buy American-made rare earth magnets from MP Materials (July 2025)",
+          "text": "米国産のレアアース磁石を購入する、5億ドルの複数年契約",
+          "text_en": "$500M multiyear deal to buy American-made rare earth magnets from MP Materials",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -271,8 +271,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Face ID用のVCSELレーザーの供給で、新たな複数年契約(2025年8月)",
-          "text_en": "New multiyear agreement with Coherent, supplier of VCSEL lasers used for Face ID (August 2025)",
+          "text": "Face ID用のVCSELレーザーの供給で、新たな複数年契約",
+          "text_en": "New multiyear agreement with Coherent, supplier of VCSEL lasers used for Face ID",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -294,8 +294,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "TDKは長年の供給元で、米国で初めてApple向けのセンサーを製造(2026年3月26日)",
-          "text_en": "Calls TDK a longtime supplier that will manufacture sensors for Apple in the U.S. for the first time (March 26, 2026)",
+          "text": "TDKは長年の供給元で、米国で初めてApple向けのセンサーを製造",
+          "text_en": "Calls TDK a longtime supplier that will manufacture sensors for Apple in the U.S. for the first time",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -317,8 +317,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Appleへ、サービス契約にもとづき衛星の通信容量を卸売で提供(Globalstarの年次報告)",
-          "text_en": "Provides wholesale satellite capacity services to Apple under service agreements (Globalstar annual report)",
+          "text": "Appleへ、サービス契約にもとづき衛星の通信容量を卸売で提供",
+          "text_en": "Provides wholesale satellite capacity services to Apple under service agreements",
           "source": {
             "label": "Globalstar 10-K(2025年度)",
             "label_en": "Globalstar 10-K (FY2025)",
@@ -340,8 +340,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "次世代のApple Foundation ModelsをGoogleのGeminiを基盤にする複数年の協業(2026年1月12日、共同声明)",
-          "text_en": "Multi-year collaboration: next-generation Apple Foundation Models will be based on Google’s Gemini (January 12, 2026, joint statement)",
+          "text": "次世代のApple Foundation ModelsをGoogleのGeminiを基盤にする複数年の協業",
+          "text_en": "Multi-year collaboration: next-generation Apple Foundation Models will be based on Google’s Gemini",
           "source": {
             "label": "Google ブログ: Joint statement from Google and Apple",
             "label_en": "Google blog: Joint statement from Google and Apple",
@@ -353,8 +353,8 @@
         },
         {
           "type": "tie",
-          "text": "Apple製品でGoogle検索を提供するライセンスの収入を得ていると記載(年次報告)",
-          "text_en": "Earns revenue from licensing arrangements with Google to offer Google search on Apple platforms (annual report)",
+          "text": "Apple製品でGoogle検索を提供するライセンスの収入を得ていると記載",
+          "text_en": "Earns revenue from licensing arrangements with Google to offer Google search on Apple platforms",
           "source": {
             "label": "Apple 10-K(2025年度)",
             "label_en": "Apple 10-K (FY2025)",
@@ -379,7 +379,7 @@
         {
           "type": "tie",
           "text": "Apple IntelligenceにChatGPT(GPT-4o)を統合(iOS 18・macOS Sequoiaなど、2024年6月10日)",
-          "text_en": "Announced ChatGPT (GPT-4o) integration into Apple Intelligence across iOS 18, iPadOS 18 and macOS Sequoia (June 10, 2024)",
+          "text_en": "Announced ChatGPT (GPT-4o) integration into Apple Intelligence across iOS 18, iPadOS 18 and macOS Sequoia",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -403,8 +403,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Xcode 26.3が、AnthropicのClaude Agentによるエージェント型コーディングに対応(2026年2月3日)",
-          "text_en": "Xcode 26.3 supports agentic coding with Anthropic’s Claude Agent (February 3, 2026)",
+          "text": "Xcode 26.3が、AnthropicのClaude Agentによるエージェント型コーディングに対応",
+          "text_en": "Xcode 26.3 supports agentic coding with Anthropic’s Claude Agent",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -428,8 +428,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Apple Cardの新しい発行会社になると発表(JPMorganの年次報告)",
-          "text_en": "Announced it will become the new issuer of Apple Card (JPMorgan Chase annual report)",
+          "text": "Apple Cardの新しい発行会社になると発表",
+          "text_en": "Announced it will become the new issuer of Apple Card",
           "source": {
             "label": "JPMorgan Chase 10-K(2025年度)",
             "label_en": "JPMorgan Chase 10-K (FY2025)",
@@ -522,8 +522,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AppleとTexas Instrumentsが提携を拡大し、Appleが米国内の生産能力を支える新たなコミットメントを表明(2025年8月、Apple発表)",
-          "text_en": "Apple and Texas Instruments are expanding their partnership with a new Apple commitment supporting U.S. capacity (August 2025, Apple Newsroom)",
+          "text": "AppleとTexas Instrumentsが提携を拡大し、Appleが米国内の生産能力を支える新たなコミットメントを表明",
+          "text_en": "Apple and Texas Instruments are expanding their partnership with a new Apple commitment supporting U.S. capacity",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -545,8 +545,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "テキサス州ShermanのGlobalWafers Americaと提携し、米国の工場向け先端ウエハーを生産(2025年8月、Apple発表)",
-          "text_en": "Apple is partnering with GlobalWafers America in Sherman, Texas to produce advanced wafers for U.S.-based fabs (August 2025, Apple Newsroom)",
+          "text": "テキサス州ShermanのGlobalWafers Americaと提携し、米国の工場向け先端ウエハーを生産",
+          "text_en": "Apple is partnering with GlobalWafers America in Sherman, Texas to produce advanced wafers for U.S.-based fabs",
           "source": {
             "label": "Apple ニュースルーム",
             "label_en": "Apple Newsroom",
@@ -570,8 +570,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Skyworksが年次報告で、主要顧客の1社としてAppleを挙げている(2025年度、10-K)",
-          "text_en": "Skyworks lists Apple among its key customers (FY2025, 10-K)",
+          "text": "Skyworksが年次報告で、主要顧客の1社としてAppleを挙げている",
+          "text_en": "Skyworks lists Apple among its key customers",
           "source": {
             "label": "Skyworks 10-K(2025年度)",
             "label_en": "Skyworks 10-K (FY2025)",
@@ -593,8 +593,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Goldman SachsがApple Cardのカード発行元。2025年12月に別の発行会社へ移行する契約を結んだ(2025年度、10-K)",
-          "text_en": "Goldman Sachs currently issues Apple Card and agreed in December 2025 to transition the program to another issuer (FY2025, 10-K)",
+          "text": "Goldman SachsがApple Cardのカード発行元。2025年12月に別の発行会社へ移行する契約を結んだ",
+          "text_en": "Goldman Sachs currently issues Apple Card and agreed in December 2025 to transition the program to another issuer",
           "source": {
             "label": "Goldman Sachs 10-K(2025年度)",
             "label_en": "Goldman Sachs 10-K (FY2025)",
@@ -618,8 +618,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapが年次報告で、競合する企業の1社としてAppleを挙げている(2025年度、10-K)",
-          "text_en": "Snap’s annual report names Apple among companies it competes with (FY2025, 10-K)",
+          "text": "Snapが年次報告で、競合する企業の1社としてAppleを挙げている",
+          "text_en": "Snap’s annual report names Apple among companies it competes with",
           "source": {
             "label": "Snap 10-K(2025年度)",
             "label_en": "Snap 10-K (FY2025)",

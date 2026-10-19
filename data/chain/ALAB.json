@@ -43,8 +43,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "TSMCがAstera Labsの唯一のファウンドリーで、全ICを製造(2025年度、10-K)",
-          "text_en": "TSMC is Astera Labs’ sole foundry partner, manufacturing all of its integrated circuits (FY2025 10-K)",
+          "text": "TSMCがAstera Labsの唯一のファウンドリーで、全ICを製造",
+          "text_en": "TSMC is Astera Labs’ sole foundry partner, manufacturing all of its integrated circuits",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -66,8 +66,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "ASEがAstera LabsのICの組立・パッケージ・テストを担当(2025年度、10-K)",
-          "text_en": "ASE assembles, packages and tests Astera Labs’ ICs (FY2025 10-K)",
+          "text": "ASEがAstera LabsのICの組立・パッケージ・テストを担当",
+          "text_en": "ASE assembles, packages and tests Astera Labs’ ICs",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -89,8 +89,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AmkorがAstera LabsのICの組立・パッケージ・テストを担当(2025年度、10-K)",
-          "text_en": "Amkor assembles, packages and tests Astera Labs’ ICs (FY2025 10-K)",
+          "text": "AmkorがAstera LabsのICの組立・パッケージ・テストを担当",
+          "text_en": "Amkor assembles, packages and tests Astera Labs’ ICs",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -112,8 +112,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Amazon.comはAstera Labsの顧客で、2022年10月発行(2023年10月修正)のワラントを保有(2025年度、10-K)",
-          "text_en": "Amazon.com is a customer of Astera Labs and holds a warrant issued in October 2022 as amended in October 2023 (FY2025 10-K)",
+          "text": "Amazon.comはAstera Labsの顧客で、2022年10月発行(2023年10月修正)のワラントを保有",
+          "text_en": "Amazon.com is a customer of Astera Labs and holds a warrant issued in October 2022 as amended in October 2023",
           "source": {
             "label": "Astera Labs 8-K(2026年2月5日)",
             "label_en": "Astera Labs 8-K (Feb 5, 2026)",
@@ -125,8 +125,8 @@
         },
         {
           "type": "tie",
-          "text": "Amazonに新たなワラント(最大3,262,299株)を付与。Amazonによる最大65億ドルの購入に応じて権利が確定(2026年2月、8-K)",
-          "text_en": "Granted Amazon a new warrant (up to 3,262,299 shares) that vests on Amazon purchases of up to $6.5B of Astera products (February 2026, 8-K)",
+          "text": "Amazonに新たなワラント(最大3,262,299株)を付与。Amazonによる最大65億ドルの購入に応じて権利が確定",
+          "text_en": "Granted Amazon a new warrant (up to 3,262,299 shares) that vests on Amazon purchases of up to $6.5B of Astera products",
           "source": {
             "label": "Astera Labs 8-K(2026年2月5日)",
             "label_en": "Astera Labs 8-K (Feb 5, 2026)",
@@ -150,8 +150,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Astera LabsのLeo CXLスマート・メモリー・コントローラーがMicrosoft AzureのM系列VM(プレビュー)で使われている(2026年1月、ブログ)",
-          "text_en": "Astera Leo CXL Smart Memory Controllers are used in Microsoft Azure M-Series VMs (preview) (January 2026, blog)",
+          "text": "Astera LabsのLeo CXLスマート・メモリー・コントローラーがMicrosoft AzureのM系列VM(プレビュー)で使われている",
+          "text_en": "Astera Leo CXL Smart Memory Controllers are used in Microsoft Azure M-Series VMs (preview)",
           "source": {
             "label": "Astera Labs ブログ",
             "label_en": "Astera Labs blog (2025 milestones)",
@@ -175,8 +175,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVLink Fusionのエコシステム向けにスケールアップ接続を提供するためNVIDIAと協業(2025年5月)",
-          "text_en": "Collaborating with NVIDIA to provide scale-up connectivity for the NVLink Fusion ecosystem (May 2025)",
+          "text": "NVLink Fusionのエコシステム向けにスケールアップ接続を提供するためNVIDIAと協業",
+          "text_en": "Collaborating with NVIDIA to provide scale-up connectivity for the NVLink Fusion ecosystem",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release",
@@ -198,8 +198,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AMDがAstera Aries Smart Retimerを量産環境で検証済みで、PCIe 7への移行で協業(2026年10月)",
-          "text_en": "AMD has validated Astera Aries Smart Retimers in production and is collaborating on the PCIe 7 transition (October 2026)",
+          "text": "AMDがAstera Aries Smart Retimerを量産環境で検証済みで、PCIe 7への移行で協業",
+          "text_en": "AMD has validated Astera Aries Smart Retimers in production and is collaborating on the PCIe 7 transition",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Aries 7)",
@@ -211,8 +211,8 @@
         },
         {
           "type": "tie",
-          "text": "AMDが、オープンなラック設計でのAMD Instinct GPU向けUALink接続でAstera Labsと協業していると説明(2025年10月)",
-          "text_en": "AMD cites its collaboration with Astera Labs on UALink connectivity for AMD Instinct GPUs in open rack architectures (October 2025)",
+          "text": "AMDが、オープンなラック設計でのAMD Instinct GPU向けUALink接続でAstera Labsと協業していると説明",
+          "text_en": "AMD cites its collaboration with Astera Labs on UALink connectivity for AMD Instinct GPUs in open rack architectures",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -234,8 +234,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IntelがAstera Aries Smart Retimerを量産環境で検証済みで、PCIe 7への移行で協業(2026年10月)",
-          "text_en": "Intel has validated Astera Aries Smart Retimers in production and is collaborating on the PCIe 7 transition (October 2026)",
+          "text": "IntelがAstera Aries Smart Retimerを量産環境で検証済みで、PCIe 7への移行で協業",
+          "text_en": "Intel has validated Astera Aries Smart Retimers in production and is collaborating on the PCIe 7 transition",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Aries 7)",
@@ -257,8 +257,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Arm Total Designに参加し、ArmのNeoverse CSSと組み合わせたAIチップレット向けのカスタム設計を提供(2025年10月)",
-          "text_en": "Joined Arm Total Design to combine its platform with Arm Neoverse CSS for custom AI chiplet solutions (October 2025)",
+          "text": "Arm Total Designに参加し、ArmのNeoverse CSSと組み合わせたAIチップレット向けのカスタム設計を提供",
+          "text_en": "Joined Arm Total Design to combine its platform with Arm Neoverse CSS for custom AI chiplet solutions",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release",
@@ -270,8 +270,8 @@
         },
         {
           "type": "tie",
-          "text": "ArmとAstera Labsが、Arm AGI CPUとLeo CXLスマート・メモリー・コントローラーを組み合わせる(2026年9月)",
-          "text_en": "Arm and Astera Labs are pairing the Arm AGI CPU with Leo CXL Smart Memory Controllers (September 2026)",
+          "text": "ArmとAstera Labsが、Arm AGI CPUとLeo CXLスマート・メモリー・コントローラーを組み合わせる",
+          "text_en": "Arm and Astera Labs are pairing the Arm AGI CPU with Leo CXL Smart Memory Controllers",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Leo)",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MicronのSSDとScorpio P-Seriesスイッチで、PCIe 6のストレージ性能が毎秒100GB超を持続することを共同で実証(2025年8月)",
-          "text_en": "Demonstrated over 100 GB/s sustained PCIe 6 storage throughput with Micron SSDs and Scorpio P-Series switches (August 2025)",
+          "text": "MicronのSSDとScorpio P-Seriesスイッチで、PCIe 6のストレージ性能が毎秒100GB超を持続することを共同で実証",
+          "text_en": "Demonstrated over 100 GB/s sustained PCIe 6 storage throughput with Micron SSDs and Scorpio P-Series switches",
           "source": {
             "label": "Astera Labs ブログ",
             "label_en": "Astera Labs blog",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SamsungがLeoファミリーを軸にCXLメモリー製品でAstera Labsと協業(2026年9月)",
-          "text_en": "Samsung Electronics is collaborating with Astera Labs on CXL memory solutions around the Leo family (September 2026)",
+          "text": "SamsungがLeoファミリーを軸にCXLメモリー製品でAstera Labsと協業",
+          "text_en": "Samsung Electronics is collaborating with Astera Labs on CXL memory solutions around the Leo family",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Leo)",
@@ -339,8 +339,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AIラック規模のシリコン・エコシステムでAlchipと戦略的提携を発表(2025年6月)",
-          "text_en": "Announced a strategic partnership with Alchip on the AI rack-scale silicon ecosystem (June 2025)",
+          "text": "AIラック規模のシリコン・エコシステムでAlchipと戦略的提携を発表",
+          "text_en": "Announced a strategic partnership with Alchip on the AI rack-scale silicon ecosystem",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release",
@@ -362,8 +362,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Lumentumが自社のフォトニック・エンジンとAsteraのAries 7光ドライバー・TIAを組み合わせる(2026年10月)",
-          "text_en": "Lumentum pairs its photonic engines with Astera’s Aries 7 Smart Optical Driver and TIA (October 2026)",
+          "text": "Lumentumが自社のフォトニック・エンジンとAsteraのAries 7光ドライバー・TIAを組み合わせる",
+          "text_en": "Lumentum pairs its photonic engines with Astera’s Aries 7 Smart Optical Driver and TIA",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Aries 7)",
@@ -385,8 +385,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Amphenol High Speed Cablesが、ラック規模のケーブル製品でAstera Labsと提携(2025年10月)",
-          "text_en": "Amphenol High Speed Cables is partnering with Astera Labs on rack-scale cable solutions (October 2025)",
+          "text": "Amphenol High Speed Cablesが、ラック規模のケーブル製品でAstera Labsと提携",
+          "text_en": "Amphenol High Speed Cables is partnering with Astera Labs on rack-scale cable solutions",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -410,8 +410,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "PCIe 6ラック規模の接続向けのアナログ・シミュレーションと検証でAstera Labsと協業(2025年10月)",
-          "text_en": "Cadence collaborates with Astera Labs on analog simulation and verification for PCIe 6 rack-scale links (October 2025)",
+          "text": "PCIe 6ラック規模の接続向けのアナログ・シミュレーションと検証でAstera Labsと協業",
+          "text_en": "Cadence collaborates with Astera Labs on analog simulation and verification for PCIe 6 rack-scale links",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -433,8 +433,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "オープンなラック設計の普及に向けAstera Labsと協業(2025年10月)",
-          "text_en": "Synopsys collaborates with Astera Labs to accelerate adoption of open rack architectures (October 2025)",
+          "text": "オープンなラック設計の普及に向けAstera Labsと協業",
+          "text_en": "Synopsys collaborates with Astera Labs to accelerate adoption of open rack architectures",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -456,8 +456,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AsteraのAriesリタイマーをアクティブ・バックプレーン設計に組み込む(2025年10月)",
-          "text_en": "TE Connectivity embeds Astera Aries retimers into active backplane designs (October 2025)",
+          "text": "AsteraのAriesリタイマーをアクティブ・バックプレーン設計に組み込む",
+          "text_en": "TE Connectivity embeds Astera Aries retimers into active backplane designs",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -481,8 +481,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AsteraのPCIe 6の立ち上げを高度なテストソリューションで支援(2025年5月)",
-          "text_en": "Keysight supports Astera Labs’ PCIe 6 ramp with advanced testing solutions (May 2025)",
+          "text": "AsteraのPCIe 6の立ち上げを高度なテストソリューションで支援",
+          "text_en": "Keysight supports Astera Labs’ PCIe 6 ramp with advanced testing solutions",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (PCIe 6 ramp)",
@@ -504,8 +504,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Asteraの接続技術を自社の光トランシーバーに組み込む(2025年10月)",
-          "text_en": "Eoptolink will integrate Astera connectivity intelligence with its optical transceivers (October 2025)",
+          "text": "Asteraの接続技術を自社の光トランシーバーに組み込む",
+          "text_en": "Eoptolink will integrate Astera connectivity intelligence with its optical transceivers",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -529,8 +529,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてWiwynnを挙げている(2026年6月)",
-          "text_en": "Names Wiwynn among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration (June 2026)",
+          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてWiwynnを挙げている",
+          "text_en": "Names Wiwynn among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -552,8 +552,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてInventecを挙げている(2026年6月)",
-          "text_en": "Names Inventec among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration (June 2026)",
+          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてInventecを挙げている",
+          "text_en": "Names Inventec among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -575,8 +575,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてGIGABYTEを挙げている(2026年6月)",
-          "text_en": "Names GIGABYTE Technology among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration (June 2026)",
+          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてGIGABYTEを挙げている",
+          "text_en": "Names GIGABYTE Technology among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -598,8 +598,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてFoxconn(子会社Ingrasys経由)を挙げている(2026年6月)",
-          "text_en": "Names Foxconn (Hon Hai) among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration (June 2026)",
+          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてFoxconn(子会社Ingrasys経由)を挙げている",
+          "text_en": "Names Foxconn (Hon Hai) among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -623,8 +623,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてQuanta(子会社QCT経由)を挙げている(2026年6月)",
-          "text_en": "Names Quanta Computer among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration (June 2026)",
+          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてQuanta(子会社QCT経由)を挙げている",
+          "text_en": "Names Quanta Computer among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -648,8 +648,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ハイパースケール向け製品の製造でAstera Labsと協業(2025年10月)",
-          "text_en": "Wistron manufactures products for hyperscale deployments in collaboration with Astera Labs (October 2025)",
+          "text": "ハイパースケール向け製品の製造でAstera Labsと協業",
+          "text_en": "Wistron manufactures products for hyperscale deployments in collaboration with Astera Labs",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -671,7 +671,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてBroadcomを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてBroadcomを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Broadcom as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -696,7 +696,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてMarvell Technologyを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてMarvell Technologyを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Marvell Technology as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -721,7 +721,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてCredo Technologyを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてCredo Technologyを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Credo Technology as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -746,7 +746,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてRambusを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてRambusを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Rambus as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -771,7 +771,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてMicrochip Technologyを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてMicrochip Technologyを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Microchip Technology as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -796,7 +796,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてMontage Technologyを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてMontage Technologyを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Montage Technology as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -821,7 +821,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてParade Technologiesを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてParade Technologiesを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Parade Technologies as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",

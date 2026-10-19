@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "7nm以下のマイクロプロセッサ・GPUのウエハーは全てTSMCに依存(年次報告)",
-          "text_en": "Relies on TSMC for all wafers of microprocessors and GPUs at 7nm or smaller nodes (annual report)",
+          "text": "7nm以下のマイクロプロセッサ・GPUのウエハーは全てTSMCに依存",
+          "text_en": "Relies on TSMC for all wafers of microprocessors and GPUs at 7nm or smaller nodes",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -53,8 +53,8 @@
         },
         {
           "type": "tie",
-          "text": "TSMC会長が「AMDはTSMC N2とアリゾナ工場の主要なHPC顧客」と発言(2025年4月)",
-          "text_en": "TSMC’s chairman said AMD is a lead HPC customer for TSMC N2 and the Arizona fab (April 2025)",
+          "text": "TSMC会長が「AMDはTSMC N2とアリゾナ工場の主要なHPC顧客」と発言",
+          "text_en": "TSMC’s chairman said AMD is a lead HPC customer for TSMC N2 and the Arizona fab",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -135,8 +135,8 @@
         },
         {
           "type": "tie",
-          "text": "Instinct MI455X向けHBM4の主要供給で整合する覚書(MOU)を締結(2026年3月18日)",
-          "text_en": "MOU to align on primary HBM4 supply for AMD Instinct MI455X (March 18, 2026)",
+          "text": "Instinct MI455X向けHBM4の主要供給で整合する覚書(MOU)を締結",
+          "text_en": "MOU to align on primary HBM4 supply for AMD Instinct MI455X",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -160,8 +160,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Heliosラックのスケールアップ向けネットワークスイッチの開発・設計・製造を担当(2026年3月)",
-          "text_en": "Will handle R&D, design and manufacturing of scale-up networking switches for the AMD Helios rack (March 2026)",
+          "text": "Heliosラックのスケールアップ向けネットワークスイッチの開発・設計・製造を担当",
+          "text_en": "Will handle R&D, design and manufacturing of scale-up networking switches for the AMD Helios rack",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -185,8 +185,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "最大6GWのAMD Instinct GPUを複数世代にわたって導入する契約(2026年2月24日)",
-          "text_en": "6-gigawatt agreement to power Meta AI infrastructure across multiple generations of AMD Instinct GPUs (February 24, 2026)",
+          "text": "最大6GWのAMD Instinct GPUを複数世代にわたって導入する契約",
+          "text_en": "6-gigawatt agreement to power Meta AI infrastructure across multiple generations of AMD Instinct GPUs",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -225,8 +225,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AzureにAMD Helios(ラック型AI基盤)とEPYCを導入(2026年7月20日)",
-          "text_en": "Microsoft will deploy AMD Helios for frontier-model AI inference on Azure and add AMD EPYC (July 20, 2026)",
+          "text": "AzureにAMD Helios(ラック型AI基盤)とEPYCを導入",
+          "text_en": "Microsoft will deploy AMD Helios for frontier-model AI inference on Azure and add AMD EPYC",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -240,8 +240,8 @@
         },
         {
           "type": "down",
-          "text": "Xbox Series S・XにAMDのセミカスタムSoCを採用(年次報告)",
-          "text_en": "AMD semi-custom SoCs power the Xbox Series S and X (annual report)",
+          "text": "Xbox Series S・XにAMDのセミカスタムSoCを採用",
+          "text_en": "AMD semi-custom SoCs power the Xbox Series S and X",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -263,8 +263,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "PlayStation 5にAMDのセミカスタムSoCを採用(年次報告)",
-          "text_en": "AMD semi-custom SoCs power the PlayStation 5 (annual report)",
+          "text": "PlayStation 5にAMDのセミカスタムSoCを採用",
+          "text_en": "AMD semi-custom SoCs power the PlayStation 5",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -286,8 +286,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "OCIがInstinct MI450搭載のAIスーパークラスターの立ち上げパートナーに(2025年10月14日)",
-          "text_en": "OCI will be a launch partner for a public AI supercluster powered by AMD Instinct MI450 (October 14, 2025)",
+          "text": "OCIがInstinct MI450搭載のAIスーパークラスターの立ち上げパートナーに",
+          "text_en": "OCI will be a launch partner for a public AI supercluster powered by AMD Instinct MI450",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -311,8 +311,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AMD Helios(ラック型AI基盤)を最初に採用するシステムベンダーの1社(2025年12月2日)",
-          "text_en": "Among the first system providers to adopt AMD Helios (December 2, 2025)",
+          "text": "AMD Helios(ラック型AI基盤)を最初に採用するシステムベンダーの1社",
+          "text_en": "Among the first system providers to adopt AMD Helios",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -334,8 +334,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Nutanixの普通株に1.5億ドルを出資し、共同開発に最大1億ドルを拠出(2026年2月25日)",
-          "text_en": "$150M strategic investment in Nutanix common stock and up to $100M for joint engineering (February 25, 2026)",
+          "text": "Nutanixの普通株に1.5億ドルを出資し、共同開発に最大1億ドルを拠出",
+          "text_en": "$150M strategic investment in Nutanix common stock and up to $100M for joint engineering",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -357,8 +357,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AMD・Cisco・HUMAINで、2030年までに最大1GWのAIインフラを展開する合弁を計画(2025年11月19日)",
-          "text_en": "AMD, Cisco and HUMAIN plan a joint venture to deploy up to 1GW of AI infrastructure by 2030 (November 19, 2025)",
+          "text": "AMD・Cisco・HUMAINで、2030年までに最大1GWのAIインフラを展開する合弁を計画",
+          "text_en": "AMD, Cisco and HUMAIN plan a joint venture to deploy up to 1GW of AI infrastructure by 2030",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -382,8 +382,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ZT Manufacturing事業をSanminaへ24億ドルの現金とSanmina株で売却(2025年10月完了)",
-          "text_en": "Sold the ZT Manufacturing business to Sanmina for $2.4B in cash plus Sanmina shares (completed October 2025)",
+          "text": "ZT Manufacturing事業をSanminaへ24億ドルの現金とSanmina株で売却",
+          "text_en": "Sold the ZT Manufacturing business to Sanmina for $2.4B in cash plus Sanmina shares",
           "source": {
             "label": "AMD 10-Q(2026年第2四半期)",
             "label_en": "AMD 10-Q (Q2 2026)",
@@ -559,8 +559,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AMD Instinct GPUを6GW分導入する、複数年・複数世代の正式契約(2025年10月6日)",
-          "text_en": "Definitive multi-year, multi-generation agreement to deploy 6GW of AMD Instinct GPUs (October 6, 2025)",
+          "text": "AMD Instinct GPUを6GW分導入する、複数年・複数世代の正式契約",
+          "text_en": "Definitive multi-year, multi-generation agreement to deploy 6GW of AMD Instinct GPUs",
           "source": {
             "label": "AMD IR の発表",
             "label_en": "AMD IR press release",
@@ -599,8 +599,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AMD Helios(ラック型AI基盤)で、AMD Instinct MI450 GPUを最大2GW分導入(2026年7月22日)",
-          "text_en": "Will deploy up to 2GW of AMD Instinct MI450 GPUs in AMD Helios racks (July 22, 2026)",
+          "text": "AMD Helios(ラック型AI基盤)で、AMD Instinct MI450 GPUを最大2GW分導入",
+          "text_en": "Will deploy up to 2GW of AMD Instinct MI450 GPUs in AMD Helios racks",
           "source": {
             "label": "AMD IR の発表",
             "label_en": "AMD IR press release",
@@ -614,8 +614,8 @@
         },
         {
           "type": "tie",
-          "text": "Anthropicに最大50億ドルを戦略的に出資すると約束(2026年7月22日)",
-          "text_en": "Committed to a strategic equity investment of up to $5B in Anthropic (July 22, 2026)",
+          "text": "Anthropicに最大50億ドルを戦略的に出資すると約束",
+          "text_en": "Committed to a strategic equity investment of up to $5B in Anthropic",
           "source": {
             "label": "AMD IR の発表",
             "label_en": "AMD IR press release",
@@ -639,8 +639,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IBMとAMDが、量子コンピューターとHPCを組み合わせた量子中心のスーパーコンピューター構想を発表(2025年8月、AMD発表)",
-          "text_en": "IBM and AMD announced plans to develop quantum-centric supercomputing architectures combining quantum computers and HPC (August 2025, AMD release)",
+          "text": "IBMとAMDが、量子コンピューターとHPCを組み合わせた量子中心のスーパーコンピューター構想を発表",
+          "text_en": "IBM and AMD announced plans to develop quantum-centric supercomputing architectures combining quantum computers and HPC",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -664,8 +664,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Nokia Cloud Platformに第5世代AMD EPYCプロセッサーを採用(2025年6月、AMD発表)",
-          "text_en": "Nokia included 5th Gen AMD EPYC processors to power the Nokia Cloud Platform (June 2025, AMD release)",
+          "text": "Nokia Cloud Platformに第5世代AMD EPYCプロセッサーを採用",
+          "text_en": "Nokia included 5th Gen AMD EPYC processors to power the Nokia Cloud Platform",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -687,8 +687,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Dell Pro法人向けPCにAMD Ryzen AI PROプロセッサーを搭載(2025年1月、AMD発表)",
-          "text_en": "Dell Pro commercial PCs are powered by AMD Ryzen AI PRO processors (January 2025, AMD release)",
+          "text": "Dell Pro法人向けPCにAMD Ryzen AI PROプロセッサーを搭載",
+          "text_en": "Dell Pro commercial PCs are powered by AMD Ryzen AI PRO processors",
           "source": {
             "label": "AMD ニュースルーム の発表",
             "label_en": "AMD newsroom press release",
@@ -710,8 +710,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AMD EPYCとAMD Instinct MI350 GPUに対応する製品を発表し、AMD Heliosへの対応も表明(2026年度、10-K)",
-          "text_en": "Super Micro introduced products supporting AMD EPYC processors and AMD Instinct MI350 GPUs and announced support for AMD Helios (FY2026, 10-K)",
+          "text": "AMD EPYCとAMD Instinct MI350 GPUに対応する製品を発表し、AMD Heliosへの対応も表明",
+          "text_en": "Super Micro introduced products supporting AMD EPYC processors and AMD Instinct MI350 GPUs and announced support for AMD Helios",
           "source": {
             "label": "Super Micro 10-K(2026年度)",
             "label_en": "Super Micro 10-K (FY2026)",

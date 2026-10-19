@@ -44,8 +44,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "GlobalFoundriesがMarvellの光製品向けに、Burlington工場のSiGe生産能力を増やす複数年契約を拡大(2026年9月17日、GlobalFoundries発表)",
-          "text_en": "GlobalFoundries expanded a multi-year agreement to increase SiGe capacity at GF Burlington for Marvell optical products (September 17, 2026, GlobalFoundries press release)",
+          "text": "GlobalFoundriesがMarvellの光製品向けに、Burlington工場のSiGe生産能力を増やす複数年契約を拡大",
+          "text_en": "GlobalFoundries expanded a multi-year agreement to increase SiGe capacity at GF Burlington for Marvell optical products",
           "source": {
             "label": "GlobalFoundries の発表",
             "label_en": "GlobalFoundries press release",
@@ -67,8 +67,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Towerが、Marvellとの提携で、500万個を超えるコヒーレント光フォトニックICをMarvellのグローバル顧客向けに出荷(2026年6月18日、6-K)",
-          "text_en": "Tower, in partnership with Marvell, shipped over five million coherent photonic ICs to Marvell global customers (June 18, 2026, 6-K)",
+          "text": "Towerが、Marvellとの提携で、500万個を超えるコヒーレント光フォトニックICをMarvellのグローバル顧客向けに出荷",
+          "text_en": "Tower, in partnership with Marvell, shipped over five million coherent photonic ICs to Marvell global customers",
           "source": {
             "label": "Tower Semiconductor 6-K(の発表)",
             "label_en": "Tower Semiconductor 6-K (press release)",
@@ -90,8 +90,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "MicrosoftがAzure Cloud HSM向けにMarvellのLiquidSecurity HSMを採用(2025年8月18日、Marvell発表)",
-          "text_en": "Microsoft selected Marvell LiquidSecurity HSMs for Azure Cloud HSM (August 18, 2025, Marvell press release)",
+          "text": "MicrosoftがAzure Cloud HSM向けにMarvellのLiquidSecurity HSMを採用",
+          "text_en": "Microsoft selected Marvell LiquidSecurity HSMs for Azure Cloud HSM",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -103,8 +103,8 @@
         },
         {
           "type": "down",
-          "text": "MicrosoftがAzure内でMarvellのLiquidSecurity HSMを幅広く利用(2024年8月6日、Marvell発表)",
-          "text_en": "Microsoft extensively uses Marvell LiquidSecurity HSMs within Azure (August 6, 2024, Marvell press release)",
+          "text": "MicrosoftがAzure内でMarvellのLiquidSecurity HSMを幅広く利用",
+          "text_en": "Microsoft extensively uses Marvell LiquidSecurity HSMs within Azure",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -116,8 +116,8 @@
         },
         {
           "type": "tie",
-          "text": "Marvell、Microsoft、UtimacoがMarvell LiquidSecurity技術を組み合わせたAzure Payment HSM v2を提供(2026年9月17日、Marvell発表)",
-          "text_en": "Marvell, Microsoft and Utimaco delivered Azure Payment HSM v2 combining Marvell LiquidSecurity technology (September 17, 2026, Marvell press release)",
+          "text": "Marvell、Microsoft、UtimacoがMarvell LiquidSecurity技術を組み合わせたAzure Payment HSM v2を提供",
+          "text_en": "Marvell, Microsoft and Utimaco delivered Azure Payment HSM v2 combining Marvell LiquidSecurity technology",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Fortinetが事業に重要な部品として、Marvellのネットワーク・無線チップに依存している(2025年度、10-K)",
-          "text_en": "Fortinet relies on Marvell network and wireless chips for components important to its business (FY2025 10-K)",
+          "text": "Fortinetが事業に重要な部品として、Marvellのネットワーク・無線チップに依存している",
+          "text_en": "Fortinet relies on Marvell network and wireless chips for components important to its business",
           "source": {
             "label": "Fortinet 10-K(2025年度)",
             "label_en": "Fortinet 10-K (FY2025)",
@@ -162,8 +162,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "LantronixがMarvellを利用し、台湾での大規模集積チップの製造を管理している(2026年度、10-K)",
-          "text_en": "Lantronix uses Marvell to manage manufacture of its large-scale integration chips in Taiwan (FY2026 10-K)",
+          "text": "LantronixがMarvellを利用し、台湾での大規模集積チップの製造を管理している",
+          "text_en": "Lantronix uses Marvell to manage manufacture of its large-scale integration chips in Taiwan",
           "source": {
             "label": "Lantronix 10-K(2026年度)",
             "label_en": "Lantronix 10-K (FY2026)",
@@ -185,8 +185,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAとMarvellがNVLink Fusionによる戦略的提携を発表し、NVIDIAがMarvellに20億ドルを出資(2026年3月31日、8-K)",
-          "text_en": "NVIDIA and Marvell announced a strategic partnership via NVLink Fusion, and NVIDIA invested $2 billion in Marvell (March 31, 2026, 8-K Ex. 99.1)",
+          "text": "NVIDIAとMarvellがNVLink Fusionによる戦略的提携を発表し、NVIDIAがMarvellに20億ドルを出資",
+          "text_en": "NVIDIA and Marvell announced a strategic partnership via NVLink Fusion, and NVIDIA invested $2 billion in Marvell",
           "source": {
             "label": "NVIDIA/Marvell joint の発表",
             "label_en": "NVIDIA/Marvell joint press release (8-K Ex. 99.1)",
@@ -198,8 +198,8 @@
         },
         {
           "type": "tie",
-          "text": "MarvellはNVIDIAのエコシステム内でカスタムXPUとNVLink Fusion対応のスケールアップ・ネットワーキングを提供(2026年3月31日、Marvell発表)",
-          "text_en": "Marvell will provide custom XPUs and NVLink Fusion-compatible scale-up networking within the NVIDIA ecosystem (March 31, 2026, Marvell press release)",
+          "text": "MarvellはNVIDIAのエコシステム内でカスタムXPUとNVLink Fusion対応のスケールアップ・ネットワーキングを提供",
+          "text_en": "Marvell will provide custom XPUs and NVLink Fusion-compatible scale-up networking within the NVIDIA ecosystem",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -211,8 +211,8 @@
         },
         {
           "type": "tie",
-          "text": "MarvellがNVIDIAと組み、Marvellのカスタム・クラウド向けシリコンを使う顧客にNVLink Fusionを提供(2025年5月19日、Marvell発表)",
-          "text_en": "Marvell teamed with NVIDIA to offer NVLink Fusion to customers using Marvell custom cloud platform silicon (May 19, 2025, Marvell press release)",
+          "text": "MarvellがNVIDIAと組み、Marvellのカスタム・クラウド向けシリコンを使う顧客にNVLink Fusionを提供",
+          "text_en": "Marvell teamed with NVIDIA to offer NVLink Fusion to customers using Marvell custom cloud platform silicon",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -224,8 +224,8 @@
         },
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、Marvellを競合として挙げている(2026年度、10-K)",
-          "text_en": "NVIDIA’s FY2026 10-K names Marvell as a competitor",
+          "text": "NVIDIAの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -237,8 +237,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてNVIDIAを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names NVIDIA among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -260,8 +260,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellとAWSが5年間の契約で戦略的関係を拡大し、EDAでのAWSクラウド利用を含む(2024年12月2日、Marvell発表)",
-          "text_en": "Marvell and AWS expanded their strategic relationship via a five-year agreement, including use of AWS cloud for EDA (December 2, 2024, Marvell press release)",
+          "text": "MarvellとAWSが5年間の契約で戦略的関係を拡大し、EDAでのAWSクラウド利用を含む",
+          "text_en": "Marvell and AWS expanded their strategic relationship via a five-year agreement, including use of AWS cloud for EDA",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -285,8 +285,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Marvell、Microsoft、Oracleが統合HSMの標準化に向けたOCPワーキンググループを設立(2026年10月13日、Marvell発表)",
-          "text_en": "Marvell, Microsoft and Oracle formed an OCP working group to standardize an integrated HSM (October 13, 2026, Marvell press release)",
+          "text": "Marvell、Microsoft、Oracleが統合HSMの標準化に向けたOCPワーキンググループを設立",
+          "text_en": "Marvell, Microsoft and Oracle formed an OCP working group to standardize an integrated HSM",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -308,8 +308,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellとLumentumが、Marvellの光DSPとLumentumの光回路スイッチの相互運用をデモ(2026年3月16日、Marvell発表)",
-          "text_en": "Marvell and Lumentum demonstrated Marvell optical DSPs interoperating with Lumentum optical circuit switching (March 16, 2026, Marvell press release)",
+          "text": "MarvellとLumentumが、Marvellの光DSPとLumentumの光回路スイッチの相互運用をデモ",
+          "text_en": "Marvell and Lumentum demonstrated Marvell optical DSPs interoperating with Lumentum optical circuit switching",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -333,8 +333,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Marvell、Lumentum、CoherentがMarvell Orion DSPを使った相互運用可能な800G ZR/ZR+プラガブルモジュールをデモ(2024年9月5日、Marvell発表)",
-          "text_en": "Marvell, Lumentum and Coherent demonstrated interoperable 800G ZR/ZR+ pluggable modules using the Marvell Orion DSP (September 5, 2024, Marvell press release)",
+          "text": "Marvell、Lumentum、CoherentがMarvell Orion DSPを使った相互運用可能な800G ZR/ZR+プラガブルモジュールをデモ",
+          "text_en": "Marvell, Lumentum and Coherent demonstrated interoperable 800G ZR/ZR+ pluggable modules using the Marvell Orion DSP",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -358,8 +358,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellがMicronとカスタムXPU向けのカスタムHBMで協業(2024年12月10日、Marvell発表)",
-          "text_en": "Marvell collaborates with Micron on custom HBM solutions for custom XPUs (December 10, 2024, Marvell press release)",
+          "text": "MarvellがMicronとカスタムXPU向けのカスタムHBMで協業",
+          "text_en": "Marvell collaborates with Micron on custom HBM solutions for custom XPUs",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -383,8 +383,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Marvellがサムスン電子とカスタムXPU向けのカスタムHBMで協業(2024年12月10日、Marvell発表)",
-          "text_en": "Marvell collaborates with Samsung Electronics on custom HBM solutions for custom XPUs (December 10, 2024, Marvell press release)",
+          "text": "Marvellがサムスン電子とカスタムXPU向けのカスタムHBMで協業",
+          "text_en": "Marvell collaborates with Samsung Electronics on custom HBM solutions for custom XPUs",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -408,8 +408,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellがSKハイニックスとカスタムXPU向けのカスタムHBMで協業(2024年12月10日、Marvell発表)",
-          "text_en": "Marvell collaborates with SK hynix on custom HBM solutions for custom XPUs (December 10, 2024, Marvell press release)",
+          "text": "MarvellがSKハイニックスとカスタムXPU向けのカスタムHBMで協業",
+          "text_en": "Marvell collaborates with SK hynix on custom HBM solutions for custom XPUs",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -433,8 +433,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellがAMDと協業し、Structera CXL製品をAMD EPYC CPUでテスト(2025年4月23日、Marvell発表)",
-          "text_en": "Marvell collaborated with AMD to test Structera CXL products with AMD EPYC CPUs (April 23, 2025, Marvell press release)",
+          "text": "MarvellがAMDと協業し、Structera CXL製品をAMD EPYC CPUでテスト",
+          "text_en": "Marvell collaborated with AMD to test Structera CXL products with AMD EPYC CPUs",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -448,8 +448,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてAMDを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names AMD among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -461,8 +461,8 @@
         },
         {
           "type": "rival",
-          "text": "AMDが年次報告で、Marvellを競合として挙げている(2026年2月、10-K)",
-          "text_en": "AMD’s 10-K (February 2026) names Marvell as a competitor",
+          "text": "AMDの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -484,8 +484,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellがIntelと協業し、Structera CXL製品をIntel Xeonプラットフォームでテスト(2025年4月23日、Marvell発表)",
-          "text_en": "Marvell collaborated with Intel to test Structera CXL products with Intel Xeon platforms (April 23, 2025, Marvell press release)",
+          "text": "MarvellがIntelと協業し、Structera CXL製品をIntel Xeonプラットフォームでテスト",
+          "text_en": "Marvell collaborated with Intel to test Structera CXL products with Intel Xeon platforms",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -499,8 +499,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてIntelを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Intel among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -522,8 +522,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellがAutomotive Ethernet事業をインフィニオンに25億ドルの現金で売却(2025年8月14日、Marvell発表)",
-          "text_en": "Marvell sold its Automotive Ethernet business to Infineon for $2.5 billion in cash (August 14, 2025, Marvell press release)",
+          "text": "MarvellがAutomotive Ethernet事業をインフィニオンに25億ドルの現金で売却",
+          "text_en": "Marvell sold its Automotive Ethernet business to Infineon for $2.5 billion in cash",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -547,7 +547,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rambusが四半期報告で、Marvellを特許のライセンス先の1社として挙げている(2026年度第2四半期、10-Q)",
+          "text": "Rambusが四半期報告で、Marvellを特許のライセンス先の1社として挙げている",
           "text_en": "Rambus’ Q2 2026 10-Q lists Marvell among companies that have licensed its patents",
           "source": {
             "label": "Rambus 10-Q(2026年第2四半期)",
@@ -560,8 +560,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてRambusを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Rambus among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -583,8 +583,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Armが、Armコンピュート・プラットフォームのシリコンへの拡大を支える業界リーダーの1社としてMarvellを挙げている(2026年3月24日、6-K)",
-          "text_en": "Arm cites Marvell among industry leaders supporting expansion of the Arm compute platform into silicon (March 24, 2026, 6-K)",
+          "text": "Armが、Armコンピュート・プラットフォームのシリコンへの拡大を支える業界リーダーの1社としてMarvellを挙げている",
+          "text_en": "Arm cites Marvell among industry leaders supporting expansion of the Arm compute platform into silicon",
           "source": {
             "label": "Arm 6-K",
             "label_en": "Arm 6-K (Ex. 99.1)",
@@ -608,8 +608,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてBroadcomを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Broadcom among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -631,8 +631,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてアルチップ・テクノロジーズを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Alchip Technologies among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -654,8 +654,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてAstera Labsを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Astera Labs among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -667,8 +667,8 @@
         },
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、Marvellを競合として挙げている(2025年度、10-K)",
-          "text_en": "Astera Labs’s FY2025 10-K names Marvell as a competitor",
+          "text": "Astera Labsの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -690,8 +690,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてCisco Systemsを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Cisco Systems among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -713,8 +713,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてCredo Technology Groupを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Credo Technology Group among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -726,8 +726,8 @@
         },
         {
           "type": "rival",
-          "text": "Credo Technology Groupが年次報告で、Marvellを競合として挙げている(2026年度、10-K)",
-          "text_en": "Credo Technology Group’s FY2026 10-K names Marvell as a competitor",
+          "text": "Credo Technology Groupの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -749,8 +749,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてGlobal Unichipを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Global Unichip among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -772,8 +772,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてMACOM Technology Solutionsを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names MACOM Technology Solutions among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -785,8 +785,8 @@
         },
         {
           "type": "rival",
-          "text": "MACOM Technology Solutionsが年次報告で、Marvellを競合として挙げている(2025年度、10-K)",
-          "text_en": "MACOM Technology Solutions’s FY2025 10-K names Marvell as a competitor",
+          "text": "MACOM Technology Solutionsの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "MACOM 10-K(2025年度)",
             "label_en": "MACOM 10-K (FY2025)",
@@ -808,8 +808,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてMediaTekを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names MediaTek among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -831,8 +831,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてMicrochip Technologyを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Microchip Technology among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -854,8 +854,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてMontage Technologyを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Montage Technology among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -877,8 +877,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてNXP Semiconductorsを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names NXP Semiconductors among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -900,8 +900,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社として群聯電子(Phison)を挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Phison Electronics among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -923,8 +923,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてQualcommを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Qualcomm among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -946,8 +946,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてRealtek Semiconductorを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Realtek Semiconductor among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -969,8 +969,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてSemtechを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Semtech among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -992,8 +992,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてSilicon Motion Technologyを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Silicon Motion Technology among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -1015,8 +1015,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業の1社としてソシオネクストを挙げている(2026年度、10-K)",
-          "text_en": "Marvell’s FY2026 10-K names Socionext among companies that compete directly with its businesses",
+          "text": "Marvellの年次報告が、競合として挙げている",
+          "text_en": "Named as a direct competitor in Marvell’s annual report",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -1038,8 +1038,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearが年次報告で、Marvellを競合として挙げている(2025年度、10-K)",
-          "text_en": "MaxLinear’s FY2025 10-K names Marvell as a competitor",
+          "text": "MaxLinearの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "MaxLinear 10-K(2025年度)",
             "label_en": "MaxLinear 10-K (FY2025)",
@@ -1061,8 +1061,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cienaが年次報告で、Marvellを競合として挙げている(2025年度、10-K)",
-          "text_en": "Ciena’s FY2025 10-K names Marvell as a competitor",
+          "text": "Cienaの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "Ciena 10-K(2025年度)",
             "label_en": "Ciena 10-K (FY2025)",
@@ -1084,8 +1084,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CEVAが年次報告で、Marvellを競合として挙げている(2025年度、10-K)",
-          "text_en": "CEVA’s FY2025 10-K names Marvell as a competitor",
+          "text": "CEVAの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "CEVA 10-K(2025年度)",
             "label_en": "CEVA 10-K (FY2025)",
@@ -1107,8 +1107,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Silicomが年次報告で、Marvellを競合として挙げている(2025年度、20-F)",
-          "text_en": "Silicom’s FY2025 20-F names Marvell as a competitor",
+          "text": "Silicomの年次報告が、Marvellを競合として挙げている",
+          "text_en": "Names Marvell as a competitor in its annual report",
           "source": {
             "label": "Silicom 20-F(2025年度)",
             "label_en": "Silicom 20-F (FY2025)",

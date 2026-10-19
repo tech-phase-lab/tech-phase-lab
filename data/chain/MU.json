@@ -140,8 +140,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "台湾・苗栗県銅鑼のウエハー製造工場をPowerchipから取得(2026年3月完了)",
-          "text_en": "Completed the acquisition of a wafer fab in Tongluo, Miaoli County, Taiwan from Powerchip (March 2026)",
+          "text": "台湾・苗栗県銅鑼のウエハー製造工場をPowerchipから取得",
+          "text_en": "Completed the acquisition of a wafer fab in Tongluo, Miaoli County, Taiwan from Powerchip",
           "source": {
             "label": "Micron 10-K(2026年度)",
             "label_en": "Micron 10-K (FY2026)",

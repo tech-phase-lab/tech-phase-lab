@@ -53,7 +53,8 @@ const { createElement } = require('react');
 test('the map shows suppliers first, no range buttons, a card per company with sources behind a tap', () => {
   for (const lang of ['ja', 'en']) {
     const html = renderToStaticMarkup(createElement(StockChainMap, { data, lang }));
-    assert.equal((html.match(/<button/g) ?? []).length, 23);
+    // 22 company chips + the root, minus the ones folded behind a row's "＋" chip (plus that chip).
+    assert.equal((html.match(/<button/g) ?? []).length, 21);
     assert.ok(!html.includes('直接の関係') && !html.includes('2段先まで'));
     assert.equal((html.match(/<details/g) ?? []).length, 25);
     assert.ok(html.indexOf(lang === 'ja' ? '供給元(上流)' : 'Suppliers (upstream)') < html.indexOf('NVDA</b>'));

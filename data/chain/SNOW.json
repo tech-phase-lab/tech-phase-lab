@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AWSと複数年の戦略的協業を結び、過去最大となる60億ドルの複数年インフラ利用コミットメントを行う(2026年5月、プレスリリース)",
-          "text_en": "Signed a multi-year strategic collaboration with AWS, including a $6B multi-year infrastructure commitment, its largest to date (May 2026, press release)",
+          "text": "AWSと複数年の戦略的協業を結び、過去最大となる60億ドルの複数年インフラ利用コミットメントを行う",
+          "text_en": "Signed a multi-year strategic collaboration with AWS, including a $6B multi-year infrastructure commitment, its largest to date",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (AWS collaboration)",
@@ -54,8 +54,8 @@
         },
         {
           "type": "up",
-          "text": "SnowflakeのプラットフォームはAWSなどのパブリッククラウド上で動いており、事業の大部分がAWS上にある(2026年9月、10-Q)",
-          "text_en": "Snowflake’s platform runs on public cloud infrastructure including AWS, and a substantial majority of its business runs on AWS (September 2026, 10-Q)",
+          "text": "SnowflakeのプラットフォームはAWSなどのパブリッククラウド上で動いており、事業の大部分がAWS上にある",
+          "text_en": "Snowflake’s platform runs on public cloud infrastructure including AWS, and a substantial majority of its business runs on AWS",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -69,8 +69,8 @@
         },
         {
           "type": "rival",
-          "text": "Snowflakeが四半期報告で、全ての市場で競合する大手パブリッククラウド事業者としてAWSを挙げている(2026年9月、10-Q)",
-          "text_en": "Snowflake’s 10-Q names AWS as a large public cloud provider that competes in all of its markets (September 2026)",
+          "text": "Snowflakeが四半期報告で、全ての市場で競合する大手パブリッククラウド事業者としてAWSを挙げている",
+          "text_en": "Snowflake’s 10-Q names AWS as a large public cloud provider that competes in all of its markets",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -94,8 +94,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "SnowflakeのプラットフォームはMicrosoft Azureのパブリッククラウド上で動いている(2026年9月、10-Q)",
-          "text_en": "Snowflake’s platform operates on Microsoft Azure public cloud infrastructure (September 2026, 10-Q)",
+          "text": "SnowflakeのプラットフォームはMicrosoft Azureのパブリッククラウド上で動いている",
+          "text_en": "Snowflake’s platform operates on Microsoft Azure public cloud infrastructure",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -107,8 +107,8 @@
         },
         {
           "type": "tie",
-          "text": "Microsoftとの提携を拡大し、Azure OpenAI ServiceをCortex AIに、Cortex AgentsをMicrosoft 365 Copilotに統合(2025年2月26日、プレスリリース)",
-          "text_en": "Expanded the Microsoft partnership, integrating Azure OpenAI Service into Cortex AI and Cortex Agents into Microsoft 365 Copilot (February 26, 2025, press release)",
+          "text": "Microsoftとの提携を拡大し、Azure OpenAI ServiceをCortex AIに、Cortex AgentsをMicrosoft 365 Copilotに統合",
+          "text_en": "Expanded the Microsoft partnership, integrating Azure OpenAI Service into Cortex AI and Cortex Agents into Microsoft 365 Copilot",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Microsoft partnership)",
@@ -120,8 +120,8 @@
         },
         {
           "type": "rival",
-          "text": "Snowflakeが四半期報告で、全ての市場で競合する大手パブリッククラウド事業者としてMicrosoft Azureを挙げている(2026年9月、10-Q)",
-          "text_en": "Snowflake’s 10-Q names Microsoft Azure as a large public cloud provider that competes in all of its markets (September 2026)",
+          "text": "Snowflakeが四半期報告で、全ての市場で競合する大手パブリッククラウド事業者としてMicrosoft Azureを挙げている",
+          "text_en": "Snowflake’s 10-Q names Microsoft Azure as a large public cloud provider that competes in all of its markets",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -145,8 +145,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "SnowflakeのプラットフォームはGoogle Cloud Platformのパブリッククラウド上で動いている(2026年9月、10-Q)",
-          "text_en": "Snowflake’s platform operates on Google Cloud Platform public cloud infrastructure (September 2026, 10-Q)",
+          "text": "SnowflakeのプラットフォームはGoogle Cloud Platformのパブリッククラウド上で動いている",
+          "text_en": "Snowflake’s platform operates on Google Cloud Platform public cloud infrastructure",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -160,8 +160,8 @@
         },
         {
           "type": "tie",
-          "text": "Google Cloudとの協業を拡大し、Gemini 3をCortex AIに組み込み、共同で市場開拓を進める(2025年1月6日、プレスリリース)",
-          "text_en": "Expanded the collaboration with Google Cloud, bringing Gemini 3 natively into Cortex AI with joint go-to-market (January 6, 2025, press release)",
+          "text": "Google Cloudとの協業を拡大し、Gemini 3をCortex AIに組み込み、共同で市場開拓を進める",
+          "text_en": "Expanded the collaboration with Google Cloud, bringing Gemini 3 natively into Cortex AI with joint go-to-market",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Google Cloud Gemini 3)",
@@ -175,8 +175,8 @@
         },
         {
           "type": "rival",
-          "text": "Snowflakeが四半期報告で、全ての市場で競合する大手パブリッククラウド事業者としてGoogle Cloud Platformを挙げている(2026年9月、10-Q)",
-          "text_en": "Snowflake’s 10-Q names Google Cloud Platform as a large public cloud provider that competes in all of its markets (September 2026)",
+          "text": "Snowflakeが四半期報告で、全ての市場で競合する大手パブリッククラウド事業者としてGoogle Cloud Platformを挙げている",
+          "text_en": "Snowflake’s 10-Q names Google Cloud Platform as a large public cloud provider that competes in all of its markets",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -200,8 +200,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Anthropicと複数年・2億ドルの契約を結び、ClaudeモデルをSnowflake Cortex AIで提供し、共同で市場開拓を進める(2025年12月3日、プレスリリース)",
-          "text_en": "Signed a multi-year, $200M agreement bringing Claude models to Snowflake Cortex AI with joint go-to-market (December 3, 2025, press release)",
+          "text": "Anthropicと複数年・2億ドルの契約を結び、ClaudeモデルをSnowflake Cortex AIで提供し、共同で市場開拓を進める",
+          "text_en": "Signed a multi-year, $200M agreement bringing Claude models to Snowflake Cortex AI with joint go-to-market",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Anthropic partnership)",
@@ -215,8 +215,8 @@
         },
         {
           "type": "up",
-          "text": "Anthropicなどの先端AIモデル提供企業のサービスに依存しており、その価格が費用と粗利益率に影響する(2026年9月、10-Q)",
-          "text_en": "Relies on frontier AI model providers such as Anthropic, whose pricing influences its costs and gross margins (September 2026, 10-Q)",
+          "text": "Anthropicなどの先端AIモデル提供企業のサービスに依存しており、その価格が費用と粗利益率に影響する",
+          "text_en": "Relies on frontier AI model providers such as Anthropic, whose pricing influences its costs and gross margins",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -230,8 +230,8 @@
         },
         {
           "type": "tie",
-          "text": "Summit 26で、Cortex AIでのClaudeの採用拡大を報告。ClaudeがSnowflake Cortex CodeとSnowflake Intelligenceを支えている(2026年6月、プレスリリース)",
-          "text_en": "At Summit 26, reported growing adoption of Claude in Cortex AI, with Claude powering Snowflake Cortex Code and Snowflake Intelligence (June 2026, press release)",
+          "text": "Summit 26で、Cortex AIでのClaudeの採用拡大を報告。ClaudeがSnowflake Cortex CodeとSnowflake Intelligenceを支えている",
+          "text_en": "At Summit 26, reported growing adoption of Claude in Cortex AI, with Claude powering Snowflake Cortex Code and Snowflake Intelligence",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Summit 26 Anthropic)",
@@ -255,8 +255,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OpenAIと複数年・2億ドルの提携契約を結び、OpenAIのモデルをCortex AIで標準提供する(2026年2月2日、プレスリリース)",
-          "text_en": "Signed a multi-year, $200M partnership making OpenAI models natively available in Cortex AI (February 2, 2026, press release)",
+          "text": "OpenAIと複数年・2億ドルの提携契約を結び、OpenAIのモデルをCortex AIで標準提供する",
+          "text_en": "Signed a multi-year, $200M partnership making OpenAI models natively available in Cortex AI",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (OpenAI partnership)",
@@ -270,8 +270,8 @@
         },
         {
           "type": "up",
-          "text": "OpenAIなどの先端AIモデル提供企業のサービスに依存しており、その価格が費用と粗利益率に影響する(2026年9月、10-Q)",
-          "text_en": "Relies on frontier AI model providers such as OpenAI, whose pricing influences its costs and gross margins (September 2026, 10-Q)",
+          "text": "OpenAIなどの先端AIモデル提供企業のサービスに依存しており、その価格が費用と粗利益率に影響する",
+          "text_en": "Relies on frontier AI model providers such as OpenAI, whose pricing influences its costs and gross margins",
           "source": {
             "label": "Snowflake 10-Q(Q2 2027年度)",
             "label_en": "Snowflake 10-Q (Q2 FY2027)",
@@ -295,8 +295,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "LSEGがSnowflakeとの5年間の全社的な協業を拡大し、利用コミットメントを増やす(2026年9月30日、プレスリリース)",
-          "text_en": "LSEG is increasing its commitment to Snowflake under an expanded five-year enterprise-wide collaboration (September 30, 2026, press release)",
+          "text": "LSEGがSnowflakeとの5年間の全社的な協業を拡大し、利用コミットメントを増やす",
+          "text_en": "LSEG is increasing its commitment to Snowflake under an expanded five-year enterprise-wide collaboration",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (LSEG collaboration)",
@@ -308,8 +308,8 @@
         },
         {
           "type": "up",
-          "text": "SnowflakeがLSEGのRisk Intelligence World-Checkサービスの利用契約顧客となる(2026年9月30日、プレスリリース)",
-          "text_en": "Snowflake became a licensed customer of LSEG Risk Intelligence World-Check services for onboarding and third-party risk management (September 30, 2026, press release)",
+          "text": "SnowflakeがLSEGのRisk Intelligence World-Checkサービスの利用契約顧客となる",
+          "text_en": "Snowflake became a licensed customer of LSEG Risk Intelligence World-Check services for onboarding and third-party risk management",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (LSEG collaboration)",
@@ -331,8 +331,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAのCUDA-Xデータサイエンス・ライブラリ(cuML、cuDF)をSnowflake MLに統合し、GPUによる高速化を実現(2025年11月18日、プレスリリース)",
-          "text_en": "Natively integrated NVIDIA CUDA-X data science libraries (cuML, cuDF) into Snowflake ML for GPU acceleration (November 18, 2025, press release)",
+          "text": "NVIDIAのCUDA-Xデータサイエンス・ライブラリ(cuML、cuDF)をSnowflake MLに統合し、GPUによる高速化を実現",
+          "text_en": "Natively integrated NVIDIA CUDA-X data science libraries (cuML, cuDF) into Snowflake ML for GPU acceleration",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (NVIDIA CUDA-X)",
@@ -354,8 +354,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Palantir FoundryおよびAIPとSnowflake AI Data Cloudのネイティブ統合で提携(2025年10月16日、Snowflakeブログ)",
-          "text_en": "Partnered on a native integration between Palantir Foundry/AIP and the Snowflake AI Data Cloud (October 16, 2025, Snowflake blog)",
+          "text": "Palantir FoundryおよびAIPとSnowflake AI Data Cloudのネイティブ統合で提携",
+          "text_en": "Partnered on a native integration between Palantir Foundry/AIP and the Snowflake AI Data Cloud",
           "source": {
             "label": "Snowflake ブログ",
             "label_en": "Snowflake blog (Palantir partnership)",
@@ -377,8 +377,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SAP Business Data Cloud向けのSAP Snowflakeソリューション拡張を発表し、ゼロコピーのデータ共有に対応(2025年11月4日、プレスリリース)",
-          "text_en": "Announced the SAP Snowflake solution extension for SAP Business Data Cloud with zero-copy data sharing (November 4, 2025, press release)",
+          "text": "SAP Business Data Cloud向けのSAP Snowflakeソリューション拡張を発表し、ゼロコピーのデータ共有に対応",
+          "text_en": "Announced the SAP Snowflake solution extension for SAP Business Data Cloud with zero-copy data sharing",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (SAP collaboration)",
@@ -390,8 +390,8 @@
         },
         {
           "type": "tie",
-          "text": "SAP自身の年次報告が、SAP Snowflakeソリューション拡張とSnowflake向けSAP Business Data Cloud Connectを説明している(2026年2月26日、SAP 20-F)",
-          "text_en": "SAP’s own annual report describes the SAP Snowflake solution extension and SAP Business Data Cloud Connect for Snowflake (February 26, 2026, 20-F)",
+          "text": "SAP自身の年次報告が、SAP Snowflakeソリューション拡張とSnowflake向けSAP Business Data Cloud Connectを説明している",
+          "text_en": "SAP’s own annual report describes the SAP Snowflake solution extension and SAP Business Data Cloud Connect for Snowflake",
           "source": {
             "label": "SAP 20-F(2025年度)",
             "label_en": "SAP 20-F (FY2025)",
@@ -413,8 +413,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ServiceNowとゼロコピー提携を発表し、双方向のデータ共有とSnowflakeからのServiceNowワークフロー起動に対応(2024年10月23日、プレスリリース)",
-          "text_en": "Announced a Zero Copy partnership with ServiceNow for bi-directional data sharing and triggering ServiceNow workflows from Snowflake (October 23, 2024, press release)",
+          "text": "ServiceNowとゼロコピー提携を発表し、双方向のデータ共有とSnowflakeからのServiceNowワークフロー起動に対応",
+          "text_en": "Announced a Zero Copy partnership with ServiceNow for bi-directional data sharing and triggering ServiceNow workflows from Snowflake",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (ServiceNow Zero Copy)",
@@ -438,8 +438,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SalesforceなどのパートナーとともにOpen Semantic Interchangeの取り組みを主導(2025年9月23日、プレスリリース)",
-          "text_en": "Leads the Open Semantic Interchange initiative together with Salesforce and other partners (September 23, 2025, press release)",
+          "text": "SalesforceなどのパートナーとともにOpen Semantic Interchangeの取り組みを主導",
+          "text_en": "Leads the Open Semantic Interchange initiative together with Salesforce and other partners",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Open Semantic Interchange)",
@@ -463,8 +463,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SnowflakeのマネージドMCPサーバー経由でサードパーティのデータが接続されるパートナーとして名前が挙がっている(2025年10月2日、プレスリリース)",
-          "text_en": "Named as a partner whose third-party data is connected through Snowflake’s managed MCP Server (October 2, 2025, press release)",
+          "text": "SnowflakeのマネージドMCPサーバー経由でサードパーティのデータが接続されるパートナーとして名前が挙がっている",
+          "text_en": "Named as a partner whose third-party data is connected through Snowflake’s managed MCP Server",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Cortex AI for Financial Services)",
@@ -486,8 +486,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SnowflakeのマネージドMCPサーバー経由でサードパーティのデータが接続されるパートナーとして名前が挙がっている(2025年10月2日、プレスリリース)",
-          "text_en": "Named as a partner whose third-party data is connected through Snowflake’s managed MCP Server (October 2, 2025, press release)",
+          "text": "SnowflakeのマネージドMCPサーバー経由でサードパーティのデータが接続されるパートナーとして名前が挙がっている",
+          "text_en": "Named as a partner whose third-party data is connected through Snowflake’s managed MCP Server",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Cortex AI for Financial Services)",
@@ -509,8 +509,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Nasdaq(eVestment)が、SnowflakeのマネージドMCPサーバー経由でサードパーティのデータが接続されるパートナーとして名前が挙がっている(2025年10月2日、プレスリリース)",
-          "text_en": "Nasdaq (eVestment) is named as a partner whose third-party data is connected through Snowflake’s managed MCP Server (October 2, 2025, press release)",
+          "text": "Nasdaq(eVestment)が、SnowflakeのマネージドMCPサーバー経由でサードパーティのデータが接続されるパートナーとして名前が挙がっている",
+          "text_en": "Nasdaq (eVestment) is named as a partner whose third-party data is connected through Snowflake’s managed MCP Server",
           "source": {
             "label": "Snowflake の発表",
             "label_en": "Snowflake press release (Cortex AI for Financial Services)",
@@ -532,8 +532,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "C3.aiが年次報告で、自社プラットフォームが統合を通じて照会するデータソースの1つとしてSnowflakeを挙げている(2026年6月24日、10-K)",
-          "text_en": "C3.ai’s 10-K describes Snowflake as one of the data sources its platform queries via integration (June 24, 2026)",
+          "text": "C3.aiが年次報告で、自社プラットフォームが統合を通じて照会するデータソースの1つとしてSnowflakeを挙げている",
+          "text_en": "C3.ai’s 10-K describes Snowflake as one of the data sources its platform queries via integration",
           "source": {
             "label": "C3.ai 10-K(2026年度)",
             "label_en": "C3.ai 10-K (FY2026)",
@@ -557,8 +557,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Teradataが年次報告で、競合としてSnowflakeを挙げている(2026年2月27日、10-K)",
-          "text_en": "Teradata’s 10-K names Snowflake among its competitors (February 27, 2026)",
+          "text": "Teradataが年次報告で、競合としてSnowflakeを挙げている",
+          "text_en": "Teradata’s 10-K names Snowflake among its competitors",
           "source": {
             "label": "Teradata 10-K(2025年度)",
             "label_en": "Teradata 10-K (FY2025)",

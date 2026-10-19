@@ -75,8 +75,8 @@
         },
         {
           "type": "tie",
-          "text": "IntelがHigh-NA EUV「TWINSCAN EXE:5200」の初の発注をASMLへ(2022年1月)",
-          "text_en": "Intel placed its first purchase order for the High-NA EUV TWINSCAN EXE:5200 (January 2022)",
+          "text": "IntelがHigh-NA EUV「TWINSCAN EXE:5200」の初の発注をASMLへ",
+          "text_en": "Intel placed its first purchase order for the High-NA EUV TWINSCAN EXE:5200",
           "source": {
             "label": "ASML Form 6-K(joint の発表 with Intel, 2022-01-19)",
             "label_en": "ASML Form 6-K (joint press release with Intel, 2022-01-19)",
@@ -88,8 +88,8 @@
         },
         {
           "type": "tie",
-          "text": "IntelとASMLが、Intel FoundryでHigh-NA EUVを量産に使っていると発表(2026年9月8日)",
-          "text_en": "Intel Foundry and ASML report High-NA EUV used in high-volume manufacturing at Intel Foundry (September 8, 2026)",
+          "text": "IntelとASMLが、Intel FoundryでHigh-NA EUVを量産に使っていると発表",
+          "text_en": "Intel Foundry and ASML report High-NA EUV used in high-volume manufacturing at Intel Foundry",
           "source": {
             "label": "Intel の発表(Intel Foundry and ASML, 2026-09-08)",
             "label_en": "Intel press release (Intel Foundry and ASML, 2026-09-08)",
@@ -113,8 +113,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "M16工場に、量産向けで業界初となるHigh-NA EUV「EXE:5200B」を導入(2025年9月3日、SK hynixの発表)",
-          "text_en": "Brought the ASML EXE:5200B High-NA EUV system to its M16 fab, an industry first for commercial use (SK hynix, September 3, 2025)",
+          "text": "M16工場に、量産向けで業界初となるHigh-NA EUV「EXE:5200B」を導入",
+          "text_en": "Brought the ASML EXE:5200B High-NA EUV system to its M16 fab, an industry first for commercial use",
           "source": {
             "label": "SK hynix の発表",
             "label_en": "SK hynix press release",
@@ -136,8 +136,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "TSMCの「グリーン製造の優秀サプライヤー賞」を受賞(2025年11月、ASMLの年次報告)",
-          "text_en": "Received the TSMC Supplier Excellence in Green Manufacturing Award (November 2025, per ASML’s annual report)",
+          "text": "TSMCの「グリーン製造の優秀サプライヤー賞」を受賞",
+          "text_en": "Received the TSMC Supplier Excellence in Green Manufacturing Award",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -161,8 +161,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DUV露光装置ではCanonとNikonが主な競合と記載(年次報告)",
-          "text_en": "Names Canon and Nikon as its primary competitors in DUV systems (annual report)",
+          "text": "DUV露光装置ではCanonとNikonが主な競合と記載",
+          "text_en": "Names Canon and Nikon as its primary competitors in DUV systems",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -183,8 +183,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DUV露光装置ではCanonとNikonが主な競合と記載(年次報告)",
-          "text_en": "Names Canon and Nikon as its primary competitors in DUV systems (annual report)",
+          "text": "DUV露光装置ではCanonとNikonが主な競合と記載",
+          "text_en": "Names Canon and Nikon as its primary competitors in DUV systems",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "複雑なパターニングを支えるアプリケーションの競合の例としてApplied Materialsを記載(年次報告)",
-          "text_en": "Named as a competitor in applications supporting complex patterning (annual report)",
+          "text": "複雑なパターニングを支えるアプリケーションの競合の例としてApplied Materialsを記載",
+          "text_en": "Named as a competitor in applications supporting complex patterning",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -229,8 +229,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "複雑なパターニングを支えるアプリケーションの競合の例としてKLAを記載(ASMLの年次報告)",
-          "text_en": "Named as a competitor in applications supporting complex patterning (ASML annual report)",
+          "text": "複雑なパターニングを支えるアプリケーションの競合の例としてKLAを記載",
+          "text_en": "Named as a competitor in applications supporting complex patterning",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -290,7 +290,7 @@
         {
           "type": "up",
           "text": "Ultra Cleanが、2024年12月27日時点の売掛金の10%超を占める3顧客の1つとしてASMLを挙げている(Applied Materials・Lamと並ぶ、10-K)",
-          "text_en": "Ultra Clean reports ASML among three customers each above 10% of gross accounts receivable at December 27, 2024 (with Applied Materials and Lam, 10-K)",
+          "text_en": "Ultra Clean reports ASML among three customers each above 10% of gross accounts receivable at December 27, 2024",
           "source": {
             "label": "Ultra Clean Holdings Form 10-K(2025年度)",
             "label_en": "Ultra Clean Holdings Form 10-K (FY2025)",
@@ -314,8 +314,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ASMLはPhilipsなどと並ぶHighTechXLの主要株主で、DeepTechXL Fund Iの共同設立者・戦略投資家(20-F)",
-          "text_en": "ASML is a main shareholder of HighTechXL together with partners such as Philips, and both are co-initiators and strategic investors in DeepTechXL Fund I (20-F)",
+          "text": "ASMLはPhilipsなどと並ぶHighTechXLの主要株主で、DeepTechXL Fund Iの共同設立者・戦略投資家",
+          "text_en": "ASML is a main shareholder of HighTechXL together with partners such as Philips, and both are co-initiators and strategic investors in DeepTechXL Fund I",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",

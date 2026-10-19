@@ -533,8 +533,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "少なくとも10GW分のNVIDIA製システムをOpenAI向けに導入する基本合意書(2025年9月22日)",
-          "text_en": "Letter of intent to deploy at least 10GW of NVIDIA systems for OpenAI (September 22, 2025)",
+          "text": "少なくとも10GW分のNVIDIA製システムをOpenAI向けに導入する基本合意書",
+          "text_en": "Letter of intent to deploy at least 10GW of NVIDIA systems for OpenAI",
           "source": {
             "label": "NVIDIA ニュースルーム の発表",
             "label_en": "NVIDIA Newsroom press release",
@@ -548,8 +548,8 @@
         },
         {
           "type": "tie",
-          "text": "システムの導入に合わせて、OpenAIに最大1,000億ドルを出資する意向(2025年9月22日)",
-          "text_en": "Intends to invest up to $100B in OpenAI as NVIDIA systems are deployed (September 22, 2025)",
+          "text": "システムの導入に合わせて、OpenAIに最大1,000億ドルを出資する意向",
+          "text_en": "Intends to invest up to $100B in OpenAI as NVIDIA systems are deployed",
           "source": {
             "label": "NVIDIA ニュースルーム の発表",
             "label_en": "NVIDIA Newsroom press release",
@@ -573,8 +573,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "NVIDIAのGrace Blackwell・Vera Rubinシステムで、最大1GWの計算容量を利用すると約束(2025年11月18日、Anthropicの発表)",
-          "text_en": "Committed to compute capacity of up to 1GW on NVIDIA Grace Blackwell and Vera Rubin systems (November 18, 2025, Anthropic announcement)",
+          "text": "NVIDIAのGrace Blackwell・Vera Rubinシステムで、最大1GWの計算容量を利用すると約束",
+          "text_en": "Committed to compute capacity of up to 1GW on NVIDIA Grace Blackwell and Vera Rubin systems",
           "source": {
             "label": "Anthropic announcement",
             "label_en": "Anthropic announcement",
@@ -588,8 +588,8 @@
         },
         {
           "type": "tie",
-          "text": "Anthropicに最大100億ドルを出資する契約(NVIDIAの10-Q、2025年11月19日)",
-          "text_en": "Agreement to invest up to $10B in Anthropic (NVIDIA 10-Q, November 19, 2025)",
+          "text": "Anthropicに最大100億ドルを出資する契約",
+          "text_en": "Agreement to invest up to $10B in Anthropic",
           "source": {
             "label": "NVIDIA 10-Q(quarter ended 2025-10-26)",
             "label_en": "NVIDIA 10-Q (quarter ended 2025-10-26)",

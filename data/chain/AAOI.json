@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Amazonに最大7,945,399株の10年ワラントを発行。大半はAmazonらの購入が一定額に達した場合に権利確定(年次報告)",
-          "text_en": "Issued Amazon a 10-year warrant for up to 7,945,399 shares; most vests only as Amazon and affiliates reach purchase thresholds (annual report)",
+          "text": "Amazonに最大7,945,399株の10年ワラントを発行。大半はAmazonらの購入が一定額に達した場合に権利確定",
+          "text_en": "Issued Amazon a 10-year warrant for up to 7,945,399 shares; most vests only as Amazon and affiliates reach purchase thresholds",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -64,8 +64,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "主要なインターネットデータセンター顧客。2025年売上の28.8%(2024年は43.7%、年次報告)",
-          "text_en": "Key internet data center customer: 28.8% of 2025 revenue (43.7% in 2024; annual report)",
+          "text": "主要なインターネットデータセンター顧客。2025年売上の28.8%",
+          "text_en": "Key internet data center customer: 28.8% of 2025 revenue",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -87,8 +87,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2024年の売上の12.4%を占めた顧客(年次報告)",
-          "text_en": "Accounted for 12.4% of AAOI revenue in 2024 (annual report)",
+          "text": "2024年の売上の12.4%を占めた顧客",
+          "text_en": "Accounted for 12.4% of AAOI revenue in 2024",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -273,8 +273,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AAOIが3年・3,500万ドルの回転与信枠(増額で最大7,500万ドル)をBOK Financialを幹事として設定(2025年7月、8-K)",
-          "text_en": "AAOI entered a three-year $35M revolving credit facility (accordion to $75M) with BOKF, NA dba BOK Financial as agent (July 2025, 8-K)",
+          "text": "AAOIが3年・3,500万ドルの回転与信枠(増額で最大7,500万ドル)をBOK Financialを幹事として設定",
+          "text_en": "AAOI entered a three-year $35M revolving credit facility (accordion to $75M) with BOKF, NA dba BOK Financial as agent",
           "source": {
             "label": "AAOI Form 8-K(2025年8月6日)",
             "label_en": "AAOI Form 8-K (Aug 6, 2025)",
@@ -298,8 +298,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "中国子会社が上海浦東発展銀行と最大5億人民元の1年間の与信枠を設定(従来の2.5億人民元から拡大、2026年6月、8-K)",
-          "text_en": "AAOI’s China subsidiary entered a one-year credit line of up to RMB 500M with Shanghai Pudong Development Bank, replacing an RMB 250M facility (June 2026, 8-K)",
+          "text": "中国子会社が上海浦東発展銀行と最大5億人民元の1年間の与信枠を設定",
+          "text_en": "AAOI’s China subsidiary entered a one-year credit line of up to RMB 500M with Shanghai Pudong Development Bank, replacing an RMB 250M facility",
           "source": {
             "label": "AAOI Form 8-K(2026年6月16日)",
             "label_en": "AAOI Form 8-K (Jun 16, 2026)",
@@ -321,8 +321,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "中国子会社が中国建設銀行と1.6226億人民元の5年間の回転与信枠を設定(2025年6月、8-K)",
-          "text_en": "AAOI’s China subsidiary entered a five-year RMB 162.26M revolving credit line with China Construction Bank (June 2025, 8-K)",
+          "text": "中国子会社が中国建設銀行と1.6226億人民元の5年間の回転与信枠を設定",
+          "text_en": "AAOI’s China subsidiary entered a five-year RMB 162.26M revolving credit line with China Construction Bank",
           "source": {
             "label": "AAOI Form 8-K(2025年7月1日)",
             "label_en": "AAOI Form 8-K (Jul 1, 2025)",

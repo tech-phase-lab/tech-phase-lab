@@ -48,8 +48,8 @@
         },
         {
           "type": "tie",
-          "text": "四日市工場の合弁契約をさらに5年延長(2034年まで、2026年1月)",
-          "text_en": "Extended the Yokkaichi joint venture agreements by five years, through 2034 (January 2026)",
+          "text": "四日市工場の合弁契約をさらに5年延長",
+          "text_en": "Extended the Yokkaichi joint venture agreements by five years, through 2034",
           "source": {
             "label": "Sandisk/Kioxia joint の発表",
             "label_en": "Sandisk/Kioxia joint press release",
@@ -97,8 +97,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "SandiskにDRAMを供給する複数年の戦略的な供給契約(2026年3月)",
-          "text_en": "Multi-year strategic arrangement to supply Sandisk with DRAM products (March 2026)",
+          "text": "SandiskにDRAMを供給する複数年の戦略的な供給契約",
+          "text_en": "Multi-year strategic arrangement to supply Sandisk with DRAM products",
           "source": {
             "label": "Sandisk 8-K(2026-03-25)",
             "label_en": "Sandisk 8-K (2026-03-25)",
@@ -186,8 +186,8 @@
         },
         {
           "type": "down",
-          "text": "SanDisk ChinaがSDSS持分の80%をJCETへ売却(2024年9月28日完了)",
-          "text_en": "SanDisk China sold 80% of its equity interest in SDSS to JCET (closed September 28, 2024)",
+          "text": "SanDisk ChinaがSDSS持分の80%をJCETへ売却",
+          "text_en": "SanDisk China sold 80% of its equity interest in SDSS to JCET",
           "source": {
             "label": "Sandisk 10-K(2026年度)",
             "label_en": "Sandisk 10-K (FY2026)",
@@ -209,8 +209,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "高帯域フラッシュ(HBF)の仕様づくりで覚書(MOU)を締結(2025年8月)",
-          "text_en": "MOU to establish the specification for High Bandwidth Flash (August 2025)",
+          "text": "高帯域フラッシュ(HBF)の仕様づくりで覚書(MOU)を締結",
+          "text_en": "MOU to establish the specification for High Bandwidth Flash",
           "source": {
             "label": "Sandisk の発表",
             "label_en": "Sandisk press release",

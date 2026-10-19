@@ -30,8 +30,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "最大2.8GWの燃料電池を購入する意向(うち初期1.2GWは契約済み、2026年4月)",
-          "text_en": "Intends to procure up to 2.8GW of fuel cells, with an initial 1.2GW contracted (April 2026)",
+          "text": "最大2.8GWの燃料電池を購入する意向",
+          "text_en": "Intends to procure up to 2.8GW of fuel cells, with an initial 1.2GW contracted",
           "source": {
             "label": "Bloom Energy の発表(2026年4月)",
             "label_en": "Bloom Energy press release (Apr 2026)",
@@ -45,7 +45,7 @@
         },
         {
           "type": "tie",
-          "text": "提携に伴う新株予約権をOracleに発行(2026年5月1日に行使)",
+          "text": "提携に伴う新株予約権をOracleに発行",
           "text_en": "Issued Oracle a warrant tied to the partnership; exercised on May 1, 2026",
           "source": {
             "label": "Bloom Energy 10-Q(2026年第2四半期)",
@@ -68,8 +68,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AIインフラ向けに燃料電池を導入する契約(最初の328MWは2026年稼働予定)",
-          "text_en": "Agreement to deploy fuel cells for AI infrastructure (first 328MW expected to run in 2026)",
+          "text": "AIインフラ向けに燃料電池を導入する契約",
+          "text_en": "Agreement to deploy fuel cells for AI infrastructure",
           "source": {
             "label": "Nebius ニュースルーム(2026年5月)",
             "label_en": "Nebius newsroom (May 2026)",
@@ -116,8 +116,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "米カリフォルニア州フリーモントのAIサーバー工場に、独立型マイクログリッドとして燃料電池を導入(2026年8月)",
-          "text_en": "Fuel cells for an islanded microgrid at its AI server campus in Fremont, California (August 2026)",
+          "text": "米カリフォルニア州フリーモントのAIサーバー工場に、独立型マイクログリッドとして燃料電池を導入",
+          "text_en": "Fuel cells for an islanded microgrid at its AI server campus in Fremont, California",
           "source": {
             "label": "Bloom Energy の発表(2026年8月)",
             "label_en": "Bloom Energy press release (Aug 2026)",
@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "最大1GWの供給契約(発表時の初回発注は100MW、2024年11月)",
-          "text_en": "Supply agreement for up to 1GW, with an initial 100MW order (November 2024)",
+          "text": "最大1GWの供給契約",
+          "text_en": "Supply agreement for up to 1GW, with an initial 100MW order",
           "source": {
             "label": "Bloom Energy の発表(2024年11月)",
             "label_en": "Bloom Energy press release (Nov 2024)",
@@ -177,8 +177,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AIインフラ向けに最大50億ドルを投じる戦略的提携(2025年10月)",
-          "text_en": "Strategic partnership to invest up to $5B in Bloom fuel cells for AI infrastructure (October 2025)",
+          "text": "AIインフラ向けに最大50億ドルを投じる戦略的提携",
+          "text_en": "Strategic partnership to invest up to $5B in Bloom fuel cells for AI infrastructure",
           "source": {
             "label": "Bloom Energy の発表(2025年10月)",
             "label_en": "Bloom Energy press release (Oct 2025)",
@@ -190,8 +190,8 @@
         },
         {
           "type": "tie",
-          "text": "資金枠を50億ドルから250億ドルへ拡大(2026年6月)",
-          "text_en": "Financing framework raised from $5B to $25B (June 2026)",
+          "text": "資金枠を50億ドルから250億ドルへ拡大",
+          "text_en": "Financing framework raised from $5B to $25B",
           "source": {
             "label": "Bloom Energy の発表(2026年6月)",
             "label_en": "Bloom Energy press release (Jun 2026)",
@@ -215,8 +215,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SoftBank GroupとBloom Energyが、日本でBloom Energy Serverを展開する折半出資の合弁会社Bloom Energy Japanを設立(2013年7月、Bloom発表)",
-          "text_en": "SoftBank Group and Bloom Energy established a 50/50 joint venture, Bloom Energy Japan Limited, to deploy Bloom Energy Servers in Japan (July 2013, Bloom release)",
+          "text": "SoftBank GroupとBloom Energyが、日本でBloom Energy Serverを展開する折半出資の合弁会社Bloom Energy Japanを設立",
+          "text_en": "SoftBank Group and Bloom Energy established a 50/50 joint venture, Bloom Energy Japan Limited, to deploy Bloom Energy Servers in Japan",
           "source": {
             "label": "Bloom Energy の発表(2013年7月)",
             "label_en": "Bloom Energy press release (Jul 2013)",

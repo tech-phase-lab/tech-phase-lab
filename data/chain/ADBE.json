@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "FireflyモデルをAWSのAmazon EC2 P5/P6インスタンスで学習(Adobeの説明、2025年12月)",
-          "text_en": "Firefly models are trained on Amazon EC2 P5/P6 instances on AWS (per Adobe, December 2025)",
+          "text": "FireflyモデルをAWSのAmazon EC2 P5/P6インスタンスで学習",
+          "text_en": "Firefly models are trained on Amazon EC2 P5/P6 instances on AWS",
           "source": {
             "label": "Amazon/AWS の発表(Adobe and Amazon collaboration)",
             "label_en": "Amazon/AWS press release (Adobe and Amazon collaboration)",
@@ -63,8 +63,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "次世代のFireflyモデルとエージェント型ワークフローで戦略的提携(2026年3月16日)",
-          "text_en": "Strategic partnership on next-generation Firefly models and agentic workflows (March 16, 2026)",
+          "text": "次世代のFireflyモデルとエージェント型ワークフローで戦略的提携",
+          "text_en": "Strategic partnership on next-generation Firefly models and agentic workflows",
           "source": {
             "label": "Adobe の発表",
             "label_en": "Adobe press release",
@@ -88,8 +88,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Googleの生成AI(Gemini・Veo・Imagen)をAdobe製品へ取り込む提携を拡大(2025年10月28日)",
-          "text_en": "Expanded partnership to bring Google AI models (Gemini, Veo, Imagen) into Adobe products (October 28, 2025)",
+          "text": "Googleの生成AI(Gemini・Veo・Imagen)をAdobe製品へ取り込む提携を拡大",
+          "text_en": "Expanded partnership to bring Google AI models (Gemini, Veo, Imagen) into Adobe products",
           "source": {
             "label": "Adobe の発表",
             "label_en": "Adobe press release",
@@ -113,8 +113,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Adobe Experience CloudをMicrosoft Copilotに取り込む計画を発表(2024年3月26日)",
-          "text_en": "Plans to bring Adobe Experience Cloud workflows into Microsoft Copilot (March 26, 2024)",
+          "text": "Adobe Experience CloudをMicrosoft Copilotに取り込む計画を発表",
+          "text_en": "Plans to bring Adobe Experience Cloud workflows into Microsoft Copilot",
           "source": {
             "label": "Microsoft News(joint の発表)",
             "label_en": "Microsoft News (joint press release)",
@@ -163,8 +163,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Accenture SongとAdobeの技術で、エージェント型の顧客体験オーケストレーションの枠組みを共同開発(2026年6月22日)",
-          "text_en": "Accenture Song co-developed an agentic experience orchestration framework powered by Adobe technology (June 22, 2026)",
+          "text": "Accenture SongとAdobeの技術で、エージェント型の顧客体験オーケストレーションの枠組みを共同開発",
+          "text_en": "Accenture Song co-developed an agentic experience orchestration framework powered by Adobe technology",
           "source": {
             "label": "Adobe の発表(Cannes Lions)",
             "label_en": "Adobe press release (Cannes Lions)",
@@ -186,8 +186,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Adobeの技術を使ったAIエージェント型の運用モデルを発表(2026年6月22日)",
-          "text_en": "Unveiling an AI Agentic Operating Model enterprise solution powered by Adobe technology (June 22, 2026)",
+          "text": "Adobeの技術を使ったAIエージェント型の運用モデルを発表",
+          "text_en": "Unveiling an AI Agentic Operating Model enterprise solution powered by Adobe technology",
           "source": {
             "label": "Adobe の発表(Cannes Lions)",
             "label_en": "Adobe press release (Cannes Lions)",
@@ -211,8 +211,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Adobeのコンテンツ・データ・AI基盤を導入する広告会社の1社(2026年6月22日)",
-          "text_en": "Among agency partners deploying Adobe content, data and AI platforms (June 22, 2026)",
+          "text": "Adobeのコンテンツ・データ・AI基盤を導入する広告会社の1社",
+          "text_en": "Among agency partners deploying Adobe content, data and AI platforms",
           "source": {
             "label": "Adobe の発表(Cannes Lions)",
             "label_en": "Adobe press release (Cannes Lions)",
@@ -234,8 +234,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Adobe Firefly Foundryでメディア制作に取り組んでいるとAdobeが説明(2026年1月22日)",
-          "text_en": "Adobe says The Home Depot is working with Adobe Firefly Foundry on media production (January 22, 2026)",
+          "text": "Adobe Firefly Foundryでメディア制作に取り組んでいるとAdobeが説明",
+          "text_en": "Adobe says The Home Depot is working with Adobe Firefly Foundry on media production",
           "source": {
             "label": "Adobe Blog",
             "label_en": "Adobe Blog",
@@ -257,8 +257,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Walt Disney ImagineeringがAdobe Firefly Foundryを利用しているとAdobeが説明(2026年1月22日)",
-          "text_en": "Adobe says Walt Disney Imagineering is working with Adobe Firefly Foundry (January 22, 2026)",
+          "text": "Walt Disney ImagineeringがAdobe Firefly Foundryを利用しているとAdobeが説明",
+          "text_en": "Adobe says Walt Disney Imagineering is working with Adobe Firefly Foundry",
           "source": {
             "label": "Adobe Blog",
             "label_en": "Adobe Blog",
@@ -458,8 +458,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Adobe Fireflyが、提携先のモデルの1つとしてOpenAIのモデルを提供(2026年の委任状説明書)",
-          "text_en": "Adobe Firefly offers OpenAI models among its partner models (2026 proxy statement)",
+          "text": "Adobe Fireflyが、提携先のモデルの1つとしてOpenAIのモデルを提供",
+          "text_en": "Adobe Firefly offers OpenAI models among its partner models",
           "source": {
             "label": "Adobe 2026 Proxy Statement(DEF 14A)",
             "label_en": "Adobe 2026 Proxy Statement (DEF 14A)",
@@ -481,8 +481,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AdobeとFigmaは、2022年の合併契約を、規制当局の承認の見通しが立たないとして双方合意で解消(2023年12月)",
-          "text_en": "Adobe and Figma mutually terminated their 2022 merger agreement because there was no clear path to regulatory approval (December 2023)",
+          "text": "AdobeとFigmaは、2022年の合併契約を、規制当局の承認の見通しが立たないとして双方合意で解消",
+          "text_en": "Adobe and Figma mutually terminated their 2022 merger agreement because there was no clear path to regulatory approval",
           "source": {
             "label": "Figma 10-K(2025年度)",
             "label_en": "Figma 10-K (FY2025)",
@@ -506,8 +506,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "傘下のCode and Theoryが、Adobe CX Enterpriseを使ったスポーツ向けコンテンツ基盤を発表(2026年6月、Adobe発表)",
-          "text_en": "Stagwell’s agency Code and Theory is launching a Content Operating System for Sports powered by Adobe CX Enterprise (June 2026, Adobe release)",
+          "text": "傘下のCode and Theoryが、Adobe CX Enterpriseを使ったスポーツ向けコンテンツ基盤を発表",
+          "text_en": "Stagwell’s agency Code and Theory is launching a Content Operating System for Sports powered by Adobe CX Enterprise",
           "source": {
             "label": "Adobe の発表(Cannes Lions)",
             "label_en": "Adobe press release (Cannes Lions)",
@@ -531,8 +531,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AdobeのAI機能を活用する代理店の1社としてPublicisを提携先エコシステムに掲載(2026年4月、Adobe発表)",
-          "text_en": "Adobe lists Publicis among agencies leveraging Adobe AI capabilities in its partner ecosystem (April 2026, Adobe release)",
+          "text": "AdobeのAI機能を活用する代理店の1社としてPublicisを提携先エコシステムに掲載",
+          "text_en": "Adobe lists Publicis among agencies leveraging Adobe AI capabilities in its partner ecosystem",
           "source": {
             "label": "Adobe の発表(Adobe Summit)",
             "label_en": "Adobe press release (Adobe Summit)",
@@ -556,8 +556,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AdobeのAI機能を活用する代理店の1社として電通を提携先エコシステムに掲載(2026年4月、Adobe発表)",
-          "text_en": "Adobe lists dentsu among agencies leveraging Adobe AI capabilities in its partner ecosystem (April 2026, Adobe release)",
+          "text": "AdobeのAI機能を活用する代理店の1社として電通を提携先エコシステムに掲載",
+          "text_en": "Adobe lists dentsu among agencies leveraging Adobe AI capabilities in its partner ecosystem",
           "source": {
             "label": "Adobe の発表(Adobe Summit)",
             "label_en": "Adobe press release (Adobe Summit)",
@@ -581,8 +581,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxが年次報告で、自社サービスの販売・連携に関する契約を結ぶ提携先の1社としてAdobeを挙げている(2026年度、10-K)",
-          "text_en": "Box lists Adobe among partners with which it has agreements to market, resell or integrate Box services (FY2026, 10-K)",
+          "text": "Boxが年次報告で、自社サービスの販売・連携に関する契約を結ぶ提携先の1社としてAdobeを挙げている",
+          "text_en": "Box lists Adobe among partners with which it has agreements to market, resell or integrate Box services",
           "source": {
             "label": "Box 10-K(2026年度)",
             "label_en": "Box 10-K (FY2026)",

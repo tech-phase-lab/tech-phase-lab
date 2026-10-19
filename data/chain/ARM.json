@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Arm AGI CPUの製造を3nmプロセスでTSMCが担う(TSMC幹部のコメント、2026年3月24日)",
-          "text_en": "TSMC manufactures the Arm AGI CPU on its 3nm process (TSMC executive quote, March 24, 2026)",
+          "text": "Arm AGI CPUの製造を3nmプロセスでTSMCが担う",
+          "text_en": "TSMC manufactures the Arm AGI CPU on its 3nm process",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -86,8 +86,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "発行済み株式の約86.4%を実質的に保有する支配株主(20-F)",
-          "text_en": "Beneficially owns about 86.4% of Arm’s issued share capital (controlling shareholder, 20-F)",
+          "text": "発行済み株式の約86.4%を実質的に保有する支配株主",
+          "text_en": "Beneficially owns about 86.4% of Arm’s issued share capital",
           "source": {
             "label": "Arm Form 20-F(FY ended 2026-03-31)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
@@ -109,8 +109,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Artisanファウンデーション IP事業をCadenceへ売却(2025年8月26日完了)",
-          "text_en": "Completed the sale of its Artisan foundation IP business to Cadence (August 26, 2025)",
+          "text": "Artisanファウンデーション IP事業をCadenceへ売却",
+          "text_en": "Completed the sale of its Artisan foundation IP business to Cadence",
           "source": {
             "label": "Arm Form 20-F(FY ended 2026-03-31)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
@@ -145,8 +145,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Armと「アーキテクチャ ライセンス契約」を結ぶが、ライセンスをめぐり係争中(20-F)",
-          "text_en": "Holds an Architecture License Agreement with Arm; the two are in pending litigation over licensing (20-F)",
+          "text": "Armと「アーキテクチャ ライセンス契約」を結ぶが、ライセンスをめぐり係争中",
+          "text_en": "Holds an Architecture License Agreement with Arm; the two are in pending litigation over licensing",
           "source": {
             "label": "Arm Form 20-F(FY ended 2026-03-31)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Arm AGI CPUの主導パートナー・共同開発者(2026年3月24日)",
-          "text_en": "Lead partner and co-developer of the Arm AGI CPU (March 24, 2026)",
+          "text": "Arm AGI CPUの主導パートナー・共同開発者",
+          "text_en": "Lead partner and co-developer of the Arm AGI CPU",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -500,8 +500,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Arm AGI CPUをヘッドノードとして組み込む顧客の1社としてOpenAIを挙げている(2026年5月、Armの決算資料)",
-          "text_en": "Arm says OpenAI is among customers integrating the Arm AGI CPU as head nodes (May 2026, Arm results release)",
+          "text": "Arm AGI CPUをヘッドノードとして組み込む顧客の1社としてOpenAIを挙げている",
+          "text_en": "Arm says OpenAI is among customers integrating the Arm AGI CPU as head nodes",
           "source": {
             "label": "Arm 6-K Ex.99.2(Q4 FY26 results)",
             "label_en": "Arm 6-K Ex.99.2 (Q4 FY26 results)",
@@ -525,8 +525,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MarvellのCEOが、次世代AIインフラでArmと提携していることを誇りに思うとコメント(2026年3月24日、Armのニュースルーム)",
-          "text_en": "Marvell’s CEO says Marvell is proud to partner with Arm on next-generation AI infrastructure (March 24, 2026, Arm Newsroom)",
+          "text": "MarvellのCEOが、次世代AIインフラでArmと提携していることを誇りに思うとコメント",
+          "text_en": "Marvell’s CEO says Marvell is proud to partner with Arm on next-generation AI infrastructure",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -548,8 +548,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SamsungのCEOが、Armなど計算分野のリーダーとの長期的な協力に言及(2026年3月24日、Armのニュースルーム)",
-          "text_en": "Samsung’s CEO cites long-term collaboration with compute leaders like Arm (March 24, 2026, Arm Newsroom)",
+          "text": "SamsungのCEOが、Armなど計算分野のリーダーとの長期的な協力に言及",
+          "text_en": "Samsung’s CEO cites long-term collaboration with compute leaders like Arm",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -571,8 +571,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SK hynixのCEOが、Armとの継続的な提携を楽しみにしているとコメント(2026年3月24日、Armのニュースルーム)",
-          "text_en": "SK hynix’s CEO says it looks forward to continued partnership with Arm (March 24, 2026, Arm Newsroom)",
+          "text": "SK hynixのCEOが、Armとの継続的な提携を楽しみにしているとコメント",
+          "text_en": "SK hynix’s CEO says it looks forward to continued partnership with Arm",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -594,8 +594,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MicronのCEOが、Armとの長年の提携に言及(2026年3月24日、Armのニュースルーム)",
-          "text_en": "Micron’s CEO describes a longstanding partnership with Arm (March 24, 2026, Arm Newsroom)",
+          "text": "MicronのCEOが、Armとの長年の提携に言及",
+          "text_en": "Micron’s CEO describes a longstanding partnership with Arm",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -617,8 +617,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SynopsysのCEOが、先端シリコンでArmと数十年にわたり協力してきたとコメント(2026年3月24日、Armの特設ページ)",
-          "text_en": "Synopsys’ CEO says Synopsys and Arm have collaborated for decades on advanced silicon (March 24, 2026, Arm ecosystem page)",
+          "text": "SynopsysのCEOが、先端シリコンでArmと数十年にわたり協力してきたとコメント",
+          "text_en": "Synopsys’ CEO says Synopsys and Arm have collaborated for decades on advanced silicon",
           "source": {
             "label": "Arm AGI CPU ecosystem page(arm.com)",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
@@ -640,8 +640,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Siemens EDAが、シミュレーション・検証・SoC実装にわたるArmとの長年の戦略的提携に言及(2026年3月24日、Armの特設ページ)",
-          "text_en": "Siemens EDA states a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation (March 24, 2026, Arm ecosystem page)",
+          "text": "Siemens EDAが、シミュレーション・検証・SoC実装にわたるArmとの長年の戦略的提携に言及",
+          "text_en": "Siemens EDA states a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation",
           "source": {
             "label": "Arm AGI CPU ecosystem page(arm.com)",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
@@ -663,8 +663,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AristaのCEOが、エコシステムの提携先としてArm AGI CPUの発表を支持するコメント(2026年3月24日、Armの特設ページ)",
-          "text_en": "Arista’s CEO is quoted as supporting the Arm AGI CPU launch as an ecosystem partner (March 24, 2026, Arm ecosystem page)",
+          "text": "AristaのCEOが、エコシステムの提携先としてArm AGI CPUの発表を支持するコメント",
+          "text_en": "Arista’s CEO is quoted as supporting the Arm AGI CPU launch as an ecosystem partner",
           "source": {
             "label": "Arm AGI CPU ecosystem page(arm.com)",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
@@ -688,8 +688,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MediaTekの社長が、Armのアーキテクチャ・エコシステムを評価し、協力を続けるとコメント(2026年3月24日、Armの特設ページ)",
-          "text_en": "MediaTek’s president says it values Arm’s architecture ecosystem and continues collaboration with Arm (March 24, 2026, Arm ecosystem page)",
+          "text": "MediaTekの社長が、Armのアーキテクチャ・エコシステムを評価し、協力を続けるとコメント",
+          "text_en": "MediaTek’s president says it values Arm’s architecture ecosystem and continues collaboration with Arm",
           "source": {
             "label": "Arm AGI CPU ecosystem page(arm.com)",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
@@ -711,8 +711,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Intel Foundryが、Armなどのリーダーと協力することを楽しみにしているとコメント(2026年3月24日、Armの特設ページ)",
-          "text_en": "Intel Foundry says it looks forward to working with leaders such as Arm (March 24, 2026, Arm ecosystem page)",
+          "text": "Intel Foundryが、Armなどのリーダーと協力することを楽しみにしているとコメント",
+          "text_en": "Intel Foundry says it looks forward to working with leaders such as Arm",
           "source": {
             "label": "Arm AGI CPU ecosystem page(arm.com)",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
@@ -736,8 +736,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NXPが、Armとの数十年にわたる関係に言及(2026年3月24日、Armの特設ページ)",
-          "text_en": "NXP cites a decades-long relationship with Arm (March 24, 2026, Arm ecosystem page)",
+          "text": "NXPが、Armとの数十年にわたる関係に言及",
+          "text_en": "NXP cites a decades-long relationship with Arm",
           "source": {
             "label": "Arm AGI CPU ecosystem page(arm.com)",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
@@ -759,8 +759,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Armは1990年に、Acorn Computers・Apple Computer・VLSI Technologyの合弁会社として始まった(2026年3月期、20-F)",
-          "text_en": "Arm began in 1990 as a joint venture between Acorn Computers, Apple Computer and VLSI Technology (FY ended March 31, 2026, 20-F)",
+          "text": "Armは1990年に、Acorn Computers・Apple Computer・VLSI Technologyの合弁会社として始まった",
+          "text_en": "Arm began in 1990 as a joint venture between Acorn Computers, Apple Computer and VLSI Technology",
           "source": {
             "label": "Arm Form 20-F(FY ended 2026-03-31)",
             "label_en": "Arm Form 20-F (FY ended 2026-03-31)",

@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IonQ Forte Enterpriseが、AWSの量子コンピューティング・サービスAmazon Braket経由で世界の顧客に提供される(2025年4月1日、IonQ発表)",
-          "text_en": "IonQ Forte Enterprise is available to customers globally through Amazon Braket, the AWS managed quantum computing service (April 1, 2025, IonQ release)",
+          "text": "IonQ Forte Enterpriseが、AWSの量子コンピューティング・サービスAmazon Braket経由で世界の顧客に提供される",
+          "text_en": "IonQ Forte Enterprise is available to customers globally through Amazon Braket, the AWS managed quantum computing service",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-04-01)",
@@ -55,7 +55,7 @@
         },
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてAmazonを挙げている(2025年度、10-K)",
+          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてAmazonを挙げている",
           "text_en": "IonQ’s FY2025 10-K lists Amazon among its current competitors in quantum computing",
           "source": {
             "label": "IonQ 10-K(2025年度)",
@@ -78,8 +78,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IonQの量子コンピューターをMicrosoftのクラウド基盤Azure Quantumで提供(2025年度、10-K)",
-          "text_en": "IonQ makes its quantum computers available through Microsoft’s Azure Quantum cloud platform (FY2025 10-K)",
+          "text": "IonQの量子コンピューターをMicrosoftのクラウド基盤Azure Quantumで提供",
+          "text_en": "IonQ makes its quantum computers available through Microsoft’s Azure Quantum cloud platform",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -91,7 +91,7 @@
         },
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてMicrosoftを挙げている(2025年度、10-K)",
+          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてMicrosoftを挙げている",
           "text_en": "IonQ’s FY2025 10-K lists Microsoft among its current competitors in quantum computing",
           "source": {
             "label": "IonQ 10-K(2025年度)",
@@ -114,8 +114,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IonQの量子コンピューターをGoogle Cloud Marketplaceで提供(2025年度、10-K)",
-          "text_en": "IonQ makes its quantum computers available through the Google Cloud Marketplace (FY2025 10-K)",
+          "text": "IonQの量子コンピューターをGoogle Cloud Marketplaceで提供",
+          "text_en": "IonQ makes its quantum computers available through the Google Cloud Marketplace",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -127,7 +127,7 @@
         },
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてAlphabet(Google)を挙げている(2025年度、10-K)",
+          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてAlphabet(Google)を挙げている",
           "text_en": "IonQ’s FY2025 10-K lists Alphabet (Google) among its current competitors in quantum computing",
           "source": {
             "label": "IonQ 10-K(2025年度)",
@@ -150,8 +150,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "日本でIonQの量子コンピューターを販売する旗艦的な販売代理店契約を豊田通商と締結(2025年4月23日、IonQ発表)",
-          "text_en": "Signed a flagship distributor partnership with Toyota Tsusho to sell IonQ quantum computing in Japan (April 23, 2025, IonQ release)",
+          "text": "日本でIonQの量子コンピューターを販売する旗艦的な販売代理店契約を豊田通商と締結",
+          "text_en": "Signed a flagship distributor partnership with Toyota Tsusho to sell IonQ quantum computing in Japan",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-04-23)",
@@ -173,8 +173,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "GDIT(General Dynamicsの事業部門)と、政府・防衛向けの量子ソリューションを共同開発・販売する提携(2025年1月22日、IonQ発表)",
-          "text_en": "IonQ and General Dynamics Information Technology (GDIT) partnered to co-develop and market quantum solutions for government and defense (January 22, 2025, IonQ release)",
+          "text": "GDIT(General Dynamicsの事業部門)と、政府・防衛向けの量子ソリューションを共同開発・販売する提携",
+          "text_en": "IonQ and General Dynamics Information Technology (GDIT) partnered to co-develop and market quantum solutions for government and defense",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-01-22)",
@@ -198,8 +198,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAのAccelerated Quantum Research Centerで、初のオンプレミス量子コンピューターとして導入。NVQLink経由でNVIDIA GB200 NVL72と接続(2026年9月23日、IonQ発表)",
-          "text_en": "IonQ will be the first on-premise quantum computing deployment at NVIDIA’s Accelerated Quantum Research Center, linked to NVIDIA GB200 NVL72 via NVQLink (September 23, 2026, IonQ release)",
+          "text": "NVIDIAのAccelerated Quantum Research Centerで、初のオンプレミス量子コンピューターとして導入。NVQLink経由でNVIDIA GB200 NVL72と接続",
+          "text_en": "IonQ will be the first on-premise quantum computing deployment at NVIDIA’s Accelerated Quantum Research Center, linked to NVIDIA GB200 NVL72 via NVQLink",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2026-09-23)",
@@ -221,8 +221,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IonQ・AstraZeneca・AWS・NVIDIAが、量子で加速した計算化学の共同研究を実施し20倍の高速化を確認(2025年6月9日、IonQ発表)",
-          "text_en": "IonQ, AstraZeneca, AWS and NVIDIA ran a joint quantum-accelerated computational chemistry research program with a 20x speedup (June 9, 2025, IonQ release)",
+          "text": "IonQ・AstraZeneca・AWS・NVIDIAが、量子で加速した計算化学の共同研究を実施し20倍の高速化を確認",
+          "text_en": "IonQ, AstraZeneca, AWS and NVIDIA ran a joint quantum-accelerated computational chemistry research program with a 20x speedup",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-06-09)",
@@ -244,8 +244,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Synopsysとの共同研究で、量子アルゴリズムが工学シミュレーションを最大14.6%高速化することを示した(2026年9月17日、IonQ発表)",
-          "text_en": "IonQ detailed joint research with Synopsys showing quantum algorithms accelerating engineering simulation workloads by up to 14.6% (September 17, 2026, IonQ release)",
+          "text": "Synopsysとの共同研究で、量子アルゴリズムが工学シミュレーションを最大14.6%高速化することを示した",
+          "text_en": "IonQ detailed joint research with Synopsys showing quantum algorithms accelerating engineering simulation workloads by up to 14.6%",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2026-09-17)",
@@ -267,8 +267,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "衛星通信向けの安全な量子ネットワークを探るため、Intellianと覚書(MoU)を締結(2025年4月16日、IonQ発表)",
-          "text_en": "Signed an MoU with Intellian to explore secure quantum networking for satellite communications (April 16, 2025, IonQ release)",
+          "text": "衛星通信向けの安全な量子ネットワークを探るため、Intellianと覚書(MoU)を締結",
+          "text_en": "Signed an MoU with Intellian to explore secure quantum networking for satellite communications",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-04-16)",
@@ -292,8 +292,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ID Quantiqueの買収とあわせ、SK Telecomと量子分野の戦略的提携に入る見込みと発表(2025年2月26日、IonQ発表)",
-          "text_en": "Expected to enter a quantum-focused strategic partnership with SK Telecom alongside the ID Quantique acquisition (February 26, 2025, IonQ release)",
+          "text": "ID Quantiqueの買収とあわせ、SK Telecomと量子分野の戦略的提携に入る見込みと発表",
+          "text_en": "Expected to enter a quantum-focused strategic partnership with SK Telecom alongside the ID Quantique acquisition",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-02-26)",
@@ -317,8 +317,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Samsung Electronicsは、IonQの上場前の出資者の1社(2025年4月16日、IonQ発表)",
-          "text_en": "Samsung Electronics was a pre-IPO investor in IonQ (April 16, 2025, IonQ release)",
+          "text": "Samsung Electronicsは、IonQの上場前の出資者の1社",
+          "text_en": "Samsung Electronics was a pre-IPO investor in IonQ",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-04-16)",
@@ -342,8 +342,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Hyundai Motorは上場前にIonQへ出資し、電池や自動運転の量子プロジェクトで協業(2025年4月16日、IonQ発表)",
-          "text_en": "Hyundai Motor invested in IonQ pre-IPO and has collaborated on quantum projects for batteries and autonomous vehicles (April 16, 2025, IonQ release)",
+          "text": "Hyundai Motorは上場前にIonQへ出資し、電池や自動運転の量子プロジェクトで協業",
+          "text_en": "Hyundai Motor invested in IonQ pre-IPO and has collaborated on quantum projects for batteries and autonomous vehicles",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-04-16)",
@@ -367,8 +367,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2022年にAirbusと、貨物の積載・配分の量子アルゴリズム開発で提携(2025年3月14日、IonQ発表)",
-          "text_en": "IonQ and Airbus partnered in 2022 on a project to develop quantum algorithms for cargo loading and distribution (March 14, 2025, IonQ release)",
+          "text": "2022年にAirbusと、貨物の積載・配分の量子アルゴリズム開発で提携",
+          "text_en": "IonQ and Airbus partnered in 2022 on a project to develop quantum algorithms for cargo loading and distribution",
           "source": {
             "label": "IonQ の発表",
             "label_en": "IonQ press release (2025-03-14)",
@@ -392,7 +392,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてIBMを挙げている(2025年度、10-K)",
+          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてIBMを挙げている",
           "text_en": "IonQ’s FY2025 10-K lists IBM among its current competitors in quantum computing",
           "source": {
             "label": "IonQ 10-K(2025年度)",
@@ -415,7 +415,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてIntelを挙げている(2025年度、10-K)",
+          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてIntelを挙げている",
           "text_en": "IonQ’s FY2025 10-K lists Intel among its current competitors in quantum computing",
           "source": {
             "label": "IonQ 10-K(2025年度)",
@@ -438,7 +438,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IonQが年次報告で、超伝導方式で競合する企業としてRigetti Computingを挙げている(2025年度、10-K)",
+          "text": "IonQが年次報告で、超伝導方式で競合する企業としてRigetti Computingを挙げている",
           "text_en": "IonQ’s 10-K names Rigetti Computing as a competitor pursuing a superconducting-qubit approach",
           "source": {
             "label": "IonQ 10-K(2025年度)",
@@ -451,7 +451,7 @@
         },
         {
           "type": "rival",
-          "text": "Rigettiが年次報告で、量子コンピューターの競合の1社としてIonQを挙げている(2025年度、10-K)",
+          "text": "Rigettiが年次報告で、量子コンピューターの競合の1社としてIonQを挙げている",
           "text_en": "Rigetti’s FY2025 10-K names IonQ among its competitors in quantum computing",
           "source": {
             "label": "Rigetti 10-K(2025年度)",
@@ -474,7 +474,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "D-Waveが年次報告で、ゲート方式の量子コンピューターに取り組む企業の1社としてIonQを挙げている(2025年度、10-K)",
+          "text": "D-Waveが年次報告で、ゲート方式の量子コンピューターに取り組む企業の1社としてIonQを挙げている",
           "text_en": "D-Wave’s FY2025 10-K names IonQ among other companies pursuing gate-model quantum computing",
           "source": {
             "label": "D-Wave 10-K(2025年度)",
@@ -497,7 +497,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Quantum Computing Inc.が年次報告で、競合の1社としてIonQを挙げている(2025年度、10-K)",
+          "text": "Quantum Computing Inc.が年次報告で、競合の1社としてIonQを挙げている",
           "text_en": "Quantum Computing Inc.’s FY2025 10-K lists IonQ among its competitors",
           "source": {
             "label": "Quantum Computing Inc 10-K(2025年度)",

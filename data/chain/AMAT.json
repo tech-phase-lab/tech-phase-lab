@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ultra Cleanが年次報告で、売上の10%超を占める2大顧客の1社としてApplied Materialsを挙げている(2023〜2025年度、10-K)",
-          "text_en": "Ultra Clean names Applied Materials as one of its two largest customers (over 10% of revenue each year, FY2023–FY2025, 10-K)",
+          "text": "Ultra Cleanが年次報告で、売上の10%超を占める2大顧客の1社としてApplied Materialsを挙げている",
+          "text_en": "Ultra Clean names Applied Materials as one of its two largest customers",
           "source": {
             "label": "Ultra Clean Holdings 10-K(2025年度)",
             "label_en": "Ultra Clean Holdings 10-K (FY2025)",
@@ -54,8 +54,8 @@
         },
         {
           "type": "up",
-          "text": "Applied MaterialsはUltra Cleanの2025年度売上の21.7%を占めた(10-K)",
-          "text_en": "Applied Materials accounted for 21.7% of Ultra Clean’s FY2025 revenue (10-K)",
+          "text": "Applied MaterialsはUltra Cleanの2025年度売上の21.7%を占めた",
+          "text_en": "Applied Materials accounted for 21.7% of Ultra Clean’s FY2025 revenue",
           "source": {
             "label": "Ultra Clean Holdings 10-K(2025年度)",
             "label_en": "Ultra Clean Holdings 10-K (FY2025)",
@@ -79,8 +79,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ichorが年次報告で、2025年の売上が最大の顧客の1社としてApplied Materialsを挙げている(2025年度、10-K)",
-          "text_en": "Ichor lists Applied Materials among its largest customers by sales in 2025 (FY2025 10-K)",
+          "text": "Ichorが年次報告で、2025年の売上が最大の顧客の1社としてApplied Materialsを挙げている",
+          "text_en": "Ichor lists Applied Materials among its largest customers by sales in 2025",
           "source": {
             "label": "Ichor Holdings 10-K(2025年度)",
             "label_en": "Ichor Holdings 10-K (FY2025)",
@@ -104,8 +104,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AtomeraはテンピのApplied MaterialsのCenturaエピタキシャル装置を、Applied Materialsからリースしている(2025年度、10-K)",
-          "text_en": "Atomera leases an Applied Materials Centura epitaxial reactor from Applied Materials, located at its Tempe facility (FY2025 10-K)",
+          "text": "AtomeraはテンピのApplied MaterialsのCenturaエピタキシャル装置を、Applied Materialsからリースしている",
+          "text_en": "Atomera leases an Applied Materials Centura epitaxial reactor from Applied Materials, located at its Tempe facility",
           "source": {
             "label": "Atomera 10-K(2025年度)",
             "label_en": "Atomera 10-K (FY2025)",
@@ -129,8 +129,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2025年4月にBesiの株式9%を取得し、2020年からBesiと一体型のハイブリッドボンディング装置を共同開発(2025年4月14日、8-K)",
-          "text_en": "Bought a 9% stake in Besi in April 2025 and co-develops an integrated hybrid bonding system with it (collaboration since 2020) (April 14, 2025, 8-K)",
+          "text": "2025年4月にBesiの株式9%を取得し、2020年からBesiと一体型のハイブリッドボンディング装置を共同開発",
+          "text_en": "Bought a 9% stake in Besi in April 2025 and co-develops an integrated hybrid bonding system with it",
           "source": {
             "label": "Applied Materials 8-K Ex. 99.1 の発表",
             "label_en": "Applied Materials 8-K Ex. 99.1 press release",
@@ -142,8 +142,8 @@
         },
         {
           "type": "tie",
-          "text": "市場取引でBesiの発行済み普通株式の9%を取得(2025年4月14日、8-K)",
-          "text_en": "Purchased 9 percent of Besi’s outstanding common stock through market transactions (April 14, 2025, 8-K)",
+          "text": "市場取引でBesiの発行済み普通株式の9%を取得",
+          "text_en": "Purchased 9 percent of Besi’s outstanding common stock through market transactions",
           "source": {
             "label": "Applied Materials 8-K Ex. 99.1 の発表",
             "label_en": "Applied Materials 8-K Ex. 99.1 press release",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Lamが年次報告で、成膜(誘電体・金属)とエッチングの主な競合としてApplied Materialsを挙げている(2026年度、10-K)",
-          "text_en": "Lam Research states that Applied Materials is its primary competitor in dielectric and metals deposition and in etch (FY2026 10-K)",
+          "text": "Lamが年次報告で、成膜(誘電体・金属)とエッチングの主な競合としてApplied Materialsを挙げている",
+          "text_en": "Lam Research states that Applied Materials is its primary competitor in dielectric and metals deposition and in etch",
           "source": {
             "label": "Lam Research 10-K(2026年度)",
             "label_en": "Lam Research 10-K (FY2026)",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "KLAが年次報告で、各製品市場の競合の1社としてApplied Materialsを挙げている(2026年度、10-K)",
-          "text_en": "KLA lists Applied Materials among its competitors in each of its product markets (FY2026 10-K)",
+          "text": "KLAが年次報告で、各製品市場の競合の1社としてApplied Materialsを挙げている",
+          "text_en": "KLA lists Applied Materials among its competitors in each of its product markets",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (FY2026)",
@@ -213,8 +213,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ASMLが年次報告で、パターン形成を補う用途の提供企業の1社としてApplied Materialsを競合に挙げている(2025年度、20-F)",
-          "text_en": "ASML states it competes with providers of patterning-enhancing applications such as Applied Materials (FY2025 20-F)",
+          "text": "ASMLが年次報告で、パターン形成を補う用途の提供企業の1社としてApplied Materialsを競合に挙げている",
+          "text_en": "ASML states it competes with providers of patterning-enhancing applications such as Applied Materials",
           "source": {
             "label": "ASML 20-F / Annual Report(2025年度)",
             "label_en": "ASML 20-F / Annual Report (FY2025)",
@@ -238,8 +238,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Axcelisが年次報告で、イオン注入装置で主にApplied Materialsと競合すると記載(2025年度、10-K)",
-          "text_en": "Axcelis states it mainly competes against Applied Materials in ion implantation systems (FY2025 10-K)",
+          "text": "Axcelisが年次報告で、イオン注入装置で主にApplied Materialsと競合すると記載",
+          "text_en": "Axcelis states it mainly competes against Applied Materials in ion implantation systems",
           "source": {
             "label": "Axcelis Technologies 10-K(2025年度)",
             "label_en": "Axcelis Technologies 10-K (FY2025)",
@@ -261,8 +261,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Veecoが年次報告で、主な競合の1社としてApplied Materialsを挙げている(2025年度、10-K)",
-          "text_en": "Veeco lists Applied Materials among its principal competitors (FY2025 10-K)",
+          "text": "Veecoが年次報告で、主な競合の1社としてApplied Materialsを挙げている",
+          "text_en": "Veeco lists Applied Materials among its principal competitors",
           "source": {
             "label": "Veeco Instruments 10-K(2025年度)",
             "label_en": "Veeco Instruments 10-K (FY2025)",
@@ -284,8 +284,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ACM Researchが年次報告で、PECVD・Track製品の主な競合の1社としてApplied Materialsを挙げている(2025年度、10-K)",
-          "text_en": "ACM Research lists Applied Materials among principal competitors for its PECVD and Track products (FY2025 10-K)",
+          "text": "ACM Researchが年次報告で、PECVD・Track製品の主な競合の1社としてApplied Materialsを挙げている",
+          "text_en": "ACM Research lists Applied Materials among principal competitors for its PECVD and Track products",
           "source": {
             "label": "ACM Research 10-K(2025年度)",
             "label_en": "ACM Research 10-K (FY2025)",
@@ -309,8 +309,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "PDF Solutionsが年次報告で、半導体製造ソフトと工程内検査・計測装置の競合としてApplied Materialsを挙げている(2025年度、10-K)",
-          "text_en": "PDF Solutions names Applied Materials as a competing provider of semiconductor manufacturing software and inline inspection/metrology equipment (FY2025 10-K)",
+          "text": "PDF Solutionsが年次報告で、半導体製造ソフトと工程内検査・計測装置の競合としてApplied Materialsを挙げている",
+          "text_en": "PDF Solutions names Applied Materials as a competing provider of semiconductor manufacturing software and inline inspection/metrology equipment",
           "source": {
             "label": "PDF Solutions 10-K(2025年度)",
             "label_en": "PDF Solutions 10-K (FY2025)",
@@ -334,8 +334,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Novaが年次報告で、工程内センサー・計測製品を開発する装置メーカー(Applied Materialsなど)と競合すると記載(2025年度、20-F)",
-          "text_en": "Nova states it competes with process equipment makers such as Applied Materials that develop in-situ sensors and metrology products (FY2025 20-F)",
+          "text": "Novaが年次報告で、工程内センサー・計測製品を開発する装置メーカー(Applied Materialsなど)と競合すると記載",
+          "text_en": "Nova states it competes with process equipment makers such as Applied Materials that develop in-situ sensors and metrology products",
           "source": {
             "label": "Nova 20-F(2025年度)",
             "label_en": "Nova 20-F (FY2025)",

@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "リン化インジウム(InP)基板の供給で生産能力の確保契約(2026年7月)",
-          "text_en": "Capacity Reservation Agreement for indium phosphide wafer substrates (July 2026)",
+          "text": "リン化インジウム(InP)基板の供給で生産能力の確保契約",
+          "text_en": "Capacity Reservation Agreement for indium phosphide wafer substrates",
           "source": {
             "label": "AXT 8-K(2026-07-29)",
             "label_en": "AXT 8-K (2026-07-29)",
@@ -60,8 +60,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "複数年の戦略契約を結び、NVIDIAがLumentumに20億ドルを出資(2026年3月)",
-          "text_en": "Multi-year strategic agreements; NVIDIA is investing $2B in Lumentum (March 2026)",
+          "text": "複数年の戦略契約を結び、NVIDIAがLumentumに20億ドルを出資",
+          "text_en": "Multi-year strategic agreements; NVIDIA is investing $2B in Lumentum",
           "source": {
             "label": "Lumentum 8-K Ex.99.1(joint の発表)",
             "label_en": "Lumentum 8-K Ex.99.1 (joint press release)",
@@ -124,8 +124,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IPG Photonicsの通信用伝送製品ラインを買収(2022年の買収として記載)",
-          "text_en": "Acquired IPG Photonics’ telecom transmission product lines (listed among 2022 acquisitions)",
+          "text": "IPG Photonicsの通信用伝送製品ラインを買収",
+          "text_en": "Acquired IPG Photonics’ telecom transmission product lines",
           "source": {
             "label": "Lumentum 10-K(2026年度)",
             "label_en": "Lumentum 10-K (FY2026)",
@@ -172,8 +172,8 @@
         },
         {
           "type": "tie",
-          "text": "LumentumはJDSU(現Viavi Solutions)から分離独立した会社(2026年度、10-K)",
-          "text_en": "Lumentum states it was spun off from JDSU, now Viavi Solutions (FY2026, 10-K)",
+          "text": "LumentumはJDSU(現Viavi Solutions)から分離独立した会社",
+          "text_en": "Lumentum states it was spun off from JDSU, now Viavi Solutions",
           "source": {
             "label": "Lumentum 10-K(2026年度)",
             "label_en": "Lumentum 10-K (FY2026)",
@@ -241,8 +241,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "QualcommおよびCorningと、ECOC 2026で共同のダイ間光インターコネクトのデモを行うと発表(2026年9月21日、Lumentum発表)",
-          "text_en": "Lumentum announced a joint die-to-die optical interconnect demonstration with Qualcomm Technologies and Corning at ECOC 2026 (September 21, 2026, Lumentum release)",
+          "text": "QualcommおよびCorningと、ECOC 2026で共同のダイ間光インターコネクトのデモを行うと発表",
+          "text_en": "Lumentum announced a joint die-to-die optical interconnect demonstration with Qualcomm Technologies and Corning at ECOC 2026",
           "source": {
             "label": "Lumentum の発表",
             "label_en": "Lumentum press release",
@@ -266,8 +266,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "QualcommおよびCorningと、ECOC 2026で共同のダイ間光インターコネクトのデモを行うと発表(2026年9月21日、Lumentum発表)",
-          "text_en": "Lumentum announced a joint die-to-die optical interconnect demonstration with Qualcomm Technologies and Corning at ECOC 2026 (September 21, 2026, Lumentum release)",
+          "text": "QualcommおよびCorningと、ECOC 2026で共同のダイ間光インターコネクトのデモを行うと発表",
+          "text_en": "Lumentum announced a joint die-to-die optical interconnect demonstration with Qualcomm Technologies and Corning at ECOC 2026",
           "source": {
             "label": "Lumentum の発表",
             "label_en": "Lumentum press release",

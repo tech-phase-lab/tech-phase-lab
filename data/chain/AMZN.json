@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "2027〜2028年に、AWSの世界のインフラへNVIDIAのGPUを追加で200万基導入する計画(2026年8月)",
-          "text_en": "AWS and NVIDIA plan to deploy 2 million additional NVIDIA GPUs across AWS global infrastructure in 2027-2028 (August 2026)",
+          "text": "2027〜2028年に、AWSの世界のインフラへNVIDIAのGPUを追加で200万基導入する計画",
+          "text_en": "AWS and NVIDIA plan to deploy 2 million additional NVIDIA GPUs across AWS global infrastructure in 2027-2028",
           "source": {
             "label": "Amazon News(aboutamazon.com)",
             "label_en": "Amazon News (aboutamazon.com)",
@@ -76,8 +76,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AWSとの戦略的関係を、5年・複数世代の契約で拡大(2024年12月、Marvellの8-K)",
-          "text_en": "Expanded the strategic relationship with AWS through a five-year, multi-generational agreement (December 2024, Marvell 8-K)",
+          "text": "AWSとの戦略的関係を、5年・複数世代の契約で拡大",
+          "text_en": "Expanded the strategic relationship with AWS through a five-year, multi-generational agreement",
           "source": {
             "label": "Marvell 8-K(2024年12月)",
             "label_en": "Marvell 8-K (Dec 2024)",
@@ -101,8 +101,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AWS向けにIntel 18Aでカスタム AIファブリックチップ、Intel 3でカスタムXeon 6を製造する複数年契約(2024年9月)",
-          "text_en": "Will make a custom AI fabric chip on Intel 18A and a custom Xeon 6 on Intel 3 for AWS (September 2024)",
+          "text": "AWS向けにIntel 18Aでカスタム AIファブリックチップ、Intel 3でカスタムXeon 6を製造する複数年契約",
+          "text_en": "Will make a custom AI fabric chip on Intel 18A and a custom Xeon 6 on Intel 3 for AWS",
           "source": {
             "label": "Intel の発表",
             "label_en": "Intel press release",
@@ -124,8 +124,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "2018年からAWSと協業し、AMD EPYCベースのEC2インスタンスを100種類以上提供(2023年6月時点)",
-          "text_en": "Has worked with AWS since 2018 and provides more than 100 EPYC-based EC2 instances (as of June 2023)",
+          "text": "2018年からAWSと協業し、AMD EPYCベースのEC2インスタンスを100種類以上提供",
+          "text_en": "Has worked with AWS since 2018 and provides more than 100 EPYC-based EC2 instances",
           "source": {
             "label": "AMD の発表",
             "label_en": "AMD press release",
@@ -149,8 +149,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Amazonと共同で設計・開発した商用バン(Rivianの年次報告)",
-          "text_en": "Designed and engineered the Rivian Commercial Van in collaboration with Amazon (Rivian annual report)",
+          "text": "Amazonと共同で設計・開発した商用バン",
+          "text_en": "Designed and engineered the Rivian Commercial Van in collaboration with Amazon",
           "source": {
             "label": "Rivian 10-K(2025年度)",
             "label_en": "Rivian 10-K (FY2025)",
@@ -162,8 +162,8 @@
         },
         {
           "type": "tie",
-          "text": "Amazonが新株予約権と株式でRivianの議決権の12.7%を保有(2025年12月31日時点、Rivianの年次報告)",
-          "text_en": "Amazon holds Rivian equity via a warrant and shares, 12.7% of voting power at December 31, 2025 (Rivian annual report)",
+          "text": "Amazonが新株予約権と株式でRivianの議決権の12.7%を保有",
+          "text_en": "Amazon holds Rivian equity via a warrant and shares, 12.7% of voting power at December 31, 2025",
           "source": {
             "label": "Rivian 10-K(2025年度)",
             "label_en": "Rivian 10-K (FY2025)",
@@ -185,8 +185,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "2042年まで、1,920MWの原子力電力をAmazonへ供給する拡大版の電力購入契約(2025年6月)",
-          "text_en": "Talen agreed to supply Amazon with 1,920MW of carbon-free nuclear power through 2042 under an expanded PPA (June 2025)",
+          "text": "2042年まで、1,920MWの原子力電力をAmazonへ供給する拡大版の電力購入契約",
+          "text_en": "Talen agreed to supply Amazon with 1,920MW of carbon-free nuclear power through 2042 under an expanded PPA",
           "source": {
             "label": "Talen Energy 8-K Ex. 99.1",
             "label_en": "Talen Energy 8-K Ex. 99.1",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Comanche Peak原子力発電所から1,200MWを供給する20年の電力購入契約(Vistraの年次報告)",
-          "text_en": "20-year PPA with AWS to supply 1,200MW from the Comanche Peak nuclear plant (Vistra annual report)",
+          "text": "Comanche Peak原子力発電所から1,200MWを供給する20年の電力購入契約",
+          "text_en": "20-year PPA with AWS to supply 1,200MW from the Comanche Peak nuclear plant",
           "source": {
             "label": "Vistra 10-K(2025年度)",
             "label_en": "Vistra 10-K (FY2025)",
@@ -235,8 +235,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Entergy Mississippiが、データセンター向けの大口の電力供給契約を締結(Entergyの年次報告)",
-          "text_en": "Entergy Mississippi executed large customer supply and service agreements to serve data center campuses (Entergy annual report)",
+          "text": "Entergy Mississippiが、データセンター向けの大口の電力供給契約を締結",
+          "text_en": "Entergy Mississippi executed large customer supply and service agreements to serve data center campuses",
           "source": {
             "label": "Entergy 10-K(2025年度)",
             "label_en": "Entergy 10-K (FY2025)",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AWSの技術(TrainiumやGravitonなど)に10年で1,000億ドル超を支出すると約束(2026年4月、Anthropicの発表)",
-          "text_en": "Committed to spend more than $100B over ten years on AWS technologies including Trainium and Graviton (April 2026, Anthropic announcement)",
+          "text": "AWSの技術(TrainiumやGravitonなど)に10年で1,000億ドル超を支出すると約束",
+          "text_en": "Committed to spend more than $100B over ten years on AWS technologies including Trainium and Graviton",
           "source": {
             "label": "Anthropic announcement",
             "label_en": "Anthropic announcement",
@@ -271,8 +271,8 @@
         },
         {
           "type": "tie",
-          "text": "Amazonが今回50億ドル、事業の節目に応じてさらに最大200億ドルをAnthropicに出資(2026年4月)",
-          "text_en": "Amazon agreed to invest $5B in Anthropic now and up to $20B more tied to commercial milestones (April 2026)",
+          "text": "Amazonが今回50億ドル、事業の節目に応じてさらに最大200億ドルをAnthropicに出資",
+          "text_en": "Amazon agreed to invest $5B in Anthropic now and up to $20B more tied to commercial milestones",
           "source": {
             "label": "Amazon News(aboutamazon.com)",
             "label_en": "Amazon News (aboutamazon.com)",
@@ -286,8 +286,8 @@
         },
         {
           "type": "tie",
-          "text": "Trainium2を使う計算クラスター「Project Rainier」を共同で構築(約50万チップ、2025年10月)",
-          "text_en": "Built Project Rainier, a Trainium2 compute cluster with nearly half a million chips, in collaboration with Anthropic (October 2025)",
+          "text": "Trainium2を使う計算クラスター「Project Rainier」を共同で構築",
+          "text_en": "Built Project Rainier, a Trainium2 compute cluster with nearly half a million chips, in collaboration with Anthropic",
           "source": {
             "label": "Amazon News(aboutamazon.com)",
             "label_en": "Amazon News (aboutamazon.com)",
@@ -309,8 +309,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "NVIDIA製チップを使うAWSの計算基盤を、OpenAIが利用できる380億ドルの複数年契約(2025年11月)",
-          "text_en": "$38B multi-year agreement giving OpenAI access to AWS compute built on NVIDIA chips (November 2025)",
+          "text": "NVIDIA製チップを使うAWSの計算基盤を、OpenAIが利用できる380億ドルの複数年契約",
+          "text_en": "$38B multi-year agreement giving OpenAI access to AWS compute built on NVIDIA chips",
           "source": {
             "label": "Amazon News(aboutamazon.com)",
             "label_en": "Amazon News (aboutamazon.com)",
@@ -332,8 +332,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AWS Gravitonプロセッサーを大規模に導入する契約(数千万コアから、2026年4月)",
-          "text_en": "Agreement to deploy AWS Graviton processors at scale, starting with tens of millions of cores (April 2026)",
+          "text": "AWS Gravitonプロセッサーを大規模に導入する契約",
+          "text_en": "Agreement to deploy AWS Graviton processors at scale, starting with tens of millions of cores",
           "source": {
             "label": "Amazon Press Center",
             "label_en": "Amazon Press Center",
@@ -401,8 +401,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ノースアナ原子力発電所の近くで、小型モジュール炉(SMR)の計画を検討する契約(2024年10月)",
-          "text_en": "Agreement to explore an SMR project near the North Anna nuclear station (October 2024)",
+          "text": "ノースアナ原子力発電所の近くで、小型モジュール炉(SMR)の計画を検討する契約",
+          "text_en": "Agreement to explore an SMR project near the North Anna nuclear station",
           "source": {
             "label": "Amazon News(aboutamazon.com)",
             "label_en": "Amazon News (aboutamazon.com)",
@@ -426,8 +426,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AIアプリ・データ・AWS Marketplaceでの提供で、AWSとの提携を拡大(2023年11月、Salesforceの発表)",
-          "text_en": "Salesforce and AWS expanded their partnership on AI apps, data and AWS Marketplace availability (November 2023)",
+          "text": "AIアプリ・データ・AWS Marketplaceでの提供で、AWSとの提携を拡大",
+          "text_en": "Salesforce and AWS expanded their partnership on AI apps, data and AWS Marketplace availability",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release",
@@ -564,8 +564,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Amazon・Best Buy・Walmart・Targetの4社でRokuの端末売上の81%を占める。RokuはAmazonをストリーミング端末の競合とも記載(2025年度、10-K)",
-          "text_en": "Amazon, Best Buy, Walmart and Target together accounted for 81% of Roku’s Devices revenue; Roku also names Amazon as a streaming-device competitor (FY2025, 10-K)",
+          "text": "Amazon・Best Buy・Walmart・Targetの4社でRokuの端末売上の81%を占める。RokuはAmazonをストリーミング端末の競合とも記載",
+          "text_en": "Amazon, Best Buy, Walmart and Target together accounted for 81% of Roku’s Devices revenue; Roku also names Amazon as a streaming-device competitor",
           "source": {
             "label": "Roku 10-K(2025年度)",
             "label_en": "Roku 10-K (FY2025)",

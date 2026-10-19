@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載(年次報告)",
-          "text_en": "Named as a primary foundry supplier (annual report)",
+          "text": "主な製造委託先として実名で記載",
+          "text_en": "Named as a primary foundry supplier",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -58,8 +58,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載(年次報告)",
-          "text_en": "Named as a primary foundry supplier (annual report)",
+          "text": "主な製造委託先として実名で記載",
+          "text_en": "Named as a primary foundry supplier",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -81,8 +81,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "半導体の組み立て・テストの主な委託先として実名で記載(年次報告)",
-          "text_en": "Named as a primary assembly and test supplier (annual report)",
+          "text": "半導体の組み立て・テストの主な委託先として実名で記載",
+          "text_en": "Named as a primary assembly and test supplier",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -104,8 +104,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "半導体の組み立て・テストの主な委託先として実名で記載(年次報告)",
-          "text_en": "Named as a primary assembly and test supplier (annual report)",
+          "text": "半導体の組み立て・テストの主な委託先として実名で記載",
+          "text_en": "Named as a primary assembly and test supplier",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -127,8 +127,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "自社のカスタムコアとSoCは、アーキテクチャ ライセンス契約などで全面的にライセンスを受けていると記載(10-Q)",
-          "text_en": "Says its custom cores and SoCs are fully licensed under its Architecture License Agreement and related agreements (10-Q)",
+          "text": "自社のカスタムコアとSoCは、アーキテクチャ ライセンス契約などで全面的にライセンスを受けていると記載",
+          "text_en": "Says its custom cores and SoCs are fully licensed under its Architecture License Agreement and related agreements",
           "source": {
             "label": "Qualcomm 10-Q(Q3 2026年度)",
             "label_en": "Qualcomm 10-Q (Q3 FY2026)",
@@ -142,8 +142,8 @@
         },
         {
           "type": "rival",
-          "text": "ArmがQualcommおよびNuviaと、Nuvia Architecture License Agreementをめぐる訴訟中と記載(2026年5月、20-F)",
-          "text_en": "Arm states it is in pending litigation with Qualcomm and Nuvia over the Nuvia Architecture License Agreement (May 2026, 20-F)",
+          "text": "ArmがQualcommおよびNuviaと、Nuvia Architecture License Agreementをめぐる訴訟中と記載",
+          "text_en": "Arm states it is in pending litigation with Qualcomm and Nuvia over the Nuvia Architecture License Agreement",
           "source": {
             "label": "Arm Holdings 20-F(2026年度)",
             "label_en": "Arm Holdings 20-F (FY2026)",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "薄型モデム(MDM)製品をAppleへ販売。2025年度に売上の10%超を占める顧客(年次報告)",
-          "text_en": "Sells thin modem (MDM) products to Apple; Apple was a 10%+ revenue customer in fiscal 2025 (annual report)",
+          "text": "薄型モデム(MDM)製品をAppleへ販売。2025年度に売上の10%超を占める顧客",
+          "text_en": "Sells thin modem (MDM) products to Apple; Apple was a 10%+ revenue customer in fiscal 2025",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -192,8 +192,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2025年度の連結売上の10%以上を占める顧客(年次報告)",
-          "text_en": "Revenues from Samsung comprised 10% or more of consolidated revenues in fiscal 2025 (annual report)",
+          "text": "2025年度の連結売上の10%以上を占める顧客",
+          "text_en": "Revenues from Samsung comprised 10% or more of consolidated revenues in fiscal 2025",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -205,7 +205,7 @@
         },
         {
           "type": "tie",
-          "text": "Galaxy S26 Ultraは、Galaxy向けにカスタマイズしたSnapdragon 8 Elite Gen 5を搭載(Samsungの発表)",
+          "text": "Galaxy S26 Ultraは、Galaxy向けにカスタマイズしたSnapdragon 8 Elite Gen 5を搭載",
           "text_en": "Galaxy S26 Ultra is powered by a customized Snapdragon 8 Elite Gen 5 for Galaxy (Samsung newsroom)",
           "source": {
             "label": "Samsung Global ニュースルーム(Galaxy S26)",
@@ -255,8 +255,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2025年度の連結売上の10%以上を占める顧客(年次報告)",
-          "text_en": "Revenues from Xiaomi comprised 10% or more of consolidated revenues in fiscal 2025 (annual report)",
+          "text": "2025年度の連結売上の10%以上を占める顧客",
+          "text_en": "Revenues from Xiaomi comprised 10% or more of consolidated revenues in fiscal 2025",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -280,8 +280,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "4G・5Gの包括ライセンス契約を締結し、係争をすべて取り下げ(2025年度第2四半期)",
-          "text_en": "Entered comprehensive 4G and 5G license agreements, dismissing all outstanding disputes (fiscal Q2 2025)",
+          "text": "4G・5Gの包括ライセンス契約を締結し、係争をすべて取り下げ",
+          "text_en": "Entered comprehensive 4G and 5G license agreements, dismissing all outstanding disputes",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -305,8 +305,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Amazonのサーバー用チップ購入に連動する、最大2,500万株の新株予約権をAmazonに発行(2026年9月3日の8-K)",
-          "text_en": "Issued Amazon a warrant for up to 25 million shares tied to Amazon purchases of Qualcomm server chip products (8-K, September 3, 2026)",
+          "text": "Amazonのサーバー用チップ購入に連動する、最大2,500万株の新株予約権をAmazonに発行",
+          "text_en": "Issued Amazon a warrant for up to 25 million shares tied to Amazon purchases of Qualcomm server chip products",
           "source": {
             "label": "Qualcomm 8-K(Sept 3, 2026)",
             "label_en": "Qualcomm 8-K (Sept 3, 2026)",
@@ -330,8 +330,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "最初のMicrosoft Copilot+ PCが、Snapdragon X Elite・X Plusを搭載(2024年5月)",
-          "text_en": "The first Microsoft Copilot+ PCs launched with Snapdragon X Elite and X Plus processors (May 2024)",
+          "text": "最初のMicrosoft Copilot+ PCが、Snapdragon X Elite・X Plusを搭載",
+          "text_en": "The first Microsoft Copilot+ PCs launched with Snapdragon X Elite and X Plus processors",
           "source": {
             "label": "Microsoft ブログ(Copilot+ PCs)",
             "label_en": "Microsoft blog (Copilot+ PCs)",

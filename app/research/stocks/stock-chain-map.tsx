@@ -8,11 +8,15 @@ type Line = { d: string; tone: ChainTone; on: boolean };
 const CARD = "chain-card-";
 /** From this many rivals on, only the main rivals show; the rest open behind a ＋. */
 const RIVAL_FOLD = 6;
+/** A map row with more chips than this folds to MAP_KEEP chips plus a "＋" chip. */
+const MAP_FOLD = 8, MAP_KEEP = 6;
+/** A list group of other kinds folds after this many cards. */
+const GROUP_FOLD = 8, GROUP_KEEP = 5;
 /** The main rivals first, topped up to five from the rest of the group. */
-function foldRivals(members: ChainCompany[], main: string[]) {
+function foldRivals(members: ChainCompany[], main: string[], keep: number) {
   const first = members.filter(company => main.includes(company.id));
   const rest = members.filter(company => !main.includes(company.id));
-  const shown = [...first, ...rest.slice(0, Math.max(0, 5 - first.length))];
+  const shown = [...first, ...rest.slice(0, Math.max(0, keep - first.length))];
   return { shown, more: members.filter(company => !shown.includes(company)) };
 }
 
@@ -48,6 +52,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
   const ja = lang === "ja";
   const t = (jaText: string, enText: string) => ja ? jaText : enText;
   const [sel, setSel] = useState<string | null>(null);
+  const [openRows, setOpenRows] = useState<number[]>([]);
   const [lines, setLines] = useState<Line[]>([]);
   const [box, setBox] = useState({ width: 0, height: 0 });
   const map = useRef<HTMLDivElement>(null);
@@ -68,13 +73,15 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
       return [r.left - area.left + r.width / 2 + dx, (side === "b" ? r.bottom : r.top) - area.top];
     };
     const spread = (list: ChainCompany[], id: string) => list.length < 2 ? 0 : (list.findIndex(company => company.id === id) / (list.length - 1) - 0.5) * (rect(root).width - 24);
-    const upstream = data.companies.filter(company => chainAbove(data, company.row)), downstream = data.companies.filter(company => !chainAbove(data, company.row));
+    // Companies folded behind a row's "＋" have no chip, so they get no line either.
+    const shown = data.companies.filter(company => chips.current[company.id]);
+    const upstream = shown.filter(company => chainAbove(data, company.row)), downstream = shown.filter(company => !chainAbove(data, company.row));
     const out: Line[] = [];
     const curve = (a: [number, number], b: [number, number], tone: ChainTone, on: boolean) => {
       const [x1, y1] = a, [x2, y2] = b, dy = Math.max(26, Math.abs(y2 - y1) * 0.5);
       out.push({ d: `M${x1},${y1} C${x1},${y1 + dy} ${x2},${y2 - dy} ${x2},${y2}`, tone, on });
     };
-    for (const company of data.companies) {
+    for (const company of shown) {
       const kinds = chainKinds(company), on = sel === company.id;
       kinds.forEach((kind, index) => {
         const dx = (index - (kinds.length - 1) / 2) * 6;
@@ -94,7 +101,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
     setLines(out);
   }, [data, sel, root, byId]);
 
-  useEffect(() => { draw(); }, [draw, lang]);
+  useEffect(() => { draw(); }, [draw, lang, openRows]);
   useEffect(() => {
     const board = map.current;
     if (!board) return;
@@ -109,14 +116,22 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
     setSel(id && sel === id ? null : id);
   }
 
-  const rowChips = (row: number) => data.companies.filter(company => company.row === row).map(company => {
+  const chipOf = (company: ChainCompany) => {
     const kinds = chainKinds(company);
     return <button type="button" key={company.id} ref={element => { chips.current[company.id] = element; }} className={`${styles.chip} ${related(company.id) ? styles.on : ""}`}
       data-tone={kinds[0]} onClick={() => select(company.id)} aria-pressed={sel === company.id}>
       <span className={styles.dots} aria-hidden="true">{kinds.map(kind => <i key={kind} data-tone={kind} />)}</span>
       <b>{company.ticker}</b><small>{ja ? company.sub : company.sub_en}</small>
     </button>;
-  });
+  };
+  // A crowded row shows its main companies and a "＋" chip for the rest, so the map stays readable (owner, Oct 19).
+  const rowChips = (row: number) => {
+    const all = data.companies.filter(company => company.row === row);
+    if (all.length <= MAP_FOLD || openRows.includes(row)) return <>{all.map(chipOf)}{all.length > MAP_FOLD && <button type="button" className={styles.more} onClick={() => setOpenRows(openRows.filter(index => index !== row))}>{t("閉じる", "Fold")}</button>}</>;
+    const first = all.filter(company => data.rivals.includes(company.id)), rest = all.filter(company => !data.rivals.includes(company.id));
+    const keep = [...first, ...rest].slice(0, MAP_KEEP);
+    return <>{keep.map(chipOf)}<button type="button" className={styles.more} onClick={() => setOpenRows([...openRows, row])}>{ja ? `＋${all.length - keep.length}社` : `+${all.length - keep.length}`}</button></>;
+  };
 
   // Rows with no company are left out, so a stock with no suppliers (or no customers) just has a shorter map.
   const rowsOf = (above: boolean) => data.rows.map((row, index) => ({ row, index })).filter(({ index }) => chainAbove(data, index) === above && data.companies.some(company => company.row === index))
@@ -157,14 +172,14 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
           const members = chainGroup(data, kind);
           return members.length > 0 && <div className={styles.grp} data-tone={kind} key={kind}>
             <h4 className={styles.gh}><i />{chainText(kind, "group", lang)} <small>{ja ? `${members.length}社` : members.length}</small></h4>
-            {kind === "rival" && members.length >= RIVAL_FOLD
-              // The main rivals (the "who competes" row) stay as cards; the rest open behind a ＋ (owner, Oct 19).
+            {members.length >= (kind === "rival" ? RIVAL_FOLD : GROUP_FOLD)
+              // The main companies stay as cards; the rest open behind a ＋ (owner, Oct 19).
               ? (() => {
-                const { shown, more } = foldRivals(members, data.rivals);
+                const { shown, more } = foldRivals(members, kind === "rival" ? data.rivals : [], kind === "rival" ? 5 : GROUP_KEEP);
                 return <>
                   <div className={styles.items}>{shown.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
                   <details className={styles.more}>
-                    <summary>{ja ? `＋ 残り${more.length}社の競合を開く` : `+ Show ${more.length} more competitors`}</summary>
+                    <summary>{ja ? `＋ 残り${more.length}社を開く` : `+ Show ${more.length} more`}</summary>
                     <div className={styles.items}>{more.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
                   </details>
                 </>;

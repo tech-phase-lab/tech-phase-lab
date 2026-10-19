@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "NVIDIAとの協業を拡大し、OCI SuperclusterでNVIDIA GB200 NVL72システムを提供(2025年6月12日、Oracle発表)",
-          "text_en": "Oracle expanded its collaboration with NVIDIA, offering NVIDIA GB200 NVL72 systems on OCI Supercluster (June 12, 2025, Oracle release)",
+          "text": "NVIDIAとの協業を拡大し、OCI SuperclusterでNVIDIA GB200 NVL72システムを提供",
+          "text_en": "Oracle expanded its collaboration with NVIDIA, offering NVIDIA GB200 NVL72 systems on OCI Supercluster",
           "source": {
             "label": "Oracle の発表",
             "label_en": "Oracle press release",
@@ -53,8 +53,8 @@
         },
         {
           "type": "up",
-          "text": "OCI Zettascale10クラスターは、複数のデータセンターにまたがり数十万基のNVIDIA GPUを接続(2025年10月14日、Oracle発表)",
-          "text_en": "OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers (October 14, 2025, Oracle release)",
+          "text": "OCI Zettascale10クラスターは、複数のデータセンターにまたがり数十万基のNVIDIA GPUを接続",
+          "text_en": "OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers",
           "source": {
             "label": "Oracle の発表",
             "label_en": "Oracle press release",
@@ -66,8 +66,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIA AI EnterpriseをOCIと統合すると発表(2025年3月18日、NVIDIA発表)",
-          "text_en": "Oracle and NVIDIA announced an integration of NVIDIA AI Enterprise with OCI (March 18, 2025, NVIDIA release)",
+          "text": "NVIDIA AI EnterpriseをOCIと統合すると発表",
+          "text_en": "Oracle and NVIDIA announced an integration of NVIDIA AI Enterprise with OCI",
           "source": {
             "label": "NVIDIA の発表",
             "label_en": "NVIDIA press release",
@@ -79,8 +79,8 @@
         },
         {
           "type": "down",
-          "text": "2026年度第2四半期の契約残高(RPO)を押し上げた新規契約の例としてNVIDIAを挙げている(2025年12月、8-K)",
-          "text_en": "Cited NVIDIA among new commitments lifting RPO in Q2 FY26 (December 2025, 8-K)",
+          "text": "2026年度第2四半期の契約残高(RPO)を押し上げた新規契約の例としてNVIDIAを挙げている",
+          "text_en": "Cited NVIDIA among new commitments lifting RPO in Q2 FY26",
           "source": {
             "label": "Oracle 8-K Ex.99.1",
             "label_en": "Oracle 8-K Ex.99.1 (Q2 FY26 results)",
@@ -104,8 +104,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "2026年第3四半期から、AMD Instinct MI450シリーズGPU 50,000基による一般向けAIスーパークラスターを、ハイパースケーラーとして初めて提供する(2025年10月14日、AMD発表)",
-          "text_en": "Oracle will be the first hyperscaler to offer a publicly available AI supercluster of 50,000 AMD Instinct MI450 GPUs from Q3 2026 (October 14, 2025, AMD release)",
+          "text": "2026年第3四半期から、AMD Instinct MI450シリーズGPU 50,000基による一般向けAIスーパークラスターを、ハイパースケーラーとして初めて提供する",
+          "text_en": "Oracle will be the first hyperscaler to offer a publicly available AI supercluster of 50,000 AMD Instinct MI450 GPUs from Q3 2026",
           "source": {
             "label": "AMD の発表",
             "label_en": "AMD press release",
@@ -127,8 +127,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "マスター・サービス契約のもとで、最大2.8GWのBloomの燃料電池システムを調達する意向(2026年4月13日、Bloom Energy発表)",
-          "text_en": "Oracle intends to procure up to 2.8 GW of Bloom fuel cell systems under a master services agreement (April 13, 2026, Bloom Energy release)",
+          "text": "マスター・サービス契約のもとで、最大2.8GWのBloomの燃料電池システムを調達する意向",
+          "text_en": "Oracle intends to procure up to 2.8 GW of Bloom fuel cell systems under a master services agreement",
           "source": {
             "label": "Bloom Energy の発表",
             "label_en": "Bloom Energy press release",
@@ -142,8 +142,8 @@
         },
         {
           "type": "tie",
-          "text": "電力提携に関連してBloomが発行したワラントをOracleが行使し、1,905,433株を取得(2026年5月1日、10-Q)",
-          "text_en": "Bloom issued Oracle a warrant tied to the on-site power partnership; Oracle completed a cashless exercise on May 1, 2026, resulting in 1,905,433 shares (10-Q)",
+          "text": "電力提携に関連してBloomが発行したワラントをOracleが行使し、1,905,433株を取得",
+          "text_en": "Bloom issued Oracle a warrant tied to the on-site power partnership; Oracle completed a cashless exercise on May 1, 2026, resulting in 1,905,433 shares",
           "source": {
             "label": "Bloom Energy 10-Q(2026年第2四半期)",
             "label_en": "Bloom Energy 10-Q (Q2 2026)",
@@ -165,8 +165,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2026年度第2四半期の契約残高(RPO)を押し上げた新規契約の例としてMetaを挙げている(2025年12月、8-K)",
-          "text_en": "Cited new RPO commitments from Meta in Q2 FY26 (December 2025, 8-K)",
+          "text": "2026年度第2四半期の契約残高(RPO)を押し上げた新規契約の例としてMetaを挙げている",
+          "text_en": "Cited new RPO commitments from Meta in Q2 FY26",
           "source": {
             "label": "Oracle 8-K Ex.99.1",
             "label_en": "Oracle 8-K Ex.99.1 (Q2 FY26 results)",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Applied Optoelectronicsは、2024年の売上の12.4%をOracleが占めたと記載(2026年2月、10-K)",
-          "text_en": "Applied Optoelectronics reports that Oracle accounted for 12.4% of its revenue in 2024 (February 2026, 10-K)",
+          "text": "Applied Optoelectronicsは、2024年の売上の12.4%をOracleが占めたと記載",
+          "text_en": "Applied Optoelectronics reports that Oracle accounted for 12.4% of its revenue in 2024",
           "source": {
             "label": "Applied Optoelectronics 10-K(2025年度)",
             "label_en": "Applied Optoelectronics 10-K (FY2025)",
@@ -215,8 +215,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OCIのマルチクラウド・サービスがMicrosoft Azureなど競合他社の製品と連携(2026年度、10-K)",
-          "text_en": "Oracle’s OCI multicloud services work with Microsoft Azure, among other competitors’ products (FY2026 10-K)",
+          "text": "OCIのマルチクラウド・サービスがMicrosoft Azureなど競合他社の製品と連携",
+          "text_en": "Oracle’s OCI multicloud services work with Microsoft Azure, among other competitors’ products",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -228,8 +228,8 @@
         },
         {
           "type": "tie",
-          "text": "OracleとMicrosoftがOracle Database@Azureを発表し、OCIのデータベース・サービスをAzureのデータセンターで提供(2023年9月14日、Microsoft発表)",
-          "text_en": "Oracle and Microsoft announced Oracle Database@Azure, putting OCI database services in Azure datacenters (September 14, 2023, Microsoft release)",
+          "text": "OracleとMicrosoftがOracle Database@Azureを発表し、OCIのデータベース・サービスをAzureのデータセンターで提供",
+          "text_en": "Oracle and Microsoft announced Oracle Database@Azure, putting OCI database services in Azure datacenters",
           "source": {
             "label": "Microsoft の発表",
             "label_en": "Microsoft press release",
@@ -243,7 +243,7 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてMicrosoftを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてMicrosoftを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Microsoft among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -268,8 +268,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Marvell、MicrosoftとともにOCPの作業部会を設立し、データセンターのハードウェア・セキュリティ・モジュールを標準化(2026年10月13日、Marvell発表)",
-          "text_en": "Marvell, Microsoft and Oracle formed an OCP working group to standardize data-center hardware security modules (October 13, 2026, Marvell release)",
+          "text": "Marvell、MicrosoftとともにOCPの作業部会を設立し、データセンターのハードウェア・セキュリティ・モジュールを標準化",
+          "text_en": "Marvell, Microsoft and Oracle formed an OCP working group to standardize data-center hardware security modules",
           "source": {
             "label": "Marvell の発表",
             "label_en": "Marvell press release",
@@ -291,8 +291,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OCIのマルチクラウド・サービスがAmazon Web Servicesなど競合他社の製品と連携(2026年度、10-K)",
-          "text_en": "Oracle’s OCI multicloud services work with Amazon Web Services, among other competitors’ products (FY2026 10-K)",
+          "text": "OCIのマルチクラウド・サービスがAmazon Web Servicesなど競合他社の製品と連携",
+          "text_en": "Oracle’s OCI multicloud services work with Amazon Web Services, among other competitors’ products",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -306,8 +306,8 @@
         },
         {
           "type": "tie",
-          "text": "OracleとAWSがOracle Database@AWSの一般提供開始を発表(2025年7月8日、Amazon/AWS発表)",
-          "text_en": "Oracle and AWS announced general availability of Oracle Database@AWS (July 8, 2025, Amazon/AWS release)",
+          "text": "OracleとAWSがOracle Database@AWSの一般提供開始を発表",
+          "text_en": "Oracle and AWS announced general availability of Oracle Database@AWS",
           "source": {
             "label": "Amazon/AWS の発表",
             "label_en": "Amazon/AWS press release",
@@ -321,8 +321,8 @@
         },
         {
           "type": "tie",
-          "text": "Amazon、Google、MicrosoftからのマルチクラウドDB売上が2026年度第1四半期に1,529%増(2025年9月9日、8-K)",
-          "text_en": "MultiCloud database revenue from Amazon, Google and Microsoft grew 1,529% in Q1 FY26 (September 9, 2025, 8-K)",
+          "text": "Amazon、Google、MicrosoftからのマルチクラウドDB売上が2026年度第1四半期に1,529%増",
+          "text_en": "MultiCloud database revenue from Amazon, Google and Microsoft grew 1,529% in Q1 FY26",
           "source": {
             "label": "Oracle 8-K Ex.99.1",
             "label_en": "Oracle 8-K Ex.99.1 (Q1 FY26 results)",
@@ -336,7 +336,7 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてAmazonを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてAmazonを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Amazon among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -361,8 +361,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OCIのマルチクラウド・サービスがGoogle Cloudなど競合他社の製品と連携(2026年度、10-K)",
-          "text_en": "Oracle’s OCI multicloud services work with Google Cloud, among other competitors’ products (FY2026 10-K)",
+          "text": "OCIのマルチクラウド・サービスがGoogle Cloudなど競合他社の製品と連携",
+          "text_en": "Oracle’s OCI multicloud services work with Google Cloud, among other competitors’ products",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -376,8 +376,8 @@
         },
         {
           "type": "tie",
-          "text": "Google Cloudと提携を拡大し、OCI Generative AIでGemini 2.5をはじめとするGoogleのAIモデルを提供(2025年8月14日、Oracle発表)",
-          "text_en": "Oracle and Google Cloud expanded their partnership to offer Google’s AI models, starting with Gemini 2.5, via OCI Generative AI (August 14, 2025, Oracle release)",
+          "text": "Google Cloudと提携を拡大し、OCI Generative AIでGemini 2.5をはじめとするGoogleのAIモデルを提供",
+          "text_en": "Oracle and Google Cloud expanded their partnership to offer Google’s AI models, starting with Gemini 2.5, via OCI Generative AI",
           "source": {
             "label": "Oracle の発表",
             "label_en": "Oracle press release",
@@ -391,7 +391,7 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてAlphabet(Google)を挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてAlphabet(Google)を挙げている",
           "text_en": "Oracle’s FY2026 10-K names Alphabet (Google) among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -416,8 +416,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Oracleは戦略的パートナーとしてPalantirを挙げ、Oracle Distributed CloudでPalantirを提供(2026年、Oracleのパートナーページ)",
-          "text_en": "Oracle lists Palantir as a strategic partner, offering Palantir on Oracle Distributed Cloud (2026, Oracle partner page)",
+          "text": "Oracleは戦略的パートナーとしてPalantirを挙げ、Oracle Distributed CloudでPalantirを提供",
+          "text_en": "Oracle lists Palantir as a strategic partner, offering Palantir on Oracle Distributed Cloud",
           "source": {
             "label": "Oracle partner page",
             "label_en": "Oracle partner page",
@@ -440,8 +440,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NetAppとOracleが、OCIで動く完全マネージド型のNetAppストレージ・サービスを発表(2026年9月29日、Oracle発表)",
-          "text_en": "NetApp and Oracle announced a fully managed NetApp storage service native to OCI (September 29, 2026, Oracle release)",
+          "text": "NetAppとOracleが、OCIで動く完全マネージド型のNetAppストレージ・サービスを発表",
+          "text_en": "NetApp and Oracle announced a fully managed NetApp storage service native to OCI",
           "source": {
             "label": "Oracle の発表",
             "label_en": "Oracle press release",
@@ -465,8 +465,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ArmはStargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)で重要な技術パートナーに挙げられたと記載(2026年5月26日、Arm 10-K)",
-          "text_en": "Arm’s 10-K states that SoftBank Group announced the Stargate Project, a joint venture with OpenAI and Oracle, naming Arm a key technology partner (May 26, 2026, Arm 10-K)",
+          "text": "ArmはStargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)で重要な技術パートナーに挙げられたと記載",
+          "text_en": "Arm’s 10-K states that SoftBank Group announced the Stargate Project, a joint venture with OpenAI and Oracle, naming Arm a key technology partner",
           "source": {
             "label": "Arm 10-K(2026年度)",
             "label_en": "Arm 10-K (FY2026)",
@@ -490,8 +490,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Stargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)に参加(2026年5月26日、Arm 10-K)",
-          "text_en": "Arm’s 10-K describes the Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle (May 26, 2026, Arm 10-K)",
+          "text": "Stargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)に参加",
+          "text_en": "Arm’s 10-K describes the Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle",
           "source": {
             "label": "Arm 10-K(2026年度)",
             "label_en": "Arm 10-K (FY2026)",
@@ -505,8 +505,8 @@
         },
         {
           "type": "tie",
-          "text": "2025年11月25日にSoftBank GroupがAmpereの全持分を取得。Oracleは持分法で出資していたAmpereの持分を売却し、利益を計上(2026年度、10-K)",
-          "text_en": "SoftBank Group acquired all equity interests of Ampere on November 25, 2025; Oracle, an equity-method investor, sold its stake and booked a gain (FY2026 10-K)",
+          "text": "2025年11月25日にSoftBank GroupがAmpereの全持分を取得。Oracleは持分法で出資していたAmpereの持分を売却し、利益を計上",
+          "text_en": "SoftBank Group acquired all equity interests of Ampere on November 25, 2025; Oracle, an equity-method investor, sold its stake and booked a gain",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -530,8 +530,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Stargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)に参加(2026年5月26日、Arm 10-K)",
-          "text_en": "Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle, per Arm’s 10-K (May 26, 2026)",
+          "text": "Stargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)に参加",
+          "text_en": "Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle, per Arm’s 10-K",
           "source": {
             "label": "Arm 10-K(2026年度)",
             "label_en": "Arm 10-K (FY2026)",
@@ -545,8 +545,8 @@
         },
         {
           "type": "tie",
-          "text": "Oracle AI Databaseで、OpenAIのChatGPTなどのLLMをOracle Database上で利用可能(2025年9月9日、8-K)",
-          "text_en": "Oracle AI Database lets customers use LLMs including OpenAI’s ChatGPT on Oracle Database (September 9, 2025, 8-K)",
+          "text": "Oracle AI Databaseで、OpenAIのChatGPTなどのLLMをOracle Database上で利用可能",
+          "text_en": "Oracle AI Database lets customers use LLMs including OpenAI’s ChatGPT on Oracle Database",
           "source": {
             "label": "Oracle 8-K Ex.99.1",
             "label_en": "Oracle 8-K Ex.99.1 (Q1 FY26 results)",
@@ -570,8 +570,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IBMが年次報告で、戦略的パートナーの1社としてOracleを挙げている(2026年2月、10-K)",
-          "text_en": "IBM’s 10-K lists Oracle among its strategic partners (February 2026)",
+          "text": "IBMが年次報告で、戦略的パートナーの1社としてOracleを挙げている",
+          "text_en": "IBM’s 10-K lists Oracle among its strategic partners",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -583,7 +583,7 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてIBMを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてIBMを挙げている",
           "text_en": "Oracle’s FY2026 10-K names IBM among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -608,7 +608,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてAdobeを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてAdobeを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Adobe among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -633,7 +633,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてCisco Systemsを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてCisco Systemsを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Cisco Systems among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -658,7 +658,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてIntelを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてIntelを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Intel among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -683,7 +683,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてSalesforceを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてSalesforceを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Salesforce among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -708,7 +708,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてSAPを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてSAPを挙げている",
           "text_en": "Oracle’s FY2026 10-K names SAP among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -733,7 +733,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてHewlett Packard Enterpriseを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてHewlett Packard Enterpriseを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Hewlett Packard Enterprise among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -758,7 +758,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてWorkdayを挙げている(2026年度、10-K)",
+          "text": "Oracleが年次報告で、主な競合の1社としてWorkdayを挙げている",
           "text_en": "Oracle’s FY2026 10-K names Workday among its principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
@@ -783,7 +783,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてOracleを挙げている(2025年度、10-K)",
+          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてOracleを挙げている",
           "text_en": "ServiceNow’s FY2025 10-K names Oracle among competing enterprise application vendors",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
@@ -806,7 +806,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MongoDBが年次報告で、競合する従来型データベース大手の1社としてOracleを挙げている(2026年度、10-K)",
+          "text": "MongoDBが年次報告で、競合する従来型データベース大手の1社としてOracleを挙げている",
           "text_en": "MongoDB’s FY2026 10-K names Oracle among legacy database competitors",
           "source": {
             "label": "MongoDB 10-K(2026年度)",
@@ -829,8 +829,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CoreWeaveが年次報告で、汎用クラウドで競合する企業の1社としてOracleを挙げている。競合の一部は顧客でもあるとしている(2026年8月、10-K)",
-          "text_en": "CoreWeave’s 10-K names Oracle as a general-purpose cloud competitor and notes that some of them are also its customers (August 2026)",
+          "text": "CoreWeaveが年次報告で、汎用クラウドで競合する企業の1社としてOracleを挙げている。競合の一部は顧客でもあるとしている",
+          "text_en": "CoreWeave’s 10-K names Oracle as a general-purpose cloud competitor and notes that some of them are also its customers",
           "source": {
             "label": "CoreWeave 10-K",
             "label_en": "CoreWeave 10-K",
@@ -852,8 +852,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Nebiusが年次報告(20-F)で、汎用クラウドで競合する企業の1社としてOracleを挙げている(2026年4月)",
-          "text_en": "Nebius’s 20-F names Oracle as a general-purpose cloud competitor (April 2026)",
+          "text": "Nebiusが年次報告(20-F)で、汎用クラウドで競合する企業の1社としてOracleを挙げている",
+          "text_en": "Nebius’s 20-F names Oracle as a general-purpose cloud competitor",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -875,7 +875,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、競合するハイパースケーラーの1社としてOracle Cloudを挙げている(2026年度、10-K)",
+          "text": "IRENが年次報告で、競合するハイパースケーラーの1社としてOracle Cloudを挙げている",
           "text_en": "IREN’s FY2026 10-K lists Oracle Cloud among hyperscaler competitors",
           "source": {
             "label": "IREN 10-K(2026年度)",

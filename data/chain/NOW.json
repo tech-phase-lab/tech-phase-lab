@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AI Control TowerをMicrosoft Agent 365の仕組みに広げ、ServiceNowのAI機能をMicrosoftのマーケットプレイスで提供(2026年7月)",
-          "text_en": "Extended AI Control Tower governance across the Microsoft Agent 365 ecosystem and made its AI specialists available through the Microsoft marketplace (July 2026)",
+          "text": "AI Control TowerをMicrosoft Agent 365の仕組みに広げ、ServiceNowのAI機能をMicrosoftのマーケットプレイスで提供",
+          "text_en": "Extended AI Control Tower governance across the Microsoft Agent 365 ecosystem and made its AI specialists available through the Microsoft marketplace",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -53,7 +53,7 @@
         },
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてMicrosoftを挙げている(2025年度、10-K)",
+          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてMicrosoftを挙げている",
           "text_en": "ServiceNow’s FY2025 10-K names Microsoft among the enterprise application software vendors it competes with",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
@@ -76,8 +76,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AIエージェントの統制で提携を深め、AI Control TowerをNVIDIA Enterprise AI Factory検証済み設計に統合(2026年7月)",
-          "text_en": "Deepened the partnership on agentic AI governance and integrated AI Control Tower into the NVIDIA Enterprise AI Factory Validated Design (July 2026)",
+          "text": "AIエージェントの統制で提携を深め、AI Control TowerをNVIDIA Enterprise AI Factory検証済み設計に統合",
+          "text_en": "Deepened the partnership on agentic AI governance and integrated AI Control Tower into the NVIDIA Enterprise AI Factory Validated Design",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -99,8 +99,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AWS Marketplaceでの取引額が10億ドルを超え、AWSとの協業を深めた(2026年7月)",
-          "text_en": "Surpassed $1B in AWS Marketplace transactions and deepened its collaboration with AWS (July 2026)",
+          "text": "AWS Marketplaceでの取引額が10億ドルを超え、AWSとの協業を深めた",
+          "text_en": "Surpassed $1B in AWS Marketplace transactions and deepened its collaboration with AWS",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -114,8 +114,8 @@
         },
         {
           "type": "tie",
-          "text": "AI・クラウドの相互運用に向け関係を拡大した技術提供企業の1社としてAWSを挙げている(2026年1月、決算発表)",
-          "text_en": "Lists AWS among technology providers with which it has expanded relationships for AI and cloud interoperability (January 2026, earnings release)",
+          "text": "AI・クラウドの相互運用に向け関係を拡大した技術提供企業の1社としてAWSを挙げている",
+          "text_en": "Lists AWS among technology providers with which it has expanded relationships for AI and cloud interoperability",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Google Cloudと5Gネットワーク・小売・IT運用向けのAIソリューションを発表。Google CloudはServiceNowを2026年のパートナー・オブ・ザ・イヤーに選出(2026年4月)",
-          "text_en": "Unveiled AI solutions with Google Cloud spanning 5G networks, retail and IT operations; Google Cloud named ServiceNow a 2026 Partner of the Year (April 2026)",
+          "text": "Google Cloudと5Gネットワーク・小売・IT運用向けのAIソリューションを発表。Google CloudはServiceNowを2026年のパートナー・オブ・ザ・イヤーに選出",
+          "text_en": "Unveiled AI solutions with Google Cloud spanning 5G networks, retail and IT operations; Google Cloud named ServiceNow a 2026 Partner of the Year",
           "source": {
             "label": "ServiceNow 2026年第1四半期の決算発表",
             "label_en": "ServiceNow Q1 2026 earnings release (8-K Ex. 99.1)",
@@ -154,8 +154,8 @@
         },
         {
           "type": "tie",
-          "text": "AI・クラウドの相互運用に向け関係を拡大した技術提供企業の1社としてGoogleを挙げている(2026年1月、決算発表)",
-          "text_en": "Lists Google among technology providers with which it has expanded relationships for AI and cloud interoperability (January 2026, earnings release)",
+          "text": "AI・クラウドの相互運用に向け関係を拡大した技術提供企業の1社としてGoogleを挙げている",
+          "text_en": "Lists Google among technology providers with which it has expanded relationships for AI and cloud interoperability",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -179,8 +179,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AnthropicのClaudeモデルをServiceNowのAIプラットフォームにより深く組み込む提携の拡大を発表(2026年1月28日)",
-          "text_en": "Announced an expanded partnership with Anthropic to integrate Claude models more deeply into the ServiceNow AI Platform (January 28, 2026)",
+          "text": "AnthropicのClaudeモデルをServiceNowのAIプラットフォームにより深く組み込む提携の拡大を発表",
+          "text_en": "Announced an expanded partnership with Anthropic to integrate Claude models more deeply into the ServiceNow AI Platform",
           "source": {
             "label": "ServiceNow 2025年第4四半期の決算発表",
             "label_en": "ServiceNow Q4 2025 earnings release (8-K Ex. 99.1)",
@@ -204,8 +204,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OpenAIと、企業向けのAIエージェント体験を広げる新たな協業を発表(2026年1月28日)",
-          "text_en": "Unveiled a new collaboration with OpenAI to drive agentic AI experiences across enterprises (January 28, 2026)",
+          "text": "OpenAIと、企業向けのAIエージェント体験を広げる新たな協業を発表",
+          "text_en": "Unveiled a new collaboration with OpenAI to drive agentic AI experiences across enterprises",
           "source": {
             "label": "ServiceNow 2025年第4四半期の決算発表",
             "label_en": "ServiceNow Q4 2025 earnings release (8-K Ex. 99.1)",
@@ -229,8 +229,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "提携を深め、Cisco AI DefenseをServiceNowのAI Control Towerに統合(2025年7月)",
-          "text_en": "Deepened the partnership, including integrating Cisco AI Defense into ServiceNow AI Control Tower (July 2025)",
+          "text": "提携を深め、Cisco AI DefenseをServiceNowのAI Control Towerに統合",
+          "text_en": "Deepened the partnership, including integrating Cisco AI Defense into ServiceNow AI Control Tower",
           "source": {
             "label": "ServiceNow 2025年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2025 earnings release (8-K Ex. 99.1)",
@@ -252,8 +252,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "LeidosがServiceNow AIプラットフォームを導入し、AIによる自律的なワークフローを展開(2026年7月)",
-          "text_en": "Leidos is deploying the ServiceNow AI Platform for autonomous AI-driven workflows (July 2026)",
+          "text": "LeidosがServiceNow AIプラットフォームを導入し、AIによる自律的なワークフローを展開",
+          "text_en": "Leidos is deploying the ServiceNow AI Platform for autonomous AI-driven workflows",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -275,8 +275,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "FiservがFinancial Services OperationsとITSM向けのNow Assistの利用を拡大(2026年1月)",
-          "text_en": "Fiserv will scale its use of ServiceNow Now Assist for Financial Services Operations and ITSM (January 2026)",
+          "text": "FiservがFinancial Services OperationsとITSM向けのNow Assistの利用を拡大",
+          "text_en": "Fiserv will scale its use of ServiceNow Now Assist for Financial Services Operations and ITSM",
           "source": {
             "label": "ServiceNow 2025年第4四半期の決算発表",
             "label_en": "ServiceNow Q4 2025 earnings release (8-K Ex. 99.1)",
@@ -298,8 +298,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Bell(カナダ最大手の通信会社)が通信向けServiceNow AIエージェントを導入(2026年4月)",
-          "text_en": "Bell, Canada’s leading telecommunications provider, deployed ServiceNow AI Agents in Telecom (April 2026)",
+          "text": "Bell(カナダ最大手の通信会社)が通信向けServiceNow AIエージェントを導入",
+          "text_en": "Bell, Canada’s leading telecommunications provider, deployed ServiceNow AI Agents in Telecom",
           "source": {
             "label": "ServiceNow 2026年第1四半期の決算発表",
             "label_en": "ServiceNow Q1 2026 earnings release (8-K Ex. 99.1)",
@@ -323,8 +323,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "FerrariのOne Digital PortalはServiceNow上に構築され、FerrariはServiceNowのパートナー(2025年7月)",
-          "text_en": "Ferrari’s One Digital Portal is built on ServiceNow; Ferrari is a ServiceNow partner (July 2025)",
+          "text": "FerrariのOne Digital PortalはServiceNow上に構築され、FerrariはServiceNowのパートナー",
+          "text_en": "Ferrari’s One Digital Portal is built on ServiceNow; Ferrari is a ServiceNow partner",
           "source": {
             "label": "ServiceNow 2025年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2025 earnings release (8-K Ex. 99.1)",
@@ -346,8 +346,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Panasonic Avionicsとの提携を拡大し、同社がServiceNowのAI型CRMを導入(2026年1月28日)",
-          "text_en": "Expanded the partnership with Panasonic Avionics, which will deploy ServiceNow AI-driven CRM (January 28, 2026)",
+          "text": "Panasonic Avionicsとの提携を拡大し、同社がServiceNowのAI型CRMを導入",
+          "text_en": "Expanded the partnership with Panasonic Avionics, which will deploy ServiceNow AI-driven CRM",
           "source": {
             "label": "ServiceNow 2025年第4四半期の決算発表",
             "label_en": "ServiceNow Q4 2025 earnings release (8-K Ex. 99.1)",
@@ -371,8 +371,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NTT DOCOMO、StarHubと、ServiceNowのCRMによるキャリア間の自律型ローミング解決モデルを発表(2026年4月)",
-          "text_en": "ServiceNow, NTT DOCOMO and StarHub introduced an inter-carrier autonomous roaming resolution model using ServiceNow CRM (April 2026)",
+          "text": "NTT DOCOMO、StarHubと、ServiceNowのCRMによるキャリア間の自律型ローミング解決モデルを発表",
+          "text_en": "ServiceNow, NTT DOCOMO and StarHub introduced an inter-carrier autonomous roaming resolution model using ServiceNow CRM",
           "source": {
             "label": "ServiceNow 2026年第1四半期の決算発表",
             "label_en": "ServiceNow Q1 2026 earnings release (8-K Ex. 99.1)",
@@ -396,8 +396,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Accentureと、レガシーなセキュリティ基盤からの移行を支援する共同サービスを開始(2026年7月)",
-          "text_en": "Launched a joint offering with Accenture to help enterprises migrate off legacy cybersecurity platforms (July 2026)",
+          "text": "Accentureと、レガシーなセキュリティ基盤からの移行を支援する共同サービスを開始",
+          "text_en": "Launched a joint offering with Accenture to help enterprises migrate off legacy cybersecurity platforms",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -409,8 +409,8 @@
         },
         {
           "type": "tie",
-          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてAccentureを挙げている(2025年度、10-K)",
-          "text_en": "ServiceNow cites Accenture as a global system integrator that offers ServiceNow solutions to its customers (FY2025 10-K)",
+          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてAccentureを挙げている",
+          "text_en": "ServiceNow cites Accenture as a global system integrator that offers ServiceNow solutions to its customers",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -432,8 +432,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてCognizantを挙げている(2025年度、10-K)",
-          "text_en": "ServiceNow cites Cognizant as a global system integrator that offers ServiceNow solutions to its customers (FY2025 10-K)",
+          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてCognizantを挙げている",
+          "text_en": "ServiceNow cites Cognizant as a global system integrator that offers ServiceNow solutions to its customers",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -455,8 +455,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてInfosysを挙げている(2025年度、10-K)",
-          "text_en": "ServiceNow cites Infosys as a global system integrator that offers ServiceNow solutions to its customers (FY2025 10-K)",
+          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてInfosysを挙げている",
+          "text_en": "ServiceNow cites Infosys as a global system integrator that offers ServiceNow solutions to its customers",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -478,8 +478,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Experianと世界規模の戦略的提携を拡大し、Experian AscendプラットフォームをServiceNow AIプラットフォームと統合(2026年7月)",
-          "text_en": "Expanding the global strategic partnership with Experian, integrating the Experian Ascend Platform with the ServiceNow AI Platform (July 2026)",
+          "text": "Experianと世界規模の戦略的提携を拡大し、Experian AscendプラットフォームをServiceNow AIプラットフォームと統合",
+          "text_en": "Expanding the global strategic partnership with Experian, integrating the Experian Ascend Platform with the ServiceNow AI Platform",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -501,8 +501,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "TeamViewerと、同社のエンドポイント機能をServiceNow AIプラットフォームに統合する提携(2026年7月)",
-          "text_en": "Partnering with TeamViewer to integrate TeamViewer endpoint capabilities with the ServiceNow AI Platform (July 2026)",
+          "text": "TeamViewerと、同社のエンドポイント機能をServiceNow AIプラットフォームに統合する提携",
+          "text_en": "Partnering with TeamViewer to integrate TeamViewer endpoint capabilities with the ServiceNow AI Platform",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -524,8 +524,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "FedExと協業を拡大し、FedEx Dataworksの物流インテリジェンスをServiceNowのワークフローに組み込む(2026年7月)",
-          "text_en": "Expanded the collaboration with FedEx to embed FedEx Dataworks logistics intelligence into ServiceNow workflows (July 2026)",
+          "text": "FedExと協業を拡大し、FedEx Dataworksの物流インテリジェンスをServiceNowのワークフローに組み込む",
+          "text_en": "Expanded the collaboration with FedEx to embed FedEx Dataworks logistics intelligence into ServiceNow workflows",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -547,8 +547,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Lenovoと、技術のライフサイクル全体のワークフローを自動化する複数年の戦略的関係を発表(2026年7月)",
-          "text_en": "Announced a multi-year strategic relationship with Lenovo to automate workflows across the technology lifecycle (July 2026)",
+          "text": "Lenovoと、技術のライフサイクル全体のワークフローを自動化する複数年の戦略的関係を発表",
+          "text_en": "Announced a multi-year strategic relationship with Lenovo to automate workflows across the technology lifecycle",
           "source": {
             "label": "ServiceNow 2026年第2四半期の決算発表",
             "label_en": "ServiceNow Q2 2026 earnings release (8-K Ex. 99.1)",
@@ -570,8 +570,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Figmaのデザイン基盤とServiceNow AIプラットフォームをつなぐ共同ソリューションを開始(2026年1月28日)",
-          "text_en": "Launched a solution with Figma connecting the Figma design platform with the ServiceNow AI Platform (January 28, 2026)",
+          "text": "Figmaのデザイン基盤とServiceNow AIプラットフォームをつなぐ共同ソリューションを開始",
+          "text_en": "Launched a solution with Figma connecting the Figma design platform with the ServiceNow AI Platform",
           "source": {
             "label": "ServiceNow 2025年第4四半期の決算発表",
             "label_en": "ServiceNow Q4 2025 earnings release (8-K Ex. 99.1)",
@@ -618,7 +618,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてOracleを挙げている(2025年度、10-K)",
+          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてOracleを挙げている",
           "text_en": "ServiceNow’s FY2025 10-K names Oracle among the enterprise application software vendors it competes with",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
@@ -641,7 +641,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSAPを挙げている(2025年度、10-K)",
+          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSAPを挙げている",
           "text_en": "ServiceNow’s FY2025 10-K names SAP among the enterprise application software vendors it competes with",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
@@ -664,7 +664,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSalesforceを挙げている(2025年度、10-K)",
+          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSalesforceを挙げている",
           "text_en": "ServiceNow’s FY2025 10-K names Salesforce among the enterprise application software vendors it competes with",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
@@ -687,7 +687,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてWorkdayを挙げている(2025年度、10-K)",
+          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてWorkdayを挙げている",
           "text_en": "ServiceNow’s FY2025 10-K names Workday among the enterprise application software vendors it competes with",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",

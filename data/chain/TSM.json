@@ -38,8 +38,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "1997年から戦略的提携。TSMCがASEを非独占の優先提供先に指定(ASEの年次報告)",
-          "text_en": "Strategic alliance since 1997; TSMC designates ASE as a non-exclusive preferred provider (ASE annual report)",
+          "text": "1997年から戦略的提携。TSMCがASEを非独占の優先提供先に指定",
+          "text_en": "Strategic alliance since 1997; TSMC designates ASE as a non-exclusive preferred provider",
           "source": {
             "label": "ASE Technology Holding Form 20-F(2025年度)",
             "label_en": "ASE Technology Holding Form 20-F (FY2025)",
@@ -60,8 +60,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Entegrisの売上の16%をTSMCが占める(2025年、Entegrisの年次報告)",
-          "text_en": "TSMC accounted for 16% of Entegris’ net sales in 2025 (Entegris annual report)",
+          "text": "Entegrisの売上の16%をTSMCが占める",
+          "text_en": "TSMC accounted for 16% of Entegris’ net sales in 2025",
           "source": {
             "label": "Entegris Form 10-K(2025年度)",
             "label_en": "Entegris Form 10-K (FY2025)",
@@ -82,8 +82,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "KLAの売上の10%超をTSMCが占める(2024〜2026年度、KLAの年次報告)",
-          "text_en": "TSMC accounted for over 10% of KLA’s revenues in fiscal 2024-2026 (KLA annual report)",
+          "text": "KLAの売上の10%超をTSMCが占める",
+          "text_en": "TSMC accounted for over 10% of KLA’s revenues in fiscal 2024-2026",
           "source": {
             "label": "KLA Form 10-K(2026年度)",
             "label_en": "KLA Form 10-K (FY2026)",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "熊本のJASMにソニーセミコンダクタソリューションズが20%未満を出資(2022年1月、TSMCの年次報告)",
-          "text_en": "Sony Semiconductor Solutions took a less than 20% stake in JASM (Kumamoto) in January 2022 (TSMC annual report)",
+          "text": "熊本のJASMにソニーセミコンダクタソリューションズが20%未満を出資",
+          "text_en": "Sony Semiconductor Solutions took a less than 20% stake in JASM (Kumamoto) in January 2022",
           "source": {
             "label": "TSMC Form 20-F(2025年度)",
             "label_en": "TSMC Form 20-F (FY2025)",
@@ -329,8 +329,8 @@
         },
         {
           "type": "tie",
-          "text": "ソニーセミコンダクタソリューションズとTSMCが戦略的提携を探る拘束力のない覚書(MOU)を締結(2026年5月、ソニーの年次報告)",
-          "text_en": "Sony Semiconductor Solutions and TSMC signed a non-binding MOU to pursue a strategic partnership (May 2026, Sony annual report)",
+          "text": "ソニーセミコンダクタソリューションズとTSMCが戦略的提携を探る拘束力のない覚書(MOU)を締結",
+          "text_en": "Sony Semiconductor Solutions and TSMC signed a non-binding MOU to pursue a strategic partnership",
           "source": {
             "label": "Sony Group Form 20-F(2025年度, year ended 2026-03)",
             "label_en": "Sony Group Form 20-F (FY2025, year ended 2026-03)",
@@ -354,8 +354,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "熊本のJASMにDENSOが10%超を出資(2022年4月)",
-          "text_en": "DENSO took a more than 10% stake in JASM (April 2022)",
+          "text": "熊本のJASMにDENSOが10%超を出資",
+          "text_en": "DENSO took a more than 10% stake in JASM",
           "source": {
             "label": "TSMC Form 20-F(2025年度)",
             "label_en": "TSMC Form 20-F (FY2025)",
@@ -377,8 +377,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "JASMの第2工場への追加投資が発表され、Toyotaも少数株主として出資(2024年2月)",
-          "text_en": "Further investment in JASM’s second fab announced; Toyota also took a minority stake (February 2024)",
+          "text": "JASMの第2工場への追加投資が発表され、Toyotaも少数株主として出資",
+          "text_en": "Further investment in JASM’s second fab announced; Toyota also took a minority stake",
           "source": {
             "label": "TSMC Form 20-F(2025年度)",
             "label_en": "TSMC Form 20-F (FY2025)",
@@ -400,8 +400,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ドイツ・ドレスデンのESMCに10%を出資(2024年1月)",
-          "text_en": "Took a 10% stake in ESMC in Dresden, Germany (January 2024)",
+          "text": "ドイツ・ドレスデンのESMCに10%を出資",
+          "text_en": "Took a 10% stake in ESMC in Dresden, Germany",
           "source": {
             "label": "TSMC Form 20-F(2025年度)",
             "label_en": "TSMC Form 20-F (FY2025)",
@@ -423,8 +423,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ESMCに10%を出資し、工場の生産能力の10%を使う権利(NXPの年次報告)",
-          "text_en": "Holds 10% of ESMC and is entitled to 10% of the fab capacity (NXP annual report)",
+          "text": "ESMCに10%を出資し、工場の生産能力の10%を使う権利",
+          "text_en": "Holds 10% of ESMC and is entitled to 10% of the fab capacity",
           "source": {
             "label": "NXP Semiconductors Form 10-K(2025年度)",
             "label_en": "NXP Semiconductors Form 10-K (FY2025)",
@@ -437,8 +437,8 @@
         },
         {
           "type": "tie",
-          "text": "シンガポールのSSMC工場を、合弁パートナーのTSMCとともに運営(NXPの年次報告)",
-          "text_en": "Operates the SSMC fab in Singapore together with its joint venture partner TSMC (NXP annual report)",
+          "text": "シンガポールのSSMC工場を、合弁パートナーのTSMCとともに運営",
+          "text_en": "Operates the SSMC fab in Singapore together with its joint venture partner TSMC",
           "source": {
             "label": "NXP Semiconductors Form 10-K(2025年度)",
             "label_en": "NXP Semiconductors Form 10-K (FY2025)",
@@ -449,8 +449,8 @@
         },
         {
           "type": "tie",
-          "text": "NXPはESMC(TSMCが70%保有)の10%を保有し、工場の生産能力の10%を受ける権利がある(2025年度、10-K)",
-          "text_en": "NXP holds 10% of ESMC (70% owned by TSMC) and is entitled to 10% of the fab capacity (FY2025, 10-K)",
+          "text": "NXPはESMC(TSMCが70%保有)の10%を保有し、工場の生産能力の10%を受ける権利がある",
+          "text_en": "NXP holds 10% of ESMC (70% owned by TSMC) and is entitled to 10% of the fab capacity",
           "source": {
             "label": "NXP Semiconductors Form 10-K(2025年度)",
             "label_en": "NXP Semiconductors Form 10-K (FY2025)",
@@ -473,8 +473,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "1994年にTSMCが共同設立。2026年2月28日時点で約27.6%を保有(TSMCの年次報告)",
-          "text_en": "Co-founded by TSMC in 1994; TSMC owned about 27.6% as of February 28, 2026 (TSMC annual report)",
+          "text": "1994年にTSMCが共同設立。2026年2月28日時点で約27.6%を保有",
+          "text_en": "Co-founded by TSMC in 1994; TSMC owned about 27.6% as of February 28, 2026",
           "source": {
             "label": "TSMC Form 20-F(2025年度)",
             "label_en": "TSMC Form 20-F (FY2025)",
@@ -540,8 +540,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2024年2月、TSMC・Sony・DENSO・Toyotaが第2工場に向けJASMへの追加投資を発表。Toyotaは少数株主になった(2025年度、20-F)",
-          "text_en": "In February 2024 TSMC, Sony, DENSO and Toyota announced further investment into JASM for a second fab; Toyota took a minority stake (FY2025, 20-F)",
+          "text": "2024年2月、TSMC・Sony・DENSO・Toyotaが第2工場に向けJASMへの追加投資を発表。Toyotaは少数株主になった",
+          "text_en": "In February 2024 TSMC, Sony, DENSO and Toyota announced further investment into JASM for a second fab; Toyota took a minority stake",
           "source": {
             "label": "TSMC Form 20-F(2025年度)",
             "label_en": "TSMC Form 20-F (FY2025)",
@@ -563,8 +563,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "TSMCは2003年1月にGUCの52.0%を取得し、2026年2月28日時点で約34.8%を保有(2025年度、20-F)",
-          "text_en": "TSMC acquired 52.0% of GUC (SoC design service company) in January 2003 and owned approximately 34.8% as of February 28, 2026 (FY2025, 20-F)",
+          "text": "TSMCは2003年1月にGUCの52.0%を取得し、2026年2月28日時点で約34.8%を保有",
+          "text_en": "TSMC acquired 52.0% of GUC (SoC design service company) in January 2003 and owned approximately 34.8% as of February 28, 2026",
           "source": {
             "label": "TSMC Form 20-F(2025年度)",
             "label_en": "TSMC Form 20-F (FY2025)",
@@ -586,8 +586,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Latticeは、16nmのFPGA(AvantとNexus 2)の開発・製造や、350nm〜40nm製品の製造でTSMCと提携(2025年度、10-K)",
-          "text_en": "Lattice partners with TSMC to develop and manufacture 16nm FPGAs (Avant and Nexus 2) and to manufacture 350nm, 130nm, 55nm and 40nm products (FY2025, 10-K)",
+          "text": "Latticeは、16nmのFPGA(AvantとNexus 2)の開発・製造や、350nm〜40nm製品の製造でTSMCと提携",
+          "text_en": "Lattice partners with TSMC to develop and manufacture 16nm FPGAs (Avant and Nexus 2) and to manufacture 350nm, 130nm, 55nm and 40nm products",
           "source": {
             "label": "Lattice Semiconductor Form 10-K(2025年度)",
             "label_en": "Lattice Semiconductor Form 10-K (FY2025)",
@@ -608,8 +608,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Silicon Labsは、ウエハーの大半をTSMCとSMICを主な提携先として製造(2025年度、10-K)",
-          "text_en": "Silicon Labs partners primarily with TSMC and SMIC to manufacture the majority of its wafers (FY2025, 10-K)",
+          "text": "Silicon Labsは、ウエハーの大半をTSMCとSMICを主な提携先として製造",
+          "text_en": "Silicon Labs partners primarily with TSMC and SMIC to manufacture the majority of its wafers",
           "source": {
             "label": "Silicon Laboratories Form 10-K(2025年度)",
             "label_en": "Silicon Laboratories Form 10-K (FY2025)",
@@ -630,8 +630,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "NavitasはGaNウエハーの唯一の供給元としてTSMCに依存してきた。TSMCは2025年7月1日に、2027年7月にGaN生産を終了する意向を発表(2025年度、10-K)",
-          "text_en": "Navitas has historically relied on TSMC as its sole GaN wafer supplier; TSMC announced on July 1, 2025 it intends to cease GaN production in July 2027 (FY2025, 10-K)",
+          "text": "NavitasはGaNウエハーの唯一の供給元としてTSMCに依存してきた。TSMCは2025年7月1日に、2027年7月にGaN生産を終了する意向を発表",
+          "text_en": "Navitas has historically relied on TSMC as its sole GaN wafer supplier; TSMC announced on July 1, 2025 it intends to cease GaN production in July 2027",
           "source": {
             "label": "Navitas Semiconductor Form 10-K(2025年度)",
             "label_en": "Navitas Semiconductor Form 10-K (FY2025)",
@@ -655,8 +655,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Himaxは過去数年、TSMC・UMC・Vanguardなどからファウンドリーサービスを受けてきた(2025年度、20-F)",
-          "text_en": "Himax has obtained foundry services from TSMC, UMC, Vanguard and others in the past few years (FY2025, 20-F)",
+          "text": "Himaxは過去数年、TSMC・UMC・Vanguardなどからファウンドリーサービスを受けてきた",
+          "text_en": "Himax has obtained foundry services from TSMC, UMC, Vanguard and others in the past few years",
           "source": {
             "label": "Himax Technologies Form 20-F(2025年度)",
             "label_en": "Himax Technologies Form 20-F (FY2025)",

@@ -55,8 +55,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "CenterPoint Houstonが年次報告で、Vistra関連会社を主要な外部顧客として記載(2025年に6.93億ドルの収入)",
-          "text_en": "CenterPoint Houston lists affiliates of Vistra as a major external customer ($693M of revenue in 2025)",
+          "text": "CenterPoint Houstonが年次報告で、Vistra関連会社を主要な外部顧客として記載",
+          "text_en": "CenterPoint Houston lists affiliates of Vistra as a major external customer",
           "source": {
             "label": "CenterPoint Energy 10-K(2025年度)",
             "label_en": "CenterPoint Energy 10-K (FY2025)",
@@ -80,8 +80,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "PJMの原子力発電所から、2,609MWの電力・容量を供給する20年の電力購入契約(2026年1月)",
-          "text_en": "20-year PPAs to supply 2,609MW of carbon-free power and capacity from its PJM nuclear plants (January 2026)",
+          "text": "PJMの原子力発電所から、2,609MWの電力・容量を供給する20年の電力購入契約",
+          "text_en": "20-year PPAs to supply 2,609MW of carbon-free power and capacity from its PJM nuclear plants",
           "source": {
             "label": "Vistra 10-K(2025年度)",
             "label_en": "Vistra 10-K (FY2025)",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Comanche Peak原子力発電所から1,200MWを供給する20年の電力購入契約(2025年9月)",
-          "text_en": "20-year PPA to supply 1,200MW from the Comanche Peak nuclear plant (September 2025)",
+          "text": "Comanche Peak原子力発電所から1,200MWを供給する20年の電力購入契約",
+          "text_en": "20-year PPA to supply 1,200MW from the Comanche Peak nuclear plant",
           "source": {
             "label": "Vistra 10-K(2025年度)",
             "label_en": "Vistra 10-K (FY2025)",
@@ -155,8 +155,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AI向け資産(データセンターなど)に投資するKKR運用のファンドへ出資を約束(2026年6月)",
-          "text_en": "Committed to invest in a KKR-managed fund targeting AI-enabling assets such as data centers (June 2026)",
+          "text": "AI向け資産(データセンターなど)に投資するKKR運用のファンドへ出資を約束",
+          "text_en": "Committed to invest in a KKR-managed fund targeting AI-enabling assets such as data centers",
           "source": {
             "label": "Vistra 10-Q(2026年第2四半期)",
             "label_en": "Vistra 10-Q (Q2 2026)",
