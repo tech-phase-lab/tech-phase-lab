@@ -1,0 +1,613 @@
+{
+  "root": {
+    "ticker": "PLTR",
+    "name": "Palantir"
+  },
+  "rows": [
+    {
+      "ja": "供給元(クラウド)",
+      "en": "Suppliers (cloud)",
+      "above": true
+    },
+    {
+      "ja": "クラウド・AIの提携先",
+      "en": "Cloud & AI partners"
+    },
+    {
+      "ja": "産業・防衛・日本の提携先",
+      "en": "Industry, defense & Japan partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "VERI"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な機能やクラウドサービスのホスティングをAWSとMicrosoft Azureに依存(年次報告)",
+          "text_en": "Depends on AWS and Microsoft Azure to host key platform features and cloud services (annual report)",
+          "source": {
+            "label": "Palantir 10-K(2025年度)",
+            "label_en": "Palantir 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We rely on the technology, infrastructure, and software applications, including software-as-a-service offerings, of certain third parties, such as AWS and Microsoft Azure, in order to host or operate some or all of certain key technology platform features or functions of our business"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Foundry・Gotham・Apollo・AIPを、Azureの政府向け機密環境で提供する提携(2024年8月8日)",
+          "text_en": "Partnership to deploy Palantir Foundry, Gotham, Apollo and AIP in Azure Government Secret and Top Secret clouds (August 8, 2024)",
+          "source": {
+            "label": "Microsoft Source の発表",
+            "label_en": "Microsoft Source press release",
+            "url": "https://news.microsoft.com/source/2024/08/08/palantir-and-microsoft-partner-to-deliver-enhanced-analytics-and-ai-services-to-classified-networks-for-critical-national-security-operations/",
+            "level": "official",
+            "date": "2024-08-08",
+            "quote": "Palantir will deploy their suite of products – Foundry, Gotham, Apollo, and AIP – in Microsoft Azure Government and in the Azure Government Secret (DoD Impact Level 6) and Top Secret clouds.",
+            "note": "提供は認可が前提です。",
+            "note_en": "Availability subject to authorization."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oracleが、OCI上で動くPalantirを戦略パートナーとして記載",
+          "text_en": "Oracle lists Palantir as a strategic partner running on Oracle Cloud Infrastructure",
+          "source": {
+            "label": "Oracle Strategic Partner page",
+            "label_en": "Oracle Strategic Partner page",
+            "url": "https://www.oracle.com/partner/palantir/",
+            "level": "official",
+            "quote": "Oracle and Palantir revolutionize data-driven operations, combining AI with sovereignty and lower costs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIAの計算基盤とNemotronモデルを組み合わせた運用向けAI基盤を共同構築(2025年10月28日)",
+          "text_en": "Building an integrated operational AI stack combining NVIDIA computing and Nemotron models (October 28, 2025)",
+          "source": {
+            "label": "NVIDIA ニュースルーム の発表",
+            "label_en": "NVIDIA newsroom press release",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-palantir-ai-enterprise-data-intelligence",
+            "level": "official",
+            "date": "2025-10-28",
+            "quote": "Palantir is integrating NVIDIA accelerated computing, NVIDIA CUDA-X libraries and open-source NVIDIA Nemotron models into its Ontology framework at the core of the Palantir AI Platform."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Snowflake AI Data CloudとPalantir Foundry・AIPを統合する提携(2025年10月16日)",
+          "text_en": "Partnership integrating Snowflake AI Data Cloud with Palantir Foundry and AIP (October 16, 2025)",
+          "source": {
+            "label": "Snowflake の発表",
+            "label_en": "Snowflake press release",
+            "url": "https://www.snowflake.com/en/news/press-releases/snowflake-palantir-announce-strategic-partnership-for-enterprise-ready-ai-analytics/",
+            "level": "official",
+            "date": "2025-10-16",
+            "quote": "today announced a new partnership that integrates Snowflake's AI Data Cloud with Palantir Foundry and Palantir Artificial Intelligence Platform (AIP)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PalantirがNebiusを推奨するソブリンAI基盤パートナーに指定(2026年9月8日、Nebiusの発表)",
+          "text_en": "Palantir named Nebius its preferred sovereign AI infrastructure partner (September 8, 2026, Nebius release)",
+          "source": {
+            "label": "Nebius 6-K(の発表)",
+            "label_en": "Nebius 6-K (press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926105749/tm2624958d1_ex99-1.htm",
+            "level": "official",
+            "date": "2026-09-08",
+            "quote": "Palantir names Nebius its preferred sovereign AI infrastructure partner, bringing Nebius compute and inference inside the Palantir perimeter"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAP Business Data CloudとPalantirのOntology・AIPをつなぐ提携(2025年7月25日)",
+          "text_en": "Partnership connecting SAP Business Data Cloud with Palantir Ontology and AIP (July 25, 2025)",
+          "source": {
+            "label": "SAP 6-K(Q2 2025 release)",
+            "label_en": "SAP 6-K (Q2 2025 release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465925070485/tm2521516d1_ex99-1.htm",
+            "level": "official",
+            "date": "2025-07-25",
+            "quote": "SAP and Palantir announced a partnership to facilitate joint customers' cloud migration journey and modernization programs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "Accenture",
+      "sub": "ITコンサル",
+      "sub_en": "IT consulting",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Accenture Palantir Business Groupを設立。AccentureはPalantirの優先グローバルパートナー(2025年12月16日)",
+          "text_en": "Formed the Accenture Palantir Business Group; Accenture is a Palantir preferred global partner (December 16, 2025)",
+          "source": {
+            "label": "Accenture ニュースルーム の発表",
+            "label_en": "Accenture newsroom press release",
+            "url": "https://newsroom.accenture.com/news/2025/accenture-and-palantir-expand-global-strategic-partnership-to-drive-ai-reinvention",
+            "level": "official",
+            "date": "2025-12-16",
+            "quote": "have formed the Accenture Palantir Business Group designed to accelerate the delivery of advanced AI and data solutions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "Boeing",
+      "sub": "航空・防衛",
+      "sub_en": "Aerospace & defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "防衛・宇宙・安全保障部門が、Palantirの AIを各プログラムで活用する提携(2025年9月23日)",
+          "text_en": "Boeing Defense, Space & Security partners with Palantir to use its AI across programs (September 23, 2025)",
+          "source": {
+            "label": "Boeing の発表",
+            "label_en": "Boeing press release",
+            "url": "https://boeing.mediaroom.com/2025-09-23-Boeing-Defense,-Space-Security-Partners-with-Palantir-to-Accelerate-AI-Adoption-Across-Defense,-Classified-Programs",
+            "level": "official",
+            "date": "2025-09-23",
+            "quote": "Boeing Defense, Space & Security to leverage Palantir capabilities across programs for global military customers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3Harris",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "L3Harrisが年次報告で、新しい能力開発の戦略的提携先としてPalantirを挙げている",
+          "text_en": "L3Harris’ annual report names Palantir among its strategic partnerships for developing new capabilities",
+          "source": {
+            "label": "L3Harris 10-K(2025年度)",
+            "label_en": "L3Harris 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also collaborate with innovative partners, such as our strategic partnerships with Palantir Technologies, Shield Capital, Anduril and Amazon Kuiper"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fujitsu",
+      "ticker": "Fujitsu",
+      "name": "Fujitsu",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Palantir Technologies JapanがFujitsuと、FoundryとAIPを組み込む戦略的な世界提携を締結(年次報告)",
+          "text_en": "Palantir Technologies Japan entered a strategic global partnership with Fujitsu incorporating Foundry and AIP (annual report)",
+          "source": {
+            "label": "Palantir 10-K(2025年度)",
+            "label_en": "Palantir 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "we, through Palantir Technologies Japan KK, entered into a strategic global partnership with Fujitsu Limited through which the parties will incorporate the capabilities of Foundry and AIP"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOMPO",
+      "ticker": "SOMPO",
+      "name": "SOMPO Holdings",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本でSOMPOホールディングスとの共同管理会社を設立し、その後支配権を取得(年次報告)",
+          "text_en": "Created a jointly controlled entity in Japan with SOMPO Holdings and later obtained a controlling interest (annual report)",
+          "source": {
+            "label": "Palantir 10-K(2025年度)",
+            "label_en": "Palantir 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "in November 2019, we created a jointly controlled entity in Japan with SOMPO Holdings, Inc., in which we subsequently obtained a controlling interest in November 2022"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLF",
+      "ticker": "CLF",
+      "name": "Cleveland-Cliffs",
+      "sub": "鉄鋼",
+      "sub_en": "Steel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cleveland-Cliffsが、運用システムの刷新でPalantirと複数年の戦略的提携を発表(2026年7月23日、10-Q)",
+          "text_en": "Cleveland-Cliffs announced a multi-year strategic partnership with Palantir to modernize operational systems (July 23, 2026, 10-Q)",
+          "source": {
+            "label": "Cleveland-Cliffs 10-Q(2026年第2四半期)",
+            "label_en": "Cleveland-Cliffs 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764065/000076406526000100/clf-20260630.htm",
+            "level": "official",
+            "date": "2026-07-23",
+            "quote": "we announced a multi-year strategic partnership with Palantir Technologies, a prominent enterprise software company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VERI",
+      "ticker": "VERI",
+      "name": "Veritone",
+      "sub": "AIソフト",
+      "sub_en": "AI software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Veritoneが年次報告で、AIソリューションの競合としてPalantirを挙げている",
+          "text_en": "Veritone’s annual report names Palantir among competitors in AI-enabled solutions",
+          "source": {
+            "label": "Veritone 10-K(2025年度)",
+            "label_en": "Veritone 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1615165/000162828026025214/veri-20251231.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "we face competition from various sources, including large, well-capitalized technology companies such as Google, Microsoft, Amazon, Axon and Palantir"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Palantir FoundryがGoogle CloudとそのMarketplaceで利用可能に。複数年の提携(2022年6月、Google Cloudのブログ)",
+          "text_en": "Palantir Foundry is available on Google Cloud and its Marketplace under a multi-year partnership (June 2022, Google Cloud blog)",
+          "source": {
+            "label": "Google Cloud ブログ",
+            "label_en": "Google Cloud blog",
+            "url": "https://cloud.google.com/blog/topics/partners/google-cloud-and-palantir-announce-annalytics-partnership",
+            "level": "official",
+            "date": "2022-06-16",
+            "quote": "Palantir Technologies is making Foundry , its fully managed SaaS platform, available on Google Cloud and Google Cloud Marketplace",
+            "note": "2022年の発表で、現在の状況は再確認していません。",
+            "note_en": "Announced in 2022; the current status has not been re-verified."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUMN",
+      "ticker": "LUMN",
+      "name": "Lumen Technologies",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lumenが決算資料で、Connected Ecosystemの提携先の1社としてPalantirを挙げている(2025年10月30日)",
+          "text_en": "Lumen cites Palantir among partners in its Connected Ecosystem (October 30, 2025, 3Q25 results presentation)",
+          "source": {
+            "label": "Lumen 3Q25 results presentation",
+            "label_en": "Lumen 3Q25 results presentation",
+            "url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000110/lumen3q25quarterlyresult.htm",
+            "level": "official",
+            "date": "2025-10-30",
+            "quote": "Connected Ecosystem off to a great start with partners like Palantir, Digital Realty, QTS, and Commvault"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD Hyundai",
+      "name": "HD Hyundai",
+      "sub": "造船・重工",
+      "sub_en": "Shipbuilding",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HD Hyundaiが、造船所のデジタル化(Future of Shipyardプロジェクト)でPalantirとの協力を強化(2025年2月、HD Hyundai発表)",
+          "text_en": "HD Hyundai said it is strengthening cooperation with Palantir to digitally transform its shipyards (Future of Shipyard project) (February 2025, HD Hyundai release)",
+          "source": {
+            "label": "HD Hyundai の発表",
+            "label_en": "HD Hyundai press release",
+            "url": "https://www.hd.com/en/newsroom/media-hub/press/view?detailsKey=3447",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "HD Hyundai is strengthening its cooperation with global leaders, including Palantir, a software company that enables AI-driven decision making, and Siemens, a global industrial solutions provider.",
+            "note": "グループ全体の発表で、上場しているどのHD Hyundai法人かは明記されていません。",
+            "note_en": "A group-level announcement; the listed HD Hyundai entity is not specified."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "HD Hyundaiが2024年4月にPalantirと無人水上艇の開発で提携し、共同開発のTENEBRISを公開(2024年11月、HD Hyundai発表)",
+          "text_en": "HD Hyundai partnered with Palantir in April 2024 to develop unmanned surface vessels and unveiled the co-developed TENEBRIS USV (November 2024, HD Hyundai release)",
+          "source": {
+            "label": "HD Hyundai の発表",
+            "label_en": "HD Hyundai press release",
+            "url": "https://www.hd.com/en/newsroom/media-hub/press/view?detailsKey=3326",
+            "level": "official",
+            "date": "2024-11-01",
+            "quote": "After partnering with Palantir, a top-tier company in the defense AI sector, in April to develop unmanned surface vessels (USVs), HD Hyundai unveiled 'TENEBRIS,' co-developed with Palantir, for the first time at the AI Expo for National Competitiveness in the U.S. this May.",
+            "note": "2024年の発表で、やや古い情報です。",
+            "note_en": "An older (2024) item."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEA",
+      "ticker": "LEA",
+      "name": "Lear",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PalantirとLearが、LearのFoundry・Warp Speed・AIP利用を全世界の製造拠点に広げる5年間の提携拡大を発表(2025年9月、Lear発表)",
+          "text_en": "Palantir and Lear announced a five-year expansion of their partnership, broadening Lear’s use of Foundry, Warp Speed and AIP across its global manufacturing footprint (September 2025, Lear release)",
+          "source": {
+            "label": "Lear の発表(joint with Palantir)",
+            "label_en": "Lear press release (joint with Palantir)",
+            "url": "https://www.lear.com/newsroom/palantir-and-lear-announce-five-year-partnership-expansion-to-accelerate-automotive-technology-transformation-ybzjj",
+            "level": "official",
+            "date": "2025-09-04",
+            "quote": "Palantir Technologies Inc. (NASDAQ: PLTR), a leading provider of AI software, today announced a five-year expansion of its partnership with Lear Corporation (NYSE: LEA), a global automotive leader in Seating and E-Systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "Cognizant",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CognizantがPalantirと戦略的提携。医療事業TriZettoでFoundryとAIPを使い、企業のAI変革を進める(2026年2月、Cognizant発表)",
+          "text_en": "Cognizant announced a strategic partnership with Palantir to use Foundry and AIP in its TriZetto healthcare business and pursue enterprise AI transformation for clients (February 2026, Cognizant release)",
+          "source": {
+            "label": "Cognizant の発表",
+            "label_en": "Cognizant press release",
+            "url": "https://news.cognizant.com/2026-02-05-Cognizant-partners-with-Palantir-to-Accelerate-AI-Driven-Modernization-in-Healthcare-and-Enterprise-Operations",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Cognizant (NASDAQ: CTSH) announced a strategic partnership with Palantir Technologies Inc. (NASDAQ: PLTR) to accelerate AI-driven modernization across healthcare and enterprise operations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOYG",
+      "ticker": "VOYG",
+      "name": "Voyager Technologies",
+      "sub": "宇宙",
+      "sub_en": "Space",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Voyagerが上場申請書類(S-1/A)で、Starlab合弁の海外の出資パートナーであり重要なパートナー・顧客としてPalantirを挙げている(2025年6月)",
+          "text_en": "Voyager’s IPO registration statement (S-1/A) lists Palantir as an international equity partner in the Starlab JV and a key partner and customer (June 2025)",
+          "source": {
+            "label": "Voyager Technologies SEC Form S-1/A",
+            "label_en": "Voyager Technologies SEC Form S-1/A",
+            "url": "https://www.sec.gov/Archives/edgar/data/1788060/000162828025029524/voyager-sx1a2.htm",
+            "level": "official",
+            "date": "2025-06-05",
+            "quote": "We intend to operate Starlab through Starlab JV, a Voyager-led and majority-owned global joint venture, with international equity partners that include Airbus, Mitsubishi, MDA Space and Palantir.",
+            "note": "上場前の提出書類です。",
+            "note_en": "Filed before the IPO."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACHR",
+      "ticker": "ACHR",
+      "name": "Archer Aviation",
+      "sub": "空飛ぶクルマ",
+      "sub_en": "eVTOL aircraft",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Archerが決算発表で、次世代の航空技術向けAIを作るPalantirとの基盤的な提携があると説明(2025年5月、8-K)",
+          "text_en": "Archer’s Q1 2025 results release states it has a foundational partnership with Palantir to build AI for next-gen aviation technologies (May 2025, 8-K)",
+          "source": {
+            "label": "Archer Aviation SEC 8-K Ex. 99.1(Q1 2025 results)",
+            "label_en": "Archer Aviation SEC 8-K Ex. 99.1 (Q1 2025 results)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824502/000162828025024657/archerq125earningspressr.htm",
+            "level": "official",
+            "date": "2025-05-12",
+            "quote": "Archer has forged a foundational partnership with Palantir to build artificial intelligence for the future of next-gen aviation technologies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEU",
+      "ticker": "LEU",
+      "name": "Centrus Energy",
+      "sub": "ウラン濃縮",
+      "sub_en": "Uranium enrichment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Centrusが決算発表で、ウラン濃縮の拡張にPalantirのAI基盤を適用し、約3億ドルのコスト削減の可能性を特定したと報告(2026年5月、8-K)",
+          "text_en": "Centrus reported it partnered with Palantir to apply its AI platform to the uranium enrichment expansion, identifying about $300M in potential cost savings (May 2026, 8-K)",
+          "source": {
+            "label": "Centrus Energy SEC 8-K Ex. 99.1(Q1 2026 results)",
+            "label_en": "Centrus Energy SEC 8-K Ex. 99.1 (Q1 2026 results)",
+            "url": "https://www.sec.gov/Archives/edgar/data/0001065059/000162828026030674/ex991-10q2026_05x05.htm",
+            "level": "official",
+            "date": "2026-05-05",
+            "quote": "Partnered with Palantir to leverage its artificial intelligence platform; early work identified ~$300 million in potential costs savings and additional improvements expected to reduce manufacturing lead times and accelerate expansion’s timetable",
+            "note": "削減額は同社が特定した「可能性」の数字です。",
+            "note_en": "The savings are potential figures identified by the company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRCY",
+      "ticker": "MRCY",
+      "name": "Mercury Systems",
+      "sub": "防衛エレクトロニクス",
+      "sub_en": "Defense electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MercuryとPalantirが、米軍向けプログラムの資材計画と工場運営を自動化する戦略的契約を発表(2026年8月、Mercury発表)",
+          "text_en": "Mercury and Palantir announced a strategic agreement to automate material planning and factory operations for U.S. military programs (August 2026, Mercury release)",
+          "source": {
+            "label": "Mercury Systems の発表",
+            "label_en": "Mercury Systems press release",
+            "url": "https://newsroom.mrcy.com/posts/pressreleases/mercury-partners-with-palantir-to-enhance-fac",
+            "level": "official",
+            "date": "2026-08-03",
+            "quote": "Mercury Systems, Inc. (NASDAQ: MRCY, www.mrcy.com ), and Palantir (NASDAQ: PLTR, www.palantir.com), a leading provider of AI software bringing commercial approaches to aerospace and defense, today announced a strategic agreement to enhance the automation of material planning and factory operations to accelerate the delivery of processing technologies for U.S. military programs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RCAT",
+      "ticker": "RCAT",
+      "name": "Red Cat Holdings",
+      "sub": "ドローン",
+      "sub_en": "Drones",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Red Catが、VNavのBlack Widowドローンへの統合とWarp Speed製造OSの導入でPalantirと戦略的提携(2024年12月、Red Cat発表)",
+          "text_en": "Red Cat announced a strategic partnership with Palantir to integrate VNav into Black Widow drones and deploy the Warp Speed manufacturing OS (December 2024, Red Cat release)",
+          "source": {
+            "label": "Red Cat の発表",
+            "label_en": "Red Cat press release",
+            "url": "https://redcat.red/press_releases/red-cat-partners-with-palantir-to-equip-black-widow-with-autonomous-visual-navigation-and-warp-speed-for-gps-compromised-environments/",
+            "level": "official",
+            "date": "2024-12-16",
+            "quote": "Red Cat Holdings, Inc. (Nasdaq: RCAT) (“Red Cat” or the “Company”), today announced a strategic partnership with Palantir Technologies Inc. (Nasdaq: PLTR) to integrate Visual Navigation software (VNav) into Red Cat’s Black Widow drones and to deploy Warp Speed, Palantir’s manufacturing OS.",
+            "note": "2024年12月の発表で、やや古い情報です。",
+            "note_en": "A December 2024 announcement."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

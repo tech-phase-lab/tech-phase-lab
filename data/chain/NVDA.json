@@ -645,7 +645,7 @@
     }
   ],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・8-K)で確認できた関係だけを載せています。「報道」と付いたものは、公式発表での再確認がまだです。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K and 8-K) are shown. Items marked \"Press\" have not yet been re-confirmed in an official announcement. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式資料で確認できた関係のみ。「報道」は公式で未確認。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown (“Press” = not yet confirmed). Not investment advice."
   }
 }

@@ -204,11 +204,36 @@
           }
         }
       ]
+    },
+    {
+      "id": "9984",
+      "ticker": "SoftBank",
+      "name": "SoftBank Group",
+      "sub": "投資・通信",
+      "sub_en": "Investment & telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SoftBank GroupとBloom Energyが、日本でBloom Energy Serverを展開する折半出資の合弁会社Bloom Energy Japanを設立(2013年7月、Bloom発表)",
+          "text_en": "SoftBank Group and Bloom Energy established a 50/50 joint venture, Bloom Energy Japan Limited, to deploy Bloom Energy Servers in Japan (July 2013, Bloom release)",
+          "source": {
+            "label": "Bloom Energy の発表(2013年7月)",
+            "label_en": "Bloom Energy press release (Jul 2013)",
+            "url": "https://www.bloomenergy.com/news/softbank-bloom-energy-form-joint-venture-to-provide-clean-reliable-and-affordable-energy-to-japan/",
+            "level": "official",
+            "date": "2013-07-17",
+            "quote": "SoftBank Group and Bloom Energy Corp. today announced the establishment of a 50/50 Joint Venture",
+            "note": "2013年の発表で、合弁会社の現状はこの資料では確認できません。",
+            "note_en": "A 2013 announcement; the current status of the joint venture is not confirmed in this source."
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
   }
 }

@@ -481,11 +481,36 @@
           }
         }
       ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Qualcomm幹部が、大規模なアクセラレーター導入向けのAristaのネットワーク製品を歓迎するコメント(2026年10月、Arista発表)",
+          "text_en": "A Qualcomm Technologies executive welcomed Arista networking solutions for large-scale accelerator deployments (October 2026, Arista release)",
+          "source": {
+            "label": "Arista Rack-Scale Architectures partner quotes(2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "We are pleased to see Arista deliver advanced networking solutions that ensure seamless interoperability",
+            "note": "提携先のコメントで、取引条件は書かれていません。",
+            "note_en": "A partner endorsement quote; no commercial terms are stated."
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
   }
 }

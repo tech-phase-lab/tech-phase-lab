@@ -74,8 +74,8 @@ function addsInformation(title: string, text: string): boolean {
  * Opened, the detail continues right after the headline and the date moves to
  * the end. A ``concise`` company story instead replaces its headline with the
  * full story text (cut at a sentence boundary) when opened (owner, Oct 7). */
-export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false, jaLimit = 60 }: {
-  label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean; jaLimit?: number;
+export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false, jaLimit = 60, capDetail = false }: {
+  label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean; jaLimit?: number; capDetail?: boolean;
 }) {
   // The alert page passes no label; an empty label must not leave a blank line above the opened text (owner, Oct 18).
   const tag = label ? <span className={styles.tickers}>{label}</span> : null;
@@ -93,9 +93,9 @@ export default function NewsStory({ label, title, body, fullBody, publication, l
   // Opened, every story reads as one text: a body that already restates the
   // headline replaces it rather than repeating it (owner, Oct 8).
   const replaces = concise || (!!body && bodyRestatesTitle(title, body));
-  const opened = withoutFiller(concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : replaces ? openedNewsText(body!, Infinity) : detail);
+  const opened = withoutFiller(concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : replaces ? openedNewsText(body!, capDetail ? undefined : Infinity) : capDetail ? openedNewsText(detail) : detail);
   if (!addsInformation(title, opened)) return headlineOnly();
-  return <details className={`${replaces ? `${styles.story} ${styles.replaces}` : styles.story}${bare}`}>
+  return <details className={replaces ? `${styles.story} ${styles.replaces}${bare}` : styles.story}>
     <summary>{tag}<span className={replaces ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
     <div className={styles.body} lang={lang}>{opened}<span className={styles.note}>{publication}</span></div>
   </details>;

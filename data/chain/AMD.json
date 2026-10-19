@@ -628,11 +628,107 @@
           }
         }
       ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・量子",
+      "sub_en": "IT & quantum",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMとAMDが、量子コンピューターとHPCを組み合わせた量子中心のスーパーコンピューター構想を発表(2025年8月、AMD発表)",
+          "text_en": "IBM and AMD announced plans to develop quantum-centric supercomputing architectures combining quantum computers and HPC (August 2025, AMD release)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/ibm-and-amd-join-forces-to-build-the-future-o/",
+            "level": "official",
+            "date": "2025-08-23",
+            "quote": "IBM (NYSE: IBM) and AMD (NASDAQ: AMD) announced plans to develop next-generation computing architectures based on the combination of quantum computers and high-performance computing",
+            "note": "構想の発表段階です。",
+            "note_en": "Plans announced."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOK",
+      "ticker": "NOK",
+      "name": "Nokia",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Nokia Cloud Platformに第5世代AMD EPYCプロセッサーを採用(2025年6月、AMD発表)",
+          "text_en": "Nokia included 5th Gen AMD EPYC processors to power the Nokia Cloud Platform (June 2025, AMD release)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-epyc-processors-now-power-nokia-cloud-infrastr/",
+            "level": "official",
+            "date": "2025-06-10",
+            "quote": "Nokia has included 5th Gen AMD EPYC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Dell Pro法人向けPCにAMD Ryzen AI PROプロセッサーを搭載(2025年1月、AMD発表)",
+          "text_en": "Dell Pro commercial PCs are powered by AMD Ryzen AI PRO processors (January 2025, AMD release)",
+          "source": {
+            "label": "AMD ニュースルーム の発表",
+            "label_en": "AMD newsroom press release",
+            "url": "https://newsroom.amd.com/news/amd-announces-first-dell-commercial-pcs-powered-by/",
+            "level": "official",
+            "date": "2025-01-06",
+            "quote": "Full portfolio of AMD-powered Dell notebooks, desktops and workstations meet the demands of the modern enterprise."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMCI",
+      "ticker": "SMCI",
+      "name": "Super Micro Computer",
+      "sub": "AIサーバー",
+      "sub_en": "AI servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AMD EPYCとAMD Instinct MI350 GPUに対応する製品を発表し、AMD Heliosへの対応も表明(2026年度、10-K)",
+          "text_en": "Super Micro introduced products supporting AMD EPYC processors and AMD Instinct MI350 GPUs and announced support for AMD Helios (FY2026, 10-K)",
+          "source": {
+            "label": "Super Micro 10-K(2026年度)",
+            "label_en": "Super Micro 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm",
+            "level": "official",
+            "date": "2026-08",
+            "quote": "We introduced new products supporting Intel Xeon 6 and Intel Xeon 6+ processors, AMD EPYC processors, and AMD Instinct",
+            "note": "製品の対応を示すもので、購入量は書かれていません。",
+            "note_en": "Product support; no purchase volume is stated."
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
   }
 }

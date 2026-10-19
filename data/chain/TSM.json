@@ -446,6 +446,20 @@
             "level": "official",
             "quote": "in Singapore (SSMC) together with our joint venture partner TSMC"
           }
+        },
+        {
+          "type": "tie",
+          "text": "NXPはESMC(TSMCが70%保有)の10%を保有し、工場の生産能力の10%を受ける権利がある(2025年度、10-K)",
+          "text_en": "NXP holds 10% of ESMC (70% owned by TSMC) and is entitled to 10% of the fab capacity (FY2025, 10-K)",
+          "source": {
+            "label": "NXP Semiconductors Form 10-K(2025年度)",
+            "label_en": "NXP Semiconductors Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "quote": "ESMC is 70% owned by TSMC, with 8 Bosch, Infineon, and NXP each owning 10%. NXP is entitled to 10% of the fab facility capacity.",
+            "note": "工場は建設中で、最初の生産は2028年を目標としています。",
+            "note_en": "The fab is under construction; initial production is targeted for 2028."
+          }
         }
       ]
     },
@@ -515,11 +529,148 @@
           }
         }
       ]
+    },
+    {
+      "id": "7203",
+      "ticker": "Toyota",
+      "name": "Toyota Motor",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年2月、TSMC・Sony・DENSO・Toyotaが第2工場に向けJASMへの追加投資を発表。Toyotaは少数株主になった(2025年度、20-F)",
+          "text_en": "In February 2024 TSMC, Sony, DENSO and Toyota announced further investment into JASM for a second fab; Toyota took a minority stake (FY2025, 20-F)",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2024-02",
+            "quote": "announced further investment into JASM to build and operate a second semiconductor manufacturing facility. Construction on the second site commenced in October 2025. By way of such investment, Toyota 26 also took a minority stake in JASM."
+          }
+        }
+      ]
+    },
+    {
+      "id": "3443",
+      "ticker": "GUC",
+      "name": "Global Unichip(GUC)",
+      "sub": "チップ設計サービス",
+      "sub_en": "Chip design services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TSMCは2003年1月にGUCの52.0%を取得し、2026年2月28日時点で約34.8%を保有(2025年度、20-F)",
+          "text_en": "TSMC acquired 52.0% of GUC (SoC design service company) in January 2003 and owned approximately 34.8% as of February 28, 2026 (FY2025, 20-F)",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "As of February 28, 2026 , we owned approximatel y 34.8 % o f the equity interest in GUC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSCC",
+      "ticker": "LSCC",
+      "name": "Lattice Semiconductor",
+      "sub": "FPGA",
+      "sub_en": "FPGAs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Latticeは、16nmのFPGA(AvantとNexus 2)の開発・製造や、350nm〜40nm製品の製造でTSMCと提携(2025年度、10-K)",
+          "text_en": "Lattice partners with TSMC to develop and manufacture 16nm FPGAs (Avant and Nexus 2) and to manufacture 350nm, 130nm, 55nm and 40nm products (FY2025, 10-K)",
+          "source": {
+            "label": "Lattice Semiconductor Form 10-K(2025年度)",
+            "label_en": "Lattice Semiconductor Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "quote": "We partner with Taiwan Semiconductor Manufacturing Company (\"TSMC\") to develop and manufacture on 16nm technology, which is used in our Avant and Nexus 2 platforms of FPGA products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "Silicon Laboratories",
+      "sub": "IoT半導体",
+      "sub_en": "IoT chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Silicon Labsは、ウエハーの大半をTSMCとSMICを主な提携先として製造(2025年度、10-K)",
+          "text_en": "Silicon Labs partners primarily with TSMC and SMIC to manufacture the majority of its wafers (FY2025, 10-K)",
+          "source": {
+            "label": "Silicon Laboratories Form 10-K(2025年度)",
+            "label_en": "Silicon Laboratories Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "quote": "We currently partner primarily with Taiwan Semiconductor Manufacturing Co. (\"TSMC\") and Semiconductor Manufacturing International Corporation (\"SMIC\") to manufacture the majority of our semiconductor wafers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVTS",
+      "ticker": "NVTS",
+      "name": "Navitas Semiconductor",
+      "sub": "パワー半導体",
+      "sub_en": "Power chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NavitasはGaNウエハーの唯一の供給元としてTSMCに依存してきた。TSMCは2025年7月1日に、2027年7月にGaN生産を終了する意向を発表(2025年度、10-K)",
+          "text_en": "Navitas has historically relied on TSMC as its sole GaN wafer supplier; TSMC announced on July 1, 2025 it intends to cease GaN production in July 2027 (FY2025, 10-K)",
+          "source": {
+            "label": "Navitas Semiconductor Form 10-K(2025年度)",
+            "label_en": "Navitas Semiconductor Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2025-07",
+            "quote": "historically, we have relied on TSMC as our sole supplier of GaN wafers, a key component in our product offerings. On July 1, 2025, TSMC announced its intention to cease GaN production in July 2027.",
+            "note": "TSMCは2027年7月にGaNの生産を終了する意向です。",
+            "note_en": "TSMC intends to cease GaN production in July 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIMX",
+      "ticker": "HIMX",
+      "name": "Himax Technologies",
+      "sub": "ディスプレイ用半導体",
+      "sub_en": "Display driver chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Himaxは過去数年、TSMC・UMC・Vanguardなどからファウンドリーサービスを受けてきた(2025年度、20-F)",
+          "text_en": "Himax has obtained foundry services from TSMC, UMC, Vanguard and others in the past few years (FY2025, 20-F)",
+          "source": {
+            "label": "Himax Technologies Form 20-F(2025年度)",
+            "label_en": "Himax Technologies Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years."
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
   }
 }

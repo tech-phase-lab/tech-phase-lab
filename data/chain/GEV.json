@@ -468,11 +468,35 @@
           }
         }
       ]
+    },
+    {
+      "id": "DUK",
+      "ticker": "DUK",
+      "name": "Duke Energy",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Duke Energyが、GE Vernovaの7HAガスタービン20基を数年かけて受け取る契約に署名(GE Vernovaの記事)",
+          "text_en": "Duke Energy has signed an agreement for 20 new GE Vernova 7HA gas-power turbines, to be delivered over several years (GE Vernova article)",
+          "source": {
+            "label": "GE Vernova article",
+            "label_en": "GE Vernova article",
+            "url": "https://www.gevernova.com/news/articles/two-years-ge-vernova-reshaping-energy-future",
+            "level": "official",
+            "quote": "has signed an agreement for 20 new 7HA gas-power turbines aimed to be delivered over the next several years",
+            "note": "納入は数年にわたります。記事に日付の記載はありません。",
+            "note_en": "Delivery is over several years; the article carries no date."
+          }
+        }
+      ]
     }
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
   }
 }

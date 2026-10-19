@@ -139,6 +139,21 @@
             "note": "Armとは訴訟が続いています。",
             "note_en": "Subject of ongoing Arm v. Qualcomm litigation."
           }
+        },
+        {
+          "type": "rival",
+          "text": "ArmがQualcommおよびNuviaと、Nuvia Architecture License Agreementをめぐる訴訟中と記載(2026年5月、20-F)",
+          "text_en": "Arm states it is in pending litigation with Qualcomm and Nuvia over the Nuvia Architecture License Agreement (May 2026, 20-F)",
+          "source": {
+            "label": "Arm Holdings 20-F(2026年度)",
+            "label_en": "Arm Holdings 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "date": "2026-05",
+            "quote": "We are involved in pending litigation, including, but not limited to, lawsuits with Qualcomm Inc. and Qualcomm Technologies, Inc. (together “Qualcomm”) and Nuvia, Inc. (“Nuvia”).",
+            "note": "ライセンス元とライセンス先の法的な争いです。Qualcommが陪審・最終判決で勝訴し、Armは控訴中と記載しています。",
+            "note_en": "A legal dispute between licensor and licensee; Qualcomm prevailed at jury and final judgment, and Arm says an appeal is pending."
+          }
         }
       ]
     },
@@ -469,7 +484,7 @@
   ],
   "far": [],
   "note": {
-    "ja": "公式の発表と提出書類(10-K・10-Q・20-F・8-K・目論見書)で確認できた関係だけを載せています。公式資料で確認できなかった関係は載せていません。この図は情報の整理を目的としており、特定の銘柄の売買を勧めるものではありません。",
-    "en": "Only relationships confirmed in official announcements and filings (10-K, 10-Q, 20-F, 8-K and prospectuses) are shown. Relationships that could not be confirmed in official materials are left out. This diagram is for organizing information and is not a recommendation to buy or sell any stock."
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
   }
 }
