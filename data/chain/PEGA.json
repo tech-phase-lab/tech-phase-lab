@@ -1,0 +1,308 @@
+{
+  "root": {
+    "ticker": "PEGA",
+    "name": "Pegasystems"
+  },
+  "rows": [
+    {
+      "ja": "供給元(クラウド基盤)",
+      "en": "Suppliers (cloud infrastructure)",
+      "above": true
+    },
+    {
+      "ja": "提携先",
+      "en": "Partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "IBM",
+    "MSFT",
+    "CRM",
+    "NOW",
+    "SAP"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、ソフトウェア開発や提供に使う供給元としてAWSを挙げている",
+          "text_en": "The annual report lists AWS among the suppliers used for software development and delivery",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "to suppliers we use, including source code repositories, the infrastructure employed for software development, and the mechanisms used for software delivery, such as Amazon Web Services (“AWS”), Google Cloud, and Microsoft Azure."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "PegaがAWSと5年間の戦略的協業契約を結んだと発表した",
+          "text_en": "Pega announced a five-year strategic collaboration agreement with AWS",
+          "source": {
+            "label": "Pega — five-year AWS strategic collaboration, July 14, 2025",
+            "label_en": "Pega — five-year AWS strategic collaboration, July 14, 2025",
+            "url": "https://www.pega.com/about/news/press-releases/pega-signs-five-year-strategic-collaboration-agreement-aws-reimagine",
+            "level": "official",
+            "quote": "PEGA), the Enterprise Transformation Company™, today announced it has signed a five-year strategic collaboration agreement (SCA) with Amazon Web Services (AWS)."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、ソフトウェア開発や提供に使う供給元としてGoogle Cloudを挙げている",
+          "text_en": "The annual report lists Google Cloud among the suppliers used for software development and delivery",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "source code repositories, the infrastructure employed for software development, and the mechanisms used for software delivery, such as Amazon Web Services (“AWS”), Google Cloud, and Microsoft Azure."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサルティング",
+      "sub_en": "Consulting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、Pegaの最大級のパートナーの1社としてAccentureを挙げている",
+          "text_en": "The annual report lists Accenture among Pega's largest partners",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Pega’s largest partners include Aaseya, Accenture, Areteans, Capgemini, Coforge, Cognizant Technology Solutions, Evonsys Inc, Ernst & Young, HCL Tech, Infosys, LTIMindtree, Tata Consultancy Services, and Virtusa."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "INFY",
+      "ticker": "INFY",
+      "name": "インフォシス",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "InfosysがPega PlatformとPega Blueprintを自社のInfosys Cobaltに組み込むと述べている",
+          "text_en": "Infosys is quoted as integrating Pega Platform and Pega Blueprint into Infosys Cobalt",
+          "source": {
+            "label": "Pega — five-year AWS strategic collaboration, July 14, 2025",
+            "label_en": "Pega — five-year AWS strategic collaboration, July 14, 2025",
+            "url": "https://www.pega.com/about/news/press-releases/pega-signs-five-year-strategic-collaboration-agreement-aws-reimagine",
+            "level": "official",
+            "quote": "“This agreement streamlines the path to integrate the power of Pega Platform and Pega Blueprint into Infosys Cobalt, our industry leading cloud offering built on AWS."
+          }
+        }
+      ],
+      "name_en": "Infosys"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・クラウド",
+      "sub_en": "IT & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペガシステムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Many of our competitors, such as International Business Machines Corporation (“IBM”), Microsoft Corporation, Oracle Corporation, Salesforce, SAP SE, and ServiceNow, have far greater resources than we do and may be able to respond more"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペガシステムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Many of our competitors, such as International Business Machines Corporation (“IBM”), Microsoft Corporation, Oracle Corporation, Salesforce, SAP SE, and ServiceNow, have far greater resources than we do and may be able to respond more quickly and efficiently to new"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "顧客管理ソフト",
+      "sub_en": "CRM software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペガシステムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Many of our competitors, such as International Business Machines Corporation (“IBM”), Microsoft Corporation, Oracle Corporation, Salesforce, SAP SE, and ServiceNow, have far greater resources than we do and may be able to respond more quickly and efficiently to new or emerging technologies, programming"
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペガシステムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Many of our competitors, such as International Business Machines Corporation (“IBM”), Microsoft Corporation, Oracle Corporation, Salesforce, SAP SE, and ServiceNow, have far greater resources than we do and may be able to respond more quickly and efficiently to new or emerging technologies, programming languages or standards, or"
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペガシステムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Many of our competitors, such as International Business Machines Corporation (“IBM”), Microsoft Corporation, Oracle Corporation, Salesforce, SAP SE, and ServiceNow, have far greater resources than we do and may be able to respond more quickly and efficiently to new or emerging technologies, programming languages or"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "データベース・業務ソフト",
+      "sub_en": "Database & enterprise software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペガシステムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Many of our competitors, such as International Business Machines Corporation (“IBM”), Microsoft Corporation, Oracle Corporation, Salesforce, SAP SE, and ServiceNow, have far greater resources than we do and may be able to respond more quickly and efficiently to new or emerging"
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "APPN",
+      "ticker": "APPN",
+      "name": "アピアン",
+      "sub": "業務自動化ソフト",
+      "sub_en": "Process automation software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アピアンの年次報告が、ペガシステムズを競合として挙げている",
+          "text_en": "Names Pegasystems as a competitor in its annual report",
+          "source": {
+            "label": "Appian 10-K",
+            "label_en": "Appian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441683/000144168326000013/appn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have obtained a judgment preservation insurance policy with respect to a now-vacated judgment and ongoing litigation against our competitor, Pegasystems, and both the payment on the policy and continued litigation are subject to risks and costs."
+          }
+        }
+      ],
+      "name_en": "Appian"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

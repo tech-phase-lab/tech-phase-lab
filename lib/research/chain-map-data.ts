@@ -49,6 +49,7 @@ import c_dell from "../../data/chain/DELL.json" with { type: "json" };
 import c_dis from "../../data/chain/DIS.json" with { type: "json" };
 import c_entg from "../../data/chain/ENTG.json" with { type: "json" };
 import c_etn from "../../data/chain/ETN.json" with { type: "json" };
+import c_form from "../../data/chain/FORM.json" with { type: "json" };
 import c_ftnt from "../../data/chain/FTNT.json" with { type: "json" };
 import c_gev from "../../data/chain/GEV.json" with { type: "json" };
 import c_gfs from "../../data/chain/GFS.json" with { type: "json" };
@@ -103,7 +104,10 @@ import c_orcl from "../../data/chain/ORCL.json" with { type: "json" };
 import c_otex from "../../data/chain/OTEX.json" with { type: "json" };
 import c_panw from "../../data/chain/PANW.json" with { type: "json" };
 import c_path from "../../data/chain/PATH.json" with { type: "json" };
+import c_payc from "../../data/chain/PAYC.json" with { type: "json" };
 import c_payx from "../../data/chain/PAYX.json" with { type: "json" };
+import c_pcor from "../../data/chain/PCOR.json" with { type: "json" };
+import c_pcty from "../../data/chain/PCTY.json" with { type: "json" };
 import c_pins from "../../data/chain/PINS.json" with { type: "json" };
 import c_pltr from "../../data/chain/PLTR.json" with { type: "json" };
 import c_pypl from "../../data/chain/PYPL.json" with { type: "json" };
@@ -224,6 +228,7 @@ const available: Record<string, ChainMapData> = {
   DIS: c_dis as ChainMapData,
   ENTG: c_entg as ChainMapData,
   ETN: c_etn as ChainMapData,
+  FORM: c_form as ChainMapData,
   FTNT: c_ftnt as ChainMapData,
   GEV: c_gev as ChainMapData,
   GFS: c_gfs as ChainMapData,
@@ -278,7 +283,10 @@ const available: Record<string, ChainMapData> = {
   OTEX: c_otex as ChainMapData,
   PANW: c_panw as ChainMapData,
   PATH: c_path as ChainMapData,
+  PAYC: c_payc as ChainMapData,
   PAYX: c_payx as ChainMapData,
+  PCOR: c_pcor as ChainMapData,
+  PCTY: c_pcty as ChainMapData,
   PINS: c_pins as ChainMapData,
   PLTR: c_pltr as ChainMapData,
   PYPL: c_pypl as ChainMapData,
