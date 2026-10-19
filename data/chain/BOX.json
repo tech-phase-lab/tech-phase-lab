@@ -1,0 +1,403 @@
+{
+  "root": {
+    "ticker": "BOX",
+    "name": "Box"
+  },
+  "rows": [
+    {
+      "ja": "クラウド・AI連携先",
+      "en": "Cloud & AI partners",
+      "above": true
+    },
+    {
+      "ja": "技術パートナー",
+      "en": "Technology partners"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "GOOG",
+    "DBX"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはGoogle Cloud Marketplaceで提供されるようになった",
+          "text_en": "Box became available on Google Cloud Marketplace",
+          "source": {
+            "label": "Box 8-K Ex.99 の発表",
+            "label_en": "Box 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000095017023068148/box-ex99_1.htm",
+            "level": "official",
+            "date": "2023-12-05",
+            "quote": "• Announced that Box is now available on Google Cloud Marketplace, making it even easier for customers using Google Cloud infrastructure to purchase Box."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Boxの年次報告が、競合としてGoogle(Drive)を挙げている",
+          "text_en": "Named as a competitor (Google Drive) in Box's annual report",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "In the enterprise file sync and share market, our primary competitors include, but are not limited to, Microsoft (OneDrive), Google (Drive) and, to a lesser extent, Dropbox."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはMicrosoftのAzure OpenAIとの提携を発表している",
+          "text_en": "Box has announced a partnership with Microsoft's Azure OpenAI",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "For example, Box has announced partnerships with Microsoft’s Azure OpenAI, Google Cloud’s Vertex AI, and Anthropic’s Claude and Amazon Titan via Amazon Bedrock."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Boxの年次報告が、競合としてMicrosoft(OneDrive)を挙げている",
+          "text_en": "Named as a competitor (OneDrive) in Box's annual report",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "In the enterprise file sync and share market, our primary competitors include, but are not limited to, Microsoft (OneDrive), Google (Drive) and, to a lesser extent, Dropbox."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはAWSとの戦略提携を拡大し、Amazon Bedrock経由の基盤モデルをBox AIで使えるようにした",
+          "text_en": "Box expanded its strategic partnership with AWS so customers can use foundation models in Box AI through Amazon Bedrock",
+          "source": {
+            "label": "Box 8-K Ex.99 の発表",
+            "label_en": "Box 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000095017024132766/box-ex99_1.htm",
+            "level": "official",
+            "date": "2024-12-03",
+            "quote": "• Expanded its strategic partnership with Amazon Web Services (AWS), allowing customers to access foundation models directly in Box AI using Amazon Bedrock, starting with Anthropic’s Claude and Amazon Titan."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはAmazon Bedrock経由でAnthropicのClaudeを使う提携を発表している",
+          "text_en": "Box has announced a partnership involving Anthropic's Claude via Amazon Bedrock",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "For example, Box has announced partnerships with Microsoft’s Azure OpenAI, Google Cloud’s Vertex AI, and Anthropic’s Claude and Amazon Titan via Amazon Bedrock.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxとChatGPTの連携が、Boxの全顧客に提供開始された",
+          "text_en": "The Box integration with ChatGPT is generally available for all Box customers",
+          "source": {
+            "label": "Box — ChatGPT enterprise-content integration, September 10, 2026",
+            "label_en": "Box — ChatGPT enterprise-content integration, September 10, 2026",
+            "url": "https://blog.box.com/box-chatgpt-enterprise-content-integration",
+            "level": "official",
+            "quote": "The Box integration with ChatGPT is generally available today for all Box customers, with OpenAI rolling out access to users of ChatGPT’s paid tiers over the next few days.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはNVIDIA NIMとBox AIの協業を発表した",
+          "text_en": "Box announced a collaboration between NVIDIA NIM and Box AI",
+          "source": {
+            "label": "Box 8-K Ex.99 の発表",
+            "label_en": "Box 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000095017024065181/box-ex99_1.htm",
+            "level": "official",
+            "date": "2024-05-28",
+            "quote": "• Announced a collaboration between NVIDIA NIM and Box AI to help provide businesses with a reliable and flexible platform for supercharging production AI."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・PC",
+      "sub_en": "Devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Boxは年次報告で、Appleなどを技術パートナーとして挙げている",
+          "text_en": "Box's annual report lists Apple among its technology partners",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We have a rich technology partner ecosystem, offering integrations with partners such as Adobe, Apple, Cisco, CrowdStrike, Google, Guidewire, IBM, Microsoft, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "Adobe",
+      "sub": "クリエイティブソフト",
+      "sub_en": "Creative software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Boxは年次報告で、Adobeなどを技術パートナーとして挙げている",
+          "text_en": "Box's annual report lists Adobe among its technology partners",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We have a rich technology partner ecosystem, offering integrations with partners such as Adobe, Apple, Cisco, CrowdStrike, Google, Guidewire, IBM, Microsoft, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務クラウド",
+      "sub_en": "Business cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Boxは年次報告で、Salesforceなどを技術パートナーとして挙げている",
+          "text_en": "Box's annual report lists Salesforce among its technology partners",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We have a rich technology partner ecosystem, offering integrations with partners such as Adobe, Apple, Cisco, CrowdStrike, Google, Guidewire, IBM, Microsoft, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Boxは年次報告で、ServiceNowなどを技術パートナーとして挙げている",
+          "text_en": "Box's annual report lists ServiceNow among its technology partners",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We have a rich technology partner ecosystem, offering integrations with partners such as Adobe, Apple, Cisco, CrowdStrike, Google, Guidewire, IBM, Microsoft, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEAM",
+      "ticker": "TEAM",
+      "name": "Atlassian",
+      "sub": "チーム協働ソフト",
+      "sub_en": "Collaboration software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはAtlassianとの提携を強化し、Atlassian Rovoコネクタを提供した",
+          "text_en": "Box strengthened its partnership with Atlassian with the new Atlassian Rovo connector",
+          "source": {
+            "label": "Box 8-K Ex.99 の発表",
+            "label_en": "Box 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000095017025031977/box-ex99_1.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "• Strengthened partnership with Atlassian with the new Atlassian Rovo connector, delivering the power of ICM to joint customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "Morgan Stanley",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはMorgan Stanley & Co.と2024年9月17日付の購入契約を結んでいる",
+          "text_en": "Box is party to a Purchase Agreement dated September 17, 2024 with Morgan Stanley & Co.",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Purchase Agreement, dated September 17, 2024, by and among Box, Inc. and Morgan Stanley & Co.",
+            "note": "契約書の記載のみです。",
+            "note_en": "Agreement listing only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BoxはWells Fargo Bankと2023年6月30日付の改訂再表示クレジット契約を結んでいる",
+          "text_en": "Box is party to an Amended and Restated Credit Agreement dated June 30, 2023 with Wells Fargo Bank, National Association",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Amended and Restated Credit Agreement, dated as of June 30, 2023, by and between Box, Inc. and Wells Fargo Bank, National Association."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同クレジット契約の第1次修正(2024年12月19日付)がある",
+          "text_en": "Amendment No. 1 to the credit agreement is dated December 19, 2024",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Amendment No. 1 to Amended and Restated Credit Agreement, dated as of December 19, 2024, by and between Box, Inc. and Wells Fargo Bank, National Association."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBX",
+      "ticker": "DBX",
+      "name": "Dropbox",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Boxの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Box’s annual report",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "In the enterprise file sync and share market, our primary competitors include, but are not limited to, Microsoft (OneDrive), Google (Drive) and, to a lesser extent, Dropbox."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "root": {
+    "ticker": "DBX",
+    "name": "Dropbox"
+  },
+  "rows": [
+    {
+      "ja": "連携(Dropboxの記載)",
+      "en": "Integrations (named by Dropbox)"
+    },
+    {
+      "ja": "連携(相手側の記載)",
+      "en": "Integrations (named by the counterparty)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "GOOGL",
+    "BOX",
+    "TEAM",
+    "CRM"
+  ],
+  "companies": [
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、Dropboxの連携先の1社としてCiscoを挙げている",
+          "text_en": "The annual report lists Cisco among Dropbox's integrations",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also have integrations with Microsoft, Adobe, Apple, Salesforce, Atlassian, Slack (now part of Salesforce), BetterCloud, Google, IBM, Cisco, VMware, Okta, Symantec, Palo Alto Networks, Zoom, and a variety of other productivity, collaboration, data management, and security vendors."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "ASAN",
+      "ticker": "ASAN",
+      "name": "アサナ",
+      "sub": "プロジェクト管理",
+      "sub_en": "Project management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dropboxの公式ページが、JiraやTrelloと並んでAsanaとの連携を紹介している",
+          "text_en": "Dropbox's official page presents integrating Dropbox with apps such as Jira, Asana and Trello",
+          "source": {
+            "label": "Dropbox — official AI partners and Claude document connectivity; checked October 16, 2026",
+            "label_en": "Dropbox — official AI partners and Claude document connectivity; checked October 16, 2026",
+            "url": "https://www.dropbox.com/en_GB/app-integrations",
+            "level": "official",
+            "quote": "Bring speed and simplicity to your distributed team and faster progress to every project by integrating Dropbox with the apps your team uses every day like Jira, Asana and Trello."
+          }
+        }
+      ],
+      "name_en": "Asana"
+    },
+    {
+      "id": "MNDY",
+      "ticker": "MNDY",
+      "name": "マンデードットコム",
+      "sub": "業務管理ソフト",
+      "sub_en": "Work management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "monday.comの年次報告が、連携先の例にDropboxを挙げている",
+          "text_en": "monday.com's annual report lists Dropbox among its integrations",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Currently, our integration center includes integrations with other tools, such as Gmail, Outlook, Jira, Salesforce, Google Drive, Dropbox, Stripe, Slack, GitHub, and Zendesk."
+          }
+        }
+      ],
+      "name_en": "monday.com"
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "ズーム",
+      "sub": "ビデオ会議",
+      "sub_en": "Video conferencing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zoomの年次報告が、連携先の1社にDropboxを挙げている",
+          "text_en": "Zoom's annual report lists Dropbox among its integrations",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We also have integrations with Atlassian, Dropbox, Google, Microsoft, Salesforce, Slack, and a variety of other productivity, collaboration, data management, and security vendors."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Zoom Meetingsが連携するツールの例としてDropboxが挙げられている",
+          "text_en": "Dropbox is named among tools that Zoom Meetings integrates with",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Zoom Meetings integrates with tools created by companies such as Atlassian, Box, Dropbox, Google, LinkedIn, Microsoft, Salesforce, ServiceNow, and Slack."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Dropboxの年次報告も、連携先の1社にZoomを挙げている",
+          "text_en": "Dropbox's annual report also lists Zoom among its integrations",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also have integrations with Microsoft, Adobe, Apple, Salesforce, Atlassian, Slack (now part of Salesforce), BetterCloud, Google, IBM, Cisco, VMware, Okta, Symantec, Palo Alto Networks, Zoom, and a variety of other productivity, collaboration, data management, and security vendors."
+          }
+        }
+      ],
+      "name_en": "Zoom"
+    },
+    {
+      "id": "AVPT",
+      "ticker": "AVPT",
+      "name": "アベポイント",
+      "sub": "データ管理",
+      "sub_en": "Data management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvePointの年次報告が、主な連携先の例にDropboxを挙げている",
+          "text_en": "AvePoint's annual report lists Dropbox among the platforms it connects with",
+          "source": {
+            "label": "AvePoint 10-K",
+            "label_en": "AvePoint 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1777921/000143774926005907/avpt20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "These include major hyperscalers and enterprise applications such as Microsoft, Salesforce, Google, AWS, Box, and Dropbox, as well as other collaboration, identity and developer platforms such as Docusign, Confluence, GitHub, Jira, Okta, Bitbucket, Smartsheet and Monday.com."
+          }
+        }
+      ],
+      "name_en": "AvePoint"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドロップボックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドロップボックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ドット・コム",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドロップボックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "家電・ソフト",
+      "sub_en": "Consumer electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドロップボックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "sub": "クリエイティブソフト",
+      "sub_en": "Creative software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドロップボックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google."
+          }
+        }
+      ],
+      "name_en": "Adobe"
+    },
+    {
+      "id": "TEAM",
+      "ticker": "TEAM",
+      "name": "アトラシアン",
+      "sub": "協業ソフト",
+      "sub_en": "Collaboration software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドロップボックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Atlassianの年次報告が、自社アプリと相互運用できる相手の例にDropboxを挙げている",
+          "text_en": "Atlassian's annual report names Dropbox among platforms its apps interoperate with",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "• Open and Extensible with a Vast Ecosystem - We are dedicated to making our apps open and interoperable with a wide range of other platforms and applications that customers use, such as Microsoft, Zoom, Anthropic, Cursor, OpenAI, Salesforce, Workday, and Dropbox."
+          }
+        }
+      ],
+      "name_en": "Atlassian"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "顧客管理ソフト",
+      "sub_en": "CRM software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドロップボックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google.",
+            "note": "Slack経由の記載です。",
+            "note_en": "Listed via Slack."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "ボックス",
+      "sub": "法人向けファイル共有",
+      "sub_en": "Enterprise file sharing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ボックスの年次報告が、ドロップボックスを競合として挙げている",
+          "text_en": "Names Dropbox as a competitor in its annual report",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "In the enterprise file sync and share market, our primary competitors include, but are not limited to, Microsoft (OneDrive), Google (Drive) and, to a lesser extent, Dropbox."
+          }
+        }
+      ],
+      "name_en": "Box"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

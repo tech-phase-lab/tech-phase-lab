@@ -1,0 +1,469 @@
+{
+  "root": {
+    "ticker": "NTNX",
+    "name": "ニュータニックス",
+    "name_en": "Nutanix"
+  },
+  "rows": [
+    {
+      "ja": "ハードウェア・半導体の提携先",
+      "en": "Hardware & chip partners",
+      "above": true
+    },
+    {
+      "ja": "ソフト・サービスの提携先",
+      "en": "Software & service partners"
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "出資・資金調達",
+      "en": "Investment & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AVGO",
+    "HPE"
+  ],
+  "companies": [
+    {
+      "id": "SMCI",
+      "ticker": "SMCI",
+      "name": "スーパー・マイクロ・コンピューター",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NutanixはSuper Micro ComputerとOEM購入契約(2014年5月16日付)を結んでいる",
+          "text_en": "Nutanix has an Original Equipment Manufacturer Purchase Agreement dated May 16, 2014 with Super Micro Computer",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "Original Equipment Manufacturer (OEM) Purchase Agreement, dated as of May 16, 2014, by and among the Registrant, Nutanix Netherlands B.V. and Super Micro Computer Inc., as amended by Amendment One to Original Equipment Manufacturer (OEM) Purchase Agreement, dated as of November 13, 2017 and Amendment Two to Original"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同契約に関する参加契約(2019年9月26日付)がある",
+          "text_en": "A Participation Agreement to that OEM Purchase Agreement is dated September 26, 2019",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "Participation Agreement to the Original Equipment Manufacturer Purchase Agreement, entered into as of September 26, 2019, by and between the Registrant, Nutanix Netherlands B.V. and Super Micro Computer, Inc."
+          }
+        }
+      ],
+      "name_en": "Super Micro Computer"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "サーバー・PC",
+      "sub_en": "Servers & PCs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dellとの提携強化により、DellからNutanix Cloud Platformを直接購入できるようになる",
+          "text_en": "The enhanced partnership lets customers buy Nutanix Cloud Platform software directly from Dell",
+          "source": {
+            "label": "Nutanix 8-K Ex.99 の発表",
+            "label_en": "Nutanix 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000095017024065921/ntnx-ex99_1.htm",
+            "level": "official",
+            "date": "2024-05-29",
+            "quote": "The enhanced partnership will include Dell Resell, the ability to purchase Nutanix Cloud Platform software tightly integrated with Dell servers directly from Dell, and Support for Storage, in which Nutanix Cloud Platform will be able to run in existing IP-based 3-Tier environments utilizing Dell’s PowerFlex storage."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年度にDellとの新規または拡大契約を結んだ",
+          "text_en": "In fiscal 2024 Nutanix signed new or enhanced agreements with Dell",
+          "source": {
+            "label": "Nutanix 8-K Ex.99 の発表",
+            "label_en": "Nutanix 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000095017024101375/ntnx-ex99_1.htm",
+            "level": "official",
+            "date": "2024-08-28",
+            "quote": "“ In fiscal 2024, we also made notable progress on partnerships, signing new or enhanced agreements with Cisco, NVIDIA and Dell, and continued to innovate towards our goal of being the leading platform for running applications and managing data, anywhere. ”"
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "Lenovo",
+      "ticker": "Lenovo",
+      "name": "レノボ・グループ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lenovo ThinkSystemの外部ストレージ連携への対応を発表した",
+          "text_en": "Nutanix announced support for Lenovo ThinkSystem external storage integrations",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "We have also announced support for NetApp ONTAP-based and Lenovo ThinkSystem external storage integrations, with the NetApp ONTAP-based solution currently available through limited-availability programs."
+          }
+        }
+      ],
+      "name_en": "Lenovo Group"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、Intelとの提携を相互運用性の取り組みとして挙げている",
+          "text_en": "The annual report lists a partnership with Intel for integrated offerings and interoperability",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "integrated offerings and demonstrated interoperability and support for our customers, including partnerships with Advanced Micro Devices, Inc., Citrix Systems, Inc., Intel Corporation, NVIDIA Corporation, Omnissa, LLC, and Palo Alto Networks, Inc."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、NVIDIAとの提携を相互運用性の取り組みとして挙げている",
+          "text_en": "The annual report lists a partnership with NVIDIA for integrated offerings and interoperability",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "and demonstrated interoperability and support for our customers, including partnerships with Advanced Micro Devices, Inc., Citrix Systems, Inc., Intel Corporation, NVIDIA Corporation, Omnissa, LLC, and Palo Alto Networks, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年度にNVIDIAとの新規または拡大契約を結んだ",
+          "text_en": "In fiscal 2024 Nutanix signed new or enhanced agreements with NVIDIA",
+          "source": {
+            "label": "Nutanix 8-K Ex.99 の発表",
+            "label_en": "Nutanix 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000095017024101375/ntnx-ex99_1.htm",
+            "level": "official",
+            "date": "2024-08-28",
+            "quote": "“ In fiscal 2024, we also made notable progress on partnerships, signing new or enhanced agreements with Cisco, NVIDIA and Dell, and continued to innovate towards our goal of being the leading platform for running applications and managing data, anywhere. ”"
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CiscoとNutanixが世界的な戦略提携を結んだ",
+          "text_en": "Cisco and Nutanix forged a global strategic partnership",
+          "source": {
+            "label": "Nutanix 8-K Ex.99 の発表",
+            "label_en": "Nutanix 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000115752323001386/a53546975ex99_1.htm",
+            "level": "official",
+            "date": "2023-08-31",
+            "quote": "Cisco and Nutanix Forge Global Strategic Partnership to Simplify Hybrid Multicloud and Fuel Business Transformation:"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年度にCiscoとの新規または拡大契約を結んだ",
+          "text_en": "In fiscal 2024 Nutanix signed new or enhanced agreements with Cisco",
+          "source": {
+            "label": "Nutanix 8-K Ex.99 の発表",
+            "label_en": "Nutanix 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000095017024101375/ntnx-ex99_1.htm",
+            "level": "official",
+            "date": "2024-08-28",
+            "quote": "“ In fiscal 2024, we also made notable progress on partnerships, signing new or enhanced agreements with Cisco, NVIDIA and Dell, and continued to innovate towards our goal of being the leading platform for running applications and managing data, anywhere. ”"
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、Palo Alto Networksとの提携を相互運用性の取り組みとして挙げている",
+          "text_en": "The annual report lists a partnership with Palo Alto Networks for integrated offerings and interoperability",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "and support for our customers, including partnerships with Advanced Micro Devices, Inc., Citrix Systems, Inc., Intel Corporation, NVIDIA Corporation, Omnissa, LLC, and Palo Alto Networks, Inc."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "NTAP",
+      "ticker": "NTAP",
+      "name": "ネットアップ",
+      "sub": "データストレージ",
+      "sub_en": "Data storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NutanixとNetAppは、ONTAPをNutanixのAIソリューションに統合する計画を示した",
+          "text_en": "Nutanix and NetApp plan to integrate NetApp ONTAP into the Nutanix Agentic AI solution",
+          "source": {
+            "label": "Nutanix — NetApp strategic alliance and planned integration, April 7, 2026",
+            "label_en": "Nutanix — NetApp strategic alliance and planned integration, April 7, 2026",
+            "url": "https://www.nutanix.com/press-releases/2026/nutanix-and-netapp-form-strategic-alliance",
+            "level": "official",
+            "quote": "As the alliance progresses, Nutanix and NetApp plan to work together to accelerate AI innovation by integrating NetApp ONTAP into the Nutanix Agentic AI solution, a full software stack purpose-built to help customers adopt Agentic AI for business transformation.",
+            "note": "計画段階です。",
+            "note_en": "Planned integration."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NutanixとNetAppが戦略提携を結んだ",
+          "text_en": "Nutanix and NetApp formed a strategic alliance",
+          "source": {
+            "label": "Nutanix — NetApp strategic alliance and planned integration, April 7, 2026",
+            "label_en": "Nutanix — NetApp strategic alliance and planned integration, April 7, 2026",
+            "url": "https://www.nutanix.com/press-releases/2026/nutanix-and-netapp-form-strategic-alliance",
+            "level": "official",
+            "quote": "Nutanix and NetApp Form Strategic Alliance with New Integration for a Modern Cloud Platform"
+          }
+        }
+      ],
+      "name_en": "NetApp"
+    },
+    {
+      "id": "WIT",
+      "ticker": "WIT",
+      "name": "ウィプロ",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "WiproがNutanixとの提携を拡大し、新たな事業部門を立ち上げた",
+          "text_en": "Wipro expanded its partnership with Nutanix to launch a new Nutanix business unit",
+          "source": {
+            "label": "Nutanix 8-K Ex.99 の発表",
+            "label_en": "Nutanix 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000095017024065921/ntnx-ex99_1.htm",
+            "level": "official",
+            "date": "2024-05-29",
+            "quote": "● Wipro Expands Partnership with Nutanix to Launch a New Nutanix Business Unit:"
+          }
+        }
+      ],
+      "name_en": "Wipro"
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "マイクロン・テクノロジー",
+      "sub": "メモリ半導体",
+      "sub_en": "Memory chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MicronがNutanix Cloud Platformを世界の製造拠点に採用した",
+          "text_en": "Micron selected Nutanix Cloud Platform for its manufacturing facilities globally",
+          "source": {
+            "label": "Nutanix 8-K Ex.99 の発表",
+            "label_en": "Nutanix 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000115752323001783/a53863813ex99_1.htm",
+            "level": "official",
+            "date": "2023-11-29",
+            "quote": "Micron Selects Nutanix Cloud Platform for Its Manufacturing Facilities Globally:",
+            "note": "2023年の発表です。",
+            "note_en": "Announced in 2023."
+          }
+        }
+      ],
+      "name_en": "Micron Technology"
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、AMDとの提携を相互運用性の取り組みとして挙げている",
+          "text_en": "The annual report lists a partnership with AMD for integrated offerings and interoperability",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "best-in-class solutions across the ecosystem into integrated offerings and demonstrated interoperability and support for our customers, including partnerships with Advanced Micro Devices, Inc., Citrix Systems, Inc., Intel Corporation, NVIDIA Corporation, Omnissa, LLC, and Palo Alto Networks, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年5月、AMDにClass A普通株4,136,789株を1株36.26ドルで売却し、約1億5,000万ドルを得た",
+          "text_en": "In May 2026 Nutanix sold 4,136,789 shares of Class A common stock to AMD at $36.26 per share for about $150.0 million",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "In May 2026, we completed the issuance and sale of 4,136,789 shares of our Class A common stock to Advanced Micro Devices, Inc. at a purchase price of $36.26 per share, for aggregate cash proceeds of approximately $150.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月にBank of America, N.A.と自己株式の加速取得契約を結んだ",
+          "text_en": "In December 2025 Nutanix entered into an accelerated share repurchase agreement with Bank of America, N.A.",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "In December 2025, we entered into an accelerated share repurchase (\"ASR\") agreement with Bank of America, N.A."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Bank of America, N.A.が管理代理人を務めるクレジット契約(2025年2月12日付)がある",
+          "text_en": "Nutanix has a credit agreement dated February 12, 2025 with Bank of America, N.A. as administrative agent",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "Credit Agreement, dated as of February 12, 2025, among Nutanix, Inc., as borrower, Bank of America, N.A., as administrative agent, collateral agent and L/C issuer, and the lenders party thereto."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体・ソフト",
+      "sub_en": "Semiconductors & software",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "年次報告が、BroadcomによるVMware買収後の競争を挙げている",
+          "text_en": "The annual report cites Broadcom's acquisition of VMware and says Broadcom may continue to compete aggressively",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "Moreover, our current or potential competitors may be acquired by third parties with greater available resources and the ability to initiate or withstand substantial price competition, such as the acquisition of VMware by Broadcom in November 2023."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "IT基盤",
+      "sub_en": "IT infrastructure",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヒューレット・パッカード・エンタープライズの年次報告が、Nutanixを競合として挙げている",
+          "text_en": "Hewlett Packard Enterprise's annual report names Nutanix as a competitor",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors are other infrastructure and cloud management software technology vendors, such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix, and Pure Storage and public cloud vendors like Amazon Web Services, Google Cloud, and Microsoft Azure."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

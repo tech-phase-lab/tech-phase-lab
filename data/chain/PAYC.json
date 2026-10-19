@@ -1,0 +1,268 @@
+{
+  "root": {
+    "ticker": "PAYC",
+    "name": "ペイコム",
+    "name_en": "Paycom Software"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ADP",
+    "PAYX",
+    "PCTY",
+    "WDAY",
+    "ORCL"
+  ],
+  "companies": [
+    {
+      "id": "JPM",
+      "ticker": "JPMorgan",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PaycomはJPMorgan Chase Bank, N.A.を貸付人兼管理代理人とするクレジット契約を結んでいる",
+          "text_en": "Paycom is party to a credit agreement with JPMorgan Chase Bank, N.A. as a lender and administrative agent",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We are party to a credit agreement (as amended from time to time, the “Credit Agreement”) with JPMorgan Chase Bank, N.A., as a lender, swingline lender and issuing bank, the lenders from time to time party thereto (collectively with JPMorgan Chase Bank, N.A., the “Lenders”), and JPMorgan Chase Bank, N.A., as the administrative agent.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Paycomの子会社を含む借入当事者がJPMorgan Chase Bank, N.A.とクレジット契約を結んでいる",
+          "text_en": "Loan parties including subsidiaries of Paycom entered into a credit agreement with JPMorgan Chase Bank, N.A.",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "and certain other subsidiaries of Software (collectively, the “Loan Parties”) entered into a credit agreement (as amended from time to time, the “Credit Agreement”) with JPMorgan Chase Bank, N.A., as a lender, swingline lender and issuing bank, the lenders from time to time party thereto (collectively with JPMorgan Chase Bank, N.A., the"
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "ADP",
+      "ticker": "ADP",
+      "name": "Automatic Data Processing",
+      "sub": "給与・人事サービス",
+      "sub_en": "Payroll & HR services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてAutomatic Data Processingを挙げている",
+          "text_en": "Paycom's annual report names Automatic Data Processing as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAYX",
+      "ticker": "PAYX",
+      "name": "Paychex",
+      "sub": "給与・人事サービス",
+      "sub_en": "Payroll & HR services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてPaychexを挙げている",
+          "text_en": "Paycom's annual report names Paychex as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCTY",
+      "ticker": "PCTY",
+      "name": "Paylocity",
+      "sub": "給与・人事ソフト",
+      "sub_en": "Payroll & HR software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてPaylocityを挙げている",
+          "text_en": "Paycom's annual report names Paylocity as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Paylocityの年次報告が、ペイコムを競合として挙げている",
+          "text_en": "Names Paycom as a competitor in its annual report",
+          "source": {
+            "label": "Paylocity 10-K",
+            "label_en": "Paylocity 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1591698/000159169826000069/pcty-20260630.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "Our competitors vary for each of our solutions and primarily include payroll and HR service and software providers, such as Automatic Data Processing, Inc., Dayforce, Inc., Paychex, Inc., Paycom Software, Inc., Ultimate Kronos Group and other local and regional providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "Workday",
+      "sub": "人事・財務ソフト",
+      "sub_en": "HR & finance software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてWorkdayを挙げている",
+          "text_en": "Paycom's annual report names Workday as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "業務ソフト・DB",
+      "sub_en": "Business software & databases",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてOracleを挙げている",
+          "text_en": "Paycom's annual report names Oracle as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてSAPを挙げている",
+          "text_en": "Paycom's annual report names SAP as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ワークフロー",
+      "sub_en": "Enterprise workflow",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてServiceNowを挙げている",
+          "text_en": "Paycom's annual report names ServiceNow as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTU",
+      "ticker": "INTU",
+      "name": "Intuit",
+      "sub": "会計・給与ソフト",
+      "sub_en": "Accounting & payroll software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、競合としてIntuitを挙げている",
+          "text_en": "Paycom's annual report names Intuit as a competitor",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "root": {
+    "ticker": "PI",
+    "name": "Impinj"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・ライセンス",
+      "en": "Partnerships & licensing"
+    },
+    {
+      "ja": "競合・和解",
+      "en": "Competitor & settlement"
+    }
+  ],
+  "rivals": [
+    "NXPI"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体製造",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "エンドポイントICのウエハーを発注書ベースで発注しており、TSMCとの長期供給契約はない",
+          "text_en": "Impinj orders endpoint IC wafers on a purchase-order basis with no long-term supply agreement with TSMC",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We order endpoint IC wafers on a purchase-order basis and do not have a long-term supply agreement with TSMC."
+          }
+        },
+        {
+          "type": "up",
+          "text": "リーダーICのウエハーも発注書ベースで発注しており、TSMCとの長期供給契約はない",
+          "text_en": "Reader IC wafers are likewise ordered on a purchase-order basis with no long-term supply agreement with TSMC",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We order our reader IC wafers on a purchase-order basis and do not have a long-term supply agreement with TSMC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ImpinjとIntelの間に2008年7月3日付のライセンス契約がある",
+          "text_en": "Impinj lists a License Agreement with Intel Corporation dated July 3, 2008",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "License Agreement, dated July 3, 2008, between the registrant and Intel Corporation",
+            "note": "2008年の契約で、古い情報です。",
+            "note_en": "Dated 2008; older agreement."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ImpinjがGoogle、Intel、Smartracとともに RAIN Allianceを共同設立した",
+          "text_en": "Impinj cofounded the RAIN Alliance along with Google, Intel and Smartrac",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We spearheaded developing the RAIN air-interface standard, lobbied governments to allocate frequency spectrum and, along with Google, Intel and Smartrac, cofounded the RAIN Alliance."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "MCHP",
+      "ticker": "MCHP",
+      "name": "マイクロチップ・テクノロジー",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月22日にMicrochip Technologyと物品・サービス契約を結んだ",
+          "text_en": "On December 22, 2025, Impinj signed a goods and services agreement with Microchip Technology",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On December 22, 2025, we signed a goods and services agreement with Microchip Technology Incorporated, of which a member of our board of directors holds both an executive leadership and board of directors position."
+          }
+        }
+      ],
+      "name_en": "Microchip Technology"
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXPセミコンダクターズ",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ImpinjはNXPを主要なエンドポイントICの競合と位置づけている",
+          "text_en": "Impinj calls NXP its primary endpoint IC competitor",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We currently derive a substantial share of our licensing revenue from NXP, our primary endpoint IC competitor, based on our Settlement Agreement with them."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Impinjのライセンス収入の相当部分は、NXPとの和解契約に基づくものである",
+          "text_en": "A substantial share of Impinj's licensing revenue comes from NXP under their Settlement Agreement",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We currently derive a substantial share of our licensing revenue from NXP, our primary endpoint IC competitor, based on our Settlement Agreement with them."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NXPの年次報告が、Impinjとの和解と係争の解決を記している",
+          "text_en": "NXP's annual report describes the settlement with Impinj resolving all outstanding litigation",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "(“Impinj”) entered into a settlement agreement with the Company paying Impinj an immaterial cash consideration, resolving all outstanding litigation and other proceedings between the parties, with all previously pending litigation and administrative proceedings being dismissed."
+          }
+        }
+      ],
+      "name_en": "NXP Semiconductors"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

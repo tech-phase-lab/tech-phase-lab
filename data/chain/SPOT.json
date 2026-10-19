@@ -1,0 +1,215 @@
+{
+  "root": {
+    "ticker": "SPOT",
+    "name": "Spotify Technology"
+  },
+  "rows": [
+    {
+      "ja": "クラウド・音楽ライセンスの供給元",
+      "en": "Cloud & music licensing suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・投資",
+      "en": "Partnerships & investments"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AAPL"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(Google)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SpotifyはGoogle Cloud Platformの利用についてGoogleとサービス契約を結んでいる",
+          "text_en": "Spotify has a service agreement with Google for the use of Google Cloud Platform",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "(4) We are subject to various non-cancelable purchase obligations and service agreements with minimum spend commitments, including a service agreement with Google for the use of Google Cloud Platform and certain content and marketing commitments."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "sub": "エンタメ・電機",
+      "sub_en": "Entertainment & electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "録音物の楽曲は、Universal Music Group、Sony Music Entertainment、Warner Music Group、Merlinとのライセンス契約に基づいて提供され、Serviceで聴かれる楽曲の大半を占める",
+          "text_en": "Music licensed to Spotify under agreements with Universal Music Group, Sony Music Entertainment, Warner Music Group and Merlin makes up the majority of music consumed on the Service",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "For example, with respect to sound recordings, the music licensed to us under our agreements with Universal Music Group, Sony Music Entertainment, Warner Music Group, and Music and Entertainment Rights Licensing Independent Network (“Merlin”), makes up the majority of music consumed on our Service.",
+            "note": "音楽事業の子会社Sony Music Entertainmentとの契約です。",
+            "note_en": "The agreement is with Sony Music Entertainment, a music subsidiary."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ソニーの20-Fが、保有するSpotify株式の再評価を記載している",
+          "text_en": "Sony's 20-F reports a revaluation of the Spotify shares it owns",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "The revaluation of the Spotify shares, which reflects costs to be paid to Sony’s artists and distributed labels as well as the changes in the fair value of derivatives utilized to hedge exposure to market fluctuation risk, owned as of March 31, 2024, 2025 and 2026 resulted in an unrealized gain"
+          }
+        }
+      ],
+      "name_en": "Sony Group"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Spotifyは2025年10月6日にOpenAIとの新たな提携を発表した",
+          "text_en": "Spotify announced a new partnership with OpenAI on October 6, 2025",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On October 6, 2025, we announced a new partnership with OpenAI, extending our ubiquity strategy into emerging agentic AI.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SpotifyとNetflixが、Jay Shettyの「On Purpose」を両プラットフォームで動画化する提携を発表した",
+          "text_en": "Spotify and Netflix partnered with Jay Shetty to bring 'On Purpose' to video across both platforms",
+          "source": {
+            "label": "Spotify — Netflix / On Purpose video collaboration, May 27, 2026",
+            "label_en": "Spotify — Netflix / On Purpose video collaboration, May 27, 2026",
+            "url": "https://newsroom.spotify.com/2026-05-27/on-purpose-jay-shetty-video-spotify-netflix/",
+            "level": "official",
+            "quote": "Spotify and Netflix Partner With Jay Shetty to Bring ‘On Purpose’ to Video Across Both Platforms — Spotify"
+          }
+        }
+      ],
+      "name_en": "Netflix"
+    },
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "sub": "インターネット・ゲーム",
+      "sub_en": "Internet & gaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tencentの関連会社が、2017年12月15日付の契約に基づき、Spotifyの普通株式を二次取得で購入した",
+          "text_en": "An affiliate of Tencent purchased ordinary shares of Spotify through a secondary purchase under an agreement dated as of December 15, 2017",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Investments and Rosello, dated as of December 15, 2017, pursuant to which an affiliate of Tencent purchased ordinary shares of Spotify through a secondary purchase."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Tencent関連の複数の会社がSpotifyの普通株式を保有している",
+          "text_en": "Several Tencent-related entities hold Spotify ordinary shares",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Also includes 4,276,200 ordinary shares held by Tencent Music Entertainment Hong Kong Limited (“TME Hong Kong”), 9,076,240 ordinary shares held by Image Frame Investment (HK) Limited (“Image Frame”), 3,227,920 ordinary shares held by Tencent Mobility Limited, and 51,609 ordinary shares held by Distribution Pool Limited."
+          }
+        }
+      ],
+      "name_en": "Tencent"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマートフォン・端末",
+      "sub_en": "Devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Spotifyの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Spotify’s annual report",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "For example, prominent, well-funded competitors like Apple, Alphabet, and Amazon may gain a competitive advantage by integrating AI or other features in their devices or operating systems and using this integration to advantage their own competitive services."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "競合のApple等が、自社のオーディオ配信サービスを端末に標準搭載し、Spotifyに大きな不利をもたらすと述べている",
+          "text_en": "Names Apple among competitors whose devices preload their own audio streaming services, a significant competitive disadvantage for Spotify",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Some of our competitors, including Apple, Alphabet, and Amazon, have developed, and are continuing to develop, devices for which their audio streaming services are preloaded or may also be set as the default providers, which puts us at a significant competitive disadvantage."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

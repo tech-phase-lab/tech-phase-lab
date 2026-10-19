@@ -1,0 +1,59 @@
+{
+  "root": {
+    "ticker": "ENTG",
+    "name": "Entegris"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Entegrisは、Morgan Stanley Senior Funding, Inc.がシニア与信枠の担保代理人を務める同順位債権者間契約(2022年7月6日付)の当事者である",
+          "text_en": "Entegris is party to an Equal Priority Intercreditor Agreement dated July 6, 2022, with Morgan Stanley Senior Funding, Inc. as senior credit facilities collateral agent",
+          "source": {
+            "label": "Entegris 10-K",
+            "label_en": "Entegris 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "4.8 Equal Priority Intercreditor Agreement, dated as of July 6, 2022, among Entegris, certain subsidiaries of Entegris, Morgan Stanley Senior Funding, Inc., as senior credit facilities collateral agent, and Truist Bank, as notes collateral agent.",
+            "note": "子会社のMorgan Stanley Senior Funding名義で、資金調達のみの関係です。",
+            "note_en": "Through subsidiary Morgan Stanley Senior Funding; financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Entegrisは、Morgan Stanley Senior Funding, Inc.が管理代理人兼担保代理人を務める借入契約の改定・再締結契約(2022年7月6日付)を結んでいる",
+          "text_en": "Entegris entered into an Amendment and Restatement Agreement dated July 6, 2022, with Morgan Stanley Senior Funding, Inc. as administrative agent and collateral agent",
+          "source": {
+            "label": "Entegris 10-K",
+            "label_en": "Entegris 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "4.12 Amendment and Restatement Agreement, dated as of July 6, 2022, among Entegris, as borrower, certain subsidiaries of Entegris, as guarantors, the lenders party thereto, the issuing banks party thereto and Morgan Stanley Senior Funding, Inc., as administrative agent and collateral agent."
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

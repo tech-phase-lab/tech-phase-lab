@@ -1,0 +1,211 @@
+{
+  "root": {
+    "ticker": "BSY",
+    "name": "Bentley Systems"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・出資",
+      "en": "Partnerships & investment"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ADSK",
+    "ORCL",
+    "GEV",
+    "Schneider"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Bentleyの主要なクラウド供給元はMicrosoftで、Azureについて複数年の最低支出契約を結んでいる",
+          "text_en": "Microsoft is Bentley's principal supplier of cloud services, under a multi-year contract with a committed level of Azure expenditures",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our principal supplier of cloud services is Microsoft, with whom we have entered into a multi-year contract for a committed level of expenditures for Azure."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Siemens",
+      "ticker": "Siemens",
+      "name": "Siemens",
+      "sub": "産業・電機",
+      "sub_en": "Industrial & electrical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BentleyはSiemens AGなどと、2016年9月23日付の普通株式購入契約を結んでいる",
+          "text_en": "Bentley is party to a Common Stock Purchase Agreement dated September 23, 2016 with Siemens AG and others",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "10.16 Common Stock Purchase Agreement, by and among Bentley Systems, Incorporated, Siemens AG, and the persons listed as “Key Holders” therein, dated September 23, 2016, as amended on October 28, 2016, and April 23, 2018",
+            "note": "2016年の契約で、2018年にも修正されています。",
+            "note_en": "Dated 2016 and amended through 2018."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bentleyは、Googleなどと提携してUrban Tech Challengeを開催した",
+          "text_en": "Bentley organized the Urban Tech Challenge in partnership with Google and others",
+          "source": {
+            "label": "Bentley — NVIDIA smart-city blueprint / Cesium technical contribution, November 4, 2025",
+            "label_en": "Bentley — NVIDIA smart-city blueprint / Cesium technical contribution, November 4, 2025",
+            "url": "https://www.bentley.com/en/blog/how-bentley-and-nvidia-are-helping-make-cities-smarter-safer-and-more-livable/",
+            "level": "official",
+            "quote": "Bentley organized the event in partnership with Google, Dublin City University, Dublin City Council, and the urban innovation outfit Smart Dublin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADSK",
+      "ticker": "ADSK",
+      "name": "Autodesk",
+      "sub": "設計ソフト",
+      "sub_en": "Design software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Autodeskの年次報告が、ベントレー・システムズを競合として挙げている",
+          "text_en": "Names Bentley Systems as a competitor in its annual report",
+          "source": {
+            "label": "Autodesk 10-K",
+            "label_en": "Autodesk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Our primary global competitors include Adobe Systems Incorporated, Bentley Systems, Inc., Dassault Systèmes S.A. and its subsidiary Dassault Systèmes SolidWorks Corp., Intergraph Corporation, a wholly owned subsidiary of Hexagon AB, MSC Software"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ベントレー・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Bentley Systems’s annual report",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in Public Works/Utilities applications include Autodesk, Inc., Trimble Inc., and Hexagon AB;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "業務ソフト・DB",
+      "sub_en": "Enterprise software & databases",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベントレー・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Bentley Systems’s annual report",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in project delivery systems include Autodesk, Inc. and Oracle Corporation; and"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEV",
+      "ticker": "GEV",
+      "name": "GE Vernova",
+      "sub": "電力機器",
+      "sub_en": "Power equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベントレー・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Bentley Systems’s annual report",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in asset performance systems include the AVEVA unit of Schneider Electric, Esri, and GE Vernova."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Schneider",
+      "ticker": "Schneider",
+      "name": "Schneider Electric",
+      "sub": "電機・自動化",
+      "sub_en": "Electrical & automation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Bentleyの年次報告が、資産性能管理の競合としてSchneider ElectricのAVEVA部門を挙げている",
+          "text_en": "Bentley's annual report names the AVEVA unit of Schneider Electric as a key competitor in asset performance systems",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in asset performance systems include the AVEVA unit of Schneider Electric, Esri, and GE Vernova.",
+            "note": "子会社部門についての記載です。",
+            "note_en": "Refers to a business unit of Schneider Electric."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

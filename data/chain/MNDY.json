@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "MNDY",
+    "name": "monday.com"
+  },
+  "rows": [
+    {
+      "ja": "連携・提携・配布",
+      "en": "Integrations, partners & distribution",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GOOG",
+    "MSFT"
+  ],
+  "companies": [
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "CRM・クラウド",
+      "sub_en": "CRM & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "連携センターの連携先にSalesforceが含まれている",
+          "text_en": "Salesforce is among the tools in monday.com's integration center",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Currently, our integration center includes integrations with other tools, such as Gmail, Outlook, Jira, Salesforce, Google Drive, Dropbox, Stripe, Slack, GitHub, and Zendesk."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "主要テック企業の提携先の例としてAmazon AWSを挙げている",
+          "text_en": "Amazon AWS is named as an example of leading tech company partners",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "We have partnered with some of the world's leading tech companies, such as Amazon AWS, as well as with a broad set of independent software vendors, in order to increase in scope, deepen our products, and strengthen our ability to serve as the connective layer across organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・端末",
+      "sub_en": "Devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モバイルアプリは、Appleなどが管理するアプリストアで配布されている",
+          "text_en": "The mobile app is distributed through app stores managed by Apple, among others",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "We distribute the mobile monday.com application through smartphone and tablet application stores managed by Apple and Google, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マンデー・ドットコムの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in monday.com’s annual report",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "For example, we currently directly compete with several large technology companies whose applications interface with our products, including Google and Microsoft."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "モバイルアプリは、Googleなどが管理するアプリストアでも配布されている",
+          "text_en": "The mobile app is also distributed through app stores managed by Google",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "We distribute the mobile monday.com application through smartphone and tablet application stores managed by Apple and Google, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マンデー・ドットコムの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in monday.com’s annual report",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "For example, we currently directly compete with several large technology companies whose applications interface with our products, including Google and Microsoft."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

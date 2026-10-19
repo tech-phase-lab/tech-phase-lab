@@ -1,0 +1,45 @@
+{
+  "root": {
+    "ticker": "PCOR",
+    "name": "プロコア",
+    "name_en": "Procore"
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤の供給元",
+      "en": "Cloud infrastructure supplier",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon Web Services",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Procoreは、プラットフォームの運用にAmazon Web Servicesなどの第三者データセンターに依存している",
+          "text_en": "Procore relies on third-party data centers such as Amazon Web Services to host and operate its platform",
+          "source": {
+            "label": "Procore 10-K",
+            "label_en": "Procore 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611052/000162828026011055/pcor-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on third-party data centers, such as Amazon Web Services (“AWS”), to host and operate our platform, and any disruption of or interference with these resources may negatively affect our ability to maintain the performance and reliability of our platform, which could cause our business to suffer."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

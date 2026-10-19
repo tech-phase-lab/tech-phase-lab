@@ -1,0 +1,326 @@
+{
+  "root": {
+    "ticker": "FRSH",
+    "name": "Freshworks"
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤",
+      "en": "Cloud infrastructure",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携先・配信基盤",
+      "en": "Partners & distribution"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CRM",
+    "NOW",
+    "MSFT"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客へのサービス提供と運用の一部で、第三者のクラウド基盤であるAWSに主に依存している",
+          "text_en": "Primarily relies on third-party cloud infrastructure partner Amazon Web Services to serve customers and operate certain aspects of its services",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We primarily rely upon third-party cloud infrastructure partner, Amazon Web Services (AWS), to serve customers and operate certain aspects of its services."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AWSと複数年の戦略的協業契約を結び、AWS上での機能開発と拡充を進める",
+          "text_en": "Signed a multi-year Strategic Collaboration Agreement with AWS to develop and expand Freshworks' capabilities on AWS",
+          "source": {
+            "label": "Freshworks — multi-year AWS strategic collaboration, January 29, 2024",
+            "label_en": "Freshworks — multi-year AWS strategic collaboration, January 29, 2024",
+            "url": "https://www.freshworks.com/press-releases/freshworks-announces-strategic-collaboration-agreement-with-aws-to-increase-the-reach-of-its-ai-boosted-software-as-a-service/",
+            "level": "official",
+            "quote": "FRSH) announced today that it has signed a multi-year Strategic Collaboration Agreement (SCA) with Amazon Web Services (AWS) to develop and expand Freshworks’ capabilities on AWS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STX",
+      "ticker": "STX",
+      "name": "Seagate",
+      "sub": "データストレージ",
+      "sub_en": "Data storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Seagateが導入事例として挙げられ、Freshserviceで3か月で移行したと記されている",
+          "text_en": "Seagate is featured as a customer that migrated with Freshservice in 3 months",
+          "source": {
+            "label": "Freshworks 8-K Ex.99 の発表",
+            "label_en": "Freshworks 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000119312526224188/d14719dex991.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "& Infrastructure) in 3 months with Freshservice Region - Global Business Challenge Freshworks Solutions About the Customer Seagate is a global leader in data storage, supporting Seagate needed to migrate ● Freddy AI Agent deployed via MS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "sub": "電機・エンタメ",
+      "sub_en": "Electronics & entertainment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Sony MusicがFreshworksのEX・CXソフトウェアを利用している顧客として挙げられている",
+          "text_en": "Sony Music is named among customers that trust Freshworks' EX and CX software",
+          "source": {
+            "label": "Freshworks 8-K Ex.99 の発表",
+            "label_en": "Freshworks 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000119312526073546/d106129dex991.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Balance, Nucor, S&P Global, and Sony Music, trust Freshworks’ Employee Experience (EX) and Customer Experience (CX) software to eliminate complexity and increase productivity, loyalty and growth.",
+            "note": "子会社(Sony Music)単位の記載です。",
+            "note_en": "Subsidiary-level mention (Sony Music)."
+          }
+        },
+        {
+          "type": "down",
+          "text": "投資家向け説明会で、Sony Music Entertainmentが顧客事例の登壇先に挙がっている",
+          "text_en": "Sony Music Entertainment is listed in a customer spotlight at the investor event",
+          "source": {
+            "label": "Freshworks 8-K Ex.99 の発表",
+            "label_en": "Freshworks 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000119312523230351/d522026dex991.htm",
+            "level": "official",
+            "date": "2023-09-07",
+            "quote": "Engineering Strategy for Durable Growth 9:30am Dennis Woodside Break 10:00am Customer Spotlight | Monos, Sony Music Entertainment & Databricks 10:10am Prakash Ramamurthy, Chief Product Officer Paddy Rathinam, Chief Revenue Officer Financial"
+          }
+        }
+      ],
+      "name_en": "Sony Group"
+    },
+    {
+      "id": "COHR",
+      "ticker": "COHR",
+      "name": "Coherent",
+      "sub": "レーザー・光通信",
+      "sub_en": "Lasers & photonics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Coherentが顧客事例として挙げられ、2023年から顧客である",
+          "text_en": "Coherent is featured as a customer since 2023",
+          "source": {
+            "label": "Freshworks 8-K Ex.99 の発表",
+            "label_en": "Freshworks 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000119312525201038/d20375dex991.htm",
+            "level": "official",
+            "date": "2025-09-11",
+            "quote": "U.S. | Customer Since: 2023 Challenge productivity Coherent, a global leader in lasers, networks, and electronics, faced fragmented IT support spread across four platforms after multiple mergers."
+          }
+        },
+        {
+          "type": "down",
+          "text": "CoherentがFreshserviceを選定したと記されている",
+          "text_en": "Coherent selected Freshservice",
+          "source": {
+            "label": "Freshworks 8-K Ex.99 の発表",
+            "label_en": "Freshworks 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000119312523230351/d522026dex991.htm",
+            "level": "official",
+            "date": "2023-09-07",
+            "quote": "efficiency with Freshservice Business Challenge The Solution About Customer Coherent selected Freshservice for of Coherent is comprised of two distinct Coherent Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "決済・金融",
+      "sub_en": "Payments & finance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Freshworksの顧客として、American Expressが挙げられている",
+          "text_en": "American Express is named among Freshworks' customers",
+          "source": {
+            "label": "Freshworks — multi-year AWS strategic collaboration, January 29, 2024",
+            "label_en": "Freshworks — multi-year AWS strategic collaboration, January 29, 2024",
+            "url": "https://www.freshworks.com/press-releases/freshworks-announces-strategic-collaboration-agreement-with-aws-to-increase-the-reach-of-its-ai-boosted-software-as-a-service/",
+            "level": "official",
+            "quote": "Headquartered in San Mateo, California, Freshworks operates around the world to serve more than 66,000 customers, including American Express, Blue Nile, Bridgestone, Databricks, Fila, and OfficeMax.",
+            "note": "AWSとの協業発表に記載された顧客例です。",
+            "note_en": "Customer example named in the AWS collaboration announcement."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Freshchatは、Google Business Messagesなどのメッセージ経路で顧客対応を行える",
+          "text_en": "Freshchat engages customers across messaging channels such as Google Business Messages",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Freshchat provides agents with a modern conversational experience to proactively engage customers across digital messaging channels such as WhatsApp, Google Business Messages, SMS, and more."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "モバイルアプリの配布をGoogle Playなどのオープンな配信市場に依存している",
+          "text_en": "Relies on open digital marketplaces including Google Play to make its mobile applications available",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We rely on third parties maintaining open digital marketplaces, including the Apple App Store and Google Play, which make our mobile applications for certain of our products available for download."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "家電・ソフト",
+      "sub_en": "Consumer devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モバイルアプリの配布をApple App Storeなどのオープンな配信市場に依存している",
+          "text_en": "Relies on open digital marketplaces including the Apple App Store to make its mobile applications available",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We rely on third parties maintaining open digital marketplaces, including the Apple App Store and Google Play, which make our mobile applications for certain of our products available for download."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "CRM・クラウド",
+      "sub_en": "CRM & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "フレッシュワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Freshworks’s annual report",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For our customer experience products, we primarily face competition from customer service suites such as Salesforce, Zendesk, Intercom, and legacy vendors, such as Oracle and SAP, and from customer relationship management vendors, such as Salesforce, HubSpot, Microsoft Dynamics, and Sage."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "ITサービス管理",
+      "sub_en": "IT service management",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フレッシュワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Freshworks’s annual report",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For our employee experience products, we face competition from traditional IT service management vendors such as ServiceNow, BMC, and Ivanti, as well as modern cloud-based providers, including Atlassian and various mid-market and emerging ITSM platforms."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "フレッシュワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Freshworks’s annual report",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For our customer experience products, we primarily face competition from customer service suites such as Salesforce, Zendesk, Intercom, and legacy vendors, such as Oracle and SAP, and from customer relationship management vendors, such as Salesforce, HubSpot, Microsoft Dynamics, and Sage."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

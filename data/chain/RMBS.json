@@ -1,0 +1,434 @@
+{
+  "root": {
+    "ticker": "RMBS",
+    "name": "Rambus"
+  },
+  "rows": [
+    {
+      "ja": "顧客・特許ライセンス先(DRAM)",
+      "en": "DRAM customers and patent licensees"
+    },
+    {
+      "ja": "特許ライセンス先",
+      "en": "Patent licensees"
+    },
+    {
+      "ja": "競合・事業取得",
+      "en": "Competitors and acquirer"
+    }
+  ],
+  "rivals": [
+    "CDNS",
+    "SNPS",
+    "MPWR",
+    "ALAB"
+  ],
+  "companies": [
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "sub": "メモリ",
+      "sub_en": "Memory",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "メモリインターフェースチップを、主要DRAMメーカーであるMicronなどに販売している",
+          "text_en": "Sells memory interface chips to major DRAM manufacturers including Micron",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our memory interface chips are sold to major DRAM manufacturers, Micron, Samsung and SK hynix, as well as directly to system manufacturers and cloud providers, for integration into server memory modules."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Micronとの半導体特許ライセンス契約(2013年12月9日付)がある",
+          "text_en": "Has a Semiconductor Patent License Agreement with Micron dated December 9, 2013",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Semiconductor Patent License Agreement, dated December 9, 2013, between Rambus, Inc. and Micron Technology, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "メモリ・電子",
+      "sub_en": "Memory & electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "メモリインターフェースチップを、主要DRAMメーカーであるSamsungなどに販売している",
+          "text_en": "Sells memory interface chips to major DRAM manufacturers including Samsung",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our memory interface chips are sold to major DRAM manufacturers, Micron, Samsung and SK hynix, as well as directly to system manufacturers and cloud providers, for integration into server memory modules."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Samsung Electronicsとの半導体特許ライセンス契約(2010年1月19日付)がある",
+          "text_en": "Has a Semiconductor Patent License Agreement with Samsung Electronics Co., Ltd. dated January 19, 2010",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Semiconductor Patent License Agreement, dated January 19, 2010, between Registrant and Samsung Electronics Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SK hynix",
+      "ticker": "SK hynix",
+      "name": "SK hynix",
+      "sub": "メモリ",
+      "sub_en": "Memory",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "メモリインターフェースチップを、主要DRAMメーカーであるSK hynixなどに販売している",
+          "text_en": "Sells memory interface chips to major DRAM manufacturers including SK hynix",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our memory interface chips are sold to major DRAM manufacturers, Micron, Samsung and SK hynix, as well as directly to system manufacturers and cloud providers, for integration into server memory modules."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SK hynixとの半導体特許ライセンス契約(2013年6月11日付)がある",
+          "text_en": "Has a Semiconductor Patent License Agreement with SK hynix dated June 11, 2013",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Semiconductor Patent License Agreement, dated June 11, 2013, between Registrant and SK hynix."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "プロセッサー",
+      "sub_en": "Processors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、特許のライセンスを受けた企業としてAMDを挙げている",
+          "text_en": "The annual report lists AMD among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、特許のライセンスを受けた企業としてNVIDIAを挙げている",
+          "text_en": "The annual report lists NVIDIA among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "通信半導体",
+      "sub_en": "Wireless chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、特許のライセンスを受けた企業としてQualcommを挙げている",
+          "text_en": "The annual report lists Qualcomm among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "ネットワーク半導体",
+      "sub_en": "Networking chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、特許のライセンスを受けた企業としてBroadcomを挙げている",
+          "text_en": "The annual report lists Broadcom among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "sub": "データインフラ半導体",
+      "sub_en": "Data infrastructure chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、特許のライセンスを受けた企業としてMarvellを挙げている",
+          "text_en": "The annual report lists Marvell among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIMO",
+      "ticker": "SIMO",
+      "name": "Silicon Motion",
+      "sub": "フラッシュコントローラー",
+      "sub_en": "Flash controllers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、特許のライセンスを受けた企業としてSilicon Motionを挙げている",
+          "text_en": "The annual report lists Silicon Motion among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Infineon",
+      "ticker": "Infineon",
+      "name": "Infineon",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、特許のライセンスを受けた企業としてInfineonを挙げている",
+          "text_en": "The annual report lists Infineon among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDNS",
+      "ticker": "CDNS",
+      "name": "Cadence",
+      "sub": "設計ソフト・IP",
+      "sub_en": "Design software & IP",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CadenceがRambusのSerDesおよびメモリインターフェースPHY IP事業を取得した(2023年9月6日)",
+          "text_en": "Cadence acquired the SerDes and memory interface PHY IP business from Rambus on September 6, 2023",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On September 6, 2023, Cadence acquired the serializer/deserializer (“SerDes”) and memory interface physical layer (“Memory”) IP business from Rambus Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2023年7月に、Cadenceと資産譲渡契約を締結した",
+          "text_en": "Entered into an asset purchase agreement with Cadence in July 2023",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In July 2023, we entered into an asset purchase agreement (the “Purchase Agreement”) with Cadence Design Systems, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ランバスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Rambus’s annual report",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the Silicon IP market, Rambus competes with the in-house design teams at our potential customers, as well as with third-party IP suppliers, such as Cadence and Synopsys."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "Synopsys",
+      "sub": "設計ソフト・IP",
+      "sub_en": "Design software & IP",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ランバスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Rambus’s annual report",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the Silicon IP market, Rambus competes with the in-house design teams at our potential customers, as well as with third-party IP suppliers, such as Cadence and Synopsys."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPWR",
+      "ticker": "MPWR",
+      "name": "Monolithic Power Systems",
+      "sub": "電源半導体",
+      "sub_en": "Power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ランバスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Rambus’s annual report",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the memory interface chip market, we compete with international semiconductor companies, including but not limited to Monolithic Power Systems, Montage Technology, Renesas and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALAB",
+      "ticker": "ALAB",
+      "name": "Astera Labs",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Astera Labsの年次報告が、ランバスを競合として挙げている",
+          "text_en": "Names Rambus as a competitor in its annual report",
+          "source": {
+            "label": "Astera Labs 10-K",
+            "label_en": "Astera Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our principal competitors include Broadcom, Inc., Credo Technology Group Holding Ltd., Marvell Technology, Inc., Microchip Technology Inc., Montage Technology, Parade Technologies, Ltd., and Rambus, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

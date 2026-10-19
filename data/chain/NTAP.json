@@ -1,0 +1,366 @@
+{
+  "root": {
+    "ticker": "NTAP",
+    "name": "ネットアップ",
+    "name_en": "NetApp"
+  },
+  "rows": [
+    {
+      "ja": "クラウド・技術提携先",
+      "en": "Cloud & technology partners",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "HPE"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、Amazon Web Servicesとの自社製品の標準連携を説明している",
+          "text_en": "The annual report describes NetApp's first-party native integration with Amazon Web Services",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Our first-party native integration with all major hyperscalers—Amazon Web Services (AWS), Microsoft Azure, and Google Cloud—combined with decades of data management leadership, uniquely enables customers to harness these shifts for competitive advantage."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Amazon FSx for NetApp ONTAPが、AWS上のSiemens Teamcenter向けに認定された",
+          "text_en": "Amazon FSx for NetApp ONTAP was certified for Siemens Teamcenter on AWS",
+          "source": {
+            "label": "NetApp 8-K Ex.99 の発表",
+            "label_en": "NetApp 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000095017025029022/ntap-ex99_1.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "• NetApp announced that Amazon FSx for NetApp ONTAP ™ was certified for Siemens Teamcenter on AWS , bringing enhanced performance, scalability, and data management capabilities to product lifecycle management workloads in the cloud."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、NVIDIA、Cisco、Microsoftなどとの協業を挙げている",
+          "text_en": "The annual report cites collaborations with technology leaders including Microsoft",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Collaborations with technology leaders such as NVIDIA, Cisco, Microsoft, and a broad network of channel partners enable us to deliver integrated, best-in-class solutions tailored to diverse customer needs."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、Google Cloudとの標準連携を説明している",
+          "text_en": "The annual report describes NetApp's native integration with Google Cloud",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Our native integration with AWS, Microsoft Azure, and Google Cloud provides customers with significant flexibility, unified management, and consistent data services across any environment."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ONTAPについてNVIDIA DGX SuperPOD Storage Certificationの手続きを始めると発表した",
+          "text_en": "NetApp announced it was beginning NVIDIA DGX SuperPOD Storage Certification for NetApp ONTAP",
+          "source": {
+            "label": "NetApp 8-K Ex.99 の発表",
+            "label_en": "NetApp 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000095017024129714/ntap-ex99_1.htm",
+            "level": "official",
+            "date": "2024-11-21",
+            "quote": "• NetApp announced its vision to accelerate AI innovation, including beginning the process of NVIDIA DGX SuperPOD Storage Certification for NetApp ONTAP™ , the creation of a global metadata namespace , a vision for a disaggregated storage architecture for ONTAP, and direct integration of AI data pipelines in the cloud and on-premises."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、NVIDIAなどとの協業を挙げている",
+          "text_en": "The annual report cites collaborations with technology leaders including NVIDIA",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Collaborations with technology leaders such as NVIDIA, Cisco, Microsoft, and a broad network of channel partners enable us to deliver integrated, best-in-class solutions tailored to diverse customer needs."
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FlexPodの連携により、共同顧客がCiscoのネットワークとNetAppのストレージを併用できるとされている",
+          "text_en": "The FlexPod integration lets joint customers use Cisco networking and compute alongside NetApp storage",
+          "source": {
+            "label": "Nutanix and NetApp · April 7, 2026 strategic alliance and planned integration",
+            "label_en": "Nutanix and NetApp · April 7, 2026 strategic alliance and planned integration",
+            "url": "https://www.nutanix.com/press-releases/2026/nutanix-and-netapp-form-strategic-alliance",
+            "level": "official",
+            "quote": "FlexPod has set the standard for converged infrastructure, and this integration will allow our joint customers to leverage Cisco’s high-performance networking and compute alongside NetApp storage and NCP, providing a unified, secure, and highly automated environment that simplifies the transition to modern, cloud-native operations.”"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、Ciscoなどとの協業を挙げている",
+          "text_en": "The annual report cites collaborations with technology leaders including Cisco",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Collaborations with technology leaders such as NVIDIA, Cisco, Microsoft, and a broad network of channel partners enable us to deliver integrated, best-in-class solutions tailored to diverse customer needs."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "Capgemini",
+      "ticker": "Capgemini",
+      "name": "キャップジェミニ",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CapgeminiとNetAppが、Azureへの移行で2024 Microsoft Partner of the Yearを受賞した",
+          "text_en": "Capgemini and NetApp received a 2024 Microsoft Partner of the Year Award for a migration to Azure",
+          "source": {
+            "label": "NetApp 8-K Ex.99 の発表",
+            "label_en": "NetApp 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000095017024101383/ntap-ex99_1.htm",
+            "level": "official",
+            "date": "2024-08-28",
+            "quote": "• Microsoft recognized Capgemini and NetApp with a 2024 Microsoft Partner of the Year Award in the “Migration to Azure” category for the companies’ work in moving a large retail customer in Asia to Azure, including Azure NetApp Files."
+          }
+        }
+      ],
+      "name_en": "Capgemini"
+    },
+    {
+      "id": "Fujitsu",
+      "ticker": "Fujitsu",
+      "name": "富士通",
+      "sub": "ITサービス・サーバー",
+      "sub_en": "IT services & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "富士通のPRIMERGYサーバーとNetAppのストレージを使う中小企業向けの仮想化ソリューションを発表した",
+          "text_en": "NetApp announced a bundled virtualization solution using Fujitsu PRIMERGY servers and NetApp storage",
+          "source": {
+            "label": "NetApp 8-K Ex.99 の発表",
+            "label_en": "NetApp 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000095017024023060/ntap-ex99_1.htm",
+            "level": "official",
+            "date": "2024-02-29",
+            "quote": "• NetApp announced a new bundled virtualization solution for small and medium businesses that uses VMware vSphere 8 virtualization software, Fujitsu PRIMERGY Servers, and NetApp all-flash storage systems with NetApp ONTAP™ integration to vSphere ."
+          }
+        }
+      ],
+      "name_en": "Fujitsu"
+    },
+    {
+      "id": "NTNX",
+      "ticker": "NTNX",
+      "name": "ニュータニックス",
+      "sub": "ハイブリッドクラウド",
+      "sub_en": "Hybrid cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NutanixがNetApp ONTAPベースの外部ストレージ連携への対応を発表した",
+          "text_en": "Nutanix announced support for NetApp ONTAP-based external storage integration",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "We have also announced support for NetApp ONTAP-based and Lenovo ThinkSystem external storage integrations, with the NetApp ONTAP-based solution currently available through limited-availability programs.",
+            "note": "限定提供プログラムの段階です。",
+            "note_en": "Currently available through limited-availability programs."
+          }
+        }
+      ],
+      "name_en": "Nutanix"
+    },
+    {
+      "id": "S",
+      "ticker": "S",
+      "name": "センチネルワン",
+      "sub": "サイバーセキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SentinelOneは、Amazon S3とNetAppにある悪意あるファイルから顧客を保護するとしている",
+          "text_en": "SentinelOne says customers receive protection from malicious files in Amazon S3 and NetApp",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Customers receive protection from malicious files in Amazon Simple Storage Service (S3) and NetApp."
+          }
+        }
+      ],
+      "name_en": "SentinelOne"
+    },
+    {
+      "id": "Lenovo",
+      "ticker": "Lenovo",
+      "name": "レノボ・グループ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NetAppの年次報告が、Lenovoへの一部OEM販売に触れている",
+          "text_en": "NetApp's annual report mentions certain OEM sales to Lenovo",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "our offerings to customers headquartered there, and involved in certain OEM sales to Lenovo."
+          }
+        }
+      ],
+      "name_en": "Lenovo Group"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bank, N.A.が管理代理人を務める第2次改定クレジット契約(2025年3月5日付)がある",
+          "text_en": "NetApp has a Second Amended and Restated Credit Agreement dated March 5, 2025 with JPMorgan Chase Bank, N.A. as administrative agent",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Second Amended and Restated Credit Agreement, dated as of March 5, 2025, by and among NetApp, Inc., the lenders from time to time party thereto and JPMorgan Chase Bank, N.A., as administrative agent.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "IT基盤",
+      "sub_en": "IT infrastructure",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヒューレット・パッカード・エンタープライズの年次報告が、NetAppを競合として挙げている",
+          "text_en": "Hewlett Packard Enterprise's annual report names NetApp as a competitor",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors are other infrastructure and cloud management software technology vendors, such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix, and Pure Storage and public cloud vendors like Amazon Web Services, Google Cloud, and Microsoft Azure."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

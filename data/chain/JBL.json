@@ -1,0 +1,180 @@
+{
+  "root": {
+    "ticker": "JBL",
+    "name": "ジェイビル",
+    "name_en": "Jabil"
+  },
+  "rows": [
+    {
+      "ja": "顧客(相手の年次報告に記載)",
+      "en": "Customers (named in their annual reports)"
+    },
+    {
+      "ja": "提携・投資",
+      "en": "Partnerships & investments"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BHE",
+    "UCTT"
+  ],
+  "companies": [
+    {
+      "id": "COHU",
+      "ticker": "COHU",
+      "name": "コヒュー",
+      "sub": "半導体試験装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "コヒューは、Jabilの工場に半導体ATE(試験装置)の専用製造拠点を置いている",
+          "text_en": "Cohu has dedicated semiconductor ATE manufacturing operations at a Jabil facility",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s supply chain is further strengthened by long-standing relationships with strategic partners, including dedicated semiconductor ATE manufacturing operations at a facility of Jabil, Inc."
+          }
+        },
+        {
+          "type": "down",
+          "text": "コヒューは半導体試験システムの大半の製造をマレーシアのJabil工場に依存している",
+          "text_en": "Cohu depends on Jabil to manufacture most of its semiconductor test systems at a facility in Malaysia",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "For example, we depend upon Jabil to manufacture most of our semiconductor test systems from its facility located in Malaysia."
+          }
+        }
+      ],
+      "name_en": "Cohu"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アリスタは主な製造パートナーとしてJabil、Sanmina、Foxconn Hon Haiを挙げている",
+          "text_en": "Arista names Jabil, Sanmina and Foxconn Hon Hai as its primary manufacturing partners",
+          "source": {
+            "label": "Arista Networks 10-K",
+            "label_en": "Arista Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年12月、Amazon.com NV Investment Holdings LLCに普通株最大1,158,539株を取得できるワラントを発行した",
+          "text_en": "In December 2024, issued a warrant to Amazon.com NV Investment Holdings LLC to acquire up to 1,158,539 of its ordinary shares",
+          "source": {
+            "label": "Jabil 10-K",
+            "label_en": "Jabil 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+            "level": "official",
+            "date": "2025-10-17",
+            "quote": "In December 2024, we issued a warrant to Amazon.com NV Investment Holdings LLC to acquire up to 1,158,539 of our ordinary shares as reported in a Current Report on Form 8-K filed on January 3, 2025."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "このワラントの初期行使価格は1株137.7671ドルで、直前30取引日のVWAPである",
+          "text_en": "The warrant has an initial exercise price of $137.7671 per share, the preceding 30 trading day VWAP",
+          "source": {
+            "label": "Jabil 10-K",
+            "label_en": "Jabil 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+            "level": "official",
+            "date": "2025-10-17",
+            "quote": "On December 27, 2024, we issued a warrant (the “Warrant”) to Amazon.com NV Investment Holdings LLC (“Warrantholder”) to acquire up to 1,158,539 of our ordinary shares (“Warrant Shares”) at an initial exercise price of $137.7671 per share, which is the preceding 30 trading day VWAP."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "BHE",
+      "ticker": "BHE",
+      "name": "ベンチマーク・エレクトロニクス",
+      "sub": "電子機器受託製造",
+      "sub_en": "EMS",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベンチマーク・エレクトロニクスの年次報告が、ジェイビルを競合として挙げている",
+          "text_en": "Names Jabil as a competitor in its annual report",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our competitors include Celestica Inc., Flex Ltd., Jabil Inc., Kimball Electronics Inc., Plexus Corp, and Sanmina Corporation."
+          }
+        }
+      ],
+      "name_en": "Benchmark Electronics"
+    },
+    {
+      "id": "UCTT",
+      "ticker": "UCTT",
+      "name": "ウルトラ・クリーン・ホールディングス",
+      "sub": "半導体装置サブシステム",
+      "sub_en": "Semiconductor subsystems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ウルトラ・クリーン・ホールディングスの年次報告が、ジェイビルを競合として挙げている",
+          "text_en": "Names Jabil as a competitor in its annual report",
+          "source": {
+            "label": "Ultra Clean Holdings 10-K",
+            "label_en": "Ultra Clean Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors for gas delivery systems are Ichor Systems, Inc. and Fujikin Incorporated; our principal competitors for other critical subsystems are Foxsemicon Integrated Technology Inc., Jabil, Inc., VDL ETG, Celestica Inc. and Benchmark Electronics, Inc.",
+            "note": "半導体装置のサブシステム分野での競合としての記載です。",
+            "note_en": "Listed as a competitor for critical subsystems."
+          }
+        }
+      ],
+      "name_en": "Ultra Clean Holdings"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

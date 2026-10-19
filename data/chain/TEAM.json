@@ -1,0 +1,526 @@
+{
+  "root": {
+    "ticker": "TEAM",
+    "name": "Atlassian"
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤(供給元)",
+      "en": "Cloud infrastructure (supplier)",
+      "above": true
+    },
+    {
+      "ja": "顧客(決算発表に記載)",
+      "en": "Customers (named in earnings release)"
+    },
+    {
+      "ja": "AI・ソフトの提携・連携",
+      "en": "AI & software partners"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GTLB",
+    "DBX",
+    "FRSH"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告で、クラウド基盤などをAmazon Web Servicesなど第三者に依存していると述べている",
+          "text_en": "The annual report says it depends on third parties such as Amazon Web Services for cloud computing infrastructure",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Additionally, we depend on services from various third parties, including cloud computing platform providers (such as Amazon Web Services) and other hardware and software providers, as well as general internet availability, to maintain our infrastructure and distribute our apps, agents, and products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIVN",
+      "ticker": "RIVN",
+      "name": "Rivian",
+      "sub": "電気自動車",
+      "sub_en": "Electric vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Atlassianの決算発表が、顧客の例にこの会社を挙げている",
+          "text_en": "Atlassian's earnings release names this company among its customers",
+          "source": {
+            "label": "Atlassian 8-K Ex.99 の発表",
+            "label_en": "Atlassian 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000031/ex991q4fy26.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Atlassian’s collaboration software powers over 85% of the Fortune 500 and 350,000+ customers worldwide - including NASA, Rivian, Deutsche Bank, United Airlines, and Bosch - who rely on our solutions to drive work forward."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DB",
+      "ticker": "DB",
+      "name": "ドイツ銀行",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Atlassianの決算発表が、顧客の例にこの会社を挙げている",
+          "text_en": "Atlassian's earnings release names this company among its customers",
+          "source": {
+            "label": "Atlassian 8-K Ex.99 の発表",
+            "label_en": "Atlassian 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000031/ex991q4fy26.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Atlassian’s collaboration software powers over 85% of the Fortune 500 and 350,000+ customers worldwide - including NASA, Rivian, Deutsche Bank, United Airlines, and Bosch - who rely on our solutions to drive work forward."
+          }
+        }
+      ],
+      "name_en": "Deutsche Bank"
+    },
+    {
+      "id": "UAL",
+      "ticker": "UAL",
+      "name": "ユナイテッド航空",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Atlassianの決算発表が、顧客の例にこの会社を挙げている",
+          "text_en": "Atlassian's earnings release names this company among its customers",
+          "source": {
+            "label": "Atlassian 8-K Ex.99 の発表",
+            "label_en": "Atlassian 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000031/ex991q4fy26.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Atlassian’s collaboration software powers over 85% of the Fortune 500 and 350,000+ customers worldwide - including NASA, Rivian, Deutsche Bank, United Airlines, and Bosch - who rely on our solutions to drive work forward."
+          }
+        }
+      ],
+      "name_en": "United Airlines"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "RovoとGoogle Workspace、Gemini Enterpriseの連携を深めると発表した",
+          "text_en": "Announced deeper integrations between Rovo, Google Workspace, and Gemini Enterprise",
+          "source": {
+            "label": "Atlassian 8-K Ex.99 の発表",
+            "label_en": "Atlassian 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000024/ex991q3fy26.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "By bringing deeper integrations between Rovo, Google Workspace, and Gemini Enterprise, joint customers can access AI agents directly in the tools where they already work, plan, and collaborate on projects."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Google Cloudとの戦略的提携を強め、Rovo向けにGemini 3 Flashを加えた",
+          "text_en": "Strengthened its strategic partnership with Google Cloud by adding Gemini 3 Flash for Rovo",
+          "source": {
+            "label": "Atlassian 8-K Ex.99 の発表",
+            "label_en": "Atlassian 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000024/ex991q3fy26.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Atlassian strengthened its strategic partnership with Google Cloud by adding Gemini 3 Flash to its open, multi-model AI strategy and extending its agentic AI capabilities – enabling advanced reasoning and multimodal features for Rovo at enterprise scale."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
+          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "• Open and Extensible with a Vast Ecosystem - We are dedicated to making our apps open and interoperable with a wide range of other platforms and applications that customers use, such as Microsoft, Zoom, Anthropic, Cursor, OpenAI, Salesforce, Workday, and Dropbox."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
+          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "• Open and Extensible with a Vast Ecosystem - We are dedicated to making our apps open and interoperable with a wide range of other platforms and applications that customers use, such as Microsoft, Zoom, Anthropic, Cursor, OpenAI, Salesforce, Workday, and Dropbox."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "ワークデイ",
+      "sub": "人事・財務ソフト",
+      "sub_en": "HR & finance software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
+          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "• Open and Extensible with a Vast Ecosystem - We are dedicated to making our apps open and interoperable with a wide range of other platforms and applications that customers use, such as Microsoft, Zoom, Anthropic, Cursor, OpenAI, Salesforce, Workday, and Dropbox."
+          }
+        }
+      ],
+      "name_en": "Workday"
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "Zoom",
+      "sub": "Web会議",
+      "sub_en": "Video conferencing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
+          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "• Open and Extensible with a Vast Ecosystem - We are dedicated to making our apps open and interoperable with a wide range of other platforms and applications that customers use, such as Microsoft, Zoom, Anthropic, Cursor, OpenAI, Salesforce, Workday, and Dropbox."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Zoomの年次報告が、Atlassianなどとの連携を挙げている",
+          "text_en": "Zoom's annual report lists integrations with Atlassian and others",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We also have integrations with Atlassian, Dropbox, Google, Microsoft, Salesforce, Slack, and a variety of other productivity, collaboration, data management, and security vendors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBX",
+      "ticker": "DBX",
+      "name": "Dropbox",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud storage",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
+          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "• Open and Extensible with a Vast Ecosystem - We are dedicated to making our apps open and interoperable with a wide range of other platforms and applications that customers use, such as Microsoft, Zoom, Anthropic, Cursor, OpenAI, Salesforce, Workday, and Dropbox."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Dropboxの年次報告が、Atlassianを競合として挙げている",
+          "text_en": "Names Atlassian as a competitor in its annual report",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain features of our platform compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe and in the content collaboration market with products offered by Microsoft, Atlassian, Slack (now part of Salesforce) and Google."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DT",
+      "ticker": "DT",
+      "name": "Dynatrace",
+      "sub": "監視ソフト",
+      "sub_en": "Observability",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dynatraceの年次報告が、Atlassianと連携機能を開発するために提携していると述べている",
+          "text_en": "Dynatrace's annual report says it partners with Atlassian to develop integrations",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "We partner with leading innovative technology organizations such as Atlassian, Red Hat, ServiceNow, and VMware to develop integrations, best practices, and extended capabilities that help our customers and solution partners achieve faster time to market and enhanced value in dynamic multicloud environments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKTA",
+      "ticker": "OKTA",
+      "name": "Okta",
+      "sub": "ID管理",
+      "sub_en": "Identity management",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oktaの連携ネットワークに、連携先としてAtlassianが含まれている",
+          "text_en": "Atlassian is included among the integrations in the Okta Integration Network",
+          "source": {
+            "label": "Okta 10-K",
+            "label_en": "Okta 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "The Okta Integration Network contains over 7,000 integrations with cloud, mobile and web applications, IoT devices and IT infrastructure providers, including AWS, Atlassian, DocuSign, Google, Microsoft 365, NetSuite, Oracle, Palo Alto Networks, Proofpoint, Salesforce, SAP, ServiceNow, Slack, Splunk, VMware, Workday, Zendesk and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年からOpenAIとの提携を続けていると説明している",
+          "text_en": "Describes a partnership with OpenAI that began in 2023",
+          "source": {
+            "label": "Atlassian — OpenAI strategic partnership update, October 6, 2026",
+            "label_en": "Atlassian — OpenAI strategic partnership update, October 6, 2026",
+            "url": "https://www.atlassian.com/blog/company-news/atlassian-openai-strategic-partnership",
+            "level": "official",
+            "quote": "And in the time since our initial partnership in 2023, more than 2.5 million businesses are using OpenAI products.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Atlassian MarketplaceでClaude Agent for Jiraを提供している",
+          "text_en": "Offers Claude Agent for Jira on the Atlassian Marketplace",
+          "source": {
+            "label": "Atlassian — Claude Agent for Jira availability, June 18, 2026",
+            "label_en": "Atlassian — Claude Agent for Jira availability, June 18, 2026",
+            "url": "https://www.atlassian.com/blog/company-news/claude-agent-for-jira",
+            "level": "official",
+            "quote": "Install Claude Agent for Jira from the Atlassian Marketplace, connect your Anthropic API key and GitHub service account, and assign your first work item.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月12日付の改定クレジット契約で、JPMorgan Chase Bankが共同シンジケーション代理人を務める",
+          "text_en": "JPMorgan Chase Bank, N.A. is a Co-Syndication Agent under the Amended and Restated Credit Agreement dated August 12, 2024",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Agreement, dated as of August 12, 2024, by and among the Company, Atlassian US, Inc., Bank of America, N.A., as Administrative Agent, Swing Line Lender and L/C Issuer, JPMorgan Chase Bank, N.A. and Morgan Stanley Senior Funding, Inc., as Co-Syndication Agents and L/C Issuers, and the other L/C Issuers and lenders party thereto"
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月12日付の改定クレジット契約で、Bank of Americaが管理代理人を務める",
+          "text_en": "Bank of America, N.A. is the Administrative Agent under the Amended and Restated Credit Agreement dated August 12, 2024",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Agreement, dated as of August 12, 2024, by and among the Company, Atlassian US, Inc., Bank of America, N.A., as Administrative Agent, Swing Line Lender and L/C Issuer, JPMorgan Chase Bank, N.A. and Morgan Stanley Senior Funding, Inc., as Co-Syndication Agents and L/C Issuers, and the other L/C Issuers and lenders party thereto"
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同クレジット契約で、Morgan Stanley Senior Fundingが共同シンジケーション代理人を務める",
+          "text_en": "Morgan Stanley Senior Funding, Inc. is a Co-Syndication Agent under the same credit agreement",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Agreement, dated as of August 12, 2024, by and among the Company, Atlassian US, Inc., Bank of America, N.A., as Administrative Agent, Swing Line Lender and L/C Issuer, JPMorgan Chase Bank, N.A. and Morgan Stanley Senior Funding, Inc., as Co-Syndication Agents and L/C Issuers, and the other L/C Issuers and lenders party thereto"
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "GTLB",
+      "ticker": "GTLB",
+      "name": "GitLab",
+      "sub": "DevOpsソフト",
+      "sub_en": "DevOps software",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GitLabの年次報告が、Atlassianを競合として挙げている",
+          "text_en": "Names Atlassian as a competitor in its annual report",
+          "source": {
+            "label": "GitLab 2026年度 Form 10-K · Competition",
+            "label_en": "GitLab FY2026 Form 10-K · Competition",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653482/000162828026018731/gtlb-20260131.htm",
+            "level": "official",
+            "quote": "We also compete with DevOps product collections and point solutions from vendors such as Atlassian, JFrog, and Harness."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRSH",
+      "ticker": "FRSH",
+      "name": "Freshworks",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Freshworksの年次報告が、Atlassianを競合として挙げている",
+          "text_en": "Names Atlassian as a competitor in its annual report",
+          "source": {
+            "label": "Freshworks 10-K",
+            "label_en": "Freshworks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For our employee experience products, we face competition from traditional IT service management vendors such as ServiceNow, BMC, and Ivanti, as well as modern cloud-based providers, including Atlassian and various mid-market and emerging ITSM platforms."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

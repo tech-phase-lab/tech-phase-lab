@@ -1,0 +1,196 @@
+{
+  "root": {
+    "ticker": "MA",
+    "name": "Mastercard"
+  },
+  "rows": [
+    {
+      "ja": "供給元(Mastercard向けの販売先として記載)",
+      "en": "Suppliers (name Mastercard as a customer)",
+      "above": true
+    },
+    {
+      "ja": "顧客・利用企業",
+      "en": "Customers & users"
+    },
+    {
+      "ja": "提携・資金調達",
+      "en": "Partnerships & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "V"
+  ],
+  "companies": [
+    {
+      "id": "QBTS",
+      "ticker": "QBTS",
+      "name": "D-Wave Quantum",
+      "sub": "量子コンピュータ",
+      "sub_en": "Quantum computing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "D-Wave Quantumの年次報告が、Mastercardを顧客例に挙げている",
+          "text_en": "D-Wave Quantum's annual report lists Mastercard among its customers",
+          "source": {
+            "label": "D-Wave Quantum 10-K",
+            "label_en": "D-Wave Quantum 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1907982/000190798226000026/qbts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our customers have included Mastercard, Deloitte, BASF, Pfizer, Unisys, Siemens Healthineers, NTT DOCOMO, Ford Otosan, Interpublic Group, Davidson Technologies, Inc.",
+            "note": "D-Wave側の記載です。",
+            "note_en": "Described in D-Wave's filing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BILL",
+      "ticker": "BILL",
+      "name": "BILL",
+      "sub": "法人支出管理",
+      "sub_en": "Business spend management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BILLは、カード発行パートナーを通じてMastercardとVisaの法人カードを提供している",
+          "text_en": "Through card issuing partners, BILL provides physical and virtual Mastercard and Visa charge cards",
+          "source": {
+            "label": "BILL 10-K",
+            "label_en": "BILL 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Through card issuing partners, BILL provides both physical and virtual Mastercard and Visa charge cards to companies that enroll in its business spend and expense management program."
+          }
+        },
+        {
+          "type": "down",
+          "text": "BILLは、カードプログラム管理者としてMastercardの規則を順守する契約上の義務を負っている",
+          "text_en": "BILL is contractually obligated to comply with Mastercard rules as a card program manager",
+          "source": {
+            "label": "BILL 10-K",
+            "label_en": "BILL 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "We are contractually obligated to comply with consumer protection laws and regulations applicable to our product offerings and customer base, as well as with Visa, Mastercard, and American Express rules, as a card program manager for our card product offerings."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PYPL",
+      "ticker": "PYPL",
+      "name": "PayPal",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MastercardとPayPalは、Mastercard One Credentialで提携する",
+          "text_en": "Mastercard and PayPal are to partner on Mastercard One Credential",
+          "source": {
+            "label": "June 4, 2025 · PayPal debit partnership and planned co-development",
+            "label_en": "June 4, 2025 · PayPal debit partnership and planned co-development",
+            "url": "https://newsroom.mastercard.com/news/press/2025/june/mastercard-and-paypal-to-partner-on-mastercard-one-credential-to-supercharge-choice-at-checkout/",
+            "level": "official",
+            "quote": "Mastercard and PayPal to partner on Mastercard One Credential to supercharge choice at checkout | Mastercard Newsroom"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bank, N.A.が管理代理人を務める80億ドルのクレジット契約(2025年11月7日付)をMastercardが締結している",
+          "text_en": "Mastercard has an $8,000,000,000 credit agreement dated November 7, 2025 with JPMorgan Chase Bank, N.A. as administrative agent",
+          "source": {
+            "label": "Mastercard 10-K",
+            "label_en": "Mastercard 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000013/ma-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "$8,000,000,000 Amended and Restated Credit Agreement, dated as of November 7 , 202 5 , among Mastercard Incorporated, the several lenders and agents from time to time party thereto, Citibank, N.A., as managing administrative agent and JPMorgan Chase Bank, N.A. as administrative agent .",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MastercardはVisaなどと、手数料関連の集団訴訟の損失分担などを定める包括合意を結んでいる",
+          "text_en": "Mastercard's filing describes an omnibus agreement with Visa and certain Visa U.S.A. members relating to the interchange multidistrict litigation",
+          "source": {
+            "label": "Visa 10-K",
+            "label_en": "Visa 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm",
+            "level": "official",
+            "date": "2025-11-06",
+            "quote": "Visa entered into an omnibus agreement with Mastercard and certain Visa U.S.A. members that confirmed and memorialized the signatories’ intentions with respect to the loss sharing agreement, the interchange judgment sharing agreement and other agreements relating to the interchange multidistrict litigation, see Note 20—Legal Matters.",
+            "note": "訴訟に関する合意です。",
+            "note_en": "Agreement relates to litigation."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同合意では、和解金の分担はMastercardが33.3333%、Visaが66.6667%とされている",
+          "text_en": "Under the omnibus agreement, the settlement is divided into a Mastercard portion at 33.3333% and a Visa portion at 66.6667%",
+          "source": {
+            "label": "Visa 10-K",
+            "label_en": "Visa 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm",
+            "level": "official",
+            "date": "2025-11-06",
+            "quote": "Under the omnibus agreement, the monetary portion of any settlement of the interchange multidistrict litigation covered by the omnibus agreement would be divided into a Mastercard portion at 33.3333 % and a Visa portion at 66.6667 %."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "マスターカードの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Mastercard’s annual report",
+          "source": {
+            "label": "Mastercard 10-K",
+            "label_en": "Mastercard 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000013/ma-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We compete worldwide with payments networks such as Visa, American Express, JCB, China UnionPay and Discover, among others."
+          }
+        }
+      ],
+      "name_en": "Visa"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

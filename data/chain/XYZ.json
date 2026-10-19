@@ -1,0 +1,235 @@
+{
+  "root": {
+    "ticker": "XYZ",
+    "name": "Block"
+  },
+  "rows": [
+    {
+      "ja": "決済ネットワーク・流通",
+      "en": "Networks & distribution",
+      "above": true
+    },
+    {
+      "ja": "提携・連携",
+      "en": "Partnerships & integrations"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "Visa",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cash App CardはVisaカードが使える場所で利用できると説明している",
+          "text_en": "Block says Cash App funds can be spent anywhere that accepts Visa cards",
+          "source": {
+            "label": "Block 10-K",
+            "label_en": "Block 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "These funds can then be sent to another customer through the app, spent anywhere that accepts Visa cards or Cash App Pay, withdrawn from an ATM using the Cash App Card, invested in stocks or exchange-traded funds (“ETFs”), used to buy bitcoin, or transferred to a bank account (either instantly for a fee or for free in one to three days)."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Cash App Cardは、Visaカードが使えるどこでも買い物に使える",
+          "text_en": "Customers can use the Cash App Card anywhere that accepts Visa cards",
+          "source": {
+            "label": "Block 10-K",
+            "label_en": "Block 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers can order a Cash App Card for free and use it anywhere that accepts Visa cards to make purchases, drawing down from the funds stored in their Cash App balance."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマートフォン・ソフト",
+      "sub_en": "Devices & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告で、Appleなどのアプリ配信市場の運営者が行う変更が、Blockの製品へのアクセスを難しくし得ると述べている",
+          "text_en": "The 10-K says changes by Apple, Google, or other app marketplace operators may make access to Block's products and services more difficult",
+          "source": {
+            "label": "Block 10-K",
+            "label_en": "Block 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Apple, Google, or other operators of app marketplaces regularly make changes to their marketplaces, and those changes may make access to our products and services more difficult.",
+            "note": "配信市場の運営者としての記載です。",
+            "note_en": "Listed as an app marketplace operator."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Appleなどが提供するソフト更新が、Blockの製品でうまく動作しない可能性があると述べている",
+          "text_en": "Software updates from Apple, Google, or others may not operate effectively with Block's products and services",
+          "source": {
+            "label": "Block 10-K",
+            "label_en": "Block 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Furthermore, Apple, Google, or other operators of app marketplaces regularly provide software updates, and such software updates may not operate effectively with our products and services, which may reduce the demand for our products and services, result in dissatisfaction by our customers, and may materially and adversely affect our business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DASH",
+      "ticker": "DASH",
+      "name": "DoorDash",
+      "sub": "フードデリバリー",
+      "sub_en": "Food delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SquareとDoorDashの連携が提供されている",
+          "text_en": "Square offers an integration with DoorDash",
+          "source": {
+            "label": "Square — DoorDash integration, US eligibility / restaurant modes; checked October 17, 2026",
+            "label_en": "Square — DoorDash integration, US eligibility / restaurant modes; checked October 17, 2026",
+            "url": "https://squareup.com/help/us/en/article/8518-integrate-doordash-with-square",
+            "level": "official",
+            "quote": "About DoorDash and Square Before you begin Integrate DoorDash with Square Manage DoorDash and Square integration View detailed tax breakdown DoorDash and Square integration support Related articles"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "DoorDashのMarketplace、Caviar、Storefrontの注文は、この連携で対応している",
+          "text_en": "DoorDash orders from Marketplace, Caviar, and Storefront are supported with this integration",
+          "source": {
+            "label": "Square — DoorDash integration, US eligibility / restaurant modes; checked October 17, 2026",
+            "label_en": "Square — DoorDash integration, US eligibility / restaurant modes; checked October 17, 2026",
+            "url": "https://squareup.com/help/us/en/article/8518-integrate-doordash-with-square",
+            "level": "official",
+            "quote": "DoorDash orders from Marketplace, Caviar, and Storefront are all supported with this integration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "Uber",
+      "sub": "配車・デリバリー",
+      "sub_en": "Rides & delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Blockの決算発表が、InstacartやUberなどの法人パートナーとの拡大に触れている",
+          "text_en": "Block's earnings release cites continued expansion with enterprise partners like Instacart and Uber",
+          "source": {
+            "label": "Block 8-K Ex.99 の発表",
+            "label_en": "Block 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000119312526335117/d91486dex991.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "by our continued expansion with enterprise partners like Instacart and Uber."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SquareとUber Eatsの連携に関する案内がある",
+          "text_en": "Square provides troubleshooting for its Uber Eats integration",
+          "source": {
+            "label": "Square — DoorDash integration, US eligibility / restaurant modes; checked October 17, 2026",
+            "label_en": "Square — DoorDash integration, US eligibility / restaurant modes; checked October 17, 2026",
+            "url": "https://squareup.com/help/us/en/article/8518-integrate-doordash-with-square",
+            "level": "official",
+            "quote": "Troubleshoot DoorDash and Uber Eats integration with Square"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlockはAnthropicと積極的に提携するとしている",
+          "text_en": "Block says it is excited to actively partner with Anthropic",
+          "source": {
+            "label": "Block 8-K Ex.99 の発表",
+            "label_en": "Block 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000119312525030738/d834054dex991.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "We are excited to actively partner with Anthropic and the",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Goldman Sachs Bank USAが管理代理人を務める与信枠契約(2020年5月1日付)がある",
+          "text_en": "Block has a revolving credit agreement dated May 1, 2020 with Goldman Sachs Bank USA as administrative agent",
+          "source": {
+            "label": "Block 10-K",
+            "label_en": "Block 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "10.11 Revolving Credit Agreement dated as of May 1, 2020 among the Registrant, the Lenders Party Thereto, and Goldman Sachs Bank USA, as Administrative Agent.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同契約の第1次修正(2020年5月28日付)がある",
+          "text_en": "A first amendment to the credit agreement is dated May 28, 2020",
+          "source": {
+            "label": "Block 10-K",
+            "label_en": "Block 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "10.12 First Amendment to Credit Agreement, dated as of May 28, 2020, among the Registrant, the Lenders Party Thereto, and Goldman Sachs Bank USA, as Administrative Agent."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

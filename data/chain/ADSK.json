@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "ADSK",
+    "name": "Autodesk"
+  },
+  "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BSY",
+    "PTC",
+    "ADBE"
+  ],
+  "companies": [
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ・テクノロジーズ",
+      "sub": "CDN・セキュリティ",
+      "sub_en": "CDN & security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Akamaiの年次報告が、顧客の例にAutodeskを挙げている",
+          "text_en": "Akamai's annual report names Autodesk among its customers",
+          "source": {
+            "label": "Akamai Technologies 10-K",
+            "label_en": "Akamai Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our customers include many of the world's leading corporations, such as adidas, Adobe, Aflac, Airbnb, Asus, Autodesk, Bank of Montreal, Carnival Corporation, Comcast, Commerzbank, Daiwa Institute of Research, eBay, Electronic Arts, Epic Games, Fidelity Investments, Honda, Japan",
+            "note": "Akamaiが提供する側の記載です。",
+            "note_en": "Akamai is the provider in this listing."
+          }
+        }
+      ],
+      "name_en": "Akamai Technologies"
+    },
+    {
+      "id": "BSY",
+      "ticker": "BSY",
+      "name": "ベントレー・システムズ",
+      "sub": "インフラ設計ソフト",
+      "sub_en": "Infrastructure software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベントレー・システムズの年次報告が、オートデスクを競合として挙げている",
+          "text_en": "Names Autodesk as a competitor in its annual report",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in Public Works/Utilities applications include Autodesk, Inc., Trimble Inc., and Hexagon AB;"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ベントレー・システムズの年次報告が、オートデスクを競合として挙げている",
+          "text_en": "Names Autodesk as a competitor in its annual report",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in Commercial/Facilities applications include Autodesk, Inc., Nemetschek SE, and Trimble Inc.;"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "オートデスクの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Autodesk’s annual report",
+          "source": {
+            "label": "Autodesk 10-K",
+            "label_en": "Autodesk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Our primary global competitors include Adobe Systems Incorporated, Bentley Systems, Inc., Dassault Systèmes S.A. and its subsidiary Dassault Systèmes SolidWorks Corp., Intergraph Corporation, a wholly owned subsidiary of Hexagon AB, MSC Software"
+          }
+        }
+      ],
+      "name_en": "Bentley Systems"
+    },
+    {
+      "id": "PTC",
+      "ticker": "PTC",
+      "name": "PTC",
+      "sub": "CAD・PLM",
+      "sub_en": "CAD & PLM",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PTCの年次報告が、オートデスクを競合として挙げている",
+          "text_en": "Names Autodesk as a competitor in its annual report",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "For enterprise CAD and PLM solutions, we compete with large established companies including Autodesk, Dassault Systèmes SA, and Siemens AG."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "sub": "クリエイティブソフト",
+      "sub_en": "Creative software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "オートデスクの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Autodesk’s annual report",
+          "source": {
+            "label": "Autodesk 10-K",
+            "label_en": "Autodesk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Our primary global competitors include Adobe Systems Incorporated, Bentley Systems, Inc., Dassault Systèmes S.A. and its subsidiary Dassault Systèmes SolidWorks Corp., Intergraph Corporation, a wholly owned"
+          }
+        }
+      ],
+      "name_en": "Adobe"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

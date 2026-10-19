@@ -1,0 +1,256 @@
+{
+  "root": {
+    "ticker": "EGHT",
+    "name": "エイトバイエイト",
+    "name_en": "8x8"
+  },
+  "rows": [
+    {
+      "ja": "提携・統合先",
+      "en": "Partners & integrations",
+      "above": true
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "RNG",
+    "ZM",
+    "FIVN",
+    "NICE",
+    "ERIC"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、Microsoft Teamsとの戦略的な統合を通じて顧客に届けると説明している",
+          "text_en": "The annual report says it reaches customers through strategic integrations with large platforms like Microsoft Teams",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "We reach customers through a hybrid approach that includes direct sales, digital channels, value-added resellers, and strategic integrations with large platforms like Microsoft Teams and Salesforce."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "年次報告が、Microsoft Teamsに多額の投資をした競合の例としてMicrosoftを挙げている",
+          "text_en": "The annual report cites Microsoft, which has invested significantly in Microsoft Teams, among its competitors",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "Some of these competitors have developed software solutions for their respective communications and/or collaboration products, such as Microsoft, which has invested significantly in its Microsoft Teams unified communication and collaboration product."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、Salesforceとの戦略的な統合を通じて顧客に届けると説明している",
+          "text_en": "The annual report says it reaches customers through strategic integrations with large platforms like Salesforce",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "We reach customers through a hybrid approach that includes direct sales, digital channels, value-added resellers, and strategic integrations with large platforms like Microsoft Teams and Salesforce."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年7月11日に、Wells Fargo Bank, National Associationを管理代理人とする新しいタームローン契約を結んだ",
+          "text_en": "On July 11, 2024, it entered into a new term loan credit agreement with Wells Fargo Bank, National Association as administrative agent",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "On July 11, 2024, we entered into a new term loan credit agreement with Wells Fargo Bank, National Association, as administrative agent, and the lenders thereto (the “2024 Credit Agreement”).",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Wells Fargo"
+    },
+    {
+      "id": "NICE",
+      "ticker": "NICE",
+      "name": "ナイス",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナイスの年次報告が、エイトバイエイトを競合として挙げている",
+          "text_en": "Names 8x8 as a competitor in its annual report",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also compete against certain UCaaS and collaboration software vendors such as 8x8, Vonage and Zoom, which offer basic CCaaS capabilities."
+          }
+        }
+      ],
+      "name_en": "NiCE"
+    },
+    {
+      "id": "RNG",
+      "ticker": "RNG",
+      "name": "リングセントラル",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リングセントラルの年次報告が、エイトバイエイトを競合として挙げている",
+          "text_en": "Names 8x8 as a competitor in its annual report",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include but are not limited to: 8x8, Inc., Dialpad, Inc., LogMeIn, Inc., Microsoft Corporation, Nextiva, Inc., Twilio Inc., Ericsson, Zoom, Amazon.com, Inc., AT&T Inc., BT Group plc, TELUS Corporation,"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "エイトバイエイトの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in 8x8’s annual report",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "chat, team messaging, contact center, and enterprise-class application program interface solutions, we face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc.,"
+          }
+        }
+      ],
+      "name_en": "RingCentral"
+    },
+    {
+      "id": "FIVN",
+      "ticker": "FIVN",
+      "name": "ファイブナイン",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エイトバイエイトの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in 8x8’s annual report",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc., among others, as well as from legacy on-premises communications equipment providers, such as Avaya, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Five9"
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "ズーム",
+      "sub": "Web会議",
+      "sub_en": "Video meetings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エイトバイエイトの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in 8x8’s annual report",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "application program interface solutions, we face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc., among others, as well as from legacy on-premises communications"
+          }
+        }
+      ],
+      "name_en": "Zoom"
+    },
+    {
+      "id": "ERIC",
+      "ticker": "ERIC",
+      "name": "エリクソン",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エイトバイエイトの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in 8x8’s annual report",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "we face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc., among others, as well as from legacy on-premises communications equipment providers, such as Avaya,"
+          }
+        }
+      ],
+      "name_en": "Ericsson"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

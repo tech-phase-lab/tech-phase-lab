@@ -1,0 +1,47 @@
+{
+  "root": {
+    "ticker": "ETN",
+    "name": "イートン",
+    "name_en": "Eaton"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "VRT"
+  ],
+  "companies": [
+    {
+      "id": "VRT",
+      "ticker": "VRT",
+      "name": "バーティブ",
+      "sub": "データセンター電源・冷却",
+      "sub_en": "Data center power & cooling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "バーティブの年次報告が、イートンを競合として挙げている",
+          "text_en": "Names Eaton as a competitor in its annual report",
+          "source": {
+            "label": "Vertiv 10-K",
+            "label_en": "Vertiv 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "These competitors may have comparatively greater financial, technical and marketing resources available to them and would include Schneider Electric, S.E., Eaton Corporation Plc, Legrand SA, and Huawei Investment & Holding Co., Ltd, each of which has a large, global presence and compete directly in the markets in which we operate."
+          }
+        }
+      ],
+      "name_en": "Vertiv"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

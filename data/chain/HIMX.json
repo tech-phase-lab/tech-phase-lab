@@ -1,0 +1,374 @@
+{
+  "root": {
+    "ticker": "HIMX",
+    "name": "Himax"
+  },
+  "rows": [
+    {
+      "ja": "ファウンドリ",
+      "en": "Foundries",
+      "above": true
+    },
+    {
+      "ja": "後工程の委託先",
+      "en": "Assembly & test",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SYNA",
+    "Novatek",
+    "QCOM",
+    "TXN"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "台湾積体電路製造",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先として台湾積体電路製造を挙げている",
+          "text_en": "The annual report lists TSMC among foundries that provided foundry services in the past few years",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years.",
+            "note": "過去数年の実績としての記載です。",
+            "note_en": "Listed as a foundry used in the past few years."
+          }
+        }
+      ],
+      "name_en": "TSMC"
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "ユナイテッド・マイクロエレクトロニクス",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてユナイテッド・マイクロエレクトロニクスを挙げている",
+          "text_en": "The annual report lists UMC among foundries that provided foundry services in the past few years",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years.",
+            "note": "過去数年の実績としての記載です。",
+            "note_en": "Listed as a foundry used in the past few years."
+          }
+        }
+      ],
+      "name_en": "United Microelectronics"
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "グローバルファウンドリーズ",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてグローバルファウンドリーズを挙げている",
+          "text_en": "The annual report lists GlobalFoundries among foundries that provided foundry services in the past few years",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years.",
+            "note": "過去数年の実績としての記載です。",
+            "note_en": "Listed as a foundry used in the past few years."
+          }
+        }
+      ],
+      "name_en": "GlobalFoundries"
+    },
+    {
+      "id": "Vanguard",
+      "ticker": "Vanguard",
+      "name": "Vanguard International Semiconductor",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてVanguard International Semiconductorを挙げている",
+          "text_en": "The annual report lists Vanguard International Semiconductor among foundries that provided foundry services in the past few years",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years.",
+            "note": "過去数年の実績としての記載です。",
+            "note_en": "Listed as a foundry used in the past few years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSMC",
+      "ticker": "PSMC",
+      "name": "Powerchip Semiconductor Manufacturing",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてPowerchip Semiconductor Manufacturingを挙げている",
+          "text_en": "The annual report lists Powerchip Semiconductor Manufacturing among foundries that provided foundry services in the past few years",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years.",
+            "note": "過去数年の実績としての記載です。",
+            "note_en": "Listed as a foundry used in the past few years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IMOS",
+      "ticker": "IMOS",
+      "name": "ChipMOS Technologies",
+      "sub": "後工程(組立・テスト)",
+      "sub_en": "Assembly & test",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、TABやCOGパッケージに特化した組立・テスト委託先としてChipMOS Technologiesを挙げている",
+          "text_en": "The annual report lists ChipMOS Technologies among assembly and testing houses specializing in TAB and COG packages",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We engage assembly and testing houses that specialize in TAB and COG packages such as Chipbond, Chipmore International trading company Ltd., ChipMOS Technologies Inc. and King Yuan Electronics Co., Ltd, etc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Chipbond",
+      "ticker": "Chipbond",
+      "name": "Chipbond Technology",
+      "sub": "後工程(組立・テスト)",
+      "sub_en": "Assembly & test",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、TABやCOGパッケージに特化した組立・テスト委託先としてChipbond Technologyを挙げている",
+          "text_en": "The annual report lists Chipbond among assembly and testing houses specializing in TAB and COG packages",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We engage assembly and testing houses that specialize in TAB and COG packages such as Chipbond, Chipmore International trading company Ltd., ChipMOS Technologies Inc. and King Yuan Electronics Co., Ltd, etc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KYEC",
+      "ticker": "KYEC",
+      "name": "King Yuan Electronics",
+      "sub": "後工程(組立・テスト)",
+      "sub_en": "Assembly & test",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、TABやCOGパッケージに特化した組立・テスト委託先としてKing Yuan Electronicsを挙げている",
+          "text_en": "The annual report lists King Yuan Electronics among assembly and testing houses specializing in TAB and COG packages",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We engage assembly and testing houses that specialize in TAB and COG packages such as Chipbond, Chipmore International trading company Ltd., ChipMOS Technologies Inc. and King Yuan Electronics Co., Ltd, etc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYNA",
+      "ticker": "SYNA",
+      "name": "シナプティクス",
+      "sub": "タッチ・表示IC",
+      "sub_en": "Touch & display ICs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハイマックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "For In-cell TDDI, we compete with Novatek Microelectronics Cop., Synaptics Incorporated, FocalTech Systems Co., Ltd., ESWIN, Chipone, OmniVision and Ilitek Corp., etc."
+          }
+        }
+      ],
+      "name_en": "Synaptics"
+    },
+    {
+      "id": "Novatek",
+      "ticker": "Novatek",
+      "name": "Novatek Microelectronics",
+      "sub": "表示ドライバIC",
+      "sub_en": "Display driver ICs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハイマックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "For In-cell TDDI, we compete with Novatek Microelectronics Cop., Synaptics Incorporated, FocalTech Systems Co., Ltd., ESWIN, Chipone, OmniVision and Ilitek Corp., etc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FocalTech",
+      "ticker": "FocalTech",
+      "name": "FocalTech Systems",
+      "sub": "タッチ・表示IC",
+      "sub_en": "Touch & display ICs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハイマックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "For In-cell TDDI, we compete with Novatek Microelectronics Cop., Synaptics Incorporated, FocalTech Systems Co., Ltd., ESWIN, Chipone, OmniVision and Ilitek Corp., etc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "クアルコム",
+      "sub": "通信半導体",
+      "sub_en": "Wireless chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハイマックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "For WiseEye ultralow power AI sensing, the main competition is Qualcomm with its “Glance” device."
+          }
+        }
+      ],
+      "name_en": "Qualcomm"
+    },
+    {
+      "id": "TXN",
+      "ticker": "TXN",
+      "name": "テキサス・インスツルメンツ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハイマックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We also compete with alternative microdisplay technology providers such as Texas Instruments with DLP, Sony with micro OLED and JBD with micro LED."
+          }
+        }
+      ],
+      "name_en": "Texas Instruments"
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "sub": "電機・エンタメ",
+      "sub_en": "Electronics & entertainment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハイマックスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We also compete with alternative microdisplay technology providers such as Texas Instruments with DLP, Sony with micro OLED and JBD with micro LED."
+          }
+        }
+      ],
+      "name_en": "Sony Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

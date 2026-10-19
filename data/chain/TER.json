@@ -1,0 +1,207 @@
+{
+  "root": {
+    "ticker": "TER",
+    "name": "Teradyne"
+  },
+  "rows": [
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "COHU",
+    "KEYS",
+    "YSKW",
+    "ABB"
+  ],
+  "companies": [
+    {
+      "id": "FLEX",
+      "ticker": "FLEX",
+      "name": "フレックス",
+      "sub": "電子機器の受託製造",
+      "sub_en": "Electronics manufacturing services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "TeradyneとFlextronics Corporationの標準製造契約の第6次修正(2009年7月27日付)が挙げられている",
+          "text_en": "Teradyne lists the Sixth Amendment (July 27, 2009) to its Standard Manufacturing Agreement with Flextronics Corporation",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Sixth Amendment to Standard Manufacturing Agreement, dated as of July 27, 2009, by and between Teradyne and Flextronics Corporation.",
+            "note": "2009年付の古い契約です。",
+            "note_en": "Older agreement, dated 2009."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Flextronics Sales & Marketing North Asia (L) LTDとの同契約の第8次修正(2012年4月13日付)も挙げられている",
+          "text_en": "The Eighth Amendment (April 13, 2012) with Flextronics Sales & Marketing North Asia (L) LTD is also listed",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Eighth Amendment to Standard Manufacturing Agreement, dated as of April 13, 2012, by and between Teradyne and Flextronics Sales & Marketing North Asia (L) LTD.",
+            "note": "子会社との契約です。",
+            "note_en": "Subsidiary-level agreement."
+          }
+        }
+      ],
+      "name_en": "Flex"
+    },
+    {
+      "id": "ASX",
+      "ticker": "ASX",
+      "name": "ASEテクノロジー・ホールディング",
+      "sub": "半導体後工程",
+      "sub_en": "Semiconductor packaging & test",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ASEは、Teradyneなどの主要な国際メーカーから試験装置を購入していると説明している",
+          "text_en": "ASE says it purchases testers from major international manufacturers, primarily Teradyne, Tokyo Electron and Advantest",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "We purchase testers from major international manufacturers, primarily Teradyne, Inc., Tokyo Electron Limited, and Advantest Corporation."
+          }
+        }
+      ],
+      "name_en": "ASE Technology Holding"
+    },
+    {
+      "id": "COHU",
+      "ticker": "COHU",
+      "name": "コーヒュー",
+      "sub": "半導体試験・検査",
+      "sub_en": "Semiconductor test & inspection",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コーヒューの年次報告が、テラダインを競合として挙げている",
+          "text_en": "Names Teradyne as a competitor in its annual report",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "テラダインの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Competitors in the Semiconductor Test segment include, among others, Advantest Corporation, SPEA S.p.A., and Cohu, Inc."
+          }
+        }
+      ],
+      "name_en": "Cohu"
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "キーサイト・テクノロジー",
+      "sub": "電子計測",
+      "sub_en": "Electronic measurement",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "テラダインの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Competitors in our Product Test operating segment include, among others, Keysight Technologies, Test Research, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Keysight Technologies"
+    },
+    {
+      "id": "YSKW",
+      "ticker": "Yaskawa",
+      "name": "安川電機",
+      "sub": "産業用ロボット",
+      "sub_en": "Industrial robots",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "テラダインの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Competitors in our Robotics segment include manufacturers of traditional industrial robots such as KUKA Robotics Corporation, ABB, FANUC, Staubli and Yaskawa Electric Corporation, companies with emerging collaborative robot offerings such as Techman, Doosan, Jaka, and AUBO Robotics, and manufacturers of autonomous mobile"
+          }
+        }
+      ],
+      "name_en": "Yaskawa Electric"
+    },
+    {
+      "id": "ABB",
+      "ticker": "ABB",
+      "name": "ABB",
+      "sub": "産業用ロボット・電機",
+      "sub_en": "Industrial robots & electrification",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "テラダインの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Competitors in our Robotics segment include manufacturers of traditional industrial robots such as KUKA Robotics Corporation, ABB, FANUC, Staubli and Yaskawa Electric Corporation, companies with emerging collaborative robot offerings such as Techman, Doosan, Jaka, and AUBO Robotics, and"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,578 @@
+{
+  "root": {
+    "ticker": "NXPI",
+    "name": "NXP Semiconductors"
+  },
+  "rows": [
+    {
+      "ja": "提携・買収・ライセンス",
+      "en": "Partnerships, deals & licensing",
+      "above": true
+    },
+    {
+      "ja": "顧客・販売",
+      "en": "Customers & distribution"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ADI",
+    "TXN",
+    "MCHP",
+    "QCOM",
+    "STM"
+  ],
+  "companies": [
+    {
+      "id": "PI",
+      "ticker": "PI",
+      "name": "Impinj",
+      "sub": "RFID半導体",
+      "sub_en": "RFID chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Impinjは、NXPとの和解契約に基づくライセンス収入の大きな割合を得ており、NXPを主要なエンドポイントIC競合と位置づけている",
+          "text_en": "Impinj derives a substantial share of its licensing revenue from NXP, its primary endpoint IC competitor, under a Settlement Agreement",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We currently derive a substantial share of our licensing revenue from NXP, our primary endpoint IC competitor, based on our Settlement Agreement with them."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NXPはImpinjに少額の現金を支払う和解契約を結び、係争中だった手続きはすべて取り下げられた",
+          "text_en": "NXP entered into a settlement agreement paying Impinj an immaterial cash consideration, with all previously pending litigation dismissed",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "(“Impinj”) entered into a settlement agreement with the Company paying Impinj an immaterial cash consideration, resolving all outstanding litigation and other proceedings between the parties, with all previously pending litigation and administrative proceedings being dismissed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NXPはTSMCと、Systems on Silicon Manufacturing Company Pte.という合弁会社に参加している",
+          "text_en": "NXP participates in a joint venture with TSMC called Systems on Silicon Manufacturing Company Pte.",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For example, we currently participate in a joint venture with Taiwan Semiconductor Manufacturing Company Limited (“TSMC”) called Systems on Silicon Manufacturing Company Pte."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NXPはTSMC、Bosch、Infineonとの合弁会社ESMCで、将来の製造需要に対応する能力を作るとしている",
+          "text_en": "NXP has a joint venture with TSMC, Robert Bosch Gmbh and Infineon Technologies AG called ESMC to create capability for its future manufacturing requirements",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "(“VSMC”), and a joint venture with TSMC, Robert Bosch Gmbh and Infineon Technologies AG called European Semiconductor Manufacturing Company (“ESMC”) to create capability for our future manufacturing requirements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASX",
+      "ticker": "ASX",
+      "name": "ASE Technology",
+      "sub": "半導体後工程",
+      "sub_en": "Chip packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASEは2007年8月6日付の持分譲渡契約で、NXPとの合弁会社ASENの60%を取得した",
+          "text_en": "ASE acquired 60% of ASEN, its joint venture with NXP Semiconductors, under an Equity Interests Transfer Agreement dated August 6, 2007",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Equity Interests Transfer Agreement dated August 6, 2007 by and among NXP B.V., NXP Semiconductors Suzhou Ltd. and J&R Holding Limited relating to our acquisition of 60% of ASEN, our joint venture with NXP Semiconductors (incorporated by",
+            "note": "2007年の古い契約です。",
+            "note_en": "An older agreement from 2007."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "sub": "データインフラ半導体",
+      "sub_en": "Data infrastructure chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellとNXPの間に2019年5月29日付の資産売買契約がある",
+          "text_en": "Marvell lists an Asset Purchase Agreement with NXP dated May 29, 2019",
+          "source": {
+            "label": "Marvell 10-K",
+            "label_en": "Marvell 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "2.3 Asset Purchase Agreement between Marvell and NXP dated May 29, 2019",
+            "note": "契約名のみの記載です。",
+            "note_en": "Agreement title only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STMicroelectronics",
+      "sub": "総合半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NXPは2025年7月24日にSTMicroelectronics Internationalと、事業を最大9億5000万ドルの現金で売却する正式合意に至った",
+          "text_en": "On July 24, 2025, NXP reached a definitive agreement with STMicroelectronics International N.V. to sell a business for up to $950 million in cash",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On July 24, 2025, NXP reached a definitive agreement with STMicroelectronics International N.V., under which NXP will sell the business for an amount up to $ 950 million in cash, including $ 900 million at closing and up to an additional $ 50 million subject to the achievement of technical milestones."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHG",
+      "ticker": "PHG",
+      "name": "Philips",
+      "sub": "ヘルスケア機器",
+      "sub_en": "Health technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NXP B.V.とKoninklijke Philips Electronics N.V.の間に2006年9月28日付の知的財産譲渡・ライセンス契約がある",
+          "text_en": "NXP B.V. and Koninklijke Philips Electronics N.V. have an Intellectual Property Transfer and License Agreement dated September 28, 2006",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "10.1 Intellectual Property Transfer and License Agreement dated as of September 28, 2006 between Koninklijke Philips Electronics N.V. and NXP B.V.",
+            "note": "2006年の古い契約です。",
+            "note_en": "An older agreement from 2006."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVT",
+      "ticker": "AVT",
+      "name": "Avnet",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Avnetは2025年の売上高の23%、2024年は22%を占めた",
+          "text_en": "Avnet accounted for 23% of NXP's revenue in 2025 and 22% in 2024",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Avnet accounted for 23% of our revenue in 2025 and 22% in 2024."
+          }
+        },
+        {
+          "type": "down",
+          "text": "最大の販売パートナー5社の1つとしてAvnetを挙げている",
+          "text_en": "NXP names Avnet among its five largest distribution partners",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also have a strong position with our distribution partners, including our five largest in alphabetical order, Arrow, Avnet, Nexty, WT Micro and World Peace."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "コンシューマー機器",
+      "sub_en": "Consumer devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大10社のエンドカスタマーの1社としてAppleを挙げている",
+          "text_en": "NXP names Apple among its 10 largest end customers",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our 10 largest end customers, some of whom are supplied by distributors, in alphabetical order, are Apple, Aptiv, Aumovio, Bosch, Denso, Harman Auto, Hyundai, LGE Automotive, Samsung and Visteon.",
+            "note": "販売店経由の供給を含む記載です。",
+            "note_en": "Some end customers are supplied through distributors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "Analog Devices",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCHP",
+      "ticker": "MCHP",
+      "name": "Microchip Technology",
+      "sub": "マイコン",
+      "sub_en": "Microcontrollers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TXN",
+      "ticker": "TXN",
+      "name": "Texas Instruments",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "通信半導体",
+      "sub_en": "Mobile chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "通信・ソフト",
+      "sub_en": "Networking & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IFX",
+      "ticker": "Infineon",
+      "name": "Infineon Technologies",
+      "sub": "パワー・車載半導体",
+      "sub_en": "Power & automotive chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RNECY",
+      "ticker": "Renesas",
+      "name": "Renesas Electronics",
+      "sub": "マイコン",
+      "sub_en": "Microcontrollers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in NXP’s annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "Skyworks Solutions",
+      "sub": "RF半導体",
+      "sub_en": "RF chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Skyworks Solutionsの年次報告が、NXPセミコンダクターズを競合として挙げている",
+          "text_en": "Names NXP as a competitor in its annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our competitors include Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPWR",
+      "ticker": "MPWR",
+      "name": "Monolithic Power Systems",
+      "sub": "電源半導体",
+      "sub_en": "Power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Monolithic Power Systemsの年次報告が、NXPセミコンダクターズを競合として挙げている",
+          "text_en": "Names NXP as a competitor in its annual report",
+          "source": {
+            "label": "Monolithic Power Systems 10-K",
+            "label_en": "Monolithic Power Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We consider our primary competitors to include Analog Devices, Infineon Technologies, NXP Semiconductors, ON Semiconductor, Power Integrations, Renesas Electronics, ROHM Semiconductor, Semtech, STMicroelectronics and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INDI",
+      "ticker": "INDI",
+      "name": "indie Semiconductor",
+      "sub": "車載半導体",
+      "sub_en": "Automotive chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "indie Semiconductorの年次報告が、NXPセミコンダクターズを競合として挙げている",
+          "text_en": "Names NXP as a competitor in its annual report",
+          "source": {
+            "label": "indie Semiconductor 10-K",
+            "label_en": "indie Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary competitors are other automotive-focused semiconductor companies, including Infineon, Monolithic Power Systems, NXP, Renesas and ST Microelectronics."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "Silicon Laboratories",
+      "sub": "無線・IoT半導体",
+      "sub_en": "Wireless & IoT chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silicon Laboratoriesの年次報告が、NXPセミコンダクターズを競合として挙げている",
+          "text_en": "Names NXP as a competitor in its annual report",
+          "source": {
+            "label": "Silicon Laboratories 10-K",
+            "label_en": "Silicon Laboratories 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We compete with Espressif, Infineon, MediaTek, Microchip, Nordic Semiconductor, NXP, Qualcomm, Renesas, STMicroelectronics, Synaptics, Telink, Texas Instruments and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIOD",
+      "ticker": "DIOD",
+      "name": "Diodes Incorporated",
+      "sub": "ディスクリート半導体",
+      "sub_en": "Discrete semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Diodes Incorporatedの年次報告が、NXPセミコンダクターズを競合として挙げている",
+          "text_en": "Names NXP as a competitor in its annual report",
+          "source": {
+            "label": "Diodes Incorporated 10-K",
+            "label_en": "Diodes Incorporated 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Some of our larger competitors include Infineon Technologies A.G., Epson, Kyocera, Nexperia, NXP Semiconductors N.V., ON Semiconductor Corporation, Renesas Electronics Corporation, Texas Instruments, and Vishay Intertechnology, Inc., many of which have greater"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "MACOM Technology Solutions",
+      "sub": "RF・光通信半導体",
+      "sub_en": "RF & optical chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MACOM Technology Solutionsの年次報告が、NXPセミコンダクターズを競合として挙げている",
+          "text_en": "Names NXP as a competitor in its annual report",
+          "source": {
+            "label": "MACOM Technology Solutions 10-K",
+            "label_en": "MACOM Technology Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "While we compete with a wide variety of companies, our significant competitors include, among others , ADI, Broadcom, Credo, Marvell, MaxLinear, Microchip, NXP, Qorvo, Semtech, Skyworks and Sumitomo as well as increased competition from Chinese companies."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "root": {
+    "ticker": "OTEX",
+    "name": "オープンテキスト",
+    "name_en": "OpenText"
+  },
+  "rows": [
+    {
+      "ja": "提携・連携先",
+      "en": "Partners & integrations",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "ORCL",
+    "IBM",
+    "NOW",
+    "VEEV"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "OpenTextの製品は、Google Cloud Marketplaceで購入でき、顧客はGoogle Cloudの利用コミットを充てられる",
+          "text_en": "OpenText solutions are available on Google Cloud Marketplace, and customers can use their Google Cloud commit to purchase them",
+          "source": {
+            "label": "OpenText — Google Cloud partnership / integration directory, checked October 16, 2026",
+            "label_en": "OpenText — Google Cloud partnership / integration directory, checked October 16, 2026",
+            "url": "https://www.opentext.com/partners/opentext-on-google-cloud",
+            "level": "official",
+            "quote": "OpenText solutions are available as private offers on Google Cloud Marketplace, and customers can use their Google Cloud commit to purchase, streamlining procurement and maximizing existing cloud investments."
+          }
+        },
+        {
+          "type": "down",
+          "text": "OpenTextの製品をGoogle Cloud Marketplaceで購入し、クラウド利用コミットを活用できる",
+          "text_en": "Customers can leverage their cloud commit and purchase OpenText solutions on Google Cloud Marketplace",
+          "source": {
+            "label": "OpenText — Google Cloud partnership / integration directory, checked October 16, 2026",
+            "label_en": "OpenText — Google Cloud partnership / integration directory, checked October 16, 2026",
+            "url": "https://www.opentext.com/partners/opentext-on-google-cloud",
+            "level": "official",
+            "quote": "Leverage your cloud commit and purchase OpenText solutions on Google Cloud Marketplace"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "OpenTextは、欧州のソブリンクラウドの提供拡大でGoogle Cloudなどのハイパースケーラーと提携している",
+          "text_en": "OpenText is expanding its European sovereign cloud offerings through partnerships with hyperscalers such as Google Cloud",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Additionally, as we expand our European sovereign cloud offerings through partnerships with hyperscalers such as Amazon Web Services and Google Cloud, we are subject to heightened data residency, sovereignty, and security requirements specific to regulated European clients."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenTextは、欧州のソブリンクラウドの提供拡大でAmazon Web Servicesなどのハイパースケーラーと提携している",
+          "text_en": "OpenText is expanding its European sovereign cloud offerings through partnerships with hyperscalers such as Amazon Web Services",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Additionally, as we expand our European sovereign cloud offerings through partnerships with hyperscalers such as Amazon Web Services and Google Cloud, we are subject to heightened data residency, sovereignty, and security requirements specific to regulated European clients."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenTextはMicrosoftと、AI対応のコンテンツ統合、サイバーセキュリティ、ADM向け開発ツールで協力している",
+          "text_en": "OpenText works with Microsoft on integrated content solutions (now with AI), cybersecurity solutions and integrated developer tool sets in ADM",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "For the enterprise market, we work together with Microsoft to innovate on integrated content solutions (now with AI), holistic cybersecurity solutions (particularly in threat detection and response), and in ADM with integrated tool sets for the developer."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "一部の市場では、OpenTextはパートナーでもあるMicrosoftと競合する",
+          "text_en": "In certain markets, OpenText competes with Microsoft, who is also its partner",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In certain markets, OpenText competes with Microsoft, who is also our partner."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "年次報告が、競合する大手企業の1社としてMicrosoftを挙げている",
+          "text_en": "The annual report names Microsoft among the large enterprise technology providers it competes with",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "We compete with large enterprise technology providers, including International Business Machines Corporation (IBM), Microsoft Corporation (Microsoft), Oracle Corporation (Oracle) and ServiceNow, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenTextのコンテンツをSalesforceと統合して業務を自動化できる",
+          "text_en": "OpenText content can be integrated with Salesforce to enable automation",
+          "source": {
+            "label": "Official product scope; checked October17,2026",
+            "label_en": "Official product scope; checked October17,2026",
+            "url": "https://www.opentext.com/products/content-management",
+            "level": "official",
+            "quote": "Accelerate sales, onboarding, and contract cycles by integrating content with Salesforce to enable automation, simplify collaboration, and provide AI-powered insights that improve customer experiences and drive growth."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告で、OpenText ContentがSalesforceなどの業務アプリと連携すると説明している",
+          "text_en": "The annual report says OpenText Content integrates with business applications including Salesforce",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "OpenText Content integrates with the applications that manage critical business processes, such as SAP® S/4HANA, SAP® SuccessFactors®, Salesforce®, Microsoft® Office"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、OpenText ContentがSAP S/4HANAやSAP SuccessFactorsと連携すると説明している",
+          "text_en": "The annual report says OpenText Content integrates with SAP S/4HANA and SAP SuccessFactors",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "OpenText Content integrates with the applications that manage critical business processes, such as SAP® S/4HANA, SAP® SuccessFactors®, Salesforce®, Microsoft® Office"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VEEV",
+      "ticker": "VEEV",
+      "name": "Veeva Systems",
+      "sub": "ライフサイエンス向けソフト",
+      "sub_en": "Life sciences software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Veeva Systemsの年次報告が、オープンテキストを競合として挙げている",
+          "text_en": "Names OpenText as a competitor in its annual report",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "No single vendor offers products that compete with all of our Veeva Development Cloud or Quality Cloud applications, but IQVIA, Dassault Systèmes, OpenText Corporation, Oracle Corporation, Honeywell International Inc., and other smaller application providers offer applications that compete with certain of our Veeva"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Veevaの年次報告が、品質管理などの分野でOpenTextを競合として挙げている",
+          "text_en": "Veeva's annual report names OpenText among the competitors in this segment",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "In this segment of our business, we compete with solutions such as those offered by OpenText, Microsoft, Honeywell, EtQ Management Consultants, LLC, Oracle, and Box, and custom-built software developed by third-party vendors or in-house by our potential customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "業務ソフト・DB",
+      "sub_en": "Business software & databases",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "OpenTextの年次報告が、競合する大手企業の1社としてOracleを挙げている",
+          "text_en": "OpenText's annual report names Oracle among the large enterprise technology providers it competes with",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "We compete with large enterprise technology providers, including International Business Machines Corporation (IBM), Microsoft Corporation (Microsoft), Oracle Corporation (Oracle) and ServiceNow, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・ソフト",
+      "sub_en": "IT & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "OpenTextの年次報告が、競合する大手企業の1社としてIBMを挙げている",
+          "text_en": "OpenText's annual report names IBM among the large enterprise technology providers it competes with",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "We compete with large enterprise technology providers, including International Business Machines Corporation (IBM), Microsoft Corporation (Microsoft), Oracle Corporation (Oracle) and ServiceNow, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ワークフロー",
+      "sub_en": "Enterprise workflow",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "OpenTextの年次報告が、企業向けAI分野に広がる競合としてServiceNowを挙げている",
+          "text_en": "OpenText's annual report names ServiceNow among platform providers extending into enterprise AI and agentic workflows",
+          "source": {
+            "label": "OpenText 10-K",
+            "label_en": "OpenText 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "We increasingly compete with large platform providers extending into enterprise AI and agentic workflows including Microsoft and ServiceNow."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "Box",
+      "sub": "コンテンツ管理",
+      "sub_en": "Content management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Boxの年次報告が、オープンテキストを競合として挙げている",
+          "text_en": "Names OpenText as a competitor in its annual report",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "In the content management market, our primary competitors include, but are not limited to, Microsoft (SharePoint) and OpenText (Documentum)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

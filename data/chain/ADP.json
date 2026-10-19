@@ -1,0 +1,191 @@
+{
+  "root": {
+    "ticker": "ADP",
+    "name": "Automatic Data Processing"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・資金調達",
+      "en": "Partnerships & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "PAYC",
+    "PCTY"
+  ],
+  "companies": [
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "コンピューター・IT",
+      "sub_en": "Computing & IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "1962年にADPが最初のIBM製コンピューターをリースしたと記している",
+          "text_en": "ADP's timeline notes it leased its first IBM computers in 1962",
+          "source": {
+            "label": "Automatic Data Processing 8-K Ex.99 の発表",
+            "label_en": "Automatic Data Processing 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/8670/000000867025000023/adp2025investorday-ex99.htm",
+            "level": "official",
+            "date": "2025-06-12",
+            "quote": "global cloud-based HCM solution 2009 FIRST HCM Mobile App 2014 FIRST HCM Marketplace 2018 FIRST digital pay solution 2023 Launched API Central 1962 ADP leases its first IBM computers 1998 FIRST cloud- based payroll solution 2006 National Employment Report (NER) 2012 ADP Data Cloud introduced 2021 FIRST app-based conversational payroll",
+            "note": "1962年の記載で、古い情報です。",
+            "note_en": "Dated 1962; historical."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAPとADPが、共通顧客がADP Global Payrollをクラウドで運用できるよう提携すると発表した",
+          "text_en": "SAP and ADP announced a partnership to let shared clients run ADP Global Payroll in the cloud",
+          "source": {
+            "label": "SAP 20-F",
+            "label_en": "SAP 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465926020058/sap-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "- On September 19, SAP and ADP, a global leader in HR and payroll solutions, announced that they would partner to enable shared clients to run ADP Global Payroll in the cloud."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "ワークデイ",
+      "sub": "人事・財務ソフト",
+      "sub_en": "HR & finance software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Workdayの年次報告が、ADPを含む給与処理会社との世界的な提携に触れている",
+          "text_en": "Workday's annual report cites its global partnerships with payroll providers, including Automatic Data Processing",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our global partnerships with payroll providers, including Automatic Data Processing, Inc."
+          }
+        }
+      ],
+      "name_en": "Workday"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ADPの与信契約(2026年6月26日付)でBank of America, N.A.がシンジケーション・エージェントを務める",
+          "text_en": "Bank of America, N.A. is a syndication agent under ADP's credit agreement dated June 26, 2026",
+          "source": {
+            "label": "Automatic Data Processing 10-K",
+            "label_en": "Automatic Data Processing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "Credit Agreement, dated as of June 26, 2026, among Automatic Data Processing, Inc., the Lenders party thereto, JPMorgan Chase Bank, N.A., as Administrative Agent, Bank of America, N.A., BNP Paribas, Wells Fargo Bank, N.A. and Deutsche Bank Securities Inc., as Syndication Agents, and Barclays Bank PLC and MUFG Bank, Ltd., as Documentation Agents -",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同様に、2025年6月27日付の与信契約でも同行が務める",
+          "text_en": "Bank of America, N.A. is also a syndication agent under the credit agreement dated June 27, 2025",
+          "source": {
+            "label": "Automatic Data Processing 10-K",
+            "label_en": "Automatic Data Processing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "Credit Agreement, dated as of June 27, 2025, among Automatic Data Processing, Inc., the Lenders party thereto, JPMorgan Chase Bank, N.A., as Administrative Agent, Bank of America, N.A., BNP Paribas, Wells Fargo Bank, N.A. and Deutsche Bank Securities Inc., as Syndication Agents, and Barclays Bank PLC and MUFG Bank, Ltd., as Documentation Agents -"
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "PAYC",
+      "ticker": "PAYC",
+      "name": "ペイコム・ソフトウェア",
+      "sub": "給与・人事ソフト",
+      "sub_en": "Payroll & HR software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペイコム・ソフトウェアの年次報告が、オートマティック・データ・プロセッシングを競合として挙げている",
+          "text_en": "Names Automatic Data Processing as a competitor in its annual report",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ],
+      "name_en": "Paycom Software"
+    },
+    {
+      "id": "PCTY",
+      "ticker": "PCTY",
+      "name": "ペイロシティ",
+      "sub": "給与・人事ソフト",
+      "sub_en": "Payroll & HR software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペイロシティの年次報告が、オートマティック・データ・プロセッシングを競合として挙げている",
+          "text_en": "Names Automatic Data Processing as a competitor in its annual report",
+          "source": {
+            "label": "Paylocity 10-K",
+            "label_en": "Paylocity 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1591698/000159169826000069/pcty-20260630.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "Our competitors vary for each of our solutions and primarily include payroll and HR service and software providers, such as Automatic Data Processing, Inc., Dayforce, Inc., Paychex, Inc., Paycom Software, Inc., Ultimate Kronos Group and other local and regional providers."
+          }
+        }
+      ],
+      "name_en": "Paylocity"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

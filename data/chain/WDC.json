@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "WDC",
+    "name": "Western Digital"
+  },
+  "rows": [
+    {
+      "ja": "顧客(顧客側の年次報告に記載)",
+      "en": "Customers (named in the customer's annual report)"
+    },
+    {
+      "ja": "分離・提携・ライセンス",
+      "en": "Separation, ventures & licensing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "STX"
+  ],
+  "companies": [
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Fortinetの年次報告は、機器の限定供給部品としてWestern Digital製のメモリ機器を挙げている",
+          "text_en": "Fortinet's annual report lists memory devices from Western Digital among its limited source components",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our limited source components for particular appliances and suppliers of those components include specific types of CPUs from Intel and AMD, network and wireless chips from Broadcom, Marvell, Qualcomm and Intel, and memory devices from Intel, Micron, ADATA, Toshiba, Samsung and Western Digital."
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "SNDK",
+      "ticker": "SNDK",
+      "name": "サンディスク",
+      "sub": "フラッシュストレージ",
+      "sub_en": "Flash storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sandiskの年次報告は、Western Digitalの債務についてSandiskが引き受け補償する旨を述べ、分離・配布契約を挙げている",
+          "text_en": "Sandisk's annual report says it agreed to assume and indemnify WDC for certain liabilities, referencing the Separation and Distribution Agreement",
+          "source": {
+            "label": "Sandisk 10-K",
+            "label_en": "Sandisk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "we have agreed to assume, and indemnify WDC for, certain liabilities, as discussed further in the section of this annual report on Form 10-K entitled “Transactions with Western Digital Corporation—Separation and Distribution Agreement and Other Transactions with WDC.” Third parties could also seek to hold us responsible for liabilities that WDC has"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Western Digitalは分離時にSandiskの株式を配布した",
+          "text_en": "Western Digital distributed Sandisk shares at the Separation",
+          "source": {
+            "label": "Western Digital 10-K",
+            "label_en": "Western Digital 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "The graph assumes that $100 was invested in our common stock at the close of market on July 2, 2021 and that all dividends, including the distribution of Sandisk shares at Separation, were reinvested."
+          }
+        }
+      ],
+      "name_en": "Sandisk"
+    },
+    {
+      "id": "Kioxia",
+      "ticker": "Kioxia",
+      "name": "キオクシア",
+      "sub": "NANDフラッシュ",
+      "sub_en": "NAND flash",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KioxiaおよびUnis Ventureとの合弁事業はすべて、分離に際してSandiskに配布された",
+          "text_en": "All business ventures with Kioxia and Unis Venture were distributed to Sandisk in connection with the Separation",
+          "source": {
+            "label": "Western Digital 10-K",
+            "label_en": "Western Digital 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "All business ventures with Kioxia and Unis Venture were distributed to Sandisk in connection with the Separation and are included in discontinued operations.",
+            "note": "分離によりSandiskへ移管済みです。",
+            "note_en": "Transferred to Sandisk in the Separation."
+          }
+        }
+      ],
+      "name_en": "Kioxia"
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "ランバス",
+      "sub": "メモリ技術",
+      "sub_en": "Memory IP",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rambusの年次報告は、Western Digitalを同社の特許のライセンスを受けた企業の1社に挙げている",
+          "text_en": "Rambus's annual report lists Western Digital among companies that have licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents."
+          }
+        }
+      ],
+      "name_en": "Rambus"
+    },
+    {
+      "id": "STX",
+      "ticker": "STX",
+      "name": "シーゲイト・テクノロジー",
+      "sub": "HDD",
+      "sub_en": "Hard drives",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ウエスタンデジタルの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Western Digital’s annual report",
+          "source": {
+            "label": "Western Digital 10-K",
+            "label_en": "Western Digital 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Our competitors include HDD competitors such as Seagate Technology Holdings plc, and Toshiba Electronic Devices & Storage Corporation along with NAND flash suppliers that provide and enable alternative storage technologies, as well as storage systems and solutions providers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "シーゲイト・テクノロジーの年次報告が、ウエスタンデジタルを競合として挙げている",
+          "text_en": "Names Western Digital as a competitor in its annual report",
+          "source": {
+            "label": "Seagate Technology 10-K",
+            "label_en": "Seagate Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "Our global competitors include HDD manufacturers such as Western Digital Corporation and Toshiba Electronics Devices & Storage Corporation along with NAND flash suppliers that provide and enable alternative storage technologies, as well as storage systems and solutions providers."
+          }
+        }
+      ],
+      "name_en": "Seagate Technology"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

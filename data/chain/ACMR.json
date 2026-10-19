@@ -1,0 +1,59 @@
+{
+  "root": {
+    "ticker": "ACMR",
+    "name": "ACM Research"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "LRCX"
+  ],
+  "companies": [
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラム・リサーチ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ACMリサーチの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "source": {
+            "label": "ACM Research 10-K",
+            "label_en": "ACM Research 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We consider our principal competitors to be those companies that provide wafer cleaning, electrical plating and furnace products to the global market, including Lam Research Corporation, NAURA Technology Group Co., Ltd., SCREEN Holdings Co., Ltd., SEMES Co."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "PECVD製品とTrack製品の主要な競合としても、ラム・リサーチを挙げている",
+          "text_en": "Also names Lam Research Corporation as a principal competitor for its PECVD and Track products",
+          "source": {
+            "label": "ACM Research 10-K",
+            "label_en": "ACM Research 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Principal competitors for our PECVD and Track products also include Lam Research Corporation, Applied Materials, Inc., and Suzhou Jingtuo Semiconductor Technology Co., Ltd ."
+          }
+        }
+      ],
+      "name_en": "Lam Research"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

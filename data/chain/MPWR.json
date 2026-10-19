@@ -1,0 +1,149 @@
+{
+  "root": {
+    "ticker": "MPWR",
+    "name": "モノリシック・パワー・システムズ",
+    "name_en": "Monolithic Power Systems"
+  },
+  "rows": [
+    {
+      "ja": "提携",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ADI",
+    "AOSL",
+    "INDI",
+    "RMBS"
+  ],
+  "companies": [
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "グローバルファウンドリーズ",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesとMonolithic Power Systemsが、高性能な電源ソリューションを拡大するための製造提携を結んだ",
+          "text_en": "GlobalFoundries and Monolithic Power Systems formed a manufacturing partnership to scale high-performance power solutions",
+          "source": {
+            "label": "MPWR / GlobalFoundries — official dated disclosure; checked October 17, 2026",
+            "label_en": "MPWR / GlobalFoundries — official dated disclosure; checked October 17, 2026",
+            "url": "https://gf.com/news-and-events/news/gf-and-mps-form-manufacturing-partnership-to-scale-high-performance-power-solutions/",
+            "level": "official",
+            "quote": "GF and Monolithic Power Systems form manufacturing partnership to scale high-performance power solutions | GlobalFoundries"
+          }
+        }
+      ],
+      "name_en": "GlobalFoundries"
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "アナログ・デバイセズ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "モノリシック・パワー・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Monolithic Power Systems’s annual report",
+          "source": {
+            "label": "Monolithic Power Systems 10-K",
+            "label_en": "Monolithic Power Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We consider our primary competitors to include Analog Devices, Infineon Technologies, NXP Semiconductors, ON Semiconductor, Power Integrations, Renesas Electronics, ROHM Semiconductor, Semtech, STMicroelectronics and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Analog Devices"
+    },
+    {
+      "id": "AOSL",
+      "ticker": "AOSL",
+      "name": "アルファ・アンド・オメガ・セミコンダクター",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、モノリシック・パワー・システムズを競合として挙げている",
+          "text_en": "Names Monolithic Power Systems as a competitor in its annual report",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc. and Vishay Intertechnology, Inc."
+          }
+        }
+      ],
+      "name_en": "Alpha and Omega Semiconductor"
+    },
+    {
+      "id": "INDI",
+      "ticker": "INDI",
+      "name": "インディ・セミコンダクター",
+      "sub": "車載半導体",
+      "sub_en": "Automotive semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インディ・セミコンダクターの年次報告が、モノリシック・パワー・システムズを競合として挙げている",
+          "text_en": "Names Monolithic Power Systems as a competitor in its annual report",
+          "source": {
+            "label": "indie Semiconductor 10-K",
+            "label_en": "indie Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary competitors are other automotive-focused semiconductor companies, including Infineon, Monolithic Power Systems, NXP, Renesas and ST Microelectronics."
+          }
+        }
+      ],
+      "name_en": "indie Semiconductor"
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "ラムバス",
+      "sub": "メモリーインターフェース",
+      "sub_en": "Memory interface",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ラムバスの年次報告が、モノリシック・パワー・システムズを競合として挙げている",
+          "text_en": "Names Monolithic Power Systems as a competitor in its annual report",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the memory interface chip market, we compete with international semiconductor companies, including but not limited to Monolithic Power Systems, Montage Technology, Renesas and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Rambus"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

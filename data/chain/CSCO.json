@@ -1,0 +1,583 @@
+{
+  "root": {
+    "ticker": "CSCO",
+    "name": "Cisco"
+  },
+  "rows": [
+    {
+      "ja": "供給元(Cisco向けの販売先として記載)",
+      "en": "Suppliers (name Cisco as a customer)",
+      "above": true
+    },
+    {
+      "ja": "AI・インフラ・ソフトの提携先",
+      "en": "AI, infrastructure & software partners"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ANET",
+    "HPE",
+    "FTNT",
+    "PANW",
+    "DDOG"
+  ],
+  "companies": [
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "Viavi Solutions",
+      "sub": "試験・計測",
+      "sub_en": "Test & measurement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Viavi Solutionsの年次報告が、Ciscoを顧客例に挙げている",
+          "text_en": "Viavi Solutions' annual report lists Cisco Systems, Inc. among its example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "Viaviの顧客としての記載です。",
+            "note_en": "Listed as a Viavi customer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CiscoはNVIDIA Spectrum-Xスイッチ用シリコンとCisco OSを組み合わせたシステムを提供する、としている",
+          "text_en": "Cisco says it is the premier partner delivering partner-developed systems featuring NVIDIA Spectrum-X switch silicon paired with a Cisco operating system",
+          "source": {
+            "label": "Cisco — Secure AI Factory with NVIDIA, March 16, 2026",
+            "label_en": "Cisco — Secure AI Factory with NVIDIA, March 16, 2026",
+            "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m03/cisco-secure-ai-factory-with-nvidia-GTC-2026.html",
+            "level": "official",
+            "quote": "Cisco is the premier partner to deliver partner-developed systems featuring NVIDIA Spectrum-X switch silicon paired with a Cisco operating system, providing customers the flexibility of leveraging both NVIDIA Cloud Partner-compliant reference architectures and Cisco Silicon One-based architectures."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cisco Silicon One搭載のAIネットワークで構築したAMD Instinct MI355X GPUベースのAI基盤が、HUMAIN向けに稼働している",
+          "text_en": "AMD Instinct MI355X GPU-based AI infrastructure built on Cisco Silicon One-based AI networking is live and serving HUMAIN customers",
+          "source": {
+            "label": "Cisco — Secure AI Factory with NVIDIA, March 16, 2026",
+            "label_en": "Cisco — Secure AI Factory with NVIDIA, March 16, 2026",
+            "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m03/cisco-secure-ai-factory-with-nvidia-GTC-2026.html",
+            "level": "official",
+            "quote": "Cisco and HUMAIN, announced that AMD Instinct MI355X GPU-based AI infrastructure built on Cisco Silicon One-based AI networking is now live in Saudi Arabia and serving HUMAIN customers in the Kingdom and beyond."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMCI",
+      "ticker": "SMCI",
+      "name": "Supermicro",
+      "sub": "AIサーバー",
+      "sub_en": "AI servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CiscoはSupermicroと組み、ラックスケールのAI計算ソリューションを製品群に加える",
+          "text_en": "Cisco, partnering with Supermicro, adds rack-scale AI computing solutions to its portfolio",
+          "source": {
+            "label": "Cisco — Supermicro rack-scale collaboration, August 25, 2026; announced October availability",
+            "label_en": "Cisco — Supermicro rack-scale collaboration, August 25, 2026; announced October availability",
+            "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m08/cisco-secure-ai-factory-nvidia-rack-scale.html",
+            "level": "official",
+            "quote": "Cisco, partnering with Supermicro, adds rack-scale AI computing solutions to its portfolio, delivering end-to-end infrastructure to run massive AI workloads, reduce deployment risk, and help customers run workloads with greater efficiency and control over data."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CiscoはSupermicroの液冷・空冷システムを提供する",
+          "text_en": "Cisco will offer Supermicro liquid- and air-cooled systems",
+          "source": {
+            "label": "Cisco — Supermicro rack-scale collaboration, August 25, 2026; announced October availability",
+            "label_en": "Cisco — Supermicro rack-scale collaboration, August 25, 2026; announced October availability",
+            "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m08/cisco-secure-ai-factory-nvidia-rack-scale.html",
+            "level": "official",
+            "quote": "Through this new partnership, Cisco will offer Supermicro liquid- and air-cooled systems, giving customers access to rack-scale and dense GPU systems – validated and sold as part of the broader Cisco AI infrastructure portfolio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTAP",
+      "ticker": "NTAP",
+      "name": "NetApp",
+      "sub": "データストレージ",
+      "sub_en": "Data storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NetAppの年次報告が、NVIDIA、Cisco、Microsoftなどとの協業を挙げている",
+          "text_en": "NetApp's annual report cites collaborations with technology leaders such as NVIDIA, Cisco, and Microsoft",
+          "source": {
+            "label": "NetApp 10-K",
+            "label_en": "NetApp 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Collaborations with technology leaders such as NVIDIA, Cisco, Microsoft, and a broad network of channel partners enable us to deliver integrated, best-in-class solutions tailored to diverse customer needs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "Box",
+      "sub": "クラウドコンテンツ管理",
+      "sub_en": "Cloud content management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Boxの年次報告が、Ciscoなどとの連携を持つ技術パートナーに挙げている",
+          "text_en": "Box's annual report lists Cisco among technology partners with which it offers integrations",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We have a rich technology partner ecosystem, offering integrations with partners such as Adobe, Apple, Cisco, CrowdStrike, Google, Guidewire, IBM, Microsoft, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBX",
+      "ticker": "DBX",
+      "name": "Dropbox",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dropboxの年次報告が、Ciscoなどとの連携があると記している",
+          "text_en": "Dropbox's annual report says it has integrations with vendors including Cisco",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also have integrations with Microsoft, Adobe, Apple, Salesforce, Atlassian, Slack (now part of Salesforce), BetterCloud, Google, IBM, Cisco, VMware, Okta, Symantec, Palo Alto Networks, Zoom, and a variety of other productivity, collaboration, data management, and security vendors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTNX",
+      "ticker": "NTNX",
+      "name": "Nutanix",
+      "sub": "ハイブリッドクラウド",
+      "sub_en": "Hybrid cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Nutanixは、Cisco UCSブレードサーバーをNutanix AHV向けに認定するためCiscoと取り組んだ",
+          "text_en": "Nutanix worked with Cisco to certify Cisco UCS blade servers for Nutanix AHV",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "We have also worked with Cisco to certify Cisco UCS blade servers for Nutanix AHV, enabling organizations to repurpose existing qualified server deployments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAND",
+      "ticker": "BAND",
+      "name": "Bandwidth",
+      "sub": "通信API",
+      "sub_en": "Communications APIs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bandwidthは、CiscoのWebex Callingとの接続提携を持つ",
+          "text_en": "Bandwidth has BYOC partnerships including Webex Calling by Cisco",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have BYOC partnerships with leading UCaaS platforms, including Microsoft Teams Direct Routing and Operator Connect, Zoom Phone Provider Exchange, Webex Calling by Cisco, and Google Voice for Google Workspace."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Bandwidthは、CiscoのWebex Contact Centerとの接続提携を持つ",
+          "text_en": "Bandwidth has BYOC partnerships including Webex Contact Center by Cisco",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have BYOC partnerships with leading CCaaS platforms, including Five9, Genesys, Webex Contact Center by Cisco, and Zoom Contact Center."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bank of America, N.A.が管理代理人を務めるクレジット契約(2024年2月2日付)をCiscoが締結している",
+          "text_en": "Cisco has a Third Amended and Restated Credit Agreement dated February 2, 2024 with Bank of America, N.A. as administrative agent",
+          "source": {
+            "label": "Cisco 10-K",
+            "label_en": "Cisco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+            "level": "official",
+            "date": "2026-09-02",
+            "quote": "10.6† Third Amended and Restated Credit Agreement, dated as of February 2, 2024, by and among Cisco Systems, Inc., certain lenders party thereto, and Bank of America, N.A., as administrative agent, swing line lender and letter of credit issuer",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アリスタネットワークスの年次報告が、Arista Networksを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Arista Networks 10-K",
+            "label_en": "Arista Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The data center and campus networking markets have historically been dominated by Cisco, with competition also coming from other large network equipment and system vendors, including Dell/EMC, Extreme Networks, Hewlett Packard Enterprise, Huawei, Juniper Networks, Nvidia, and white box networking vendors that utilize open-source operating systems."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "IT基盤",
+      "sub_en": "IT infrastructure",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヒューレット・パッカード・エンタープライズの年次報告が、Hewlett Packard Enterpriseを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors in data center infrastructure are technology vendors, such as Dell Technologies Inc., Super Micro Computer, Inc., Cisco Systems, Inc., and Lenovo Group Ltd."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フォーティネットの年次報告が、Fortinetを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors include companies such as Check Point, Cisco, CrowdStrike, F5 Networks, HPE, Huawei, Microsoft, Netskope, Palo Alto Networks, SonicWALL, Sophos, and Zscaler."
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Palo Alto Networksの年次報告が、セキュリティ機能を製品に組み込む大手企業の例としてCiscoを挙げている",
+          "text_en": "Palo Alto Networks' annual report names Cisco among large companies that incorporate security features in their products and could bring competitive solutions",
+          "source": {
+            "label": "Palo Alto Networks 10-K",
+            "label_en": "Palo Alto Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm",
+            "level": "official",
+            "date": "2026-09-10",
+            "quote": "• large companies that incorporate security or observability features in their products, such as Alphabet Inc., Cisco Systems, Inc., and Microsoft Corporation, or those that have acquired, or may acquire, security vendors and have the technical and financial resources to bring competitive solutions to the market;"
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "DDOG",
+      "ticker": "DDOG",
+      "name": "データドッグ",
+      "sub": "監視・可観測性",
+      "sub_en": "Observability",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データドッグの年次報告が、Datadogを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Datadog 10-K",
+            "label_en": "Datadog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "• with respect to APM, we compete with Cisco Systems, Inc., New Relic, Inc. and Dynatrace Software Inc."
+          }
+        }
+      ],
+      "name_en": "Datadog"
+    },
+    {
+      "id": "DT",
+      "ticker": "DT",
+      "name": "ダイナトレース",
+      "sub": "可観測性",
+      "sub_en": "Observability",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ダイナトレースの年次報告が、Dynatraceを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our principal competitors include Cisco (which includes AppDynamics and Splunk), Datadog, Elastic, Grafana, and New Relic."
+          }
+        }
+      ],
+      "name_en": "Dynatrace"
+    },
+    {
+      "id": "CHKP",
+      "ticker": "CHKP",
+      "name": "チェック・ポイント",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "チェック・ポイントの年次報告が、Check Pointを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Check Point Software Technologies 20-F",
+            "label_en": "Check Point Software Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1015922/000117891326001932/zk2634942.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Our competitors include Cisco Systems, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Check Point"
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "シエナ",
+      "sub": "光ネットワーク",
+      "sub_en": "Optical networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シエナの年次報告が、Cienaを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Our competitors include Nokia, Huawei, Cisco, Hewlett Packard Enterprise, and ZTE."
+          }
+        }
+      ],
+      "name_en": "Ciena"
+    },
+    {
+      "id": "FIVN",
+      "ticker": "FIVN",
+      "name": "ファイブナイン",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファイブナインの年次報告が、Five9を競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We currently compete with large legacy vendors that offer on-premises contact center systems, such as Avaya Inc., or Avaya, and Cisco Systems, Inc., or Cisco."
+          }
+        }
+      ],
+      "name_en": "Five9"
+    },
+    {
+      "id": "NICE",
+      "ticker": "NICE",
+      "name": "ナイス",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナイスの年次報告が、NiCEを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the CCaaS market, which is a part of the broader Contact Center Infrastructure market that is still mainly held by traditional on-premises players, we compete against Amazon Connect, Avaya, Cisco, Five9, Genesys, and TalkDesk, as well as other niche vendors."
+          }
+        }
+      ],
+      "name_en": "NiCE"
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "ズーム",
+      "sub": "Web会議",
+      "sub_en": "Video meetings",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ズームの年次報告が、Zoomを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We face competition from legacy web-based meeting services providers, including Cisco Webex and GoTo, bundled productivity suite providers with communications offerings, including Microsoft 365 (with Teams) and Google Workspace (with Meet), and UCaaS and"
+          }
+        }
+      ],
+      "name_en": "Zoom"
+    },
+    {
+      "id": "RNG",
+      "ticker": "RNG",
+      "name": "リングセントラル",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リングセントラルの年次報告が、RingCentralを競合として挙げている",
+          "text_en": "Names other as a competitor in its annual report",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "• software providers such as Microsoft Corporation, Zoom Communications, Inc. and Cisco Systems, Inc. that generally license and/or host their software solutions, and their resellers including major global service providers and cable companies;"
+          }
+        }
+      ],
+      "name_en": "RingCentral"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

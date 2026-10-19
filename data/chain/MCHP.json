@@ -1,0 +1,314 @@
+{
+  "root": {
+    "ticker": "MCHP",
+    "name": "Microchip Technology"
+  },
+  "rows": [
+    {
+      "ja": "提携・買収・資金調達",
+      "en": "Partnerships, deals & financing",
+      "above": true
+    },
+    {
+      "ja": "販売代理店",
+      "en": "Distributors"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "NXPI",
+    "SLAB",
+    "MTSI",
+    "ALAB"
+  ],
+  "companies": [
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "半導体IPライセンス",
+      "sub_en": "Semiconductor IP licensing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CEVAは、NeuPro NPUファミリー全体をMicrochipのロードマップ全体に採用する包括的なポートフォリオライセンス契約を結んだ",
+          "text_en": "CEVA lists a comprehensive portfolio license with Microchip to adopt its full NeuPro NPU family across its roadmap",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "54 IP licensing agreements that underscore our momentum across connect, sense and infer: ten NPU licensing agreements, including a comprehensive portfolio license with Microchip to adopt our full NeuPro NPU family across its roadmap and embed AI capabilities across product lines; multiple agreements for our AI DSPs and accelerators across"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIOD",
+      "ticker": "DIOD",
+      "name": "Diodes Incorporated",
+      "sub": "ディスクリート半導体",
+      "sub_en": "Discrete semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Diodesは2025年4月29日に、TF Semiconductor Solutionsの約56.4%の持分をMicrochipへ最大約1760万ドル相当のMCHP株式と引き換えに売却する契約を結んだ",
+          "text_en": "On April 29, 2025, Diodes agreed to sell its approximate 56.4% ownership stake in TF Semiconductor Solutions, Inc. to Microchip in exchange for MCHP common stock valued at up to approximately $17.6 million",
+          "source": {
+            "label": "Diodes Incorporated 10-K",
+            "label_en": "Diodes Incorporated 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On April 29, 2025, the Company entered into an agreement to sell its approximate 56.4 % ownership stake in TF Semiconductor Solutions, Inc. to Microchip Technology Incorporated (“MCHP”) in exchange for shares of MCHP common stock at a value up to approximately $ 17.6 million, subject to earnout provisions, and certain closing adjustments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PI",
+      "ticker": "PI",
+      "name": "Impinj",
+      "sub": "RFID半導体",
+      "sub_en": "RFID chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Impinjは2025年12月22日にMicrochipと物品・サービス契約を結んだ",
+          "text_en": "On December 22, 2025, Impinj signed a goods and services agreement with Microchip Technology Incorporated",
+          "source": {
+            "label": "Impinj 10-K",
+            "label_en": "Impinj 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On December 22, 2025, we signed a goods and services agreement with Microchip Technology Incorporated, of which a member of our board of directors holds both an executive leadership and board of directors position.",
+            "note": "Impinjの取締役の1人がMicrochipの役員・取締役を兼ねています。",
+            "note_en": "An Impinj director also holds an executive and board position at Microchip."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MicrochipはJPMorgan Chase Bank, N.A.が管理代理人を務める第2次改訂版クレジット契約(2025年3月25日付)を結んでいる",
+          "text_en": "Microchip has a Second Amended and Restated Credit Agreement dated March 25, 2025 with JPMorgan Chase Bank, N.A. as administrative agent",
+          "source": {
+            "label": "Microchip Technology 10-K",
+            "label_en": "Microchip Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000016/mchp-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "10.4 Second Amended and Restated Credit Agreement, dated as of March 25, 2025, by and among Microchip Technology Incorporated, the lenders from time to time party thereto and JPMorgan Chase Bank, N.A., as administrative agent",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARW",
+      "ticker": "ARW",
+      "name": "Arrow Electronics",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の販売代理店Arrow Electronicsは、2026年度の純売上高の12%、2025年度は10%を占めた",
+          "text_en": "Arrow Electronics, Microchip's largest distributor, made up 12% and 10% of its net sales in fiscal 2026 and fiscal 2025, respectively",
+          "source": {
+            "label": "Microchip Technology 10-K",
+            "label_en": "Microchip Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000016/mchp-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "With the exception of Arrow Electronics, our largest distributor, which made up 12% and 10% of our net sales, in fiscal 2026 and in fiscal 2025, respectively, no distributor or direct customer accounted for more than 10% of our net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXP Semiconductors",
+      "sub": "車載・組み込み半導体",
+      "sub_en": "Automotive & embedded chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NXP Semiconductorsの年次報告が、マイクロチップ・テクノロジーを競合として挙げている",
+          "text_en": "Names Microchip as a competitor in its annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "Silicon Laboratories",
+      "sub": "無線・IoT半導体",
+      "sub_en": "Wireless & IoT chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silicon Laboratoriesの年次報告が、マイクロチップ・テクノロジーを競合として挙げている",
+          "text_en": "Names Microchip as a competitor in its annual report",
+          "source": {
+            "label": "Silicon Laboratories 10-K",
+            "label_en": "Silicon Laboratories 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We compete with Espressif, Infineon, MediaTek, Microchip, Nordic Semiconductor, NXP, Qualcomm, Renesas, STMicroelectronics, Synaptics, Telink, Texas Instruments and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "MACOM Technology Solutions",
+      "sub": "RF・光通信半導体",
+      "sub_en": "RF & optical chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MACOM Technology Solutionsの年次報告が、マイクロチップ・テクノロジーを競合として挙げている",
+          "text_en": "Names Microchip as a competitor in its annual report",
+          "source": {
+            "label": "MACOM Technology Solutions 10-K",
+            "label_en": "MACOM Technology Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "While we compete with a wide variety of companies, our significant competitors include, among others , ADI, Broadcom, Credo, Marvell, MaxLinear, Microchip, NXP, Qorvo, Semtech, Skyworks and Sumitomo as well as increased competition from Chinese companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALAB",
+      "ticker": "ALAB",
+      "name": "Astera Labs",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Astera Labsの年次報告が、マイクロチップ・テクノロジーを競合として挙げている",
+          "text_en": "Names Microchip as a competitor in its annual report",
+          "source": {
+            "label": "Astera Labs 10-K",
+            "label_en": "Astera Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our principal competitors include Broadcom, Inc., Credo Technology Group Holding Ltd., Marvell Technology, Inc., Microchip Technology Inc., Montage Technology, Parade Technologies, Ltd., and Rambus, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "MaxLinear",
+      "sub": "通信半導体",
+      "sub_en": "Connectivity chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MaxLinearの年次報告が、マイクロチップ・テクノロジーを競合として挙げている",
+          "text_en": "Names Microchip as a competitor in its annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated, Analog Devices, Inc., Renesas Electronics Corporation, Microchip"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SITM",
+      "ticker": "SITM",
+      "name": "SiTime",
+      "sub": "タイミング半導体",
+      "sub_en": "Timing chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SiTimeの年次報告が、マイクロチップ・テクノロジーを競合として挙げている",
+          "text_en": "Names Microchip as a competitor in its annual report",
+          "source": {
+            "label": "SiTime 10-K",
+            "label_en": "SiTime 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Companies that we primarily compete with include, but are not limited to, Abracon, LLC, Daishinku Corp., Diodes Incorporated, Kyocera Corporation, Microchip Technology Inc., Murata Manufacturing Co., Ltd, Nihon Dempa Kogoyo., Ltd., Rakon Limited, Renesas Electronics Corporation, Seiko Epson Corporation, Skyworks Solutions,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIMO",
+      "ticker": "SIMO",
+      "name": "Silicon Motion",
+      "sub": "ストレージ制御半導体",
+      "sub_en": "Storage controller chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silicon Motionの年次報告が、マイクロチップ・テクノロジーを競合として挙げている",
+          "text_en": "Names Microchip as a competitor in its annual report",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We face competition from several competitors, including Microchip and Phison, our flash memory customers and smaller merchant suppliers in China."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

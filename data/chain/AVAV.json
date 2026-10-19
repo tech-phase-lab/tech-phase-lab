@@ -1,0 +1,304 @@
+{
+  "root": {
+    "ticker": "AVAV",
+    "name": "AeroVironment"
+  },
+  "rows": [
+    {
+      "ja": "サプライヤー",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "LMT",
+    "RTX",
+    "BA",
+    "LHX",
+    "NOC"
+  ],
+  "companies": [
+    {
+      "id": "KTOS",
+      "ticker": "KTOS",
+      "name": "クラトス・ディフェンス",
+      "sub": "防衛・宇宙システム",
+      "sub_en": "Defense & space systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Kratosは2022年に、AeroVironmentが取得したBlueHaloから約1億6,000万ドルの契約獲得の可能性を得た",
+          "text_en": "In 2022, Kratos received an approximate $160 million potential contract award from Blue Halo (acquired by AeroVironment)",
+          "source": {
+            "label": "Kratos Defense 10-K",
+            "label_en": "Kratos Defense 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Related to certain of these investments, in 2022, we received an approximate $160 million potential contract award from Blue Halo (acquired by AeroVironment) and a significant contract award from Intelsat (acquired by SES) as a result of Kratos OpenSpace™ products and technology.",
+            "note": "取得前の2022年の契約で、子会社レベルです。",
+            "note_en": "A 2022 award from BlueHalo before its acquisition; subsidiary-level."
+          }
+        }
+      ],
+      "name_en": "Kratos Defense"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月1日付のクレジット契約第4次修正の当事者に、JPMorgan Chase Bank, N.A.が含まれる",
+          "text_en": "JPMorgan Chase Bank, N.A. is a party to the Fourth Amendment to Credit Agreement dated May 1, 2025",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Fourth Amendment to Credit Agreement, Amendment to Security and Pledge Agreement, and Joinder Agreement, dated May 1, 2025, by and among AeroVironment, Inc., certain lenders, letter of credit issuers, Bank of America, N.A., as the administrative agent and the swingline lender, and Bank of America, N.A., JPMorgan Chase Bank, N.A., U.S.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AeroVironmentのクレジット契約で、Bank of America, N.A.が管理代理人を務める",
+          "text_en": "Bank of America, N.A. is the administrative agent under AeroVironment's Credit Agreement",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "In connection with the consummation of the Arcturus Acquisition on February 19, 2021, the Company, as borrower, and Arcturus, as guarantor, entered into a Credit Agreement with certain lenders, letter of credit issuers, Bank of America, N.A., as the administrative agent and the swingline lender, and BofA Securities, Inc., JPMorgan Chase Bank, N.A., and U.S.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーティン",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Our current principal competitors include Elbit Systems Ltd., Quantum-Systems, Inc., Redwire Corporation, Teledyne Technologies, Inc., Sierra Nevada Corporation, Lockheed Martin Corporation, The Boeing Company, Textron, Inc., Shield AI, Inc., Northrop Grumman Corporation, Griffon Aerospace, Inc., L3Harris Technologies, Inc., Anduril"
+          }
+        }
+      ],
+      "name_en": "Lockheed Martin"
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTX",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Competitors in the C-UAS and Electronic Warfare markets include Anduril Industries, Inc., The Boeing Company, Lockheed Martin Corporation, RTX Corporation, DroneShield Limited, SRC Inc., Polaris, Inc., CACI International Inc., Northrop Grumman Corporation, L3Harris Technologies, Inc., and other emerging technology firms and international players."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "航空宇宙",
+      "sub_en": "Aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "The space technology and directed energy market includes competitors such as The Boeing Company, Lockheed Martin Corporation, L3Harris Technologies, Inc., BAE Systems, Inc., nLIGHT, Inc., Epirus, Inc., EO Solutions Corporation, Huntington Ingalls Industries, Inc., and RTX Corporation."
+          }
+        }
+      ],
+      "name_en": "Boeing"
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "sub": "防衛・通信",
+      "sub_en": "Defense & communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Our current principal competitors include Elbit Systems Ltd., Quantum-Systems, Inc., Redwire Corporation, Teledyne Technologies, Inc., Sierra Nevada Corporation, Lockheed Martin Corporation, The Boeing Company, Textron, Inc., Shield AI, Inc., Northrop Grumman Corporation, Griffon Aerospace, Inc., L3Harris Technologies, Inc., Anduril"
+          }
+        }
+      ],
+      "name_en": "L3Harris Technologies"
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Our current principal competitors include Elbit Systems Ltd., Quantum-Systems, Inc., Redwire Corporation, Teledyne Technologies, Inc., Sierra Nevada Corporation, Lockheed Martin Corporation, The Boeing Company, Textron, Inc., Shield AI, Inc., Northrop Grumman Corporation, Griffon Aerospace, Inc., L3Harris Technologies, Inc., Anduril"
+          }
+        }
+      ],
+      "name_en": "Northrop Grumman"
+    },
+    {
+      "id": "RDW",
+      "ticker": "RDW",
+      "name": "レッドワイヤー",
+      "sub": "宇宙インフラ",
+      "sub_en": "Space infrastructure",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Our current principal competitors include Elbit Systems Ltd., Quantum-Systems, Inc., Redwire Corporation, Teledyne Technologies, Inc., Sierra Nevada Corporation, Lockheed Martin Corporation, The Boeing Company, Textron, Inc., Shield AI, Inc., Northrop Grumman Corporation, Griffon Aerospace, Inc., L3Harris Technologies, Inc., Anduril"
+          }
+        }
+      ],
+      "name_en": "Redwire"
+    },
+    {
+      "id": "TDY",
+      "ticker": "TDY",
+      "name": "テレダイン・テクノロジーズ",
+      "sub": "センサー・電子機器",
+      "sub_en": "Sensors & electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Our current principal competitors include Elbit Systems Ltd., Quantum-Systems, Inc., Redwire Corporation, Teledyne Technologies, Inc., Sierra Nevada Corporation, Lockheed Martin Corporation, The Boeing Company, Textron, Inc., Shield AI, Inc., Northrop Grumman Corporation, Griffon Aerospace, Inc., L3Harris Technologies, Inc., Anduril"
+          }
+        }
+      ],
+      "name_en": "Teledyne Technologies"
+    },
+    {
+      "id": "TXT",
+      "ticker": "TXT",
+      "name": "テキストロン",
+      "sub": "航空機・防衛",
+      "sub_en": "Aircraft & defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エアロバイロメントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in AeroVironment’s annual report",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Competitors in the LMS market include Textron Inc., RTX Corporation, Lockheed Martin Corporation, Anduril Industries, Inc., Aevex Corp., SpektreWorks, Inc., Dragoon Technology LLC, Cummings Aerospace, Inc., Elbit Systems Ltd., and UVision Air Ltd."
+          }
+        }
+      ],
+      "name_en": "Textron"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

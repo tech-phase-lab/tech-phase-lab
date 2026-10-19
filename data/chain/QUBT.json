@@ -1,0 +1,192 @@
+{
+  "root": {
+    "ticker": "QUBT",
+    "name": "クアンタム・コンピューティング",
+    "name_en": "Quantum Computing Inc."
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "IBM",
+    "GOOG",
+    "IONQ",
+    "RGTI",
+    "QBTS"
+  ],
+  "companies": [
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・量子",
+      "sub_en": "IT services & quantum",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クアンタム・コンピューティングの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Quantum Computing Inc.’s annual report",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "well-established technology companies that generally compete across our products, including IBM, Quantinuum, Google, Microsoft and Amazon;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(Google)",
+      "sub": "ネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クアンタム・コンピューティングの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Quantum Computing Inc.’s annual report",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "well-established technology companies that generally compete across our products, including IBM, Quantinuum, Google, Microsoft and Amazon;"
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クアンタム・コンピューティングの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Quantum Computing Inc.’s annual report",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "well-established technology companies that generally compete across our products, including IBM, Quantinuum, Google, Microsoft and Amazon;"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クアンタム・コンピューティングの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Quantum Computing Inc.’s annual report",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "well-established technology companies that generally compete across our products, including IBM, Quantinuum, Google, Microsoft and Amazon;"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "IONQ",
+      "ticker": "IONQ",
+      "name": "IonQ",
+      "sub": "量子コンピュータ",
+      "sub_en": "Quantum computing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クアンタム・コンピューティングの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Quantum Computing Inc.’s annual report",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "public and private companies with competing technology, including IonQ, Rigetti Computing, PsiQuantum, Infleqtion, Xanadu and D-Wave"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RGTI",
+      "ticker": "RGTI",
+      "name": "リゲッティ・コンピューティング",
+      "sub": "量子コンピュータ",
+      "sub_en": "Quantum computing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クアンタム・コンピューティングの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Quantum Computing Inc.’s annual report",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "public and private companies with competing technology, including IonQ, Rigetti Computing, PsiQuantum, Infleqtion, Xanadu and D-Wave"
+          }
+        }
+      ],
+      "name_en": "Rigetti Computing"
+    },
+    {
+      "id": "QBTS",
+      "ticker": "QBTS",
+      "name": "D-Wave Quantum",
+      "sub": "量子コンピュータ",
+      "sub_en": "Quantum computing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クアンタム・コンピューティングの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Quantum Computing Inc.’s annual report",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "public and private companies with competing technology, including IonQ, Rigetti Computing, PsiQuantum, Infleqtion, Xanadu and D-Wave"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "root": {
+    "ticker": "AMBA",
+    "name": "アンバレラ",
+    "name_en": "Ambarella"
+  },
+  "rows": [
+    {
+      "ja": "製造・組立の供給元",
+      "en": "Manufacturing & assembly suppliers",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "NVDA",
+    "CEVA"
+  ],
+  "companies": [
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "半導体・電子",
+      "sub_en": "Semiconductors & electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アンバレラのSoCの大半は、米テキサス州オースティンと韓国の工場でSamsungが供給している",
+          "text_en": "The substantial majority of Ambarella's SoCs are supplied by Samsung in Austin, Texas and South Korea",
+          "source": {
+            "label": "Ambarella 10-K",
+            "label_en": "Ambarella 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Currently, the substantial majority of our SoCs are supplied by Samsung Electronics Corporation (Samsung) in facilities located in Austin, Texas and South Korea, from whom we have the option to purchase both fully-assembled and tested products as well as tested die in wafer form for assembly."
+          }
+        },
+        {
+          "type": "up",
+          "text": "組立・検査済み製品と、組立前のウエハ形態の検査済みダイの両方を購入できる",
+          "text_en": "Ambarella can buy both fully assembled and tested products and tested die in wafer form",
+          "source": {
+            "label": "Ambarella 10-K",
+            "label_en": "Ambarella 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Currently, the majority of our SoCs are supplied by Samsung in facilities located in Austin, Texas and South Korea, from whom we have the option to purchase both fully assembled and tested products as well as tested die in wafer form for assembly."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "ASX",
+      "ticker": "ASX",
+      "name": "ASEテクノロジー・ホールディング",
+      "sub": "半導体の組立・検査",
+      "sub_en": "Semiconductor assembly & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Samsungから検査済みダイを購入する場合、組立はASEに委託している",
+          "text_en": "For tested die purchased from Samsung, Ambarella contracts the assembly to ASE",
+          "source": {
+            "label": "Ambarella 10-K",
+            "label_en": "Ambarella 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "In the case of purchases of tested die from Samsung, we contract the assembly to Advanced Semiconductor Engineering, Inc., or ASE."
+          }
+        }
+      ],
+      "name_en": "ASE Technology Holding"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アンバレラの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Ambarella’s annual report",
+          "source": {
+            "label": "Ambarella 10-K",
+            "label_en": "Ambarella 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "In the IoT market, our primary competitors include HiSilicon Technologies Co., Ltd., or HiSilicon, which is owned by Huawei Technologies Co., Novatek Microelectronics Corp., or Novatek, NVIDIA Corporation, or NVIDIA, Qualcomm Incorporated, or Qualcomm, and Sigmastar Technology Ltd."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "アンバレラの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Ambarella’s annual report",
+          "source": {
+            "label": "Ambarella 10-K",
+            "label_en": "Ambarella 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "In the automotive camera market, we compete against Horizon Robotics Inc., Mobileye, a subsidiary of Intel Corporation, Novatek, NVIDIA, Qualcomm, Renesas Electronics Corporation, and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "半導体IP",
+      "sub_en": "Semiconductor IP",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAの年次報告が、アンバレラを競合として挙げている",
+          "text_en": "Names Ambarella as a competitor in its annual report",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "AI accelerator providers, including Arm Ethos, Cadence AI/Vision DSP families, Imagination AI accelerators, Cambricon, Ambarella (CVflow), and open‑source engines such as Nvidia’s NVDLA."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

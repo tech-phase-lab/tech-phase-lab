@@ -1,0 +1,468 @@
+{
+  "root": {
+    "ticker": "SWKS",
+    "name": "Skyworks Solutions"
+  },
+  "rows": [
+    {
+      "ja": "顧客(Skyworksの年次報告に記載)",
+      "en": "Customers (named in Skyworks' annual report)",
+      "above": true
+    },
+    {
+      "ja": "合併・買収・資金調達",
+      "en": "Merger, acquisition & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "QRVO",
+    "AVGO",
+    "QCOM",
+    "ADI",
+    "TXN"
+  ],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマートフォン・PC",
+      "sub_en": "Smartphones & PCs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Appleは、販売店や受託製造業者などを通じた購入で、純売上高の2025年度67%、2024年度69%、2023年度66%を占めた",
+          "text_en": "Apple, through sales to distributors, contract manufacturers and direct sales, accounted for 67%, 69% and 66% of net revenue in fiscal 2025, 2024 and 2023, respectively",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "During fiscal 2025, fiscal 2024, and fiscal 2023, Apple, through sales to multiple distributors, contract manufacturers, and direct sales for multiple applications including smartphones, tablets, desktop, and notebook computers, watches and other devices, in the aggregate accounted for 67 %, 69 %, and 66 % of the Company’s net revenue, respectively."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年次報告が、主要顧客としてAmazonとApple Inc.を挙げている",
+          "text_en": "The annual report lists Amazon and Apple Inc. among its key customers",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our key customers include Amazon, Apple Inc."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "QRVO",
+      "ticker": "QRVO",
+      "name": "コルボ",
+      "sub": "RF半導体",
+      "sub_en": "RF chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Qorvoの年次報告によると、QorvoはSkyworksと2025年10月27日付の合併契約(Agreement and Plan of Merger)を結んだ",
+          "text_en": "Qorvo's annual report says it entered into an Agreement and Plan of Merger with Skyworks on October 27, 2025",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "On October 27, 2025, we entered into an Agreement and Plan of Merger (the “Merger Agreement”), by and among Skyworks Solutions, Inc., a Delaware corporation (“Skyworks”), the Company, Comet Acquisition Corp., a Delaware corporation and a wholly-owned subsidiary of Skyworks (“Merger Sub",
+            "note": "合併は計画段階の記載です。",
+            "note_en": "Describes a planned merger."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Skyworksの年次報告が、Qorvoとの合併の行方が不確実なことが取引先との関係に影響し得ると記載している",
+          "text_en": "Skyworks' annual report says uncertainty about the outcome of the Mergers with Qorvo could disrupt its business relationships",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Uncertainty regarding the outcome of the Mergers and our future could disrupt our business relationships with our existing and potential customers, distributors, service providers and other business partners, who may attempt to negotiate changes in existing business relationships or consider entering into business relationships with parties other than Qorvo."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Skyworksの年次報告が、競合としてQorvoを挙げている",
+          "text_en": "Named as a competitor in Skyworks' annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our competitors include Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Qorvo"
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "シリコン・ラボラトリーズ",
+      "sub": "IoT半導体",
+      "sub_en": "IoT chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Skyworksは、Silicon LaboratoriesのInfrastructure and Automotive事業の取得代金の一部に充てるため、2021年7月26日にタームローン10億ドルを借り入れた",
+          "text_en": "On July 26, 2021 Skyworks borrowed $1.0 billion of term loans to finance part of the purchase price for Silicon Laboratories' Infrastructure and Automotive business",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "On July 26, 2021, the Company borrowed $ 1.0 billion in aggregate principal amount of term loans (the “Term Loans”) under the Term Loan Facility to finance a portion of the purchase price for the acquisition of the Infrastructure and Automotive business of Silicon Laboratories Inc. and to pay fees and expenses incurred in connection therewith.",
+            "note": "2021年の取得に関する記載です。",
+            "note_en": "Refers to a 2021 acquisition."
+          }
+        }
+      ],
+      "name_en": "Silicon Laboratories"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPMorgan",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Skyworksは2021年5月21日に、JPMorgan Chase Bank, N.A.を管理代理人とする750百万ドルのリボルビング・クレジット・ファシリティ契約を結んだ",
+          "text_en": "On May 21, 2021 Skyworks entered into a revolving credit agreement with JPMorgan Chase Bank, N.A. as administrative agent, providing a $750 million revolving credit facility",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Additionally, on May 21, 2021, the Company entered into a revolving credit agreement with various financial institutions, as lenders, and JPMorgan Chase Bank, N.A., as administrative agent, providing for a $750 million revolving credit facility (the “Revolving Credit Facility”).",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "GS",
+      "ticker": "Goldman Sachs",
+      "name": "ゴールドマン・サックス",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Skyworksは2025年10月27日に、Goldman Sachs Bank USAが最大3,050.0百万ドルの無担保ブリッジ・タームローンを提供するとしたコミットメント・レターを結んだ",
+          "text_en": "On October 27, 2025 Skyworks entered into a commitment letter under which Goldman Sachs Bank USA committed to provide up to $3,050.0 million of senior unsecured bridge term loans",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In connection with the execution of the Merger Agreement, we entered into a commitment letter (“Bridge Commitment Letter”) on October 27, 2025, with Goldman Sachs Bank USA, which committed to provide, subject to the satisfaction of customary closing conditions, up to $ 3,050.0 million of senior unsecured bridge term loans for the",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Goldman Sachs"
+    },
+    {
+      "id": "BAC",
+      "ticker": "Bank of America",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Skyworksは、Bank of America, N.A.を管理代理人とするクレジット契約に基づく優先クレジット・ファシリティを持つ",
+          "text_en": "Skyworks has a senior credit facility under a credit agreement with Bank of America, N.A. as administrative agent",
+          "source": {
+            "label": "Skyworks Solutions 8-K Ex.99 の発表",
+            "label_en": "Skyworks Solutions 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000110465926089381/tm2620808d3_ex99-1.htm",
+            "level": "official",
+            "date": "2026-08-03",
+            "quote": "senior credit facility pursuant to a credit agreement with Bank of America, N.A., as administrative agent, swing line lender and letter",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "アナログ・デバイセズ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スカイワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Analog Devices"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "通信・インフラ半導体",
+      "sub_en": "Networking & infrastructure chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スカイワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "CRUS",
+      "ticker": "CRUS",
+      "name": "シーラス・ロジック",
+      "sub": "オーディオ半導体",
+      "sub_en": "Audio chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スカイワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Cirrus Logic"
+    },
+    {
+      "id": "MRAAY",
+      "ticker": "Murata",
+      "name": "村田製作所",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スカイワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Murata Manufacturing"
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXPセミコンダクターズ",
+      "sub": "車載・産業用半導体",
+      "sub_en": "Automotive & industrial chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スカイワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "NXP Semiconductors"
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "クアルコム",
+      "sub": "モバイル半導体",
+      "sub_en": "Mobile chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スカイワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "クアルコムの年次報告が、スカイワークスを競合として挙げている",
+          "text_en": "Names Skyworks as a competitor in its annual report",
+          "source": {
+            "label": "Qualcomm 10-K",
+            "label_en": "Qualcomm 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "date": "2025-11-05",
+            "quote": "Examples (some of which are strategic partners of ours in other areas) include Broadcom, HiSilicon, MediaTek, Mobileye, Nvidia, NXP Semiconductors, Qorvo, Samsung, Skyworks, Texas Instruments and UNISOC."
+          }
+        }
+      ],
+      "name_en": "Qualcomm"
+    },
+    {
+      "id": "TXN",
+      "ticker": "TXN",
+      "name": "テキサス・インスツルメンツ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スカイワークスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Texas Instruments"
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "マコム・テクノロジー・ソリューションズ",
+      "sub": "高周波半導体",
+      "sub_en": "RF & microwave chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マコム・テクノロジー・ソリューションズの年次報告が、スカイワークスを競合として挙げている",
+          "text_en": "Names Skyworks as a competitor in its annual report",
+          "source": {
+            "label": "MACOM Technology Solutions 10-K",
+            "label_en": "MACOM Technology Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "While we compete with a wide variety of companies, our significant competitors include, among others , ADI, Broadcom, Credo, Marvell, MaxLinear, Microchip, NXP, Qorvo, Semtech, Skyworks and Sumitomo as well as increased competition from Chinese companies."
+          }
+        }
+      ],
+      "name_en": "MACOM Technology Solutions"
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "マックスリニア",
+      "sub": "接続用半導体",
+      "sub_en": "Connectivity chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、スカイワークスを競合として挙げている",
+          "text_en": "Names Skyworks as a competitor in its annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom, Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated,"
+          }
+        }
+      ],
+      "name_en": "MaxLinear"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

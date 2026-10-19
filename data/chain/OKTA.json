@@ -1,0 +1,283 @@
+{
+  "root": {
+    "ticker": "OKTA",
+    "name": "オクタ",
+    "name_en": "Okta"
+  },
+  "rows": [
+    {
+      "ja": "Okta Integration Networkの連携先",
+      "en": "Integrations in the Okta Integration Network",
+      "above": true
+    },
+    {
+      "ja": "Oktaを連携先に挙げる企業",
+      "en": "Companies naming Okta as an integration"
+    },
+    {
+      "ja": "AI・セキュリティ提携",
+      "en": "AI & security programs"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Okta Integration Networkの連携先にSalesforceが挙げられている",
+          "text_en": "Salesforce is listed among the Okta Integration Network integrations",
+          "source": {
+            "label": "Okta 10-K",
+            "label_en": "Okta 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "The Okta Integration Network contains over 7,000 integrations with cloud, mobile and web applications, IoT devices and IT infrastructure providers, including AWS, Atlassian, DocuSign, Google, Microsoft 365, NetSuite, Oracle, Palo Alto Networks, Proofpoint, Salesforce, SAP, ServiceNow, Slack, Splunk, VMware, Workday, Zendesk and Zoom."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Okta Integration Networkの連携先にMicrosoft 365が挙げられている",
+          "text_en": "Microsoft 365 is listed among the Okta Integration Network integrations",
+          "source": {
+            "label": "Okta 10-K",
+            "label_en": "Okta 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "The Okta Integration Network contains over 7,000 integrations with cloud, mobile and web applications, IoT devices and IT infrastructure providers, including AWS, Atlassian, DocuSign, Google, Microsoft 365, NetSuite, Oracle, Palo Alto Networks, Proofpoint, Salesforce, SAP, ServiceNow, Slack, Splunk, VMware, Workday, Zendesk and Zoom."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Okta Integration Networkの連携先にServiceNowが挙げられている",
+          "text_en": "ServiceNow is listed among the Okta Integration Network integrations",
+          "source": {
+            "label": "Okta 10-K",
+            "label_en": "Okta 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "The Okta Integration Network contains over 7,000 integrations with cloud, mobile and web applications, IoT devices and IT infrastructure providers, including AWS, Atlassian, DocuSign, Google, Microsoft 365, NetSuite, Oracle, Palo Alto Networks, Proofpoint, Salesforce, SAP, ServiceNow, Slack, Splunk, VMware, Workday, Zendesk and Zoom."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Okta Integration Networkの連携先にPalo Alto Networksが挙げられている",
+          "text_en": "Palo Alto Networks is listed among the Okta Integration Network integrations",
+          "source": {
+            "label": "Okta 10-K",
+            "label_en": "Okta 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "The Okta Integration Network contains over 7,000 integrations with cloud, mobile and web applications, IoT devices and IT infrastructure providers, including AWS, Atlassian, DocuSign, Google, Microsoft 365, NetSuite, Oracle, Palo Alto Networks, Proofpoint, Salesforce, SAP, ServiceNow, Slack, Splunk, VMware, Workday, Zendesk and Zoom."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "ボックス",
+      "sub": "クラウド保管",
+      "sub_en": "Cloud content",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Boxは、Oktaを販売・連携を行う技術パートナーの1社として挙げている",
+          "text_en": "Box names Okta among technology partners for marketing, reselling or integration",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We have a rich technology partner ecosystem, offering integrations with partners such as Adobe, Apple, Cisco, CrowdStrike, Google, Guidewire, IBM, Microsoft, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Boxは、Oktaを含むパートナーと販売・再販・連携の契約を結んだとしている",
+          "text_en": "Box says it has agreements with partners including Okta to market, resell or integrate",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "For example, we have entered into agreements with partners such as Adobe, Apple, Carahsoft, Cisco, CrowdStrike, Google, Guidewire, IBM, Macnica, Microsoft, Mitsui Knowledge Industry, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom to market, resell, or integrate with our"
+          }
+        }
+      ],
+      "name_en": "Box"
+    },
+    {
+      "id": "DBX",
+      "ticker": "DBX",
+      "name": "ドロップボックス",
+      "sub": "クラウド保管",
+      "sub_en": "Cloud storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dropboxは、Oktaなどとの連携があると説明している",
+          "text_en": "Dropbox says it has integrations with vendors including Okta",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also have integrations with Microsoft, Adobe, Apple, Salesforce, Atlassian, Slack (now part of Salesforce), BetterCloud, Google, IBM, Cisco, VMware, Okta, Symantec, Palo Alto Networks, Zoom, and a variety of other productivity, collaboration, data management, and security vendors."
+          }
+        }
+      ],
+      "name_en": "Dropbox"
+    },
+    {
+      "id": "AVPT",
+      "ticker": "AVPT",
+      "name": "アブポイント",
+      "sub": "データ管理",
+      "sub_en": "Data management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvePointは、Oktaを対応する認証基盤の1つとして挙げている",
+          "text_en": "AvePoint lists Okta among the identity platforms it covers",
+          "source": {
+            "label": "AvePoint 10-K",
+            "label_en": "AvePoint 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1777921/000143774926005907/avpt20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "These include major hyperscalers and enterprise applications such as Microsoft, Salesforce, Google, AWS, Box, and Dropbox, as well as other collaboration, identity and developer platforms such as Docusign, Confluence, GitHub, Jira, Okta, Bitbucket, Smartsheet and Monday.com."
+          }
+        }
+      ],
+      "name_en": "AvePoint"
+    },
+    {
+      "id": "VRNS",
+      "ticker": "VRNS",
+      "name": "バロニス・システムズ",
+      "sub": "データセキュリティ",
+      "sub_en": "Data security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Varonisは、保護対象のリソースにOktaを挙げている",
+          "text_en": "Varonis lists Okta among its protected resources",
+          "source": {
+            "label": "Varonis Systems 10-K",
+            "label_en": "Varonis Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000162828026005450/vrns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "The protected resources currently include Salesforce, AWS, Azure, Google Cloud, Google Workspace, Databricks, ServiceNow, Snowflake, Confluence, Slack, GitHub, Okta, Box, Jira, Zoom and databases."
+          }
+        }
+      ],
+      "name_en": "Varonis Systems"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oktaは、OpenAIのDaybreak Cyber Partner Programの一環として、最先端のAIモデルで脆弱性を探した",
+          "text_en": "Okta used frontier AI models to hunt for vulnerabilities as part of OpenAI's Daybreak Cyber Partner Program",
+          "source": {
+            "label": "OKTA / OpenAI — primary relationship source; checked October 17, 2026",
+            "label_en": "OKTA / OpenAI — primary relationship source; checked October 17, 2026",
+            "url": "https://sec.okta.com/articles/2026/09/hunting-vulnerabilities-using-frontier-models/",
+            "level": "official",
+            "quote": "Over several months, Okta has used frontier AI models to proactively hunt for vulnerabilities and secure Okta’s products as part of OpenAI’s Daybreak Cyber Partner Program and Anthropic's Project Glasswing .",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oktaは、AnthropicのProject Glasswingの一環として、最先端のAIモデルで脆弱性を探した",
+          "text_en": "Okta used frontier AI models to hunt for vulnerabilities as part of Anthropic's Project Glasswing",
+          "source": {
+            "label": "OKTA / OpenAI — primary relationship source; checked October 17, 2026",
+            "label_en": "OKTA / OpenAI — primary relationship source; checked October 17, 2026",
+            "url": "https://sec.okta.com/articles/2026/09/hunting-vulnerabilities-using-frontier-models/",
+            "level": "official",
+            "quote": "Over several months, Okta has used frontier AI models to proactively hunt for vulnerabilities and secure Okta’s products as part of OpenAI’s Daybreak Cyber Partner Program and Anthropic's Project Glasswing .",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

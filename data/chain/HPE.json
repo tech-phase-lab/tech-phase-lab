@@ -1,0 +1,425 @@
+{
+  "root": {
+    "ticker": "HPE",
+    "name": "ヒューレット・パッカード・エンタープライズ",
+    "name_en": "Hewlett Packard Enterprise"
+  },
+  "rows": [
+    {
+      "ja": "供給元(単一供給元の例)",
+      "en": "Suppliers (single-source examples)",
+      "above": true
+    },
+    {
+      "ja": "分離・提携先",
+      "en": "Separation & partners"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CSCO",
+    "ANET",
+    "AVGO",
+    "IBM",
+    "NTNX"
+  ],
+  "companies": [
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、x86プロセッサの単一供給元の例としてAMDを挙げている",
+          "text_en": "The annual report names AMD as a single-source supplier of certain x86 processors",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "In some instances, our single-source suppliers (e.g., Intel and AMD as suppliers of certain x86 processors Broadcom and others for industry standard Application-Specific Standard Product, or NVIDIA for Graphics Processing Units) are also",
+            "note": "単一供給元の例としての記載です。",
+            "note_en": "Mentioned as an example of single-source suppliers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、x86プロセッサの単一供給元の例としてIntelを挙げている",
+          "text_en": "The annual report names Intel as a single-source supplier of certain x86 processors",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "In some instances, our single-source suppliers (e.g., Intel and AMD as suppliers of certain x86 processors Broadcom and others for industry standard Application-Specific Standard Product, or NVIDIA for Graphics Processing Units)",
+            "note": "単一供給元の例としての記載です。",
+            "note_en": "Mentioned as an example of single-source suppliers."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、標準ASSPの単一供給元の例としてBroadcomを挙げている",
+          "text_en": "The annual report names Broadcom as a single-source supplier of industry standard ASSPs",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "In some instances, our single-source suppliers (e.g., Intel and AMD as suppliers of certain x86 processors Broadcom and others for industry standard Application-Specific Standard Product, or NVIDIA for Graphics Processing Units) are also the single-source suppliers for the entire",
+            "note": "単一供給元の例としての記載です。",
+            "note_en": "Mentioned as an example of single-source suppliers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "HPEの年次報告が、インフラ・クラウド管理ソフトの主な競合としてBroadcomを挙げている",
+          "text_en": "Named as a primary competitor in infrastructure and cloud management software in HPE's annual report",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors are other infrastructure and cloud management software technology vendors, such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix, and Pure Storage and public cloud vendors like Amazon Web Services, Google Cloud, and Microsoft Azure."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、GPUの単一供給元の例としてNVIDIAを挙げている",
+          "text_en": "The annual report names NVIDIA as a single-source supplier of GPUs",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "single-source suppliers (e.g., Intel and AMD as suppliers of certain x86 processors Broadcom and others for industry standard Application-Specific Standard Product, or NVIDIA for Graphics Processing Units) are also the single-source suppliers for the entire market; disruptions with these suppliers would result in industry-wide dislocations",
+            "note": "単一供給元の例としての記載です。",
+            "note_en": "Mentioned as an example of single-source suppliers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HP",
+      "sub": "PC・プリンター",
+      "sub_en": "PCs & printers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HPとHewlett Packard Enterpriseが、両事業の分離に伴う分離・配布契約などを結んだ",
+          "text_en": "HP and Hewlett Packard Enterprise entered into a separation and distribution agreement and other agreements in connection with the separation of the two businesses",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "We and Hewlett Packard Enterprise entered into a separation and distribution agreement and various other agreements in connection with the separation of the two businesses."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "HPEは、分離契約に基づきHP Inc.の特定の債務について全額補償する義務を負う可能性がある",
+          "text_en": "Under the Separation agreements, HPE may be obligated to fully indemnify HP Inc. for certain liabilities",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "We may be obligated to fully indemnify HP Inc. for certain liabilities under the Separation agreements or HP Inc. may not be able to fully cover their indemnification obligations to us under the same Separation agreements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DXC",
+      "ticker": "DXC",
+      "name": "DXCテクノロジー",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HPEとDXCの間の分離・配布契約で、双方が既存の訴訟の対応で協力することに合意した",
+          "text_en": "Under the Separation and Distribution Agreements between HPE and DXC, the parties agreed to cooperate in managing certain existing litigation",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "As part of the Separation and Distribution Agreements between Hewlett Packard Enterprise and HP Inc., Hewlett Packard Enterprise and DXC, and Hewlett Packard Enterprise and Seattle SpinCo, the parties to each agreement agreed to cooperate with each other in managing certain existing litigation related to both parties' businesses."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "HPEの年次報告が、DXC Tax Matters Agreementについて説明している",
+          "text_en": "The annual report describes the DXC Tax Matters Agreement",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "See Note 18, “Guarantees and Indemnifications,” for a description of the DXC Tax Matters Agreement and Micro Focus Tax Matters Agreement."
+          }
+        }
+      ],
+      "name_en": "DXC Technology"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年9月、JPMorgan Chase Bankなどと約120億ドルの無担保シニア遅延引出しタームローン枠の契約を結んだ",
+          "text_en": "In September 2024, HPE entered into term loan agreements with JPMorgan Chase Bank, N.A. and others for approximately $12.0 billion of senior unsecured delayed draw term loan facilities",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "In September 2024, the Company entered into term loan agreements with JPMorgan Chase Bank, N.A, Citibank, N.A., and Mizuho Bank, Ltd. for approximately $ 12.0 billion of senior unsecured delayed draw term loan facilities, comprised of an approximately $ 9.0 billion 364-day tranche and a $ 3.0 billion three-year tranche, subject to customary conditions.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年9月12日付の5年クレジット契約で、JPMorgan Chase Bankが管理代理人を務める",
+          "text_en": "Under the Five-Year Credit Agreement dated September 12, 2024, JPMorgan Chase Bank, N.A. is Administrative Processing Agent and Co-Administrative Agent",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "10.32 Five-Year Credit Agreement, dated as of September 12, 2024, among Hewlett Packard Enterprise Company, the Borrowing Subsidiaries from time to time party thereto, the Lenders party thereto, JPMorgan Chase Bank, N.A., as Administrative Processing Agent and Co-Administrative Agent, and Citibank, N.A., as Co-Administrative Agent."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "データセンター・ネットワーク",
+      "sub_en": "Data center networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPEの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in HPE’s annual report",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors are technology vendors, such as Cisco Systems, Inc., Arista Networks Inc, Nokia Corporation, Huawei Technologies Co."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "アリスタネットワークスの年次報告が、HPEを競合として挙げている",
+          "text_en": "Names HPE as a competitor in its annual report",
+          "source": {
+            "label": "Arista Networks 10-K",
+            "label_en": "Arista Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The data center and campus networking markets have historically been dominated by Cisco, with competition also coming from other large network equipment and system vendors, including Dell/EMC, Extreme Networks, Hewlett Packard Enterprise, Huawei, Juniper Networks, Nvidia, and white box networking vendors that utilize open-source operating systems."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPEの年次報告が、データセンター・インフラの主な競合としてシスコを挙げている",
+          "text_en": "Named as a primary competitor in data center infrastructure in HPE’s annual report",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors in data center infrastructure are technology vendors, such as Dell Technologies Inc., Super Micro Computer, Inc., Cisco Systems, Inc., and Lenovo Group Ltd."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・ソフト",
+      "sub_en": "IT & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPEの年次報告が、金融サービス事業の競合としてIBM Global Financingを挙げている",
+          "text_en": "Named in HPE’s annual report as a competitor of its Financial Services business (IBM Global Financing)",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Financial Services primarily competes with captive financing companies, such as IBM Global Financing, Dell Financial Services, and Cisco Capital, as well as banks and other financial institutions.",
+            "note": "金融サービス事業に限った競合です。",
+            "note_en": "Competitor of the financing business only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "シエナ",
+      "sub": "光ネットワーク",
+      "sub_en": "Optical networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シエナの年次報告が、ヒューレット・パッカード・エンタープライズを競合として挙げている",
+          "text_en": "Names Hewlett Packard Enterprise as a competitor in its annual report",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Our competitors include Nokia, Huawei, Cisco, Hewlett Packard Enterprise, and ZTE."
+          }
+        }
+      ],
+      "name_en": "Ciena"
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フォーティネットの年次報告が、ヒューレット・パッカード・エンタープライズを競合として挙げている",
+          "text_en": "Names Hewlett Packard Enterprise as a competitor in its annual report",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors include companies such as Check Point, Cisco, CrowdStrike, F5 Networks, HPE, Huawei, Microsoft, Netskope, Palo Alto Networks, SonicWALL, Sophos, and Zscaler."
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "NTNX",
+      "ticker": "NTNX",
+      "name": "ニュータニックス",
+      "sub": "ハイパーコンバージド基盤",
+      "sub_en": "Hyperconverged infrastructure",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ニュータニックスの年次報告が、ヒューレット・パッカード・エンタープライズを競合として挙げている",
+          "text_en": "Names Hewlett Packard Enterprise as a competitor in its annual report",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "• traditional IT systems vendors, such as Dell, Everpure, Inc., Fujitsu, HPE, Hitachi Vantara, Lenovo, Inc., NetApp, Inc., and Huawei Technologies Co., Ltd., many of which offer integrated systems that bundle servers, storage and networking solutions, as well as standalone server and storage products."
+          }
+        }
+      ],
+      "name_en": "Nutanix"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "root": {
+    "ticker": "SYNA",
+    "name": "シナプティクス",
+    "name_en": "Synaptics"
+  },
+  "rows": [
+    {
+      "ja": "提携・買収",
+      "en": "Partnerships & acquisitions"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "HIMX",
+    "SLAB"
+  ],
+  "companies": [
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SynapticsがIoT向けWi-Fi事業の資産取得と非独占ライセンス取得でBroadcomと契約し、対価は現金2億30万ドルで2025年1月30日に完了した",
+          "text_en": "Synaptics entered into asset purchase agreements with Broadcom for certain assets and non-exclusive licenses relating to its Wi-Fi Business in the IoT market, for $200.3 million in cash, closed January 30, 2025",
+          "source": {
+            "label": "Synaptics 10-K",
+            "label_en": "Synaptics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "On January 19, 2025, we entered into definitive asset purchase agreements with Broadcom to acquire certain assets, and obtain non-exclusive licenses relating to, Broadcom’s Wi-Fi Business in the IoT market for an aggregate consideration of $ 200.3 million in cash, which closed on January 30, 2025 (“Closing Date”)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "両社が移行サービスを相互に提供し、Broadcomが仕入先への発注を支援する1年間の在庫供給契約も含まれる",
+          "text_en": "Both parties provide transition services to one another, including a one-year inventory supply arrangement in which Broadcom facilitates Synaptics' purchase orders with suppliers",
+          "source": {
+            "label": "Synaptics 10-K",
+            "label_en": "Synaptics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "We also entered into transition agreements with Broadcom, under which both parties will provide one another with certain transition services (including one year inventory supply agreement in which Broadcom will facilitate Synaptics to place purchase orders with respective suppliers) following the Closing Date."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "ON",
+      "ticker": "ON",
+      "name": "オン・セミコンダクター",
+      "sub": "パワー・センシング半導体",
+      "sub_en": "Power and sensing semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Synapticsはonsemiとの合併契約に基づき、特定の場合にonsemiへ解約手数料を支払う可能性がある",
+          "text_en": "Under its merger agreement with onsemi, Synaptics could be required in specified circumstances to pay a termination fee to onsemi",
+          "source": {
+            "label": "Synaptics 10-K",
+            "label_en": "Synaptics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "The Merger Agreement contains provisions that could discourage or deter a potential competing acquirer from making a favorable alternative transaction proposal to us and, in specified circumstances, could require us to pay a substantial termination fee to onsemi."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "合併の成否は、Synapticsとonsemiの事業統合がうまく進むかに左右される",
+          "text_en": "The success of the merger depends in part on Synaptics and onsemi integrating their operations",
+          "source": {
+            "label": "Synaptics 10-K",
+            "label_en": "Synaptics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "The success of the Merger, including anticipated benefits and cost savings, will depend, in part, on our and onsemi's ability to successfully integrate our respective operations in a manner that results in various benefits and that does not materially disrupt existing business and strategic relationships or result in a loss of customers."
+          }
+        }
+      ],
+      "name_en": "onsemi"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(グーグル)",
+      "sub": "インターネット・AI",
+      "sub_en": "Internet & AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GoogleのML coreをSynaptics Astra AI-Native hardwareとオープンソースソフトウェアに統合する共同開発を進める",
+          "text_en": "The collaboration will integrate Google's ML core with Synaptics Astra AI-Native hardware and open-source software",
+          "source": {
+            "label": "Synaptics — Google edge-AI collaboration, January 2, 2025",
+            "label_en": "Synaptics — Google edge-AI collaboration, January 2, 2025",
+            "url": "https://www.synaptics.com/company/news/synaptics-and-google-collaborate-on-edge-ai-for-the-iot",
+            "level": "official",
+            "quote": "The collaboration will integrate Google's ML core with Synaptics Astra AI-Native hardware and open-source software to accelerate the development of context-aware devices."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "GoogleのMLIR準拠のML coreをSynaptics Astraハードウェアに載せ、オープンソースのソフトとツールと組み合わせる",
+          "text_en": "The collaboration integrates Google's MLIR-compliant ML core on Synaptics Astra hardware with open-source software and tools",
+          "source": {
+            "label": "Synaptics — Google edge-AI collaboration, January 2, 2025",
+            "label_en": "Synaptics — Google edge-AI collaboration, January 2, 2025",
+            "url": "https://www.synaptics.com/company/news/synaptics-and-google-collaborate-on-edge-ai-for-the-iot",
+            "level": "official",
+            "quote": "The collaboration will integrate Google’s MLIR-compliant ML core on the Synaptics Astra TM hardware with open-source software and tools."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "WFC",
+      "ticker": "Wells Fargo",
+      "name": "ウェルズ・ファーゴ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Wells Fargo Bank, N.A.を管理代理人とする第2次修正再録クレジット契約(2021年3月11日付)をSynapticsが借り手として締結している",
+          "text_en": "Synaptics is borrower under a Second Amended and Restated Credit Agreement dated March 11, 2021 with Wells Fargo Bank, National Association as administrative agent",
+          "source": {
+            "label": "Synaptics 10-K",
+            "label_en": "Synaptics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "Second Amended and Restated Credit Agreement, dated March 11, 2021, by and among Synaptics Incorporated, as borrower, the lenders from time to time party thereto, Wells Fargo Bank, National Association, as administrative agent, swingline lender and issuing lender, Wells Fargo Securities, LLC, as joint lead arranger and joint bookrunner, MUFG",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同契約の第1次修正・貸し手加入契約(2021年12月2日付)がある",
+          "text_en": "A First Amendment and Lender Joinder Agreement to the credit agreement is dated December 2, 2021",
+          "source": {
+            "label": "Synaptics 10-K",
+            "label_en": "Synaptics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "10.1(b) First Amendment and Lender Joinder Agreement, dated as of December 2, 2021, by and among Synaptics Incorporated, the Lenders party thereto, and Wells Fargo Bank, National Association, as Administrative Agent"
+          }
+        }
+      ],
+      "name_en": "Wells Fargo"
+    },
+    {
+      "id": "HIMX",
+      "ticker": "HIMX",
+      "name": "ヒマックス・テクノロジーズ",
+      "sub": "ディスプレイドライバー",
+      "sub_en": "Display drivers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヒマックス・テクノロジーズの年次報告が、シナプティクスを競合として挙げている",
+          "text_en": "Names Synaptics as a competitor in its annual report",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "For In-cell TDDI, we compete with Novatek Microelectronics Cop., Synaptics Incorporated, FocalTech Systems Co., Ltd., ESWIN, Chipone, OmniVision and Ilitek Corp., etc."
+          }
+        }
+      ],
+      "name_en": "Himax Technologies"
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "シリコン・ラボラトリーズ",
+      "sub": "無線IoT半導体",
+      "sub_en": "Wireless IoT semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シリコン・ラボラトリーズの年次報告が、シナプティクスを競合として挙げている",
+          "text_en": "Names Synaptics as a competitor in its annual report",
+          "source": {
+            "label": "Silicon Laboratories 10-K",
+            "label_en": "Silicon Laboratories 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We compete with Espressif, Infineon, MediaTek, Microchip, Nordic Semiconductor, NXP, Qualcomm, Renesas, STMicroelectronics, Synaptics, Telink, Texas Instruments and others."
+          }
+        }
+      ],
+      "name_en": "Silicon Laboratories"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

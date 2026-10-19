@@ -1,0 +1,130 @@
+{
+  "root": {
+    "ticker": "KTOS",
+    "name": "クラトス・ディフェンス",
+    "name_en": "Kratos Defense"
+  },
+  "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "VSAT"
+  ],
+  "companies": [
+    {
+      "id": "AVAV",
+      "ticker": "AVAV",
+      "name": "エアロバイロメント",
+      "sub": "防衛・無人機",
+      "sub_en": "Defense & drones",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2022年に、Blue Halo(AeroVironmentが買収)から約1.6億ドルの契約獲得の可能性を得た",
+          "text_en": "In 2022, received an approximate $160 million potential contract award from Blue Halo (acquired by AeroVironment)",
+          "source": {
+            "label": "Kratos Defense 10-K",
+            "label_en": "Kratos Defense 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Related to certain of these investments, in 2022, we received an approximate $160 million potential contract award from Blue Halo (acquired by AeroVironment) and a significant contract award from Intelsat (acquired by SES) as a result of Kratos OpenSpace™ products and technology.",
+            "note": "買収後のBlue Halo経由の記載です。",
+            "note_en": "Refers to Blue Halo, which AeroVironment later acquired."
+          }
+        }
+      ],
+      "name_en": "AeroVironment"
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Northrop Grumman(Kratosのチームメイト)が競争入札で受注したと説明している",
+          "text_en": "Describes Northrop Grumman as Kratos' teammate that was competitively awarded a U.S. contract",
+          "source": {
+            "label": "Kratos Defense 10-K",
+            "label_en": "Kratos Defense 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "arc jet and coupled fiber laser facility for hypersonic materials evaluations, known internally as Project Helios, and a recent announcement that Kratos’ teammate Northrop Grumman was competitively awarded the U.S.",
+            "note": "受注内容は引用の範囲では不明です。",
+            "note_en": "The contract details are not shown in the quote."
+          }
+        }
+      ],
+      "name_en": "Northrop Grumman"
+    },
+    {
+      "id": "EADSY",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AirbusとKratosは、2029年までに戦闘対応の無人僚機CCAを納入する計画で順調に進んでいる",
+          "text_en": "Airbus and Kratos are on track to deliver a combat-ready uncrewed Collaborative Combat Aircraft (CCA) by 2029",
+          "source": {
+            "label": "KTOS / Airbus — official relationship source; checked October 17, 2026",
+            "label_en": "KTOS / Airbus — official relationship source; checked October 17, 2026",
+            "url": "https://www.kratosdefense.com/newsroom/airbus-u740-valkyrie-uncrewed-combat-aircraft-takes-off-for-first-european-test-flight",
+            "level": "official",
+            "quote": "This key milestone confirms that Airbus and Kratos are on track to deliver a combat-ready uncrewed Collaborative Combat Aircraft (CCA) by 2029, addressing the operational requirements of the German and other European Armed Forces."
+          }
+        }
+      ],
+      "name_en": "Airbus"
+    },
+    {
+      "id": "VSAT",
+      "ticker": "VSAT",
+      "name": "バイアサット",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クラトス・ディフェンスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Kratos’s annual report",
+          "source": {
+            "label": "Kratos Defense 10-K",
+            "label_en": "Kratos Defense 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Tier two competitors include smaller government contractors such as Mercury Systems, Qinetiq, Cobham, CACI, Peraton, Linquest (now owned by KBR), Viasat and AAR Corp."
+          }
+        }
+      ],
+      "name_en": "Viasat"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

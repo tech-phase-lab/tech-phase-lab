@@ -1,0 +1,404 @@
+{
+  "root": {
+    "ticker": "FIVN",
+    "name": "ファイブナイン",
+    "name_en": "Five9"
+  },
+  "rows": [
+    {
+      "ja": "クラウド・CRMの提携先",
+      "en": "Cloud & CRM partners",
+      "above": true
+    },
+    {
+      "ja": "インテグレーター・再販・通信の提携先",
+      "en": "Integrators, resellers & telecom partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CSCO",
+    "RNG",
+    "NICE",
+    "EGHT"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Google Cloudとの提携を拡大し、大企業向けの共同のEnterprise CX AIソリューションを発表した",
+          "text_en": "It announced an expanded partnership with Google Cloud and a new joint Enterprise CX AI solution for large enterprises",
+          "source": {
+            "label": "Five9 — Google Cloud Enterprise CX AI announcement, January 12, 2026",
+            "label_en": "Five9 — Google Cloud Enterprise CX AI announcement, January 12, 2026",
+            "url": "https://www.five9.com/news/news-releases/five9-launches-joint-enterprise-customer-experience-ai-solution-google-cloud",
+            "level": "official",
+            "quote": "Customers and partners can purchase Five9 directly through Google Cloud Marketplace, which allows them to benefit from the ease of procurement, consolidated billing, and draw down on their Google Cloud spend commitment."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Five9はGoogle Cloud Marketplaceから直接購入できる",
+          "text_en": "Five9 can be purchased directly through Google Cloud Marketplace",
+          "source": {
+            "label": "Five9 — Google Cloud Enterprise CX AI announcement, January 12, 2026",
+            "label_en": "Five9 — Google Cloud Enterprise CX AI announcement, January 12, 2026",
+            "url": "https://www.five9.com/news/news-releases/five9-launches-joint-enterprise-customer-experience-ai-solution-google-cloud",
+            "level": "official",
+            "quote": "FIVN) today announced an expanded partnership with Google Cloud and a new joint Enterprise CX AI solution that helps large enterprises connect with their customers so they can deliver seamless, intelligent, and AI-driven customer experiences."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、UCパートナーとしてMicrosoft Teamsとの連携を挙げている",
+          "text_en": "The annual report lists integrations with UC partners such as Microsoft Teams",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also offer integrations into UC partners such as Microsoft Teams, Nextiva, RingCentral, Zoom Video Communications, or Zoom, and others."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告で、連携するCRMベンダーとしてMicrosoftを挙げている",
+          "text_en": "The annual report names Microsoft among the CRM vendors it integrates with",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We offer flexibility and integrate with a number of leading CRM vendors, including Microsoft Corporation, or Microsoft, Oracle Corporation, or Oracle, Salesforce.com, Inc., or Salesforce, ServiceNow, Inc., or ServiceNow, Zendesk, Inc., or Zendesk, among others."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、連携するCRMベンダーとしてSalesforceを挙げている",
+          "text_en": "The annual report names Salesforce among the CRM vendors it integrates with",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We offer flexibility and integrate with a number of leading CRM vendors, including Microsoft Corporation, or Microsoft, Oracle Corporation, or Oracle, Salesforce.com, Inc., or Salesforce, ServiceNow, Inc., or ServiceNow, Zendesk, Inc., or Zendesk, among others."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "データベース・クラウド",
+      "sub_en": "Database & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、連携するCRMベンダーとしてOracleを挙げている",
+          "text_en": "The annual report names Oracle among the CRM vendors it integrates with",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have built a robust ecosystem of partners including a variety of leading CRM software vendors such as Microsoft, Oracle, Salesforce, ServiceNow and Zendesk;"
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、連携するCRMベンダーとしてServiceNowを挙げている",
+          "text_en": "The annual report names ServiceNow among the CRM vendors it integrates with",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We offer flexibility and integrate with a number of leading CRM vendors, including Microsoft Corporation, or Microsoft, Oracle Corporation, or Oracle, Salesforce.com, Inc., or Salesforce, ServiceNow, Inc., or ServiceNow, Zendesk, Inc., or Zendesk, among others."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・ソフト",
+      "sub_en": "IT services & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、IBMをシステムインテグレーターの例として挙げている",
+          "text_en": "The annual report names IBM among its system integrators",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Verint; unified communications vendors such as Microsoft Teams, RingCentral and Zoom; system integrators such as Accenture PLC, Deloitte Consulting LLP, Ernst & Young, IBM, Kyndryl, Inc., PwC LLP and Slalom Consulting, LLC; technology solution distributors such as Avant, LLC, Intelysis, Sandler Partners, Telarus, Amplix and Bridgepoint"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサルティング",
+      "sub_en": "Consulting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、Accentureをシステムインテグレーターの例として挙げている",
+          "text_en": "The annual report names Accenture among its system integrators",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Calabrio, Inc., or Calabrio, and Verint Systems Inc., or Verint; unified communications vendors such as Microsoft Teams, RingCentral and Zoom; system integrators such as Accenture PLC, Deloitte Consulting LLP, Ernst & Young, IBM, Kyndryl, Inc., PwC LLP and Slalom Consulting, LLC; technology solution distributors such as Avant, LLC, Intelysis,"
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "KD",
+      "ticker": "KD",
+      "name": "Kyndryl",
+      "sub": "ITインフラサービス",
+      "sub_en": "IT infrastructure services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、Kyndrylをシステムインテグレーターの例として挙げている",
+          "text_en": "The annual report names Kyndryl among its system integrators",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "unified communications vendors such as Microsoft Teams, RingCentral and Zoom; system integrators such as Accenture PLC, Deloitte Consulting LLP, Ernst & Young, IBM, Kyndryl, Inc., PwC LLP and Slalom Consulting, LLC; technology solution distributors such as Avant, LLC, Intelysis, Sandler Partners, Telarus, Amplix and Bridgepoint"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、付加価値再販業者の例としてAT&Tを挙げている",
+          "text_en": "The annual report names AT&T among its value-added resellers",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "LLC; technology solution distributors such as Avant, LLC, Intelysis, Sandler Partners, Telarus, Amplix and Bridgepoint Technologies; value-added resellers such as AT&T Inc., Babble Cloud, British Telecom, Connect Managed Services (UK) Limited, CDW Corporation, NWN Carousel, Opus Technology and TELUS Communications; software vendors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAND",
+      "ticker": "BAND",
+      "name": "Bandwidth",
+      "sub": "通信API",
+      "sub_en": "Communications APIs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bandwidthの年次報告が、主要CCaaS基盤とのBYOC提携の1社としてFive9を挙げている",
+          "text_en": "Bandwidth's annual report names Five9 among the leading CCaaS platforms it has BYOC partnerships with",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have BYOC partnerships with leading CCaaS platforms, including Five9, Genesys, Webex Contact Center by Cisco, and Zoom Contact Center."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファイブナインの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Five9’s annual report",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We currently compete with large legacy vendors that offer on-premises contact center systems, such as Avaya Inc., or Avaya, and Cisco Systems, Inc., or Cisco."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ファイブナインの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Five9’s annual report",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We currently compete with large legacy technology vendors that offer on-premises contact center systems, such as Avaya and Cisco."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "RNG",
+      "ticker": "RNG",
+      "name": "リングセントラル",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファイブナインの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Five9’s annual report",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also face competition from many smaller contact center service providers such as Content Guru and Talkdesk, as well as vendors offering both unified communications and contact center solutions such as RingCentral and Zoom."
+          }
+        }
+      ],
+      "name_en": "RingCentral"
+    },
+    {
+      "id": "NICE",
+      "ticker": "NICE",
+      "name": "ナイス",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナイスの年次報告が、ファイブナインを競合として挙げている",
+          "text_en": "Names Five9 as a competitor in its annual report",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the CCaaS market, which is a part of the broader Contact Center Infrastructure market that is still mainly held by traditional on-premises players, we compete against Amazon Connect, Avaya, Cisco, Five9, Genesys, and TalkDesk, as well as other niche vendors."
+          }
+        }
+      ],
+      "name_en": "NiCE"
+    },
+    {
+      "id": "EGHT",
+      "ticker": "EGHT",
+      "name": "エイトバイエイト",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エイトバイエイトの年次報告が、ファイブナインを競合として挙げている",
+          "text_en": "Names Five9 as a competitor in its annual report",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc., among others, as well as from legacy on-premises communications equipment providers, such as Avaya, Inc.,"
+          }
+        }
+      ],
+      "name_en": "8x8"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

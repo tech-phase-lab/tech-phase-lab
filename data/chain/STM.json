@@ -1,0 +1,515 @@
+{
+  "root": {
+    "ticker": "STM",
+    "name": "STマイクロエレクトロニクス",
+    "name_en": "STMicroelectronics"
+  },
+  "rows": [
+    {
+      "ja": "提携・取引先",
+      "en": "Partners & deals",
+      "above": true
+    },
+    {
+      "ja": "顧客(STの年次報告に記載)",
+      "en": "Customers (named in ST's annual report)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "NXPI",
+    "MPWR",
+    "POWI",
+    "NVTS",
+    "SLAB"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年2月9日に、STはAmazon Web Services(AWS)との戦略的協業を拡大し、複数年・数十億米ドル規模の商用契約を結んだと発表した",
+          "text_en": "On February 9, 2026, ST announced an expanded strategic collaboration with Amazon Web Services (AWS) through a multi-year, multi-billion USD commercial engagement",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On February 9, 2026, we announced an expanded strategic collaboration with Amazon Web Services (AWS) through a multi-year, multi-billion USD commercial engagement serving several product categories, to enable new high performance compute infrastructure for cloud and AI data centers."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "クアルコム",
+      "sub": "通信半導体",
+      "sub_en": "Wireless chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "STがQualcomm Technologiesと2024年に発表した協業の最初の製品が、STM32マイコン搭載システムの無線接続の実装を簡素化する",
+          "text_en": "The first product of ST's collaboration with Qualcomm Technologies, announced in 2024, simplifies implementing wireless connectivity in systems containing STM32 MCUs",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "It is the first product of ST’s collaboration with Qualcomm Technologies, Inc. announced in 2024, to simplify implementing wireless connectivity in systems containing STM32 MCUs."
+          }
+        }
+      ],
+      "name_en": "Qualcomm"
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXPセミコンダクターズ",
+      "sub": "車載・産業半導体",
+      "sub_en": "Automotive & industrial chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月24日、NXPはSTMicroelectronics International N.V.との間で、ある事業を最大9.5億ドル(クロージング時9億ドル、技術マイルストーン達成で最大5,000万ドル)の現金で売却する最終契約に合意した",
+          "text_en": "On July 24, 2025, NXP reached a definitive agreement with STMicroelectronics International N.V. to sell a business for up to $950 million in cash, including $900 million at closing and up to $50 million on technical milestones",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On July 24, 2025, NXP reached a definitive agreement with STMicroelectronics International N.V., under which NXP will sell the business for an amount up to $ 950 million in cash, including $ 900 million at closing and up to an additional $ 50 million subject to the achievement of technical milestones.",
+            "note": "NXPの年次報告にある、売却側からの記載です。",
+            "note_en": "Described from NXP's side as the seller."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NXPセミコンダクターズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ],
+      "name_en": "NXP Semiconductors"
+    },
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "プロセッサIP",
+      "sub_en": "Processor IP",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CEVAは、STMicroelectronicsが一部の用途でCEVAの設計のライセンスを受けていると記している",
+          "text_en": "CEVA says STMicroelectronics licenses its designs for some applications",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Companies such as NXP and STMicroelectronics license our designs for some applications and use their own proprietary cores for other applications.",
+            "note": "ライセンス先の例示としての記載です。",
+            "note_en": "Mentioned as an example licensee."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "ラムバス",
+      "sub": "メモリ・インターフェースIP",
+      "sub_en": "Memory interface IP",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rambusは、STMicroelectronicsが同社の特許をライセンスしていると記している",
+          "text_en": "Rambus says STMicroelectronics has licensed its patents",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "ライセンス先の例示としての記載です。",
+            "note_en": "Mentioned as an example licensee."
+          }
+        }
+      ],
+      "name_en": "Rambus"
+    },
+    {
+      "id": "AOSL",
+      "ticker": "AOSL",
+      "name": "アルファ・アンド・オメガ・セミコンダクター",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AOSの無形資産には、STMicroelectronics International N.V.とのライセンス契約に関する特許・技術権が含まれる",
+          "text_en": "Alpha and Omega's intangible assets include patents and technology rights related to a license agreement with STMicroelectronics International N.V.",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "The Company is amortizing intangible assets of patents and technology rights related to a license agreement with STMicroelectronics International N.V."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors in power discretes include Infineon Technologies AG, ON Semiconductor Corp., STMicroelectronics N.V., Toshiba Corporation, Diodes Incorporated and Vishay Intertechnology, Inc."
+          }
+        }
+      ],
+      "name_en": "Alpha and Omega Semiconductor"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマートフォン・PC",
+      "sub_en": "Consumer devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大顧客のAppleが2025年の売上高の17.7%を占めた",
+          "text_en": "Apple, ST's largest customer, accounted for 17.7% of total revenues in 2025",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2025 our largest customer, Apple, accounted for 17.7% of our total revenues."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Appleの比率は2025年、2024年、2023年の純売上高のそれぞれ17.7%、14.5%、12.3%だった",
+          "text_en": "Apple accounted for 17.7%, 14.5% and 12.3% of ST's net revenues in 2025, 2024 and 2023, respectively",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2025, 2024 and 2023, our largest customer, Apple, accounted for 17.7%, 14.5% and 12.3% of our net revenues, respectively, reported within our four reportable segments."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "Continental",
+      "ticker": "Continental",
+      "name": "コンチネンタル",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STの年次報告が、主要顧客の1社としてContinentalを挙げている",
+          "text_en": "Continental is named among ST's major customers in its annual report",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco."
+          }
+        }
+      ],
+      "name_en": "Continental"
+    },
+    {
+      "id": "Denso",
+      "ticker": "Denso",
+      "name": "デンソー",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STの年次報告が、主要顧客の1社としてDensoを挙げている",
+          "text_en": "Denso is named among ST's major customers in its annual report",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco."
+          }
+        }
+      ],
+      "name_en": "Denso"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HP",
+      "sub": "PC・プリンター",
+      "sub_en": "PCs & printers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STの年次報告が、主要顧客の1社としてHPを挙げている",
+          "text_en": "HP is named among ST's major customers in its annual report",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco.",
+            "note": "社名は「HP」と記載されています。",
+            "note_en": "Named as \"HP\"."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBLY",
+      "ticker": "MBLY",
+      "name": "モービルアイ",
+      "sub": "運転支援システム",
+      "sub_en": "Driver assistance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STの年次報告が、主要顧客の1社としてMobileyeを挙げている",
+          "text_en": "Mobileye is named among ST's major customers in its annual report",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco."
+          }
+        }
+      ],
+      "name_en": "Mobileye"
+    },
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "電子・半導体",
+      "sub_en": "Electronics & chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STの年次報告が、主要顧客の1社としてSamsungを挙げている",
+          "text_en": "Samsung is named among ST's major customers in its annual report",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco.",
+            "note": "社名は「Samsung」と記載され、法人は特定されていません。",
+            "note_en": "Named as \"Samsung\"; the legal entity is not specified."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "スペースX",
+      "sub": "宇宙・衛星通信",
+      "sub_en": "Space & satellites",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STの年次報告が、主要顧客の1社としてSpaceXを挙げている",
+          "text_en": "SpaceX is named among ST's major customers in its annual report",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco."
+          }
+        }
+      ],
+      "name_en": "SpaceX"
+    },
+    {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "テスラ",
+      "sub": "電気自動車",
+      "sub_en": "Electric vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STの年次報告が、主要顧客の1社としてTeslaを挙げている",
+          "text_en": "Tesla is named among ST's major customers in its annual report",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco."
+          }
+        }
+      ],
+      "name_en": "Tesla"
+    },
+    {
+      "id": "MPWR",
+      "ticker": "MPWR",
+      "name": "モノリシック・パワー・システムズ",
+      "sub": "電源半導体",
+      "sub_en": "Power ICs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "モノリシック・パワー・システムズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "source": {
+            "label": "Monolithic Power Systems 10-K",
+            "label_en": "Monolithic Power Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We consider our primary competitors to include Analog Devices, Infineon Technologies, NXP Semiconductors, ON Semiconductor, Power Integrations, Renesas Electronics, ROHM Semiconductor, Semtech, STMicroelectronics and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Monolithic Power Systems"
+    },
+    {
+      "id": "POWI",
+      "ticker": "POWI",
+      "name": "パワー・インテグレーションズ",
+      "sub": "高電圧電源IC",
+      "sub_en": "High-voltage power ICs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "パワー・インテグレーションズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "source": {
+            "label": "Power Integrations 10-K",
+            "label_en": "Power Integrations 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/833640/000083364026000037/powi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competing alternatives to our high-voltage ICs for the power-supply market include monolithic and hybrid ICs from companies such as STMicroelectronics, Infineon Technologies and Sanken Electric Company, as well as PWM-controller chips paired with discrete high-voltage silicon or GaN transistors."
+          }
+        }
+      ],
+      "name_en": "Power Integrations"
+    },
+    {
+      "id": "NVTS",
+      "ticker": "NVTS",
+      "name": "ナビタス・セミコンダクター",
+      "sub": "GaN・SiCパワー半導体",
+      "sub_en": "GaN & SiC power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary SiC competitors include Infineon, Wolfspeed, Inc., ON Semiconductor Corporation, ROHM Co., Ltd., Qorvo, Inc., and STMicroelectronics International N.V."
+          }
+        }
+      ],
+      "name_en": "Navitas Semiconductor"
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "シリコン・ラボラトリーズ",
+      "sub": "無線マイコン",
+      "sub_en": "Wireless MCUs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シリコン・ラボラトリーズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "source": {
+            "label": "Silicon Laboratories 10-K",
+            "label_en": "Silicon Laboratories 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We compete with Espressif, Infineon, MediaTek, Microchip, Nordic Semiconductor, NXP, Qualcomm, Renesas, STMicroelectronics, Synaptics, Telink, Texas Instruments and others."
+          }
+        }
+      ],
+      "name_en": "Silicon Laboratories"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

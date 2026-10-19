@@ -1,0 +1,195 @@
+{
+  "root": {
+    "ticker": "VEEV",
+    "name": "ヴィーヴァ・システムズ",
+    "name_en": "Veeva Systems"
+  },
+  "rows": [
+    {
+      "ja": "パートナー部品",
+      "en": "Partner components",
+      "above": true
+    },
+    {
+      "ja": "提携",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CRM",
+    "ORCL",
+    "OTEX",
+    "HON"
+  ],
+  "companies": [
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "Zoom",
+      "sub": "ビデオ会議",
+      "sub_en": "Video conferencing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Veeva CRM Engage Meetingは、Zoom Video Communicationsの専用パートナーツールを使っており、機能の要になっている",
+          "text_en": "Veeva CRM Engage Meeting uses a purpose-built partner tool from Zoom Video Communications that is critical to the application's functionality",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "For example, our Veeva CRM Engage Meeting application uses a purpose-built partner tool from Zoom Video Communications, Inc., which is critical to the application’s functionality."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VeevaとMicrosoftは、Microsoftの技術とVeeva Vaultの連携を可能にするために提携している",
+          "text_en": "Veeva and Microsoft are partnering to enable integration and collaboration between Microsoft technology and Veeva Vault applications",
+          "source": {
+            "label": "Veeva — named Microsoft product / AI partner directory, checked October 16, 2026",
+            "label_en": "Veeva — named Microsoft product / AI partner directory, checked October 16, 2026",
+            "url": "https://www.veeva.com/meet-veeva/partners/product/",
+            "level": "official",
+            "quote": "Veeva and Microsoft are partnering to enable integration and collaboration between Microsoft technology and Veeva Vault applications."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "CRM・クラウド",
+      "sub_en": "CRM & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Veeva’s annual report",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "For example, Salesforce, our primary CRM competitor, has announced that certain large Veeva CRM customers have committed to purchasing its CRM solutions and a number of our customers have informed us of their intent to move to Salesforce as their CRM provider."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "データベース・クラウド",
+      "sub_en": "Database & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Veeva’s annual report",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "No single vendor offers products that compete with all of our Veeva Development Cloud or Quality Cloud applications, but IQVIA, Dassault Systèmes, OpenText Corporation, Oracle Corporation, Honeywell International Inc., and other smaller application providers offer applications that compete with certain of our Veeva Development Cloud and"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OTEX",
+      "ticker": "OTEX",
+      "name": "OpenText",
+      "sub": "情報管理",
+      "sub_en": "Information mgmt",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Veeva’s annual report",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "No single vendor offers products that compete with all of our Veeva Development Cloud or Quality Cloud applications, but IQVIA, Dassault Systèmes, OpenText Corporation, Oracle Corporation, Honeywell International Inc., and other smaller application providers offer applications that compete with certain of our Veeva"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "Honeywell",
+      "sub": "産業・ソフト",
+      "sub_en": "Industrial & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Veeva’s annual report",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "products that compete with all of our Veeva Development Cloud or Quality Cloud applications, but IQVIA, Dassault Systèmes, OpenText Corporation, Oracle Corporation, Honeywell International Inc., and other smaller application providers offer applications that compete with certain of our Veeva Development Cloud and Quality Cloud applications."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客が一部の機能にAmazon Web Servicesなどの汎用クラウドを選ぶ場合があると述べている",
+          "text_en": "Says customers may choose general cloud platforms such as Amazon Web Services for certain functions its applications provide",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "Our customers may also choose to use cloud-based applications or platforms that are not life sciences specific—such as Salesforce, Box, Inc., Amazon Web Services, or Microsoft—for certain of the functions our applications provide."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

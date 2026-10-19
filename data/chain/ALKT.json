@@ -1,0 +1,46 @@
+{
+  "root": {
+    "ticker": "ALKT",
+    "name": "アルカミ・テクノロジー",
+    "name_en": "Alkami Technology"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "QTWO"
+  ],
+  "companies": [
+    {
+      "id": "QTWO",
+      "ticker": "QTWO",
+      "name": "Q2 Holdings",
+      "sub": "デジタルバンキング",
+      "sub_en": "Digital banking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Q2 Holdingsの年次報告が、アルカミ・テクノロジーを競合として挙げている",
+          "text_en": "Names Alkami Technology as a competitor in its annual report",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our digital banking platform, we have several point solution competitors, including Candescent, Alkami Technology, CSI, Backbase and Lumin Digital in the online, consumer and SMB banking space and Finastra and Bottomline Technologies in the commercial banking space."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

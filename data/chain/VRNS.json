@@ -1,0 +1,106 @@
+{
+  "root": {
+    "ticker": "VRNS",
+    "name": "Varonis"
+  },
+  "rows": [
+    {
+      "ja": "連携先",
+      "en": "Integrations & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MicrosoftのPurviewのData Security Posture Managementが、Varonisなどのパートナーソリューションと連携すると説明している",
+          "text_en": "Microsoft says its Purview Data Security Posture Management integrates with partner solutions such as Varonis",
+          "source": {
+            "label": "Microsoft · Purview Data Security Posture Management",
+            "label_en": "Microsoft · Purview Data Security Posture Management",
+            "url": "https://learn.microsoft.com/en-us/purview/data-security-posture-management-learn-about",
+            "level": "official",
+            "quote": "This version of Data Security Posture Management extends coverage to third-party SaaS and IaaS platforms, such as Google Cloud Platform, Snowflake, and Databricks, and integrates with partner solutions such as Varonis, Cyera, BigID, and OneTrust for comprehensive risk insights."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Varonisの顧客は、Exchange OnlineとMicrosoft 365 Copilot向けの追加サポートを購入できる",
+          "text_en": "Varonis customers can purchase add-on support for Exchange Online and Microsoft 365 Copilot",
+          "source": {
+            "label": "Varonis Systems 10-K",
+            "label_en": "Varonis Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000162828026005450/vrns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Customers can purchase add-on support for Exchange Online, Microsoft 365 Copilot and ChatGPT Enterprise."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "ビジネスソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Varonisの保護対象リソースにSalesforceが含まれている",
+          "text_en": "Salesforce is among the resources protected by Varonis",
+          "source": {
+            "label": "Varonis Systems 10-K",
+            "label_en": "Varonis Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000162828026005450/vrns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "The protected resources currently include Salesforce, AWS, Azure, Google Cloud, Google Workspace, Databricks, ServiceNow, Snowflake, Confluence, Slack, GitHub, Okta, Box, Jira, Zoom and databases.",
+            "note": "保護対象の列挙に含まれるものです。",
+            "note_en": "Listed among protected resources."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VaronisはAnthropicのClaude Enterprise、Claude Platform、Claude Code、Claude Coworkとの連携を深めた",
+          "text_en": "Varonis deepened its integration with Anthropic's Claude Enterprise, Claude Platform, Claude Code and Claude Cowork",
+          "source": {
+            "label": "July 28, 2026 · SaaS transition and quarterly results",
+            "label_en": "July 28, 2026 · SaaS transition and quarterly results",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184326004948/exh_991.htm",
+            "level": "official",
+            "quote": "Deepened integration with Anthropic’s Claude Enterprise and Claude Platform as well as Claude Code and Claude Cowork, enabling security teams to secure and govern the entire Claude enterprise suite with the Varonis Atlas AI Security Platform.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
