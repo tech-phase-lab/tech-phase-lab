@@ -210,8 +210,8 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts")}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
         {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
-        {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Indicators")}
-        {item("/research/capital-map", "changes", ja ? "資本マップ" : "CAPITAL MAP")}
+        {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
+        {item("/research/capital-map", "changes", ja ? "資本マップ" : "Capital Map")}
         {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}

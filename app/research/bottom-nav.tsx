@@ -45,7 +45,7 @@ export default function BottomNav() {
   const ja = lang === "ja";
   const bar = useRef<HTMLElement>(null);
   const [glow, setGlow] = useState<{ x: number; w: number } | null>(null);
-  const alertsPage = pathname === "/research/news" || pathname === "/research/price-targets";
+  const alertsPage = pathname === "/research/news";
   const unread = useAlertsUnread(alertsPage);
   const tabs = [
     { key: "home", href: "/research#research-main", label: ja ? "ホーム" : "Home", active: pathname === "/research" && (!hash || hash === "#research-main") },

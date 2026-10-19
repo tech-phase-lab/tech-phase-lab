@@ -11,3 +11,9 @@ Owner-approved scope on `codex/research-preview`:
 - Stock search Suspense uses the bilingual branded loader; English result counts distinguish `1 result` from plural results.
 
 Verification must be reported separately from implementation. No saved articles, annotations or watchlist entries may be added or removed for this UI check.
+
+## Follow-up: concise English navigation
+
+- Owner-approved menu/quick-tool labels: Earnings & Economy, 22 Tracked Stocks, Capital Map. Phone English quick-tool cards use compact typography to preserve one-line titles.
+- The phone Alerts tab is selected only on `/research/news`; visiting price targets no longer selects Alerts or marks that feed as read.
+- Home upper/lower news must keep their existing mixed tech feeds until the owner contracts Stock News API. Do not change those feeds during UI cleanup.

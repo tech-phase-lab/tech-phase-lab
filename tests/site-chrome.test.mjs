@@ -85,6 +85,7 @@ test("unread alerts count only the rows the 速報 page lists, with a stated tim
 
 test("bottom bar: five items in order, bilingual labels, raised search, unread dot, reduced motion", () => {
   const nav = read("app/research/bottom-nav.tsx");
+  assert.match(nav, /const alertsPage = pathname === "\/research\/news";/);
   const order = ["ホーム", "速報", "銘柄検索", "ウォッチリスト", "マーケット"].map(label => nav.indexOf(`"${label}"`));
   assert.deepEqual([...order].sort((a, b) => a - b), order);
   for (const [ja, en] of [["ホーム", "Home"], ["速報", "Alerts"], ["銘柄検索", "Search"], ["ウォッチリスト", "Watchlist"], ["マーケット", "Markets"]]) {
@@ -103,7 +104,7 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
     ["すべての機能が使えます", "All features unlocked"], ["運営者　全機能", "Owner · Full access"], ["アカウント", "Account"],
     ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"], ["監視22銘柄リスト", "22 Tracked Stocks"],
-    ["決算・経済指標", "Earnings & Indicators"], ["銘柄比較 PRO", "Compare · PRO"]]) {
+    ["決算・経済指標", "Earnings & Economy"], ["銘柄比較 PRO", "Compare · PRO"]]) {
     assert.ok(menu.includes(`"${ja}" : "${en}"`), ja);
   }
   // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
