@@ -19,8 +19,12 @@ import c_anet from "../../data/chain/ANET.json" with { type: "json" };
 import c_aosl from "../../data/chain/AOSL.json" with { type: "json" };
 import c_aph from "../../data/chain/APH.json" with { type: "json" };
 import c_app from "../../data/chain/APP.json" with { type: "json" };
+import c_appn from "../../data/chain/APPN.json" with { type: "json" };
 import c_arm from "../../data/chain/ARM.json" with { type: "json" };
+import c_arw from "../../data/chain/ARW.json" with { type: "json" };
+import c_asan from "../../data/chain/ASAN.json" with { type: "json" };
 import c_asml from "../../data/chain/ASML.json" with { type: "json" };
+import c_asts from "../../data/chain/ASTS.json" with { type: "json" };
 import c_asx from "../../data/chain/ASX.json" with { type: "json" };
 import c_avgo from "../../data/chain/AVGO.json" with { type: "json" };
 import c_avpt from "../../data/chain/AVPT.json" with { type: "json" };
@@ -51,6 +55,7 @@ import c_dis from "../../data/chain/DIS.json" with { type: "json" };
 import c_docn from "../../data/chain/DOCN.json" with { type: "json" };
 import c_docu from "../../data/chain/DOCU.json" with { type: "json" };
 import c_dt from "../../data/chain/DT.json" with { type: "json" };
+import c_duol from "../../data/chain/DUOL.json" with { type: "json" };
 import c_entg from "../../data/chain/ENTG.json" with { type: "json" };
 import c_etn from "../../data/chain/ETN.json" with { type: "json" };
 import c_form from "../../data/chain/FORM.json" with { type: "json" };
@@ -129,7 +134,9 @@ import c_powi from "../../data/chain/POWI.json" with { type: "json" };
 import c_ptc from "../../data/chain/PTC.json" with { type: "json" };
 import c_pypl from "../../data/chain/PYPL.json" with { type: "json" };
 import c_qcom from "../../data/chain/QCOM.json" with { type: "json" };
+import c_qlys from "../../data/chain/QLYS.json" with { type: "json" };
 import c_qrvo from "../../data/chain/QRVO.json" with { type: "json" };
+import c_qtwo from "../../data/chain/QTWO.json" with { type: "json" };
 import c_rblx from "../../data/chain/RBLX.json" with { type: "json" };
 import c_rddt from "../../data/chain/RDDT.json" with { type: "json" };
 import c_rmbs from "../../data/chain/RMBS.json" with { type: "json" };
@@ -223,8 +230,12 @@ const available: Record<string, ChainMapData> = {
   AOSL: c_aosl as ChainMapData,
   APH: c_aph as ChainMapData,
   APP: c_app as ChainMapData,
+  APPN: c_appn as ChainMapData,
   ARM: c_arm as ChainMapData,
+  ARW: c_arw as ChainMapData,
+  ASAN: c_asan as ChainMapData,
   ASML: c_asml as ChainMapData,
+  ASTS: c_asts as ChainMapData,
   ASX: c_asx as ChainMapData,
   AVGO: c_avgo as ChainMapData,
   AVPT: c_avpt as ChainMapData,
@@ -255,6 +266,7 @@ const available: Record<string, ChainMapData> = {
   DOCN: c_docn as ChainMapData,
   DOCU: c_docu as ChainMapData,
   DT: c_dt as ChainMapData,
+  DUOL: c_duol as ChainMapData,
   ENTG: c_entg as ChainMapData,
   ETN: c_etn as ChainMapData,
   FORM: c_form as ChainMapData,
@@ -333,7 +345,9 @@ const available: Record<string, ChainMapData> = {
   PTC: c_ptc as ChainMapData,
   PYPL: c_pypl as ChainMapData,
   QCOM: c_qcom as ChainMapData,
+  QLYS: c_qlys as ChainMapData,
   QRVO: c_qrvo as ChainMapData,
+  QTWO: c_qtwo as ChainMapData,
   RBLX: c_rblx as ChainMapData,
   RDDT: c_rddt as ChainMapData,
   RMBS: c_rmbs as ChainMapData,

@@ -1,0 +1,338 @@
+{
+  "root": {
+    "ticker": "ASAN",
+    "name": "Asana"
+  },
+  "rows": [
+    {
+      "ja": "サプライヤー(クラウド基盤)",
+      "en": "Suppliers (cloud hosting)",
+      "above": true
+    },
+    {
+      "ja": "顧客(Asanaのリリースに記載)",
+      "en": "Customers (named in Asana's releases)"
+    },
+    {
+      "ja": "AI・事業提携",
+      "en": "AI & business partners"
+    },
+    {
+      "ja": "連携先",
+      "en": "Integrations"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Asanaは2024年11月にAWSと、ホスティング関連サービスの60か月契約を結んだ",
+          "text_en": "In November 2024, Asana entered into a 60-month contract with AWS for hosting-related services",
+          "source": {
+            "label": "Asana 10-K",
+            "label_en": "Asana 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "In November 2024, the Company entered into a 60-month contract with Amazon Web Services (“AWS”) for hosting-related services, which replaced the Company’s prior agreement with AWS and terminated the remaining commitments under the prior agreement."
+          }
+        },
+        {
+          "type": "down",
+          "text": "顧客例としてAmazonが挙げられている",
+          "text_en": "Amazon is named among Asana's example customers",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772025000105/asana8-kex991q1fy26.htm",
+            "level": "official",
+            "date": "2025-06-03",
+            "quote": "Over 170,000 customers like Accenture, Amazon, Anthropic, Morningstar, and Suzuki rely on Asana to align teams and accelerate organizational impact."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサル・SI",
+      "sub_en": "Consulting & SI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例としてAccentureが挙げられている",
+          "text_en": "Accenture is named among Asana's example customers",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772025000105/asana8-kex991q1fy26.htm",
+            "level": "official",
+            "date": "2025-06-03",
+            "quote": "Over 170,000 customers like Accenture, Amazon, Anthropic, Morningstar, and Suzuki rely on Asana to align teams and accelerate organizational impact."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "MORN",
+      "ticker": "MORN",
+      "name": "モーニングスター",
+      "sub": "投資調査",
+      "sub_en": "Investment research",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例としてMorningstarが挙げられている",
+          "text_en": "Morningstar is named among Asana's example customers",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772025000105/asana8-kex991q1fy26.htm",
+            "level": "official",
+            "date": "2025-06-03",
+            "quote": "Over 170,000 customers like Accenture, Amazon, Anthropic, Morningstar, and Suzuki rely on Asana to align teams and accelerate organizational impact."
+          }
+        }
+      ],
+      "name_en": "Morningstar"
+    },
+    {
+      "id": "SZKMY",
+      "ticker": "Suzuki",
+      "name": "スズキ",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例としてスズキが挙げられている",
+          "text_en": "Suzuki is named among Asana's example customers",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772025000235/asana8-kex991q3fy26.htm",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "Over 170,000 customers like Accenture, Amazon, Anthropic, and Suzuki rely on Asana to align teams and accelerate organizational impact."
+          }
+        }
+      ],
+      "name_en": "Suzuki Motor"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AsanaはOpenAIと戦略的提携を結び、AI機能を支えている",
+          "text_en": "Asana has a strategic partnership with OpenAI to power its AI features",
+          "source": {
+            "label": "Asana 10-K",
+            "label_en": "Asana 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "We have expanded this ecosystem through strategic partnerships with leading foundational model providers, including OpenAI and Anthropic, to power our AI features with state-of-the-art intelligence.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AsanaはAnthropicと戦略的提携を結び、AI機能を支えている",
+          "text_en": "Asana has a strategic partnership with Anthropic to power its AI features",
+          "source": {
+            "label": "Asana 10-K",
+            "label_en": "Asana 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "We have expanded this ecosystem through strategic partnerships with leading foundational model providers, including OpenAI and Anthropic, to power our AI features with state-of-the-art intelligence.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        },
+        {
+          "type": "down",
+          "text": "顧客例としてAnthropicも挙げられている",
+          "text_en": "Anthropic is also named among Asana's example customers",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772025000235/asana8-kex991q3fy26.htm",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "Over 170,000 customers like Accenture, Amazon, Anthropic, and Suzuki rely on Asana to align teams and accelerate organizational impact."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AsanaはGoogle Cloud Partner of Yearを受賞した",
+          "text_en": "Asana received the Google Cloud Partner of the Year award",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000037/asana8-kex991q1fy27.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "• Received the Google Cloud Partner of the Year award, underscoring Asana’s position as a strategic enterprise partner for connecting work management with the broader Google ecosystem."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AsanaはMastercardと提携し、Mastercard Business会員に初回の年間契約の20%還元を提供した",
+          "text_en": "Asana launched a partnership with Mastercard offering Mastercard Business cardholders a 20% rebate on an annual subscription for first-time customers",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772024000105/asana8-kex991q3fy25.htm",
+            "level": "official",
+            "date": "2024-12-05",
+            "quote": "• Launched a partnership with Mastercard, offering Mastercard Business cardholders a 20% rebate on an annual subscription to first-time Asana customers."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "その後、小規模事業者向けの割引提供へ提携を拡大した",
+          "text_en": "The partnership was later expanded to give small businesses access to Asana at a discounted rate",
+          "source": {
+            "label": "Asana 8-K Ex.99 の発表",
+            "label_en": "Asana 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772025000198/asana8-kex991q2fy26.htm",
+            "level": "official",
+            "date": "2025-09-03",
+            "quote": "• Expanded Asana’s partnership with Mastercard - giving small businesses access to Asana at a discounted rate so they can work with more clarity, speed, and impact."
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AsanaのAPIはMicrosoft Teamsなどの外部アプリと連携できる",
+          "text_en": "Asana's API enables integration with third-party applications such as Microsoft Teams",
+          "source": {
+            "label": "Asana 10-K",
+            "label_en": "Asana 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Asana platform maintains a robust API that enables developers to build apps and integrate efficiently with hundreds of third-party applications like Microsoft Teams, Slack, Jira, Salesforce, and Adobe Creative Cloud."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "CRM・クラウド",
+      "sub_en": "CRM & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AsanaのAPIはSalesforceなどの外部アプリと連携できる",
+          "text_en": "Asana's API enables integration with third-party applications such as Salesforce",
+          "source": {
+            "label": "Asana 10-K",
+            "label_en": "Asana 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Asana platform maintains a robust API that enables developers to build apps and integrate efficiently with hundreds of third-party applications like Microsoft Teams, Slack, Jira, Salesforce, and Adobe Creative Cloud."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "sub": "クリエイティブソフト",
+      "sub_en": "Creative software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AsanaのAPIはAdobe Creative Cloudなどの外部アプリと連携できる",
+          "text_en": "Asana's API enables integration with third-party applications such as Adobe Creative Cloud",
+          "source": {
+            "label": "Asana 10-K",
+            "label_en": "Asana 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Asana platform maintains a robust API that enables developers to build apps and integrate efficiently with hundreds of third-party applications like Microsoft Teams, Slack, Jira, Salesforce, and Adobe Creative Cloud."
+          }
+        }
+      ],
+      "name_en": "Adobe"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
