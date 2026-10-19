@@ -37,12 +37,32 @@ SELECT json_build_object(
 )::text
 """
 
-def verify_restored_payments(env):
-    result = json.loads(run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c',
-                             PAYMENT_RESTORE_CHECK], env=env))
+LIVE_PAYMENT_RESTORE_CHECK = PAYMENT_RESTORE_CHECK.replace(
+    'resolute_payments_sandbox', 'resolute_payments_live').replace(
+    'SANDBOX_ACCESS_GRANTED', 'LIVE_ACCESS_GRANTED')
+LIVE_SCHEMA_CHECK = "SELECT EXISTS (SELECT 1 FROM pg_namespace WHERE nspname='resolute_payments_live')"
+
+def verify_restored_payments(env, *, live=False):
+    sql = LIVE_PAYMENT_RESTORE_CHECK if live else PAYMENT_RESTORE_CHECK
+    result = json.loads(run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c', sql], env=env))
     if result['invalid_grants'] or result['missing_grants']:
         raise RuntimeError('restored payment ledger is inconsistent')
     return {key: result[key] for key in ('orders', 'grants', 'events', 'audit', 'alert_outbox')}
+
+def verify_restored_live_payments(env, *, required=False):
+    present = run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c',
+                   LIVE_SCHEMA_CHECK], env=env).decode().strip()
+    if present not in ('t', 'f'):
+        raise RuntimeError('invalid live schema presence result')
+    if present == 'f':
+        if required:
+            raise RuntimeError('required live ledger missing from backup')
+        return {'state': 'not_installed'}
+    counts = verify_restored_payments(env, live=True)
+    # The view must survive the dump/restore too, not only its underlying tables.
+    run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c',
+         'SELECT count(*) FROM resolute_payments_live.entitlement_periods'], env=env)
+    return {'state': 'verified', 'rows': counts}
 
 SQL = """CREATE SCHEMA IF NOT EXISTS resolute_backup_probe;
 CREATE TABLE IF NOT EXISTS resolute_backup_probe.sample
@@ -195,9 +215,14 @@ def main():
                 count = int(run(['psql', '-XAt', '-c', 'SELECT count(*) FROM resolute_backup_probe.sample'], env=e))
                 if count != 2: raise RuntimeError('probe row count differs')
                 payment_counts = verify_restored_payments(e)
+                live_counts = verify_restored_live_payments(
+                    e, required=os.environ.get('RESOLUTE_REQUIRE_LIVE_LEDGER') == 'true')
                 report = {'event': 'RESOLUTE_RESTORE_OK', 'bytes': manifest['bytes'],
                           'probe_rows': count, 'payment_rows': payment_counts,
+                          'live_payment_ledger': live_counts,
                           'checks': ['download','decrypt','checksums','pg_restore','probe_content','primary_key','sandbox_payment_integrity']}
+                if live_counts['state'] == 'verified':
+                    report['checks'].append('live_payment_integrity')
                 # Verify restored PK rejects duplicate ID, not just column presence.
                 try:
                     run(['psql', '-X', '-v', 'ON_ERROR_STOP=1', '-c',

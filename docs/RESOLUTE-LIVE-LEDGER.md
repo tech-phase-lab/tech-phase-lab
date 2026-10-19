@@ -70,3 +70,23 @@ consumers together, verify isolated restore and actual production configuration,
 and then change the source only after the release gates pass. Existing legacy
 admin/test entitlements are deliberately not merged into live purchases. Verify
 which operator/test access must remain available before switching the setting.
+
+## Empty-ledger provisioning and restore acceptance
+
+`scripts/resolute/provision-live-ledger.mjs` is an explicit operator-only job.
+It applies migration 014 atomically to the dedicated database, checks that all
+five tables and the entitlement view are empty, and verifies that the existing
+API reader and Sandbox writer have no schema access. It creates no credentials,
+imports no Sandbox records, and does not activate payments or entitlement reads.
+An existing schema stops the job; inspect it before considering a retry.
+
+The isolated restore job validates both payment ledgers when the live schema is
+present. It requires a matching paid/captured order and exactly one grant audit
+record, checks refund/suspension state consistency, and checks that the narrow
+entitlement view survived restoration. A missing live schema is explicitly
+reported as `not_installed`, never as a successful production-ledger check.
+After provisioning, set `RESOLUTE_REQUIRE_LIVE_LEDGER=true` on the isolated
+restore service so an older backup without that schema fails acceptance.
+A verified empty ledger is a schema/restore result, not proof of live payment
+processing. Database roles and ACLs are excluded from these data backups and
+must be provisioned separately before activation.
