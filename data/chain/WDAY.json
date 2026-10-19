@@ -1,0 +1,399 @@
+{
+  "root": {
+    "ticker": "WDAY",
+    "name": "Workday"
+  },
+  "rows": [
+    {
+      "ja": "クラウド・AIの提携先",
+      "en": "Cloud & AI partners",
+      "above": true
+    },
+    {
+      "ja": "給与・ソフト連携",
+      "en": "Payroll & software integrations"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ORCL",
+    "SAP",
+    "PAYC"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Google Cloudと、Accenture、Deloitte、KPMGなどのGSIと連携して共同顧客を支援している",
+          "text_en": "Workday and Google Cloud partner closely with GSIs including Accenture, Deloitte, and KPMG for joint customers",
+          "source": {
+            "label": "Workday — Google Cloud expanded partnership, May 28, 2026",
+            "label_en": "Workday — Google Cloud expanded partnership, May 28, 2026",
+            "url": "https://newsroom.workday.com/2026-05-28-Workday-and-Google-Cloud-Expand-Strategic-Partnership-to-Bring-AI-Agents-for-HR-and-Finance-Into-Employees-Daily-Workflows",
+            "level": "official",
+            "quote": "To help joint enterprise customers realize the value of the agentic enterprise faster, Workday and Google Cloud are partnering closely with leading Global System Integrators (GSIs), including Accenture, Deloitte, and KPMG."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年5月28日にGoogle Cloudとの戦略的提携の拡大を発表した",
+          "text_en": "Announced an expanded strategic partnership with Google Cloud on May 28, 2026",
+          "source": {
+            "label": "Workday — Google Cloud expanded partnership, May 28, 2026",
+            "label_en": "Workday — Google Cloud expanded partnership, May 28, 2026",
+            "url": "https://newsroom.workday.com/2026-05-28-Workday-and-Google-Cloud-Expand-Strategic-Partnership-to-Bring-AI-Agents-for-HR-and-Finance-Into-Employees-Daily-Workflows",
+            "level": "official",
+            "quote": "Workday and Google Cloud Expand Strategic Partnership to Bring AI Agents for HR and Finance Into Employees' Daily Workflows - May 28, 2026"
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサルティング",
+      "sub_en": "Consulting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "WorkdayとGoogle Cloudの共同顧客向けに、Accentureと連携している",
+          "text_en": "Partnering with Accenture alongside Google Cloud for joint enterprise customers",
+          "source": {
+            "label": "Workday — Google Cloud expanded partnership, May 28, 2026",
+            "label_en": "Workday — Google Cloud expanded partnership, May 28, 2026",
+            "url": "https://newsroom.workday.com/2026-05-28-Workday-and-Google-Cloud-Expand-Strategic-Partnership-to-Bring-AI-Agents-for-HR-and-Finance-Into-Employees-Daily-Workflows",
+            "level": "official",
+            "quote": "To help joint enterprise customers realize the value of the agentic enterprise faster, Workday and Google Cloud are partnering closely with leading Global System Integrators (GSIs), including Accenture, Deloitte, and KPMG."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、Amazon Web Servicesなどのパブリッククラウド事業者との戦略的提携を挙げている",
+          "text_en": "The annual report cites strategic partnerships with public cloud providers including Amazon Web Services",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Strategic partnerships with public cloud providers, including Amazon Web Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年度に発表したMicrosoftとの提携で、顧客がMicrosoftの基盤で作ったエージェントをWorkdayで登録・管理できるようにする",
+          "text_en": "The partnership with Microsoft announced in fiscal 2026 lets customers register and manage agents built on Microsoft systems in Workday's Agent System of Record",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "For example, our partnership with Microsoft Corporation (“Microsoft”), announced in fiscal 2026, will enable customers to register and manage agents they build using Microsoft’s systems within the Workday Agent System of Record."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADP",
+      "ticker": "ADP",
+      "name": "オートマティック・データ・プロセッシング",
+      "sub": "給与計算",
+      "sub_en": "Payroll",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ADPなどの給与事業者との世界的な提携で、給与ソリューションの連携を進めている",
+          "text_en": "Global partnerships with payroll providers including ADP enable integrated payroll solutions",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our global partnerships with payroll providers, including Automatic Data Processing, Inc."
+          }
+        }
+      ],
+      "name_en": "Automatic Data Processing"
+    },
+    {
+      "id": "BL",
+      "ticker": "BL",
+      "name": "BlackLine",
+      "sub": "会計ソフト",
+      "sub_en": "Accounting software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackLineの年次報告が、自社の基盤がWorkdayなどのERPと連携すると述べている",
+          "text_en": "BlackLine's annual report says its platform integrates with ERP systems from Workday and others",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our platform integrates with the leading ERP systems offered by Workday, Inc., SAP SE (“SAP”), Oracle Corporation, Microsoft Dynamics 365 (“Microsoft Dynamics”), an application offered by Microsoft Corporation (“Microsoft”), Sage Intacct, Inc., and NetSuite, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "Box",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud content",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Boxの年次報告が、連携先の技術パートナーにWorkdayを挙げている",
+          "text_en": "Box's annual report names Workday among its technology partners for integrations",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We have a rich technology partner ecosystem, offering integrations with partners such as Adobe, Apple, Cisco, CrowdStrike, Google, Guidewire, IBM, Microsoft, Okta, Oracle-NetSuite, Palo Alto Networks, Salesforce, ServiceNow, Slack, USDM, Workday, and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKTA",
+      "ticker": "OKTA",
+      "name": "Okta",
+      "sub": "ID管理",
+      "sub_en": "Identity management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oktaの連携ネットワークに、連携先としてWorkdayが含まれている",
+          "text_en": "Workday is included among the integrations in the Okta Integration Network",
+          "source": {
+            "label": "Okta 10-K",
+            "label_en": "Okta 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "The Okta Integration Network contains over 7,000 integrations with cloud, mobile and web applications, IoT devices and IT infrastructure providers, including AWS, Atlassian, DocuSign, Google, Microsoft 365, NetSuite, Oracle, Palo Alto Networks, Proofpoint, Salesforce, SAP, ServiceNow, Slack, Splunk, VMware, Workday, Zendesk and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOCU",
+      "ticker": "DOCU",
+      "name": "Docusign",
+      "sub": "電子署名",
+      "sub_en": "E-signature",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Docusignの年次報告が、販売を広げる技術提携先にWorkdayを挙げている",
+          "text_en": "Docusign's annual report names Workday among technology partners that help it sell to more accounts",
+          "source": {
+            "label": "Docusign 10-K",
+            "label_en": "Docusign 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261333/000126133326000021/docu-20260131.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "We have partnerships with some of the world’s foremost technology providers including Salesforce, Microsoft, SAP, Google, ServiceNow, and Workday—that help us sell into a far greater number of accounts than we could do alone."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEAM",
+      "ticker": "TEAM",
+      "name": "アトラシアン",
+      "sub": "業務ソフト",
+      "sub_en": "Collaboration software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Atlassianの年次報告が、アプリの相互運用先としてWorkdayを挙げている",
+          "text_en": "Atlassian's annual report names Workday among the platforms its apps are interoperable with",
+          "source": {
+            "label": "Atlassian 10-K",
+            "label_en": "Atlassian 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "• Open and Extensible with a Vast Ecosystem - We are dedicated to making our apps open and interoperable with a wide range of other platforms and applications that customers use, such as Microsoft, Zoom, Anthropic, Cursor, OpenAI, Salesforce, Workday, and Dropbox."
+          }
+        }
+      ],
+      "name_en": "Atlassian"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年4月6日付のクレジット契約で、Bank of Americaが貸し手に含まれる",
+          "text_en": "Bank of America, N.A. is a party to the Credit Agreement dated April 6, 2022",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "10.21 Credit Agreement, dated as of April 6, 2022, among Workday, certain subsidiaries of Workday, Bank of America, N.A., Wells Fargo Bank, National Association, and the other L/C Issuers and Lenders party thereto"
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同クレジット契約で、Wells Fargo Bankが貸し手に含まれる",
+          "text_en": "Wells Fargo Bank, National Association is a party to the same Credit Agreement",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "10.21 Credit Agreement, dated as of April 6, 2022, among Workday, certain subsidiaries of Workday, Bank of America, N.A., Wells Fargo Bank, National Association, and the other L/C Issuers and Lenders party thereto"
+          }
+        }
+      ],
+      "name_en": "Wells Fargo"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "データベース・ソフト",
+      "sub_en": "Database & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Workdayの年次報告が、主な競合としてOracleを挙げている",
+          "text_en": "Workday's annual report names Oracle as a primary competitor",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our primary competitors are Oracle and SAP, well-established providers of financial management and HCM applications, which have long-standing relationships with customers and partners."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Workdayの年次報告が、主な競合としてSAPを挙げている",
+          "text_en": "Workday's annual report names SAP as a primary competitor",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our primary competitors are Oracle and SAP, well-established providers of financial management and HCM applications, which have long-standing relationships with customers and partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAYC",
+      "ticker": "PAYC",
+      "name": "Paycom",
+      "sub": "人事・給与ソフト",
+      "sub_en": "HR & payroll software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paycomの年次報告が、Workdayを競合として挙げている",
+          "text_en": "Names Workday as a competitor in its annual report",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

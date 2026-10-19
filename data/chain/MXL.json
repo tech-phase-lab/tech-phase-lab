@@ -1,0 +1,432 @@
+{
+  "root": {
+    "ticker": "MXL",
+    "name": "MaxLinear"
+  },
+  "rows": [
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing partners",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・買収・資金調達",
+      "en": "Partnerships, M&A and financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AVGO",
+    "QCOM",
+    "MRVL",
+    "MTSI",
+    "CRDO"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSMC",
+      "name": "TSMC",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、主要なファウンドリ提携先として台湾のTSMCを挙げている",
+          "text_en": "The annual report lists TSMC in Taiwan among its key foundry partners",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our key foundry partners include Taiwan Semiconductor Manufacturing Corporation, or TSMC, in Taiwan, and United Microelectronics Corporation, or UMC, in Taiwan and Singapore."
+          }
+        },
+        {
+          "type": "up",
+          "text": "年次報告が、最大級の製造パートナー4社の1つとしてTSMCを挙げている",
+          "text_en": "The annual report names TSMC among four of its largest manufacturing partners",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "For example, according to their websites, four of our largest manufacturing partners, ASE, Intel, TSMC, and UMC, each maintain well-developed environmental management and sustainability programs that are publicly avowed and supported by the highest levels of management"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "UMC",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、主要なファウンドリ提携先として台湾・シンガポールのUMCを挙げている",
+          "text_en": "The annual report lists UMC in Taiwan and Singapore among its key foundry partners",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our key foundry partners include Taiwan Semiconductor Manufacturing Corporation, or TSMC, in Taiwan, and United Microelectronics Corporation, or UMC, in Taiwan and Singapore."
+          }
+        },
+        {
+          "type": "up",
+          "text": "年次報告が、最大級の製造パートナー4社の1つとしてUMCを挙げている",
+          "text_en": "The annual report names UMC among four of its largest manufacturing partners",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "For example, according to their websites, four of our largest manufacturing partners, ASE, Intel, TSMC, and UMC, each maintain well-developed environmental management and sustainability programs that are publicly avowed and supported by the highest levels of management within"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASX",
+      "ticker": "ASX",
+      "name": "ASE",
+      "sub": "半導体後工程",
+      "sub_en": "Assembly & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、最大級の製造パートナー4社の1つとしてASEを挙げている",
+          "text_en": "The annual report names ASE among four of its largest manufacturing partners",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "For example, according to their websites, four of our largest manufacturing partners, ASE, Intel, TSMC, and UMC, each maintain well-developed environmental management and sustainability programs that are publicly avowed and supported by the highest levels of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "Comcast",
+      "sub": "通信・メディア",
+      "sub_en": "Telecom & media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年次報告が、OEMの顧客である大手ペイTV事業者の1社としてComcastを挙げている",
+          "text_en": "The annual report names Comcast among large Pay-TV companies that are customers of its OEMs",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Even if we succeed, additional testing and operational certifications will be required by the OEMs’ customers, which include large Pay-TV television companies such as Comcast Corporation, Liberty Global plc, Charter Communications, Inc., Sky UK Limited, AT&T Inc. and EchoStar Corporation.",
+            "note": "OEMを介した間接的な関係です。",
+            "note_en": "Indirect, through OEMs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIMO",
+      "ticker": "SIMO",
+      "name": "Silicon Motion",
+      "sub": "フラッシュコントローラー",
+      "sub_en": "Flash controllers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年5月5日に、Silicon Motionと合併契約を締結した",
+          "text_en": "Entered into a merger agreement with Silicon Motion on May 5, 2022",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "On May 5, 2022, the Company entered into an Agreement and Plan of Merger (the “Merger Agreement”) with MaxLinear, Inc., a Delaware Corporation (“MaxLinear”), and Shark Merger Sub, an exempted company with limited liability incorporated under the law of the Cayman Islands and a",
+            "note": "合併契約は終了しています。",
+            "note_en": "The merger agreement was terminated."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "合併契約の終了に関する法的手続きで損害賠償を支払う可能性を、年次報告がリスクとして挙げている",
+          "text_en": "The annual report cites as a risk possible damages in legal proceedings over the termination of the merger agreement with Silicon Motion",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "• If we are required to pay any damages in connection with legal proceedings related to the termination of the Merger Agreement with Silicon Motion, including for any alleged breaches of the Merger Agreement, or if we agree to make any payments in any settlement of legal proceedings related to the termination of the"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Wells Fargo Bank, National Associationが管理代理人兼担保代理人を務める信用契約(2021年6月23日付)を締結している",
+          "text_en": "Entered into a credit agreement dated June 23, 2021 with Wells Fargo Bank, National Association as administrative agent and collateral agent",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "23, 2021, the Company entered into a Credit Agreement, or the June 23, 2021 Credit Agreement, by and among the Company, the lenders from time to time party thereto, and Wells Fargo Bank, National Association, as administrative agent and collateral agent, that provides for a senior secured term B loan facility, or the “Initial Term Loan under the",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "保留中だった合併向けのWells Fargo Bankとのコミットメントレター(2022年10月24日付)は、合併契約の終了で失効した",
+          "text_en": "The commitment letter dated October 24, 2022 with Wells Fargo Bank for the formerly pending merger was terminated upon termination of the merger agreement",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "The second amended and restated commitment letter dated October 24, 2022 with Wells Fargo Bank, N.A., or Wells Fargo Bank, and other lenders, and related financing commitments for the previously pending (now terminated) merger were also terminated upon termination of the Merger Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "ネットワーク半導体",
+      "sub_en": "Networking chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated, Analog Devices, Inc., Renesas Electronics Corporation, Microchip"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "通信半導体",
+      "sub_en": "Wireless chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom, Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "sub": "データインフラ半導体",
+      "sub_en": "Data infrastructure chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "semiconductor competitors include Broadcom, Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated, Analog Devices, Inc., Renesas Electronics Corporation, Microchip"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "MACOM",
+      "sub": "高速接続半導体",
+      "sub_en": "High-speed connectivity chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated, Analog Devices, Inc., Renesas Electronics Corporation, Microchip"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "MACOMの年次報告が、マックスリニアを競合として挙げている",
+          "text_en": "Names MaxLinear as a competitor in its annual report",
+          "source": {
+            "label": "MACOM Technology Solutions 10-K",
+            "label_en": "MACOM Technology Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "While we compete with a wide variety of companies, our significant competitors include, among others , ADI, Broadcom, Credo, Marvell, MaxLinear, Microchip, NXP, Qorvo, Semtech, Skyworks and Sumitomo as well as increased competition from Chinese companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRDO",
+      "ticker": "CRDO",
+      "name": "Credo",
+      "sub": "高速接続半導体",
+      "sub_en": "High-speed connectivity chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom, Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated, Analog Devices, Inc.,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MediaTek",
+      "ticker": "MediaTek",
+      "name": "MediaTek",
+      "sub": "通信・SoC",
+      "sub_en": "Communications & SoC",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "merchant semiconductor competitors include Broadcom, Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated, Analog Devices, Inc., Renesas Electronics Corporation,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Realtek",
+      "ticker": "Realtek",
+      "name": "Realtek",
+      "sub": "通信・PC半導体",
+      "sub_en": "Communications & PC chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom, Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "Skyworks",
+      "sub": "RF半導体",
+      "sub_en": "RF chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マックスリニアの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom, Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated,"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

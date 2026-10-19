@@ -1,0 +1,361 @@
+{
+  "root": {
+    "ticker": "CRUS",
+    "name": "Cirrus Logic"
+  },
+  "rows": [
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "ライセンス・資金調達",
+      "en": "Licensing and financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ADI",
+    "QCOM",
+    "SWKS",
+    "Realtek"
+  ],
+  "companies": [
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2022会計年度に、GlobalFoundriesと生産能力予約・ウエハー供給コミットメント契約を結んでいる(2026暦年まで)",
+          "text_en": "Entered into a Capacity Reservation and Wafer Supply Commitment Agreement with GlobalFoundries in fiscal year 2022, covering purchases through calendar year 2026",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In fiscal year 2022, the Company entered into a Capacity Reservation and Wafer Supply Commitment Agreement with GlobalFoundries to reserve capacity and set wafer pricing for products purchased pursuant to the agreement through calendar year 2026."
+          }
+        },
+        {
+          "type": "up",
+          "text": "ウエハーの大部分を、シンガポールとドイツのGlobalFoundriesなどが製造している",
+          "text_en": "The substantial majority of its wafers are manufactured by TSMC and by GlobalFoundries in Singapore and Germany",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Although we seek to reduce our dependence on any one subcontractor, the substantial majority of our semiconductor wafers are manufactured by TSMC at fabs in Taiwan, and GlobalFoundries in Singapore and Germany."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSMC",
+      "name": "TSMC",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ウエハーの製造を、主にGlobalFoundriesとTSMCに委託している",
+          "text_en": "Wafers are primarily supplied by GlobalFoundries and TSMC",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "We use a variety of foundries in the production of wafers, primarily supplied by GLOBALFOUNDRIES Inc., (\"GlobalFoundries\") and Taiwan Semiconductor Manufacturing Company, Limited (\"TSMC\")."
+          }
+        },
+        {
+          "type": "up",
+          "text": "ウエハーの大部分を、台湾の工場でTSMCが製造している",
+          "text_en": "The substantial majority of its wafers are manufactured by TSMC at fabs in Taiwan",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Although we seek to reduce our dependence on any one subcontractor, the substantial majority of our semiconductor wafers are manufactured by TSMC at fabs in Taiwan, and GlobalFoundries in Singapore and Germany."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "Amkor Technology",
+      "sub": "半導体後工程",
+      "sub_en": "Assembly & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な組立・テスト委託先の1社としてAmkor Technologyを挙げている",
+          "text_en": "Lists Amkor Technology among its primary assembly and test houses",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "The Company’s primary assembly and test houses include Advanced Semiconductor Engineering, Inc., Amkor Technology, Inc., STATS ChipPAC Pte."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "コンシューマー機器",
+      "sub_en": "Consumer devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "唯一のエンド顧客であるAppleが、契約製造会社を通じた購入で2026会計年度の総売上の約91%を占めた",
+          "text_en": "Its one end customer, Apple Inc., purchasing through contract manufacturers, represented approximately 91 percent of total net sales in fiscal 2026",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "For fiscal years 2026, 2025, and 2024, we had one end customer, Apple Inc., who purchased through multiple contract manufacturers and represented approximately 91 percent, 89 percent, and 87 percent, of the Company’s total net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Foxconn",
+      "ticker": "Foxconn",
+      "name": "Foxconn",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "契約製造会社のFoxconnが、連結売掛金総額の39%を占めた",
+          "text_en": "Contract manufacturer Foxconn represented 39 percent of consolidated gross trade accounts receivable",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Contract manufacturers aggregated at their parent level, that represented more than 10 percent of consolidated gross trade accounts receivable included Foxconn and Luxshare, representing 39 percent and 22 percent, respectively, of our consolidated gross trade accounts receivable as of the end of fiscal year 2026, and Foxconn",
+            "note": "売掛金の比率に基づく記載です。",
+            "note_en": "Based on share of trade receivables."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Luxshare",
+      "ticker": "Luxshare",
+      "name": "Luxshare",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "契約製造会社のLuxshareが、連結売掛金総額の22%を占めた",
+          "text_en": "Contract manufacturer Luxshare represented 22 percent of consolidated gross trade accounts receivable",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Contract manufacturers aggregated at their parent level, that represented more than 10 percent of consolidated gross trade accounts receivable included Foxconn and Luxshare, representing 39 percent and 22 percent, respectively, of our consolidated gross trade accounts receivable as of the end of fiscal year 2026, and Foxconn and Luxshare,",
+            "note": "売掛金の比率に基づく記載です。",
+            "note_en": "Based on share of trade receivables."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "半導体IP",
+      "sub_en": "Semiconductor IP",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CEVAが、公表済みのライセンシーの1社としてCirrus Logicを挙げている",
+          "text_en": "CEVA lists Cirrus Logic among its publicly announced licensees",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our publicly announced licensees include companies such as Actions, Ambiq, ASPEED, ASR Microelectronics, Atmosic, Beken, Bestechnic, boAt, Broadcom, Ceragon, Cirrus Logic, Espressif Systems, ESWIN, Fujifilm, Rockchip, Goodix, Hisense, iCatch Technology, iCOM, InPlay, Intel, Itron, LG Electronics, LifeSignals, ListenAI, MediaTek,",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Wells Fargo Bank, National Associationが管理代理人を務める第二次改訂版信用契約(2021年7月8日付)を締結している",
+          "text_en": "Entered into a second amended and restated credit agreement dated July 8, 2021 with Wells Fargo Bank, National Association as administrative agent",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "On July 8, 2021, the Company entered into a second amended and restated credit agreement (the \"Second Amended Credit Agreement\") with Wells Fargo Bank, National Association, as administrative agent, and the lenders party thereto.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年5月4日に、同行を管理代理人とする第三次改訂版信用契約を締結した",
+          "text_en": "Entered into a third amended and restated credit agreement on May 4, 2026 with Wells Fargo Bank, National Association as administrative agent",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "On May 4, 2026, subsequent to fiscal 2026 year-end, the Company entered into a third amended and restated credit agreement (the \"Third Amended Credit Agreement\") with Wells Fargo Bank, National Association, as Administrative Agent, and the Lenders party thereto, which amended and restated the Second Amended Credit Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "Analog Devices",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シーラス・ロジックの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cirrus Logic’s annual report",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our primary competitors include, but are not limited to, AKM Semiconductor Inc., Analog Devices Inc., QUALCOMM Incorporated, Realtek Semiconductor Corporation, Renesas Electronics Corporation, Shanghai Awinic Technology Co., Ltd., Shenzhen Goodix Technology Co,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "通信半導体",
+      "sub_en": "Wireless chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シーラス・ロジックの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cirrus Logic’s annual report",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our principal competitors in these markets include AKM Semiconductor Inc., Analog Devices Inc., Qualcomm Incorporated, Realtek Semiconductor Corporation, Renesas Electronics Corporation, Shanghai Awinic Technology Co., Ltd., Shenzhen Goodix Technology Co, Ltd., Skyworks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Realtek",
+      "ticker": "Realtek",
+      "name": "Realtek",
+      "sub": "通信・PC半導体",
+      "sub_en": "Communications & PC chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シーラス・ロジックの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cirrus Logic’s annual report",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our primary competitors include, but are not limited to, AKM Semiconductor Inc., Analog Devices Inc., QUALCOMM Incorporated, Realtek Semiconductor Corporation, Renesas Electronics Corporation, Shanghai Awinic Technology Co., Ltd., Shenzhen Goodix Technology Co, Ltd., Skyworks Solutions Inc., ST"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "Skyworks Solutions",
+      "sub": "RF半導体",
+      "sub_en": "RF chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Skyworks Solutionsの年次報告が、シーラス・ロジックを競合として挙げている",
+          "text_en": "Names Cirrus Logic as a competitor in its annual report",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our competitors include Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

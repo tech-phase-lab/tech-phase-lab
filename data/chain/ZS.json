@@ -1,0 +1,73 @@
+{
+  "root": {
+    "ticker": "ZS",
+    "name": "Zscaler"
+  },
+  "rows": [
+    {
+      "ja": "連携先",
+      "en": "Integration partners",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FTNT"
+  ],
+  "companies": [
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "ワークフローソフト",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、ITサービス管理ツールのServiceNowなどとの連携を挙げている",
+          "text_en": "The annual report cites integration with IT service management tools such as ServiceNow",
+          "source": {
+            "label": "Zscaler 10-K",
+            "label_en": "Zscaler 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "Automated workflows enable organizations to remediate these risks, integrating with mainstream IT Service Management tools such as ServiceNow and Jira."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "Fortinet",
+      "sub": "ネットワークセキュリティ",
+      "sub_en": "Network security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fortinetの年次報告が、Zscalerを競合として挙げている",
+          "text_en": "Names Zscaler as a competitor in its annual report",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors include companies such as Check Point, Cisco, CrowdStrike, F5 Networks, HPE, Huawei, Microsoft, Netskope, Palo Alto Networks, SonicWALL, Sophos, and Zscaler."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

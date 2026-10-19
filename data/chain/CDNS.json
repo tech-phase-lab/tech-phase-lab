@@ -1,0 +1,323 @@
+{
+  "root": {
+    "ticker": "CDNS",
+    "name": "ケイデンス"
+  },
+  "rows": [
+    {
+      "ja": "提携・買収・投資",
+      "en": "Partnerships & acquisitions",
+      "above": true
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SNPS",
+    "CEVA",
+    "KEYS"
+  ],
+  "companies": [
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "ラムバス",
+      "sub": "メモリ・インターフェースIP",
+      "sub_en": "Memory interface IP",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cadenceが2023年9月6日に、RambusからSerDesとメモリ・インターフェースPHYのIP事業を取得した",
+          "text_en": "On September 6, 2023, Cadence acquired the SerDes and memory interface PHY IP business from Rambus Inc.",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On September 6, 2023, Cadence acquired the serializer/deserializer (“SerDes”) and memory interface physical layer (“Memory”) IP business from Rambus Inc."
+          }
+        }
+      ],
+      "name_en": "Rambus"
+    },
+    {
+      "id": "ARM",
+      "ticker": "ARM",
+      "name": "Arm",
+      "sub": "プロセッサIP",
+      "sub_en": "Processor IP",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cadenceが2025年8月26日に、Arm LimitedからArtisan foundation IP事業を取得した",
+          "text_en": "On August 26, 2025, Cadence acquired the Artisan foundation IP business from Arm Limited",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On August 26, 2025, Cadence acquired the Artisan foundation IP business from Arm Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "プロセッサIP",
+      "sub_en": "Processor IP",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年9月14日、CEVAとIntrinsixがCadenceとの株式譲渡契約を結んだ",
+          "text_en": "On September 14, 2023, Ceva and Intrinsix entered into a Share Purchase Agreement with Cadence",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On September 14, 2023, the Company and Intrinsix, then its wholly owned subsidiary, entered into a Share Purchase Agreement (the “Agreement”) with Cadence Design Systems, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ケイデンスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cadence’s annual report",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "U.S.-based competitors include Keysight Technologies, Inc., Schrödinger, Inc., and CEVA, Inc., while international competitors include Altium Limited (acquired by Renesas Electronics Corporation) and Zuken, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GTCで、Grace Blackwellアーキテクチャに関するNVIDIAとの提携拡大と、エージェント型AIの協業を発表した",
+          "text_en": "At GTC, Cadence announced an expanded partnership with NVIDIA on its Grace Blackwell architecture and a collaboration on full-stack agentic AI solutions",
+          "source": {
+            "label": "Cadence Design Systems 8-K Ex.99 の発表",
+            "label_en": "Cadence Design Systems 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000046/cdns4282025ex9901.htm",
+            "level": "official",
+            "date": "2025-04-28",
+            "quote": "• At the GPU Technology Conference (GTC), Cadence announced an expanded partnership with NVIDIA on its latest Grace Blackwell architecture and a collaboration on developing full-stack agentic AI solutions using the new Llama Nemotron Reasoning Model."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IP売上の伸びは、Intelとの重要な契約が牽引したと説明している",
+          "text_en": "IP revenue growth was highlighted by a significant agreement with Intel",
+          "source": {
+            "label": "Cadence Design Systems 8-K Ex.99 の発表",
+            "label_en": "Cadence Design Systems 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000089/cdns07272026ex9901.htm",
+            "level": "official",
+            "date": "2026-07-27",
+            "quote": "• IP revenue grew more than 40% year-over-year, driven by strong demand for Cadence’s Star IP portfolio, highlighted by a significant agreement with Intel and additional wins with leading semiconductor companies"
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "UMC",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UMCは、28HPC+プロセスのアナログ・ミックスドシグナル・フローの認証でCadenceと協業していると記している",
+          "text_en": "UMC says it collaborates with Cadence on certification of the analog/mixed-signal flow for its 28HPC+ process",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We and Cadence Design Systems collaborate on certification of analog/mixed-signal flow for 28HPC+ process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSEM",
+      "ticker": "TSEM",
+      "name": "タワーセミコンダクター",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Towerは、Cadenceなどの設計自動化大手と協業していると記している",
+          "text_en": "Tower says it collaborates with leading design automation providers including Cadence",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "we collaborate with leading design automation providers - including Cadence Design Systems, Synopsys, Siemens EDA, and Keysight Technologies"
+          }
+        }
+      ],
+      "name_en": "Tower Semiconductor"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月14日付のクレジット契約で、JPMorgan Chase Bankが共同主幹事を務める",
+          "text_en": "Under the Credit Agreement dated August 14, 2024, JPMorgan Chase Bank, N.A. is a joint lead arranger and joint bookrunner",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Credit Agreement, dated August 14, 2024, by and among the Registrant, Bank of America, N.A., as a lender and administrative agent, the other lenders and issuing banks party thereto and BofA Securities, Inc., JPMorgan Chase Bank, N.A. and HSBC Bank USA, National Association, as joint lead arrangers and joint bookrunners.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月14日付のクレジット契約で、Bank of Americaが貸付人兼管理代理人を務める",
+          "text_en": "Under the Credit Agreement dated August 14, 2024, Bank of America, N.A. is lender and administrative agent",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Credit Agreement, dated August 14, 2024, by and among the Registrant, Bank of America, N.A., as a lender and administrative agent, the other lenders and issuing banks party thereto and BofA Securities, Inc., JPMorgan Chase Bank, N.A. and HSBC Bank USA, National Association, as joint lead arrangers and joint bookrunners.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Bank of Americaなどとの2022年9月7日付ローン契約に、2024年8月14日付の第1次修正がある",
+          "text_en": "The loan agreement dated September 7, 2022 with Bank of America, N.A. and other lenders has a First Amendment dated August 14, 2024",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "First Amendment to Loan Agreement, dated August 14, 2024, with respect to that certain Loan Agreement, dated September 7, 2022, by and among the Registrant, Bank of America, N.A. and the other lenders party thereto."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "シノプシス",
+      "sub": "EDAソフト",
+      "sub_en": "EDA software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ケイデンスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cadence’s annual report",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key competitors include Synopsys, Inc., Ansys, Inc."
+          }
+        }
+      ],
+      "name_en": "Synopsys"
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "キーサイト・テクノロジー",
+      "sub": "計測機器",
+      "sub_en": "Test & measurement",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ケイデンスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cadence’s annual report",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "U.S.-based competitors include Keysight Technologies, Inc., Schrödinger, Inc., and CEVA, Inc., while international competitors include Altium Limited (acquired by Renesas Electronics Corporation) and Zuken, Inc."
+          }
+        }
+      ],
+      "name_en": "Keysight Technologies"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

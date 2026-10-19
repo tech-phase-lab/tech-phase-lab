@@ -1,0 +1,325 @@
+{
+  "root": {
+    "ticker": "NVTS",
+    "name": "Navitas Semiconductor"
+  },
+  "rows": [
+    {
+      "ja": "ファウンドリ",
+      "en": "Foundries",
+      "above": true
+    },
+    {
+      "ja": "提携",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "Infineon",
+    "POWI",
+    "ON",
+    "TXN"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSMC",
+      "name": "TSMC",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GaN製品の既存のウエハー製造パートナーは、台湾のTSMCである",
+          "text_en": "TSMC in Taiwan is its existing wafer fabrication partner for GaN products",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "For GaN products, our existing wafer fabrication partner is TSMC located in Taiwan."
+          }
+        },
+        {
+          "type": "up",
+          "text": "TSMCからバッファ在庫を購入することを約束した",
+          "text_en": "Committed to purchase buffer inventory from TSMC",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "committing to purchase buffer inventory from TSMC, expanding our collaboration with Powerchip Semiconductor Manufacturing Corporation and in November 2025, we announced a long-term strategic partnership with"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GaNでは、米国拠点のファウンドリ提携先であるGlobalFoundriesとの協業を競争上の強みと位置づけている",
+          "text_en": "Considers its collaboration with US-based foundry partner GlobalFoundries for GaN to be a competitive advantage",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "As a result, we consider our collaboration with United States based foundry partners, specifically GlobalFoundries for GaN and X-Fabs for SiC, to be a competitive advantage, as we believe that foreign semiconductor companies and companies that rely on foreign supply chains will be disadvantaged in these critical markets."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年11月に、AIデータセンターなど向けの先進GaNソリューションを開発・提供する長期の戦略的提携を発表した",
+          "text_en": "In November 2025, announced a long-term strategic partnership with GlobalFoundries to develop and deliver advanced GaN solutions for markets including AI datacenters",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "with Powerchip Semiconductor Manufacturing Corporation and in November 2025, we announced a long-term strategic partnership with GlobalFoundries to develop and deliver advanced GaN solutions for critical applications in high power markets, including AI datacenters, energy and grid infrastructure, performance computing and industrial electrification."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSMC",
+      "ticker": "PSMC",
+      "name": "Powerchip Semiconductor",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Powerchip Semiconductor Manufacturingとの協業を拡大している",
+          "text_en": "Expanding its collaboration with Powerchip Semiconductor Manufacturing Corporation",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "committing to purchase buffer inventory from TSMC, expanding our collaboration with Powerchip Semiconductor Manufacturing Corporation and in November 2025, we announced a long-term strategic partnership with"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "800 VDC配電の電力供給先として、NVIDIA Rubin Ultraプラットフォームを挙げている",
+          "text_en": "Cites the NVIDIA Rubin Ultra platform as infrastructure powered by 800 VDC distribution",
+          "source": {
+            "label": "NVTS / NVIDIA — official relationship source; checked October 17, 2026",
+            "label_en": "NVTS / NVIDIA — official relationship source; checked October 17, 2026",
+            "url": "https://ir.navitassemi.com/news-releases/news-release-details/navitas-supports-800-vdc-power-architecture-nvidias-next",
+            "level": "official",
+            "quote": "The 800 VDC distribution directly powers IT racks, eliminating the need for additional AC-DC conversion stages, and is stepped down through two high-efficiency DC-DC stages (800 VDC to 54 V/12 VDC, and then to point-of-load GPU voltages), to drive advanced infrastructure such as the NVIDIA Rubin Ultra platform."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Infineon",
+      "ticker": "Infineon",
+      "name": "Infineon",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated, Innoscience (Suzhou) Semiconductor Co., Ltd., Renesas Electronics Corp., and Efficient Power Conversion Corporation (EPC)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "POWI",
+      "ticker": "POWI",
+      "name": "Power Integrations",
+      "sub": "パワー半導体",
+      "sub_en": "Power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated, Innoscience (Suzhou) Semiconductor Co., Ltd., Renesas Electronics Corp., and Efficient Power Conversion Corporation (EPC)."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Power Integrationsの年次報告が、ナビタス・セミコンダクターを競合として挙げている",
+          "text_en": "Names Navitas Semiconductor as a competitor in its annual report",
+          "source": {
+            "label": "Power Integrations 10-K",
+            "label_en": "Power Integrations 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/833640/000083364026000037/powi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competing suppliers of high-voltage GaN products include InnoScience, Infineon, Renesas, Texas Instruments, Navitas Semiconductor and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ON",
+      "ticker": "ON",
+      "name": "onsemi",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary silicon-based power semiconductor competitors include Infineon, STMicroelectronics, ON Semiconductor and"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TXN",
+      "ticker": "TXN",
+      "name": "Texas Instruments",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated, Innoscience (Suzhou) Semiconductor Co., Ltd., Renesas Electronics Corp., and Efficient Power Conversion Corporation (EPC)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Wolfspeed",
+      "ticker": "WOLF",
+      "name": "Wolfspeed",
+      "sub": "SiC半導体",
+      "sub_en": "SiC semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary SiC competitors include Infineon, Wolfspeed, Inc., ON Semiconductor Corporation, ROHM Co., Ltd., Qorvo, Inc., and STMicroelectronics International N.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STMicroelectronics",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary SiC competitors include Infineon, Wolfspeed, Inc., ON Semiconductor Corporation, ROHM Co., Ltd., Qorvo, Inc., and STMicroelectronics International N.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Renesas",
+      "ticker": "Renesas",
+      "name": "Renesas",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated, Innoscience (Suzhou) Semiconductor Co., Ltd., Renesas Electronics Corp., and Efficient Power Conversion Corporation (EPC)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

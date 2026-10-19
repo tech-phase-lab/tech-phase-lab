@@ -1,0 +1,454 @@
+{
+  "root": {
+    "ticker": "UMC",
+    "name": "United Microelectronics"
+  },
+  "rows": [
+    {
+      "ja": "ウエハーの調達先",
+      "en": "Wafer suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客(顧客側の年次報告などに記載)",
+      "en": "Customers (named in their filings)"
+    },
+    {
+      "ja": "提携・ライセンス・預託",
+      "en": "Partnerships, licensing & deposit"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "INTC",
+    "GFS"
+  ],
+  "companies": [
+    {
+      "id": "SHECY",
+      "ticker": "Shin-Etsu",
+      "name": "信越化学工業",
+      "sub": "半導体ウエハー",
+      "sub_en": "Silicon wafers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "UMCは、シリコンウエハーの大半を、Shin-Etsu Handotai Corporation、GlobalWafers、Sumco Group、Soitecから購入した",
+          "text_en": "UMC purchased a majority of its silicon wafers from Shin-Etsu Handotai Corporation, GlobalWafers, Sumco Group and Soitec",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "For example, we purchased a majority of our silicon wafers from Shin-Etsu Handotai Corporation, or Shin-Etsu, GlobalWafers, Sumco Group (including Sumco Corporation and Formosa Sumco Technology Corporation) and Soitec.",
+            "note": "Shin-Etsu Handotai Corporationとの取引の記載です。",
+            "note_en": "Refers to Shin-Etsu Handotai Corporation."
+          }
+        },
+        {
+          "type": "up",
+          "text": "UMCのウエハーの主な供給元は、Shin-Etsu、GlobalWafers、Sumco Group、Soitecである",
+          "text_en": "The principal makers of UMC's wafers are Shin-Etsu, GlobalWafers, Sumco Group and Soitec",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "The principal makers for our wafers are Shin-Etsu, GlobalWafers, Sumco Group and Soitec.",
+            "note": "Shin-Etsu Handotai Corporationとの取引の記載です。",
+            "note_en": "Refers to Shin-Etsu Handotai Corporation."
+          }
+        }
+      ],
+      "name_en": "Shin-Etsu Chemical"
+    },
+    {
+      "id": "LSCC",
+      "ticker": "LSCC",
+      "name": "ラティス・セミコンダクター",
+      "sub": "プログラマブル半導体",
+      "sub_en": "Programmable chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Latticeは、UMCなどのファウンドリ・パートナーからシリコンウエハーを調達している",
+          "text_en": "Lattice sources silicon wafers from foundry partners including UMC",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We source silicon wafers from our foundry partners, UMC, USJC, Samsung, TSMC, and Epson, pursuant to agreements with each company and their respective affiliates."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Latticeは、UMCとその子会社USJCの130nm、90nm、65nm、40nm CMOS工程などで製品を製造している",
+          "text_en": "Lattice manufactures its products with UMC and its subsidiary USJC on its 130nm, 90nm, 65nm and 40nm CMOS process technologies",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Lattice partners with United Microelectronics Corporation (\"UMC\") and its subsidiary United Semiconductor Japan Corporation (\"USJC\") to manufacture our products on its 130nm, 90nm, 65nm, and 40nm CMOS process technologies, as well as embedded flash memory in these process nodes."
+          }
+        }
+      ],
+      "name_en": "Lattice Semiconductor"
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "マックスリニア",
+      "sub": "接続用半導体",
+      "sub_en": "Connectivity chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MaxLinearは、台湾とシンガポールのUMCを主要なファウンドリ・パートナーに挙げている",
+          "text_en": "MaxLinear names UMC, in Taiwan and Singapore, among its key foundry partners",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our key foundry partners include Taiwan Semiconductor Manufacturing Corporation, or TSMC, in Taiwan, and United Microelectronics Corporation, or UMC, in Taiwan and Singapore."
+          }
+        },
+        {
+          "type": "down",
+          "text": "MaxLinearは、UMCを最大級の製造パートナー4社の1社に挙げている",
+          "text_en": "MaxLinear names UMC among four of its largest manufacturing partners",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "For example, according to their websites, four of our largest manufacturing partners, ASE, Intel, TSMC, and UMC, each maintain well-developed environmental management and sustainability programs that are publicly avowed and supported by the highest levels of management within"
+          }
+        }
+      ],
+      "name_en": "MaxLinear"
+    },
+    {
+      "id": "SITM",
+      "ticker": "SITM",
+      "name": "サイタイム",
+      "sub": "タイミング半導体",
+      "sub_en": "Timing chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SiTimeは、アナログ回路の製造を主にTSMCとUMCに頼っている",
+          "text_en": "SiTime relies primarily on TSMC and UMC for fabrication of its analog circuits",
+          "source": {
+            "label": "SiTime 10-K",
+            "label_en": "SiTime 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "(\"Teledyne\") for our MEMS fabrication, and primarily on TSMC and UMC for our analog circuits fabrication, and any disruption in the supply of wafers or any increases in the wafer or materials prices could adversely affect our gross margins and our ability to meet customer demands in a timely manner, or at all, and lead to reduced revenue."
+          }
+        },
+        {
+          "type": "down",
+          "text": "SiTimeは、MEMSタイミング製品とアナログ回路の主な供給元にBosch、TSMC、UMC、Teledyneを挙げている",
+          "text_en": "SiTime names Bosch, TSMC, UMC and Teledyne as primary foundries and suppliers for its MEMS timing devices and analog circuits",
+          "source": {
+            "label": "SiTime 10-K",
+            "label_en": "SiTime 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We currently rely on Bosch, TSMC, UMC, and Teledyne as our primary foundries and suppliers for our MEMS timing devices and analog circuits, and only a few foundry vendors have the capability to manufacture our most advanced solutions, in particular with respect to our MEMS technology."
+          }
+        }
+      ],
+      "name_en": "SiTime"
+    },
+    {
+      "id": "HIMX",
+      "ticker": "HIMX",
+      "name": "ハイマックス・テクノロジーズ",
+      "sub": "ディスプレイ用半導体",
+      "sub_en": "Display driver chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Himaxは、ここ数年のファウンドリ・サービスの調達先にTSMC、UMCなどを挙げている",
+          "text_en": "Himax lists TSMC, UMC and others among foundries it has obtained foundry services from in the past few years",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years."
+          }
+        }
+      ],
+      "name_en": "Himax Technologies"
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "CPU・GPU",
+      "sub_en": "CPUs & GPUs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AMDは、IC製品のウエハー製造をTSMC、UMCなどのファウンドリに頼っている",
+          "text_en": "AMD relies on TSMC, UMC and its other foundries to produce wafers for its IC products",
+          "source": {
+            "label": "AMD 10-K",
+            "label_en": "AMD 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Moreover, we rely on TSMC, UMC and our other foundries to produce wafers with competitive performance attributes for our IC products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TXN",
+      "ticker": "TXN",
+      "name": "テキサス・インスツルメンツ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "UMCは、主な顧客としてTexas InstrumentsやIntelなどの統合デバイスメーカーを挙げている",
+          "text_en": "UMC names integrated device manufacturers such as Texas Instruments and Intel among its primary customers",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Our primary customers, in terms of our sales revenues, include premier integrated device manufacturers, such as Texas Instruments and Intel, plus leading fabless design companies, such as MediaTek, Realtek and Novatek."
+          }
+        }
+      ],
+      "name_en": "Texas Instruments"
+    },
+    {
+      "id": "MediaTek",
+      "ticker": "MediaTek",
+      "name": "メディアテック",
+      "sub": "スマホ・家電用半導体",
+      "sub_en": "Mobile & consumer chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "UMCは、顧客としてMediaTek、Realtek、Novatek、Texas Instrumentsを挙げている",
+          "text_en": "UMC names MediaTek, Realtek, Novatek and Texas Instruments among its customers",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Our customers include industry leaders such as MediaTek, Realtek, Novatek and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "MediaTek"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Intelは2024年に、UMCと12nmプロセス・プラットフォームを開発する戦略的協業を発表し、量産は2027年開始の見込みと記載している",
+          "text_en": "Intel announced in 2024 a strategic collaboration with UMC to develop a 12 nm process platform, with production expected to begin in 2027",
+          "source": {
+            "label": "Intel 10-K",
+            "label_en": "Intel 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "In 2024, we announced a strategic collaboration with UMC to develop a 12 nm process platform that expands our mature‑node process portfolio and strengthens our U.S.-based manufacturing foundry capabilities, with production expected to begin in 2027."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "UMCは、Intelとの協業契約が、Intelの米国での大規模製造能力とUMCの成熟ノードのファウンドリ経験を組み合わせるものだと説明している",
+          "text_en": "UMC says its collaboration agreements combine Intel's at-scale U.S. manufacturing capacity with UMC's foundry experience on mature nodes",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "The Collaboration agreements provide for the combination of Intel’s at-scale U.S. manufacturing capacity and our extensive foundry experience on mature nodes, enabling an expanded process portfolio."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "インテルの年次報告が、ユナイテッド・マイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names UMC as a competitor in its annual report",
+          "source": {
+            "label": "Intel 10-K",
+            "label_en": "Intel 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "As we pursue our strategy to establish Intel Foundry as a major provider of foundry capacity to manufacture semiconductors for others, we face intense competition from well-established competitors such as TSMC, Samsung, Global Foundries, UMC and SMIC."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "CDNS",
+      "ticker": "CDNS",
+      "name": "ケイデンス・デザイン・システムズ",
+      "sub": "設計ソフト",
+      "sub_en": "Design software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UMCとCadence Design Systemsは、28HPC+プロセスのアナログ/ミックスドシグナル・フローの認証で協力している",
+          "text_en": "UMC and Cadence Design Systems collaborate on certification of the analog/mixed-signal flow for the 28HPC+ process",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We and Cadence Design Systems collaborate on certification of analog/mixed-signal flow for 28HPC+ process."
+          }
+        }
+      ],
+      "name_en": "Cadence Design Systems"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・ソフトウェア",
+      "sub_en": "IT services & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UMCは、IBMなどと特許クロスライセンス契約を結んでいる",
+          "text_en": "UMC has patent cross-licensing agreements with several companies, including IBM",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "In addition, we currently have patent cross-licensing agreements with several companies, including International Business Machines Corporation, or IBM."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "通信・インフラ半導体",
+      "sub_en": "Networking & infrastructure chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UMCは、IBMやBroadcom Inc.などと特許クロスライセンスを結んでいる",
+          "text_en": "UMC has patent cross-licenses with major technology companies, including IBM and Broadcom Inc.",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We have entered into various patent cross-licenses with major technology companies, including a number of leading international semiconductor companies, such as IBM and Broadcom Inc."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UMCのADS(米国預託証券)は、UMCとJPMorgan Chase Bank, N.A.などの間の2009年10月21日付の預託契約に基づいて発行されている",
+          "text_en": "UMC's ADSs are issued under a Deposit Agreement dated October 21, 2009 among UMC, JPMorgan Chase Bank, N.A. and the holders",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "The ADSs are issued under the Deposit Agreement, dated as of October 21, 2009, as amended, supplemented or modified from time to time, among United Microelectronics, JPMorgan Chase Bank, N.A. and the holders and beneficial owners from time to time of American Depositary Receipts issued thereunder.",
+            "note": "預託契約に関する記載です。",
+            "note_en": "Relates to the ADS deposit agreement."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "グローバルファウンドリーズ",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "グローバルファウンドリーズの年次報告が、ユナイテッド・マイクロエレクトロニクスを競合として挙げている",
+          "text_en": "Names UMC as a competitor in its annual report",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Key competitors include Taiwan Semiconductor Manufacturing Company, Limited (“TSMC”), United Microelectronics Corporation (“UMC”) and Semiconductor Manufacturing International Corporation."
+          }
+        }
+      ],
+      "name_en": "GlobalFoundries"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

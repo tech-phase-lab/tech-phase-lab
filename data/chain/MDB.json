@@ -1,0 +1,459 @@
+{
+  "root": {
+    "ticker": "MDB",
+    "name": "MongoDB"
+  },
+  "rows": [
+    {
+      "ja": "クラウド・開発パートナー",
+      "en": "Cloud & ecosystem partners",
+      "above": true
+    },
+    {
+      "ja": "提携・ホスティング",
+      "en": "Partnerships & hosting"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ORCL",
+    "ESTC",
+    "IBM",
+    "MSFT"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、主要3クラウド事業者との提携拡大を挙げている",
+          "text_en": "MongoDB's annual report says it expanded business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure)",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "For example, we have expanded our business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure) to enhance our joint marketing initiatives, deliver technology integrations that benefit customers and align with our sales strategy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(GCP)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、主要3クラウド事業者との提携拡大を挙げている",
+          "text_en": "MongoDB's annual report says it expanded business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure)",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "For example, we have expanded our business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure) to enhance our joint marketing initiatives, deliver technology integrations that benefit customers and align with our sales strategy."
+          }
+        }
+      ],
+      "name_en": "Alphabet (GCP)"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、主要3クラウド事業者との提携拡大を挙げている",
+          "text_en": "MongoDB's annual report says it expanded business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure)",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "For example, we have expanded our business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure) to enhance our joint marketing initiatives, deliver technology integrations that benefit customers and align with our sales strategy."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "MongoDBの年次報告が、競合の既存データベース大手の1社に挙げている",
+          "text_en": "Named among established legacy database providers MongoDB competes with in its annual report",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We primarily compete with established legacy database software providers such as IBM, Microsoft, Oracle and other similar companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
+          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini, Confluent, HCL, Wipro, Cognizant, Deloitte and Tata Consultancy Services."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "IBMがMAAPエコシステムに加わったと発表している",
+          "text_en": "Announced that IBM has joined the MAAP ecosystem",
+          "source": {
+            "label": "MongoDB 8-K Ex.99 の発表",
+            "label_en": "MongoDB 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000144181624000257/mdb-103124xex991xrelease.htm",
+            "level": "official",
+            "date": "2024-12-09",
+            "quote": "We recently announced that Capgemini, Confluent, IBM, Unstructured, and QuantumBlack, AI by McKinsey have joined the MAAP ecosystem, offering customers additional integration and solution options."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "MongoDBの年次報告が、競合の既存データベース大手の1社に挙げている",
+          "text_en": "Named among established legacy database providers MongoDB competes with in its annual report",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We primarily compete with established legacy database software providers such as IBM, Microsoft, Oracle and other similar companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサルティング",
+      "sub_en": "Consulting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
+          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini, Confluent, HCL, Wipro, Cognizant, Deloitte and Tata Consultancy Services."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "INFY",
+      "ticker": "INFY",
+      "name": "インフォシス",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
+          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini, Confluent, HCL, Wipro, Cognizant, Deloitte and Tata Consultancy Services."
+          }
+        }
+      ],
+      "name_en": "Infosys"
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
+          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini, Confluent, HCL, Wipro, Cognizant, Deloitte and Tata Consultancy Services."
+          }
+        }
+      ],
+      "name_en": "Cognizant"
+    },
+    {
+      "id": "WIT",
+      "ticker": "WIT",
+      "name": "ウィプロ",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
+          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini, Confluent, HCL, Wipro, Cognizant, Deloitte and Tata Consultancy Services."
+          }
+        }
+      ],
+      "name_en": "Wipro"
+    },
+    {
+      "id": "CFLT",
+      "ticker": "CFLT",
+      "name": "Confluent",
+      "sub": "データ基盤",
+      "sub_en": "Data streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
+          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini, Confluent, HCL, Wipro, Cognizant, Deloitte and Tata Consultancy Services."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ConfluentがMAAPエコシステムに加わったと発表している",
+          "text_en": "Announced that Confluent has joined the MAAP ecosystem",
+          "source": {
+            "label": "MongoDB 8-K Ex.99 の発表",
+            "label_en": "MongoDB 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000144181624000257/mdb-103124xex991xrelease.htm",
+            "level": "official",
+            "date": "2024-12-09",
+            "quote": "We recently announced that Capgemini, Confluent, IBM, Unstructured, and QuantumBlack, AI by McKinsey have joined the MAAP ecosystem, offering customers additional integration and solution options."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BABA",
+      "ticker": "BABA",
+      "name": "アリババ",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Alibaba Cloudと組み、中国で認可を受けたMongoDB-as-a-Serviceを提供している",
+          "text_en": "Expanded its partner ecosystem with Alibaba Cloud to offer an authorized MongoDB-as-a-Service in China",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have expanded our global partner ecosystem with Alibaba Cloud and Tencent Cloud to offer an authorized MongoDB-as-a-Service solution in China, allowing their customers to easily adopt and consume our hosted solution."
+          }
+        }
+      ],
+      "name_en": "Alibaba"
+    },
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "sub": "インターネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年2月にTencent Cloudとのグローバル提携を発表した",
+          "text_en": "Announced a global partnership with Tencent Cloud in February 2021",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "In addition, we expanded our reach in China in February 2021 when we announced a global partnership with Tencent Cloud that allows customers to easily adopt and use MongoDB-as-a-Service across Tencent’s global cloud infrastructure."
+          }
+        }
+      ],
+      "name_en": "Tencent"
+    },
+    {
+      "id": "DOCN",
+      "ticker": "DOCN",
+      "name": "DigitalOcean",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DigitalOceanがMongoDBと提携し、フルマネージドのデータベースサービスを提供している",
+          "text_en": "DigitalOcean offers a fully managed database service in partnership with MongoDB",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We currently offer managed offerings for relational databases (SQL) such as PostgreSQL and MySQL, a NoSQL database such as DigitalOcean Managed MongoDB, a fully-managed database as a service offering in partnership with MongoDB, and a high-performance key-value caching service such as Managed Caching for Valkey."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBとMorgan Stanley & Co.の購入契約(2018年6月25日付)が年次報告の添付書類に挙げられている",
+          "text_en": "A Purchase Agreement dated June 25, 2018 between MongoDB and Morgan Stanley & Co. is listed in the annual report exhibits",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "10.11 Purchase Agreement, dated June 25, 2018, by and among MongoDB, Inc. and Morgan Stanley & Co.",
+            "note": "添付書類の目録に載っている記載のみです。",
+            "note_en": "Exhibit list mention only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同様の購入契約(2020年1月9日付)も挙げられている",
+          "text_en": "A second Purchase Agreement dated January 9, 2020 is also listed",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "10.13 Purchase Agreement, dated January 9, 2020, by and among MongoDB, Inc. and Morgan Stanley & Co."
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "データベース・ソフト",
+      "sub_en": "Database & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MongoDBの年次報告が、競合の既存データベース大手の1社に挙げている",
+          "text_en": "Named among established legacy database providers MongoDB competes with in its annual report",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We primarily compete with established legacy database software providers such as IBM, Microsoft, Oracle and other similar companies."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "ESTC",
+      "ticker": "ESTC",
+      "name": "Elastic",
+      "sub": "検索・分析",
+      "sub_en": "Search & analytics",
+      "row": 3,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Elasticの年次報告が、MongoDBを競合として挙げている",
+          "text_en": "Names MongoDB as a competitor in its annual report",
+          "source": {
+            "label": "Elastic 10-K",
+            "label_en": "Elastic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1707753/000170775326000018/estc-20260430.htm",
+            "level": "official",
+            "date": "2026-06-08",
+            "quote": "Apache Solr (open source offering), and Coveo; native vector databases, such as Pinecone, Qdrant, and Weaviate; database platforms with integrated vector search, such as MongoDB Atlas; and search tools, such as Google Gemini Enterprise Agent Platform (formerly Vertex AI) and Microsoft Azure AI Search."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
