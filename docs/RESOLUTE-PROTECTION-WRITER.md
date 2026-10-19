@@ -1,4 +1,4 @@
-# Isolated protection writer — implemented, not deployed
+# Isolated protection writer — synthetic deployment verified, production disabled
 
 The application and retry worker now use a narrow HTTPS gateway instead of S3
 credentials. `services/resolute-protection/server.mjs` is a separate dormant
@@ -69,3 +69,12 @@ Real deployed credential isolation, negative HTTP acceptance against the separat
 service, actual private-bucket readback and isolated restore replay remain open.
 Independent production key custody/readback remains open as documented in
 RESOLUTE-KEY-ESCROW.md. No production key, service, role or saving flag changed.
+
+## Deployed acceptance update, 2026-10-19
+
+The dedicated writer and bucket were provisioned and a separate credential-limited
+Railway probe passed actual HTTPS/bucket acceptance with a recovered synthetic
+key. Both new services were then disabled and synthetic keys/tokens cleared.
+See RESOLUTE-PROTECTION-DEPLOYMENT.md for exact deployments, logs, timeout
+limitations and retirement evidence. Earlier implementation-only statements
+above describe the pre-deployment state; production custody/replay remain open.

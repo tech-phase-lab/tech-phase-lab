@@ -51,3 +51,11 @@ Prepared a separate encrypted-event PUT/GET writer and removed direct S3 access
 from application/retry runtime. See RESOLUTE-PROTECTION-WRITER.md. No deployment
 or credential provisioning was performed; local synthetic HTTP acceptance alone
 is not proof of production isolation or provider-enforced retention.
+
+### Actual isolated writer acceptance
+
+Dedicated writer/bucket and a separate probe were installed for synthetic data.
+Actual HTTPS/S3 acceptance passed with a recovered synthetic key; deployment/log
+IDs and limitations are in RESOLUTE-PROTECTION-DEPLOYMENT.md. Both new services
+are disabled afterward and test keys/tokens cleared. Production saving is still
+off; independent production custody and DB-to-restore acceptance remain open.

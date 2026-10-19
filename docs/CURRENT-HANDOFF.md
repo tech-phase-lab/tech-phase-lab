@@ -1624,3 +1624,16 @@ RESOLUTE-PROTECTION-WRITER.md for deployment configuration and residual risk:
 this is application-level isolation, NOT provider object lock. Real isolated
 service credentials, independent key custody and production replay remain open.
 No service provision, production activation, reservation or morning-job change.
+
+## 2026-10-19 — Isolated writer actual synthetic acceptance completed
+
+Packaged/deployed pinned4b3bdd8 after integrating colleague cbb8310 and passing
+Node1154/Python2498/lint/build. New dedicated writer9d9728c1 and bucket978cea1c
+are separate from backup/API. Credential-limited probe310e0e6e used an age-recovered
+synthetic key and logged actual ACCEPTANCE_OK:3 encrypted records, readback,
+retry and negative-operation checks. External executor proxy timeout attempts
+failed; the Railway probe passed unchanged4-second limits. Both new services
+were then disabled; test keys/tokens cleared, actual DISABLED logs verified.
+See RESOLUTE-PROTECTION-DEPLOYMENT.md and its acceptance JSON. No customer saving,
+DB migration, payment, mail, AI call or morning-job/reservation changes. Next:
+production independent key custody and fenced API-to-isolated-restore acceptance.
