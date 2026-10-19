@@ -5,6 +5,56 @@ checkout and the uncommitted operational record. This is NOT the recovered
 original and is not a complete historical log. Evidence below comes from the
 conversation handoff and committed project records; unverified items stay open.
 
+## Current decision point — 2026-10-20 JST
+
+This section supersedes older pending statements below; historical evidence is
+retained. Latest implementation:0399659f (HTTP API bridge),86ae9c53 (capsule verify).
+Local integrated gates passed: Node1155, Python2508, lint/build/compileall/diff.
+GitHub run39279609804 was QUEUED at this check; no CI success is claimed.
+
+| Gate | Current evidence | What remains |
+| --- | --- | --- |
+| Durable deletion/notification stops | Transactional journals/outbox, independent encrypted events, completion barrier and retry implemented | Apply reviewed schemas/ACLs only after recovery inputs are available |
+| Independent writer | Actual HTTPS/S3 synthetic write/readback/conflict checks passed | Production key/token provisioning and activation review |
+| Stale backup replay | Real isolated PostgreSQL18 dump/restore and two replays passed | Join real authenticated API, real DB and independent storage in one isolated deployed run |
+| Authenticated path | Synthetic signed JWT through actual loopback HTTP API/writer, scoped PGlite stores and Python replay passed | Live Clerk-issued session and isolated real infrastructure; local tests do not close this gate |
+| Recovery key custody | Real age synthetic seal/verify/recover and tamper rejection passed | Owner-managed custody location, separate identity/integrity-pin custody and actual retrieval; no production key created |
+| Production saving | API has no plan/settings/protection configuration names; writers not activated | Explicit activation only after all preceding gates; do not call saving operational |
+
+Read-only infrastructure recheck: API7108edd6 remains pinned bb45d9d0 and SLEEPING;
+no plan/settings/protection variables are listed. This is configuration evidence,
+not a database privilege query. Writer9d9728c1 retains deployment4892f476 and actual
+RESOLUTE_WRITER_DISABLED log. Restore acceptance058b8f14 retains deploymenta2305d23
+and actual RESOLUTE_RESTORE_ACCEPTANCE_DISABLED log. All three report no staged
+changes. No credentials were read or changed in this recheck.
+
+Morning service006aea7e remains pinned693c170b, cron0 22 * * 0-4, deployment93dc0258.
+The October20 07:00 JST execution is still in the future at this check; its actual
+logs AND saved results remain pending. No schedule or reservation was modified.
+
+### Ordered completion work (no more substitute local-only tests)
+
+1. Establish owner-controlled recovery custody: identify the actual capsule,
+   recovery identity and integrity-pin locations; demonstrate retrieval with a
+   disposable capsule first. Do not generate/install a production protection key
+   before this is established. Ask only for the storage choice, not a key/token.
+2. Prepare one isolated deployed acceptance flow using the existing tested
+   components, separate synthetic database/namespace and a live authorized Clerk
+   session. Readiness must explicitly prohibit production DB credentials, mail,
+   payments and AI calls. Use a real dump created before deletion/OFF; verify
+   old state, independent receipts, first replay and second replay. Return the
+   disposable services to disabled state and inspect the actual disabled logs.
+3. Review the production migration/ACL and recovery cutover package. Confirm an
+   independently complete fenced checkpoint and custody retrieval before any
+   schema application that makes restore require those inputs. Production save
+   activation is a separate decision, never implied by acceptance SUCCESS.
+
+Planning estimate for these remaining recovery-protection tasks, once custody
+and authentication are available: roughly2–4 hours, not a guaranteed completion
+or estimate for the whole product launch. Missing access/owner custody decisions,
+provider failures and new defects may extend this. Purchases on a real mobile
+browser, live sales readiness and the scheduled morning check are separate gates.
+
 ## Preserved constraints
 
 Work only on codex/research-preview; main untouched. RIZEL's90 approved Japanese/
