@@ -51,13 +51,18 @@ import c_hpe from "../../data/chain/HPE.json" with { type: "json" };
 import c_hpq from "../../data/chain/HPQ.json" with { type: "json" };
 import c_hubs from "../../data/chain/HUBS.json" with { type: "json" };
 import c_ibm from "../../data/chain/IBM.json" with { type: "json" };
+import c_indi from "../../data/chain/INDI.json" with { type: "json" };
 import c_intc from "../../data/chain/INTC.json" with { type: "json" };
 import c_intu from "../../data/chain/INTU.json" with { type: "json" };
 import c_ionq from "../../data/chain/IONQ.json" with { type: "json" };
+import c_iot from "../../data/chain/IOT.json" with { type: "json" };
+import c_ipgp from "../../data/chain/IPGP.json" with { type: "json" };
 import c_iren from "../../data/chain/IREN.json" with { type: "json" };
+import c_jbl from "../../data/chain/JBL.json" with { type: "json" };
 import c_jd from "../../data/chain/JD.json" with { type: "json" };
 import c_keys from "../../data/chain/KEYS.json" with { type: "json" };
 import c_klac from "../../data/chain/KLAC.json" with { type: "json" };
+import c_ktos from "../../data/chain/KTOS.json" with { type: "json" };
 import c_lite from "../../data/chain/LITE.json" with { type: "json" };
 import c_lrcx from "../../data/chain/LRCX.json" with { type: "json" };
 import c_lscc from "../../data/chain/LSCC.json" with { type: "json" };
@@ -134,6 +139,8 @@ import c_wdc from "../../data/chain/WDC.json" with { type: "json" };
 import c_wk from "../../data/chain/WK.json" with { type: "json" };
 import c_wmt from "../../data/chain/WMT.json" with { type: "json" };
 import c_xyz from "../../data/chain/XYZ.json" with { type: "json" };
+import c_zeta from "../../data/chain/ZETA.json" with { type: "json" };
+import c_zm from "../../data/chain/ZM.json" with { type: "json" };
 import c_zs from "../../data/chain/ZS.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
@@ -207,13 +214,18 @@ const available: Record<string, ChainMapData> = {
   HPQ: c_hpq as ChainMapData,
   HUBS: c_hubs as ChainMapData,
   IBM: c_ibm as ChainMapData,
+  INDI: c_indi as ChainMapData,
   INTC: c_intc as ChainMapData,
   INTU: c_intu as ChainMapData,
   IONQ: c_ionq as ChainMapData,
+  IOT: c_iot as ChainMapData,
+  IPGP: c_ipgp as ChainMapData,
   IREN: c_iren as ChainMapData,
+  JBL: c_jbl as ChainMapData,
   JD: c_jd as ChainMapData,
   KEYS: c_keys as ChainMapData,
   KLAC: c_klac as ChainMapData,
+  KTOS: c_ktos as ChainMapData,
   LITE: c_lite as ChainMapData,
   LRCX: c_lrcx as ChainMapData,
   LSCC: c_lscc as ChainMapData,
@@ -290,6 +302,8 @@ const available: Record<string, ChainMapData> = {
   WK: c_wk as ChainMapData,
   WMT: c_wmt as ChainMapData,
   XYZ: c_xyz as ChainMapData,
+  ZETA: c_zeta as ChainMapData,
+  ZM: c_zm as ChainMapData,
   ZS: c_zs as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;

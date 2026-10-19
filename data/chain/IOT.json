@@ -1,0 +1,79 @@
+{
+  "root": {
+    "ticker": "IOT",
+    "name": "サムサラ"
+  },
+  "rows": [
+    {
+      "ja": "ホスティングの供給元",
+      "en": "Hosting supplier",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "VZ"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Amazonとの商業契約が更新されない場合、別のホスティング先でConnected Operations Platformを設定し直す必要があると説明している",
+          "text_en": "Says that if Amazon did not allow renewal of its commercial agreement, it would have to set up its Connected Operations Platform on an alternative hosting service",
+          "source": {
+            "label": "Samsara 10-K",
+            "label_en": "Samsara 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1642896/000162828026018167/iot-20260131.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "If Amazon decided to compete with us and did not allow us to renew our commercial agreement, this may have a significant impact on our solution and would require that we allocate time and expense to setting up our Connected Operations Platform on an alternative hosting service.",
+            "note": "リスク説明の中での記載です。",
+            "note_en": "Mentioned in a risk discussion."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "サムサラの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Samsara’s annual report",
+          "source": {
+            "label": "Samsara 10-K",
+            "label_en": "Samsara 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1642896/000162828026018167/iot-20260131.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Our primary competitors include vendors like Avigilon, CalAmp, Fleet Complete, Geotab, Lytx, Masternaut, Michelin, Motive, Nauto, Netradyne, Omnitracs, Orbcomm, Platform Science, Skybitz, Spireon, TrackUnit, Verizon Connect, Webfleet, and Zonar.",
+            "note": "Verizon Connectという事業の記載です。",
+            "note_en": "Refers to the Verizon Connect business."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

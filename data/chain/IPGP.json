@@ -1,0 +1,114 @@
+{
+  "root": {
+    "ticker": "IPGP",
+    "name": "IPGフォトニクス"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MKSI",
+    "COHR"
+  ],
+  "companies": [
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bank of America, N.A.が管理代理人などを務めるクレジット契約(2025年6月24日付)を締結している",
+          "text_en": "Has a credit agreement dated June 24, 2025 with Bank of America, N.A. as Administrative Agent, Swing Line Lender and L/C Issuer",
+          "source": {
+            "label": "IPG Photonics 10-K",
+            "label_en": "IPG Photonics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Credit Agreement dated as of June 24, 2025 among the Registrant and certain subsidiaries, and Bank of America, N.A. , in its capacity as Administrative Age nt, Swing Line Lender and L/C Issuer, the other L/C Issuers, and the other Lenders from time to time a party thereto",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年6月24日にBank of America, N.A.と、2030年6月24日に満期となる新しいクレジット契約を結んだ",
+          "text_en": "On June 24, 2025, entered into a new credit agreement with Bank of America, N.A. which matures on June 24, 2030",
+          "source": {
+            "label": "IPG Photonics 10-K",
+            "label_en": "IPG Photonics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On June 24, 2025, the Company entered into a new credit agreement with Bank of America, N.A. which matures on June 24, 2030."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKSインスツルメンツ",
+      "sub": "レーザー・半導体装置",
+      "sub_en": "Lasers & equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MKSインスツルメンツの年次報告が、IPGフォトニクスを競合として挙げている",
+          "text_en": "Names IPG Photonics as a competitor in its annual report",
+          "source": {
+            "label": "MKS Inc. 10-K",
+            "label_en": "MKS Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In PSD, Trumpf Group, Lumentum Holdings Inc., IPG Photonics Corporation, EdgeWave GmbH and Amplitude Laser Group offer products that compete with our laser products."
+          }
+        }
+      ],
+      "name_en": "MKS Inc."
+    },
+    {
+      "id": "COHR",
+      "ticker": "COHR",
+      "name": "コヒレント",
+      "sub": "レーザー・光学",
+      "sub_en": "Lasers & photonics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IPGフォトニクスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in IPG Photonics’s annual report",
+          "source": {
+            "label": "IPG Photonics 10-K",
+            "label_en": "IPG Photonics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the materials processing market, we compete with makers of fiber lasers and other lasers, such as Coherent, Inc., JPT Opto-Electronics Co."
+          }
+        }
+      ],
+      "name_en": "Coherent"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
