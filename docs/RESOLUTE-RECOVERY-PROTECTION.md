@@ -161,3 +161,12 @@ pending. Do not apply plan/settings schemas until an independently complete
 recovery manifest can be supplied; the new restore code will fail closed without it.
 GitHub Actions39238948979 passed both validation and PostgreSQL concurrency jobs
 for db418e7; both Vercel status checks also succeeded.
+
+## Dormant storage ACL preparation
+
+Migration019 plus the explicit transactional operator runner now prepare and audit
+plan/settings/retry permissions. See RESOLUTE-STORAGE-PERMISSIONS.md for the exact
+allowlist and production gates. Unsafe effective grants (including column-only or
+PUBLIC access), role escalation and missing required rights abort the transaction.
+This has not been applied to production and does not establish key custody or an
+independent object-write permission boundary. All storage flags remain disabled.

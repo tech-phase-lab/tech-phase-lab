@@ -1591,3 +1591,14 @@ Schedules, morning service/reservation, API flags and original job bundle preser
 See RESOLUTE-RECOVERY-PROTECTION.md for exact evidence and remaining gates.
 db418e7 GitHub CI (both jobs) and both Vercel deployments passed. Integrated
 colleague ed2383f0 without modifying their chain-map changes.
+
+
+## 2026-10-19 — Dormant storage role preparation and effective ACL audit
+
+Added migration019 and explicit operator runner with atomic grant/audit/rollback.
+Catalog checks reject extra table/column privileges, PUBLIC leaks, grant options,
+ownership, sequence/DDL access, executable definer routines and role membership
+in either direction. Login/admin/inherit attributes must remain disabled. No
+production apply, keys, runtime flags, cron or reservation changes. See
+RESOLUTE-STORAGE-PERMISSIONS.md for exact scope and remaining object-credential/
+key-custody gates. NOLOGIN alone is not proof of a complete recovery write fence.
