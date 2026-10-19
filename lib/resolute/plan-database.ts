@@ -1,3 +1,4 @@
+import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
 import { Pool, type PoolClient } from "pg";
 import { resoluteDatabaseConfig } from "./database-config.ts";
 import { parsePlanSnapshot, type PlanInput, type PlanSnapshot } from "./plan-data.ts";
@@ -13,7 +14,7 @@ function snapshot(row: Row | undefined): PlanSnapshot {
   return parsePlanSnapshot({ plan: row.plan === null ? null : { ...row.plan,
     createdAt: row.created_at?.toISOString(), updatedAt: row.updated_at?.toISOString() }, revision: Number(row.revision) });
 }
-export function createPlanStore(pool: Pick<Pool, "connect">) {
+export function createPlanStore(pool: Pick<Pool, "connect">, source: EntitlementSource = entitlementSource()) {
   return async (userId: string, method: "GET" | "PUT" | "DELETE", mutation?: { baseRevision: number; plan: PlanInput | null }) => {
     if (!/^user_[A-Za-z0-9]{1,128}$/.test(userId)) throw new Error("Invalid identity");
     const client: PoolClient = await pool.connect();
@@ -21,7 +22,7 @@ export function createPlanStore(pool: Pick<Pool, "connect">) {
       await client.query("BEGIN");
       // Serializes initial creation, updates and deletions, including absent rows.
       await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [userId]);
-      const rights = await client.query(`SELECT 1 FROM resolute.entitlements WHERE clerk_user_id=$1
+      const rights = source === "live" ? {rowCount:(await readEntitlementSnapshot(client,userId,source)).view.canUseTools?1:0} : await client.query(`SELECT 1 FROM resolute.entitlements WHERE clerk_user_id=$1
         AND product_id='resolute_v1' AND kind='use' AND revoked_at IS NULL
         AND starts_at<=statement_timestamp() AND expires_at IS NULL`, [userId]);
       const active = rights.rowCount === 1;

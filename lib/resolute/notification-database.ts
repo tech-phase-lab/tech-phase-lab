@@ -1,3 +1,4 @@
+import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
 import { Pool, type PoolClient } from "pg";
 import { resoluteDatabaseConfig } from "./database-config.ts";
 import { defaultNotificationSettings, parseNotificationMutation, parseNotificationSnapshot,
@@ -7,7 +8,7 @@ export class NotificationConflict extends Error {
  readonly snapshot: NotificationSnapshot;
  constructor(snapshot: NotificationSnapshot) { super("REVISION_CONFLICT"); this.snapshot=snapshot; }
 }
-export function createNotificationStore(pool: Pick<Pool,"connect">) {
+export function createNotificationStore(pool: Pick<Pool,"connect">, source: EntitlementSource = entitlementSource()) {
  return async (userId: string, method: "GET"|"PUT", mutation?: {settings:NotificationSettings;baseRevision:number}) => {
   if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId)) throw new Error("Invalid identity");
   const parsed=method==="PUT"?parseNotificationMutation(mutation):undefined;
@@ -15,7 +16,7 @@ export function createNotificationStore(pool: Pick<Pool,"connect">) {
   try {
    await client.query("BEGIN");
    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",[userId]);
-   const rights=await client.query(`SELECT 1 FROM resolute.entitlements WHERE clerk_user_id=$1
+   const rights=source==="live"?{rowCount:(await readEntitlementSnapshot(client,userId,source)).view.canUseTools?1:0}:await client.query(`SELECT 1 FROM resolute.entitlements WHERE clerk_user_id=$1
     AND product_id='resolute_v1' AND kind='use' AND revoked_at IS NULL
     AND starts_at<=statement_timestamp() AND expires_at IS NULL`,[userId]);
    if(rights.rowCount!==1) throw new NotificationAccessDenied();

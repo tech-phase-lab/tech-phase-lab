@@ -52,4 +52,16 @@ CREATE TABLE resolute_payments_live.alert_outbox (
 );
 -- No application startup DDL, grants to the existing reader, or public network exposure.
 REVOKE ALL ON SCHEMA resolute_payments_live FROM PUBLIC;
+-- Narrow read model: entitlement consumers need no raw payment IDs, quotes or audit.
+CREATE VIEW resolute_payments_live.entitlement_periods AS
+ SELECT g.user_id AS clerk_user_id, 'resolute_v1'::text AS product_id,
+        g.kind,g.starts_at,g.expires_at
+ FROM resolute_payments_live.grants g
+ JOIN resolute_payments_live.orders o ON o.id=g.order_id AND o.user_id=g.user_id
+ WHERE g.state='active' AND o.state='paid'
+   AND o.quote->>'product'='resolute_v1' AND o.quote->>'kind'=g.kind
+   AND o.capture_id IS NOT NULL AND o.paid_at IS NOT NULL;
+REVOKE ALL ON resolute_payments_live.entitlement_periods FROM PUBLIC;
+-- Provision USAGE and SELECT on this view only for entitlement/plan/settings readers.
+-- No grants or role creation are performed by this migration.
 COMMIT;
