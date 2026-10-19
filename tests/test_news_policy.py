@@ -18,9 +18,11 @@ class NewsSelectionTests(unittest.TestCase):
     def test_event_invitations_are_not_public_news(self):
         for title in ["Nebius is hosting a private party for our developer community on Oct 16 at Käfer. Don't miss it!",
                       'Join our AMA with the CEO tomorrow', 'See you at our booth at GTC', 'Save the date: Nebius community night',
-                      '開発者向けパーティーを開催します。お見逃しなく']:
+                      '開発者向けパーティーを開催します。お見逃しなく',
+                      '#NVIDIAGTC Berlin: Nebius Live is just 2 days away. Join the conversation as our CRO speaks about European capacity',
+                      'Our CRO will speak at the keynote', '#NVIDIAGTCベルリンで開催されるNebius Liveまであと2日']:
             self.assertFalse(news_policy.eligible(title), title)
-        for title in ["Why we support America's existing nuclear plants", 'Nebius expands its data center in Finland']:
+        for title in ["Why we support America's existing nuclear plants", 'Nebius expands its data center in Finland', 'Nebius posts record quarterly results']:
             self.assertTrue(news_policy.eligible(title), title)
 
     def test_news_headline_removes_cta_and_urls_in_both_languages(self):

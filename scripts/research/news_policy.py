@@ -6,10 +6,12 @@ PROMOTION = re.compile(
     r'hiring|careers?|job openings?|giveaways?|'
     # Community events and invitations are not investment news.
     r'parties|party|meetups?|hackathons?|happy hours?|rsvp|livestreams?|podcasts?|'
-    r'ama|booths?|save the date|community (?:event|night|day))\b|'
+    r'ama|booths?|save the date|community (?:event|night|day)|keynotes?|fireside chats?|'
+    # Event countdowns and speaker announcements ("Nebius Live is 2 days away").
+    r'days? (?:away|to go)|(?:will (?:be )?speak(?:ing)?|speaking at))\b|'
     r"\b(?:join us|register (?:now|today|here)|sign up (?:now|today|here)|"
     r"don[’']t miss|do not miss|see you (?:at|in|there)|visit us|come (?:meet|see|say))\b|"
-    r'講座|セミナー|ウェビナー|参加登録|採用募集|受講|パーティー|ミートアップ|ハッカソン|お見逃しなく', re.I)
+    r'あと\d+日|基調講演|登壇予定|講座|セミナー|ウェビナー|参加登録|採用募集|受講|パーティー|ミートアップ|ハッカソン|お見逃しなく', re.I)
 # A sales pitch mentioning a partner is not a corporate partnership announcement.
 MATERIAL = re.compile(
     r'\b(?:quarterly (?:results|earnings)|financial results|earnings results|'
