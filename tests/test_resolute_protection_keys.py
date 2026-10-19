@@ -1,9 +1,11 @@
 import importlib.util
 import json
+import io
 import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('protection_keys', Path(__file__).resolve().parents[1] / 'scripts/resolute/protection_keys.py')
 keys = importlib.util.module_from_spec(spec)
@@ -73,3 +75,45 @@ class KeyEscrowTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 keys.write_new(link, b'changed')
             self.assertEqual(path.read_bytes(), b'original')
+
+
+class KeyVerificationCliTests(unittest.TestCase):
+    def invoke(self, directory, failure=None):
+        capsule = Path(directory) / 'capsule.age'
+        capsule.write_bytes(b'ciphertext')
+        argv = ['protection_keys.py', 'verify', '--capsule', str(capsule),
+                '--capsule-sha256', 'a' * 64, '--key-fingerprint', 'b' * 64,
+                '--identity', 'private-identity']
+        out, err = io.StringIO(), io.StringIO()
+        with patch('sys.argv', argv), patch('sys.stdout', out), patch('sys.stderr', err), \
+                patch.object(keys, 'recover', return_value=b'k' * 32, side_effect=failure) as recover, \
+                patch.object(keys, 'write_new') as write:
+            status = keys.main()
+        write.assert_not_called()
+        recover.assert_called_once_with(b'ciphertext', 'private-identity', 'a' * 64, 'b' * 64)
+        self.assertEqual(sorted(p.name for p in Path(directory).iterdir()), ['capsule.age'])
+        return status, out.getvalue(), err.getvalue()
+
+    def test_verified_capsule_never_writes_or_prints_plaintext(self):
+        with tempfile.TemporaryDirectory() as directory:
+            status, out, err = self.invoke(directory)
+        self.assertEqual(status, 0)
+        self.assertEqual(json.loads(out), {'state': 'verified'})
+        self.assertEqual(err, '')
+
+    def test_failed_verification_has_no_success_or_secret_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            status, out, err = self.invoke(directory, ValueError('private secret detail'))
+        self.assertEqual(status, 1)
+        self.assertEqual(out, '')
+        self.assertEqual(err, 'RESOLUTE_KEY_ESCROW_FAILED\n')
+
+    def test_verify_rejects_plaintext_output_option(self):
+        with patch('sys.argv', ['protection_keys.py', 'verify', '--capsule', 'x',
+                              '--capsule-sha256', 'a' * 64, '--key-fingerprint', 'b' * 64,
+                              '--identity', 'x', '--output', 'plaintext']), \
+                patch('sys.stderr', io.StringIO()), patch.object(keys, 'recover') as recover:
+            with self.assertRaises(SystemExit) as stopped:
+                keys.main()
+        self.assertEqual(stopped.exception.code, 2)
+        recover.assert_not_called()

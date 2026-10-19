@@ -83,11 +83,14 @@ def main():
     create = sub.add_parser('seal')
     create.add_argument('--recipient', required=True)
     restore = sub.add_parser('recover')
-    restore.add_argument('--capsule', required=True)
-    restore.add_argument('--capsule-sha256', required=True)
-    restore.add_argument('--key-fingerprint', required=True)
-    for command in (create, restore):
+    verify = sub.add_parser('verify', help='Authenticate a retrieved capsule without writing the key')
+    for command in (restore, verify):
+        command.add_argument('--capsule', required=True)
+        command.add_argument('--capsule-sha256', required=True)
+        command.add_argument('--key-fingerprint', required=True)
+    for command in (create, restore, verify):
         command.add_argument('--identity', required=True)
+    for command in (create, restore):
         command.add_argument('--output', required=True)
     args = parser.parse_args()
     try:
@@ -103,8 +106,12 @@ def main():
             with open(args.capsule, 'rb') as stream:
                 cipher = stream.read(LIMIT + 1)
             key = recover(cipher, args.identity, args.capsule_sha256, args.key_fingerprint)
-            write_new(args.output, key.hex().encode() + b'\n')
-            print('{"state":"recovered"}')
+            if args.command == 'verify':
+                # Verification never installs or serializes the recovered plaintext.
+                print('{"state":"verified"}')
+            else:
+                write_new(args.output, key.hex().encode() + b'\n')
+                print('{"state":"recovered"}')
     except Exception:
         # Exceptions and subprocess stderr may contain sensitive input/paths.
         print('RESOLUTE_KEY_ESCROW_FAILED', file=sys.stderr)

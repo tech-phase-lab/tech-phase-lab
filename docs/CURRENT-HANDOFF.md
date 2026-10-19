@@ -1673,3 +1673,13 @@ stops, two checked replays and corrupted ciphertext. See
 RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for exact evidence boundaries. Live Clerk,
 real API network/database and S3 have NOT all been exercised in one deployed
 flow. No Railway configuration/deployment change in this step.
+
+## 2026-10-20 JST — Recovery capsule verification without plaintext output
+
+Added protection_keys.py verify for readback checks using independently retained
+checksum/fingerprint and the recovery age identity. No --output option and no
+plaintext file write; generic redacted failure only. Real age1.3.2 synthetic
+acceptance passed positive verification, four negative cases and compatibility
+of explicit recover mode0600 output. Production keys/identities were not used;
+independent production custody and live-member deployed API-to-restore acceptance
+remain open. No Railway mutation or deployment in this step.

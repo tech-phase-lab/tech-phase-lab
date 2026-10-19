@@ -55,3 +55,35 @@ was used in that acceptance check.
   collisions only; bucket-wide credentials must not be treated as non-delete.
 - Only after those gates, review production migrations and minimum privileges,
   recovery write fencing, replay and explicit activation. Storage is still off.
+
+## Readback verification without plaintext output — 2026-10-20 JST
+
+Use `verify` for a capsule retrieved from its independent custody location:
+
+```sh
+python3 scripts/resolute/protection_keys.py verify \
+  --capsule /private/retrieved-capsule.age \
+  --capsule-sha256 <independently-retained-checksum> \
+  --key-fingerprint <independently-retained-fingerprint> \
+  --identity /private/recovery-identity
+```
+
+The command verifies the pinned capsule checksum BEFORE decryption, authenticates
+and validates the payload and checks the recovered key fingerprint. It prints
+only `{"state":"verified"}`. It has no output-file argument and never calls the
+plaintext writer. Failure prints only RESOLUTE_KEY_ESCROW_FAILED with nonzero
+exit. `recover` remains the explicit operation for an authorized recovery process
+that needs a mode0600 plaintext file. Neither command activates application saves.
+
+Local acceptance with real age1.3.2 and disposable identities passed: verify wrote
+no plaintext file, wrong checksum/fingerprint/identity and authenticated tampering
+all failed, and existing recover mode0600 output still matched the synthetic key.
+Temporary identities and recovered plaintext were removed. Three CLI regression
+tests cover no-write verification, redacted failure and rejection of --output.
+
+A verified local capsule does NOT establish remote custody. Before generating or
+installing the production protection key, record the actual independent custody
+location, who can retrieve the age identity, where integrity pins are kept, and
+perform a retrieval using those exact locations. Do not put the identity together
+with application credentials. Do not label a synthetic local copy as a successful
+remote retrieval. The production custody gate remains open.
