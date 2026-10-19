@@ -1,0 +1,397 @@
+{
+  "root": {
+    "ticker": "VIAV",
+    "name": "ヴィアヴィ・ソリューションズ"
+  },
+  "rows": [
+    {
+      "ja": "顧客(年次報告に記載)",
+      "en": "Customers (named in annual report)"
+    },
+    {
+      "ja": "提携・買収・資金調達",
+      "en": "Partnerships, acquisitions & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "COHR"
+  ],
+  "companies": [
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例にAdvanced Micro Devicesが挙げられている",
+          "text_en": "Advanced Micro Devices is named among example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "顧客例として名前が挙がっているものです。",
+            "note_en": "Named among Viavi's example customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例にCisco Systemsが挙げられている",
+          "text_en": "Cisco Systems is named among example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "顧客例として名前が挙がっているものです。",
+            "note_en": "Named among Viavi's example customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "Ciena",
+      "sub": "光ネットワーク",
+      "sub_en": "Optical networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例にCienaが挙げられている",
+          "text_en": "Ciena is named among example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "顧客例として名前が挙がっているものです。",
+            "note_en": "Named among Viavi's example customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例にAT&Tが挙げられている",
+          "text_en": "AT&T is named among example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "顧客例として名前が挙がっているものです。",
+            "note_en": "Named among Viavi's example customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "Verizon",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例にVerizon Communicationsが挙げられている",
+          "text_en": "Verizon Communications is named among example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "顧客例として名前が挙がっているものです。",
+            "note_en": "Named among Viavi's example customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOK",
+      "ticker": "NOK",
+      "name": "Nokia",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例にNokiaが挙げられている",
+          "text_en": "Nokia is named among example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "顧客例として名前が挙がっているものです。",
+            "note_en": "Named among Viavi's example customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ERIC",
+      "ticker": "ERIC",
+      "name": "Ericsson",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客例にEricssonが挙げられている",
+          "text_en": "Ericsson is named among example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc.",
+            "note": "顧客例として名前が挙がっているものです。",
+            "note_en": "Named among Viavi's example customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "Lockheed Martin",
+      "sub": "防衛・航空",
+      "sub_en": "Defense & aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "光学セキュリティ製品(OSP)の顧客にLockheed Martinが挙げられている",
+          "text_en": "Lockheed Martin is named among OSP customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "OSP customers include SICPA Holding SA Company (SICPA), Lockheed Martin Corporation and Seiko Epson Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "Keysight Technologies",
+      "sub": "計測機器",
+      "sub_en": "Test & measurement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KeysightがSpirentの高速イーサネット・ネットワークセキュリティ・チャネルエミュレーション事業を、Viaviに売却した",
+          "text_en": "Keysight divested Spirent's high-speed ethernet, network security and channel emulation business lines to Viavi Solutions Inc.",
+          "source": {
+            "label": "Keysight Technologies 10-K",
+            "label_en": "Keysight Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "of investments, partially offset by $399 million provided by the divestiture of Spirent’s high-speed ethernet, network security and channel emulation business lines to Viavi Solutions Inc. and $30 million provided by sale of investments."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ViaviとKeysightの間に、2025年3月2日付の資産購入契約がある",
+          "text_en": "There is an Asset Purchase Agreement between Viavi Solutions Inc. and Keysight Technologies, Inc. dated as of March 2, 2025",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Asset Purchase Agreement by and between Viavi Solutions Inc. and Keysight Technologies, Inc., dated as of March 2, 2025"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同契約の第1次修正が2025年5月28日付である",
+          "text_en": "The First Amendment to the Asset Purchase Agreement is dated May 28, 2025",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "First Amendment to Asset Purchase Agreement by and between Viavi Solutions Inc. and Keysight Technologies, Inc. dated May 28, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIAなどとの提携により、AI-RANの深層学習モデルを展示する",
+          "text_en": "Through its partnership with NVIDIA and others, will showcase a deep-learning model for AI-RAN",
+          "source": {
+            "label": "VIAVI — NVIDIA AI-RAN demonstrations, March 1, 2026",
+            "label_en": "VIAVI — NVIDIA AI-RAN demonstrations, March 1, 2026",
+            "url": "https://blog.viavisolutions.com/2026/03/01/accelerating-ai-native-networks-with-nvidia-ai-ran-platforms/",
+            "level": "official",
+            "quote": "Through our partnership with NVIDIA, as well as with the AI-RAN Alliance and GlobalLogic, we will showcase a deep-learning model that can accurately distinguish genuine user equipment access requests from phantom signals and maintain strict L1 timing."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MWC 2026でパートナーのNVIDIAとの協業を紹介する",
+          "text_en": "Presents collaborations with its partner NVIDIA at MWC 2026",
+          "source": {
+            "label": "VIAVI — NVIDIA AI-RAN demonstrations, March 1, 2026",
+            "label_en": "VIAVI — NVIDIA AI-RAN demonstrations, March 1, 2026",
+            "url": "https://blog.viavisolutions.com/2026/03/01/accelerating-ai-native-networks-with-nvidia-ai-ran-platforms/",
+            "level": "official",
+            "quote": "Schedule a meeting with us at MWC 2026 to get a deep dive into these exciting collaborations with our partner NVIDIA, and many more."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Wells Fargo Bank, National Associationが管理代理人を務めるクレジット契約(2021年12月30日付)を結んでいる",
+          "text_en": "Entered into a credit agreement dated December 30, 2021 with Wells Fargo Bank, National Association as administrative agent",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "On December 30, 2021, we entered into a credit agreement (the Credit Agreement) with Wells Fargo Bank, National Association (Wells Fargo) as administrative agent and other lender-related parties.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年10月16日、Spirent事業の取得完了と同時に、6億ドルのシニア担保付タームローン契約を結んだ",
+          "text_en": "On October 16, 2025, concurrent with closing of the Spirent HSE and CE acquisition, entered into a $600.0 million senior secured term loan credit agreement",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "On October 16, 2025, concurrent with the closing of the acquisition of Spirent’s HSE and CE business, the Company entered into a $ 600.0 million senior secured term loan credit agreement (Term Loan Credit Agreement) with Wells Fargo Bank, National Association (Wells Fargo), as administrative agent, and other lenders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LITE",
+      "ticker": "LITE",
+      "name": "Lumentum",
+      "sub": "光部品",
+      "sub_en": "Optical components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JDS UniphaseとLumentum Holdingsの間に、2015年7月31日付の税務事項契約があり、年次報告の添付書類に挙がっている",
+          "text_en": "A Tax Matters Agreement dated as of July 31, 2015 between JDS Uniphase Corporation and Lumentum Holdings Inc. is listed in the annual report",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Tax Matters Agreement, dated as of July 31, 2015, by and between JDS Uniphase Corporation and Lumentum Holdings Inc.",
+            "note": "分離に伴う過去の契約です。",
+            "note_en": "Older agreement from a separation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COHR",
+      "ticker": "COHR",
+      "name": "Coherent",
+      "sub": "光部品",
+      "sub_en": "Optical components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヴィアヴィ・ソリューションズの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Viavi’s annual report",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "OSP competitors include providers of anti-counterfeiting technologies such as Giesecke & Devrient and Crane NXT; special-effect pigments such as GNMI Group and FYOTEC; optical coatings companies such as Materion, Zhejiang Crystal-Optech Co Ltd. and Platinum Optics Technology, Inc.; and manufacturers of passive and other optical components such as Coherent."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

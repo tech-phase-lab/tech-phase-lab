@@ -73,15 +73,18 @@ import c_jd from "../../data/chain/JD.json" with { type: "json" };
 import c_keys from "../../data/chain/KEYS.json" with { type: "json" };
 import c_klac from "../../data/chain/KLAC.json" with { type: "json" };
 import c_ktos from "../../data/chain/KTOS.json" with { type: "json" };
+import c_kvyo from "../../data/chain/KVYO.json" with { type: "json" };
 import c_lite from "../../data/chain/LITE.json" with { type: "json" };
 import c_lrcx from "../../data/chain/LRCX.json" with { type: "json" };
 import c_lscc from "../../data/chain/LSCC.json" with { type: "json" };
 import c_ma from "../../data/chain/MA.json" with { type: "json" };
+import c_manh from "../../data/chain/MANH.json" with { type: "json" };
 import c_mchp from "../../data/chain/MCHP.json" with { type: "json" };
 import c_mdb from "../../data/chain/MDB.json" with { type: "json" };
 import c_meli from "../../data/chain/MELI.json" with { type: "json" };
 import c_meta from "../../data/chain/META.json" with { type: "json" };
 import c_mksi from "../../data/chain/MKSI.json" with { type: "json" };
+import c_mndy from "../../data/chain/MNDY.json" with { type: "json" };
 import c_mpwr from "../../data/chain/MPWR.json" with { type: "json" };
 import c_mrvl from "../../data/chain/MRVL.json" with { type: "json" };
 import c_msft from "../../data/chain/MSFT.json" with { type: "json" };
@@ -122,6 +125,9 @@ import c_rblx from "../../data/chain/RBLX.json" with { type: "json" };
 import c_rddt from "../../data/chain/RDDT.json" with { type: "json" };
 import c_rmbs from "../../data/chain/RMBS.json" with { type: "json" };
 import c_roku from "../../data/chain/ROKU.json" with { type: "json" };
+import c_rpd from "../../data/chain/RPD.json" with { type: "json" };
+import c_s from "../../data/chain/S.json" with { type: "json" };
+import c_sanm from "../../data/chain/SANM.json" with { type: "json" };
 import c_sap from "../../data/chain/SAP.json" with { type: "json" };
 import c_shop from "../../data/chain/SHOP.json" with { type: "json" };
 import c_simo from "../../data/chain/SIMO.json" with { type: "json" };
@@ -142,7 +148,9 @@ import c_swks from "../../data/chain/SWKS.json" with { type: "json" };
 import c_syna from "../../data/chain/SYNA.json" with { type: "json" };
 import c_team from "../../data/chain/TEAM.json" with { type: "json" };
 import c_tel from "../../data/chain/TEL.json" with { type: "json" };
+import c_tenb from "../../data/chain/TENB.json" with { type: "json" };
 import c_ter from "../../data/chain/TER.json" with { type: "json" };
+import c_tsem from "../../data/chain/TSEM.json" with { type: "json" };
 import c_tsla from "../../data/chain/TSLA.json" with { type: "json" };
 import c_tsm from "../../data/chain/TSM.json" with { type: "json" };
 import c_ttd from "../../data/chain/TTD.json" with { type: "json" };
@@ -153,6 +161,8 @@ import c_uber from "../../data/chain/UBER.json" with { type: "json" };
 import c_uctt from "../../data/chain/UCTT.json" with { type: "json" };
 import c_umc from "../../data/chain/UMC.json" with { type: "json" };
 import c_v from "../../data/chain/V.json" with { type: "json" };
+import c_veev from "../../data/chain/VEEV.json" with { type: "json" };
+import c_viav from "../../data/chain/VIAV.json" with { type: "json" };
 import c_vrns from "../../data/chain/VRNS.json" with { type: "json" };
 import c_vrt from "../../data/chain/VRT.json" with { type: "json" };
 import c_vst from "../../data/chain/VST.json" with { type: "json" };
@@ -258,15 +268,18 @@ const available: Record<string, ChainMapData> = {
   KEYS: c_keys as ChainMapData,
   KLAC: c_klac as ChainMapData,
   KTOS: c_ktos as ChainMapData,
+  KVYO: c_kvyo as ChainMapData,
   LITE: c_lite as ChainMapData,
   LRCX: c_lrcx as ChainMapData,
   LSCC: c_lscc as ChainMapData,
   MA: c_ma as ChainMapData,
+  MANH: c_manh as ChainMapData,
   MCHP: c_mchp as ChainMapData,
   MDB: c_mdb as ChainMapData,
   MELI: c_meli as ChainMapData,
   META: c_meta as ChainMapData,
   MKSI: c_mksi as ChainMapData,
+  MNDY: c_mndy as ChainMapData,
   MPWR: c_mpwr as ChainMapData,
   MRVL: c_mrvl as ChainMapData,
   MSFT: c_msft as ChainMapData,
@@ -307,6 +320,9 @@ const available: Record<string, ChainMapData> = {
   RDDT: c_rddt as ChainMapData,
   RMBS: c_rmbs as ChainMapData,
   ROKU: c_roku as ChainMapData,
+  RPD: c_rpd as ChainMapData,
+  S: c_s as ChainMapData,
+  SANM: c_sanm as ChainMapData,
   SAP: c_sap as ChainMapData,
   SHOP: c_shop as ChainMapData,
   SIMO: c_simo as ChainMapData,
@@ -327,7 +343,9 @@ const available: Record<string, ChainMapData> = {
   SYNA: c_syna as ChainMapData,
   TEAM: c_team as ChainMapData,
   TEL: c_tel as ChainMapData,
+  TENB: c_tenb as ChainMapData,
   TER: c_ter as ChainMapData,
+  TSEM: c_tsem as ChainMapData,
   TSLA: c_tsla as ChainMapData,
   TSM: c_tsm as ChainMapData,
   TTD: c_ttd as ChainMapData,
@@ -338,6 +356,8 @@ const available: Record<string, ChainMapData> = {
   UCTT: c_uctt as ChainMapData,
   UMC: c_umc as ChainMapData,
   V: c_v as ChainMapData,
+  VEEV: c_veev as ChainMapData,
+  VIAV: c_viav as ChainMapData,
   VRNS: c_vrns as ChainMapData,
   VRT: c_vrt as ChainMapData,
   VST: c_vst as ChainMapData,

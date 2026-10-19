@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "TSEM",
+    "name": "タワーセミコンダクター"
+  },
+  "rows": [
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing",
+      "above": true
+    },
+    {
+      "ja": "提携・資本関係",
+      "en": "Partnerships & equity"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GFS"
+  ],
+  "companies": [
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2023年9月、Intelがニューメキシコ州の300mm工場でTowerの顧客向けウェハーを製造するための生産枠をTowerの指示で確保する契約を結んだ",
+          "text_en": "In September 2023, Tower and Intel signed an agreement under which Intel committed to build a capacity corridor at Tower's instructions to manufacture wafers for Tower's customers in its 300mm facility in New Mexico",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "In September 2023, Tower and Intel signed an agreement under which Intel has committed to build a capacity corridor at Tower’s instructions, in order for Intel to manufacture wafers for Tower’s customers in Intel’s 300mm facility in New Mexico, USA."
+          }
+        },
+        {
+          "type": "up",
+          "text": "TowerはこのIntel工場に設置する設備等への投資を約束している",
+          "text_en": "Tower committed to invest in equipment and other fixed assets to be installed in this Intel facility",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Under this agreement, Tower has committed to invest up to $ 300,000 for equipment and other fixed assets to be owned by Tower and to be installed and qualified for Tower processes and for its customer products in this Intel facility."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCRHY",
+      "ticker": "Panasonic",
+      "name": "パナソニック ホールディングス",
+      "sub": "電機",
+      "sub_en": "Electronics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TowerはPanasonicから新設会社TPSCoの51%を取得した",
+          "text_en": "Tower acquired from Panasonic 51% of a newly established company, TPSCo",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "from Panasonic 51% of a newly established company, TPSCo, which became a foundry for the sale of wafers to Panasonic and other third-party",
+            "note": "過去の取引に基づく記載です。",
+            "note_en": "Based on a past transaction."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TPSCoはPanasonicが設立したファウンドリで、Panasonicなどにウェハーを提供する",
+          "text_en": "TPSCo was initially formed by Panasonic to provide foundry wafer services to Panasonic and other third parties",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "a 51% equity stake in TPSCo, a company initially formed by Panasonic to provide foundry wafer services to Panasonic and other third-party"
+          }
+        }
+      ],
+      "name_en": "Panasonic Holdings"
+    },
+    {
+      "id": "CDNS",
+      "ticker": "CDNS",
+      "name": "Cadence Design Systems",
+      "sub": "設計自動化",
+      "sub_en": "EDA",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cadence Design Systemsなどの設計自動化企業と協業している",
+          "text_en": "Collaborates with design automation providers including Cadence Design Systems",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "we collaborate with leading design automation providers - including Cadence Design Systems, Synopsys, Siemens EDA, and Keysight Technologies"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "Synopsys",
+      "sub": "設計自動化",
+      "sub_en": "EDA",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Synopsysなどの設計自動化企業と協業している",
+          "text_en": "Collaborates with design automation providers including Synopsys",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "we collaborate with leading design automation providers - including Cadence Design Systems, Synopsys, Siemens EDA, and Keysight Technologies"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "標準セル、I/O、メモリのIPをSynopsysなどからライセンスできる",
+          "text_en": "Standard cells, I/O and memory IP can be licensed from Synopsys and other suppliers",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "- and license standard cells, I/O, and memory IP from Synopsys, eMemory, and other top suppliers of physical IP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "Keysight Technologies",
+      "sub": "計測機器",
+      "sub_en": "Test & measurement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Keysight Technologiesなどの設計自動化企業と協業している",
+          "text_en": "Collaborates with design automation providers including Keysight Technologies",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "we collaborate with leading design automation providers - including Cadence Design Systems, Synopsys, Siemens EDA, and Keysight Technologies"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特殊プロセス分野ではGlobalFoundriesなどのファウンドリと最も直接的に競合すると述べている",
+          "text_en": "Says it competes most directly in the specialty segment with foundries such as GlobalFoundries",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We compete most directly in the specialty segment with foundries such as GlobalFoundries (mainly"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesの年次報告が、タワーセミコンダクターを競合として挙げている",
+          "text_en": "Names Tower Semiconductor as a competitor in its annual report",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Other smaller dedicated foundry competitors include HuaHong Group, X-FAB Silicon Foundries, Tower Semiconductor Ltd., Vanguard International Semiconductor Corporation, and Powerchip Semiconductor Manufacturing Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
