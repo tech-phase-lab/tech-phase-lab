@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ZETA",
-    "name": "Zeta Global"
+    "name": "Zeta Global",
+    "cik": 1851003
   },
   "rows": [
     {

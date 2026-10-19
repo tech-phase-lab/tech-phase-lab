@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DOCN",
-    "name": "DigitalOcean"
+    "name": "DigitalOcean",
+    "cik": 1582961
   },
   "rows": [
     {

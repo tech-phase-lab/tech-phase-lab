@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "GEV",
-    "name": "GE Vernova"
+    "name": "GE Vernova",
+    "cik": 1996810
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CRWV",
-    "name": "CoreWeave"
+    "name": "CoreWeave",
+    "cik": 1769628
   },
   "rows": [
     {

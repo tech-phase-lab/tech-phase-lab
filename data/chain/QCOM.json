@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "QCOM",
-    "name": "Qualcomm"
+    "name": "Qualcomm",
+    "cik": 804328
   },
   "rows": [
     {

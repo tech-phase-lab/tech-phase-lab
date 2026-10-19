@@ -2,7 +2,8 @@
   "root": {
     "ticker": "QLYS",
     "name": "クオリス",
-    "name_en": "Qualys"
+    "name_en": "Qualys",
+    "cik": 1107843
   },
   "rows": [
     {

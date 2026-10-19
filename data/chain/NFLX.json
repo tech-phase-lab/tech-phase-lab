@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NFLX",
-    "name": "Netflix"
+    "name": "Netflix",
+    "cik": 1065280
   },
   "rows": [
     {

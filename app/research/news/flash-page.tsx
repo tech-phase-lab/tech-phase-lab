@@ -139,6 +139,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
     </div>
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
+      {!feed && !failed && <div className={styles.loading} role="status" aria-busy="true" aria-label={ja ? "読み込み中" : "Loading"}><span /><span /><span /><em>{ja ? "ニュースを読み込み中…" : "Loading news…"}</em></div>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
       {!!shown.length && <div className={timeline.timeline}>{shown.flatMap((row, index) => {
         const key = dayKey(row);

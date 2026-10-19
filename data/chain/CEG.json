@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CEG",
-    "name": "Constellation"
+    "name": "Constellation",
+    "cik": 1868275
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "RMBS",
-    "name": "Rambus"
+    "name": "Rambus",
+    "cik": 917273
   },
   "rows": [
     {

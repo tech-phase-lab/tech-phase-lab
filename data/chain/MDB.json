@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MDB",
-    "name": "MongoDB"
+    "name": "MongoDB",
+    "cik": 1441816
   },
   "rows": [
     {

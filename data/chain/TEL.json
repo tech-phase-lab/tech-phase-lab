@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TEL",
-    "name": "TE Connectivity"
+    "name": "TE Connectivity",
+    "cik": 1385157
   },
   "rows": [
     {

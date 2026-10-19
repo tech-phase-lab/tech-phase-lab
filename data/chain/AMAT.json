@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AMAT",
-    "name": "Applied Materials"
+    "name": "Applied Materials",
+    "cik": 6951
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CRWD",
-    "name": "CrowdStrike"
+    "name": "CrowdStrike",
+    "cik": 1535527
   },
   "rows": [
     {

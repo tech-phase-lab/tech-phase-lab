@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "FTNT",
-    "name": "Fortinet"
+    "name": "Fortinet",
+    "cik": 1262039
   },
   "rows": [
     {

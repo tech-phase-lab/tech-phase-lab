@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PEGA",
-    "name": "Pegasystems"
+    "name": "Pegasystems",
+    "cik": 1013857
   },
   "rows": [
     {

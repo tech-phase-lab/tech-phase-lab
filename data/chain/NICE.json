@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NICE",
-    "name": "NiCE"
+    "name": "NiCE",
+    "cik": 1003935
   },
   "rows": [
     {

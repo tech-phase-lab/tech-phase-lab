@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TTD",
-    "name": "The Trade Desk"
+    "name": "The Trade Desk",
+    "cik": 1671933
   },
   "rows": [
     {

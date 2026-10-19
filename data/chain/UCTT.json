@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "UCTT",
-    "name": "Ultra Clean"
+    "name": "Ultra Clean",
+    "cik": 1275014
   },
   "rows": [
     {

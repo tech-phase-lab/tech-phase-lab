@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PI",
-    "name": "Impinj"
+    "name": "Impinj",
+    "cik": 1114995
   },
   "rows": [
     {

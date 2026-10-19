@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TER",
-    "name": "Teradyne"
+    "name": "Teradyne",
+    "cik": 97210
   },
   "rows": [
     {

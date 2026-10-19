@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AVPT",
-    "name": "AvePoint"
+    "name": "AvePoint",
+    "cik": 1777921
   },
   "rows": [
     {

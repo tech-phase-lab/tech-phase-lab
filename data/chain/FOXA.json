@@ -2,7 +2,8 @@
   "root": {
     "ticker": "FOXA",
     "name": "フォックス・コーポレーション",
-    "name_en": "Fox Corporation"
+    "name_en": "Fox Corporation",
+    "cik": 1754301
   },
   "rows": [
     {

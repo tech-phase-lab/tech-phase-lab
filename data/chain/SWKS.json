@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SWKS",
-    "name": "Skyworks Solutions"
+    "name": "Skyworks Solutions",
+    "cik": 4127
   },
   "rows": [
     {

@@ -2,7 +2,8 @@
   "root": {
     "ticker": "SYNA",
     "name": "シナプティクス",
-    "name_en": "Synaptics"
+    "name_en": "Synaptics",
+    "cik": 817720
   },
   "rows": [
     {

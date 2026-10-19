@@ -2,7 +2,8 @@
   "root": {
     "ticker": "MPWR",
     "name": "モノリシック・パワー・システムズ",
-    "name_en": "Monolithic Power Systems"
+    "name_en": "Monolithic Power Systems",
+    "cik": 1280452
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MSFT",
-    "name": "Microsoft"
+    "name": "Microsoft",
+    "cik": 789019
   },
   "rows": [
     {

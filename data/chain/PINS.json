@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PINS",
-    "name": "Pinterest"
+    "name": "Pinterest",
+    "cik": 1506293
   },
   "rows": [
     {

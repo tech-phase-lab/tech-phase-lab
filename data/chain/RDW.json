@@ -2,7 +2,8 @@
   "root": {
     "ticker": "RDW",
     "name": "レッドワイヤー",
-    "name_en": "Redwire"
+    "name_en": "Redwire",
+    "cik": 1819810
   },
   "rows": [
     {

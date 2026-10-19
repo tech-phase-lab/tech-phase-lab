@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "HUBS",
-    "name": "HubSpot"
+    "name": "HubSpot",
+    "cik": 1404655
   },
   "rows": [
     {

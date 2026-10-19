@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ENTG",
-    "name": "Entegris"
+    "name": "Entegris",
+    "cik": 1101302
   },
   "rows": [
     {

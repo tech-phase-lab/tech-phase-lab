@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CXM",
-    "name": "Sprinklr"
+    "name": "Sprinklr",
+    "cik": 1569345
   },
   "rows": [
     {

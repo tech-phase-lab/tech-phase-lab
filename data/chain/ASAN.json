@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ASAN",
-    "name": "Asana"
+    "name": "Asana",
+    "cik": 1477720
   },
   "rows": [
     {

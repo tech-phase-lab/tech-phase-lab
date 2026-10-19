@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SITM",
-    "name": "SiTime"
+    "name": "SiTime",
+    "cik": 1451809
   },
   "rows": [
     {

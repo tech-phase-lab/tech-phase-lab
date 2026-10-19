@@ -2,7 +2,8 @@
   "root": {
     "ticker": "PCOR",
     "name": "プロコア",
-    "name_en": "Procore"
+    "name_en": "Procore",
+    "cik": 1611052
   },
   "rows": [
     {

@@ -2,7 +2,8 @@
   "root": {
     "ticker": "OTEX",
     "name": "オープンテキスト",
-    "name_en": "OpenText"
+    "name_en": "OpenText",
+    "cik": 1002638
   },
   "rows": [
     {

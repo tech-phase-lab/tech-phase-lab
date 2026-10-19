@@ -2,7 +2,8 @@
   "root": {
     "ticker": "FLEX",
     "name": "フレックス",
-    "name_en": "Flex"
+    "name_en": "Flex",
+    "cik": 866374
   },
   "rows": [
     {

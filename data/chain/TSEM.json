@@ -2,7 +2,8 @@
   "root": {
     "ticker": "TSEM",
     "name": "タワーセミコンダクター",
-    "name_en": "Tower Semiconductor"
+    "name_en": "Tower Semiconductor",
+    "cik": 928876
   },
   "rows": [
     {

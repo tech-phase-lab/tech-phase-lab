@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SNOW",
-    "name": "Snowflake"
+    "name": "Snowflake",
+    "cik": 1640147
   },
   "rows": [
     {

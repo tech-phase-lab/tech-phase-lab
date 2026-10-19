@@ -2,7 +2,8 @@
   "root": {
     "ticker": "DASH",
     "name": "ドアダッシュ",
-    "name_en": "DoorDash"
+    "name_en": "DoorDash",
+    "cik": 1792789
   },
   "rows": [
     {

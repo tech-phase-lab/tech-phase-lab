@@ -2,7 +2,8 @@
   "root": {
     "ticker": "TWLO",
     "name": "トゥイリオ",
-    "name_en": "Twilio"
+    "name_en": "Twilio",
+    "cik": 1447669
   },
   "rows": [
     {

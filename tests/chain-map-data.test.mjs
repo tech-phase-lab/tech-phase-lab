@@ -4,6 +4,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import ts from 'typescript';
 import * as chain from '../lib/research/chain-map-data.ts';
+import { companyNetworkFor } from '../lib/research/chain-network.server.ts';
 
 const data = chain.chainDataFor('NVDA');
 const ALL = readdirSync(new URL('../data/chain/', import.meta.url)).filter(name => name.endsWith('.json')).map(name => name.slice(0, -5)).sort();
@@ -144,4 +145,10 @@ test('the English view of every map has no Japanese left in it', () => {
     const match = html.match(/[぀-ヿ㐀-鿿]+/);
     assert.equal(match, null, `${ticker}: ${match?.[0]}`);
   }
+});
+
+test('the stock page gets a network record for every company that has a quoted chain map', () => {
+  for (const ticker of ALL.filter(name => name !== 'NVDA')) assert.ok(companyNetworkFor({ cik: chain.chainDataFor(ticker).root.cik, ticker }), ticker);
+  assert.equal(companyNetworkFor({ cik: 0, ticker: 'ZZZZ' }), null);
+  assert.equal(companyNetworkFor({ cik: 1, ticker: 'ZM' }), null);
 });

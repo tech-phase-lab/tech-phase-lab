@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "FROG",
-    "name": "JFrog"
+    "name": "JFrog",
+    "cik": 1800667
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "IREN",
-    "name": "IREN"
+    "name": "IREN",
+    "cik": 1878848
   },
   "rows": [
     {

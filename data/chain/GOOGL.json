@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "GOOGL",
-    "name": "Alphabet"
+    "name": "Alphabet",
+    "cik": 1652044
   },
   "rows": [
     {

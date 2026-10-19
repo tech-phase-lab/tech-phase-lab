@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MCHP",
-    "name": "Microchip Technology"
+    "name": "Microchip Technology",
+    "cik": 827054
   },
   "rows": [
     {

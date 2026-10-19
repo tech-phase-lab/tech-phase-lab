@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "WMT",
-    "name": "Walmart"
+    "name": "Walmart",
+    "cik": 104169
   },
   "rows": [
     {

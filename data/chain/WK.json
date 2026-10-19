@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "WK",
-    "name": "Workiva"
+    "name": "Workiva",
+    "cik": 1445305
   },
   "rows": [
     {

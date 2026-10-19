@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "GFS",
-    "name": "GlobalFoundries"
+    "name": "GlobalFoundries",
+    "cik": 1709048
   },
   "rows": [
     {

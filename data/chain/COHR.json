@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "COHR",
-    "name": "Coherent"
+    "name": "Coherent",
+    "cik": 820318
   },
   "rows": [
     {

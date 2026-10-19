@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "INTU",
-    "name": "Intuit"
+    "name": "Intuit",
+    "cik": 896878
   },
   "rows": [
     {

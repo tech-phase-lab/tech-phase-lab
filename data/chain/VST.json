@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "VST",
-    "name": "Vistra"
+    "name": "Vistra",
+    "cik": 1692819
   },
   "rows": [
     {

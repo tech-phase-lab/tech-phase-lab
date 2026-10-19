@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "GTLB",
-    "name": "GitLab"
+    "name": "GitLab",
+    "cik": 1653482
   },
   "rows": [
     {

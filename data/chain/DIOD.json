@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DIOD",
-    "name": "Diodes"
+    "name": "Diodes",
+    "cik": 29002
   },
   "rows": [
     {

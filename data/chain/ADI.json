@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ADI",
-    "name": "Analog Devices"
+    "name": "Analog Devices",
+    "cik": 6281
   },
   "rows": [
     {

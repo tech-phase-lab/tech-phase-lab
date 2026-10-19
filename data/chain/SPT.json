@@ -2,7 +2,8 @@
   "root": {
     "ticker": "SPT",
     "name": "スプラウト・ソーシャル",
-    "name_en": "Sprout Social"
+    "name_en": "Sprout Social",
+    "cik": 1517375
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TTWO",
-    "name": "Take-Two Interactive"
+    "name": "Take-Two Interactive",
+    "cik": 946581
   },
   "rows": [
     {

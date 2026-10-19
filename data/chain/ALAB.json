@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ALAB",
-    "name": "Astera Labs"
+    "name": "Astera Labs",
+    "cik": 1736297
   },
   "rows": [
     {

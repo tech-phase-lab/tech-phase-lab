@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MNDY",
-    "name": "monday.com"
+    "name": "monday.com",
+    "cik": 1845338
   },
   "rows": [
     {

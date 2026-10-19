@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TSM",
-    "name": "TSMC"
+    "name": "TSMC",
+    "cik": 1046179
   },
   "rows": [
     {

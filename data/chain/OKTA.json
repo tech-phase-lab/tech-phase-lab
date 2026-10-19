@@ -2,7 +2,8 @@
   "root": {
     "ticker": "OKTA",
     "name": "オクタ",
-    "name_en": "Okta"
+    "name_en": "Okta",
+    "cik": 1660134
   },
   "rows": [
     {

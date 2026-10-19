@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "CEVA",
-    "name": "CEVA"
+    "name": "CEVA",
+    "cik": 1173489
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MRVL",
-    "name": "Marvell Technology"
+    "name": "Marvell Technology",
+    "cik": 1835632
   },
   "rows": [
     {

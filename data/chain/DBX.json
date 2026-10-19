@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DBX",
-    "name": "Dropbox"
+    "name": "Dropbox",
+    "cik": 1467623
   },
   "rows": [
     {

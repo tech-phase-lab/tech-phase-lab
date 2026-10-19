@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ANET",
-    "name": "Arista Networks"
+    "name": "Arista Networks",
+    "cik": 1596532
   },
   "rows": [
     {

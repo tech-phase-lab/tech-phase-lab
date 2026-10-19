@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SMCI",
-    "name": "Supermicro"
+    "name": "Supermicro",
+    "cik": 1375365
   },
   "rows": [
     {

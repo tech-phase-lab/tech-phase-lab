@@ -2,7 +2,8 @@
   "root": {
     "ticker": "POWI",
     "name": "パワー・インテグレーションズ",
-    "name_en": "Power Integrations"
+    "name_en": "Power Integrations",
+    "cik": 833640
   },
   "rows": [
     {

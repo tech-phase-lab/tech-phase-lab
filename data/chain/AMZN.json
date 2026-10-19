@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AMZN",
-    "name": "Amazon"
+    "name": "Amazon",
+    "cik": 1018724
   },
   "rows": [
     {

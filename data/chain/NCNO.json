@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NCNO",
-    "name": "nCino"
+    "name": "nCino",
+    "cik": 1902733
   },
   "rows": [
     {

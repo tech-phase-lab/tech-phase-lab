@@ -2,7 +2,8 @@
   "root": {
     "ticker": "MTSI",
     "name": "マコム・テクノロジー・ソリューションズ",
-    "name_en": "MACOM Technology Solutions"
+    "name_en": "MACOM Technology Solutions",
+    "cik": 1493594
   },
   "rows": [
     {

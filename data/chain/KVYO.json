@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "KVYO",
-    "name": "Klaviyo"
+    "name": "Klaviyo",
+    "cik": 1835830
   },
   "rows": [
     {

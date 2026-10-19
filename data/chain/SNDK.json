@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SNDK",
-    "name": "Sandisk"
+    "name": "Sandisk",
+    "cik": 2023554
   },
   "rows": [
     {

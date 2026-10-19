@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SOFI",
-    "name": "SoFi Technologies"
+    "name": "SoFi Technologies",
+    "cik": 1818874
   },
   "rows": [
     {

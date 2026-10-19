@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DOCU",
-    "name": "Docusign"
+    "name": "Docusign",
+    "cik": 1261333
   },
   "rows": [
     {

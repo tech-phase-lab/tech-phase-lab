@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MANH",
-    "name": "Manhattan Associates"
+    "name": "Manhattan Associates",
+    "cik": 1056696
   },
   "rows": [
     {

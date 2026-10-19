@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MA",
-    "name": "Mastercard"
+    "name": "Mastercard",
+    "cik": 1141391
   },
   "rows": [
     {

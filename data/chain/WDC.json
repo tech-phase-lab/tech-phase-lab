@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "WDC",
-    "name": "Western Digital"
+    "name": "Western Digital",
+    "cik": 106040
   },
   "rows": [
     {

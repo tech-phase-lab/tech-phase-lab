@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ABNB",
-    "name": "Airbnb"
+    "name": "Airbnb",
+    "cik": 1559720
   },
   "rows": [
     {

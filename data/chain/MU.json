@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "MU",
-    "name": "Micron"
+    "name": "Micron",
+    "cik": 723125
   },
   "rows": [
     {
