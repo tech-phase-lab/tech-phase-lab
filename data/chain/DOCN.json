@@ -1,0 +1,215 @@
+{
+  "root": {
+    "ticker": "DOCN",
+    "name": "DigitalOcean"
+  },
+  "rows": [
+    {
+      "ja": "提携",
+      "en": "Partnerships",
+      "above": true
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "MSFT",
+    "GOOGL",
+    "CRWV"
+  ],
+  "companies": [
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年にAMDとの提携を拡大し、AMDはDigitalOceanを基盤とするデベロッパークラウドを立ち上げた",
+          "text_en": "DigitalOcean expanded its partnership with AMD, which launched a DigitalOcean-powered developer cloud in 2025",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, we entered into multiple strategic partnerships, including with Laravel, which is using DigitalOcean for its Laravel VPS offering, fal, a leading multimodal AI platform for generative media, and an expanded partnership with AMD, which launched a DigitalOcean-powered developer cloud in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Databases",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フルマネージドのMongoDBをMongoDBとの提携で提供している",
+          "text_en": "DigitalOcean offers fully-managed MongoDB as a database service in partnership with MongoDB",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We currently offer managed offerings for relational databases (SQL) such as PostgreSQL and MySQL, a NoSQL database such as DigitalOcean Managed MongoDB, a fully-managed database as a service offering in partnership with MongoDB, and a high-performance key-value caching service such as Managed Caching for Valkey."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月5日付のクレジット契約で、Morgan Stanley Senior Funding, Inc.が管理代理人を務める",
+          "text_en": "DigitalOcean entered a credit agreement on May 5, 2025 with Morgan Stanley Senior Funding, Inc. as administrative agent",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On May 5, 2025, the Company entered into a credit agreement (the “Credit Agreement”) by and among the Company, its wholly owned subsidiary, DigitalOcean, LLC, as borrower (the “Borrower”), with Morgan Stanley Senior Funding, Inc., as administrative agent (in such capacity, the “Agent”), and the lenders party thereto (the “Lenders”).",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同クレジット契約が年次報告の別添書類(10.17)に挙げられている",
+          "text_en": "The credit agreement is listed as Exhibit 10.17 to the annual report",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "10.17 Credit Agreement, dated as of May 5, 2025, between DigitalOcean Holdings, Inc., DigitalOcean, LLC, the lenders party thereto and Morgan Stanley Senior Funding, Inc., as Administrative Agent."
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our AI/ML offerings compete with providers of AI/ML infrastructure and services, including the same large, diversified technology companies, Amazon (AWS), Microsoft (Azure), and Google (GCP), and smaller more infrastructure-focused companies such as Coreweave and Lambda Labs."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our AI/ML offerings compete with providers of AI/ML infrastructure and services, including the same large, diversified technology companies, Amazon (AWS), Microsoft (Azure), and Google (GCP), and smaller more infrastructure-focused companies such as Coreweave and Lambda Labs."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our AI/ML offerings compete with providers of AI/ML infrastructure and services, including the same large, diversified technology companies, Amazon (AWS), Microsoft (Azure), and Google (GCP), and smaller more infrastructure-focused companies such as Coreweave and Lambda Labs."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "コアウィーブ",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "source": {
+            "label": "DigitalOcean 10-K",
+            "label_en": "DigitalOcean 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our AI/ML offerings compete with providers of AI/ML infrastructure and services, including the same large, diversified technology companies, Amazon (AWS), Microsoft (Azure), and Google (GCP), and smaller more infrastructure-focused companies such as Coreweave and Lambda Labs."
+          }
+        }
+      ],
+      "name_en": "CoreWeave"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

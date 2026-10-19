@@ -46,11 +46,16 @@ import c_csco from "../../data/chain/CSCO.json" with { type: "json" };
 import c_dash from "../../data/chain/DASH.json" with { type: "json" };
 import c_ddog from "../../data/chain/DDOG.json" with { type: "json" };
 import c_dell from "../../data/chain/DELL.json" with { type: "json" };
+import c_diod from "../../data/chain/DIOD.json" with { type: "json" };
 import c_dis from "../../data/chain/DIS.json" with { type: "json" };
+import c_docn from "../../data/chain/DOCN.json" with { type: "json" };
+import c_docu from "../../data/chain/DOCU.json" with { type: "json" };
+import c_dt from "../../data/chain/DT.json" with { type: "json" };
 import c_entg from "../../data/chain/ENTG.json" with { type: "json" };
 import c_etn from "../../data/chain/ETN.json" with { type: "json" };
 import c_form from "../../data/chain/FORM.json" with { type: "json" };
 import c_frog from "../../data/chain/FROG.json" with { type: "json" };
+import c_frsh from "../../data/chain/FRSH.json" with { type: "json" };
 import c_ftnt from "../../data/chain/FTNT.json" with { type: "json" };
 import c_gev from "../../data/chain/GEV.json" with { type: "json" };
 import c_gfs from "../../data/chain/GFS.json" with { type: "json" };
@@ -92,8 +97,10 @@ import c_mtsi from "../../data/chain/MTSI.json" with { type: "json" };
 import c_mu from "../../data/chain/MU.json" with { type: "json" };
 import c_mxl from "../../data/chain/MXL.json" with { type: "json" };
 import c_nbis from "../../data/chain/NBIS.json" with { type: "json" };
+import c_ncno from "../../data/chain/NCNO.json" with { type: "json" };
 import c_net from "../../data/chain/NET.json" with { type: "json" };
 import c_nflx from "../../data/chain/NFLX.json" with { type: "json" };
+import c_nice from "../../data/chain/NICE.json" with { type: "json" };
 import c_now from "../../data/chain/NOW.json" with { type: "json" };
 import c_ntap from "../../data/chain/NTAP.json" with { type: "json" };
 import c_ntnx from "../../data/chain/NTNX.json" with { type: "json" };
@@ -118,6 +125,8 @@ import c_pins from "../../data/chain/PINS.json" with { type: "json" };
 import c_pl from "../../data/chain/PL.json" with { type: "json" };
 import c_plab from "../../data/chain/PLAB.json" with { type: "json" };
 import c_pltr from "../../data/chain/PLTR.json" with { type: "json" };
+import c_powi from "../../data/chain/POWI.json" with { type: "json" };
+import c_ptc from "../../data/chain/PTC.json" with { type: "json" };
 import c_pypl from "../../data/chain/PYPL.json" with { type: "json" };
 import c_qcom from "../../data/chain/QCOM.json" with { type: "json" };
 import c_qrvo from "../../data/chain/QRVO.json" with { type: "json" };
@@ -241,11 +250,16 @@ const available: Record<string, ChainMapData> = {
   DASH: c_dash as ChainMapData,
   DDOG: c_ddog as ChainMapData,
   DELL: c_dell as ChainMapData,
+  DIOD: c_diod as ChainMapData,
   DIS: c_dis as ChainMapData,
+  DOCN: c_docn as ChainMapData,
+  DOCU: c_docu as ChainMapData,
+  DT: c_dt as ChainMapData,
   ENTG: c_entg as ChainMapData,
   ETN: c_etn as ChainMapData,
   FORM: c_form as ChainMapData,
   FROG: c_frog as ChainMapData,
+  FRSH: c_frsh as ChainMapData,
   FTNT: c_ftnt as ChainMapData,
   GEV: c_gev as ChainMapData,
   GFS: c_gfs as ChainMapData,
@@ -287,8 +301,10 @@ const available: Record<string, ChainMapData> = {
   MU: c_mu as ChainMapData,
   MXL: c_mxl as ChainMapData,
   NBIS: c_nbis as ChainMapData,
+  NCNO: c_ncno as ChainMapData,
   NET: c_net as ChainMapData,
   NFLX: c_nflx as ChainMapData,
+  NICE: c_nice as ChainMapData,
   NOW: c_now as ChainMapData,
   NTAP: c_ntap as ChainMapData,
   NTNX: c_ntnx as ChainMapData,
@@ -313,6 +329,8 @@ const available: Record<string, ChainMapData> = {
   PL: c_pl as ChainMapData,
   PLAB: c_plab as ChainMapData,
   PLTR: c_pltr as ChainMapData,
+  POWI: c_powi as ChainMapData,
+  PTC: c_ptc as ChainMapData,
   PYPL: c_pypl as ChainMapData,
   QCOM: c_qcom as ChainMapData,
   QRVO: c_qrvo as ChainMapData,
