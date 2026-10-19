@@ -54,7 +54,7 @@ import orclMap from "../../data/chain/ORCL.json" with { type: "json" };
 export type ChainKind = "up" | "down" | "tie" | "rival";
 export type ChainSource = { label: string; label_en: string; url: string; level: "official" | "press"; date?: string; quote?: string; note?: string; note_en?: string };
 export type ChainRelation = { type: ChainKind; text: string; text_en: string; source: ChainSource };
-export type ChainCompany = { id: string; ticker: string; name: string; sub: string; sub_en: string; row: number; relations: ChainRelation[] };
+export type ChainCompany = { id: string; ticker: string; name: string; name_en?: string; sub: string; sub_en: string; row: number; relations: ChainRelation[] };
 export type ChainFar = { from: string; to: string; text: string; text_en: string; source: ChainSource };
 export type ChainMapData = {
   root: { ticker: string; name: string };

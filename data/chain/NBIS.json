@@ -351,7 +351,8 @@
             "note_en": "The source says only “Hyundai” without naming the legal entity; the relationship is at the Avride level."
           }
         }
-      ]
+      ],
+      "name_en": "Hyundai"
     },
     {
       "id": "MUFG",
@@ -376,7 +377,8 @@
             "note_en": "A lending relationship; the facility is syndicated with other banks."
           }
         }
-      ]
+      ],
+      "name_en": "Mitsubishi UFJ Financial Group (MUFG)"
     }
   ],
   "far": [],

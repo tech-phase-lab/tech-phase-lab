@@ -87,7 +87,8 @@
             "quote": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd."
           }
         }
-      ]
+      ],
+      "name_en": "ASE Technology (ASE)"
     },
     {
       "id": "AMKR",

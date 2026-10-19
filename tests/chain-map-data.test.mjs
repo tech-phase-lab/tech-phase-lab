@@ -135,3 +135,11 @@ test('the "who competes" row stays on one line (main rivals only), and unlisted 
     for (const company of item.companies) assert.ok(!UNLISTED.includes(company.ticker) && !UNLISTED.includes(company.name), `${ticker} ${company.id}`);
   }
 });
+
+test('the English view of every map has no Japanese left in it', () => {
+  for (const ticker of Object.keys(BATCH).concat(['NVDA'])) {
+    const html = renderToStaticMarkup(createElement(StockChainMap, { data: chain.chainDataFor(ticker), lang: 'en' }));
+    const match = html.match(/[぀-ヿ㐀-鿿]+/);
+    assert.equal(match, null, `${ticker}: ${match?.[0]}`);
+  }
+});
