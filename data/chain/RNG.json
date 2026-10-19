@@ -1,0 +1,542 @@
+{
+  "root": {
+    "ticker": "RNG",
+    "name": "リングセントラル"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客・販売先",
+      "en": "Customers & resellers"
+    },
+    {
+      "ja": "提携・連携・資金調達",
+      "en": "Partnerships, integrations & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ZM",
+    "TWLO",
+    "EGHT",
+    "FIVN",
+    "CSCO"
+  ],
+  "companies": [
+    {
+      "id": "EQIX",
+      "ticker": "EQIX",
+      "name": "エクイニクス",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "北米の顧客向けに、Equinixなどのデータセンターの設備を賃借して提供している",
+          "text_en": "RingCentral serves North American customers from data center facilities where it leases space from Equinix and other providers",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We currently serve our North American customers from geographically disparate data center hosting facilities in North America, where we lease space from Equinix, Inc., and other providers, and we serve our European customers from third-party data center hosting facilities in Europe."
+          }
+        }
+      ],
+      "name_en": "Equinix"
+    },
+    {
+      "id": "BAND",
+      "ticker": "BAND",
+      "name": "バンドウィズ",
+      "sub": "通信API",
+      "sub_en": "Communications APIs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "コンタクトセンターやSMSの提供に、Bandwidth.comなどの第三者技術を使っている",
+          "text_en": "RingCentral uses third-party technology from Bandwidth.com and others to provide contact center and SMS solutions",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We currently use and/or provide third-party technology and integrations from NICE, Bandwidth.com, Inc., Microsoft Corporation and other companies to provide some of our solutions to our customers, including contact center and SMS solutions."
+          }
+        }
+      ],
+      "name_en": "Bandwidth"
+    },
+    {
+      "id": "NICE",
+      "ticker": "NICE",
+      "name": "NiCE",
+      "sub": "コンタクトセンターソフト",
+      "sub_en": "Contact center software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "コンタクトセンターなどの提供に、NICEなどの第三者技術を使っている",
+          "text_en": "RingCentral uses third-party technology from NICE and others to provide contact center solutions",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We currently use and/or provide third-party technology and integrations from NICE, Bandwidth.com, Inc., Microsoft Corporation and other companies to provide some of our solutions to our customers, including contact center and SMS solutions."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "長年の提携関係をNiCEと延長した",
+          "text_en": "RingCentral extended its long-standing partnership with NiCE",
+          "source": {
+            "label": "RingCentral 8-K Ex.99 の発表",
+            "label_en": "RingCentral 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490525000037/rng-20250630x8kxex991.htm",
+            "level": "official",
+            "date": "2025-08-05",
+            "quote": "We also extended our long-standing partnership with NiCE and we look forward to working with them, as we continue offering a best-in-class, integrated AI-powered cloud telephony and contact center suite that is the ideal choice for enterprises with complex and advanced use-cases.”"
+          }
+        },
+        {
+          "type": "down",
+          "text": "NiCE CXone Mpowerを基盤とするRingCentral Contact Centerの販売について、複数年の契約延長をした",
+          "text_en": "RingCentral extended a multi-year agreement to market and sell RingCentral Contact Center, powered by NiCE CXone Mpower",
+          "source": {
+            "label": "RingCentral 8-K Ex.99 の発表",
+            "label_en": "RingCentral 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490525000037/rng-20250630x8kxex991.htm",
+            "level": "official",
+            "date": "2025-08-05",
+            "quote": "NICE), through a multi-year extension of our long-term agreement to market and sell RingCentral Contact Center™, a proven, global solution for enterprise-grade customer engagement, powered by NiCE CXone Mpower."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNH",
+      "ticker": "UNH",
+      "name": "ユナイテッドヘルス",
+      "sub": "医療保険",
+      "sub_en": "Health insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "UnitedHealthcareから医療保険サービスを購入している",
+          "text_en": "The company purchased health insurance services from UnitedHealthcare, a subsidiary of UnitedHealth Group",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In the ordinary course of business, the Company purchased health insurance services from UnitedHealthcare, a subsidiary of UnitedHealth Group, a provider of health insurance services to the Company.",
+            "note": "子会社からの購入です。",
+            "note_en": "Purchased from a subsidiary."
+          }
+        }
+      ],
+      "name_en": "UnitedHealth Group"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AT&Tが顧客向けにAIRの提供を始め、提携を拡大した",
+          "text_en": "Expanded partnership with AT&T, which began offering AIR to its customers",
+          "source": {
+            "label": "RingCentral 8-K Ex.99 の発表",
+            "label_en": "RingCentral 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490525000049/rng-20250930x8kxex991.htm",
+            "level": "official",
+            "date": "2025-11-03",
+            "quote": "• Expanded partnership with AT&T, which began offering AIR to their customers, highlighting RingCentral’s and AT&T’s shared commitment to AI-powered business communications."
+          }
+        },
+        {
+          "type": "down",
+          "text": "AT&Tがクラウド型コンタクトセンターと会話インテリジェンスの提供を始められるようになった",
+          "text_en": "This enables AT&T to start offering cloud contact center and conversational intelligence to its customers",
+          "source": {
+            "label": "RingCentral 8-K Ex.99 の発表",
+            "label_en": "RingCentral 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490525000037/rng-20250630x8kxex991.htm",
+            "level": "official",
+            "date": "2025-08-05",
+            "quote": "This enables AT&T to start offering cloud contact center and conversational intelligence to their customers, thus elevating customer engagement and experiences through AI-enabled technologies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "ticker": "G",
+      "name": "Genpact",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GenpactがRingEXとRingCXを採用し、インド全22通信サークルで提供する",
+          "text_en": "RingEX and RingCX were selected by Genpact, with licensed availability across all 22 telecom circles in India",
+          "source": {
+            "label": "RingCentral 8-K Ex.99 の発表",
+            "label_en": "RingCentral 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490525000008/rng-20241231x8kxex991.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "• RingEX & RingCX selected by Genpact, a global advanced technology services and solutions company with 125,000 employees in 30+ countries, to enable tighter collaboration and for RingCentral's licensed availability across all 22 telecom circles in India.",
+            "note": "2025年の発表です。",
+            "note_en": "Announced in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "顧客管理ソフト",
+      "sub_en": "CRM software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Salesforceなど主要なCRMと連携している",
+          "text_en": "RingCentral integrates with CRMs including Salesforce",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "◦ Deep CRM integrations, including Salesforce, Zendesk, ServiceNow, HubSpot, Microsoft Dynamics, and others, ensuring customer interactions are context-aware and data-driven."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "RingCentralはMicrosoft Teamsに組み込まれ、Teams Phoneライセンスなしで利用できる",
+          "text_en": "RingCentral embeds into Microsoft Teams without requiring a Teams Phone license",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "RingCentral seamlessly embeds into Microsoft Teams, providing reliable, global enterprise-grade phone, SMS, fax, and customer experience solutions — without requiring a Teams Phone license."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "RingCentralとOpenAIの提携が、Aragon ResearchによるRingCXの評価で言及されている",
+          "text_en": "Aragon Research cited the OpenAI partnership in naming RingCX a Leader",
+          "source": {
+            "label": "RingCentral 8-K Ex.99 の発表",
+            "label_en": "RingCentral 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000043/rng-20260630x8kxex991.htm",
+            "level": "official",
+            "date": "2026-07-23",
+            "quote": "• Aragon Research named RingCX a Leader in its Intelligent Contact Center for SMB Globe report, specifically citing the OpenAI partnership as positioning RingCentral to lead the shift toward agentic voice AI across the full customer interaction lifecycle.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマートフォン",
+      "sub_en": "Smartphones",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モバイルOSの提供元としてAppleが挙げられ、同社との関係が成長に影響しうるとされている",
+          "text_en": "Apple is named as a provider of mobile operating systems, and problems in that relationship could hurt growth",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "addition, if we experience difficulties in the future integrating our mobile applications into smart devices or if problems arise with our relationships with providers of mobile operating systems, such as those of Apple Inc. or Alphabet Inc., our future growth and our results of operations could suffer.",
+            "note": "リスク要因としての記載です。",
+            "note_en": "Mentioned as a risk factor."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(Google)",
+      "sub": "ネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モバイルOSの提供元としてAlphabetが挙げられ、同社との関係が成長に影響しうるとされている",
+          "text_en": "Alphabet is named as a provider of mobile operating systems, and problems in that relationship could hurt growth",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "addition, if we experience difficulties in the future integrating our mobile applications into smart devices or if problems arise with our relationships with providers of mobile operating systems, such as those of Apple Inc. or Alphabet Inc., our future growth and our results of operations could suffer.",
+            "note": "リスク要因としての記載です。",
+            "note_en": "Mentioned as a risk factor."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年9月11日付で、Bank of America, N.A.が管理代理人を務める修正再録のクレジット契約を結んだ",
+          "text_en": "RingCentral entered into an Amended and Restated Credit Agreement dated September 11, 2025 with Bank of America, N.A. as administrative agent",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On September 11, 2025, we entered into an Amended and Restated Credit Agreement among us, the lenders from time to time party thereto and Bank of America, N.A., as administrative agent and as collateral agent (as amended, amended and restated or otherwise modified from time to time, the “Credit Agreement”).",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2023年2月に、Bank of America, N.A.が管理代理人を務めるクレジット契約で4億ドルのTerm Loanを設けた",
+          "text_en": "In February 2023, RingCentral entered into a credit agreement with Bank of America, N.A. as administrative agent providing a $400.0 million Term Loan",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In February 2023, the Company entered into a credit agreement with certain lenders, from time to time party thereto and Bank of America, N.A., as administrative agent and as collateral agent (as amended from time to time, the “Credit Agreement”), providing for a $ 400.0 million Term Loan (the “Term"
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "ズーム・コミュニケーションズ",
+      "sub": "ビデオ会議",
+      "sub_en": "Video conferencing",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リングセントラルの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include but are not limited to: 8x8, Inc., Dialpad, Inc., LogMeIn, Inc., Microsoft Corporation, Nextiva, Inc., Twilio Inc., Ericsson, Zoom, Amazon.com, Inc., AT&T Inc., BT Group plc, TELUS Corporation, Vodafone Group Plc, Deutsche Telekom, Avaya LLC, Mitel Networks Corporation, Cisco Systems, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Zoom Communications"
+    },
+    {
+      "id": "TWLO",
+      "ticker": "TWLO",
+      "name": "トゥイリオ",
+      "sub": "通信API",
+      "sub_en": "Communications APIs",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リングセントラルの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include but are not limited to: 8x8, Inc., Dialpad, Inc., LogMeIn, Inc., Microsoft Corporation, Nextiva, Inc., Twilio Inc., Ericsson, Zoom, Amazon.com, Inc., AT&T Inc., BT Group plc, TELUS Corporation, Vodafone Group Plc, Deutsche Telekom, Avaya LLC, Mitel Networks Corporation, Cisco"
+          }
+        }
+      ],
+      "name_en": "Twilio"
+    },
+    {
+      "id": "EGHT",
+      "ticker": "EGHT",
+      "name": "8x8",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リングセントラルの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include but are not limited to: 8x8, Inc., Dialpad, Inc., LogMeIn, Inc., Microsoft Corporation, Nextiva, Inc., Twilio Inc., Ericsson, Zoom, Amazon.com, Inc., AT&T Inc., BT Group plc, TELUS Corporation,"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "8x8の年次報告が、リングセントラルを競合として挙げている",
+          "text_en": "Names RingCentral as a competitor in its annual report",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "chat, team messaging, contact center, and enterprise-class application program interface solutions, we face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc.,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIVN",
+      "ticker": "FIVN",
+      "name": "Five9",
+      "sub": "コンタクトセンターソフト",
+      "sub_en": "Contact center software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Five9の年次報告が、リングセントラルを競合として挙げている",
+          "text_en": "Names RingCentral as a competitor in its annual report",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also face competition from many smaller contact center service providers such as Content Guru and Talkdesk, as well as vendors offering both unified communications and contact center solutions such as RingCentral and Zoom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リングセントラルの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include but are not limited to: 8x8, Inc., Dialpad, Inc., LogMeIn, Inc., Microsoft Corporation, Nextiva, Inc., Twilio Inc., Ericsson, Zoom, Amazon.com, Inc., AT&T Inc., BT Group plc, TELUS Corporation, Vodafone Group Plc, Deutsche Telekom, Avaya LLC, Mitel Networks Corporation, Cisco Systems, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "ERIC",
+      "ticker": "ERIC",
+      "name": "エリクソン",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リングセントラルの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include but are not limited to: 8x8, Inc., Dialpad, Inc., LogMeIn, Inc., Microsoft Corporation, Nextiva, Inc., Twilio Inc., Ericsson, Zoom, Amazon.com, Inc., AT&T Inc., BT Group plc, TELUS Corporation, Vodafone Group Plc, Deutsche Telekom, Avaya LLC, Mitel Networks Corporation, Cisco Systems, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Ericsson"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

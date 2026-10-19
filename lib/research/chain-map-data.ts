@@ -162,7 +162,9 @@ import c_rblx from "../../data/chain/RBLX.json" with { type: "json" };
 import c_rddt from "../../data/chain/RDDT.json" with { type: "json" };
 import c_rdw from "../../data/chain/RDW.json" with { type: "json" };
 import c_rgti from "../../data/chain/RGTI.json" with { type: "json" };
+import c_rklb from "../../data/chain/RKLB.json" with { type: "json" };
 import c_rmbs from "../../data/chain/RMBS.json" with { type: "json" };
+import c_rng from "../../data/chain/RNG.json" with { type: "json" };
 import c_roku from "../../data/chain/ROKU.json" with { type: "json" };
 import c_rpd from "../../data/chain/RPD.json" with { type: "json" };
 import c_s from "../../data/chain/S.json" with { type: "json" };
@@ -398,7 +400,9 @@ const available: Record<string, ChainMapData> = {
   RDDT: c_rddt as ChainMapData,
   RDW: c_rdw as ChainMapData,
   RGTI: c_rgti as ChainMapData,
+  RKLB: c_rklb as ChainMapData,
   RMBS: c_rmbs as ChainMapData,
+  RNG: c_rng as ChainMapData,
   ROKU: c_roku as ChainMapData,
   RPD: c_rpd as ChainMapData,
   S: c_s as ChainMapData,
