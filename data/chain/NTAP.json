@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NTAP",
-    "name": "ネットアップ"
+    "name": "ネットアップ",
+    "name_en": "NetApp"
   },
   "rows": [
     {

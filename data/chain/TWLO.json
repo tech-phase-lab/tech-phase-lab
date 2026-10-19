@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TWLO",
-    "name": "トゥイリオ"
+    "name": "トゥイリオ",
+    "name_en": "Twilio"
   },
   "rows": [
     {

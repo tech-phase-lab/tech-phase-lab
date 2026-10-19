@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "RDW",
-    "name": "レッドワイヤー"
+    "name": "レッドワイヤー",
+    "name_en": "Redwire"
   },
   "rows": [
     {

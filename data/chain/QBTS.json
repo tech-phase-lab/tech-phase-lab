@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "QBTS",
-    "name": "ディーウェイブ・クアンタム"
+    "name": "ディーウェイブ・クアンタム",
+    "name_en": "D-Wave Quantum"
   },
   "rows": [
     {

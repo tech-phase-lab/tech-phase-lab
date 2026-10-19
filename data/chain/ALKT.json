@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ALKT",
-    "name": "アルカミ・テクノロジー"
+    "name": "アルカミ・テクノロジー",
+    "name_en": "Alkami Technology"
   },
   "rows": [
     {

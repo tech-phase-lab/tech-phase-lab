@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PCOR",
-    "name": "プロコア"
+    "name": "プロコア",
+    "name_en": "Procore"
   },
   "rows": [
     {

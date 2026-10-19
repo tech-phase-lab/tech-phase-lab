@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "DASH",
-    "name": "ドアダッシュ"
+    "name": "ドアダッシュ",
+    "name_en": "DoorDash"
   },
   "rows": [
     {

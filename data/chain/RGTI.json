@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "RGTI",
-    "name": "リゲッティ・コンピューティング"
+    "name": "リゲッティ・コンピューティング",
+    "name_en": "Rigetti Computing"
   },
   "rows": [
     {

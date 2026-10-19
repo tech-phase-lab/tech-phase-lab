@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "FLEX",
-    "name": "フレックス"
+    "name": "フレックス",
+    "name_en": "Flex"
   },
   "rows": [
     {

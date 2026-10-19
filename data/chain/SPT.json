@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SPT",
-    "name": "スプラウト・ソーシャル"
+    "name": "スプラウト・ソーシャル",
+    "name_en": "Sprout Social"
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "VEEV",
-    "name": "ヴィーヴァ・システムズ"
+    "name": "ヴィーヴァ・システムズ",
+    "name_en": "Veeva Systems"
   },
   "rows": [
     {

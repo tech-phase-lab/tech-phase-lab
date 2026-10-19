@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "PAYC",
-    "name": "ペイコム"
+    "name": "ペイコム",
+    "name_en": "Paycom Software"
   },
   "rows": [
     {

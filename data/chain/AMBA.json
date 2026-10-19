@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AMBA",
-    "name": "アンバレラ"
+    "name": "アンバレラ",
+    "name_en": "Ambarella"
   },
   "rows": [
     {

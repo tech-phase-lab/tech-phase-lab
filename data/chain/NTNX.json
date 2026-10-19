@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NTNX",
-    "name": "ニュータニックス"
+    "name": "ニュータニックス",
+    "name_en": "Nutanix"
   },
   "rows": [
     {

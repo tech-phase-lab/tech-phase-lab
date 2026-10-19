@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "OTEX",
-    "name": "オープンテキスト"
+    "name": "オープンテキスト",
+    "name_en": "OpenText"
   },
   "rows": [
     {

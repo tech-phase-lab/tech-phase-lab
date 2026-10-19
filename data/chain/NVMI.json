@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "NVMI",
-    "name": "ノバ"
+    "name": "ノバ",
+    "name_en": "Nova"
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "RKLB",
-    "name": "ロケット・ラボ"
+    "name": "ロケット・ラボ",
+    "name_en": "Rocket Lab"
   },
   "rows": [
     {

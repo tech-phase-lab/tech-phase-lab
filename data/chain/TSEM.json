@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TSEM",
-    "name": "タワーセミコンダクター"
+    "name": "タワーセミコンダクター",
+    "name_en": "Tower Semiconductor"
   },
   "rows": [
     {

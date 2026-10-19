@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "POWI",
-    "name": "パワー・インテグレーションズ"
+    "name": "パワー・インテグレーションズ",
+    "name_en": "Power Integrations"
   },
   "rows": [
     {

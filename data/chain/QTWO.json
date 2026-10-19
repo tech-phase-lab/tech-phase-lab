@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "QTWO",
-    "name": "Q2ホールディングス"
+    "name": "Q2ホールディングス",
+    "name_en": "Q2 Holdings"
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "VIAV",
-    "name": "ヴィアヴィ・ソリューションズ"
+    "name": "ヴィアヴィ・ソリューションズ",
+    "name_en": "Viavi Solutions"
   },
   "rows": [
     {

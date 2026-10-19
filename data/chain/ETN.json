@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "ETN",
-    "name": "イートン"
+    "name": "イートン",
+    "name_en": "Eaton"
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "QLYS",
-    "name": "クオリス"
+    "name": "クオリス",
+    "name_en": "Qualys"
   },
   "rows": [
     {

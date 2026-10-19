@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "OKTA",
-    "name": "オクタ"
+    "name": "オクタ",
+    "name_en": "Okta"
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "RNG",
-    "name": "リングセントラル"
+    "name": "リングセントラル",
+    "name_en": "RingCentral"
   },
   "rows": [
     {

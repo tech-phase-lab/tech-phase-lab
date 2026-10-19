@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "AOSL",
-    "name": "アルファ・アンド・オメガ・セミコンダクター"
+    "name": "アルファ・アンド・オメガ・セミコンダクター",
+    "name_en": "Alpha and Omega Semiconductor"
   },
   "rows": [
     {

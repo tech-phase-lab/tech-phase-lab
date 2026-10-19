@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "FIVN",
-    "name": "ファイブナイン"
+    "name": "ファイブナイン",
+    "name_en": "Five9"
   },
   "rows": [
     {

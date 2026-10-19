@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "EGHT",
-    "name": "エイトバイエイト"
+    "name": "エイトバイエイト",
+    "name_en": "8x8"
   },
   "rows": [
     {

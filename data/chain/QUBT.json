@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "QUBT",
-    "name": "クアンタム・コンピューティング"
+    "name": "クアンタム・コンピューティング",
+    "name_en": "Quantum Computing Inc."
   },
   "rows": [
     {

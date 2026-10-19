@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "LSCC",
-    "name": "ラティスセミコンダクター"
+    "name": "ラティスセミコンダクター",
+    "name_en": "Lattice Semiconductor"
   },
   "rows": [
     {

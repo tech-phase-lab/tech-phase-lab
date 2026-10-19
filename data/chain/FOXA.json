@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "FOXA",
-    "name": "フォックス・コーポレーション"
+    "name": "フォックス・コーポレーション",
+    "name_en": "Fox Corporation"
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SNPS",
-    "name": "シノプシス"
+    "name": "シノプシス",
+    "name_en": "Synopsys"
   },
   "rows": [
     {

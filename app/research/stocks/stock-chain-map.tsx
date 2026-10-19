@@ -146,7 +146,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
     <div className={styles.card}>
       <div className={styles.head}>
         <h3>{t("企業の連鎖マップ", "Company connection map")}</h3>
-        <div className={styles.id}><div><span className={styles.tk}>{root}</span><span className={styles.nm}>{data.root.name}</span></div>
+        <div className={styles.id}><div><span className={styles.tk}>{root}</span><span className={styles.nm}>{ja ? data.root.name : (data.root.name_en ?? data.root.name)}</span></div>
           <span className={styles.cnt}>{ja ? `${counts.companies}社 · ${counts.relations}の関係` : `${counts.companies} companies · ${counts.relations} relationships`}</span></div>
         <div className={styles.legend}>{([...CHAIN_KINDS.filter(kind => data.companies.some(company => chainKinds(company).includes(kind))), ...(data.far.length > 0 ? ["far"] : [])] as ChainTone[]).map(tone => <span key={tone} data-tone={tone}><i />{chainText(tone, "legend", lang)}</span>)}</div>
       </div>
@@ -157,7 +157,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
         </svg>
         {rowsOf(true)}
         <section className={`${styles.row} ${styles.rootRow}`}><div className={styles.chips}>
-          <button type="button" ref={element => { chips.current[root] = element; }} className={`${styles.chip} ${styles.root}`} onClick={() => select(null)}><b>{root}</b><small>{data.root.name}</small></button>
+          <button type="button" ref={element => { chips.current[root] = element; }} className={`${styles.chip} ${styles.root}`} onClick={() => select(null)}><b>{root}</b><small>{ja ? data.root.name : (data.root.name_en ?? data.root.name)}</small></button>
         </div></section>
         {rowsOf(false)}
       </div>

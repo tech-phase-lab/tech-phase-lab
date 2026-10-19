@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "IOT",
-    "name": "サムサラ"
+    "name": "サムサラ",
+    "name_en": "Samsara"
   },
   "rows": [
     {

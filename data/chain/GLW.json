@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "GLW",
-    "name": "コーニング"
+    "name": "コーニング",
+    "name_en": "Corning"
   },
   "rows": [
     {

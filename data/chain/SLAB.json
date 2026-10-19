@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "SLAB",
-    "name": "シリコン・ラボラトリーズ"
+    "name": "シリコン・ラボラトリーズ",
+    "name_en": "Silicon Laboratories"
   },
   "rows": [
     {

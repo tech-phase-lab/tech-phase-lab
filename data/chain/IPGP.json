@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "IPGP",
-    "name": "IPGフォトニクス"
+    "name": "IPGフォトニクス",
+    "name_en": "IPG Photonics"
   },
   "rows": [
     {

@@ -1,7 +1,8 @@
 {
   "root": {
     "ticker": "TENB",
-    "name": "テナブル"
+    "name": "テナブル",
+    "name_en": "Tenable"
   },
   "rows": [
     {

@@ -226,7 +226,7 @@ export type ChainRelation = { type: ChainKind; text: string; text_en: string; so
 export type ChainCompany = { id: string; ticker: string; name: string; name_en?: string; sub: string; sub_en: string; row: number; relations: ChainRelation[] };
 export type ChainFar = { from: string; to: string; text: string; text_en: string; source: ChainSource };
 export type ChainMapData = {
-  root: { ticker: string; name: string };
+  root: { ticker: string; name: string; name_en?: string };
   /** Row 0 sits above the root by default; `above: true` puts further supplier rows above it too. Rows without companies are not drawn. */
   rows: { ja: string; en: string; above?: boolean }[];
   rivals: string[];
