@@ -1648,3 +1648,16 @@ entry guard and false-positive restore states. The revised harness still needs
 an actual isolated PostgreSQL/S3 run; previous actual deployment logs prove only
 the prior revision. Production key custody and API-to-restore flow remain open.
 No live service, production key, saving flag or schedule changes in this step.
+
+## 2026-10-19 — Strengthened restore harness verified in real isolation
+
+Commit2ce61a69 passed GitHub CI39268699563 (both jobs). Dedicated acceptance
+service058b8f14 ran unchanged hash-pinned modules against fresh PostgreSQL18 and
+the protection bucket's unique synthetic namespace. Deployment0d2e0a94 logged
+actual ACCEPTANCE_OK: stale backup verified, three encrypted records, three
+conditional conflicts, first replay and second replay each erased plan/stopped
+notifications/cleared queue. Initial initdb failures were fixed in launcher PATH,
+not assertions. Retirementa2305d23 logged DISABLED; bucket references cleared,
+no staged patch. See RESOLUTE-RESTORE-ACCEPTANCE.md and adjacent evidence JSON.
+Production key custody, exact production DB gates and authenticated API-to-writer-
+to-restore acceptance remain open. All existing service IDs/crons preserved.

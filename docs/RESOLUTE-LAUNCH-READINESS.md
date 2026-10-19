@@ -71,3 +71,14 @@ being reported as successful first-pass recovery. Regression tests cover partial
 replay, stale fixture absence and credential variants. This revised harness has
 not yet been rerun in Railway; earlier deployment evidence remains for its
 original revision. No production key, DB, service or schedule was changed.
+
+### Strengthened harness actual run completed
+
+The previously pending real run now passed with synthetic data in a dedicated
+unscheduled service. Stale dump state and each of two replays were verified in
+actual PostgreSQL18; independent encrypted storage readback and all three
+conditional-write refusals passed. The launcher PATH initialization failure was
+corrected without changing the tested module bundle or assertions. The service
+was then disabled and bucket references cleared; actual DISABLED log confirmed.
+See RESOLUTE-RESTORE-ACCEPTANCE.md for IDs, evidence and limitations. Production
+key custody and authenticated customer API-to-restore acceptance remain open.
