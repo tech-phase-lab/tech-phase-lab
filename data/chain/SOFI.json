@@ -30,8 +30,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "個人ローンの証券化(3.75億ドル)を、BlackRockの運用ファンド・口座のみに販売(2023年10月30日、SoFi発表)",
-          "text_en": "Placed a $375M personal loan securitization exclusively with funds and accounts managed by BlackRock investment advisors (October 30, 2023, SoFi release)",
+          "text": "個人ローンの証券化(3.75億ドル)を、BlackRockの運用ファンド・口座のみに販売",
+          "text_en": "Placed a $375M personal loan securitization exclusively with funds and accounts managed by BlackRock investment advisors",
           "source": {
             "label": "SoFi の発表(2023年10月30日)",
             "label_en": "SoFi press release (Oct 30, 2023)",
@@ -55,8 +55,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Blue Owlが運用するファンドと、最大50億ドル・2年間の個人ローン事業(Loan Platform Business)契約を確定(2025年3月13日、SoFi発表)",
-          "text_en": "Finalized an up to $5B two-year Loan Platform Business agreement for personal loans with funds managed by Blue Owl Capital (March 13, 2025, SoFi release)",
+          "text": "Blue Owlが運用するファンドと、最大50億ドル・2年間の個人ローン事業(Loan Platform Business)契約を確定",
+          "text_en": "Finalized an up to $5B two-year Loan Platform Business agreement for personal loans with funds managed by Blue Owl Capital",
           "source": {
             "label": "SoFi の発表(2025年3月13日)",
             "label_en": "SoFi press release (Mar 13, 2025)",
@@ -80,8 +80,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2024年第4四半期に、5.25億ドルの個人ローン証券化をPGIM Fixed Incomeが運用するファンド・口座と実施(2025年1月16日、SoFi発表)",
-          "text_en": "Closed a $525M personal loan securitization in Q4 2024 with funds and accounts managed by PGIM Fixed Income (January 16, 2025, SoFi release)",
+          "text": "2024年第4四半期に、5.25億ドルの個人ローン証券化をPGIM Fixed Incomeが運用するファンド・口座と実施",
+          "text_en": "Closed a $525M personal loan securitization in Q4 2024 with funds and accounts managed by PGIM Fixed Income",
           "source": {
             "label": "SoFi の発表(2025年1月16日)",
             "label_en": "SoFi press release (Jan 16, 2025)",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Mastercardと提携を強化し、SoFiのステーブルコインSoFiUSDをMastercardの世界の決済網での決済手段にできるようにする(2026年3月3日、SoFi発表)",
-          "text_en": "Announced an enhanced partnership with Mastercard to enable its SoFiUSD stablecoin as a settlement option across Mastercard’s global payments network (March 3, 2026, SoFi release)",
+          "text": "Mastercardと提携を強化し、SoFiのステーブルコインSoFiUSDをMastercardの世界の決済網での決済手段にできるようにする",
+          "text_en": "Announced an enhanced partnership with Mastercard to enable its SoFiUSD stablecoin as a settlement option across Mastercard’s global payments network",
           "source": {
             "label": "SoFi の発表(2026年3月3日)",
             "label_en": "SoFi press release (Mar 3, 2026)",
@@ -118,8 +118,8 @@
         },
         {
           "type": "tie",
-          "text": "法人向けの法定通貨・暗号資産バンキング「SoFi Big Business Banking」の最初の参加企業としてMastercardが挙げられている(2026年4月2日、SoFi発表)",
-          "text_en": "Mastercard is named as an initial participant in SoFi Big Business Banking, SoFi’s fiat and crypto banking offering for enterprise partners (April 2, 2026, SoFi release)",
+          "text": "法人向けの法定通貨・暗号資産バンキング「SoFi Big Business Banking」の最初の参加企業としてMastercardが挙げられている",
+          "text_en": "Mastercard is named as an initial participant in SoFi Big Business Banking, SoFi’s fiat and crypto banking offering for enterprise partners",
           "source": {
             "label": "SoFi の発表(2026年4月2日)",
             "label_en": "SoFi press release (Apr 2, 2026)",
@@ -143,8 +143,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SoFi Big Business Bankingの最初の参加企業としてBullishが挙げられている(2026年4月2日、SoFi発表)",
-          "text_en": "Bullish is named as an initial participant in SoFi Big Business Banking (April 2, 2026, SoFi release)",
+          "text": "SoFi Big Business Bankingの最初の参加企業としてBullishが挙げられている",
+          "text_en": "Bullish is named as an initial participant in SoFi Big Business Banking",
           "source": {
             "label": "SoFi の発表(2026年4月2日)",
             "label_en": "SoFi press release (Apr 2, 2026)",
@@ -168,8 +168,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SoFi Big Business Bankingの最初の参加企業としてBitGoが挙げられている(2026年4月2日、SoFi発表)",
-          "text_en": "BitGo is named as an initial participant in SoFi Big Business Banking (April 2, 2026, SoFi release)",
+          "text": "SoFi Big Business Bankingの最初の参加企業としてBitGoが挙げられている",
+          "text_en": "BitGo is named as an initial participant in SoFi Big Business Banking",
           "source": {
             "label": "SoFi の発表(2026年4月2日)",
             "label_en": "SoFi press release (Apr 2, 2026)",
@@ -193,8 +193,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SoFi Big Business Bankingの最初の参加企業としてGalaxyが挙げられている(2026年4月2日、SoFi発表)",
-          "text_en": "Galaxy is named as an initial participant in SoFi Big Business Banking (April 2, 2026, SoFi release)",
+          "text": "SoFi Big Business Bankingの最初の参加企業としてGalaxyが挙げられている",
+          "text_en": "Galaxy is named as an initial participant in SoFi Big Business Banking",
           "source": {
             "label": "SoFi の発表(2026年4月2日)",
             "label_en": "SoFi press release (Apr 2, 2026)",
@@ -218,8 +218,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Templum経由で、SoFiの会員がStepStone Private Markets Fundを利用できるようにした(2024年12月4日、SoFi発表)",
-          "text_en": "SoFi gave members access to the StepStone Private Markets Fund through its relationship with Templum (December 4, 2024, SoFi release)",
+          "text": "Templum経由で、SoFiの会員がStepStone Private Markets Fundを利用できるようにした",
+          "text_en": "SoFi gave members access to the StepStone Private Markets Fund through its relationship with Templum",
           "source": {
             "label": "SoFi の発表(2024年12月4日)",
             "label_en": "SoFi press release (Dec 4, 2024)",
@@ -243,8 +243,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Goldman Sachs Bank USAが、SoFiの改定済み回転与信契約の管理代理人(2025年度、10-K)",
-          "text_en": "Goldman Sachs Bank USA is administrative agent under SoFi’s amended and restated revolving credit agreement (FY2025 10-K)",
+          "text": "Goldman Sachs Bank USAが、SoFiの改定済み回転与信契約の管理代理人",
+          "text_en": "Goldman Sachs Bank USA is administrative agent under SoFi’s amended and restated revolving credit agreement",
           "source": {
             "label": "SoFi 10-K(2025年度)",
             "label_en": "SoFi 10-K (FY2025)",
@@ -258,8 +258,8 @@
         },
         {
           "type": "tie",
-          "text": "SoFiの6.976億ドルの個人ローン証券化で、組成代理人・共同主幹事を務めた(2025年3月3日、SoFi発表)",
-          "text_en": "Goldman Sachs was structuring agent and joint lead bookrunner on SoFi’s $697.6M personal loan securitization (March 3, 2025, SoFi release)",
+          "text": "SoFiの6.976億ドルの個人ローン証券化で、組成代理人・共同主幹事を務めた",
+          "text_en": "Goldman Sachs was structuring agent and joint lead bookrunner on SoFi’s $697.6M personal loan securitization",
           "source": {
             "label": "SoFi の発表(2025年3月3日)",
             "label_en": "SoFi press release (Mar 3, 2025)",
@@ -283,8 +283,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SoFiの6.976億ドルの個人ローン証券化で、共同主幹事を務めた(2025年3月3日、SoFi発表)",
-          "text_en": "Bank of America was joint lead bookrunner on SoFi’s $697.6M personal loan securitization (March 3, 2025, SoFi release)",
+          "text": "SoFiの6.976億ドルの個人ローン証券化で、共同主幹事を務めた",
+          "text_en": "Bank of America was joint lead bookrunner on SoFi’s $697.6M personal loan securitization",
           "source": {
             "label": "SoFi の発表(2025年3月3日)",
             "label_en": "SoFi press release (Mar 3, 2025)",

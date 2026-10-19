@@ -40,7 +40,7 @@
         {
           "type": "up",
           "text": "Nebiusが年次報告で、NVIDIAやOEMとの強い関係が最新GPUの提供を支えると記載",
-          "text_en": "Nebius says its strong relationships with NVIDIA and OEM partners support providing the latest GPUs (annual report)",
+          "text_en": "Nebius says its strong relationships with NVIDIA and OEM partners support providing the latest GPUs",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -52,8 +52,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAがNebiusに20億ドルを出資する戦略的提携(2026年3月11日、6-K)",
-          "text_en": "NVIDIA and Nebius announced a strategic partnership under which NVIDIA will invest $2B in Nebius (March 11, 2026, 6-K)",
+          "text": "NVIDIAがNebiusに20億ドルを出資する戦略的提携",
+          "text_en": "NVIDIA and Nebius announced a strategic partnership under which NVIDIA will invest $2B in Nebius",
           "source": {
             "label": "Nebius 6-K Ex. 99.1(NVIDIA/Nebius joint の発表, 2026-03-11)",
             "label_en": "Nebius 6-K Ex. 99.1 (NVIDIA/Nebius joint press release, 2026-03-11)",
@@ -77,8 +77,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AIインフラ向けに、送電網を介さない電源としてBloomの燃料電池を導入する契約(2026年5月20日)",
-          "text_en": "Agreement to deploy Bloom fuel cells for behind-the-meter power for Nebius’s AI infrastructure (May 20, 2026)",
+          "text": "AIインフラ向けに、送電網を介さない電源としてBloomの燃料電池を導入する契約",
+          "text_en": "Agreement to deploy Bloom fuel cells for behind-the-meter power for Nebius’s AI infrastructure",
           "source": {
             "label": "Nebius ニュースルーム の発表(2026-05-20)",
             "label_en": "Nebius newsroom press release (2026-05-20)",
@@ -102,8 +102,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "ニュージャージー州Vinelandのデータセンターで、専用GPU基盤を5年間Microsoftに提供(年次報告)",
-          "text_en": "Provides Microsoft dedicated GPU capacity at its Vineland, New Jersey data center over five years (annual report)",
+          "text": "ニュージャージー州Vinelandのデータセンターで、専用GPU基盤を5年間Microsoftに提供",
+          "text_en": "Provides Microsoft dedicated GPU capacity at its Vineland, New Jersey data center over five years",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -127,8 +127,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "専用GPU容量の発注に関するインフラサービス契約をMetaと締結(2026年3月、年次報告)",
-          "text_en": "Infrastructure Services Agreement with Meta for dedicated GPU capacity orders (March 2026, annual report)",
+          "text": "専用GPU容量の発注に関するインフラサービス契約をMetaと締結",
+          "text_en": "Infrastructure Services Agreement with Meta for dedicated GPU capacity orders",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -152,8 +152,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "PalantirがNebiusを推奨するソブリンAI基盤パートナーに指定(2026年9月8日、6-K)",
-          "text_en": "Palantir named Nebius its preferred sovereign AI infrastructure partner (September 8, 2026, 6-K)",
+          "text": "PalantirがNebiusを推奨するソブリンAI基盤パートナーに指定",
+          "text_en": "Palantir named Nebius its preferred sovereign AI infrastructure partner",
           "source": {
             "label": "Nebius 6-K Ex. 99.1(Palantir/Nebius joint の発表, 2026-09-08)",
             "label_en": "Nebius 6-K Ex. 99.1 (Palantir/Nebius joint press release, 2026-09-08)",
@@ -175,8 +175,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "UberとNebiusが、自動運転子会社Avrideに最大3.75億ドルを共同出資(2025年10月22日、年次報告)",
-          "text_en": "Uber and Nebius jointly invested up to $375M in Nebius’s autonomous-driving subsidiary Avride (October 22, 2025, annual report)",
+          "text": "UberとNebiusが、自動運転子会社Avrideに最大3.75億ドルを共同出資",
+          "text_en": "Uber and Nebius jointly invested up to $375M in Nebius’s autonomous-driving subsidiary Avride",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -338,8 +338,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "子会社Avrideが、自動運転プラットフォームの共同開発でHyundaiと戦略的提携(2025年3月、年次報告)",
-          "text_en": "Nebius subsidiary Avride entered a strategic partnership with Hyundai for joint development of an autonomous driving platform (March 2025, annual report)",
+          "text": "子会社Avrideが、自動運転プラットフォームの共同開発でHyundaiと戦略的提携",
+          "text_en": "Nebius subsidiary Avride entered a strategic partnership with Hyundai for joint development of an autonomous driving platform",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -363,8 +363,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "傘下の三菱UFJ銀行ロンドン支店が、Nebiusの約7.75億ドルの担保付きターム・ローンの主幹事・引受・ブックランナーを務める(2026年7月、6-K)",
-          "text_en": "MUFG Bank, London Branch acts as mandated lead arranger, underwriter and sole bookrunner on Nebius’s roughly $775M senior secured term loan (July 2026, 6-K)",
+          "text": "傘下の三菱UFJ銀行ロンドン支店が、Nebiusの約7.75億ドルの担保付きターム・ローンの主幹事・引受・ブックランナーを務める",
+          "text_en": "MUFG Bank, London Branch acts as mandated lead arranger, underwriter and sole bookrunner on Nebius’s roughly $775M senior secured term loan",
           "source": {
             "label": "Nebius 6-K(2026-07-17)",
             "label_en": "Nebius 6-K (2026-07-17)",

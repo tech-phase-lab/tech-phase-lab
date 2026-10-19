@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Salesforceは未上場のAnthropic PBCへの出資を保有し、その帳簿価額は2026年7月31日時点で戦略投資ポートフォリオの約45%(2026年8月27日、10-Q)",
-          "text_en": "Salesforce holds a privately held investment in Anthropic PBC, carrying value about 45 percent of its strategic investments portfolio at July 31, 2026 (August 27, 2026, 10-Q)",
+          "text": "Salesforceは未上場のAnthropic PBCへの出資を保有し、その帳簿価額は2026年7月31日時点で戦略投資ポートフォリオの約45%",
+          "text_en": "Salesforce holds a privately held investment in Anthropic PBC, carrying value about 45 percent of its strategic investments portfolio at July 31, 2026",
           "source": {
             "label": "Salesforce 10-Q(Q2 2027年度)",
             "label_en": "Salesforce 10-Q (Q2 FY2027)",
@@ -70,8 +70,8 @@
         },
         {
           "type": "down",
-          "text": "Anthropic自身がSlackなどを使うSalesforceの顧客でもある(2025年10月14日、Salesforce発表)",
-          "text_en": "Anthropic is itself a Salesforce customer, using Slack and Agentforce Sales (October 14, 2025, Salesforce press release)",
+          "text": "Anthropic自身がSlackなどを使うSalesforceの顧客でもある",
+          "text_en": "Anthropic is itself a Salesforce customer, using Slack and Agentforce Sales",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (Anthropic)",
@@ -85,8 +85,8 @@
         },
         {
           "type": "tie",
-          "text": "SalesforceがClaude Codeを全世界のエンジニアリング組織に展開(2025年10月14日、Salesforce発表)",
-          "text_en": "Salesforce is deploying Claude Code across its global engineering organization (October 14, 2025, Salesforce press release)",
+          "text": "SalesforceがClaude Codeを全世界のエンジニアリング組織に展開",
+          "text_en": "Salesforce is deploying Claude Code across its global engineering organization",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (Anthropic)",
@@ -110,8 +110,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OpenAIとの戦略的提携を拡大し、OpenAIのモデルをAgentforce 360で利用でき、SalesforceのアプリをChatGPTから使えるようにした(2025年10月14日、Salesforce発表)",
-          "text_en": "Announced an expanded strategic partnership with OpenAI; OpenAI models are available in Agentforce 360 and Salesforce apps are accessible in ChatGPT (October 14, 2025)",
+          "text": "OpenAIとの戦略的提携を拡大し、OpenAIのモデルをAgentforce 360で利用でき、SalesforceのアプリをChatGPTから使えるようにした",
+          "text_en": "Announced an expanded strategic partnership with OpenAI; OpenAI models are available in Agentforce 360 and Salesforce apps are accessible in ChatGPT",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (OpenAI)",
@@ -125,8 +125,8 @@
         },
         {
           "type": "tie",
-          "text": "OpenAIをAgentforce 360の推奨モデルの1つとし、Atlas Reasoning EngineとPrompt Builderの既定LLMに選べる(2025年10月14日、Salesforce発表)",
-          "text_en": "OpenAI is featured as a preferred model in Agentforce 360 for the Atlas Reasoning Engine and Prompt Builder (October 14, 2025)",
+          "text": "OpenAIをAgentforce 360の推奨モデルの1つとし、Atlas Reasoning EngineとPrompt Builderの既定LLMに選べる",
+          "text_en": "OpenAI is featured as a preferred model in Agentforce 360 for the Atlas Reasoning Engine and Prompt Builder",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (OpenAI)",
@@ -140,8 +140,8 @@
         },
         {
           "type": "tie",
-          "text": "OpenAIと新たなMissionforce提携を発表し、モデルを安全な政府向け環境に提供(2026年9月16日、Salesforce発表)",
-          "text_en": "Announced a new Missionforce partnership with OpenAI to bring its models to secure government environments (September 16, 2026)",
+          "text": "OpenAIと新たなMissionforce提携を発表し、モデルを安全な政府向け環境に提供",
+          "text_en": "Announced a new Missionforce partnership with OpenAI to bring its models to secure government environments",
           "source": {
             "label": "Salesforce ニュースルーム",
             "label_en": "Salesforce newsroom (Missionforce)",
@@ -165,8 +165,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AnthropicのAmazon Bedrock上のモデルをSalesforceのバーチャルプライベートクラウド内でAgentforce 360 Platformに提供(2025年10月14日、Salesforce発表)",
-          "text_en": "Anthropic’s Amazon Bedrock-hosted models are offered within the Agentforce 360 Platform, contained in the Salesforce virtual private cloud (October 14, 2025)",
+          "text": "AnthropicのAmazon Bedrock上のモデルをSalesforceのバーチャルプライベートクラウド内でAgentforce 360 Platformに提供",
+          "text_en": "Anthropic’s Amazon Bedrock-hosted models are offered within the Agentforce 360 Platform, contained in the Salesforce virtual private cloud",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (Anthropic)",
@@ -180,8 +180,8 @@
         },
         {
           "type": "tie",
-          "text": "AWSとの戦略的提携を拡大。全Salesforceクラウドを23か国のAWS Marketplaceで提供し、Data CloudはAmazon RedshiftおよびBedrockと連携(2024年11月)",
-          "text_en": "Expanded strategic partnership with AWS; all Salesforce clouds are available on AWS Marketplace in 23 countries and Data Cloud integrates with Amazon Redshift and Bedrock (November 2024)",
+          "text": "AWSとの戦略的提携を拡大。全Salesforceクラウドを23か国のAWS Marketplaceで提供し、Data CloudはAmazon RedshiftおよびBedrockと連携",
+          "text_en": "Expanded strategic partnership with AWS; all Salesforce clouds are available on AWS Marketplace in 23 countries and Data Cloud integrates with Amazon Redshift and Bedrock",
           "source": {
             "label": "Salesforce ニュースルーム",
             "label_en": "Salesforce newsroom (AWS)",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Googleと戦略的提携を拡大し、GeminiモデルをAgentforce 360 Platformに提供しGoogle Workspaceと連携(2025年10月16日、Google Cloud発表)",
-          "text_en": "Expanded the strategic partnership with Google, bringing Gemini models to the Agentforce 360 Platform and integrating with Google Workspace (October 16, 2025, Google Cloud press release)",
+          "text": "Googleと戦略的提携を拡大し、GeminiモデルをAgentforce 360 Platformに提供しGoogle Workspaceと連携",
+          "text_en": "Expanded the strategic partnership with Google, bringing Gemini models to the Agentforce 360 Platform and integrating with Google Workspace",
           "source": {
             "label": "Google Cloud の発表",
             "label_en": "Google Cloud press release (Salesforce)",
@@ -228,8 +228,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIA Nemotron 3 NanoをAgentforceで利用でき、NVIDIAのAI基盤を使った参照アーキテクチャを共同開発(2026年3月16日、Salesforce発表)",
-          "text_en": "NVIDIA Nemotron 3 Nano is available within Agentforce; the companies are developing reference architectures using NVIDIA AI infrastructure (March 16, 2026)",
+          "text": "NVIDIA Nemotron 3 NanoをAgentforceで利用でき、NVIDIAのAI基盤を使った参照アーキテクチャを共同開発",
+          "text_en": "NVIDIA Nemotron 3 Nano is available within Agentforce; the companies are developing reference architectures using NVIDIA AI infrastructure",
           "source": {
             "label": "Salesforce ニュースルーム",
             "label_en": "Salesforce newsroom (NVIDIA)",
@@ -241,8 +241,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAのAIプラットフォームとSalesforce Platform・Agentforceを組み合わせる戦略的協業を発表(2024年9月17日、Salesforce発表)",
-          "text_en": "Announced a strategic collaboration combining the NVIDIA AI platform with the Salesforce Platform and Agentforce (September 17, 2024)",
+          "text": "NVIDIAのAIプラットフォームとSalesforce Platform・Agentforceを組み合わせる戦略的協業を発表",
+          "text_en": "Announced a strategic collaboration combining the NVIDIA AI platform with the Salesforce Platform and Agentforce",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (NVIDIA)",
@@ -266,8 +266,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "CrowdStrikeがAgentforceでAmazon Bedrock経由のClaudeを利用(2025年10月14日、Salesforce発表)",
-          "text_en": "CrowdStrike uses Claude via Amazon Bedrock in Agentforce (October 14, 2025, Salesforce press release)",
+          "text": "CrowdStrikeがAgentforceでAmazon Bedrock経由のClaudeを利用",
+          "text_en": "CrowdStrike uses Claude via Amazon Bedrock in Agentforce",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (Anthropic)",
@@ -291,8 +291,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "RBC Wealth ManagementがAgentforceでAmazon Bedrock経由のClaudeをアドバイザーの面談準備に利用(2025年10月14日、Salesforce発表)",
-          "text_en": "RBC Wealth Management uses Claude via Amazon Bedrock in Agentforce for advisor meeting prep (October 14, 2025, Salesforce press release)",
+          "text": "RBC Wealth ManagementがAgentforceでAmazon Bedrock経由のClaudeをアドバイザーの面談準備に利用",
+          "text_en": "RBC Wealth Management uses Claude via Amazon Bedrock in Agentforce for advisor meeting prep",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (Anthropic)",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Five9が年次報告で、パートナー網に含まれる主要CRMソフト企業の1社としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "Five9’s FY2025 10-K lists Salesforce among leading CRM software vendors in its partner ecosystem (February 2026)",
+          "text": "Five9が年次報告で、パートナー網に含まれる主要CRMソフト企業の1社としてSalesforceを挙げている",
+          "text_en": "Five9’s FY2025 10-K lists Salesforce among leading CRM software vendors in its partner ecosystem",
           "source": {
             "label": "Five9 10-K(2025年度)",
             "label_en": "Five9 10-K (FY2025)",
@@ -341,8 +341,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "DocuSignが年次報告で、Salesforceとの提携(製品連携と共同販売)を挙げている(2026年3月、10-K)",
-          "text_en": "DocuSign’s FY2026 10-K cites a partnership with Salesforce, with product integrations and co-selling (March 2026)",
+          "text": "DocuSignが年次報告で、Salesforceとの提携(製品連携と共同販売)を挙げている",
+          "text_en": "DocuSign’s FY2026 10-K cites a partnership with Salesforce, with product integrations and co-selling",
           "source": {
             "label": "DocuSign 10-K(2026年度)",
             "label_en": "DocuSign 10-K (FY2026)",
@@ -366,8 +366,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxが年次報告で、連携しているパートナーの1社としてSalesforceを挙げている(2026年3月、10-K)",
-          "text_en": "Box’s FY2026 10-K lists Salesforce among partners it offers integrations with (March 2026)",
+          "text": "Boxが年次報告で、連携しているパートナーの1社としてSalesforceを挙げている",
+          "text_en": "Box’s FY2026 10-K lists Salesforce among partners it offers integrations with",
           "source": {
             "label": "Box 10-K(2026年度)",
             "label_en": "Box 10-K (FY2026)",
@@ -391,8 +391,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Zoomが年次報告で、Zoom Meetingsが連携するツールの提供元の1社としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "Zoom’s FY2026 10-K says Zoom Meetings integrates with tools created by companies such as Salesforce (February 2026)",
+          "text": "Zoomが年次報告で、Zoom Meetingsが連携するツールの提供元の1社としてSalesforceを挙げている",
+          "text_en": "Zoom’s FY2026 10-K says Zoom Meetings integrates with tools created by companies such as Salesforce",
           "source": {
             "label": "Zoom 10-K(2026年度)",
             "label_en": "Zoom 10-K (FY2026)",
@@ -416,8 +416,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Oktaが年次報告で、連携するアプリ・基盤提供企業の1社としてSalesforceを挙げている(2026年3月、10-K)",
-          "text_en": "Okta’s FY2026 10-K lists Salesforce among the applications and infrastructure providers it integrates with (March 2026)",
+          "text": "Oktaが年次報告で、連携するアプリ・基盤提供企業の1社としてSalesforceを挙げている",
+          "text_en": "Okta’s FY2026 10-K lists Salesforce among the applications and infrastructure providers it integrates with",
           "source": {
             "label": "Okta 10-K(2026年度)",
             "label_en": "Okta 10-K (FY2026)",
@@ -441,8 +441,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianが年次報告で、自社アプリの相互運用先としてSalesforceを挙げている(2026年8月、10-K)",
-          "text_en": "Atlassian’s FY2026 10-K lists Salesforce among platforms its apps are kept interoperable with (August 2026)",
+          "text": "Atlassianが年次報告で、自社アプリの相互運用先としてSalesforceを挙げている",
+          "text_en": "Atlassian’s FY2026 10-K lists Salesforce among platforms its apps are kept interoperable with",
           "source": {
             "label": "Atlassian 10-K(2026年度)",
             "label_en": "Atlassian 10-K (FY2026)",
@@ -466,8 +466,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Cognizantが年次報告で、技術パートナーとしてSalesforceと緊密に連携していると述べている(2026年2月、10-K)",
-          "text_en": "Cognizant’s FY2025 10-K says it works closely with Salesforce as a technology partner (February 2026)",
+          "text": "Cognizantが年次報告で、技術パートナーとしてSalesforceと緊密に連携していると述べている",
+          "text_en": "Cognizant’s FY2025 10-K says it works closely with Salesforce as a technology partner",
           "source": {
             "label": "Cognizant 10-K(2025年度)",
             "label_en": "Cognizant 10-K (FY2025)",
@@ -491,8 +491,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Infosysが20年以上にわたるSalesforceの戦略的パートナーだと述べている(2026年6月、20-F)",
-          "text_en": "Infosys describes itself as a strategic Salesforce partner for over two decades (June 2026, 20-F)",
+          "text": "Infosysが20年以上にわたるSalesforceの戦略的パートナーだと述べている",
+          "text_en": "Infosys describes itself as a strategic Salesforce partner for over two decades",
           "source": {
             "label": "Infosys 20-F(2026年度)",
             "label_en": "Infosys 20-F (FY2026)",
@@ -516,8 +516,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Wiproが年次報告で、戦略的な技術提携先の1社としてSalesforceを挙げている(2026年6月、20-F)",
-          "text_en": "Wipro’s FY2026 20-F lists Salesforce among its strategic technology partnerships (June 2026)",
+          "text": "Wiproが年次報告で、戦略的な技術提携先の1社としてSalesforceを挙げている",
+          "text_en": "Wipro’s FY2026 20-F lists Salesforce among its strategic technology partnerships",
           "source": {
             "label": "Wipro 20-F(2026年度)",
             "label_en": "Wipro 20-F (FY2026)",
@@ -541,8 +541,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "TTEC Digitalが、主要なCXソフト企業の1社としてSalesforceと戦略的提携を結んでいる(2026年2月、10-K)",
-          "text_en": "TTEC Digital has strategic partnerships with leading CX software vendors including Salesforce (February 2026, 10-K)",
+          "text": "TTEC Digitalが、主要なCXソフト企業の1社としてSalesforceと戦略的提携を結んでいる",
+          "text_en": "TTEC Digital has strategic partnerships with leading CX software vendors including Salesforce",
           "source": {
             "label": "TTEC 10-K(2025年度)",
             "label_en": "TTEC 10-K (FY2025)",
@@ -566,8 +566,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IBMが年次報告で、ソフトウェア部門の主な競合の1社としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "IBM’s FY2025 10-K names Salesforce among the principal competitors in its software segment (February 2026)",
+          "text": "IBMが年次報告で、ソフトウェア部門の主な競合の1社としてSalesforceを挙げている",
+          "text_en": "IBM’s FY2025 10-K names Salesforce among the principal competitors in its software segment",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -581,8 +581,8 @@
         },
         {
           "type": "tie",
-          "text": "IBMが年次報告で、戦略的パートナーの1社としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "IBM’s FY2025 10-K lists Salesforce among its strategic partners (February 2026)",
+          "text": "IBMが年次報告で、戦略的パートナーの1社としてSalesforceを挙げている",
+          "text_en": "IBM’s FY2025 10-K lists Salesforce among its strategic partners",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -606,8 +606,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Freshworksが年次報告で、顧客体験製品の競合としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "Freshworks’s FY2025 10-K names Salesforce as a competitor in customer experience products (February 2026)",
+          "text": "Freshworksが年次報告で、顧客体験製品の競合としてSalesforceを挙げている",
+          "text_en": "Freshworks’s FY2025 10-K names Salesforce as a competitor in customer experience products",
           "source": {
             "label": "Freshworks 10-K(2025年度)",
             "label_en": "Freshworks 10-K (FY2025)",
@@ -629,8 +629,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Brazeが年次報告で、マーケティングソフト競合の1社としてSalesforceを挙げている(2026年3月、10-K)",
-          "text_en": "Braze’s FY2026 10-K names Salesforce among marketing software competitors (March 2026)",
+          "text": "Brazeが年次報告で、マーケティングソフト競合の1社としてSalesforceを挙げている",
+          "text_en": "Braze’s FY2026 10-K names Salesforce among marketing software competitors",
           "source": {
             "label": "Braze 10-K(2026年度)",
             "label_en": "Braze 10-K (FY2026)",
@@ -652,8 +652,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Klaviyoが年次報告で、主な競合の1社としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "Klaviyo’s FY2025 10-K names Salesforce among its main competitors (February 2026)",
+          "text": "Klaviyoが年次報告で、主な競合の1社としてSalesforceを挙げている",
+          "text_en": "Klaviyo’s FY2025 10-K names Salesforce among its main competitors",
           "source": {
             "label": "Klaviyo 10-K(2025年度)",
             "label_en": "Klaviyo 10-K (FY2025)",
@@ -675,8 +675,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pegasystemsが年次報告で、競合の1社としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "Pegasystems’ FY2025 10-K names Salesforce among its competitors (February 2026)",
+          "text": "Pegasystemsが年次報告で、競合の1社としてSalesforceを挙げている",
+          "text_en": "Pegasystems’ FY2025 10-K names Salesforce among its competitors",
           "source": {
             "label": "Pegasystems 10-K(2025年度)",
             "label_en": "Pegasystems 10-K (FY2025)",
@@ -698,8 +698,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、競合の1社としてSalesforceを挙げている(2026年6月、10-K)",
-          "text_en": "Oracle’s FY2026 10-K names Salesforce among its competitors (June 2026)",
+          "text": "Oracleが年次報告で、競合の1社としてSalesforceを挙げている",
+          "text_en": "Oracle’s FY2026 10-K names Salesforce among its competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -721,8 +721,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSalesforceを挙げている(2026年1月、10-K)",
-          "text_en": "ServiceNow’s FY2025 10-K names Salesforce among enterprise application software competitors (January 2026)",
+          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSalesforceを挙げている",
+          "text_en": "ServiceNow’s FY2025 10-K names Salesforce among enterprise application software competitors",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -744,8 +744,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Guidewireが年次報告で、競合する汎用ソフト企業の1社としてSalesforceを挙げている(2026年9月、10-K)",
-          "text_en": "Guidewire’s FY2026 10-K names Salesforce among horizontal software vendors it competes with (September 2026)",
+          "text": "Guidewireが年次報告で、競合する汎用ソフト企業の1社としてSalesforceを挙げている",
+          "text_en": "Guidewire’s FY2026 10-K names Salesforce among horizontal software vendors it competes with",
           "source": {
             "label": "Guidewire 10-K(2026年度)",
             "label_en": "Guidewire 10-K (FY2026)",
@@ -767,8 +767,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ExlServiceが年次報告で、競合する純粋なAIソリューション・プラットフォーム企業の1社としてSalesforceを挙げている(2026年2月、10-K)",
-          "text_en": "EXL’s FY2025 10-K names Salesforce among pure-play AI solutions/platform vendors it competes against (February 2026)",
+          "text": "ExlServiceが年次報告で、競合する純粋なAIソリューション・プラットフォーム企業の1社としてSalesforceを挙げている",
+          "text_en": "EXL’s FY2025 10-K names Salesforce among pure-play AI solutions/platform vendors it competes against",
           "source": {
             "label": "ExlService 10-K(2025年度)",
             "label_en": "ExlService 10-K (FY2025)",

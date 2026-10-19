@@ -157,8 +157,8 @@
         },
         {
           "type": "tie",
-          "text": "MacrohardのAI開発とTerafab構想を共同で推進(SpaceXの目論見書)",
-          "text_en": "Jointly pursuing the Macrohard AI effort and the Terafab plan (SpaceX prospectus)",
+          "text": "MacrohardのAI開発とTerafab構想を共同で推進",
+          "text_en": "Jointly pursuing the Macrohard AI effort and the Terafab plan",
           "source": {
             "label": "SpaceX 目論見書(2026年6月5日)",
             "label_en": "SpaceX prospectus (June 5, 2026)",
@@ -249,8 +249,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Ford車がTesla Superchargerを使えると発表(2024年春から)",
-          "text_en": "Ford EV customers gain Tesla Supercharger access (from spring 2024)",
+          "text": "Ford車がTesla Superchargerを使えると発表",
+          "text_en": "Ford EV customers gain Tesla Supercharger access",
           "source": {
             "label": "Ford の発表(2024年1月)",
             "label_en": "Ford press release (Jan 2024)",
@@ -274,8 +274,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rivian車がTesla Superchargerを利用可能に(2024年3月)",
-          "text_en": "Rivian owners can use the Tesla Supercharger network (March 2024)",
+          "text": "Rivian車がTesla Superchargerを利用可能に",
+          "text_en": "Rivian owners can use the Tesla Supercharger network",
           "source": {
             "label": "Rivian Stories(2024年3月)",
             "label_en": "Rivian Stories (Mar 2024)",
@@ -299,8 +299,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "北米向けEVで2025年からNACS採用でTeslaと合意(2023年9月発表)",
-          "text_en": "Agreed with Tesla to adopt NACS on North American EVs from 2025 (announced September 2023)",
+          "text": "北米向けEVで2025年からNACS採用でTeslaと合意",
+          "text_en": "Agreed with Tesla to adopt NACS on North American EVs from 2025",
           "source": {
             "label": "Honda の発表(2023年9月)",
             "label_en": "Honda press release (Sep 2023)",
@@ -324,8 +324,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2025年からNACS採用でTeslaと合意(2023年7月発表)",
-          "text_en": "Agreed with Tesla to adopt NACS from 2025 (announced July 2023)",
+          "text": "2025年からNACS採用でTeslaと合意",
+          "text_en": "Agreed with Tesla to adopt NACS from 2025",
           "source": {
             "label": "Nissan USA の発表(2023年7月)",
             "label_en": "Nissan USA press release (Jul 2023)",
@@ -349,8 +349,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "北米向けのバッテリーEVで2025年からNACS採用でTeslaと合意(2023年10月発表)",
-          "text_en": "Agreed with Tesla to adopt NACS on its battery EVs from 2025 (announced October 2023)",
+          "text": "北米向けのバッテリーEVで2025年からNACS採用でTeslaと合意",
+          "text_en": "Agreed with Tesla to adopt NACS on its battery EVs from 2025",
           "source": {
             "label": "Toyota USA ニュースルーム(2023年10月)",
             "label_en": "Toyota USA Newsroom (Oct 2023)",
@@ -374,8 +374,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Lucid車が2025年1月31日からTeslaの充電網を利用可能(Lucidの年次報告)",
-          "text_en": "Lucid customers gained access to Tesla’s Supercharger network on January 31, 2025 (Lucid annual report)",
+          "text": "Lucid車が2025年1月31日からTeslaの充電網を利用可能",
+          "text_en": "Lucid customers gained access to Tesla’s Supercharger network on January 31, 2025",
           "source": {
             "label": "Lucid 10-K(2025年度)",
             "label_en": "Lucid 10-K FY2025",
@@ -471,8 +471,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Li Autoが年次報告で、20万人民元超の中国NEV市場でTeslaが支配的な地位にあると記載(2025年度、20-F)",
-          "text_en": "Li Auto states Tesla holds a dominant position in China’s NEV segment priced above RMB 200,000 (FY2025, 20-F)",
+          "text": "Li Autoが年次報告で、20万人民元超の中国NEV市場でTeslaが支配的な地位にあると記載",
+          "text_en": "Li Auto states Tesla holds a dominant position in China’s NEV segment priced above RMB 200,000",
           "source": {
             "label": "Li Auto 20-F(2025年度)",
             "label_en": "Li Auto 20-F FY2025",
@@ -496,8 +496,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "XPengが年次報告で、中国に自社工場を建てた外国EVメーカーの例としてTeslaを挙げている(2025年度、20-F)",
-          "text_en": "XPeng cites Tesla as an example of a foreign EV competitor that built a wholly-owned factory in China (FY2025, 20-F)",
+          "text": "XPengが年次報告で、中国に自社工場を建てた外国EVメーカーの例としてTeslaを挙げている",
+          "text_en": "XPeng cites Tesla as an example of a foreign EV competitor that built a wholly-owned factory in China",
           "source": {
             "label": "XPeng 20-F(2025年度)",
             "label_en": "XPeng 20-F FY2025",
@@ -521,8 +521,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Faraday Futureが年次報告で、EVを提供する主要自動車メーカーの1社としてTeslaを挙げている(2025年度、10-K)",
-          "text_en": "Faraday Future lists Tesla among major automakers offering electric vehicles (FY2025, 10-K)",
+          "text": "Faraday Futureが年次報告で、EVを提供する主要自動車メーカーの1社としてTeslaを挙げている",
+          "text_en": "Faraday Future lists Tesla among major automakers offering electric vehicles",
           "source": {
             "label": "Faraday Future 10-K(2025年度)",
             "label_en": "Faraday Future 10-K FY2025",

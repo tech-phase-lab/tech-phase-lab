@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Intel 4・Intel 3・Intel 18AなどのEUV露光装置はASMLが唯一の供給元(年次報告)",
-          "text_en": "ASML is the sole supplier of the EUV lithography tools Intel deploys in Intel 4, Intel 3 and Intel 18A (annual report)",
+          "text": "Intel 4・Intel 3・Intel 18AなどのEUV露光装置はASMLが唯一の供給元",
+          "text_en": "ASML is the sole supplier of the EUV lithography tools Intel deploys in Intel 4, Intel 3 and Intel 18A",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -63,8 +63,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "一部の製品でTSMCの生産能力を利用(年次報告)",
-          "text_en": "Uses TSMC foundry capacity for various tiles or entire products (annual report)",
+          "text": "一部の製品でTSMCの生産能力を利用",
+          "text_en": "Uses TSMC foundry capacity for various tiles or entire products",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -101,8 +101,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "複数年の協業を発表。Google CloudはIntel Xeonなどを引き続き導入(2026年4月、Intel発表)",
-          "text_en": "Multiyear collaboration; Google Cloud continues to deploy Intel Xeon processors (April 2026, Intel announcement)",
+          "text": "複数年の協業を発表。Google CloudはIntel Xeonなどを引き続き導入",
+          "text_en": "Multiyear collaboration; Google Cloud continues to deploy Intel Xeon processors",
           "source": {
             "label": "Intel の発表(Intel and Google)",
             "label_en": "Intel press release (Intel and Google)",
@@ -124,8 +124,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AWS向けにIntel 18Aでカスタム AIファブリックチップ、Intel 3でカスタムXeon 6を製造する複数年契約(2024年9月)",
-          "text_en": "Multiyear deal to make a custom AI fabric chip on Intel 18A and a custom Xeon 6 on Intel 3 for AWS (September 2024)",
+          "text": "AWS向けにIntel 18Aでカスタム AIファブリックチップ、Intel 3でカスタムXeon 6を製造する複数年契約",
+          "text_en": "Multiyear deal to make a custom AI fabric chip on Intel 18A and a custom Xeon 6 on Intel 3 for AWS",
           "source": {
             "label": "Intel の発表(Intel and AWS)",
             "label_en": "Intel press release (Intel and AWS)",
@@ -147,8 +147,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "防衛産業向けの18Aプロセスの顧客として、Microsoftを迎えたとIntelが説明(2024年9月)",
-          "text_en": "Intel says it onboarded Microsoft among defense industrial base customers for its 18A process (September 2024)",
+          "text": "防衛産業向けの18Aプロセスの顧客として、Microsoftを迎えたとIntelが説明",
+          "text_en": "Intel says it onboarded Microsoft among defense industrial base customers for its 18A process",
           "source": {
             "label": "Intel の発表(Secure Enclave / RAMP-C)",
             "label_en": "Intel press release (Secure Enclave / RAMP-C)",
@@ -172,8 +172,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Fortinet Security Processor 6で、Intelの設計・パッケージングなどを使う戦略的協業(2026年7月)",
-          "text_en": "Strategic collaboration on Fortinet Security Processor 6 using Intel design and packaging (July 2026)",
+          "text": "Fortinet Security Processor 6で、Intelの設計・パッケージングなどを使う戦略的協業",
+          "text_en": "Strategic collaboration on Fortinet Security Processor 6 using Intel design and packaging",
           "source": {
             "label": "Intel の発表(Intel and Fortinet)",
             "label_en": "Intel press release (Intel and Fortinet)",
@@ -195,8 +195,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "x86のカスタム製品(クライアント向け・データセンター向け)を共同開発する戦略的提携(2025年9月)",
-          "text_en": "Strategic partnership to co-develop custom client and data center x86 products (September 2025)",
+          "text": "x86のカスタム製品(クライアント向け・データセンター向け)を共同開発する戦略的提携",
+          "text_en": "Strategic partnership to co-develop custom client and data center x86 products",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -208,8 +208,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAがIntel株2.15億株を1株23.28ドル・計50億ドルで購入(2025年12月26日完了)",
-          "text_en": "NVIDIA bought 215 million Intel shares at $23.28 for $5.0B (completed December 26, 2025)",
+          "text": "NVIDIAがIntel株2.15億株を1株23.28ドル・計50億ドルで購入",
+          "text_en": "NVIDIA bought 215 million Intel shares at $23.28 for $5.0B",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -244,8 +244,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Intel株8,700万株を1株23ドル・計20億ドルで購入(2025年9月26日完了)",
-          "text_en": "Bought 87 million Intel shares at $23.00 for $2.0B (completed September 26, 2025)",
+          "text": "Intel株8,700万株を1株23ドル・計20億ドルで購入",
+          "text_en": "Bought 87 million Intel shares at $23.00 for $2.0B",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -267,8 +267,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Intelが普通株の約79.5%・議決権の97.3%を保有(Mobileyeの年次報告)",
-          "text_en": "Intel beneficially owns about 79.5% of Mobileye’s common stock and 97.3% of voting power (Mobileye annual report)",
+          "text": "Intelが普通株の約79.5%・議決権の97.3%を保有",
+          "text_en": "Intel beneficially owns about 79.5% of Mobileye’s common stock and 97.3% of voting power",
           "source": {
             "label": "Mobileye 10-K(2025年度)",
             "label_en": "Mobileye 10-K (FY2025)",
@@ -290,8 +290,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AMDとx86エコシステムの諮問グループを設立(2024年10月)",
-          "text_en": "Formed an x86 ecosystem advisory group with AMD (October 2024)",
+          "text": "AMDとx86エコシステムの諮問グループを設立",
+          "text_en": "Formed an x86 ecosystem advisory group with AMD",
           "source": {
             "label": "Intel の発表(x86 Ecosystem Advisory Group)",
             "label_en": "Intel press release (x86 Ecosystem Advisory Group)",
@@ -326,8 +326,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "12nmプロセスの開発で戦略的に協業(2024年)",
-          "text_en": "Strategic collaboration to develop a 12nm process platform (2024)",
+          "text": "12nmプロセスの開発で戦略的に協業",
+          "text_en": "Strategic collaboration to develop a 12nm process platform",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -348,8 +348,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NAND事業をSK hynixへ売却(2回目の取引完了は2025年3月27日)",
-          "text_en": "Sold its NAND memory business to SK hynix (second closing on March 27, 2025)",
+          "text": "NAND事業をSK hynixへ売却",
+          "text_en": "Sold its NAND memory business to SK hynix",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",

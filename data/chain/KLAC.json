@@ -35,7 +35,7 @@
       "relations": [
         {
           "type": "down",
-          "text": "売上の10%超を占める顧客としてTSMCを記載(年次報告)",
+          "text": "売上の10%超を占める顧客としてTSMCを記載",
           "text_en": "Lists TSMC as a customer accounting for more than 10% of total revenues, primarily in semiconductor process control",
           "source": {
             "label": "KLA 10-K(2026年度)",
@@ -60,8 +60,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載(年次報告)",
-          "text_en": "Named among competitors (annual report)",
+          "text": "競合として実名で記載",
+          "text_en": "Named among competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -83,8 +83,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載(年次報告)",
-          "text_en": "Named among competitors (annual report)",
+          "text": "競合として実名で記載",
+          "text_en": "Named among competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -121,8 +121,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載(年次報告)",
-          "text_en": "Named among competitors (annual report)",
+          "text": "競合として実名で記載",
+          "text_en": "Named among competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -144,8 +144,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載(年次報告)",
-          "text_en": "Named among competitors (annual report)",
+          "text": "競合として実名で記載",
+          "text_en": "Named among competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",

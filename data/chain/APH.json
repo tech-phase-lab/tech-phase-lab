@@ -46,8 +46,8 @@
         },
         {
           "type": "tie",
-          "text": "2026年1月9日にCCS事業の買収を完了(2026年1月12日に発表)",
-          "text_en": "Completed the acquisition of CommScope’s CCS business on January 9, 2026 (announced January 12, 2026)",
+          "text": "2026年1月9日にCCS事業の買収を完了",
+          "text_en": "Completed the acquisition of CommScope’s CCS business on January 9, 2026",
           "source": {
             "label": "Amphenol 8-K Ex.99.1(2026年1月12日)",
             "label_en": "Amphenol 8-K Ex.99.1 (Jan 12, 2026)",
@@ -59,8 +59,8 @@
         },
         {
           "type": "tie",
-          "text": "2024年7月にCommScopeの移動体ネットワーク事業(旧Andrew)を21億ドルの現金で買収することで合意。2025年1月31日に完了(10-K)",
-          "text_en": "Agreed in July 2024 to acquire CommScope’s mobile networks businesses (OWN and DAS, the former Andrew portfolio) for $2.1B in cash; completed January 31, 2025 (10-K)",
+          "text": "2024年7月にCommScopeの移動体ネットワーク事業(旧Andrew)を21億ドルの現金で買収することで合意。2025年1月31日に完了",
+          "text_en": "Agreed in July 2024 to acquire CommScope’s mobile networks businesses (OWN and DAS, the former Andrew portfolio) for $2.1B in cash; completed January 31, 2025",
           "source": {
             "label": "Amphenol 8-K Ex.99.1(2024年7月18日)",
             "label_en": "Amphenol 8-K Ex.99.1 (Jul 18, 2024)",
@@ -105,7 +105,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてTE Connectivityを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてTE Connectivityを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists TE Connectivity among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -128,7 +128,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてAptivを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてAptivを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists Aptiv among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -151,7 +151,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてCorningを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてCorningを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists Corning among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -174,7 +174,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてSensata Technologiesを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてSensata Technologiesを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists Sensata Technologies among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -197,7 +197,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてBeldenを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてBeldenを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists Belden among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -220,7 +220,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてFoxconn Interconnect Technologyを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてFoxconn Interconnect Technologyを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists Foxconn Interconnect Technology among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -243,7 +243,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてHUBER+SUHNERを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてHUBER+SUHNERを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists HUBER+SUHNER among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -266,7 +266,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてLuxshare Precision Industryを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてLuxshare Precision Industryを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists Luxshare Precision Industry among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",
@@ -289,7 +289,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Amphenolが年次報告で、主な競合の1社としてAVIC Jonhon Optronic Technologyを挙げている(2025年度、10-K)",
+          "text": "Amphenolが年次報告で、主な競合の1社としてAVIC Jonhon Optronic Technologyを挙げている",
           "text_en": "Amphenol’s FY2025 10-K lists AVIC Jonhon Optronic Technology among its primary competitors",
           "source": {
             "label": "Amphenol 10-K(2025年度)",

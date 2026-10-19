@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "CredoはIC製造をすべてTSMCに委託し、2026年度はTSMCだけをウエハー製造に使った(2026年度、10-K)",
-          "text_en": "Credo outsources all IC manufacturing to TSMC, its exclusive wafer foundry in fiscal 2026 (FY2026 10-K)",
+          "text": "CredoはIC製造をすべてTSMCに委託し、2026年度はTSMCだけをウエハー製造に使った",
+          "text_en": "Credo outsources all IC manufacturing to TSMC, its exclusive wafer foundry in fiscal 2026",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -62,8 +62,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AmkorがCredoのIC製品のパッケージングを担当(2026年度、10-K)",
-          "text_en": "Amkor packages Credo’s IC products (FY2026 10-K)",
+          "text": "AmkorがCredoのIC製品のパッケージングを担当",
+          "text_en": "Amkor packages Credo’s IC products",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -85,8 +85,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "ASEがCredoのIC製品のパッケージングを担当(2026年度、10-K)",
-          "text_en": "ASE packages Credo’s IC products (FY2026 10-K)",
+          "text": "ASEがCredoのIC製品のパッケージングを担当",
+          "text_en": "ASE packages Credo’s IC products",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -110,8 +110,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "KYECがCredoのIC製品のテストを担当(2026年度、10-K)",
-          "text_en": "KYEC tests Credo’s IC products (FY2026 10-K)",
+          "text": "KYECがCredoのIC製品のテストを担当",
+          "text_en": "KYEC tests Credo’s IC products",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "SigurdがCredoのIC製品のテストを担当(2026年度、10-K)",
-          "text_en": "Sigurd tests Credo’s IC products (FY2026 10-K)",
+          "text": "SigurdがCredoのIC製品のテストを担当",
+          "text_en": "Sigurd tests Credo’s IC products",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -156,8 +156,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "BizLinkが長期供給契約のもとでCredoのAEC製品を製造(2026年度、10-K)",
-          "text_en": "BizLink manufactures Credo’s AEC products under a long-term supply agreement (FY2026 10-K)",
+          "text": "BizLinkが長期供給契約のもとでCredoのAEC製品を製造",
+          "text_en": "BizLink manufactures Credo’s AEC products under a long-term supply agreement",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -169,8 +169,8 @@
         },
         {
           "type": "up",
-          "text": "製造会社との長期供給契約は、一部のAEC製品に関するBizLinkとの契約だけ(2026年度、10-K)",
-          "text_en": "Credo’s only long-term supply contract with a manufacturer is its agreement with BizLink for certain AEC products (FY2026 10-K)",
+          "text": "製造会社との長期供給契約は、一部のAEC製品に関するBizLinkとの契約だけ",
+          "text_en": "Credo’s only long-term supply contract with a manufacturer is its agreement with BizLink for certain AEC products",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -192,8 +192,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Amazon系の会社にワラントを発行。Amazonによる購入(最大2.01億ドル)に連動し、ワラントの株式はすべて行使済み(2026年度、10-K)",
-          "text_en": "Issued a warrant to an Amazon entity tied to Amazon’s purchases from Credo (up to $201.0 million); all warrant shares have been exercised (FY2026 10-K)",
+          "text": "Amazon系の会社にワラントを発行。Amazonによる購入(最大2.01億ドル)に連動し、ワラントの株式はすべて行使済み",
+          "text_en": "Issued a warrant to an Amazon entity tied to Amazon’s purchases from Credo (up to $201.0 million); all warrant shares have been exercised",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -217,8 +217,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Microsoftと、信頼性の高いデュアルToR構成向けのスイッチケーブルを開発し、実装をオープンソース化(2026年度、10-K)",
-          "text_en": "Co-developed a switch cable and open-sourced the implementation with Microsoft for a dual-ToR network architecture (FY2026 10-K)",
+          "text": "Microsoftと、信頼性の高いデュアルToR構成向けのスイッチケーブルを開発し、実装をオープンソース化",
+          "text_en": "Co-developed a switch cable and open-sourced the implementation with Microsoft for a dual-ToR network architecture",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -230,8 +230,8 @@
         },
         {
           "type": "tie",
-          "text": "HiWire Switch AECとそのオープンソース実装でMicrosoftと提携(2025年度、10-K)",
-          "text_en": "Partners with Microsoft on the HiWire Switch AEC and open-source implementation (FY2025 10-K)",
+          "text": "HiWire Switch AECとそのオープンソース実装でMicrosoftと提携",
+          "text_en": "Partners with Microsoft on the HiWire Switch AEC and open-source implementation",
           "source": {
             "label": "Credo 10-K(2025年度)",
             "label_en": "Credo 10-K (FY2025)",
@@ -253,8 +253,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ZeroFlap Opticsの開発でOracleと提携(2026年度、10-K)",
-          "text_en": "Partnered with Oracle to develop ZeroFlap Optics (FY2026 10-K)",
+          "text": "ZeroFlap Opticsの開発でOracleと提携",
+          "text_en": "Partnered with Oracle to develop ZeroFlap Optics",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -276,7 +276,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合の1社としてBroadcomを挙げている(2026年度、10-K)",
+          "text": "Credoが年次報告で、主な競合の1社としてBroadcomを挙げている",
           "text_en": "Credo’s FY2026 10-K names Broadcom as a principal competitor",
           "source": {
             "label": "Credo 10-K(2026年度)",
@@ -301,7 +301,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合の1社としてMarvellを挙げている(2026年度、10-K)",
+          "text": "Credoが年次報告で、主な競合の1社としてMarvellを挙げている",
           "text_en": "Credo’s FY2026 10-K names Marvell as a principal competitor",
           "source": {
             "label": "Credo 10-K(2026年度)",
@@ -314,7 +314,7 @@
         },
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接の競合の1社としてCredoを挙げている(2026年度、10-K)",
+          "text": "Marvellが年次報告で、直接の競合の1社としてCredoを挙げている",
           "text_en": "Marvell’s FY2026 10-K names Credo among its direct competitors",
           "source": {
             "label": "Marvell 10-K(2026年度)",
@@ -337,7 +337,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合の1社としてAstera Labsを挙げている(2026年度、10-K)",
+          "text": "Credoが年次報告で、主な競合の1社としてAstera Labsを挙げている",
           "text_en": "Credo’s FY2026 10-K names Astera Labs as a principal competitor",
           "source": {
             "label": "Credo 10-K(2026年度)",
@@ -350,7 +350,7 @@
         },
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてCredoを挙げている(2025年度、10-K)",
+          "text": "Astera Labsが年次報告で、主な競合の1社としてCredoを挙げている",
           "text_en": "Astera Labs’ FY2025 10-K names Credo as a principal competitor",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
@@ -375,7 +375,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MACOMが年次報告で、重要な競合の1社としてCredoを挙げている(2025年度、10-K)",
+          "text": "MACOMが年次報告で、重要な競合の1社としてCredoを挙げている",
           "text_en": "MACOM’s FY2025 10-K names Credo as a significant competitor",
           "source": {
             "label": "MACOM 10-K(2025年度)",
@@ -398,7 +398,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cienaが年次報告で、データセンター間接続で今後競合する追加の企業の1社としてCredoを挙げている(2025年度、10-K)",
+          "text": "Cienaが年次報告で、データセンター間接続で今後競合する追加の企業の1社としてCredoを挙げている",
           "text_en": "Ciena’s FY2025 10-K names Credo among additional competitors it will face in data-center interconnects",
           "source": {
             "label": "Ciena 10-K(2025年度)",
@@ -423,7 +423,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearが年次報告で、主なマーチャント半導体の競合の1社としてCredo Semiconductorを挙げている(2025年度、10-K)",
+          "text": "MaxLinearが年次報告で、主なマーチャント半導体の競合の1社としてCredo Semiconductorを挙げている",
           "text_en": "MaxLinear’s FY2025 10-K names Credo Semiconductor among its primary merchant semiconductor competitors",
           "source": {
             "label": "MaxLinear 10-K(2025年度)",

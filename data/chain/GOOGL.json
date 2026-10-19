@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Google向けにカスタムTPUを開発・供給する長期契約(2026年4月、Broadcomの8-K)",
-          "text_en": "Long Term Agreement for Broadcom to develop and supply custom TPUs for Google (April 2026, Broadcom 8-K)",
+          "text": "Google向けにカスタムTPUを開発・供給する長期契約",
+          "text_en": "Long Term Agreement for Broadcom to develop and supply custom TPUs for Google",
           "source": {
             "label": "Broadcom 8-K(Item 8.01)",
             "label_en": "Broadcom 8-K (Item 8.01)",
@@ -65,8 +65,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Google CloudのTPUとサービスの利用を大きく拡大する計画(数百億ドル規模、2025年10月、Anthropicの発表)",
-          "text_en": "Plans to greatly expand use of Google Cloud TPUs and services, worth tens of billions of dollars (October 2025, Anthropic announcement)",
+          "text": "Google CloudのTPUとサービスの利用を大きく拡大する計画",
+          "text_en": "Plans to greatly expand use of Google Cloud TPUs and services, worth tens of billions of dollars",
           "source": {
             "label": "Anthropic announcement",
             "label_en": "Anthropic announcement",
@@ -80,8 +80,8 @@
         },
         {
           "type": "tie",
-          "text": "Broadcom・Google・Anthropicが協業を拡大し、AnthropicがTPUの約3.5GW分を利用(2026年4月、Broadcomの8-K)",
-          "text_en": "Broadcom, Google and Anthropic expanded their collaboration; Anthropic will access about 3.5GW of TPU capacity (April 2026, Broadcom 8-K)",
+          "text": "Broadcom・Google・Anthropicが協業を拡大し、AnthropicがTPUの約3.5GW分を利用",
+          "text_en": "Broadcom, Google and Anthropic expanded their collaboration; Anthropic will access about 3.5GW of TPU capacity",
           "source": {
             "label": "Broadcom 8-K(Item 8.01)",
             "label_en": "Broadcom 8-K (Item 8.01)",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "次世代のApple Foundation Modelsの基盤にGoogleのGeminiを使う複数年の協業(2026年1月12日、共同声明)",
-          "text_en": "Multi-year collaboration: next-generation Apple Foundation Models will be based on Google’s Gemini (January 12, 2026, joint statement)",
+          "text": "次世代のApple Foundation Modelsの基盤にGoogleのGeminiを使う複数年の協業",
+          "text_en": "Multi-year collaboration: next-generation Apple Foundation Models will be based on Google’s Gemini",
           "source": {
             "label": "Google ブログ: Joint statement from Google and Apple",
             "label_en": "Google blog: Joint statement from Google and Apple",
@@ -143,8 +143,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "FluidstackのTeraWulfでのリース債務の保証を約32億ドルに拡大し、新株予約権を保有(2025年8月)",
-          "text_en": "Increased its backstop of Fluidstack lease obligations at TeraWulf to about $3.2B and holds warrants (August 2025)",
+          "text": "FluidstackのTeraWulfでのリース債務の保証を約32億ドルに拡大し、新株予約権を保有",
+          "text_en": "Increased its backstop of Fluidstack lease obligations at TeraWulf to about $3.2B and holds warrants",
           "source": {
             "label": "TeraWulf の発表(8-K Ex. 99.1)",
             "label_en": "TeraWulf press release (8-K Ex. 99.1)",
@@ -168,8 +168,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "FluidstackのCipherでのリース債務14億ドルを保証し、新株予約権を取得(2025年9月)",
-          "text_en": "Backstops $1.4B of Fluidstack lease obligations at Cipher and receives warrants (September 2025)",
+          "text": "FluidstackのCipherでのリース債務14億ドルを保証し、新株予約権を取得",
+          "text_en": "Backstops $1.4B of Fluidstack lease obligations at Cipher and receives warrants",
           "source": {
             "label": "Cipher Mining の発表(8-K Ex. 99.1)",
             "label_en": "Cipher Mining press release (8-K Ex. 99.1)",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Waymoの自動運転車をUberのプラットフォームで提供(Uberの年次報告)",
-          "text_en": "Waymo makes a fleet of autonomous vehicles available through the Uber platform (Uber annual report)",
+          "text": "Waymoの自動運転車をUberのプラットフォームで提供",
+          "text_en": "Waymo makes a fleet of autonomous vehicles available through the Uber platform",
           "source": {
             "label": "Uber 10-K(2025年度)",
             "label_en": "Uber 10-K (FY2025)",
@@ -264,8 +264,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ナッシュビルの車両運用をWaymoと提携して実施(Lyftの決算、2026年8月)",
-          "text_en": "Fleet operations in Nashville run in partnership with Waymo (Lyft earnings, August 2026)",
+          "text": "ナッシュビルの車両運用をWaymoと提携して実施",
+          "text_en": "Fleet operations in Nashville run in partnership with Waymo",
           "source": {
             "label": "Lyft Q2 2026 earnings release(8-K)",
             "label_en": "Lyft Q2 2026 earnings release (8-K)",
@@ -559,8 +559,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Avisが、Waymo(Alphabet傘下)との自動運転の提携が6月1日にダラスで始まったと説明(2026年7月28日、決算発表)",
-          "text_en": "Avis states its autonomous vehicle partnership with Waymo (Alphabet subsidiary) went live in Dallas on June 1 (July 28, 2026, earnings release)",
+          "text": "Avisが、Waymo(Alphabet傘下)との自動運転の提携が6月1日にダラスで始まったと説明",
+          "text_en": "Avis states its autonomous vehicle partnership with Waymo (Alphabet subsidiary) went live in Dallas on June 1",
           "source": {
             "label": "Avis Budget Q2 2026 earnings release(8-K)",
             "label_en": "Avis Budget Q2 2026 earnings release (8-K)",

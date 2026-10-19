@@ -46,8 +46,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "GE Vernova・KiewitのTICと、最大5.4GWのガス火力複合発電を開発する契約(2025年2月)",
-          "text_en": "Project development agreement with GE Vernova and Kiewit’s TIC for up to 5.4GW of gas-fired combined-cycle projects (February 2025)",
+          "text": "GE Vernova・KiewitのTICと、最大5.4GWのガス火力複合発電を開発する契約",
+          "text_en": "Project development agreement with GE Vernova and Kiewit’s TIC for up to 5.4GW of gas-fired combined-cycle projects",
           "source": {
             "label": "NRG Energy 10-K(2025年度)",
             "label_en": "NRG Energy 10-K FY2025",
@@ -71,8 +71,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Mill Creek 5号機向けに7HA.03複合発電設備を受注(2024年4月)",
-          "text_en": "Order for 7HA.03 combined-cycle equipment for the Mill Creek Unit 5 project (April 2024)",
+          "text": "Mill Creek 5号機向けに7HA.03複合発電設備を受注",
+          "text_en": "Order for 7HA.03 combined-cycle equipment for the Mill Creek Unit 5 project",
           "source": {
             "label": "GE Vernova の発表(2024年4月)",
             "label_en": "GE Vernova press release (Apr 2024)",
@@ -96,8 +96,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AWSのデータセンター拡大を支える戦略的な枠組み契約(2025年3月)",
-          "text_en": "Strategic framework agreement to support AWS data center scaling (March 2025)",
+          "text": "AWSのデータセンター拡大を支える戦略的な枠組み契約",
+          "text_en": "Strategic framework agreement to support AWS data center scaling",
           "source": {
             "label": "GE Vernova の発表(2025年3月)",
             "label_en": "GE Vernova press release (Mar 2025)",
@@ -119,8 +119,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "米データセンター向けの電力開発で提携し、最初の案件にGE Vernovaの7HAタービン7基を使う見込み(2025年1月)",
-          "text_en": "Partnership to power U.S. data centers; first projects expected to use seven GE Vernova 7HA turbines (January 2025)",
+          "text": "米データセンター向けの電力開発で提携し、最初の案件にGE Vernovaの7HAタービン7基を使う見込み",
+          "text_en": "Partnership to power U.S. data centers; first projects expected to use seven GE Vernova 7HA turbines",
           "source": {
             "label": "Chevron の発表(2025年1月、GE Vernovaサイトに掲載)",
             "label_en": "Chevron newsroom page fetched at gevernova.com URL (Jan 2025)",
@@ -144,8 +144,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "小型モジュール炉(SMR)の設計・開発を日立との合弁で手がける(年次報告)",
-          "text_en": "Small modular reactors are designed and developed through joint ventures with Hitachi (annual report)",
+          "text": "小型モジュール炉(SMR)の設計・開発を日立との合弁で手がける",
+          "text_en": "Small modular reactors are designed and developed through joint ventures with Hitachi",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "航空転用エンジンの保守を支える折半出資の合弁「Aero Alliance」(年次報告)",
-          "text_en": "Aero Alliance: 50-50 joint venture for aeroderivative engine support (annual report)",
+          "text": "航空転用エンジンの保守を支える折半出資の合弁「Aero Alliance」",
+          "text_en": "Aero Alliance: 50-50 joint venture for aeroderivative engine support",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -203,8 +203,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2024年4月2日にGeneral Electricから分離独立。「GE」の名称はライセンスで使用(年次報告)",
-          "text_en": "Spun off from General Electric on April 2, 2024; uses the GE name under license (annual report)",
+          "text": "2024年4月2日にGeneral Electricから分離独立。「GE」の名称はライセンスで使用",
+          "text_en": "Spun off from General Electric on April 2, 2024; uses the GE name under license",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -226,8 +226,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電力事業と電化事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key competitor in Power and Electrification (annual report)",
+          "text": "電力事業と電化事業の主要な競合として記載",
+          "text_en": "Named as a key competitor in Power and Electrification",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -249,8 +249,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Power-segment competitor (annual report)",
+          "text": "電力事業の主要な競合として記載",
+          "text_en": "Named as a key Power-segment competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -272,8 +272,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "風力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Wind-segment competitor (annual report)",
+          "text": "風力事業の主要な競合として記載",
+          "text_en": "Named as a key Wind-segment competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -295,8 +295,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "風力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Wind-segment competitor (annual report)",
+          "text": "風力事業の主要な競合として記載",
+          "text_en": "Named as a key Wind-segment competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -318,8 +318,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "風力事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Wind-segment competitor (annual report)",
+          "text": "風力事業の主要な競合として記載",
+          "text_en": "Named as a key Wind-segment competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -341,8 +341,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Electrification competitor (annual report)",
+          "text": "電化事業の主要な競合として記載",
+          "text_en": "Named as a key Electrification competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -364,8 +364,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Electrification competitor (annual report)",
+          "text": "電化事業の主要な競合として記載",
+          "text_en": "Named as a key Electrification competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -387,8 +387,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Electrification competitor (annual report)",
+          "text": "電化事業の主要な競合として記載",
+          "text_en": "Named as a key Electrification competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -410,8 +410,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載(年次報告)",
-          "text_en": "Named as a key Electrification competitor (annual report)",
+          "text": "電化事業の主要な競合として記載",
+          "text_en": "Named as a key Electrification competitor",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",

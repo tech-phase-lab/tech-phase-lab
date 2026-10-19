@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "液冷のGrace Blackwell GPUを数十万基導入し、Vera Rubinを動かす最初の大手クラウドになるとMicrosoftが説明(2026年3月)",
-          "text_en": "Says it has deployed hundreds of thousands of liquid-cooled Grace Blackwell GPUs and will be first to power on Vera Rubin (March 2026)",
+          "text": "液冷のGrace Blackwell GPUを数十万基導入し、Vera Rubinを動かす最初の大手クラウドになるとMicrosoftが説明",
+          "text_en": "Says it has deployed hundreds of thousands of liquid-cooled Grace Blackwell GPUs and will be first to power on Vera Rubin",
           "source": {
             "label": "Microsoft ブログ(2026年3月)",
             "label_en": "Microsoft blog (Mar 2026)",
@@ -74,8 +74,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AMDのHeliosとEPYCをAzureのAI・HPC向け仮想マシンに導入(2026年7月)",
-          "text_en": "Bringing AMD’s Helios platform and next-generation EPYC to Azure AI and HPC VMs (July 2026)",
+          "text": "AMDのHeliosとEPYCをAzureのAI・HPC向け仮想マシンに導入",
+          "text_en": "Bringing AMD’s Helios platform and next-generation EPYC to Azure AI and HPC VMs",
           "source": {
             "label": "Microsoft ブログ(2026年7月)",
             "label_en": "Microsoft blog (Jul 2026)",
@@ -99,8 +99,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "自社AIチップMaia 300の計算チップレットをTSMCのN2Pで製造(2026年10月)",
-          "text_en": "Maia 300 compute chiplets are built on TSMC’s N2P process (October 2026)",
+          "text": "自社AIチップMaia 300の計算チップレットをTSMCのN2Pで製造",
+          "text_en": "Maia 300 compute chiplets are built on TSMC’s N2P process",
           "source": {
             "label": "Microsoft ブログ(2026年10月)",
             "label_en": "Microsoft blog (Oct 2026)",
@@ -124,8 +124,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Microsoftが選んだチップ設計を、Intel 18Aで生産する計画(2024年2月、Intel発表)",
-          "text_en": "Microsoft chose a chip design it plans to produce on Intel 18A (Intel announcement, February 2024)",
+          "text": "Microsoftが選んだチップ設計を、Intel 18Aで生産する計画",
+          "text_en": "Microsoft chose a chip design it plans to produce on Intel 18A",
           "source": {
             "label": "Intel ニュースルーム(2024年2月)",
             "label_en": "Intel newsroom (Feb 2024)",
@@ -162,8 +162,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "ニュージャージー州のデータセンターで、専用GPU基盤を5年間Microsoftに提供(Nebiusの年次報告)",
-          "text_en": "Provides dedicated GPU capacity at its Vineland, New Jersey data center over five years (Nebius annual report)",
+          "text": "ニュージャージー州のデータセンターで、専用GPU基盤を5年間Microsoftに提供",
+          "text_en": "Provides dedicated GPU capacity at its Vineland, New Jersey data center over five years",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -187,7 +187,7 @@
       "relations": [
         {
           "type": "up",
-          "text": "CoreWeaveが年次報告で、最大の顧客としてMicrosoftを挙げている(2025年売上の約67%)",
+          "text": "CoreWeaveが年次報告で、最大の顧客としてMicrosoftを挙げている",
           "text_en": "CoreWeave’s annual report says Microsoft was its top customer, about 67% of its 2025 revenue",
           "source": {
             "label": "CoreWeave 10-K(2025年度)",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "スリーマイル島1号機の再稼働に伴う20年の電力購入契約(2024年9月)",
-          "text_en": "20-year power purchase agreement tied to the restart of Three Mile Island Unit 1 (September 2024)",
+          "text": "スリーマイル島1号機の再稼働に伴う20年の電力購入契約",
+          "text_en": "20-year power purchase agreement tied to the restart of Three Mile Island Unit 1",
           "source": {
             "label": "Constellation の発表(2024年9月)",
             "label_en": "Constellation press release (Sep 2024)",
@@ -235,8 +235,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OpenAIと長期の戦略的提携。持分法投資で、出資比率は約25%(Microsoftの年次報告)",
-          "text_en": "Long-term strategic partnership with OpenAI; equity-method investment of about 25% (Microsoft annual report)",
+          "text": "OpenAIと長期の戦略的提携。持分法投資で、出資比率は約25%",
+          "text_en": "Long-term strategic partnership with OpenAI; equity-method investment of about 25%",
           "source": {
             "label": "Microsoft 10-K(2026年度)",
             "label_en": "Microsoft 10-K (FY2026)",
@@ -263,8 +263,8 @@
         },
         {
           "type": "down",
-          "text": "OpenAIがAzureを追加で2,500億ドル分購入すると契約(2025年10月)",
-          "text_en": "OpenAI contracted to purchase an incremental $250B of Azure services (October 2025)",
+          "text": "OpenAIがAzureを追加で2,500億ドル分購入すると契約",
+          "text_en": "OpenAI contracted to purchase an incremental $250B of Azure services",
           "source": {
             "label": "Microsoft ブログ(2025年10月)",
             "label_en": "Microsoft blog (Oct 2025)",
@@ -286,8 +286,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AnthropicがAzureの計算容量を300億ドル分購入すると約束し、Microsoftは最大50億ドルを出資(2025年11月)",
-          "text_en": "Anthropic committed to buy $30B of Azure compute; Microsoft to invest up to $5B (November 2025)",
+          "text": "AnthropicがAzureの計算容量を300億ドル分購入すると約束し、Microsoftは最大50億ドルを出資",
+          "text_en": "Anthropic committed to buy $30B of Azure compute; Microsoft to invest up to $5B",
           "source": {
             "label": "Microsoft ブログ(2025年11月)",
             "label_en": "Microsoft blog (Nov 2025)",
@@ -311,8 +311,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "「RISE with SAP on Microsoft Azure」の共同プログラムを世界で拡大(2026年5月)",
-          "text_en": "Expanded the global RISE with SAP on Microsoft Azure joint program (May 2026)",
+          "text": "「RISE with SAP on Microsoft Azure」の共同プログラムを世界で拡大",
+          "text_en": "Expanded the global RISE with SAP on Microsoft Azure joint program",
           "source": {
             "label": "SAP News(2026年5月)",
             "label_en": "SAP News (May 2026)",
@@ -334,8 +334,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Azureのデータセンター内でOracleのデータベースサービスを提供する「Oracle Database@Azure」(2023年9月)",
-          "text_en": "Oracle Database@Azure: Oracle database services on OCI inside Azure datacenters (September 2023)",
+          "text": "Azureのデータセンター内でOracleのデータベースサービスを提供する「Oracle Database@Azure」",
+          "text_en": "Oracle Database@Azure: Oracle database services on OCI inside Azure datacenters",
           "source": {
             "label": "Microsoft Source(2023年9月)",
             "label_en": "Microsoft Source (Sep 2023)",

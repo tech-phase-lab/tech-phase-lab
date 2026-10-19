@@ -82,8 +82,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Google Cloudと企業のAI導入・基幹システム刷新で協業(2026年6月)",
-          "text_en": "Partners with Google Cloud on enterprise AI adoption and core-system modernization (June 2026)",
+          "text": "Google Cloudと企業のAI導入・基幹システム刷新で協業",
+          "text_en": "Partners with Google Cloud on enterprise AI adoption and core-system modernization",
           "source": {
             "label": "IBM の発表(2026年6月4日)",
             "label_en": "IBM announcement (June 4, 2026)",
@@ -424,7 +424,7 @@
         },
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載(年次報告)",
+          "text": "戦略パートナーとして実名で記載",
           "text_en": "Named as a strategic partner in the annual report",
           "source": {
             "label": "IBM 10-K(2025年度)",
@@ -447,8 +447,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "NVIDIA GB200 NVL72のAIスーパーコンピューターをIBMへ納入し、IBMがGraniteモデルの学習に利用(2025年1月)",
-          "text_en": "To deliver an NVIDIA GB200 NVL72 AI supercomputer to IBM for training Granite models (January 2025)",
+          "text": "NVIDIA GB200 NVL72のAIスーパーコンピューターをIBMへ納入し、IBMがGraniteモデルの学習に利用",
+          "text_en": "To deliver an NVIDIA GB200 NVL72 AI supercomputer to IBM for training Granite models",
           "source": {
             "label": "IBM ニュースルーム(CoreWeave release, Jan 2025)",
             "label_en": "IBM newsroom (CoreWeave release, Jan 2025)",
@@ -472,8 +472,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "量子コンピューターとスーパーコンピューターを組み合わせた次世代の計算基盤を共同で開発する計画(2025年8月)",
-          "text_en": "Plans to develop quantum-centric supercomputing architectures together (August 2025)",
+          "text": "量子コンピューターとスーパーコンピューターを組み合わせた次世代の計算基盤を共同で開発する計画",
+          "text_en": "Plans to develop quantum-centric supercomputing architectures together",
           "source": {
             "label": "IBM ニュースルーム(2025年8月)",
             "label_en": "IBM newsroom (Aug 2025)",
@@ -497,8 +497,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "GPUを使ったデータ分析・文書処理・インフラ・クラウドなどで協業を拡大(2026年3月)",
-          "text_en": "Expanded collaboration on GPU-native analytics, document processing, infrastructure and cloud (March 2026)",
+          "text": "GPUを使ったデータ分析・文書処理・インフラ・クラウドなどで協業を拡大",
+          "text_en": "Expanded collaboration on GPU-native analytics, document processing, infrastructure and cloud",
           "source": {
             "label": "IBM ニュースルーム(2026年3月)",
             "label_en": "IBM newsroom (Mar 2026)",
@@ -520,8 +520,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IBMのソフトウェアにClaudeを組み込む戦略的提携(2025年10月)",
-          "text_en": "Strategic partnership to integrate Claude into select IBM software (October 2025)",
+          "text": "IBMのソフトウェアにClaudeを組み込む戦略的提携",
+          "text_en": "Strategic partnership to integrate Claude into select IBM software",
           "source": {
             "label": "IBM ニュースルーム(2025年10月)",
             "label_en": "IBM newsroom (Oct 2025)",
@@ -543,8 +543,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ネットワークでつないだ分散型量子コンピューターの基盤づくりで協力する意向(2025年11月)",
-          "text_en": "Intention to collaborate on networked distributed quantum computing (November 2025)",
+          "text": "ネットワークでつないだ分散型量子コンピューターの基盤づくりで協力する意向",
+          "text_en": "Intention to collaborate on networked distributed quantum computing",
           "source": {
             "label": "IBM ニュースルーム(2025年11月)",
             "label_en": "IBM newsroom (Nov 2025)",
@@ -580,8 +580,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IBMのナノスタック型トランジスタの研究でSiemensと協力(2026年10月)",
-          "text_en": "Research with Siemens to advance IBM’s nanostack transistor architecture (October 2026)",
+          "text": "IBMのナノスタック型トランジスタの研究でSiemensと協力",
+          "text_en": "Research with Siemens to advance IBM’s nanostack transistor architecture",
           "source": {
             "label": "IBM ニュースルーム(2026年10月)",
             "label_en": "IBM newsroom (Oct 2026)",
@@ -603,8 +603,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Now PlatformとIBM watsonxを連携し、Graniteモデルを組み込む協業(2024年5月)",
-          "text_en": "Integration of the Now Platform with IBM watsonx and Granite models (May 2024)",
+          "text": "Now PlatformとIBM watsonxを連携し、Graniteモデルを組み込む協業",
+          "text_en": "Integration of the Now Platform with IBM watsonx and Granite models",
           "source": {
             "label": "IBM ニュースルーム(May 2024; ServiceNow Knowledge 2024)",
             "label_en": "IBM newsroom (May 2024; ServiceNow Knowledge 2024)",
@@ -822,8 +822,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "GlobalFoundriesが、IBMなど大手半導体企業と特許のクロスライセンスを結んでいると記載(2025年度、20-F)",
-          "text_en": "GlobalFoundries states it has patent cross-licenses with leading semiconductor companies including IBM (FY2025, 20-F)",
+          "text": "GlobalFoundriesが、IBMなど大手半導体企業と特許のクロスライセンスを結んでいると記載",
+          "text_en": "GlobalFoundries states it has patent cross-licenses with leading semiconductor companies including IBM",
           "source": {
             "label": "GlobalFoundries 20-F(2025年度)",
             "label_en": "GlobalFoundries 20-F FY2025",
@@ -846,8 +846,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "KyndrylはIBMから分離独立した会社。IBMの製品をKyndrylのサービス契約経由で使う顧客からの収益は、関係の変化に伴い減少(2026年度、10-K)",
-          "text_en": "Kyndryl states it was spun off from IBM and that revenue from customers consuming IBM content through Kyndryl service contracts has declined as the relationship evolves (FY2026, 10-K)",
+          "text": "KyndrylはIBMから分離独立した会社。IBMの製品をKyndrylのサービス契約経由で使う顧客からの収益は、関係の変化に伴い減少",
+          "text_en": "Kyndryl states it was spun off from IBM and that revenue from customers consuming IBM content through Kyndryl service contracts has declined as the relationship evolves",
           "source": {
             "label": "Kyndryl 10-K(2026年度)(2026年3月)",
             "label_en": "Kyndryl 10-K FY2026 (Mar 2026)",

@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IntelがDell製品に使われるIntel製CPUについて、特許侵害の主張からDellを補償している(2026年7月、10-Q)",
-          "text_en": "Intel supplies CPUs used in Dell products and is indemnifying Dell against patent claims over Intel CPUs (July 2026, 10-Q)",
+          "text": "IntelがDell製品に使われるIntel製CPUについて、特許侵害の主張からDellを補償している",
+          "text_en": "Intel supplies CPUs used in Dell products and is indemnifying Dell against patent claims over Intel CPUs",
           "source": {
             "label": "Intel 10-Q",
             "label_en": "Intel 10-Q (quarter ended 2026-06-27)",
@@ -65,8 +65,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "MicrosoftがDellを含む主要OEMと販売契約を結んでいる(2025年度、10-K)",
-          "text_en": "Microsoft has OEM distribution agreements with Dell, which pre-installs Microsoft software (FY2025 10-K)",
+          "text": "MicrosoftがDellを含む主要OEMと販売契約を結んでいる",
+          "text_en": "Microsoft has OEM distribution agreements with Dell, which pre-installs Microsoft software",
           "source": {
             "label": "Microsoft 10-K",
             "label_en": "Microsoft 10-K (FY ended 2025-06-30)",
@@ -90,8 +90,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AMDが、Dell Pro商用PCにRyzen AI PROプロセッサーが搭載されると発表(2025年1月6日、AMD発表)",
-          "text_en": "AMD announced Dell Pro commercial PCs will be powered by AMD Ryzen AI PRO processors (January 6, 2025, AMD press release)",
+          "text": "AMDが、Dell Pro商用PCにRyzen AI PROプロセッサーが搭載されると発表",
+          "text_en": "AMD announced Dell Pro commercial PCs will be powered by AMD Ryzen AI PRO processors",
           "source": {
             "label": "AMD の発表",
             "label_en": "AMD press release (Ryzen AI PRO in Dell PCs)",
@@ -103,8 +103,8 @@
         },
         {
           "type": "tie",
-          "text": "AMDとDellが、ケンブリッジ大学のAIスーパーコンピューター「Zenith」と核融合AIシステム「Sunrise」を支援(2026年6月8日、AMD発表)",
-          "text_en": "AMD and Dell are supporting the University of Cambridge’s Zenith AI supercomputer and Sunrise fusion AI system (June 8, 2026, AMD press release)",
+          "text": "AMDとDellが、ケンブリッジ大学のAIスーパーコンピューター「Zenith」と核融合AIシステム「Sunrise」を支援",
+          "text_en": "AMD and Dell are supporting the University of Cambridge’s Zenith AI supercomputer and Sunrise fusion AI system",
           "source": {
             "label": "AMD の発表",
             "label_en": "AMD press release (UK investment)",
@@ -126,8 +126,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "MicronがDellのインフラとMicronのAI向けストレージ・メモリー製品(Micron 6550 ION SSDなど)の組み合わせを紹介(2025年5月15日、Micronブログ)",
-          "text_en": "Micron describes combining Dell infrastructure with Micron AI-ready storage and memory products (e.g., Micron 6550 ION SSD) for data centers (May 15, 2025, Micron blog)",
+          "text": "MicronがDellのインフラとMicronのAI向けストレージ・メモリー製品(Micron 6550 ION SSDなど)の組み合わせを紹介",
+          "text_en": "Micron describes combining Dell infrastructure with Micron AI-ready storage and memory products (e.g., Micron 6550 ION SSD) for data centers",
           "source": {
             "label": "Micron ブログ",
             "label_en": "Micron blog (Dell Tech World 2025)",
@@ -151,8 +151,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "IRENがDell Canadaから、GPUと関連製品・サービスを約23億ドルで購入することで合意。2026年後半に段階的に納入(2026年5月、10-Q)",
-          "text_en": "IREN agreed to buy GPUs and ancillary products and services from Dell Canada for about $2.3B, with delivery in phases in the second half of calendar 2026 (May 2026, 10-Q)",
+          "text": "IRENがDell Canadaから、GPUと関連製品・サービスを約23億ドルで購入することで合意。2026年後半に段階的に納入",
+          "text_en": "IREN agreed to buy GPUs and ancillary products and services from Dell Canada for about $2.3B, with delivery in phases in the second half of calendar 2026",
           "source": {
             "label": "IREN 10-Q",
             "label_en": "IREN 10-Q (quarter ended 2026-03-31)",
@@ -166,8 +166,8 @@
         },
         {
           "type": "down",
-          "text": "IRENが年次報告で、AIクラウド向けGPU・ネットワーク・ストレージの限られた供給元の1社としてDell Technologiesを挙げている(2026年度、10-K)",
-          "text_en": "IREN lists Dell Technologies among its limited set of hardware suppliers for GPUs, networking and storage used in AI Cloud Services (FY2026 10-K)",
+          "text": "IRENが年次報告で、AIクラウド向けGPU・ネットワーク・ストレージの限られた供給元の1社としてDell Technologiesを挙げている",
+          "text_en": "IREN lists Dell Technologies among its limited set of hardware suppliers for GPUs, networking and storage used in AI Cloud Services",
           "source": {
             "label": "IREN 10-K",
             "label_en": "IREN 10-K (FY ended 2026-06-30)",
@@ -179,8 +179,8 @@
         },
         {
           "type": "tie",
-          "text": "IRENがDell Financial Servicesと、GPU発注の一部を対象とする24か月のリース融資を結んだ(2026年5月、10-Q)",
-          "text_en": "IREN entered financing arrangements with Dell Financial Services for a 24-month lease financing a portion of its GPU orders (May 2026, 10-Q)",
+          "text": "IRENがDell Financial Servicesと、GPU発注の一部を対象とする24か月のリース融資を結んだ",
+          "text_en": "IREN entered financing arrangements with Dell Financial Services for a 24-month lease financing a portion of its GPU orders",
           "source": {
             "label": "IREN 10-Q",
             "label_en": "IREN 10-Q (quarter ended 2026-03-31)",
@@ -204,8 +204,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Nutanixのソフトは認定済みのDellハードウェア(Dell XC)で動作し、Dell PowerFlex・PowerStoreの外部ストレージとも連携する(2026年度、10-K)",
-          "text_en": "Nutanix software runs on qualified Dell hardware (Dell XC) and integrates with Dell PowerFlex and PowerStore external storage (FY2026 10-K)",
+          "text": "Nutanixのソフトは認定済みのDellハードウェア(Dell XC)で動作し、Dell PowerFlex・PowerStoreの外部ストレージとも連携する",
+          "text_en": "Nutanix software runs on qualified Dell hardware (Dell XC) and integrates with Dell PowerFlex and PowerStore external storage",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K (FY ended 2026-07-31)",
@@ -217,8 +217,8 @@
         },
         {
           "type": "rival",
-          "text": "Nutanixが年次報告で、競合する従来型ITシステムベンダーの1社としてDellを挙げている(2026年度、10-K)",
-          "text_en": "Nutanix names Dell among traditional IT systems vendors it competes with (FY2026 10-K)",
+          "text": "Nutanixが年次報告で、競合する従来型ITシステムベンダーの1社としてDellを挙げている",
+          "text_en": "Nutanix names Dell among traditional IT systems vendors it competes with",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K (FY ended 2026-07-31)",
@@ -240,8 +240,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAが、RTX PRO 6000 Blackwell Server Edition GPU搭載の2U RTX PROサーバーを提供するシステムパートナーの1社としてDell Technologiesを挙げた(2025年8月11日、NVIDIA発表)",
-          "text_en": "NVIDIA named Dell Technologies among system partners offering 2U RTX PRO servers with RTX PRO 6000 Blackwell Server Edition GPUs (August 11, 2025, NVIDIA press release)",
+          "text": "NVIDIAが、RTX PRO 6000 Blackwell Server Edition GPU搭載の2U RTX PROサーバーを提供するシステムパートナーの1社としてDell Technologiesを挙げた",
+          "text_en": "NVIDIA named Dell Technologies among system partners offering 2U RTX PRO servers with RTX PRO 6000 Blackwell Server Edition GPUs",
           "source": {
             "label": "NVIDIA の発表",
             "label_en": "NVIDIA press release (RTX PRO Servers)",
@@ -266,7 +266,7 @@
         {
           "type": "tie",
           "text": "BroadcomによるVMware買収を受け、DellはVMware製品の販売契約を2024年3月に終了(2026年度、10-K)。VxRailには引き続きVMware製品を組み込んでいる",
-          "text_en": "Dell terminated its VMware distribution agreement after Broadcom acquired VMware, but still embeds VMware products in its VxRail solution (FY2026 10-K)",
+          "text_en": "Dell terminated its VMware distribution agreement after Broadcom acquired VMware, but still embeds VMware products in its VxRail solution",
           "source": {
             "label": "Dell Technologies 10-K",
             "label_en": "Dell Technologies 10-K (FY ended 2026-01-30)",
@@ -280,8 +280,8 @@
         },
         {
           "type": "tie",
-          "text": "Broadcomが、2021年のVMware分離がDellの非課税扱いにならなかった場合、Dellの税負担を補償する可能性があると開示(2026年9月10日、10-Q)",
-          "text_en": "Broadcom discloses it may have to indemnify Dell for tax liabilities if the 2021 VMware spin-off from Dell fails to qualify as tax-free (September 2026, 10-Q)",
+          "text": "Broadcomが、2021年のVMware分離がDellの非課税扱いにならなかった場合、Dellの税負担を補償する可能性があると開示",
+          "text_en": "Broadcom discloses it may have to indemnify Dell for tax liabilities if the 2021 VMware spin-off from Dell fails to qualify as tax-free",
           "source": {
             "label": "Broadcom 10-Q",
             "label_en": "Broadcom 10-Q (quarter ended 2026-08-02)",
@@ -305,7 +305,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Hewlett Packard Enterpriseが年次報告で、Dell Technologiesを競合として挙げている(2025年度、10-K)",
+          "text": "Hewlett Packard Enterpriseが年次報告で、Dell Technologiesを競合として挙げている",
           "text_en": "Hewlett Packard Enterprise names Dell as a competitor in its FY2025 10-K",
           "source": {
             "label": "HPE 10-K",
@@ -328,7 +328,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HP Inc.が年次報告で、Dell Technologiesを競合として挙げている(2025年度、10-K)",
+          "text": "HP Inc.が年次報告で、Dell Technologiesを競合として挙げている",
           "text_en": "HP Inc. names Dell as a competitor in its FY2025 10-K",
           "source": {
             "label": "HP Inc. 10-K",
@@ -351,7 +351,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Super Micro Computerが年次報告で、Dell Technologiesを競合として挙げている(2026年度、10-K)",
+          "text": "Super Micro Computerが年次報告で、Dell Technologiesを競合として挙げている",
           "text_en": "Super Micro Computer names Dell as a competitor in its FY2026 10-K",
           "source": {
             "label": "Super Micro 10-K",
@@ -374,7 +374,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cisco Systemsが年次報告で、Dell Technologiesを競合として挙げている(2026年度、10-K)",
+          "text": "Cisco Systemsが年次報告で、Dell Technologiesを競合として挙げている",
           "text_en": "Cisco Systems names Dell as a competitor in its FY2026 10-K",
           "source": {
             "label": "Cisco 10-K",
@@ -397,7 +397,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IBMが年次報告で、Dell Technologiesを競合として挙げている(2025年度、10-K)",
+          "text": "IBMが年次報告で、Dell Technologiesを競合として挙げている",
           "text_en": "IBM names Dell as a competitor in its FY2025 10-K",
           "source": {
             "label": "IBM 10-K(2025年度)",
@@ -420,7 +420,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pure Storage(Everpure)が年次報告で、Dell Technologiesを競合として挙げている(2026年9月、10-Q)",
+          "text": "Pure Storage(Everpure)が年次報告で、Dell Technologiesを競合として挙げている",
           "text_en": "Pure Storage (Everpure) names Dell as a competitor in its September 2026 10-Q",
           "source": {
             "label": "Pure Storage 10-Q",

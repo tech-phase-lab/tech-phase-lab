@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "エンタープライズSSDの開発・販売で長期の提携。PhisonがNANDコントローラーなどを供給(2022年4月、Seagate発表)",
-          "text_en": "Long-term partnership on development and distribution of enterprise-class SSDs; Phison supplies NAND flash controller and storage solutions (April 2022, Seagate release)",
+          "text": "エンタープライズSSDの開発・販売で長期の提携。PhisonがNANDコントローラーなどを供給",
+          "text_en": "Long-term partnership on development and distribution of enterprise-class SSDs; Phison supplies NAND flash controller and storage solutions",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (Phison partnership)",
@@ -61,8 +61,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "東芝メモリ(現Kioxia)と長期のNAND供給契約を締結(2018年1月)",
-          "text_en": "Signed a long-term NAND supply agreement with Toshiba Memory Corporation (now Kioxia) (January 2018)",
+          "text": "東芝メモリ(現Kioxia)と長期のNAND供給契約を締結",
+          "text_en": "Signed a long-term NAND supply agreement with Toshiba Memory Corporation (now Kioxia)",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (NAND supply agreement)",
@@ -76,8 +76,8 @@
         },
         {
           "type": "tie",
-          "text": "ベインキャピタル主導の、東芝メモリ(現Kioxia)を買収するコンソーシアムに出資(2018年6月)",
-          "text_en": "Invested in the Bain Capital-led consortium that acquired Toshiba Memory Corporation (now Kioxia) (June 2018)",
+          "text": "ベインキャピタル主導の、東芝メモリ(現Kioxia)を買収するコンソーシアムに出資",
+          "text_en": "Invested in the Bain Capital-led consortium that acquired Toshiba Memory Corporation (now Kioxia)",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (Toshiba Memory investment)",
@@ -101,8 +101,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "SeagateがHDD用サスペンション部品の供給元として名前を挙げ、反トラスト法違反の損害賠償を求めている(2026年度、10-K)",
-          "text_en": "Named as an HDD suspension assembly supplier against which Seagate is pursuing antitrust claims (FY2026 10-K)",
+          "text": "SeagateがHDD用サスペンション部品の供給元として名前を挙げ、反トラスト法違反の損害賠償を求めている",
+          "text_en": "Named as an HDD suspension assembly supplier against which Seagate is pursuing antitrust claims",
           "source": {
             "label": "Seagate 10-K(2026年度)",
             "label_en": "Seagate 10-K (FY2026)",
@@ -126,8 +126,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "SeagateのHDD用サスペンション部品の供給元として名前が挙げられた反トラスト訴訟(2022年に和解、2026年度、10-K)",
-          "text_en": "Named as an HDD suspension assembly supplier in Seagate’s antitrust action (settled in 2022) (FY2026 10-K)",
+          "text": "SeagateのHDD用サスペンション部品の供給元として名前が挙げられた反トラスト訴訟",
+          "text_en": "Named as an HDD suspension assembly supplier in Seagate’s antitrust action",
           "source": {
             "label": "Seagate 10-K(2026年度)",
             "label_en": "Seagate 10-K (FY2026)",
@@ -151,8 +151,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Dellが、Seagate Mozaic 3+を最初に採用する顧客の1社で、Exos M 32TBドライブを自社ストレージに組み込む(2025年1月、Seagate発表)",
-          "text_en": "Dell is among the first customers to adopt Seagate Mozaic 3+ and will integrate Exos M 32TB drives into its storage systems (January 2025, Seagate release)",
+          "text": "Dellが、Seagate Mozaic 3+を最初に採用する顧客の1社で、Exos M 32TBドライブを自社ストレージに組み込む",
+          "text_en": "Dell is among the first customers to adopt Seagate Mozaic 3+ and will integrate Exos M 32TB drives into its storage systems",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (Mozaic 3+ / Exos M)",
@@ -176,8 +176,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "DropboxがHAMR技術のExos 32TBドライブ(Mozaic)をデータセンター向けに認定(2025年9月、Seagate)",
-          "text_en": "Dropbox qualified Seagate HAMR-based Exos 32TB drives (Mozaic platform) for deployment in its data centers (September 2025, Seagate)",
+          "text": "DropboxがHAMR技術のExos 32TBドライブ(Mozaic)をデータセンター向けに認定",
+          "text_en": "Dropbox qualified Seagate HAMR-based Exos 32TB drives (Mozaic platform) for deployment in its data centers",
           "source": {
             "label": "Seagate の記事",
             "label_en": "Seagate Stories: Powering AI at scale",
@@ -201,8 +201,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Zoomの顧客が会議の録画をSeagate Lyve Cloudに保存できるようにする(2021年8月、Seagate発表)",
-          "text_en": "Zoom agreed to let its customers store meeting recordings on Seagate Lyve Cloud (August 2021, Seagate release)",
+          "text": "Zoomの顧客が会議の録画をSeagate Lyve Cloudに保存できるようにする",
+          "text_en": "Zoom agreed to let its customers store meeting recordings on Seagate Lyve Cloud",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (Zoom / Lyve Cloud)",
@@ -226,8 +226,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Seagate Lyve ServicesとExos XシステムをAWS Marketplace・AWS Outpostsなどと連携(2024年12月、Seagate発表)",
-          "text_en": "Seagate Lyve Services and Exos X systems are integrated with AWS services, including AWS Marketplace and AWS Outposts (December 2024, Seagate release)",
+          "text": "Seagate Lyve ServicesとExos XシステムをAWS Marketplace・AWS Outpostsなどと連携",
+          "text_en": "Seagate Lyve Services and Exos X systems are integrated with AWS services, including AWS Marketplace and AWS Outposts",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (AWS re:Invent)",
@@ -251,8 +251,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Xbox Series X|S用のSeagate拡張ストレージカードを、Xbox(Microsoft)と共同で設計(2025年6月、Seagate発表)",
-          "text_en": "Seagate’s Storage Expansion Card for Xbox Series X|S was designed in collaboration with Xbox (Microsoft) (June 2025, Seagate release)",
+          "text": "Xbox Series X|S用のSeagate拡張ストレージカードを、Xbox(Microsoft)と共同で設計",
+          "text_en": "Seagate’s Storage Expansion Card for Xbox Series X|S was designed in collaboration with Xbox (Microsoft)",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (4TB Xbox expansion card)",
@@ -276,8 +276,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "PS5・PS4向けのPlayStation公式ライセンスのGame Drive外付けSSDを販売(2024年9月、Seagate発表)",
-          "text_en": "Seagate sells a Game Drive External SSD officially licensed by PlayStation for PS5 and PS4 consoles (September 2024, Seagate release)",
+          "text": "PS5・PS4向けのPlayStation公式ライセンスのGame Drive外付けSSDを販売",
+          "text_en": "Seagate sells a Game Drive External SSD officially licensed by PlayStation for PS5 and PS4 consoles",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (PlayStation licensed Game Drive)",
@@ -301,8 +301,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "eBayと持続可能性の協業で合意し、SeagateのeBay店舗を工場で再認定したドライブの販売チャネルにする(2024年6月、Seagate発表)",
-          "text_en": "Agreed a sustainability collaboration with eBay making Seagate’s eBay storefront a channel for factory-recertified drives (June 2024, Seagate release)",
+          "text": "eBayと持続可能性の協業で合意し、SeagateのeBay店舗を工場で再認定したドライブの販売チャネルにする",
+          "text_en": "Agreed a sustainability collaboration with eBay making Seagate’s eBay storefront a channel for factory-recertified drives",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (eBay circularity)",
@@ -326,8 +326,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "EquinixはLyve Cloudのエコシステムに参加するクラウド提携先の1社(2022年2月、Seagate発表)",
-          "text_en": "Equinix is part of the Lyve Cloud ecosystem network of cloud partners (February 2022, Seagate release)",
+          "text": "EquinixはLyve Cloudのエコシステムに参加するクラウド提携先の1社",
+          "text_en": "Equinix is part of the Lyve Cloud ecosystem network of cloud partners",
           "source": {
             "label": "Seagate の発表",
             "label_en": "Seagate press release (Lyve Cloud Singapore)",
@@ -351,8 +351,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2024年4月、SoCの設計・開発・製造に関する資産をBroadcom子会社のAvagoに売却(2026年度、10-K)",
-          "text_en": "Sold its SoC design, development and manufacturing assets to Broadcom subsidiary Avago in April 2024 (FY2026 10-K)",
+          "text": "2024年4月、SoCの設計・開発・製造に関する資産をBroadcom子会社のAvagoに売却",
+          "text_en": "Sold its SoC design, development and manufacturing assets to Broadcom subsidiary Avago in April 2024",
           "source": {
             "label": "Seagate 10-K(2026年度)",
             "label_en": "Seagate 10-K (FY2026)",
@@ -376,7 +376,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Seagateが年次報告で、世界のHDDの競合としてWestern Digitalを挙げている(2026年度、10-K)",
+          "text": "Seagateが年次報告で、世界のHDDの競合としてWestern Digitalを挙げている",
           "text_en": "Seagate’s FY2026 10-K lists Western Digital as a global HDD competitor",
           "source": {
             "label": "Seagate 10-K(2026年度)",
@@ -389,7 +389,7 @@
         },
         {
           "type": "rival",
-          "text": "Western Digitalが年次報告で、HDDの競合としてSeagateを挙げている(2026年度、10-K)",
+          "text": "Western Digitalが年次報告で、HDDの競合としてSeagateを挙げている",
           "text_en": "Western Digital’s FY2026 10-K lists Seagate as an HDD competitor",
           "source": {
             "label": "Western Digital 10-K(2026年度)",

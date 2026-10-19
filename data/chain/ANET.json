@@ -49,8 +49,8 @@
         },
         {
           "type": "tie",
-          "text": "BroadcomからVeloCloud事業を3億ドルの現金で取得(2025年6月30日完了)",
-          "text_en": "Acquired the VeloCloud business from Broadcom for $300.0M in cash (completed June 30, 2025)",
+          "text": "BroadcomからVeloCloud事業を3億ドルの現金で取得",
+          "text_en": "Acquired the VeloCloud business from Broadcom for $300.0M in cash",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -87,8 +87,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載(年次報告)",
-          "text_en": "Named as a primary contract manufacturing partner (annual report)",
+          "text": "主な製造委託先として実名で記載",
+          "text_en": "Named as a primary contract manufacturing partner",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -110,8 +110,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載(年次報告)",
-          "text_en": "Named as a primary contract manufacturing partner (annual report)",
+          "text": "主な製造委託先として実名で記載",
+          "text_en": "Named as a primary contract manufacturing partner",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載(年次報告)",
-          "text_en": "Named as a primary contract manufacturing partner (annual report)",
+          "text": "主な製造委託先として実名で記載",
+          "text_en": "Named as a primary contract manufacturing partner",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -492,8 +492,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Qualcomm幹部が、大規模なアクセラレーター導入向けのAristaのネットワーク製品を歓迎するコメント(2026年10月、Arista発表)",
-          "text_en": "A Qualcomm Technologies executive welcomed Arista networking solutions for large-scale accelerator deployments (October 2026, Arista release)",
+          "text": "Qualcomm幹部が、大規模なアクセラレーター導入向けのAristaのネットワーク製品を歓迎するコメント",
+          "text_en": "A Qualcomm Technologies executive welcomed Arista networking solutions for large-scale accelerator deployments",
           "source": {
             "label": "Arista Rack-Scale Architectures partner quotes(2026年10月)",
             "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",

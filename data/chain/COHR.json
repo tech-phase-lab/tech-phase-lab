@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "NVIDIAと、AIインフラ向けの先端レーザーと光ネットワーク製品の複数年の供給契約を締結(2026年度、10-K)",
-          "text_en": "Entered a strategic multi-year supply agreement with NVIDIA for advanced lasers and optical networking products supporting next-generation AI infrastructure (FY2026 10-K)",
+          "text": "NVIDIAと、AIインフラ向けの先端レーザーと光ネットワーク製品の複数年の供給契約を締結",
+          "text_en": "Entered a strategic multi-year supply agreement with NVIDIA for advanced lasers and optical networking products supporting next-generation AI infrastructure",
           "source": {
             "label": "Coherent 10-K(2026年度)",
             "label_en": "Coherent 10-K (FY2026)",
@@ -48,8 +48,8 @@
         },
         {
           "type": "down",
-          "text": "NVIDIAと複数年・非独占の戦略契約を結び、数十億ドル規模のNVIDIAの購入コミットメントと、先端技術の今後の利用・生産枠の権利を含む(2026年3月2日、8-K)",
-          "text_en": "NVIDIA entered a multi-year, non-exclusive strategic agreement with Coherent that includes a multi-billion-dollar NVIDIA purchase commitment and future access and capacity rights for advanced technologies (March 2, 2026, 8-K)",
+          "text": "NVIDIAと複数年・非独占の戦略契約を結び、数十億ドル規模のNVIDIAの購入コミットメントと、先端技術の今後の利用・生産枠の権利を含む",
+          "text_en": "NVIDIA entered a multi-year, non-exclusive strategic agreement with Coherent that includes a multi-billion-dollar NVIDIA purchase commitment and future access and capacity rights for advanced technologies",
           "source": {
             "label": "Coherent 8-K Exhibit 99.1 の発表(2026年3月2日)",
             "label_en": "Coherent 8-K Exhibit 99.1 press release (Mar 2, 2026)",
@@ -61,8 +61,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAが、2026年3月2日に新規発行のCoherent普通株7,788,161株を20億ドルの現金で私募により取得(2026年3月、8-K)",
-          "text_en": "NVIDIA bought 7,788,161 newly issued Coherent common shares for $2B in cash in a private placement on March 2, 2026 (March 2026, 8-K)",
+          "text": "NVIDIAが、2026年3月2日に新規発行のCoherent普通株7,788,161株を20億ドルの現金で私募により取得",
+          "text_en": "NVIDIA bought 7,788,161 newly issued Coherent common shares for $2B in cash in a private placement on March 2, 2026",
           "source": {
             "label": "Coherent 8-K(2026年3月2日)",
             "label_en": "Coherent 8-K (Mar 2, 2026)",
@@ -84,8 +84,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Appleが、Face IDなどに使うVCSELレーザーを作る長年のパートナーCoherentと、新たな複数年契約を締結(2025年8月6日、Apple発表)",
-          "text_en": "Apple entered a new multiyear agreement with Coherent, a long-standing partner that produces the VCSEL lasers used for features including Face ID (August 6, 2025, Apple Newsroom)",
+          "text": "Appleが、Face IDなどに使うVCSELレーザーを作る長年のパートナーCoherentと、新たな複数年契約を締結",
+          "text_en": "Apple entered a new multiyear agreement with Coherent, a long-standing partner that produces the VCSEL lasers used for features including Face ID",
           "source": {
             "label": "Apple ニュースルーム(2025年8月6日)",
             "label_en": "Apple Newsroom (Aug 6, 2025)",
@@ -107,8 +107,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "DENSOが、Coherent子会社Silicon Carbide LLCのクラスA普通ユニットに5億ドルを出資(持分約12.5%、2026年度、10-K)",
-          "text_en": "Denso invested $500M in Coherent’s Silicon Carbide LLC subsidiary for Class A Common Units (about 12.5% ownership) (FY2026 10-K)",
+          "text": "DENSOが、Coherent子会社Silicon Carbide LLCのクラスA普通ユニットに5億ドルを出資",
+          "text_en": "Denso invested $500M in Coherent’s Silicon Carbide LLC subsidiary for Class A Common Units (about 12.5% ownership)",
           "source": {
             "label": "Coherent 10-K(2026年度), 注記15",
             "label_en": "Coherent 10-K (FY2026), Note 15",
@@ -132,8 +132,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "三菱電機が、Coherent子会社Silicon Carbide LLCのクラスA普通ユニットに5億ドルを出資(持分約12.5%、2026年度、10-K)",
-          "text_en": "Mitsubishi Electric (MELCO) invested $500M in Coherent’s Silicon Carbide LLC subsidiary for Class A Common Units (about 12.5% ownership) (FY2026 10-K)",
+          "text": "三菱電機が、Coherent子会社Silicon Carbide LLCのクラスA普通ユニットに5億ドルを出資",
+          "text_en": "Mitsubishi Electric (MELCO) invested $500M in Coherent’s Silicon Carbide LLC subsidiary for Class A Common Units (about 12.5% ownership)",
           "source": {
             "label": "Coherent 10-K(2026年度), 注記15",
             "label_en": "Coherent 10-K (FY2026), Note 15",
@@ -157,7 +157,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IPGが年次報告で、材料加工で競合するレーザーメーカーの1社として「Coherent, Inc.」を挙げている(2025年度、10-K)",
+          "text": "IPGが年次報告で、材料加工で競合するレーザーメーカーの1社として「Coherent, Inc.」を挙げている",
           "text_en": "IPG Photonics’ FY2025 10-K lists Coherent, Inc. among laser makers it competes with in materials processing",
           "source": {
             "label": "IPG Photonics 10-K(2025年度)",
@@ -182,7 +182,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "nLIGHTが年次報告で、競合する半導体レーザー・ファイバーレーザーなどの企業の1社としてCoherentを挙げている(2025年度、10-K)",
+          "text": "nLIGHTが年次報告で、競合する半導体レーザー・ファイバーレーザーなどの企業の1社としてCoherentを挙げている",
           "text_en": "nLIGHT’s FY2025 10-K lists Coherent among companies offering competing semiconductor lasers, fiber lasers and other laser products",
           "source": {
             "label": "nLIGHT 10-K(2025年度)",
@@ -207,7 +207,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、主要な競合の1社としてCoherent Corporationを挙げている(2025年度、10-K)",
+          "text": "AAOIが年次報告で、主要な競合の1社としてCoherent Corporationを挙げている",
           "text_en": "Applied Optoelectronics’ FY2025 10-K lists Coherent Corporation among its major competitors",
           "source": {
             "label": "Applied Optoelectronics 10-K(2025年度)",
@@ -230,7 +230,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSが年次報告で、Coherent Corp.の製品はMKSのレーザー・フォトニクス製品と競合すると記載(2025年度、10-K)",
+          "text": "MKSが年次報告で、Coherent Corp.の製品はMKSのレーザー・フォトニクス製品と競合すると記載",
           "text_en": "MKS Instruments’ FY2025 10-K states that Coherent Corp. offers products that compete with MKS’s laser and photonics products",
           "source": {
             "label": "MKS Instruments 10-K(2025年度)",
@@ -253,7 +253,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Viaviが年次報告で、光セキュリティ・性能事業で競合する受動部品などのメーカーの1社としてCoherentを挙げている(2026年度、10-K)",
+          "text": "Viaviが年次報告で、光セキュリティ・性能事業で競合する受動部品などのメーカーの1社としてCoherentを挙げている",
           "text_en": "Viavi’s FY2026 10-K lists Coherent among manufacturers of passive and other optical components that it competes with in its optical security and performance business",
           "source": {
             "label": "Viavi Solutions 10-K(2026年度)",
@@ -278,7 +278,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Fabrinetが年次報告で、カスタム光学・ガラス事業の競合として、Coherent傘下のPhotop Technologiesを挙げている(2026年度、10-K)",
+          "text": "Fabrinetが年次報告で、カスタム光学・ガラス事業の競合として、Coherent傘下のPhotop Technologiesを挙げている",
           "text_en": "Fabrinet’s FY2026 10-K lists Photop Technologies, a subsidiary of Coherent Corp., among competitors of its customized optics and glass operations",
           "source": {
             "label": "Fabrinet 10-K(2026年度)",

@@ -30,8 +30,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "再稼働するスリーマイル島(Crane Clean Energy Center)の出力をMicrosoftが20年間購入する契約(2024年9月)",
-          "text_en": "20-year PPA under which Microsoft buys the output of the restarted Crane Clean Energy Center (September 2024)",
+          "text": "再稼働するスリーマイル島(Crane Clean Energy Center)の出力をMicrosoftが20年間購入する契約",
+          "text_en": "20-year PPA under which Microsoft buys the output of the restarted Crane Clean Energy Center",
           "source": {
             "label": "Constellation 10-K(2025年度)",
             "label_en": "Constellation 10-K (FY2025)",
@@ -55,8 +55,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "イリノイ州Clinton発電所の出力1,121MWを20年間供給する契約(2025年6月3日)",
-          "text_en": "20-year PPA for 1,121MW of output from the Clinton Clean Energy Center in Illinois (June 3, 2025)",
+          "text": "イリノイ州Clinton発電所の出力1,121MWを20年間供給する契約",
+          "text_en": "20-year PPA for 1,121MW of output from the Clinton Clean Energy Center in Illinois",
           "source": {
             "label": "Constellation の発表(2025年6月3日)",
             "label_en": "Constellation press release (Jun 3, 2025)",
@@ -78,8 +78,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NRGが持つSouth Texas Project原子力発電所の44%持分を約16.5億ドルで取得(2023年完了、NRGの年次報告)",
-          "text_en": "Constellation acquired NRG’s 44% interest in the South Texas Project nuclear plant for about $1.65B (completed 2023, NRG annual report)",
+          "text": "NRGが持つSouth Texas Project原子力発電所の44%持分を約16.5億ドルで取得",
+          "text_en": "Constellation acquired NRG’s 44% interest in the South Texas Project nuclear plant for about $1.65B",
           "source": {
             "label": "NRG Energy 10-K(2025年度)",
             "label_en": "NRG Energy 10-K (FY2025)",
@@ -101,8 +101,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SalemとPeach Bottomの原子力発電所を共同保有(PSEGの年次報告)",
-          "text_en": "Co-owns the Salem and Peach Bottom nuclear stations with Constellation (PSEG annual report)",
+          "text": "SalemとPeach Bottomの原子力発電所を共同保有",
+          "text_en": "Co-owns the Salem and Peach Bottom nuclear stations with Constellation",
           "source": {
             "label": "PSEG 10-K(2025年度)",
             "label_en": "PSEG 10-K (FY2025)",
@@ -124,8 +124,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2022年2月にExelonから分離独立。移行サービス契約でつながりが残る(年次報告)",
-          "text_en": "Spun off from Exelon in February 2022; the two remain linked by a transition services agreement (annual report)",
+          "text": "2022年2月にExelonから分離独立。移行サービス契約でつながりが残る",
+          "text_en": "Spun off from Exelon in February 2022; the two remain linked by a transition services agreement",
           "source": {
             "label": "Constellation 10-K(2025年度)",
             "label_en": "Constellation 10-K (FY2025)",
@@ -149,8 +149,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "メイン州Wyman石油火力発電所の少数持分を保有。主な所有者NextEra Energy Resourcesが運営(2025年度、10-K)",
-          "text_en": "Constellation holds a minority stake in the Wyman (Maine) oil-fired plant, operated by principal owner NextEra Energy Resources (FY2025, 10-K)",
+          "text": "メイン州Wyman石油火力発電所の少数持分を保有。主な所有者NextEra Energy Resourcesが運営",
+          "text_en": "Constellation holds a minority stake in the Wyman (Maine) oil-fired plant, operated by principal owner NextEra Energy Resources",
           "source": {
             "label": "Constellation 10-K(2025年度)",
             "label_en": "Constellation 10-K (FY2025)",

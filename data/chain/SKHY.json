@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "最新のHigh-NA EUV露光装置(EXE:5200B)を量産向けに初めて組み立て(M16、2025年9月)",
-          "text_en": "Assembled the industry’s first High-NA EUV system (EXE:5200B) for mass production at M16 (September 2025)",
+          "text": "最新のHigh-NA EUV露光装置(EXE:5200B)を量産向けに初めて組み立て",
+          "text_en": "Assembled the industry’s first High-NA EUV system (EXE:5200B) for mass production at M16",
           "source": {
             "label": "SK hynix ニュースルーム(2025年9月)",
             "label_en": "SK hynix Newsroom (Sep 2025)",
@@ -144,8 +144,8 @@
         },
         {
           "type": "tie",
-          "text": "次世代メモリーと供給拡大の複数年の技術提携(2026年6月)",
-          "text_en": "Multi-year technology partnership for next-generation memory and expanded supply (June 2026)",
+          "text": "次世代メモリーと供給拡大の複数年の技術提携",
+          "text_en": "Multi-year technology partnership for next-generation memory and expanded supply",
           "source": {
             "label": "SK hynix ニュースルーム(2026年6月)",
             "label_en": "SK hynix Newsroom (Jun 2026)",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "TSMCの先端ロジックとCoWoSパッケージを使い、HBM4を共同開発する覚書(2024年4月)",
-          "text_en": "MOU to co-develop HBM4 using TSMC’s advanced logic and CoWoS packaging (April 2024)",
+          "text": "TSMCの先端ロジックとCoWoSパッケージを使い、HBM4を共同開発する覚書",
+          "text_en": "MOU to co-develop HBM4 using TSMC’s advanced logic and CoWoS packaging",
           "source": {
             "label": "SK hynix ニュースルーム(2024年4月)",
             "label_en": "SK hynix Newsroom (Apr 2024)",
@@ -192,8 +192,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "次世代DRAM・HBMで長期の共同開発契約(2026年3月)",
-          "text_en": "Long-term collaboration agreement on next-generation DRAM and HBM (March 2026)",
+          "text": "次世代DRAM・HBMで長期の共同開発契約",
+          "text_en": "Long-term collaboration agreement on next-generation DRAM and HBM",
           "source": {
             "label": "Applied Materials の発表(2026年3月、MFN配信)",
             "label_en": "Applied Materials press release (Mar 2026, GlobeNewswire via MFN)",
@@ -217,8 +217,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "DDR5・CXLメモリーがAMD EPYC 9004シリーズで動作確認済みと発表(2022年11月)",
-          "text_en": "DDR5 and CXL solutions validated with AMD EPYC 9004 Series processors (November 2022)",
+          "text": "DDR5・CXLメモリーがAMD EPYC 9004シリーズで動作確認済みと発表",
+          "text_en": "DDR5 and CXL solutions validated with AMD EPYC 9004 Series processors",
           "source": {
             "label": "SK hynix ニュースルーム(2022年11月)",
             "label_en": "SK hynix Newsroom (Nov 2022)",
@@ -242,8 +242,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IntelがNAND事業をSK hynixに売却(2回目の取引完了は2025年3月27日、年次報告)",
-          "text_en": "Intel sold its NAND business to SK hynix; second closing on March 27, 2025 (annual report)",
+          "text": "IntelがNAND事業をSK hynixに売却",
+          "text_en": "Intel sold its NAND business to SK hynix; second closing on March 27, 2025",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K FY2025",
@@ -267,8 +267,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "最大株主として20.5%を保有(2026年3月31日時点、目論見書)",
-          "text_en": "Largest shareholder with a 20.5% interest as of March 31, 2026 (prospectus)",
+          "text": "最大株主として20.5%を保有",
+          "text_en": "Largest shareholder with a 20.5% interest as of March 31, 2026",
           "source": {
             "label": "SK hynix 目論見書(Form 424B4, 2026)",
             "label_en": "SK hynix prospectus (Form 424B4, 2026)",
@@ -290,8 +290,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2026年6月、SPC 1がキオクシアの残りの持分をすべて売却したと開示(目論見書)",
-          "text_en": "Disclosed that in June 2026 SPC 1 sold all of its remaining equity interest in Kioxia (prospectus)",
+          "text": "2026年6月、SPC 1がキオクシアの残りの持分をすべて売却したと開示",
+          "text_en": "Disclosed that in June 2026 SPC 1 sold all of its remaining equity interest in Kioxia",
           "source": {
             "label": "SK hynix 目論見書(Form 424B4, 2026)",
             "label_en": "SK hynix prospectus (Form 424B4, 2026)",
@@ -305,8 +305,8 @@
         },
         {
           "type": "rival",
-          "text": "NAND市場の主要な競合としてKIOXIAとSandiskを挙げている(目論見書)",
-          "text_en": "Names KIOXIA and Sandisk among major NAND competitors (prospectus)",
+          "text": "NAND市場の主要な競合としてKIOXIAとSandiskを挙げている",
+          "text_en": "Names KIOXIA and Sandisk among major NAND competitors",
           "source": {
             "label": "SK hynix 目論見書(Form 424B4, 2026)",
             "label_en": "SK hynix prospectus (Form 424B4, 2026)",
@@ -327,8 +327,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DRAMとNANDの主要な競合としてSamsung Electronicsを挙げている(目論見書)",
-          "text_en": "Names Samsung Electronics a major competitor in DRAM and NAND (prospectus)",
+          "text": "DRAMとNANDの主要な競合としてSamsung Electronicsを挙げている",
+          "text_en": "Names Samsung Electronics a major competitor in DRAM and NAND",
           "source": {
             "label": "SK hynix 目論見書(Form 424B4, 2026)",
             "label_en": "SK hynix prospectus (Form 424B4, 2026)",

@@ -40,7 +40,7 @@
       "relations": [
         {
           "type": "up",
-          "text": "Palo Alto Networksが年次報告で、自社製品を組み立てる電子機器の受託製造(EMS)会社としてFlex(Flextronics International)を挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、自社製品を組み立てる電子機器の受託製造(EMS)会社としてFlex(Flextronics International)を挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Flex (Flextronics International) as its EMS provider that assembles its products",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -63,8 +63,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをAmazonのAWS Marketplaceで販売している(2026年度、10-K)",
-          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through AWS Marketplace (FY2026 10-K)",
+          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをAmazonのAWS Marketplaceで販売している",
+          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through AWS Marketplace",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -88,8 +88,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをMicrosoftのAzure Marketplaceで販売している(2026年度、10-K)",
-          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through Azure Marketplace (FY2026 10-K)",
+          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをMicrosoftのAzure Marketplaceで販売している",
+          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through Azure Marketplace",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -103,8 +103,8 @@
         },
         {
           "type": "tie",
-          "text": "Frontier AI Critical Defense Programで、MAPPを通じてMicrosoftと協業している(2026年8月19日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks collaborates with Microsoft (via MAPP) in its Frontier AI Critical Defense Program (August 19, 2026, Palo Alto Networks release)",
+          "text": "Frontier AI Critical Defense Programで、MAPPを通じてMicrosoftと協業している",
+          "text_en": "Palo Alto Networks collaborates with Microsoft (via MAPP) in its Frontier AI Critical Defense Program",
           "source": {
             "label": "Palo Alto Networks の発表(2026年8月19日)",
             "label_en": "Palo Alto Networks press release (Aug 19, 2026)",
@@ -116,7 +116,7 @@
         },
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてMicrosoftを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてMicrosoftを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Microsoft among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをAlphabetのGoogle Cloud Marketplaceで販売している(2026年度、10-K)",
-          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through Google Cloud Marketplace (FY2026 10-K)",
+          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをAlphabetのGoogle Cloud Marketplaceで販売している",
+          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through Google Cloud Marketplace",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -154,8 +154,8 @@
         },
         {
           "type": "tie",
-          "text": "Google Cloudと、AIとクラウドのセキュリティに関する戦略的提携の大幅な拡大を発表(2025年12月19日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks and Google Cloud announced a significant expansion of their strategic partnership for AI and cloud security (December 19, 2025, Palo Alto Networks release)",
+          "text": "Google Cloudと、AIとクラウドのセキュリティに関する戦略的提携の大幅な拡大を発表",
+          "text_en": "Palo Alto Networks and Google Cloud announced a significant expansion of their strategic partnership for AI and cloud security",
           "source": {
             "label": "Palo Alto Networks の発表(2025年12月19日)",
             "label_en": "Palo Alto Networks press release (Dec 19, 2025)",
@@ -169,7 +169,7 @@
         },
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてAlphabet(Google Cloud)を挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてAlphabet(Google Cloud)を挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Alphabet(Google Cloud) among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -192,8 +192,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをOracleのOracle Cloud Marketplaceで販売している(2026年度、10-K)",
-          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through Oracle Cloud Marketplace (FY2026 10-K)",
+          "text": "Palo Alto Networksが、VM-SeriesバーチャルファイアウォールとCloud NGFWをOracleのOracle Cloud Marketplaceで販売している",
+          "text_en": "Palo Alto Networks sells its VM-Series virtual firewalls and Cloud NGFW through Oracle Cloud Marketplace",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -217,7 +217,7 @@
       "relations": [
         {
           "type": "down",
-          "text": "CDWが年次報告で、最上位の認定を受けた主要ベンダーパートナーの1社としてPalo Alto Networksを挙げている(2025年度、10-K)",
+          "text": "CDWが年次報告で、最上位の認定を受けた主要ベンダーパートナーの1社としてPalo Alto Networksを挙げている",
           "text_en": "CDW’s FY2025 10-K lists Palo Alto Networks among major vendor partners from which it has received the highest level of certification",
           "source": {
             "label": "CDW 10-K(2025年度)",
@@ -242,7 +242,7 @@
       "relations": [
         {
           "type": "down",
-          "text": "ePlusが年次報告で、自社が再販・統合する技術パートナーの1社としてPalo Alto Networksを挙げている(2026年度、10-K)",
+          "text": "ePlusが年次報告で、自社が再販・統合する技術パートナーの1社としてPalo Alto Networksを挙げている",
           "text_en": "ePlus’s FY2026 10-K lists Palo Alto Networks among technology partners whose solutions it resells and integrates",
           "source": {
             "label": "ePlus 10-K(2026年度)",
@@ -267,8 +267,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2024年8月31日、IBMのQRadar事業の一部資産(知的財産、顧客関係、SaaS顧客契約)の買収を完了。IBMに条件付き対価を支払う(2026年度、10-K)",
-          "text_en": "Completed the acquisition of certain IBM QRadar assets (IP, customer relationships, SaaS customer contracts) on August 31, 2024, with contingent consideration payable to IBM (FY2026 10-K)",
+          "text": "2024年8月31日、IBMのQRadar事業の一部資産(知的財産、顧客関係、SaaS顧客契約)の買収を完了。IBMに条件付き対価を支払う",
+          "text_en": "Completed the acquisition of certain IBM QRadar assets (IP, customer relationships, SaaS customer contracts) on August 31, 2024, with contingent consideration payable to IBM",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -282,8 +282,8 @@
         },
         {
           "type": "tie",
-          "text": "IBM、Red Hatと、Virtual PatchingをProject Lightwellに統合する協業を発表(2026年6月24日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks, IBM and Red Hat announced a collaboration integrating Virtual Patching with Project Lightwell (June 24, 2026, Palo Alto Networks release)",
+          "text": "IBM、Red Hatと、Virtual PatchingをProject Lightwellに統合する協業を発表",
+          "text_en": "Palo Alto Networks, IBM and Red Hat announced a collaboration integrating Virtual Patching with Project Lightwell",
           "source": {
             "label": "Palo Alto Networks の発表(2026年6月24日)",
             "label_en": "Palo Alto Networks press release (Jun 24, 2026)",
@@ -295,7 +295,7 @@
         },
         {
           "type": "tie",
-          "text": "IBMが年次報告で、戦略的パートナーの1社としてPalo Alto Networksを挙げている(2025年度、10-K)",
+          "text": "IBMが年次報告で、戦略的パートナーの1社としてPalo Alto Networksを挙げている",
           "text_en": "IBM’s FY2025 10-K names Palo Alto Networks among its strategic partners",
           "source": {
             "label": "IBM 10-K(2025年度)",
@@ -320,8 +320,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AT&T Businessと協業を拡大し、AT&T Dynamic DefenseとAT&T SASEの運用管理型サービスを提供(2026年7月29日、Palo Alto Networks発表)",
-          "text_en": "AT&T Business and Palo Alto Networks expanded their collaboration with managed AT&T Dynamic Defense and AT&T SASE offerings (July 29, 2026, Palo Alto Networks release)",
+          "text": "AT&T Businessと協業を拡大し、AT&T Dynamic DefenseとAT&T SASEの運用管理型サービスを提供",
+          "text_en": "AT&T Business and Palo Alto Networks expanded their collaboration with managed AT&T Dynamic Defense and AT&T SASE offerings",
           "source": {
             "label": "Palo Alto Networks の発表(2026年7月29日)",
             "label_en": "Palo Alto Networks press release (Jul 29, 2026)",
@@ -345,8 +345,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "T-Mobileと、Prisma SASE 5Gを土台にした運用管理型のSASEサービスを開始(2025年5月15日、Palo Alto Networks発表)",
-          "text_en": "T-Mobile and Palo Alto Networks launched a managed SASE offering built on Prisma SASE 5G (May 15, 2025, Palo Alto Networks release)",
+          "text": "T-Mobileと、Prisma SASE 5Gを土台にした運用管理型のSASEサービスを開始",
+          "text_en": "T-Mobile and Palo Alto Networks launched a managed SASE offering built on Prisma SASE 5G",
           "source": {
             "label": "Palo Alto Networks の発表(2025年5月15日)",
             "label_en": "Palo Alto Networks press release (May 15, 2025)",
@@ -368,8 +368,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Deutsche Telekomと、欧州の規制産業向けにT Security経由でSovereign Cortexを開始(2026年6月9日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks and Deutsche Telekom launched Sovereign Cortex with T Security for regulated European industries (June 9, 2026, Palo Alto Networks release)",
+          "text": "Deutsche Telekomと、欧州の規制産業向けにT Security経由でSovereign Cortexを開始",
+          "text_en": "Palo Alto Networks and Deutsche Telekom launched Sovereign Cortex with T Security for regulated European industries",
           "source": {
             "label": "Palo Alto Networks の発表(2026年6月9日)",
             "label_en": "Palo Alto Networks press release (Jun 9, 2026)",
@@ -391,8 +391,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Oktaと、新たな連携(Prisma Access Browser、Cortex)を伴う提携の拡大を発表(2025年7月15日、Palo Alto Networks発表)",
-          "text_en": "Okta and Palo Alto Networks announced an expanded partnership with new integrations (Prisma Access Browser, Cortex) (July 15, 2025, Palo Alto Networks release)",
+          "text": "Oktaと、新たな連携(Prisma Access Browser、Cortex)を伴う提携の拡大を発表",
+          "text_en": "Okta and Palo Alto Networks announced an expanded partnership with new integrations (Prisma Access Browser, Cortex)",
           "source": {
             "label": "Palo Alto Networks の発表(2025年7月15日)",
             "label_en": "Palo Alto Networks press release (Jul 15, 2025)",
@@ -404,7 +404,7 @@
         },
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてOktaを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてOktaを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Okta among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -427,8 +427,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Prisma AIRSをServiceNowのAIエージェント基盤にネイティブ統合(2025年11月18日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks integrated Prisma AIRS natively with ServiceNow’s AI agent platform (November 18, 2025, Palo Alto Networks release)",
+          "text": "Prisma AIRSをServiceNowのAIエージェント基盤にネイティブ統合",
+          "text_en": "Palo Alto Networks integrated Prisma AIRS natively with ServiceNow’s AI agent platform",
           "source": {
             "label": "Palo Alto Networks の発表(2025年11月18日)",
             "label_en": "Palo Alto Networks press release (Nov 18, 2025)",
@@ -450,8 +450,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Nokiaと、AIファクトリー向けデータセンター・セキュリティで協業を発表(2026年3月2日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks and Nokia announced a collaboration on data center security for AI factories (March 2, 2026, Palo Alto Networks release)",
+          "text": "Nokiaと、AIファクトリー向けデータセンター・セキュリティで協業を発表",
+          "text_en": "Palo Alto Networks and Nokia announced a collaboration on data center security for AI factories",
           "source": {
             "label": "Palo Alto Networks の発表(2026年3月2日)",
             "label_en": "Palo Alto Networks press release (Mar 2, 2026)",
@@ -475,8 +475,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Unit 42のサービスが、継続的な攻撃的セキュリティ・テストにAnthropicのClaude Mythosモデルを使う(2026年9月22日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks’ Unit 42 service uses Anthropic’s Claude Mythos models for continuous offensive security testing (September 22, 2026, Palo Alto Networks release)",
+          "text": "Unit 42のサービスが、継続的な攻撃的セキュリティ・テストにAnthropicのClaude Mythosモデルを使う",
+          "text_en": "Palo Alto Networks’ Unit 42 service uses Anthropic’s Claude Mythos models for continuous offensive security testing",
           "source": {
             "label": "Palo Alto Networks の発表(2026年9月22日)",
             "label_en": "Palo Alto Networks press release (Sep 22, 2026)",
@@ -500,8 +500,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Unit 42のサービスが、継続的な攻撃的セキュリティ・テストにOpenAIのGPT-5.6-Cyberモデルを使う(2026年9月22日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks’ Unit 42 service uses OpenAI’s GPT-5.6-Cyber model for continuous offensive security testing (September 22, 2026, Palo Alto Networks release)",
+          "text": "Unit 42のサービスが、継続的な攻撃的セキュリティ・テストにOpenAIのGPT-5.6-Cyberモデルを使う",
+          "text_en": "Palo Alto Networks’ Unit 42 service uses OpenAI’s GPT-5.6-Cyber model for continuous offensive security testing",
           "source": {
             "label": "Palo Alto Networks の発表(2026年9月22日)",
             "label_en": "Palo Alto Networks press release (Sep 22, 2026)",
@@ -525,8 +525,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OT(制御系)の脅威調査でSiemensと協業している(2026年8月19日、Palo Alto Networks発表)",
-          "text_en": "Palo Alto Networks collaborates with Siemens on OT threat research (August 19, 2026, Palo Alto Networks release)",
+          "text": "OT(制御系)の脅威調査でSiemensと協業している",
+          "text_en": "Palo Alto Networks collaborates with Siemens on OT threat research",
           "source": {
             "label": "Palo Alto Networks の発表(2026年8月19日)",
             "label_en": "Palo Alto Networks press release (Aug 19, 2026)",
@@ -548,8 +548,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "三菱電機が、Frontier AI Critical Defense Programの協業に参加(2026年8月19日、Palo Alto Networks発表)",
-          "text_en": "Mitsubishi Electric joined Palo Alto Networks’ Frontier AI Critical Defense Program collaboration (August 19, 2026, Palo Alto Networks release)",
+          "text": "三菱電機が、Frontier AI Critical Defense Programの協業に参加",
+          "text_en": "Mitsubishi Electric joined Palo Alto Networks’ Frontier AI Critical Defense Program collaboration",
           "source": {
             "label": "Palo Alto Networks の発表(2026年8月19日)",
             "label_en": "Palo Alto Networks press release (Aug 19, 2026)",
@@ -571,7 +571,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rapid7が年次報告で、最近の技術アライアンスの1社としてPalo Alto Networksを挙げている(2025年度、10-K)",
+          "text": "Rapid7が年次報告で、最近の技術アライアンスの1社としてPalo Alto Networksを挙げている",
           "text_en": "Rapid7’s FY2025 10-K lists Palo Alto Networks among its recent technology alliances",
           "source": {
             "label": "Rapid7 10-K(2025年度)",
@@ -594,7 +594,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Zoomが年次報告で、提携するソフトウェア提供企業の1社としてPalo Alto Networksを挙げている(2026年度、10-K)",
+          "text": "Zoomが年次報告で、提携するソフトウェア提供企業の1社としてPalo Alto Networksを挙げている",
           "text_en": "Zoom’s FY2026 10-K lists Palo Alto Networks among software providers it partners with",
           "source": {
             "label": "Zoom 10-K(2026年度)",
@@ -617,7 +617,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Nutanixが年次報告で、統合製品や相互運用のための提携先の1社としてPalo Alto Networksを挙げている(2026年度、10-K)",
+          "text": "Nutanixが年次報告で、統合製品や相互運用のための提携先の1社としてPalo Alto Networksを挙げている",
           "text_en": "Nutanix’s FY2026 10-K cites partnerships with Palo Alto Networks for integrated offerings and interoperability",
           "source": {
             "label": "Nutanix 10-K(2026年度)",
@@ -640,7 +640,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Kyndrylが年次報告で、主要な提携先の1社としてPalo Alto Networksを挙げている(2026年度、10-K)",
+          "text": "Kyndrylが年次報告で、主要な提携先の1社としてPalo Alto Networksを挙げている",
           "text_en": "Kyndryl’s FY2026 10-K lists Palo Alto Networks among its key partnerships",
           "source": {
             "label": "Kyndryl 10-K(2026年度)",
@@ -663,7 +663,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rackspaceが年次報告で、標準のプライベートクラウド商品を提供するためのOEM提携先の1社としてPalo Alto Networksを挙げている(2025年度、10-K)",
+          "text": "Rackspaceが年次報告で、標準のプライベートクラウド商品を提供するためのOEM提携先の1社としてPalo Alto Networksを挙げている",
           "text_en": "Rackspace’s FY2025 10-K lists Palo Alto Networks among OEMs it partners with for standard Private Cloud offers",
           "source": {
             "label": "Rackspace 10-K(2025年度)",
@@ -686,7 +686,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Extreme Networksが年次報告で、Secure Web Gatewayの連携先の1社としてPalo Alto Networksを挙げている(2026年度、10-K)",
+          "text": "Extreme Networksが年次報告で、Secure Web Gatewayの連携先の1社としてPalo Alto Networksを挙げている",
           "text_en": "Extreme Networks’ FY2026 10-K lists Palo Alto Networks among Secure Web Gateway partners it integrates with",
           "source": {
             "label": "Extreme Networks 10-K(2026年度)",
@@ -709,8 +709,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAが、BlueField-4搭載のデータセンター基盤を構築する業界リーダーの1社としてPalo Alto Networksを挙げている(2025年11月19日、決算発表)",
-          "text_en": "NVIDIA lists Palo Alto Networks among industry leaders building BlueField-4-accelerated data center platforms (November 19, 2025, earnings release)",
+          "text": "NVIDIAが、BlueField-4搭載のデータセンター基盤を構築する業界リーダーの1社としてPalo Alto Networksを挙げている",
+          "text_en": "NVIDIA lists Palo Alto Networks among industry leaders building BlueField-4-accelerated data center platforms",
           "source": {
             "label": "NVIDIA 8-K Q3 2026年度 results release",
             "label_en": "NVIDIA 8-K Q3 FY2026 results release",
@@ -732,7 +732,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCiscoを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCiscoを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Cisco among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -755,7 +755,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCheck Point Softwareを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCheck Point Softwareを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Check Point Software among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -778,7 +778,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCrowdStrikeを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCrowdStrikeを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names CrowdStrike among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -801,7 +801,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてFortinetを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてFortinetを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Fortinet among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -824,7 +824,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてSailPointを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてSailPointを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names SailPoint among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -847,7 +847,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてZscalerを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてZscalerを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Zscaler among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -870,7 +870,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてDatadogを挙げている(オブザーバビリティ分野)(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてDatadogを挙げている(オブザーバビリティ分野)",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Datadog among its main competitors in observability",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -893,7 +893,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてDynatraceを挙げている(オブザーバビリティ分野)(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてDynatraceを挙げている(オブザーバビリティ分野)",
           "text_en": "Palo Alto Networks’ FY2026 10-K names Dynatrace among its main competitors in observability",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -916,7 +916,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Netskopeが年次報告で、主な競合の1社としてPalo Alto Networksを挙げている(2026年1月期、10-K)",
+          "text": "Netskopeが年次報告で、主な競合の1社としてPalo Alto Networksを挙げている",
           "text_en": "Netskope’s 10-K (FY ended January 2026) names Palo Alto Networks among its primary competitors",
           "source": {
             "label": "Netskope 10-K",
@@ -939,7 +939,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SentinelOneが年次報告で、汎用ネットワーク・セキュリティ製品の提供企業の1社としてPalo Alto Networksを挙げている(2026年度、10-K)",
+          "text": "SentinelOneが年次報告で、汎用ネットワーク・セキュリティ製品の提供企業の1社としてPalo Alto Networksを挙げている",
           "text_en": "SentinelOne’s FY2026 10-K lists Palo Alto Networks among providers of general network security products that compete with it",
           "source": {
             "label": "SentinelOne 10-K(2026年度)",
@@ -962,7 +962,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualysが年次報告で、競合する上場企業の1社としてPalo Alto Networksを挙げている(2025年度、10-K)",
+          "text": "Qualysが年次報告で、競合する上場企業の1社としてPalo Alto Networksを挙げている",
           "text_en": "Qualys’s FY2025 10-K names Palo Alto Networks among its public-company competitors",
           "source": {
             "label": "Qualys 10-K(2025年度)",
@@ -985,7 +985,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Tenableが年次報告で、クラウドセキュリティの競合の1社としてPalo Alto Networksを挙げている(2025年度、10-K)",
+          "text": "Tenableが年次報告で、クラウドセキュリティの競合の1社としてPalo Alto Networksを挙げている",
           "text_en": "Tenable’s FY2025 10-K names Palo Alto Networks among cloud security competitors",
           "source": {
             "label": "Tenable 10-K(2025年度)",
@@ -1008,7 +1008,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Elasticが年次報告で、Elastic Securityの競合の1社としてPalo Alto Networksを挙げている(2026年度、10-K)",
+          "text": "Elasticが年次報告で、Elastic Securityの競合の1社としてPalo Alto Networksを挙げている",
           "text_en": "Elastic’s FY2026 10-K names Palo Alto Networks among Elastic Security competitors",
           "source": {
             "label": "Elastic 10-K(2026年度)",
@@ -1031,7 +1031,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HPEが年次報告で、ネットワーク・セキュリティ分野の主な競合の1社としてPalo Alto Networksを挙げている(2025年度、10-K)",
+          "text": "HPEが年次報告で、ネットワーク・セキュリティ分野の主な競合の1社としてPalo Alto Networksを挙げている",
           "text_en": "HPE’s FY2025 10-K names Palo Alto Networks among its primary networking/security competitors",
           "source": {
             "label": "HPE 10-K(2025年度)",

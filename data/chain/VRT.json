@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "TecogenのDTxチラーをデータセンター冷却向けにVertivが販売する販売・マーケティング契約(2025年2月28日)",
-          "text_en": "Sales and marketing agreement under which Vertiv sells Tecogen DTx chillers for data center cooling (February 28, 2025)",
+          "text": "TecogenのDTxチラーをデータセンター冷却向けにVertivが販売する販売・マーケティング契約",
+          "text_en": "Sales and marketing agreement under which Vertiv sells Tecogen DTx chillers for data center cooling",
           "source": {
             "label": "Tecogen 10-K(2025年度)",
             "label_en": "Tecogen 10-K (FY2025)",
@@ -64,8 +64,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Vertivとのターンキー契約で、設備・資材に1.29億ドルを約束(Bitfarmsの年次報告)",
-          "text_en": "Committed $129M for equipment and materials under a turnkey agreement with Vertiv (Bitfarms annual report)",
+          "text": "Vertivとのターンキー契約で、設備・資材に1.29億ドルを約束",
+          "text_en": "Committed $129M for equipment and materials under a turnkey agreement with Vertiv",
           "source": {
             "label": "Bitfarms 10-K(2025年度)",
             "label_en": "Bitfarms 10-K (FY2025)",
@@ -86,8 +86,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "River Bendキャンパス向けに、AIデータセンターのインフラをVertivと共同開発(Hut 8の年次報告)",
-          "text_en": "Co-developed an AI data center infrastructure solution with Vertiv for its River Bend campus (Hut 8 annual report)",
+          "text": "River Bendキャンパス向けに、AIデータセンターのインフラをVertivと共同開発",
+          "text_en": "Co-developed an AI data center infrastructure solution with Vertiv for its River Bend campus",
           "source": {
             "label": "Hut 8 10-K(2025年度)",
             "label_en": "Hut 8 10-K (FY2025)",
@@ -108,8 +108,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Omniverse DSX Blueprintで、プレハブ式の「Vertiv OneCore Rubin DSX」AI工場インフラを構築(NVIDIAの発表、2026年3月16日)",
-          "text_en": "Uses the Omniverse DSX Blueprint to build its prefabricated Vertiv OneCore Rubin DSX AI factory infrastructure (NVIDIA press release, March 16, 2026)",
+          "text": "Omniverse DSX Blueprintで、プレハブ式の「Vertiv OneCore Rubin DSX」AI工場インフラを構築",
+          "text_en": "Uses the Omniverse DSX Blueprint to build its prefabricated Vertiv OneCore Rubin DSX AI factory infrastructure",
           "source": {
             "label": "NVIDIA ニュースルーム の発表",
             "label_en": "NVIDIA newsroom press release",
@@ -121,8 +121,8 @@
         },
         {
           "type": "tie",
-          "text": "次世代AI計算向けの電源・冷却インフラでNVIDIAと提携と記載(年次報告)",
-          "text_en": "Says its partnership with NVIDIA supports power and thermal infrastructure for next-generation AI computing (annual report)",
+          "text": "次世代AI計算向けの電源・冷却インフラでNVIDIAと提携と記載",
+          "text_en": "Says its partnership with NVIDIA supports power and thermal infrastructure for next-generation AI computing",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",
@@ -134,7 +134,7 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAが、800VDCのAIファクトリー電源構想のデータセンター電源システムの提携先の1社としてVertivを掲載(NVIDIA技術ブログ)",
+          "text": "NVIDIAが、800VDCのAIファクトリー電源構想のデータセンター電源システムの提携先の1社としてVertivを掲載",
           "text_en": "NVIDIA lists Vertiv among data center power system partners for its 800 VDC AI factory power architecture (NVIDIA Technical Blog)",
           "source": {
             "label": "NVIDIA Technical Blog(800 VDC)",
@@ -158,8 +158,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "将来のデータセンター電源に向けた代替エネルギーでOkloと協力(年次報告)",
-          "text_en": "Collaborates with Oklo on alternative energy solutions for future data center power (annual report)",
+          "text": "将来のデータセンター電源に向けた代替エネルギーでOkloと協力",
+          "text_en": "Collaborates with Oklo on alternative energy solutions for future data center power",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",
@@ -183,8 +183,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "分散型発電とバックアップ電源でCaterpillarと提携(年次報告)",
-          "text_en": "Partnership with Caterpillar for distributed power generation and backup solutions (annual report)",
+          "text": "分散型発電とバックアップ電源でCaterpillarと提携",
+          "text_en": "Partnership with Caterpillar for distributed power generation and backup solutions",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",

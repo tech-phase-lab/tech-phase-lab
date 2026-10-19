@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Falconプラットフォームを主にAWS上で運用し、自社データセンターで補完(2026年度、10-K)",
-          "text_en": "Hosts its Falcon platform primarily on AWS, supplemented by its own data centers (FY2026 10-K)",
+          "text": "Falconプラットフォームを主にAWS上で運用し、自社データセンターで補完",
+          "text_en": "Hosts its Falcon platform primarily on AWS, supplemented by its own data centers",
           "source": {
             "label": "CrowdStrike 10-K(2026年度)",
             "label_en": "CrowdStrike 10-K (FY2026)",
@@ -55,8 +55,8 @@
         },
         {
           "type": "tie",
-          "text": "AWSがAWS Marketplaceで統合SIEMを提供する最初のセキュリティ提携先としてCrowdStrikeを選定(2025年12月、8-K)",
-          "text_en": "AWS selected CrowdStrike as the first cybersecurity partner to deliver an integrated SIEM through SaaS Quick Launch in AWS Marketplace (December 2025, 8-K)",
+          "text": "AWSがAWS Marketplaceで統合SIEMを提供する最初のセキュリティ提携先としてCrowdStrikeを選定",
+          "text_en": "AWS selected CrowdStrike as the first cybersecurity partner to deliver an integrated SIEM through SaaS Quick Launch in AWS Marketplace",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q3 FY26)",
@@ -70,8 +70,8 @@
         },
         {
           "type": "tie",
-          "text": "AWSと協力してAI・クラウド・Next-Gen SIEMの新機能を発表し、Project QuiltWorksをAWSと拡大(2026年8月、8-K)",
-          "text_en": "Introduced AI, cloud and Next-Gen SIEM innovations in collaboration with AWS and extended Project QuiltWorks with AWS (August 2026, 8-K)",
+          "text": "AWSと協力してAI・クラウド・Next-Gen SIEMの新機能を発表し、Project QuiltWorksをAWSと拡大",
+          "text_en": "Introduced AI, cloud and Next-Gen SIEM innovations in collaboration with AWS and extended Project QuiltWorks with AWS",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q2 FY27)",
@@ -95,8 +95,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Microsoftとの戦略的提携を拡大し、FalconをMicrosoft Marketplaceで既存のAzure利用コミットメントを使って購入可能にした(2026年3月、8-K)",
-          "text_en": "Expanded its strategic alliance with Microsoft so the Falcon platform can be bought on Microsoft Marketplace using Azure Consumption Commitment (March 2026, 8-K)",
+          "text": "Microsoftとの戦略的提携を拡大し、FalconをMicrosoft Marketplaceで既存のAzure利用コミットメントを使って購入可能にした",
+          "text_en": "Expanded its strategic alliance with Microsoft so the Falcon platform can be bought on Microsoft Marketplace using Azure Consumption Commitment",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q4 FY26)",
@@ -108,8 +108,8 @@
         },
         {
           "type": "tie",
-          "text": "Falcon AIDRを、Microsoft Azureを含むAIゲートウェイ提携先に拡大(2026年8月、8-K)",
-          "text_en": "Extended Falcon AIDR to AI gateway partners including Microsoft Azure (August 2026, 8-K)",
+          "text": "Falcon AIDRを、Microsoft Azureを含むAIゲートウェイ提携先に拡大",
+          "text_en": "Extended Falcon AIDR to AI gateway partners including Microsoft Azure",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q2 FY27)",
@@ -123,8 +123,8 @@
         },
         {
           "type": "tie",
-          "text": "Microsoft Defender環境への対応を拡大(Falcon OverWatch for Defender、Next-Gen SIEM連携)(2026年6月、8-K)",
-          "text_en": "Expanded support for Microsoft Defender environments (Falcon OverWatch for Defender, Next-Gen SIEM integration) (June 2026, 8-K)",
+          "text": "Microsoft Defender環境への対応を拡大(Falcon OverWatch for Defender、Next-Gen SIEM連携)",
+          "text_en": "Expanded support for Microsoft Defender environments (Falcon OverWatch for Defender, Next-Gen SIEM integration)",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q1 FY27)",
@@ -146,8 +146,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Google CloudにCloud Detection and Responseを拡大し、2026年のGoogle Cloudセキュリティ・パートナー・オブ・ザ・イヤー(インフラ保護部門)に選出、Google Agent Cloud Ecosystemのローンチ・パートナーにも選定(2026年6月、8-K)",
-          "text_en": "Expanded Cloud Detection and Response to Google Cloud, named 2026 Google Cloud Security Partner of the Year (Infrastructure Protection) and a launch partner for the Google Agent Cloud Ecosystem (June 2026, 8-K)",
+          "text": "Google CloudにCloud Detection and Responseを拡大し、2026年のGoogle Cloudセキュリティ・パートナー・オブ・ザ・イヤー(インフラ保護部門)に選出、Google Agent Cloud Ecosystemのローンチ・パートナーにも選定",
+          "text_en": "Expanded Cloud Detection and Response to Google Cloud, named 2026 Google Cloud Security Partner of the Year (Infrastructure Protection) and a launch partner for the Google Agent Cloud Ecosystem",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q1 FY27)",
@@ -161,8 +161,8 @@
         },
         {
           "type": "tie",
-          "text": "AWS Marketplaceに加え、Google MarketplaceとMicrosoft MarketplaceでもFalconを販売(2026年度、10-K)",
-          "text_en": "Sells the Falcon platform via Google Marketplace and Microsoft Marketplace in addition to AWS Marketplace (FY2026 10-K)",
+          "text": "AWS Marketplaceに加え、Google MarketplaceとMicrosoft MarketplaceでもFalconを販売",
+          "text_en": "Sells the Falcon platform via Google Marketplace and Microsoft Marketplace in addition to AWS Marketplace",
           "source": {
             "label": "CrowdStrike 10-K(2026年度)",
             "label_en": "CrowdStrike 10-K (FY2026)",
@@ -186,8 +186,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "CoreWeaveと、エージェント時代の安全なAIクラウド基盤に向けたグローバルな提携を発表(2025年12月、8-K)",
-          "text_en": "Unveiled a global partnership with CoreWeave for a secure AI cloud foundation (December 2025, 8-K)",
+          "text": "CoreWeaveと、エージェント時代の安全なAIクラウド基盤に向けたグローバルな提携を発表",
+          "text_en": "Unveiled a global partnership with CoreWeave for a secure AI cloud foundation",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q3 FY26)",
@@ -209,8 +209,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAと協業し、Nemotron・NeMo・NIMを使うCharlotte AI AgentWorksを展開(2025年12月、8-K)",
-          "text_en": "Collaborated with NVIDIA on Charlotte AI AgentWorks using Nemotron, NeMo and NIM (December 2025, 8-K)",
+          "text": "NVIDIAと協業し、Nemotron・NeMo・NIMを使うCharlotte AI AgentWorksを展開",
+          "text_en": "Collaborated with NVIDIA on Charlotte AI AgentWorks using Nemotron, NeMo and NIM",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q3 FY26)",
@@ -222,8 +222,8 @@
         },
         {
           "type": "tie",
-          "text": "AWS、NVIDIA、OpenAIとともにCharlotte AI AgentWorks Ecosystemを立ち上げ(2026年6月、8-K)",
-          "text_en": "Charlotte AI AgentWorks Ecosystem was created with AWS, NVIDIA and OpenAI (June 2026, 8-K)",
+          "text": "AWS、NVIDIA、OpenAIとともにCharlotte AI AgentWorks Ecosystemを立ち上げ",
+          "text_en": "Charlotte AI AgentWorks Ecosystem was created with AWS, NVIDIA and OpenAI",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q1 FY27)",
@@ -247,8 +247,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Intelとの戦略的協業を拡大し、FalconをAI PC向けに最適化(2026年6月、8-K)",
-          "text_en": "Expanded a strategic collaboration with Intel to optimize Falcon for AI PCs (June 2026, 8-K)",
+          "text": "Intelとの戦略的協業を拡大し、FalconをAI PC向けに最適化",
+          "text_en": "Expanded a strategic collaboration with Intel to optimize Falcon for AI PCs",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q1 FY27)",
@@ -270,8 +270,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AWS、Intel、Meta、NVIDIA、Salesforceとともに、企業のAIを守る新機能を発表(2025年12月、8-K)",
-          "text_en": "Announced innovations with AWS, Intel, Meta, NVIDIA and Salesforce to secure enterprise AI (December 2025, 8-K)",
+          "text": "AWS、Intel、Meta、NVIDIA、Salesforceとともに、企業のAIを守る新機能を発表",
+          "text_en": "Announced innovations with AWS, Intel, Meta, NVIDIA and Salesforce to secure enterprise AI",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q3 FY26)",
@@ -295,8 +295,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AWS、Intel、Meta、NVIDIAとともに、Salesforceと企業のAIを守る新機能を発表(2025年12月、8-K)",
-          "text_en": "Announced innovations with Salesforce (among others) to secure enterprise AI (December 2025, 8-K)",
+          "text": "AWS、Intel、Meta、NVIDIAとともに、Salesforceと企業のAIを守る新機能を発表",
+          "text_en": "Announced innovations with Salesforce (among others) to secure enterprise AI",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q3 FY26)",
@@ -320,8 +320,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IBMとの戦略的協業を拡大し、Charlotte AIをIBMのATOMと統合してエージェント型SOCを推進(2026年6月、8-K)",
-          "text_en": "Expanded a strategic collaboration with IBM to integrate Charlotte AI with IBM’s ATOM for agentic SOC (June 2026, 8-K)",
+          "text": "IBMとの戦略的協業を拡大し、Charlotte AIをIBMのATOMと統合してエージェント型SOCを推進",
+          "text_en": "Expanded a strategic collaboration with IBM to integrate Charlotte AI with IBM’s ATOM for agentic SOC",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q1 FY27)",
@@ -343,8 +343,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OpenAIとAnthropicが参加するサイバーセキュリティ連合Project QuiltWorksを立ち上げ、OpenAIのTrusted Access for Cyberのローンチ・パートナーにもなった(2026年6月、8-K)",
-          "text_en": "Launched the Project QuiltWorks cybersecurity coalition featuring OpenAI and Anthropic, and is a launch partner in OpenAI’s Trusted Access for Cyber (June 2026, 8-K)",
+          "text": "OpenAIとAnthropicが参加するサイバーセキュリティ連合Project QuiltWorksを立ち上げ、OpenAIのTrusted Access for Cyberのローンチ・パートナーにもなった",
+          "text_en": "Launched the Project QuiltWorks cybersecurity coalition featuring OpenAI and Anthropic, and is a launch partner in OpenAI’s Trusted Access for Cyber",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q1 FY27)",
@@ -368,8 +368,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AnthropicのProject Glasswingと、Anthropicが参加するQuiltWorks連合の両方でローンチ・パートナー(2026年6月、8-K)",
-          "text_en": "A launch partner in Anthropic’s Project Glasswing and in the QuiltWorks coalition featuring Anthropic (June 2026, 8-K)",
+          "text": "AnthropicのProject Glasswingと、Anthropicが参加するQuiltWorks連合の両方でローンチ・パートナー",
+          "text_en": "A launch partner in Anthropic’s Project Glasswing and in the QuiltWorks coalition featuring Anthropic",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q1 FY27)",
@@ -393,8 +393,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "サウジアラビアでAramcoと覚書(MoU)を締結(2026年3月、8-K)",
-          "text_en": "Signed a memorandum of understanding (MoU) in Saudi Arabia with Aramco (March 2026, 8-K)",
+          "text": "サウジアラビアでAramcoと覚書(MoU)を締結",
+          "text_en": "Signed a memorandum of understanding (MoU) in Saudi Arabia with Aramco",
           "source": {
             "label": "CrowdStrike 8-K Ex.99.1",
             "label_en": "CrowdStrike 8-K Ex.99.1 (Q4 FY26)",
@@ -418,8 +418,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Dell MDRをCrowdStrike Falcon XDRプラットフォーム上で提供する提携を拡大(2024年3月5日、Dell発表)",
-          "text_en": "Dell and CrowdStrike expanded their partnership to deliver Dell MDR on the CrowdStrike Falcon XDR platform (March 5, 2024, Dell release)",
+          "text": "Dell MDRをCrowdStrike Falcon XDRプラットフォーム上で提供する提携を拡大",
+          "text_en": "Dell and CrowdStrike expanded their partnership to deliver Dell MDR on the CrowdStrike Falcon XDR platform",
           "source": {
             "label": "Dell Technologies の発表",
             "label_en": "Dell Technologies press release",
@@ -443,7 +443,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、競合の1社としてCrowdStrikeを挙げている(2026年度、10-K)",
+          "text": "Palo Alto Networksが年次報告で、競合の1社としてCrowdStrikeを挙げている",
           "text_en": "Palo Alto Networks’ FY2026 10-K names CrowdStrike as a competitor",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
@@ -468,7 +468,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SentinelOneが年次報告で、競合するエンドポイント保護企業の1社としてCrowdStrikeを挙げている(2026年度、10-K)",
+          "text": "SentinelOneが年次報告で、競合するエンドポイント保護企業の1社としてCrowdStrikeを挙げている",
           "text_en": "SentinelOne’s FY2026 10-K names CrowdStrike among endpoint security competitors",
           "source": {
             "label": "SentinelOne 10-K(2026年度)",
@@ -493,7 +493,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Fortinetが年次報告で、クラウド型セキュリティの競合の1社としてCrowdStrikeを挙げている(2025年度、10-K)",
+          "text": "Fortinetが年次報告で、クラウド型セキュリティの競合の1社としてCrowdStrikeを挙げている",
           "text_en": "Fortinet’s FY2025 10-K names CrowdStrike among cloud-based security competitors",
           "source": {
             "label": "Fortinet 10-K(2025年度)",
@@ -518,7 +518,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualysが年次報告で、競合する上場企業の1社としてCrowdStrikeを挙げている(2025年度、10-K)",
+          "text": "Qualysが年次報告で、競合する上場企業の1社としてCrowdStrikeを挙げている",
           "text_en": "Qualys’ FY2025 10-K names CrowdStrike among public company competitors",
           "source": {
             "label": "Qualys 10-K(2025年度)",
@@ -543,7 +543,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Elasticが年次報告で、Elastic Securityの競合の1社としてCrowdStrikeを挙げている(2026年度、10-K)",
+          "text": "Elasticが年次報告で、Elastic Securityの競合の1社としてCrowdStrikeを挙げている",
           "text_en": "Elastic’s FY2026 10-K names CrowdStrike among competitors of Elastic Security",
           "source": {
             "label": "Elastic 10-K(2026年度)",
@@ -568,7 +568,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Ciscoが年次報告で、競合の1社としてCrowdStrikeを挙げている(2026年度、10-K)",
+          "text": "Ciscoが年次報告で、競合の1社としてCrowdStrikeを挙げている",
           "text_en": "Cisco’s FY2026 10-K names CrowdStrike as a competitor",
           "source": {
             "label": "Cisco 10-K(2026年度)",

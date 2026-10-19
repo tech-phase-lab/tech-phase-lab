@@ -51,8 +51,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "MTIAとEthernet技術をBroadcomから調達(2026年4月)",
-          "text_en": "Sources MTIA and Ethernet technology from Broadcom (April 2026)",
+          "text": "MTIAとEthernet技術をBroadcomから調達",
+          "text_en": "Sources MTIA and Ethernet technology from Broadcom",
           "source": {
             "label": "Meta の発表(2026年4月)",
             "label_en": "Meta announcement (April 2026)",
@@ -66,8 +66,8 @@
         },
         {
           "type": "tie",
-          "text": "複数世代のMTIA(自社設計AI半導体)を共同開発(2026年4月)",
-          "text_en": "Co-develops multiple generations of MTIA custom AI silicon (April 2026)",
+          "text": "複数世代のMTIA(自社設計AI半導体)を共同開発",
+          "text_en": "Co-develops multiple generations of MTIA custom AI silicon",
           "source": {
             "label": "Meta の発表(2026年4月)",
             "label_en": "Meta announcement (April 2026)",
@@ -89,8 +89,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "最大6GWのInstinct GPUを導入する契約(2026年2月)",
-          "text_en": "Agreement to deploy up to 6GW of Instinct GPUs (February 2026)",
+          "text": "最大6GWのInstinct GPUを導入する契約",
+          "text_en": "Agreement to deploy up to 6GW of Instinct GPUs",
           "source": {
             "label": "AMD の発表(2026年2月)",
             "label_en": "AMD announcement (February 2026)",
@@ -103,8 +103,8 @@
         },
         {
           "type": "tie",
-          "text": "Heliosの開発ロードマップをAMDと共同で調整(2026年2月)",
-          "text_en": "Coordinates the Helios development roadmap with AMD (February 2026)",
+          "text": "Heliosの開発ロードマップをAMDと共同で調整",
+          "text_en": "Coordinates the Helios development roadmap with AMD",
           "source": {
             "label": "AMD の発表(2026年2月)",
             "label_en": "AMD announcement (February 2026)",
@@ -125,8 +125,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "NVIDIAのAI基盤技術を調達し、Spectrum-Xなどを採用(2026年2月)",
-          "text_en": "Sources NVIDIA AI infrastructure technology, including Spectrum-X (February 2026)",
+          "text": "NVIDIAのAI基盤技術を調達し、Spectrum-Xなどを採用",
+          "text_en": "Sources NVIDIA AI infrastructure technology, including Spectrum-X",
           "source": {
             "label": "Meta の発表(2026年2月)",
             "label_en": "Meta announcement (February 2026)",
@@ -139,8 +139,8 @@
         },
         {
           "type": "tie",
-          "text": "CPU・GPU・ネットワークの複数年にわたる協業(2026年2月)",
-          "text_en": "Multiyear collaboration on CPUs, GPUs and networking (February 2026)",
+          "text": "CPU・GPU・ネットワークの複数年にわたる協業",
+          "text_en": "Multiyear collaboration on CPUs, GPUs and networking",
           "source": {
             "label": "NVIDIA の発表(2026年2月)",
             "label_en": "NVIDIA announcement (February 2026)",
@@ -161,8 +161,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Arm AGI CPUの主導パートナーとして共同開発(2026年3月24日)",
-          "text_en": "Lead partner and co-developer of the Arm AGI CPU (March 24, 2026)",
+          "text": "Arm AGI CPUの主導パートナーとして共同開発",
+          "text_en": "Lead partner and co-developer of the Arm AGI CPU",
           "source": {
             "label": "Arm の発表(2026年3月)",
             "label_en": "Arm announcement (March 2026)",
@@ -185,8 +185,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Metaの102.4T scale-out基盤向けラックネットワークを共同開発(Arista発表、2026年10月7日)",
-          "text_en": "Rack-scale networking co-developed for Meta’s 102.4T scale-out fabric (Arista, October 7, 2026)",
+          "text": "Metaの102.4T scale-out基盤向けラックネットワークを共同開発",
+          "text_en": "Rack-scale networking co-developed for Meta’s 102.4T scale-out fabric",
           "source": {
             "label": "Arista のソリューションページ(Metaのコメント)",
             "label_en": "Arista solutions page (Meta’s comment)",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "光ファイバーの複数年調達契約(最大60億ドル、2026年1月27日)",
-          "text_en": "Multiyear optical-fiber supply agreement worth up to $6B (January 27, 2026)",
+          "text": "光ファイバーの複数年調達契約",
+          "text_en": "Multiyear optical-fiber supply agreement worth up to $6B",
           "source": {
             "label": "Meta の発表(2026年1月27日)",
             "label_en": "Meta announcement (January 27, 2026)",
@@ -234,8 +234,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Quest 3にSnapdragon XR2 Gen 2を採用(2023年9月)",
-          "text_en": "Quest 3 uses the Snapdragon XR2 Gen 2 (September 2023)",
+          "text": "Quest 3にSnapdragon XR2 Gen 2を採用",
+          "text_en": "Quest 3 uses the Snapdragon XR2 Gen 2",
           "source": {
             "label": "Meta の発表(2023年9月)",
             "label_en": "Meta announcement (September 2023)",
@@ -270,8 +270,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AWSのGraviton計算基盤をAI向けに大規模利用する契約(2026年4月24日)",
-          "text_en": "Agreement to use AWS Graviton compute at scale for agentic AI (April 24, 2026)",
+          "text": "AWSのGraviton計算基盤をAI向けに大規模利用する契約",
+          "text_en": "Agreement to use AWS Graviton compute at scale for agentic AI",
           "source": {
             "label": "Amazon の発表(2026年4月24日)",
             "label_en": "Amazon announcement (April 24, 2026)",
@@ -294,8 +294,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AI計算容量の供給契約(新しい容量は2027年初めから、2026年3月)",
-          "text_en": "AI compute-capacity agreement (new capacity from early 2027; March 2026)",
+          "text": "AI計算容量の供給契約",
+          "text_en": "AI compute-capacity agreement",
           "source": {
             "label": "Nebius の発表(2026年3月)",
             "label_en": "Nebius announcement (March 2026)",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "最大210億ドルの計算容量購入を約束(CoreWeaveの2026年6月期開示)",
-          "text_en": "Committed to buy up to $21B of compute capacity (CoreWeave, quarter to June 2026)",
+          "text": "最大210億ドルの計算容量購入を約束",
+          "text_en": "Committed to buy up to $21B of compute capacity",
           "source": {
             "label": "CoreWeave 10-Q(2026年6月30日終了の四半期)",
             "label_en": "CoreWeave 10-Q (quarter ended June 30, 2026)",
@@ -339,8 +339,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "インドJamnagarのAIデータセンターを賃借する契約(2026年6月)",
-          "text_en": "Lease of an AI data center in Jamnagar, India (June 2026)",
+          "text": "インドJamnagarのAIデータセンターを賃借する契約",
+          "text_en": "Lease of an AI data center in Jamnagar, India",
           "source": {
             "label": "Meta の発表(2026年6月)",
             "label_en": "Meta announcement (June 2026)",
@@ -363,8 +363,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "原子力電力の20年購入契約(2026年1月)",
-          "text_en": "20-year nuclear power purchase agreements (January 2026)",
+          "text": "原子力電力の20年購入契約",
+          "text_en": "20-year nuclear power purchase agreements",
           "source": {
             "label": "Vistra の発表(2026年1月9日)",
             "label_en": "Vistra announcement (January 9, 2026)",
@@ -387,8 +387,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Clinton原子力発電所の20年電力購入契約(2025年6月、開始は2027年6月予定)",
-          "text_en": "20-year power purchase from the Clinton nuclear plant (June 2025; starts June 2027)",
+          "text": "Clinton原子力発電所の20年電力購入契約",
+          "text_en": "20-year power purchase from the Clinton nuclear plant",
           "source": {
             "label": "Constellation の発表(2025年6月)",
             "label_en": "Constellation announcement (June 2025)",
@@ -412,8 +412,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Ohio州の原子力キャンパス開発を前払いなどで支援(2026年1月)",
-          "text_en": "Supports development of an Ohio nuclear campus through prepayments and early funding (January 2026)",
+          "text": "Ohio州の原子力キャンパス開発を前払いなどで支援",
+          "text_en": "Supports development of an Ohio nuclear campus through prepayments and early funding",
           "source": {
             "label": "Meta の発表(2026年1月)",
             "label_en": "Meta announcement (January 2026)",
@@ -436,8 +436,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Meta Glassesを共同で展開(2026年6月)",
-          "text_en": "Jointly launches Meta Glasses (June 2026)",
+          "text": "Meta Glassesを共同で展開",
+          "text_en": "Jointly launches Meta Glasses",
           "source": {
             "label": "Meta の発表(2026年6月)",
             "label_en": "Meta announcement (June 2026)",
@@ -504,8 +504,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Hyperion(米ルイジアナ州)データセンターを共同で開発・保有する合弁会社を設立(Blue Owl 80%、Meta 20%、2025年10月)",
-          "text_en": "Joint venture to develop and own the Hyperion data center (Blue Owl 80%, Meta 20%; October 2025)",
+          "text": "Hyperion(米ルイジアナ州)データセンターを共同で開発・保有する合弁会社を設立",
+          "text_en": "Joint venture to develop and own the Hyperion data center",
           "source": {
             "label": "Meta ニュースルーム(2025年10月)",
             "label_en": "Meta newsroom (Oct 2025)",
@@ -529,8 +529,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "テキサス州エルパソのデータセンターキャンパスを共同で開発・保有する事業(2026年7月)",
-          "text_en": "Venture to develop and own a data center campus in El Paso, Texas (July 2026)",
+          "text": "テキサス州エルパソのデータセンターキャンパスを共同で開発・保有する事業",
+          "text_en": "Venture to develop and own a data center campus in El Paso, Texas",
           "source": {
             "label": "Meta ニュースルーム(2026年7月)",
             "label_en": "Meta newsroom (Jul 2026)",
@@ -554,8 +554,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Metaの北部ルイジアナのデータセンターに電力を供給する設備の承認をEntergy Louisianaが申請(Entergyの年次報告)",
-          "text_en": "Entergy Louisiana sought approval of resources to serve Meta’s new north Louisiana data center (Entergy annual report)",
+          "text": "Metaの北部ルイジアナのデータセンターに電力を供給する設備の承認をEntergy Louisianaが申請",
+          "text_en": "Entergy Louisiana sought approval of resources to serve Meta’s new north Louisiana data center",
           "source": {
             "label": "Entergy 10-K(2025年度)",
             "label_en": "Entergy 10-K (FY2025)",
@@ -603,8 +603,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Oakley Meta Vanguard(AIグラス)でトレーニング情報を使える戦略的協業(2025年9月)",
-          "text_en": "Strategic collaboration to bring training insights to Oakley Meta Vanguard AI glasses (September 2025)",
+          "text": "Oakley Meta Vanguard(AIグラス)でトレーニング情報を使える戦略的協業",
+          "text_en": "Strategic collaboration to bring training insights to Oakley Meta Vanguard AI glasses",
           "source": {
             "label": "Garmin の発表(2025年9月)",
             "label_en": "Garmin press release (Sep 2025)",

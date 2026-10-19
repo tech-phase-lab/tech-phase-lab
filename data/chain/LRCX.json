@@ -72,8 +72,8 @@
         },
         {
           "type": "tie",
-          "text": "Boise拠点で先端メモリーの研究開発・量産技術を支援(2026年2月)",
-          "text_en": "Supports advanced-memory R&D and production technology at its Boise site (February 2026)",
+          "text": "Boise拠点で先端メモリーの研究開発・量産技術を支援",
+          "text_en": "Supports advanced-memory R&D and production technology at its Boise site",
           "source": {
             "label": "Lam Research の発表(2026年2月17日)",
             "label_en": "Lam Research announcement (February 17, 2026)",
@@ -86,8 +86,8 @@
         },
         {
           "type": "down",
-          "text": "MicronのSupplier Dayで「優秀なフロントエンド装置サプライヤー」に選ばれた(2025年11月13日)",
-          "text_en": "Received Micron’s Outstanding Front End Equipment Supplier of the Year award (November 13, 2025)",
+          "text": "MicronのSupplier Dayで「優秀なフロントエンド装置サプライヤー」に選ばれた",
+          "text_en": "Received Micron’s Outstanding Front End Equipment Supplier of the Year award",
           "source": {
             "label": "Lam のブログ(2025年12月8日)",
             "label_en": "Lam newsroom blog (Dec 8, 2025)",
@@ -512,8 +512,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "1nm未満のロジック微細化に向けた新工程・新材料で5年間の共同研究(2026年3月10日)",
-          "text_en": "Five-year collaboration on new processes and materials for sub-1nm logic scaling (March 10, 2026)",
+          "text": "1nm未満のロジック微細化に向けた新工程・新材料で5年間の共同研究",
+          "text_en": "Five-year collaboration on new processes and materials for sub-1nm logic scaling",
           "source": {
             "label": "Lam/IBM の発表(2026年3月10日)",
             "label_en": "Lam/IBM press release (Mar 10, 2026)",
@@ -537,8 +537,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "EUVドライフォトレジスト技術に使う前駆体化学品を安定して確保する戦略的協業(2022年7月12日)",
-          "text_en": "Strategic collaboration for reliable access to precursor chemicals for EUV dry photoresist technology (July 12, 2022)",
+          "text": "EUVドライフォトレジスト技術に使う前駆体化学品を安定して確保する戦略的協業",
+          "text_en": "Strategic collaboration for reliable access to precursor chemicals for EUV dry photoresist technology",
           "source": {
             "label": "Lam の発表(2022年7月12日)",
             "label_en": "Lam press release (Jul 12, 2022)",
@@ -562,8 +562,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ASML・imecとHigh-NA EUVのパターニングに関する共同論文を発表(2026年7月14日)",
-          "text_en": "Joint paper with ASML and imec on High-NA EUV patterning (July 14, 2026)",
+          "text": "ASML・imecとHigh-NA EUVのパターニングに関する共同論文を発表",
+          "text_en": "Joint paper with ASML and imec on High-NA EUV patterning",
           "source": {
             "label": "Lam ニュースルームのブログ(2026年7月14日)",
             "label_en": "Lam newsroom blog (Jul 14, 2026)",
