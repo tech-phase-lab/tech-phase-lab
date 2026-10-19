@@ -1707,3 +1707,17 @@ acceptance. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md. The disposable Google /
 Evernote custody rehearsal is recorded in RESOLUTE-KEY-ESCROW.md; production key
 custody remains open. Next: implement and verify the isolated authenticated runner
 before enabling the preview transport. Morning job and reservations unchanged.
+
+## 2026-10-20 JST — Isolated recovery coordinator implemented, not activated
+
+Added services/resolute-recovery/handler.mjs: actual Clerk signature/issuer/party
+verification, exact-owner gate, bounded UUID-only input, expiring window and one
+execution permit. The exclusive private permit survives process reconstruction;
+concurrent requests and failed runs cannot retry. Reports require all recovery
+checks and explicit no-production/mail/payment/AI evidence, with extra fields
+removed. Tests use real ephemeral signatures and synthetic executor reports.
+The actual PostgreSQL/API/writer executor and service entrypoint remain unbuilt;
+do not enable the transport or mistake these tests for deployed acceptance.
+See services/resolute-recovery/README.md for the remaining adapter contract.
+Integrated remote16b5a166 without changing others' UI/data. Earlier CI39286167172
+was cancelled by later pushes, not a pass. No live configuration/schedule changes.
