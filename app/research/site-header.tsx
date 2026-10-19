@@ -97,6 +97,8 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
 
 type MenuIcon = keyof typeof menuIcons;
 const menuIcons = {
+  news: <path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM9 9h6M9 13h6" />,
+  alerts: <path d="M13 3L5 14h6l-1 7 8-11h-6z" />,
   gem: <path d="M12 3l7 9-7 9-7-9z" />,
   next: <path d="M9 6l6 6-6 6" />,
   close: <path d="M6 6l12 12M18 6L6 18" />,
@@ -205,10 +207,12 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "リサーチ" : "Research"}</h4>
+        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts")}
+        {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
         {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Indicators")}
         {item("/research/capital-map", "changes", ja ? "資本マップ" : "CAPITAL MAP")}
-        {item("/research/watchlist", "star", ja ? "お気に入り" : "Watchlist")}
+        {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
       </div>

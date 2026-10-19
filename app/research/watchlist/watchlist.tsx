@@ -126,7 +126,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const ordered = sortFavorites(favorites, displayedQuotes, sort);
   const monitored = companies.some(item => item.ticker === active);
   if (!ready && status === "loading") return <ResearchLoading />;
-  return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
+  return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>
@@ -164,7 +164,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         {status === "error" && <button onClick={retry}>{t("再試行", "Retry")}</button>}
         {status === "conflict" && <button onClick={() => { if (window.confirm(t("この端末の未保存の変更を取り消し、保存済みの内容に戻しますか？", "Discard this tab’s unsaved edits and load the saved list?"))) discardPending(); }}>{t("保存済みの内容に戻す", "Use saved list")}</button>}
       </div>}
-      {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のお気に入りを取り込む", "Import this device’s favorites")}</button></div>}
+      {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のウォッチリストを取り込む", "Import this device’s watchlist")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
       {!ready ? <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
 

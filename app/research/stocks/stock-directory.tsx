@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import SiteHeader from "../site-header";
+import HomeSidebar from "../home-sidebar";
+import shell from "../research-tools.module.css";
 import NavigationIcon from "../navigation-icon";
 import { useSearchParams } from "next/navigation";
 import { useStockFavorites } from "../use-stock-favorites";
@@ -252,8 +254,10 @@ export default function StockDirectory() {
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#stock-search-main">{t("本文へ移動", "Skip to content")}</a>
     <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research/capital-map"><NavigationIcon name="changes" />{t("資本マップ", "CAPITAL MAP")}</Link><Link href="/research/stocks" aria-current="page"><NavigationIcon name="search" />{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics"><NavigationIcon name="metrics" />{t("決算・指標", "Financials")}</Link></nav>} />
-    <main id="stock-search-main" className={styles.main}>
-      <div className={styles.topline}><Link href="/research/watchlist">☆ {t("お気に入り", "Favorites")}</Link></div>
+    <div className={shell.withSidebar}>
+    <aside className={shell.toolSidebar}><HomeSidebar lang={lang} tab="home" standalone pathname="/research/stocks" /></aside>
+    <main id="stock-search-main" className={`${styles.main} ${styles.sidebarMain}`}>
+      <div className={styles.topline}><Link href="/research/watchlist">☆ {t("ウォッチリスト", "Watchlist")}</Link></div>
       <section className={styles.hero}>
         <p>STOCK DISCOVERY</p>
         <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "U.S. stock research")}</span></h1>
@@ -270,7 +274,7 @@ export default function StockDirectory() {
 
       {(query.trim() || errorMessage) && !directQuote && <div className={`${styles.layout} ${polish.resultLayout}`}>
         <section ref={resultsTarget} className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
-          <div className={styles.sectionHeading}><h2 id="results-title">{t("検索結果", "Matches")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", " results")}`}</span></div>
+          <div className={styles.sectionHeading}><h2 id="results-title">{t("検索結果", "Matches")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", results.length === 1 ? " result" : " results")}`}</span></div>
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
           <ol className={polish.compactResults}>{visibleResults.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta} aria-hidden="true">→</span></button></li>)}</ol>
@@ -303,5 +307,6 @@ export default function StockDirectory() {
       </details>}
       <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("SECは名簿の正確性・網羅性を保証していません。検索結果は企業識別用で、売買推奨ではありません。", "The SEC does not guarantee directory accuracy or scope. Results identify issuers and are not investment recommendations.")}</p></footer>
     </main>
+    </div>
   </div>;
 }

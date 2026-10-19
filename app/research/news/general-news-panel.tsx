@@ -30,7 +30,7 @@ function initialSnapshot(initialNews?: InitialNewsSnapshot | null) {
   return { data: initialNews.data, time: initialNews.checkedAt, at: new Date(initialNews.checkedAt).toISOString() };
 }
 
-export default function GeneralNewsPanel({ lang, officialOnly = false, initialNews }: { lang: Language; officialOnly?: boolean; initialNews?: InitialNewsSnapshot | null }) {
+export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, initialNews }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; initialNews?: InitialNewsSnapshot | null }) {
   const [fetchedData, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
   const [failed, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
@@ -90,18 +90,18 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
   // it was found would pass a guess off as the publication time (owner, Oct 10).
   const official = listedOfficialNews(data, lang);
   const news = officialOnly ? [] : [...data?.items ?? []].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
-  const market = officialOnly ? [] : data?.marketUpdates ?? [];
+  const market = officialOnly || generalOnly ? [] : data?.marketUpdates ?? [];
   // Analyst ratings and target changes live on the price target page only (owner, Oct 7).
   // Test publications appear only once they have a checked bilingual summary;
   // untranslated originals and metadata-only notices are not listed.
-  const originalPreview = officialOnly ? [] : listedOriginalPreviews(data);
-  const updates = [
+  const originalPreview = officialOnly || generalOnly ? [] : listedOriginalPreviews(data);
+  const updates = generalOnly ? [] : [
     ...originalPreview.map(item => ({ kind: "original-preview" as const, item, at: item.previewPublishedAt })),
     // Sort by the time the card shows, so the list reads newest first (owner, Oct 9).
     ...official.map(item => { const time = officialTime(item), shown = clockTime(time.at, time.kind, item.observedAt);
       return { kind: "official" as const, item, publication: { ...shown, dated: time.kind }, at: shown.kind === "date" ? `${shown.at}T00:00:00Z` : shown.at }; }),
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
-    ...(officialOnly ? [] : wireStories(wire, lang, WATCH_TICKERS).map(story => ({ kind: "wire" as const, story, at: story.at }))),
+    ...(officialOnly || generalOnly ? [] : wireStories(wire, lang, WATCH_TICKERS).map(story => ({ kind: "wire" as const, story, at: story.at }))),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   const pages = Math.max(1, Math.ceil((updates.length + news.length) / 5));
   const current = Math.min(page, pages), start = (current - 1) * 5;
@@ -143,8 +143,8 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
           publication={`${publication.dated === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? `${publication.at} · ${lang === "ja" ? "取得" : "Found"} ${new Date(item.observedAt).toLocaleTimeString(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false, hour: "2-digit", minute: "2-digit" })} JST` : format(publication.at)}`} /></TimelineRow></article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
-    {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
-    {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <div className={styles.placeholder} aria-busy="true" aria-label={lang === "ja" ? "ニュースを取得中" : "Fetching news"} /> : !data.enabled ? <p>{lang === "ja" ? "通常ニュースの配信は準備中です。" : "General news coverage is coming soon."}</p> : <>
+    {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}>{!generalOnly && <h2 id="general-news-title">{lang === "ja" ? "一般ニュース" : "General news"}</h2>}<button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
+    {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <div className={styles.placeholder} aria-busy="true" aria-label={lang === "ja" ? "ニュースを取得中" : "Fetching news"} /> : !data.enabled ? <p>{lang === "ja" ? "一般ニュースの配信は準備中です。" : "General news coverage is coming soon."}</p> : <>
       <p className={styles.note}>{lang === "ja" ? "日英の内容を確認した記事を掲載しています。" : "Articles are published after review of both language versions."}</p>
       {!data.items.length && <p>{lang === "ja" ? "現在、公開中の記事はありません。" : "No articles are currently published."}</p>}
       <div className={styles.items}>{visibleNews.map(item => <article key={item.id}><details className={styles.story}>

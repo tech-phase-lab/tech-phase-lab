@@ -13,7 +13,7 @@ export default function CompanySwitcher({ ticker, companies, lang, compact = fal
   const { favorites, toggle, error, editable } = useStockFavorites();
   return <div className={`${styles.bar} ${compact ? styles.compact : ""}`}>
     <Link href="/research/companies">← {lang === "ja" ? `監視${companies.length}銘柄リスト` : `${companies.length} research companies`}</Link>
-    <button className={styles.favorite} disabled={!editable} onClick={() => toggle(ticker)} aria-pressed={favorites.includes(ticker)}>{favorites.includes(ticker) ? "★" : "☆"} {lang === "ja" ? "お気に入り" : "Favorite"}</button>
+    <button className={styles.favorite} disabled={!editable} onClick={() => toggle(ticker)} aria-pressed={favorites.includes(ticker)}>{favorites.includes(ticker) ? "★" : "☆"} {lang === "ja" ? "ウォッチリスト" : "Watchlist"}</button>
     {!compact && <label>
       <span>{lang === "ja" ? "銘柄を切り替える" : "Choose company"}</span>
       <select value={ticker} onChange={(event) => {
@@ -23,6 +23,6 @@ export default function CompanySwitcher({ ticker, companies, lang, compact = fal
         {companies.map((company) => <option key={company.ticker} value={company.ticker}>{company.ticker} · {company.name}</option>)}
       </select>
     </label>}
-    {error && <p role="alert">{lang === "ja" ? "お気に入りを保存できませんでした。" : "Could not save favorite."}</p>}
+    {error && <p role="alert">{lang === "ja" ? "ウォッチリストを更新できませんでした。" : "Could not update watchlist."}</p>}
   </div>;
 }

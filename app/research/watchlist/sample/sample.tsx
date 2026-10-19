@@ -69,7 +69,7 @@ export default function WatchlistSample() {
   const visibleSamples = samples.filter(row => !(removed[listIndex] ?? []).includes(row.ticker));
   const remove = (ticker: string) => { if (!window.confirm(t(`${ticker}をこのリストから削除しますか？`, `Remove ${ticker} from this list?`))) return false; setRemoved(current => ({ ...current, [listIndex]: [...(current[listIndex] ?? []), ticker] })); setExpanded(""); };
   const rows = (query.trim() ? searchStocks(visibleSamples, query) : visibleSamples).map(row => quoteFor(row, session)).toSorted((a, b) => order === "gainers" ? b.percent - a.percent : order === "losers" ? a.percent - b.percent : samples.findIndex(s => s.ticker === a.ticker) - samples.findIndex(s => s.ticker === b.ticker));
-  return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
+  return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>

@@ -231,7 +231,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
                 t("米国株の銘柄検索", "U.S. stock search"),
                 t("株価とチャートの確認", "Stock quotes and charts"),
                 t("指数・債券・為替のマーケット情報", "Indices, bonds and currencies"),
-                t("お気に入り銘柄の登録", "Your stock watchlist"),
+                t("ウォッチリストへの銘柄登録", "Your stock watchlist"),
                 t("決算・経済指標カレンダー", "Earnings and economic calendar"),
                 t("決算の主要数字と変化の要点", "Key earnings figures and changes"),
                 t("独自リサーチの無料公開記事", "Selected full research articles"),

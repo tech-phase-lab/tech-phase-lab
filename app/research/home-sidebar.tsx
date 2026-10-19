@@ -36,23 +36,23 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
   const t = (jaText: string, en: string) => ja ? jaText : en;
   const unread = useAlertsUnread(false);
   const quick: Item[] = [
-    { key: "alerts", icon: icons.alerts, label: t("速報", "Alerts"), href: "/research/news", badge: unread ? <em className={`${styles.count} ${styles.fresh}`}>NEW</em> : null },
+    { key: "alerts", icon: icons.alerts, label: t("ハイテク速報", "Tech Alerts"), href: "/research/news", badge: unread ? <em className={`${styles.count} ${styles.fresh}`}>NEW</em> : null },
     { key: "search", icon: icons.search, label: t("銘柄検索", "Stock search"), href: "/research/stocks" },
-    { key: "watchlist", icon: icons.star, label: t("お気に入り", "Watchlist"), href: "/research/watchlist" },
+    { key: "watchlist", icon: icons.star, label: t("ウォッチリスト", "Watchlist"), href: "/research/watchlist" },
     { key: "market", icon: icons.market, label: t("マーケット", "Markets"), href: "/research/market" },
-    { key: "news", icon: icons.news, label: t("ニュース", "News"), href: "/research/news" },
+    { key: "news", icon: icons.news, label: t("一般ニュース", "General News"), href: "/research/general-news" },
     { key: "targets", icon: icons.target, label: t("目標株価", "Price targets"), href: "/research/price-targets" },
   ];
   const research: Item[] = [
     { key: "watch", icon: icons.watch, label: t("監視22銘柄", "22-stock watch"), onClick: () => openView?.("companies"), current: tab === "companies", badge: companyCount === undefined ? null : <em className={styles.count}>{companyCount}</em> },
-    { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & data"), onClick: () => openView?.("metrics"), current: tab === "metrics" },
+    { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & data"), href: "/research/calendar", current: pathname === "/research/calendar" },
     { key: "map", icon: icons.map, label: t("資本マップ", "Capital map"), href: "/research/capital-map" },
     { key: "compare", icon: icons.compare, label: t("銘柄比較", "Compare stocks"), href: "/research/compare", pro: true },
     { key: "saved", icon: icons.saved, label: t("保存したリサーチ", "Saved research"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
   ];
   const destinations: Record<string, string> = { watch: "/research" + researchViewHashes.companies, metrics: "/research/calendar", saved: "/research" + researchViewHashes.saved };
   const row = (original: Item) => {
-    const item = standalone ? { ...original, href: original.href ?? destinations[original.key], current: original.href ? original.href === pathname && original.key !== "alerts" : original.current } : original;
+    const item = standalone ? { ...original, href: original.href ?? destinations[original.key], current: original.href ? original.href === pathname : original.current } : original;
     const inner = <>{item.icon}<span>{item.label}</span>{item.badge}{item.pro && <b className={styles.tag}>PRO</b>}</>;
     const props = { className: `${styles.item} ${item.current ? styles.on : ""}`, "aria-current": item.current ? "page" as const : undefined };
     return item.href ? <Link key={item.key} href={item.href} {...props}>{inner}</Link> : <button key={item.key} type="button" onClick={item.onClick} {...props}>{inner}</button>;

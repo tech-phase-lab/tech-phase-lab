@@ -4,8 +4,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
-import { flashRows, type FlashRow } from "@/lib/research/flash-rows";
-import { earningsOnlyProviders, providers } from "@/lib/research/intake";
+import { flashRows, WATCH_TICKERS, type FlashRow } from "@/lib/research/flash-rows";
+import { providers } from "@/lib/research/intake";
 import { isFreshItem } from "@/lib/research/company-freshness";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
@@ -107,7 +107,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
     return () => { alive = false; clearInterval(timer); stop(); };
   }, []);
 
-  const rows = flashRows(feed, wire, lang).filter(row => (view === "all" || row.kind === "earnings"));
+  const rows = flashRows(feed, wire, lang).filter(row => row.tickers.some(ticker => WATCH_TICKERS.has(ticker)) && (view === "all" || row.kind === "earnings"));
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   const current = Math.min(page, pages);
   const shown = rows.slice((current - 1) * PAGE, current * PAGE);
@@ -134,8 +134,6 @@ export default function FlashPage({ lang }: { lang: Language }) {
         <div className={styles.sourcesPanel}>
           <h4>{ja ? `監視${providers.length}銘柄（ニュース・決算）` : `${providers.length} watched stocks (news & earnings)`}</h4>
           <ul>{providers.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{shortName(p.name)}</span></li>)}</ul>
-          <h4>{ja ? `決算のみ${earningsOnlyProviders.length}銘柄` : `${earningsOnlyProviders.length} earnings-only stocks`}</h4>
-          <ul>{earningsOnlyProviders.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{shortName(p.name)}</span></li>)}</ul>
         </div>
       </details>
     </div>
@@ -150,6 +148,6 @@ export default function FlashPage({ lang }: { lang: Language }) {
       })}</div>}
     </div>
     <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    <p className={timeline.fine}>{ja ? "監視22銘柄のリアルタイム監視の情報と、対象37銘柄の決算の結果を、新しい順に並べています（時刻は日本時間）。銘柄ごとの情報は、監視22銘柄リストで確認できます。" : "The live monitor of the 22 watched stocks and earnings results for all 37 covered stocks, newest first."}</p>
+    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと決算を、新しい順に掲載しています。時刻は日本時間です。" : "News and earnings for the 22 tracked stocks, newest first. All times are JST."}</p>
   </section>;
 }

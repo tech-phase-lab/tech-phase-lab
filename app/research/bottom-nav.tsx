@@ -51,7 +51,7 @@ export default function BottomNav() {
     { key: "home", href: "/research#research-main", label: ja ? "ホーム" : "Home", active: pathname === "/research" && (!hash || hash === "#research-main") },
     { key: "alerts", href: "/research/news", label: ja ? "速報" : "Alerts", active: alertsPage },
     { key: "search", href: "/research/stocks", label: ja ? "銘柄検索" : "Search", active: pathname.startsWith("/research/stocks") },
-    { key: "watchlist", href: "/research/watchlist", label: ja ? "お気に入り" : "Watchlist", active: pathname.startsWith("/research/watchlist") },
+    { key: "watchlist", href: "/research/watchlist", label: ja ? "ウォッチリスト" : "Watchlist", active: pathname.startsWith("/research/watchlist") },
     { key: "markets", href: "/research/market", label: ja ? "マーケット" : "Markets", active: pathname === "/research/market" },
   ] as const;
   const current = tabs.findIndex(tab => tab.active);

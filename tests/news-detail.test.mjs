@@ -355,8 +355,18 @@ import { listedOfficialNews, listedOriginalPreviews } from ${JSON.stringify(new 
 import { wireStories } from ${JSON.stringify(new URL('../lib/research/wire-stories.ts',import.meta.url).href)};
 const WATCH_TICKERS = [];
 `
-    +`export function visible(data,page,officialOnly=false,lang='en') { const wire = []; ${pageLogic}
+    +`export function visible(data,page,officialOnly=false,lang='en',generalOnly=false) { const wire = []; ${pageLogic}
 return {pages,current,visibleUpdates,visibleNews}; }`)).toString('base64'));
+  // Dedicated general news never mixes in official, wire or market updates,
+  // and its pagination counts only published Stock News articles.
+  const generalItems=Array.from({length:7},(_,index)=>({id:`general-${index}`,publishedAt:`2026-10-08T0${index}:00:00Z`}));
+  const generalFeed={...after,items:generalItems};
+  const firstGeneral=pagination.visible(generalFeed,1,false,'en',true);
+  const secondGeneral=pagination.visible(generalFeed,2,false,'en',true);
+  assert.equal(firstGeneral.pages,2);
+  assert.deepEqual(firstGeneral.visibleUpdates,[]);
+  assert.deepEqual(secondGeneral.visibleUpdates,[]);
+  assert.deepEqual([...firstGeneral.visibleNews,...secondGeneral.visibleNews].map(item=>item.id),generalItems.map(item=>item.id).reverse());
   const pages=pagination.visible(after,1).pages;
   assert.equal(pages,pagination.visible(before,1).pages);
   const visited=[];

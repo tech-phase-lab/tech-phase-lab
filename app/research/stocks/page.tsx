@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import StockDirectory from "./stock-directory";
+import ResearchLoading from "../loading";
 
 export const metadata: Metadata = {
   title: "米国株検索 | Tech Phase Research",
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function StockDirectoryPage() {
-  return <Suspense fallback={<p>Loading…</p>}><StockDirectory /></Suspense>;
+  return <Suspense fallback={<ResearchLoading />}><StockDirectory /></Suspense>;
 }
