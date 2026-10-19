@@ -6,6 +6,8 @@ import styles from "./stock-chain-map.module.css";
 
 type Line = { d: string; tone: ChainTone; on: boolean };
 const CARD = "chain-card-";
+/** From this many rivals on, the rival group is drawn as a tag cloud. */
+const RIVAL_CLOUD = 6;
 
 function Source({ source, lang }: { source: ChainSource; lang: "ja" | "en" }) {
   const ja = lang === "ja";
@@ -39,6 +41,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
   const ja = lang === "ja";
   const t = (jaText: string, enText: string) => ja ? jaText : enText;
   const [sel, setSel] = useState<string | null>(null);
+  const [openRival, setOpenRival] = useState<string | null>(null);
   const [lines, setLines] = useState<Line[]>([]);
   const [box, setBox] = useState({ width: 0, height: 0 });
   const map = useRef<HTMLDivElement>(null);
@@ -148,7 +151,14 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
           const members = chainGroup(data, kind);
           return members.length > 0 && <div className={styles.grp} data-tone={kind} key={kind}>
             <h4 className={styles.gh}><i />{chainText(kind, "group", lang)} <small>{ja ? `${members.length}社` : members.length}</small></h4>
-            <div className={styles.items}>{members.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
+            {kind === "rival" && members.length >= RIVAL_CLOUD
+              // Many rivals read as a cloud of small tags, not a wall of cards; tapping one opens its source (owner, Oct 19).
+              ? <>
+                <div className={styles.cloud}>{members.map(company => <button type="button" key={company.id} id={CARD + company.id} className={styles.cl}
+                  aria-pressed={openRival === company.id} onClick={() => setOpenRival(openRival === company.id ? null : company.id)}><b>{company.ticker}</b><span>{company.name}</span></button>)}</div>
+                {openRival && byId.get(openRival) && <Card company={byId.get(openRival)!} lang={lang} anchor={false} />}
+              </>
+              : <div className={styles.items}>{members.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>}
           </div>;
         })}
         {data.far.length > 0 && <div className={styles.grp} data-tone="far">

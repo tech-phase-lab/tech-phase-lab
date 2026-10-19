@@ -86,3 +86,9 @@
 .close { position: absolute; top: 6px; right: 6px; z-index: 1; width: 28px; height: 28px; border: 0; border-radius: 50%; background: #1a2636; color: #e9eef5; font-size: 16px; line-height: 1; }
 /* On a phone the floating bottom bar (and the back-to-top button above it) cover the lowest ~150px: pin the card above them. */
 @media (max-width: 760px) { .picked { bottom: calc(160px + env(safe-area-inset-bottom)); } }
+
+.cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+.cl { display: inline-flex; align-items: baseline; gap: 6px; padding: 5px 10px; border: 1px dashed var(--rival); border-radius: 8px; background: #1b1628; color: #e4dcf8; cursor: pointer; font: inherit; max-width: 100%; }
+.cl b { font: 600 12.5px var(--font-mono), ui-monospace, monospace; }
+.cl span { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cl[aria-pressed="true"] { border-style: solid; background: #2a2145; }
