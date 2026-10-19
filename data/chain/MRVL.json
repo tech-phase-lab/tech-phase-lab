@@ -68,7 +68,7 @@
         {
           "type": "up",
           "text": "Towerが、Marvellとの提携で、500万個を超えるコヒーレント光フォトニックICをMarvellのグローバル顧客向けに出荷",
-          "text_en": "Tower, in partnership with Marvell, shipped over five million coherent photonic ICs to Marvell global customers",
+          "text_en": "Tower, in partnership with Marvell, shipped over five million coherent photonic ICs to Marvell’s global customers",
           "source": {
             "label": "Tower Semiconductor 6-K(の発表)",
             "label_en": "Tower Semiconductor 6-K (press release)",
@@ -396,7 +396,8 @@
             "note_en": "Collaboration announcement from 2024."
           }
         }
-      ]
+      ],
+      "name_en": "Samsung Electronics"
     },
     {
       "id": "HYNIX",
@@ -421,7 +422,8 @@
             "note_en": "Collaboration announcement from 2024."
           }
         }
-      ]
+      ],
+      "name_en": "SK hynix"
     },
     {
       "id": "AMD",
@@ -535,7 +537,8 @@
             "note_en": "Completed divestiture."
           }
         }
-      ]
+      ],
+      "name_en": "Infineon Technologies"
     },
     {
       "id": "RMBS",
@@ -642,7 +645,8 @@
             "quote": "Companies that compete directly with our businesses include, but are not limited to, Advanced Micro Devices, Inc. (“AMD”), Alchip Technologies (“Alchip”)"
           }
         }
-      ]
+      ],
+      "name_en": "Alchip Technologies"
     },
     {
       "id": "ALAB",
@@ -911,7 +915,8 @@
             "quote": "Nvidia Corporation, NXP Semiconductors N.V., Phison Electronics Corporation"
           }
         }
-      ]
+      ],
+      "name_en": "Phison Electronics"
     },
     {
       "id": "QCOM",
@@ -1026,7 +1031,8 @@
             "quote": "Silicon Motion Technology Corporation, and Socionext Inc"
           }
         }
-      ]
+      ],
+      "name_en": "Socionext"
     },
     {
       "id": "MXL",

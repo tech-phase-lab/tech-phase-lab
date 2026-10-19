@@ -170,7 +170,7 @@
         {
           "type": "rival",
           "text": "Palo Alto Networksが年次報告で、主な競合の1社としてAlphabet(Google Cloud)を挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Alphabet(Google Cloud) among its main competitors",
+          "text_en": "Palo Alto Networks’ FY2026 10-K names Alphabet (Google Cloud) among its main competitors",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -559,7 +559,8 @@
             "quote": "OT leaders like Mitsubishi Electric and Axis Communications"
           }
         }
-      ]
+      ],
+      "name_en": "Mitsubishi Electric"
     },
     {
       "id": "RPD",

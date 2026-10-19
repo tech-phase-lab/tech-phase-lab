@@ -488,8 +488,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "約20億ドルを出資。Rubinなどを先行して提供",
-          "text_en": "Invested about $2 billion; offers Rubin and other products early",
+          "text": "NVIDIAがNebiusに約20億ドルを出資。提携により、NebiusはRubinなどを先行して利用できる",
+          "text_en": "NVIDIA invested about $2 billion in Nebius; the partnership gives Nebius early access to the forthcoming Rubin platform and other NVIDIA products",
           "source": {
             "label": "The Next Web の報道",
             "label_en": "The Next Web report",
@@ -646,6 +646,6 @@
   ],
   "note": {
     "ja": "公式資料で確認できた関係のみ。「報道」は公式で未確認。投資判断を勧めるものではありません。",
-    "en": "Only relationships confirmed in official materials are shown (“Press” = not yet confirmed). Not investment advice."
+    "en": "Relationships are based on official disclosures unless marked as media reports. Not investment advice."
   }
 }

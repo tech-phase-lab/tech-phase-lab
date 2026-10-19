@@ -570,7 +570,8 @@
             "note_en": "A lender to a CoreWeave subsidiary borrower; a financing relationship only."
           }
         }
-      ]
+      ],
+      "name_en": "Mitsubishi UFJ Financial Group (MUFG)"
     },
     {
       "id": "MS",
@@ -670,7 +671,8 @@
             "note_en": "A convertible-note hedge; the counterparty is the subsidiary Mizuho Markets Americas LLC."
           }
         }
-      ]
+      ],
+      "name_en": "Mizuho Financial Group"
     },
     {
       "id": "AMZN",

@@ -192,7 +192,8 @@
             "quote": "competitors in one or more of our markets include Coherent Corporation, Eoptolink Technology Inc., Ltd., Foxconn Interconnect Technology Ltd., InnoLight Technology (Suzhou) Ltd., Intel Corporation, Lumentum Holdings, Inc."
           }
         }
-      ]
+      ],
+      "name_en": "Eoptolink"
     },
     {
       "id": "InnoLight",
@@ -215,7 +216,8 @@
             "quote": "competitors in one or more of our markets include Coherent Corporation, Eoptolink Technology Inc., Ltd., Foxconn Interconnect Technology Ltd., InnoLight Technology (Suzhou) Ltd., Intel Corporation, Lumentum Holdings, Inc."
           }
         }
-      ]
+      ],
+      "name_en": "Zhongji InnoLight"
     },
     {
       "id": "FIT",
@@ -261,7 +263,8 @@
             "quote": "Mitsubishi, Molex, LLC, Source Photonics, Inc. and Sumitomo Electric Industries, Ltd."
           }
         }
-      ]
+      ],
+      "name_en": "Sumitomo Electric"
     },
     {
       "id": "BOKF",
@@ -309,7 +312,8 @@
             "quote": "entered into a one-year credit line agreement with Shanghai Pudong Development Bank Co., Ltd. in Ningbo City, China"
           }
         }
-      ]
+      ],
+      "name_en": "Shanghai Pudong Development Bank"
     },
     {
       "id": "939",
@@ -332,7 +336,8 @@
             "quote": "entered into a five-year revolving credit line agreement, totaling 162,260,000 RMB (the \"Credit Line\"), as well as a related security agreement (the \"Security Agreement\"), with China Construction Bank Co., Ltd."
           }
         }
-      ]
+      ],
+      "name_en": "China Construction Bank"
     }
   ],
   "far": [],
