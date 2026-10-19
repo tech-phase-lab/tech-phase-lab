@@ -55,7 +55,7 @@
       "relations": [
         {
           "type": "tie",
-          "text": "UiPathが、Anthropic の大規模言語モデルClaude 3.5 Sonnetを3つの主要製品に組み込むと発表した",
+          "text": "UiPathが、Anthropicの大規模言語モデルClaude 3.5 Sonnetを3つの主要製品に組み込むと発表した",
           "text_en": "UiPath announced the integration of Anthropic's large language model, Claude 3.5 Sonnet, in three key products",
           "source": {
             "label": "UiPath 8-K Ex.99 の発表",
