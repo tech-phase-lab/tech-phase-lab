@@ -1,0 +1,503 @@
+{
+  "root": {
+    "ticker": "IREN",
+    "name": "IREN"
+  },
+  "rows": [
+    {
+      "ja": "供給元(GPU・サーバー)",
+      "en": "Suppliers (GPUs & servers)",
+      "above": true
+    },
+    {
+      "ja": "顧客(AIクラウド契約)",
+      "en": "Customers (AI cloud contracts)"
+    },
+    {
+      "ja": "提携・出資・融資",
+      "en": "Partnerships, investment & financing"
+    },
+    {
+      "ja": "競合(IRENの年次報告に記載)",
+      "en": "Competitors (named in IREN’s 10-K)"
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "AMZN",
+    "GOOGL",
+    "CRWV",
+    "NBIS"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IRENが年次報告で、AIクラウド向けGPU・関連機器の限られた供給元の1社としてNVIDIAを挙げている(2026年度、10-K)",
+          "text_en": "IREN lists NVIDIA among the limited number of suppliers of GPUs and related equipment for its AI Cloud Services (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "from a limited number of suppliers, including NVIDIA, AMD, Dell Technologies, Lenovo, Supermicro, Gigabyte and leading storage and networking providers"
+          }
+        },
+        {
+          "type": "down",
+          "text": "NVIDIAの社内AI・研究向けに、5年間・約34億ドルのクラウドサービス契約を締結(2026年度、10-K)",
+          "text_en": "Signed a five-year, approximately $3.4B cloud services contract with NVIDIA for its internal AI and research workloads (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "in May 2026 we entered into a five-year cloud services contract with NVIDIA to support its internal AI and research workloads representing approximately $3.4 billion of total contract value"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAと、最大5GWのNVIDIA DSX準拠AI基盤で戦略的提携。NVIDIAにIRENの株式を最大21億ドル分取得する権利を付与(2026年度、10-K)",
+          "text_en": "Entered a strategic partnership with NVIDIA for up to 5GW of NVIDIA DSX-aligned AI infrastructure and granted NVIDIA the right to invest up to $2.1B in IREN shares (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "In May 2026, we entered into a strategic partnership with NVIDIA intended to support the deployment of up to 5GW of NVIDIA DSX-aligned AI infrastructure across our global pipeline over time. We also granted NVIDIA the right to invest up to $2.1 billion in Ordinary shares, subject to delivery of up to 600,000 GPUs, and certain regulatory conditions.",
+            "note": "出資は権利の付与で、GPUの納入や規制上の条件があります。まだ株式を持つ段階ではありません。",
+            "note_en": "The investment is a conditional right (GPU delivery and regulatory conditions); NVIDIA is not yet a shareholder."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "IRENはNVIDIA Cloud Partnerで、NVIDIAのPreferred Partnerの資格を持つ(2026年度、10-K)",
+          "text_en": "IREN is an NVIDIA Cloud Partner with NVIDIA Preferred Partner status (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "We are an NVIDIA Cloud Partner and secured NVIDIA Preferred Partner status during fiscal year 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IRENが年次報告で、GPU・関連インフラの供給元の1社としてDell Technologiesを挙げている(2026年度、10-K)",
+          "text_en": "IREN names Dell Technologies among suppliers of GPUs and related infrastructure (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "from a limited number of suppliers, including NVIDIA, AMD, Dell Technologies, Lenovo, Supermicro, Gigabyte and leading storage and networking providers",
+            "note": "契約の当事者は子会社のDell Marketing L.P.とDell Canada Inc.です。",
+            "note_en": "The contracting entities are the subsidiaries Dell Marketing L.P. and Dell Canada Inc."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Dell CanadaとDell USAが、IRENの子会社にGPUと関連製品をそれぞれ約23億ドル・約12億ドルで供給することで合意(2026年3月、8-K)",
+          "text_en": "Dell Canada and Dell USA agreed to supply GPUs and ancillary products to IREN subsidiaries for about $2.3B and $1.2B respectively (March 2026, 8-K)",
+          "source": {
+            "label": "IREN 8-K",
+            "label_en": "IREN 8-K (Item 1.01, Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000114036126007905/ny20064909x3_8k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Dell Canada will supply to IE CA Leasing GPUs and ancillary products and services, scheduled to be delivered in phases during the second half of 2026, for an aggregate purchase price of approximately $2.3 billion",
+            "note": "契約の当事者はDell Technologies傘下のDell Canada Inc.とDell Marketing L.P.です。",
+            "note_en": "The contracting entities are Dell Canada Inc. and Dell Marketing L.P., subsidiaries of Dell Technologies."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Dell Marketing L.P.が、ChildressのIRENの34億ドルのAIクラウド契約向けに、約16億ドルのGPUを供給(2026年5月、8-K)",
+          "text_en": "Dell Marketing L.P. will supply GPUs to an IREN subsidiary for about $1.6B to serve the $3.4B AI cloud contract at Childress (May 2026, 8-K)",
+          "source": {
+            "label": "IREN 8-K",
+            "label_en": "IREN 8-K (Item 1.01, May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000030/iren-20260519.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "Dell will supply to IE US Hardware GPUs and ancillary products and services (“GPUs”) for an aggregate purchase price of approximately $1.6 billion payable in installments within 30 days of each tranche shipping.",
+            "note": "契約の当事者は子会社のDell Marketing L.P.です。",
+            "note_en": "The contracting entity is the subsidiary Dell Marketing L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IRENが年次報告で、AIクラウド向けGPU・サーバー等の供給元の1社としてAMDを挙げている(2026年度、10-K)",
+          "text_en": "IREN names Advanced Micro Devices among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "from a limited number of suppliers, including NVIDIA, AMD, Dell Technologies, Lenovo, Supermicro, Gigabyte and leading storage and networking providers"
+          }
+        },
+        {
+          "type": "up",
+          "text": "IRENのGPU保有分・発注分にAMD MI350Xシステムが含まれる(2026年度、10-K)",
+          "text_en": "IREN’s GPU fleet installed and on order includes AMD MI350X systems (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "As of June 30, 2026, our GPUs installed and on order included AMD MI350X and NVIDIA H100, H200, B200, B300, GB300 and VR200 systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "0992",
+      "ticker": "Lenovo",
+      "name": "Lenovo Group",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IRENが年次報告で、AIクラウド向けのGPU・サーバー等の供給元の1社としてLenovo Groupを挙げている(2026年度、10-K)",
+          "text_en": "IREN names Lenovo Group among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "from a limited number of suppliers, including NVIDIA, AMD, Dell Technologies, Lenovo, Supermicro, Gigabyte and leading storage and networking providers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMCI",
+      "ticker": "SMCI",
+      "name": "Super Micro Computer",
+      "sub": "AIサーバー",
+      "sub_en": "AI servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IRENが年次報告で、AIクラウド向けのGPU・サーバー等の供給元の1社としてSuper Micro Computerを挙げている(2026年度、10-K)",
+          "text_en": "IREN names Super Micro Computer among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "from a limited number of suppliers, including NVIDIA, AMD, Dell Technologies, Lenovo, Supermicro, Gigabyte and leading storage and networking providers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "2376",
+      "ticker": "GIGABYTE",
+      "name": "Gigabyte Technology",
+      "sub": "サーバー・PC",
+      "sub_en": "Servers & PCs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IRENが年次報告で、AIクラウド向けのGPU・サーバー等の供給元の1社としてGigabyte Technologyを挙げている(2026年度、10-K)",
+          "text_en": "IREN names Gigabyte Technology among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "from a limited number of suppliers, including NVIDIA, AMD, Dell Technologies, Lenovo, Supermicro, Gigabyte and leading storage and networking providers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "テキサス州ChildressでMicrosoftに専用GPUサービスを5年間・約97億ドルで提供する契約(2026年度、10-K)",
+          "text_en": "Will provide Microsoft dedicated GPU services at Childress, Texas under a five-year, approximately $9.7B contract (FY2026 10-K)",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "On November 2, 2025, we entered into the Microsoft Agreement, pursuant to which we will provide Microsoft Corporation with dedicated GPU services at “Horizon” data center facilities located in Childress, Texas over a five-year average term."
+          }
+        },
+        {
+          "type": "down",
+          "text": "子会社がMicrosoft向けにNVIDIA GB300搭載の専用GPU容量を提供するパートナー作業指示書を締結(2031年まで約97億ドル、2025年11月、8-K)",
+          "text_en": "IREN subsidiary signed a Partner Statement of Work to provide Microsoft dedicated NVIDIA GB300 GPU capacity (about $9.7B through 2031) (November 2025, 8-K)",
+          "source": {
+            "label": "IREN 8-K",
+            "label_en": "IREN 8-K (Item 1.01, Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000114036125040072/ef20058139_8k.htm",
+            "level": "official",
+            "date": "2025-11-03",
+            "quote": "IE US Hardware 3 Inc. (“IE US Hardware 3”), a wholly owned subsidiary of IREN Limited (the “Company”), and Microsoft Corporation (“Microsoft”) entered into a Partner Statement of Work (the “Microsoft Agreement”) , pursuant to which IE US Hardware 3 will provide Microsoft access to dedicated GPU infrastructure capacity in tranches"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてMicrosoft Azureを挙げている(2026年度、10-K)",
+          "text_en": "IREN’s FY2026 10-K names Microsoft Azure among the hyperscalers it competes with in AI Cloud Services",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud, as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others",
+            "note": "Microsoftは最大の顧客でもあります。企業によっては顧客・供給元・提携先と競合を兼ねる場合がある、と同じ書類に記載があります。",
+            "note_en": "Microsoft is also IREN’s largest customer; the filing notes companies may be customers, suppliers or partners in one context and competitors in another."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Anthropicが、IRENと複数年のクラウド契約を結んだと報じられている(The Information報道、2026年10月12日)。両社とも公式には発表していません",
+          "text_en": "Anthropic is reported to have signed a multiyear cloud agreement with IREN (The Information report, October 12, 2026); neither company has announced it officially",
+          "source": {
+            "label": "Dataconomy の報道(The Information報道の引用)",
+            "label_en": "Dataconomy report (citing The Information)",
+            "url": "https://dataconomy.com/2026/10/12/anthropic-reportedly-signs-multiyear-cloud-deal-with-iren/",
+            "level": "press",
+            "date": "2026-10-12",
+            "note": "公式発表はまだありません。契約の金額・期間は報じられていません。IRENが発表したら公式の出典に差し替えます。",
+            "note_en": "Not yet officially announced; value and term were not reported. This will be replaced with an official source once IREN announces it."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Goldman Sachs Bank USAが、IRENのGPU機器を保有する子会社向けの約15億ドルのつなぎ型タームローンで共同主幹事・ブックランナー(2026年6月、8-K)",
+          "text_en": "Goldman Sachs Bank USA is joint lead arranger and bookrunner on the roughly $1.5B delayed draw term loan financing IREN’s GPU hardware subsidiary (June 2026, 8-K)",
+          "source": {
+            "label": "IREN 8-K",
+            "label_en": "IREN 8-K (Item 1.01, Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000114036126023427/ef20075181_8k.htm",
+            "level": "official",
+            "date": "2026-06-01",
+            "quote": "Goldman Sachs Bank USA and JPMorgan Chase Bank, N.A., as joint lead arrangers and joint bookrunners",
+            "note": "融資関係で、IRENのGPU機器を保有する子会社(Hardware 3)の融資です。",
+            "note_en": "A financing relationship at the Hardware 3 subsidiary level."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bankが、IRENのGPU機器を保有する子会社向けの約15億ドルのつなぎ型タームローンで共同主幹事・ブックランナー(2026年6月、8-K)",
+          "text_en": "JPMorgan Chase Bank is joint lead arranger and bookrunner on the roughly $1.5B delayed draw term loan financing IREN’s GPU hardware subsidiary (June 2026, 8-K)",
+          "source": {
+            "label": "IREN 8-K",
+            "label_en": "IREN 8-K (Item 1.01, Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000114036126023427/ef20075181_8k.htm",
+            "level": "official",
+            "date": "2026-06-01",
+            "quote": "Goldman Sachs Bank USA and JPMorgan Chase Bank, N.A., as joint lead arrangers and joint bookrunners",
+            "note": "融資関係で、IRENのGPU機器を保有する子会社(Hardware 3)の融資です。",
+            "note_en": "A financing relationship at the Hardware 3 subsidiary level."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてAmazon(AWS)を挙げている(2026年度、10-K)",
+          "text_en": "IREN’s FY2026 10-K names Amazon Web Services among the hyperscalers it competes with",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud, as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてAlphabet(Google Cloud)を挙げている(2026年度、10-K)",
+          "text_en": "IREN’s FY2026 10-K names Google Cloud among the hyperscalers it competes with",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud, as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてOracleを挙げている(2026年度、10-K)",
+          "text_en": "IREN’s FY2026 10-K names Oracle Cloud among the hyperscalers it competes with",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud, as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENが年次報告で、AIクラウドで競合する特化型AIクラウドの1社としてCoreWeaveを挙げている(2026年度、10-K)",
+          "text_en": "IREN’s FY2026 10-K names CoreWeave among the specialized AI Cloud Services providers it competes with",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud, as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius Group",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENが年次報告で、AIクラウドで競合する特化型AIクラウドの1社としてNebius Groupを挙げている(2026年度、10-K)",
+          "text_en": "IREN’s FY2026 10-K names Nebius among the specialized AI Cloud Services providers it competes with",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud, as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係のみ。「報道」は公式で未確認。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown; \"report\" items are not yet confirmed officially. Not investment advice."
+  }
+}
