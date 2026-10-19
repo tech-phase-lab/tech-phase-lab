@@ -38,6 +38,8 @@ import c_bidu from "../../data/chain/BIDU.json" with { type: "json" };
 import c_bill from "../../data/chain/BILL.json" with { type: "json" };
 import c_bksy from "../../data/chain/BKSY.json" with { type: "json" };
 import c_bl from "../../data/chain/BL.json" with { type: "json" };
+import c_box from "../../data/chain/BOX.json" with { type: "json" };
+import c_brze from "../../data/chain/BRZE.json" with { type: "json" };
 import c_bsy from "../../data/chain/BSY.json" with { type: "json" };
 import c_camt from "../../data/chain/CAMT.json" with { type: "json" };
 import c_cdns from "../../data/chain/CDNS.json" with { type: "json" };
@@ -65,9 +67,14 @@ import c_docn from "../../data/chain/DOCN.json" with { type: "json" };
 import c_docu from "../../data/chain/DOCU.json" with { type: "json" };
 import c_dt from "../../data/chain/DT.json" with { type: "json" };
 import c_duol from "../../data/chain/DUOL.json" with { type: "json" };
+import c_eght from "../../data/chain/EGHT.json" with { type: "json" };
 import c_entg from "../../data/chain/ENTG.json" with { type: "json" };
+import c_estc from "../../data/chain/ESTC.json" with { type: "json" };
 import c_etn from "../../data/chain/ETN.json" with { type: "json" };
+import c_fivn from "../../data/chain/FIVN.json" with { type: "json" };
+import c_flex from "../../data/chain/FLEX.json" with { type: "json" };
 import c_form from "../../data/chain/FORM.json" with { type: "json" };
+import c_foxa from "../../data/chain/FOXA.json" with { type: "json" };
 import c_frog from "../../data/chain/FROG.json" with { type: "json" };
 import c_frsh from "../../data/chain/FRSH.json" with { type: "json" };
 import c_ftnt from "../../data/chain/FTNT.json" with { type: "json" };
@@ -75,11 +82,13 @@ import c_gev from "../../data/chain/GEV.json" with { type: "json" };
 import c_gfs from "../../data/chain/GFS.json" with { type: "json" };
 import c_glw from "../../data/chain/GLW.json" with { type: "json" };
 import c_googl from "../../data/chain/GOOGL.json" with { type: "json" };
+import c_himx from "../../data/chain/HIMX.json" with { type: "json" };
 import c_hpe from "../../data/chain/HPE.json" with { type: "json" };
 import c_hpq from "../../data/chain/HPQ.json" with { type: "json" };
 import c_hubs from "../../data/chain/HUBS.json" with { type: "json" };
 import c_ibm from "../../data/chain/IBM.json" with { type: "json" };
 import c_ichr from "../../data/chain/ICHR.json" with { type: "json" };
+import c_imos from "../../data/chain/IMOS.json" with { type: "json" };
 import c_indi from "../../data/chain/INDI.json" with { type: "json" };
 import c_intc from "../../data/chain/INTC.json" with { type: "json" };
 import c_intu from "../../data/chain/INTU.json" with { type: "json" };
@@ -147,8 +156,11 @@ import c_qcom from "../../data/chain/QCOM.json" with { type: "json" };
 import c_qlys from "../../data/chain/QLYS.json" with { type: "json" };
 import c_qrvo from "../../data/chain/QRVO.json" with { type: "json" };
 import c_qtwo from "../../data/chain/QTWO.json" with { type: "json" };
+import c_qubt from "../../data/chain/QUBT.json" with { type: "json" };
 import c_rblx from "../../data/chain/RBLX.json" with { type: "json" };
 import c_rddt from "../../data/chain/RDDT.json" with { type: "json" };
+import c_rdw from "../../data/chain/RDW.json" with { type: "json" };
+import c_rgti from "../../data/chain/RGTI.json" with { type: "json" };
 import c_rmbs from "../../data/chain/RMBS.json" with { type: "json" };
 import c_roku from "../../data/chain/ROKU.json" with { type: "json" };
 import c_rpd from "../../data/chain/RPD.json" with { type: "json" };
@@ -167,6 +179,7 @@ import c_snow from "../../data/chain/SNOW.json" with { type: "json" };
 import c_snps from "../../data/chain/SNPS.json" with { type: "json" };
 import c_sofi from "../../data/chain/SOFI.json" with { type: "json" };
 import c_sony from "../../data/chain/SONY.json" with { type: "json" };
+import c_spcx from "../../data/chain/SPCX.json" with { type: "json" };
 import c_spot from "../../data/chain/SPOT.json" with { type: "json" };
 import c_spt from "../../data/chain/SPT.json" with { type: "json" };
 import c_stm from "../../data/chain/STM.json" with { type: "json" };
@@ -260,6 +273,8 @@ const available: Record<string, ChainMapData> = {
   BILL: c_bill as ChainMapData,
   BKSY: c_bksy as ChainMapData,
   BL: c_bl as ChainMapData,
+  BOX: c_box as ChainMapData,
+  BRZE: c_brze as ChainMapData,
   BSY: c_bsy as ChainMapData,
   CAMT: c_camt as ChainMapData,
   CDNS: c_cdns as ChainMapData,
@@ -287,9 +302,14 @@ const available: Record<string, ChainMapData> = {
   DOCU: c_docu as ChainMapData,
   DT: c_dt as ChainMapData,
   DUOL: c_duol as ChainMapData,
+  EGHT: c_eght as ChainMapData,
   ENTG: c_entg as ChainMapData,
+  ESTC: c_estc as ChainMapData,
   ETN: c_etn as ChainMapData,
+  FIVN: c_fivn as ChainMapData,
+  FLEX: c_flex as ChainMapData,
   FORM: c_form as ChainMapData,
+  FOXA: c_foxa as ChainMapData,
   FROG: c_frog as ChainMapData,
   FRSH: c_frsh as ChainMapData,
   FTNT: c_ftnt as ChainMapData,
@@ -297,11 +317,13 @@ const available: Record<string, ChainMapData> = {
   GFS: c_gfs as ChainMapData,
   GLW: c_glw as ChainMapData,
   GOOGL: c_googl as ChainMapData,
+  HIMX: c_himx as ChainMapData,
   HPE: c_hpe as ChainMapData,
   HPQ: c_hpq as ChainMapData,
   HUBS: c_hubs as ChainMapData,
   IBM: c_ibm as ChainMapData,
   ICHR: c_ichr as ChainMapData,
+  IMOS: c_imos as ChainMapData,
   INDI: c_indi as ChainMapData,
   INTC: c_intc as ChainMapData,
   INTU: c_intu as ChainMapData,
@@ -369,8 +391,11 @@ const available: Record<string, ChainMapData> = {
   QLYS: c_qlys as ChainMapData,
   QRVO: c_qrvo as ChainMapData,
   QTWO: c_qtwo as ChainMapData,
+  QUBT: c_qubt as ChainMapData,
   RBLX: c_rblx as ChainMapData,
   RDDT: c_rddt as ChainMapData,
+  RDW: c_rdw as ChainMapData,
+  RGTI: c_rgti as ChainMapData,
   RMBS: c_rmbs as ChainMapData,
   ROKU: c_roku as ChainMapData,
   RPD: c_rpd as ChainMapData,
@@ -389,6 +414,7 @@ const available: Record<string, ChainMapData> = {
   SNPS: c_snps as ChainMapData,
   SOFI: c_sofi as ChainMapData,
   SONY: c_sony as ChainMapData,
+  SPCX: c_spcx as ChainMapData,
   SPOT: c_spot as ChainMapData,
   SPT: c_spt as ChainMapData,
   STM: c_stm as ChainMapData,

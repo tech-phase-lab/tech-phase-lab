@@ -1,0 +1,153 @@
+{
+  "root": {
+    "ticker": "IMOS",
+    "name": "ChipMOS"
+  },
+  "rows": [
+    {
+      "ja": "製造装置の供給元",
+      "en": "Equipment suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "認証・その他",
+      "en": "Certification"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Advantest",
+      "ticker": "Advantest",
+      "name": "アドバンテスト",
+      "sub": "テスタ",
+      "sub_en": "Test equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "テスタを国際的なメーカーであるアドバンテストから購入している",
+          "text_en": "Purchases testers from international manufacturers including Advantest Corporation",
+          "source": {
+            "label": "ChipMOS Technologies 20-F",
+            "label_en": "ChipMOS Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "We purchase testers from international manufacturers Advantest Corporation."
+          }
+        },
+        {
+          "type": "up",
+          "text": "TCP関連のテスタを追加でアドバンテストから購入した",
+          "text_en": "Subsequently purchased additional TCP-related testers from Advantest Corporation",
+          "source": {
+            "label": "ChipMOS Technologies 20-F",
+            "label_en": "ChipMOS Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "We subsequently purchased additional TCP-related testers from Advantest Corporation and assembly equipment from Shibaura Mechatronics Corp."
+          }
+        }
+      ],
+      "name_en": "Advantest"
+    },
+    {
+      "id": "Shibaura",
+      "ticker": "Shibaura",
+      "name": "芝浦メカトロニクス",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "組立装置を芝浦メカトロニクスから購入した",
+          "text_en": "Purchased assembly equipment from Shibaura Mechatronics Corp.",
+          "source": {
+            "label": "ChipMOS Technologies 20-F",
+            "label_en": "ChipMOS Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "We subsequently purchased additional TCP-related testers from Advantest Corporation and assembly equipment from Shibaura Mechatronics Corp."
+          }
+        }
+      ],
+      "name_en": "Shibaura Mechatronics"
+    },
+    {
+      "id": "HIMX",
+      "ticker": "HIMX",
+      "name": "ハイマックス",
+      "sub": "表示ドライバIC",
+      "sub_en": "Display driver ICs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Himaxの年次報告が、TABやCOGパッケージの組立・テスト委託先としてChipMOSを挙げている",
+          "text_en": "Himax's annual report lists ChipMOS among assembly and testing houses specializing in TAB and COG packages",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We engage assembly and testing houses that specialize in TAB and COG packages such as Chipbond, Chipmore International trading company Ltd., ChipMOS Technologies Inc. and King Yuan Electronics Co., Ltd, etc."
+          }
+        }
+      ],
+      "name_en": "Himax Technologies"
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "sub": "電機・エンタメ",
+      "sub_en": "Electronics & entertainment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "グリーン製品要求に適合した製品について、日本のソニーからグリーンパートナー認証を取得した",
+          "text_en": "Obtained Green Partner certification from Sony Corporation of Japan for products conforming to its Green Product Requirement",
+          "source": {
+            "label": "ChipMOS Technologies 20-F",
+            "label_en": "ChipMOS Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "For products in conformity with Green Product Requirement, the Company obtained Green Partner certification from Sony Corporation of Japan.",
+            "note": "認証取得の記載のみです。",
+            "note_en": "Certification mention only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ソニーの認証は途切れることなく維持されている",
+          "text_en": "The Sony certificates continue to be maintained uninterrupted",
+          "source": {
+            "label": "ChipMOS Technologies 20-F",
+            "label_en": "ChipMOS Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "The Sony certificates will continue to be maintained uninterrupted until now."
+          }
+        }
+      ],
+      "name_en": "Sony Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

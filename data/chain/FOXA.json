@@ -1,0 +1,111 @@
+{
+  "root": {
+    "ticker": "FOXA",
+    "name": "フォックス・コーポレーション"
+  },
+  "rows": [
+    {
+      "ja": "供給元(クラウド)",
+      "en": "Supplier (cloud)",
+      "above": true
+    },
+    {
+      "ja": "提携・資金調達",
+      "en": "Partnerships & financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Amazon Web Services(AWS)との戦略的協業を発表し、AWSを優先AIクラウド事業者に指名した",
+          "text_en": "It announced a strategic collaboration with Amazon Web Services (AWS), naming AWS as its preferred AI Cloud provider",
+          "source": {
+            "label": "Fox · April16,2026 preferred AI cloud AWS and deployed Elemental services",
+            "label_en": "Fox · April16,2026 preferred AI cloud AWS and deployed Elemental services",
+            "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-corporation-names-amazon-web-services-its-preferred-ai-cloud-provider/",
+            "level": "official",
+            "quote": "“FOX” or the “Company”) today announced a strategic collaboration with Amazon Web Services (AWS), naming AWS as its preferred AI Cloud provider."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ディズニー",
+      "sub": "メディア・エンターテインメント",
+      "sub_en": "Media & entertainment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FOX SportsとDisney/ESPNは、複数年の権利契約に基づくUFL試合の国内配信パートナーである",
+          "text_en": "FOX Sports and Disney/ESPN are the domestic distribution partners of the UFL games under multi-year rights agreements",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "FOX Sports and Disney/ESPN are the domestic distribution partners of the UFL games under multi-year rights agreements."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Disney取引後の21CFおよびDisneyとの関係を、分離・配当契約と税務事項契約が定めている",
+          "text_en": "A separation and distribution agreement and a tax matters agreement govern aspects of the relationship with 21CF and Disney following the Disney Transaction",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "The Company is party to a separation and distribution agreement and a tax matters agreement that govern certain aspects of the Company’s relationship with 21CF and Disney following the Disney Transaction."
+          }
+        }
+      ],
+      "name_en": "Disney"
+    },
+    {
+      "id": "MS",
+      "ticker": "Morgan Stanley",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年6月30日、合併契約に関連して、Morgan Stanley Senior Funding, Inc.を管理代理人とするタームローン契約を締結した",
+          "text_en": "On June 30, 2026, in connection with the Merger Agreement, it entered into a term loan agreement with Morgan Stanley Senior Funding, Inc. as administrative agent",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "On June 30, 2026, in connection with the Merger Agreement, the Company entered into a term loan agreement (the “Term Loan Agreement”), among the Company, as Borrower, the initial lenders named therein, and Morgan Stanley Senior Funding, Inc., as administrative agent.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

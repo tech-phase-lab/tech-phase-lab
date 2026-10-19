@@ -1,0 +1,263 @@
+{
+  "root": {
+    "ticker": "SPCX",
+    "name": "SpaceX"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "周波数取得・資金調達",
+      "en": "Spectrum & financing"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ASTS",
+    "IREN",
+    "PL"
+  ],
+  "companies": [
+    {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "テスラ",
+      "sub": "EV・蓄電",
+      "sub_en": "EVs & energy storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SpaceXは2025年12月31日時点で、Teslaから506百万ドルのMegapack製品と131百万ドルのCybertruckを購入した",
+          "text_en": "As of December 31, 2025, SpaceX purchased $506 million of Megapack products and $131 million of Cybertrucks from Tesla",
+          "source": {
+            "label": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "label_en": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+            "level": "official",
+            "quote": "As of December 31, 2025, the Company purchased $ 506 million of Megapack products and $ 131 million of Cybertrucks at manufacturer’s suggested retail price from Tesla, recorded in Property, plant, and equipment, net in the consolidated balance sheets."
+          }
+        },
+        {
+          "type": "up",
+          "text": "2026年6月30日までの3か月と6か月で、SpaceXはTeslaからMegapack製品をそれぞれ295百万ドル、329百万ドル購入した",
+          "text_en": "During the three and six months ended June 30, 2026, SpaceX purchased $295 million and $329 million, respectively, of Megapack products from Tesla",
+          "source": {
+            "label": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "label_en": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+            "level": "official",
+            "quote": "During the three and six months ended June 30, 2026, the Company purchased $ 295 million and $ 329 million, respectively, of Megapack products from Tesla, Inc."
+          }
+        }
+      ],
+      "name_en": "Tesla"
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "STMicroelectronicsの年次報告が、主要顧客としてSpaceXを挙げている",
+          "text_en": "STMicroelectronics' annual report lists SpaceX among its major customers",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major customers include (in alphabetical order) Apple, Bosch, Continental, Denso, HP, Mobileye, Samsung, SpaceX, Tesla and Vitesco."
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "SATS",
+      "ticker": "SATS",
+      "name": "エコースター",
+      "sub": "衛星・通信",
+      "sub_en": "Satellite & communications",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SpaceXはEchoStarと、EchoStarの50MHz分の周波数ライセンス(AWS-4とH-Block)を購入する契約を結んだ",
+          "text_en": "SpaceX entered into a License Purchase Agreement for the purchase of EchoStar's licenses related to 50 MHz of spectrum (AWS-4 and H-Block)",
+          "source": {
+            "label": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "label_en": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+            "level": "official",
+            "quote": "Company entered into a License Purchase Agreement (the “Spectrum License Purchase Agreement”) with Spectrum Business Trust 2025-1, a Nevada Business Trust (“Trust”) and EchoStar Corporation (“EchoStar”) for the purchase of EchoStar’s licenses related to 50 MHz of spectrum (the “AWS-4 and H-Block Licenses” and the transactions contemplated"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年11月5日に契約を改定して再締結し、最大15MHz分のAWS-3周波数ライセンスを追加した",
+          "text_en": "On November 5, 2025 the parties amended and restated the agreement to include licenses for up to 15 MHz of additional unpaired AWS-3 spectrum",
+          "source": {
+            "label": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "label_en": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+            "level": "official",
+            "quote": "On November 5, 2025, the parties amended and restated the Spectrum License Purchase Agreement to include EchoStar’s licenses for up to 15 MHz of additional unpaired AWS-3 spectrum (together with the AWS-4 and H-Block Licenses, the “Spectrum Licenses”)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "EchoStarへの周波数ライセンスの支払いが856百万ドル増えた",
+          "text_en": "Payments to EchoStar for the Spectrum Licenses increased by $856 million",
+          "source": {
+            "label": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "label_en": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+            "level": "official",
+            "quote": "space launch facilities and related infrastructure, an increase in purchases of marketable securities of $13,029 million from cash proceeds received from the IPO and the SpaceX Notes, and an increase in payments to EchoStar for the Spectrum Licenses of $856 million."
+          }
+        }
+      ],
+      "name_en": "EchoStar"
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Wells Fargo Securitiesは、SpaceXのIPOの主幹事(ブック・ランニング・マネージャー)の1社を務めた",
+          "text_en": "Wells Fargo Securities acted as a book-running manager for SpaceX's IPO",
+          "source": {
+            "label": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "label_en": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+            "level": "official",
+            "quote": "Morgan, Barclays, Deutsche Bank Securities, RBC Capital Markets, UBS Investment Bank, and Wells Fargo Securities acted as book-running managers for the IPO.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Wells Fargo"
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "ゴールドマン・サックス",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SpaceXは2026年6月26日付で、Goldman Sachs & Co.などと登録権利契約を結んだ",
+          "text_en": "SpaceX entered into a Registration Rights Agreement dated June 26, 2026 with BofA Securities, Citigroup Global Markets and Goldman Sachs & Co.",
+          "source": {
+            "label": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "label_en": "SpaceX June 30 2026 Form 10-Q; segments / related-party purchases / acquisitions",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+            "level": "official",
+            "quote": "4.2 Registration Rights Agreement, dated as of June 26, 2026, among Space Exploration Technologies Corp. and BofA Securities, Inc., Citigroup Global Markets Inc., Goldman Sachs & Co.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Goldman Sachs"
+    },
+    {
+      "id": "ASTS",
+      "ticker": "ASTS",
+      "name": "ASTスペースモバイル",
+      "sub": "衛星直接通信",
+      "sub_en": "Direct-to-device satellites",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ASTスペースモバイルの年次報告が、スペースXを競合として挙げている",
+          "text_en": "Names SpaceX as a competitor in its annual report",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We face competition from existing and new companies including SpaceX’s Starlink, which is developing satellite communications technology using LEO constellations to provide competitive services in the direct-to-device segment of the mobile satellite services industry."
+          }
+        }
+      ],
+      "name_en": "AST SpaceMobile"
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "アイレン",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アイレンの年次報告が、スペースXを競合として挙げている",
+          "text_en": "Names SpaceX as a competitor in its annual report",
+          "source": {
+            "label": "IREN 10-K",
+            "label_en": "IREN 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "As a global AI Cloud Services provider, we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud, as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others."
+          }
+        }
+      ],
+      "name_en": "IREN"
+    },
+    {
+      "id": "PL",
+      "ticker": "PL",
+      "name": "プラネット・ラボ",
+      "sub": "地球観測衛星",
+      "sub_en": "Earth observation satellites",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Planet Labsの年次報告が、SpaceXが直接競合に参入する可能性に言及している",
+          "text_en": "Planet Labs' annual report says SpaceX could offer more advanced or lower priced offerings if it decided to compete with it directly",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "For example, SpaceX’s vertical integration and use of its own launch vehicles provides cost and speed advantages that could enable it to offer more advanced or lower priced offerings, if they were to decide to compete with us directly.",
+            "note": "参入の可能性としての記載です。",
+            "note_en": "Describes a potential entry into competition."
+          }
+        }
+      ],
+      "name_en": "Planet Labs"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
