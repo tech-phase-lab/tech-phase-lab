@@ -1,0 +1,384 @@
+{
+  "root": {
+    "ticker": "CXM",
+    "name": "Sprinklr"
+  },
+  "rows": [
+    {
+      "ja": "連携・パートナー(Sprinklrの年次報告に記載)",
+      "en": "Integrations & partners (named in Sprinklr's annual report)"
+    },
+    {
+      "ja": "顧客(Sprinklrの発表に記載)",
+      "en": "Customers (named in Sprinklr's press release)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SPT"
+  ],
+  "companies": [
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "sub": "クリエイティブソフト",
+      "sub_en": "Creative software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、連携先として挙げている",
+          "text_en": "The annual report names it among its marketplace integrations",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Sprinklr marketplace integrations include 80+ out-of-the-box connectors with CRMs, CDPs, DAMs, and Data Visualization, as well as with other enterprise platforms like Microsoft, Salesforce, Adobe, Google, Oracle, SAP and ServiceNow."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、パートナーの例として挙げている",
+          "text_en": "The annual report names it among its partner examples",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We work with agencies and partners across nine different partner categories, including System Integrators, Transformational partners and Resellers, which includes partners such as Microsoft, Accenture, Deloitte, Salesforce, SAP, ServiceNow, Adobe, Oracle and others."
+          }
+        }
+      ],
+      "name_en": "Adobe"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、連携先として挙げている",
+          "text_en": "The annual report names it among its marketplace integrations",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Sprinklr marketplace integrations include 80+ out-of-the-box connectors with CRMs, CDPs, DAMs, and Data Visualization, as well as with other enterprise platforms like Microsoft, Salesforce, Adobe, Google, Oracle, SAP and ServiceNow."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、パートナーの例として挙げている",
+          "text_en": "The annual report names it among its partner examples",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We work with agencies and partners across nine different partner categories, including System Integrators, Transformational partners and Resellers, which includes partners such as Microsoft, Accenture, Deloitte, Salesforce, SAP, ServiceNow, Adobe, Oracle and others."
+          }
+        },
+        {
+          "type": "down",
+          "text": "2026年8月の発表で、Sprinklrを利用する企業の例にMicrosoftが挙げられている",
+          "text_en": "The August 2026 press release names Microsoft among enterprises relying on Sprinklr",
+          "source": {
+            "label": "Sprinklr 8-K Ex.99 の発表",
+            "label_en": "Sprinklr 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000119312526347899/d40248dex991.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "enterprises — including Microsoft, P&G, Samsung, and 59% of the Fortune 100 — rely on Sprinklr to help them deliver consistent, trusted customer experiences worldwide."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "顧客管理ソフト",
+      "sub_en": "CRM software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、連携先として挙げている",
+          "text_en": "The annual report names it among its marketplace integrations",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Sprinklr marketplace integrations include 80+ out-of-the-box connectors with CRMs, CDPs, DAMs, and Data Visualization, as well as with other enterprise platforms like Microsoft, Salesforce, Adobe, Google, Oracle, SAP and ServiceNow."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、パートナーの例として挙げている",
+          "text_en": "The annual report names it among its partner examples",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We work with agencies and partners across nine different partner categories, including System Integrators, Transformational partners and Resellers, which includes partners such as Microsoft, Accenture, Deloitte, Salesforce, SAP, ServiceNow, Adobe, Oracle and others."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "企業向けソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、連携先として挙げている",
+          "text_en": "The annual report names it among its marketplace integrations",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Sprinklr marketplace integrations include 80+ out-of-the-box connectors with CRMs, CDPs, DAMs, and Data Visualization, as well as with other enterprise platforms like Microsoft, Salesforce, Adobe, Google, Oracle, SAP and ServiceNow."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、パートナーの例として挙げている",
+          "text_en": "The annual report names it among its partner examples",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We work with agencies and partners across nine different partner categories, including System Integrators, Transformational partners and Resellers, which includes partners such as Microsoft, Accenture, Deloitte, Salesforce, SAP, ServiceNow, Adobe, Oracle and others."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "企業向けソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、連携先として挙げている",
+          "text_en": "The annual report names it among its marketplace integrations",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Sprinklr marketplace integrations include 80+ out-of-the-box connectors with CRMs, CDPs, DAMs, and Data Visualization, as well as with other enterprise platforms like Microsoft, Salesforce, Adobe, Google, Oracle, SAP and ServiceNow."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、パートナーの例として挙げている",
+          "text_en": "The annual report names it among its partner examples",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We work with agencies and partners across nine different partner categories, including System Integrators, Transformational partners and Resellers, which includes partners such as Microsoft, Accenture, Deloitte, Salesforce, SAP, ServiceNow, Adobe, Oracle and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、連携先として挙げている",
+          "text_en": "The annual report names it among its marketplace integrations",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Sprinklr marketplace integrations include 80+ out-of-the-box connectors with CRMs, CDPs, DAMs, and Data Visualization, as well as with other enterprise platforms like Microsoft, Salesforce, Adobe, Google, Oracle, SAP and ServiceNow."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "年次報告が、パートナーの例として挙げている",
+          "text_en": "The annual report names it among its partner examples",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We work with agencies and partners across nine different partner categories, including System Integrators, Transformational partners and Resellers, which includes partners such as Microsoft, Accenture, Deloitte, Salesforce, SAP, ServiceNow, Adobe, Oracle and others."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、連携先として挙げている",
+          "text_en": "The annual report names it among its marketplace integrations",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Sprinklr marketplace integrations include 80+ out-of-the-box connectors with CRMs, CDPs, DAMs, and Data Visualization, as well as with other enterprise platforms like Microsoft, Salesforce, Adobe, Google, Oracle, SAP and ServiceNow."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサルティング",
+      "sub_en": "Consulting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告が、パートナーの例として挙げている",
+          "text_en": "The annual report names it among its partner examples",
+          "source": {
+            "label": "Sprinklr 10-K",
+            "label_en": "Sprinklr 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We work with agencies and partners across nine different partner categories, including System Integrators, Transformational partners and Resellers, which includes partners such as Microsoft, Accenture, Deloitte, Salesforce, SAP, ServiceNow, Adobe, Oracle and others."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "電機・半導体",
+      "sub_en": "Electronics & chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年8月の発表で、Sprinklrを利用する企業の例にSamsungが挙げられている",
+          "text_en": "The August 2026 press release names Samsung among enterprises relying on Sprinklr",
+          "source": {
+            "label": "Sprinklr 8-K Ex.99 の発表",
+            "label_en": "Sprinklr 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000119312526347899/d40248dex991.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "enterprises — including Microsoft, P&G, Samsung, and 59% of the Fortune 100 — rely on Sprinklr to help them deliver consistent, trusted customer experiences worldwide."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "PG",
+      "ticker": "PG",
+      "name": "プロクター・アンド・ギャンブル",
+      "sub": "日用品",
+      "sub_en": "Consumer goods",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年8月の発表で、Sprinklrを利用する企業の例にP&Gが挙げられている",
+          "text_en": "The August 2026 press release names P&G among enterprises relying on Sprinklr",
+          "source": {
+            "label": "Sprinklr 8-K Ex.99 の発表",
+            "label_en": "Sprinklr 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1569345/000119312526347899/d40248dex991.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "enterprises — including Microsoft, P&G, Samsung, and 59% of the Fortune 100 — rely on Sprinklr to help them deliver consistent, trusted customer experiences worldwide."
+          }
+        }
+      ],
+      "name_en": "Procter & Gamble"
+    },
+    {
+      "id": "SPT",
+      "ticker": "SPT",
+      "name": "スプラウト・ソーシャル",
+      "sub": "SNS管理ソフト",
+      "sub_en": "Social media management",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sprout Socialの年次報告が、競合としてSprinklrを挙げている",
+          "text_en": "Sprout Social's annual report names Sprinklr as a competitor",
+          "source": {
+            "label": "Sprout Social 10-K",
+            "label_en": "Sprout Social 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We primarily face competition from other social media management companies such as Hootsuite, Khoros and Sprinklr, as well as a range of independent point solutions."
+          }
+        }
+      ],
+      "name_en": "Sprout Social"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

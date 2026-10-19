@@ -1,0 +1,248 @@
+{
+  "root": {
+    "ticker": "CIEN",
+    "name": "Ciena"
+  },
+  "rows": [
+    {
+      "ja": "供給元(Viaviの年次報告に記載)",
+      "en": "Supplier (named in Viavi's annual report)",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CSCO",
+    "NOK",
+    "HPE",
+    "AVGO"
+  ],
+  "companies": [
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "ビアビ・ソリューションズ",
+      "sub": "試験・測定機器",
+      "sub_en": "Test & measurement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Viaviの年次報告が、顧客例の1社としてCienaを挙げている",
+          "text_en": "Viavi's annual report lists Ciena among its example customers",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Examples of our customers include Advanced Micro Devices, Inc., América Móvil, AT&T Inc., British Telecom Openreach, Ciena, Cisco Systems, Inc., Deutsche Telekom AG, Ericsson, Lumen Technologies, Inc., Nokia Corporation and Verizon Communications Inc."
+          }
+        }
+      ],
+      "name_en": "Viavi Solutions"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "sub": "通信事業者",
+      "sub_en": "Telecom carrier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AT&Tへの売上は、2025年度で5億70万ドル(売上高の10.5%)だった",
+          "text_en": "Sales to AT&T were $500.7 million, or 10.5% of total revenue, in fiscal 2025",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Sales to AT&T were $500.7 million, or 10.5% of total revenue, in fiscal 2025, and $475.3 million, or 11.8% of total revenue, in fiscal 2024."
+          }
+        },
+        {
+          "type": "down",
+          "text": "AT&Tは、Cienaの全事業セグメントから製品とサービスを購入している",
+          "text_en": "AT&T purchased products and services from each of Ciena's operating segments",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "AT&T purchased products and services from each of Ciena’s operating segments for each of the periods presented."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bank of America, N.A.が管理代理人を務めるクレジット契約(2014年7月15日付、修正を含む)をCienaが結んでいる",
+          "text_en": "Ciena has a credit agreement dated July 15, 2014, as amended, with Bank of America, N.A. as administrative agent",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Pursuant to a credit agreement, dated July 15, 2014, as amended (the “Credit Agreement”), by and among Ciena Corporation, the lenders party thereto and Bank of America, N.A., as administrative agent (the “Administrative Agent”), Ciena maintained a senior secured term loan with an outstanding aggregate principal amount, as of January",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同クレジット契約に関する追加参加・修正契約(2016年4月25日付)がある",
+          "text_en": "An Incremental Joinder and Amendment Agreement under the Credit Agreement is dated April 25, 2016",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "10.41 Incremental Joinder and Amendment Agreement under the Credit Agreement and Related Agreements dated as of April 25, 2016 by and between Ciena Corporation, Bank of America, N.A. as Administrative Agent, Ciena Communications, Inc. and Ciena Government Solutions, Inc. ++"
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シエナの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Ciena’s annual report",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Our competitors include Nokia, Huawei, Cisco, Hewlett Packard Enterprise, and ZTE."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "シエナの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Ciena’s annual report",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Competitors for our Blue Planet Automation Software include Cisco, Nokia, Amdocs, ServiceNow, Netcracker, and Ericsson."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "NOK",
+      "ticker": "NOK",
+      "name": "ノキア",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シエナの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Ciena’s annual report",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Our competitors include Nokia, Huawei, Cisco, Hewlett Packard Enterprise, and ZTE."
+          }
+        }
+      ],
+      "name_en": "Nokia"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "IT機器",
+      "sub_en": "IT infrastructure",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シエナの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Ciena’s annual report",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Our competitors include Nokia, Huawei, Cisco, Hewlett Packard Enterprise, and ZTE."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データセンター内外の相互接続分野への拡大に伴い、今後Broadcomとも競合する見通しと説明している",
+          "text_en": "Ciena says that as it expands its interconnect strategy it will begin to compete with Broadcom",
+          "source": {
+            "label": "Ciena 10-K",
+            "label_en": "Ciena 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "In addition, as we advance our interconnects and market expansion strategy to address needs inside and around the data center, we will begin to compete with additional competitors, including Marvell Technology Group, Credo Technology Group, and Broadcom.",
+            "note": "将来の競合見通しです。",
+            "note_en": "Expected future competition."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

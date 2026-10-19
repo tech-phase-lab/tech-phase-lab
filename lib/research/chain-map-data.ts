@@ -26,6 +26,7 @@ import c_asan from "../../data/chain/ASAN.json" with { type: "json" };
 import c_asml from "../../data/chain/ASML.json" with { type: "json" };
 import c_asts from "../../data/chain/ASTS.json" with { type: "json" };
 import c_asx from "../../data/chain/ASX.json" with { type: "json" };
+import c_avav from "../../data/chain/AVAV.json" with { type: "json" };
 import c_avgo from "../../data/chain/AVGO.json" with { type: "json" };
 import c_avpt from "../../data/chain/AVPT.json" with { type: "json" };
 import c_avt from "../../data/chain/AVT.json" with { type: "json" };
@@ -35,9 +36,15 @@ import c_be from "../../data/chain/BE.json" with { type: "json" };
 import c_bhe from "../../data/chain/BHE.json" with { type: "json" };
 import c_bidu from "../../data/chain/BIDU.json" with { type: "json" };
 import c_bill from "../../data/chain/BILL.json" with { type: "json" };
+import c_bksy from "../../data/chain/BKSY.json" with { type: "json" };
+import c_bl from "../../data/chain/BL.json" with { type: "json" };
+import c_bsy from "../../data/chain/BSY.json" with { type: "json" };
 import c_camt from "../../data/chain/CAMT.json" with { type: "json" };
 import c_cdns from "../../data/chain/CDNS.json" with { type: "json" };
 import c_ceg from "../../data/chain/CEG.json" with { type: "json" };
+import c_ceva from "../../data/chain/CEVA.json" with { type: "json" };
+import c_chkp from "../../data/chain/CHKP.json" with { type: "json" };
+import c_cien from "../../data/chain/CIEN.json" with { type: "json" };
 import c_cohr from "../../data/chain/COHR.json" with { type: "json" };
 import c_cohu from "../../data/chain/COHU.json" with { type: "json" };
 import c_cost from "../../data/chain/COST.json" with { type: "json" };
@@ -47,7 +54,9 @@ import c_crus from "../../data/chain/CRUS.json" with { type: "json" };
 import c_crwd from "../../data/chain/CRWD.json" with { type: "json" };
 import c_crwv from "../../data/chain/CRWV.json" with { type: "json" };
 import c_csco from "../../data/chain/CSCO.json" with { type: "json" };
+import c_cxm from "../../data/chain/CXM.json" with { type: "json" };
 import c_dash from "../../data/chain/DASH.json" with { type: "json" };
+import c_dbx from "../../data/chain/DBX.json" with { type: "json" };
 import c_ddog from "../../data/chain/DDOG.json" with { type: "json" };
 import c_dell from "../../data/chain/DELL.json" with { type: "json" };
 import c_diod from "../../data/chain/DIOD.json" with { type: "json" };
@@ -133,6 +142,7 @@ import c_pltr from "../../data/chain/PLTR.json" with { type: "json" };
 import c_powi from "../../data/chain/POWI.json" with { type: "json" };
 import c_ptc from "../../data/chain/PTC.json" with { type: "json" };
 import c_pypl from "../../data/chain/PYPL.json" with { type: "json" };
+import c_qbts from "../../data/chain/QBTS.json" with { type: "json" };
 import c_qcom from "../../data/chain/QCOM.json" with { type: "json" };
 import c_qlys from "../../data/chain/QLYS.json" with { type: "json" };
 import c_qrvo from "../../data/chain/QRVO.json" with { type: "json" };
@@ -147,6 +157,7 @@ import c_sanm from "../../data/chain/SANM.json" with { type: "json" };
 import c_sap from "../../data/chain/SAP.json" with { type: "json" };
 import c_shop from "../../data/chain/SHOP.json" with { type: "json" };
 import c_simo from "../../data/chain/SIMO.json" with { type: "json" };
+import c_sitm from "../../data/chain/SITM.json" with { type: "json" };
 import c_skhy from "../../data/chain/SKHY.json" with { type: "json" };
 import c_slab from "../../data/chain/SLAB.json" with { type: "json" };
 import c_smci from "../../data/chain/SMCI.json" with { type: "json" };
@@ -237,6 +248,7 @@ const available: Record<string, ChainMapData> = {
   ASML: c_asml as ChainMapData,
   ASTS: c_asts as ChainMapData,
   ASX: c_asx as ChainMapData,
+  AVAV: c_avav as ChainMapData,
   AVGO: c_avgo as ChainMapData,
   AVPT: c_avpt as ChainMapData,
   AVT: c_avt as ChainMapData,
@@ -246,9 +258,15 @@ const available: Record<string, ChainMapData> = {
   BHE: c_bhe as ChainMapData,
   BIDU: c_bidu as ChainMapData,
   BILL: c_bill as ChainMapData,
+  BKSY: c_bksy as ChainMapData,
+  BL: c_bl as ChainMapData,
+  BSY: c_bsy as ChainMapData,
   CAMT: c_camt as ChainMapData,
   CDNS: c_cdns as ChainMapData,
   CEG: c_ceg as ChainMapData,
+  CEVA: c_ceva as ChainMapData,
+  CHKP: c_chkp as ChainMapData,
+  CIEN: c_cien as ChainMapData,
   COHR: c_cohr as ChainMapData,
   COHU: c_cohu as ChainMapData,
   COST: c_cost as ChainMapData,
@@ -258,7 +276,9 @@ const available: Record<string, ChainMapData> = {
   CRWD: c_crwd as ChainMapData,
   CRWV: c_crwv as ChainMapData,
   CSCO: c_csco as ChainMapData,
+  CXM: c_cxm as ChainMapData,
   DASH: c_dash as ChainMapData,
+  DBX: c_dbx as ChainMapData,
   DDOG: c_ddog as ChainMapData,
   DELL: c_dell as ChainMapData,
   DIOD: c_diod as ChainMapData,
@@ -344,6 +364,7 @@ const available: Record<string, ChainMapData> = {
   POWI: c_powi as ChainMapData,
   PTC: c_ptc as ChainMapData,
   PYPL: c_pypl as ChainMapData,
+  QBTS: c_qbts as ChainMapData,
   QCOM: c_qcom as ChainMapData,
   QLYS: c_qlys as ChainMapData,
   QRVO: c_qrvo as ChainMapData,
@@ -358,6 +379,7 @@ const available: Record<string, ChainMapData> = {
   SAP: c_sap as ChainMapData,
   SHOP: c_shop as ChainMapData,
   SIMO: c_simo as ChainMapData,
+  SITM: c_sitm as ChainMapData,
   SKHY: c_skhy as ChainMapData,
   SLAB: c_slab as ChainMapData,
   SMCI: c_smci as ChainMapData,

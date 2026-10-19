@@ -1,0 +1,100 @@
+{
+  "root": {
+    "ticker": "CHKP",
+    "name": "Check Point Software Technologies"
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FTNT",
+    "CSCO"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Check Pointが、Microsoftの米国パートナー賞(コマーシャルマーケットプレイス部門)を受賞した",
+          "text_en": "Check Point won the Microsoft US Partner Award for Commercial Marketplace",
+          "source": {
+            "label": "CHKP / Microsoft — primary relationship source; checked October 17, 2026",
+            "label_en": "CHKP / Microsoft — primary relationship source; checked October 17, 2026",
+            "url": "https://www.checkpoint.com/partners/microsoft/",
+            "level": "official",
+            "quote": "Check Point wins Microsoft US Partner Award for Commercial Marketplace",
+            "note": "受賞を伝える見出しに基づくものです。",
+            "note_en": "Based on an award headline."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "ネットワークセキュリティ",
+      "sub_en": "Network security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フォーティネットの年次報告が、チェック・ポイントを競合として挙げている",
+          "text_en": "Names Check Point as a competitor in its annual report",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Among others, our competitors include Check Point Software Technologies Ltd."
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "チェック・ポイントの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Check Point’s annual report",
+          "source": {
+            "label": "Check Point Software Technologies 20-F",
+            "label_en": "Check Point Software Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1015922/000117891326001932/zk2634942.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Our competitors include Cisco Systems, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
