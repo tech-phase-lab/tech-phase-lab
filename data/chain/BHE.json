@@ -1,0 +1,193 @@
+{
+  "root": {
+    "ticker": "BHE",
+    "name": "Benchmark Electronics"
+  },
+  "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FLEX",
+    "SANM",
+    "UCTT"
+  ],
+  "companies": [
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド マテリアルズ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大顧客のApplied Materials(子会社を含む)向け売上が、2025年と2024年は総売上の14%、2023年は12%だった",
+          "text_en": "Sales to its largest customer, Applied Materials and subsidiaries, were 14% of total sales in 2025 and 2024 and 12% in 2023",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Sales to our largest customer, Applied Materials, Inc. and subsidiaries, represented 14% of our total sales in both 2025 and 2024 and 12% of our total sales in 2023."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Applied Materials(子会社を含む)は2025年と2024年の最大顧客で、いずれも総売上の14%だった",
+          "text_en": "Applied Materials and subsidiaries were the largest customer in 2025 and 2024, at 14% of total sales in both years",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Sales to Applied Materials, Inc. and subsidiaries, our largest customer in 2025 and 2024 represented 14% of our total sales in both 2025 and 2024."
+          }
+        }
+      ],
+      "name_en": "Applied Materials"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年6月27日に、Bank of America, N.A.を管理代理人とする7億ドルの第2次改定クレジット契約を結んだ",
+          "text_en": "On June 27, 2025, it entered into a $700 million second amended and restated credit agreement with Bank of America, N.A. as Administrative Agent",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On June 27, 2025, the Company entered into a $700 million second amended and restated credit agreement (the Credit Agreement) by and among the Company, certain of its subsidiaries, the lenders party thereto and Bank of America, N.A., as Administrative Agent, Swingline Lender and an L/C Issuer.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同契約には子会社が保証人として加わり、Bank of Americaが貸付人兼L/C発行銀行を務める",
+          "text_en": "Certain subsidiaries are guarantors, and Bank of America acts as Swingline Lender and L/C Issuer",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On June 27, 2025, the Company entered into a $ 700 million second amended and restated credit agreement (the Credit Agreement) by and among the Company, certain of its subsidiaries (the Guarantors), the lenders party thereto and Bank of America, N.A., as Administrative Agent, Swingline Lender and an L/C Issuer (Bank of America)."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "FLEX",
+      "ticker": "FLEX",
+      "name": "フレックス",
+      "sub": "EMS",
+      "sub_en": "EMS",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベンチマーク・エレクトロニクスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Benchmark’s annual report",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our competitors include Celestica Inc., Flex Ltd., Jabil Inc., Kimball Electronics Inc., Plexus Corp, and Sanmina Corporation."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ベンチマーク・エレクトロニクスの年次報告が、主な競合として挙げている",
+          "text_en": "Named as a primary competitor in Benchmark’s annual report",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Celestica Inc., Flex Ltd., Jabil Inc., Kimball Electronics Inc., Plexus Corporation, and Sanmina Corporation."
+          }
+        }
+      ],
+      "name_en": "Flex"
+    },
+    {
+      "id": "SANM",
+      "ticker": "SANM",
+      "name": "サンミナ",
+      "sub": "EMS",
+      "sub_en": "EMS",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "サンミナの年次報告が、ベンチマーク・エレクトロニクスを競合として挙げている",
+          "text_en": "Names Benchmark as a competitor in its annual report",
+          "source": {
+            "label": "Sanmina 10-K",
+            "label_en": "Sanmina 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/897723/000089772325000042/sanm-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "Our competitors include major global EMS providers, including Benchmark Electronics, Inc., Celestica, Inc., Flex Ltd., Hon Hai Precision Industry Co., Ltd."
+          }
+        }
+      ],
+      "name_en": "Sanmina"
+    },
+    {
+      "id": "UCTT",
+      "ticker": "UCTT",
+      "name": "ウルトラ・クリーン・ホールディングス",
+      "sub": "半導体装置部品",
+      "sub_en": "Chip equipment subsystems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ウルトラ・クリーン・ホールディングスの年次報告が、ベンチマーク・エレクトロニクスを競合として挙げている",
+          "text_en": "Names Benchmark as a competitor in its annual report",
+          "source": {
+            "label": "Ultra Clean Holdings 10-K",
+            "label_en": "Ultra Clean Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors for gas delivery systems are Ichor Systems, Inc. and Fujikin Incorporated; our principal competitors for other critical subsystems are Foxsemicon Integrated Technology Inc., Jabil, Inc., VDL ETG, Celestica Inc. and Benchmark Electronics, Inc."
+          }
+        }
+      ],
+      "name_en": "Ultra Clean Holdings"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "root": {
+    "ticker": "COHU",
+    "name": "Cohu"
+  },
+  "rows": [
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing partner",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TER",
+    "KLAC",
+    "Advantest"
+  ],
+  "companies": [
+    {
+      "id": "JBL",
+      "ticker": "JBL",
+      "name": "ジェイビル",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Cohuの年次報告は、Jabilの施設にある専用の半導体ATE製造拠点を戦略的パートナーとの関係として挙げている",
+          "text_en": "Cohu's annual report cites dedicated semiconductor ATE manufacturing operations at a Jabil facility among its strategic partner relationships",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s supply chain is further strengthened by long-standing relationships with strategic partners, including dedicated semiconductor ATE manufacturing operations at a facility of Jabil, Inc."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Cohuはマレーシアにあるジェイビルの施設で、半導体テストシステムの大半を製造してもらっている",
+          "text_en": "Cohu depends on Jabil to manufacture most of its semiconductor test systems at its facility in Malaysia",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "For example, we depend upon Jabil to manufacture most of our semiconductor test systems from its facility located in Malaysia."
+          }
+        }
+      ],
+      "name_en": "Jabil"
+    },
+    {
+      "id": "TER",
+      "ticker": "TER",
+      "name": "テラダイン",
+      "sub": "半導体テスト装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "テラダインの年次報告が、コヒューを競合として挙げている",
+          "text_en": "Names Cohu as a competitor in its annual report",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Competitors in the Semiconductor Test segment include, among others, Advantest Corporation, SPEA S.p.A., and Cohu, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "コヒューの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cohu’s annual report",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        }
+      ],
+      "name_en": "Teradyne"
+    },
+    {
+      "id": "KLAC",
+      "ticker": "KLAC",
+      "name": "KLA",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コヒューの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cohu’s annual report",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Advantest",
+      "ticker": "Advantest",
+      "name": "アドバンテスト",
+      "sub": "半導体テスト装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コヒューの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Cohu’s annual report",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        }
+      ],
+      "name_en": "Advantest"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

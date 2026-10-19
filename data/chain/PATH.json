@@ -1,0 +1,316 @@
+{
+  "root": {
+    "ticker": "PATH",
+    "name": "ユーアイパス"
+  },
+  "rows": [
+    {
+      "ja": "生成AIモデルの提携先",
+      "en": "Generative AI partners",
+      "above": true
+    },
+    {
+      "ja": "クラウド・半導体の提携先",
+      "en": "Cloud & chip partners"
+    },
+    {
+      "ja": "業務ソフト・データの提携先",
+      "en": "Business software & data partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathとOpenAIが、ChatGPTコネクターを作る協業を発表した",
+          "text_en": "UiPath announced a collaboration with OpenAI to build a ChatGPT connector for enterprise workflows",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472225000046/path-20251031xex991.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "UiPath announced a collaboration with OpenAI to build a ChatGPT connector that integrates OpenAI frontier models with enterprise customer workflows, powered by UiPath enterprise orchestration, accelerating time to value and ROI from their agentic AI efforts.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathが、Anthropic の大規模言語モデルClaude 3.5 Sonnetを3つの主要製品に組み込むと発表した",
+          "text_en": "UiPath announced the integration of Anthropic's large language model, Claude 3.5 Sonnet, in three key products",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472224000055/path-20241031xex991.htm",
+            "level": "official",
+            "date": "2024-12-05",
+            "quote": "UiPath announced the integration of Anthropic’s large language model (LLM), Claude 3.5 Sonnet, to deliver new AI features in three key products, including UiPath Autopilot for Everyone, Clipboard AI, and a new medical record summarization solution.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathが、Microsoft Azure AI Foundryとの統合を発表した",
+          "text_en": "UiPath announced an integration with Microsoft Azure AI Foundry",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472225000046/path-20251031xex991.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "UiPath announced an integration with Microsoft Azure AI Foundry, enabling customers to automate end-to-end processes using UiPath agents interacting with Azure AI Foundry agents and models."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AI Innovation HubをMicrosoftなどと提携して運営している",
+          "text_en": "UiPath's AI Innovation Hub is run in partnership with global technology leaders such as Microsoft",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472225000004/path-20250131xex991.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "The AI Innovation Hub serves as a collaborative space to drive the latest in AI research, development, and business solutions in partnership with University College London and global technology leaders such as Microsoft, SAP, and AWS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "ネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "UiPath IXPがGoogle Cloud Marketplaceで利用可能になり、新規IXPプロジェクトの既定の外部モデルにGeminiが採用される",
+          "text_en": "UiPath IXP is now available on Google Cloud Marketplace, and Gemini will become the default third-party model for new IXP projects",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472226000037/path-2026430xex991.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "UiPath announced that UiPath Intelligent Xtraction and Processing (IXP) is now available on Google Cloud Marketplace and that Gemini will become the default third-party model for new IXP projects, enabling customers to process longer, more complex documents with greater speed and accuracy."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Gemini搭載のAI文書処理ソリューションをGoogle Cloud Marketplaceで提供開始した",
+          "text_en": "UiPath announced availability of its AI Document Processing Solution on Google Cloud Marketplace with Gemini-powered automation",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472226000037/path-2026430xex991.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "• Announced Availability of AI Document Processing Solution in Google Cloud Marketplace with Gemini-Powered Automation:"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AI Innovation HubをAWSなどと提携して運営している",
+          "text_en": "UiPath's AI Innovation Hub is run in partnership with global technology leaders such as AWS",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472225000004/path-20250131xex991.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "The AI Innovation Hub serves as a collaborative space to drive the latest in AI research, development, and business solutions in partnership with University College London and global technology leaders such as Microsoft, SAP, and AWS.",
+            "note": "AWSとの個別の契約内容は引用からは分かりません。",
+            "note_en": "The quote does not describe a separate AWS agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathとNVIDIAが、不正検知などの高い信頼性が必要な場面でAI機能を強化する協業を発表した",
+          "text_en": "UiPath announced a collaboration with NVIDIA to add AI capabilities to automated workflows in high-trust scenarios such as fraud detection",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472225000046/path-20251031xex991.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "UiPath announced a collaboration with NVIDIA to help enterprise customers fortify their existing automated workflows with AI capabilities in high-trust scenarios, such as fraud detection or care management in healthcare."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Inflectionとの協業を通じ、UiPathをIntelのTiber AI Cloudの選択肢にする計画がある",
+          "text_en": "Through its collaboration with Intel, Inflection intends to make UiPath available as an option on Intel's Tiber AI Cloud",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472224000055/path-20241031xex991.htm",
+            "level": "official",
+            "date": "2024-12-05",
+            "quote": "Through its collaboration with Intel, Inflection intends to make UiPath available as an option to Intel’s Tiber AI Cloud service, leveraging Intel’s new Gaudi 3 processors.",
+            "note": "計画段階の記載です。",
+            "note_en": "Described as an intention."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathが、SAP顧客向けの企業オートメーション統合サービスを発表した",
+          "text_en": "UiPath announced an integrated offering with SAP to accelerate enterprise automation for SAP customers",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472224000055/path-20241031xex991.htm",
+            "level": "official",
+            "date": "2024-12-05",
+            "quote": "• Announces an Integrated Offering with SAP to Accelerate Enterprise Automation for SAP Customers:"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathが、SalesforceのAgentExchangeでUiPath CX CompanionとUiPath Maestro Connectorを公開した",
+          "text_en": "UiPath launched UiPath CX Companion and UiPath Maestro Connector on Salesforce's AgentExchange",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472226000037/path-2026430xex991.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "UiPath launched UiPath CX Companion and UiPath Maestro Connector on AgentExchange, Salesforce’s marketplace for the agentic era that brings together the rich ecosystem of AppExchange, Slack, and Agentforce into one experience."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VEEV",
+      "ticker": "VEEV",
+      "name": "Veeva Systems",
+      "sub": "ライフサイエンス向けソフト",
+      "sub_en": "Life sciences software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathが、ライフサイエンスでのエージェント型テストに向け、Veeva AI Partner Programに参加した",
+          "text_en": "UiPath joined the Veeva AI Partner Program to enable agentic testing in life sciences",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472226000007/path-2026131xex991.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "• UiPath Joined Veeva AI Partner Program to Enable Agentic Testing in Life Sciences:"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UiPathが、UiPath PlatformとSnowflake Cortex AIを組み合わせるパートナーシップを発表した",
+          "text_en": "UiPath announced a partnership with Snowflake, uniting the UiPath Platform with Snowflake Cortex AI",
+          "source": {
+            "label": "UiPath 8-K Ex.99 の発表",
+            "label_en": "UiPath 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472225000046/path-20251031xex991.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "UiPath announced a partnership with Snowflake, uniting the UiPath Platform™ for agentic automation with Snowflake Cortex AI, empowering businesses to quickly turn data insights into faster and smarter autonomous actions."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

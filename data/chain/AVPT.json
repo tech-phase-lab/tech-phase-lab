@@ -1,0 +1,57 @@
+{
+  "root": {
+    "ticker": "AVPT",
+    "name": "AvePoint"
+  },
+  "rows": [
+    {
+      "ja": "クラウド提携先",
+      "en": "Cloud partners",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvePointは、Google Cloud Platformなどのマーケットプレイスを通じてSaaS製品を提供している",
+          "text_en": "AvePoint offers its SaaS products via the Google Cloud Platform marketplace, among others",
+          "source": {
+            "label": "AvePoint 10-K",
+            "label_en": "AvePoint 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1777921/000143774926005907/avpt20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also offer our SaaS products via the marketplaces of our technology alliance partners, including Google Cloud Platform (\" GCP \"), Microsoft Azure, (\" Azure \") and Amazon Web Services (\" AWS \")."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AvePointは、Microsoft、Google、AWSと技術・販売・マーケティングの戦略的提携を結んでいる",
+          "text_en": "AvePoint maintains strategic partnerships with Microsoft, Google and AWS covering technology, sales and marketing",
+          "source": {
+            "label": "AvePoint 10-K",
+            "label_en": "AvePoint 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1777921/000143774926005907/avpt20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We maintain strategic partnerships with Microsoft, Google, and AWS that incorporate technology, sales, and marketing initiatives."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
