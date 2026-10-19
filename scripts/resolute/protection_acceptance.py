@@ -8,18 +8,42 @@ import os
 from pathlib import Path
 import tempfile
 import uuid
-import boto3
-from botocore.config import Config
-from botocore.exceptions import ClientError
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-import protection
-import protection_events as events
-import backup
+
+def validate_environment(env):
+    """Fail before importing clients or starting processes with live credentials."""
+    if env.get('RESOLUTE_PROTECTION_ACCEPTANCE_ONLY') != 'true':
+        raise RuntimeError('acceptance only')
+    for name, value in env.items():
+        if value and (name.startswith('PG') or name.endswith(('_DB_URL', 'DATABASE_URL')) or name.startswith('DATABASE_')):
+            raise RuntimeError('production connection forbidden')
+
+
+def verify_restore_state(sql, *, protected):
+    """Prove the stale backup exists before replay, then check each replay."""
+    check = json.loads(sql("""SELECT json_build_object(
+'plans',(SELECT count(*) FROM resolute.plans),
+'planPresent',(SELECT plan IS NOT NULL FROM resolute.plans WHERE clerk_user_id='user_acceptance'),
+'planRevision',(SELECT revision FROM resolute.plans WHERE clerk_user_id='user_acceptance'),
+'alertsEnabled',(SELECT (settings->>'alertsEnabled')::boolean FROM resolute.notification_settings WHERE clerk_user_id='user_acceptance'),
+'morningEnabled',(SELECT (settings->>'morningEnabled')::boolean FROM resolute.notification_settings WHERE clerk_user_id='user_acceptance'),
+'settingsRevision',(SELECT revision FROM resolute.notification_settings WHERE clerk_user_id='user_acceptance'),
+'pending',(SELECT count(*) FROM resolute.notification_outbox WHERE accepted_at IS NULL));""", 'resolute_restore_test'))
+    expected = dict(plans=1, planPresent=not protected, planRevision=2 if protected else 1,
+                    alertsEnabled=not protected, morningEnabled=not protected,
+                    settingsRevision=2 if protected else 1, pending=0 if protected else 1)
+    if check != expected:
+        raise RuntimeError('acceptance restore state differs')
+
 
 def main():
-    if os.environ.get('RESOLUTE_PROTECTION_ACCEPTANCE_ONLY')!='true':raise RuntimeError('acceptance only')
-    if any(os.environ.get(k) for k in ('PGHOST','PGPASSWORD','DATABASE_URL','ENTITLEMENT_DB_URL','RESOLUTE_PLAN_DB_URL','RESOLUTE_NOTIFICATION_DB_URL')):
-        raise RuntimeError('production connection forbidden')
+    validate_environment(os.environ)
+    import boto3
+    from botocore.config import Config
+    from botocore.exceptions import ClientError
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+    import protection
+    import protection_events as events
+    import backup
     bucket=os.environ['BACKUP_BUCKET']
     s3=boto3.client('s3',endpoint_url=os.environ['BACKUP_ENDPOINT'],region_name=os.environ['BACKUP_REGION'],
         aws_access_key_id=os.environ['BACKUP_ACCESS_KEY_ID'],aws_secret_access_key=os.environ['BACKUP_SECRET_ACCESS_KEY'],
@@ -71,13 +95,13 @@ UPDATE resolute.notification_settings SET revision=2,settings=settings||'{"alert
             pin=events.seal_manifest(s3,bucket,key,protection)
             ledger=events.load_manifest(s3,bucket,key,pin,protection)
             run(['pg_restore','--exit-on-error','--no-owner','--no-acl','-d','resolute_restore_test',str(dump)],env=dict(env,PGDATABASE='resolute_restore_test'))
-            sql(protection.restore_sql(ledger),'resolute_restore_test')
-            sql(protection.restore_sql(ledger),'resolute_restore_test')
-            check=json.loads(sql("""SELECT json_build_object('erased',(SELECT plan IS NULL AND revision=2 FROM resolute.plans WHERE clerk_user_id='user_acceptance'),
-'off',(SELECT settings->>'alertsEnabled'='false' AND settings->>'morningEnabled'='false' AND revision=2 FROM resolute.notification_settings WHERE clerk_user_id='user_acceptance'),
-'pending',(SELECT count(*) FROM resolute.notification_outbox WHERE accepted_at IS NULL));""",'resolute_restore_test'))
-            if check!={'erased':True,'off':True,'pending':0} or duplicate_rejected!=3:raise RuntimeError('acceptance result differs')
-            print(json.dumps({'event':'RESOLUTE_PROTECTION_ACCEPTANCE_OK','synthetic_events':3,'conditional_conflicts':3,'encrypted_event_bytes':stored_bytes,'real_pg_dump_restore':True,'replay_idempotent':True,'plan_erased':True,'notifications_off':True,'pending_outbox':0,'source_db_connected':False,'mail_sent':False}),flush=True)
+            verify_restore_state(sql, protected=False)
+            for _ in range(2):
+                sql(protection.restore_sql(ledger),'resolute_restore_test')
+                verify_restore_state(sql, protected=True)
+            if duplicate_rejected != 3:
+                raise RuntimeError('acceptance result differs')
+            print(json.dumps({'event':'RESOLUTE_PROTECTION_ACCEPTANCE_OK','synthetic_events':3,'conditional_conflicts':3,'encrypted_event_bytes':stored_bytes,'real_pg_dump_restore':True,'stale_backup_verified':True,'replay_checks':2,'replay_idempotent':True,'plan_erased':True,'notifications_off':True,'pending_outbox':0,'source_db_connected':False,'mail_sent':False}),flush=True)
         finally:
             run(['runuser','-u','postgres','--','pg_ctl','-D',str(cluster),'-m','immediate','-w','stop'])
 if __name__=='__main__':

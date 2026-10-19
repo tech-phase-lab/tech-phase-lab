@@ -59,3 +59,15 @@ Actual HTTPS/S3 acceptance passed with a recovered synthetic key; deployment/log
 IDs and limitations are in RESOLUTE-PROTECTION-DEPLOYMENT.md. Both new services
 are disabled afterward and test keys/tokens cleared. Production saving is still
 off; independent production custody and DB-to-restore acceptance remain open.
+
+### Restore acceptance evidence strengthened
+
+Synthetic acceptance now rejects inherited PostgreSQL and database connection
+variables before loading clients or starting processes. It verifies the restored
+stale fixture (plan present, both notifications ON, one pending item) before
+replay, then verifies deletion/OFF/empty queue after EACH of two replays. This
+prevents an already-clean fixture or a repair only on the second replay from
+being reported as successful first-pass recovery. Regression tests cover partial
+replay, stale fixture absence and credential variants. This revised harness has
+not yet been rerun in Railway; earlier deployment evidence remains for its
+original revision. No production key, DB, service or schedule was changed.

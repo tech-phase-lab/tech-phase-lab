@@ -1637,3 +1637,14 @@ were then disabled; test keys/tokens cleared, actual DISABLED logs verified.
 See RESOLUTE-PROTECTION-DEPLOYMENT.md and its acceptance JSON. No customer saving,
 DB migration, payment, mail, AI call or morning-job/reservation changes. Next:
 production independent key custody and fenced API-to-isolated-restore acceptance.
+
+## 2026-10-19 — Restore acceptance assertions strengthened
+
+The synthetic restore harness now proves the stale backup contains the original
+plan, notification consent and pending queue before applying independent history.
+It checks the first replay and the second replay separately. Inherited PG*/DB URL
+variables are rejected before imports or I/O. Seven regression tests cover the
+entry guard and false-positive restore states. The revised harness still needs
+an actual isolated PostgreSQL/S3 run; previous actual deployment logs prove only
+the prior revision. Production key custody and API-to-restore flow remain open.
+No live service, production key, saving flag or schedule changes in this step.
