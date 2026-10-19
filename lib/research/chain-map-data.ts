@@ -135,6 +135,7 @@ import c_snps from "../../data/chain/SNPS.json" with { type: "json" };
 import c_sofi from "../../data/chain/SOFI.json" with { type: "json" };
 import c_sony from "../../data/chain/SONY.json" with { type: "json" };
 import c_spot from "../../data/chain/SPOT.json" with { type: "json" };
+import c_spt from "../../data/chain/SPT.json" with { type: "json" };
 import c_stm from "../../data/chain/STM.json" with { type: "json" };
 import c_stx from "../../data/chain/STX.json" with { type: "json" };
 import c_swks from "../../data/chain/SWKS.json" with { type: "json" };
@@ -319,6 +320,7 @@ const available: Record<string, ChainMapData> = {
   SOFI: c_sofi as ChainMapData,
   SONY: c_sony as ChainMapData,
   SPOT: c_spot as ChainMapData,
+  SPT: c_spt as ChainMapData,
   STM: c_stm as ChainMapData,
   STX: c_stx as ChainMapData,
   SWKS: c_swks as ChainMapData,

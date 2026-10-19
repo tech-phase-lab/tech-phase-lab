@@ -1,0 +1,257 @@
+{
+  "root": {
+    "ticker": "SPT",
+    "name": "スプラウト・ソーシャル"
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤",
+      "en": "Cloud infrastructure",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・連携先",
+      "en": "Partners & integrations"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CXM"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Sprout Socialは、クラウド基盤の大半をAmazon Web Servicesに委託し、プラットフォームと製品をそこで稼働させている",
+          "text_en": "Sprout Social outsources the majority of its cloud infrastructure to Amazon Web Services, which hosts its platform and products",
+          "source": {
+            "label": "Sprout Social 10-K",
+            "label_en": "Sprout Social 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We outsource the majority of our cloud infrastructure to Amazon Web Services, or AWS, which hosts our platform and products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "sub": "電機・エンタメ",
+      "sub_en": "Electronics & entertainment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2020年第3四半期の新規顧客ブランドとしてSonyが挙げられている",
+          "text_en": "Sony is named among new customer brands in the third quarter of 2020",
+          "source": {
+            "label": "Sprout Social 8-K Ex.99 の発表",
+            "label_en": "Sprout Social 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737520000045/ex991-sproutsocial3q20.htm",
+            "level": "official",
+            "date": "2020-11-09",
+            "quote": "• During the third quarter, we had the opportunity to help new customer brands like Electronic Arts, Discover, Taco Bell, The Cleveland Cavaliers, Sony, Nikon, and Purdue University.",
+            "note": "2020年の発表に基づく記載です。",
+            "note_en": "Based on a 2020 announcement."
+          }
+        }
+      ],
+      "name_en": "Sony Group"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "CRM・クラウド",
+      "sub_en": "CRM & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Salesforceとの新しい連携を発表している",
+          "text_en": "Announced a new integration with Salesforce",
+          "source": {
+            "label": "Sprout Social 8-K Ex.99 の発表",
+            "label_en": "Sprout Social 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737520000045/ex991-sproutsocial3q20.htm",
+            "level": "official",
+            "date": "2020-11-09",
+            "quote": "• Deepened our CRM capabilities and announced new integrations with Microsoft Dynamics 365 and Salesforce that enhance existing integrations with Hubspot and Zendesk.",
+            "note": "2020年の発表に基づく記載です。",
+            "note_en": "Based on a 2020 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Microsoft Dynamics 365との新しい連携を発表している",
+          "text_en": "Announced a new integration with Microsoft Dynamics 365",
+          "source": {
+            "label": "Sprout Social 8-K Ex.99 の発表",
+            "label_en": "Sprout Social 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737520000045/ex991-sproutsocial3q20.htm",
+            "level": "official",
+            "date": "2020-11-09",
+            "quote": "• Deepened our CRM capabilities and announced new integrations with Microsoft Dynamics 365 and Salesforce that enhance existing integrations with Hubspot and Zendesk.",
+            "note": "2020年の発表に基づく記載です。",
+            "note_en": "Based on a 2020 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUBS",
+      "ticker": "HUBS",
+      "name": "HubSpot",
+      "sub": "CRMソフト",
+      "sub_en": "CRM software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HubSpotとの既存の連携を強化したと述べている",
+          "text_en": "Enhanced existing integrations with HubSpot",
+          "source": {
+            "label": "Sprout Social 8-K Ex.99 の発表",
+            "label_en": "Sprout Social 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737520000045/ex991-sproutsocial3q20.htm",
+            "level": "official",
+            "date": "2020-11-09",
+            "quote": "• Deepened our CRM capabilities and announced new integrations with Microsoft Dynamics 365 and Salesforce that enhance existing integrations with Hubspot and Zendesk.",
+            "note": "2020年の発表に基づく記載です。",
+            "note_en": "Based on a 2020 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS",
+      "sub_en": "Social media",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FacebookやInstagramなどの主要SNSと戦略的な関係を築いていると述べている",
+          "text_en": "Says it has cultivated strong, strategic relationships with leading social networks including Facebook and Instagram",
+          "source": {
+            "label": "Sprout Social 10-K",
+            "label_en": "Sprout Social 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We have cultivated strong, strategic relationships with leading social networks—including Facebook, Instagram, Threads, X (formerly Twitter), Pinterest, LinkedIn, YouTube, Reddit, Tumblr, Bluesky and TikTok.",
+            "note": "主要SNSとの関係として名前が挙がっているものです。",
+            "note_en": "Named among Sprout Social's social network relationships."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PINS",
+      "ticker": "PINS",
+      "name": "Pinterest",
+      "sub": "SNS",
+      "sub_en": "Social media",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Pinterestなどの主要SNSと戦略的な関係を築いていると述べている",
+          "text_en": "Says it has cultivated strong, strategic relationships with leading social networks including Pinterest",
+          "source": {
+            "label": "Sprout Social 10-K",
+            "label_en": "Sprout Social 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We have cultivated strong, strategic relationships with leading social networks—including Facebook, Instagram, Threads, X (formerly Twitter), Pinterest, LinkedIn, YouTube, Reddit, Tumblr, Bluesky and TikTok.",
+            "note": "主要SNSとの関係として名前が挙がっているものです。",
+            "note_en": "Named among Sprout Social's social network relationships."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDDT",
+      "ticker": "RDDT",
+      "name": "Reddit",
+      "sub": "SNS",
+      "sub_en": "Social media",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Redditなどの主要SNSと戦略的な関係を築いていると述べている",
+          "text_en": "Says it has cultivated strong, strategic relationships with leading social networks including Reddit",
+          "source": {
+            "label": "Sprout Social 10-K",
+            "label_en": "Sprout Social 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We have cultivated strong, strategic relationships with leading social networks—including Facebook, Instagram, Threads, X (formerly Twitter), Pinterest, LinkedIn, YouTube, Reddit, Tumblr, Bluesky and TikTok.",
+            "note": "主要SNSとの関係として名前が挙がっているものです。",
+            "note_en": "Named among Sprout Social's social network relationships."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CXM",
+      "ticker": "CXM",
+      "name": "Sprinklr",
+      "sub": "顧客体験管理",
+      "sub_en": "Customer experience mgmt",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sprout Socialの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Sprout Social’s annual report",
+          "source": {
+            "label": "Sprout Social 10-K",
+            "label_en": "Sprout Social 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We primarily face competition from other social media management companies such as Hootsuite, Khoros and Sprinklr, as well as a range of independent point solutions."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
