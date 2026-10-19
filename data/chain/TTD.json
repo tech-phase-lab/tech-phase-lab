@@ -1,0 +1,151 @@
+{
+  "root": {
+    "ticker": "TTD",
+    "name": "The Trade Desk"
+  },
+  "rows": [
+    {
+      "ja": "広告枠の供給元(Googleは競合でもある)",
+      "en": "Inventory suppliers (Google also competes)",
+      "above": true
+    },
+    {
+      "ja": "資金調達・連携",
+      "en": "Financing & integrations"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GOOG",
+    "AMZN"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "検索・広告",
+      "sub_en": "Search & ads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "年次報告が、Googleを最大の広告枠供給元の1社と位置づけている",
+          "text_en": "The annual report calls Google one of its largest advertising inventory suppliers",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "For example, Google is one of our largest advertising inventory suppliers in addition to being one of our competitors."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "同じ年次報告が、Googleを競合の1社でもあるとしている",
+          "text_en": "The same report says Google is also one of its competitors",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "For example, Google is one of our largest advertising inventory suppliers in addition to being one of our competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "年次報告が、GoogleやAmazonを大手企業の部門として競合のDSP事業者に挙げている",
+          "text_en": "The annual report names Google and Amazon as divisions of large companies competing as demand-side platform providers",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with other demand-side platform providers, some of which are smaller, privately held companies and others are divisions of large, well-established companies such as Google and Amazon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bank, N.A.が代理人を務める銀行団と、2021年6月15日付で貸付・担保契約を結んでいる",
+          "text_en": "The company and a syndicate of banks led by JPMorgan Chase Bank, N.A. as agent entered into a Loan and Security Agreement on June 15, 2021",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On June 15, 2021, we and a syndicate of banks, led by JPMorgan Chase Bank, N.A., as agent, entered into a Loan and Security Agreement (the “Credit Facility”).",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同じ2021年6月15日付の貸付・担保契約(Credit Facility)が記載されている",
+          "text_en": "The same June 15, 2021 Loan and Security Agreement (the Credit Facility) is described",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On June 15, 2021, the Company and a syndicate of banks, led by JPMorgan Chase Bank, N.A., as agent, entered into a Loan and Security Agreement (the “Credit Facility”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Spotify Ad Exchangeは、Sellers and Publishers 500+、オープンエクスチェンジ、プライベートマーケットプレイス取引を通じて広告主が利用できる",
+          "text_en": "Spotify Ad Exchange is accessible to advertisers through Sellers and Publishers 500+, open exchange, and private marketplace deals",
+          "source": {
+            "label": "The Trade Desk — Spotify publisher integration, September 29, 2025",
+            "label_en": "The Trade Desk — Spotify publisher integration, September 29, 2025",
+            "url": "https://www.thetradedesk.com/resources/elevate-omnichannel-strategy-with-spotify-ads",
+            "level": "official",
+            "quote": "This scale is now available through the Spotify Ad Exchange, which advertisers can access through the Sellers and Publishers 500+ , open exchange, and private marketplace deals, making it easier than ever to work toward:"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

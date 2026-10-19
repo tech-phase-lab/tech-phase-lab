@@ -1,0 +1,107 @@
+{
+  "root": {
+    "ticker": "MELI",
+    "name": "MercadoLibre"
+  },
+  "rows": [
+    {
+      "ja": "アプリ配信(供給元)",
+      "en": "App distribution (suppliers)",
+      "above": true
+    },
+    {
+      "ja": "広告・提携",
+      "en": "Advertising & partnerships"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "ハード・ソフト",
+      "sub_en": "Devices & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Mercado LibreとMercado Pagoのアプリは、主にApple App Storeなどの第三者アプリストア経由の配信に依存している",
+          "text_en": "The Mercado Libre and Mercado Pago apps depend on distribution through third-party app stores, primarily Apple's App Store",
+          "source": {
+            "label": "MercadoLibre 10-K",
+            "label_en": "MercadoLibre 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our Mercado Libre and Mercado Pago mobile applications depend on distribution through third-party app stores operated by global mobile operating system providers, primarily Apple’s App Store and Google Play."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同アプリは、主にGoogle Playなどの第三者アプリストア経由の配信に依存している",
+          "text_en": "The apps depend on distribution through third-party app stores, primarily Google Play",
+          "source": {
+            "label": "MercadoLibre 10-K",
+            "label_en": "MercadoLibre 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our Mercado Libre and Mercado Pago mobile applications depend on distribution through third-party app stores operated by global mobile operating system providers, primarily Apple’s App Store and Google Play."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Google Ad ManagerおよびAdMobとの連携が4月に始まった",
+          "text_en": "Its integration with Google Ad Manager and AdMob went live in April",
+          "source": {
+            "label": "MercadoLibre 8-K Ex.99 の発表",
+            "label_en": "MercadoLibre 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959025000041/meli-20250804xex991.htm",
+            "level": "official",
+            "date": "2025-08-04",
+            "quote": "Our integration with Google Ad Manager and AdMob went live in April."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "TVストリーミング",
+      "sub_en": "TV streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "RokuやHBOとの提携で、プレミアム広告枠を新たに追加している",
+          "text_en": "It is adding new premium advertising inventory through partnerships with Roku and HBO",
+          "source": {
+            "label": "MercadoLibre 8-K Ex.99 の発表",
+            "label_en": "MercadoLibre 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959025000048/meli-20251029xex991.htm",
+            "level": "official",
+            "date": "2025-10-29",
+            "quote": "We are also adding new premium advertising inventory through partnerships with Roku and HBO."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
