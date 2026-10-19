@@ -68,7 +68,7 @@
           "text": "Google CloudのTPUとサービスの利用を大きく拡大する計画",
           "text_en": "Plans to greatly expand use of Google Cloud TPUs and services, worth tens of billions of dollars",
           "source": {
-            "label": "Anthropic announcement",
+            "label": "Anthropic の発表",
             "label_en": "Anthropic announcement",
             "url": "https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services",
             "level": "official",
@@ -267,7 +267,7 @@
           "text": "ナッシュビルの車両運用をWaymoと提携して実施",
           "text_en": "Fleet operations in Nashville run in partnership with Waymo",
           "source": {
-            "label": "Lyft Q2 2026 earnings release(8-K)",
+            "label": "Lyft 決算発表(8-K、2026年第2四半期)",
             "label_en": "Lyft Q2 2026 earnings release (8-K)",
             "url": "https://www.sec.gov/Archives/edgar/data/1759509/000162828026054305/lyft-20260630xpressrelease.htm",
             "level": "official",
@@ -562,7 +562,7 @@
           "text": "Avisが、Waymo(Alphabet傘下)との自動運転の提携が6月1日にダラスで始まったと説明",
           "text_en": "Avis states its autonomous vehicle partnership with Waymo (Alphabet subsidiary) went live in Dallas on June 1",
           "source": {
-            "label": "Avis Budget Q2 2026 earnings release(8-K)",
+            "label": "Avis Budget 決算発表(8-K、2026年第2四半期)",
             "label_en": "Avis Budget Q2 2026 earnings release (8-K)",
             "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000037/a03-pressreleasexq2f26.htm",
             "level": "official",

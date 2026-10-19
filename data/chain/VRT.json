@@ -137,7 +137,7 @@
           "text": "NVIDIAが、800VDCのAIファクトリー電源構想のデータセンター電源システムの提携先の1社としてVertivを掲載",
           "text_en": "NVIDIA lists Vertiv among data center power system partners for its 800 VDC AI factory power architecture (NVIDIA Technical Blog)",
           "source": {
-            "label": "NVIDIA Technical Blog(800 VDC)",
+            "label": "NVIDIA 技術ブログ(800 VDC)",
             "label_en": "NVIDIA Technical Blog (800 VDC)",
             "url": "https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/",
             "level": "official",

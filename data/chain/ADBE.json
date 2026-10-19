@@ -116,7 +116,7 @@
           "text": "Adobe Experience CloudをMicrosoft Copilotに取り込む計画を発表",
           "text_en": "Plans to bring Adobe Experience Cloud workflows into Microsoft Copilot",
           "source": {
-            "label": "Microsoft News(joint の発表)",
+            "label": "Microsoft ニュース(共同発表)",
             "label_en": "Microsoft News (joint press release)",
             "url": "https://news.microsoft.com/2024/03/26/adobe-and-microsoft-partner-to-bring-new-generative-ai-capabilities-to-marketers-as-they-work-in-microsoft-365-applications/",
             "level": "official",
@@ -237,7 +237,7 @@
           "text": "Adobe Firefly Foundryでメディア制作に取り組んでいるとAdobeが説明",
           "text_en": "Adobe says The Home Depot is working with Adobe Firefly Foundry on media production",
           "source": {
-            "label": "Adobe Blog",
+            "label": "Adobe ブログ",
             "label_en": "Adobe Blog",
             "url": "https://blog.adobe.com/en/publish/2026/01/22/adobe-partners-artists-power-new-era-media-entertainment-firefly-foundry",
             "level": "official",
@@ -260,7 +260,7 @@
           "text": "Walt Disney ImagineeringがAdobe Firefly Foundryを利用しているとAdobeが説明",
           "text_en": "Adobe says Walt Disney Imagineering is working with Adobe Firefly Foundry",
           "source": {
-            "label": "Adobe Blog",
+            "label": "Adobe ブログ",
             "label_en": "Adobe Blog",
             "url": "https://blog.adobe.com/en/publish/2026/01/22/adobe-partners-artists-power-new-era-media-entertainment-firefly-foundry",
             "level": "official",
@@ -461,7 +461,7 @@
           "text": "Adobe Fireflyが、提携先のモデルの1つとしてOpenAIのモデルを提供",
           "text_en": "Adobe Firefly offers OpenAI models among its partner models",
           "source": {
-            "label": "Adobe 2026 Proxy Statement(DEF 14A)",
+            "label": "Adobe 2026年委任状説明書(DEF 14A)",
             "label_en": "Adobe 2026 Proxy Statement (DEF 14A)",
             "url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000043/adbe-20260227.htm",
             "level": "official",

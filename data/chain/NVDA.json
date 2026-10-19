@@ -576,7 +576,7 @@
           "text": "NVIDIAのGrace Blackwell・Vera Rubinシステムで、最大1GWの計算容量を利用すると約束",
           "text_en": "Committed to compute capacity of up to 1GW on NVIDIA Grace Blackwell and Vera Rubin systems",
           "source": {
-            "label": "Anthropic announcement",
+            "label": "Anthropic の発表",
             "label_en": "Anthropic announcement",
             "url": "https://www.anthropic.com/news/microsoft-nvidia-anthropic-announce-strategic-partnerships",
             "level": "official",
@@ -591,7 +591,7 @@
           "text": "Anthropicに最大100億ドルを出資する契約",
           "text_en": "Agreement to invest up to $10B in Anthropic",
           "source": {
-            "label": "NVIDIA 10-Q(quarter ended 2025-10-26)",
+            "label": "NVIDIA 10-Q(2025年10月26日終了四半期)",
             "label_en": "NVIDIA 10-Q (quarter ended 2025-10-26)",
             "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
             "level": "official",
