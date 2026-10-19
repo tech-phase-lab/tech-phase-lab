@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import ts from 'typescript';
 import * as chain from '../lib/research/chain-map-data.ts';
 
 const data = chain.chainDataFor('NVDA');
+const ALL = readdirSync(new URL('../data/chain/', import.meta.url)).filter(name => name.endsWith('.json')).map(name => name.slice(0, -5)).sort();
 const hasJapanese = text => /[぀-ヿ㐀-鿿]/.test(text);
 
 test('the NVDA chain map data keeps its companies, rows and two-step links', () => {
@@ -82,7 +83,8 @@ const BATCH = {
 };
 
 test('the earnings-ordered companies use the same format with an official source on every relation', () => {
-  for (const [ticker, [companies, relations]] of Object.entries(BATCH)) {
+  for (const ticker of ALL.filter(name => name !== 'NVDA')) {
+    const { companies, relations } = BATCH[ticker] ? { companies: BATCH[ticker][0], relations: BATCH[ticker][1] } : chain.chainCounts(chain.chainDataFor(ticker));
     const item = chain.chainDataFor(ticker);
     assert.ok(item, ticker);
     assert.equal(item.root.ticker, ticker);
@@ -127,7 +129,7 @@ test('a map without suppliers, rivals or two-step links leaves those parts out, 
 
 test('the "who competes" row stays on one line (main rivals only), and unlisted companies are not shown', () => {
   const UNLISTED = ['TikTok', 'xAI', 'Groq', 'Scale AI', 'Crusoe', 'Westinghouse', 'Framatome', 'BMC', 'Semes', 'CXMT', 'imec', 'SK ecoplant'];
-  for (const ticker of Object.keys(BATCH)) {
+  for (const ticker of ALL) {
     const item = chain.chainDataFor(ticker);
     const labels = item.rivals.map(id => item.companies.find(company => company.id === id).ticker);
     const width = labels.reduce((sum, label) => sum + label.length * 7.8 + 24, 0) + 8 * Math.max(0, labels.length - 1);
@@ -137,7 +139,7 @@ test('the "who competes" row stays on one line (main rivals only), and unlisted 
 });
 
 test('the English view of every map has no Japanese left in it', () => {
-  for (const ticker of Object.keys(BATCH).concat(['NVDA'])) {
+  for (const ticker of ALL) {
     const html = renderToStaticMarkup(createElement(StockChainMap, { data: chain.chainDataFor(ticker), lang: 'en' }));
     const match = html.match(/[぀-ヿ㐀-鿿]+/);
     assert.equal(match, null, `${ticker}: ${match?.[0]}`);
