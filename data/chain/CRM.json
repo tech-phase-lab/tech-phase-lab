@@ -126,7 +126,7 @@
         {
           "type": "tie",
           "text": "OpenAIをAgentforce 360の推奨モデルの1つとし、Atlas Reasoning EngineとPrompt Builderの既定LLMに選べる",
-          "text_en": "OpenAI is featured as a preferred model in Agentforce 360 for the Atlas Reasoning Engine and Prompt Builder",
+          "text_en": "OpenAI is featured as a preferred model provider in Agentforce 360, and customers can select it as the default LLM for the Atlas Reasoning Engine and Prompt Builder",
           "source": {
             "label": "Salesforce の発表",
             "label_en": "Salesforce press release (OpenAI)",

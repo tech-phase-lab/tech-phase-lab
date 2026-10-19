@@ -25,7 +25,7 @@ function Source({ source, lang }: { source: ChainSource; lang: "ja" | "en" }) {
   const note = ja ? source.note : source.note_en;
   return <div className={styles.src}>
     {source.date && <span>{ja ? "発表日" : "Published"} {source.date.replace(/-/g, "/")}</span>}
-    <span><a href={source.url} target="_blank" rel="noopener noreferrer">{ja ? source.label : source.label_en}</a>{source.level === "press" && <> <em>{ja ? "報道" : "Press"}</em></>}</span>
+    <span><a href={source.url} target="_blank" rel="noopener noreferrer">{ja ? source.label : source.label_en}</a>{source.level === "press" && <> <em>{ja ? "報道" : "Media report"}</em></>}</span>
     {source.quote && <q lang="en">{source.quote}</q>}
     {note && <span>{note}</span>}
   </div>;
@@ -36,7 +36,7 @@ function Card({ company, lang, anchor = true }: { company: ChainCompany; lang: "
   const ja = lang === "ja";
   const many = company.relations.length > 1;
   return <div className={styles.it} id={anchor ? CARD + company.id : undefined} data-tone={company.relations[0].type}>
-    <div className={styles.itHead}><b>{company.ticker}</b><span>{ja ? company.name : company.name_en ?? company.name}</span>
+    <div className={styles.itHead}><b>{company.ticker}</b><span>{ja ? company.name : (company.name_en ?? company.name).replace(/([A-Za-z0-9])\(/g, "$1 (")}</span>
       {chainKinds(company).map(kind => <span key={kind} className={styles.tg} data-tone={kind}>{chainText(kind, "tag", lang)}</span>)}</div>
     <p className={styles.ln}>{ja ? company.relations[0].text : company.relations[0].text_en}</p>
     <details><summary>{ja ? "出典・引用・発表日" : "Sources, quotes & dates"}{many ? (ja ? `(${company.relations.length}件)` : ` (${company.relations.length})`) : ""}</summary>

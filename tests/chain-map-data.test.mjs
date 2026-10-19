@@ -61,7 +61,7 @@ test('the map shows suppliers first, no range buttons, a card per company with s
     assert.ok(html.includes(lang === 'ja' ? '22社 · 31の関係' : '22 companies · 31 relationships'));
     assert.ok(html.includes(lang === 'ja' ? 'さらに先の関係' : 'Further links'));
     assert.ok(html.includes(lang === 'ja' ? '出典・引用・発表日' : 'Sources, quotes &amp; dates'));
-    assert.ok(html.includes(lang === 'ja' ? '報道' : 'Press'));
+    assert.ok(html.includes(lang === 'ja' ? '報道' : 'Media report'));
     assert.equal((html.match(/id="chain-card-/g) ?? []).length, 22);
     // The Japanese view never shows English-only copy; the English view never shows Japanese.
     const visible = html.replace(/<q[^>]*>.*?<\/q>/g, '').replace(/<a [^>]*>/g, '<a>');

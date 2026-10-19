@@ -5,8 +5,8 @@
   },
   "rows": [
     {
-      "ja": "供給元(GPU・電力)",
-      "en": "Suppliers (GPUs & power)",
+      "ja": "供給元(GPU・電力・光部品)",
+      "en": "Suppliers (GPUs, power & optical)",
       "above": true
     },
     {
@@ -186,10 +186,10 @@
       "name": "Applied Optoelectronics",
       "sub": "光通信部品",
       "sub_en": "Optical components",
-      "row": 1,
+      "row": 0,
       "relations": [
         {
-          "type": "down",
+          "type": "up",
           "text": "Applied Optoelectronicsは、2024年の売上の12.4%をOracleが占めたと記載",
           "text_en": "Applied Optoelectronics reports that Oracle accounted for 12.4% of its revenue in 2024",
           "source": {

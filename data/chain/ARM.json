@@ -641,7 +641,7 @@
         {
           "type": "tie",
           "text": "Siemens EDAが、シミュレーション・検証・SoC実装にわたるArmとの長年の戦略的提携に言及",
-          "text_en": "Siemens EDA states a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation",
+          "text_en": "Siemens EDA describes a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation",
           "source": {
             "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
