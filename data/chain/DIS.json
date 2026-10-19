@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "DIS",
+    "name": "Disney"
+  },
+  "rows": [
+    {
+      "ja": "顧客・販売チャネル",
+      "en": "Customers & channels"
+    },
+    {
+      "ja": "提携・投資",
+      "en": "Partnerships & investments"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Disneyの年次報告が、物理媒体の流通を第三者に許諾し、第三者がAmazonなどの小売に販売すると述べている",
+          "text_en": "Disney's annual report says it licenses physical distribution rights to third parties who sell to retailers such as Amazon",
+          "source": {
+            "label": "Disney 10-K",
+            "label_en": "Disney 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "We have licensed the rights for physical distribution to third parties who generally sell to retailers, such as Walmart and Amazon."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Disneyの年次報告が、電子版をAmazonなどのe-tailer経由で配信すると述べている",
+          "text_en": "Disney's annual report says it distributes electronic formats through e-tailers such as Amazon",
+          "source": {
+            "label": "Disney 10-K",
+            "label_en": "Disney 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "We distribute electronic formats through e-tailers such as Apple and Amazon, and MVPDs, such as Comcast and DirecTV."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・OS",
+      "sub_en": "Devices & OS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Disneyの年次報告が、電子版をAppleなどのe-tailer経由で配信すると述べている",
+          "text_en": "Disney's annual report says it distributes electronic formats through e-tailers such as Apple",
+          "source": {
+            "label": "Disney 10-K",
+            "label_en": "Disney 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "We distribute electronic formats through e-tailers such as Apple and Amazon, and MVPDs, such as Comcast and DirecTV."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOXA",
+      "ticker": "FOXA",
+      "name": "Fox Corporation",
+      "sub": "放送・メディア",
+      "sub_en": "Broadcasting & media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Foxの年次報告が、21CFとDisneyとの関係を定める分離・配分契約を結んでいると述べている",
+          "text_en": "Fox's annual report says it is party to a separation and distribution agreement governing its relationship with 21CF and Disney",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "The Company is party to a separation and distribution agreement and a tax matters agreement that govern certain aspects of the Company’s relationship with 21CF and Disney following the Disney Transaction."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Foxの年次報告が、FOX SportsとDisney/ESPNをUFLの試合の国内配信パートナーとしている",
+          "text_en": "Fox's annual report names FOX Sports and Disney/ESPN as the domestic distribution partners of UFL games",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "FOX Sports and Disney/ESPN are the domestic distribution partners of the UFL games under multi-year rights agreements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Disneyの2026年2月の発表が、OpenAIとの提携を挙げている",
+          "text_en": "Disney's February 2026 press release cites the partnership just announced with OpenAI",
+          "source": {
+            "label": "Disney 8-K Ex.99 の発表",
+            "label_en": "Disney 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000022/fy2026_q2x8kxneoxex991.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "“I’m confident Disney will continue to innovate and put the spirit of Walt at the heart of everything it does – from its new park in Abu Dhabi to the groundbreaking partnerships just announced with OpenAI and the NFL, to the countless upcoming creative projects that will enthrall audiences around the world.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "OpenAIがSoraを終了したため、Disneyは予定していた同社への投資を行わない",
+          "text_en": "Because OpenAI shut down Sora, Disney will not proceed with its previously planned investment in the company",
+          "source": {
+            "label": "Disney 8-K Ex.99 の発表",
+            "label_en": "Disney 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000036/fy2026_q2xprxex991.htm",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "As widely reported, OpenAI opted to shut down Sora, and as a result we will not proceed with our previously planned investment in the company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

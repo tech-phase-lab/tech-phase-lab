@@ -1,0 +1,73 @@
+{
+  "root": {
+    "ticker": "ACLS",
+    "name": "Axcelis Technologies"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMAT",
+    "SHI"
+  ],
+  "companies": [
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド マテリアルズ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクセリスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Axcelis’s annual report",
+          "source": {
+            "label": "Axcelis Technologies 10-K",
+            "label_en": "Axcelis Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the market for ion implantation systems, we mainly compete against Applied Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Applied Materials"
+    },
+    {
+      "id": "SHI",
+      "ticker": "Sumitomo Heavy",
+      "name": "住友重機械工業",
+      "sub": "イオン注入装置",
+      "sub_en": "Ion implanters",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクセリスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in Axcelis’s annual report",
+          "source": {
+            "label": "Axcelis Technologies 10-K",
+            "label_en": "Axcelis Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Other implantation equipment manufacturers we compete with include Sumitomo Heavy Industries Ion Technology Co.",
+            "note": "子会社の住友重機械イオンテクノロジーに関する記載です。",
+            "note_en": "Refers to subsidiary Sumitomo Heavy Industries Ion Technology."
+          }
+        }
+      ],
+      "name_en": "Sumitomo Heavy Industries"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

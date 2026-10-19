@@ -1,0 +1,163 @@
+{
+  "root": {
+    "ticker": "BABA",
+    "name": "Alibaba"
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BIDU",
+    "JD"
+  ],
+  "companies": [
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAPとAlibaba Groupが戦略的提携の拡大を発表した(5月27日)",
+          "text_en": "SAP and Alibaba Group announced an extension of their strategic partnership on May 27",
+          "source": {
+            "label": "SAP 20-F",
+            "label_en": "SAP 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465926020058/sap-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "- On May 27, SAP and Alibaba Group announced an extension of their strategic partnership to accelerate cloud transformation."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SAPのクラウド製品4種を、中国企業向けにAlibaba Cloudで段階的に提供する計画を、SAPとAlibabaが発表した",
+          "text_en": "SAP and Alibaba announced the phased launch of four SAP cloud solutions on Alibaba Cloud for Chinese enterprises",
+          "source": {
+            "label": "SAP 20-F",
+            "label_en": "SAP 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465926020058/sap-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "- Also on September 24, SAP and Alibaba announced plans to advance their strategic partnership with the phased launch of four SAP cloud solutions (SAP Cloud ERP, SAP Cloud ERP Private, SAP BTP, and SAP Integrated Business Planning) on Alibaba Cloud for Chinese enterprises in China."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MongoDBは、Alibaba Cloudなどと組み、中国で認定MongoDB-as-a-Serviceを提供している",
+          "text_en": "MongoDB offers an authorized MongoDB-as-a-Service solution in China with Alibaba Cloud and Tencent Cloud",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have expanded our global partner ecosystem with Alibaba Cloud and Tencent Cloud to offer an authorized MongoDB-as-a-Service solution in China, allowing their customers to easily adopt and consume our hosted solution.",
+            "note": "MongoDBの文書による記載です。",
+            "note_en": "As described in MongoDB's document."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SoftBank",
+      "ticker": "SoftBank",
+      "name": "ソフトバンクグループ",
+      "sub": "投資・通信",
+      "sub_en": "Investment & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Alipayの持分と支配権を手放した後、2011年7月にSoftBankおよびAltaba Inc.と基本契約を結んだ",
+          "text_en": "After the divestment of Alipay, the company entered into a framework agreement in July 2011 with SoftBank and Altaba Inc.",
+          "source": {
+            "label": "Alibaba 20-F",
+            "label_en": "Alibaba 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "After the divestment of our interest in and control over Alipay, we entered into a framework agreement in July 2011, or the 2011 framework agreement, with SoftBank, Altaba Inc.",
+            "note": "2011年の契約で、古い記載です。",
+            "note_en": "A 2011 agreement; older."
+          }
+        }
+      ],
+      "name_en": "SoftBank Group"
+    },
+    {
+      "id": "BIDU",
+      "ticker": "BIDU",
+      "name": "百度(バイドゥ)",
+      "sub": "検索・AI",
+      "sub_en": "Search & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "百度(バイドゥ)の年次報告が、アリババを競合として挙げている",
+          "text_en": "Names アリババ as a competitor in its annual report",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We compete with Alibaba Cloud, Volcano Engine, Huawei and Kingsoft cloud for our cloud offerings."
+          }
+        }
+      ],
+      "name_en": "Baidu"
+    },
+    {
+      "id": "JD",
+      "ticker": "JD",
+      "name": "JDドットコム",
+      "sub": "EC",
+      "sub_en": "E-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "JDドットコムの年次報告が、アリババを競合として挙げている",
+          "text_en": "Names アリババ as a competitor in its annual report",
+          "source": {
+            "label": "JD.com 20-F",
+            "label_en": "JD.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526157870/d53690d20f.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "Our current or potential competitors include (i) major e-commerce companies in China that offer a wide range of general merchandise product categories, such as Alibaba Group, which operates taobao.com and tmall.com , and (ii) major traditional retailers in China that are moving into online retailing, such as Suning.com Group Co., Ltd.,"
+          }
+        }
+      ],
+      "name_en": "JD.com"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

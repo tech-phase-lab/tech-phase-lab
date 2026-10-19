@@ -1,0 +1,165 @@
+{
+  "root": {
+    "ticker": "WMT",
+    "name": "Walmart"
+  },
+  "rows": [
+    {
+      "ja": "仕入先(Walmartでの販売を記載)",
+      "en": "Suppliers (sold at Walmart)",
+      "above": true
+    },
+    {
+      "ja": "AI・投資の提携先",
+      "en": "AI & investment partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "COST",
+    "ROKU"
+  ],
+  "companies": [
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "ストリーミング機器",
+      "sub_en": "Streaming devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Rokuの年次報告が、自社製品の販売先の小売店としてWalmartを挙げている",
+          "text_en": "Roku's annual report names Walmart among the retailers through which its products are sold",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In the United States, the majority of our products and our licensed Roku TV partners’ products are sold through brick and mortar retailers, such as Best Buy, Target, and Walmart, including their online sales platforms, and online retailers such as Amazon, and to a lesser extent our website (excluding Roku TV models).",
+            "note": "Roku側の記載です。",
+            "note_en": "Described in Roku's filing."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Rokuの年次報告が、Walmartを競合として挙げている(Onn.ブランドの配信機器の製造・販売)",
+          "text_en": "Roku's annual report names Walmart as a competitor, citing its Onn. branded streaming products",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We also face increased competition from Walmart (which makes and sells Onn. branded streaming products, including co-branded Roku TV models), in light of its acquisition of Vizio (which makes and sells smart TVs with"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google(Alphabet)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "WalmartはGoogleと組み、Walmartの買い物体験をGeminiアプリ内に提供する",
+          "text_en": "Walmart is partnering with Google to bring the Walmart experience directly into Gemini",
+          "source": {
+            "label": "WMT / Alphabet — primary relationship source; checked October 17, 2026",
+            "label_en": "WMT / Alphabet — primary relationship source; checked October 17, 2026",
+            "url": "https://corporate.walmart.com/news/2026/01/11/walmart-and-google-turn-ai-discovery-into-effortless-shopping-experiences",
+            "level": "official",
+            "quote": "Partnering with Google to bring the Walmart experience directly into Gemini is another step toward creating seamless shopping experiences for customers and members that are more intuitive and personal than ever before.\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "WalmartとOpenAIの新たな提携により、顧客はChatGPTで買い物ができるようになる",
+          "text_en": "Walmart's new partnership with OpenAI will allow customers and members to shop with ChatGPT",
+          "source": {
+            "label": "WMT / Alphabet — primary relationship source; checked October 17, 2026",
+            "label_en": "WMT / Alphabet — primary relationship source; checked October 17, 2026",
+            "url": "https://corporate.walmart.com/news/2026/01/11/walmart-and-google-turn-ai-discovery-into-effortless-shopping-experiences",
+            "level": "official",
+            "quote": "Walmart’s new partnership with OpenAI will allow customers and members to shop with ChatGPT, creating an AI-first experience where shoppers can simply chat and select.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JD",
+      "ticker": "JD",
+      "name": "JD.com",
+      "sub": "中国EC",
+      "sub_en": "China e-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Walmartは、JD.comへの投資の売却で36億ドルの純収入を得た",
+          "text_en": "Walmart received $3.6 billion in net proceeds from the sale of its JD.com investment",
+          "source": {
+            "label": "Walmart 10-K",
+            "label_en": "Walmart 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "consideration of $1.9 billion, partially offset by net proceeds received from sales of certain strategic investments, including $3.6 billion related to the sale of our JD.com investment.",
+            "note": "売却済みの投資です。",
+            "note_en": "Investment has been sold."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "sub": "会員制小売",
+      "sub_en": "Warehouse clubs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コストコの年次報告が、ウォルマートを競合として挙げている",
+          "text_en": "Names ウォルマート as a competitor in its annual report",
+          "source": {
+            "label": "Costco 10-K",
+            "label_en": "Costco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm",
+            "level": "official",
+            "date": "2026-10-07",
+            "quote": "Walmart, Target, Kroger, and Amazon are among our significant general merchandise retail competitors in the U.S."
+          }
+        }
+      ],
+      "name_en": "Costco"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

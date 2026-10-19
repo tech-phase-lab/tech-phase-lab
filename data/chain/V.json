@@ -1,0 +1,212 @@
+{
+  "root": {
+    "ticker": "V",
+    "name": "Visa"
+  },
+  "rows": [
+    {
+      "ja": "顧客・利用企業",
+      "en": "Customers & users"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MA",
+    "AXP"
+  ],
+  "companies": [
+    {
+      "id": "XYZ",
+      "ticker": "XYZ",
+      "name": "Block",
+      "sub": "決済・フィンテック",
+      "sub_en": "Payments & fintech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Blockの年次報告が、Cash App CardはVisaカードが使える場所ならどこでも使えると記している",
+          "text_en": "Block's annual report says customers can use the Cash App Card anywhere that accepts Visa cards",
+          "source": {
+            "label": "Block 10-K",
+            "label_en": "Block 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "These funds can then be sent to another customer through the app, spent anywhere that accepts Visa cards or Cash App Pay, withdrawn from an ATM using the Cash App Card, invested in stocks or exchange-traded funds (“ETFs”), used to buy bitcoin, or transferred to a bank account (either instantly for a fee or for free in one to three days).",
+            "note": "Block側の記載です。",
+            "note_en": "Described in Block's filing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COIN",
+      "ticker": "COIN",
+      "name": "Coinbase",
+      "sub": "暗号資産取引所",
+      "sub_en": "Crypto exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "CoinbaseがVisa Directを組み込み、顧客のリアルタイム入金を実現する",
+          "text_en": "Coinbase is to integrate Visa Direct to deliver real-time account funding for customers",
+          "source": {
+            "label": "October 29, 2024 · Coinbase Visa Direct partnership",
+            "label_en": "October 29, 2024 · Coinbase Visa Direct partnership",
+            "url": "https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.20931.html",
+            "level": "official",
+            "quote": "Coinbase to Integrate Visa Direct to Deliver Real-Time Account Funding for Customers | Visa",
+            "note": "統合予定の記載です。",
+            "note_en": "Announced as planned."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BILL",
+      "ticker": "BILL",
+      "name": "BILL",
+      "sub": "法人支出管理",
+      "sub_en": "Business spend management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BILLは、カード発行パートナーを通じてVisaとMastercardの法人カードを提供している",
+          "text_en": "Through card issuing partners, BILL provides physical and virtual Visa and Mastercard charge cards",
+          "source": {
+            "label": "BILL 10-K",
+            "label_en": "BILL 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Through card issuing partners, BILL provides both physical and virtual Mastercard and Visa charge cards to companies that enroll in its business spend and expense management program."
+          }
+        },
+        {
+          "type": "down",
+          "text": "BILLは、カードプログラム管理者としてVisaの規則を順守する契約上の義務を負っている",
+          "text_en": "BILL is contractually obligated to comply with Visa rules as a card program manager",
+          "source": {
+            "label": "BILL 10-K",
+            "label_en": "BILL 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "We are contractually obligated to comply with consumer protection laws and regulations applicable to our product offerings and customer base, as well as with Visa, Mastercard, and American Express rules, as a card program manager for our card product offerings."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAYC",
+      "ticker": "PAYC",
+      "name": "Paycom Software",
+      "sub": "給与・人事ソフト",
+      "sub_en": "Payroll & HR software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "PaycomのVault Visa給与カードは、Visa U.S.A Inc.からのライセンスに基づき発行される",
+          "text_en": "The Vault Visa Payroll Card is issued by The Bancorp Bank, N.A. pursuant to a license from Visa U.S.A Inc.",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Vault Visa ® Payroll Card is issued by The Bancorp Bank, N.A., Member FDIC, pursuant to a license from Visa U.S.A Inc. and may be used everywhere Visa debit cards are accepted.",
+            "note": "Paycom側の記載です。",
+            "note_en": "Described in Paycom's filing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "Mastercard",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VisaはMastercardなどと、手数料関連の集団訴訟の損失分担などを定める包括合意を結んでいる",
+          "text_en": "Visa entered into an omnibus agreement with Mastercard and certain Visa U.S.A. members relating to the interchange multidistrict litigation",
+          "source": {
+            "label": "Visa 10-K",
+            "label_en": "Visa 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm",
+            "level": "official",
+            "date": "2025-11-06",
+            "quote": "Visa entered into an omnibus agreement with Mastercard and certain Visa U.S.A. members that confirmed and memorialized the signatories’ intentions with respect to the loss sharing agreement, the interchange judgment sharing agreement and other agreements relating to the interchange multidistrict litigation, see Note 20—Legal Matters.",
+            "note": "訴訟に関する合意です。",
+            "note_en": "Agreement relates to litigation."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同合意では、和解金の分担はMastercardが33.3333%、Visaが66.6667%とされている",
+          "text_en": "Under the omnibus agreement, the settlement is divided into a Mastercard portion at 33.3333% and a Visa portion at 66.6667%",
+          "source": {
+            "label": "Visa 10-K",
+            "label_en": "Visa 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm",
+            "level": "official",
+            "date": "2025-11-06",
+            "quote": "Under the omnibus agreement, the monetary portion of any settlement of the interchange multidistrict litigation covered by the omnibus agreement would be divided into a Mastercard portion at 33.3333 % and a Visa portion at 66.6667 %."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "マスターカードの年次報告が、ビザを競合として挙げている",
+          "text_en": "Names ビザ as a competitor in its annual report",
+          "source": {
+            "label": "Mastercard 10-K",
+            "label_en": "Mastercard 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000013/ma-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We compete worldwide with payments networks such as Visa, American Express, JCB, China UnionPay and Discover, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "決済・カード",
+      "sub_en": "Payments & cards",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ビザの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in ビザ’s annual report",
+          "source": {
+            "label": "Visa 10-K",
+            "label_en": "Visa 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm",
+            "level": "official",
+            "date": "2025-11-06",
+            "quote": "Some of our competitors, including American Express, Discover, private-label card networks, virtual currency providers, technology companies that enable the exchange of digital assets, and certain alternative payments systems like Alipay and WeChat Pay, operate closed-loop payments systems, with direct connections to both sellers and consumers."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

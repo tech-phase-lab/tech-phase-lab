@@ -1,0 +1,227 @@
+{
+  "root": {
+    "ticker": "KEYS",
+    "name": "Keysight Technologies"
+  },
+  "rows": [
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partnerships",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CDNS",
+    "ANET",
+    "TER"
+  ],
+  "companies": [
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "シノプシス",
+      "sub": "EDA・設計ソフト",
+      "sub_en": "EDA & design software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Synopsysは、光学ソリューション事業(OSG)をKeysightへ売却する正式契約を2024年9月3日に結んだ",
+          "text_en": "Synopsys signed a definitive agreement on September 3, 2024 to sell its Optical Solutions Group (OSG) to Keysight",
+          "source": {
+            "label": "Synopsys 10-K",
+            "label_en": "Synopsys 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Following the determination that it was a necessary step towards obtaining governmental approval of and successfully closing the Ansys Merger, on September 3, 2024, we signed a definitive agreement for the sale of our Optical Solutions Group (OSG) to Keysight Technologies, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AnsysもPowerArtist RTL事業をKeysightへ売却する正式契約を結んでいる",
+          "text_en": "Ansys has similarly entered into a definitive agreement with Keysight for the sale of its PowerArtist RTL business",
+          "source": {
+            "label": "Synopsys 10-K",
+            "label_en": "Synopsys 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Ansys has similarly entered into a definitive agreement with Keysight Technologies, Inc. for the sale of its PowerArtist RTL business (such sale, together with the Optical Solutions Divestiture, the Regulatory Divestitures)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Keysightは2025年に、SynopsysのOSG取得に5億7800万ドル、AnsysのPowerArtist RTL事業の取得に2600万ドルを使った",
+          "text_en": "Keysight used $578 million for the acquisition of Synopsys’ OSG and $26 million for Ansys’ PowerArtist RTL Business in 2025",
+          "source": {
+            "label": "Keysight Technologies 10-K",
+            "label_en": "Keysight Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "In 2025, we used $2,022 million, net of cash acquired, for acquisitions, which included $1,415 million, net of $127 million cash acquired, for the acquisition of Spirent, $578 million used for the acquisition of Synopsys’ OSG, $26 million used for acquisition of Ansys’ PowerArtist RTL Business and $3 million used for other acquisition activity."
+          }
+        }
+      ],
+      "name_en": "Synopsys"
+    },
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "ヴァイアヴィ・ソリューションズ",
+      "sub": "光・ネットワーク試験",
+      "sub_en": "Optical & network test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ViaviとKeysightの間に、2025年3月2日付の資産購入契約がある",
+          "text_en": "Viavi and Keysight are parties to an Asset Purchase Agreement dated as of March 2, 2025",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Asset Purchase Agreement by and between Viavi Solutions Inc. and Keysight Technologies, Inc., dated as of March 2, 2025"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同契約の第1次修正が2025年5月28日付で結ばれている",
+          "text_en": "A First Amendment to the Asset Purchase Agreement is dated May 28, 2025",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "First Amendment to Asset Purchase Agreement by and between Viavi Solutions Inc. and Keysight Technologies, Inc. dated May 28, 2025"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Keysightは、Spirentの高速イーサネット、ネットワークセキュリティ、チャネルエミュレーションの事業をViaviへ売却し、3億9900万ドルを得た",
+          "text_en": "Keysight divested Spirent’s high-speed ethernet, network security and channel emulation business lines to Viavi, providing $399 million",
+          "source": {
+            "label": "Keysight Technologies 10-K",
+            "label_en": "Keysight Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "of investments, partially offset by $399 million provided by the divestiture of Spirent’s high-speed ethernet, network security and channel emulation business lines to Viavi Solutions Inc. and $30 million provided by sale of investments."
+          }
+        }
+      ],
+      "name_en": "VIAVI Solutions"
+    },
+    {
+      "id": "TSEM",
+      "ticker": "TSEM",
+      "name": "タワーセミコンダクター",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Towerは設計自動化の提供企業の1社としてKeysightと協業していると説明している",
+          "text_en": "Tower says it collaborates with design automation providers including Keysight Technologies",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "we collaborate with leading design automation providers - including Cadence Design Systems, Synopsys, Siemens EDA, and Keysight Technologies",
+            "note": "20-F上の協業先の列挙です。",
+            "note_en": "Listed among collaborators in a 20-F."
+          }
+        }
+      ],
+      "name_en": "Tower Semiconductor"
+    },
+    {
+      "id": "CDNS",
+      "ticker": "CDNS",
+      "name": "ケイデンス・デザイン・システムズ",
+      "sub": "EDA・設計ソフト",
+      "sub_en": "EDA & design software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ケイデンス・デザイン・システムズの年次報告が、キーサイト・テクノロジーを競合として挙げている",
+          "text_en": "Names Keysight as a competitor in its annual report",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "U.S.-based competitors include Keysight Technologies, Inc., Schrödinger, Inc., and CEVA, Inc., while international competitors include Altium Limited (acquired by Renesas Electronics Corporation) and Zuken, Inc."
+          }
+        }
+      ],
+      "name_en": "Cadence Design Systems"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アリスタネットワークスの年次報告が、キーサイト・テクノロジーを競合として挙げている",
+          "text_en": "Names Keysight as a competitor in its annual report",
+          "source": {
+            "label": "Arista Networks 10-K",
+            "label_en": "Arista Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In the network packet broker (\"NPB\") market, Arista DANZ Monitoring Fabric (\"DMF\") competes with Cisco, Gigamon, Keysight, Netscout and other network monitoring software providers."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
+      "id": "TER",
+      "ticker": "TER",
+      "name": "テラダイン",
+      "sub": "半導体・製品試験",
+      "sub_en": "Semiconductor & product test",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "テラダインの年次報告が、キーサイト・テクノロジーを競合として挙げている",
+          "text_en": "Names Keysight as a competitor in its annual report",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Competitors in our Product Test operating segment include, among others, Keysight Technologies, Test Research, Inc.,"
+          }
+        }
+      ],
+      "name_en": "Teradyne"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

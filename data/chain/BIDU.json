@@ -1,0 +1,140 @@
+{
+  "root": {
+    "ticker": "BIDU",
+    "name": "Baidu"
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BABA",
+    "GOOG",
+    "Tencent"
+  ],
+  "companies": [
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月、Apollo Goは複数年の戦略提携をUberと結び、完全自動運転車数千台をUberのプラットフォームに投入する",
+          "text_en": "In July 2025, Apollo Go entered into a multi-year strategic partnership with Uber to deploy thousands of fully autonomous vehicles on the Uber platform",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "In July 2025, Apollo Go entered into a multi-year strategic partnership with Uber Technologies, Inc. to deploy thousands of Apollo Go’s fully autonomous vehicles on the Uber platform across multiple international markets, with initial deployments planned for Asia and the Middle East."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "英国では、Apollo GoがUberなどとの提携をロンドンでの自動運転車の試験に進めた",
+          "text_en": "In the UK, Apollo Go advanced partnerships with Uber and Lyft to pilot autonomous vehicles in London",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "In the UK, Apollo Go advanced partnerships with Uber and Lyft to pilot autonomous vehicles in London."
+          }
+        }
+      ],
+      "name_en": "Uber Technologies"
+    },
+    {
+      "id": "BABA",
+      "ticker": "BABA",
+      "name": "アリババ",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "百度(バイドゥ)の年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in 百度(バイドゥ)’s annual report",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We compete with Alibaba Cloud, Volcano Engine, Huawei and Kingsoft cloud for our cloud offerings."
+          }
+        }
+      ],
+      "name_en": "Alibaba"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "検索・広告",
+      "sub_en": "Search & ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の検索・広告事業者としてGoogleなどが、強い知名度と大きな資金力を持つと百度が述べている",
+          "text_en": "Baidu says U.S.-based search and marketing platforms such as Google have strong brand names and greater financial resources",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "U.S.-based internet search providers and online marketing platforms, such as Microsoft, Google and Facebook, have a strong global presence, well established brand names, more users and customers and significantly greater financial resources than we do."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "sub": "インターネット",
+      "sub_en": "Internet",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "iQIYIの年次報告が、動画配信の競合としてTencent Videoなどを挙げている",
+          "text_en": "iQIYI's annual report lists Tencent Video among its video-streaming competitors",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "for content sourcing, user traffic and advertising customers from other providers of online entertainment video services in Chinese mainland, primarily including Tencent Video, Youku, Mango TV and Bilibili. iQIYI also competes with other internet media and entertainment services, such as internet and social platforms and short- or",
+            "note": "子会社iQIYIの記載です。",
+            "note_en": "Subsidiary iQIYI's statement."
+          }
+        }
+      ],
+      "name_en": "Tencent"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
