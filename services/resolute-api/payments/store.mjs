@@ -1,15 +1,18 @@
 import { randomUUID } from 'node:crypto';
 import { addYear, reject } from './policy.mjs';
 import { sandboxAccess } from './access.mjs';
-const S = 'resolute_payments_sandbox';
 const iso = row => row && Object.fromEntries(Object.entries(row).map(([k,v]) => [k,v instanceof Date ? v.toISOString() : v]));
-export function paymentStore(pool) {
+export function paymentStore(pool, { environment = 'sandbox' } = {}) {
+  if (!['sandbox', 'live'].includes(environment)) throw Error('Invalid payment ledger');
+  // Selected by server wiring only; never interpolate request input as a schema.
+  const S = environment === 'live' ? 'resolute_payments_live' : 'resolute_payments_sandbox';
+  const grantAudit = environment === 'live' ? 'LIVE_ACCESS_GRANTED' : 'SANDBOX_ACCESS_GRANTED';
   async function tx(user, fn) {
     const db = await pool.connect();
     try {
       await db.query('BEGIN');
       await db.query("SET LOCAL lock_timeout = '2s'");
-      await db.query('SELECT pg_advisory_xact_lock(hashtextextended($1, 617))', [user]);
+      await db.query('SELECT pg_advisory_xact_lock(hashtextextended($1, $2))', [user, environment === 'live' ? 0 : 617]);
       const result = await fn(db); await db.query('COMMIT'); return result;
     } catch (e) { await db.query('ROLLBACK'); throw e; } finally { db.release(); }
   }
@@ -33,6 +36,7 @@ export function paymentStore(pool) {
   }
   return { tx, audit, rights, get,
     async access(user) {
+      if (environment !== 'sandbox') throw Error('Use the live entitlement reader');
       if (!/^user_[A-Za-z0-9]{1,128}$/.test(user)) reject('AUTH_REQUIRED',401);
       // One statement gives a consistent clock and snapshot across refund/capture commits.
       const { rows } = await pool.query(`SELECT statement_timestamp() AS as_of,
@@ -100,7 +104,7 @@ export function paymentStore(pool) {
         await db.query(`INSERT INTO ${S}.grants(order_id,user_id,kind,starts_at,expires_at) VALUES ($1,$2,$3,$4,$5)`,
           [order.id,order.user_id,order.quote.kind,new Date(start),addYear(start)]);
         await db.query(`UPDATE ${S}.orders SET state='paid',capture_id=$2,paid_at=$3 WHERE id=$1`,[order.id,payment.captureId,payment.paidAt]);
-        await audit(db,order.id,'SANDBOX_ACCESS_GRANTED'); return 'paid';
+        await audit(db,order.id,grantAudit); return 'paid';
       });
     },
     async adverse(paypalId, state, code, eventId) {
