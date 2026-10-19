@@ -9,7 +9,6 @@ import ResearchToolShell from "../research-tool-shell";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import { calendarInsight } from "./calendar-insights";
-import CompactPicker from "../compact-picker";
 import EconomicResultsPanel from "./economic-results-panel";
 
 const earningsFocus: Record<string, { ja: string; en: string }> = {
@@ -59,8 +58,8 @@ export default function EventCalendar() {
       <button aria-pressed={view === "results"} onClick={() => { setView("results"); setPeriod("all"); }}>{t("発表済みの結果", "Results")}</button>
     </div>
     <div className={calendarStyles.displayOptions}>
-      <CompactPicker wheel lang={lang} label={t("表示月", "Month")} value={period} options={[{ value: "all", label: t("すべての月", "All months") }, ...months.map(month => ({ value: month, label: month }))]} onChange={setPeriod} />
-      <CompactPicker wheel lang={lang} label={t("時間帯", "Time zone")} value={zone} options={[{ value: "Asia/Tokyo", label: "JST" }, { value: "America/New_York", label: "ET" }]} onChange={value => { setZoneOverride(value); setPeriod("all"); }} />
+      <select aria-label={t("表示月", "Month")} value={period} onChange={event => setPeriod(event.target.value)}><option value="all">{t("すべての月", "All months")}</option>{months.map(month => <option key={month} value={month}>{month}</option>)}</select>
+      <select aria-label={t("時間帯", "Time zone")} value={zone} onChange={event => { setZoneOverride(event.target.value); setPeriod("all"); }}><option value="Asia/Tokyo">JST</option><option value="America/New_York">ET</option></select>
     </div>
     <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} active={view === "results"} />
     {view === "upcoming" && <div className={calendarStyles.upcomingContent}>
