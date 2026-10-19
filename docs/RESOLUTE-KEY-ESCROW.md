@@ -87,3 +87,20 @@ location, who can retrieve the age identity, where integrity pins are kept, and
 perform a retrieval using those exact locations. Do not put the identity together
 with application credentials. Do not label a synthetic local copy as a successful
 remote retrieval. The production custody gate remains open.
+
+## Owner custody rehearsal — 2026-10-20 00:58 JST
+
+The owner reported redisplaying and comparing the disposable identity and pins
+in Google Password Manager, and returned the capsule downloaded from Evernote.
+Returned file RESOLUTE-TEST-ONLY-20261020(1).age (323 bytes) matched the original
+byte for byte and its independently retained SHA256. Authenticated age decryption
+and the recovered key fingerprint both passed using the retained disposable
+test identity. This verifies the returned ciphertext; Google retrieval is
+owner-attested, not a programmatic retrieval of the identity from Google.
+
+The selected custody workflow is Google Password Manager for the private
+recovery identity/integrity pins and Evernote for the encrypted capsule. The
+rehearsal is complete with the stated evidence boundary. No production key was
+created, installed or verified. Never reuse the disposable identity or key in
+production. Actual production custody/readback and live Clerk authenticated
+isolated acceptance remain open; saving stays disabled.

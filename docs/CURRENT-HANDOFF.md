@@ -1694,3 +1694,16 @@ Railway origin is remapped by the test transport; production HTTPS restrictions
 remain intact. Synthetic JWT/PGlite evidence is not live-member/real-PG/S3
 deployed acceptance. Production saving, keys, Railway services and schedules
 were not changed. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md.
+
+## 2026-10-20 JST — Live owner read verified; recovery transport prepared
+
+Owner sign-in succeeded in the preview browser. Entitlements returned both
+RESOLUTE grants missing and capabilities false; plan/settings stayed unavailable.
+Added an inactive, short-window, exact-owner POST recovery-check transport with
+same-origin/empty-body restrictions, separate destination/token, no retries and
+bounded allowlisted evidence. No configuration was enabled. Its dedicated runner
+is not implemented/deployed yet; synthetic response tests are not live recovery
+acceptance. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md. The disposable Google /
+Evernote custody rehearsal is recorded in RESOLUTE-KEY-ESCROW.md; production key
+custody remains open. Next: implement and verify the isolated authenticated runner
+before enabling the preview transport. Morning job and reservations unchanged.

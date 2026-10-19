@@ -132,3 +132,13 @@ corrected without changing the tested module bundle or assertions. The service
 was then disabled and bucket references cleared; actual DISABLED log confirmed.
 See RESOLUTE-RESTORE-ACCEPTANCE.md for IDs, evidence and limitations. Production
 key custody and authenticated customer API-to-restore acceptance remain open.
+
+### Live owner authentication and inactive recovery transport
+
+Live preview owner sign-in and read-only entitlements succeeded; no RESOLUTE
+purchase grants were present. Plan/settings remained unavailable. Prepared an
+owner-only, time-limited recovery-check forwarding route, disabled by default.
+No environment variables, production keys, migrations, services or schedules
+were changed. The dedicated runner and complete authenticated real-PG/S3 recovery
+acceptance remain pending; transport unit tests must not be reported as that
+acceptance. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md and CURRENT-HANDOFF.md.

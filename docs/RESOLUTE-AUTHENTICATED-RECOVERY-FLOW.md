@@ -57,3 +57,37 @@ parallel Node run lost three unrelated test processes while the container record
 OOM kills; the complete suite passed with `npm test -- --test-concurrency=2`
 without new OOM kills. Initial build font downloads returned HTTP503; unchanged
 `npm run build` succeeded on retry. No tests were removed or skipped.
+
+## 2026-10-20 JST — Live owner session and disabled acceptance transport
+
+The owner completed secure browser sign-in on the preview deployment. The account
+page identified the owner and PRO membership. A direct authenticated browser read
+of `/api/resolute/entitlements` returned `resolute_v1`, `asOf`
+`2026-10-19T16:23:50.048Z`, both grants `missing`, and both capability booleans
+false. PRO membership alone does not grant RESOLUTE access. Direct plan and
+notification-settings reads returned `PLAN_UNAVAILABLE` and
+`NOTIFICATION_UNAVAILABLE`. No browser token was extracted and no saving was
+activated. This verifies live authenticated reads, not a deployed recovery run.
+
+Added POST `/api/resolute/recovery-check` as an inactive server-side transport.
+It requires the preview environment, ENABLED=true and an UNTIL time no more than
+one hour ahead; missing configuration keeps it disabled. It accepts only an
+empty same-origin request with `X-Resolute-Recovery-Check: 1`, authenticates the
+exact owner, and obtains the session token server-side. It forwards one nonce
+to a separately configured Railway origin with a separate service token; it
+never changes normal plan/settings destinations or retries a lost response.
+Responses have a size limit and must contain fresh nonce-matched checks for
+isolation, independent readback and both replays. Only allowlisted evidence is
+returned; logs and credentials are not relayed.
+
+Configuration names: `RESOLUTE_RECOVERY_CHECK_ENABLED`,
+`RESOLUTE_RECOVERY_CHECK_UNTIL`, `RESOLUTE_RECOVERY_CHECK_URL`, and
+`RESOLUTE_RECOVERY_CHECK_SERVICE_TOKEN`. None were installed in this step.
+The dedicated `/internal/v1/recovery-check` runner is NOT yet implemented or
+deployed. Before any activation, verify ownership of its deployment, actual
+isolated database/storage wiring, server-side JWT verification, operation
+fencing and single-run behavior. A different hostname or an upstream JSON report
+alone does not establish isolation or prove execution; correlate actual runner
+logs and saved results. Tests currently use synthetic response reports solely
+to verify transport rejection/redaction. Production custody, DB gates and the
+complete authenticated real PostgreSQL/S3 dump/restore acceptance remain open.
