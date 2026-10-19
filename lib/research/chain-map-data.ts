@@ -39,6 +39,15 @@ import crwvMap from "../../data/chain/CRWV.json" with { type: "json" };
 import irenMap from "../../data/chain/IREN.json" with { type: "json" };
 import cohrMap from "../../data/chain/COHR.json" with { type: "json" };
 import amatMap from "../../data/chain/AMAT.json" with { type: "json" };
+import panwMap from "../../data/chain/PANW.json" with { type: "json" };
+import snowMap from "../../data/chain/SNOW.json" with { type: "json" };
+import dellMap from "../../data/chain/DELL.json" with { type: "json" };
+import mrvlMap from "../../data/chain/MRVL.json" with { type: "json" };
+import crmMap from "../../data/chain/CRM.json" with { type: "json" };
+import avgoMap from "../../data/chain/AVGO.json" with { type: "json" };
+import crdoMap from "../../data/chain/CRDO.json" with { type: "json" };
+import crwdMap from "../../data/chain/CRWD.json" with { type: "json" };
+import orclMap from "../../data/chain/ORCL.json" with { type: "json" };
 
 /** One stock's reviewed chain map: boxes by business row, lines by relation type, plus two-step links.
  * Add another stock by dropping data/chain/<TICKER>.json in the same shape and listing it below. */
@@ -67,6 +76,7 @@ const available: Record<string, ChainMapData> = {
   VRT: vrt2 as ChainMapData, PLTR: pltr as ChainMapData, CEG: ceg as ChainMapData, AAOI: aaoi as ChainMapData, NBIS: nbis as ChainMapData,
   APH: aphMap as ChainMapData, NOW: nowMap as ChainMapData, STX: stxMap as ChainMapData, ALAB: alabMap as ChainMapData, IONQ: ionqMap as ChainMapData,
   SOFI: sofiMap as ChainMapData, CRWV: crwvMap as ChainMapData, IREN: irenMap as ChainMapData, COHR: cohrMap as ChainMapData, AMAT: amatMap as ChainMapData,
+  PANW: panwMap as ChainMapData, SNOW: snowMap as ChainMapData, DELL: dellMap as ChainMapData, MRVL: mrvlMap as ChainMapData, CRM: crmMap as ChainMapData, AVGO: avgoMap as ChainMapData, CRDO: crdoMap as ChainMapData, CRWD: crwdMap as ChainMapData, ORCL: orclMap as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;
 
