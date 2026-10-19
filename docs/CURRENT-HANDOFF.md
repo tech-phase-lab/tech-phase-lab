@@ -1683,3 +1683,14 @@ acceptance passed positive verification, four negative cases and compatibility
 of explicit recover mode0600 output. Production keys/identities were not used;
 independent production custody and live-member deployed API-to-restore acceptance
 remain open. No Railway mutation or deployment in this step.
+
+## 2026-10-20 JST — Authenticated recovery regression uses the actual HTTP bridge
+
+Extracted the unchanged Node API HTTP bridge to http-server.mjs and reused it
+in the signed API-to-replay regression. The API and writer now both cross real
+loopback sockets, including streamed JSON bodies and responses. Missing service
+credentials are rejected before the signed-session cases. Only the validated
+Railway origin is remapped by the test transport; production HTTPS restrictions
+remain intact. Synthetic JWT/PGlite evidence is not live-member/real-PG/S3
+deployed acceptance. Production saving, keys, Railway services and schedules
+were not changed. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md.

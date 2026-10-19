@@ -7,6 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {PGlite} from '@electric-sql/pglite';
 import {authConfig} from '../services/resolute-api/auth.mjs';
 import {createHandler} from '../services/resolute-api/handler.mjs';
+import {createApiServer} from '../services/resolute-api/http-server.mjs';
 import {createWriter} from '../services/resolute-protection/server.mjs';
 import {createPlanStore} from '../lib/resolute/plan-database.ts';
 import {createNotificationStore} from '../lib/resolute/notification-database.ts';
@@ -81,8 +82,19 @@ test('signed session through browser routes, scoped DB, HTTP writer and Python r
  };
  let session=jwt('user_buyer');
  const handler=createHandler(config,async()=>{throw Error('unexpected entitlement route');},undefined,createPlanStore(pool(db,'resolute_plan_writer'),'legacy',barrier),createNotificationStore(pool(db,'resolute_notification_writer'),'legacy',barrier));
- // Fetch adapter exercises exact transport Request/Response and real JWT verification.
- const transport=(url,init)=>handler(new Request(url,init));
+ const api=createApiServer(handler);
+ api.listen(0,'127.0.0.1');await once(api,'listening');
+ t.after(()=>new Promise(resolve=>{api.close(resolve);api.closeAllConnections();}));
+ const apiBase=`http://127.0.0.1:${api.address().port}`;
+ // Only remap the deployment origin; requests cross a real socket and the
+ // same Node HTTP bridge as production. Production HTTPS validation is intact.
+ const transport=(url,init)=>{
+  assert.equal(url.origin,'https://api.up.railway.app');
+  assert.equal(init.redirect,'error');
+  return fetch(apiBase+url.pathname+url.search,init);
+ };
+ const denied=await fetch(apiBase+'/internal/v1/plan',{headers:{Authorization:`Bearer ${session}`}});
+ assert.equal(denied.status,401);await denied.body?.cancel();
  const plans=createPlanRoutes({session:async()=>session,forward:(token,method,mutation)=>fetchResolutePlan(token,'https://api.up.railway.app',serviceToken,method,mutation,transport)});
  const notifications=createNotificationRoutes({session:async()=>session,forward:(token,method,mutation)=>fetchNotificationSettings(token,'https://api.up.railway.app',serviceToken,method,mutation,transport)});
  const call=(routes,method,body)=>routes[method](new Request(origin+'/api/resolute/fixture',{method,headers:{origin,'content-type':'application/json'},body:method==='GET'?undefined:JSON.stringify(body)}));

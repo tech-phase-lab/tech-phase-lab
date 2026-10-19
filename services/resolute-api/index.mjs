@@ -3,8 +3,7 @@ import { paymentRuntime } from './payments/runtime.mjs';
 import { livePaymentRuntime } from './payments/live-runtime.mjs';
 import {riskRequest} from './risk-store.mjs';
 import { operateNotificationSettings } from '../../lib/resolute/notification-database.ts';
-import { createServer } from 'node:http';
-import { Readable } from 'node:stream';
+import { createApiServer } from './http-server.mjs';
 import { authConfig } from './auth.mjs';
 import { createHandler } from './handler.mjs';
 import { getResoluteEntitlementsForUser } from '../../lib/resolute/database.ts';
@@ -17,16 +16,6 @@ if(new URL(db.connectionString).username!=='resolute_api_reader')throw Error('Re
 const payments=paymentRuntime(process.env,config);
 const livePayments=livePaymentRuntime(process.env,config);
 const handler=createHandler(config,getResoluteEntitlementsForUser,undefined,operateResolutePlan,operateNotificationSettings,riskRequest,rizelReviewRequest);
-const server=createServer({maxHeaderSize:24576},async(req,res)=>{
-  try {
-    const request=new Request('http://service.invalid'+req.url,{method:req.method,headers:req.headers,
-      ...(['GET','HEAD'].includes(req.method)?{}:{body:Readable.toWeb(req),duplex:'half'})});
-    const response=await livePayments(request) ?? await payments(request) ?? await handler(request);
-    res.writeHead(response.status,Object.fromEntries(response.headers));
-    if(response.body)Readable.fromWeb(response.body).pipe(res);else res.end();
-  } catch {res.writeHead(503,{'Cache-Control':'private, no-store'});res.end();}
-});
-server.requestTimeout=25000;server.headersTimeout=10000;server.keepAliveTimeout=5000;
-server.maxConnections=32;
+const server=createApiServer(async request=>await livePayments(request) ?? await payments(request) ?? await handler(request));
 server.listen(Number(process.env.PORT || 3000),'::',()=>console.log('RESOLUTE_API_READY'));
 process.on('SIGTERM',()=>server.close(()=>process.exit(0)));
