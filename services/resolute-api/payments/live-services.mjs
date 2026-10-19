@@ -1,4 +1,4 @@
-/** Dormant factory. Not imported by the public HTTP runtime or API startup. */
+/** Lazy factory: live credentials and database are opened only behind the live gate. */
 import { Pool } from 'pg';
 import { createClerkClient } from '@clerk/backend';
 import { resoluteDatabaseConfig } from '../../../lib/resolute/database-config.ts';

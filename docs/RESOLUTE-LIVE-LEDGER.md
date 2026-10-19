@@ -123,3 +123,24 @@ explicit owner approval to open sales, and retirement of the old fixed links.
 No live API calls or real payments are implied by the local provider doubles.
 PayPal references: https://developer.paypal.com/api/rest/production/ and
 https://developer.paypal.com/api/rest/webhooks/rest/ (reviewed 2026-10-19).
+
+## Authenticated live HTTP preparation (2026-10-19)
+
+The API now has a separate `/internal/v1/live-payments` namespace and
+`/webhooks/paypal-live`. The website proxy is `/api/resolute/live-payments`.
+All are dormant unless server-only `RESOLUTE_PAYPAL_LIVE_ENABLED=true`.
+No request field or URL query switches a Sandbox transaction into live mode.
+The proxy requires Clerk identity and a same-origin JSON POST; the API verifies
+both the service token and the member JWT. Audit is owner-only. The live access
+route uses the verified live entitlement reader rather than Sandbox access.
+
+Order creation and capture additionally require `RESOLUTE_LIVE_SALES_ENABLED`
+on both hosts (the API engine rechecks immediately before capture). Order status,
+access and verified webhook processing remain available if sales alone are stopped.
+Keep provider credentials enabled after launch when stopping sales, so refunds and
+disputes can still revoke rights. Turning off provider configuration disables the
+whole live integration, including webhooks.
+
+No live settings, credential, database-login permission or entitlement source is
+activated by this code change. The existing checkout UI remains Sandbox-only;
+its live presentation and real provider end-to-end validation are still pending.
