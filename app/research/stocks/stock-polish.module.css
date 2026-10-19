@@ -61,6 +61,6 @@
 .sourceDrawer summary:focus-visible { outline:2px solid #9dddc4; }
 
 /* Restrained search treatment; keep the existing page layout. */
-.searchBox.searchBox{border:1px solid #3d5260;border-radius:11px;background:linear-gradient(125deg,#1a2834,#101b26);box-shadow:inset 0 1px 0 #ffffff08,0 5px 18px #0003;transition:border-color .18s,box-shadow .18s}
-.searchBox.searchBox:focus-within{border-color:#91cbb5;box-shadow:0 0 0 3px #91cbb511,inset 0 1px 0 #ffffff08}
+.searchBox.searchBox{height:48px;border:1px solid #435c6b;border-bottom-color:#15232e;border-radius:4px;background:linear-gradient(180deg,#213441 0%,#14232f 100%);box-shadow:inset 0 1px 0 #ffffff16,inset 1px 0 0 #ffffff06,0 3px 0 #080f16,0 7px 14px #0005;transition:border-color .18s,box-shadow .18s}
+.searchBox.searchBox:focus-within{border-color:#91cbb5;box-shadow:0 0 0 2px #91cbb518,inset 0 1px 0 #ffffff16,0 3px 0 #080f16,0 7px 14px #0005}
 .searchBox.searchBox>span{color:#a3bac7}

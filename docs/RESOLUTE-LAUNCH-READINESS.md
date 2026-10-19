@@ -142,3 +142,13 @@ No environment variables, production keys, migrations, services or schedules
 were changed. The dedicated runner and complete authenticated real-PG/S3 recovery
 acceptance remain pending; transport unit tests must not be reported as that
 acceptance. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md and CURRENT-HANDOFF.md.
+
+### Recovery coordinator prepared; actual execution still pending
+
+The isolated-side authenticated coordinator now enforces exact owner identity,
+UUID-only requests, expiration, and one execution per private sandbox permit.
+It rejects incomplete evidence and does not retry failed/uncertain runs. It has
+no runnable entrypoint or real executor yet. Production remains disabled; the
+remaining integration is the fixed real PostgreSQL/API/writer acceptance adapter,
+followed by actual logs and saved-result verification. See the recovery service
+README. Existing morning job and reservations were not touched.

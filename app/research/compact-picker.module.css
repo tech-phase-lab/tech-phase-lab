@@ -1,5 +1,5 @@
-.dropdown{position:relative;width:max-content;min-width:100px;max-width:55%;flex-shrink:0}
-.trigger{display:flex;align-items:flex-end;justify-content:flex-end;gap:12px;width:100%;min-height:44px;padding:12px 4px 3px 10px;border:0;border-bottom:1px solid #71858b;border-radius:0;background:transparent;color:#bddbce;font:inherit;font-size:14px;line-height:1.4;cursor:pointer;text-align:right}
+.dropdown{position:relative;width:max-content;min-width:82px;max-width:55%;flex-shrink:0}
+.trigger.trigger{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:8px;width:100%;min-height:44px;padding:0 2px 0 6px;border:0;border-radius:0;background:transparent;color:#bddbce;font:inherit;font-size:13px;line-height:1.4;cursor:pointer;text-align:right}
 .trigger span{align-self:center;font-size:16px}
 .list{position:absolute;right:0;top:calc(100% + 8px);z-index:30;width:280px;max-width:calc(100vw - 40px);max-height:280px;overflow-y:auto;overscroll-behavior:contain;padding:6px;border:1px solid #52636b;border-radius:10px;background:#1b242d;box-shadow:0 10px 24px #0004;scrollbar-width:thin;scrollbar-color:#5c776b transparent}
 .list button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:12px 14px;border:0;border-radius:6px;background:transparent;color:#d2dfe7;text-align:left;font:inherit;font-size:14px;line-height:1.5;cursor:pointer}
@@ -9,3 +9,5 @@
 .trigger:focus-visible{outline:2px solid #9edcc4;outline-offset:3px}
 
 .open{z-index:1000}.backdrop{position:fixed;inset:0;z-index:0;background:#02070db3}.open .trigger{position:relative;z-index:1}.open .list{z-index:2}
+
+.trigger::after{content:"";position:absolute;left:0;right:0;bottom:9px;border-bottom:1px solid #71858b;pointer-events:none}
