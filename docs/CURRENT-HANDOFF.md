@@ -1661,3 +1661,15 @@ not assertions. Retirementa2305d23 logged DISABLED; bucket references cleared,
 no staged patch. See RESOLUTE-RESTORE-ACCEPTANCE.md and adjacent evidence JSON.
 Production key custody, exact production DB gates and authenticated API-to-writer-
 to-restore acceptance remain open. All existing service IDs/crons preserved.
+
+## 2026-10-19 — Authenticated recovery flow joined locally
+
+Added a single integration regression joining browser routes, forwarding,
+actual RSA/Clerk token verification, API handlers, separate scoped plan/settings
+roles, real stores/barrier, loopback HTTP writer, encrypted independent records
+and Python replay SQL against a stale PGlite fixture. Covers unauthorized users,
+storage outage503, durable retry, read completion barrier, both notification
+stops, two checked replays and corrupted ciphertext. See
+RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for exact evidence boundaries. Live Clerk,
+real API network/database and S3 have NOT all been exercised in one deployed
+flow. No Railway configuration/deployment change in this step.
