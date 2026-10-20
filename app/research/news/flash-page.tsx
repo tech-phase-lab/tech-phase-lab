@@ -14,6 +14,7 @@ import { readVisitStart } from "../use-alerts-unread";
 import timeline from "../companies/company-activity.module.css";
 import tabStyles from "./news-feed.module.css";
 import styles from "./flash-page.module.css";
+import FlashSkeleton from "./flash-skeleton";
 import FeedPagination from "./feed-pagination";
 import NewsStory from "./news-story";
 
@@ -125,7 +126,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
     </div>
   </article>;
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
-    <div className={styles.controls}>
+    {(feed || failed) && <div className={styles.controls}>
       <div className={tabStyles.tabs} role="group" aria-label={ja ? "表示する速報" : "Alert filter"}>
         {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
       </div>
@@ -136,10 +137,10 @@ export default function FlashPage({ lang }: { lang: Language }) {
           <ul>{providers.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{shortName(p.name)}</span></li>)}</ul>
         </div>
       </details>
-    </div>
+    </div>}
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
-      {!feed && !failed && <div className={styles.loading} role="status" aria-busy="true" aria-label={ja ? "読み込み中" : "Loading"}><span /><span /><span /><em>{ja ? "ニュースを読み込み中…" : "Loading news…"}</em></div>}
+      {!feed && !failed && <FlashSkeleton ja={ja} bare />}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
       {!!shown.length && <div className={timeline.timeline}>{shown.flatMap((row, index) => {
         const key = dayKey(row);
