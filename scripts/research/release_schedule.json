@@ -74,6 +74,15 @@
       "titleJa": "Netflix 決算発表（2026年Q3）"
     },
     {
+      "id": "meta-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "META",
+      "phase": "release",
+      "at": "2026-10-21T20:00:00.000Z",
+      "titleJa": "Meta 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
       "id": "tsla-q3-2026-webcast-close",
       "kind": "earnings",
       "ticker": "TSLA",
@@ -81,6 +90,14 @@
       "at": "2026-10-21T20:00:00.000Z",
       "titleJa": "Tesla 決算（米国市場終了後）",
       "approximate": true
+    },
+    {
+      "id": "meta-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "META",
+      "phase": "call",
+      "at": "2026-10-21T20:30:00.000Z",
+      "titleJa": "Meta 決算説明会（2026年Q3）"
     },
     {
       "id": "ibm-q3-2026-call",
@@ -124,6 +141,23 @@
       "titleJa": "Bloom Energy 決算説明会（2026年Q3）"
     },
     {
+      "id": "stx-fq1-2027-call-close",
+      "kind": "earnings",
+      "ticker": "STX",
+      "phase": "release",
+      "at": "2026-10-27T20:00:00.000Z",
+      "titleJa": "Seagate 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "stx-fq1-2027-call",
+      "kind": "earnings",
+      "ticker": "STX",
+      "phase": "call",
+      "at": "2026-10-27T21:00:00.000Z",
+      "titleJa": "Seagate 決算説明会（2027年度Q1）"
+    },
+    {
       "id": "skhy-3q26-call",
       "kind": "earnings",
       "ticker": "SKHY",
@@ -149,12 +183,29 @@
       "approximate": true
     },
     {
+      "id": "now-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "NOW",
+      "phase": "release",
+      "at": "2026-10-28T20:00:00.000Z",
+      "titleJa": "ServiceNow 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
       "id": "klac-fq1-2027-call",
       "kind": "earnings",
       "ticker": "KLAC",
       "phase": "call",
       "at": "2026-10-28T21:00:00.000Z",
       "titleJa": "KLA 決算説明会（2027年度Q1）"
+    },
+    {
+      "id": "now-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "NOW",
+      "phase": "call",
+      "at": "2026-10-28T21:00:00.000Z",
+      "titleJa": "ServiceNow 決算説明会（2026年Q3）"
     },
     {
       "id": "msft-fq1-2027-call",
@@ -173,12 +224,37 @@
       "titleJa": "米国PCE物価指数（9月）"
     },
     {
+      "id": "intc-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "INTC",
+      "phase": "release",
+      "at": "2026-10-29T20:00:00.000Z",
+      "titleJa": "Intel 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
       "id": "sndk-fq1-2027-call",
       "kind": "earnings",
       "ticker": "SNDK",
       "phase": "call",
       "at": "2026-10-29T20:30:00.000Z",
       "titleJa": "Sandisk 決算説明会（2027年度Q1）"
+    },
+    {
+      "id": "amzn-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "AMZN",
+      "phase": "call",
+      "at": "2026-10-29T21:00:00.000Z",
+      "titleJa": "Amazon 決算説明会（2026年Q3）"
+    },
+    {
+      "id": "intc-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "INTC",
+      "phase": "call",
+      "at": "2026-10-29T21:00:00.000Z",
+      "titleJa": "Intel 決算説明会（2026年Q3）"
     },
     {
       "id": "amd-q3-2026-call-close",

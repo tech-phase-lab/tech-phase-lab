@@ -92,6 +92,36 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
   },
   {
+    id: "meta-q3-2026-call", afterClose: true, ticker: "META", kind: "earnings" as const, title: { ja: "Meta 決算説明会（2026年Q3）", en: "Meta Q3 2026 earnings call" },
+    startsAt: "2026-10-21T13:30:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Meta IR (press release)",
+    sourceUrl: "https://s21.q4cdn.com/399680738/files/doc_news/Meta-to-Announce-Third-Quarter-2026-Results-2026.pdf",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "now-q3-2026-call", afterClose: true, ticker: "NOW", kind: "earnings" as const, title: { ja: "ServiceNow 決算説明会（2026年Q3）", en: "ServiceNow Q3 2026 earnings call" },
+    startsAt: "2026-10-28T14:00:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "ServiceNow IR (press release)",
+    sourceUrl: "https://s205.q4cdn.com/916135447/files/doc_news/ServiceNow-to-Announce-Third-Quarter-2026-Financial-Results-on-October-28-2026.pdf",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "stx-fq1-2027-call", afterClose: true, ticker: "STX", kind: "earnings" as const, title: { ja: "Seagate 決算説明会（2027年度Q1）", en: "Seagate fiscal Q1 2027 earnings call" },
+    startsAt: "2026-10-27T14:00:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Seagate Newsroom",
+    sourceUrl: "https://www.seagate.com/gb/en/stories/articles/seagate-technology-to-report-fiscal-first-quarter-2027-financial-results-on-october-27-2026-pr/",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "intc-q3-2026-call", afterClose: true, ticker: "INTC", kind: "earnings" as const, title: { ja: "Intel 決算説明会（2026年Q3）", en: "Intel Q3 2026 earnings call" },
+    startsAt: "2026-10-29T14:00:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Intel IR",
+    sourceUrl: "https://www.intc.com/news-events/press-releases/detail/1782/intel-to-report-third-quarter-2026-financial-results",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "amzn-q3-2026-call", ticker: "AMZN", kind: "earnings" as const, title: { ja: "Amazon 決算説明会（2026年Q3）", en: "Amazon Q3 2026 earnings call" },
+    startsAt: "2026-10-29T14:00:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Amazon",
+    sourceUrl: "https://www.aboutamazon.com/md/news/company-news/amazon-earnings-q3-2026-report",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
+  },
+  {
     id: "skhy-3q26-call", ticker: "SKHY", kind: "earnings" as const, title: { ja: "SK hynix 決算説明会（2026年Q3）", en: "SK hynix 3Q26 earnings call" },
     startsAt: "2026-10-28T09:00:00+09:00", sourceTimezone: "Asia/Seoul", sourceName: "SK hynix (SEC Form 6-K)",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526420934/d413172d6k.htm",
@@ -199,13 +229,6 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
     sourceUrl: "https://ir.kla.com/news-events/press-releases/detail/522/kla-announces-first-quarter-fiscal-year-2027-earnings-date", checkedOn: "2026-10-01",
     note: { ja: "米国市場終了後の公開予定です。公式発表に正確な公開時刻がないため、日付のみ掲載しています。", en: "Due after the U.S. market closes. Only the date is shown because the announcement does not give an exact publication time." },
   },
-  ...([
-    ["meta-q3-2026-results", "META", "2026-10-22", "Meta 決算発表（2026年Q3）", "Meta Q3 2026 results", "Meta IR", "https://investor.atmeta.com/investor-events/"],
-    ["stx-fq1-2027-results", "STX", "2026-10-27", "Seagate 決算発表（2027年度Q1）", "Seagate fiscal Q1 2027 results", "Seagate IR", "https://investors.seagate.com/"],
-  ] as const).map(([id, ticker, date, ja, en, sourceName, sourceUrl]): DateOnlyCalendarEvent => ({
-    id, kind: "earnings", ticker, date, sourceTimezone: "Asia/Tokyo", title: { ja, en }, sourceName, sourceUrl, checkedOn: "2026-10-15",
-    note: { ja: "日付は日本時間です。発表時刻は未公表のため、日付のみ掲載しています。", en: "The date is in Japan time. Only the date is shown because no publication time has been announced." },
-  })),
   ...["2026-10-28", "2026-12-09"].map((date): DateOnlyCalendarEvent => ({
     id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",
     title: { ja: "FOMC会合 最終日", en: "FOMC meeting final day" }, sourceName: "Federal Reserve",
