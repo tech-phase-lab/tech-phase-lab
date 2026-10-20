@@ -212,7 +212,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
         {item("/research/capital-map", "changes", ja ? "資本マップ" : "Capital Map")}
-        {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
+        {item("/research/watchlist", "star", ja ? "お気に入り" : "Watchlist")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
       </div>
