@@ -1,8 +1,9 @@
 # Offline protection-key escrow
 
 `protection_keys.py` prepares an age-encrypted recovery capsule for the existing
-32-byte online protection key. It does not generate a production key, contact
-storage, enable writes, or change services. Requires the `age` executable.
+32-byte online protection key. Its explicit `prepare` command generates a fresh
+key on the owner's device; `seal` accepts an existing key. Neither contacts
+storage, enables writes, or changes services. Requires the `age` executable.
 
 ## Operator procedure
 
@@ -169,3 +170,43 @@ fresh disposable identities, prepare + verify passed; wrong identity, modified
 ciphertext and repeated preparation were rejected; existing bytes were retained
 and permissions checked. Disposable test directories were removed. No production
 identity/key was generated, installed, remotely retrieved or activated.
+
+
+## Production custody readback — 2026-10-20 13:13 JST
+
+This supersedes earlier statements that a production key has not been created
+or that owner custody is still pending. Evidence is owner-reported terminal
+results on the owner's WSL Ubuntu PC, not direct assistant access to that PC or
+a programmatic Google/Evernote retrieval. Reported tools: age/age-keygen1.2.1,
+Python3.14.4. Preparation used the pinned6f9c0ab9 script and returned
+locally-verified. No production secret was transferred to the chat environment.
+
+Custody locations: Google Password Manager entry RESOLUTE本番復旧鍵-20261020
+(identity in password; both integrity pins in notes), and Evernote note
+RESOLUTE 本番復旧用 20261020 (encrypted capsule attachment only).
+The downloaded attachment was initially named return instead of returned;
+correcting the name produced FILE_OK. No key was regenerated.
+
+The temporary interactive verifier subsequently returned VERIFY failure.
+Its exact cause remains unconfirmed; do not attribute it to a bad password or
+corrupt file. Follow-up checks separately established:
+- FILE_MATCH: returned Evernote ciphertext exactly equals the original capsule.
+- PASSWORD_MATCH: hidden input copied from Google equals the original identity.
+- MEMO_MATCH: parsed Google notes equal both original named integrity pins.
+- RESOLUTE_CUSTODY_VERIFIED: recover() authenticated the returned ciphertext
+  with the locally retained identity/pins, validated its strict payload and
+  matched the recovered protection-key fingerprint. No plaintext key was written.
+
+Together these checks establish owner-attested custody/readback and recovery:
+the Google-retrieved inputs matched those used in the successful recovery.
+The successful final command alone, without the preceding Google comparisons,
+would not establish independent Google retrieval. The temporary-identity-file
+variant is not claimed successful. The original preparation marker still says
+remoteCustodyVerified=false and activated=false; it is a preparation-time marker,
+not an updated custody record. Retain the original private files for now.
+
+Production service provisioning, migrations/ACLs, the independently complete
+fenced recovery manifest and customer-save activation remain separate pending
+work. No service variables, DB grants, schedules, reservations, mail, payments,
+AI calls or RIZEL visibility changed. Prior live Clerk isolated recovery
+acceptance remains synthetic; it does not prove production-key installation.

@@ -1862,3 +1862,24 @@ previously documented; actual production key creation/custody/readback and
 production activation remain pending. Do not call customer saving operational.
 Other contributor commit d1a76eaa was fast-forwarded before this docs-only record;
 its account navigation/recovery changes were preserved unchanged.
+
+
+## 2026-10-20 13:13 JST — Owner production custody completed
+
+Owner reported FILE_MATCH, PASSWORD_MATCH, MEMO_MATCH and finally
+RESOLUTE_CUSTODY_VERIFIED on WSL Ubuntu. Actual Google identity/pins retrieval
+was compared locally, and the Evernote-returned ciphertext authenticated and
+matched the recovered key fingerprint. See RESOLUTE-KEY-ESCROW.md for evidence
+limits. No production key was received here or installed into any service.
+The preceding temporary verifier failure is not root-caused; do not regenerate
+keys or ask the owner to repeat completed custody setup.
+
+Production saving remains off. Next review: backup/export module packaging,
+independent fenced manifest provisioning and restoration key path BEFORE
+production schema/ACL application. backup.py requires protection inputs once
+plan/settings schema is present; applying schemas without the restore inputs
+can break the scheduled recovery verification. NOLOGIN alone is not a write
+fence. Keep active connection verification and post-replay checks in the cutover.
+Do not enable mail, payments, AI, or alter the morning job/reservations.
+Other contributor53fb0e46 notification/account changes were fast-forwarded and
+preserved unchanged. This record is documentation-only; diff validation applies.

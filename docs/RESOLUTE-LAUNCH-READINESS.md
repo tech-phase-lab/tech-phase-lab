@@ -5,7 +5,20 @@ checkout and the uncommitted operational record. This is NOT the recovered
 original and is not a complete historical log. Evidence below comes from the
 conversation handoff and committed project records; unverified items stay open.
 
-## Latest decision point — 2026-10-20 11:59 JST
+## Latest decision point — 2026-10-20 13:13 JST
+
+Owner-reported production recovery custody/readback is now complete. Fresh keys
+were prepared on the owner's WSL Ubuntu device, not in the chat workspace.
+Google-retrieved identity and pins matched the originals; the Evernote-downloaded
+capsule matched byte-for-byte; authenticated recovery and key fingerprint checks
+then returned RESOLUTE_CUSTODY_VERIFIED. See RESOLUTE-KEY-ESCROW.md for the precise
+evidence boundary and the earlier unresolved temporary-verifier failure.
+No production secret was received by the assistant or installed into a service.
+Production saving remains disabled. Next: prepare the backup/restore manifest
+and key provisioning path before applying production schemas/ACLs; schema
+installation alone would make protected restore require independent inputs.
+
+## Previous decision point — 2026-10-20 11:59 JST
 
 Supersedes the dated status below. Code fafbf53c: Node1193/Python2508 (3701),
 lint/build/compileall/diff passed. Actual isolated authenticated synthetic-session
