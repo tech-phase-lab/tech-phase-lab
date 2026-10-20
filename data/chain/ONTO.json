@@ -10,6 +10,10 @@
       "en": "Customers (named in Onto's annual report)"
     },
     {
+      "ja": "提携・投資・共同開発",
+      "en": "Partnerships, investments & collaboration"
+    },
+    {
       "ja": "競合",
       "en": "Competitors"
     }
@@ -42,6 +46,21 @@
             "note": "主要顧客の例としての記載です。",
             "note_en": "Cited as an example customer region."
           }
+        },
+        {
+          "type": "tie",
+          "text": "TSMCと共同で、先端ロジック向けにAtlasプラットフォームを用いた独自のプロセス制御ソリューションを開発した",
+          "text_en": "TSMC and Onto have developed unique process control solutions for advanced logic applications using the Atlas platform",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Receives-TSMC-Honor-for-Unique-Advanced-Node-and-Packaging-Technologies-2023.pdf",
+            "level": "official",
+            "date": "2023-03-28",
+            "quote": "Working together, TSMC and Onto have developed unique process control solutions for advanced logic applications using our Atlas® platform",
+            "note": "2023年の発表で、やや古い情報です。",
+            "note_en": "From a 2023 release (older)."
+          }
         }
       ]
     },
@@ -72,12 +91,177 @@
       "name_en": "Samsung Electronics"
     },
     {
+      "id": "RIGAKU",
+      "ticker": "Rigaku",
+      "name": "リガク・ホールディングス",
+      "sub": "X線分析装置",
+      "sub_en": "X-ray analytical equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "リガクが、Onto Innovationと戦略的な資本・事業提携を結んだと発表した",
+          "text_en": "Rigaku announced a strategic capital and business alliance with Onto Innovation",
+          "source": {
+            "label": "Rigaku の発表",
+            "label_en": "Rigaku press release",
+            "url": "https://rigaku.com/about/news-and-press-releases/rigaku-strategic-alliance-with-onto-innovation",
+            "level": "official",
+            "date": "2026-04-20",
+            "quote": "Rigaku Holdings Corporation (headquarters: Akishima, Tokyo; President and CEO: Jun Kawakami; “Rigaku”), a global leader in X-ray analytical technologies, today announced that it has entered into a strategic capital and business alliance with Onto Innovation Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Ontoがリガクの株式27%(少数株主持分)の取得を完了した",
+          "text_en": "Onto completed the acquisition of a 27% minority equity stake in Rigaku",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation-2026.pdf",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "Onto Innovation Inc. (NYSE: ONTO) today announced the successful closing of its previously announced acquisition of a 27% minority equity stake in Rigaku Holdings Corporation"
+          }
+        }
+      ],
+      "name_en": "Rigaku Holdings"
+    },
+    {
+      "id": "SKH",
+      "ticker": "SK hynix",
+      "name": "SKハイニックス",
+      "sub": "メモリ半導体",
+      "sub_en": "Memory chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Ontoは、HBM向けの欠陥防止システムの開発により、SK hynixから技術功績のBest Partner Awardを受けた",
+          "text_en": "Onto received the Best Partner Award for technology achievement from SK hynix for a defect prevention system for HBM applications",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Receives-Best-Partner-Award-from-SK-hynix-for-Hidden-Defect-Prevention-in-High-Bandwidth-Memory-Production-2026.pdf",
+            "level": "official",
+            "date": "2026-10-12",
+            "quote": "SK hynix bestowed the honor on Onto, the only company recognized for technology achievement, for developing a defect prevention system with breakthrough measurement technology for high-bandwidth memory (HBM) applications."
+          }
+        }
+      ],
+      "name_en": "SK hynix"
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラム・リサーチ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にLam Researchが挙げられている",
+          "text_en": "Lam Research is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "Lam Research"
+    },
+    {
+      "id": "GLW",
+      "ticker": "GLW",
+      "name": "コーニング",
+      "sub": "ガラス・素材",
+      "sub_en": "Glass & materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にCorningが挙げられている",
+          "text_en": "Corning is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "Corning"
+    },
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKSインスツルメンツ",
+      "sub": "半導体装置部品",
+      "sub_en": "Equipment subsystems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にMKS Instrumentsが挙げられている",
+          "text_en": "MKS Instruments is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "MKS Instruments"
+    },
+    {
+      "id": "RESONAC",
+      "ticker": "Resonac",
+      "name": "レゾナック・ホールディングス",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にResonacが挙げられている",
+          "text_en": "Resonac is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "Resonac Holdings"
+    },
+    {
       "id": "KLAC",
       "ticker": "KLAC",
       "name": "KLA",
       "sub": "半導体検査・計測",
       "sub_en": "Process control",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -113,7 +297,7 @@
       "name": "Nova",
       "sub": "半導体計測",
       "sub_en": "Metrology",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -149,7 +333,7 @@
       "name": "Camtek",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",

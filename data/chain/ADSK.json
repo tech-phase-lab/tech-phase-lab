@@ -11,6 +11,10 @@
       "above": true
     },
     {
+      "ja": "提携・連携",
+      "en": "Partnerships & integrations"
+    },
+    {
       "ja": "競合",
       "en": "Competitors"
     }
@@ -53,7 +57,7 @@
       "name": "ベントレー・システムズ",
       "sub": "インフラ設計ソフト",
       "sub_en": "Infrastructure software",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -103,7 +107,7 @@
       "name": "PTC",
       "sub": "CAD・PLM",
       "sub_en": "CAD & PLM",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -126,7 +130,7 @@
       "name": "アドビ",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -140,9 +144,126 @@
             "date": "2026-03-03",
             "quote": "Our primary global competitors include Adobe Systems Incorporated, Bentley Systems, Inc., Dassault Systèmes S.A. and its subsidiary Dassault Systèmes SolidWorks Corp., Intergraph Corporation, a wholly owned"
           }
+        },
+        {
+          "type": "tie",
+          "text": "AutodeskとAdobeは、NVIDIA、Pixar、Appleとともに、OpenUSDのためのアライアンスを発足させた",
+          "text_en": "Autodesk and Adobe, with NVIDIA, Pixar and Apple, announced the Alliance for OpenUSD",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/aousd-to-drive-open-standards-for-3d-content",
+            "level": "official",
+            "date": "2023-08-01",
+            "quote": "Pixar, Adobe, Apple, Autodesk, and NVIDIA Form Alliance for OpenUSD to Drive Open Standards for 3D Content",
+            "note": "競合でもあります。2023年の発表で、時期は古いです。",
+            "note_en": "Also a competitor. Announced in 2023; older."
+          }
         }
       ],
       "name_en": "Adobe"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年6月、AutodeskはAmazon Web Servicesと戦略的協業契約を結んだ",
+          "text_en": "In June 2026, Autodesk signed a strategic collaboration agreement with Amazon Web Services",
+          "source": {
+            "label": "Autodesk の発表",
+            "label_en": "Autodesk press release",
+            "url": "https://adsknews.autodesk.com/en/pressrelease/autodesk-signs-strategic-collaboration-agreement-with-amazon-web-services/",
+            "level": "official",
+            "date": "2026-06-03",
+            "quote": "Autodesk, Inc. (NASDAQ: ADSK), a global leader in design and make technology, today announced it has signed a strategic collaboration agreement (SCA) with Amazon Web Services, Inc. (AWS)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AutodeskとNVIDIAは、Pixar、Adobe、Appleとともに、OpenUSDのためのアライアンスを発足させた",
+          "text_en": "Autodesk and NVIDIA, with Pixar, Adobe and Apple, announced the Alliance for OpenUSD",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/aousd-to-drive-open-standards-for-3d-content",
+            "level": "official",
+            "date": "2023-08-01",
+            "quote": "Pixar, Adobe, Apple, Autodesk, and NVIDIA Form Alliance for OpenUSD to Drive Open Standards for 3D Content",
+            "note": "2023年の発表で、時期は古いです。",
+            "note_en": "Announced in 2023; older."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIA Omniverseにより、Autodeskの顧客は自社の技術を他社ツールと併用できると、Autodeskが述べている",
+          "text_en": "Autodesk says NVIDIA Omniverse lets its customers use Autodesk technology alongside partners' and non-Autodesk tools",
+          "source": {
+            "label": "Autodesk ニュースルーム",
+            "label_en": "Autodesk newsroom",
+            "url": "https://adsknews.autodesk.com/en/news/nvidia-omniverse/",
+            "level": "official",
+            "date": "2020-11-12",
+            "quote": "Continuing Autodesk’s emphasis on openness, NVIDIA Omniverse enables our customers to use our technology alongside our partners’ and non-Autodesk tools as needed to customize their workflows.",
+            "note": "2020年の発表で、時期は古いです。",
+            "note_en": "Announced in 2020; older."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAが、Autodeskを含むソフト提供各社が、同社のCloudXR連携でApple Vision Pro向けのアプリを提供していると説明している",
+          "text_en": "NVIDIA says software providers including Autodesk are using its CloudXR integration to deliver applications to Apple Vision Pro",
+          "source": {
+            "label": "NVIDIA ブログ",
+            "label_en": "NVIDIA blog",
+            "url": "https://blogs.nvidia.com/blog/nvidia-cloudxr-apple-vision-pro/",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Leading software providers — including Autodesk , Innoactive , Synopsys , Trifork , X-Plane and iRacing — are using the integration to deliver high-fidelity applications natively to Apple Vision Pro."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマホ・IT機器",
+      "sub_en": "Devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AutodeskとAppleは、NVIDIA、Pixar、Adobeとともに、OpenUSDのためのアライアンスを発足させた",
+          "text_en": "Autodesk and Apple, with NVIDIA, Pixar and Adobe, announced the Alliance for OpenUSD",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/aousd-to-drive-open-standards-for-3d-content",
+            "level": "official",
+            "date": "2023-08-01",
+            "quote": "Pixar, Adobe, Apple, Autodesk, and NVIDIA Form Alliance for OpenUSD to Drive Open Standards for 3D Content",
+            "note": "2023年の発表で、時期は古いです。",
+            "note_en": "Announced in 2023; older."
+          }
+        }
+      ],
+      "name_en": "Apple"
     }
   ],
   "far": [],

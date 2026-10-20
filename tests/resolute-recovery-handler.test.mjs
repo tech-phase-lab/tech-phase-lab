@@ -47,7 +47,8 @@ test('concurrent requests consume one permit and a lost or failed run cannot be 
  const run=createRecoveryHandler({...options(),execute:async()=>{calls++;await pending;throw Error('secret log');}});
  const first=run(request());
  // Wait until execution begins, without assuming authentication is synchronous.
- for(let i=0;i<100&&calls===0;i++)await new Promise(resolve=>setImmediate(resolve));
+ // Bounded by time, not by a tick count: signature verification can take longer than 100 ticks on a busy machine.
+ for(const deadline=Date.now()+5000;calls===0&&Date.now()<deadline;)await new Promise(resolve=>setImmediate(resolve));
  assert.equal(calls,1);assert.equal((await run(request())).status,409);release();
  assert.deepEqual(await (await first).json(),{error:'RECOVERY_CHECK_UNAVAILABLE'});
  assert.equal((await run(request())).status,409);assert.equal(calls,1);

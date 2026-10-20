@@ -2,8 +2,8 @@
   "root": {
     "ticker": "MPWR",
     "name": "モノリシック・パワー・システムズ",
-    "name_en": "Monolithic Power Systems",
-    "cik": 1280452
+    "cik": 1280452,
+    "name_en": "Monolithic Power Systems"
   },
   "rows": [
     {
@@ -140,6 +140,55 @@
         }
       ],
       "name_en": "Rambus"
+    },
+    {
+      "id": "ECX",
+      "ticker": "ECX",
+      "name": "ECARX",
+      "sub": "車載システム",
+      "sub_en": "Automotive systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ECARXが、Monolithic Power Systemsと戦略的な協力契約を結んだと発表した",
+          "text_en": "ECARX announced it signed a strategic cooperation agreement with Monolithic Power Systems",
+          "source": {
+            "label": "ECARX の発表",
+            "label_en": "ECARX press release (GlobeNewswire copy)",
+            "url": "https://www.financialcontent.com/article/gnwcq-2025-7-22-ecarx-and-monolithic-power-systems-form-strategic-partnership-to-accelerate-deployment-of-global-automotive-intelligence-and-robotics-solutions",
+            "level": "official",
+            "date": "2025-07-22",
+            "quote": "ECARX Holdings Inc. (Nasdaq: ECX) (“ECARX”), a global mobility technology provider, today announced it has signed a strategic cooperation agreement with Monolithic Power Systems, Inc. (\"MPS\") (Nasdaq: MPWR)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIS",
+      "ticker": "VIS",
+      "name": "ヴァンガード・インターナショナル・セミコンダクター",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MPSとVISが、パワー半導体を製造するファウンドリ契約を結んだ",
+          "text_en": "MPS and VIS entered into a foundry agreement to produce power semiconductors",
+          "source": {
+            "label": "MPS の発表",
+            "label_en": "MPS press release (GlobeNewswire copy)",
+            "url": "https://markets.financialcontent.com/clarkebroadcasting.mymotherlode/article/gnwcq-2022-12-12-monolithic-power-systems-signs-agreement-with-vanguard-international-to-secure-semiconductor-supply",
+            "level": "official",
+            "date": "2022-12-12",
+            "quote": "MPS and Vanguard International Semiconductor Corporation (VIS), a leading specialty IC foundry service provider, have entered into a foundry agreement to produce power semiconductors.",
+            "note": "2022年の発表で、古い情報です。",
+            "note_en": "From a 2022 announcement (older)."
+          }
+        }
+      ],
+      "name_en": "Vanguard International Semiconductor"
     }
   ],
   "far": [],

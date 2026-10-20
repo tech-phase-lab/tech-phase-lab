@@ -7,6 +7,7 @@ import c_adbe from "../../data/chain/ADBE.json" with { type: "json" };
 import c_adi from "../../data/chain/ADI.json" with { type: "json" };
 import c_adp from "../../data/chain/ADP.json" with { type: "json" };
 import c_adsk from "../../data/chain/ADSK.json" with { type: "json" };
+import c_aehr from "../../data/chain/AEHR.json" with { type: "json" };
 import c_akam from "../../data/chain/AKAM.json" with { type: "json" };
 import c_alab from "../../data/chain/ALAB.json" with { type: "json" };
 import c_alkt from "../../data/chain/ALKT.json" with { type: "json" };
@@ -19,6 +20,7 @@ import c_anet from "../../data/chain/ANET.json" with { type: "json" };
 import c_aosl from "../../data/chain/AOSL.json" with { type: "json" };
 import c_aph from "../../data/chain/APH.json" with { type: "json" };
 import c_app from "../../data/chain/APP.json" with { type: "json" };
+import c_appf from "../../data/chain/APPF.json" with { type: "json" };
 import c_appn from "../../data/chain/APPN.json" with { type: "json" };
 import c_arm from "../../data/chain/ARM.json" with { type: "json" };
 import c_arw from "../../data/chain/ARW.json" with { type: "json" };
@@ -245,6 +247,7 @@ const available: Record<string, ChainMapData> = {
   ADI: c_adi as ChainMapData,
   ADP: c_adp as ChainMapData,
   ADSK: c_adsk as ChainMapData,
+  AEHR: c_aehr as ChainMapData,
   AKAM: c_akam as ChainMapData,
   ALAB: c_alab as ChainMapData,
   ALKT: c_alkt as ChainMapData,
@@ -257,6 +260,7 @@ const available: Record<string, ChainMapData> = {
   AOSL: c_aosl as ChainMapData,
   APH: c_aph as ChainMapData,
   APP: c_app as ChainMapData,
+  APPF: c_appf as ChainMapData,
   APPN: c_appn as ChainMapData,
   ARM: c_arm as ChainMapData,
   ARW: c_arw as ChainMapData,

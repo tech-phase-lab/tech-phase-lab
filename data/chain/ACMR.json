@@ -11,7 +11,10 @@
     }
   ],
   "rivals": [
-    "LRCX"
+    "LRCX",
+    "TEL",
+    "NAURA",
+    "SCREEN"
   ],
   "companies": [
     {
@@ -50,6 +53,102 @@
         }
       ],
       "name_en": "Lam Research"
+    },
+    {
+      "id": "NAURA",
+      "ticker": "NAURA",
+      "name": "北方華創科技集団",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ACMリサーチの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "source": {
+            "label": "ACM Research 10-K",
+            "label_en": "ACM Research 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We consider our principal competitors to be those companies that provide wafer cleaning, electrical plating and furnace products to the global market, including Lam Research Corporation, NAURA Technology Group Co., Ltd., SCREEN Holdings Co., Ltd., SEMES Co. Ltd., Tokyo Electron Ltd. and Kokusai Semiconductor Equipment Corporation."
+          }
+        }
+      ],
+      "name_en": "NAURA Technology Group"
+    },
+    {
+      "id": "SCREEN",
+      "ticker": "SCREEN",
+      "name": "SCREENホールディングス",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ACMリサーチの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "source": {
+            "label": "ACM Research 10-K",
+            "label_en": "ACM Research 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We consider our principal competitors to be those companies that provide wafer cleaning, electrical plating and furnace products to the global market, including Lam Research Corporation, NAURA Technology Group Co., Ltd., SCREEN Holdings Co., Ltd., SEMES Co. Ltd., Tokyo Electron Ltd. and Kokusai Semiconductor Equipment Corporation."
+          }
+        }
+      ],
+      "name_en": "SCREEN Holdings"
+    },
+    {
+      "id": "TEL",
+      "ticker": "TEL",
+      "name": "東京エレクトロン",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ACMリサーチの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "source": {
+            "label": "ACM Research 10-K",
+            "label_en": "ACM Research 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We consider our principal competitors to be those companies that provide wafer cleaning, electrical plating and furnace products to the global market, including Lam Research Corporation, NAURA Technology Group Co., Ltd., SCREEN Holdings Co., Ltd., SEMES Co. Ltd., Tokyo Electron Ltd. and Kokusai Semiconductor Equipment Corporation."
+          }
+        }
+      ],
+      "name_en": "Tokyo Electron"
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド マテリアルズ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PECVD製品とTrack製品の主要な競合として、アプライド マテリアルズも挙げている",
+          "text_en": "Also names Applied Materials, Inc. as a principal competitor for its PECVD and Track products",
+          "source": {
+            "label": "ACM Research 10-K",
+            "label_en": "ACM Research 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Principal competitors for our PECVD and Track products also include Lam Research Corporation, Applied Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Applied Materials"
     }
   ],
   "far": [],

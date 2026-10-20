@@ -1,0 +1,103 @@
+{
+  "root": {
+    "ticker": "APPF",
+    "name": "アップフォリオ",
+    "cik": 1433195,
+    "name_en": "AppFolio"
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤の供給元",
+      "en": "Cloud infrastructure supplier",
+      "above": true
+    },
+    {
+      "ja": "AI・提携先",
+      "en": "AI & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon Web Services",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AppFolioは、Amazon BedrockをRealm-Xの提供基盤の中核に使っている",
+          "text_en": "AppFolio uses Amazon Bedrock as a central part of how it delivers Realm-X",
+          "source": {
+            "label": "AppFolio の発表",
+            "label_en": "AppFolio press release",
+            "url": "https://www.appfolio.com/newsroom/appfolio-names-amazon-web-services-its-preferred-cloud-provider",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Amazon Bedrock plays a central role in how AppFolio delivers Realm-X responsibly at scale, providing the governance, safety, and compliance controls the platform requires."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AppFolioはAWSの早期採用企業として、AWSと直接協力して製品を形づくった",
+          "text_en": "As an early adopter, AppFolio worked directly with AWS to shape the product",
+          "source": {
+            "label": "AppFolio の発表",
+            "label_en": "AppFolio press release",
+            "url": "https://www.appfolio.com/newsroom/appfolio-names-amazon-web-services-its-preferred-cloud-provider",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "As an early adopter, AppFolio worked directly with AWS to shape the product to its performance standards"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AppFolioのRealm-XとAnthropicのClaudeを結ぶ、エージェント間コネクタを発表した",
+          "text_en": "AppFolio announced an agent-to-agent connector between its Realm-X AI suite and Anthropic's Claude",
+          "source": {
+            "label": "AppFolio の発表",
+            "label_en": "AppFolio press release",
+            "url": "https://www.appfolio.com/newsroom/appfolio-connects-realm-x-to-anthropics-claude-2026",
+            "level": "official",
+            "date": "2026-06-09",
+            "quote": "today announced a milestone in Real Estate Performance Management: an agent-to-agent connector between its AppFolio Realm-X AI suite and Anthropic’s Claude.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        },
+        {
+          "type": "up",
+          "text": "AppFolioはAmazon Bedrock上でClaudeを利用している",
+          "text_en": "AppFolio uses Claude on Amazon Bedrock",
+          "source": {
+            "label": "AppFolio の発表",
+            "label_en": "AppFolio press release",
+            "url": "https://www.appfolio.com/newsroom/appfolio-names-amazon-web-services-its-preferred-cloud-provider",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Anthropic’s Claude is one example: AppFolio’s use of Claude on Amazon Bedrock is detailed in a published case study",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -13,6 +13,10 @@
     {
       "ja": "資金調達",
       "en": "Financing"
+    },
+    {
+      "ja": "過去の買収",
+      "en": "Past acquisitions"
     }
   ],
   "rivals": [],
@@ -129,6 +133,30 @@
         }
       ],
       "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "AGYS",
+      "ticker": "AGYS",
+      "name": "Agilysys",
+      "sub": "ホスピタリティ向けソフト",
+      "sub_en": "Hospitality software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arrow Electronicsは、AgilysysのKeyLink Systems Group流通事業の資産と事業の大半を取得する確定契約を結んだ",
+          "text_en": "Arrow Electronics signed a definitive agreement to acquire substantially all of the assets and operations of Agilysys's KeyLink Systems Group distribution business",
+          "source": {
+            "label": "Arrow Electronics Form 8-K",
+            "label_en": "Arrow Electronics Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/0000007536/000115752307000065/a5303626.txt",
+            "level": "official",
+            "quote": "the Company signed a definitive agreement pursuant to which the Company will acquire substantially all of the assets and operations of the KeyLink Systems Group distribution business of Agilysys, Inc.",
+            "note": "2007年の古い取引です。",
+            "note_en": "Dated 2007."
+          }
+        }
+      ]
     }
   ],
   "far": [],

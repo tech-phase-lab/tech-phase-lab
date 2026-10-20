@@ -9,6 +9,11 @@
       "ja": "配信プラットフォーム",
       "en": "Distribution platforms",
       "above": true
+    },
+    {
+      "ja": "クラウド基盤",
+      "en": "Cloud infrastructure",
+      "above": true
     }
   ],
   "rivals": [],
@@ -83,9 +88,46 @@
             "date": "2026-02-27",
             "quote": "In addition, our distribution agreements with Apple and Google are generally terminable by Apple or Google without cause with 30 days prior written notice (to the extent allowed by applicable local law)."
           }
+        },
+        {
+          "type": "up",
+          "text": "Duolingoは、Google Cloudから計算・保管の容量の提供を受けており、契約はいずれかの当事者が解約するまで継続する",
+          "text_en": "Google Cloud provides Duolingo with computing and storage capacity under an agreement that continues until terminated by either party",
+          "source": {
+            "label": "Duolingo annual report",
+            "label_en": "Duolingo annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "AWS and Google Cloud provide us with computing and storage capacity pursuant to agreements that continue until terminated by either party."
+          }
         }
       ],
       "name_en": "Alphabet"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Duolingoは、AWSなどから計算・保管の容量の提供を受けており、契約はいずれかの当事者が解約するまで継続する",
+          "text_en": "AWS provides Duolingo with computing and storage capacity under an agreement that continues until terminated by either party",
+          "source": {
+            "label": "Duolingo annual report",
+            "label_en": "Duolingo annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "AWS and Google Cloud provide us with computing and storage capacity pursuant to agreements that continue until terminated by either party."
+          }
+        }
+      ],
+      "name_en": "Amazon"
     }
   ],
   "far": [],

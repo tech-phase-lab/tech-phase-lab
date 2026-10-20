@@ -2,14 +2,22 @@
   "root": {
     "ticker": "RDW",
     "name": "レッドワイヤー",
-    "name_en": "Redwire",
-    "cik": 1819810
+    "cik": 1819810,
+    "name_en": "Redwire"
   },
   "rows": [
     {
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携",
+      "en": "Partnerships"
     },
     {
       "ja": "資金調達",
@@ -47,6 +55,21 @@
             "note": "NASAの補給ミッションを通じた打ち上げです。",
             "note_en": "Launch is via a NASA resupply mission."
           }
+        },
+        {
+          "type": "up",
+          "text": "Redwire子会社のSpaceMDが、SpaceXのStarfall宇宙船による飛行の契約を結んだ",
+          "text_en": "Redwire's subsidiary SpaceMD signed a contract for a Starfall mission on SpaceX's spacecraft",
+          "source": {
+            "label": "Redwire の発表",
+            "label_en": "Redwire press release",
+            "url": "https://ir.rdw.com/news-events/press-releases/detail/241/redwires-spacemd-announces-its-first-commercial-mission",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Space Microgravity Development LLC (SpaceMD), a wholly owned subsidiary of Redwire Corporation (NYSE:RDW) and venture company focused on leveraging the microgravity environment to create dynamic innovations, announced today that it has signed a contract for a Starfall mission. Starfall is SpaceX’s new spacecraft that enables affordable, routine access to a microgravity environment",
+            "note": "子会社SpaceMDによる契約で、飛行は2028年の計画です。",
+            "note_en": "Contract signed by the subsidiary SpaceMD; the flight is planned for 2028."
+          }
         }
       ],
       "name_en": "SpaceX"
@@ -57,7 +80,7 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
-      "row": 1,
+      "row": 3,
       "relations": [
         {
           "type": "tie",
@@ -91,12 +114,60 @@
       "name_en": "JPMorgan Chase"
     },
     {
+      "id": "8020",
+      "ticker": "Kanematsu",
+      "name": "兼松",
+      "sub": "商社",
+      "sub_en": "Trading company",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Redwireは兼松と提携契約を結び、日本の宇宙産業の成長を後押しする",
+          "text_en": "Redwire signed a teaming agreement with Kanematsu to support the growth of Japan's space industry",
+          "source": {
+            "label": "Redwire の発表",
+            "label_en": "Redwire press release",
+            "url": "https://ir.rdw.com/news-events/press-releases/detail/242/redwire-and-kanematsu-announce-strategic-collaboration-to",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Redwire Corporation (NYSE: RDW), a global leader in aerospace and defense technology solutions, announced that it has signed a teaming agreement with Kanematsu Corporation (hereinafter “Kanematsu”). The collaboration combines Redwire’s advanced space technologies with Kanematsu’s extensive market expertise to support the growth of Japan’s space industry."
+          }
+        }
+      ],
+      "name_en": "Kanematsu"
+    },
+    {
+      "id": "MOG",
+      "ticker": "MOG.A",
+      "name": "ムーグ",
+      "sub": "航空宇宙・精密制御",
+      "sub_en": "Aerospace & motion control",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "RedwireはMoogのMETEOR衛星バスに組み込む太陽電池アレイ(ELSA)翼を、1,280万ドルで納入する契約を受注した",
+          "text_en": "Redwire was awarded a $12.8 million contract to deliver ELSA solar array wings to Moog for integration with its METEOR satellite bus",
+          "source": {
+            "label": "Redwire の発表",
+            "label_en": "Redwire press release",
+            "url": "https://ir.rdw.com/news-events/press-releases/detail/223/redwire-awarded-contract-to-deliver-elsa-high-performance",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "today announced it has been awarded a $12.8 million contract to deliver Extensible Low-Profile Solar Array ( ELSA ) wings to Moog, Inc. (NYSE: MOG.A and MOG.B). The wings will be integrated with Moog’s METEOR satellite bus"
+          }
+        }
+      ],
+      "name_en": "Moog"
+    },
+    {
       "id": "AVAV",
       "ticker": "AVAV",
       "name": "エアロバイロメント",
       "sub": "防衛・無人機",
       "sub_en": "Defense & drones",
-      "row": 2,
+      "row": 4,
       "relations": [
         {
           "type": "rival",
@@ -120,7 +191,7 @@
       "name": "ロケット・ラボ",
       "sub": "宇宙・打ち上げ",
       "sub_en": "Space & launch",
-      "row": 2,
+      "row": 4,
       "relations": [
         {
           "type": "rival",
@@ -157,7 +228,7 @@
       "name": "エアバス",
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
-      "row": 2,
+      "row": 4,
       "relations": [
         {
           "type": "rival",

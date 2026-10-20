@@ -43,6 +43,19 @@
             "date": "2026-02-19",
             "quote": "We have a non-cancellable cloud hosting arrangement with Amazon Web Services (“AWS”) that contains provisions for minimum purchase commitments."
           }
+        },
+        {
+          "type": "tie",
+          "text": "AppianがAmazon Web Servicesと戦略的協業契約を結び、生成AIを企業の業務プロセスに広げる",
+          "text_en": "Appian signed a Strategic Collaboration Agreement with Amazon Web Services to make generative AI more accessible to enterprise business processes",
+          "source": {
+            "label": "Appian の発表",
+            "label_en": "Appian press release",
+            "url": "https://appian.com/about/explore/press-releases/2024/appian-signs-a-strategic-collaboration-agreement-with-aws-to-del",
+            "level": "official",
+            "date": "2024-04-15",
+            "quote": "Appian (Nasdaq: APPN) announced today that it has signed a Strategic Collaboration Agreement (SCA) with Amazon Web Services (AWS) to make generative artificial intelligence (AI) more accessible to enterprise business processes."
+          }
         }
       ],
       "name_en": "Amazon"
@@ -79,6 +92,21 @@
             "level": "official",
             "date": "2026-02-19",
             "quote": "We have a number of strategic partnerships with companies, including Accenture, Capgemini, Deloitte, Indra Group, KPMG, and PwC."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AppianがAccentureのINTIENTパートナー網にコアパートナーとして加わった",
+          "text_en": "Appian joined Accenture's INTIENT partner ecosystem as a core partner",
+          "source": {
+            "label": "Appian の発表",
+            "label_en": "Appian press release",
+            "url": "https://appian.com/about/explore/press-releases/2021/appian-selected-by-accenture-as-a-core-partner-in-the-intient-ne",
+            "level": "official",
+            "date": "2021-01-08",
+            "quote": "Appian (NASDAQ: APPN) today announced that it has joined Accenture’s INTIENT partner ecosystem as a core partner.",
+            "note": "2021年の発表で、古い情報です。",
+            "note_en": "From a 2021 announcement (older)."
           }
         }
       ],
@@ -122,6 +150,82 @@
         }
       ],
       "name_en": "Wells Fargo"
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "スノーフレーク",
+      "sub": "データクラウド",
+      "sub_en": "Data cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AppianがSnowflakeとの技術提携を始め、AppianのデータファブリックをSnowflakeのAI Data Cloudにつなぐ",
+          "text_en": "Appian is launching a technology partnership with Snowflake, connecting its data fabric to Snowflake's AI Data Cloud",
+          "source": {
+            "label": "Appian の発表",
+            "label_en": "Appian press release",
+            "url": "https://appian.com/about/explore/press-releases/2026/appian-advances-ai-in-process-to-deliver-enterprise-outcomes-at-scale",
+            "level": "official",
+            "date": "2026-04-28",
+            "quote": "Furthering its commitment to supporting industry-leading data platforms, Appian is launching a technology partnership with Snowflake"
+          }
+        }
+      ],
+      "name_en": "Snowflake"
+    },
+    {
+      "id": "GWRE",
+      "ticker": "GWRE",
+      "name": "ガイドワイヤ",
+      "sub": "保険向けソフト",
+      "sub_en": "Insurance software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AppianがGuidewire PartnerConnectにSelectレベルのソリューションパートナーとして加わった",
+          "text_en": "Appian joined Guidewire PartnerConnect as a Solution partner at the Select level",
+          "source": {
+            "label": "Appian の発表",
+            "label_en": "Appian press release (joint with Guidewire)",
+            "url": "https://appian.com/about/explore/press-releases/2022/appian-joins-guidewire-partnerconnect-solution-alliance-ecosyste",
+            "level": "official",
+            "date": "2022-10-24",
+            "quote": "Guidewire (NYSE: GWRE) and Appian (Nasdaq: APPN) today announced that Appian has joined Guidewire PartnerConnect as a new Solution partner at the Select level.",
+            "note": "2022年の発表で、やや古い情報です。",
+            "note_en": "From a 2022 announcement (older)."
+          }
+        }
+      ],
+      "name_en": "Guidewire"
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "ボックス",
+      "sub": "コンテンツ管理",
+      "sub_en": "Content management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AppianがBoxとの連携提携を発表した",
+          "text_en": "Appian announced an integration partnership with Box",
+          "source": {
+            "label": "Appian の発表",
+            "label_en": "Appian press release",
+            "url": "https://www.appian.com/news/news-item/appian-announces-integration-partnership-with-box-for-deep-collaboration",
+            "level": "official",
+            "date": "2020-05-13",
+            "quote": "Appian (NASDAQ: APPN) today announced an integration partnership with Box, a leading cloud content management platform, to make enterprise collaboration more efficient, secure, and valuable.",
+            "note": "2020年の発表で、古い情報です。",
+            "note_en": "From a 2020 announcement (older)."
+          }
+        }
+      ],
+      "name_en": "Box"
     },
     {
       "id": "PEGA",

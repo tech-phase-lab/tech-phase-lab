@@ -8,6 +8,14 @@
     {
       "ja": "資金調達",
       "en": "Financing"
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "事業売却・提携解消",
+      "en": "Divestiture & alliance"
     }
   ],
   "rivals": [],
@@ -50,6 +58,108 @@
         }
       ],
       "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSMC",
+      "name": "台湾積体電路製造",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Chip foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Entegrisの年次報告で、TSMCは純売上高の16%を占める主要顧客として挙げられている(2025年)",
+          "text_en": "The annual report lists TSMC as a top customer, at 16% of Entegris's net sales in 2025",
+          "source": {
+            "label": "Entegris 10-K",
+            "label_en": "Entegris 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Percentage of net sales to top customers: Taiwan Semiconductor Manufacturing Company (TSMC) 16% 16% 11%"
+          }
+        }
+      ],
+      "name_en": "Taiwan Semiconductor Manufacturing"
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラム・リサーチ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ラム・リサーチが、Entegrisを2020年のサプライヤー表彰(Ramp Performance Award)の受賞企業に挙げている",
+          "text_en": "Lam Research named Entegris among the recipients of its 2020 Ramp Performance Award for suppliers",
+          "source": {
+            "label": "Lam Research の発表",
+            "label_en": "Lam Research press release",
+            "url": "https://newsroom.lamresearch.com/2020-11-02-Lam-Research-Announces-2020-Supplier-Excellence-Award-Recipients",
+            "level": "official",
+            "date": "2020-11-02",
+            "quote": "Ramp Performance Award Brooks Automation, Inc. Entegris, Inc. Viper Northwest, Inc.",
+            "note": "2020年の発表です。",
+            "note_en": "Announced in 2020."
+          }
+        }
+      ],
+      "name_en": "Lam Research"
+    },
+    {
+      "id": "ESI",
+      "ticker": "ESI",
+      "name": "エレメント・ソリューションズ",
+      "sub": "特殊化学品",
+      "sub_en": "Specialty chemicals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Entegrisは、Element Solutions傘下のMacDermid Enthone Inc.との提携契約(Alliance Agreement)を2023年6月5日に終了した",
+          "text_en": "Entegris terminated its Alliance Agreement with MacDermid Enthone Inc., a global business unit of Element Solutions Inc, on June 5, 2023",
+          "source": {
+            "label": "Entegris 10-K",
+            "label_en": "Entegris 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On June 5, 2023, the Company terminated an Alliance Agreement (the “Alliance Agreement”) between the Company and MacDermid Enthone Inc., a global business unit of Element Solutions Inc (“MacDermid Enthone”).",
+            "note": "子会社(事業部門)との契約で、すでに終了しています。",
+            "note_en": "Contract with a business unit of the company; already terminated."
+          }
+        }
+      ],
+      "name_en": "Element Solutions"
+    },
+    {
+      "id": "FUJI",
+      "ticker": "Fujifilm",
+      "name": "富士フイルムホールディングス",
+      "sub": "画像・素材",
+      "sub_en": "Imaging & materials",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Entegrisは、Electronic Chemicals事業をFUJIFILM Holdings America Corporationに売却した(2023年10月2日完了)",
+          "text_en": "Entegris completed the sale of its Electronic Chemicals business to FUJIFILM Holdings America Corporation on October 2, 2023 for $675.3 million",
+          "source": {
+            "label": "Entegris 10-K",
+            "label_en": "Entegris 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On October 2, 2023, the Company completed the sale of its Electronic Chemicals (“EC”) business to FUJIFILM Holdings America Corporation (“Fujifilm”) for $675.3 million.",
+            "note": "米国子会社との取引で、すでに完了しています。",
+            "note_en": "Transaction with a U.S. subsidiary; already completed."
+          }
+        }
+      ],
+      "name_en": "Fujifilm Holdings"
     }
   ],
   "far": [],

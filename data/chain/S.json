@@ -34,9 +34,59 @@
             "note": "製品機能としての記載です。",
             "note_en": "Described as a product capability."
           }
+        },
+        {
+          "type": "tie",
+          "text": "SentinelOneが、Amazon Web Servicesとの戦略的協業契約の延長を発表した",
+          "text_en": "SentinelOne announced an extension of its strategic collaboration agreement with Amazon Web Services",
+          "source": {
+            "label": "SentinelOne の発表",
+            "label_en": "SentinelOne press release",
+            "url": "https://www.sentinelone.com/tw/press/sentinelone-expands-strategic-collaboration-with-aws-to-deliver-ai-powered-cybersecurity/",
+            "level": "official",
+            "date": "2024-10-17",
+            "quote": "SentinelOne (NYSE: S) today announced an extension of its strategic collaboration agreement (SCA) with Amazon Web Services (AWS), designed to deliver generative AI benefits."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SentinelOneが、Amazon Bedrock上のAIガバナンスを統合して提供するため、AWSとの協業拡大を発表した",
+          "text_en": "SentinelOne announced an expanded collaboration with AWS to deliver unified AI governance for customers building on Amazon Bedrock",
+          "source": {
+            "label": "SentinelOne の発表",
+            "label_en": "SentinelOne press release",
+            "url": "https://www.sentinelone.com/press/sentinelone-expands-collaboration-with-aws-to-deliver-unified-ai-governance/",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "SentinelOne ® (NYSE: S), the AI Security leader, today announced an expanded collaboration with Amazon Web Services (AWS) to deliver unified AI governance for customers building on Amazon Bedrock."
+          }
         }
       ],
       "name_en": "Amazon"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "ネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SentinelOneがGoogle Cloudと、サイバー防御を強化する複数年の協業を発表した",
+          "text_en": "SentinelOne announced a multi-year collaboration with Google Cloud to develop solutions that strengthen cyber defense",
+          "source": {
+            "label": "SentinelOne の発表",
+            "label_en": "SentinelOne press release",
+            "url": "https://www.sentinelone.com/press/sentinelone-expands-strategic-collaboration-with-google-cloud-to-deliver-autonomous-ai-powered-security-at-global-scale/",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "SentinelOne ® (NYSE: S), the AI Security Leader, today announced a significant multi-year collaboration with Google Cloud to develop solutions that strengthen cyber defense."
+          }
+        }
+      ],
+      "name_en": "Google"
     }
   ],
   "far": [],

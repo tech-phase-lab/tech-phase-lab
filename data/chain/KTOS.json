@@ -2,8 +2,8 @@
   "root": {
     "ticker": "KTOS",
     "name": "クラトス・ディフェンス",
-    "name_en": "Kratos Defense",
-    "cik": 1069258
+    "cik": 1069258,
+    "name_en": "Kratos Defense"
   },
   "rows": [
     {
@@ -71,6 +71,19 @@
             "note": "受注内容は引用の範囲では不明です。",
             "note_en": "The contract details are not shown in the quote."
           }
+        },
+        {
+          "type": "tie",
+          "text": "Kratosが率いる宇宙軍の地上システム案件のチームに、Northrop Grummanが加わっている",
+          "text_en": "Northrop Grumman is part of the team Kratos leads on a Space Force ground system contract",
+          "source": {
+            "label": "Kratos Defense の発表",
+            "label_en": "Kratos Defense press release",
+            "url": "https://www.kratosdefense.com/newsroom/kratos-receives-446-8-million-space-systems-command-contract-for-resilient-missile-warning-and-missile-tracking-ground-management-integration-gmi",
+            "level": "official",
+            "date": "2026-04-08",
+            "quote": "Kratos will serve as the system integrator, leading a team including Northrop Grumman , Auria , ASRC Federal Systems Solutions and Rise8 , to establish fully operational primary and backup mission operations capabilities."
+          }
         }
       ],
       "name_en": "Northrop Grumman"
@@ -121,6 +134,80 @@
         }
       ],
       "name_en": "Viasat"
+    },
+    {
+      "id": "KAI",
+      "ticker": "KAI",
+      "name": "韓国航空宇宙産業",
+      "sub": "防衛・航空",
+      "sub_en": "Defense & aerospace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KratosとKAIは、有人無人機の連携技術を進める戦略的提携を結んだ",
+          "text_en": "Kratos formed a strategic partnership with Korea Aerospace Industries to advance Manned-Unmanned Teaming technologies",
+          "source": {
+            "label": "Kratos Defense の発表",
+            "label_en": "Kratos Defense press release",
+            "url": "https://www.kratosdefense.com/newsroom/kratos-forms-strategic-partnership-with-korean-industry-leader-to-advance-manned-unmanned-teaming",
+            "level": "official",
+            "date": "2025-10-27",
+            "quote": "Kratos Defense & Security Solutions, Inc. (Nasdaq: KTOS), a leading technology company in the defense, national security, and global markets, today announced the formation of a strategic partnership with Korea Aerospace Industries (KAI), a major Korean defense organization to advance Manned-Unmanned Teaming (MUM-T) technologies and capabilities."
+          }
+        }
+      ],
+      "name_en": "Korea Aerospace Industries"
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GEエアロスペース",
+      "sub": "航空エンジン",
+      "sub_en": "Aircraft engines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KratosとGE Aerospaceは、無人機向けの推進技術を進める正式な共同開発契約を発表した",
+          "text_en": "Kratos and GE Aerospace announced a formal teaming agreement to advance propulsion technologies for unmanned aircraft",
+          "source": {
+            "label": "Kratos Defense の発表",
+            "label_en": "Kratos Defense press release",
+            "url": "https://www.kratosdefense.com/newsroom/kratos-and-ge-aerospace-sign-teaming-agreement-expand-small-engine-portfolio-with-new-propulsion-system",
+            "level": "official",
+            "date": "2025-06-03",
+            "quote": "Kratos Defense & Security Solutions, Inc. (Nasdaq: KTOS), a Technology Company in the Defense, National Security and Global Markets, and GE Aerospace (NYSE: GE) today announced a formal teaming agreement to advance propulsion technologies for the next generation of affordable unmanned aerial systems and Collaborative Combat Aircraft-type (CCA-type) aircraft."
+          }
+        }
+      ],
+      "name_en": "GE Aerospace"
+    },
+    {
+      "id": "JSAT",
+      "ticker": "SKY Perfect JSAT",
+      "name": "スカパーJSAT",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KratosはSKY Perfect JSATから、5G NTN地上システムの開発と検証に選ばれた",
+          "text_en": "Kratos was selected by SKY Perfect JSAT to develop and validate its 5G NTN ground system",
+          "source": {
+            "label": "Kratos Defense の発表",
+            "label_en": "Kratos Defense press release",
+            "url": "https://www.kratosdefense.com/newsroom/kratos-selected-by-sky-perfect-jsat-as-strategic-partner-for-5g-ntn-satellite-ground-system",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Kratos Defense & Security Solutions, Inc. (Nasdaq: KTOS), a technology company specializing in Defense, National Security and Global Markets, today announced that it has been selected by SKY Perfect JSAT Corporation (SKY Perfect JSAT) to develop and validate the 5G Non-Terrestrial Network (NTN) ground system for SKY Perfect JSAT’s Universal NTN initiative.",
+            "note": "発表では事業会社のSKY Perfect JSAT Corporationが相手です。",
+            "note_en": "The release names SKY Perfect JSAT Corporation, the operating company."
+          }
+        }
+      ],
+      "name_en": "SKY Perfect JSAT"
     }
   ],
   "far": [],

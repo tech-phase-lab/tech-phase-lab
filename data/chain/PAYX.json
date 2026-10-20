@@ -17,7 +17,8 @@
   ],
   "rivals": [
     "PAYC",
-    "PCTY"
+    "PCTY",
+    "TNET"
   ],
   "companies": [
     {
@@ -91,6 +92,105 @@
         }
       ],
       "name_en": "Microsoft"
+    },
+    {
+      "id": "PYPL",
+      "ticker": "PYPL",
+      "name": "ペイパル",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Paychex Flex Perksの中で、PayPalとの新しい提携を発表した",
+          "text_en": "Announced a new partnership with PayPal within Paychex Flex Perks",
+          "source": {
+            "label": "Paychex の発表",
+            "label_en": "Paychex press release",
+            "url": "https://www.paychex.com/newsroom/news-releases/paychex-and-paypal-partnership",
+            "level": "official",
+            "date": "2026-01-08",
+            "quote": "Through this collaboration, employees of Paychex customers have the ability to easily set up PayPal Direct Deposit, providing up to two-day early access to their paychecks."
+          }
+        }
+      ],
+      "name_en": "PayPal"
+    },
+    {
+      "id": "INTU",
+      "ticker": "INTU",
+      "name": "インテュイット",
+      "sub": "会計ソフト",
+      "sub_en": "Accounting software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Paychexの総勘定元帳サービスから、IntuitのQuickBooks Onlineへ給与データを連携する",
+          "text_en": "Payroll data flows from the Paychex general ledger service into Intuit's QuickBooks Online",
+          "source": {
+            "label": "Paychex の発表",
+            "label_en": "Paychex press release",
+            "url": "https://www.paychex.com/newsroom/news-releases/paychex-introduces-quickbooks-integration",
+            "level": "official",
+            "date": "2018-12-17",
+            "quote": "After setup, with each payroll processed, payroll transactions flow into the user’s QuickBooks Online journal entry, using an API tailored to Intuit.",
+            "note": "2018年の発表で、古い内容です。",
+            "note_en": "A 2018 announcement; older."
+          }
+        }
+      ],
+      "name_en": "Intuit"
+    },
+    {
+      "id": "FISV",
+      "ticker": "FISV",
+      "name": "フィサーブ",
+      "sub": "決済・金融ソフト",
+      "sub_en": "Payments & fintech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Paychexは、FiservのClover向けに給与・勤怠のアプリを提供している",
+          "text_en": "Paychex offers a payroll and time-attendance app for Fiserv's Clover platform",
+          "source": {
+            "label": "Paychex の発表",
+            "label_en": "Paychex press release",
+            "url": "https://www.paychex.com/newsroom/news-release/hr-management-solutions-integration-clover",
+            "level": "official",
+            "date": "2020-12-23",
+            "quote": "This relationship with Fiserv and Clover significantly streamlines employer operations, delivering a superior client experience and giving employees access to extensive self-service benefits.",
+            "note": "2020年の発表で、古い内容です。",
+            "note_en": "A 2020 announcement; older."
+          }
+        }
+      ],
+      "name_en": "Fiserv"
+    },
+    {
+      "id": "TNET",
+      "ticker": "TNET",
+      "name": "トライネット・グループ",
+      "sub": "PEO・人事サービス",
+      "sub_en": "PEO & HR services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トライネット・グループの年次報告が、ペイチェックスを競合として挙げている",
+          "text_en": "Names Paychex as a competitor in its annual report",
+          "source": {
+            "label": "TriNet 2025年度 Form 10-K · PEO competition names ADP TotalSource and Paychex",
+            "label_en": "TriNet FY2025 Form 10-K · PEO competition names ADP TotalSource and Paychex",
+            "url": "https://www.sec.gov/Archives/edgar/data/937098/000093709826000010/tnet-20251231.htm",
+            "level": "official",
+            "quote": "Our PEO service competitors include large PEOs such as the TotalSource unit of Automatic Data Processing, Inc., the PEO operations of Paychex, Inc. and Insperity, Inc., as well as numerous specialized and smaller PEOs and similar HR service providers with PEO operations."
+          }
+        }
+      ],
+      "name_en": "TriNet Group"
     },
     {
       "id": "PAYC",

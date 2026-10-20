@@ -16,7 +16,8 @@
   ],
   "rivals": [
     "FTNT",
-    "CSCO"
+    "CSCO",
+    "PANW"
   ],
   "companies": [
     {
@@ -40,9 +41,174 @@
             "note": "受賞を伝える見出しに基づくものです。",
             "note_en": "Based on an award headline."
           }
+        },
+        {
+          "type": "tie",
+          "text": "Check Pointが、Microsoftと協力し、Azure OpenAI Serviceで自社のAIアシスタントを強化すると発表した",
+          "text_en": "Check Point announced a collaboration with Microsoft using Azure OpenAI Service to enhance Check Point Infinity AI Copilot",
+          "source": {
+            "label": "Check Point の発表",
+            "label_en": "Check Point press release",
+            "url": "https://www.checkpoint.com/press-releases/check-point-announces-a-new-collaboration-with-microsoft-to-supercharge-infinity-ai-copilot-with-microsoft-azure-openai-service/",
+            "level": "official",
+            "date": "2024-03-26",
+            "quote": "has announced a collaboration with Microsoft that utilizes the Microsoft Azure OpenAI Service to enhance Check Point Infinity AI Copilot",
+            "note": "2024年の発表です。",
+            "note_en": "From a 2024 announcement."
+          }
         }
       ],
       "name_en": "Microsoft"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Check PointがNVIDIAと協力し、AIクラウド基盤のセキュリティを強化すると発表した",
+          "text_en": "Check Point announced it is collaborating with NVIDIA to enhance the security of AI cloud infrastructure",
+          "source": {
+            "label": "Check Point の発表",
+            "label_en": "Check Point press release",
+            "url": "https://www.checkpoint.com/press-releases/check-point-to-set-new-standard-for-securing-ai-cloud-infrastructure-at-scale-with-nvidia/",
+            "level": "official",
+            "date": "2024-03-19",
+            "quote": "today announced it is collaborating with NVIDIA to enhance the security of AI cloud infrastructure."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Check PointがNVIDIAと協力し、AIファクトリー向けの統合セキュリティ製品を提供すると発表した",
+          "text_en": "Check Point announced it is working with NVIDIA to deliver an integrated security solution built for AI factories",
+          "source": {
+            "label": "Check Point の発表",
+            "label_en": "Check Point press release",
+            "url": "https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/",
+            "level": "official",
+            "date": "2025-10-28",
+            "quote": "today announced it is working with NVIDIA to deliver an integrated security solution built for AI factories."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Check Pointは、OpenAIのパートナープログラムを通じて、OpenAIのモデルを自社製品やサービスに組み込める",
+          "text_en": "Through OpenAI's partner program, Check Point can embed OpenAI models into its products, workflows, and managed services",
+          "source": {
+            "label": "Check Point の発表",
+            "label_en": "Check Point press release",
+            "url": "https://www.checkpoint.com/press-releases/check-point-to-embed-openai-frontier-cyber-capabilities-into-check-point-security-products/",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "Through the OpenAI Daybreak Cyber Partner Program, open to only a select group of security vendors, Check Point can embed OpenAI models directly into the products, workflows, and managed services its customers rely on.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Check Pointが、AWS European Sovereign Cloudのパートナーになったと発表した",
+          "text_en": "Check Point announced it is a partner for the AWS European Sovereign Cloud",
+          "source": {
+            "label": "Check Point の発表",
+            "label_en": "Check Point press release",
+            "url": "https://www.checkpoint.com/press-releases/check-point-softwares-cloud-firewall-offering-now-available-on-aws-european-sovereign-cloud/",
+            "level": "official",
+            "date": "2026-07-01",
+            "quote": "today announced it is a partner for the AWS European Sovereign Cloud, a new independent cloud for Europe."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Check Pointが、Amazon Bedrock AgentCoreとの連携を予定していると発表した",
+          "text_en": "Check Point announced an upcoming integration with Amazon Bedrock AgentCore",
+          "source": {
+            "label": "Check Point の発表",
+            "label_en": "Check Point press release",
+            "url": "https://www.checkpoint.com/press-releases/check-point-announces-upcoming-integration-with-amazon-bedrock-agentcore/",
+            "level": "official",
+            "date": "2026-06-17",
+            "quote": "announced today its upcoming integration with Amazon Bedrock AgentCore.",
+            "note": "計画段階の連携です。",
+            "note_en": "Planned integration."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Check Pointが、Google Cloudの立ち上げパートナーとして、自社のAI Defense PlaneをGoogle CloudのAIエージェント基盤と連携させると発表した",
+          "text_en": "Check Point announced it will serve as a launch partner with Google Cloud to integrate its AI Defense Plane with Google Cloud's Gemini Enterprise Agent Platform",
+          "source": {
+            "label": "Check Point の発表",
+            "label_en": "Check Point press release",
+            "url": "https://www.checkpoint.com/press-releases/check-point-to-integrate-ai-defense-plane-with-google-cloud-to-help-secure-ai-agents-with-integrated-discovery-governance-and-runtime-protection/",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "today announced that it will serve as a launch partner with Google Cloud to integrate Check Point’s AI Defense Plane with Google Cloud’s Gemini Enterprise Agent Platform.",
+            "note": "計画段階の連携です。",
+            "note_en": "Planned integration."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "パロアルトネットワークスの年次報告が、チェック・ポイントを競合として挙げている",
+          "text_en": "Names Check Point as a competitor in its annual report",
+          "source": {
+            "label": "Palo Alto Networks annual report",
+            "label_en": "Palo Alto Networks annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm",
+            "level": "official",
+            "date": "2026-09-10",
+            "quote": "independent vendors that offer a mix of security products, such as Check Point Software Technologies Ltd., CrowdStrike Holdings, Inc., Delinea Inc., Fortinet, Inc., Okta, Inc., SailPoint Technologies, Inc., and Zscaler, Inc."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
     },
     {
       "id": "FTNT",

@@ -2,8 +2,8 @@
   "root": {
     "ticker": "INDI",
     "name": "インディ・セミコンダクター",
-    "name_en": "indie Semiconductor",
-    "cik": 1841925
+    "cik": 1841925,
+    "name_en": "indie Semiconductor"
   },
   "rows": [
     {
@@ -12,8 +12,8 @@
       "above": true
     },
     {
-      "ja": "資金調達",
-      "en": "Financing"
+      "ja": "資金調達・事業売却",
+      "en": "Financing & divestiture"
     },
     {
       "ja": "競合",
@@ -122,6 +122,55 @@
         }
       ],
       "name_en": "Wells Fargo"
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "グローバルファウンドリーズ",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "車載レーダー向けSoCをGFの22FDXで製造する戦略的協力を発表した",
+          "text_en": "Announced a strategic collaboration with GF to develop radar SoCs manufactured on its 22FDX platform",
+          "source": {
+            "label": "GlobalFoundries の発表",
+            "label_en": "GlobalFoundries press release",
+            "url": "https://gf.com/gf-press-release/indie-semiconductor-and-globalfoundries-announce-strategic-collaboration-to-accelerate-automotive-radar-adoption/",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "indie Semiconductor (Nasdaq: INDI), an automotive solutions innovator, has announced a strategic collaboration with GlobalFoundries (Nasdaq: GFS) (GF) to develop its portfolio of high-performance radar systems-on-chip (SoC)."
+          }
+        }
+      ],
+      "name_en": "GlobalFoundries"
+    },
+    {
+      "id": "United Faith",
+      "ticker": "United Faith",
+      "name": "United Faith Auto-Engineering",
+      "sub": "中国上場企業",
+      "sub_en": "China-listed company",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社を通じ、Wuxi indieの持分34.38%をUnited Faithへ売却する資産購入契約を2025年10月27日に結んだ",
+          "text_en": "Through a subsidiary, entered into an Asset Purchase Agreement on October 27, 2025 to sell its 34.38% equity interest in Wuxi indie Microelectronics to United Faith",
+          "source": {
+            "label": "indie Semiconductor Form 8-K",
+            "label_en": "indie Semiconductor Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1841925/000121390025102817/ea0262065-8k_indie.htm",
+            "level": "official",
+            "date": "2025-10-28",
+            "quote": "On October 27, 2025, indie Semiconductor, Inc., a Delaware corporation (“indie”), through its subsidiary Ay Dee Kay LLC, a California limited liability company (“ADK”), entered into an Asset Purchase Agreement (the “Asset Purchase Agreement”) with United Faith Auto-Engineering Co., Ltd., a publicly-listed company in the People’s Republic of China (“United Faith”), pursuant to which indie has agreed to sell ADK’s entire 34.38% of the outstanding equity interest in Wuxi indie Microelectronics Technology Co., Ltd., a Chinese entity (“Wuxi”) to United Faith (the “Asset Sale”).",
+            "note": "子会社経由の契約で、完了は承認次第です。",
+            "note_en": "Entered through a subsidiary; closing is subject to approvals."
+          }
+        }
+      ]
     },
     {
       "id": "MPWR",

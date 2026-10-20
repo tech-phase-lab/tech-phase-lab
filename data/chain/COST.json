@@ -6,8 +6,8 @@
   },
   "rows": [
     {
-      "ja": "提携先(クレジットカード)",
-      "en": "Partners (credit card)"
+      "ja": "提携先",
+      "en": "Partners"
     },
     {
       "ja": "競合",
@@ -116,6 +116,54 @@
         }
       ],
       "name_en": "Walmart"
+    },
+    {
+      "id": "DASH",
+      "ticker": "DASH",
+      "name": "ドアダッシュ",
+      "sub": "宅配プラットフォーム",
+      "sub_en": "Delivery platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CostcoとDoorDashは、米国全域でCostcoのDoorDash出店を始めたと発表した",
+          "text_en": "Costco and DoorDash announced the launch of Costco on the DoorDash Marketplace across the U.S.",
+          "source": {
+            "label": "DoorDash の発表",
+            "label_en": "DoorDash press release",
+            "url": "https://about.doordash.com/en-us/news/doordash-costco-partnership",
+            "level": "official",
+            "date": "2026-09-17",
+            "quote": "Costco Wholesale Corporation (NASDAQ: COST) and DoorDash (NASDAQ: DASH), a global leader in local commerce, today announced the launch of Costco on the DoorDash Marketplace across the U.S."
+          }
+        }
+      ],
+      "name_en": "DoorDash"
+    },
+    {
+      "id": "CART",
+      "ticker": "CART",
+      "name": "インスタカート",
+      "sub": "宅配・EC基盤",
+      "sub_en": "Delivery & e-commerce platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "InstacartとCostcoは、フランスとスペインで、InstacartのStorefront Proを使った当日配達サイトを始めた",
+          "text_en": "Instacart and Costco launched same-day delivery websites in France and Spain powered by Instacart's Storefront Pro",
+          "source": {
+            "label": "Instacart の発表",
+            "label_en": "Instacart press release",
+            "url": "https://company.instacart.com/pressreleases/costco-launches-first-same-day-websites-in-france-and-spain-with-instacart",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "Today, Instacart (NASDAQ: CART) and Costco Wholesale announced the expansion of their North American partnership into Europe, with the launch of Costco’s first-ever same-day delivery websites in France and Spain, powered by Instacart’s Storefront Pro commerce platform and fulfillment solutions services."
+          }
+        }
+      ],
+      "name_en": "Instacart"
     }
   ],
   "far": [],

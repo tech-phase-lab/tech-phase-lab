@@ -9,6 +9,10 @@
       "ja": "提携",
       "en": "Partnerships",
       "above": true
+    },
+    {
+      "ja": "連携・統合",
+      "en": "Integrations"
     }
   ],
   "rivals": [],
@@ -33,6 +37,212 @@
             "quote": "customers from using Cloudflare’s global network and real-time network insights and Cloudflare’s other products and technology, Cloudflare’s partnership with OpenAI and the potential resulting benefits to Cloudflare customers, the potential opportunity for Cloudflare to attract additional customers and to expand sales to existing",
             "note": "OpenAIは未上場です。",
             "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CloudflareのVulnerability Discovery and Remediationは、OpenAI Daybreakモデルを使っている",
+          "text_en": "Cloudflare's Vulnerability Discovery and Remediation service uses OpenAI Daybreak models",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2026/cloudflare-partners-with-openai-daybreak-models-to-redefine-vulnerability-management-with-ai-powered-edge-defense/",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "Through the OpenAI Daybreak Defense Network, the service combines deep code investigation and automated patch generation using OpenAI Daybreak models, including GPT-5.6 Cyber, with real-time traffic and security context from Cloudflare’s global network.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JD",
+      "ticker": "JD",
+      "name": "JD Cloud",
+      "sub": "クラウド(JD.comの関連会社)",
+      "sub_en": "Cloud (JD.com affiliate)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CloudflareとJD Cloudが、5年にわたる提携の大幅な拡大計画を発表した",
+          "text_en": "Cloudflare and JD Cloud announced plans for a significant expansion of their partnership",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2025/cloudflare-and-jd-cloud-announce-partnership-to-accelerate-ai-inference/",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "Cloudflare, Inc. (NYSE: NET), the leading connectivity cloud company, and JD Cloud, an intelligent technology service provider and affiliate of JD.com, today announced plans for a significant expansion of their partnership",
+            "note": "JD.comの関連会社であるJD Cloudとの関係です。",
+            "note_en": "Relationship is with JD Cloud, an affiliate of JD.com."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "クラウド・データベース",
+      "sub_en": "Cloud & databases",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cloudflareの接続クラウドを、Oracle Cloud Infrastructureでネイティブに利用できるようにする",
+          "text_en": "Cloudflare's connectivity cloud platform will be available natively on Oracle Cloud Infrastructure",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2025/cloudflare-integrates-services-with-oracle-cloud-infrastructure-to-help/",
+            "level": "official",
+            "date": "2025-10-13",
+            "quote": "Cloudflare, Inc. (NYSE: NET), the leading connectivity cloud company, today announced that its connectivity cloud platform will be available natively on Oracle Cloud Infrastructure (OCI) for customers worldwide."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "DTE",
+      "ticker": "Deutsche Telekom",
+      "name": "ドイツテレコム",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Deutsche TelekomとCloudflareが、欧州企業向けの戦略的提携を発表した",
+          "text_en": "Deutsche Telekom and Cloudflare announced a strategic partnership for enterprises across Europe",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2026/cloudflare-and-deutsche-telekom-join-forces-for-a-secure-and-resilient-internet/",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "Deutsche Telekom AG (XETRA:DTE) and Cloudflare, Inc. (NYSE: NET), the leading connectivity cloud company, today announced a strategic partnership designed to strengthen the security and resilience of digital infrastructure for enterprises across Europe."
+          }
+        }
+      ],
+      "name_en": "Deutsche Telekom"
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CloudflareとVisaが、Trusted Agent Protocolを共同で開発し導入した",
+          "text_en": "Cloudflare and Visa worked together to develop and introduce the Trusted Agent Protocol",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2025/cloudflare-collaborates-with-leading-payments-companies-to-secure-and-enable-agentic-commerce/",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "Cloudflare and Visa have worked together to develop and introduce the Trusted Agent Protocol"
+          }
+        }
+      ],
+      "name_en": "Visa"
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CloudflareはMastercardと、Web Bot Authを活用する取り組みを進めている",
+          "text_en": "Cloudflare is working with Mastercard to leverage Web Bot Auth",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2025/cloudflare-collaborates-with-leading-payments-companies-to-secure-and-enable-agentic-commerce/",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "Cloudflare is also working with Mastercard and American Express to leverage Web Bot Auth."
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "決済・カード",
+      "sub_en": "Payments & cards",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CloudflareはAmerican Expressと、Web Bot Authを活用する取り組みを進めている",
+          "text_en": "Cloudflare is working with American Express to leverage Web Bot Auth",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2025/cloudflare-collaborates-with-leading-payments-companies-to-secure-and-enable-agentic-commerce/",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "Cloudflare is also working with Mastercard and American Express to leverage Web Bot Auth."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    },
+    {
+      "id": "ASAN",
+      "ticker": "ASAN",
+      "name": "Asana",
+      "sub": "業務管理ソフト",
+      "sub_en": "Work management software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cloudflare OSに取り込む業務アプリ連携の例として、Asanaが挙げられている",
+          "text_en": "Asana is named among the applications integrated into Cloudflare OS",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2026/cloudflares-ai-workspace-platform-partners-with-leading-applications-and-deployment-teams-to-make-ai-productive-in-the-enterprise/",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "new integrations with some of the most popular technology applications in the enterprise—including Asana, Box, Canva, ClickHouse, GitHub, Gong, Notion, and more—to bring their tools into Cloudflare OS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "Box",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud content management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cloudflare OSに取り込む業務アプリ連携の例として、Boxが挙げられている",
+          "text_en": "Box is named among the applications integrated into Cloudflare OS",
+          "source": {
+            "label": "Cloudflare の発表",
+            "label_en": "Cloudflare press release",
+            "url": "https://www.cloudflare.com/press/press-releases/2026/cloudflares-ai-workspace-platform-partners-with-leading-applications-and-deployment-teams-to-make-ai-productive-in-the-enterprise/",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "new integrations with some of the most popular technology applications in the enterprise—including Asana, Box, Canva, ClickHouse, GitHub, Gong, Notion, and more—to bring their tools into Cloudflare OS"
           }
         }
       ]

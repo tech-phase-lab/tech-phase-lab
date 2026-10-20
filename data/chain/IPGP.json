@@ -2,13 +2,17 @@
   "root": {
     "ticker": "IPGP",
     "name": "IPGフォトニクス",
-    "name_en": "IPG Photonics",
-    "cik": 1111928
+    "cik": 1111928,
+    "name_en": "IPG Photonics"
   },
   "rows": [
     {
       "ja": "資金調達",
       "en": "Financing"
+    },
+    {
+      "ja": "顧客・提携先",
+      "en": "Customers & partners"
     },
     {
       "ja": "競合",
@@ -17,7 +21,9 @@
   ],
   "rivals": [
     "MKSI",
-    "COHR"
+    "COHR",
+    "LITE",
+    "LASR"
   ],
   "companies": [
     {
@@ -65,7 +71,7 @@
       "name": "MKSインスツルメンツ",
       "sub": "レーザー・半導体装置",
       "sub_en": "Lasers & equipment",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -89,7 +95,7 @@
       "name": "コヒレント",
       "sub": "レーザー・光学",
       "sub_en": "Lasers & photonics",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -106,6 +112,117 @@
         }
       ],
       "name_en": "Coherent"
+    },
+    {
+      "id": "ITW",
+      "ticker": "ITW",
+      "name": "イリノイ・ツール・ワークス",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年にIPGフォトニクスは、ハンドヘルド溶接向けレーザー分野でMiller Electricと戦略的提携を結んだ",
+          "text_en": "In 2023 IPG Photonics announced a strategic partnership with Miller Electric to promote laser solutions for handheld welding",
+          "source": {
+            "label": "IPG Photonics の発表",
+            "label_en": "IPG Photonics press release",
+            "url": "https://www.ipgphotonics.com/newsroom/news/ipg-photonics-miller-electric-collaboration",
+            "level": "official",
+            "date": "2023-11-07",
+            "quote": "IPG Photonics Corporation (NASDAQ: IPGP), a global leader in fiber laser technology, and Miller Electric Mfg. LLC, a leading worldwide manufacturer of arc welding products, today announced a strategic partnership with a goal to further promote laser solutions for handheld welding applications.",
+            "note": "提携先はITWの完全子会社Miller Electricです。",
+            "note_en": "The partner is Miller Electric, a wholly owned subsidiary of ITW."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "提携先のMiller Electricは、Illinois Tool Worksの完全子会社である",
+          "text_en": "Miller Electric, the partner, is wholly owned by Illinois Tool Works",
+          "source": {
+            "label": "IPG Photonics の発表",
+            "label_en": "IPG Photonics press release",
+            "url": "https://www.ipgphotonics.com/newsroom/news/ipg-photonics-miller-electric-collaboration",
+            "level": "official",
+            "date": "2023-11-07",
+            "quote": "Miller Electric is headquartered in Appleton, Wisconsin, and wholly owned by Illinois Tool Works (NYSE: ITW)."
+          }
+        }
+      ],
+      "name_en": "Illinois Tool Works"
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "IPGフォトニクスはLockheed Martinから、CROSSBOW高エネルギーレーザー対ドローン防衛システムの納入を受注した",
+          "text_en": "IPG Photonics received an order from Lockheed Martin for delivery of its CROSSBOW high-energy laser counter-UAS defense systems",
+          "source": {
+            "label": "IPG Photonics の発表",
+            "label_en": "IPG Photonics press release",
+            "url": "https://www.ipgphotonics.com/newsroom/news/ipg-photonics-receives-order-from-lockheed-martin",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "IPG Photonics, the global leader in fiber laser technology, announced today that it has received an order from Lockheed Martin Corporation for the delivery of its CROSSBOW™ high-energy laser counter-UAS defense systems."
+          }
+        }
+      ],
+      "name_en": "Lockheed Martin"
+    },
+    {
+      "id": "LITE",
+      "ticker": "LITE",
+      "name": "ルメンタム",
+      "sub": "光通信・レーザー",
+      "sub_en": "Photonics & lasers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IPGフォトニクスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in IPG Photonics’s annual report",
+          "source": {
+            "label": "IPG Photonics annual report",
+            "label_en": "IPG Photonics annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the materials processing market, we compete with makers of fiber lasers and other lasers, such as Coherent, Inc., JPT Opto-Electronics Co. Ltd., Laserline GmbH, Lumentum Holdings Inc., Maxphotonics Co., Ltd., MKS Instruments, Inc., nLight, Inc., Trumpf GmbH + Co. KG and Wuhan Raycus Fiber Laser Technologies Co. Ltd., as well as other smaller competitors."
+          }
+        }
+      ],
+      "name_en": "Lumentum"
+    },
+    {
+      "id": "LASR",
+      "ticker": "LASR",
+      "name": "エヌライト",
+      "sub": "ファイバーレーザー",
+      "sub_en": "Fiber lasers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IPGフォトニクスの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in IPG Photonics’s annual report",
+          "source": {
+            "label": "IPG Photonics annual report",
+            "label_en": "IPG Photonics annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the materials processing market, we compete with makers of fiber lasers and other lasers, such as Coherent, Inc., JPT Opto-Electronics Co. Ltd., Laserline GmbH, Lumentum Holdings Inc., Maxphotonics Co., Ltd., MKS Instruments, Inc., nLight, Inc., Trumpf GmbH + Co. KG and Wuhan Raycus Fiber Laser Technologies Co. Ltd., as well as other smaller competitors."
+          }
+        }
+      ],
+      "name_en": "nLight"
     }
   ],
   "far": [],

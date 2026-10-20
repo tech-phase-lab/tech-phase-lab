@@ -148,6 +148,94 @@
           }
         }
       ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・動画・クラウド",
+      "sub_en": "Search, video & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Disneyが、YouTube TVとの複数年の配信契約を発表した",
+          "text_en": "Disney announced a multi-year distribution agreement with YouTube TV",
+          "source": {
+            "label": "Disney の発表",
+            "label_en": "Disney press release",
+            "url": "https://thewaltdisneycompany.com/press-releases/the-walt-disney-company-announces-multi-year-distribution-agreement-with-youtube-tv/",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "The Walt Disney Company announced a multi-year distribution agreement with YouTube TV that delivers Disney’s marquee sports, news and entertainment programming – along with greater choice and value for their customers.",
+            "note": "YouTube TVはAlphabet傘下のサービスです。",
+            "note_en": "YouTube TV is a service of Alphabet."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "ケーブル・通信",
+      "sub_en": "Cable & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "DisneyとCharterが、複数年の配信契約を発表した",
+          "text_en": "Disney and Charter announced a multi-year distribution agreement",
+          "source": {
+            "label": "Charter 8-K exhibit(joint の発表)",
+            "label_en": "Charter 8-K exhibit (joint press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166723000128/a091123chtr8kexh991.htm",
+            "level": "official",
+            "date": "2023-09-11",
+            "quote": "The Walt Disney Company (NYSE: DIS) and Charter Communications, Inc. (NASDAQ: CHTR) today announced a transformative, multi-year distribution agreement that maximizes value for consumers and supports the linear TV experience as the industry continues to evolve.",
+            "note": "2023年の発表で、古い情報です。",
+            "note_en": "From a 2023 announcement (older)."
+          }
+        },
+        {
+          "type": "down",
+          "text": "CharterとDisneyが、Spectrum TV SelectにHuluを加える拡大配信契約を発表した",
+          "text_en": "Charter and Disney announced an expanded distribution agreement that brings Hulu (With Ads) to all Spectrum TV Select customers",
+          "source": {
+            "label": "Charter の発表",
+            "label_en": "Charter press release",
+            "url": "https://corporate.charter.com/newsroom/spectrum-tv-select-customers-to-receive-hulu-as-part-of-expanded-agreement-between-charter-and-the-walt-disney-company",
+            "level": "official",
+            "date": "2025-06-26",
+            "quote": "Charter Communications (NASDAQ: CHTR) and The Walt Disney Company (NYSE: DIS) today announced an expanded distribution agreement that brings Hulu (With Ads) to all Spectrum TV Select customers at no additional cost."
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "FUBO",
+      "ticker": "FUBO",
+      "name": "Fubo",
+      "sub": "動画配信",
+      "sub_en": "Streaming TV",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DisneyとFuboが、Hulu + Live TVとFuboを統合する正式契約を結んだと発表した",
+          "text_en": "Disney and Fubo announced a definitive agreement to combine Disney's Hulu + Live TV business with Fubo",
+          "source": {
+            "label": "Disney の発表",
+            "label_en": "Disney press release",
+            "url": "https://thewaltdisneycompany.com/press-releases/fubo-and-disneys-hulu-live-tv-virtual-mvpd-businesses-to-combine/",
+            "level": "official",
+            "date": "2025-01-06",
+            "quote": "FuboTV Inc. (NYSE: FUBO) and The Walt Disney Company (NYSE: DIS) today announced that they have entered into a definitive agreement for Disney to combine its Hulu + Live TV business with Fubo (the “Transaction”), forming a combined virtual MVPD company."
+          }
+        }
+      ]
     }
   ],
   "far": [],

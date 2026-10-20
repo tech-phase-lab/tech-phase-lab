@@ -2,14 +2,18 @@
   "root": {
     "ticker": "IOT",
     "name": "サムサラ",
-    "name_en": "Samsara",
-    "cik": 1642896
+    "cik": 1642896,
+    "name_en": "Samsara"
   },
   "rows": [
     {
       "ja": "ホスティングの供給元",
       "en": "Hosting supplier",
       "above": true
+    },
+    {
+      "ja": "提携・連携先",
+      "en": "Partners & integrations"
     },
     {
       "ja": "競合",
@@ -52,7 +56,7 @@
       "name": "ベライゾン",
       "sub": "通信",
       "sub_en": "Telecom",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -71,6 +75,128 @@
         }
       ],
       "name_en": "Verizon"
+    },
+    {
+      "id": "EFN",
+      "ticker": "Element",
+      "name": "Element Fleet Management",
+      "sub": "車両管理",
+      "sub_en": "Fleet management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サムサラとElement Fleet Managementが、車両・業務管理の共同提供を発表した",
+          "text_en": "Samsara and Element Fleet Management announced a holistic fleet and operations management offering",
+          "source": {
+            "label": "Samsara の発表",
+            "label_en": "Samsara press release",
+            "url": "https://www.samsara.com/company/news/press-releases/samsara-x-element-partnership",
+            "level": "official",
+            "date": "2025-06-10",
+            "quote": "Samsara Inc. (\"Samsara\") (NYSE: IOT), the pioneer of the Connected Operations® Platform, and Element Fleet Management Corp. (\"Element\") (TSX: EFN), the largest publicly traded, pure-play automotive fleet manager in the world, today announced a holistic fleet and operations management offering."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VWAGY",
+      "ticker": "VW",
+      "name": "フォルクスワーゲン",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サムサラがVolkswagen Group Info Servicesとの協業を発表し、フォルクスワーゲン各ブランドの車両データをSamsaraに連携できるとした",
+          "text_en": "Samsara announced a strategic collaboration with Volkswagen Group Info Services AG, connecting vehicle data from Volkswagen group brands into the Samsara Platform",
+          "source": {
+            "label": "Samsara の発表",
+            "label_en": "Samsara press release",
+            "url": "https://www.samsara.com/uk/company/news/press-releases/samsara-and-volkswagen-group-info-services",
+            "level": "official",
+            "date": "2026-10-01",
+            "quote": "today announced a strategic collaboration with Volkswagen Group Info Services AG. This integration enables fleet operators to connect vehicle data from Volkswagen Passenger Cars, Volkswagen Commercial Vehicles, Audi, Škoda, SEAT, and Cupra directly into the Samsara Platform.",
+            "note": "子会社Volkswagen Group Info Servicesとの協業です。",
+            "note_en": "Collaboration with subsidiary Volkswagen Group Info Services AG."
+          }
+        }
+      ],
+      "name_en": "Volkswagen"
+    },
+    {
+      "id": "MBGAF",
+      "ticker": "Mercedes-Benz",
+      "name": "メルセデス・ベンツ",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サムサラがMercedes-Benz Connectivity Servicesの車両データAPIとの直接連携を発表した",
+          "text_en": "Samsara announced a direct integration with the Mercedes-Benz Connectivity Services vehicle data APIs",
+          "source": {
+            "label": "Samsara の発表",
+            "label_en": "Samsara press release",
+            "url": "https://www.samsara.com/uk/company/news/press-releases/samsara-integrates-with-mercedes-benz-connectivity-services",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "today announced a direct integration between the Samsara platform and the Mercedes-Benz Connectivity Services vehicle data APIs. This partnership provides European fleets with turnkey access to Mercedes-Benz vehicle data streamed directly to the Samsara platform."
+          }
+        }
+      ],
+      "name_en": "Mercedes-Benz"
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サムサラがMobilisights経由でステランティスとの連携を拡大し、追加ハードなしで車両データを利用できるとした",
+          "text_en": "Samsara expanded its integration with Stellantis through Mobilisights, giving seamless access to vehicle data without additional hardware",
+          "source": {
+            "label": "Samsara company ブログ",
+            "label_en": "Samsara company blog",
+            "url": "https://www.samsara.com/uk/blog/samsara-and-stellantis-are-compatible-with-oem-integration",
+            "level": "official",
+            "date": "2025-01-21",
+            "quote": "Samsara has announced an expansion of its integration efforts with vehicle manufacturer Stellantis through Mobilisights – the Stellantis Data as a Service Company – giving businesses across Europe seamless access to vehicle data without the need for additional hardware.",
+            "note": "同社ブログの記載で、データ子会社Mobilisights経由です。",
+            "note_en": "Stated in Samsara's blog, via Stellantis data company Mobilisights."
+          }
+        }
+      ],
+      "name_en": "Stellantis"
+    },
+    {
+      "id": "AMV0",
+      "ticker": "AUMOVIO",
+      "name": "AUMOVIO",
+      "sub": "車載部品",
+      "sub_en": "Automotive components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サムサラがAUMOVIOとの提携を発表した",
+          "text_en": "Samsara announced a partnership with AUMOVIO",
+          "source": {
+            "label": "Samsara の発表",
+            "label_en": "Samsara press release",
+            "url": "https://www.samsara.com/company/news/press-releases/samsara-unveils-new-product-and-partnership-innovations-at-go-beyond-london-2025",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Samsara also announced a partnership with AUMOVIO"
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -144,6 +144,134 @@
         }
       ],
       "name_en": "Alibaba"
+    },
+    {
+      "id": "Ceconomy",
+      "ticker": "Ceconomy",
+      "name": "セコノミー",
+      "sub": "家電小売",
+      "sub_en": "Consumer electronics retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JDドットコムとCECONOMYは戦略的投資契約を結び、CECONOMYの成長と家電プラットフォームへの転換を進める",
+          "text_en": "JD.com and CECONOMY aim to drive CECONOMY's growth and its transformation into an omni-channel consumer electronics platform under a strategic investment agreement",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 の発表",
+            "label_en": "JD.com 6-K Ex.99.1 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312525169356/d67552dex991.htm",
+            "level": "official",
+            "date": "2025-07-30",
+            "quote": "Under the strategic investment agreement, the Company and CECONOMY aim to drive CECONOMY’s growth as a stand-alone business and accelerate CECONOMY’s transformation into Europe’s leading omni-channel consumer electronics platform.",
+            "note": "公開買付けの成立までは記載していません。",
+            "note_en": "The quote does not state that the offer was completed."
+          }
+        }
+      ],
+      "name_en": "CECONOMY"
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MastercardとJD.comが戦略的パートナーシップを発表した",
+          "text_en": "Mastercard and JD.com announced a strategic partnership",
+          "source": {
+            "label": "Mastercard and JD.com joint の発表",
+            "label_en": "Mastercard and JD.com joint press release (PR Newswire)",
+            "url": "https://www.prnewswire.com/apac/news-releases/mastercard-and-jdcom-announce-strategic-partnership-to-support-business-growth-through-payments-innovation-302774620.html",
+            "level": "official",
+            "date": "2026-05-18",
+            "quote": "Mastercard, a world leading technology company in payment, and JD.com, a Nasdaq-listed technology and service company with supply chain at its core, announced a strategic partnership to deliver innovations that build a more connected, secure and intelligent commerce ecosystem."
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年第3四半期に、JD Healthが製薬会社のEli Lillyなどと戦略的協力契約を結んだ",
+          "text_en": "In the third quarter of 2025, JD Health entered into strategic cooperation agreements with pharmaceutical companies including Eli Lilly",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 earnings release",
+            "label_en": "JD.com 6-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312525278665/d715997dex991.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "During the third quarter of 2025, JD Health entered into strategic cooperation agreements with leading pharmaceutical companies, including Eli Lilly, Innovent Biologics, Eisai China, and Bayer China.",
+            "note": "子会社のJD Healthの契約です。",
+            "note_en": "An agreement of JD's subsidiary JD Health."
+          }
+        }
+      ],
+      "name_en": "Eli Lilly"
+    },
+    {
+      "id": "Innovent",
+      "ticker": "Innovent",
+      "name": "イノベント・バイオロジクス",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年第3四半期に、JD Healthが製薬会社のInnovent Biologicsなどと戦略的協力契約を結んだ",
+          "text_en": "In the third quarter of 2025, JD Health entered into strategic cooperation agreements with pharmaceutical companies including Innovent Biologics",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 earnings release",
+            "label_en": "JD.com 6-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312525278665/d715997dex991.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "During the third quarter of 2025, JD Health entered into strategic cooperation agreements with leading pharmaceutical companies, including Eli Lilly, Innovent Biologics, Eisai China, and Bayer China.",
+            "note": "子会社のJD Healthの契約です。",
+            "note_en": "An agreement of JD's subsidiary JD Health."
+          }
+        }
+      ],
+      "name_en": "Innovent Biologics"
+    },
+    {
+      "id": "MMM",
+      "ticker": "MMM",
+      "name": "スリーエム",
+      "sub": "電機・素材",
+      "sub_en": "Industrial & materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "JD Industrialsが、3M Chinaを含む主要サプライヤーとの戦略的協力を深めた",
+          "text_en": "JD Industrials deepened strategic collaborations with leading suppliers including 3M China",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 earnings release",
+            "label_en": "JD.com 6-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526218013/d128173dex991.htm",
+            "level": "official",
+            "date": "2026-05-12",
+            "quote": "In the first quarter, JD Industrials (“JDI”) continued to strengthen its industrial supply chain capabilities and deepened its strategic collaborations with leading suppliers, including SATA Tools, 3M China and Linde (China) Forklift Truck.",
+            "note": "子会社JD Industrialsと3M Chinaの関係です。",
+            "note_en": "A relationship between JD Industrials, a JD subsidiary, and 3M China."
+          }
+        }
+      ],
+      "name_en": "3M"
     }
   ],
   "far": [],

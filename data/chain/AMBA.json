@@ -2,14 +2,18 @@
   "root": {
     "ticker": "AMBA",
     "name": "アンバレラ",
-    "name_en": "Ambarella",
-    "cik": 1280263
+    "cik": 1280263,
+    "name_en": "Ambarella"
   },
   "rows": [
     {
       "ja": "製造・組立の供給元",
       "en": "Manufacturing & assembly suppliers",
       "above": true
+    },
+    {
+      "ja": "提携先・顧客・販売",
+      "en": "Partners, customers & distribution"
     },
     {
       "ja": "競合",
@@ -83,12 +87,138 @@
       "name_en": "ASE Technology Holding"
     },
     {
+      "id": "Quanta",
+      "ticker": "Quanta",
+      "name": "クアンタ・コンピュータ",
+      "sub": "ODM・サーバー",
+      "sub_en": "ODM & servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アンバレラが、Quantaとの提携を拡大して、AIソリューションを開発すると発表した",
+          "text_en": "Ambarella's CEO says it is expanding its partnership with Quanta to deliver AI technologies",
+          "source": {
+            "label": "Ambarella の発表",
+            "label_en": "Ambarella press release",
+            "url": "https://www.ambarella.com/news/quanta-and-ambarella-expand-strategic-partnership-to-innovate-broader-range-of-cutting-edge-ai-solutions/",
+            "level": "official",
+            "date": "2024-01-11",
+            "quote": "\"We are thrilled to expand our partnership with Quanta in delivering innovative AI technologies,\" said Fermi Wang, president and CEO of Ambarella.",
+            "note": "2024年の発表で、やや古い情報です。",
+            "note_en": "From a 2024 announcement (older)."
+          }
+        }
+      ],
+      "name_en": "Quanta Computer"
+    },
+    {
+      "id": "Leapmotor",
+      "ticker": "Leapmotor",
+      "name": "零跑汽車",
+      "sub": "電気自動車",
+      "sub_en": "Electric vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Leapmotorは、アンバレラのCV3-ADを用いた高度運転支援ソリューションの開発を約束した",
+          "text_en": "Leapmotor committed to creating an advanced intelligent driving solution based on Ambarella's CV3-AD family of automotive AI domain controller SoCs",
+          "source": {
+            "label": "Ambarella and Leapmotor joint の発表",
+            "label_en": "Ambarella and Leapmotor joint press release (GlobeNewswire via Nasdaq)",
+            "url": "https://www.nasdaq.com/press-release/leapmotor-and-ambarella-announce-strategic-cooperation-agreement-powerful-advanced",
+            "level": "official",
+            "date": "2024-06-11",
+            "quote": "As part of this cooperation agreement, Leapmotor committed to creating an advanced intelligent driving solution based on Ambarella’s powerful CV3-AD family of automotive AI domain controller systems-on-chip (SoCs).",
+            "note": "2024年の発表で、やや古い情報です。",
+            "note_en": "From a 2024 announcement (older)."
+          }
+        }
+      ],
+      "name_en": "Leapmotor"
+    },
+    {
+      "id": "Capgemini",
+      "ticker": "Capgemini",
+      "name": "キャップジェミニ",
+      "sub": "IT・コンサルティング",
+      "sub_en": "IT & consulting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Capgeminiが、アンバレラのエッジAIと物理AIの導入を促す、エンジニアリングとシステム統合の支援を提供する",
+          "text_en": "Capgemini will provide engineering, systems integration, and industry expertise to help accelerate adoption of Ambarella's Edge and Physical AI technologies",
+          "source": {
+            "label": "Ambarella and Capgemini joint の発表",
+            "label_en": "Ambarella and Capgemini joint press release",
+            "url": "https://www.ambarella.com/news/ambarella-engages-capgemini-to-help-accelerate-enterprise-adoption-of-edge-and-physical-ai/",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "Under the agreement, Capgemini will provide engineering, systems integration, and industry expertise to help accelerate customer adoption of Ambarella’s Edge and Physical AI technologies."
+          }
+        }
+      ],
+      "name_en": "Capgemini"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル(アルファベット)",
+      "sub": "クラウド・ネット",
+      "sub_en": "Cloud & internet",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アンバレラの開発者向け環境は、Google Cloud Platform上で提供され、Gemini Enterpriseを活用する",
+          "text_en": "Ambarella's developer environment is delivered on Google Cloud Platform with agentic AI capabilities powered by Gemini Enterprise",
+          "source": {
+            "label": "Ambarella の発表",
+            "label_en": "Ambarella press release",
+            "url": "https://www.ambarella.com/news/ambarella-expands-its-developer-zone-with-remote-access-to-live-silicon-and-agentic-ai-development-on-google-cloud-platform/",
+            "level": "official",
+            "date": "2026-09-15",
+            "quote": "agentic AI development capabilities powered by Gemini Enterprise, all delivered on Google Cloud Platform (GCP)"
+          }
+        }
+      ],
+      "name_en": "Google (Alphabet)"
+    },
+    {
+      "id": "Macnica",
+      "ticker": "Macnica",
+      "name": "マクニカ",
+      "sub": "半導体商社",
+      "sub_en": "Semiconductor distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アンバレラは、Macnicaを非独占の認定ディストリビューターに任命した",
+          "text_en": "Ambarella appointed Macnica as a non-exclusive authorized distributor of its edge AI infrastructure products",
+          "source": {
+            "label": "Ambarella の発表",
+            "label_en": "Ambarella press release",
+            "url": "https://www.ambarella.com/news/ambarella-and-macnica-enter-a-long-term-strategic-distribution-agreement-to-accelerate-edge-ai-infrastructure-and-physical-ai-adoption/",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "Under the agreement, Ambarella has appointed Macnica as a non-exclusive authorized distributor for Ambarella edge AI infrastructure semiconductor devices and associated platforms",
+            "note": "契約の相手は米州と欧州の子会社(Macnica AmericasとMacnica ATD Europe)です。",
+            "note_en": "The agreement is with Macnica Americas and Macnica ATD Europe (subsidiaries)."
+          }
+        }
+      ],
+      "name_en": "Macnica"
+    },
+    {
       "id": "NVDA",
       "ticker": "NVDA",
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -124,7 +254,7 @@
       "name": "CEVA",
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
