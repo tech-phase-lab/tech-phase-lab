@@ -40,7 +40,7 @@ export function sandboxHandler({env,identity,ownerId,services}) {
       const userId=await identity();
       if(!userId) return response({error:'sign-in'},401);
       if(userId!==ownerId) return response({error:'owner-only'},403);
-      if(action==='status') return response(await (await services()).store.entitlement(userId));
+      if(action==='status') return response(await (await services()).store.summary(userId));
       const body=await readBody(request,2048);
       const keys=action==='create'?['currency','acceptedTerms']:['id'];
       if(Object.keys(body).length!==keys.length || keys.some(k=>!Object.hasOwn(body,k)) ||

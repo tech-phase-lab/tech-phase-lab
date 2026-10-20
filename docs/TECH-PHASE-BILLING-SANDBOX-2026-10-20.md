@@ -345,3 +345,54 @@ A separate `TECH_PHASE_BILLING_SANDBOX_WEBHOOK_ENABLED` switch permits receiving
 notifications while both purchase switches remain false. Do not point PayPal
 to the deployment-protected Vercel preview. Configuration is staged live for
 the next PRO backend deployment; deployed acceptance is still pending.
+
+## 2026-10-20 14:59 JST — PayPal connection and public route accepted
+
+Published `d10c04f87404fc3d76485eebbd486660529e8b45` after integrating latest
+parallel changes through `af8af67`. Local final-tree gates passed: Node 1,237,
+Python 2,523, build, lint (0 errors/5 existing warnings), compileall and diff check.
+GitHub tree exactly matched local `98ebb38e260de857bd6c18494f9fa5a2c652684c`.
+Both actual provider plan responses passed the application's `assertPlan`.
+
+PRO runtime deployment `c10d6881-0848-4dc2-9364-5aa628ddb815` is SUCCESS, pinned
+to `d10c04f`. Acceptance deployment `320ff34d-d871-4600-bd20-7071db125c1a`
+logged `TECH_PHASE_PAYPAL_RUNTIME_OK`: owner readiness 200/configurationReady true,
+unsigned public notification 401/signature, private service without token 401,
+authenticated purchase 503/billing-disabled. These are real deployed HTTP checks,
+not a claim of a completed purchase or valid signed payment delivery.
+
+The helper's temporary Sandbox client ID/secret/env references and service token
+were blanked; helper source returned to the retired no-op. Runtime retains the
+approved credential references. RESOLUTE webhook URL/event subscriptions were
+verified unchanged; no RESOLUTE service settings, database or schedules modified.
+
+Still open: real Sandbox buyer approval/payment and signed delivery, real Clerk
+owner gateway session, month-end provider snapshots, PRO backup/restore acceptance,
+disputes and missed-webhook reconciliation, purchase UI and production membership
+projection. Both purchase switches remain false; production metadata untouched.
+
+Retirement deployment `c57acb12-eeb0-484a-b695-23c6f3a496ff` is SUCCESS and
+logged `TECH_PHASE_PROVISION_RETIRED`. GitHub Actions `39377657564` is still
+in progress; its PostgreSQL concurrency job passed. Do not yet claim full
+remote CI success. This final operational evidence is staged locally for the
+next publication batch; implementation and provider setup are already deployed.
+
+## Owner checkout screen continuation
+
+Added `/research/account/billing`, guarded on the server by preview environment
+and exact Clerk owner ID, with an account-screen link for preview testing. The
+public PRO offer remains Coming soon. Bilingual checkout supports JPY/USD,
+explicit Sandbox recurring consent, resuming an existing approval, manual fresh
+payment reconciliation and confirmed cancellation. Return query parameters never
+grant access or automatically create/cancel subscriptions. Approval navigation
+accepts only the exact Sandbox host/path and a single BA token.
+
+GET status now returns the owner's most recent/open subscription (only UUID,
+currency and local state) plus separately verified Sandbox access. This allows
+reload/recovery without storing contracts in browser storage. Provider IDs, user
+IDs, terms/audit data and credentials stay server-side. Contract ACTIVE and paid
+PRO access are shown separately. The return URL now points to the dedicated page.
+
+Planned activation is restricted to this one owner in Sandbox for buyer acceptance;
+it is not customer checkout or production launch. PRO backup/restore and production
+projection remain launch gates. No real-money purchase is authorized by this switch.

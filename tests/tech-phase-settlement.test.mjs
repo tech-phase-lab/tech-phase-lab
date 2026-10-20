@@ -30,6 +30,19 @@ test('monthly boundaries preserve month-end anchor and exact minor-unit money',(
  for(const value of ['2e1','20.001','-20',' 20','Infinity'])assert.equal(amountMinor({currency_code:'USD',value},'USD'),null);
  assert.equal(amountMinor({currency_code:'JPY',value:'2980.1'},'JPY'),null);
 });
+test('subscription summary survives reload, binds owner and excludes provider/internal fields',()=>database(async(store)=>{
+ assert.equal((await store.summary('user_owner')).subscription,null);
+ const row=await store.reserve('user_owner','JPY','sandbox-v1');
+ await store.attach(row.user_id,row.id,sid);
+ const summary=await store.summary(row.user_id);
+ assert.deepEqual(summary.subscription,{id:row.id,currency:'JPY',state:'approval_pending'});
+ assert.equal(summary.plan,'free');
+ assert.equal((await store.summary('other')).subscription,null);
+ await store.cancelled(row.user_id,row.id);
+ assert.equal((await store.summary(row.user_id)).subscription.state,'cancelled');
+ const next=await store.reserve(row.user_id,'USD','sandbox-v1');
+ assert.equal((await store.summary(row.user_id)).subscription.id,next.id);
+}));
 test('only matching paid transaction, cycle, amount and schedule produces a PRO period',()=>{
  const result=verifiedPeriod(local,remote(),[payment()],plans,now);
  assert.equal(result.periodEnd,'2026-11-20T00:00:00.000Z');
@@ -104,7 +117,7 @@ test('unverified webhook never queries or changes billing records',async()=>{
 test('sandbox HTTP requires preview, owner identity, exact fields, origin and bounded input',async()=>{
  const env={VERCEL_ENV:'preview',TECH_PHASE_BILLING_SANDBOX_ENABLED:'true',TECH_PHASE_PAYPAL_ENV:'sandbox'};
  let user='user_owner',calls=0;
- const services=async()=>{calls++;return {store:{entitlement:async id=>({environment:'sandbox',user:id})},
+ const services=async()=>{calls++;return {store:{summary:async id=>({environment:'sandbox',user:id})},
   checkout:{start:async(...args)=>({args}),cancel:async()=>({status:'cancelled'})},reconciliation:{reconcile:async()=>({plan:'pro'})},webhook:async()=>({status:'ignored'})};};
  const handler=sandboxHandler({env,identity:async()=>user,ownerId:'user_owner',services});
  const req=(action,body,origin='https://example.test')=>new Request('https://example.test/api/'+action,{method:body===undefined?'GET':'POST',headers:{origin,'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});

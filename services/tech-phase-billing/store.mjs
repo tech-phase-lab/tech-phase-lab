@@ -10,6 +10,11 @@ export function billingStore(pool) {
     finally { client.release(); }
   }
   return {
+    async summary(userId) {
+      const row=(await pool.query(`SELECT id,currency,state FROM ${S}.subscriptions WHERE user_id=$1
+        ORDER BY (state NOT IN ('cancelled','expired')) DESC,created_at DESC,id DESC LIMIT 1`,[userId])).rows[0];
+      return {...await this.entitlement(userId),subscription:row ?? null};
+    },
     async reserve(userId, currency, termsVersion) {
       const q = offer(currency);
       if (typeof userId !== 'string' || !userId || userId.length > 128 ||
