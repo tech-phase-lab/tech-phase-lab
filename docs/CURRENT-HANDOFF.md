@@ -1788,3 +1788,38 @@ executor, acceptance-only S3 namespace and disabled one-shot container CLI.
 Synthetic session is clearly distinguished from the pending real Clerk session.
 See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for checks and actual-run evidence.
 Production saving/key custody, mail, payments and RIZEL publication remain off.
+
+
+## 2026-10-20 — Deployed authenticated synthetic recovery verified
+
+fafbf53c passed real PostgreSQL/API/writer/external-storage/dump/restore acceptance
+on deployment6f822e7a at11:30 JST; all nine observed checks true, both replays
+preserved deletion/OFF/empty queue. Session was synthetic, not live Clerk.
+Retired immediately: a382d959 logged ACCEPTANCE_DISABLED, storage refs cleared.
+No production database, cron, mail, payment, AI or RIZEL publication changed.
+See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for complete evidence and remaining
+live-session/key-custody gates. Do not describe production saving as available.
+
+
+## 2026-10-20 — Live-session continuation prepared; exposure approval blocked
+
+The preview browser still displayed an authenticated owner account. Added an
+owner-only preview page at /resolute/recovery-check with an explicit one-shot
+button, no mount-time request/retry, a synchronous double-click latch and
+allowlisted evidence display. Both page and API remain disabled. No session
+token was read from the browser. The existing server-side transport owns JWT
+forwarding; ordinary plan/settings destinations are unchanged.
+
+Automatic approval review rejected generating a public Railway domain for the
+isolated runner because this would widen exposure without specific owner
+approval. The service inspection confirmed no domain, no staged changes and
+the disabled retirement deployment. Do not bypass that rejection or activate
+credentials before approval. Required approval: a temporary HTTPS endpoint for
+the isolated runner, with a separate service token, exact-owner signed-session
+check, one execution and <=1h expiry, removed after verification. Synthetic
+DB/storage only; no production DB, mail, payments or AI. No Vercel recovery
+variables or live runner credentials were installed.
+
+Validation of the owner-page tree: Node1193/1193, Python2508/2508 (258.697s),
+lint0 errors/5 existing warnings, Next build, compileall and diff check passed.
+The earlier executor commit fafbf53c GitHub CI39358938320 completed successfully.

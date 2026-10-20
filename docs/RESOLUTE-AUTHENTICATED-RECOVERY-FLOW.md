@@ -122,7 +122,7 @@ and checks each of two replays. No caller-selected command/DB/path. Storage writ
 are restricted to a fresh acceptance prefix outside production events. Cleanup
 stops the temporary cluster. Local PostgreSQL package installation is blocked by
 runtime setgroups/setuid restrictions; real execution uses the existing isolated
-Railway acceptance service, never the production database. Live results pending.
+Railway acceptance service, never the production database. Actual synthetic-session results follow below.
 
 Validation: Node1193/1193, Python2508/2508 (296.062s), lint0 errors with5
 existing warnings, Next build, compileall and diff check passed. Initial
@@ -131,3 +131,54 @@ and lint/build reruns passed. A pre-existing random corruption test could leave
 its byte unchanged when it was already zero; it now flips a bit deterministically.
 No failure was waived. A bounded owner-only server entrypoint is prepared but
 not activated; it requires a separate token, one instance and <=1h window.
+
+
+## 2026-10-20 11:30 JST — Actual isolated API-to-restore acceptance passed
+
+Code fafbf53c796337f0be8257549d8eaa99bb1bb2e6 ran on the existing isolated
+resolute-restore-acceptance service058b8f14-3cb5-45d8-a3f8-c73dc55adaec.
+Deployment6f822e7a-4d76-4662-bf1f-5cae7bd37c16 logged
+RESOLUTE_RECOVERY_ACCEPTANCE_OK at2026-10-20T02:30:24.691560493Z.
+All nine returned checks were true: authenticatedSession, isolatedDatabase,
+staleBackupVerified, independentReadback, firstReplay, secondReplay, planErased,
+notificationsStopped and pendingQueueEmpty. These checks come from actual API
+writes, three encrypted object readbacks, pg_dump/pg_restore, and SQL assertions
+after each replay, not deployment status. Actual PostgreSQL18 and external object
+storage were used; session signing was synthetic, liveOwnerSession=false.
+ProductionTouched/mailSent/livePayment/aiCalled were all false.
+
+Retirement deploymenta382d959-1e16-4025-9076-91cd8c27bd26 logged
+RESOLUTE_RECOVERY_ACCEPTANCE_DISABLED at2026-10-20T02:32:35.735082075Z.
+The enable flag is false and all five RECOVERY_STORAGE references were cleared.
+No cron, public domain, volume, resource limit or production service changed.
+Encrypted acceptance objects use a unique test prefix; the temporary encryption
+key was discarded. They are not production recovery material.
+
+Remaining gate: a live Clerk owner session through the preview transport and
+bounded runner, plus independently retrievable production recovery-key custody.
+The successful synthetic run does not close either gate. Ordinary customer
+saving, notifications, payments and public RIZEL content remain disabled.
+
+
+## 2026-10-20 — Live-session continuation prepared; exposure approval blocked
+
+The preview browser still displayed an authenticated owner account. Added an
+owner-only preview page at /resolute/recovery-check with an explicit one-shot
+button, no mount-time request/retry, a synchronous double-click latch and
+allowlisted evidence display. Both page and API remain disabled. No session
+token was read from the browser. The existing server-side transport owns JWT
+forwarding; ordinary plan/settings destinations are unchanged.
+
+Automatic approval review rejected generating a public Railway domain for the
+isolated runner because this would widen exposure without specific owner
+approval. The service inspection confirmed no domain, no staged changes and
+the disabled retirement deployment. Do not bypass that rejection or activate
+credentials before approval. Required approval: a temporary HTTPS endpoint for
+the isolated runner, with a separate service token, exact-owner signed-session
+check, one execution and <=1h expiry, removed after verification. Synthetic
+DB/storage only; no production DB, mail, payments or AI. No Vercel recovery
+variables or live runner credentials were installed.
+
+Validation of the owner-page tree: Node1193/1193, Python2508/2508 (258.697s),
+lint0 errors/5 existing warnings, Next build, compileall and diff check passed.
+The earlier executor commit fafbf53c GitHub CI39358938320 completed successfully.

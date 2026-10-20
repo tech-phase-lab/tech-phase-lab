@@ -5,7 +5,23 @@ checkout and the uncommitted operational record. This is NOT the recovered
 original and is not a complete historical log. Evidence below comes from the
 conversation handoff and committed project records; unverified items stay open.
 
-## Current decision point — 2026-10-20 JST
+## Latest decision point — 2026-10-20 11:32 JST
+
+Supersedes the dated status below. Code fafbf53c: Node1193/Python2508 (3701),
+lint/build/compileall/diff passed. Actual isolated authenticated synthetic-session
+API -> PostgreSQL18 -> encrypted external storage -> stale dump/restore -> two
+replays passed all nine checks at11:30 JST. See authenticated recovery flow doc.
+The test service was disabled and all five storage references cleared; actual
+DISABLED log verified at11:32 JST. Live Clerk owner-session acceptance and
+production recovery-key custody remain open; production saving remains disabled.
+
+October20 morning news did NOT produce a successful saved article:07:02 readback
+confirmed zero candidates/saved rows. Morning preflight later passed, but that
+is not generation success. Current publication-date guard is live on20a3069e;
+cron/reservations unchanged. Stock News API and Twelve Data remain uncontracted
+until planned mid-November. Prior-day/delayed news cannot be relabeled as today.
+
+## Historical decision point — 2026-10-20 JST
 
 This section supersedes older pending statements below; historical evidence is
 retained. Latest implementation:0399659f (HTTP API bridge),86ae9c53 (capsule verify).
@@ -161,3 +177,27 @@ again or enable paid intake now. Today-only RESOLUTE selection replaces96h with
 explicit publication timestamps in the current JST day, never acquisition dates.
 Date-only/previous-day/future articles stay out; the scheduled job remains unchanged.
 Validation and deployment evidence will follow; no live verification claimed here.
+
+
+## 2026-10-20 — Live-session continuation prepared; exposure approval blocked
+
+The preview browser still displayed an authenticated owner account. Added an
+owner-only preview page at /resolute/recovery-check with an explicit one-shot
+button, no mount-time request/retry, a synchronous double-click latch and
+allowlisted evidence display. Both page and API remain disabled. No session
+token was read from the browser. The existing server-side transport owns JWT
+forwarding; ordinary plan/settings destinations are unchanged.
+
+Automatic approval review rejected generating a public Railway domain for the
+isolated runner because this would widen exposure without specific owner
+approval. The service inspection confirmed no domain, no staged changes and
+the disabled retirement deployment. Do not bypass that rejection or activate
+credentials before approval. Required approval: a temporary HTTPS endpoint for
+the isolated runner, with a separate service token, exact-owner signed-session
+check, one execution and <=1h expiry, removed after verification. Synthetic
+DB/storage only; no production DB, mail, payments or AI. No Vercel recovery
+variables or live runner credentials were installed.
+
+Validation of the owner-page tree: Node1193/1193, Python2508/2508 (258.697s),
+lint0 errors/5 existing warnings, Next build, compileall and diff check passed.
+The earlier executor commit fafbf53c GitHub CI39358938320 completed successfully.
