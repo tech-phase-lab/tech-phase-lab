@@ -2277,3 +2277,16 @@ empty activation pin. No owner key entry, login or Run now is needed. Morning,
 daily/weekly schedules, reservations, UI, live payments, billing, mail and AI
 were untouched. Documentation-only update: git diff --check; no new combined-tree
 test claim. Previous3804 tests/CI39429622017 remain scoped tofb7c4eda.
+
+
+## 2026-10-20 23:16 JST — actual public HTTPS authentication passed
+
+API runtime config and all4 disabled save/retry gates verified inside the existing
+API container without credential export. A temporary no-storage wrapper on the
+existing writer passed public HTTPS token acceptance/rejection from that API:
+404/401/401/405/503 as designed, exit0 at14:14:43.379Z. S3 access0, persisted
+objects0. This is real HTTPS authentication, not durable publication/readback.
+Original start restored; ab018522 emitted RESOLUTE_WRITER_DISABLED at14:15:44Z;
+preflight3dd5d74d verified REMOVED. See RESOLUTE-HTTPS-AUTH-CHECK.md for deployment
+snapshot behavior and full evidence. Fresh maintained-fence inventory, real object
+receipts and independent nonempty restore/replay remain. User action unnecessary.
