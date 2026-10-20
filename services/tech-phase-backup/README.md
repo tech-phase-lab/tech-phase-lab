@@ -73,3 +73,37 @@ Dockerfile configuration; existing successful Docker deployments remain active.
 Use `restart_service` on their explicit IDs for a finite Run Now, and verify the
 safe job event, not just a Railway SUCCESS label. For releases, review and deploy
 the pinned source commit and verify Docker build selection before execution.
+
+## Optional external heartbeat monitoring
+
+Set `TECH_PHASE_BACKUP_MONITOR_PING_URL` separately in each PRO job to its own
+Healthchecks UUID URL (`https://hc-ping.com/<uuid>`). Never reuse a RESOLUTE check.
+Only empty POST requests go out: `/start` before work, the base URL after all work
+and cleanup succeeds, `/fail` on exceptions. Redirects, other hosts, credentials,
+query strings and additional paths are rejected. Each request has a 5-second
+network timeout and no retries. No archive, ledger, logs or error text is sent.
+An invalid Sandbox guard makes no external request and exits with failure.
+
+A monitor outage does not skip backup/restore work. An unsuccessful configured
+heartbeat produces exit code 1 even if the data operation completed; inspect both
+the data event and `TECH_PHASE_BACKUP_MONITOR`. An unset URL logs `disabled` and
+preserves the existing job behavior; it does not provide missed-run detection.
+
+Create two independent checks with these settings before enabling the variable:
+
+| Check | Cron (UTC) | Time zone | Grace |
+| --- | --- | --- | --- |
+| Tech Phase PRO Sandbox daily backup | `30 0 * * *` | UTC | 30 minutes |
+| Tech Phase PRO Sandbox weekly restore | `0 1 * * 1` | UTC | 30 minutes |
+
+A separate monitor is necessary to detect jobs that never start, build failures,
+and process termination before a failure ping. Configure failure-only alerts to
+the operator after confirming the recipient and notification authorization.
+Validate start/success reception with a finite Run Now; verify missed-run and
+failure alerts with a separate synthetic check, never by stopping real backups.
+Do not mark monitoring accepted until reception and actual notification delivery
+are verified. These checks and notification routes are not provisioned by this
+code change, and no external ping was sent in local tests.
+
+Protocol references: https://healthchecks.io/docs/signaling_failures/ and
+https://healthchecks.io/docs/measuring_script_run_time/.

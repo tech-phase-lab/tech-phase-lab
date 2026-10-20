@@ -127,3 +127,83 @@ class TechPhaseBackupTests(unittest.TestCase):
         with patch.object(backup.subprocess, 'run', return_value=Mock(returncode=1, stderr=b'secret')):
             with self.assertRaisesRegex(RuntimeError, '^database command failed$'):
                 backup.run(['psql'])
+
+    def test_monitor_sends_empty_body_to_fixed_host_without_redirects(self):
+        url = 'https://hc-ping.com/11111111-2222-3333-4444-555555555555'
+        with patch.object(backup, 'build_opener') as factory:
+            response = factory.return_value.open.return_value.__enter__.return_value
+            response.status = 200
+            for phase, suffix in [('start', '/start'), ('success', ''), ('fail', '/fail')]:
+                self.assertEqual(backup.monitor_ping(url, phase), 'sent')
+                args, kwargs = factory.return_value.open.call_args
+                self.assertEqual(args[0].full_url, url + suffix)
+                self.assertEqual(args[0].data, b'')
+                self.assertEqual(args[0].method, 'POST')
+                self.assertEqual(kwargs['timeout'], 5)
+            self.assertIsInstance(factory.call_args.args[0], backup.NoMonitorRedirects)
+        self.assertIsNone(backup.NoMonitorRedirects().redirect_request(
+            None, None, 302, None, None, 'https://other.test'))
+
+    def test_monitor_rejects_other_hosts_credentials_queries_and_paths(self):
+        base = 'https://hc-ping.com/11111111-2222-3333-4444-555555555555'
+        with patch.object(backup, 'build_opener') as factory:
+            for url in [base.replace('https:', 'http:'), base + '?secret=value',
+                        base + '/fail', base + '#fragment',
+                        base.replace('hc-ping.com', 'hc-ping.com.evil.test'),
+                        base.replace('hc-ping.com', 'user:secret@hc-ping.com')]:
+                self.assertEqual(backup.monitor_ping(url, 'start'), 'failed')
+            self.assertEqual(backup.monitor_ping('', 'start'), 'disabled')
+            factory.assert_not_called()
+
+    def test_monitor_network_error_is_masked(self):
+        with patch.object(backup, 'build_opener', side_effect=OSError('secret')):
+            self.assertEqual(backup.monitor_ping(
+                'https://hc-ping.com/11111111-2222-3333-4444-555555555555', 'fail'), 'failed')
+
+    def test_job_reports_failure_without_success_or_exception_details(self):
+        output = io.StringIO()
+        with patch.object(backup, 'monitor_ping', return_value='sent') as ping, \
+                patch('sys.stdout', output):
+            result = backup.run_job(self.env, Mock(side_effect=RuntimeError('buyer secret')))
+        self.assertEqual(result, 1)
+        self.assertEqual([c.args[1] for c in ping.call_args_list], ['start', 'fail'])
+        self.assertNotIn('buyer secret', output.getvalue())
+
+    def test_monitor_failure_does_not_skip_backup_and_returns_nonzero(self):
+        job = Mock()
+        with patch.object(backup, 'monitor_ping', side_effect=['failed', 'sent']), \
+                patch('sys.stdout', io.StringIO()):
+            self.assertEqual(backup.run_job(self.env, job), 1)
+        job.assert_called_once_with()
+
+    def test_disabled_monitor_keeps_existing_job_usable(self):
+        job = Mock()
+        with patch.object(backup, 'build_opener') as factory, patch('sys.stdout', io.StringIO()):
+            self.assertEqual(backup.run_job(self.env, job), 0)
+        factory.assert_not_called()
+        job.assert_called_once_with()
+
+    def test_invalid_environment_never_pings_or_runs_job(self):
+        job = Mock()
+        with patch.object(backup, 'monitor_ping') as ping, patch('sys.stdout', io.StringIO()):
+            self.assertEqual(backup.run_job({**self.env, 'TECH_PHASE_PAYPAL_ENV': 'live'}, job), 1)
+        ping.assert_not_called()
+        job.assert_not_called()
+
+    def test_success_ping_waits_for_completed_job(self):
+        order = []
+        def ping(url, phase):
+            order.append(phase)
+            return 'sent'
+        with patch.object(backup, 'monitor_ping', side_effect=ping), \
+                patch('sys.stdout', io.StringIO()):
+            self.assertEqual(backup.run_job(self.env, lambda: order.append('completed')), 0)
+        self.assertEqual(order, ['start', 'completed', 'success'])
+
+    def test_completion_ping_failure_surfaces_without_rerunning_job(self):
+        job = Mock()
+        with patch.object(backup, 'monitor_ping', side_effect=['sent', 'failed']) as ping, \
+                patch('sys.stdout', io.StringIO()):
+            self.assertEqual(backup.run_job(self.env, job), 1)
+        job.assert_called_once_with()
+        self.assertEqual([c.args[1] for c in ping.call_args_list], ['start', 'success'])

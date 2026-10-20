@@ -12,6 +12,7 @@ import re
 import subprocess
 import tempfile
 from urllib.parse import urlsplit
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 SCHEMA = 'tech_phase_billing_sandbox'
 PREFIX = 'tech-phase/sandbox/v1/'
@@ -189,6 +190,52 @@ def restore_check(dump, root):
         run(prefix + ['pg_ctl', '-D', str(cluster), '-m', 'immediate', '-w', 'stop'])
 
 
+class NoMonitorRedirects(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def monitor_ping(url, phase):
+    """Send no payload, credentials or exception text; never follow redirects."""
+    if not url:
+        return 'disabled'
+    if (phase not in ('start', 'success', 'fail') or not re.fullmatch(
+            r'https://hc-ping\.com/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}', url)):
+        return 'failed'
+    suffix = '' if phase == 'success' else '/' + phase
+    try:
+        request = Request(url + suffix, data=b'', method='POST')
+        with build_opener(NoMonitorRedirects()).open(request, timeout=5) as response:
+            return 'sent' if response.status == 200 else 'failed'
+    except Exception:
+        return 'failed'
+
+
+def run_job(env=None, job=None):
+    env = os.environ if env is None else env
+    job = main if job is None else job
+    # A rejected environment must not mark an unrelated check healthy.
+    try:
+        validate_mode(env)
+    except Exception:
+        print(json.dumps({'event': 'TECH_PHASE_BACKUP_JOB_FAILED'}), flush=True)
+        return 1
+    url = env.get('TECH_PHASE_BACKUP_MONITOR_PING_URL', '')
+    started = monitor_ping(url, 'start')
+    try:
+        job()
+    except Exception:
+        finished = monitor_ping(url, 'fail')
+        print(json.dumps({'event': 'TECH_PHASE_BACKUP_JOB_FAILED',
+                          'monitor_start': started, 'monitor_finish': finished}), flush=True)
+        return 1
+    finished = monitor_ping(url, 'success')
+    print(json.dumps({'event': 'TECH_PHASE_BACKUP_MONITOR',
+                      'monitor_start': started, 'monitor_finish': finished}), flush=True)
+    # Preserve completed backup work, but surface broken monitoring to Railway.
+    return 1 if 'failed' in (started, finished) else 0
+
+
 def main():
     import boto3
     from botocore.config import Config
@@ -260,9 +307,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except Exception:
-        # Database and cloud exceptions can contain credentials or payment data.
-        print(json.dumps({'event': 'TECH_PHASE_BACKUP_JOB_FAILED'}), flush=True)
-        raise SystemExit(1)
+    raise SystemExit(run_job())
