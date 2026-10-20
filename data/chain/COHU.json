@@ -11,6 +11,10 @@
       "above": true
     },
     {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
       "ja": "競合",
       "en": "Competitors"
     }
@@ -64,7 +68,7 @@
       "name": "テラダイン",
       "sub": "半導体テスト装置",
       "sub_en": "Semiconductor test equipment",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -101,7 +105,7 @@
       "name": "KLA",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -124,7 +128,7 @@
       "name": "アドバンテスト",
       "sub": "半導体テスト装置",
       "sub_en": "Semiconductor test equipment",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -141,6 +145,58 @@
         }
       ],
       "name_en": "Advantest"
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体メーカー",
+      "sub_en": "Semiconductor maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cohuの年次報告は、STMicroelectronicsを連結売上高の10%以上を占めた顧客に挙げている",
+          "text_en": "Cohu's annual report lists STMicroelectronics among customers with 10% or more of consolidated net sales",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "During the last three years, the following customers comprised 10% or greater of our consolidated net sales: 2025 2024 2023 STMicroelectronics * * 12.0 %",
+            "note": "2023年に12.0%",
+            "note_en": "12.0% in 2023"
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "アナログ・デバイセズ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cohuの年次報告は、Analog Devicesを連結売上高の10%以上を占めた顧客に挙げている",
+          "text_en": "Cohu's annual report lists Analog Devices among customers with 10% or more of consolidated net sales",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774924004596/cohu20231230_10k.htm",
+            "level": "official",
+            "date": "2024-02-16",
+            "quote": "10% or greater of our consolidated net sales were as follows: 2023 2022 2021 STMicroelectronics 12.0 % * * Analog Devices * * 14.1 %",
+            "note": "2021年に14.1%で、やや古い情報",
+            "note_en": "14.1% in 2021; older information"
+          }
+        }
+      ],
+      "name_en": "Analog Devices"
     }
   ],
   "far": [],

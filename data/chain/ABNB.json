@@ -215,6 +215,81 @@
       "name_en": "Goldman Sachs"
     },
     {
+      "id": "TRIP",
+      "ticker": "TRIP",
+      "name": "Tripadvisor",
+      "sub": "旅行口コミ・体験予約",
+      "sub_en": "Travel reviews & experiences",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tripadvisor Groupの体験(ツアー・アクティビティ・アトラクション)の一部がAirbnbで予約できるようになる新たな提携を発表した",
+          "text_en": "Tripadvisor Group announced a new partnership to make a selection of its tours, activities and attractions available to book on Airbnb",
+          "source": {
+            "label": "Tripadvisor Group の発表",
+            "label_en": "Tripadvisor Group press release",
+            "url": "https://tripadvisor.mediaroom.com/2026-08-11-Tripadvisor-Group-and-Airbnb-Announce-Experiences-Partnership",
+            "level": "official",
+            "date": "2026-08-11",
+            "quote": "Tripadvisor Group today announced a new partnership with Airbnb that will make a selection of tours, activities, and attractions from Tripadvisor Group available to book on Airbnb.",
+            "note": "2026年8月11日のTripadvisor発表に基づきます。",
+            "note_en": "Per Tripadvisor’s August 11, 2026 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CART",
+      "ticker": "CART",
+      "name": "Instacart(Maplebear)",
+      "sub": "食料品配送",
+      "sub_en": "Grocery delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Airbnbの食料品配送サービスを、米国の25を超える都市でInstacartとの提携により提供している",
+          "text_en": "Airbnb offers grocery delivery in over 25 US cities in partnership with Instacart",
+          "source": {
+            "label": "Airbnb ニュースルーム",
+            "label_en": "Airbnb newsroom (2026 May Release)",
+            "url": "https://news.airbnb.com/en-au/2026-may-release-now-theres-even-more-to-airbnb/",
+            "level": "official",
+            "date": "2026-05-12",
+            "quote": "Available in over 25 US cities in partnership with Instacart.",
+            "note": "2026年5月のAirbnb発表に基づきます。",
+            "note_en": "Per Airbnb’s May 2026 release."
+          }
+        }
+      ]
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "Visa",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AirbnbはVisa Directを利用し、ホストが対象のVisaデビットカードに紐づく銀行口座へ収益を受け取れる選択肢を提供する",
+          "text_en": "Airbnb uses Visa Direct to let Hosts move earnings to a bank account tied to an eligible Visa debit card",
+          "source": {
+            "label": "Airbnb ニュースルーム",
+            "label_en": "Airbnb newsroom (joint Visa release)",
+            "url": "https://news.airbnb.com/visa-and-airbnb-partner-to-get-hosts-paid-faster-with-visa-direct/",
+            "level": "official",
+            "date": "2021-04-28",
+            "quote": "Through Airbnb’s use of Visa Direct 1 , Visa’s real-time 2 push payments platform, Hosts will have an option to move money from Airbnb to a bank account associated with an eligible Visa debit card.",
+            "note": "2021年4月の発表で、古い情報です。",
+            "note_en": "From an April 2021 announcement; older."
+          }
+        }
+      ]
+    },
+    {
       "id": "GOOG",
       "ticker": "GOOG",
       "name": "Alphabet(Google)",
