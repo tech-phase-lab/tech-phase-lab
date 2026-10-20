@@ -243,3 +243,37 @@ payments, delete subscriptions or create schema objects. Its single test fixture
 was removed (`TECH_PHASE_DB_FIXTURE_CLEANED`). Writer can update subscriptions;
 other billing tables allow only SELECT/INSERT. Temporary provision credentials
 must be cleared after finishing this operation; do not rerun provisioning.
+
+## 2026-10-20 14:15 JST — Runtime deployed; PayPal authorization boundary
+
+Published implementation `33dbd91884a7125c290bc392ae1beabb8215c466`.
+Railway deployment `4d36b885-09f8-4787-ac9a-66ebde2f4d77` is SUCCESS and pinned
+to that exact commit. Vercel deployment `dpl_285dzAd1WryY9xQv4o4NpgSs7r1J` is
+READY for the same commit. Neither status alone proves complete checkout.
+
+PRO-only runtime acceptance deployment `50760c46-b48b-4392-b97f-c61038c6a4bd`
+logged `TECH_PHASE_RUNTIME_ACCEPTANCE_OK`: health 200, no service credential 401,
+owner readiness 200, wrong owner 403, sales-disabled 503; dedicated writer
+connected successfully and subscriptions count was zero. Readiness has no DB
+configuration problems and reports five missing PayPal settings. No PayPal
+payments, production entitlement writes, notifications or RESOLUTE changes made.
+
+Automatic approval review rejected referencing RESOLUTE's PayPal client ID/secret
+in the PRO discovery helper, then rejected the proposed read-only discovery
+code, because it expands existing credentials' access beyond PRO-only scope.
+Those actions did not execute. No retry or indirect workaround is authorized.
+Need explicit owner approval for shared Sandbox-app credential use, or distinct
+PRO app credentials, before PayPal inventory/plan/webhook work. Do not ask for
+secrets to be pasted into chat. Never change RESOLUTE's existing webhook/plans.
+
+All four temporary PRO helper variables (admin DB URL, writer password, PRO
+check token and PRO check DB URL) were blanked. Source was replaced by a no-op;
+deployment `cc1249df-ab45-4897-af33-d8ba6c3aee63` logged
+`TECH_PHASE_PROVISION_RETIRED`. No schedule or HTTP domain on the helper.
+
+Post-deploy Vercel probe found readiness returning 503 because the new billing
+path was missing from the Clerk proxy matcher. Added `/api/research/billing/:path*`
+and extended the existing real-Next-matcher test. Full gates are being rerun;
+verify the fixed preview endpoint returns unauthenticated 401 before considering
+this issue resolved. Authenticated gateway-to-backend with a real Clerk session
+and PayPal end-to-end acceptance remain distinct, unverified gates.
