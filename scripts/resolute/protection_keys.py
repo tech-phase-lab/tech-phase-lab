@@ -1,10 +1,14 @@
-"""Offline age escrow. Never activates storage or generates a production key."""
+"""Offline age escrow and operator-local preparation. Never activates storage."""
 import argparse
 import hashlib
 import hmac
 import json
 import os
+from pathlib import Path
 import re
+import secrets
+import shutil
+import stat
 import subprocess
 import sys
 
@@ -77,9 +81,54 @@ def write_new(path, body):
         raise
 
 
+def keygen(args):
+    result = subprocess.run(['age-keygen', *args], stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, timeout=30, check=False)
+    if result.returncode or not 1 <= len(result.stdout) <= LIMIT:
+        raise ValueError('identity generation failed')
+    return result.stdout
+
+
+def prepare(directory, generate=keygen, run=age):
+    # Native Windows chmod does not enforce private ACLs. Fail closed there.
+    # Use a private POSIX filesystem (including WSL home, never /mnt/c).
+    if os.name != 'posix':
+        raise ValueError('private POSIX filesystem required')
+    directory = Path(directory)
+    parent = directory.parent.resolve(strict=True)
+    info = parent.stat()
+    if info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) & 0o077:
+        raise ValueError('owner-only parent directory required')
+    directory = parent / directory.name
+    directory.mkdir(mode=0o700)  # Existing paths/symlinks are never reused.
+    try:
+        info = directory.stat()
+        if stat.S_IMODE(info.st_mode) & 0o077:
+            raise ValueError('private permissions unavailable')
+        identity = generate([])
+        if not re.fullmatch(rb'(?:#[^\r\n]*\n)*AGE-SECRET-KEY-1[0-9A-Z]{58}\n?', identity):
+            raise ValueError('invalid identity output')
+        identity_path = directory / 'google-recovery-identity.txt'
+        write_new(identity_path, identity)
+        recipient = generate(['-y', str(identity_path)]).decode('ascii').strip()
+        cipher, receipt = seal(secrets.token_bytes(32), recipient, identity_path, run)
+        write_new(directory / 'evernote-recovery-capsule.age', cipher)
+        write_new(directory / 'google-integrity-pins.json',
+                  (json.dumps(receipt, sort_keys=True) + '\n').encode())
+        # Written last: absent marker means this directory is incomplete.
+        write_new(directory / 'local-preparation.json',
+                  b'{"state":"locally-verified","remoteCustodyVerified":false,"activated":false}\n')
+    except BaseException:
+        # Only remove the directory we exclusively created, never an older set.
+        shutil.rmtree(directory)
+        raise
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
+    initialize = sub.add_parser('prepare', help='Generate a fresh identity and sealed key locally; no activation')
+    initialize.add_argument('--directory', required=True)
     create = sub.add_parser('seal')
     create.add_argument('--recipient', required=True)
     restore = sub.add_parser('recover')
@@ -94,7 +143,10 @@ def main():
         command.add_argument('--output', required=True)
     args = parser.parse_args()
     try:
-        if args.command == 'seal':
+        if args.command == 'prepare':
+            prepare(args.directory)
+            print('{"state":"locally-verified","remoteCustodyVerified":false,"activated":false}')
+        elif args.command == 'seal':
             # Secret input is stdin, never an argument or environment dump.
             raw = sys.stdin.buffer.read(66)
             if not re.fullmatch(rb'[0-9a-f]{64}\n?', raw):

@@ -117,3 +117,83 @@ class KeyVerificationCliTests(unittest.TestCase):
                 keys.main()
         self.assertEqual(stopped.exception.code, 2)
         recover.assert_not_called()
+
+
+@unittest.skipUnless(os.name == 'posix', 'private POSIX filesystem required')
+class LocalPreparationTests(unittest.TestCase):
+    def setUp(self):
+        self.identity = b'AGE-SECRET-KEY-1' + b'A' * 58 + b'\n'
+        self.recipient = b'age1' + b'a' * 58 + b'\n'
+        self.generate = lambda args: self.recipient if args else self.identity
+        self.run = lambda args, body: b'test:' + body if args[0] == '-r' else body.removeprefix(b'test:')
+
+    def test_preparation_is_private_separate_and_not_remote_acceptance(self):
+        with tempfile.TemporaryDirectory() as parent:
+            output = Path(parent) / 'new'
+            keys.prepare(output, self.generate, self.run)
+            self.assertEqual(output.stat().st_mode & 0o777, 0o700)
+            for item in output.iterdir():
+                self.assertEqual(item.stat().st_mode & 0o777, 0o600)
+            self.assertEqual({p.name for p in output.iterdir()}, {
+                'google-recovery-identity.txt', 'google-integrity-pins.json',
+                'evernote-recovery-capsule.age', 'local-preparation.json'})
+            receipt = json.loads((output / 'google-integrity-pins.json').read_text())
+            marker = json.loads((output / 'local-preparation.json').read_text())
+            self.assertEqual(marker, {'state': 'locally-verified', 'remoteCustodyVerified': False, 'activated': False})
+            self.assertNotIn('AGE-SECRET', json.dumps(receipt))
+            recovered = keys.recover((output / 'evernote-recovery-capsule.age').read_bytes(),
+                                     output / 'google-recovery-identity.txt',
+                                     receipt['capsuleSha256'], receipt['keyFingerprint'], self.run)
+            self.assertEqual(len(recovered), 32)
+
+    def test_existing_directory_and_symlink_are_never_overwritten(self):
+        with tempfile.TemporaryDirectory() as parent:
+            old = Path(parent) / 'old'
+            old.mkdir()
+            (old / 'keep').write_text('original')
+            link = Path(parent) / 'link'
+            link.symlink_to(old, target_is_directory=True)
+            for output in (old, link):
+                with self.assertRaises(FileExistsError):
+                    keys.prepare(output, self.generate, self.run)
+            self.assertEqual((old / 'keep').read_text(), 'original')
+
+    def test_shared_parent_rejected_before_key_generation(self):
+        with tempfile.TemporaryDirectory() as parent:
+            os.chmod(parent, 0o755)
+            with patch.object(keys, 'secrets') as random, self.assertRaises(ValueError):
+                keys.prepare(Path(parent) / 'new', self.generate, self.run)
+            random.token_bytes.assert_not_called()
+
+    def test_failed_decryption_removes_partial_identity_and_capsule(self):
+        with tempfile.TemporaryDirectory() as parent:
+            output = Path(parent) / 'new'
+            def failed(args, body):
+                if args[0] == '-d':
+                    raise ValueError('private subprocess detail')
+                return self.run(args, body)
+            with self.assertRaises(ValueError):
+                keys.prepare(output, self.generate, failed)
+            self.assertFalse(output.exists())
+
+    def test_invalid_identity_is_rejected_and_cleaned(self):
+        with tempfile.TemporaryDirectory() as parent:
+            output = Path(parent) / 'new'
+            with self.assertRaises(ValueError):
+                keys.prepare(output, lambda args: b'invalid', self.run)
+            self.assertFalse(output.exists())
+
+    def test_native_windows_fails_before_creating_anything(self):
+        with patch.object(keys.os, 'name', 'nt'), patch.object(keys, 'keygen') as generate:
+            with self.assertRaises(ValueError):
+                keys.prepare('unused')
+        generate.assert_not_called()
+
+    def test_prepare_cli_never_prints_private_values(self):
+        out, err = io.StringIO(), io.StringIO()
+        with patch('sys.argv', ['keys', 'prepare', '--directory', 'private']), \
+                patch('sys.stdout', out), patch('sys.stderr', err), \
+                patch.object(keys, 'prepare', side_effect=ValueError('SECRET')):
+            self.assertEqual(keys.main(), 1)
+        self.assertEqual(out.getvalue(), '')
+        self.assertEqual(err.getvalue(), 'RESOLUTE_KEY_ESCROW_FAILED\n')

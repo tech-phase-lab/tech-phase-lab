@@ -241,3 +241,26 @@ previously documented; actual production key creation/custody/readback and
 production activation remain pending. Do not call customer saving operational.
 Other contributor commit d1a76eaa was fast-forwarded before this docs-only record;
 its account navigation/recovery changes were preserved unchanged.
+
+## 2026-10-20 — Operator-local key preparation implemented
+
+Added protection_keys.py prepare: fresh native age identity plus random 32-byte
+key, authenticated local round trip, separate Google identity/pins and Evernote
+capsule, no plaintext online key file, exclusive private directory, redacted
+errors and partial-output cleanup. The final marker explicitly says remote
+custody is unverified and activation is false. Existing directories/symlinks are
+never overwritten. Owner-only POSIX parent required; native Windows fails closed
+because chmod does not establish ACLs. WSL Linux home is documented but has not
+been tested here. See RESOLUTE-KEY-ESCROW.md for exact commands and destinations.
+
+All 18 escrow tests passed, including seven new preparation regressions. Actual
+age1.3.2 disposable prepare/verify, wrong identity, tampering, repeat execution
+and permission checks passed; disposable secrets removed. No production key was
+created or installed. Google/Evernote production custody/readback remains an
+owner operation; the earlier disposable rehearsal does not close that gate.
+No service, domain, environment flag, DB privilege/schema, mail, payment, AI,
+cron or reservation was changed by this work.
+
+Final integrated local gates on base9035f632: Node1198/1198, Python2515/2515
+(254.752s), lint0 errors/5 existing warnings, Next build, compileall and diff
+check passed. Owner-facing Japanese instructions: RESOLUTE-KEY-CUSTODY-OWNER.md.

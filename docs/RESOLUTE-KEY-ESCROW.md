@@ -111,3 +111,61 @@ now passed, followed by verified service/domain/credential retirement. See
 RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for actual logs and browser evidence.
 Production key custody remains pending; the disposable rehearsal is not a
 production key. No key, migration, saving flag or mail capability was activated.
+
+## Operator-local preparation — 2026-10-20
+
+`prepare` now creates a fresh native age identity and random 32-byte protection
+key on the operator's own device, seals and authenticates the capsule, and emits
+only a non-secret status. It does not install the key or contact any service.
+Never run it in a chat-hosted workspace to create production custody material.
+Local preparation is not proof of Google/Evernote retrieval.
+
+Prerequisites: Python 3 and trusted `age`/`age-keygen` on PATH. This operation
+supports owner-only POSIX filesystems. Native Windows is deliberately rejected
+because chmod does not establish Windows ACLs. On Windows, use an existing WSL
+Linux home directory, never a Windows-mounted `/mnt/c` directory. WSL itself has
+not been acceptance-tested here; do not infer native Windows support. If this
+workstation setup is unavailable, resolve that before asking the owner to run it.
+
+In a local terminal, from the checked repository, create a private parent outside
+any repository, shared/synced folder or application credentials directory:
+
+```sh
+mkdir -m 700 "$HOME/resolute-key-custody"
+python3 scripts/resolute/protection_keys.py prepare \
+  --directory "$HOME/resolute-key-custody/production-20261020"
+```
+
+An existing output directory (including a symlink) is rejected without changes.
+A failed preparation removes only its newly created partial directory. This is
+cleanup, not a promise of secure erasure from disk snapshots. Do not delete an
+older key set to retry; select a new directory after understanding the error.
+
+Save the generated items in separate destinations:
+
+| Local file | Destination |
+| --- | --- |
+| google-recovery-identity.txt | New Google Password Manager entry, private identity as password; never overwrite the rehearsal entry |
+| google-integrity-pins.json | Notes in that same Google entry; retain both named pins exactly |
+| evernote-recovery-capsule.age | New Evernote production recovery note, encrypted attachment only |
+| local-preparation.json | Local status only; remoteCustodyVerified and activated remain false |
+
+Never upload the entire directory, the private identity, or Google screenshots
+to chat, Evernote or the repository. No plaintext online protection key is
+written. File permissions are 0600 and the new directory is 0700.
+
+Close both apps, reopen the new Google entry, redisplay the private identity and
+both pins, and download the actual attachment again from Evernote. Use the
+existing `verify` command above with that downloaded capsule and an identity
+file reconstructed locally from the Google entry, using the pins redisplayed
+from Google. Do not use the original local identity as evidence of Google
+retrieval. A successful command prints only `{"state":"verified"}`; that
+non-secret result may be shared. Record the actual custody entry identifiers
+without passwords. Keep the original private set until retrieval is confirmed;
+retention/cleanup and installation are separate operator actions.
+
+Validation: all 18 key-escrow unit tests passed. With actual age 1.3.2 and
+fresh disposable identities, prepare + verify passed; wrong identity, modified
+ciphertext and repeated preparation were rejected; existing bytes were retained
+and permissions checked. Disposable test directories were removed. No production
+identity/key was generated, installed, remotely retrieved or activated.
