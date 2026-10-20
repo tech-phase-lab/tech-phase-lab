@@ -1,4 +1,4 @@
-import {candidatesFromFeed,generate,publicationBounds} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,publicationBounds} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
@@ -15,14 +15,20 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
  const claim=await selectionPool.query(`INSERT INTO public.resolute_rizel_daily_runs(day,state,started_at)
  VALUES($1,'processing',$2) ON CONFLICT DO NOTHING RETURNING day`,[day,now.toISOString()]);
  if(!claim.rows.length)return {state:'already-claimed',day};
- const refs=[];
+ const refs=[];let stage='source',diagnostics;
  try{
-  const candidates=candidatesFromFeed(await readFeed(),now,{allowDateOnly:true}),seen=new Set();
+  const intake=inspectCandidateFeed(await readFeed(),now,{allowDateOnly:true});
+  diagnostics={...intake.diagnostics,outsideDailyWindow:0,duplicateHeadline:0,overDailyLimit:0};
+  const candidates=intake.candidates,seen=new Set();
   const selected=candidates.filter(c=>{
-   if(now.getTime()-publicationBounds(c.publishedAt).earliest>96*3600000||seen.has(c.fingerprint))return false;
+   if(now.getTime()-publicationBounds(c.publishedAt).earliest>96*3600000){diagnostics.outsideDailyWindow++;return false;}
+   if(seen.has(c.fingerprint)){diagnostics.duplicateHeadline++;return false;}
    seen.add(c.fingerprint);return true;
-  }).slice(0,3);
+  });
+  diagnostics.overDailyLimit=Math.max(0,selected.length-3);selected.splice(3);
+  stage='storage';
   await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET candidate_count=$2 WHERE day=$1',[day,selected.length]);
+  stage='generation';
   for(const candidate of selected){
    const draft=await summarize(candidate,budgetPool,now,fetcher);
    if(!draft)continue;
@@ -35,10 +41,13 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET selection_refs=$2 WHERE day=$1',[day,JSON.stringify(refs)]);
   }
   if(selected.length&&!refs.length)throw Error('NO_VERIFIED_OUTPUT');
-  await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='ready',finished_at=$2 WHERE day=$1",[day,now.toISOString()]);
-  return {state:'ready',day,count:refs.length,publication:'withheld'};
+  stage='readback';
+  await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='ready',finished_at=$2 WHERE day=$1",[day,new Date().toISOString()]);
+  const saved=(await selectionPool.query('SELECT state,candidate_count,selection_refs,publication FROM public.resolute_rizel_daily_runs WHERE day=$1',[day])).rows[0];
+  if(saved?.state!=='ready'||saved.candidate_count!==selected.length||saved.publication!=='withheld'||!Array.isArray(saved.selection_refs)||saved.selection_refs.length!==refs.length||refs.some((ref,i)=>saved.selection_refs[i]?.articleId!==ref.articleId||saved.selection_refs[i]?.articleRevision!==ref.articleRevision))throw Error('READBACK_MISMATCH');
+  return {state:refs.length?'ready':'no-candidates',day,count:refs.length,publication:'withheld',storageVerified:true,diagnostics};
  }catch{
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='failed',finished_at=$2 WHERE day=$1",[day,now.toISOString()]);
-  throw Error('PRIVATE_DAILY_REVIEW_FAILED');
+  const error=new Error('PRIVATE_DAILY_REVIEW_FAILED');error.stage=stage;error.diagnostics=diagnostics;throw error;
  }
 }

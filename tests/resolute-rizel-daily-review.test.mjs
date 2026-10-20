@@ -17,7 +17,7 @@ test('private morning path claims once, passes no inferred evidence, and never w
   assert.equal((await prepareDailyReview({...opts,now:new Date('2026-10-16T22:00:00Z')})).state,'outside-window');
   assert.equal((await prepareDailyReview({...opts,now:new Date('2026-10-14T21:59:00Z')})).state,'outside-window');
   assert.equal(reads,0);
-  assert.deepEqual(await prepareDailyReview(opts),{state:'ready',day:'2026-10-15',count:1,publication:'withheld'});
+  const result=await prepareDailyReview(opts);assert.equal(result.state,'ready');assert.equal(result.day,'2026-10-15');assert.equal(result.count,1);assert.equal(result.publication,'withheld');assert.equal(result.storageVerified,true);assert.equal(result.diagnostics.inspected,1);
   assert.equal((await prepareDailyReview(opts)).state,'already-claimed');assert.equal(calls,1);assert.equal(reads,1);
   const row=(await db.query('SELECT * FROM resolute_rizel_daily_runs')).rows[0];assert.equal(row.state,'ready');assert.equal(row.publication,'withheld');assert.equal(row.selection_refs.length,1);
   const tables=(await db.query("SELECT tablename FROM pg_tables WHERE schemaname='public'")).rows.map(r=>r.tablename);assert.deepEqual(tables,['resolute_rizel_daily_runs']);
@@ -30,8 +30,8 @@ test('source outage and unsupported summaries fail closed without an automatic p
   try{await assert.rejects(prepareDailyReview(opts),/PRIVATE_DAILY_REVIEW_FAILED/);assert.equal((await prepareDailyReview(opts)).state,'already-claimed');assert.equal(calls,unavailable?0:1);assert.equal((await db.query('SELECT state FROM resolute_rizel_daily_runs')).rows[0].state,'failed');}finally{await db.close();}
  }
 });
-test('fresh successful empty intake is distinguishable from failure',async()=>{
- const db=await setup();try{assert.equal((await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({...feed,items:[]})})).count,0);}finally{await db.close();}
+test('empty intake is never reported as a generated-news success',async()=>{
+ const db=await setup();try{const result=await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({...feed,items:[]})});assert.equal(result.count,0);assert.equal(result.state,'no-candidates');assert.equal(result.storageVerified,true);assert.equal(result.diagnostics.inspected,0);}finally{await db.close();}
 });
 
 test('private daily review keeps a source date unchanged and excludes uncertain freshness',async()=>{
@@ -43,4 +43,31 @@ test('private daily review keeps a source date unchanged and excludes uncertain 
  select:async x=>({state:'selected',publication:'withheld',articleId:x.article.id,articleRevision:'private-date'})});
  assert.deepEqual(seen,['2026-10-13']);assert.equal(result.count,1);
  }finally{await db.close();}
+});
+
+test('zero output reports coverage and rejection reasons without model calls',async()=>{
+ const db=await setup();let calls=0;
+ try{
+ const result=await prepareDailyReview({enabled:true,now,selectionPool:db,
+  readFeed:async()=>({ok:true,enabled:false,items:[],officialUpdates:[
+   {...feed.items[0],bodyEn:''},
+   {...feed.items[0],title:'NVIDIA announces a new product',url:'https://example.com/positive'},
+   {...feed.items[0],title:'AI risk warning',publishedAt:'2020-01-01T00:00:00Z',url:'https://example.com/old'}],analystUpdates:[{},{}]}),
+  summarize:async()=>{calls++;throw Error('must not generate');}});
+ assert.equal(result.state,'no-candidates');assert.equal(result.storageVerified,true);assert.equal(calls,0);
+ assert.equal(result.diagnostics.generalEnabled,false);assert.equal(result.diagnostics.inspected,3);
+ assert.equal(result.diagnostics.rejected.body,1);assert.equal(result.diagnostics.rejected.noDownsideHeadline,1);
+ assert.equal(result.diagnostics.rejected.date,1);assert.equal(result.diagnostics.unconsumedAnalystCount,2);
+ }finally{await db.close();}
+});
+
+test('missing or inconsistent saved result cannot be reported as verified',async()=>{
+ for(const row of [null,{state:'ready',candidate_count:1,selection_refs:[],publication:'withheld'},
+  {state:'ready',candidate_count:0,selection_refs:[],publication:'public'}]){
+ const db=await setup();const pool={query:async(sql,args)=>sql.startsWith('SELECT state,candidate_count')?{rows:row?[row]:[]}:db.query(sql,args)};
+ try{
+ await assert.rejects(prepareDailyReview({enabled:true,now,selectionPool:pool,readFeed:async()=>({...feed,items:[]})}),error=>error.stage==='readback');
+ assert.equal((await db.query('SELECT state FROM resolute_rizel_daily_runs')).rows[0].state,'failed');
+ }finally{await db.close();}
+ }
 });

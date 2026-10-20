@@ -1721,3 +1721,14 @@ do not enable the transport or mistake these tests for deployed acceptance.
 See services/resolute-recovery/README.md for the remaining adapter contract.
 Integrated remote16b5a166 without changing others' UI/data. Earlier CI39286167172
 was cancelled by later pushes, not a pass. No live configuration/schedule changes.
+
+## 2026-10-20 morning — zero-output investigation
+
+07:02 worker logged ready/count0. Independent read-only DB inspection confirmed
+candidate_count0 and saved_count0, publication withheld. Live source is reachable,
+but general-news intake is disabled. At09:18 the exact reader/sanitizer/selector
+inspected72 official entries: body27, unrelated16, no-downside-headline28 rejected;
+one remaining candidate exceeded96h. This is current-feed evidence, not historical
+07:02 replay. Added no-candidates outcome, aggregate reasons/coverage and mandatory
+DB readback before reporting success. See RESOLUTE-MORNING-2026-10-20.md. No AI,
+mail, sales, daily claim reset or schedule/reservation change in the diagnostic.

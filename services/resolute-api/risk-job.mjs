@@ -16,23 +16,29 @@ export function publicationBounds(value){
  if(!/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+-]\d{2}:\d{2})$/.test(value))return null;
  const time=Date.parse(value);return Number.isFinite(time)?{earliest:time,latest:time}:null;
 }
-export function candidatesFromFeed(feed,now=new Date(),{allowDateOnly=false}={}){
+export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={}){
  if(!feed||feed.ok!==true||typeof feed.enabled!=='boolean'||!Array.isArray(feed.items)||feed.items.length>500)throw Error('SOURCE_UNAVAILABLE');
  // enabled controls only the general-news lane; officialUpdates remains independent.
  if(feed.officialUpdates!==undefined&&!Array.isArray(feed.officialUpdates))throw Error('SOURCE_UNAVAILABLE');
  if(!feed.enabled&&feed.officialUpdates===undefined)throw Error('SOURCE_UNAVAILABLE');
  const raw=[...(feed.enabled?feed.items:[]),...(feed.officialUpdates??[])];if(raw.length>1000)throw Error('SOURCE_LIMIT');const unique=new Map();
- for(const a of raw){if(a.pendingResearch||a.brief||a.confidence==='low')continue;const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');if(typeof title!=='string'||!body||body.length<100||body.length>24000||!relevant.test(title+' '+body)||!negative.test(title))continue;
+ const rejected={partial:0,body:0,unrelated:0,noDownsideHeadline:0,date:0,url:0,duplicateUrl:0};
+ for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
+ if(typeof title!=='string'||!body||body.length<100||body.length>24000){rejected.body++;continue;}
+ if(!relevant.test(title+' '+body)){rejected.unrelated++;continue;}
+ if(!negative.test(title)){rejected.noDownsideHeadline++;continue;}
  const publishedAt=a.publishedAt??(allowDateOnly?a.publishedOn:undefined),bounds=publicationBounds(publishedAt);
- if(!bounds||!allowDateOnly&&publishedAt.length===10||bounds.latest>now.getTime()||now.getTime()-bounds.earliest>7*86400000)continue;
- let u;try{u=new URL(a.url);}catch{continue;}if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048)continue;u.hash='';for(const key of [...u.searchParams.keys()])if(key.startsWith('utm_'))u.searchParams.delete(key);
+ if(!bounds||!allowDateOnly&&publishedAt.length===10||bounds.latest>now.getTime()||now.getTime()-bounds.earliest>7*86400000){rejected.date++;continue;}
+ let u;try{u=new URL(a.url);}catch{rejected.url++;continue;}if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048){rejected.url++;continue;}u.hash='';for(const key of [...u.searchParams.keys()])if(key.startsWith('utm_'))u.searchParams.delete(key);
  // Official status requires a primary-source host, not merely placement in officialUpdates.
  const host=u.hostname.replace(/^www\./,''),sns=['x.com','twitter.com'].includes(host);
  const primary=['nvidia.com','investor.nvidia.com','ir.micron.com','micron.com','tsmc.com','pr.tsmc.com','asml.com','nebius.com','ir.amd.com','amd.com','sec.gov','bis.gov','federalreserve.gov'].includes(host);
  const id=hash(u.href),fingerprint=hash(title.normalize('NFKC').replace(/\s/g,''));
+ if(unique.has(id))rejected.duplicateUrl++;
  unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:publishedAt.length===10?publishedAt:new Date(publishedAt).toISOString(),source:primary?'official':sns?'sns':'report',fingerprint});
- }return [...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
+ }return {candidates:[...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)),diagnostics:{generalEnabled:feed.enabled,generalCount:feed.items.length,officialCount:feed.officialUpdates?.length??0,inspected:raw.length,rejected,coverage:'configured-feed-only',unconsumedMarketCount:feed.marketUpdates?.length??0,unconsumedAnalystCount:feed.analystUpdates?.length??0}};
 }
+export function candidatesFromFeed(feed,now=new Date(),options={}){return inspectCandidateFeed(feed,now,options).candidates;}
 const strings={type:'string'};
 const copy={type:'object',additionalProperties:false,properties:{title:strings,source:strings,content:strings,duration:strings},required:['title','source','content','duration']};
 const fact={type:'object',additionalProperties:false,properties:{scope:{type:'string',enum:['company','sector','market','unknown']},duration:{type:'string',enum:['days','months','years','unknown']},impact:{type:'string',enum:['opinion','possible','confirmed','unknown']}},required:['scope','duration','impact']};
