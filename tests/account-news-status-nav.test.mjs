@@ -90,3 +90,17 @@ test("account service failure is localized and offers recovery without a loaded 
   assert.match(en, /Back to home/);
   assert.doesNotMatch(en, /[ぁ-んァ-ヶ一-龠]/);
 });
+
+
+test("paid access expiry is bilingual, explicit about timezone, and never presented as a billing date", () => {
+  const member = { ...owner, ownerMode: false, isAdmin: false, accessExpiresAt: Date.parse("2027-01-20T03:00:00Z") };
+  for (const lang of ["ja", "en"]) {
+    const { html } = render(member, lang);
+    assert.match(html, /dateTime="2027-01-20T03:00:00.000Z"/);
+    assert.match(html, lang === "ja" ? /PRO利用期限/ : /PRO access until/);
+    assert.doesNotMatch(html, /次回請求|Next billing/);
+    for (const invalid of [{ownerMode:true}, {testing:true}, {plan:"free"}, {accessExpiresAt:0}, {accessExpiresAt:NaN}, {accessExpiresAt:Infinity}, {accessExpiresAt:1e20}]) {
+      assert.doesNotMatch(render({...member,...invalid},lang).html, /<time/);
+    }
+  }
+});

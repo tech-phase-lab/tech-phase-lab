@@ -16,6 +16,10 @@ test('member notification routes enforce verified identity, expiry and fixed own
   for(const [member,status] of [[{status:'unavailable'},503],[{status:'signed-out'},401],[{status:'signed-in',plan:'free'},403],[{status:'signed-in',plan:'pro',accessExpiresAt:0},403]]) {
    globalThis.__pushMember=member;assert.equal((await POST(req())).status,status);
   }
+  for (const expiry of [0, Date.now()-1, undefined, NaN]) {
+   globalThis.__pushMember={status:'signed-in',plan:'pro',accessExpiresAt:expiry};
+   assert.equal((await (await GET()).json()).reason,'pro-required');
+  }
   assert.equal(calls.length,0);
   globalThis.__pushMember={status:'signed-in',userId:'user_owner',plan:'pro',accessExpiresAt:Date.now()+60000};
   for(const action of ['register','status','test','remove']) assert.equal((await POST(req(action))).status,200);

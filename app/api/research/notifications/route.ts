@@ -21,7 +21,7 @@ export async function GET() {
     const member = await getMembership();
     if (member.status === "unavailable") return Response.json({ enabled: false }, { status: 503, headers });
     if (member.status !== "signed-in") return Response.json({ enabled: false, reason: "sign-in" }, { headers });
-    if (member.plan !== "pro") return Response.json({ enabled: false, reason: "pro-required" }, { headers });
+    if (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now()) return Response.json({ enabled: false, reason: "pro-required" }, { headers });
     const config = await monitor("/push/config");
     return Response.json({ enabled: config.enabled === true && config.memberAccessVersion === 1,
       publicKey: config.memberAccessVersion === 1 ? config.publicKey : "", validUntil: member.accessExpiresAt }, { headers });

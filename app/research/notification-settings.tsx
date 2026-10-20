@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { waitForIdentity } from "@/lib/research/member-recovery";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 
@@ -15,42 +16,62 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
   const [testSent, setTestSent] = useState(false);
   const [received, setReceived] = useState(false);
   const [retryAt, setRetryAt] = useState(0);
+  const inspection = useRef(0);
+  const operation = useRef(false);
+  const pendingInspection = useRef(false);
+  const [refresh, setRefresh] = useState(0);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
+    let requestController: AbortController | undefined;
+    let resumeTimer: ReturnType<typeof setTimeout> | undefined;
     let expiryTimer: ReturnType<typeof setTimeout> | undefined;
     async function inspect() {
+      if (operation.current) { pendingInspection.current = true; return; }
+      pendingInspection.current = false;
+      const current = ++inspection.current;
+      requestController?.abort();
+      requestController = new AbortController();
+      const signal = AbortSignal.any([requestController.signal, AbortSignal.timeout(15_000)]);
+      const active = () => !cancelled && current === inspection.current && !signal.aborted;
       clearTimeout(expiryTimer);
+      setState("checking"); setKey(""); setTestSent(false); setReceived(false); setMessage("");
       try {
-        const response = await fetch("/api/research/notifications", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
+        const response = await fetch("/api/research/notifications", { cache: "no-store", signal });
         const config = await response.json();
-        if (cancelled) return;
+        if (!active()) return;
         // Resolve membership before device guidance so signed-out and Free users
         // are not asked to change permissions for a feature they cannot use yet.
         const supported = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
-        const registration = supported ? await navigator.serviceWorker.getRegistration("/research") : undefined;
-        const subscription = await registration?.pushManager.getSubscription();
-        if (cancelled) return;
+        const registration = supported ? await waitForIdentity(navigator.serviceWorker.getRegistration("/research"), signal) : undefined;
+        const subscription = registration ? await waitForIdentity(registration.pushManager.getSubscription(), signal) : undefined;
+        if (!active()) return;
         setHasSubscription(Boolean(subscription));
         if (config.reason === "sign-in" || config.reason === "pro-required") { setState(config.reason); return; }
         if (!response.ok || !config.enabled || !config.publicKey) { setState("unavailable"); return; }
+        if (!Number.isFinite(config.validUntil) || config.validUntil <= Date.now()) { setState("pro-required"); return; }
+        // A capped browser timer is a recheck, not proof that paid access expired.
+        expiryTimer = setTimeout(() => { void inspect(); }, Math.min(config.validUntil - Date.now(), 2_147_483_647));
         if (!supported) { setState("unsupported"); return; }
         if (Notification.permission === "denied") { setState("blocked"); return; }
         setKey(config.publicKey);
         if (subscription) {
-          const check = await fetch("/api/research/notifications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "status", subscription: subscription.toJSON() }), signal: AbortSignal.timeout(15_000) });
+          const check = await fetch("/api/research/notifications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "status", subscription: subscription.toJSON() }), signal });
           const result = await check.json();
-          if (!cancelled) setState(check.status === 401 ? "sign-in" : check.status === 403 ? "pro-required" : check.ok && result.ok ? result.registered ? "on" : "off" : "unknown");
-        } else if (!cancelled) setState("off");
-        if (!cancelled && Number.isFinite(config.validUntil)) expiryTimer = setTimeout(() => { setState("pro-required"); setTestSent(false); setReceived(false); }, Math.max(0, Math.min(config.validUntil - Date.now(), 2_147_483_647)));
-      } catch { if (!cancelled) setState("unavailable"); }
+          if (active()) setState(check.status === 401 ? "sign-in" : check.status === 403 ? "pro-required" : check.ok && result.ok ? result.registered ? "on" : "off" : "unknown");
+        } else if (active()) setState("off");
+      } catch { if (!cancelled && current === inspection.current) setState("unavailable"); }
     }
+    const visible = () => { if (document.visibilityState === "visible") { clearTimeout(resumeTimer); resumeTimer = setTimeout(() => { void inspect(); }, 0); } };
     void inspect();
-    window.addEventListener("focus", inspect);
+    window.addEventListener("focus", visible);
+    window.addEventListener("pageshow", visible);
+    window.addEventListener("online", visible);
+    document.addEventListener("visibilitychange", visible);
     window.addEventListener("tech-phase:membership-changed", inspect);
-    return () => { cancelled = true; clearTimeout(expiryTimer); window.removeEventListener("focus", inspect); window.removeEventListener("tech-phase:membership-changed", inspect); };
-  }, [open]);
+    return () => { cancelled = true; requestController?.abort(); clearTimeout(expiryTimer); clearTimeout(resumeTimer); window.removeEventListener("focus", visible); window.removeEventListener("pageshow", visible); window.removeEventListener("online", visible); document.removeEventListener("visibilitychange", visible); window.removeEventListener("tech-phase:membership-changed", inspect); };
+  }, [open, refresh]);
   async function request(action: string, subscription: PushSubscription) {
     const response = await fetch("/api/research/notifications", {
       method: "POST", headers: { "Content-Type": "application/json" },
@@ -63,7 +84,9 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
     return result;
   }
   async function run(action: "enable" | "disable" | "status" | "test") {
-    if (busy) return;
+    if (operation.current) return;
+    operation.current = true;
+    inspection.current++; // An older inspection must not overwrite this device action.
     setBusy(true); setMessage("");
     try {
       if (action === "enable") {
@@ -114,7 +137,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
         setMessage(result.accepted ? t("送信を受け付けました。スマホに届いたら「届きました」を押してください。", "Send accepted. Select Received after it appears on your phone.") : failure);
       }
     } catch (error) { setMessage(error instanceof Error ? error.message : t("接続を確認してください。", "Check your connection.")); if (action === "enable") setState(current => current === "sign-in" || current === "pro-required" ? current : "unknown"); }
-    finally { setBusy(false); }
+    finally { operation.current = false; setBusy(false); if (pendingInspection.current) setRefresh(value => value + 1); }
   }
   const label = { "sign-in": t("通知を利用するにはログインしてください", "Sign in to use notifications"), "pro-required": t("スマホ通知はPRO会員向けです", "Phone notifications are available with PRO"), checking: t("確認中…", "Checking…"), off: t("この端末：通知オフ", "This device: off"), on: t("この端末：通知オン", "This device: on"), unknown: t("この端末：登録状態を確認", "This device: verify registration"), blocked: t("この端末：通知が許可されていません", "This device: permission blocked"), unsupported: t("このブラウザでは通知を利用できません", "Notifications unavailable in this browser"), unavailable: t("通知サービスに接続できません", "Notification service unavailable") }[state];
   const usable = ["off", "on", "unknown"].includes(state);
@@ -123,6 +146,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
     {open && <div id="price-target-notifications" className={styles.notificationBody}>
       <strong className={styles.notificationTitle}>{t("目標株価・決算速報のスマホ通知", "Price target and earnings phone alerts")}</strong>
       <p role="status">{label}</p>
+      {(state === "unavailable" || state === "checking") && <button type="button" disabled={busy} onClick={() => setRefresh(value => value + 1)}>{t("再確認", "Try again")}</button>}
       {(state === "sign-in" || state === "pro-required") && <Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link>}
       {!usable && hasSubscription && <button type="button" disabled={busy} onClick={() => void run("disable")}>{t("この端末の通知をオフ", "Turn off on this device")}</button>}
       {state === "unsupported" && <p>{t("iPhoneではSafariの共有メニューからホーム画面に追加し、そのアイコンから開いてください。", "On iPhone, add this site to your Home Screen using Safari’s Share menu, then open that icon.")}</p>}
