@@ -83,3 +83,64 @@ matched source. This checks the payload, not the currently deployed launcher or
 an actual Railway execution. Regenerate from the final reviewed source if changed.
 
 Final integrated local validation on base86a329d4: Node1207/1207, Python2520/2520 (278.110s), lint0 errors/5 existing warnings, Next build, compileall and diff check passed. No production deployment or new live recovery pass is claimed.
+
+
+## 2026-10-20 13:26–13:29 JST — Restore V2 deployed, execution still unverified
+
+Installed the c792d51d three-module bundle in restore-check service
+c0eec3c0-cdd2-47da-bd48-fef21e30934b as new
+RESOLUTE_PROTECTED_JOB_V2_B64; retained both older job variables. Changed only
+startCommand to select V2, then redeployed3aaa54dc-91e4-40db-8547-7f19fc77a99a.
+The launcher requires restore mode, verifies bundle digest and exact module set,
+compiles/extracts the three files, runs backup.py and removes the temporary files.
+Local extraction/source equality/cleanup checks passed. Bundle SHA256 remains
+0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d;
+launcher SHA256 df78d35f2309dab2161f82c8145ae9c0a59f16e99c41957825d876f24e8f382f.
+
+Readback: deployment SUCCESS, state cronReady, no staged changes, domains or
+volumes; weekly cron remains0 0 * * 1. No runtime result was returned by bounded
+log reads, including an explicit time window. One restart also left cronReady
+with no execution result. Therefore neither an actual restore nor online-history
+provider reads are claimed successful. Do not repeat deploy/restart to substitute
+for a cron run. Official Railway docs distinguish railway cron run from redeploy;
+the installed remote connector does not expose cron run, and this workspace has
+no Railway CLI or token authentication. A dashboard manual Run or an authorized
+browser fallback is still needed; never alter the schedule to force a run.
+
+Morning service006aea7e was read back unchanged: pin20a3069e, deploymentb43e335e,
+cron0 22 * * 0-4, no staged changes. No customer-save flag, production key,
+DB schema/privilege, mail, payment, AI invocation or reservation changed.
+GitHub CI39369328863: payment concurrency passed; main validation still running
+at this observation. Do not report overall CI success yet.
+
+
+## 2026-10-20 13:47–13:49 JST — Actual old-version restore passed; V2 redeployed
+
+Owner clicked Run now. Deployment3aaa54dc's actual04:47:38Z structured logs
+show RESOLUTE_RESTORE_OK:69247 encrypted bytes, probe_rows2, Sandbox
+orders11/grants7/events8/audit32/alert_outbox7, live ledger verified with all
+five counts0. Download/decryption/checksums/pg_restore/probe/PK/both payment
+integrity checks passed in2.355s; monitor_ping_sent=true. Cron execution status
+succeeded, no running replica afterward. data_protection=not_installed is
+expected while application storage schemas are absent, not a protection pass.
+
+Crucially, the same execution logged bundle commitdb418e7 and digest
+aab5c9ca86efbf2bc1af5ca7cd6d25c783aee9a9cbc0499b41c4ae555bc3c151.
+Thus the earlier c792 V2 deployment claim established configuration only:
+redeploy reused the old execution configuration despite describe-service showing
+the V2 start command. The actual run is NOT evidence of executing c792d51d.
+
+Corrective operation: added a fixed c792d51d/bundle-digest marker to the V2
+launcher, then set RESOLUTE_PROTECTED_JOB_V2_B64 with skipDeploys=false so a
+fresh deployment is generated from current settings. New deployment
+c6ef3efc-604c-4133-8a4d-91c319f5b0f0 reached SUCCESS at13:49 JST with V2 start
+command and unchanged weekly cron; no staged changes. New launcher digest
+259c9cadbb0811358ac9bee290bf32bf48a9c76cdf9af65e887cc0eb64224672.
+Old variables retained. A fresh manual Run now is still required; verify the
+c792d51d marker AND RESOLUTE_RESTORE_OK before accepting this deployment.
+No runtime success for c6ef3efc is claimed yet. No production storage/key/DB
+activation, schedule modification, mail, payment or AI call occurred.
+
+GitHub CI39369328863 for c792d51d is now completed/success. Local3727 tests,
+lint/build/compileall passed as previously recorded. Owner custody stays complete;
+no need to repeat Google/Evernote setup or regenerate keys.
