@@ -2064,3 +2064,13 @@ new helpers are credential-neutralized/inert with actual retired logs; first
 helper deletion was not approved, so neither is claimed deleted. See latest
 STORAGE-CUTOVER/LAUNCH-READINESS for exact IDs, remaining write/recovery gate and
 approval boundary. No owner key/Run now repetition; all schedules untouched.
+
+
+2026-10-20 16:19 JST: continued isolated real-S3 gateway verification through
+connected app. Three synthetic events persisted; six overwrite conflicts rejected;
+writer server restart readback/decryption/receipt checks and four HTTP negatives
+passed (10279dd3,07:18:26Z). Production bucket/DB untouched. Existing acceptance
+service retired with actual referencesNeutralized=true log (981857b9,07:18:58Z).
+This proves synthetic loopback HTTP + real S3 durability, NOT public HTTPS or
+production save/restore. Saving OFF; in-container production DB execution remains
+blocked, with owner approval already retained. See STORAGE-CUTOVER latest entry.

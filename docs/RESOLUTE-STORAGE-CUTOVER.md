@@ -604,3 +604,57 @@ Owner key custody and Run now must NOT be repeated.
 
 Application source unchanged; prior3768-test/CI39379931568 evidence applies to
 the deployed source. This documentation update requires git diff --check only.
+
+
+## 2026-10-20 16:19 JST — Isolated real-object gateway durability
+
+Continued through the connected Railway app without retrying the blocked CLI
+endpoint or copying any database administrator credentials. Reused existing
+resolute-protection-acceptance (310e0e6e-1a55-4a20-88fb-412a86d1d860), with
+references only to the existing synthetic resolute-protection bucket
+(978cea1c-440a-42c2-b98c-0c8fe6a22626). No service, domain, volume or cron added.
+Production API/writer activation and source database were untouched.
+
+Deployment10279dd3-1fd1-4efa-9e5e-0323b8996a93 SUCCESS actually logged
+RESOLUTE_SYNTHETIC_GATEWAY_DURABILITY_OK at07:18:26.156567945Z:
+- Three synthetic delete/alerts_off/morning_off events persisted through the
+  current publisher, real loopback HTTP writer and real HTTPS S3 adapter.
+- Six conditional overwrite conflicts returned412; idempotent receipts matched,
+  while changed event timestamps were rejected without overwriting originals.
+- Closed and recreated the writer server; all three records decrypted and their
+  SHA256 receipts matched after readback from S3. This is a server restart inside
+  one process, not a new container or an independent disaster-recovery run.
+- Four HTTP negatives passed: DELETE405, listing404, wrong token401, query404.
+- Complete isolated namespace listing contained exactly three objects, untruncated.
+
+The production modules were bundled unchanged from017293dc with pinned AWS SDK
+3.1152.0. Only the physical S3 key received a synthetic namespace prefix:
+resolute/protection/acceptance/gateway-9cfca233-9609-4c9d-9398-5bb231532d8f/.
+The three encrypted synthetic objects remain there. An ephemeral test-only key
+and token existed in process memory; no production recovery key was generated,
+read or replaced. The production history bucket was not accessed. This listing
+is NOT a production recovery manifest, and no bootstrap pin was reused.
+
+Afterward five temporary bucket references were replaced with literal DISABLED,
+SYNTHETIC_GATEWAY_CHECK=false, and the function replaced with no-I/O retirement
+code. Deployment981857b9-87c2-4cfd-a2f2-0138d727f3f3 SUCCESS actually logged
+RESOLUTE_SYNTHETIC_GATEWAY_CHECK_RETIRED at07:18:58.592184164Z:
+referencesNeutralized=true, reads0, writes0. The existing service remains inert;
+it was not deleted. No production credentials remain newly attached to it.
+
+Remaining boundaries: deployed public HTTPS gateway authentication, production
+scoped DB writes, and production-history isolated restore are NOT verified by
+this test. Saving stays OFF. The allowed in-container DB execution path is still
+unavailable; see RESOLUTE-SCOPED-WRITE-CHECK.md. Owner authorization persists and
+no repeated login, key custody or Run now is needed. All morning/daily/weekly
+schedules, billing, live payments, mail, AI and approved UI remain unchanged.
+
+Node suite on017293dc: npm test -- --test-concurrency=2 passed1247/1247,
+0 failed/skipped/cancelled,76.941s. No application source changed in this step;
+only the operational record changes. Documentation diff check passed. Earlier
+Python/build gates are historical evidence, not rerun results for this step.
+
+Coworker d3d723c1 landed during publication; its recovery watchdog changes were
+preserved by rebase. The final change here remains documentation-only and passed
+diff check; the1247-test result above predates d3d723c1 and is not a new test claim
+for that coworker code. No remote ref was forced or unrelated file replaced.
