@@ -58,7 +58,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com", "s21.q4cdn.com", "s205.q4cdn.com", "www.seagate.com", "www.intc.com", "www.aboutamazon.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -110,11 +110,13 @@ test("Sandisk call keeps the official Eastern time and release/call distinction"
 test("date-only earnings keep the official date without fabricating a time", () => {
   const now = Date.parse("2026-09-22T12:00:00Z");
   assert.equal(selectDateOnlyEarnings("2026-09", now).length, 0);
-  assert.deepEqual(selectDateOnlyEarnings("2026-10", now).map((event) => event.date), ["2026-10-28", "2026-10-22", "2026-10-27"]);
-  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T21:59:00Z")).length, 3);
+  assert.deepEqual(selectDateOnlyEarnings("2026-10", now).map((event) => event.date), ["2026-10-28"]);
+  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T21:59:00Z")).length, 1);
   assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-28T07:00:00Z")).length, 1);
-  // META (Oct 22) and STX (Oct 27) dates are in Japan time, as given by the owner on Oct 15; no time is published.
-  assert.deepEqual(dateOnlyEvents.filter((event) => ["META", "STX"].includes(event.ticker)).map((event) => [event.ticker, event.date, event.sourceTimezone]), [["META", "2026-10-22", "Asia/Tokyo"], ["STX", "2026-10-27", "Asia/Tokyo"]]);
+  // META and STX are timed calls now (official release dates and times, Oct 20): not date-only any more.
+  assert.deepEqual(dateOnlyEvents.filter((event) => ["META", "STX"].includes(event.ticker)), []);
+  assert.deepEqual(calendarEvents.filter((event) => ["META", "STX", "INTC", "AMZN", "NOW"].includes(event.ticker)).map((event) => [event.ticker, event.startsAt]),
+    [["META", "2026-10-21T13:30:00-07:00"], ["STX", "2026-10-27T14:00:00-07:00"], ["NOW", "2026-10-28T14:00:00-07:00"], ["INTC", "2026-10-29T14:00:00-07:00"], ["AMZN", "2026-10-29T14:00:00-07:00"]]);
 });
 
 test("an economic release leaves the upcoming list once its result is posted", () => {
@@ -191,7 +193,7 @@ test("FOMC meetings stay date-only until the Federal Reserve publishes clock tim
   assert.deepEqual(fomc.map((event) => event.date), ["2026-10-28", "2026-12-09"]);
   assert.ok(fomc.every((event) => event.kind === "economic" && !("startsAt" in event)));
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 2);
-  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 3);
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 1);
 });
 
 test("calendar coverage tracks 50 unique companies (all 38 roster stocks included) and only conclusive checks advance", async () => {
