@@ -104,3 +104,10 @@ rehearsal is complete with the stated evidence boundary. No production key was
 created, installed or verified. Never reuse the disposable identity or key in
 production. Actual production custody/readback and live Clerk authenticated
 isolated acceptance remain open; saving stays disabled.
+
+
+Update 2026-10-20 11:59 JST: live Clerk authenticated isolated recovery acceptance
+now passed, followed by verified service/domain/credential retirement. See
+RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for actual logs and browser evidence.
+Production key custody remains pending; the disposable rehearsal is not a
+production key. No key, migration, saving flag or mail capability was activated.

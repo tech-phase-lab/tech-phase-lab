@@ -182,3 +182,42 @@ variables or live runner credentials were installed.
 Validation of the owner-page tree: Node1193/1193, Python2508/2508 (258.697s),
 lint0 errors/5 existing warnings, Next build, compileall and diff check passed.
 The earlier executor commit fafbf53c GitHub CI39358938320 completed successfully.
+
+
+## 2026-10-20 11:53–11:59 JST — Live Clerk recovery acceptance completed
+
+Owner explicitly approved temporary HTTPS exposure for the isolated acceptance.
+Preview024aea9e (Vercel dpl_CDKSdeVyksEsdhqdMiibSBERwbiC) forwarded the real
+signed-in owner session server-side to runner fafbf53c on Railway deployment
+59a94566-9b0a-4cdc-b7bb-9537b81ccc55. No browser JWT was extracted. Authorized browser automation
+invoked the prepared UI exactly once. Browser
+verifiedAt=2026-10-20T02:53:13.793Z, all nine checks true: authenticatedSession,
+isolatedDatabase, staleBackupVerified, independentReadback, firstReplay,
+secondReplay, planErased, notificationsStopped, pendingQueueEmpty.
+
+Actual runtime logs show cluster, migrations, API save, stale backup, API
+DELETE/both OFF, independent readback, restore, stale-state check, two replay
+assertions and cleanup; RESOLUTE_RECOVERY_HTTP status200 at02:53:13.825169938Z.
+This closes the previously pending live Clerk -> preview transport -> isolated
+real PostgreSQL18/API/encrypted external storage -> pg_dump/pg_restore -> twice
+replayed protection acceptance. It does not activate or mutate production data.
+
+Retirement was verified, not inferred from deployment status:
+- Temporary domain0a627f6b-135a-4a72-8baa-17038b9232bb was removed; service has no
+  public domains/TCP proxies and no staged changes.
+- Check flag false; token/until, three Clerk refs and five storage refs cleared.
+- Railway retirement69a9adea-8db4-4b33-a4ff-aa423716aa04 logged
+  RESOLUTE_RECOVERY_SERVER_DISABLED at2026-10-20T02:59:45.660319374Z.
+- Four preview-only recovery envs retired (false/empty); Vercel retirement
+  dpl_AQYviULTPxtvwS2SfKBMJef6ekCj READY. Browser reload showed disabled button
+  and confirmation that the check is disabled.
+- GitHub CI39360248328 for024aea9e completed both jobs successfully; local3701
+  tests/lint/build/compileall were previously passed on that code tree.
+
+No main change, production DB/schema/writer activation, mail, live payment,
+additional AI call, RIZEL publication, cron or reservation modification.
+Google Password Manager/Evernote disposable custody rehearsal is complete as
+previously documented; actual production key creation/custody/readback and
+production activation remain pending. Do not call customer saving operational.
+Other contributor commit d1a76eaa was fast-forwarded before this docs-only record;
+its account navigation/recovery changes were preserved unchanged.
