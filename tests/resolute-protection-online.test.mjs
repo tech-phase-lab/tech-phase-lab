@@ -15,7 +15,8 @@ test('real authenticated encryption hides identity; corruption, wrong key and mo
  assert.ok(!object.includes(event.userId));assert.ok(!cipher.includes(Buffer.from(event.userId)));
  assert.deepEqual(decryptProtection(cipher,key,object),event);
  assert.notDeepEqual(cipher,encryptProtection(event,key));
- for(const [body,k,name] of [[Buffer.from(cipher).fill(0,35,36),key,object],[cipher,Buffer.alloc(32,8),object],[cipher,key,object+'x']])assert.throws(()=>decryptProtection(body,k,name),ProtectionUnavailable);
+ const corrupted=Buffer.from(cipher);corrupted[35]^=1;
+ for(const [body,k,name] of [[corrupted,key,object],[cipher,Buffer.alloc(32,8),object],[cipher,key,object+'x']])assert.throws(()=>decryptProtection(body,k,name),ProtectionUnavailable);
 });
 test('lost PUT reply, duplicate retries and concurrent publication converge on one verified immutable event',async()=>{
  const store=objects();const put=store.putIfAbsent.bind(store);store.putIfAbsent=async(...a)=>{await put(...a);throw Error('lost reply');};

@@ -106,3 +106,28 @@ Validation: Node1188/1188 and Python2508/2508 (242.753s), total3696;
 lint0 errors/5 existing warnings, Next build, compileall and diff check passed.
 These results include actual local child processes but not live PostgreSQL/S3
 or owner-session restore acceptance. Do not enable saving from these results.
+
+## 2026-10-20 — Fixed real PostgreSQL/API executor connected
+
+Added executor.mjs, acceptance-only S3 adapter, replay-SQL bridge, one-shot CLI
+and PostgreSQL18/Node24 container. The coordinator forwards the already verified
+bearer token in memory to the isolated loopback API; it never leaves through a
+child environment, object, file or log. The synthetic CLI uses a fresh signed
+fixture session and explicitly labels liveOwnerSession=false.
+
+The executor uses real scoped API saves/deletion/both notification stops and
+actual pg_dump/pg_restore. It requires three independent encrypted receipts,
+fences the API/writer, compares readback checksums, proves stale backup contents,
+and checks each of two replays. No caller-selected command/DB/path. Storage writes
+are restricted to a fresh acceptance prefix outside production events. Cleanup
+stops the temporary cluster. Local PostgreSQL package installation is blocked by
+runtime setgroups/setuid restrictions; real execution uses the existing isolated
+Railway acceptance service, never the production database. Live results pending.
+
+Validation: Node1193/1193, Python2508/2508 (296.062s), lint0 errors with5
+existing warnings, Next build, compileall and diff check passed. Initial
+concurrent lint/build and one Node process were OOM-killed; complete Node suite
+and lint/build reruns passed. A pre-existing random corruption test could leave
+its byte unchanged when it was already zero; it now flips a bit deterministically.
+No failure was waived. A bounded owner-only server entrypoint is prepared but
+not activated; it requires a separate token, one instance and <=1h window.

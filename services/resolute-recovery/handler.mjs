@@ -63,7 +63,7 @@ export function createRecoveryHandler({ config, enabled = false, until, claim,
       if (!await claim(input.requestId)) return reply(409, 'CHECK_ALREADY_STARTED');
       if (!inWindow()) return reply(503, 'RECOVERY_CHECK_UNAVAILABLE');
       const signal = AbortSignal.timeout(Math.min(50_000, deadline - now()));
-      const evidence = await execute({ requestId: input.requestId, userId, signal });
+      const evidence = await execute({ requestId: input.requestId, userId, signal, authorization: request.headers.get('authorization') });
       if (signal.aborted || !inWindow() || checks.some(name => evidence?.[name] !== true) ||
         ['productionTouched', 'mailSent', 'livePayment', 'aiCalled'].some(name => evidence?.[name] !== false))
         return reply(503, 'RECOVERY_CHECK_UNAVAILABLE');

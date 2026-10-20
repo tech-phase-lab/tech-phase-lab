@@ -1780,3 +1780,11 @@ regressions cover resistant descendants and abort despite exit0. This is a
 prerequisite for the fixed PG/API/writer executor, which remains unimplemented;
 no actual authenticated recovery acceptance or production saving is claimed.
 No new deployment, credentials, DB changes, provider calls or AI/mail/payment.
+
+## 2026-10-20 — Continue through actual isolated executor
+
+Connected the authenticated coordinator to a fixed real PostgreSQL/API/writer
+executor, acceptance-only S3 namespace and disabled one-shot container CLI.
+Synthetic session is clearly distinguished from the pending real Clerk session.
+See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for checks and actual-run evidence.
+Production saving/key custody, mail, payments and RIZEL publication remain off.
