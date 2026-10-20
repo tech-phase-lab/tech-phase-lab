@@ -56,3 +56,20 @@ credential may permit writes in the restore container even though the drill code
 only reads; use scoped read-only credentials where the storage provider supports
 them. Daily backup implies up to one day's data loss without a separate journal.
 External missed-job alerts and production recovery acceptance remain launch gates.
+
+## PostgreSQL image metadata in restore jobs
+
+For `restore-check`, override image defaults `PG_MAJOR`, `PG_VERSION` and `PGDATA`
+with empty strings. The fail-closed guard forbids nonempty `PG*` variables; these
+image metadata/default-directory settings are not source connection credentials,
+but are still rejected. PostgreSQL tools use the image PATH and explicit `-D`
+cluster directory, so the drill does not need these defaults. Do not clear or
+hide a real source credential to pass the guard; it must never be configured in
+the restore service in the first place.
+
+The deployed Sandbox jobs are scheduled for daily 09:30 JST backup and Monday
+10:00 JST restore-check. An observed MCP `redeploy` path selected Railpack despite
+Dockerfile configuration; existing successful Docker deployments remain active.
+Use `restart_service` on their explicit IDs for a finite Run Now, and verify the
+safe job event, not just a Railway SUCCESS label. For releases, review and deploy
+the pinned source commit and verify Docker build selection before execution.

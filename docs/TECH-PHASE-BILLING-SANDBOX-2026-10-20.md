@@ -671,3 +671,99 @@ helper syntax and diff checks passed. Node checks were repeated after integratin
 the new RESOLUTE shell/SQL tests. These local checks do not constitute a built
 backup Docker image, a real PostgreSQL dump/restore or deployment acceptance.
 The preceding recovery-watchdog CI run `39385967422` is completed/success.
+
+## 18:37 JST approval: reader created; deployment confirmation cancelled
+
+The user explicitly approved temporary administrative credential use for the
+PRO-only backup reader and immediate cleanup. Recovered this repository from
+GitHub after workspace maintenance; current local checkout is
+`/workspace/scratch/1815107402f9/tech-phase-notebook` at `e847d03a`.
+
+Provision helper deployment `d98c9e94-ce40-46fc-bc8b-5ffb8ce5b4d5` completed
+SUCCESS at 09:38 UTC with `TECH_PHASE_BACKUP_READER_READY`, `readOnly:true`.
+It created only `tech_phase_billing_sandbox_backup` with the prepared minimum
+privileges. Its generated password is configured only in the PRO backup service.
+Do not run the role-creation script again or rotate this password inadvertently.
+
+Immediately cleared `TECH_PHASE_PROVISION_DB_URL` and
+`TECH_PHASE_BACKUP_DB_PASSWORD` on the helper, then replaced its source with the
+retired marker. Cleanup deployment `01a0f83a-5089-4199-8a20-2db277cab0ba` is
+SUCCESS and emitted `TECH_PHASE_PROVISION_RETIRED`. No administrative connection
+was added to either backup or restore service.
+
+Enabled the backup guard and staged only the backup service source in the
+production-named environment: repository `tech-phase-lab/tech-phase-lab`, branch
+`codex/research-preview`, pinned commit `e847d03a689253b4cfbd8c6b692738518a0fed37`.
+Reviewed patch `ef3656ba-7b0f-4dd2-85d5-2979a32bc6ec`: exactly three source fields
+on backup service `ea8553fe-6495-4b90-b07a-ec89cb1995c4`, no other resource change.
+
+The subsequent `accept_deploy` returned "Cancelled — the user did not approve
+this action. No changes were made." Do not bypass that cancellation with a live
+source connect or another execution route. The source remains staged; no backup
+image has been built or job executed. Restore-check remains disabled and has no
+source. Neither service has a cron. No actual snapshot or restore acceptance yet.
+
+Next action: obtain/complete approval of this specific staged backup deployment,
+re-read its patch (other work may add changes), then execute and verify backup
+before enabling/deploying the isolated restore-check. The previous temporary
+admin credential approval has already been fulfilled and need not be requested
+again. RESOLUTE infrastructure was not modified.
+
+## 19:50 JST explicit payload/destination approval; backup and restore passed
+
+The user explicitly approved encrypting the PRO Sandbox contract/payment/period
+and revocation data into `tech-phase-billing-backups-sandbox` and checking it in
+an isolated restore environment. The previously reviewed backup-only source
+patch was accepted, followed by a separately reviewed restore-only source patch.
+Both are pinned to `e847d03a689253b4cfbd8c6b692738518a0fed37`; that commit's CI
+run `39388517701` is completed/success. No application code was changed here.
+
+Actual backup deployment `8ef1069d-34f9-46cd-a32c-f8936785d5d1` emitted
+`TECH_PHASE_BACKUP_OK` at 10:54:41 UTC: 14,484 encrypted bytes, one retained
+snapshot. This includes a real read-only PostgreSQL dump, dedicated PRO bucket
+write, authenticated readback/decryption and plaintext equality check before
+publishing the latest pointer. No payment/provider/member identifiers were logged.
+
+The initial restore deployment `09cc1d17-bc7d-4295-b227-0659175ba4be` emitted
+`TECH_PHASE_BACKUP_JOB_FAILED` despite Railway reporting SUCCESS. Do not use
+Railway's deployment status alone as job acceptance. The PostgreSQL image supplies
+`PG_MAJOR`, `PG_VERSION` and `PGDATA`; the restore guard rejects all nonempty PG*
+variables. Cleared these three image defaults only on the PRO restore service;
+no source credentials were present or bypassed. Kept the fail-closed code intact
+and documented these required empty overrides in the backup README.
+
+With those overrides, deployment `210cdf0c-fc0f-4cb0-8ab6-bbfb688fdfae` emitted
+`TECH_PHASE_RESTORE_CHECK_OK` at 10:57:19 UTC. Restored counts: subscriptions 1,
+payments 1, periods 1, events 1, review_holds 0, adverse_transactions 0. Checks:
+authenticated decryption, actual PostgreSQL restore, payment-ledger consistency
+and entitlement-view equivalence. `promotion:false`: no source DB replacement,
+Clerk writes, provider charge or production entitlement change. Zero adverse rows
+means this run does not establish real refund/dispute replay acceptance.
+
+Configured daily backup at 00:30 UTC / 09:30 JST (`30 0 * * *`) and weekly
+restore-check on Monday at 01:00 UTC / 10:00 JST (`0 1 * * 1`), both restart NEVER.
+The first schedule-config redeployments `8339b23b-1753-492c-8160-1093823e49ad`
+and `e401598a-57a3-45c9-be6b-0033da4cfa2e` failed before execution: Railpack
+was selected instead of Dockerfile and no start command was detected. Reasserted
+`dockerfilePath:Dockerfile` and the existing root directory along with both cron
+settings; describe-service confirmed `builder:DOCKERFILE`. Redeployed the known
+successful builds as `c57a1f35-6c33-4806-be06-3e50fa49d93b` (backup) and
+`6956bf41-e3e7-4a01-a52a-28d58073c558` (restore). Future scheduled ticks
+have not yet been observed. Both services have no public domain or volume.
+
+RESOLUTE data/services/buckets/schedules were untouched. No user action is needed
+for this completed Sandbox backup/restore acceptance. Remaining production gates
+include external missed-job/failure alerts, independently held key/access custody,
+revocation/deletion reconciliation before any serving-DB restore, and production
+recovery acceptance. Do not claim project-loss or production recovery readiness.
+
+The two replacement redeploys also attempted Railpack and failed before runtime,
+even though describe-service showed Dockerfile. Kept the existing successful
+Docker deployments active instead of repeating builds. The environment reported
+both as `cronReady` with no pending changes. Ran those exact active deployments
+through `restart_service`: backup emitted `TECH_PHASE_BACKUP_OK` again at
+10:59:53 UTC (14,484 bytes; one retained daily snapshot), and restore emitted
+`TECH_PHASE_RESTORE_CHECK_OK` again at 11:00:04 UTC with the same ledger counts.
+The failed build attempts remain in history; they did not replace the active
+working images. For future releases use the reviewed source-commit deployment
+path; investigate the MCP redeploy/Railpack behavior before relying on it.
