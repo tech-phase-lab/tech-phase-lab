@@ -1996,3 +1996,6 @@ the verified execution. Main, billing, live payments, email and AI were untouche
 
 
 Latest 2026-10-20 14:03 JST: production protection bucket prepared separately; read-only DB/catalog and empty-bucket preflight passed on real Railway execution, then temporary probe retired and credentials blanked. Writer/restore connection references stored with skipDeploys=true, not runtime verified. Production PC-only online key installation remains owner-only; do not repeat custody or Run now. Saving stays off. Full IDs/evidence in RESOLUTE-STORAGE-CUTOVER.md.
+
+
+2026-10-20 14:18 JST RESOLUTE update: owner online key installed and runtime AES-GCM check passed; restore references match key and read back pinned empty bootstrap manifest. Seven migrations and three-role ACL audit passed on real DB inside a rolled-back transaction; no schemas installed. Probes retired, temporary secrets blanked. See RESOLUTE-STORAGE-CUTOVER.md for exact evidence and remaining backup/schema/replay gates. Empty bootstrap pin MUST NOT survive customer-write activation without fresh fenced inventory. No repeated owner custody step needed. Other担当 PRO commit33dbd918 preserved by fast-forward.

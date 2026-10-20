@@ -214,3 +214,73 @@ repeat Google/Evernote verification. The assistant cannot retrieve the PC-only
 key. Keep ENABLED=false. Downstream key references, token provisioning, manifest
 fencing and migrations/ACLs must be completed before explicit save activation.
 Morning/daily/weekly schedules, main, live payments, mail and AI untouched.
+
+## 2026-10-20 14:11–14:18 JST — Owner key installed; runtime checks and migration rehearsal
+
+Owner reported completing the private WSL-to-Railway copy into the disabled
+writer's RESOLUTE_WRITER_KEY_HEX. No key/age identity was read into chat.
+Actual deployment87a06fc6-695f-41b9-aafb-f03e5dd943f8 logged
+RESOLUTE_PRODUCTION_KEY_RUNTIME_OK at05:12:11.000843832Z:64-hex key loaded,
+AES-GCM memory round trip passed, writerDisabled=true, DB/storage writes0.
+Non-secret fingerprint697d2470b736420ac32ff258e9c17f7939b82da4cfa0a44f75856ee72e395de6.
+This runtime fingerprint was not independently compared by the assistant with
+Google's notes; owner-side copy command checked the previously verified pins.
+Writer deploymentef0a1382-2304-409c-807f-d1399b376136 actually logged
+RESOLUTE_WRITER_DISABLED at05:12:24.998591597Z. Module-type warning is nonfatal.
+
+Initialized the empty production manifest only while the writer was disabled,
+application storage tables absent, both existing writer roles NOLOGIN and with
+no elevated attributes, and writer sessions0. These catalog checks ran before
+and after the bounded S3 operation. Whole bucket inventory allowed only the
+expected manifest on retry, no event/other objects. Conditional PUT prevented
+replacement; exact GET readback and post-inventory passed. This operational
+bootstrap fence relies on absent application schemas and stopped known writers;
+it is not provider object lock or a reusable concurrent-live-write fence.
+Canonical bytes match protection_events.seal_manifest empty serialization:
+{"objects":[],"version":1}
+SHA2563ccbe11b60a4fa4f0d024f7c22cba06b70ca3ff7d9eead4c8a3a5aa4ca8d2b73.
+Deployment6b51220a-25e4-4d12-a307-63ba7bdf61ea logged
+RESOLUTE_INITIAL_MANIFEST_OK at05:13:36.817215270Z, events0, bootstrapOnly=true.
+The pin is retained here outside the DB dump.
+
+Restore key now references the writer's online key; restore manifest pin is set.
+A GET-only probe using references THROUGH restore-check configuration matched
+the writer fingerprint and authenticated the pinned manifest bytes:
+deploymentd0d59a1a-b313-4144-9b75-6110f52e6f3f logged
+RESOLUTE_RESTORE_CONNECTION_OK at05:15:17.208177859Z; writes0/events0.
+This checks rendered restore credentials, key equality and manifest readback.
+It is NOT a new Python pg_restore run or a non-empty production-event replay.
+Existing successful V2 full restore remains the earlier13:51 execution.
+Forced a fresh restore configuration deployment using
+RESOLUTE_STORAGE_CONFIG_REV=20261020-production-bootstrap-v1; cron unchanged.
+Check the latest deployment/runtime before claiming this configuration executed.
+
+Rehearsed002–005/017–019 plus the existing verifyStoragePermissions catalog audit
+in one real production DB transaction, with advisory lock, bounded statement/
+lock/idle timeouts and mandatory ROLLBACK (no COMMIT). Existing016 prerequisites
+were retained. Initial attempt764675f7 stopped before DB connection because the
+retired SETUP URL was blank; no SQL ran. Corrected using a temporary Postgres URL
+reference constrained to the internal host and /resolute, with redacted errors.
+Deploymentb83651af-7455-4eba-8575-81f443b10fed logged
+RESOLUTE_STORAGE_MIGRATION_REHEARSAL_OK at05:16:05.054196096Z:
+migrations7, rolesVerified3, loginsEnabled=false, rawPaymentAccess=false,
+deliveryAccess=false, rolledBack=true, persistedChanges0, activation=false.
+Post-rollback checks confirmed new storage tables and third writer role absent.
+This validates the migration sequence against the actual existing catalog;
+production schemas/ACLs are NOT installed.
+
+Cleanup verified by real idle logs:
+- probe c9c6a6e0-9617-49b4-8b1c-d1b54360c966 at05:16:11.933550092Z;
+  all nine temporary DB/key/storage/pin/flag references blanked.
+- provision6ad4a6c6-4a49-4cd8-8e2a-33b90289d47f at05:16:58.784232949Z;
+  temporary admin URL blanked. Both read/write counts0, no scheduled work.
+
+Next: package daily backup dependencies, finish controlled schema/ACL cutover and
+actual post-cutover backup/restore acceptance. BEFORE any customer-save/writer
+activation, replace or invalidate this EMPTY BOOTSTRAP pin and establish the
+fresh, complete write-fenced manifest procedure; never retain an empty pin as
+evidence of complete history after writes begin. Customer saving, retry/delivery,
+live payments and AI remain off. No morning/daily/weekly cron or reservations
+changed. No further owner key/custody step needed for this milestone.
+
+Restore configuration deployment2322edf1-fc79-498b-b1f2-69a1f570d349 reached SUCCESS at14:18 JST observation, cron0 0 * * 1 unchanged, no staged changes. No new cron execution claimed.
