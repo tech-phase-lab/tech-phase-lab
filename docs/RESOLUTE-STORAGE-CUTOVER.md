@@ -757,3 +757,33 @@ performing backup or restore. Do not substitute older logs or an initial empty
 manifest for fresh complete write-fenced inventory acceptance. Next runtime
 evidence must identify8daeaf3c and the module digest above, then show actual
 backup/restore checks. No owner Run now or login was requested.
+
+## 2026-10-20 21:31 JST — actual isolated restore of stream-cleanup bundle
+
+Created one bounded restore-only service c7399bea-6c38-4adf-b42c-5577d960f798,
+using the same verified launcher through the existing restore-service reference.
+No production PGHOST/PGPASSWORD/DATABASE_URL/ENTITLEMENT_DB_URL, monitor URL,
+cron, public domain or volume was supplied. Readback checked the missing DB and
+monitor variable names, absent cron and zero volumes before connecting the image.
+The restore code's production-connection guard remained intact. Limits0.5CPU /
+0.5GB, restart NEVER, timeout900s; required protection and live-ledger checks true.
+
+Deployment b5ac796f-20d5-4738-8dc5-a2bd0ee4ed6e reached SUCCESS and emitted:
+- RESOLUTE_PROTECTED_BUNDLE_READY at2026-10-20T12:31:47.151516893Z with
+  commit8daeaf3cd68753fb5e8f50de38bf542a9b3f3052 and module SHA256
+  480e4935f5d79d590447dcb852fd52778a95f215cd0f5b5ed0daa8d5ff22c9cf.
+- RESOLUTE_RESTORE_OK at2026-10-20T12:31:47.151529133Z: encrypted bytes84933,
+  probe_rows2; Sandbox orders11/grants7/events8/audit32/alert_outbox7; live ledger
+  verified with all five counts0; protection verified from independent_online_manifest,
+  deletions0/suppressions0; download/decrypt/checksums/pg_restore/probe/primary-key/
+  both payment-integrity checks passed;3.354s,monitor_ping_sent=false.
+
+This verifies actual provider reads and isolated DB restore with the new stream
+cleanup code. It does NOT establish a new backup write, a scheduled V4-code run,
+nonempty production deletion replay or customer-save readiness. Fresh complete
+write-fenced inventory remains mandatory before save activation; no old empty
+manifest may be reused after subsequent events. Production DB was not connected.
+
+Deleted the temporary service after capturing runtime evidence; provider returned
+deletion success and no detached volumes. Existing morning/daily/weekly schedules
+and all customer-saving gates were untouched. No owner action was requested.

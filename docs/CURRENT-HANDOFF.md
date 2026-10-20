@@ -9,8 +9,10 @@ to repeat completed operations. Other product work is unchanged.
   gates passed: Node1,257, Python2,545, lint, build, compileall and diff check.
   Based on coworker30eda76f; CI39417464527 passed for8daeaf3c. At21:27 JST,
   rebuilt backup/restore bundles reached deployment SUCCESS with unchanged
-  schedules. Both new deployment log streams were empty: runtime acceptance
-  remains pending. See the final cutover entry for IDs and bundle digests.
+  schedules. At21:31 JST an isolated one-shot restore of the actual backup
+  verified8daeaf3c and its bundle digest, then RESOLUTE_RESTORE_OK. Production
+  protection history was empty; nonempty acceptance and scheduled-job execution
+  remain pending. The one-shot service was deleted. See the final cutover entry.
 - Owner reports Vercel paused at100% usage. Do not resume it or change billing.
   Continue local/CI and scoped Railway work; frontend availability is not verified.
 
