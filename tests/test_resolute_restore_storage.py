@@ -65,7 +65,7 @@ class RestoreStorageTests(unittest.TestCase):
                         backup.load_online_protection(env, self.factory, None)
         self.factory.assert_not_called()
 
-    def test_real_authenticated_event_uses_only_independent_gets(self):
+    def test_real_authenticated_event_uses_independent_read_only_inventory_and_gets(self):
         from cryptography.hazmat.primitives.ciphers.aead import AESGCM
         event = dict(version=1, userId='user_fixture', revision=3,
                      kind='delete', at='2026-10-19T06:00:00.000Z')
@@ -84,13 +84,16 @@ class RestoreStorageTests(unittest.TestCase):
             self.assertEqual(kwargs['Bucket'], 'history')
             reads.append(kwargs['Key'])
             return {'Body': io.BytesIO(files[kwargs['Key']])}
-        client = Mock(spec=['get_object'])
+        client = Mock(spec=['get_object', 'get_paginator'])
         client.get_object.side_effect = get_object
+        client.get_paginator.return_value.paginate.return_value = [
+            {'Contents': [{'Key': name, 'Size': len(body), 'ETag': 'fixture'}]}]
         self.factory.return_value = client
         config = object()
         ledger = backup.load_online_protection(self.env, self.factory, config)
         self.assertEqual(ledger['deletions'][0]['revision'], 3)
         self.assertEqual(len(reads), 2)
+        self.assertEqual(client.get_paginator.call_count, 2)
         self.factory.assert_called_once_with('s3', endpoint_url='https://history.example.invalid',
             aws_access_key_id='history-access', aws_secret_access_key='history-secret',
             region_name='auto', config=config)

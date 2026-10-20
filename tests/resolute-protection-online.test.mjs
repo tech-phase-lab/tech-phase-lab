@@ -86,9 +86,30 @@ test('notification stop writes transactional durable retry record; retry publish
 test('retry worker is off by default; bounded batches continue past one failing user without logging identities',async()=>{
  const {main,retryProtectionBatch}=await import('../services/resolute-api/protection-retry.mjs');
  assert.deepEqual(await main({}),{event:'RESOLUTE_PROTECTION_RETRY_DISABLED'});
- let released=0;const seen=[];const pool={async connect(){return {async query(){return {rows:[{clerk_user_id:'user_one'},{clerk_user_id:'user_two'}]};},release(){released++;}};}};
+ let released=0;const seen=[];const pool={async connect(){return {async query(sql){return sql.includes('count(*)')?{rows:[{pending:'1',due:'0'}]}:{rows:[{clerk_user_id:'user_one'},{clerk_user_id:'user_two'}]};},release(){released++;}};}};
  const result=await retryProtectionBatch(pool,async(_client,user)=>{seen.push(user);if(user==='user_one')throw Error('secret');});
- assert.deepEqual(result,{checked:2,completed:1,failed:1,remainingBatch:0});assert.equal(released,1);assert.equal(seen.length,2);
+ assert.deepEqual(result,{checked:2,completed:1,failed:1,remainingBatch:0,pending:1,dueRemaining:0});assert.equal(released,1);assert.equal(seen.length,2);
  assert.ok(!JSON.stringify(result).includes('user_'));
  await assert.rejects(()=>retryProtectionBatch(pool,async()=>{},{limit:101}));
+});
+
+test('a successful limited retry still reports unselected and delayed events',async()=>{
+ const {retryProtectionBatch}=await import('../services/resolute-api/protection-retry.mjs');
+ const db=new PGlite();let released=0;
+ try{
+  await db.exec(`CREATE SCHEMA resolute;CREATE TABLE resolute.protection_outbox
+   (clerk_user_id text,published_at timestamptz,next_attempt_at timestamptz);
+   INSERT INTO resolute.protection_outbox VALUES
+    ('user_a',NULL,NOW()),('user_b',NULL,NOW()),('user_c',NULL,NOW()+INTERVAL '1 day');`);
+  const client={query:(sql,args)=>db.query(sql,args),release(){released++;}};
+  const pool={async connect(){return client;}};
+  const publish=async(c,user)=>{await c.query('UPDATE resolute.protection_outbox SET published_at=NOW() WHERE clerk_user_id=$1',[user]);};
+  const first=await retryProtectionBatch(pool,publish,{limit:1});
+  assert.deepEqual(first,{checked:1,completed:1,failed:0,remainingBatch:0,pending:2,dueRemaining:1});
+  const second=await retryProtectionBatch(pool,publish,{limit:1});
+  assert.equal(second.pending,1);assert.equal(second.dueRemaining,0);
+  const delayed=await retryProtectionBatch(pool,publish,{limit:1});
+  assert.equal(delayed.checked,0);assert.equal(delayed.pending,1);
+  assert.equal(released,3);
+ }finally{await db.close();}
 });

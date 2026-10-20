@@ -595,3 +595,29 @@ unchanged. Daily cron0 0 * * * and weekly0 0 * * 1 both unchanged.
 This turn changed infrastructure and operation records only; no application code
 or dependencies changed. Prior checked code reused; diff check passed. Coworker
 commit2a78993d fast-forwarded and preserved without editing its PRO/UI work.
+
+## 2026-10-20 — Restore freshness and retry queue hardening
+
+The production restore entry point now requires a complete event-prefix LIST
+before reading the pinned manifest's events and another LIST after authenticated
+reads. The manifest's event names must exactly equal the inventory and the
+inventory (including size/ETag) must stay unchanged. An authentic old empty
+bootstrap manifest therefore fails once any event appears. Missing LIST access
+also fails closed; the application/writer permissions are not broadened.
+GET-only load_manifest remains available for already-isolated pinned inputs,
+but backup.load_online_protection always requests the complete inventory check.
+This does NOT replace fencing all writers before real recovery or sealing a new
+manifest. An event can arrive after the final observation unless writes are stopped.
+No user-save activation is authorized by these checks alone.
+
+Retry batches now report whole-queue pending and dueRemaining event counts,
+including users outside the per-batch limit and delayed backoff entries. CLI
+completion exits nonzero while pending remains, even if every selected user
+succeeded. Counts are not user identifiers. No scheduler/login/retry service was
+activated. A real SQL fixture covers a successful limited batch followed by a
+delayed-only queue. Cryptographic tests cover stale empty manifests, inventory
+changes during reading, complete replay and unavailable LIST permission.
+
+Validation and deployment evidence follow below when completed.
+
+Full gates: Node1236/Python2523 passed (3759 total), lint0 errors/5 existing warnings, build/compileall/diff check passed. Stale generated build cache was preserved outside the repository and build repeated successfully. Runtime verification follows separately.

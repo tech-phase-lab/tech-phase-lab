@@ -2004,3 +2004,13 @@ Latest 2026-10-20 14:03 JST: production protection bucket prepared separately; r
 2026-10-20 14:29 JST RESOLUTE: storage migrations002–005/017–019 COMMITTED,3-role ACL audit passed before/after; all roles NOLOGIN and app saving OFF. Daily backup upgraded to checked three-module payload; real pre/post backups passed. Post-schema isolated restore of84933-byte dump passed including independent online empty baseline. Read RESOLUTE-STORAGE-CUTOVER.md latest entry for exact IDs, retained pre-schema dump, remaining activation gates, and IMPORTANT discovery: empty-string variable update did NOT neutralize referenced PGHOST/PGPASSWORD. Use fresh restore-only service; guard blocked unsafe attempts. Temp function references now DISABLED with runtime verification. Never use empty bootstrap pin after customer writes begin.
 
 Final14:33 JST cleanup confirmed: temporary cutover services deleted, no volumes; probe14/provision3 temporary references verified absent or DISABLED at runtime. Daily/weekly/morning schedules unchanged. All detailed evidence appended to storage cutover record.
+
+
+2026-10-20 recovery hardening: runtime restores now require complete, stable
+GET+LIST inventory matching the pinned manifest; stale empty bootstrap pins fail
+when events exist. Actual recovery still requires fencing writers and resealing.
+Retry CLI reports whole-queue pending/dueRemaining and cannot report completion
+while delayed or unselected events remain. Saving and retry scheduling stay OFF.
+Validation: Node1236 + Python2523 =3759 passed; lint0 errors/5 existing warnings,
+build passed after preserving and replacing stale generated cache, compileall and
+diff check passed. Railway runtime validation is pending in this entry.

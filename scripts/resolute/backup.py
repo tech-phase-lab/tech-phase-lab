@@ -164,7 +164,8 @@ def load_online_protection(env, client_factory, config):
                             aws_secret_access_key=values['SECRET_ACCESS_KEY'],
                             region_name=values['REGION'], config=config)
     return protection_events.load_manifest(client, values['BUCKET'],
-                                           bytes.fromhex(key_hex), pin, protection)
+                                           bytes.fromhex(key_hex), pin, protection,
+                                           require_complete_inventory=True)
 
 def main():
     import boto3

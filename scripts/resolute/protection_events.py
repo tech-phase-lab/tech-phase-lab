@@ -60,7 +60,7 @@ def seal_manifest(s3,bucket,key,protection):
         raise ValueError('protection manifest readback mismatch')
     return pin
 
-def load_manifest(s3,bucket,key,pin,protection):
+def load_manifest(s3,bucket,key,pin,protection,*,require_complete_inventory=False):
     if not isinstance(pin,str) or not re.fullmatch('[0-9a-f]{64}',pin):
         raise ValueError('independent online protection manifest required')
     raw=s3.get_object(Bucket=bucket,Key=MANIFEST_PREFIX+pin+'.json')['Body'].read(32*1024*1024+1)
@@ -69,6 +69,10 @@ def load_manifest(s3,bucket,key,pin,protection):
     manifest=json.loads(raw)
     if not isinstance(manifest,dict) or set(manifest)!={'version','objects'} or type(manifest['version']) is not int or manifest['version']!=1 or not isinstance(manifest['objects'],list) or len(manifest['objects'])>MAX_OBJECTS:
         raise ValueError('invalid protection manifest')
+    # A pinned manifest may be authentic but stale. Live-store restore must also
+    # reject omitted/new objects and concurrent inventory changes. Operators must
+    # still fence writers: two observations cannot prevent a later write.
+    before=inventory(s3,bucket) if require_complete_inventory else None
     ledger={'version':1,'deletions':[],'suppressions':[]};seen=set()
     for item in manifest['objects']:
         if not isinstance(item,dict) or set(item)!={'key','sha256'} or not isinstance(item['key'],str) or not re.fullmatch(re.escape(PREFIX)+r'[0-9a-f]{64}\.bin',item['key']) or not isinstance(item['sha256'],str) or not re.fullmatch('[0-9a-f]{64}',item['sha256']) or item['key'] in seen:
@@ -78,4 +82,6 @@ def load_manifest(s3,bucket,key,pin,protection):
         if hashlib.sha256(body).hexdigest()!=item['sha256']: raise ValueError('protection event checksum mismatch')
         event=decrypt_event(body,key,item['key'],protection)
         for group in ('deletions','suppressions'):ledger[group].extend(event[group])
+    if before is not None and (seen!=set(before) or inventory(s3,bucket)!=before):
+        raise ValueError('incomplete or changing protection inventory; fence writers and reseal manifest')
     return protection.validate(ledger)

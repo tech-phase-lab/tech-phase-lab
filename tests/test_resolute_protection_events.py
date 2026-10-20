@@ -44,3 +44,26 @@ console.log(JSON.stringify({name:protectionObjectKey(event,key),body:encryptProt
         with self.assertRaises(Exception):e.decrypt_event(body,bytes([8])*32,name,p)
         for pin in (None,'','latest','../'):
             with self.assertRaises(ValueError):e.load_manifest(s3,'private',bytes([7])*32,pin,p)
+
+    def test_empty_bootstrap_manifest_rejects_later_event(self):
+        s3=Objects();key=bytes([7])*32
+        pin=e.seal_manifest(s3,'private',key,p)
+        self.assertEqual(e.load_manifest(s3,'private',key,pin,p,require_complete_inventory=True)['deletions'],[])
+        name,body=self.fixture();s3.files[name]=body
+        with self.assertRaisesRegex(ValueError,'inventory'):
+            e.load_manifest(s3,'private',key,pin,p,require_complete_inventory=True)
+
+    def test_complete_inventory_replay_and_change_during_read(self):
+        name,body=self.fixture();s3=Objects();s3.files[name]=body;key=bytes([7])*32
+        pin=e.seal_manifest(s3,'private',key,p)
+        self.assertEqual(len(e.load_manifest(s3,'private',key,pin,p,require_complete_inventory=True)['deletions']),1)
+        s3.calls=0;s3.mutate=True
+        with self.assertRaisesRegex(ValueError,'inventory'):
+            e.load_manifest(s3,'private',key,pin,p,require_complete_inventory=True)
+
+    def test_missing_list_permission_cannot_skip_freshness_check(self):
+        s3=Objects();key=bytes([7])*32;pin=e.seal_manifest(s3,'private',key,p)
+        def forbidden(_):raise PermissionError('List unavailable')
+        s3.get_paginator=forbidden
+        with self.assertRaises(PermissionError):
+            e.load_manifest(s3,'private',key,pin,p,require_complete_inventory=True)

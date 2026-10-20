@@ -13,7 +13,14 @@ export async function retryProtectionBatch(pool,protect,{limit=50,now=Date.now,m
    if(now()-started>=maxMs)break;
    try{await protect(client,row.clerk_user_id);completed++;}catch{failed++;}
   }
-  return {checked:completed+failed,completed,failed,remainingBatch:rows.length-completed-failed};
+  // Count the whole queue, including delayed retries and users beyond LIMIT.
+  // Finishing this batch is not evidence that all protection receipts exist.
+  const {rows:[queue]}=await client.query(`SELECT count(*)::text AS pending,
+   count(*) FILTER (WHERE next_attempt_at<=statement_timestamp())::text AS due
+   FROM resolute.protection_outbox WHERE published_at IS NULL`);
+  const pending=Number(queue?.pending),dueRemaining=Number(queue?.due);
+  if(!Number.isSafeInteger(pending)||pending<0||!Number.isSafeInteger(dueRemaining)||dueRemaining<0||dueRemaining>pending)throw Error('INVALID_RETRY_QUEUE_STATE');
+  return {checked:completed+failed,completed,failed,remainingBatch:rows.length-completed-failed,pending,dueRemaining};
  }finally{client.release();}
 }
 export async function main(env=process.env){
@@ -24,6 +31,6 @@ export async function main(env=process.env){
  try{return {event:'RESOLUTE_PROTECTION_RETRY_RESULT',...await retryProtectionBatch(pool,protect)};}finally{await pool.end();}
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
- main().then(result=>{console.log(JSON.stringify(result));if(result.failed||result.remainingBatch)process.exitCode=1;})
+ main().then(result=>{console.log(JSON.stringify(result));if(result.failed||result.remainingBatch||result.pending)process.exitCode=1;})
  .catch(()=>{console.error(JSON.stringify({event:'RESOLUTE_PROTECTION_RETRY_FAILED'}));process.exitCode=1;});
 }
