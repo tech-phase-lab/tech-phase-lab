@@ -5,3 +5,27 @@
 - READMEにPRO専用2チェックの設定を記録: 日次UTC `30 0 * * *`、週次UTC `0 1 * * 1`、猶予各30分。RESOLUTEの監視・通知先・変数は再利用/変更していない。
 - 外部チェックの作成、Railway変数設定、監視コードのデプロイ、実際の開始/成功受信、未実行/失敗通知の到達は未実施。ローカル検証は外部通信を模擬しており、通知の実運用を完了扱いしない。
 - Healthchecks用コネクターの検索では該当なし。接続には運営者が利用しているHealthchecks管理画面へのブラウザー操作許可が必要。PRO専用チェックと通知設定を準備し、宛先とテスト通知の許可を確認してから外部通知を有効にする。秘密URLをチャットへ貼り付ける必要はない。
+
+## 2026-10-20 20:27 JST承認後 — 接続と実行検証
+
+運営者がPRO専用監視の作成、運営者メールへの異常通知、失敗・未実行のテスト通知各1通を承認。ログイン済みHealthchecksで既存の運営者メール連携（down only）を照合し、新しいPROチェック2つへ割り当てた。RESOLUTEのチェック・割り当て・Railwayサービスは変更していない。
+
+- `Tech Phase PRO Sandbox daily backup`: UTC `30 0 * * *`、猶予30分。
+- `Tech Phase PRO Sandbox weekly restore`: UTC `0 1 * * 1`、猶予30分。
+- PROの2ジョブだけに専用heartbeat変数を設定。URLは秘密値として文書に記載しない。
+- 実装 `0c4bbce8f3bea7869393b174febb094270e4397b`。CI `39413626669` 成功。ローカルNode 1,257件、Python 2,542件、build成功、lintエラー0（既存警告5）。
+- Railwayの環境差分がPROの2サービスだけであることを確認して承認済みデプロイを実行。既存Cronは保持。デプロイだけではCronジョブの実処理は走らないため、成功した新しいデプロイIDに対して有限のRun Nowを実施した。
+- backup deployment `d0c57449-eaf8-44dc-9b13-67c7aa8e80da`: 11:32:08 UTCに `TECH_PHASE_BACKUP_OK`、暗号化後14,484 bytes、retained 1。11:32:09にmonitor_start/monitor_finishともsent。Healthchecksでup・実行時間約1秒を確認。
+- restore deployment `bcff28cc-b66c-463f-b544-f6de80802fdb`: 11:32:54 UTCに `TECH_PHASE_RESTORE_CHECK_OK`。契約・支払い・期間・イベント各1、hold/adverse各0。復号・pg_restore・台帳・権限view整合が成功し、promotion=false。monitor_start/monitor_finishともsent。Healthchecksでup・実行時間約4秒を確認。
+- Railwayは両ジョブcronReady、未適用変更なし。以前のRailpack再デプロイ失敗各2件は履歴として残るが、今回の新しい稼働デプロイはSUCCESS。
+- 失敗テスト専用チェック `Tech Phase PRO TEST failure 20261020` に成功信号1回、失敗信号1回を送りup→downを確認。20:32 JST時点のメール連携にDelivered（44秒前）。テスト後は休止し、追加通知を防止。
+
+この時点の未確認事項: 実際のメール受信箱到着、通常の次回Cron実行と継続稼働。定時実行の初回は日次10/21 09:30 JST、週次10/26 10:00 JST。PRO鍵のRailway外保管と本番復旧受入は別の課題として残る。
+
+### 未実行検知の実測
+
+`Tech Phase PRO TEST missed run 20261020` を毎分Cron・猶予1分で作成。20:34 JSTに初期成功信号を1回だけ送信し、その後は開始/成功/失敗信号を一切送らなかった。lateを経て20:36にup→downとなり、同時刻のメール連携でDelivered（7秒前）を確認。実際の未実行を外部監視側で検知した結果であり、手動の失敗信号ではない。テスト後は休止済み。失敗・未実行の2通以外にテストメールを送っていない。両テストの受信箱への到着は運営者確認待ち。
+
+追加監視は無料枠の範囲（既存3＋PRO運用2＋休止テスト2の計7チェック）。既存連携の宛先やdown only設定は変更せず、PROの割り当てだけ追加した。
+
+次の開発対象はPROの支払い/権限失効の残ケース。USD、更新決済、返金・異議申立ての実プロバイダー検証と、複数会員向け権限反映はまだ受入完了していない。バックアップ監視の成功をPRO決済全体の完成と混同しない。
