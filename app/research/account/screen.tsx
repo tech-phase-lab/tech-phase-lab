@@ -6,12 +6,31 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { recoverMember } from "@/lib/research/member-recovery";
 import { useIdentityRefresh } from "../identity-provider";
+import { readAccountReturn } from "@/lib/research/account-return";
 import PreviewControls from "./preview-controls";
 import styles from "./styles.module.css";
+const subscribeReturn = () => () => {};
+function returnSnapshot() {
+  try { return readAccountReturn(window.sessionStorage); } catch { return "/research/account"; }
+}
+function useAccountReturn() { return useSyncExternalStore<string | null>(subscribeReturn, returnSnapshot, () => null); }
+function AccountUnavailable() {
+  const [lang, setLang] = useResearchLanguage();
+  const ja = lang === "ja";
+  return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={ja ? "マイアカウント" : "My account"} description="">
+    <section className={styles.card} role="alert">
+      <h2>{ja ? "会員機能に接続できませんでした" : "Could not connect to account services"}</h2>
+      <p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p>
+      <button type="button" onClick={() => window.location.reload()}>{ja ? "再読み込み" : "Reload"}</button>
+      <Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link>
+    </section>
+  </ResearchToolShell>;
+}
 type Member = { accessExpiresAt?: number; status: string; plan: string; isAdmin: boolean; ownerMode: boolean; canTest: boolean; testing: boolean };
 function AccountContent({ status, plan, signingUp = false, initialMember }: { status: string; plan: string; signingUp?: boolean; initialMember?: Member }) {
   const [lang, setLang] = useResearchLanguage(); const ja = lang === "ja";
   const { isLoaded, isSignedIn } = useAuth();
+  const returnTo = useAccountReturn();
   const [member, setMember] = useState(initialMember ?? {status, plan, isAdmin: false, ownerMode: false, canTest: false, testing: false});
   const refreshIdentity = useIdentityRefresh();
   const [retry, setRetry] = useState(0);
@@ -52,7 +71,7 @@ function AccountContent({ status, plan, signingUp = false, initialMember }: { st
   }, [isLoaded, isSignedIn, member.plan, member.ownerMode, member.accessExpiresAt]);
   const content = <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={ja ? "マイアカウント" : "My account"} description="">
     <section className={styles.card}>
-      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Could not verify your membership"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : !isLoaded && member.status !== "signed-in" ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl="/research/account" /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl="/research/account" />) : <><span className={styles.plan}>TECH PHASE {member.ownerMode ? (ja ? "運営者" : "Owner") : member.plan === "pro" ? "PRO" : "FREE"}</span><>{member.testing && <p>{ja ? "運営者用の試験状態です（課金なし）" : "Admin test mode — no charge"}</p>}</><h2>{member.ownerMode ? ja ? "運営者としてログインしています" : "Owner view" : ja ? "ログインしています" : "You’re signed in"}</h2><p>{member.plan === "pro" ? (ja ? "PRO会員として登録されています。" : "Your PRO membership is active.") : (ja ? "無料プランをご利用中です。" : "You’re on the Free plan.")}</p><Link href="/research/columns">{ja ? "PROリサーチ・コラム" : "PRO Research & Columns"}</Link><Link href="/research/notifications">{ja ? "スマホ通知設定" : "Phone notifications"}</Link>{member.isAdmin && <Link href="/research/write">{ja ? "ひとりごとを書く" : "Write a note"}</Link>}{member.status === "signed-in" && member.isAdmin === true && <Link href="/research/review" prefetch={false}>{ja ? "ニュース配信状況" : "News delivery status"}</Link>}{member.isAdmin && <Link href="/api/research/member/export">{ja ? "登録者一覧をダウンロード" : "Download member list"}</Link>}<>{member.canTest && <PreviewControls ja={ja} testing={member.testing} onChange={() => setRetry(value => value + 1)} />}</><SignOutButton redirectUrl="/research/account"><button>{ja ? "ログアウト" : "Sign out"}</button></SignOutButton></>}
+      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Could not verify your membership"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : (!isLoaded || returnTo === null) && member.status !== "signed-in" ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl={returnTo ?? "/research/account"} /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl={returnTo ?? "/research/account"} />) : <><span className={styles.plan}>TECH PHASE {member.ownerMode ? (ja ? "運営者" : "Owner") : member.plan === "pro" ? "PRO" : "FREE"}</span><>{member.testing && <p>{ja ? "運営者用の試験状態です（課金なし）" : "Admin test mode — no charge"}</p>}</><h2>{member.ownerMode ? ja ? "運営者としてログインしています" : "Owner view" : ja ? "ログインしています" : "You’re signed in"}</h2><p>{member.plan === "pro" ? (ja ? "PRO会員として登録されています。" : "Your PRO membership is active.") : (ja ? "無料プランをご利用中です。" : "You’re on the Free plan.")}</p><Link href="/research/columns">{ja ? "PROリサーチ・コラム" : "PRO Research & Columns"}</Link><Link href="/research/notifications">{ja ? "スマホ通知設定" : "Phone notifications"}</Link>{member.isAdmin && <Link href="/research/write">{ja ? "ひとりごとを書く" : "Write a note"}</Link>}{member.status === "signed-in" && member.isAdmin === true && <Link href="/research/review" prefetch={false}>{ja ? "ニュース配信状況" : "News delivery status"}</Link>}{member.isAdmin && <Link href="/api/research/member/export">{ja ? "登録者一覧をダウンロード" : "Download member list"}</Link>}<>{member.canTest && <PreviewControls ja={ja} testing={member.testing} onChange={() => setRetry(value => value + 1)} />}</><SignOutButton redirectUrl="/research/account"><button>{ja ? "ログアウト" : "Sign out"}</button></SignOutButton></>}
     </section>
   </ResearchToolShell>;
   return content;
@@ -71,15 +90,16 @@ function isCallbackRoute() {
   return /^#\/sso-callback(?:[?#]|$)/.test(window.location.hash);
 }
 function AccountCallback() {
+  const returnTo = useAccountReturn();
   const [lang] = useResearchLanguage();
   return <>
     <p role="status">{lang === "ja" ? "ログインを完了しています…" : "Completing sign-in…"}</p>
-    <AuthenticateWithRedirectCallback
+    {returnTo !== null && <AuthenticateWithRedirectCallback
       signInUrl="/research/account"
       signUpUrl="/research/account/sign-up"
-      signInForceRedirectUrl="/research/account"
-      signUpForceRedirectUrl="/research/account"
-    />
+      signInForceRedirectUrl={returnTo}
+      signUpForceRedirectUrl={returnTo}
+    />}
   </>;
 }
 
@@ -88,6 +108,6 @@ export default function AccountScreen(props: {status:string; plan:string; signin
   // Handle the OAuth return independently of the SignIn widget's hash router.
   // In particular, a nested return fragment must not leave an empty Clerk card.
   if (callback) return <AccountCallback />;
-  if (props.status === "unavailable") return <p>会員機能に接続できません。時間をおいて再度お試しください。</p>;
+  if (props.status === "unavailable") return <AccountUnavailable />;
   return <AccountContent {...props} />;
 }

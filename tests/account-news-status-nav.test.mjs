@@ -1,3 +1,4 @@
+import * as accountReturn from "../lib/research/account-return.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -16,6 +17,7 @@ let language = "ja";
 let authLoaded = true;
 const links = [];
 new Function("require", "module", "exports", compiled)(id => {
+  if (id === "@/lib/research/account-return") return accountReturn;
   if (id.endsWith(".module.css")) return { default: {} };
   if (id === "@clerk/nextjs") return {
     useAuth: () => ({ isLoaded: authLoaded, isSignedIn: true }),
@@ -75,4 +77,16 @@ test("signed-out, unavailable, loading, FREE, PRO, and role-loss states do not e
   }
   assert.equal(render(owner).statusLinks.length, 1);
   assert.equal(render({ ...owner, isAdmin: false }).statusLinks.length, 0);
+});
+
+test("account service failure is localized and offers recovery without a loaded identity SDK", () => {
+  const member = {status:"unavailable",plan:"free"};
+  const ja = render(member, "ja", false).html;
+  assert.match(ja, /会員機能に接続できませんでした/);
+  assert.match(ja, /再読み込み/);
+  const en = render(member, "en", false).html;
+  assert.match(en, /Could not connect to account services/);
+  assert.match(en, /Reload/);
+  assert.match(en, /Back to home/);
+  assert.doesNotMatch(en, /[ぁ-んァ-ヶ一-龠]/);
 });

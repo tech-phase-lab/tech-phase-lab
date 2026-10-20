@@ -2,6 +2,7 @@ import { initialMemberDisplay } from "@/lib/membership/display-server";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { MemberDisplayProvider } from "./member-display-provider";
+import AccountReturnTracker from "./account-return-tracker";
 import LaunchBrand from "./launch-brand";
 import BottomNav from "./bottom-nav";
 import PullToRefresh from "./pull-to-refresh";
@@ -16,5 +17,5 @@ export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech P
 
 export default async function ResearchLayout({ children }: { children: ReactNode }) {
   const initial = await initialMemberDisplay();
-  return <><LaunchBrand /><ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider initial={initial}>{children}<PullToRefresh /><BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider></>;
+  return <><LaunchBrand /><AccountReturnTracker /><ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider initial={initial}>{children}<PullToRefresh /><BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider></>;
 }
