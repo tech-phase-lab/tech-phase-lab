@@ -2027,3 +2027,20 @@ gates rerunning. See STORAGE-CUTOVER latest evidence for exact IDs.
 Final combined d10c04f8 gates: Node1237/Python2523 (3760 total) passed;
 lint0 errors/5 existing warnings, build, compileall and diff check passed.
 Deployed three-module payload verified byte-for-byte against integrated source.
+
+
+2026-10-20 15:11 JST: previous integrated CI39377657564 SUCCESS. New read-only
+storage readiness command actually ran on production: all3 dormant ACLs verified,
+scoped sessions0 and unpublished protection0. Evidence445bb4fa at06:11:34Z in
+STORAGE-CUTOVER. One-shot service removed. This is a snapshot, NOT a maintained
+recovery fence or save activation. No owner action/key custody/Run now needed.
+
+Final readiness gates: Node1239/1239 (89.614s), Python2523/2523
+(376.676s), total3762 passed. Lint0 errors/5 existing warnings; build,
+compileall and diff check passed. Node rerun completed with no additional
+OOM kills (counter stayed9). No test skipped or removed.
+
+Coworker accf4368 arrived during publication; ref update did not overwrite it.
+Integrated PRO checkout changes and repeated all gates: Node1245/Python2523
+(total3768) passed, lint0 errors/5 existing warnings, build/compileall/diff check
+passed. Sequential heavy gates avoided further OOM kills.

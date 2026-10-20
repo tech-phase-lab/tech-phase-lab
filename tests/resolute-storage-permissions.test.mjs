@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
 import {prepareStoragePermissions,main} from '../scripts/resolute/provision-storage-permissions.mjs';
+import {checkStorageReadiness,main as readinessMain} from '../scripts/resolute/check-storage-readiness.mjs';
 import {verifyStoragePermissions} from '../scripts/resolute/storage-permissions.mjs';
 async function fixture(){
  const boot=new PGlite();await boot.exec('CREATE DATABASE resolute');const data=await boot.dumpDataDir();await boot.close();
@@ -70,5 +71,33 @@ test('audit fails when a required grant disappears after preparation',async()=>{
   await prepareStoragePermissions(client);
   await db.exec('REVOKE UPDATE(attempts) ON resolute.protection_outbox FROM resolute_protection_writer');
   await assert.rejects(()=>verifyStoragePermissions(client),/UNSAFE/);
+ }finally{await db.close();}
+});
+
+test('readiness is dormant by default and validates connection scope before I/O',async()=>{
+ assert.deepEqual(await readinessMain({}),{event:'RESOLUTE_STORAGE_READINESS_DISABLED'});
+ await assert.rejects(()=>readinessMain({RESOLUTE_CHECK_STORAGE_READINESS:'true',RESOLUTE_SETUP_DB_URL:'postgresql://user@wrong.internal/resolute'}),/INVALID_STORAGE_SCOPE/);
+});
+test('read-only readiness detects backlog including delayed receipts without changing rows',async()=>{
+ const {db,client}=await fixture();
+ try{
+  await prepareStoragePermissions(client);
+  const empty=await checkStorageReadiness(client);
+  assert.equal(empty.dormantChecksPassed,true);
+  assert.equal(empty.recoveryFenceVerified,false);assert.equal(empty.activation,false);
+  await db.exec("INSERT INTO resolute.plan_deletions VALUES('user_readiness',1,NOW()); UPDATE resolute.protection_outbox SET next_attempt_at=NOW()+interval '1 day'");
+  const before=await db.query('SELECT * FROM resolute.protection_outbox');
+  const result=await checkStorageReadiness(client);
+  assert.equal(result.pendingProtection,1);assert.equal(result.dueProtection,0);
+  assert.equal(result.dormantChecksPassed,false);
+  assert.deepEqual(await db.query('SELECT * FROM resolute.protection_outbox'),before);
+  const live={query:(sql,args)=>sql.includes('FROM pg_stat_activity')?Promise.resolve({rows:[{sessions:'1'}]}):client.query(sql,args)};
+  assert.equal((await checkStorageReadiness(live)).activeScopedSessions,1);
+  await db.exec('DELETE FROM resolute.protection_outbox');
+  assert.equal((await checkStorageReadiness(live)).dormantChecksPassed,false);
+  await db.exec('ALTER ROLE resolute_plan_writer LOGIN');
+  await assert.rejects(()=>checkStorageReadiness(client),/UNSAFE/);
+  // Error must close its read-only transaction, allowing the operator connection to continue.
+  await db.exec('CREATE TABLE public.after_readiness_failure(id int)');
  }finally{await db.close();}
 });

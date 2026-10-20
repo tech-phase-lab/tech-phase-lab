@@ -659,3 +659,25 @@ and successor CI are being verified separately.
 Final combined d10c04f8 gates: Node1237/Python2523 (3760 total) passed;
 lint0 errors/5 existing warnings, build, compileall and diff check passed.
 Deployed three-module payload verified byte-for-byte against integrated source.
+
+
+2026-10-20 15:11 JST actual read-only production readiness passed:
+deployment445bb4fa-51ce-44c5-9185-2e431986d0f3 logged
+RESOLUTE_STORAGE_READINESS at2026-10-20T06:11:34.131154785Z.
+rolesVerified3,loginsEnabled=false,rawPaymentAccess=false,deliveryAccess=false,
+activeScopedSessions0,pendingProtection0,dueProtection0,dormantChecksPassed=true.
+recoveryFenceVerified=false and activation=false intentionally remain explicit.
+The dedicated one-shot service8ab66cf5-afab-4c09-bf65-61c16d707f85 used the
+reviewed read-only transaction and the source ACL audit, with no public domain,
+cron or volume. It was deleted after the evidence was captured. No application
+credentials, role attributes, stored customer data or existing schedules changed.
+
+Final readiness gates: Node1239/1239 (89.614s), Python2523/2523
+(376.676s), total3762 passed. Lint0 errors/5 existing warnings; build,
+compileall and diff check passed. Node rerun completed with no additional
+OOM kills (counter stayed9). No test skipped or removed.
+
+Coworker accf4368 arrived during publication; ref update did not overwrite it.
+Integrated PRO checkout changes and repeated all gates: Node1245/Python2523
+(total3768) passed, lint0 errors/5 existing warnings, build/compileall/diff check
+passed. Sequential heavy gates avoided further OOM kills.

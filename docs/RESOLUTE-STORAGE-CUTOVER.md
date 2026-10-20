@@ -448,3 +448,63 @@ and successor CI are being verified separately.
 Final combined d10c04f8 gates: Node1237/Python2523 (3760 total) passed;
 lint0 errors/5 existing warnings, build, compileall and diff check passed.
 Deployed three-module payload verified byte-for-byte against integrated source.
+
+
+## Dormant storage readiness command — 2026-10-20
+
+`scripts/resolute/check-storage-readiness.mjs` performs no I/O by default.
+Explicit RESOLUTE_CHECK_STORAGE_READINESS=true and a reviewed
+RESOLUTE_SETUP_DB_URL scoped to postgres.railway.internal/resolute are required.
+Use an operator connection with catalog visibility; never install this credential
+into the application or retry service. Do not put a connection URL on a command line.
+The command opens BEGIN READ ONLY, audits the three dormant role ACLs, counts
+existing scoped-role sessions and all unpublished protection records (including
+future retry backoff), then ROLLBACKs. It returns only counts/booleans. Nonzero
+sessions or pending records make the CLI fail; query/ACL errors are redacted.
+NOLOGIN alone does not end old sessions. This command neither terminates them nor
+publishes queued events, changes grants, enables saving or sends notifications.
+
+`dormantChecksPassed` is only a point-in-time preflight. It does not fence
+privileged writers, infrastructure or object storage and deliberately always
+reports recoveryFenceVerified=false and activation=false. Continue to require
+an actual maintained write fence and complete independently pinned manifest.
+PGlite regression verifies a delayed pending receipt remains unchanged, a
+simulated pre-existing role session prevents readiness, and ACL failure closes
+the read-only transaction. Real production execution is recorded separately.
+
+Previous integrated CI39377657564 (d10c04f8, including fafde179 recovery fix)
+completed successfully; the documentation-only fb27c783 did not replace that
+code validation with a new code tree.
+
+
+2026-10-20 15:11 JST actual read-only production readiness passed:
+deployment445bb4fa-51ce-44c5-9185-2e431986d0f3 logged
+RESOLUTE_STORAGE_READINESS at2026-10-20T06:11:34.131154785Z.
+rolesVerified3,loginsEnabled=false,rawPaymentAccess=false,deliveryAccess=false,
+activeScopedSessions0,pendingProtection0,dueProtection0,dormantChecksPassed=true.
+recoveryFenceVerified=false and activation=false intentionally remain explicit.
+The dedicated one-shot service8ab66cf5-afab-4c09-bf65-61c16d707f85 used the
+reviewed read-only transaction and the source ACL audit, with no public domain,
+cron or volume. It was deleted after the evidence was captured. No application
+credentials, role attributes, stored customer data or existing schedules changed.
+
+Deployed one-file Bun source SHA256:
+b0ef14068bc866a92912f9207cb3708616f43d3f8a5f032890066d383fd33bcd.
+It concatenates the unchanged ACL auditor and new readiness command, pins
+pg8.23.1 and substitutes only the script entry point/imports.
+
+Validation note: overlapping local gates exhausted container memory. Two lint
+attempts exited137 and an initial Node run lost two test-file processes while
+the cgroup OOM-kill counter increased. They are not passing evidence. Build
+passed; standalone lint subsequently passed with0 errors/5 existing warnings.
+Complete Node rerun and the original Python suite results follow.
+
+Final readiness gates: Node1239/1239 (89.614s), Python2523/2523
+(376.676s), total3762 passed. Lint0 errors/5 existing warnings; build,
+compileall and diff check passed. Node rerun completed with no additional
+OOM kills (counter stayed9). No test skipped or removed.
+
+Coworker accf4368 arrived during publication; ref update did not overwrite it.
+Integrated PRO checkout changes and repeated all gates: Node1245/Python2523
+(total3768) passed, lint0 errors/5 existing warnings, build/compileall/diff check
+passed. Sequential heavy gates avoided further OOM kills.
