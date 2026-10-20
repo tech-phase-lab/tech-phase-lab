@@ -49,8 +49,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner",
+          "text": "MicrosoftはIBMの戦略パートナーだ",
+          "text_en": "Microsoft is a strategic partner of IBM",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -61,8 +61,8 @@
         },
         {
           "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
+          "text": "Microsoftはソフトウェア事業で主要な競合にあたる",
+          "text_en": "Microsoft is a principal competitor of IBM in software",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -97,8 +97,8 @@
         },
         {
           "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
+          "text": "GoogleはIBMのソフトウェア事業と競合する",
+          "text_en": "Google (Alphabet) competes with IBM in software",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -119,8 +119,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner",
+          "text": "IBMはAWSと戦略的に提携する",
+          "text_en": "IBM partners strategically with Amazon Web Services (AWS)",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -131,8 +131,8 @@
         },
         {
           "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
+          "text": "Amazonはソフトウェア事業の主要な競合に数えられる",
+          "text_en": "Amazon is a principal competitor of IBM in software",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -153,8 +153,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner",
+          "text": "Oracleとは戦略パートナーの関係にある",
+          "text_en": "Oracle is a strategic partner of IBM",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -165,8 +165,8 @@
         },
         {
           "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
+          "text": "IBMのソフトウェア事業はOracleと競合する",
+          "text_en": "Oracle competes with IBM's software business",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -177,8 +177,8 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、競合としてIBMを挙げている",
-          "text_en": "Oracle’s annual report lists IBM among companies that compete directly with it",
+          "text": "IBMは、Oracleと競合関係にある",
+          "text_en": "IBM is a competitor of Oracle.",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K FY2026",
@@ -200,8 +200,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner",
+          "text": "Palo Alto NetworksはIBMの提携先だ",
+          "text_en": "Palo Alto Networks is a strategic partner of IBM",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -222,8 +222,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner",
+          "text": "SalesforceはIBMの戦略パートナーの一社だ",
+          "text_en": "Salesforce is one of IBM's strategic partners",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -234,8 +234,8 @@
         },
         {
           "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
+          "text": "Salesforceはソフトウェア事業の主要な競合だ",
+          "text_en": "Salesforce is a principal competitor of IBM in software",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -256,8 +256,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner",
+          "text": "IBMはAdobeと戦略的パートナーシップを結ぶ",
+          "text_en": "IBM has a strategic partnership with Adobe",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -278,8 +278,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner",
+          "text": "SAPはIBMの戦略パートナーに名を連ねる",
+          "text_en": "SAP is a strategic partner of IBM",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -290,8 +290,8 @@
         },
         {
           "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
+          "text": "ソフトウェア事業の主要な競合にSAPがある",
+          "text_en": "SAP is a principal competitor of IBM in software",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -312,8 +312,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インフラ事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its infrastructure business",
+          "text": "インフラ事業ではDell Technologiesが主要な競合となる",
+          "text_en": "Dell Technologies is a principal competitor of IBM in infrastructure",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -334,8 +334,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インフラ事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its infrastructure business",
+          "text": "HPEはインフラ事業で主要な競合の一社だ",
+          "text_en": "HPE is a principal competitor of IBM in infrastructure",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -346,8 +346,8 @@
         },
         {
           "type": "rival",
-          "text": "HPEが年次報告で、競合としてIBMを挙げている",
-          "text_en": "HPE’s annual report lists IBM among its primary competitors",
+          "text": "IBMとHPEは、インフラ分野で競い合う",
+          "text_en": "IBM is a competitor of HPE.",
           "source": {
             "label": "HPE 10-K(2025年度)",
             "label_en": "HPE 10-K FY2025",
@@ -369,8 +369,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コンサルティング事業の競合として実名で記載",
-          "text_en": "Named as a competitor in its consulting business",
+          "text": "Accentureはコンサルティング事業の競合だ",
+          "text_en": "Accenture is a competitor of IBM in consulting",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -391,8 +391,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コンサルティング事業の競合として実名で記載",
-          "text_en": "Named as a competitor in its consulting business",
+          "text": "コンサルティング事業ではCapgeminiと競合する",
+          "text_en": "IBM competes with Capgemini in consulting",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -425,8 +425,8 @@
         },
         {
           "type": "tie",
-          "text": "戦略パートナーとして実名で記載",
-          "text_en": "Named as a strategic partner in the annual report",
+          "text": "Samsung ElectronicsはIBMの提携先となる",
+          "text_en": "Samsung Electronics is a strategic partner of IBM",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K FY2025",
@@ -559,8 +559,8 @@
         },
         {
           "type": "rival",
-          "text": "ソフトウェア事業の競合として「Splunk(Cisco傘下)」を実名で記載",
-          "text_en": "Names Splunk, a Cisco company, as a principal competitor in its software business",
+          "text": "ソフトウェア事業ではSplunk(Cisco傘下)が主要な競合を担う",
+          "text_en": "Splunk, a Cisco company, is a principal competitor of IBM in software",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -627,8 +627,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBが年次報告で、提携を広げたソフトウェア会社・システム会社の1社としてIBMを挙げている",
-          "text_en": "MongoDB’s annual report lists IBM among partners it expanded relationships with",
+          "text": "IBMは、MongoDBが提携を広げたソフトウェア会社・システム会社の1社である",
+          "text_en": "IBM is one of the software vendors and systems integrators with which MongoDB has expanded its partnerships.",
           "source": {
             "label": "MongoDB 10-K(2026年度)(2026年1月)",
             "label_en": "MongoDB 10-K FY2026 (Jan 2026)",
@@ -640,8 +640,8 @@
         },
         {
           "type": "rival",
-          "text": "MongoDBが年次報告で、主な競合の例としてIBMを挙げている",
-          "text_en": "MongoDB’s annual report names IBM among legacy database competitors",
+          "text": "IBMは、MongoDBが主に競合する既存データベース企業の一例だ",
+          "text_en": "IBM is one of the established database software providers MongoDB primarily competes with.",
           "source": {
             "label": "MongoDB 10-K(2026年度)",
             "label_en": "MongoDB 10-K FY2026",
@@ -663,8 +663,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pegasystemsが年次報告で、競合としてIBMを挙げている",
-          "text_en": "Pegasystems’ annual report names IBM among its competitors",
+          "text": "IBMは、Pegasystemsの競合に含まれる",
+          "text_en": "IBM is a competitor of Pegasystems.",
           "source": {
             "label": "Pegasystems 10-K(2025年度)",
             "label_en": "Pegasystems 10-K FY2025",
@@ -686,8 +686,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ソフトウェア事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its software business",
+          "text": "Broadcomはソフトウェア事業でIBMと競い合う",
+          "text_en": "Broadcom is a principal competitor of IBM in software",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -708,8 +708,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インフラ事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its infrastructure business",
+          "text": "インフラ事業ではIntelも主要な競合に入る",
+          "text_en": "Intel is a principal competitor of IBM in infrastructure",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -730,8 +730,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インフラ事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its infrastructure business",
+          "text": "NetAppはインフラ事業の主要な競合に含まれる",
+          "text_en": "NetApp is a principal competitor of IBM in infrastructure",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -752,8 +752,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インフラ事業の主要な競合として実名で記載",
-          "text_en": "Named as a principal competitor in its infrastructure business",
+          "text": "Pure Storageはインフラ事業で競合する主要企業だ",
+          "text_en": "Pure Storage is a principal competitor of IBM in infrastructure",
           "source": {
             "label": "IBM 10-K(2025年12月期)",
             "label_en": "IBM 10-K (fiscal year ended December 2025)",
@@ -764,8 +764,8 @@
         },
         {
           "type": "tie",
-          "text": "Pure Storageが年次報告で、クラウド技術のパートナーとしてIBMを挙げている",
-          "text_en": "Pure Storage’s annual report lists IBM among its cloud technology partners",
+          "text": "IBMは、Pure Storageのクラウド技術パートナーを務める",
+          "text_en": "IBM is a cloud technology partner of Pure Storage.",
           "source": {
             "label": "Pure Storage/Everpure 10-K(2026年度)",
             "label_en": "Pure Storage/Everpure 10-K FY2026",
@@ -777,8 +777,8 @@
         },
         {
           "type": "rival",
-          "text": "Pure Storageが年次報告で、競合としてIBMを挙げている",
-          "text_en": "Pure Storage’s annual report lists IBM among its main competitors",
+          "text": "Pure Storageの主な競合には、IBMも入る",
+          "text_en": "IBM is one of Pure Storage's main competitors.",
           "source": {
             "label": "Pure Storage/Everpure 10-K(2026年度)",
             "label_en": "Pure Storage/Everpure 10-K FY2026",
@@ -801,8 +801,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cognizantが年次報告で、競合としてIBM Consultingを挙げている",
-          "text_en": "Cognizant’s annual report lists IBM Consulting among its direct competitors",
+          "text": "IBM Consultingは、Cognizantの直接の競合だ",
+          "text_en": "IBM Consulting is a direct competitor of Cognizant.",
           "source": {
             "label": "Cognizant 10-K(2025年度)",
             "label_en": "Cognizant 10-K FY2025",
@@ -824,8 +824,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "GlobalFoundriesが、IBMなど大手半導体企業と特許のクロスライセンスを結んでいると記載",
-          "text_en": "GlobalFoundries states it has patent cross-licenses with leading semiconductor companies including IBM",
+          "text": "GlobalFoundriesはIBMなど大手半導体企業と特許のクロスライセンスを結んでいる",
+          "text_en": "GlobalFoundries has patent cross-licenses with leading semiconductor companies including IBM",
           "source": {
             "label": "GlobalFoundries 20-F(2025年度)",
             "label_en": "GlobalFoundries 20-F FY2025",

@@ -34,8 +34,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主要な製造委託先(ファウンドリ)の1社としてTSMCを挙げている",
-          "text_en": "Names TSMC among its primary foundry partners",
+          "text": "TSMCは、インディ・セミコンダクターの主要な製造委託先(ファウンドリ)の1社に入る",
+          "text_en": "TSMC is one of indie Semiconductor's primary foundry partners.",
           "source": {
             "label": "indie Semiconductor 10-K",
             "label_en": "indie Semiconductor 10-K",
@@ -182,8 +182,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インディ・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in indie Semiconductor’s annual report",
+          "text": "インディ・セミコンダクターと競合する",
+          "text_en": "Competes with indie Semiconductor",
           "source": {
             "label": "indie Semiconductor 10-K",
             "label_en": "indie Semiconductor 10-K",

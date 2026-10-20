@@ -63,8 +63,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Lam Researchが年次報告で、最も重要な顧客の1社としてSK hynixを挙げている",
-          "text_en": "Lam Research’s annual report lists SK hynix among its most significant customers",
+          "text": "SK hynixは、Lam Researchにとって最も重要な顧客の1社",
+          "text_en": "SK hynix is one of Lam Research's most significant customers.",
           "source": {
             "label": "Lam Research 10-K(2026年度)",
             "label_en": "Lam Research 10-K FY2026",
@@ -86,8 +86,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "FormFactorが年次報告で、売上の10%超を占める顧客としてSK hynixを挙げている",
-          "text_en": "FormFactor’s annual report reports SK hynix as a 10%+ customer",
+          "text": "SK hynixは、FormFactorの売上の10%超を占める顧客となった",
+          "text_en": "SK hynix is a 10%+ customer of FormFactor.",
           "source": {
             "label": "FormFactor 10-K(2025年度)",
             "label_en": "FormFactor 10-K FY2025",
@@ -109,8 +109,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Rambusが年次報告で、メモリーインターフェース用チップの販売先にSK hynixを挙げている",
-          "text_en": "Rambus’ annual report says its memory interface chips are sold to DRAM makers including SK hynix",
+          "text": "Rambusのメモリーインターフェース用チップは、SK hynixにも販売される",
+          "text_en": "Rambus sells its memory interface chips to DRAM makers including SK hynix.",
           "source": {
             "label": "Rambus 10-K(2025年度)",
             "label_en": "Rambus 10-K FY2025",
@@ -132,8 +132,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "NVIDIAが年次報告で、SK hynixからメモリーを購入していると記載",
-          "text_en": "NVIDIA’s annual report states it purchases memory from SK hynix",
+          "text": "NVIDIAはSK hynixからメモリーを購入する",
+          "text_en": "NVIDIA purchases memory from SK hynix",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K FY2026",
@@ -306,8 +306,8 @@
         },
         {
           "type": "rival",
-          "text": "NAND市場の主要な競合としてKIOXIAとSandiskを挙げている",
-          "text_en": "Names KIOXIA and Sandisk among major NAND competitors",
+          "text": "NAND市場では、KIOXIAとSandiskがSK hynixの主要な競合となる",
+          "text_en": "In the NAND market, KIOXIA and Sandisk are major competitors of SK hynix.",
           "source": {
             "label": "SK hynix 目論見書(Form 424B4, 2026)",
             "label_en": "SK hynix prospectus (Form 424B4, 2026)",
@@ -328,8 +328,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DRAMとNANDの主要な競合としてSamsung Electronicsを挙げている",
-          "text_en": "Names Samsung Electronics a major competitor in DRAM and NAND",
+          "text": "DRAMとNANDで、SK hynixと主に競うのはSamsung Electronics",
+          "text_en": "Samsung Electronics is a major competitor of SK hynix in DRAM and NAND.",
           "source": {
             "label": "SK hynix 目論見書(Form 424B4, 2026)",
             "label_en": "SK hynix prospectus (Form 424B4, 2026)",
@@ -350,8 +350,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Micronが年次報告で、メモリーの競合としてSK hynixを挙げている",
-          "text_en": "Micron’s annual report lists SK hynix among its memory competitors",
+          "text": "Micronは、メモリー市場でSK hynixと競合する",
+          "text_en": "Micron competes with SK hynix in memory.",
           "source": {
             "label": "Micron 10-K(2026年度)",
             "label_en": "Micron 10-K FY2026",
@@ -373,8 +373,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Sandiskが年次報告で、垂直統合型のフラッシュ競合としてSK hynixを挙げている",
-          "text_en": "Sandisk’s annual report lists SK hynix among vertically integrated flash competitors",
+          "text": "Sandiskは、垂直統合型のフラッシュメーカーSK hynixと競合する",
+          "text_en": "Sandisk competes with vertically integrated flash makers such as SK hynix.",
           "source": {
             "label": "Sandisk 10-K(2026年度)",
             "label_en": "Sandisk 10-K FY2026",

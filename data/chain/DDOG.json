@@ -121,8 +121,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Datadog’s annual report",
+          "text": "Datadogと競合する",
+          "text_en": "Competes with Datadog",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -134,8 +134,8 @@
         },
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Datadog’s annual report",
+          "text": "Datadogと競合する",
+          "text_en": "Competes with Datadog",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -158,8 +158,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ダイナトレースの年次報告が、データドッグを競合として挙げている",
-          "text_en": "Names Datadog as a competitor in its annual report",
+          "text": "Datadogと競合する",
+          "text_en": "Competes with Datadog",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -171,8 +171,8 @@
         },
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Datadog’s annual report",
+          "text": "Datadogと競合する",
+          "text_en": "Competes with Datadog",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -195,8 +195,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Datadog’s annual report",
+          "text": "Datadogと競合する",
+          "text_en": "Competes with Datadog",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -219,8 +219,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Datadog’s annual report",
+          "text": "Datadogと競合する",
+          "text_en": "Competes with Datadog",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -232,8 +232,8 @@
         },
         {
           "type": "rival",
-          "text": "クラウド監視で、Microsoft Azureなどクラウド事業者のネイティブ機能と競合すると年次報告が述べている",
-          "text_en": "The annual report says Datadog competes in cloud monitoring with native solutions from providers such as Microsoft Azure",
+          "text": "Datadogはクラウド監視で、Microsoft Azureなど各クラウド事業者のネイティブ機能と競合する。",
+          "text_en": "In cloud monitoring, Datadog competes with native solutions from cloud providers such as Microsoft Azure.",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -256,8 +256,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Datadog’s annual report",
+          "text": "Datadogと競合する",
+          "text_en": "Competes with Datadog",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",

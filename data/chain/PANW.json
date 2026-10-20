@@ -41,8 +41,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Palo Alto Networksが年次報告で、自社製品を組み立てる電子機器の受託製造(EMS)会社としてFlex(Flextronics International)を挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Flex (Flextronics International) as its EMS provider that assembles its products",
+          "text": "Flex(Flextronics International)が、Palo Alto Networksの製品を組み立てるEMS(電子機器の受託製造)会社だ",
+          "text_en": "Flex (Flextronics International) is Palo Alto Networks' EMS provider and assembles its products.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -117,8 +117,8 @@
         },
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてMicrosoftを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Microsoft among its main competitors",
+          "text": "Microsoftは、Palo Alto Networksの主な競合の1社に当たる",
+          "text_en": "Microsoft is one of Palo Alto Networks' main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -170,8 +170,8 @@
         },
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてAlphabet(Google Cloud)を挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Alphabet (Google Cloud) among its main competitors",
+          "text": "Palo Alto Networksは、主な競合の1社であるAlphabet(Google Cloud)と競合する",
+          "text_en": "Palo Alto Networks competes with Alphabet (Google Cloud), one of its main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -218,8 +218,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "CDWが年次報告で、最上位の認定を受けた主要ベンダーパートナーの1社としてPalo Alto Networksを挙げている",
-          "text_en": "CDW’s FY2025 10-K lists Palo Alto Networks among major vendor partners from which it has received the highest level of certification",
+          "text": "CDWは、最上位の認定を受けた主要ベンダーパートナーの1社にPalo Alto Networksを持つ",
+          "text_en": "CDW has received the highest level of certification from major vendor partners including Palo Alto Networks.",
           "source": {
             "label": "CDW 10-K(2025年度)",
             "label_en": "CDW 10-K (FY2025)",
@@ -243,8 +243,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "ePlusが年次報告で、自社が再販・統合する技術パートナーの1社としてPalo Alto Networksを挙げている",
-          "text_en": "ePlus’s FY2026 10-K lists Palo Alto Networks among technology partners whose solutions it resells and integrates",
+          "text": "ePlusは、再販・統合する技術パートナーの1社としてPalo Alto Networksを扱う",
+          "text_en": "ePlus resells and integrates solutions from technology partners including Palo Alto Networks.",
           "source": {
             "label": "ePlus 10-K(2026年度)",
             "label_en": "ePlus 10-K (FY2026)",
@@ -296,8 +296,8 @@
         },
         {
           "type": "tie",
-          "text": "IBMが年次報告で、戦略的パートナーの1社としてPalo Alto Networksを挙げている",
-          "text_en": "IBM’s FY2025 10-K names Palo Alto Networks among its strategic partners",
+          "text": "Palo Alto Networksは、IBMの戦略的パートナーの1社となる",
+          "text_en": "Palo Alto Networks is one of IBM's strategic partners.",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -405,8 +405,8 @@
         },
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてOktaを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Okta among its main competitors",
+          "text": "Palo Alto Networksは、主な競合の1社であるOktaと競い合う",
+          "text_en": "Palo Alto Networks competes with Okta, one of its main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -573,8 +573,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rapid7が年次報告で、最近の技術アライアンスの1社としてPalo Alto Networksを挙げている",
-          "text_en": "Rapid7’s FY2025 10-K lists Palo Alto Networks among its recent technology alliances",
+          "text": "Rapid7は、最近の技術アライアンス先の1社にPalo Alto Networksを迎えた",
+          "text_en": "Palo Alto Networks is one of Rapid7's recent technology alliances.",
           "source": {
             "label": "Rapid7 10-K(2025年度)",
             "label_en": "Rapid7 10-K (FY2025)",
@@ -596,8 +596,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Zoomが年次報告で、提携するソフトウェア提供企業の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Zoom’s FY2026 10-K lists Palo Alto Networks among software providers it partners with",
+          "text": "Zoomは、提携するソフトウェア提供企業の1社にPalo Alto Networksを数える",
+          "text_en": "Zoom partners with software providers including Palo Alto Networks.",
           "source": {
             "label": "Zoom 10-K(2026年度)",
             "label_en": "Zoom 10-K (FY2026)",
@@ -619,8 +619,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Nutanixが年次報告で、統合製品や相互運用のための提携先の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Nutanix’s FY2026 10-K cites partnerships with Palo Alto Networks for integrated offerings and interoperability",
+          "text": "Nutanixは、統合製品や相互運用のための提携先の1社として、Palo Alto Networksと組む",
+          "text_en": "Nutanix partners with Palo Alto Networks on integrated offerings and interoperability.",
           "source": {
             "label": "Nutanix 10-K(2026年度)",
             "label_en": "Nutanix 10-K (FY2026)",
@@ -642,8 +642,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Kyndrylが年次報告で、主要な提携先の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Kyndryl’s FY2026 10-K lists Palo Alto Networks among its key partnerships",
+          "text": "Kyndrylは、主要な提携先の1社であるPalo Alto Networksと提携する",
+          "text_en": "Palo Alto Networks is one of Kyndryl's key partners.",
           "source": {
             "label": "Kyndryl 10-K(2026年度)",
             "label_en": "Kyndryl 10-K (FY2026)",
@@ -665,8 +665,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rackspaceが年次報告で、標準のプライベートクラウド商品を提供するためのOEM提携先の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Rackspace’s FY2025 10-K lists Palo Alto Networks among OEMs it partners with for standard Private Cloud offers",
+          "text": "Palo Alto Networksは、Rackspaceが標準のプライベートクラウド商品を提供するためのOEM提携先の1社だ",
+          "text_en": "Rackspace partners with OEMs including Palo Alto Networks to provide standard Private Cloud offers.",
           "source": {
             "label": "Rackspace 10-K(2025年度)",
             "label_en": "Rackspace 10-K (FY2025)",
@@ -688,8 +688,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Extreme Networksが年次報告で、Secure Web Gatewayの連携先の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Extreme Networks’ FY2026 10-K lists Palo Alto Networks among Secure Web Gateway partners it integrates with",
+          "text": "Extreme Networksの製品は、Secure Web Gatewayの連携先の1社としてPalo Alto Networksと統合される",
+          "text_en": "Extreme Networks products integrate with Secure Web Gateway partners including Palo Alto Networks.",
           "source": {
             "label": "Extreme Networks 10-K(2026年度)",
             "label_en": "Extreme Networks 10-K (FY2026)",
@@ -711,8 +711,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAが、BlueField-4搭載のデータセンター基盤を構築する業界リーダーの1社としてPalo Alto Networksを挙げている",
-          "text_en": "NVIDIA lists Palo Alto Networks among industry leaders building BlueField-4-accelerated data center platforms",
+          "text": "Palo Alto Networksは、NVIDIAのBlueField-4搭載データセンター基盤を構築する業界リーダーの1社だ",
+          "text_en": "Palo Alto Networks is among the industry leaders building BlueField-4-accelerated data center platforms with NVIDIA.",
           "source": {
             "label": "NVIDIA 8-K(2026年度第3四半期決算発表)",
             "label_en": "NVIDIA 8-K Q3 FY2026 results release",
@@ -734,8 +734,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCiscoを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Cisco among its main competitors",
+          "text": "Ciscoは、Palo Alto Networksの主な競合の1社に名を連ねる",
+          "text_en": "Cisco is one of Palo Alto Networks' main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -757,8 +757,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCheck Point Softwareを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Check Point Software among its main competitors",
+          "text": "Check Point Softwareは、Palo Alto Networksの主な競合の1社だ",
+          "text_en": "Check Point Software is one of Palo Alto Networks' main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -780,8 +780,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてCrowdStrikeを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names CrowdStrike among its main competitors",
+          "text": "CrowdStrikeは、Palo Alto Networksと競合する主な1社となる",
+          "text_en": "CrowdStrike is one of Palo Alto Networks' main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -803,8 +803,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてFortinetを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Fortinet among its main competitors",
+          "text": "Palo Alto Networksは、主な競合の1社としてFortinetを相手に戦う",
+          "text_en": "Palo Alto Networks competes with Fortinet, one of its main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -826,8 +826,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてSailPointを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names SailPoint among its main competitors",
+          "text": "SailPointも、Palo Alto Networksの主な競合の1社に含まれる",
+          "text_en": "SailPoint is one of Palo Alto Networks' main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -849,8 +849,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合の1社としてZscalerを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names Zscaler among its main competitors",
+          "text": "Palo Alto Networksは、主な競合の1社であるZscalerと市場を争う",
+          "text_en": "Palo Alto Networks vies with Zscaler, one of its main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -918,8 +918,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Netskopeが年次報告で、主な競合の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Netskope’s 10-K (FY ended January 2026) names Palo Alto Networks among its primary competitors",
+          "text": "Netskopeは、主な競合の1社であるPalo Alto Networksと競合する",
+          "text_en": "Netskope competes with Palo Alto Networks, one of its primary competitors.",
           "source": {
             "label": "Netskope 10-K",
             "label_en": "Netskope 10-K (FY ended Jan 2026)",
@@ -941,8 +941,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SentinelOneが年次報告で、汎用ネットワーク・セキュリティ製品の提供企業の1社としてPalo Alto Networksを挙げている",
-          "text_en": "SentinelOne’s FY2026 10-K lists Palo Alto Networks among providers of general network security products that compete with it",
+          "text": "SentinelOneは、汎用ネットワーク・セキュリティ製品の提供企業の1社、Palo Alto Networksを競合に持つ",
+          "text_en": "SentinelOne competes with Palo Alto Networks, a provider of general network security products.",
           "source": {
             "label": "SentinelOne 10-K(2026年度)",
             "label_en": "SentinelOne 10-K (FY2026)",
@@ -964,8 +964,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualysが年次報告で、競合する上場企業の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Qualys’s FY2025 10-K names Palo Alto Networks among its public-company competitors",
+          "text": "Qualysは、上場企業の競合の1社としてPalo Alto Networksと競う",
+          "text_en": "Qualys competes with public companies including Palo Alto Networks.",
           "source": {
             "label": "Qualys 10-K(2025年度)",
             "label_en": "Qualys 10-K (FY2025)",
@@ -987,8 +987,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Tenableが年次報告で、クラウドセキュリティの競合の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Tenable’s FY2025 10-K names Palo Alto Networks among cloud security competitors",
+          "text": "Tenableは、クラウドセキュリティの競合の1社としてPalo Alto Networksを抱える",
+          "text_en": "Palo Alto Networks is one of Tenable's cloud security competitors.",
           "source": {
             "label": "Tenable 10-K(2025年度)",
             "label_en": "Tenable 10-K (FY2025)",
@@ -1010,8 +1010,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Elasticが年次報告で、Elastic Securityの競合の1社としてPalo Alto Networksを挙げている",
-          "text_en": "Elastic’s FY2026 10-K names Palo Alto Networks among Elastic Security competitors",
+          "text": "Elastic Securityの競合の1社は、Palo Alto Networksだ",
+          "text_en": "Palo Alto Networks is one of Elastic Security's competitors.",
           "source": {
             "label": "Elastic 10-K(2026年度)",
             "label_en": "Elastic 10-K (FY2026)",
@@ -1033,8 +1033,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HPEが年次報告で、ネットワーク・セキュリティ分野の主な競合の1社としてPalo Alto Networksを挙げている",
-          "text_en": "HPE’s FY2025 10-K names Palo Alto Networks among its primary networking/security competitors",
+          "text": "HPEのネットワーク・セキュリティ分野では、Palo Alto Networksが主な競合の1社となる",
+          "text_en": "Palo Alto Networks is one of HPE's primary networking and security competitors.",
           "source": {
             "label": "HPE 10-K(2025年度)",
             "label_en": "HPE 10-K (FY2025)",

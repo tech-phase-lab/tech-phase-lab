@@ -79,8 +79,8 @@
         },
         {
           "type": "rival",
-          "text": "先端プロセス技術(受託製造)の主な競合としてTSMCを挙げている",
-          "text_en": "Names TSMC its primary competitor in leading-edge process technology",
+          "text": "TSMCは、先端プロセス技術(受託製造)でIntelと競う主な相手だ",
+          "text_en": "TSMC is Intel's primary competitor in leading-edge semiconductor process technology.",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -148,8 +148,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "防衛産業向けの18Aプロセスの顧客として、Microsoftを迎えたとIntelが説明",
-          "text_en": "Intel says it onboarded Microsoft among defense industrial base customers for its 18A process",
+          "text": "Intelは防衛産業向けの18Aプロセスの顧客にMicrosoftを迎えた",
+          "text_en": "Intel has onboarded Microsoft among its defense industrial base customers for the 18A process",
           "source": {
             "label": "Intel の発表(Secure Enclave / RAMP-C)",
             "label_en": "Intel press release (Secure Enclave / RAMP-C)",
@@ -222,8 +222,8 @@
         },
         {
           "type": "rival",
-          "text": "Intelが年次報告で、データセンター・AI向けGPUシステムの競合としてNVIDIAを挙げている",
-          "text_en": "Intel’s annual report names NVIDIA among GPU system providers competing in data center and AI",
+          "text": "NVIDIAは、データセンター・AI向けGPUシステムでIntelの競合となる",
+          "text_en": "NVIDIA competes with Intel in GPU systems for data center and AI workloads.",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -304,8 +304,8 @@
         },
         {
           "type": "rival",
-          "text": "Intelが年次報告で、クライアント向け事業の主な競合としてAMDを挙げている",
-          "text_en": "Intel’s annual report states AMD is the primary competitor of its client computing business",
+          "text": "AMDは、Intelのクライアント向け事業における主な競合だ",
+          "text_en": "AMD is Intel's primary competitor in its client business.",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -375,8 +375,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Intelが年次報告で、Armベースのチップを含む競合としてQualcommを挙げている",
-          "text_en": "Intel’s annual report lists Qualcomm among platform-product competitors, including Arm-based Snapdragon PC processors",
+          "text": "Qualcommは、Armベースのチップを含む分野でIntelと競合する",
+          "text_en": "Qualcomm competes with Intel, including in Arm-based chips.",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -398,8 +398,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AppleがPC向けCPUをIntel製から自社設計のARMベースに置き換えたと記載",
-          "text_en": "States Apple replaced Intel client CPUs in its PCs with its own ARM-based designs",
+          "text": "AppleはPC向けCPUをIntel製から自社設計のARMベースに置き換えた",
+          "text_en": "Apple replaced Intel client CPUs in its PCs with its own ARM-based designs",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -421,8 +421,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "カスタムASICの開発市場でBroadcomと競合と記載",
-          "text_en": "States it competes with Broadcom in the custom ASIC development market",
+          "text": "Intelはカスタム ASICの開発市場でBroadcomと競合する",
+          "text_en": "Intel competes with Broadcom in the custom ASIC development market",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -444,8 +444,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "先端の受託製造でSamsungと直接競合と記載",
-          "text_en": "States it competes directly with Samsung in leading-edge foundry manufacturing",
+          "text": "先端の受託製造ではSamsungと直接競合する間柄だ",
+          "text_en": "Intel competes directly with Samsung in leading-edge foundry manufacturing",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",

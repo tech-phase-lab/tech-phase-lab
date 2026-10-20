@@ -246,8 +246,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、SpaceXのStarlinkを直接通信分野の競合として挙げている",
-          "text_en": "The annual report names SpaceX's Starlink as a competitor in the direct-to-device segment",
+          "text": "SpaceXのStarlinkは、直接通信分野でAST SpaceMobileの競合となる",
+          "text_en": "SpaceX's Starlink competes with AST SpaceMobile in the direct-to-device segment.",
           "source": {
             "label": "AST SpaceMobile 10-K",
             "label_en": "AST SpaceMobile 10-K",
@@ -259,8 +259,8 @@
         },
         {
           "type": "up",
-          "text": "BlueBird衛星の打上げ契約先の1社としてSpaceXが挙げられている",
-          "text_en": "SpaceX is named among the launch providers under agreement for BlueBird satellites",
+          "text": "SpaceXはBlueBird衛星の打上げ契約先の1社を務める",
+          "text_en": "SpaceX is one of the launch providers under agreement for BlueBird satellites",
           "source": {
             "label": "AST SpaceMobile 8-K Ex.99 の発表",
             "label_en": "AST SpaceMobile 8-K Ex.99 press release",
@@ -283,8 +283,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、競合としてIridium Communicationsを挙げている",
-          "text_en": "The annual report names Iridium Communications as a competitor",
+          "text": "Iridium CommunicationsはAST SpaceMobileと競合する既存事業者だ",
+          "text_en": "Iridium Communications is an existing service provider that competes with AST SpaceMobile.",
           "source": {
             "label": "AST SpaceMobile 10-K",
             "label_en": "AST SpaceMobile 10-K",
@@ -307,8 +307,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、競合としてGlobalstarを挙げている",
-          "text_en": "The annual report names Globalstar as a competitor",
+          "text": "Globalstarは、AST SpaceMobileの既存の競合事業者だ",
+          "text_en": "Globalstar is an existing service provider that competes with AST SpaceMobile.",
           "source": {
             "label": "AST SpaceMobile 10-K",
             "label_en": "AST SpaceMobile 10-K",

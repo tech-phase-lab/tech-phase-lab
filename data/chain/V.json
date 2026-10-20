@@ -29,8 +29,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Blockの年次報告が、Cash App CardはVisaカードが使える場所ならどこでも使えると記している",
-          "text_en": "Block's annual report says customers can use the Cash App Card anywhere that accepts Visa cards",
+          "text": "Block提供のCash App Cardは、Visaカードが使える場所ならどこでも利用できる",
+          "text_en": "Cash App Card works anywhere that accepts Visa cards",
           "source": {
             "label": "Block 10-K",
             "label_en": "Block 10-K",
@@ -167,8 +167,8 @@
         },
         {
           "type": "rival",
-          "text": "マスターカードの年次報告が、ビザを競合として挙げている",
-          "text_en": "Names Visa as a competitor in its annual report",
+          "text": "Visaと競合する",
+          "text_en": "Competes with Visa",
           "source": {
             "label": "Mastercard 10-K",
             "label_en": "Mastercard 10-K",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ビザの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Visa’s annual report",
+          "text": "Visaと競合する",
+          "text_en": "Competes with Visa",
           "source": {
             "label": "Visa 10-K",
             "label_en": "Visa 10-K",

@@ -182,8 +182,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヒマックス・テクノロジーズの年次報告が、シナプティクスを競合として挙げている",
-          "text_en": "Names Synaptics as a competitor in its annual report",
+          "text": "シナプティクスと競合する",
+          "text_en": "Competes with Synaptics",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -206,8 +206,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シリコン・ラボラトリーズの年次報告が、シナプティクスを競合として挙げている",
-          "text_en": "Names Synaptics as a competitor in its annual report",
+          "text": "シナプティクスと競合する",
+          "text_en": "Competes with Synaptics",
           "source": {
             "label": "Silicon Laboratories 10-K",
             "label_en": "Silicon Laboratories 10-K",

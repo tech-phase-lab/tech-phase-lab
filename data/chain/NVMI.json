@@ -120,8 +120,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ノバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Nova’s annual report",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
           "source": {
             "label": "Nova 20-F",
             "label_en": "Nova 20-F",
@@ -143,8 +143,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Onto Innovationの年次報告が、ノバを競合として挙げている",
-          "text_en": "Names Nova as a competitor in its annual report",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
           "source": {
             "label": "Onto Innovation 10-K",
             "label_en": "Onto Innovation 10-K",
@@ -166,8 +166,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ノバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Nova’s annual report",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
           "source": {
             "label": "Nova 20-F",
             "label_en": "Nova 20-F",
@@ -189,8 +189,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ノバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Nova’s annual report",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
           "source": {
             "label": "Nova annual report",
             "label_en": "Nova annual report (20-F)",
@@ -213,8 +213,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ノバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Nova’s annual report",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
           "source": {
             "label": "Nova annual report",
             "label_en": "Nova annual report (20-F)",
@@ -237,8 +237,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ノバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Nova’s annual report",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
           "source": {
             "label": "Nova annual report",
             "label_en": "Nova annual report (20-F)",

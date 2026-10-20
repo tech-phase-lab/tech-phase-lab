@@ -50,8 +50,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "BlackLineの年次報告は、SAPなどの再販業者が自社の契約条件を転嫁してくる可能性に触れている",
-          "text_en": "The annual report notes that resellers such as SAP may impose terms passed down from their own agreements with end customers",
+          "text": "SAPなどの再販業者が、自社の不利な契約条件をBlackLineに転嫁してくる可能性がある",
+          "text_en": "Resellers such as SAP may impose unfavorable terms on BlackLine that they pass down from their own agreements with end customers.",
           "source": {
             "label": "BlackLine 10-K",
             "label_en": "BlackLine 10-K",

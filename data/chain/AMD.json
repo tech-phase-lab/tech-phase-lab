@@ -407,8 +407,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDが年次報告で、データセンター事業の主な競合としてIntelとNVIDIAを挙げている",
-          "text_en": "AMD’s annual report says its Data Center segment competes primarily against Intel and NVIDIA",
+          "text": "AMDのデータセンター事業は、IntelとNVIDIAを主な競合とする",
+          "text_en": "AMD's Data Center segment competes primarily against Intel and NVIDIA",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -420,8 +420,8 @@
         },
         {
           "type": "rival",
-          "text": "Intelが年次報告で、クライアント向け事業の主な競合としてAMDを挙げている",
-          "text_en": "Intel’s annual report names AMD as a primary competitor in its client computing business",
+          "text": "AMDは、Intelのクライアント向け事業の主な競合だ",
+          "text_en": "AMD is the primary competitor of Intel's client computing business",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -443,8 +443,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDが年次報告で、データセンター事業の主な競合としてIntelとNVIDIAを挙げている",
-          "text_en": "AMD’s annual report says its Data Center segment competes primarily against Intel and NVIDIA",
+          "text": "NVIDIAはAMDのデータセンター事業で、Intelと並ぶ主な競合に当たる",
+          "text_en": "NVIDIA is, together with Intel, the primary competitor of AMD's Data Center segment",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -456,8 +456,8 @@
         },
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、GPU・高速計算の競合としてAMDを挙げている",
-          "text_en": "NVIDIA’s annual report lists AMD among competitors in GPUs and accelerated computing",
+          "text": "AMDは、NVIDIAのGPU・高速計算分野における競合となる",
+          "text_en": "AMD is one of NVIDIA's competitors in GPUs and accelerated computing",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -479,8 +479,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDが年次報告で、組み込み事業の競合するASSPメーカーとしてMarvellを挙げている",
-          "text_en": "AMD’s annual report names Marvell among ASSP vendors competing in its Embedded segment",
+          "text": "Marvellは、AMDの組み込み事業で競合するASSPメーカーのひとつだ",
+          "text_en": "Marvell is one of the ASSP vendors competing with AMD's Embedded segment",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -492,8 +492,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接競合する企業としてAMDを挙げている",
-          "text_en": "Marvell’s annual report lists AMD among companies that compete directly with its businesses",
+          "text": "Marvellの事業と直接競合する企業に、AMDがある",
+          "text_en": "AMD competes directly with Marvell's businesses",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -515,8 +515,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDが年次報告で、組み込み事業の競合するASSPメーカーとしてBroadcomを挙げている",
-          "text_en": "AMD’s annual report names Broadcom among ASSP vendors competing in its Embedded segment",
+          "text": "AMDの組み込み事業では、ASSPメーカーのBroadcomが競合する",
+          "text_en": "Broadcom is one of the ASSP vendors competing with AMD's Embedded segment",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -538,8 +538,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDが年次報告で、FPGAの主な競合としてLatticeを挙げている",
-          "text_en": "AMD’s annual report names Lattice among its primary FPGA competitors",
+          "text": "LatticeはAMDにとってFPGAの主な競合で、今後も競争が続く見込みだ",
+          "text_en": "Lattice is one of AMD's primary FPGA competitors, and AMD expects the competition to continue",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",

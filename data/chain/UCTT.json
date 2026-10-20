@@ -31,8 +31,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "FY2025・2024・2023の各年で売上の10%超を占めた最大顧客の1社として挙げられている",
-          "text_en": "Named as one of the two largest revenue customers, each over 10% of total revenues in fiscal years 2025, 2024 and 2023",
+          "text": "アプライド マテリアルズはFY2025・2024・2023の各年、売上の10%超を占めた最大顧客の1社だ",
+          "text_en": "Applied Materials was one of the two largest revenue customers, each over 10% of total revenues in fiscal years 2025, 2024 and 2023",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -44,8 +44,8 @@
         },
         {
           "type": "down",
-          "text": "2024年12月27日時点で売掛金総額の10.0%超を占めた3顧客の1社として挙げられている",
-          "text_en": "Named among three customers each over 10.0% of gross accounts receivable as of December 27, 2024",
+          "text": "アプライド マテリアルズは、2024年12月27日時点で売掛金総額の10.0%超を占めた3顧客の1社に当たる",
+          "text_en": "Applied Materials was one of three customers each over 10.0% of gross accounts receivable as of December 27, 2024",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -68,8 +68,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "FY2025・2024・2023の各年で売上の10%超を占めた最大顧客の1社として挙げられている",
-          "text_en": "Named as one of the two largest revenue customers, each over 10% of total revenues in fiscal years 2025, 2024 and 2023",
+          "text": "ラムリサーチは、FY2025・2024・2023の各年に売上の10%超を占めた最大顧客の1社を務める",
+          "text_en": "Lam Research was one of the two largest revenue customers, each over 10% of total revenues in fiscal years 2025, 2024 and 2023",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -81,8 +81,8 @@
         },
         {
           "type": "down",
-          "text": "2024年12月27日時点で売掛金総額の10.0%超を占めた3顧客の1社として挙げられている",
-          "text_en": "Named among three customers each over 10.0% of gross accounts receivable as of December 27, 2024",
+          "text": "ラムリサーチは2024年12月27日時点で、売掛金総額の10.0%超を占めた3顧客の1社でもある",
+          "text_en": "Lam Research was one of three customers each over 10.0% of gross accounts receivable as of December 27, 2024",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2024年12月27日時点で売掛金総額の10.0%超を占めた3顧客の1社として挙げられている",
-          "text_en": "Named among three customers each over 10.0% of gross accounts receivable as of December 27, 2024",
+          "text": "ASMLも2024年12月27日時点で売掛金総額の10.0%超を占めた3顧客の1社に並ぶ",
+          "text_en": "ASML was one of three customers each over 10.0% of gross accounts receivable as of December 27, 2024",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -130,8 +130,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アイコー・ホールディングスの年次報告が、ウルトラクリーン・ホールディングスを競合として挙げている",
-          "text_en": "Names Ultra Clean as a competitor in its annual report",
+          "text": "Ultra Cleanと競合する",
+          "text_en": "Competes with Ultra Clean",
           "source": {
             "label": "Ichor Holdings 10-K",
             "label_en": "Ichor Holdings 10-K",
@@ -143,8 +143,8 @@
         },
         {
           "type": "rival",
-          "text": "ウルトラクリーンの年次報告が、ガス供給システムの主な競合としてIchor Systemsを挙げている",
-          "text_en": "Ultra Clean's annual report names Ichor Systems as a principal competitor for gas delivery systems",
+          "text": "ガス供給システムでは、Ichor Systemsがウルトラクリーンの主な競合",
+          "text_en": "Ichor Systems is a principal competitor of Ultra Clean in gas delivery systems.",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ウルトラクリーンの年次報告が、その他の重要サブシステムの主な競合としてJabilを挙げている",
-          "text_en": "Ultra Clean's annual report names Jabil as a principal competitor for other critical subsystems",
+          "text": "その他の重要サブシステムの主な競合として、Jabilが挙がる",
+          "text_en": "Jabil is a principal competitor of Ultra Clean in other critical subsystems.",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ウルトラクリーンの年次報告が、その他の重要サブシステムの主な競合としてCelesticaを挙げている",
-          "text_en": "Ultra Clean's annual report names Celestica as a principal competitor for other critical subsystems",
+          "text": "ウルトラクリーンは、その他の重要サブシステムでCelesticaと競合する",
+          "text_en": "Celestica is a principal competitor of Ultra Clean in other critical subsystems.",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",
@@ -215,8 +215,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ウルトラクリーンの年次報告が、その他の重要サブシステムの主な競合としてBenchmark Electronicsを挙げている",
-          "text_en": "Ultra Clean's annual report names Benchmark Electronics as a principal competitor for other critical subsystems",
+          "text": "Benchmark Electronicsは、その他の重要サブシステムにおけるウルトラクリーンの主な競合となる",
+          "text_en": "Benchmark Electronics is a principal competitor of Ultra Clean in other critical subsystems.",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",

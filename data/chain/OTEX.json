@@ -130,8 +130,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告が、競合する大手企業の1社としてMicrosoftを挙げている",
-          "text_en": "The annual report names Microsoft among the large enterprise technology providers it competes with",
+          "text": "MicrosoftはOpenTextと競合する大手企業の1社",
+          "text_en": "Microsoft is one of the large enterprise technology providers OpenText competes with",
           "source": {
             "label": "OpenText 10-K",
             "label_en": "OpenText 10-K",
@@ -165,8 +165,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告で、OpenText ContentがSalesforceなどの業務アプリと連携すると説明している",
-          "text_en": "The annual report says OpenText Content integrates with business applications including Salesforce",
+          "text": "OpenText ContentはSalesforceなどの業務アプリと連携する",
+          "text_en": "OpenText Content integrates with business applications including Salesforce",
           "source": {
             "label": "OpenText 10-K",
             "label_en": "OpenText 10-K",
@@ -188,8 +188,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、OpenText ContentがSAP S/4HANAやSAP SuccessFactorsと連携すると説明している",
-          "text_en": "The annual report says OpenText Content integrates with SAP S/4HANA and SAP SuccessFactors",
+          "text": "OpenText ContentはSAP S/4HANAやSAP SuccessFactorsと統合される",
+          "text_en": "OpenText Content integrates with SAP S/4HANA and SAP SuccessFactors",
           "source": {
             "label": "OpenText 10-K",
             "label_en": "OpenText 10-K",
@@ -211,8 +211,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Veeva Systemsの年次報告が、オープンテキストを競合として挙げている",
-          "text_en": "Names OpenText as a competitor in its annual report",
+          "text": "オープンテキストと競合する",
+          "text_en": "Competes with OpenText",
           "source": {
             "label": "Veeva Systems 10-K",
             "label_en": "Veeva Systems 10-K",
@@ -224,8 +224,8 @@
         },
         {
           "type": "rival",
-          "text": "Veevaの年次報告が、品質管理などの分野でOpenTextを競合として挙げている",
-          "text_en": "Veeva's annual report names OpenText among the competitors in this segment",
+          "text": "オープンテキストと競合する",
+          "text_en": "Competes with OpenText",
           "source": {
             "label": "Veeva Systems 10-K",
             "label_en": "Veeva Systems 10-K",
@@ -247,8 +247,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "OpenTextの年次報告が、競合する大手企業の1社としてOracleを挙げている",
-          "text_en": "OpenText's annual report names Oracle among the large enterprise technology providers it competes with",
+          "text": "OracleはOpenTextの競合となる大手企業の1社",
+          "text_en": "Oracle is one of the large enterprise technology providers OpenText competes with",
           "source": {
             "label": "OpenText 10-K",
             "label_en": "OpenText 10-K",
@@ -270,8 +270,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "OpenTextの年次報告が、競合する大手企業の1社としてIBMを挙げている",
-          "text_en": "OpenText's annual report names IBM among the large enterprise technology providers it competes with",
+          "text": "IBMは、OpenTextと競合する大手企業の1社に含まれる",
+          "text_en": "IBM is one of the large enterprise technology providers OpenText competes with",
           "source": {
             "label": "OpenText 10-K",
             "label_en": "OpenText 10-K",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "OpenTextの年次報告が、企業向けAI分野に広がる競合としてServiceNowを挙げている",
-          "text_en": "OpenText's annual report names ServiceNow among platform providers extending into enterprise AI and agentic workflows",
+          "text": "ServiceNowは企業向けAI分野へ広がり、OpenTextとの競合が強まる",
+          "text_en": "ServiceNow is extending into enterprise AI and agentic workflows and increasingly competes with OpenText",
           "source": {
             "label": "OpenText 10-K",
             "label_en": "OpenText 10-K",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Boxの年次報告が、オープンテキストを競合として挙げている",
-          "text_en": "Names OpenText as a competitor in its annual report",
+          "text": "オープンテキストと競合する",
+          "text_en": "Competes with OpenText",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",

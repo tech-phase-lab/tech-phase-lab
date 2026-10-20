@@ -41,8 +41,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Viavi Solutionsの年次報告が、Ciscoを顧客例に挙げている",
-          "text_en": "Viavi Solutions' annual report lists Cisco Systems, Inc. among its example customers",
+          "text": "CiscoはViavi Solutionsの顧客の一例だ。",
+          "text_en": "Cisco is one of Viavi Solutions' customers.",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -144,8 +144,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NetAppの年次報告が、NVIDIA、Cisco、Microsoftなどとの協業を挙げている",
-          "text_en": "NetApp's annual report cites collaborations with technology leaders such as NVIDIA, Cisco, and Microsoft",
+          "text": "NetAppは、NVIDIA、Cisco、Microsoftなどと協業する。",
+          "text_en": "NetApp collaborates with technology leaders such as NVIDIA, Cisco, and Microsoft.",
           "source": {
             "label": "NetApp 10-K",
             "label_en": "NetApp 10-K",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxの年次報告が、Ciscoなどとの連携を持つ技術パートナーに挙げている",
-          "text_en": "Box's annual report lists Cisco among technology partners with which it offers integrations",
+          "text": "Boxは、Ciscoなどの技術パートナーと連携機能を提供する。",
+          "text_en": "Box offers integrations with technology partners such as Cisco.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Dropboxの年次報告が、Ciscoなどとの連携があると記している",
-          "text_en": "Dropbox's annual report says it has integrations with vendors including Cisco",
+          "text": "DropboxにはCiscoなどとの連携がある",
+          "text_en": "Dropbox has integrations with vendors including Cisco",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -297,8 +297,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アリスタネットワークスの年次報告が、Arista Networksを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Arista Networks 10-K",
             "label_en": "Arista Networks 10-K",
@@ -321,8 +321,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヒューレット・パッカード・エンタープライズの年次報告が、Hewlett Packard Enterpriseを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -345,8 +345,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、Fortinetを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -369,8 +369,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksの年次報告が、セキュリティ機能を製品に組み込む大手企業の例としてCiscoを挙げている",
-          "text_en": "Palo Alto Networks' annual report names Cisco among large companies that incorporate security features in their products and could bring competitive solutions",
+          "text": "Ciscoは、セキュリティ機能を製品に組み込む大手として、Palo Alto Networksと競合し得る。",
+          "text_en": "Cisco is among the large companies that incorporate security features in their products and could bring competitive solutions to Palo Alto Networks' market.",
           "source": {
             "label": "Palo Alto Networks 10-K",
             "label_en": "Palo Alto Networks 10-K",
@@ -393,8 +393,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、Datadogを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -417,8 +417,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ダイナトレースの年次報告が、Dynatraceを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -441,8 +441,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "チェック・ポイントの年次報告が、Check Pointを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Check Point Software Technologies 20-F",
             "label_en": "Check Point Software Technologies 20-F",
@@ -465,8 +465,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シエナの年次報告が、Cienaを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Ciena 10-K",
             "label_en": "Ciena 10-K",
@@ -489,8 +489,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ファイブナインの年次報告が、Five9を競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -513,8 +513,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナイスの年次報告が、NiCEを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -537,8 +537,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ズームの年次報告が、Zoomを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -561,8 +561,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、RingCentralを競合として挙げている",
-          "text_en": "Names other as a competitor in its annual report",
+          "text": "Ciscoと競合する",
+          "text_en": "Competes with Cisco",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",

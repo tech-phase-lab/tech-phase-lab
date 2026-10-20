@@ -61,8 +61,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告が、主要顧客としてAmazonとApple Inc.を挙げている",
-          "text_en": "The annual report lists Amazon and Apple Inc. among its key customers",
+          "text": "AmazonとApple Inc.は、Skyworksの主要顧客に当たる",
+          "text_en": "Amazon and Apple Inc. are among Skyworks' key customers.",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -85,8 +85,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Qorvoの年次報告によると、QorvoはSkyworksと2025年10月27日付の合併契約(Agreement and Plan of Merger)を結んだ",
-          "text_en": "Qorvo's annual report says it entered into an Agreement and Plan of Merger with Skyworks on October 27, 2025",
+          "text": "Qorvoは、Skyworksとの合併契約(Agreement and Plan of Merger)に2025年10月27日付で合意した",
+          "text_en": "Qorvo entered into an Agreement and Plan of Merger with Skyworks on October 27, 2025",
           "source": {
             "label": "Qorvo 10-K",
             "label_en": "Qorvo 10-K",
@@ -100,8 +100,8 @@
         },
         {
           "type": "tie",
-          "text": "Skyworksの年次報告が、Qorvoとの合併の行方が不確実なことが取引先との関係に影響し得ると記載している",
-          "text_en": "Skyworks' annual report says uncertainty about the outcome of the Mergers with Qorvo could disrupt its business relationships",
+          "text": "Qorvoとの合併の行方が不透明なため、Skyworksは取引先との関係が損なわれるおそれがある",
+          "text_en": "Uncertainty about the outcome of the Mergers with Qorvo could disrupt Skyworks' business relationships.",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -113,8 +113,8 @@
         },
         {
           "type": "rival",
-          "text": "Skyworksの年次報告が、競合としてQorvoを挙げている",
-          "text_en": "Named as a competitor in Skyworks' annual report",
+          "text": "QorvoはSkyworksの競合企業に挙がる",
+          "text_en": "Qorvo is a Skyworks competitor.",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -241,8 +241,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -265,8 +265,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -289,8 +289,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -313,8 +313,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -337,8 +337,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -361,8 +361,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -374,8 +374,8 @@
         },
         {
           "type": "rival",
-          "text": "クアルコムの年次報告が、スカイワークスを競合として挙げている",
-          "text_en": "Names Skyworks as a competitor in its annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Qualcomm 10-K",
             "label_en": "Qualcomm 10-K",
@@ -398,8 +398,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Skyworks’s annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -422,8 +422,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マコム・テクノロジー・ソリューションズの年次報告が、スカイワークスを競合として挙げている",
-          "text_en": "Names Skyworks as a competitor in its annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "MACOM Technology Solutions 10-K",
             "label_en": "MACOM Technology Solutions 10-K",
@@ -446,8 +446,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、スカイワークスを競合として挙げている",
-          "text_en": "Names Skyworks as a competitor in its annual report",
+          "text": "Skyworks Solutionsと競合する",
+          "text_en": "Competes with Skyworks Solutions",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",

@@ -444,8 +444,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、競合の1社としてCrowdStrikeを挙げている",
-          "text_en": "Palo Alto Networks’ FY2026 10-K names CrowdStrike as a competitor",
+          "text": "Palo Alto Networksは、CrowdStrikeを競合の1社に数える。",
+          "text_en": "Palo Alto Networks competes with CrowdStrike (FY2026).",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -469,8 +469,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SentinelOneが年次報告で、競合するエンドポイント保護企業の1社としてCrowdStrikeを挙げている",
-          "text_en": "SentinelOne’s FY2026 10-K names CrowdStrike among endpoint security competitors",
+          "text": "SentinelOneのエンドポイント保護事業では、CrowdStrikeが競合の1社となる。",
+          "text_en": "CrowdStrike is one of SentinelOne's endpoint security competitors (FY2026).",
           "source": {
             "label": "SentinelOne 10-K(2026年度)",
             "label_en": "SentinelOne 10-K (FY2026)",
@@ -494,8 +494,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Fortinetが年次報告で、クラウド型セキュリティの競合の1社としてCrowdStrikeを挙げている",
-          "text_en": "Fortinet’s FY2025 10-K names CrowdStrike among cloud-based security competitors",
+          "text": "クラウド型セキュリティでは、CrowdStrikeがFortinetの競合の1社となる。",
+          "text_en": "Fortinet and CrowdStrike compete in cloud-based security (FY2025).",
           "source": {
             "label": "Fortinet 10-K(2025年度)",
             "label_en": "Fortinet 10-K (FY2025)",
@@ -519,8 +519,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualysが年次報告で、競合する上場企業の1社としてCrowdStrikeを挙げている",
-          "text_en": "Qualys’ FY2025 10-K names CrowdStrike among public company competitors",
+          "text": "Qualysは、競合する上場企業の1社であるCrowdStrikeと競い合う。",
+          "text_en": "Qualys competes with public companies such as CrowdStrike (FY2025).",
           "source": {
             "label": "Qualys 10-K(2025年度)",
             "label_en": "Qualys 10-K (FY2025)",
@@ -544,8 +544,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Elasticが年次報告で、Elastic Securityの競合の1社としてCrowdStrikeを挙げている",
-          "text_en": "Elastic’s FY2026 10-K names CrowdStrike among competitors of Elastic Security",
+          "text": "CrowdStrikeは、Elastic Securityの競合の1社に含まれる。",
+          "text_en": "CrowdStrike is among the competitors of Elastic Security (FY2026).",
           "source": {
             "label": "Elastic 10-K(2026年度)",
             "label_en": "Elastic 10-K (FY2026)",
@@ -569,8 +569,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Ciscoが年次報告で、競合の1社としてCrowdStrikeを挙げている",
-          "text_en": "Cisco’s FY2026 10-K names CrowdStrike as a competitor",
+          "text": "CrowdStrikeはCiscoの競合の1社に名を連ねる。",
+          "text_en": "CrowdStrike is one of Cisco's competitors (FY2026).",
           "source": {
             "label": "Cisco 10-K(2026年度)",
             "label_en": "Cisco 10-K (FY2026)",

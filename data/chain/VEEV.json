@@ -82,8 +82,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Veeva’s annual report",
+          "text": "ヴィーヴァ・システムズと競合する",
+          "text_en": "Competes with Veeva Systems",
           "source": {
             "label": "Veeva Systems 10-K",
             "label_en": "Veeva Systems 10-K",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Veeva’s annual report",
+          "text": "ヴィーヴァ・システムズと競合する",
+          "text_en": "Competes with Veeva Systems",
           "source": {
             "label": "Veeva Systems 10-K",
             "label_en": "Veeva Systems 10-K",
@@ -128,8 +128,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Veeva’s annual report",
+          "text": "ヴィーヴァ・システムズと競合する",
+          "text_en": "Competes with Veeva Systems",
           "source": {
             "label": "Veeva Systems 10-K",
             "label_en": "Veeva Systems 10-K",
@@ -151,8 +151,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヴィーヴァ・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Veeva’s annual report",
+          "text": "ヴィーヴァ・システムズと競合する",
+          "text_en": "Competes with Veeva Systems",
           "source": {
             "label": "Veeva Systems 10-K",
             "label_en": "Veeva Systems 10-K",
@@ -174,8 +174,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "顧客が一部の機能にAmazon Web Servicesなどの汎用クラウドを選ぶ場合があると述べている",
-          "text_en": "Says customers may choose general cloud platforms such as Amazon Web Services for certain functions its applications provide",
+          "text": "Veevaの顧客が一部の機能に、Amazon Web Servicesなどの汎用クラウドを選ぶ場合もある",
+          "text_en": "Veeva's customers may choose general cloud platforms such as Amazon Web Services for certain functions its applications provide.",
           "source": {
             "label": "Veeva Systems 10-K",
             "label_en": "Veeva Systems 10-K",

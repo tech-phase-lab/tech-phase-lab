@@ -32,8 +32,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、連携先として挙げている",
-          "text_en": "The annual report names it among its marketplace integrations",
+          "text": "SprinklrはAdobeとコネクターで連携する。",
+          "text_en": "Sprinklr's marketplace integrations include Adobe, among 80+ out-of-the-box connectors.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -45,8 +45,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、パートナーの例として挙げている",
-          "text_en": "The annual report names it among its partner examples",
+          "text": "AdobeはSprinklrのパートナー例に入る。",
+          "text_en": "Adobe is one of Sprinklr's partners.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -69,8 +69,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、連携先として挙げている",
-          "text_en": "The annual report names it among its marketplace integrations",
+          "text": "SprinklrはMicrosoftと標準コネクターで連携する。",
+          "text_en": "Sprinklr integrates with Microsoft through its marketplace's out-of-the-box connectors.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -82,8 +82,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、パートナーの例として挙げている",
-          "text_en": "The annual report names it among its partner examples",
+          "text": "MicrosoftはSprinklrのパートナーに名を連ねる。",
+          "text_en": "Microsoft is one of Sprinklr's partners.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -95,8 +95,8 @@
         },
         {
           "type": "down",
-          "text": "2026年8月の発表で、Sprinklrを利用する企業の例にMicrosoftが挙げられている",
-          "text_en": "The August 2026 press release names Microsoft among enterprises relying on Sprinklr",
+          "text": "Microsoftは、2026年8月の発表時点でSprinklrを利用する企業の一例だ",
+          "text_en": "As of the August 2026 press release, Microsoft is an example of an enterprise relying on Sprinklr",
           "source": {
             "label": "Sprinklr 8-K Ex.99 の発表",
             "label_en": "Sprinklr 8-K Ex.99 press release",
@@ -119,8 +119,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、連携先として挙げている",
-          "text_en": "The annual report names it among its marketplace integrations",
+          "text": "Salesforceは、Sprinklrの連携先だ。",
+          "text_en": "Salesforce is one of the platforms Sprinklr's marketplace integrates with.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -132,8 +132,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、パートナーの例として挙げている",
-          "text_en": "The annual report names it among its partner examples",
+          "text": "Sprinklrは、Salesforceをパートナーに持つ。",
+          "text_en": "Salesforce is one of Sprinklr's partners.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -156,8 +156,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、連携先として挙げている",
-          "text_en": "The annual report names it among its marketplace integrations",
+          "text": "SprinklrはOracleとのコネクターを用意する。",
+          "text_en": "Sprinklr provides a connector to Oracle through its marketplace.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -169,8 +169,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、パートナーの例として挙げている",
-          "text_en": "The annual report names it among its partner examples",
+          "text": "OracleもSprinklrのパートナーの一角。",
+          "text_en": "Oracle is also one of Sprinklr's partners.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -193,8 +193,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、連携先として挙げている",
-          "text_en": "The annual report names it among its marketplace integrations",
+          "text": "Sprinklrのマーケットプレイスは、SAPとも連携する。",
+          "text_en": "Sprinklr's marketplace also integrates with SAP.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -206,8 +206,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、パートナーの例として挙げている",
-          "text_en": "The annual report names it among its partner examples",
+          "text": "SAPは、Sprinklrのパートナーとなる。",
+          "text_en": "SAP is one of Sprinklr's partners.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -229,8 +229,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、連携先として挙げている",
-          "text_en": "The annual report names it among its marketplace integrations",
+          "text": "SprinklrはServiceNowとも連携する。",
+          "text_en": "Sprinklr's marketplace supports integration with ServiceNow.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -242,8 +242,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、パートナーの例として挙げている",
-          "text_en": "The annual report names it among its partner examples",
+          "text": "Sprinklrは、ServiceNowとパートナー関係を結ぶ。",
+          "text_en": "Sprinklr partners with ServiceNow.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -266,8 +266,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、連携先として挙げている",
-          "text_en": "The annual report names it among its marketplace integrations",
+          "text": "SprinklrはGoogleとも連携する。",
+          "text_en": "Google is also among the platforms Sprinklr's marketplace integrates with.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -290,8 +290,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、パートナーの例として挙げている",
-          "text_en": "The annual report names it among its partner examples",
+          "text": "Accentureは、Sprinklrのパートナーの例となる。",
+          "text_en": "Accenture is among Sprinklr's partners.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -314,8 +314,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2026年8月の発表で、Sprinklrを利用する企業の例にSamsungが挙げられている",
-          "text_en": "The August 2026 press release names Samsung among enterprises relying on Sprinklr",
+          "text": "Samsungは、2026年8月の発表時点でSprinklrを利用する企業のひとつ",
+          "text_en": "As of the August 2026 press release, Samsung is an example of an enterprise relying on Sprinklr",
           "source": {
             "label": "Sprinklr 8-K Ex.99 の発表",
             "label_en": "Sprinklr 8-K Ex.99 press release",
@@ -338,8 +338,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2026年8月の発表で、Sprinklrを利用する企業の例にP&Gが挙げられている",
-          "text_en": "The August 2026 press release names P&G among enterprises relying on Sprinklr",
+          "text": "P&Gは、2026年8月の発表時点でSprinklrを利用する企業に含まれる",
+          "text_en": "As of the August 2026 press release, P&G is an example of an enterprise relying on Sprinklr",
           "source": {
             "label": "Sprinklr 8-K Ex.99 の発表",
             "label_en": "Sprinklr 8-K Ex.99 press release",
@@ -362,8 +362,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Sprout Socialの年次報告が、競合としてSprinklrを挙げている",
-          "text_en": "Sprout Social's annual report names Sprinklr as a competitor",
+          "text": "Sprout Socialは、Sprinklrなどのソーシャルメディア管理企業と競合する。",
+          "text_en": "Sprout Social competes with social media management companies such as Sprinklr.",
           "source": {
             "label": "Sprout Social 10-K",
             "label_en": "Sprout Social 10-K",

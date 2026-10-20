@@ -110,8 +110,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "純売上高の10%超を占める顧客に、2023年、2024年、2025年ともMicronが挙げられている",
-          "text_en": "Micron is named among customers over 10% of net revenue in 2023, 2024 and 2025",
+          "text": "Micronは2023年、2024年、2025年のいずれも純売上高の10%超を占める顧客だ",
+          "text_en": "Micron accounted for more than 10% of Silicon Motion's net revenue as a customer in each of 2023, 2024 and 2025",
           "source": {
             "label": "Silicon Motion 20-F",
             "label_en": "Silicon Motion 20-F",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "純売上高の10%超を占める顧客に、2024年と2025年にキオクシアが挙げられている",
-          "text_en": "Kioxia is named among customers over 10% of net revenue in 2024 and 2025",
+          "text": "キオクシアは2024年と2025年、純売上高の10%超を占める顧客だった",
+          "text_en": "Kioxia accounted for more than 10% of Silicon Motion's net revenue as a customer in 2024 and 2025",
           "source": {
             "label": "Silicon Motion 20-F",
             "label_en": "Silicon Motion 20-F",
@@ -157,8 +157,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "純売上高の10%超を占める顧客に、2023年にSK hynixが挙げられている",
-          "text_en": "SK Hynix is named among customers over 10% of net revenue in 2023",
+          "text": "SK hynixは2023年、純売上高の10%超を占めた顧客の一角を担った",
+          "text_en": "SK hynix accounted for more than 10% of Silicon Motion's net revenue as a customer in 2023",
           "source": {
             "label": "Silicon Motion 20-F",
             "label_en": "Silicon Motion 20-F",
@@ -195,8 +195,8 @@
         },
         {
           "type": "tie",
-          "text": "MaxLinearの年次報告によると、Silicon Motionは2023年8月16日に合併契約の解除を通知し、損害賠償を求める仲裁を始めるとした",
-          "text_en": "According to MaxLinear's annual report, Silicon Motion gave notice on August 16, 2023 that it was terminating the merger agreement and would start arbitration to seek damages",
+          "text": "Silicon Motionは2023年8月16日、MaxLinearに合併契約の解除を通知し、損害賠償を求める仲裁を始める構えだ",
+          "text_en": "Silicon Motion notified MaxLinear on August 16, 2023 that it was terminating the merger agreement and would start arbitration to seek damages",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -218,8 +218,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rambusの年次報告が、特許のライセンスを受けた企業としてSilicon Motionを挙げている",
-          "text_en": "Rambus's annual report lists Silicon Motion among companies that have licensed its patents",
+          "text": "Rambusは、Silicon Motionをはじめ特許のライセンスを受けた企業を抱える",
+          "text_en": "Rambus has licensed its patents to companies including Silicon Motion.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -243,8 +243,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シリコンモーションの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Silicon Motion’s annual report",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
           "source": {
             "label": "Silicon Motion 20-F",
             "label_en": "Silicon Motion 20-F",
@@ -256,8 +256,8 @@
         },
         {
           "type": "rival",
-          "text": "シリコンモーションの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Silicon Motion’s annual report",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
           "source": {
             "label": "Silicon Motion 20-F",
             "label_en": "Silicon Motion 20-F",
@@ -279,8 +279,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シリコンモーションの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Silicon Motion’s annual report",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
           "source": {
             "label": "Silicon Motion 20-F",
             "label_en": "Silicon Motion 20-F",
@@ -292,8 +292,8 @@
         },
         {
           "type": "rival",
-          "text": "シリコンモーションの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Silicon Motion’s annual report",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
           "source": {
             "label": "Silicon Motion 20-F",
             "label_en": "Silicon Motion 20-F",

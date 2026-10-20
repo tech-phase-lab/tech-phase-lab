@@ -155,8 +155,8 @@
         },
         {
           "type": "down",
-          "text": "AEPの年次報告が、固体酸化物形燃料電池100MWの購入契約を記載",
-          "text_en": "AEP’s annual report describes a purchase agreement for 100MW of solid oxide fuel cells",
+          "text": "AEPは、固体酸化物形燃料電池100MWの購入契約を結んだ",
+          "text_en": "AEP signed a purchase agreement for 100MW of solid oxide fuel cells",
           "source": {
             "label": "AEP 10-K(2025年度)",
             "label_en": "AEP 10-K (FY2025)",

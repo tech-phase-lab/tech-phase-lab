@@ -126,8 +126,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Qorvoの年次報告が、Skyworksとの合併の成否は、両社の事業を円滑に統合できるかに左右されると記載している",
-          "text_en": "Qorvo's annual report says the success of the Mergers with Skyworks depends in part on integrating the two companies' operations",
+          "text": "QorvoとSkyworksは合併を計画し、その成否は両社の事業統合の円滑さにかかる",
+          "text_en": "The success of the planned merger of Qorvo and Skyworks depends in part on integrating the two companies' operations.",
           "source": {
             "label": "Qorvo 10-K",
             "label_en": "Qorvo 10-K",
@@ -141,8 +141,8 @@
         },
         {
           "type": "tie",
-          "text": "Skyworksの年次報告が、Qorvoとの合併の行方が不確実なことが取引先との関係に影響し得ると記載している",
-          "text_en": "Skyworks' annual report says uncertainty about the outcome of the Mergers with Qorvo could disrupt its business relationships",
+          "text": "Qorvoとの合併の行方が不確実なことは、Skyworksの取引先との関係に影響し得る",
+          "text_en": "Uncertainty about the outcome of the Qorvo merger could disrupt Skyworks' business relationships.",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -154,8 +154,8 @@
         },
         {
           "type": "rival",
-          "text": "スカイワークスの年次報告が、コルボを競合として挙げている",
-          "text_en": "Names Qorvo as a competitor in its annual report",
+          "text": "Qorvoと競合する",
+          "text_en": "Competes with Qorvo",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -191,8 +191,8 @@
         },
         {
           "type": "tie",
-          "text": "onsemiの年次報告に、United Silicon Carbide, Inc.、Qorvo US, Inc.などによる2024年12月9日付の株式売買契約が記載されている",
-          "text_en": "onsemi's annual report lists a Stock Purchase Agreement dated December 9, 2024 among United Silicon Carbide, Inc., Qorvo US, Inc. and others",
+          "text": "onsemiは、2024年12月9日付の株式売買契約をUnited Silicon Carbide, Inc.、Qorvo US, Inc.などと結んだ",
+          "text_en": "onsemi entered into a Stock Purchase Agreement dated December 9, 2024 with United Silicon Carbide, Inc., Qorvo US, Inc. and others",
           "source": {
             "label": "onsemi 10-K",
             "label_en": "onsemi 10-K",
@@ -240,8 +240,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、QorvoのHPA部門の主な競合としてAnalog Devices, Inc.を挙げている",
-          "text_en": "The annual report says Qorvo's HPA competes primarily with Analog Devices, Inc.",
+          "text": "Analog Devices, Inc.が、QorvoのHPA部門の主な競合だ",
+          "text_en": "Analog Devices, Inc. is the main competitor of Qorvo's HPA.",
           "source": {
             "label": "Qorvo 10-K",
             "label_en": "Qorvo 10-K",
@@ -264,8 +264,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、QorvoのCSG部門の主な競合としてBroadcom Inc.を挙げている",
-          "text_en": "The annual report says Qorvo's CSG competes primarily with Broadcom Inc.",
+          "text": "Broadcom Inc.は、QorvoのCSG部門が主に競合する相手だ",
+          "text_en": "Broadcom Inc. is the main competitor of Qorvo's CSG.",
           "source": {
             "label": "Qorvo 10-K",
             "label_en": "Qorvo 10-K",
@@ -277,8 +277,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告が、QorvoのACG部門の主な競合としてBroadcom Inc.を挙げている",
-          "text_en": "The annual report says Qorvo's ACG competes primarily with Broadcom Inc.",
+          "text": "QorvoのACG部門は、主にBroadcom Inc.を競合相手とする",
+          "text_en": "Broadcom Inc. is the main competitor of Qorvo's ACG.",
           "source": {
             "label": "Qorvo 10-K",
             "label_en": "Qorvo 10-K",
@@ -301,8 +301,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マコム・テクノロジー・ソリューションズの年次報告が、コルボを競合として挙げている",
-          "text_en": "Names Qorvo as a competitor in its annual report",
+          "text": "Qorvoと競合する",
+          "text_en": "Competes with Qorvo",
           "source": {
             "label": "MACOM Technology Solutions 10-K",
             "label_en": "MACOM Technology Solutions 10-K",
@@ -325,8 +325,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、コルボを競合として挙げている",
-          "text_en": "Names Qorvo as a competitor in its annual report",
+          "text": "Qorvoと競合する",
+          "text_en": "Competes with Qorvo",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",

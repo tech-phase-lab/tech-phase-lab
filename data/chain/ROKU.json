@@ -82,8 +82,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告で、WalmartやShopifyなどとの提携によるアクション広告を挙げている",
-          "text_en": "The annual report cites action ads in partnership with companies such as Walmart, Shopify, and Instacart",
+          "text": "RokuはWalmartやShopifyなどと組んでアクション広告を展開する",
+          "text_en": "Roku runs action ads in partnership with companies such as Walmart and Shopify.",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -118,8 +118,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告で、Walmartなどとの提携によるアクション広告を挙げている",
-          "text_en": "The annual report cites action ads in partnership with companies such as Walmart, Shopify, and Instacart",
+          "text": "Rokuのアクション広告の多くは、Walmartなどとの提携によるもの",
+          "text_en": "Many of Roku's action ads are run in partnership with companies such as Walmart.",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -189,8 +189,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、Netflixを主要なコンテンツパートナーの1社として挙げている",
-          "text_en": "The annual report lists Netflix among its leading content partners",
+          "text": "Netflixは、Rokuの主要なコンテンツパートナーの1社に数えられる",
+          "text_en": "Netflix is one of Roku's leading content partners.",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -212,8 +212,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rokuの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Roku’s annual report",
+          "text": "Rokuと競合する",
+          "text_en": "Competes with Roku",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -225,8 +225,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告が、AmazonやGoogleを、Rokuより強いブランドと販売資源を持つ競合の例に挙げている",
-          "text_en": "The annual report names Amazon and Google as competitors with stronger brand identity and marketing resources",
+          "text": "AmazonやGoogleは、Rokuより強いブランドと販売資源を持つ競合の代表格",
+          "text_en": "Amazon and Google compete with Roku with stronger brand identity and greater marketing resources.",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -248,8 +248,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rokuの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Roku’s annual report",
+          "text": "Rokuと競合する",
+          "text_en": "Competes with Roku",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -271,8 +271,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rokuの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Roku’s annual report",
+          "text": "Rokuと競合する",
+          "text_en": "Competes with Roku",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -294,8 +294,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、ComcastをTVストリーミングのアプリと機器を提供するサービス事業者として競合に挙げている",
-          "text_en": "The annual report names Comcast among service operators offering TV streaming applications and devices",
+          "text": "Comcastは、有料テレビの契約にTVストリーミングのアプリと機器を付けてRokuと競合する",
+          "text_en": "Comcast competes with Roku by offering TV streaming applications and devices as part of its cable service plans.",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",

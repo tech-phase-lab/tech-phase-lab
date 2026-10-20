@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IBMが年次報告で、戦略パートナーとしてAdobeを挙げている",
-          "text_en": "IBM’s annual report lists Adobe among its strategic partners",
+          "text": "IBMにとってAdobeは、戦略パートナーのひとつだ",
+          "text_en": "Adobe is one of IBM's strategic partners",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -235,8 +235,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Adobe Firefly Foundryでメディア制作に取り組んでいるとAdobeが説明",
-          "text_en": "Adobe says The Home Depot is working with Adobe Firefly Foundry on media production",
+          "text": "The Home DepotはAdobe Firefly Foundryでメディア制作に取り組んでいる",
+          "text_en": "The Home Depot is working with Adobe Firefly Foundry on media production",
           "source": {
             "label": "Adobe ブログ",
             "label_en": "Adobe Blog",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Walt Disney ImagineeringがAdobe Firefly Foundryを利用しているとAdobeが説明",
-          "text_en": "Adobe says Walt Disney Imagineering is working with Adobe Firefly Foundry",
+          "text": "Walt Disney ImagineeringはAdobe Firefly Foundryの利用企業の一つだ",
+          "text_en": "Walt Disney Imagineering is working with Adobe Firefly Foundry",
           "source": {
             "label": "Adobe ブログ",
             "label_en": "Adobe Blog",
@@ -283,8 +283,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Autodeskが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "Autodesk’s annual report names Adobe as a competitor",
+          "text": "AdobeはAutodeskにとって主要なグローバル競合のひとつである",
+          "text_en": "Adobe is one of Autodesk's primary global competitors",
           "source": {
             "label": "ADSK 10-K(2026年度)",
             "label_en": "ADSK 10-K FY2026",
@@ -305,8 +305,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Brazeが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "Braze’s annual report names Adobe as a competitor",
+          "text": "AdobeはBrazeと、マーケティングソリューションで競合する",
+          "text_en": "Adobe competes with Braze in marketing solutions",
           "source": {
             "label": "BRZE 10-K(2026年度)",
             "label_en": "BRZE 10-K FY2026",
@@ -327,8 +327,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Dropboxが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "Dropbox’s annual report names Adobe as a competitor",
+          "text": "Adobeはクラウドストレージ市場でDropboxと競う",
+          "text_en": "Adobe competes with Dropbox in the cloud storage market",
           "source": {
             "label": "DBX 10-K(2025年度)",
             "label_en": "DBX 10-K FY2025",
@@ -349,8 +349,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DocuSignが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "DocuSign’s annual report names Adobe as a competitor",
+          "text": "DocuSignの電子署名分野では、Adobeが現在の主要なグローバル競合だ",
+          "text_en": "Adobe is DocuSign's primary global competitor in eSignature today",
           "source": {
             "label": "DOCU 10-K(2026年度)",
             "label_en": "DOCU 10-K FY2026",
@@ -371,8 +371,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Getty Imagesが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "Getty Images’s annual report names Adobe as a competitor",
+          "text": "Getty Imagesのクリエイティブコンテンツ事業は、Adobeなどと競合する",
+          "text_en": "Getty Images' creative content business competes with bundled offerings such as Adobe's",
           "source": {
             "label": "GETY 10-K(2025年度)",
             "label_en": "GETY 10-K FY2025",
@@ -393,8 +393,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Klaviyoが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "Klaviyo’s annual report names Adobe as a competitor",
+          "text": "KlaviyoはAdobeなど大手のマーケティングオートメーション事業者を競合に持つ",
+          "text_en": "Klaviyo competes with large marketing automation software providers such as Adobe",
           "source": {
             "label": "KVYO 10-K(2025年度)",
             "label_en": "KVYO 10-K FY2025",
@@ -415,8 +415,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "Oracle’s annual report names Adobe as a competitor",
+          "text": "Oracleの一部の製品は、Adobeと直接競合している",
+          "text_en": "Some of Oracle's offerings compete directly with Adobe",
           "source": {
             "label": "ORCL 10-K(2026年度)",
             "label_en": "ORCL 10-K FY2026",
@@ -437,8 +437,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Shutterstockが年次報告で、競合としてAdobeを挙げている",
-          "text_en": "Shutterstock’s annual report names Adobe as a competitor",
+          "text": "Shutterstockの競合には、クリエイティブワークフローツールを提供するAdobeがある",
+          "text_en": "Adobe, which provides creative workflow tools, is one of Shutterstock's competitors",
           "source": {
             "label": "SSTK 10-K(2025年度)",
             "label_en": "SSTK 10-K FY2025",
@@ -532,8 +532,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AdobeのAI機能を活用する代理店の1社としてPublicisを提携先エコシステムに掲載",
-          "text_en": "Adobe lists Publicis among agencies leveraging Adobe AI capabilities in its partner ecosystem",
+          "text": "Publicisは、AdobeのAI機能を活用する提携代理店の1社だ",
+          "text_en": "Publicis is one of the agencies in Adobe's partner ecosystem leveraging Adobe AI capabilities",
           "source": {
             "label": "Adobe の発表(Adobe Summit)",
             "label_en": "Adobe press release (Adobe Summit)",
@@ -557,8 +557,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AdobeのAI機能を活用する代理店の1社として電通を提携先エコシステムに掲載",
-          "text_en": "Adobe lists dentsu among agencies leveraging Adobe AI capabilities in its partner ecosystem",
+          "text": "電通は、AdobeのAI機能を活用する代理店の1社として提携先エコシステムに名を連ねる",
+          "text_en": "dentsu is one of the agencies in Adobe's partner ecosystem leveraging Adobe AI capabilities",
           "source": {
             "label": "Adobe の発表(Adobe Summit)",
             "label_en": "Adobe press release (Adobe Summit)",
@@ -583,8 +583,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxが年次報告で、自社サービスの販売・連携に関する契約を結ぶ提携先の1社としてAdobeを挙げている",
-          "text_en": "Box lists Adobe among partners with which it has agreements to market, resell or integrate Box services",
+          "text": "BoxはAdobeを提携先の1社として、Boxサービスの販売・再販・連携に関する契約を結んでいる",
+          "text_en": "Box has agreements with partners such as Adobe to market, resell or integrate Box services",
           "source": {
             "label": "Box 10-K(2026年度)",
             "label_en": "Box 10-K (FY2026)",

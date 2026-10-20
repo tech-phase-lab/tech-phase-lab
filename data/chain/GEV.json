@@ -182,8 +182,8 @@
         },
         {
           "type": "tie",
-          "text": "Baker Hughesが年次報告で、GE Vernovaの知的財産を使うガスタービンの販売・供給契約を記載",
-          "text_en": "Baker Hughes’ annual report describes a gas turbine distribution and supply agreement licensing GE Vernova IP",
+          "text": "Baker Hughesは、GE Vernovaの知的財産を使うガスタービンの販売・供給契約を結ぶ",
+          "text_en": "Baker Hughes has a gas turbine distribution and supply agreement licensing GE Vernova IP",
           "source": {
             "label": "Baker Hughes 10-K(2025年度)",
             "label_en": "Baker Hughes 10-K FY2025",
@@ -228,8 +228,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電力事業と電化事業の主要な競合として記載",
-          "text_en": "Named as a key competitor in Power and Electrification",
+          "text": "電力事業と電化事業では、Siemens Energyが主要な競合となる",
+          "text_en": "Siemens Energy is a key competitor in Power and Electrification",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -251,8 +251,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電力事業の主要な競合として記載",
-          "text_en": "Named as a key Power-segment competitor",
+          "text": "Rolls-Royceは電力事業の主要な競合の一社だ",
+          "text_en": "Rolls-Royce is a key competitor in the Power segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -274,8 +274,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "風力事業の主要な競合として記載",
-          "text_en": "Named as a key Wind-segment competitor",
+          "text": "Vestasは風力事業で主要な競合の位置を占める",
+          "text_en": "Vestas is a key competitor in the Wind segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -297,8 +297,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "風力事業の主要な競合として記載",
-          "text_en": "Named as a key Wind-segment competitor",
+          "text": "Nordexは風力事業の主要な競合である",
+          "text_en": "Nordex is a key competitor in the Wind segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -320,8 +320,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "風力事業の主要な競合として記載",
-          "text_en": "Named as a key Wind-segment competitor",
+          "text": "Goldwindは風力事業の主要な競合に入る",
+          "text_en": "Goldwind is a key competitor in the Wind segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -343,8 +343,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載",
-          "text_en": "Named as a key Electrification competitor",
+          "text": "Schneider Electricは電化事業の主要競合",
+          "text_en": "Schneider Electric is a key competitor in the Electrification segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -366,8 +366,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載",
-          "text_en": "Named as a key Electrification competitor",
+          "text": "ABBは電化事業の主要な競合の一社だ",
+          "text_en": "ABB is a key competitor of GE Vernova's Electrification segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -389,8 +389,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載",
-          "text_en": "Named as a key Electrification competitor",
+          "text": "Siemensは電化事業で競合する主要企業だ",
+          "text_en": "Siemens is a key competitor of GE Vernova's Electrification segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -412,8 +412,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "電化事業の主要な競合として記載",
-          "text_en": "Named as a key Electrification competitor",
+          "text": "三菱電機は電化事業で主要な競合に当たる",
+          "text_en": "Mitsubishi Electric is a key competitor of GE Vernova's Electrification segment",
           "source": {
             "label": "GE Vernova 10-K(2025年度)",
             "label_en": "GE Vernova 10-K FY2025",
@@ -436,8 +436,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Caterpillarが年次報告で、特定の市場の競合としてGE Vernovaを挙げている",
-          "text_en": "Caterpillar’s annual report lists GE Vernova among competitors in certain markets",
+          "text": "GE Vernovaは、特定の市場でCaterpillarの競合相手だ",
+          "text_en": "GE Vernova is a competitor of Caterpillar in certain markets.",
           "source": {
             "label": "Caterpillar 10-K(2025年度)",
             "label_en": "Caterpillar 10-K FY2025",
@@ -459,8 +459,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Babcock & Wilcoxが年次報告で、競合としてGE Vernovaを挙げている",
-          "text_en": "Babcock & Wilcox’s annual report lists GE Vernova among its competitors",
+          "text": "Babcock & WilcoxとGE Vernovaは競合関係にある",
+          "text_en": "GE Vernova is a competitor of Babcock & Wilcox.",
           "source": {
             "label": "Babcock & Wilcox 10-K(2025年度)",
             "label_en": "Babcock & Wilcox 10-K FY2025",

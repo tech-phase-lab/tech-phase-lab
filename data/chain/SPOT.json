@@ -72,8 +72,8 @@
         },
         {
           "type": "tie",
-          "text": "ソニーの20-Fが、保有するSpotify株式の再評価を記載している",
-          "text_en": "Sony's 20-F reports a revaluation of the Spotify shares it owns",
+          "text": "Sonyは、保有するSpotify株式の再評価で未実現益を得た(20-F)",
+          "text_en": "Sony recognized an unrealized gain from the revaluation of the Spotify shares it owns.",
           "source": {
             "label": "Sony Group 20-F",
             "label_en": "Sony Group 20-F",
@@ -181,8 +181,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Spotifyの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Spotify’s annual report",
+          "text": "Spotify Technologyと競合する",
+          "text_en": "Competes with Spotify Technology",
           "source": {
             "label": "Spotify Technology 20-F",
             "label_en": "Spotify Technology 20-F",
@@ -194,8 +194,8 @@
         },
         {
           "type": "rival",
-          "text": "競合のApple等が、自社のオーディオ配信サービスを端末に標準搭載し、Spotifyに大きな不利をもたらすと述べている",
-          "text_en": "Names Apple among competitors whose devices preload their own audio streaming services, a significant competitive disadvantage for Spotify",
+          "text": "Appleなどの競合は、自社のオーディオ配信サービスを端末に標準搭載し、Spotifyを大きく不利にする",
+          "text_en": "Apple and other competitors preload their own audio streaming services on their devices, putting Spotify at a significant competitive disadvantage.",
           "source": {
             "label": "Spotify Technology 20-F",
             "label_en": "Spotify Technology 20-F",

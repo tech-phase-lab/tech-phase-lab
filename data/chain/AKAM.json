@@ -71,8 +71,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、NVIDIAなどの技術を用いたAkamaiの世界分散基盤により、AI推論の処理能力をデータの発生地点の近くに置くと説明している",
-          "text_en": "The annual report says AIC places AI inferencing capacity closer to where data is created, using Akamai's globally distributed infrastructure and architectures such as NVIDIA's",
+          "text": "Akamaiは世界分散基盤とNVIDIAなどのアーキテクチャを活用し、AI推論の処理能力をデータの発生地点の近くに置く",
+          "text_en": "Akamai uses its globally distributed infrastructure and architectures such as NVIDIA's to place AI inferencing capacity closer to where data is created",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -107,8 +107,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、Akamaiの販売チャネルパートナーの1社としてMicrosoft Azureを挙げている",
-          "text_en": "The annual report lists Microsoft Azure among Akamai's channel partners",
+          "text": "Microsoft Azureは、Akamaiの販売チャネルパートナーの1社だ",
+          "text_en": "Microsoft Azure is one of Akamai's channel partners",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -132,8 +132,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にAirbnbが挙げられている",
-          "text_en": "Airbnb is named among Akamai's example customers",
+          "text": "AirbnbはAkamaiの顧客企業の一社だ",
+          "text_en": "Airbnb is one of Akamai's customers",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -155,8 +155,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にAutodeskが挙げられている",
-          "text_en": "Autodesk is named among Akamai's example customers",
+          "text": "AutodeskはAkamaiのサービスを使う顧客である",
+          "text_en": "Autodesk is an Akamai customer",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -178,8 +178,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にAdobeが挙げられている",
-          "text_en": "Adobe is named among Akamai's example customers",
+          "text": "AdobeはAkamaiの顧客例のひとつ",
+          "text_en": "Adobe is one of Akamai's customers",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -201,8 +201,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にComcastが挙げられている",
-          "text_en": "Comcast is named among Akamai's example customers",
+          "text": "ComcastはAkamaiを利用する顧客に含まれる",
+          "text_en": "Comcast is among Akamai's customers",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -224,8 +224,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にホンダが挙げられている",
-          "text_en": "Honda is named among Akamai's example customers",
+          "text": "ホンダはAkamaiの顧客に名を連ねる",
+          "text_en": "Honda is one of Akamai's customers",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -248,8 +248,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にパナソニックが挙げられている",
-          "text_en": "Panasonic is named among Akamai's example customers",
+          "text": "パナソニックもAkamaiの顧客となっている",
+          "text_en": "Panasonic is also an Akamai customer",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -272,8 +272,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にPhilipsが挙げられている",
-          "text_en": "Philips is named among Akamai's example customers",
+          "text": "PhilipsはAkamaiの顧客として取引を持つ",
+          "text_en": "Philips is a customer of Akamai",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",

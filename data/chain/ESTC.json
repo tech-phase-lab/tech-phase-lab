@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、AWS・GCP・Azure上でElastic Cloudを提供するため、Amazon、Google、Microsoftと提携していると説明している",
-          "text_en": "The annual report says it partners with Amazon, Google, and Microsoft to offer Elastic Cloud on AWS, GCP, and Azure",
+          "text": "ElasticはAmazon、Google、Microsoftと提携し、AWS・GCP・Azure上でElastic Cloudを提供する。",
+          "text_en": "Elastic partners with Amazon to offer Elastic Cloud on AWS.",
           "source": {
             "label": "Elastic 10-K",
             "label_en": "Elastic 10-K",
@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、AWS・GCP・Azure上でElastic Cloudを提供するため、Amazon、Google、Microsoftと提携していると説明している",
-          "text_en": "The annual report says it partners with Amazon, Google, and Microsoft to offer Elastic Cloud on AWS, GCP, and Azure",
+          "text": "AWS・GCP・Azure上のElastic Cloudは、Amazon、Google、Microsoftとの提携で成り立つ。",
+          "text_en": "Elastic partners with Google to offer Elastic Cloud on GCP.",
           "source": {
             "label": "Elastic 10-K",
             "label_en": "Elastic 10-K",
@@ -83,8 +83,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、AWS・GCP・Azure上でElastic Cloudを提供するため、Amazon、Google、Microsoftと提携していると説明している",
-          "text_en": "The annual report says it partners with Amazon, Google, and Microsoft to offer Elastic Cloud on AWS, GCP, and Azure",
+          "text": "Elasticは、Amazon、Google、Microsoftとの提携を通じ、AWS・GCP・Azure上でElastic Cloudを展開する。",
+          "text_en": "Elastic partners with Microsoft to offer Elastic Cloud on Azure.",
           "source": {
             "label": "Elastic 10-K",
             "label_en": "Elastic 10-K",
@@ -220,8 +220,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "HubSpotの年次報告が、データ収集・処理の拡張にElasticsearchなどのオープンソース分散システムを使っていると述べている",
-          "text_en": "HubSpot's annual report says it uses open-source distributed systems including Elasticsearch to scale data collection and processing",
+          "text": "HubSpotは、データ収集・処理の拡張にElasticsearchなどのオープンソース分散システムを使う。",
+          "text_en": "HubSpot uses open-source distributed systems including Elasticsearch to scale data collection and processing.",
           "source": {
             "label": "HubSpot 10-K",
             "label_en": "HubSpot 10-K",
@@ -235,8 +235,8 @@
         },
         {
           "type": "down",
-          "text": "HubSpotは、HBase、Elasticsearch、Kafkaなどの分散技術でデータベースを構築したと述べている",
-          "text_en": "HubSpot says it built its database using distributed technologies such as HBase, Elasticsearch and Kafka",
+          "text": "HubSpotのデータベースは、HBase、Elasticsearch、Kafkaなどの分散技術で一から構築されている。",
+          "text_en": "HubSpot built its database from the ground up using distributed technologies such as HBase, Elasticsearch and Kafka.",
           "source": {
             "label": "HubSpot 10-K",
             "label_en": "HubSpot 10-K",
@@ -259,8 +259,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Qualysの年次報告が、同社のクラウド基盤のElasticsearchクラスターで資産の詳細データを検索できると述べている",
-          "text_en": "Qualys's annual report says its cloud platform's Elasticsearch clusters let customers find detailed data on any asset",
+          "text": "Qualysの顧客は、クラウド基盤のElasticsearchクラスターで資産の詳細データを検索できる。",
+          "text_en": "Qualys's cloud platform runs on Elasticsearch clusters that let customers find detailed data on any asset.",
           "source": {
             "label": "Qualys 10-K",
             "label_en": "Qualys 10-K",
@@ -285,8 +285,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エラスティックの年次報告が、ベクトル検索を統合したデータベース基盤の例としてMongoDB Atlasを挙げている",
-          "text_en": "Elastic's annual report cites MongoDB Atlas as a database platform with integrated vector search",
+          "text": "MongoDB Atlasは、ベクトル検索を統合したデータベース基盤としてElasticと競合する。",
+          "text_en": "MongoDB Atlas competes with Elastic as a database platform with integrated vector search.",
           "source": {
             "label": "Elastic 10-K",
             "label_en": "Elastic 10-K",
@@ -308,8 +308,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、エラスティックを競合として挙げている",
-          "text_en": "Names Elastic as a competitor in its annual report",
+          "text": "エラスティックと競合する",
+          "text_en": "Competes with Elastic",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",

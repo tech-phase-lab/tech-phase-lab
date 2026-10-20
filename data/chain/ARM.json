@@ -123,8 +123,8 @@
         },
         {
           "type": "tie",
-          "text": "Cadenceが年次報告で、Artisan事業をArm Limitedから取得したと記載",
-          "text_en": "Cadence’s annual report says it acquired the Artisan foundation IP business from Arm Limited",
+          "text": "CadenceはArtisan事業をArm Limitedから取得した",
+          "text_en": "Cadence acquired the Artisan foundation IP business from Arm Limited",
           "source": {
             "label": "Cadence Form 10-K(2025年度)",
             "label_en": "Cadence Form 10-K (FY2025)",
@@ -263,8 +263,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
-          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "text": "Cloudflareは、Arm AGI CPUを導入する(will deploy)パートナー・顧客だ",
+          "text_en": "Cloudflare is a partner and customer that will deploy the Arm AGI CPU",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -288,8 +288,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
-          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客の一社となる",
+          "text_en": "F5 is a partner and customer that will deploy the Arm AGI CPU",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -313,8 +313,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
-          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "text": "SAPは、Arm AGI CPUの導入(will deploy)を予定するパートナー・顧客である",
+          "text_en": "SAP is a partner and customer that will deploy the Arm AGI CPU",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -338,8 +338,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Arm AGI CPUを導入する(will deploy)パートナー・顧客としてArmが記載",
-          "text_en": "Named by Arm as a partner/customer that will deploy the Arm AGI CPU",
+          "text": "SK Telecomは、Arm AGI CPUを導入する(will deploy)パートナー・顧客に含まれる",
+          "text_en": "SK Telecom is a partner and customer that will deploy the Arm AGI CPU",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -363,8 +363,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Arm AGI CPUシステムの主要なOEM・ODMパートナーとしてArmが記載",
-          "text_en": "Named by Arm among lead OEM/ODM partners for Arm AGI CPU systems",
+          "text": "LenovoはArm AGI CPUシステムの主要なOEM・ODMパートナーだ",
+          "text_en": "Lenovo is a lead OEM/ODM partner for Arm AGI CPU systems",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -386,8 +386,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Arm AGI CPUシステムの主要なOEM・ODMパートナーとしてArmが記載",
-          "text_en": "Named by Arm among lead OEM/ODM partners for Arm AGI CPU systems",
+          "text": "Quanta Computerは、Arm AGI CPUシステムで主要なOEM・ODMパートナーを担う",
+          "text_en": "Quanta Computer is a lead OEM/ODM partner for Arm AGI CPU systems",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -409,8 +409,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Arm AGI CPUシステムの主要なOEM・ODMパートナーとしてArmが記載",
-          "text_en": "Named by Arm among lead OEM/ODM partners for Arm AGI CPU systems",
+          "text": "Super Micro Computerは、Arm AGI CPUシステムの主要OEM・ODMの一角",
+          "text_en": "Super Micro Computer is a lead OEM/ODM partner for Arm AGI CPU systems",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -455,8 +455,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Armとの提携でXPUとネットワーク製品を構築できたとBroadcomが説明",
-          "text_en": "Broadcom says its partnership with Arm has enabled it to build XPU and networking solutions",
+          "text": "Broadcomは、Armとの提携でXPUとネットワーク製品を構築できた",
+          "text_en": "Broadcom's partnership with Arm has enabled it to build XPU and networking solutions",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -478,8 +478,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CEVAが年次報告で、競合するDSP・NPU・プロセッサIPベンダーとしてArmを挙げている",
-          "text_en": "CEVA’s annual report lists Arm among DSP, NPU and processor IP vendors it competes with",
+          "text": "CEVAはDSP・NPU・プロセッサIPの分野でArmと競合している",
+          "text_en": "CEVA competes with Arm among DSP, NPU and processor IP vendors.",
           "source": {
             "label": "CEVA Form 10-K(2025年度)",
             "label_en": "CEVA Form 10-K (FY2025)",
@@ -501,8 +501,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Arm AGI CPUをヘッドノードとして組み込む顧客の1社としてOpenAIを挙げている",
-          "text_en": "Arm says OpenAI is among customers integrating the Arm AGI CPU as head nodes",
+          "text": "OpenAIはArm AGI CPUをヘッドノードに組み込む顧客の1社になる",
+          "text_en": "OpenAI is among the customers integrating the Arm AGI CPU as head nodes.",
           "source": {
             "label": "Arm 6-K Ex.99.2(2026年度第4四半期決算)",
             "label_en": "Arm 6-K Ex.99.2 (Q4 FY26 results)",
@@ -549,8 +549,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SamsungのCEOが、Armなど計算分野のリーダーとの長期的な協力に言及",
-          "text_en": "Samsung’s CEO cites long-term collaboration with compute leaders like Arm",
+          "text": "SamsungのCEOは、Armなど計算分野のリーダーとの長期的な協力を打ち出している",
+          "text_en": "Samsung collaborates long-term with compute leaders like Arm",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -595,8 +595,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MicronのCEOが、Armとの長年の提携に言及",
-          "text_en": "Micron’s CEO describes a longstanding partnership with Arm",
+          "text": "MicronのCEOは、Armとの長年の提携を重視する",
+          "text_en": "Micron has a longstanding partnership with Arm",
           "source": {
             "label": "Arm ニュースルーム: Arm AGI CPU launch(2026-03-24)",
             "label_en": "Arm Newsroom: Arm AGI CPU launch (2026-03-24)",
@@ -641,8 +641,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Siemens EDAが、シミュレーション・検証・SoC実装にわたるArmとの長年の戦略的提携に言及",
-          "text_en": "Siemens EDA describes a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation",
+          "text": "Siemens EDAはArmと、シミュレーション・検証・SoC実装にわたる長年の戦略的提携を結ぶ",
+          "text_en": "Siemens EDA has a longstanding strategic partnership with Arm spanning simulation, verification and SoC implementation",
           "source": {
             "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",
@@ -737,8 +737,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NXPが、Armとの数十年にわたる関係に言及",
-          "text_en": "NXP cites a decades-long relationship with Arm",
+          "text": "NXPはArmと、数十年にわたる関係を築いてきた",
+          "text_en": "NXP has built a decades-long relationship with Arm",
           "source": {
             "label": "Arm AGI CPUの提携先ページ",
             "label_en": "Arm AGI CPU ecosystem page (arm.com)",

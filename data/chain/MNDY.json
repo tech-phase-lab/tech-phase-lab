@@ -53,8 +53,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "主要テック企業の提携先の例としてAmazon AWSを挙げている",
-          "text_en": "Amazon AWS is named as an example of leading tech company partners",
+          "text": "Amazon AWSは、monday.comが提携する主要テック企業の一例だ",
+          "text_en": "monday.com partners with leading tech companies such as Amazon AWS.",
           "source": {
             "label": "monday.com 20-F",
             "label_en": "monday.com 20-F",
@@ -213,8 +213,8 @@
         },
         {
           "type": "tie",
-          "text": "Microsoftの資料が、monday.comとMicrosoft Entra IDの統合方法を説明している",
-          "text_en": "Microsoft's documentation explains how to integrate monday.com with Microsoft Entra ID",
+          "text": "monday.comはMicrosoft Entra IDと統合できる",
+          "text_en": "monday.com integrates with Microsoft Entra ID.",
           "source": {
             "label": "Microsoft Learn documentation",
             "label_en": "Microsoft Learn documentation",
@@ -225,8 +225,8 @@
         },
         {
           "type": "rival",
-          "text": "マンデー・ドットコムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in monday.com’s annual report",
+          "text": "monday.comと競合する",
+          "text_en": "Competes with monday.com",
           "source": {
             "label": "monday.com 20-F",
             "label_en": "monday.com 20-F",
@@ -248,8 +248,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マンデー・ドットコムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in monday.com’s annual report",
+          "text": "monday.comと競合する",
+          "text_en": "Competes with monday.com",
           "source": {
             "label": "monday.com 20-F",
             "label_en": "monday.com 20-F",

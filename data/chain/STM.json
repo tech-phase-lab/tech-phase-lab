@@ -101,8 +101,8 @@
         },
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "text": "STマイクロエレクトロニクスと競合する",
+          "text_en": "Competes with STMicroelectronics",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -125,8 +125,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "CEVAは、STMicroelectronicsが一部の用途でCEVAの設計のライセンスを受けていると記している",
-          "text_en": "CEVA says STMicroelectronics licenses its designs for some applications",
+          "text": "STMicroelectronicsは一部の用途でCEVAの設計のライセンスを受けている",
+          "text_en": "STMicroelectronics licenses CEVA's designs for some applications",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -150,8 +150,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rambusは、STMicroelectronicsが同社の特許をライセンスしていると記している",
-          "text_en": "Rambus says STMicroelectronics has licensed its patents",
+          "text": "STMicroelectronicsはRambusの特許をライセンス契約で利用する",
+          "text_en": "STMicroelectronics has licensed Rambus's patents",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -189,8 +189,8 @@
         },
         {
           "type": "rival",
-          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "text": "STマイクロエレクトロニクスと競合する",
+          "text_en": "Competes with STMicroelectronics",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",
@@ -250,8 +250,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "STの年次報告が、主要顧客の1社としてContinentalを挙げている",
-          "text_en": "Continental is named among ST's major customers in its annual report",
+          "text": "Continentalは、STの主要顧客の1社に数えられる",
+          "text_en": "Continental is one of ST's major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -274,8 +274,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "STの年次報告が、主要顧客の1社としてDensoを挙げている",
-          "text_en": "Denso is named among ST's major customers in its annual report",
+          "text": "STの主要顧客の1社が、Densoだ",
+          "text_en": "Denso is one of ST's major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -298,8 +298,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "STの年次報告が、主要顧客の1社としてHPを挙げている",
-          "text_en": "HP is named among ST's major customers in its annual report",
+          "text": "HPは、STの主要顧客の1社となる",
+          "text_en": "HP is one of ST's major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -323,8 +323,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "STの年次報告が、主要顧客の1社としてMobileyeを挙げている",
-          "text_en": "Mobileye is named among ST's major customers in its annual report",
+          "text": "Mobileyeは、STにとって主要顧客の1社を占める",
+          "text_en": "Mobileye is one of ST's major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -347,8 +347,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "STの年次報告が、主要顧客の1社としてSamsungを挙げている",
-          "text_en": "Samsung is named among ST's major customers in its annual report",
+          "text": "Samsungは、STの主要顧客の1社に位置する",
+          "text_en": "Samsung is one of ST's major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -373,8 +373,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "STの年次報告が、主要顧客の1社としてSpaceXを挙げている",
-          "text_en": "SpaceX is named among ST's major customers in its annual report",
+          "text": "STの主要顧客の1社はSpaceX",
+          "text_en": "SpaceX is one of ST's major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -397,8 +397,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "STの年次報告が、主要顧客の1社としてTeslaを挙げている",
-          "text_en": "Tesla is named among ST's major customers in its annual report",
+          "text": "Teslaも、STの主要顧客の1社に名を連ねる",
+          "text_en": "Tesla is also one of ST's major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -421,8 +421,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "モノリシック・パワー・システムズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "text": "STマイクロエレクトロニクスと競合する",
+          "text_en": "Competes with STMicroelectronics",
           "source": {
             "label": "Monolithic Power Systems 10-K",
             "label_en": "Monolithic Power Systems 10-K",
@@ -445,8 +445,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "パワー・インテグレーションズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "text": "STマイクロエレクトロニクスと競合する",
+          "text_en": "Competes with STMicroelectronics",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",
@@ -469,8 +469,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "text": "STマイクロエレクトロニクスと競合する",
+          "text_en": "Competes with STMicroelectronics",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -493,8 +493,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シリコン・ラボラトリーズの年次報告が、STマイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names STMicroelectronics as a competitor in its annual report",
+          "text": "STマイクロエレクトロニクスと競合する",
+          "text_en": "Competes with STMicroelectronics",
           "source": {
             "label": "Silicon Laboratories 10-K",
             "label_en": "Silicon Laboratories 10-K",

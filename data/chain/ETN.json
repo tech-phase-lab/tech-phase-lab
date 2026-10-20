@@ -107,8 +107,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "バーティブの年次報告が、イートンを競合として挙げている",
-          "text_en": "Names Eaton as a competitor in its annual report",
+          "text": "イートンと競合する",
+          "text_en": "Competes with Eaton",
           "source": {
             "label": "Vertiv 10-K",
             "label_en": "Vertiv 10-K",

@@ -69,8 +69,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "オントゥ・イノベーションの年次報告が、カムテックを競合として挙げている",
-          "text_en": "Names Camtek as a competitor in its annual report",
+          "text": "Camtekと競合する",
+          "text_en": "Competes with Camtek",
           "source": {
             "label": "Onto Innovation 10-K",
             "label_en": "Onto Innovation 10-K",

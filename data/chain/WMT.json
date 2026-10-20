@@ -34,8 +34,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Rokuの年次報告が、自社製品の販売先の小売店としてWalmartを挙げている",
-          "text_en": "Roku's annual report names Walmart among the retailers through which its products are sold",
+          "text": "Rokuの製品は、Walmartなどの小売店を通じて販売される",
+          "text_en": "Roku's products are sold through retailers such as Walmart.",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -49,8 +49,8 @@
         },
         {
           "type": "rival",
-          "text": "Rokuの年次報告が、Walmartを競合として挙げている(Onn.ブランドの配信機器の製造・販売)",
-          "text_en": "Roku's annual report names Walmart as a competitor, citing its Onn. branded streaming products",
+          "text": "WalmartはOnn.ブランドの配信機器を製造・販売し、Rokuと競合する",
+          "text_en": "Walmart competes with Roku, making and selling Onn. branded streaming products",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コストコの年次報告が、ウォルマートを競合として挙げている",
-          "text_en": "Names Walmart as a competitor in its annual report",
+          "text": "Walmartと競合する",
+          "text_en": "Competes with Walmart",
           "source": {
             "label": "Costco 10-K",
             "label_en": "Costco 10-K",

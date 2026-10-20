@@ -38,8 +38,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、Microsoft Teamsとの戦略的な統合を通じて顧客に届けると説明している",
-          "text_en": "The annual report says it reaches customers through strategic integrations with large platforms like Microsoft Teams",
+          "text": "エイトバイエイトは、Microsoft Teamsとの戦略的な統合を通じて顧客に届ける。",
+          "text_en": "8x8 reaches customers through strategic integrations with large platforms like Microsoft Teams.",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",
@@ -51,8 +51,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告が、Microsoft Teamsに多額の投資をした競合の例としてMicrosoftを挙げている",
-          "text_en": "The annual report cites Microsoft, which has invested significantly in Microsoft Teams, among its competitors",
+          "text": "Microsoftは、Microsoft Teamsに多額の投資をしたエイトバイエイトの競合。",
+          "text_en": "Microsoft, which has invested significantly in Microsoft Teams, is one of 8x8's competitors.",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",
@@ -75,8 +75,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、Salesforceとの戦略的な統合を通じて顧客に届けると説明している",
-          "text_en": "The annual report says it reaches customers through strategic integrations with large platforms like Salesforce",
+          "text": "エイトバイエイトの顧客への販路には、Salesforceとの戦略的な統合がある。",
+          "text_en": "8x8 reaches customers through strategic integrations with large platforms like Salesforce.",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",
@@ -125,8 +125,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナイスの年次報告が、エイトバイエイトを競合として挙げている",
-          "text_en": "Names 8x8 as a competitor in its annual report",
+          "text": "エイトバイエイトと競合する",
+          "text_en": "Competes with 8x8",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -149,8 +149,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、エイトバイエイトを競合として挙げている",
-          "text_en": "Names 8x8 as a competitor in its annual report",
+          "text": "エイトバイエイトと競合する",
+          "text_en": "Competes with 8x8",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",
@@ -162,8 +162,8 @@
         },
         {
           "type": "rival",
-          "text": "エイトバイエイトの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in 8x8’s annual report",
+          "text": "エイトバイエイトと競合する",
+          "text_en": "Competes with 8x8",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",
@@ -186,8 +186,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エイトバイエイトの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in 8x8’s annual report",
+          "text": "エイトバイエイトと競合する",
+          "text_en": "Competes with 8x8",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エイトバイエイトの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in 8x8’s annual report",
+          "text": "エイトバイエイトと競合する",
+          "text_en": "Competes with 8x8",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",
@@ -234,8 +234,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エイトバイエイトの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in 8x8’s annual report",
+          "text": "エイトバイエイトと競合する",
+          "text_en": "Competes with 8x8",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",

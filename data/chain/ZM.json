@@ -247,8 +247,8 @@
         },
         {
           "type": "rival",
-          "text": "Zoomの年次報告が、競合としてMicrosoft 365(Teams)を挙げている",
-          "text_en": "Zoom's annual report names Microsoft 365 (with Teams) as a competitor",
+          "text": "Microsoft 365(Teams)は、Zoomの競合に当たる",
+          "text_en": "Microsoft 365 (with Teams) competes with Zoom.",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -284,8 +284,8 @@
         },
         {
           "type": "rival",
-          "text": "Zoomの年次報告が、競合としてGoogle Workspace(Meet)を挙げている",
-          "text_en": "Zoom's annual report names Google Workspace (with Meet) as a competitor",
+          "text": "ZoomはGoogle Workspace(Meet)と競合する",
+          "text_en": "Google Workspace (with Meet) competes with Zoom.",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -308,8 +308,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Zoomの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Zoom’s annual report",
+          "text": "Zoomと競合する",
+          "text_en": "Competes with Zoom",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -332,8 +332,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エイトバイエイトの年次報告が、Zoomを競合として挙げている",
-          "text_en": "Names Zoom as a competitor in its annual report",
+          "text": "Zoomと競合する",
+          "text_en": "Competes with Zoom",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",

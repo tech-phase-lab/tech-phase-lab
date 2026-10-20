@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Fortinetの年次報告は、機器の限定供給部品としてWestern Digital製のメモリ機器を挙げている",
-          "text_en": "Fortinet's annual report lists memory devices from Western Digital among its limited source components",
+          "text": "Fortinetの一部機器は、Western Digital製のメモリ機器を限定供給部品として使う",
+          "text_en": "Fortinet uses memory devices from Western Digital as limited source components in certain appliances.",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -60,8 +60,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Sandiskの年次報告は、Western Digitalの債務についてSandiskが引き受け補償する旨を述べ、分離・配布契約を挙げている",
-          "text_en": "Sandisk's annual report says it agreed to assume and indemnify WDC for certain liabilities, referencing the Separation and Distribution Agreement",
+          "text": "Sandiskは、分離・配布契約に基づき、Western Digitalの一部債務を引き受けて補償することに合意した",
+          "text_en": "Sandisk agreed to assume, and indemnify WDC for, certain liabilities under the Separation and Distribution Agreement.",
           "source": {
             "label": "Sandisk 10-K",
             "label_en": "Sandisk 10-K",
@@ -86,8 +86,8 @@
         },
         {
           "type": "tie",
-          "text": "Western DigitalはSandiskを、同社のプラットフォーム向けにSSDの認定を済ませた提供元の1社に挙げている",
-          "text_en": "Western Digital lists Sandisk among providers whose SSDs it has qualified for its platforms",
+          "text": "Western Digitalは、Sandiskを同社のプラットフォーム向けにSSDの認定を済ませた提供元の1社とする",
+          "text_en": "Western Digital has qualified SSDs from providers including Sandisk for its platforms.",
           "source": {
             "label": "Western Digital の発表",
             "label_en": "Western Digital press release",
@@ -140,8 +140,8 @@
         },
         {
           "type": "tie",
-          "text": "Western DigitalはKioxiaを、同社のプラットフォーム向けにSSDの認定を済ませた提供元の1社に挙げている",
-          "text_en": "Western Digital lists Kioxia among providers whose SSDs it has qualified for its platforms",
+          "text": "Kioxiaは、Western Digitalがプラットフォーム向けにSSDの認定を済ませた提供元の1社",
+          "text_en": "Western Digital has qualified SSDs from providers including Kioxia for its platforms.",
           "source": {
             "label": "Western Digital の発表",
             "label_en": "Western Digital press release",
@@ -166,8 +166,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rambusの年次報告は、Western Digitalを同社の特許のライセンスを受けた企業の1社に挙げている",
-          "text_en": "Rambus's annual report lists Western Digital among companies that have licensed its patents",
+          "text": "Western Digitalは、Rambusの特許のライセンスを受けた企業の1社",
+          "text_en": "Western Digital is among the companies that have licensed Rambus's patents.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてNVIDIAが挙げられている",
-          "text_en": "NVIDIA is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "text": "NVIDIAはWestern DigitalのOpen Composable Compatibility Labの参加企業の一つだ",
+          "text_en": "NVIDIA is one of the ecosystem participants in Western Digital's Open Composable Compatibility Lab",
           "source": {
             "label": "Western Digital の発表",
             "label_en": "Western Digital press release",
@@ -215,8 +215,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてBroadcomが挙げられている",
-          "text_en": "Broadcom is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "text": "BroadcomもWestern DigitalのOpen Composable Compatibility Labに参加している",
+          "text_en": "Broadcom is one of the ecosystem participants in Western Digital's Open Composable Compatibility Lab",
           "source": {
             "label": "Western Digital の発表",
             "label_en": "Western Digital press release",
@@ -241,8 +241,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてIntelが挙げられている",
-          "text_en": "Intel is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "text": "IntelはWestern DigitalのOpen Composable Compatibility Labの参加企業に入る",
+          "text_en": "Intel is one of the ecosystem participants in Western Digital's Open Composable Compatibility Lab",
           "source": {
             "label": "Western Digital の発表",
             "label_en": "Western Digital press release",
@@ -267,8 +267,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてArista Networksが挙げられている",
-          "text_en": "Arista Networks is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "text": "Arista NetworksはWestern DigitalのOpen Composable Compatibility Labに参画する",
+          "text_en": "Arista Networks is one of the ecosystem participants in Western Digital's Open Composable Compatibility Lab",
           "source": {
             "label": "Western Digital の発表",
             "label_en": "Western Digital press release",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ウエスタンデジタルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Western Digital’s annual report",
+          "text": "Western Digitalと競合する",
+          "text_en": "Competes with Western Digital",
           "source": {
             "label": "Western Digital 10-K",
             "label_en": "Western Digital 10-K",
@@ -306,8 +306,8 @@
         },
         {
           "type": "rival",
-          "text": "シーゲイト・テクノロジーの年次報告が、ウエスタンデジタルを競合として挙げている",
-          "text_en": "Names Western Digital as a competitor in its annual report",
+          "text": "Western Digitalと競合する",
+          "text_en": "Competes with Western Digital",
           "source": {
             "label": "Seagate Technology 10-K",
             "label_en": "Seagate Technology 10-K",

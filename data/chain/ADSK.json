@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Akamaiの年次報告が、顧客の例にAutodeskを挙げている",
-          "text_en": "Akamai's annual report names Autodesk among its customers",
+          "text": "Autodeskは、Akamaiの顧客のひとつだ",
+          "text_en": "Autodesk is one of Akamai's customers",
           "source": {
             "label": "Akamai Technologies 10-K",
             "label_en": "Akamai Technologies 10-K",
@@ -61,8 +61,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ベントレー・システムズの年次報告が、オートデスクを競合として挙げている",
-          "text_en": "Names Autodesk as a competitor in its annual report",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
           "source": {
             "label": "Bentley Systems 10-K",
             "label_en": "Bentley Systems 10-K",
@@ -74,8 +74,8 @@
         },
         {
           "type": "rival",
-          "text": "ベントレー・システムズの年次報告が、オートデスクを競合として挙げている",
-          "text_en": "Names Autodesk as a competitor in its annual report",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
           "source": {
             "label": "Bentley Systems 10-K",
             "label_en": "Bentley Systems 10-K",
@@ -87,8 +87,8 @@
         },
         {
           "type": "rival",
-          "text": "オートデスクの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Autodesk’s annual report",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
           "source": {
             "label": "Autodesk 10-K",
             "label_en": "Autodesk 10-K",
@@ -111,8 +111,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "PTCの年次報告が、オートデスクを競合として挙げている",
-          "text_en": "Names Autodesk as a competitor in its annual report",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
           "source": {
             "label": "PTC 10-K",
             "label_en": "PTC 10-K",
@@ -134,8 +134,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "オートデスクの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Autodesk’s annual report",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
           "source": {
             "label": "Autodesk 10-K",
             "label_en": "Autodesk 10-K",
@@ -211,8 +211,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIA Omniverseにより、Autodeskの顧客は自社の技術を他社ツールと併用できると、Autodeskが述べている",
-          "text_en": "Autodesk says NVIDIA Omniverse lets its customers use Autodesk technology alongside partners' and non-Autodesk tools",
+          "text": "NVIDIA Omniverseにより、Autodeskの顧客は自社の技術を他社ツールと併用できる",
+          "text_en": "NVIDIA Omniverse lets Autodesk's customers use Autodesk technology alongside partners' and non-Autodesk tools",
           "source": {
             "label": "Autodesk ニュースルーム",
             "label_en": "Autodesk newsroom",
@@ -226,8 +226,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAが、Autodeskを含むソフト提供各社が、同社のCloudXR連携でApple Vision Pro向けのアプリを提供していると説明している",
-          "text_en": "NVIDIA says software providers including Autodesk are using its CloudXR integration to deliver applications to Apple Vision Pro",
+          "text": "Autodeskなどのソフト提供各社は、NVIDIAのCloudXR連携を使ってApple Vision Pro向けのアプリを提供している",
+          "text_en": "Software providers including Autodesk use NVIDIA's CloudXR integration to deliver applications to Apple Vision Pro",
           "source": {
             "label": "NVIDIA ブログ",
             "label_en": "NVIDIA blog",
@@ -239,8 +239,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAは、Omniverseが接続する業界有力アプリの提供元としてAutodeskを挙げている",
-          "text_en": "NVIDIA names Autodesk among software companies whose applications connect to its Omniverse ecosystem",
+          "text": "Autodeskは、アプリがNVIDIA Omniverseに接続する業界有力ソフト企業のひとつだ",
+          "text_en": "Autodesk is one of the software companies whose applications connect to the NVIDIA Omniverse ecosystem",
           "source": {
             "label": "NVIDIA の発表",
             "label_en": "NVIDIA press release",

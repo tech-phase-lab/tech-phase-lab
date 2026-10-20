@@ -26,8 +26,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MicrosoftのPurviewのData Security Posture Managementが、Varonisなどのパートナーソリューションと連携すると説明している",
-          "text_en": "Microsoft says its Purview Data Security Posture Management integrates with partner solutions such as Varonis",
+          "text": "MicrosoftのPurviewのData Security Posture Managementは、Varonisなどのパートナーソリューションと連携する",
+          "text_en": "Microsoft's Purview Data Security Posture Management integrates with partner solutions such as Varonis.",
           "source": {
             "label": "Microsoft · Purview Data Security Posture Management",
             "label_en": "Microsoft · Purview Data Security Posture Management",

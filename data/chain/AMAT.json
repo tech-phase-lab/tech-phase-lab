@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ultra Cleanが年次報告で、売上の10%超を占める2大顧客の1社としてApplied Materialsを挙げている",
-          "text_en": "Ultra Clean names Applied Materials as one of its two largest customers",
+          "text": "Applied Materialsは、Ultra Cleanの売上の10%超を占める2大顧客の1社だ",
+          "text_en": "Applied Materials is one of Ultra Clean's two largest customers, each accounting for more than 10% of its revenues",
           "source": {
             "label": "Ultra Clean Holdings 10-K(2025年度)",
             "label_en": "Ultra Clean Holdings 10-K (FY2025)",
@@ -80,8 +80,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ichorが年次報告で、2025年の売上が最大の顧客の1社としてApplied Materialsを挙げている",
-          "text_en": "Ichor lists Applied Materials among its largest customers by sales in 2025",
+          "text": "Applied Materialsは、Ichorの2025年の売上が最大の顧客の1社に入る",
+          "text_en": "Applied Materials is one of Ichor's largest customers by sales in 2025",
           "source": {
             "label": "Ichor Holdings 10-K(2025年度)",
             "label_en": "Ichor Holdings 10-K (FY2025)",
@@ -168,8 +168,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Lamが年次報告で、成膜(誘電体・金属)とエッチングの主な競合としてApplied Materialsを挙げている",
-          "text_en": "Lam Research states that Applied Materials is its primary competitor in dielectric and metals deposition and in etch",
+          "text": "Applied Materialsは、Lamの成膜(誘電体・金属)とエッチングで主な競合となる",
+          "text_en": "Applied Materials is Lam Research's primary competitor in dielectric and metals deposition and in etch",
           "source": {
             "label": "Lam Research 10-K(2026年度)",
             "label_en": "Lam Research 10-K (FY2026)",
@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "KLAが年次報告で、各製品市場の競合の1社としてApplied Materialsを挙げている",
-          "text_en": "KLA lists Applied Materials among its competitors in each of its product markets",
+          "text": "Applied Materialsは、KLAが各製品市場で相対する多数の競合の1社である",
+          "text_en": "Applied Materials is one of KLA's many competitors in each of its product markets",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (FY2026)",
@@ -214,8 +214,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ASMLが年次報告で、パターン形成を補う用途の提供企業の1社としてApplied Materialsを競合に挙げている",
-          "text_en": "ASML states it competes with providers of patterning-enhancing applications such as Applied Materials",
+          "text": "ASMLは、パターン形成を補う用途の提供企業の1社、Applied Materialsとも競合している",
+          "text_en": "ASML competes with providers of patterning-enhancing applications such as Applied Materials",
           "source": {
             "label": "ASML 20-F(2025年度)",
             "label_en": "ASML 20-F / Annual Report (FY2025)",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Axcelisが年次報告で、イオン注入装置で主にApplied Materialsと競合すると記載",
-          "text_en": "Axcelis states it mainly competes against Applied Materials in ion implantation systems",
+          "text": "Axcelisはイオン注入装置の市場で、主にApplied Materialsと競合する",
+          "text_en": "Axcelis mainly competes against Applied Materials in ion implantation systems",
           "source": {
             "label": "Axcelis Technologies 10-K(2025年度)",
             "label_en": "Axcelis Technologies 10-K (FY2025)",
@@ -262,8 +262,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Veecoが年次報告で、主な競合の1社としてApplied Materialsを挙げている",
-          "text_en": "Veeco lists Applied Materials among its principal competitors",
+          "text": "Applied Materialsは、Veecoの主な競合の1社に名を連ねる",
+          "text_en": "Applied Materials is one of Veeco's principal competitors",
           "source": {
             "label": "Veeco Instruments 10-K(2025年度)",
             "label_en": "Veeco Instruments 10-K (FY2025)",
@@ -285,8 +285,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ACM Researchが年次報告で、PECVD・Track製品の主な競合の1社としてApplied Materialsを挙げている",
-          "text_en": "ACM Research lists Applied Materials among principal competitors for its PECVD and Track products",
+          "text": "ACM ResearchのPECVD・Track製品では、Applied Materialsが主な競合の1社となっている",
+          "text_en": "Applied Materials is one of ACM Research's principal competitors for its PECVD and Track products",
           "source": {
             "label": "ACM Research 10-K(2025年度)",
             "label_en": "ACM Research 10-K (FY2025)",
@@ -310,8 +310,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "PDF Solutionsが年次報告で、半導体製造ソフトと工程内検査・計測装置の競合としてApplied Materialsを挙げている",
-          "text_en": "PDF Solutions names Applied Materials as a competing provider of semiconductor manufacturing software and inline inspection/metrology equipment",
+          "text": "PDF Solutionsは、半導体製造ソフトと工程内検査・計測装置の分野でApplied Materialsと競合する",
+          "text_en": "Applied Materials competes with PDF Solutions in semiconductor manufacturing software and inline inspection/metrology equipment",
           "source": {
             "label": "PDF Solutions 10-K(2025年度)",
             "label_en": "PDF Solutions 10-K (FY2025)",
@@ -335,8 +335,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Novaが年次報告で、工程内センサー・計測製品を開発する装置メーカー(Applied Materialsなど)と競合すると記載",
-          "text_en": "Nova states it competes with process equipment makers such as Applied Materials that develop in-situ sensors and metrology products",
+          "text": "Novaは、工程内センサー・計測製品を開発する装置メーカー(Applied Materialsなど)と競い合う",
+          "text_en": "Nova competes with process equipment makers such as Applied Materials that develop in-situ sensors and metrology products",
           "source": {
             "label": "Nova 20-F(2025年度)",
             "label_en": "Nova 20-F (FY2025)",

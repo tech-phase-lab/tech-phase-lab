@@ -41,8 +41,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IRENが年次報告で、AIクラウド向けGPU・関連機器の限られた供給元の1社としてNVIDIAを挙げている",
-          "text_en": "IREN lists NVIDIA among the limited number of suppliers of GPUs and related equipment for its AI Cloud Services",
+          "text": "NVIDIAは、IRENのAIクラウド向けGPU・関連機器の限られた供給元の1社に入る",
+          "text_en": "NVIDIA is one of a limited number of suppliers of GPUs and related equipment for IREN's AI Cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IRENが年次報告で、GPU・関連インフラの供給元の1社としてDell Technologiesを挙げている",
-          "text_en": "IREN names Dell Technologies among suppliers of GPUs and related infrastructure",
+          "text": "Dell Technologiesは、IRENにGPU・関連インフラを供給する1社だ",
+          "text_en": "Dell Technologies is one of IREN's suppliers of GPUs and related infrastructure.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -160,8 +160,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IRENが年次報告で、AIクラウド向けGPU・サーバー等の供給元の1社としてAMDを挙げている",
-          "text_en": "IREN names Advanced Micro Devices among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services",
+          "text": "AMDは、IRENのAIクラウド向けGPU・サーバー等を供給する1社となる",
+          "text_en": "AMD is one of IREN's suppliers of GPUs and servers for its AI Cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -196,8 +196,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IRENが年次報告で、AIクラウド向けのGPU・サーバー等の供給元の1社としてLenovo Groupを挙げている",
-          "text_en": "IREN names Lenovo Group among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services",
+          "text": "Lenovo Groupは、IRENのAIクラウド向けGPU・サーバー等の供給元の1社を担う",
+          "text_en": "Lenovo Group is one of IREN's suppliers of GPUs and servers for its AI Cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -219,8 +219,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IRENが年次報告で、AIクラウド向けのGPU・サーバー等の供給元の1社としてSuper Micro Computerを挙げている",
-          "text_en": "IREN names Super Micro Computer among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services",
+          "text": "Super Micro Computerは、IRENのAIクラウド向けGPU・サーバー等の供給元の1社である",
+          "text_en": "Super Micro Computer is one of IREN's suppliers of GPUs and servers for its AI Cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -242,8 +242,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "IRENが年次報告で、AIクラウド向けのGPU・サーバー等の供給元の1社としてGigabyte Technologyを挙げている",
-          "text_en": "IREN names Gigabyte Technology among the suppliers of GPUs, servers and related infrastructure for its AI Cloud Services",
+          "text": "Gigabyte Technologyは、IRENのAIクラウド向けGPU・サーバー等の供給元の1社に数えられる",
+          "text_en": "Gigabyte Technology is one of IREN's suppliers of GPUs and servers for its AI Cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -291,8 +291,8 @@
         },
         {
           "type": "rival",
-          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてMicrosoft Azureを挙げている",
-          "text_en": "IREN’s FY2026 10-K names Microsoft Azure among the hyperscalers it competes with in AI Cloud Services",
+          "text": "Microsoft Azureは、AIクラウドでIRENと競合するハイパースケーラーの1社だ",
+          "text_en": "Microsoft Azure is one of the hyperscalers IREN competes with in AI Cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -390,8 +390,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてAmazon(AWS)を挙げている",
-          "text_en": "IREN’s FY2026 10-K names Amazon Web Services among the hyperscalers it competes with",
+          "text": "Amazon(AWS)は、IRENがAIクラウドで競合するハイパースケーラーの1社だ",
+          "text_en": "IREN competes with hyperscalers including Amazon Web Services in AI cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -413,8 +413,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてAlphabet(Google Cloud)を挙げている",
-          "text_en": "IREN’s FY2026 10-K names Google Cloud among the hyperscalers it competes with",
+          "text": "Alphabet(Google Cloud)は、AIクラウドでIRENと競うハイパースケーラーの1社となる",
+          "text_en": "IREN competes with hyperscalers including Google Cloud in AI cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -436,8 +436,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、AIクラウドで競合するハイパースケーラーの1社としてOracleを挙げている",
-          "text_en": "IREN’s FY2026 10-K names Oracle Cloud among the hyperscalers it competes with",
+          "text": "IRENはAIクラウドで、ハイパースケーラーの1社であるOracleと競合する",
+          "text_en": "IREN competes with Oracle Cloud, one of the hyperscalers, in AI cloud.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -459,8 +459,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、AIクラウドで競合する特化型AIクラウドの1社としてCoreWeaveを挙げている",
-          "text_en": "IREN’s FY2026 10-K names CoreWeave among the specialized AI Cloud Services providers it competes with",
+          "text": "特化型AIクラウドの1社であるCoreWeaveは、IRENのAIクラウドの競合だ",
+          "text_en": "CoreWeave is one of the specialized AI Cloud Services providers IREN competes with.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",
@@ -482,8 +482,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、AIクラウドで競合する特化型AIクラウドの1社としてNebius Groupを挙げている",
-          "text_en": "IREN’s FY2026 10-K names Nebius among the specialized AI Cloud Services providers it competes with",
+          "text": "IRENのAIクラウドの競合には、特化型AIクラウドの1社、Nebius Groupがいる",
+          "text_en": "Nebius is one of the specialized AI Cloud Services providers IREN competes with.",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",

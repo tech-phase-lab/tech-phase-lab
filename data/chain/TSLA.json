@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "電池セルの供給元として実名で記載",
-          "text_en": "Named as a battery-cell supplier",
+          "text": "Panasonic Holdingsは電池セルの供給元だ",
+          "text_en": "Panasonic Holdings supplies Tesla with battery cells",
           "source": {
             "label": "Tesla 10-K(2025年12月期)",
             "label_en": "Tesla 10-K (fiscal year ended December 2025)",
@@ -64,8 +64,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "電池セルの供給元として実名で記載",
-          "text_en": "Named as a battery-cell supplier",
+          "text": "CATLはTeslaに電池セルを供給している",
+          "text_en": "CATL supplies Tesla with battery cells",
           "source": {
             "label": "Tesla 10-K(2025年12月期)",
             "label_en": "Tesla 10-K (fiscal year ended December 2025)",
@@ -110,8 +110,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "車内体験向けのプロセッサ・SoCを提供(AMDがTeslaを技術パートナーとして記載)",
-          "text_en": "Provides processors and SoCs for in-cabin experiences (AMD lists Tesla as a technology partner)",
+          "text": "AMDは、技術パートナーのTeslaに車内体験向けのプロセッサ・SoCを提供する",
+          "text_en": "AMD provides processors and SoCs for in-cabin experiences to technology partners such as Tesla",
           "source": {
             "label": "AMD 車載ソリューションのページ",
             "label_en": "AMD automotive in-vehicle experience page",
@@ -182,8 +182,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Fluenceが年次報告でTeslaを主要な競合に挙げている",
-          "text_en": "Fluence names Tesla as a key competitor in its annual report",
+          "text": "Teslaは、Fluenceの主要な競合に含まれる",
+          "text_en": "Tesla is one of Fluence's key competitors.",
           "source": {
             "label": "Fluence 10-K(2025年9月期)",
             "label_en": "Fluence 10-K (fiscal year ended September 2025)",
@@ -204,8 +204,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Enphaseが年次報告で蓄電市場の競合にTeslaを挙げている",
-          "text_en": "Enphase names Tesla as a competitor in the storage market in its annual report",
+          "text": "蓄電市場では、EnphaseがTeslaと競合する",
+          "text_en": "Enphase competes with Tesla in the storage market.",
           "source": {
             "label": "Enphase 10-K(2025年12月期)",
             "label_en": "Enphase 10-K (fiscal year ended December 2025)",
@@ -399,8 +399,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SolarEdgeの年次報告が、北米の住宅用インバーターの競合としてTeslaを挙げている",
-          "text_en": "SolarEdge’s annual report names Tesla as a competitor in North American residential solar inverters",
+          "text": "SolarEdgeは北米の住宅用インバーターで、Teslaと競い合う",
+          "text_en": "SolarEdge competes with Tesla in North American residential solar inverters.",
           "source": {
             "label": "SolarEdge 10-K(2025年度)",
             "label_en": "SolarEdge 10-K FY2025",
@@ -424,8 +424,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Eos Energyの年次報告が、競合としてTeslaを挙げている",
-          "text_en": "Eos Energy’s annual report names Tesla among competitors",
+          "text": "Eos Energyは、Teslaなどのリチウムイオン電池メーカーと競合している",
+          "text_en": "Eos Energy competes with Tesla and other Li-ion battery manufacturers and solution providers.",
           "source": {
             "label": "Eos Energy 10-K(2025年度)",
             "label_en": "Eos Energy 10-K FY2025",
@@ -447,8 +447,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Albemarleの年次報告が、リチウム化合物の主要な競合としてTeslaを挙げている",
-          "text_en": "Albemarle’s annual report lists Tesla among major competitors in lithium compounds",
+          "text": "Albemarleのリチウム化合物事業では、Teslaも主要な競合に含まれる",
+          "text_en": "Tesla is among Albemarle's major competitors in lithium compounds.",
           "source": {
             "label": "Albemarle 10-K(2025年度)",
             "label_en": "Albemarle 10-K FY2025",
@@ -472,8 +472,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Li Autoが年次報告で、20万人民元超の中国NEV市場でTeslaが支配的な地位にあると記載",
-          "text_en": "Li Auto states Tesla holds a dominant position in China’s NEV segment priced above RMB 200,000",
+          "text": "Li Autoと競合するTeslaは、20万人民元超の中国NEV市場で支配的な地位を持つ",
+          "text_en": "Tesla holds a dominant position in China’s NEV segment priced above RMB 200,000, where it competes with Li Auto",
           "source": {
             "label": "Li Auto 20-F(2025年度)",
             "label_en": "Li Auto 20-F FY2025",
@@ -497,8 +497,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "XPengが年次報告で、中国に自社工場を建てた外国EVメーカーの例としてTeslaを挙げている",
-          "text_en": "XPeng cites Tesla as an example of a foreign EV competitor that built a wholly-owned factory in China",
+          "text": "Teslaは合弁パートナーなしで上海にGiga Shanghaiを建設した、XPengの外国EV競合の実例",
+          "text_en": "Tesla built the Tesla Giga Shanghai factory without a joint venture partner, an example of the foreign EV competitors XPeng faces in China.",
           "source": {
             "label": "XPeng 20-F(2025年度)",
             "label_en": "XPeng 20-F FY2025",
@@ -522,8 +522,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Faraday Futureが年次報告で、EVを提供する主要自動車メーカーの1社としてTeslaを挙げている",
-          "text_en": "Faraday Future lists Tesla among major automakers offering electric vehicles",
+          "text": "Teslaは、EVを提供する主要自動車メーカーの1社で、Faraday Futureの競合となる",
+          "text_en": "Tesla and other major automakers offer electric vehicles, competing with Faraday Future.",
           "source": {
             "label": "Faraday Future 10-K(2025年度)",
             "label_en": "Faraday Future 10-K FY2025",

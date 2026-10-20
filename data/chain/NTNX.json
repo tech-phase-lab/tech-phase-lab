@@ -141,8 +141,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Intelとの提携を相互運用性の取り組みとして挙げている",
-          "text_en": "The annual report lists a partnership with Intel for integrated offerings and interoperability",
+          "text": "NutanixはIntelと提携し、相互運用性を実証している",
+          "text_en": "Nutanix partners with Intel on integrated offerings and demonstrated interoperability",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K",
@@ -165,8 +165,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、NVIDIAとの提携を相互運用性の取り組みとして挙げている",
-          "text_en": "The annual report lists a partnership with NVIDIA for integrated offerings and interoperability",
+          "text": "NutanixとNVIDIAの提携により、統合製品と相互運用性が顧客に提供される",
+          "text_en": "Nutanix partners with NVIDIA on integrated offerings and demonstrated interoperability",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Palo Alto Networksとの提携を相互運用性の取り組みとして挙げている",
-          "text_en": "The annual report lists a partnership with Palo Alto Networks for integrated offerings and interoperability",
+          "text": "Nutanixは、Palo Alto Networksとの提携で相互運用性を確保する",
+          "text_en": "Nutanix partners with Palo Alto Networks on integrated offerings and demonstrated interoperability",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K",
@@ -350,8 +350,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、AMDとの提携を相互運用性の取り組みとして挙げている",
-          "text_en": "The annual report lists a partnership with AMD for integrated offerings and interoperability",
+          "text": "AMDとの提携を通じて、Nutanixは統合製品と相互運用性を顧客に示す",
+          "text_en": "Nutanix partners with AMD on integrated offerings and demonstrated interoperability",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K",
@@ -423,8 +423,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、BroadcomによるVMware買収後の競争を挙げている",
-          "text_en": "The annual report cites Broadcom's acquisition of VMware and says Broadcom may continue to compete aggressively",
+          "text": "BroadcomのVMware買収後、Nutanixとの競争が激しくなる可能性がある",
+          "text_en": "Broadcom's acquisition of VMware means Broadcom may continue to compete aggressively with Nutanix",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K",
@@ -447,8 +447,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヒューレット・パッカード・エンタープライズの年次報告が、Nutanixを競合として挙げている",
-          "text_en": "Hewlett Packard Enterprise's annual report names Nutanix as a competitor",
+          "text": "ニュータニックスと競合する",
+          "text_en": "Competes with Nutanix",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",

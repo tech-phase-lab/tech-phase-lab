@@ -34,8 +34,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "nCinoのプラットフォームに連携する技術パートナーとしてAnthropicを挙げている",
-          "text_en": "Anthropic is named among technology partners integrated within the nCino Platform",
+          "text": "AnthropicはnCinoのプラットフォームに連携する技術パートナー",
+          "text_en": "Anthropic is a technology partner integrated within the nCino Platform",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "プラットフォームに連携する技術パートナーとしてAWSを挙げている",
-          "text_en": "AWS is named among technology partners integrated within the platform",
+          "text": "AWSはnCinoのプラットフォームに連携する技術パートナーとなる",
+          "text_en": "AWS is a technology partner integrated within the nCino platform",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -82,8 +82,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "プラットフォームに連携する技術パートナーとしてDocusignを挙げている",
-          "text_en": "Docusign is named among technology partners integrated within the platform",
+          "text": "Docusignは、nCinoのプラットフォームに連携する技術パートナーだ",
+          "text_en": "Docusign is a technology partner integrated within the nCino platform",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "プラットフォームに連携する技術パートナーとしてSalesforceを挙げている",
-          "text_en": "Salesforce is named among technology partners integrated within the platform",
+          "text": "Salesforceの製品はnCinoのプラットフォームに連携する",
+          "text_en": "Salesforce is a technology partner integrated within the nCino platform",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -118,8 +118,8 @@
         },
         {
           "type": "rival",
-          "text": "Salesforceが競合する自社製品を開発する可能性を、年次報告が挙げている",
-          "text_en": "The annual report notes Salesforce could develop its own offerings that compete directly",
+          "text": "Salesforceが競合する自社製品を開発する可能性があり、独占契約はない",
+          "text_en": "Salesforce could develop its own offerings that compete directly with nCino's; no exclusivity arrangement prevents it",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -143,8 +143,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "販売・導入を支援するパートナーとしてAccentureを挙げている",
-          "text_en": "Accenture is named among partners that assist in co-selling and implementation",
+          "text": "AccentureはnCinoの販売と導入を支援するパートナー",
+          "text_en": "Accenture is a partner that assists nCino in co-selling and implementation",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -179,8 +179,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客の例としてWells Fargoが挙げられている",
-          "text_en": "Wells Fargo is named among nCino's customers",
+          "text": "Wells FargoはnCinoの顧客の一社だ",
+          "text_en": "Wells Fargo is an nCino customer",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -217,8 +217,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客の例としてBank of Americaが挙げられている",
-          "text_en": "Bank of America is named among nCino's customers",
+          "text": "Bank of AmericaはnCinoの顧客に含まれる",
+          "text_en": "Bank of America is an nCino customer",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -255,8 +255,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客の例としてBarclaysが挙げられている",
-          "text_en": "Barclays is named among nCino's customers",
+          "text": "BarclaysもnCinoの顧客に入る",
+          "text_en": "Barclays is an nCino customer",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -278,8 +278,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客の例としてSantanderが挙げられている",
-          "text_en": "Santander is named among nCino's customers",
+          "text": "SantanderはnCinoを利用する顧客の一つだ",
+          "text_en": "Santander is an nCino customer",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -301,8 +301,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客の例としてTD Bankが挙げられている",
-          "text_en": "TD Bank is named among nCino's customers",
+          "text": "TD BankはnCinoの顧客として取引する",
+          "text_en": "TD Bank is an nCino customer",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -324,8 +324,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Q2 Holdingsの年次報告が、エヌシーノを競合として挙げている",
-          "text_en": "Names nCino as a competitor in its annual report",
+          "text": "nCinoと競合する",
+          "text_en": "Competes with nCino",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",

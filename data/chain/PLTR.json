@@ -85,8 +85,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Oracleが、OCI上で動くPalantirを戦略パートナーとして記載",
-          "text_en": "Oracle lists Palantir as a strategic partner running on Oracle Cloud Infrastructure",
+          "text": "PalantirはOracleの戦略パートナーで、OCI上で稼働する",
+          "text_en": "Palantir is a strategic partner of Oracle and runs on Oracle Cloud Infrastructure",
           "source": {
             "label": "Oracle 戦略的パートナーのページ",
             "label_en": "Oracle Strategic Partner page",
@@ -245,8 +245,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "L3Harrisが年次報告で、新しい能力開発の戦略的提携先としてPalantirを挙げている",
-          "text_en": "L3Harris’ annual report names Palantir among its strategic partnerships for developing new capabilities",
+          "text": "L3HarrisとPalantirは、新しい能力開発で戦略的に提携する",
+          "text_en": "L3Harris and Palantir are strategic partners in developing new capabilities.",
           "source": {
             "label": "L3Harris 10-K(2025年度)",
             "label_en": "L3Harris 10-K (FY2025)",
@@ -337,8 +337,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Veritoneが年次報告で、AIソリューションの競合としてPalantirを挙げている",
-          "text_en": "Veritone’s annual report names Palantir among competitors in AI-enabled solutions",
+          "text": "VeritoneのAIソリューション分野では、Palantirが競合に挙がる",
+          "text_en": "Palantir competes with Veritone in AI-enabled solutions.",
           "source": {
             "label": "Veritone 10-K(2025年度)",
             "label_en": "Veritone 10-K (FY2025)",
@@ -385,8 +385,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Lumenが決算資料で、Connected Ecosystemの提携先の1社としてPalantirを挙げている",
-          "text_en": "Lumen cites Palantir among partners in its Connected Ecosystem",
+          "text": "Lumenは、Connected Ecosystemの提携先の1社としてPalantirと組む",
+          "text_en": "Lumen partners with Palantir in its Connected Ecosystem.",
           "source": {
             "label": "Lumen 決算資料(2025年第3四半期)",
             "label_en": "Lumen 3Q25 results presentation",
@@ -494,8 +494,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Voyagerが上場申請書類(S-1/A)で、Starlab合弁の海外の出資パートナーであり重要なパートナー・顧客としてPalantirを挙げている",
-          "text_en": "Voyager’s IPO registration statement (S-1/A) lists Palantir as an international equity partner in the Starlab JV and a key partner and customer",
+          "text": "Palantirは、Voyager主導のStarlab合弁(S-1/A)に海外の出資パートナーとして参画する予定で、重要なパートナー・顧客でもある",
+          "text_en": "Palantir is set to join Voyager's Starlab JV (S-1/A) as an international equity partner and is also a key partner and customer.",
           "source": {
             "label": "Voyager Technologies S-1/A",
             "label_en": "Voyager Technologies SEC Form S-1/A",
@@ -519,8 +519,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Archerが決算発表で、次世代の航空技術向けAIを作るPalantirとの基盤的な提携があると説明",
-          "text_en": "Archer’s Q1 2025 results release states it has a foundational partnership with Palantir to build AI for next-gen aviation technologies",
+          "text": "ArcherはPalantirと、次世代の航空技術向けAIを開発する基盤的な提携を結んでいる",
+          "text_en": "Archer has a foundational partnership with Palantir to build AI for next-gen aviation technologies",
           "source": {
             "label": "Archer Aviation 8-K Ex.99.1(2025年第1四半期決算)",
             "label_en": "Archer Aviation SEC 8-K Ex. 99.1 (Q1 2025 results)",

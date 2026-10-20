@@ -97,8 +97,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Sony MusicがFreshworksのEX・CXソフトウェアを利用している顧客として挙げられている",
-          "text_en": "Sony Music is named among customers that trust Freshworks' EX and CX software",
+          "text": "Sony Musicは、FreshworksのEX・CXソフトウェアを利用する顧客だ",
+          "text_en": "Sony Music is a customer that trusts Freshworks' EX and CX software",
           "source": {
             "label": "Freshworks 8-K Ex.99 の発表",
             "label_en": "Freshworks 8-K Ex.99 press release",
@@ -172,8 +172,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Freshworksの顧客として、American Expressが挙げられている",
-          "text_en": "American Express is named among Freshworks' customers",
+          "text": "American Expressは、Freshworksの顧客に含まれる",
+          "text_en": "American Express is one of Freshworks' customers",
           "source": {
             "label": "Freshworks — multi-year AWS strategic collaboration, January 29, 2024",
             "label_en": "Freshworks — multi-year AWS strategic collaboration, January 29, 2024",
@@ -257,8 +257,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "フレッシュワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Freshworks’s annual report",
+          "text": "Freshworksと競合する",
+          "text_en": "Competes with Freshworks",
           "source": {
             "label": "Freshworks 10-K",
             "label_en": "Freshworks 10-K",
@@ -281,8 +281,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フレッシュワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Freshworks’s annual report",
+          "text": "Freshworksと競合する",
+          "text_en": "Competes with Freshworks",
           "source": {
             "label": "Freshworks 10-K",
             "label_en": "Freshworks 10-K",
@@ -305,8 +305,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "フレッシュワークスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Freshworks’s annual report",
+          "text": "Freshworksと競合する",
+          "text_en": "Competes with Freshworks",
           "source": {
             "label": "Freshworks 10-K",
             "label_en": "Freshworks 10-K",

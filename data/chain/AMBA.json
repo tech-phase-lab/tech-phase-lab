@@ -222,8 +222,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アンバレラの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Ambarella’s annual report",
+          "text": "アンバレラと競合する",
+          "text_en": "Competes with Ambarella",
           "source": {
             "label": "Ambarella 10-K",
             "label_en": "Ambarella 10-K",
@@ -235,8 +235,8 @@
         },
         {
           "type": "rival",
-          "text": "アンバレラの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Ambarella’s annual report",
+          "text": "アンバレラと競合する",
+          "text_en": "Competes with Ambarella",
           "source": {
             "label": "Ambarella 10-K",
             "label_en": "Ambarella 10-K",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CEVAの年次報告が、アンバレラを競合として挙げている",
-          "text_en": "Names Ambarella as a competitor in its annual report",
+          "text": "アンバレラと競合する",
+          "text_en": "Competes with Ambarella",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",

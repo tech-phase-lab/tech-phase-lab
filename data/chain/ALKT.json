@@ -29,8 +29,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Q2 Holdingsの年次報告が、アルカミ・テクノロジーを競合として挙げている",
-          "text_en": "Names Alkami Technology as a competitor in its annual report",
+          "text": "アルカミ・テクノロジーと競合する",
+          "text_en": "Competes with Alkami Technology",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",

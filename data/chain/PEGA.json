@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、ソフトウェア開発や提供に使う供給元としてAWSを挙げている",
-          "text_en": "The annual report lists AWS among the suppliers used for software development and delivery",
+          "text": "AWSは、Pegaのソフトウェア開発と提供を支える供給元だ",
+          "text_en": "AWS is a supplier for Pega's software development and delivery.",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -73,8 +73,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、ソフトウェア開発や提供に使う供給元としてGoogle Cloudを挙げている",
-          "text_en": "The annual report lists Google Cloud among the suppliers used for software development and delivery",
+          "text": "Google Cloudは、Pegaがソフトウェアの開発と提供に使う供給元となる",
+          "text_en": "Google Cloud is a supplier for Pega's software development and delivery.",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -97,8 +97,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Pegaの最大級のパートナーの1社としてAccentureを挙げている",
-          "text_en": "The annual report lists Accenture among Pega's largest partners",
+          "text": "Accentureは、Pegaの最大級のパートナーの1社に数えられる",
+          "text_en": "Accenture is one of Pega's largest partners.",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -121,8 +121,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "InfosysがPega PlatformとPega Blueprintを自社のInfosys Cobaltに組み込むと述べている",
-          "text_en": "Infosys is quoted as integrating Pega Platform and Pega Blueprint into Infosys Cobalt",
+          "text": "InfosysはPega PlatformとPega Blueprintを、自社のInfosys Cobaltに組み込む",
+          "text_en": "Infosys is integrating Pega Platform and Pega Blueprint into Infosys Cobalt.",
           "source": {
             "label": "Pega — five-year AWS strategic collaboration, July 14, 2025",
             "label_en": "Pega — five-year AWS strategic collaboration, July 14, 2025",
@@ -144,8 +144,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペガシステムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "text": "Pegasystemsと競合する",
+          "text_en": "Competes with Pegasystems",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペガシステムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "text": "Pegasystemsと競合する",
+          "text_en": "Competes with Pegasystems",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペガシステムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "text": "Pegasystemsと競合する",
+          "text_en": "Competes with Pegasystems",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -215,8 +215,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペガシステムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "text": "Pegasystemsと競合する",
+          "text_en": "Competes with Pegasystems",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペガシステムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "text": "Pegasystemsと競合する",
+          "text_en": "Competes with Pegasystems",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -262,8 +262,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペガシステムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pegasystems’s annual report",
+          "text": "Pegasystemsと競合する",
+          "text_en": "Competes with Pegasystems",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -286,8 +286,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アピアンの年次報告が、ペガシステムズを競合として挙げている",
-          "text_en": "Names Pegasystems as a competitor in its annual report",
+          "text": "Pegasystemsと競合する",
+          "text_en": "Competes with Pegasystems",
           "source": {
             "label": "Appian 10-K",
             "label_en": "Appian 10-K",

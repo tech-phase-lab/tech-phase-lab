@@ -213,8 +213,8 @@
         },
         {
           "type": "tie",
-          "text": "AMDが、オープンなラック設計でのAMD Instinct GPU向けUALink接続でAstera Labsと協業していると説明",
-          "text_en": "AMD cites its collaboration with Astera Labs on UALink connectivity for AMD Instinct GPUs in open rack architectures",
+          "text": "AMDはAstera Labsと、オープンなラック設計のAMD Instinct GPU向けUALink接続で協業している",
+          "text_en": "AMD collaborates with Astera Labs on UALink connectivity for AMD Instinct GPUs in open rack architectures",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (OCP 2025)",
@@ -531,8 +531,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてWiwynnを挙げている",
-          "text_en": "Names Wiwynn among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
+          "text": "Astera Labsは台湾のODMの1社、Wiwynnとラック規模のAIシステムの検証・統合で協業する",
+          "text_en": "Astera Labs collaborates with Taiwan ODM Wiwynn on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -554,8 +554,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてInventecを挙げている",
-          "text_en": "Names Inventec among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
+          "text": "Astera Labsは台湾のODMの1社、Inventecと組み、ラック規模のAIシステムの検証・統合を進める",
+          "text_en": "Inventec works with Astera Labs on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -577,8 +577,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてGIGABYTEを挙げている",
-          "text_en": "Names GIGABYTE Technology among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
+          "text": "GIGABYTEは、Astera Labsとラック規模のAIシステムの検証・統合で協業する台湾のODMの1社だ",
+          "text_en": "GIGABYTE Technology is one of the Taiwan ODMs collaborating with Astera Labs on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -600,8 +600,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてFoxconn(子会社Ingrasys経由)を挙げている",
-          "text_en": "Names Foxconn (Hon Hai) among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
+          "text": "Astera Labsは台湾のODMの1社、Foxconnと子会社Ingrasys経由でラック規模のAIシステムの検証・統合に取り組む",
+          "text_en": "Astera Labs works with Foxconn (Hon Hai), through its subsidiary Ingrasys, on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -625,8 +625,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ラック規模のAIシステムの検証・統合で協業する台湾のODMの1社としてQuanta(子会社QCT経由)を挙げている",
-          "text_en": "Names Quanta Computer among Taiwan ODMs it collaborates with on rack-scale AI system validation and integration",
+          "text": "台湾のODMの1社、Quantaは子会社QCTを通じ、Astera Labsとラック規模のAIシステムの検証・統合で協力する",
+          "text_en": "Quanta Computer, through its subsidiary Quanta Cloud Technology, collaborates with Astera Labs on rack-scale AI system validation and integration",
           "source": {
             "label": "Astera Labs の発表",
             "label_en": "Astera Labs press release (Taiwan)",
@@ -673,8 +673,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてBroadcomを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Broadcom as a principal competitor",
+          "text": "Broadcomは、一部の製品・ソリューションでAstera Labsと競合する主な競合の1社だ",
+          "text_en": "Broadcom is a principal competitor of Astera Labs in some products and solutions",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -698,8 +698,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてMarvell Technologyを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Marvell Technology as a principal competitor",
+          "text": "Marvell Technologyは、Astera Labsの主な競合の1社だ",
+          "text_en": "Marvell Technology is a principal competitor of Astera Labs in some products and solutions",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -723,8 +723,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてCredo Technologyを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Credo Technology as a principal competitor",
+          "text": "Astera Labsの主な競合の1社に、Credo Technologyが含まれる",
+          "text_en": "Credo Technology is a principal competitor of Astera Labs in some products and solutions",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -748,8 +748,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてRambusを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Rambus as a principal competitor",
+          "text": "Astera Labsは、Rambusを主な競合の1社に抱える",
+          "text_en": "Rambus is a principal competitor of Astera Labs in some products and solutions",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -773,8 +773,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてMicrochip Technologyを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Microchip Technology as a principal competitor",
+          "text": "Astera Labsの主な競合の1社に、Microchip Technologyがいる",
+          "text_en": "Microchip Technology is a principal competitor of Astera Labs in some products and solutions",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -798,8 +798,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてMontage Technologyを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Montage Technology as a principal competitor",
+          "text": "Montage Technologyは、Astera Labsの主な競合の1社を占める",
+          "text_en": "Montage Technology is a principal competitor of Astera Labs in some products and solutions",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -823,8 +823,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてParade Technologiesを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Parade Technologies as a principal competitor",
+          "text": "Parade Technologiesは、Astera Labsと一部の製品・ソリューションで競り合う主な競合の1社",
+          "text_en": "Parade Technologies is a principal competitor of Astera Labs in some products and solutions",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",

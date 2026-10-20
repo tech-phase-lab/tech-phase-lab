@@ -77,8 +77,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "組立・テストを担う外部の製造委託先の1社としてASEを挙げている",
-          "text_en": "Names ASE among its third-party contract manufacturers for assembly and test",
+          "text": "BroadcomはASEを、組立・テストの外部製造委託先の1社として使う",
+          "text_en": "Broadcom uses ASE as one of its third-party contract manufacturers for assembly and test.",
           "source": {
             "label": "Broadcom 10-K(2025年度)",
             "label_en": "Broadcom 10-K (FY2025)",
@@ -101,8 +101,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "組立・テストを担う外部の製造委託先の1社としてAmkorを挙げている",
-          "text_en": "Names Amkor among its third-party contract manufacturers for assembly and test",
+          "text": "Amkorは、組立・テストでBroadcomの外部製造委託先の1社を務める",
+          "text_en": "Amkor is one of Broadcom's third-party contract manufacturers for assembly and test.",
           "source": {
             "label": "Broadcom 10-K(2025年度)",
             "label_en": "Broadcom 10-K (FY2025)",
@@ -170,8 +170,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Aristaが年次報告で、スイッチ用チップの主要な汎用シリコン供給元としてBroadcomに主に依存していると述べている",
-          "text_en": "Arista states it is primarily reliant on Broadcom as its predominant merchant silicon vendor for switching chips",
+          "text": "Aristaはスイッチ用チップを、主要な汎用シリコン供給元のBroadcomに主に頼る",
+          "text_en": "Arista relies primarily on Broadcom, its predominant merchant silicon vendor, for its switching chips.",
           "source": {
             "label": "Arista 10-K(2025年度)",
             "label_en": "Arista 10-K (FY2025)",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "HPEが年次報告で、業界標準ASSPの単一供給元の1社としてBroadcomを挙げている",
-          "text_en": "HPE lists Broadcom among its single-source suppliers of industry-standard ASSPs",
+          "text": "HPEは業界標準ASSPを、Broadcomなど単一の供給元の1社から調達する",
+          "text_en": "HPE sources industry-standard ASSPs from single-source suppliers such as Broadcom.",
           "source": {
             "label": "HPE 10-K(2025年度)",
             "label_en": "HPE 10-K (FY2025)",
@@ -225,8 +225,8 @@
         },
         {
           "type": "rival",
-          "text": "HPEが年次報告で、インフラ・クラウド管理ソフトの主な競合の1社としてBroadcomを挙げている",
-          "text_en": "HPE’s FY2025 10-K names Broadcom among its primary competitors in infrastructure and cloud management software",
+          "text": "Broadcomは、インフラ・クラウド管理ソフトでHPEの主な競合の1社として競り合う",
+          "text_en": "Broadcom is among HPE's primary competitors in infrastructure and cloud management software.",
           "source": {
             "label": "HPE 10-K(2025年度)",
             "label_en": "HPE 10-K (FY2025)",
@@ -323,8 +323,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Ciscoが年次報告で、一部の製品・サービスでの競合としてBroadcomを挙げている",
-          "text_en": "Cisco’s FY2026 10-K lists Broadcom among its competitors for some products and services",
+          "text": "Broadcomは、一部の製品・サービスでCiscoの競合になる",
+          "text_en": "Broadcom competes with Cisco for some of its products and services.",
           "source": {
             "label": "Cisco 10-K(2026年度)",
             "label_en": "Cisco 10-K (FY2026)",
@@ -346,8 +346,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、ネットワーク製品の競合としてBroadcomを挙げている",
-          "text_en": "NVIDIA’s FY2026 10-K lists Broadcom among competitors in networking products",
+          "text": "Broadcomはネットワーク製品でNVIDIAの競合相手だ",
+          "text_en": "Broadcom competes with NVIDIA in networking products.",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -369,8 +369,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDが年次報告で、組み込み事業の競合としてBroadcomを挙げている",
-          "text_en": "AMD’s FY2025 10-K lists Broadcom among competitors in its Embedded segment",
+          "text": "Broadcomは組み込み事業でAMDと競合している",
+          "text_en": "Broadcom competes with AMD in its Embedded segment.",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -394,8 +394,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Intelが年次報告で、カスタムASIC開発市場でBroadcomと競合すると述べている",
-          "text_en": "Intel’s FY2025 10-K states it competes with Broadcom in the custom ASIC development market",
+          "text": "Intelは、カスタムASIC開発市場でBroadcomと競合する",
+          "text_en": "Intel competes with Broadcom in the custom ASIC development market.",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -417,8 +417,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、自社の事業と直接競合する企業の1社としてBroadcomを挙げている",
-          "text_en": "Marvell’s FY2026 10-K lists Broadcom among companies that compete directly with its businesses",
+          "text": "Marvellと直接競合する企業の1社にBroadcomがある",
+          "text_en": "Broadcom competes directly with Marvell's businesses.",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -440,8 +440,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualcommが年次報告で、無線接続製品の競合としてBroadcomを挙げている",
-          "text_en": "Qualcomm’s FY2025 10-K lists Broadcom as a competitor in wireless connectivity products",
+          "text": "Broadcomは無線接続製品でQualcommの競合を成す",
+          "text_en": "Broadcom competes with Qualcomm in wireless connectivity products.",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -463,8 +463,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合としてBroadcomを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K lists Broadcom as a principal competitor",
+          "text": "Broadcomは、Astera Labsの主な競合の一角を占める",
+          "text_en": "Broadcom is one of Astera Labs' principal competitors.",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -486,8 +486,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合としてBroadcomを挙げている",
-          "text_en": "Credo’s FY2026 10-K lists Broadcom as a principal competitor",
+          "text": "Broadcomは、Credoの主な競合に入る",
+          "text_en": "Broadcom is one of Credo's principal competitors.",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -509,8 +509,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cienaが年次報告で、データセンター事業への拡大に伴いBroadcomとも競合する見込みだと述べている",
-          "text_en": "Ciena states in its FY2025 10-K that it expects to compete with Broadcom as it expands into the data center",
+          "text": "Cienaはデータセンター事業への拡大に伴い、Broadcomとの競合を見込む",
+          "text_en": "Ciena expects to compete with Broadcom as it expands into the data center.",
           "source": {
             "label": "Ciena 10-K(2025年度)",
             "label_en": "Ciena 10-K (FY2025)",
@@ -534,8 +534,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MACOMが年次報告で、主な競合の1社としてBroadcomを挙げている",
-          "text_en": "MACOM’s FY2025 10-K lists Broadcom among its primary competitors",
+          "text": "MACOMは、主な競合の1社であるBroadcomと市場を争う",
+          "text_en": "Broadcom is one of MACOM's primary competitors.",
           "source": {
             "label": "MACOM 10-K(2025年度)",
             "label_en": "MACOM 10-K (FY2025)",
@@ -557,8 +557,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearが年次報告で、主な汎用半導体の競合としてBroadcomを挙げている",
-          "text_en": "MaxLinear’s FY2025 10-K lists Broadcom as a primary merchant semiconductor competitor",
+          "text": "Broadcomは汎用半導体でMaxLinearの主な競合となる",
+          "text_en": "Broadcom is a primary merchant semiconductor competitor of MaxLinear.",
           "source": {
             "label": "MaxLinear 10-K(2025年度)",
             "label_en": "MaxLinear 10-K (FY2025)",
@@ -580,8 +580,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Skyworksが年次報告で、競合の1社としてBroadcomを挙げている",
-          "text_en": "Skyworks’ FY2025 10-K lists Broadcom among its competitors",
+          "text": "Skyworksは、競合先の1社にBroadcomを抱える",
+          "text_en": "Broadcom is one of Skyworks' competitors.",
           "source": {
             "label": "Skyworks 10-K(2025年度)",
             "label_en": "Skyworks 10-K (FY2025)",
@@ -603,8 +603,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qorvoが年次報告で、CSG事業(ACG事業も同様)は主にBroadcomと競合すると述べている",
-          "text_en": "Qorvo’s FY2026 10-K states its CSG segment competes primarily with Broadcom (and its ACG segment likewise)",
+          "text": "QorvoのCSG事業は主にBroadcomと競合し、ACG事業も同様だ",
+          "text_en": "Qorvo's CSG segment competes primarily with Broadcom, and so does its ACG segment.",
           "source": {
             "label": "Qorvo 10-K(2026年度)",
             "label_en": "Qorvo 10-K (FY2026)",

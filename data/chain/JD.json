@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Walmartは、JD.comへの投資の売却で36億ドルを受け取ったと述べている",
-          "text_en": "Walmart reports $3.6 billion in proceeds related to the sale of its JD.com investment",
+          "text": "Walmartは、JD.comへの投資を売却し、36億ドルを受け取った",
+          "text_en": "Walmart sold its JD.com investment and received $3.6 billion in proceeds.",
           "source": {
             "label": "Walmart 10-K",
             "label_en": "Walmart 10-K",
@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "JDドットコムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in JD.com’s annual report",
+          "text": "JD.comと競合する",
+          "text_en": "Competes with JD.com",
           "source": {
             "label": "JD.com 20-F",
             "label_en": "JD.com 20-F",

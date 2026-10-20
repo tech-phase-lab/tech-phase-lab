@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "UMCの年次報告が、主要顧客の例としてTexas Instrumentsを挙げている",
-          "text_en": "UMC's annual report names Texas Instruments among its primary customers",
+          "text": "Texas Instrumentsは、UMCの主要顧客に含まれる",
+          "text_en": "Texas Instruments is one of UMC's primary customers.",
           "source": {
             "label": "United Microelectronics 20-F",
             "label_en": "United Microelectronics 20-F",
@@ -74,8 +74,8 @@
         },
         {
           "type": "up",
-          "text": "Texas Instrumentsは、この取引でSilicon Labsの製造を外部ファウンドリから切り替えると説明している",
-          "text_en": "Texas Instruments says the transaction involves reshoring Silicon Labs' manufacturing from external foundries",
+          "text": "Texas Instrumentsは、この取引でSilicon Labsの製造を外部ファウンドリから切り替える方針",
+          "text_en": "Through the transaction, Texas Instruments plans to reshore Silicon Labs' manufacturing from external foundries.",
           "source": {
             "label": "Texas Instruments 8-K Ex.99 の発表",
             "label_en": "Texas Instruments 8-K Ex.99 press release",
@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXP Semiconductorsの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -154,8 +154,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Skyworks Solutionsの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -177,8 +177,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Monolithic Power Systemsの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Monolithic Power Systems 10-K",
             "label_en": "Monolithic Power Systems 10-K",
@@ -200,8 +200,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "AMD 10-K",
             "label_en": "AMD 10-K",
@@ -223,8 +223,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Alpha and Omega Semiconductorの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",
@@ -246,8 +246,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Power Integrationsの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",
@@ -269,8 +269,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Navitas Semiconductorの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -292,8 +292,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "GlobalFoundriesの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "GlobalFoundries 20-F",
             "label_en": "GlobalFoundries 20-F",
@@ -315,8 +315,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -338,8 +338,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Ambarellaの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Ambarella 10-K",
             "label_en": "Ambarella 10-K",
@@ -361,8 +361,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Rambusの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -384,8 +384,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Himax Technologiesの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -407,8 +407,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Diodes Incorporatedの年次報告が、テキサス・インスツルメンツを競合として挙げている",
-          "text_en": "Names Texas Instruments as a competitor in its annual report",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
           "source": {
             "label": "Diodes Incorporated 10-K",
             "label_en": "Diodes Incorporated 10-K",

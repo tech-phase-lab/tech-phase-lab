@@ -249,8 +249,8 @@
         },
         {
           "type": "tie",
-          "text": "Qualcomm Technologiesと共同開発したとMetaが説明",
-          "text_en": "Meta says it co-developed the chip with Qualcomm Technologies",
+          "text": "MetaはQualcomm Technologiesと共同開発した",
+          "text_en": "Meta co-developed the chip with Qualcomm Technologies",
           "source": {
             "label": "Meta の発表(2023年9月)",
             "label_en": "Meta announcement (September 2023)",
@@ -461,8 +461,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapが年次報告でMetaを競合に挙げている",
-          "text_en": "Snap names Meta as a competitor in its annual report",
+          "text": "SnapはMetaと競合関係にある",
+          "text_en": "Snap competes with Meta.",
           "source": {
             "label": "Snap 10-K(2025年12月期)",
             "label_en": "Snap 10-K (fiscal year ended December 2025)",
@@ -483,8 +483,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AppLovinが年次報告でMetaを広告市場の競合に挙げている",
-          "text_en": "AppLovin names Meta as a competitor in advertising in its annual report",
+          "text": "AppLovinは広告市場でMetaと競う",
+          "text_en": "AppLovin competes with Meta in advertising.",
           "source": {
             "label": "AppLovin 10-K(2025年12月期)",
             "label_en": "AppLovin 10-K (fiscal year ended December 2025)",
@@ -629,8 +629,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Metaが年次報告で、iOSに競合製品を組み込んでいる企業としてAppleを挙げている",
-          "text_en": "Meta’s annual report says Apple has integrated competitive products with iOS",
+          "text": "Appleは、iOSにMetaと競合する製品を組み込んだ",
+          "text_en": "Apple has integrated products that compete with Meta's into iOS.",
           "source": {
             "label": "Meta 10-K(2025年度)",
             "label_en": "Meta 10-K (FY2025)",
@@ -652,8 +652,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Metaが年次報告で、Androidに競合製品を組み込んでいる企業としてGoogleを挙げている",
-          "text_en": "Meta’s annual report says Google has integrated competitive products with Android",
+          "text": "Googleは、Metaと競合する製品をAndroidに組み込み済みだ",
+          "text_en": "Google has integrated products that compete with Meta's into Android.",
           "source": {
             "label": "Meta 10-K(2025年度)",
             "label_en": "Meta 10-K (FY2025)",
@@ -675,8 +675,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pinterestが年次報告で、競合としてMeta(Facebook・Instagram・Threads・Meta AI)を挙げている",
-          "text_en": "Pinterest’s annual report names Meta among its competitors",
+          "text": "Meta(Facebook・Instagram・Threads・Meta AI)はPinterestの競合企業だ",
+          "text_en": "Meta competes with Pinterest.",
           "source": {
             "label": "Pinterest 10-K(2025年度)",
             "label_en": "Pinterest 10-K (FY2025)",
@@ -698,8 +698,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Redditが年次報告で、ユーザーを奪い合う競合としてMetaを挙げている",
-          "text_en": "Reddit’s annual report names Meta among companies it competes against for users",
+          "text": "RedditはMetaとユーザーを奪い合う",
+          "text_en": "Reddit competes against Meta for users.",
           "source": {
             "label": "Reddit 10-K(2025年度)",
             "label_en": "Reddit 10-K (FY2025)",
@@ -721,8 +721,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Robloxが年次報告で、ユーザーと利用時間を奪い合う相手にMeta Platformsを挙げている",
-          "text_en": "Roblox’s annual report says it competes with Meta Platforms for users and engagement",
+          "text": "Meta Platformsは、ユーザーと利用時間を巡るRobloxのライバルだ",
+          "text_en": "Roblox competes with Meta Platforms for users and engagement hours.",
           "source": {
             "label": "Roblox 10-K(2025年度)",
             "label_en": "Roblox 10-K (FY2025)",
@@ -744,8 +744,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Match Groupが年次報告で、競合するSNSとしてFacebookとInstagramを挙げている",
-          "text_en": "Match Group’s annual report names Facebook and Instagram among competing social platforms",
+          "text": "FacebookとInstagramは、Match Groupが競合するSNSだ",
+          "text_en": "Facebook and Instagram are social platforms that compete with Match Group.",
           "source": {
             "label": "Match Group 10-K(2025年度)",
             "label_en": "Match Group 10-K (FY2025)",
@@ -767,8 +767,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Bumbleが年次報告で、競合しうる例としてFacebookの出会い機能を挙げている",
-          "text_en": "Bumble’s annual report cites Facebook’s dating feature as an example of competition",
+          "text": "BumbleにとってFacebookの出会い機能は、競合になりうる例だ",
+          "text_en": "Facebook's dating feature is an example of competition for Bumble.",
           "source": {
             "label": "Bumble 10-K(2025年度)",
             "label_en": "Bumble 10-K (FY2025)",
@@ -790,8 +790,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Unityが年次報告で、競合する大手企業の1社としてMetaを挙げている",
-          "text_en": "Unity’s annual report lists Meta among large companies it competes with",
+          "text": "Metaは、Unityが競合する大手企業の1社である",
+          "text_en": "Meta is one of the large companies Unity competes with.",
           "source": {
             "label": "Unity 10-K(2025年度)",
             "label_en": "Unity 10-K (FY2025)",
@@ -815,8 +815,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Yelpが年次報告で、地域広告で競合しうる大手としてGoogleとMetaを挙げている",
-          "text_en": "Yelp’s annual report says major internet companies such as Google and Meta may compete for local advertising",
+          "text": "GoogleとMetaは、地域広告でYelpと競合しうる大手だ",
+          "text_en": "Google and Meta may compete with Yelp for local advertising.",
           "source": {
             "label": "Yelp 10-K(2025年度)",
             "label_en": "Yelp 10-K (FY2025)",
@@ -838,8 +838,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Spotifyが年次報告で、競合する企業の1社としてMetaを挙げている",
-          "text_en": "Spotify’s annual report names Meta among companies that compete with it",
+          "text": "Metaは、Spotifyが競合する企業の1社となる",
+          "text_en": "Meta is one of the companies Spotify competes with.",
           "source": {
             "label": "Spotify 20-F(2025年度)",
             "label_en": "Spotify 20-F (FY2025)",

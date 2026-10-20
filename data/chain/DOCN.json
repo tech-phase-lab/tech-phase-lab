@@ -97,8 +97,8 @@
         },
         {
           "type": "tie",
-          "text": "同クレジット契約が年次報告の別添書類(10.17)に挙げられている",
-          "text_en": "The credit agreement is listed as Exhibit 10.17 to the annual report",
+          "text": "Morgan Stanleyは、同クレジット契約(別添書類10.17)の管理代理人だ",
+          "text_en": "Morgan Stanley Senior Funding is Administrative Agent under DigitalOcean's credit agreement, Exhibit 10.17 to the annual report",
           "source": {
             "label": "DigitalOcean 10-K",
             "label_en": "DigitalOcean 10-K",
@@ -121,8 +121,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "text": "DigitalOceanと競合する",
+          "text_en": "Competes with DigitalOcean",
           "source": {
             "label": "DigitalOcean 10-K",
             "label_en": "DigitalOcean 10-K",
@@ -145,8 +145,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "text": "DigitalOceanと競合する",
+          "text_en": "Competes with DigitalOcean",
           "source": {
             "label": "DigitalOcean 10-K",
             "label_en": "DigitalOcean 10-K",
@@ -169,8 +169,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "text": "DigitalOceanと競合する",
+          "text_en": "Competes with DigitalOcean",
           "source": {
             "label": "DigitalOcean 10-K",
             "label_en": "DigitalOcean 10-K",
@@ -193,8 +193,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "デジタルオーシャンの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in DigitalOcean’s annual report",
+          "text": "DigitalOceanと競合する",
+          "text_en": "Competes with DigitalOcean",
           "source": {
             "label": "DigitalOcean 10-K",
             "label_en": "DigitalOcean 10-K",

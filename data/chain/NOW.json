@@ -54,8 +54,8 @@
         },
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてMicrosoftを挙げている",
-          "text_en": "ServiceNow’s FY2025 10-K names Microsoft among the enterprise application software vendors it competes with",
+          "text": "Microsoftは企業向けソフト大手の1社として、ServiceNowの競合に名を連ねる",
+          "text_en": "Microsoft is one of the enterprise application software vendors that compete with ServiceNow",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -115,8 +115,8 @@
         },
         {
           "type": "tie",
-          "text": "AI・クラウドの相互運用に向け関係を拡大した技術提供企業の1社としてAWSを挙げている",
-          "text_en": "Lists AWS among technology providers with which it has expanded relationships for AI and cloud interoperability",
+          "text": "ServiceNowはAI・クラウドの相互運用に向け、技術提供企業の1社AWSとの関係を拡大した",
+          "text_en": "ServiceNow has expanded its relationship with AWS for AI and cloud interoperability",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -155,8 +155,8 @@
         },
         {
           "type": "tie",
-          "text": "AI・クラウドの相互運用に向け関係を拡大した技術提供企業の1社としてGoogleを挙げている",
-          "text_en": "Lists Google among technology providers with which it has expanded relationships for AI and cloud interoperability",
+          "text": "AI・クラウドの相互運用に向け、技術提供企業の1社Googleとの関係をServiceNowは拡大した",
+          "text_en": "ServiceNow has expanded its relationship with Google for AI and cloud interoperability",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -410,8 +410,8 @@
         },
         {
           "type": "tie",
-          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてAccentureを挙げている",
-          "text_en": "ServiceNow cites Accenture as a global system integrator that offers ServiceNow solutions to its customers",
+          "text": "Accentureはグローバルなシステム・インテグレーターとして、ServiceNowのソリューションを顧客に提供する",
+          "text_en": "Accenture is a global system integrator that offers ServiceNow solutions to its customers",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -433,8 +433,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてCognizantを挙げている",
-          "text_en": "ServiceNow cites Cognizant as a global system integrator that offers ServiceNow solutions to its customers",
+          "text": "Cognizantは、ServiceNowのソリューションを顧客に提供するグローバルなシステム・インテグレーター",
+          "text_en": "Cognizant is a global system integrator that offers ServiceNow solutions to its customers",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -456,8 +456,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ServiceNowが年次報告で、自社ソリューションを顧客に提供するグローバルなシステム・インテグレーターとしてInfosysを挙げている",
-          "text_en": "ServiceNow cites Infosys as a global system integrator that offers ServiceNow solutions to its customers",
+          "text": "InfosysもServiceNowのソリューションを顧客に届けるグローバルなシステム・インテグレーターとなる",
+          "text_en": "Infosys is a global system integrator that offers ServiceNow solutions to its customers",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -619,8 +619,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてOracleを挙げている",
-          "text_en": "ServiceNow’s FY2025 10-K names Oracle among the enterprise application software vendors it competes with",
+          "text": "Oracleは企業向けソフト大手の1社として、ServiceNowと競う",
+          "text_en": "Oracle is one of the enterprise application software vendors that compete with ServiceNow",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -642,8 +642,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSAPを挙げている",
-          "text_en": "ServiceNow’s FY2025 10-K names SAP among the enterprise application software vendors it competes with",
+          "text": "SAPは企業向けソフト大手の1社で、ServiceNowの競合に数えられる",
+          "text_en": "SAP is one of the enterprise application software vendors that compete with ServiceNow",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -665,8 +665,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSalesforceを挙げている",
-          "text_en": "ServiceNow’s FY2025 10-K names Salesforce among the enterprise application software vendors it competes with",
+          "text": "Salesforceは、ServiceNowが競合する企業向けソフト大手の1社だ",
+          "text_en": "Salesforce is one of the enterprise application software vendors that compete with ServiceNow",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -688,8 +688,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてWorkdayを挙げている",
-          "text_en": "ServiceNow’s FY2025 10-K names Workday among the enterprise application software vendors it competes with",
+          "text": "Workdayは企業向けソフト大手の1社として、ServiceNowとぶつかる",
+          "text_en": "Workday is one of the enterprise application software vendors that compete with ServiceNow",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",

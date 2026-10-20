@@ -44,8 +44,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告は、AWSはパートナーでもあるが、JFrogの機能の一部で競合し得ると述べている",
-          "text_en": "The annual report says AWS, while also a partner, may compete with a subset of JFrog functionality",
+          "text": "AWSはJFrogのパートナーだが、機能の一部で競合する可能性がある",
+          "text_en": "AWS is also a JFrog partner but may compete with a subset of JFrog functionality.",
           "source": {
             "label": "JFrog 10-K",
             "label_en": "JFrog 10-K",
@@ -92,8 +92,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告は、Microsoft Azure(Azure DevOps含む)はパートナーでもあるが、JFrogの機能の一部で競合し得ると述べている",
-          "text_en": "The annual report says Microsoft Azure (including Azure DevOps), while also a partner, may compete with a subset of JFrog functionality",
+          "text": "Microsoft Azure(Azure DevOps含む)はJFrogのパートナーでもあるが、機能の一部で競合し得る",
+          "text_en": "Microsoft Azure (including Azure DevOps) is also a JFrog partner but may compete with a subset of JFrog functionality.",
           "source": {
             "label": "JFrog 10-K",
             "label_en": "JFrog 10-K",
@@ -117,8 +117,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告は、Google Cloudはパートナーでもあるが、JFrogの機能の一部で競合し得ると述べている",
-          "text_en": "The annual report says Google Cloud, while also a partner, may compete with a subset of JFrog functionality",
+          "text": "Google CloudもJFrogのパートナーでありつつ、機能の一部で競合する可能性を持つ",
+          "text_en": "Google Cloud is also a JFrog partner but may compete with a subset of JFrog functionality.",
           "source": {
             "label": "JFrog 10-K",
             "label_en": "JFrog 10-K",
@@ -143,8 +143,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "GitLabの年次報告が、ジェイフロッグを競合として挙げている",
-          "text_en": "Names JFrog as a competitor in its annual report",
+          "text": "JFrogと競合する",
+          "text_en": "Competes with JFrog",
           "source": {
             "label": "GitLab 10-K",
             "label_en": "GitLab 10-K",
@@ -166,8 +166,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告は、セキュリティ分野の競合としてSynopsysなどを挙げている",
-          "text_en": "The annual report names Synopsys among security-focused companies that may compete with a subset of JFrog's security offerings",
+          "text": "セキュリティ分野では、SynopsysなどがJFrogの機能の一部と競合し得る",
+          "text_en": "In security, Synopsys and others may compete with a subset of JFrog's security offerings.",
           "source": {
             "label": "JFrog 10-K",
             "label_en": "JFrog 10-K",

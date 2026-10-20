@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Dropboxの連携先の1社としてCiscoを挙げている",
-          "text_en": "The annual report lists Cisco among Dropbox's integrations",
+          "text": "Ciscoは、Dropboxの連携先の1社を占める。",
+          "text_en": "Cisco is one of Dropbox's integration partners.",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -60,8 +60,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Dropboxの公式ページが、JiraやTrelloと並んでAsanaとの連携を紹介している",
-          "text_en": "Dropbox's official page presents integrating Dropbox with apps such as Jira, Asana and Trello",
+          "text": "DropboxはJiraやTrelloと並んで、Asanaと連携する",
+          "text_en": "Dropbox integrates with apps such as Jira, Asana and Trello",
           "source": {
             "label": "Dropbox — official AI partners and Claude document connectivity; checked October 16, 2026",
             "label_en": "Dropbox — official AI partners and Claude document connectivity; checked October 16, 2026",
@@ -83,8 +83,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "monday.comの年次報告が、連携先の例にDropboxを挙げている",
-          "text_en": "monday.com's annual report lists Dropbox among its integrations",
+          "text": "monday.comの連携先には、Dropboxが含まれる。",
+          "text_en": "Dropbox is among monday.com's integrations.",
           "source": {
             "label": "monday.com 20-F",
             "label_en": "monday.com 20-F",
@@ -107,8 +107,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Zoomの年次報告が、連携先の1社にDropboxを挙げている",
-          "text_en": "Zoom's annual report lists Dropbox among its integrations",
+          "text": "ZoomはDropboxを連携先の1社に持つ。",
+          "text_en": "Zoom integrates with Dropbox.",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -120,8 +120,8 @@
         },
         {
           "type": "tie",
-          "text": "Zoom Meetingsが連携するツールの例としてDropboxが挙げられている",
-          "text_en": "Dropbox is named among tools that Zoom Meetings integrates with",
+          "text": "Zoom Meetingsは、Dropboxなどのツールと連携する",
+          "text_en": "Zoom Meetings integrates with tools from companies such as Dropbox",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -133,8 +133,8 @@
         },
         {
           "type": "tie",
-          "text": "Dropboxの年次報告も、連携先の1社にZoomを挙げている",
-          "text_en": "Dropbox's annual report also lists Zoom among its integrations",
+          "text": "ZoomはDropboxの連携先の1社でもある。",
+          "text_en": "Zoom is also among Dropbox's integrations.",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -157,8 +157,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AvePointの年次報告が、主な連携先の例にDropboxを挙げている",
-          "text_en": "AvePoint's annual report lists Dropbox among the platforms it connects with",
+          "text": "AvePointは、主な連携先の例としてDropboxに対応する。",
+          "text_en": "AvePoint connects with Dropbox as one of its major integration platforms.",
           "source": {
             "label": "AvePoint 10-K",
             "label_en": "AvePoint 10-K",
@@ -181,8 +181,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ドロップボックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ドロップボックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -229,8 +229,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ドロップボックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -253,8 +253,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ドロップボックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -277,8 +277,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ドロップボックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -301,8 +301,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ドロップボックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -314,8 +314,8 @@
         },
         {
           "type": "tie",
-          "text": "Atlassianの年次報告が、自社アプリと相互運用できる相手の例にDropboxを挙げている",
-          "text_en": "Atlassian's annual report names Dropbox among platforms its apps interoperate with",
+          "text": "Atlassianのアプリは、Dropboxと相互運用できる。",
+          "text_en": "Atlassian's apps are open and interoperable with Dropbox.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -338,8 +338,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ドロップボックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dropbox’s annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -364,8 +364,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ボックスの年次報告が、ドロップボックスを競合として挙げている",
-          "text_en": "Names Dropbox as a competitor in its annual report",
+          "text": "Dropboxと競合する",
+          "text_en": "Competes with Dropbox",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",

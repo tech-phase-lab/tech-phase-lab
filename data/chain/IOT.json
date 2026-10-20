@@ -34,8 +34,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Amazonとの商業契約が更新されない場合、別のホスティング先でConnected Operations Platformを設定し直す必要があると説明している",
-          "text_en": "Says that if Amazon did not allow renewal of its commercial agreement, it would have to set up its Connected Operations Platform on an alternative hosting service",
+          "text": "Amazonとの商業契約を更新できない場合、サムサラはConnected Operations Platformを別のホスティング先で設定し直す必要がある",
+          "text_en": "If Samsara cannot renew its commercial agreement with Amazon, it would have to set up its Connected Operations Platform on an alternative hosting service.",
           "source": {
             "label": "Samsara 10-K",
             "label_en": "Samsara 10-K",
@@ -60,8 +60,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サムサラの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Samsara’s annual report",
+          "text": "サムサラと競合する",
+          "text_en": "Competes with Samsara",
           "source": {
             "label": "Samsara 10-K",
             "label_en": "Samsara 10-K",

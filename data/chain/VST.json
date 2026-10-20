@@ -56,8 +56,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "CenterPoint Houstonが年次報告で、Vistra関連会社を主要な外部顧客として記載",
-          "text_en": "CenterPoint Houston lists affiliates of Vistra as a major external customer",
+          "text": "Vistra関連会社はCenterPoint Houstonの主要な外部顧客だ",
+          "text_en": "Affiliates of Vistra are a major external customer of CenterPoint Houston",
           "source": {
             "label": "CenterPoint Energy 10-K(2025年度)",
             "label_en": "CenterPoint Energy 10-K (FY2025)",
@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Cipherが年次報告で、Odessa施設の電力をVistra子会社のLuminantから電力購入契約で調達と記載",
-          "text_en": "Cipher’s annual report says it buys power for its Odessa facility from Vistra subsidiary Luminant under a PPA",
+          "text": "Cipherは、Odessa施設の電力をVistra子会社のLuminantから電力購入契約で調達する",
+          "text_en": "Cipher buys power for its Odessa facility from Vistra subsidiary Luminant under a power purchase agreement",
           "source": {
             "label": "Cipher Digital 10-K(2025年度)",
             "label_en": "Cipher Digital 10-K (FY2025)",

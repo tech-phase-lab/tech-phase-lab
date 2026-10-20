@@ -161,8 +161,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にLam Researchが挙げられている",
-          "text_en": "Lam Research is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "text": "Lam Researchは、OntoのPACE(パネル級パッケージング研究施設)の協力企業だ",
+          "text_en": "Lam Research is a collaborator at Onto's Packaging Applications Center of Excellence",
           "source": {
             "label": "Onto Innovation の発表",
             "label_en": "Onto Innovation press release",
@@ -187,8 +187,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にCorningが挙げられている",
-          "text_en": "Corning is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "text": "Corningは、OntoのPACE(パネル級パッケージング研究施設)に協力する",
+          "text_en": "Corning is a collaborator at Onto's Packaging Applications Center of Excellence",
           "source": {
             "label": "Onto Innovation の発表",
             "label_en": "Onto Innovation press release",
@@ -213,8 +213,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にMKS Instrumentsが挙げられている",
-          "text_en": "MKS Instruments is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "text": "MKS Instrumentsは、OntoのPACE(パネル級パッケージング研究施設)の協力企業に加わる",
+          "text_en": "MKS Instruments is a collaborator at Onto's Packaging Applications Center of Excellence",
           "source": {
             "label": "Onto Innovation の発表",
             "label_en": "Onto Innovation press release",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OntoのPACE(パネル級パッケージング研究施設)の協力企業にResonacが挙げられている",
-          "text_en": "Resonac is listed as a collaborator at Onto's Packaging Applications Center of Excellence",
+          "text": "Resonacは、OntoのPACE(パネル級パッケージング研究施設)の協力企業の一社となる",
+          "text_en": "Resonac is a collaborator at Onto's Packaging Applications Center of Excellence",
           "source": {
             "label": "Onto Innovation の発表",
             "label_en": "Onto Innovation press release",
@@ -265,8 +265,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "KLAの年次報告が、オントー・イノベーションを競合として挙げている",
-          "text_en": "Names Onto Innovation as a competitor in its annual report",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
           "source": {
             "label": "KLA 10-K",
             "label_en": "KLA 10-K",
@@ -278,8 +278,8 @@
         },
         {
           "type": "rival",
-          "text": "オントー・イノベーションの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Onto Innovation’s annual report",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
           "source": {
             "label": "Onto Innovation 10-K",
             "label_en": "Onto Innovation 10-K",
@@ -301,8 +301,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "オントー・イノベーションの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Onto Innovation’s annual report",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
           "source": {
             "label": "Onto Innovation 10-K",
             "label_en": "Onto Innovation 10-K",
@@ -314,8 +314,8 @@
         },
         {
           "type": "rival",
-          "text": "Novaの年次報告が、オントー・イノベーションを競合として挙げている",
-          "text_en": "Names Onto Innovation as a competitor in its annual report",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
           "source": {
             "label": "Nova 20-F",
             "label_en": "Nova 20-F",
@@ -337,8 +337,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "オントー・イノベーションの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Onto Innovation’s annual report",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
           "source": {
             "label": "Onto Innovation 10-K",
             "label_en": "Onto Innovation 10-K",

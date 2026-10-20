@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、衛星を打ち上げられる限られた供給元の1社としてRocket Lab USAを挙げている",
-          "text_en": "The annual report lists Rocket Lab USA among the limited number of suppliers able to launch Planet's satellites",
+          "text": "Rocket Lab USAは、Planetの衛星を打ち上げられる限られた供給元の1社に入る",
+          "text_en": "Rocket Lab USA is one of the limited number of suppliers able to launch Planet's satellites.",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -60,8 +60,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、衛星を打ち上げられる限られた供給元の1社として三菱重工業を挙げている",
-          "text_en": "The annual report lists Mitsubishi Heavy Industries among the limited number of suppliers able to launch Planet's satellites",
+          "text": "三菱重工業も、Planetの衛星を打ち上げられる限られた供給元の1社となる",
+          "text_en": "Mitsubishi Heavy Industries is one of the limited number of suppliers able to launch Planet's satellites.",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -84,8 +84,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Googleとの研究開発サービスの提携に触れている",
-          "text_en": "The annual report cites a research and development services partnership with Google",
+          "text": "PlanetはGoogleと研究開発サービスで提携する",
+          "text_en": "Planet partners with Google on research and development services.",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -186,8 +186,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "プラネット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Planet Labs’s annual report",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "プラネット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Planet Labs’s annual report",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -234,8 +234,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "プラネット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Planet Labs’s annual report",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "プラネット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Planet Labs’s annual report",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -282,8 +282,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、SpaceXが自社ロケットを使い、直接競合に動けばコストと速度で優位に立ち得ると述べている",
-          "text_en": "The annual report says SpaceX's vertical integration and own launch vehicles could give it cost and speed advantages if it decided to compete directly",
+          "text": "SpaceXは、自社ロケットで直接競合に動けば、コストと速度で優位に立ち得る",
+          "text_en": "SpaceX's vertical integration and own launch vehicles could give it cost and speed advantages if it competed directly.",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -308,8 +308,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、Amazon Leoなどの新たな衛星群が参入障壁を下げ、直接競合する可能性にも触れている",
-          "text_en": "The annual report notes new satellite fleets such as Amazon Leo may lower barriers to entry or lead the company to compete directly",
+          "text": "Amazon Leoなどの新たな衛星群は参入障壁を下げ、直接競合する可能性もある",
+          "text_en": "New satellite fleets such as Amazon Leo may lower barriers to entry or lead the company to compete directly.",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",

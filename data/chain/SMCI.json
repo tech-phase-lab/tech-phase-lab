@@ -74,8 +74,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Netlistが起こした特許申立ての中で、Micronの下流の顧客としてSupermicroが挙げられている",
-          "text_en": "In a Netlist complaint against Micron, Supermicro is named among Micron's downstream customers",
+          "text": "Netlistが起こした特許申立ての相手方に、Micronの下流の顧客としてSupermicroが入る",
+          "text_en": "Netlist's patent complaint against Micron names Supermicro among Micron's downstream customers",
           "source": {
             "label": "Supermicro 10-K",
             "label_en": "Supermicro 10-K",
@@ -100,8 +100,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "IRENの年次報告は、GPUなどのハードウェアの調達先にSupermicroを挙げている",
-          "text_en": "IREN's annual report lists Supermicro among the suppliers of its GPUs, networking and storage equipment",
+          "text": "IRENは、GPUなどのハードウェアをSupermicroから調達する",
+          "text_en": "IREN sources hardware such as GPUs, networking and storage equipment from Supermicro.",
           "source": {
             "label": "IREN 10-K",
             "label_en": "IREN 10-K",
@@ -200,8 +200,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヒューレット・パッカード・エンタープライズの年次報告が、スーパー・マイクロ・コンピューターを競合として挙げている",
-          "text_en": "Names Supermicro as a competitor in its annual report",
+          "text": "Supermicroと競合する",
+          "text_en": "Competes with Supermicro",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",

@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先として台湾積体電路製造を挙げている",
-          "text_en": "The annual report lists TSMC among foundries that provided foundry services in the past few years",
+          "text": "Himaxは過去数年、台湾積体電路製造のファウンドリ(受託製造)サービスを利用した",
+          "text_en": "Himax has used TSMC's foundry services over the past few years.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -63,8 +63,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてユナイテッド・マイクロエレクトロニクスを挙げている",
-          "text_en": "The annual report lists UMC among foundries that provided foundry services in the past few years",
+          "text": "ユナイテッド・マイクロエレクトロニクスは、過去数年にHimaxへファウンドリ(受託製造)サービスを提供した",
+          "text_en": "UMC provided foundry services to Himax over the past few years.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -89,8 +89,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてグローバルファウンドリーズを挙げている",
-          "text_en": "The annual report lists GlobalFoundries among foundries that provided foundry services in the past few years",
+          "text": "グローバルファウンドリーズは、過去数年のHimaxのファウンドリ(受託製造)委託先だ",
+          "text_en": "GlobalFoundries has been one of Himax's foundries over the past few years.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -115,8 +115,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてVanguard International Semiconductorを挙げている",
-          "text_en": "The annual report lists Vanguard International Semiconductor among foundries that provided foundry services in the past few years",
+          "text": "Vanguard International Semiconductorは、過去数年にHimaxのファウンドリ(受託製造)を担った",
+          "text_en": "Vanguard International Semiconductor provided foundry services to Himax over the past few years.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -140,8 +140,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、過去数年にファウンドリ(受託製造)サービスを受けた先としてPowerchip Semiconductor Manufacturingを挙げている",
-          "text_en": "The annual report lists Powerchip Semiconductor Manufacturing among foundries that provided foundry services in the past few years",
+          "text": "Himaxは過去数年、Powerchip Semiconductor Manufacturingからファウンドリ(受託製造)サービスを受けた",
+          "text_en": "Himax has obtained foundry services from Powerchip Semiconductor Manufacturing over the past few years.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -165,8 +165,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、TABやCOGパッケージに特化した組立・テスト委託先としてChipMOS Technologiesを挙げている",
-          "text_en": "The annual report lists ChipMOS Technologies among assembly and testing houses specializing in TAB and COG packages",
+          "text": "ChipMOS Technologiesは、HimaxのTABやCOGパッケージ向け組立・テスト委託先である",
+          "text_en": "ChipMOS Technologies is an assembly and testing house Himax engages for TAB and COG packages.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -188,8 +188,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、TABやCOGパッケージに特化した組立・テスト委託先としてChipbond Technologyを挙げている",
-          "text_en": "The annual report lists Chipbond among assembly and testing houses specializing in TAB and COG packages",
+          "text": "Chipbond Technologyは、TABやCOGパッケージに特化したHimaxの組立・テスト委託先となる",
+          "text_en": "Chipbond Technology is an assembly and testing house Himax engages, specializing in TAB and COG packages.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -211,8 +211,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、TABやCOGパッケージに特化した組立・テスト委託先としてKing Yuan Electronicsを挙げている",
-          "text_en": "The annual report lists King Yuan Electronics among assembly and testing houses specializing in TAB and COG packages",
+          "text": "Himaxは、TABやCOGパッケージの組立・テストをKing Yuan Electronicsに委託する",
+          "text_en": "Himax engages King Yuan Electronics for assembly and testing of TAB and COG packages.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -234,8 +234,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "text": "Himaxと競合する",
+          "text_en": "Competes with Himax",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "text": "Himaxと競合する",
+          "text_en": "Competes with Himax",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -281,8 +281,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "text": "Himaxと競合する",
+          "text_en": "Competes with Himax",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -304,8 +304,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "text": "Himaxと競合する",
+          "text_en": "Competes with Himax",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -328,8 +328,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "text": "Himaxと競合する",
+          "text_en": "Competes with Himax",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -352,8 +352,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ハイマックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Himax Technologies’s annual report",
+          "text": "Himaxと競合する",
+          "text_en": "Competes with Himax",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",

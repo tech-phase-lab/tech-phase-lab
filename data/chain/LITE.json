@@ -102,8 +102,8 @@
         },
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、ネットワーク製品の競合としてLumentumを挙げている",
-          "text_en": "NVIDIA’s annual report lists Lumentum among competitors in networking products",
+          "text": "LumentumはNVIDIAのネットワーク製品の競合に数えられる",
+          "text_en": "Lumentum competes with NVIDIA in networking products.",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -137,8 +137,8 @@
         },
         {
           "type": "rival",
-          "text": "IPGが年次報告で、材料加工用レーザーの競合としてLumentumを挙げている",
-          "text_en": "IPG’s annual report lists Lumentum among laser makers it competes with in materials processing",
+          "text": "LumentumはIPGの材料加工用レーザー事業の競合メーカーだ",
+          "text_en": "Lumentum competes with IPG in materials-processing lasers.",
           "source": {
             "label": "IPG Photonics 10-K(2025年度)",
             "label_en": "IPG Photonics 10-K (FY2025)",
@@ -196,8 +196,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Applied Optoelectronicsが年次報告で、主な競合としてLumentumを挙げている",
-          "text_en": "Applied Optoelectronics’ annual report lists Lumentum among its major competitors",
+          "text": "Applied Optoelectronicsにとって、Lumentumは主な競合の一つだ",
+          "text_en": "Lumentum is one of Applied Optoelectronics' major competitors.",
           "source": {
             "label": "Applied Optoelectronics 10-K(2025年度)",
             "label_en": "Applied Optoelectronics 10-K (FY2025)",
@@ -219,8 +219,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSが年次報告で、レーザー製品の競合としてLumentumを挙げている",
-          "text_en": "MKS’s annual report lists Lumentum among companies whose products compete with its laser products",
+          "text": "MKSのレーザー製品と競合する製品を、Lumentumが提供する",
+          "text_en": "Lumentum offers products that compete with MKS's laser products.",
           "source": {
             "label": "MKS 10-K(2025年度)",
             "label_en": "MKS 10-K (FY2025)",

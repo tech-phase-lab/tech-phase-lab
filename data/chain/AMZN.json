@@ -54,8 +54,8 @@
         },
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、AI計算機能を自社基盤に組み込む企業の1社としてAmazonを挙げている",
-          "text_en": "NVIDIA’s annual report lists Amazon among companies incorporating AI computing hardware in their own platforms",
+          "text": "NVIDIAにとってAmazonは、AI計算機能を自社基盤に組み込む競合企業の1社だ",
+          "text_en": "Amazon is one of the companies that incorporate AI computing hardware in their own platforms and compete with NVIDIA",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -356,8 +356,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Netflixが年次報告で、計算処理の大半をAWSで動かしていると記載",
-          "text_en": "Netflix says it runs the vast majority of its computing on AWS",
+          "text": "Netflixは計算処理の大半をAWSで動かしている",
+          "text_en": "Netflix runs the vast majority of its computing on AWS",
           "source": {
             "label": "Netflix 10-K(2025年度)",
             "label_en": "Netflix 10-K (FY2025)",
@@ -379,8 +379,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Palantirが年次報告で、顧客向けの一部の処理をAWSなどの計算基盤に依存と記載",
-          "text_en": "Palantir says it depends on computing infrastructure operated by AWS and others for some customers",
+          "text": "Palantirは顧客向けの一部の処理を、AWSなどの計算基盤に頼る",
+          "text_en": "Palantir depends on computing infrastructure operated by AWS and others for some customers",
           "source": {
             "label": "Palantir 10-K(2025年度)",
             "label_en": "Palantir 10-K (FY2025)",
@@ -450,8 +450,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、直接競合する企業の1社としてAmazonを挙げている",
-          "text_en": "Oracle’s annual report says its offerings compete directly with offerings from companies including Amazon",
+          "text": "Oracleの一部の製品は、競合企業の1社であるAmazonと直接競合する",
+          "text_en": "Some of Oracle's offerings compete directly with Amazon",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -473,8 +473,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snowflakeが年次報告で、競合する大手クラウドの1社としてAWSを挙げている",
-          "text_en": "Snowflake’s annual report names AWS among large public cloud providers that compete with it",
+          "text": "AWSは大手クラウドの1社として、Snowflakeと競合する",
+          "text_en": "AWS, as a large public cloud provider, competes with Snowflake",
           "source": {
             "label": "Snowflake 10-K(2026年度)",
             "label_en": "Snowflake 10-K (FY2026)",
@@ -496,8 +496,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MongoDBが年次報告で、データベース機能で競合するクラウドの1社としてAWSを挙げている",
-          "text_en": "MongoDB’s annual report names AWS among public cloud providers that compete with it on database functionality",
+          "text": "AWSは、データベース機能を提供するクラウドの1社としてMongoDBと競合している",
+          "text_en": "AWS competes with MongoDB as a public cloud provider offering database functionality",
           "source": {
             "label": "MongoDB 10-K(2026年度)",
             "label_en": "MongoDB 10-K (FY2026)",
@@ -519,8 +519,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "eBayが年次報告で、競合する大手としてAmazonを挙げている",
-          "text_en": "eBay’s annual report names Amazon among larger competitors",
+          "text": "Amazonは、eBayより規模の大きい競合のひとつだ",
+          "text_en": "Amazon is one of eBay's competitors that are larger than eBay",
           "source": {
             "label": "eBay 10-K(2025年度)",
             "label_en": "eBay 10-K (FY2025)",
@@ -542,8 +542,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Costcoが年次報告で、米国の主な総合小売の競合としてAmazonを挙げている",
-          "text_en": "Costco’s annual report names Amazon among its significant general merchandise retail competitors in the U.S.",
+          "text": "Amazonは、Costcoの米国での主要な総合小売の競合に含まれる",
+          "text_en": "Amazon is one of Costco's significant general merchandise retail competitors in the U.S.",
           "source": {
             "label": "Costco 10-K(2026年度)",
             "label_en": "Costco 10-K (FY2026)",
@@ -565,8 +565,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Amazon・Best Buy・Walmart・Targetの4社でRokuの端末売上の81%を占める。RokuはAmazonをストリーミング端末の競合とも記載",
-          "text_en": "Amazon, Best Buy, Walmart and Target together accounted for 81% of Roku’s Devices revenue; Roku also names Amazon as a streaming-device competitor",
+          "text": "Amazon・Best Buy・Walmart・Targetの4社でRokuの端末売上の81%を占め、AmazonはRokuのストリーミング端末の競合でもある",
+          "text_en": "Amazon, Best Buy, Walmart and Target together account for 81% of Roku's Devices revenue; Amazon is also a streaming-device competitor of Roku",
           "source": {
             "label": "Roku 10-K(2025年度)",
             "label_en": "Roku 10-K (FY2025)",

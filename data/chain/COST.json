@@ -79,8 +79,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コストコの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Costco’s annual report",
+          "text": "Costcoと競合する",
+          "text_en": "Competes with Costco",
           "source": {
             "label": "Costco 10-K",
             "label_en": "Costco 10-K",
@@ -103,8 +103,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コストコの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Costco’s annual report",
+          "text": "Costcoと競合する",
+          "text_en": "Competes with Costco",
           "source": {
             "label": "Costco 10-K",
             "label_en": "Costco 10-K",

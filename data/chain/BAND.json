@@ -150,8 +150,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、OpenAIのRealtime interfaceなどの公開APIを使った会話型AI連携に触れている",
-          "text_en": "The annual report cites public APIs like OpenAI's Realtime interface for conversational AI integration",
+          "text": "Bandwidthは、OpenAIのRealtime interfaceなどの公開APIを通じて会話型AIをクラウド通信に連携できる",
+          "text_en": "Bandwidth integrates conversational AI into cloud communications through public APIs such as OpenAI's Realtime interface.",
           "source": {
             "label": "Bandwidth 10-K",
             "label_en": "Bandwidth 10-K",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "RingCentralの年次報告が、コンタクトセンターやSMSの提供にBandwidth.comの技術・連携を利用または提供していると記している",
-          "text_en": "RingCentral's annual report says it uses and/or provides Bandwidth.com technology and integrations for contact center and SMS solutions",
+          "text": "RingCentralは、コンタクトセンターやSMSの提供にBandwidth.comの技術・連携を利用または提供する",
+          "text_en": "RingCentral uses and/or provides Bandwidth.com technology and integrations for contact center and SMS solutions",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",

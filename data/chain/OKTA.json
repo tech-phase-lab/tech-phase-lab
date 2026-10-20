@@ -32,8 +32,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Okta Integration Networkの連携先にSalesforceが挙げられている",
-          "text_en": "Salesforce is listed among the Okta Integration Network integrations",
+          "text": "SalesforceはOkta Integration Networkの連携先だ",
+          "text_en": "Salesforce is one of the integrations in the Okta Integration Network",
           "source": {
             "label": "Okta 10-K",
             "label_en": "Okta 10-K",
@@ -56,8 +56,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Okta Integration Networkの連携先にMicrosoft 365が挙げられている",
-          "text_en": "Microsoft 365 is listed among the Okta Integration Network integrations",
+          "text": "Microsoft 365もOkta Integration Networkと連携できる",
+          "text_en": "Microsoft 365 is one of the integrations in the Okta Integration Network",
           "source": {
             "label": "Okta 10-K",
             "label_en": "Okta 10-K",
@@ -80,8 +80,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Okta Integration Networkの連携先にServiceNowが挙げられている",
-          "text_en": "ServiceNow is listed among the Okta Integration Network integrations",
+          "text": "ServiceNowはOkta Integration Networkに連携先として加わる",
+          "text_en": "ServiceNow is one of the integrations in the Okta Integration Network",
           "source": {
             "label": "Okta 10-K",
             "label_en": "Okta 10-K",
@@ -104,8 +104,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Okta Integration Networkの連携先にPalo Alto Networksが挙げられている",
-          "text_en": "Palo Alto Networks is listed among the Okta Integration Network integrations",
+          "text": "Palo Alto NetworksはOkta Integration Networkの連携先に入る",
+          "text_en": "Palo Alto Networks is one of the integrations in the Okta Integration Network",
           "source": {
             "label": "Okta 10-K",
             "label_en": "Okta 10-K",
@@ -128,8 +128,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxは、Oktaを販売・連携を行う技術パートナーの1社として挙げている",
-          "text_en": "Box names Okta among technology partners for marketing, reselling or integration",
+          "text": "Boxは、Oktaを連携先の1社として提供する",
+          "text_en": "Box offers integrations with Okta",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -165,8 +165,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Dropboxは、Oktaなどとの連携があると説明している",
-          "text_en": "Dropbox says it has integrations with vendors including Okta",
+          "text": "DropboxはOktaなどのベンダーとの連携を備える",
+          "text_en": "Dropbox has integrations with vendors including Okta",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -189,8 +189,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "AvePointは、Oktaを対応する認証基盤の1つとして挙げている",
-          "text_en": "AvePoint lists Okta among the identity platforms it covers",
+          "text": "AvePointは、対応する認証基盤の1つとしてOktaを備える",
+          "text_en": "AvePoint covers identity platforms including Okta",
           "source": {
             "label": "AvePoint 10-K",
             "label_en": "AvePoint 10-K",
@@ -213,8 +213,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Varonisは、保護対象のリソースにOktaを挙げている",
-          "text_en": "Varonis lists Okta among its protected resources",
+          "text": "Varonisの保護対象のリソースには、Oktaが含まれる",
+          "text_en": "Okta is among the resources Varonis protects",
           "source": {
             "label": "Varonis Systems 10-K",
             "label_en": "Varonis Systems 10-K",

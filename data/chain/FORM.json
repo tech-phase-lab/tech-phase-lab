@@ -225,8 +225,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォームファクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in FormFactor’s annual report",
+          "text": "FormFactorと競合する",
+          "text_en": "Competes with FormFactor",
           "source": {
             "label": "FormFactor 10-K",
             "label_en": "FormFactor 10-K",

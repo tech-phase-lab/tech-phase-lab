@@ -185,8 +185,8 @@
         },
         {
           "type": "rival",
-          "text": "ケイデンス・デザイン・システムズの年次報告が、セバを競合として挙げている",
-          "text_en": "Names CEVA as a competitor in its annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "Cadence Design Systems 10-K",
             "label_en": "Cadence Design Systems 10-K",
@@ -198,8 +198,8 @@
         },
         {
           "type": "rival",
-          "text": "セバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in CEVA’s annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -222,8 +222,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "セバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in CEVA’s annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -261,8 +261,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "セバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in CEVA’s annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -285,8 +285,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "セバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in CEVA’s annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -322,8 +322,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "セバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in CEVA’s annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -346,8 +346,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "セバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in CEVA’s annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -370,8 +370,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "セバの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in CEVA’s annual report",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",

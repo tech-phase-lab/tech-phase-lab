@@ -85,8 +85,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "LatticeのForm 10-Kが、ASEとAmkorを認定済みの主要な組立パートナー2社として挙げている",
-          "text_en": "Lattice's 10-K says it has qualified two major assembly partners, ASE and Amkor",
+          "text": "ASEとAmkorは、Lattice(Form 10-K)が認定済みの主要な組立パートナー2社に当たる",
+          "text_en": "Lattice has qualified ASE and Amkor as its two major assembly partners.",
           "source": {
             "label": "Lattice Semiconductor 10-K",
             "label_en": "Lattice Semiconductor 10-K",
@@ -194,8 +194,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "MaxLinearは、ASEを最大級の製造パートナー4社の1社に挙げている",
-          "text_en": "MaxLinear names ASE among four of its largest manufacturing partners",
+          "text": "ASEはMaxLinearの最大級の製造パートナー4社の1社に入る",
+          "text_en": "ASE is one of MaxLinear's four largest manufacturing partners.",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -242,8 +242,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ASEは、TSMCとの戦略的提携と地理的な近さにより、ファウンドリ・サービスを含む総合的な製造ソリューションを提供できると説明している",
-          "text_en": "ASE says its strategic alliance with and proximity to TSMC lets it offer a total semiconductor manufacturing solution that includes foundry services",
+          "text": "ASEはTSMCとの戦略的提携と地理的な近さを生かし、ファウンドリ・サービスを含む総合的な製造ソリューションを提供できる",
+          "text_en": "ASE's strategic alliance with and proximity to TSMC let it offer a total semiconductor manufacturing solution that includes foundry services.",
           "source": {
             "label": "ASE Technology Holding 20-F",
             "label_en": "ASE Technology Holding 20-F",
@@ -401,8 +401,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アムコー・テクノロジーの年次報告が、ASEテクノロジーを競合として挙げている",
-          "text_en": "Names ASE Technology as a competitor in its annual report",
+          "text": "ASE Technology Holdingと競合する",
+          "text_en": "Competes with ASE Technology Holding",
           "source": {
             "label": "Amkor Technology 10-K",
             "label_en": "Amkor Technology 10-K",

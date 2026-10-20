@@ -62,8 +62,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マコム・テクノロジー・ソリューションズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MACOM’s annual report",
+          "text": "マコム・テクノロジー・ソリューションズと競合する",
+          "text_en": "Competes with MACOM Technology Solutions",
           "source": {
             "label": "MACOM Technology Solutions 10-K",
             "label_en": "MACOM Technology Solutions 10-K",
@@ -86,8 +86,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マコム・テクノロジー・ソリューションズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MACOM’s annual report",
+          "text": "マコム・テクノロジー・ソリューションズと競合する",
+          "text_en": "Competes with MACOM Technology Solutions",
           "source": {
             "label": "MACOM Technology Solutions 10-K",
             "label_en": "MACOM Technology Solutions 10-K",
@@ -110,8 +110,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、マコム・テクノロジー・ソリューションズを競合として挙げている",
-          "text_en": "Names MACOM as a competitor in its annual report",
+          "text": "マコム・テクノロジー・ソリューションズと競合する",
+          "text_en": "Competes with MACOM Technology Solutions",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -134,8 +134,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "MACOMは、IQEを重要な供給元だと述べている",
-          "text_en": "MACOM calls IQE an important supplier",
+          "text": "IQEはMACOMにとって重要な供給元だ",
+          "text_en": "IQE is an important supplier to MACOM.",
           "source": {
             "label": "MACOM の発表",
             "label_en": "MACOM press release",

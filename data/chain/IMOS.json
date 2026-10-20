@@ -57,8 +57,8 @@
         },
         {
           "type": "up",
-          "text": "機械設備と付属品の取得の取引相手に、アドバンテストの台湾法人が挙げられている",
-          "text_en": "Advantest Taiwan Inc. is named as the trading counterparty for the acquisition of machinery equipment and related accessories",
+          "text": "機械設備と付属品の取得の取引相手は、アドバンテストの台湾法人だ",
+          "text_en": "The counterparty to the acquisition of machinery equipment and related accessories is Advantest Taiwan Inc.",
           "source": {
             "label": "ChipMOS Form 6-K",
             "label_en": "ChipMOS Form 6-K (Taiwan Stock Exchange filing)",
@@ -107,8 +107,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "ChipMOSが、建物と付帯設備を取得する取引の相手方として群創光電を挙げている",
-          "text_en": "ChipMOS's filing names Innolux as the trading counterparty in its acquisition of building and facilities",
+          "text": "ChipMOSが建物と付帯設備を取得する取引の相手方は、群創光電である",
+          "text_en": "INNOLUX is the counterparty to ChipMOS's acquisition of a building and related facilities.",
           "source": {
             "label": "ChipMOS Form 6-K",
             "label_en": "ChipMOS Form 6-K (Taiwan Stock Exchange filing)",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Himaxの年次報告が、TABやCOGパッケージの組立・テスト委託先としてChipMOSを挙げている",
-          "text_en": "Himax's annual report lists ChipMOS among assembly and testing houses specializing in TAB and COG packages",
+          "text": "ChipMOSは、HimaxのTABやCOGパッケージの組立・テスト委託先に当たる",
+          "text_en": "ChipMOS is an assembly and testing house Himax engages for TAB and COG packages.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",

@@ -61,8 +61,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2020年第3四半期の新規顧客ブランドとしてSonyが挙げられている",
-          "text_en": "Sony is named among new customer brands in the third quarter of 2020",
+          "text": "2020年第3四半期、Sonyは新規顧客ブランドとして加わった",
+          "text_en": "Sony joined as a new customer brand in the third quarter of 2020",
           "source": {
             "label": "Sprout Social 8-K Ex.99 の発表",
             "label_en": "Sprout Social 8-K Ex.99 press release",
@@ -137,8 +137,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "HubSpotとの既存の連携を強化したと述べている",
-          "text_en": "Enhanced existing integrations with HubSpot",
+          "text": "Sprout Socialは、HubSpotとの既存の連携を強化した",
+          "text_en": "Sprout Social enhanced its existing integrations with HubSpot.",
           "source": {
             "label": "Sprout Social 8-K Ex.99 の発表",
             "label_en": "Sprout Social 8-K Ex.99 press release",
@@ -162,8 +162,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "FacebookやInstagramなどの主要SNSと戦略的な関係を築いていると述べている",
-          "text_en": "Says it has cultivated strong, strategic relationships with leading social networks including Facebook and Instagram",
+          "text": "Sprout Socialは、FacebookやInstagramなどの主要SNSと戦略的な関係を築いている",
+          "text_en": "Sprout Social has cultivated strong, strategic relationships with leading social networks including Facebook and Instagram.",
           "source": {
             "label": "Sprout Social 10-K",
             "label_en": "Sprout Social 10-K",
@@ -187,8 +187,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Pinterestなどの主要SNSと戦略的な関係を築いていると述べている",
-          "text_en": "Says it has cultivated strong, strategic relationships with leading social networks including Pinterest",
+          "text": "Sprout Socialは、Pinterestを含む主要SNSと戦略的な関係を結ぶ",
+          "text_en": "Sprout Social has cultivated strong, strategic relationships with leading social networks including Pinterest.",
           "source": {
             "label": "Sprout Social 10-K",
             "label_en": "Sprout Social 10-K",
@@ -212,8 +212,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Redditなどの主要SNSと戦略的な関係を築いていると述べている",
-          "text_en": "Says it has cultivated strong, strategic relationships with leading social networks including Reddit",
+          "text": "主要SNSのRedditは、Sprout Socialと戦略的な関係にある",
+          "text_en": "Reddit is one of the leading social networks with which Sprout Social has cultivated strong, strategic relationships.",
           "source": {
             "label": "Sprout Social 10-K",
             "label_en": "Sprout Social 10-K",
@@ -237,8 +237,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Sprout Socialの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Sprout Social’s annual report",
+          "text": "スプラウト・ソーシャルと競合する",
+          "text_en": "Competes with Sprout Social",
           "source": {
             "label": "Sprout Social 10-K",
             "label_en": "Sprout Social 10-K",

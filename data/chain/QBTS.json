@@ -91,8 +91,8 @@
         },
         {
           "type": "down",
-          "text": "60社以上の商用顧客の例にLockheed Martinが挙げられている",
-          "text_en": "Lockheed Martin is named among its 60+ commercial customers",
+          "text": "Lockheed Martinは60社以上の商用顧客の一社だ",
+          "text_en": "Lockheed Martin is one of D-Wave's 60+ commercial customers",
           "source": {
             "label": "D-Wave Quantum 8-K Ex.99 の発表",
             "label_en": "D-Wave Quantum 8-K Ex.99 press release",
@@ -116,8 +116,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にMastercardが挙げられている",
-          "text_en": "Mastercard is named among D-Wave's customers",
+          "text": "Mastercardはこれまでの顧客に含まれる",
+          "text_en": "Mastercard is one of D-Wave's customers",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",
@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にPfizerが挙げられている",
-          "text_en": "Pfizer is named among D-Wave's customers",
+          "text": "Pfizerも同社の顧客に名を連ねる",
+          "text_en": "Pfizer is one of D-Wave's customers",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",
@@ -162,8 +162,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告の顧客例にBASFが挙げられている",
-          "text_en": "BASF is named among D-Wave's customers",
+          "text": "BASFは顧客の一つとなっている",
+          "text_en": "BASF is one of D-Wave's customers",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",
@@ -185,8 +185,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "60社以上の商用顧客の例にSiemensが挙げられている",
-          "text_en": "Siemens is named among its 60+ commercial customers",
+          "text": "Siemensは60社以上の商用顧客の一角を占めた",
+          "text_en": "Siemens is one of D-Wave's 60+ commercial customers",
           "source": {
             "label": "D-Wave Quantum 8-K Ex.99 の発表",
             "label_en": "D-Wave Quantum 8-K Ex.99 press release",
@@ -211,8 +211,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "クアンタム・コンピューティングの年次報告が、ディーウェイブ・クアンタムを競合として挙げている",
-          "text_en": "Names D-Wave Quantum as a competitor in its annual report",
+          "text": "ディーウェイブ・クアンタムと競合する",
+          "text_en": "Competes with D-Wave Quantum",
           "source": {
             "label": "Quantum Computing Inc. 10-K",
             "label_en": "Quantum Computing Inc. 10-K",
@@ -235,8 +235,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として、Googleなどの大手テック企業を挙げている",
-          "text_en": "Names large tech companies including Google as competitors",
+          "text": "Googleなどの大手テック企業が、競合の筆頭格だ",
+          "text_en": "Large tech companies including Google are among its competitors.",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として、IBMなどの大手テック企業を挙げている",
-          "text_en": "Names large tech companies including IBM as competitors",
+          "text": "IBMなどの大手テック企業と競合する",
+          "text_en": "Large tech companies including IBM compete with it.",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",
@@ -281,8 +281,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として、Microsoftなどの大手テック企業を挙げている",
-          "text_en": "Names large tech companies including Microsoft as competitors",
+          "text": "Microsoftなどの大手テック企業は、競合に当たる",
+          "text_en": "Large tech companies including Microsoft compete with it.",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",
@@ -304,8 +304,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として、Intelなどの大手テック企業を挙げている",
-          "text_en": "Names large tech companies including Intel as competitors",
+          "text": "Intelなどの大手テック企業が、競合に含まれる",
+          "text_en": "Large tech companies including Intel compete with it.",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",

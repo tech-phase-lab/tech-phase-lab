@@ -34,8 +34,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "1962年にADPが最初のIBM製コンピューターをリースしたと記している",
-          "text_en": "ADP's timeline notes it leased its first IBM computers in 1962",
+          "text": "ADPは1962年に、最初のIBM製コンピューターをリースした",
+          "text_en": "ADP leased its first IBM computers in 1962",
           "source": {
             "label": "Automatic Data Processing 8-K Ex.99 の発表",
             "label_en": "Automatic Data Processing 8-K Ex.99 press release",
@@ -82,8 +82,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Workdayの年次報告が、ADPを含む給与処理会社との世界的な提携に触れている",
-          "text_en": "Workday's annual report cites its global partnerships with payroll providers, including Automatic Data Processing",
+          "text": "Workdayは、ADPを含む給与処理会社と世界的に提携している",
+          "text_en": "Workday has global partnerships with payroll providers, including Automatic Data Processing",
           "source": {
             "label": "Workday 10-K",
             "label_en": "Workday 10-K",
@@ -145,8 +145,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペイコム・ソフトウェアの年次報告が、オートマティック・データ・プロセッシングを競合として挙げている",
-          "text_en": "Names Automatic Data Processing as a competitor in its annual report",
+          "text": "Automatic Data Processingと競合する",
+          "text_en": "Competes with Automatic Data Processing",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -169,8 +169,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペイロシティの年次報告が、オートマティック・データ・プロセッシングを競合として挙げている",
-          "text_en": "Names Automatic Data Processing as a competitor in its annual report",
+          "text": "Automatic Data Processingと競合する",
+          "text_en": "Competes with Automatic Data Processing",
           "source": {
             "label": "Paylocity 10-K",
             "label_en": "Paylocity 10-K",

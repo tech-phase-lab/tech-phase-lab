@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Towerは設計自動化の提供企業の1社としてKeysightと協業していると説明している",
-          "text_en": "Tower says it collaborates with design automation providers including Keysight Technologies",
+          "text": "Towerは設計自動化の提供企業の1社であるKeysightと協業する",
+          "text_en": "Tower collaborates with design automation providers including Keysight Technologies.",
           "source": {
             "label": "Tower Semiconductor 20-F",
             "label_en": "Tower Semiconductor 20-F",
@@ -157,8 +157,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ケイデンス・デザイン・システムズの年次報告が、キーサイト・テクノロジーを競合として挙げている",
-          "text_en": "Names Keysight as a competitor in its annual report",
+          "text": "Keysight Technologiesと競合する",
+          "text_en": "Competes with Keysight Technologies",
           "source": {
             "label": "Cadence Design Systems 10-K",
             "label_en": "Cadence Design Systems 10-K",
@@ -181,8 +181,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アリスタネットワークスの年次報告が、キーサイト・テクノロジーを競合として挙げている",
-          "text_en": "Names Keysight as a competitor in its annual report",
+          "text": "Keysight Technologiesと競合する",
+          "text_en": "Competes with Keysight Technologies",
           "source": {
             "label": "Arista Networks 10-K",
             "label_en": "Arista Networks 10-K",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テラダインの年次報告が、キーサイト・テクノロジーを競合として挙げている",
-          "text_en": "Names Keysight as a competitor in its annual report",
+          "text": "Keysight Technologiesと競合する",
+          "text_en": "Competes with Keysight Technologies",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",

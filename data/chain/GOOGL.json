@@ -119,8 +119,8 @@
         },
         {
           "type": "down",
-          "text": "Appleが年次報告で、Apple製品でGoogle検索を提供するライセンスの収入を得ていると記載",
-          "text_en": "Apple’s annual report says it earns revenue from licensing arrangements with Google to offer Google search on Apple platforms",
+          "text": "AppleはApple製品でのGoogle検索の提供に対するライセンス収入を得ている",
+          "text_en": "Apple earns revenue from licensing arrangements with Google to offer Google search on Apple platforms",
           "source": {
             "label": "Apple 10-K(2025年度)",
             "label_en": "Apple 10-K (FY2025)",
@@ -194,8 +194,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Kyndrylが年次報告で、共同ソリューション開発の主要な提携先としてGoogle Cloudを挙げている",
-          "text_en": "Kyndryl’s annual report lists Google Cloud among its key alliance partners",
+          "text": "Kyndrylは、共同ソリューション開発の主要な提携先にGoogle Cloudを置く",
+          "text_en": "Google Cloud is one of Kyndryl's key alliance partners.",
           "source": {
             "label": "Kyndryl 10-K(2026年度)",
             "label_en": "Kyndryl 10-K (FY2026)",
@@ -217,8 +217,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ServiceNowが年次報告で、AI強化のために関係を広げた技術提供企業の1社としてGoogleを挙げている",
-          "text_en": "ServiceNow’s annual report says it expanded relationships with technology providers including Google",
+          "text": "ServiceNowは、AI強化のため関係を広げた技術提供企業の1社として、Googleと組む",
+          "text_en": "ServiceNow expanded its relationship with Google to strengthen its AI capabilities.",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -290,8 +290,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Snapが年次報告で、計算処理の大半をGoogle CloudとAWSで動かしていると記載",
-          "text_en": "Snap says it runs the vast majority of its computing on Google Cloud and AWS",
+          "text": "Snapは計算処理の大半をGoogle CloudとAWSで動かしている",
+          "text_en": "Snap runs the vast majority of its computing on Google Cloud and AWS",
           "source": {
             "label": "Snap 10-K(2025年度)",
             "label_en": "Snap 10-K (FY2025)",
@@ -305,8 +305,8 @@
         },
         {
           "type": "rival",
-          "text": "Snapが年次報告で、競合する企業の1社としてAlphabet(GoogleとYouTube)を挙げている",
-          "text_en": "Snap’s annual report names Alphabet (including Google and YouTube) among companies it competes with",
+          "text": "Alphabet(GoogleとYouTube)は、Snapが競合する企業の1社だ",
+          "text_en": "Alphabet (including Google and YouTube) competes with Snap.",
           "source": {
             "label": "Snap 10-K(2025年度)",
             "label_en": "Snap 10-K (FY2025)",
@@ -328,8 +328,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Snowflakeが年次報告で、基盤をAWS・Azure・Google Cloudで運用していると記載",
-          "text_en": "Snowflake says its platform operates on public cloud infrastructure from AWS, Azure and Google Cloud",
+          "text": "Snowflakeの基盤はAWS・Azure・Google Cloudで稼働する",
+          "text_en": "Snowflake's platform operates on public cloud infrastructure from AWS, Azure and Google Cloud",
           "source": {
             "label": "Snowflake 10-K(2026年度)",
             "label_en": "Snowflake 10-K (FY2026)",
@@ -353,8 +353,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、AI計算機能を自社設計に組み込む企業の1社としてAlphabetを挙げている",
-          "text_en": "NVIDIA’s annual report names Alphabet among companies designing hardware and software with AI computing functionality",
+          "text": "Alphabetは、AI計算機能を自社設計に組み込む企業の1社として、NVIDIAと競合する",
+          "text_en": "Alphabet competes with NVIDIA by designing hardware and software with AI computing functionality.",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -376,8 +376,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、クラウドで直接競合する大手としてAlphabetを挙げている",
-          "text_en": "Oracle’s annual report names Alphabet among the largest companies whose offerings compete directly with its cloud offerings",
+          "text": "Alphabetは、Oracleのクラウドと直接競合する大手の一社である",
+          "text_en": "Alphabet is one of the largest companies whose offerings compete directly with Oracle's cloud offerings.",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -399,8 +399,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IBMが年次報告で、ソフトウェア事業の主要な競合としてAlphabet(Google)を挙げている",
-          "text_en": "IBM’s annual report lists Alphabet (Google) among principal competitors in its software segment",
+          "text": "Alphabet(Google)は、IBMのソフトウェア事業における主要な競合だ",
+          "text_en": "Alphabet (Google) is a principal competitor of IBM in its software segment.",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -422,8 +422,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、主な競合としてAlphabetを挙げている",
-          "text_en": "Palo Alto Networks’ annual report names Alphabet among its main competitors",
+          "text": "AlphabetはPalo Alto Networksの主な競合の一つとなる",
+          "text_en": "Alphabet is one of Palo Alto Networks' main competitors.",
           "source": {
             "label": "Palo Alto Networks 10-K(2026年度)",
             "label_en": "Palo Alto Networks 10-K (FY2026)",
@@ -445,8 +445,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pinterestが年次報告で、競合としてGoogle(Gemini・Lens・YouTubeを含む)を挙げている",
-          "text_en": "Pinterest’s annual report names Google (including Gemini, Lens and YouTube) among its competitors",
+          "text": "Google(Gemini・Lens・YouTubeを含む)は、Pinterestと競合する立場にある",
+          "text_en": "Google (including Gemini, Lens and YouTube) competes with Pinterest.",
           "source": {
             "label": "Pinterest 10-K(2025年度)",
             "label_en": "Pinterest 10-K (FY2025)",
@@ -468,8 +468,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Spotifyが年次報告で、競合として機器に自社サービスを事前搭載する企業の1社にAlphabetを挙げている",
-          "text_en": "Spotify’s annual report names Alphabet among competitors with devices that preload competing audio services",
+          "text": "Alphabetは、音声配信サービスを機器に事前搭載してSpotifyと競う1社だ",
+          "text_en": "Alphabet is a Spotify competitor that preloads its own audio services on devices.",
           "source": {
             "label": "Spotify 20-F(2025年度)",
             "label_en": "Spotify 20-F (FY2025)",
@@ -491,8 +491,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Redditが年次報告で、ユーザーを奪い合う競合としてGoogle(YouTube・検索・マップなど)を挙げている",
-          "text_en": "Reddit’s annual report names Google among companies it competes against for users",
+          "text": "Google(YouTube・検索・マップなど)は、Redditとユーザーを奪い合う",
+          "text_en": "Google (including YouTube, Search, Maps, and Shopping) competes with Reddit for users.",
           "source": {
             "label": "Reddit 10-K(2025年度)",
             "label_en": "Reddit 10-K (FY2025)",
@@ -514,8 +514,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Yelpが年次報告で、検索・ディレクトリの主な競合としてGoogleを挙げている",
-          "text_en": "Yelp’s annual report calls Google its primary competitor among online search engines and directories",
+          "text": "Googleは、Yelpにとって検索・ディレクトリ分野で最大の競合である",
+          "text_en": "Google is Yelp's primary competitor among online search engines and directories.",
           "source": {
             "label": "Yelp 10-K(2025年度)",
             "label_en": "Yelp 10-K (FY2025)",
@@ -537,8 +537,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "The Trade Deskが年次報告で、競合として、また広告枠の大手供給元としてGoogleを挙げている",
-          "text_en": "The Trade Desk’s annual report names Google as a competitor and also as one of its largest ad inventory suppliers",
+          "text": "Googleは、The Trade Deskの競合であり、広告枠の大手供給元でもある",
+          "text_en": "Google is both a competitor of The Trade Desk and one of its largest advertising inventory suppliers.",
           "source": {
             "label": "Trade Desk 10-K(2025年度)",
             "label_en": "Trade Desk 10-K (FY2025)",
@@ -560,8 +560,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Avisが、Waymo(Alphabet傘下)との自動運転の提携が6月1日にダラスで始まったと説明",
-          "text_en": "Avis states its autonomous vehicle partnership with Waymo (Alphabet subsidiary) went live in Dallas on June 1",
+          "text": "AvisとWaymo(Alphabet傘下)の自動運転の提携は、6月1日にダラスで始まった",
+          "text_en": "Avis's autonomous vehicle partnership with Waymo (Alphabet subsidiary) went live in Dallas on June 1",
           "source": {
             "label": "Avis Budget 決算発表(8-K、2026年第2四半期)",
             "label_en": "Avis Budget Q2 2026 earnings release (8-K)",

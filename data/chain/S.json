@@ -22,8 +22,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "SentinelOneの年次報告が、顧客はAmazon S3とNetApp上の悪意あるファイルから保護されると記載している",
-          "text_en": "SentinelOne's 10-K says customers receive protection from malicious files in Amazon S3 and NetApp",
+          "text": "SentinelOneの顧客は、Amazon S3とNetApp上の悪意あるファイルから保護される",
+          "text_en": "SentinelOne protects customers from malicious files in Amazon S3 and NetApp.",
           "source": {
             "label": "SentinelOne 10-K",
             "label_en": "SentinelOne 10-K",

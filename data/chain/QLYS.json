@@ -211,8 +211,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テナブルの年次報告が、クオリスを競合として挙げている",
-          "text_en": "Names Qualys as a competitor in its annual report",
+          "text": "クオリスと競合する",
+          "text_en": "Competes with Qualys",
           "source": {
             "label": "Tenable 10-K",
             "label_en": "Tenable 10-K",
@@ -224,8 +224,8 @@
         },
         {
           "type": "rival",
-          "text": "競合として、Tenable Holdingsを挙げている",
-          "text_en": "Names Tenable Holdings among its competitors",
+          "text": "Qualysは、Tenable Holdingsと競合する",
+          "text_en": "Qualys competes with Tenable Holdings.",
           "source": {
             "label": "Qualys 10-K",
             "label_en": "Qualys 10-K",
@@ -248,8 +248,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として、CrowdStrikeを挙げている",
-          "text_en": "Names CrowdStrike among its competitors",
+          "text": "CrowdStrikeは、Qualysの競合に当たる",
+          "text_en": "CrowdStrike is a competitor of Qualys.",
           "source": {
             "label": "Qualys 10-K",
             "label_en": "Qualys 10-K",
@@ -272,8 +272,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として、Palo Alto Networksを挙げている",
-          "text_en": "Names Palo Alto Networks among its competitors",
+          "text": "Palo Alto Networksは、Qualysの競合だ",
+          "text_en": "Palo Alto Networks is a competitor of Qualys.",
           "source": {
             "label": "Qualys 10-K",
             "label_en": "Qualys 10-K",
@@ -296,8 +296,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として、Rapid7を挙げている",
-          "text_en": "Names Rapid7 among its competitors",
+          "text": "Rapid7は、Qualysの競合相手だ",
+          "text_en": "Rapid7 is a competitor of Qualys.",
           "source": {
             "label": "Qualys 10-K",
             "label_en": "Qualys 10-K",

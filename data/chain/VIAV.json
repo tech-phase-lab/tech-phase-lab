@@ -33,8 +33,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例にAdvanced Micro Devicesが挙げられている",
-          "text_en": "Advanced Micro Devices is named among example customers",
+          "text": "Advanced Micro Devicesはヴィアヴィ・ソリューションズの顧客だ",
+          "text_en": "Advanced Micro Devices is one of Viavi's customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -58,8 +58,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例にCisco Systemsが挙げられている",
-          "text_en": "Cisco Systems is named among example customers",
+          "text": "Cisco Systemsは同社の顧客に含まれる",
+          "text_en": "Cisco Systems is one of Viavi's customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -83,8 +83,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例にCienaが挙げられている",
-          "text_en": "Ciena is named among example customers",
+          "text": "Cienaは顧客の一つとなっている",
+          "text_en": "Ciena is one of Viavi's customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -108,8 +108,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例にAT&Tが挙げられている",
-          "text_en": "AT&T is named among example customers",
+          "text": "AT&Tは顧客の例に入る",
+          "text_en": "AT&T is one of Viavi's customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例にVerizon Communicationsが挙げられている",
-          "text_en": "Verizon Communications is named among example customers",
+          "text": "Verizon Communicationsは顧客の一角を占める",
+          "text_en": "Verizon Communications is one of Viavi's customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -158,8 +158,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例にNokiaが挙げられている",
-          "text_en": "Nokia is named among example customers",
+          "text": "Nokiaは同社の顧客の一社だ",
+          "text_en": "Nokia is one of Viavi's customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -183,8 +183,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例にEricssonが挙げられている",
-          "text_en": "Ericsson is named among example customers",
+          "text": "Ericssonが顧客の一社に名を連ねる",
+          "text_en": "Ericsson is one of Viavi's customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -208,8 +208,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "光学セキュリティ製品(OSP)の顧客にLockheed Martinが挙げられている",
-          "text_en": "Lockheed Martin is named among OSP customers",
+          "text": "光学セキュリティ製品(OSP)の顧客にLockheed Martinがいる",
+          "text_en": "Lockheed Martin is one of Viavi's OSP customers",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -377,8 +377,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヴィアヴィ・ソリューションズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Viavi’s annual report",
+          "text": "ヴィアヴィ・ソリューションズと競合する",
+          "text_en": "Competes with Viavi Solutions",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",

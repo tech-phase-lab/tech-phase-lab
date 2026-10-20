@@ -75,8 +75,8 @@
         },
         {
           "type": "rival",
-          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてKioxiaを挙げている",
-          "text_en": "Sandisk’s annual report names Kioxia among the vertically integrated flash suppliers it competes with",
+          "text": "Sandiskは、垂直統合型のフラッシュメーカーKioxiaと競合する",
+          "text_en": "Sandisk competes with vertically integrated flash maker Kioxia.",
           "source": {
             "label": "Sandisk 10-K(2026年度)",
             "label_en": "Sandisk 10-K (FY2026)",
@@ -225,8 +225,8 @@
         },
         {
           "type": "rival",
-          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてSK hynixを挙げている",
-          "text_en": "Sandisk’s annual report names SK hynix among the vertically integrated flash suppliers it competes with",
+          "text": "垂直統合型のフラッシュメーカーSK hynixが、Sandiskの競合先だ",
+          "text_en": "SK hynix is a vertically integrated flash maker that competes with Sandisk.",
           "source": {
             "label": "Sandisk 10-K(2026年度)",
             "label_en": "Sandisk 10-K (FY2026)",
@@ -248,8 +248,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてMicronを挙げている",
-          "text_en": "Sandisk’s annual report names Micron among its vertically integrated flash competitors",
+          "text": "Sandiskは、垂直統合型のMicronともフラッシュ市場で競り合う",
+          "text_en": "Sandisk also competes in flash with the vertically integrated Micron.",
           "source": {
             "label": "Sandisk 10-K(2026年度)",
             "label_en": "Sandisk 10-K (FY2026)",
@@ -261,8 +261,8 @@
         },
         {
           "type": "rival",
-          "text": "Micronが年次報告で、競合としてSandiskを挙げている",
-          "text_en": "Micron’s annual report lists Sandisk among its memory and storage competitors",
+          "text": "Sandiskは、Micronにとってメモリーとストレージの競合先になる",
+          "text_en": "Sandisk is one of Micron's memory and storage competitors.",
           "source": {
             "label": "Micron 10-K(2026年度)",
             "label_en": "Micron 10-K (FY2026)",
@@ -284,8 +284,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてSamsung Electronicsを挙げている",
-          "text_en": "Sandisk’s annual report names Samsung Electronics among the vertically integrated flash suppliers it competes with",
+          "text": "Samsung Electronicsは、垂直統合型のフラッシュメーカーとしてSandiskと競合する",
+          "text_en": "Samsung Electronics competes with Sandisk as a vertically integrated flash maker.",
           "source": {
             "label": "Sandisk 10-K(2026年度)",
             "label_en": "Sandisk 10-K (FY2026)",

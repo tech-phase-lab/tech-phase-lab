@@ -105,8 +105,8 @@
         },
         {
           "type": "up",
-          "text": "Rocket Labは、BlackSkyを最も古くから続く商業衛星顧客の1社と述べている",
-          "text_en": "Rocket Lab calls BlackSky one of its earliest and longest-standing commercial satellite customers",
+          "text": "BlackSkyは、Rocket Labにとって最初期から取引が続く商業衛星顧客の1社になる",
+          "text_en": "BlackSky is one of Rocket Lab's earliest and longest-standing commercial satellite customers.",
           "source": {
             "label": "BKSY / Rocket Lab — official relationship source; checked October 17, 2026",
             "label_en": "BKSY / Rocket Lab — official relationship source; checked October 17, 2026",
@@ -301,8 +301,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Planet Labsの年次報告が、ブラックスカイを競合として挙げている",
-          "text_en": "Names BlackSky as a competitor in its annual report",
+          "text": "BlackSkyと競合する",
+          "text_en": "Competes with BlackSky",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",

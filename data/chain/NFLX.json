@@ -226,8 +226,8 @@
         },
         {
           "type": "rival",
-          "text": "AMC Networksの年次報告が、競合する配信サービスとしてNetflixを挙げている",
-          "text_en": "AMC Networks’ annual report names Netflix among competing subscription streaming services",
+          "text": "Netflixは、AMC Networksと競合する定額制配信サービスだ",
+          "text_en": "Netflix is one of the subscription streaming services that compete with AMC Networks",
           "source": {
             "label": "AMC Networks 10-K(2025年度)",
             "label_en": "AMC Networks 10-K (FY2025)",
@@ -262,8 +262,8 @@
         },
         {
           "type": "rival",
-          "text": "Foxの年次報告が、競合する配信サービスとしてNetflixを挙げている",
-          "text_en": "Fox’s annual report names Netflix among competing streaming services",
+          "text": "NetflixはFoxと競合する配信サービスに含まれる",
+          "text_en": "Netflix is one of the streaming services that compete with Fox",
           "source": {
             "label": "Fox Corp 10-K(2026年度)",
             "label_en": "Fox Corp 10-K (FY2026)",
@@ -298,8 +298,8 @@
         },
         {
           "type": "tie",
-          "text": "TKOの年次報告が、Netflixを配信先・放映権の提携先として記載",
-          "text_en": "TKO’s annual report lists Netflix among its distributors and rights partners",
+          "text": "NetflixはTKOの配信先であり、放映権の提携先でもある",
+          "text_en": "Netflix is one of TKO's distributors and rights partners",
           "source": {
             "label": "TKO Group 10-K(2025年度)",
             "label_en": "TKO Group 10-K (FY2025)",
@@ -321,8 +321,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rokuの年次報告が、Netflixを主要なコンテンツパートナーとして記載",
-          "text_en": "Roku’s annual report calls Netflix one of its leading content partners",
+          "text": "NetflixはRokuの主要なコンテンツパートナーだ",
+          "text_en": "Netflix is one of Roku's leading content partners",
           "source": {
             "label": "Roku 10-K(2025年度)",
             "label_en": "Roku 10-K (FY2025)",
@@ -344,8 +344,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Comcastの年次報告が、競合する配信サービスとしてNetflixを挙げている",
-          "text_en": "Comcast’s annual report names Netflix among competing streaming services",
+          "text": "Netflixは、Comcastと競合する配信サービスの一角を占める",
+          "text_en": "Netflix is one of the streaming services that compete with Comcast",
           "source": {
             "label": "Comcast 10-K(2025年度)",
             "label_en": "Comcast 10-K (FY2025)",
@@ -367,8 +367,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Charterの年次報告が、競合する配信サービスとしてNetflixを挙げている",
-          "text_en": "Charter’s annual report lists Netflix among competing SVOD services",
+          "text": "NetflixはCharterのSVODサービスにとって競合だ",
+          "text_en": "Netflix is one of the SVOD services that compete with Charter",
           "source": {
             "label": "Charter 10-K(2025年度)",
             "label_en": "Charter 10-K (FY2025)",
@@ -390,8 +390,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Robloxの年次報告が、ユーザーを奪い合う相手としてNetflixを挙げている",
-          "text_en": "Roblox’s annual report lists Netflix among platforms it competes with for users",
+          "text": "RobloxとNetflixは、ユーザーの獲得を巡り争う",
+          "text_en": "Roblox and Netflix compete for users",
           "source": {
             "label": "Roblox 10-K(2025年度)",
             "label_en": "Roblox 10-K (FY2025)",

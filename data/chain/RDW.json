@@ -171,8 +171,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エアロバイロメントの年次報告が、レッドワイヤーを競合として挙げている",
-          "text_en": "Names Redwire as a competitor in its annual report",
+          "text": "レッドワイヤーと競合する",
+          "text_en": "Competes with Redwire",
           "source": {
             "label": "AeroVironment 10-K",
             "label_en": "AeroVironment 10-K",
@@ -195,8 +195,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "レッドワイヤーの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Redwire’s annual report",
+          "text": "レッドワイヤーと競合する",
+          "text_en": "Competes with Redwire",
           "source": {
             "label": "Redwire 10-K",
             "label_en": "Redwire 10-K",
@@ -208,8 +208,8 @@
         },
         {
           "type": "rival",
-          "text": "ロケット・ラボの年次報告が、レッドワイヤーを競合として挙げている",
-          "text_en": "Names Redwire as a competitor in its annual report",
+          "text": "レッドワイヤーと競合する",
+          "text_en": "Competes with Redwire",
           "source": {
             "label": "Rocket Lab 10-K",
             "label_en": "Rocket Lab 10-K",
@@ -232,8 +232,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "レッドワイヤーの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Redwire’s annual report",
+          "text": "レッドワイヤーと競合する",
+          "text_en": "Competes with Redwire",
           "source": {
             "label": "Redwire 10-K",
             "label_en": "Redwire 10-K",

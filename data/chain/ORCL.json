@@ -80,8 +80,8 @@
         },
         {
           "type": "down",
-          "text": "2026年度第2四半期の契約残高(RPO)を押し上げた新規契約の例としてNVIDIAを挙げている",
-          "text_en": "Cited NVIDIA among new commitments lifting RPO in Q2 FY26",
+          "text": "2026年度第2四半期の契約残高(RPO)は、NVIDIAなどの新規契約で押し上げられた",
+          "text_en": "New commitments from NVIDIA and others lifted Oracle's RPO in Q2 FY26",
           "source": {
             "label": "Oracle 8-K Ex.99.1",
             "label_en": "Oracle 8-K Ex.99.1 (Q2 FY26 results)",
@@ -166,8 +166,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2026年度第2四半期の契約残高(RPO)を押し上げた新規契約の例としてMetaを挙げている",
-          "text_en": "Cited new RPO commitments from Meta in Q2 FY26",
+          "text": "Metaの新規契約が、2026年度第2四半期の契約残高(RPO)を押し上げた",
+          "text_en": "New commitments from Meta lifted Oracle's RPO in Q2 FY26",
           "source": {
             "label": "Oracle 8-K Ex.99.1",
             "label_en": "Oracle 8-K Ex.99.1 (Q2 FY26 results)",
@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Applied Optoelectronicsは、2024年の売上の12.4%をOracleが占めたと記載",
-          "text_en": "Applied Optoelectronics reports that Oracle accounted for 12.4% of its revenue in 2024",
+          "text": "Applied Optoelectronicsは2024年の売上の12.4%をOracleから得た",
+          "text_en": "Oracle accounted for 12.4% of Applied Optoelectronics' revenue in 2024",
           "source": {
             "label": "Applied Optoelectronics 10-K(2025年度)",
             "label_en": "Applied Optoelectronics 10-K (FY2025)",
@@ -244,8 +244,8 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてMicrosoftを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Microsoft among its principal competitors",
+          "text": "MicrosoftはOracleの主な競合の1社だ",
+          "text_en": "Microsoft is one of Oracle's principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -337,8 +337,8 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてAmazonを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Amazon among its principal competitors",
+          "text": "AmazonはOracleの主な競合の1社として、一部製品と直接競合する",
+          "text_en": "Amazon competes directly with certain Oracle offerings",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -392,8 +392,8 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてAlphabet(Google)を挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Alphabet (Google) among its principal competitors",
+          "text": "Alphabet(Google)もOracleの主な競合の1社に数えられる",
+          "text_en": "Alphabet (Google) is one of Oracle's principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -466,8 +466,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ArmはStargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)で重要な技術パートナーに挙げられたと記載",
-          "text_en": "Arm’s 10-K states that SoftBank Group announced the Stargate Project, a joint venture with OpenAI and Oracle, naming Arm a key technology partner",
+          "text": "ArmはStargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)で重要な技術パートナーに指名された",
+          "text_en": "Arm was named a key technology partner in the Stargate Project, the joint venture of SoftBank Group, OpenAI and Oracle",
           "source": {
             "label": "Arm 10-K(2026年度)",
             "label_en": "Arm 10-K (FY2026)",
@@ -571,8 +571,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IBMが年次報告で、戦略的パートナーの1社としてOracleを挙げている",
-          "text_en": "IBM’s 10-K lists Oracle among its strategic partners",
+          "text": "OracleはIBMの戦略的パートナーの1社に名を連ねる",
+          "text_en": "Oracle is one of IBM's strategic partners",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -584,8 +584,8 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてIBMを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names IBM among its principal competitors",
+          "text": "IBMは、Oracleの主な競合の1社として一部製品でぶつかる",
+          "text_en": "IBM competes directly with certain Oracle offerings",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -609,8 +609,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてAdobeを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Adobe among its principal competitors",
+          "text": "AdobeはOracleの主要な競合の1社となる",
+          "text_en": "Adobe is one of Oracle's principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -634,8 +634,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてCisco Systemsを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Cisco Systems among its principal competitors",
+          "text": "Cisco Systemsは、Oracleの一部製品と競う大手の1社",
+          "text_en": "Cisco Systems competes directly with certain Oracle offerings",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -659,8 +659,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてIntelを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Intel among its principal competitors",
+          "text": "IntelはOracleの主な競合の1社に含まれる",
+          "text_en": "Intel is one of Oracle's principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -684,8 +684,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてSalesforceを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Salesforce among its principal competitors",
+          "text": "SalesforceはOracleの主な競合の1社で、直接競い合う",
+          "text_en": "Salesforce competes directly with certain Oracle offerings",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -709,8 +709,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてSAPを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names SAP among its principal competitors",
+          "text": "SAPは、Oracleの主な競合の1社に位置する",
+          "text_en": "SAP is one of Oracle's principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -734,8 +734,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてHewlett Packard Enterpriseを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Hewlett Packard Enterprise among its principal competitors",
+          "text": "Hewlett Packard EnterpriseもOracleの主な競合の1社を担う",
+          "text_en": "Hewlett Packard Enterprise is one of Oracle's principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -759,8 +759,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、主な競合の1社としてWorkdayを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Workday among its principal competitors",
+          "text": "Workdayは、Oracleと直接競合する企業の1つ",
+          "text_en": "Workday is one of Oracle's principal competitors",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -784,8 +784,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてOracleを挙げている",
-          "text_en": "ServiceNow’s FY2025 10-K names Oracle among competing enterprise application vendors",
+          "text": "ServiceNowは企業向けソフト大手の1社Oracleをライバルとする",
+          "text_en": "Oracle is one of the enterprise application vendors that compete with ServiceNow",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -807,8 +807,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MongoDBが年次報告で、競合する従来型データベース大手の1社としてOracleを挙げている",
-          "text_en": "MongoDB’s FY2026 10-K names Oracle among legacy database competitors",
+          "text": "MongoDBは、従来型データベース大手の1社Oracleとの競合が中心",
+          "text_en": "MongoDB competes mainly with established legacy database providers such as Oracle",
           "source": {
             "label": "MongoDB 10-K(2026年度)",
             "label_en": "MongoDB 10-K (FY2026)",
@@ -853,8 +853,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Nebiusが年次報告(20-F)で、汎用クラウドで競合する企業の1社としてOracleを挙げている",
-          "text_en": "Nebius’s 20-F names Oracle as a general-purpose cloud competitor",
+          "text": "Oracleは、Nebius(20-F)で汎用クラウドの競合1社となる",
+          "text_en": "Oracle competes with Nebius as a general-purpose cloud provider",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -876,8 +876,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、競合するハイパースケーラーの1社としてOracle Cloudを挙げている",
-          "text_en": "IREN’s FY2026 10-K lists Oracle Cloud among hyperscaler competitors",
+          "text": "Oracle Cloudは、IRENが競合するハイパースケーラーの1つ",
+          "text_en": "Oracle Cloud is one of the hyperscalers IREN competes with",
           "source": {
             "label": "IREN 10-K(2026年度)",
             "label_en": "IREN 10-K (FY2026)",

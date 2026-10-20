@@ -32,8 +32,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、サプライチェーン実行・計画の競合としてBlue Yonder/Panasonic(旧JDA)を挙げている",
-          "text_en": "The annual report names Blue Yonder/Panasonic (formerly JDA) among supply chain execution and planning competitors",
+          "text": "Blue Yonder/Panasonic(旧JDA)は、サプライチェーン実行・計画分野の競合だ",
+          "text_en": "Blue Yonder/Panasonic (formerly JDA) competes in supply chain execution and planning.",
           "source": {
             "label": "Manhattan Associates 10-K",
             "label_en": "Manhattan Associates 10-K",
@@ -58,8 +58,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、競合としてIBMのSterling Commerce部門を挙げている",
-          "text_en": "The annual report names the Sterling Commerce division of IBM as a competitor",
+          "text": "IBMのSterling Commerce部門は、競合に当たる",
+          "text_en": "The Sterling Commerce division of IBM is a competitor.",
           "source": {
             "label": "Manhattan Associates 10-K",
             "label_en": "Manhattan Associates 10-K",
@@ -166,8 +166,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、ERPベンダーの競合としてOracleを挙げている",
-          "text_en": "The annual report lists Oracle among competing ERP vendors",
+          "text": "ERPベンダーのOracleが競合相手となる",
+          "text_en": "Oracle is a competing ERP vendor.",
           "source": {
             "label": "Manhattan Associates 10-K",
             "label_en": "Manhattan Associates 10-K",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、ERPベンダーの競合としてSAPを挙げている",
-          "text_en": "The annual report lists SAP among competing ERP vendors",
+          "text": "ERPベンダーのSAPも競合相手だ",
+          "text_en": "SAP is also a competing ERP vendor.",
           "source": {
             "label": "Manhattan Associates 10-K",
             "label_en": "Manhattan Associates 10-K",
