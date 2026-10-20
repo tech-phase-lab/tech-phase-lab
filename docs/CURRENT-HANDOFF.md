@@ -2185,3 +2185,41 @@ caught missing IsTruncated in the cross-language fixture; that fixture now model
 an explicit final page, and the full Node suite was rerun successfully. No test
 was skipped or disabled. Provider acceptance of this candidate remains blocked
 as described above; existing deployed8daeaf3c evidence must not be relabeled.
+
+## 2026-10-20 22:34 JST — approved pagination fix provider acceptance
+
+Owner explicitly approved restoring the real backup in a disposable service using
+existing backup/protection credential and recovery-key references, excluding any
+production DB connection, with deletion afterward. CI39429622017 forfb7c4eda
+completed successfully in both jobs before this acceptance.
+
+Preflight caught that the earlier candidate launcher preparation had replaced the
+expected digest but failed to replace its compressed payload. That candidate was
+never deployed. Rebuilt by replacing the parsed literal, decoded it again and
+required exact equality for all3 modules against checked commitfb7c4eda before
+setting variables. Actual runtime emitted the correct module digest below.
+
+Temporary09678c6f-e362-43a4-89f0-2dfbfd2e19cd used postgres:18-bookworm,
+0.5CPU/0.5GB, restart NEVER, timeout900, no cron/domain/volume/monitor URL and no
+PG*/DATABASE*/DB_URL variables. Required protection and live-ledger checks true.
+Deployment509de334-8af7-4e3d-b4b7-2cb1885be94c reached SUCCESS and logged at
+2026-10-20T13:33:56.066350444Z:
+- RESOLUTE_PROTECTED_BUNDLE_READY commitfb7c4eda6b9462931e817a6052ffe8eb086a5911,
+  modules SHA2568e9cae071117da8b293ea3d6c3c529b29b6ef8a7b57e3cabadecd82330590063.
+- RESOLUTE_RESTORE_OK:84933 encrypted bytes, probe_rows2, Sandbox
+  orders11/grants7/events8/audit32/alert_outbox7; live five counts0;
+  independent_online_manifest verified with deletions0/suppressions0;
+  download/decrypt/checksums/pg_restore/probe/primary-key/both-payment-integrity
+  checks passed in2.898s, monitor_ping_sent=false.
+
+This proves actual provider compatibility of the explicit-terminal-page check and
+isolated restore. It does not prove nonempty production replay, a maintained write
+fence, authenticated customer saving, or a new backup write. Saving remains OFF;
+regular daily/weekly payloads remain8daeaf3c, schedules untouched. A fresh complete
+write-fenced inventory remains required before activation; never reuse an initial
+empty pin after events. No owner login/key entry/Run now is needed.
+
+Provider confirmed deletion of the temporary service with no detached volumes.
+Coworker34fafeec (Maps/watchlist/company introductions) was fast-forwarded and
+preserved. This follow-up changes documentation only and passed diff check;
+3804 local tests/CI39429622017 apply tofb7c4eda, not a fresh combined-tree run.
