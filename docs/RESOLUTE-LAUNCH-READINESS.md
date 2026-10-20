@@ -387,3 +387,45 @@ remain pending; customer saving stays off. The successful synthetic live-Clerk
 replay remains separate evidence. Existing daily/weekly/morning schedules and
 reservations were not modified. The apt-utils debconf notice did not prevent
 the verified execution. Main, billing, live payments, email and AI were untouched.
+
+## 2026-10-20 14:03 JST — Production store preparation and read-only preflight
+
+Created a separate production-history bucket resolute-protection-live
+(ae4437b5-24f9-43dd-9fe0-475676821f1b, sjc;
+S3 name resolute-protection-live-vpdsti). Existing synthetic protection objects
+remain in resolute-protection, unchanged. Backup bucket remains separate.
+No provider object lock/versioning/non-delete credential guarantee is claimed.
+
+Prepared five bucket-variable references on the disabled protection writer
+(RESOLUTE_WRITER_*), and five RESOLUTE_RESTORE_PROTECTION_* references on
+restore-check. Both used skipDeploys=true: stored configuration is ready, but
+these connections are NOT claimed loaded by the existing runtime. Writer
+ENABLED=false; no production key/token installed and no customer-save activation.
+
+Reused the retired protection-acceptance one-shot function for a bounded
+read-only preflight, with the existing API reader URL and temporary new-bucket
+references. No admin DB credentials used. Deployment
+53810a91-3d09-41f8-ba79-e1b243e47dc5 actually logged
+RESOLUTE_STORAGE_PREFLIGHT_OK at2026-10-20T05:02:14.561884781Z:
+current database/role/transaction checked as resolute/resolute_api_reader/read-only;
+plans, notification_settings and protection_outbox absent; both pre-existing
+plan/notification roles NOLOGIN and without elevated role attributes;
+all three writer identities had0 pg_stat_activity sessions; whole bucket
+ListObjectsV2(MaxKeys=1) returned no objects and no truncation. Writes0.
+This is a point-in-time observation, NOT a durable write fence, ACL audit,
+complete recovery manifest, production-key replay, or customer-saving acceptance.
+
+After inspection, replaced the function with an idle no-I/O body and blanked
+all six temporary DB/storage references. Final deployment
+94c52848-29b6-452d-b7af-80a5df086f9c actually logged
+RESOLUTE_STORAGE_PREFLIGHT_IDLE, reads0/writes0 at05:02:50.103278093Z.
+No cron or public domain added. Previous synthetic acceptance remains historical.
+
+Remaining owner-only prerequisite: install the ALREADY GENERATED 32-byte online
+protection key into the disabled writer's RESOLUTE_WRITER_KEY_HEX using the
+owner's PC and Railway's private Variables UI. Do not install the AGE-SECRET-KEY
+recovery identity, regenerate custody material, upload any secret to chat, or
+repeat Google/Evernote verification. The assistant cannot retrieve the PC-only
+key. Keep ENABLED=false. Downstream key references, token provisioning, manifest
+fencing and migrations/ACLs must be completed before explicit save activation.
+Morning/daily/weekly schedules, main, live payments, mail and AI untouched.

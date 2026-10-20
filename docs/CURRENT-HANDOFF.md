@@ -1993,3 +1993,6 @@ remain pending; customer saving stays off. The successful synthetic live-Clerk
 replay remains separate evidence. Existing daily/weekly/morning schedules and
 reservations were not modified. The apt-utils debconf notice did not prevent
 the verified execution. Main, billing, live payments, email and AI were untouched.
+
+
+Latest 2026-10-20 14:03 JST: production protection bucket prepared separately; read-only DB/catalog and empty-bucket preflight passed on real Railway execution, then temporary probe retired and credentials blanked. Writer/restore connection references stored with skipDeploys=true, not runtime verified. Production PC-only online key installation remains owner-only; do not repeat custody or Run now. Saving stays off. Full IDs/evidence in RESOLUTE-STORAGE-CUTOVER.md.
