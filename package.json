@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "PYTHONPATH=scripts/test_clock node --experimental-strip-types --test tests/*.test.mjs",
+    "test": "PYTHONPATH=scripts/test_clock node --experimental-strip-types --test --test-concurrency=2 tests/*.test.mjs",
     "test:python": "python3 scripts/run_python_tests.py",
     "build:review": "node scripts/review/build.mjs",
     "prebuild": "node scripts/research-ui/prepare-pdf-fonts.mjs",

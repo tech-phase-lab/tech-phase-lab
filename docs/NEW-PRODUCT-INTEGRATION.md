@@ -1,3 +1,29 @@
+## RESOLUTE update — 2026-10-21 00:12 JST
+
+This dated update supersedes older pending claims for the checks below.
+Actual public HTTPS publication/readback of exactly3 synthetic protection events
+passed at2026-10-20T14:51:45Z; independent complete manifest pin
+72f819a298d8f5365f0fcb404c80ea3fd48e1b5139ffebbd9830cdad92bace75.
+Fresh baseline and final seal were produced while backend45509 held5 DB write
+fence locks. Production histories/outbox remained0; locks released14:55:10Z.
+Writer restored to disabled; temporary listener removed. Isolated actual-backup
+restore passed14:56:55Z with deletion1/both notification stops, pending0 and two
+idempotent replays. No source DB credentials exported. Disposable restore service
+deletion is pending: the tool confirmation expired/cancelled; service still exists.
+It was safely retired at15:14:19Z (actual RETIRED log, six credential/key references
+neutralized, inert start, no cron/domain/volume).
+See [complete evidence](RESOLUTE-NONEMPTY-CUTOVER-CHECK.md) and its retained manifest.
+
+Customer saving remains OFF; all3 storage roles NOLOGIN. Next: scoped runtime
+connections and normal authenticated route acceptance before any activation; obtain
+a fresh complete write-fenced manifest at that time. No owner key entry, login or
+Run now needed. Daily/weekly new-pin deployments ready; schedules unchanged and
+no new scheduled-run success claimed. Morning/news/earnings/UI/Vercel/billing/mail/AI
+untouched. Integrated2c056205 gates: Node1294,Python2549,lint0errors/5existingwarnings,
+build,compileall,diff check passed. GitHub/CI result must be verified separately.
+
+---
+
 ## Current RESOLUTE status — 2026-10-20 evening JST
 
 This summary supersedes older pending/completed statements below for RESOLUTE
