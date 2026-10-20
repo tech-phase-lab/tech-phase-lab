@@ -587,3 +587,87 @@ restart NEVER and cron `17 * * * *`. Bundle the checked entry with esbuild
 `--bundle --platform=node --format=esm`; credentials are runtime references to the
 existing PRO Sandbox service, not embedded in the function source. Deployment
 and the initial real recovery run remain pending at this code publication.
+
+## 2026-10-20 16:23 JST — Sandbox watchdog deployed and first run accepted
+
+Published recovery code `d3d723c1b79a6d4e6add688b7ba700d1696eb20d`, exact tree
+`9803007cc9be4159502ccef59e950f6047588f32`; local checkout aligned. No changes to
+main, the pinned PRO runtime, production membership or RESOLUTE services/schedules.
+
+Created only in environment 3a80776d-15a3-4ca1-bd0c-e0c915ccf73b:
+- Service tech-phase-billing-recovery-sandbox,
+  `7950fd63-99a9-49f3-9d7a-a7f319620e9e`.
+- Bun 1.4 function, no public domain, restart NEVER, cron `17 * * * *`.
+- Explicit recovery enabled/preview settings; Sandbox environment, owner ID and
+  service-token references point only to tech-phase-billing-sandbox. These are
+  persistent scheduled-job references, unlike retired one-shot helper variables.
+- Bundled source SHA-256
+  `e1d76f044d2b83c8511aa70d210ce3037cb0fecda0780a5b9f86681ddaa447f0`;
+  get-function-source-code confirmed deployed code equals the checked bundle.
+
+The initial unconfigured deployment exited disabled without service calls.
+After configuration, explicitly ran deployment
+`9f761461-925c-4f25-bdf8-e2b13829cd8a`; it completed SUCCESS at 07:22:53 UTC,
+logging TECH_PHASE_SANDBOX_RECOVERY outcome verified, plan pro, state cancelled,
+changed false. This confirms the deployed job rechecks the existing cancelled
+paid contract without changing state/expiry. The future hourly tick is configured
+but not yet observed. No new purchase/cancellation occurred in the watchdog.
+
+GitHub Actions 39385967422 was in progress at last observation; all local gates
+passed. Keep production multi-user recovery and PRO backup/restore as launch gates.
+Operational deployment evidence is staged locally for the next documentation batch
+so the running code CI is not displaced by another documentation commit.
+
+## PRO backup implementation prepared; source authorization blocked
+
+Added `services/tech-phase-backup/` with PostgreSQL 18 custom-format snapshots,
+AES-256-GCM encryption, bounded authenticated S3 readback, seven daily/four weekly
+retention, freshness checks and disposable Unix-socket-only restore drills.
+The restore checker verifies all six PRO tables, payment consistency and the
+entitlement view including refund holds and adverse-transaction tombstones.
+This is not a restore-to-serving-DB or production access-enable operation.
+
+Created only these new, PRO-specific resources in the existing production-named
+Railway environment; application mode remains Sandbox:
+
+- Bucket `tech-phase-billing-backups-sandbox`:
+  `395e5e7f-5ae2-43f7-8a91-9930dcf9b5aa`.
+- Empty backup service `ea8553fe-6495-4b90-b07a-ec89cb1995c4`.
+- Empty restore-check service `7938ee41-3d0b-4b0e-a40e-e391f564344d`.
+
+Both services are disabled (`TECH_PHASE_BACKUP_ENABLED=false`), have no source,
+cron, public domain, persistent volume or deployed job. A new PRO-only encryption
+key and the new bucket references are configured. The unused generated database
+password was cleared. No source database credential was added; no snapshot or
+real-data restore has occurred. Do not report backup acceptance as passed.
+
+Automatic approval review rejected temporary injection of the shared PostgreSQL
+admin connection into the retired PRO provision helper. A safer proposal to use
+the existing PRO-scoped writer connection was also rejected because its underlying
+INSERT/subscription-UPDATE privileges would be copied to another service. Neither
+credential write succeeded. The helper remains retired at deployment
+`740f6496-f135-4213-814f-db516640f9e5`; its code/config were not changed.
+
+Prepared, but did not execute, `scripts/tech-phase/provision-backup-reader.mjs`.
+The concrete pending operation is to temporarily provide the administrator
+connection to that PRO helper, create only `tech_phase_billing_sandbox_backup`
+with CONNECT/USAGE/SELECT and future owner-table SELECT, verify no write/CREATE
+privilege, then clear the helper credentials and retire its code immediately.
+It refuses to rotate/modify an existing role and connects only to the PRO logical
+database. Explicit user approval of this temporary administrative credential
+exposure is required before retrying the blocked operation. RESOLUTE code,
+services, data, credentials, bucket contents and schedules were not changed.
+
+After that approval: configure the new read-only password, publish/pin the checked
+backup image, run one backup and one disposable restore, inspect safe aggregate
+results, then enable daily backup and weekly restore-check schedules. Project-loss
+key custody, production revocation/deletion replay, missed-job alerts and actual
+production recovery remain separate launch gates; no automatic promotion exists.
+
+Local verification with RESOLUTE commit `30faefae02ac1462c9cb3709bb9acd792cf698d7`
+preserved: Node 1,257 passed; Python 2,533 passed (including ten new PRO backup
+cases); Next build passed; lint zero errors/five existing warnings; compileall,
+helper syntax and diff checks passed. Node checks were repeated after integrating
+the new RESOLUTE shell/SQL tests. These local checks do not constitute a built
+backup Docker image, a real PostgreSQL dump/restore or deployment acceptance.
+The preceding recovery-watchdog CI run `39385967422` is completed/success.
