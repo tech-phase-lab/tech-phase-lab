@@ -359,3 +359,31 @@ activation, schedule modification, mail, payment or AI call occurred.
 GitHub CI39369328863 for c792d51d is now completed/success. Local3727 tests,
 lint/build/compileall passed as previously recorded. Owner custody stays complete;
 no need to repeat Google/Evernote setup or regenerate keys.
+
+
+## 2026-10-20 13:54 JST observation — V2 actual restore verified
+
+Owner reported pressing Run now; subsequent inspection found the completed V2
+execution at13:51:43 JST (log time, not inferred from the report time).
+Deploymentc6ef3efc-604c-4133-8a4d-91c319f5b0f0 logged both:
+- RESOLUTE_PROTECTED_BUNDLE_READY: commitc792d51d06437a27748f03ee2714a8c23ce7409e,
+  digest0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d,
+  modules3, timestamp2026-10-20T04:51:43.084940930Z.
+- RESOLUTE_RESTORE_OK at04:51:43.084946050Z:69247 encrypted bytes, probe_rows2,
+  Sandbox orders11/grants7/events8/audit32/alert_outbox7; live ledger verified
+  with all five counts0; download/decrypt/checksums/pg_restore/probe/primary-key/
+  both payment-integrity assertions passed,2.67s, monitor_ping_sent=true.
+
+Environment status confirms cronSucceeded, lastExecutionStatus=succeeded,
+lastExecutionAt04:51:41.853Z, running replicas0, no pending work or recent
+failures. This closes the pending V2 execution gate and the stale-build confusion.
+Do not ask for another Run now or repeat owner key custody verification.
+
+The result data_protection.state=not_installed correctly reflects the existing
+backup without application storage schemas. This is NOT an actual production
+online-history replay acceptance. Production protection key and independent
+store connection provisioning, fenced complete manifest and schema/ACL cutover
+remain pending; customer saving stays off. The successful synthetic live-Clerk
+replay remains separate evidence. Existing daily/weekly/morning schedules and
+reservations were not modified. The apt-utils debconf notice did not prevent
+the verified execution. Main, billing, live payments, email and AI were untouched.
