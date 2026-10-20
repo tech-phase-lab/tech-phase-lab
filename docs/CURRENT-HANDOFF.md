@@ -2053,3 +2053,14 @@ comparison passed ea42bc94 at06:33:55Z, no network/data writes. Original API and
 writer runtime deployments unchanged; no DB logins or saving enabled. Probe
 deleted. See STORAGE-CUTOVER for fingerprint-check correction and exact evidence
 boundaries. No repeat owner custody or Run now.
+
+
+2026-10-20 15:51 JST: API now pinned7875e998; eaa96549 actual READY log.
+Real reader-only Postgres connection and API HTTP200/unauth401 checks passed
+(c0155713). Storage roles NOLOGIN/sessions0; saving remains OFF. Scoped write
+probe blocked before DB connection, then automatic approval rejected putting
+superuser credentials in a temporary service. No workaround attempted. Both
+new helpers are credential-neutralized/inert with actual retired logs; first
+helper deletion was not approved, so neither is claimed deleted. See latest
+STORAGE-CUTOVER/LAUNCH-READINESS for exact IDs, remaining write/recovery gate and
+approval boundary. No owner key/Run now repetition; all schedules untouched.

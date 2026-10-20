@@ -723,3 +723,57 @@ Schedules/reservations, UI/RIZEL visibility, production payments, mail and AI
 were untouched. Next: reviewed API/runtime and scoped storage connections,
 controlled receipt/recovery verification before customer-save activation.
 No repeat owner key-custody, token paste or Run now is needed for this milestone.
+
+
+## 2026-10-20 15:51 JST — API updated; actual reader/HTTP checks passed, writes blocked
+
+API7108edd6 was explicitly pinned to reviewed commit
+7875e998cf6936d6c8c8b3628a4ca667a1ef89c2. Deploymenteaa96549-6fdc-4a06-9ce0-a7431213ba2f
+logged RESOLUTE_API_READY at06:45:47.209246325Z. Existing protection references
+are now included in a new API deployment; protection and customer-save gates
+remain disabled. No plan/settings writer credentials or logins were installed.
+
+Actual Railway checkc0155713-31a1-44fb-8942-6f68e4d99ed5 logged
+RESOLUTE_READER_HTTP_VERIFIED at06:50:21.629314999Z:
+- Connected as resolute_api_reader to internal Postgres database resolute in
+  BEGIN READ ONLY; entitlement SELECT permission exercised without reading rows.
+- All three storage roles remain NOLOGIN without elevated role attributes;
+  pg_stat_activity shows0 sessions for these identities.
+- Updated public API /healthz returned200 with status ok; unauthenticated GET
+  /internal/v1/plan and /internal/v1/notification-settings returned401 AUTH_REQUIRED.
+- DB writes0, activation=false. These checks are NOT authenticated customer saves,
+  a new full ACL audit, source-outbox/inventory completeness or a writer receipt.
+
+The planned rollback-only scoped write test did NOT run. Initial helper
+f1eb60ef-cc4f-41cd-9666-553b60f6c5c8 failed at DB URL parsing before connection:
+the old provision service's RESOLUTE_SETUP_DB_URL reference was unusable.
+A proposed Postgres-admin reference for this temporary helper was rejected by
+automatic approval review: copying superuser credentials into a temporary
+verification service exceeded the narrow dedicated-role test and unnecessarily
+exposed privileged credentials. No admin reference was applied. Do not route the
+same rejected operation through a different API or existing helper without
+resolving the approval boundary. A separately scoped reader-only connection was
+the materially safer alternative used above.
+
+Deletion of the first temporary helper was also not approved (tool returned
+Cancelled / no changes). Do not claim it was deleted. Both helpers now retain
+only literal disabled references and inert code, no network/DB operations:
+- f1eb60ef:6e1aaa0e-9aae-4cd1-81ff-082be2cd4c29 at06:50:39Z,
+  RESOLUTE_SCOPED_CHECK_RETIRED referencesNeutralized=true (all11 refs).
+- ecc14154-6d4d-4951-941d-67ecaecd5b55:
+  ac1c3fa6-d21d-4f07-b1a8-60dd8a5373c4 at06:51:32Z,
+  RESOLUTE_READER_CHECK_RETIRED referencesNeutralized=true (DB ref/enable flag).
+Both have NEVER restart policy and no cron, domain or volume. Their removal is
+pending; do not re-enable them. No encryption key was regenerated or logged.
+
+Next: resolve a narrowly scoped storage-write verification connection without
+copying superuser credentials to a new service. Then fresh write-fenced complete
+inventory, actual gateway receipt/store and isolated restore with nonempty
+history. Do not reuse the bootstrap empty inventory after writes. No new saved
+history, new recovery success or customer-save activation is claimed in this turn.
+The existing writer remains disabled and unchanged. Morning job/reservations,
+RIZEL visibility/approved UI/copy, main, billing, mail and AI were untouched.
+Owner key custody and Run now must NOT be repeated.
+
+Application source unchanged; prior3768-test/CI39379931568 evidence applies to
+the deployed source. This documentation update requires git diff --check only.
