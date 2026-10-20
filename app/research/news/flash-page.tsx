@@ -14,7 +14,6 @@ import { readVisitStart } from "../use-alerts-unread";
 import timeline from "../companies/company-activity.module.css";
 import tabStyles from "./news-feed.module.css";
 import styles from "./flash-page.module.css";
-import FlashSkeleton from "./flash-skeleton";
 import FeedPagination from "./feed-pagination";
 import NewsStory from "./news-story";
 
@@ -42,7 +41,7 @@ function timeCell(row: FlashRow) {
 /** 速報: the watched companies' live monitor and earnings results as one
  * newest-first timeline. New rows look like the live monitor's: a mint dot,
  * NEW, and they stay marked until the page is left (owner, Oct 14). */
-export default function FlashPage({ lang }: { lang: Language }) {
+export default function FlashPage({ lang, onReady }: { lang: Language; onReady?: () => void }) {
   const ja = lang === "ja";
   const [feed, setFeed] = useState<GeneralNewsFeed | null>(null);
   const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});
@@ -108,6 +107,9 @@ export default function FlashPage({ lang }: { lang: Language }) {
     return () => { alive = false; clearInterval(timer); stop(); };
   }, []);
 
+  // The page shell shows the shared branded loader until the first feed (or its failure) is known (owner, Oct 20).
+  useEffect(() => { if (feed || failed) onReady?.(); }, [feed, failed, onReady]);
+
   const rows = flashRows(feed, wire, lang).filter(row => row.tickers.some(ticker => WATCH_TICKERS.has(ticker)) && (view === "all" || row.kind === "earnings"));
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   const current = Math.min(page, pages);
@@ -126,7 +128,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
     </div>
   </article>;
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
-    {(feed || failed) && <div className={styles.controls}>
+    <div className={styles.controls}>
       <div className={tabStyles.tabs} role="group" aria-label={ja ? "表示する速報" : "Alert filter"}>
         {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
       </div>
@@ -137,10 +139,9 @@ export default function FlashPage({ lang }: { lang: Language }) {
           <ul>{providers.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{shortName(p.name)}</span></li>)}</ul>
         </div>
       </details>
-    </div>}
+    </div>
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
-      {!feed && !failed && <FlashSkeleton ja={ja} bare />}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
       {!!shown.length && <div className={timeline.timeline}>{shown.flatMap((row, index) => {
         const key = dayKey(row);

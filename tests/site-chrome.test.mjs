@@ -86,9 +86,9 @@ test("unread alerts count only the rows the 速報 page lists, with a stated tim
 test("bottom bar: five items in order, bilingual labels, raised search, unread dot, reduced motion", () => {
   const nav = read("app/research/bottom-nav.tsx");
   assert.match(nav, /const alertsPage = pathname === "\/research\/news";/);
-  const order = ["ホーム", "速報", "銘柄検索", "ウォッチリスト", "マーケット"].map(label => nav.indexOf(`"${label}"`));
+  const order = ["ホーム", "速報", "銘柄検索", "お気に入り", "マーケット"].map(label => nav.indexOf(`"${label}"`));
   assert.deepEqual([...order].sort((a, b) => a - b), order);
-  for (const [ja, en] of [["ホーム", "Home"], ["速報", "Alerts"], ["銘柄検索", "Search"], ["ウォッチリスト", "Watchlist"], ["マーケット", "Markets"]]) {
+  for (const [ja, en] of [["ホーム", "Home"], ["速報", "Alerts"], ["銘柄検索", "Search"], ["お気に入り", "Watchlist"], ["マーケット", "Markets"]]) {
     assert.match(nav, new RegExp(`ja \\? "${ja}" : "${en}"`));
   }
   assert.match(nav, /tab\.key === "alerts" && unread && <span className=\{styles\.live\}/);
