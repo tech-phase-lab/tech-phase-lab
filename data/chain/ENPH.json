@@ -1,0 +1,98 @@
+{
+  "root": {
+    "ticker": "ENPH",
+    "name": "エンフェーズ・エナジー",
+    "name_en": "Enphase Energy",
+    "cik": 1463101
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SEDG",
+    "TSLA",
+    "CHPT"
+  ],
+  "companies": [
+    {
+      "id": "SEDG",
+      "ticker": "SEDG",
+      "name": "ソーラーエッジ",
+      "sub": "太陽光用インバーター",
+      "sub_en": "Solar inverters",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンフェーズ・エナジーと競合する",
+          "text_en": "Competes with Enphase Energy",
+          "source": {
+            "label": "エンフェーズ・エナジー 年次報告書(10-K)",
+            "label_en": "Enphase Energy Form 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the inverter market include, among others, SolarEdge Technologies, Inc. (“SolarEdge”), Huawei Technologies Co."
+          }
+        }
+      ],
+      "name_en": "SolarEdge"
+    },
+    {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "テスラ",
+      "sub": "EV・蓄電",
+      "sub_en": "EVs & storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンフェーズ・エナジーと競合する",
+          "text_en": "Competes with Enphase Energy",
+          "source": {
+            "label": "エンフェーズ・エナジー 年次報告書(10-K)",
+            "label_en": "Enphase Energy Form 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the storage market include Tesla, SolarEdge, Huawei, BYD Company Limited (“BYD”), Franklin Solar Battery and other producers of battery cells and integrated storage systems."
+          }
+        }
+      ],
+      "name_en": "Tesla"
+    },
+    {
+      "id": "CHPT",
+      "ticker": "CHPT",
+      "name": "チャージポイント",
+      "sub": "EV充電",
+      "sub_en": "EV charging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンフェーズ・エナジーと競合する",
+          "text_en": "Competes with Enphase Energy",
+          "source": {
+            "label": "エンフェーズ・エナジー 年次報告書(10-K)",
+            "label_en": "Enphase Energy Form 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the EV charger market include Wallbox N.V., ChargePoint Holdings, Inc., Tesla and EVBox Group, among others."
+          }
+        }
+      ],
+      "name_en": "ChargePoint"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

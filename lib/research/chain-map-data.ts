@@ -58,6 +58,7 @@ import c_crus from "../../data/chain/CRUS.json" with { type: "json" };
 import c_crwd from "../../data/chain/CRWD.json" with { type: "json" };
 import c_crwv from "../../data/chain/CRWV.json" with { type: "json" };
 import c_csco from "../../data/chain/CSCO.json" with { type: "json" };
+import c_ctsh from "../../data/chain/CTSH.json" with { type: "json" };
 import c_cxm from "../../data/chain/CXM.json" with { type: "json" };
 import c_dash from "../../data/chain/DASH.json" with { type: "json" };
 import c_dbx from "../../data/chain/DBX.json" with { type: "json" };
@@ -70,9 +71,11 @@ import c_docu from "../../data/chain/DOCU.json" with { type: "json" };
 import c_dt from "../../data/chain/DT.json" with { type: "json" };
 import c_duol from "../../data/chain/DUOL.json" with { type: "json" };
 import c_eght from "../../data/chain/EGHT.json" with { type: "json" };
+import c_enph from "../../data/chain/ENPH.json" with { type: "json" };
 import c_entg from "../../data/chain/ENTG.json" with { type: "json" };
 import c_estc from "../../data/chain/ESTC.json" with { type: "json" };
 import c_etn from "../../data/chain/ETN.json" with { type: "json" };
+import c_fico from "../../data/chain/FICO.json" with { type: "json" };
 import c_fivn from "../../data/chain/FIVN.json" with { type: "json" };
 import c_flex from "../../data/chain/FLEX.json" with { type: "json" };
 import c_form from "../../data/chain/FORM.json" with { type: "json" };
@@ -80,10 +83,12 @@ import c_foxa from "../../data/chain/FOXA.json" with { type: "json" };
 import c_frog from "../../data/chain/FROG.json" with { type: "json" };
 import c_frsh from "../../data/chain/FRSH.json" with { type: "json" };
 import c_ftnt from "../../data/chain/FTNT.json" with { type: "json" };
+import c_gddy from "../../data/chain/GDDY.json" with { type: "json" };
 import c_gev from "../../data/chain/GEV.json" with { type: "json" };
 import c_gfs from "../../data/chain/GFS.json" with { type: "json" };
 import c_glw from "../../data/chain/GLW.json" with { type: "json" };
 import c_googl from "../../data/chain/GOOGL.json" with { type: "json" };
+import c_grmn from "../../data/chain/GRMN.json" with { type: "json" };
 import c_gtlb from "../../data/chain/GTLB.json" with { type: "json" };
 import c_himx from "../../data/chain/HIMX.json" with { type: "json" };
 import c_hpe from "../../data/chain/HPE.json" with { type: "json" };
@@ -202,6 +207,7 @@ import c_ttd from "../../data/chain/TTD.json" with { type: "json" };
 import c_ttwo from "../../data/chain/TTWO.json" with { type: "json" };
 import c_twlo from "../../data/chain/TWLO.json" with { type: "json" };
 import c_txn from "../../data/chain/TXN.json" with { type: "json" };
+import c_tyl from "../../data/chain/TYL.json" with { type: "json" };
 import c_uber from "../../data/chain/UBER.json" with { type: "json" };
 import c_uctt from "../../data/chain/UCTT.json" with { type: "json" };
 import c_umc from "../../data/chain/UMC.json" with { type: "json" };
@@ -298,6 +304,7 @@ const available: Record<string, ChainMapData> = {
   CRWD: c_crwd as ChainMapData,
   CRWV: c_crwv as ChainMapData,
   CSCO: c_csco as ChainMapData,
+  CTSH: c_ctsh as ChainMapData,
   CXM: c_cxm as ChainMapData,
   DASH: c_dash as ChainMapData,
   DBX: c_dbx as ChainMapData,
@@ -310,9 +317,11 @@ const available: Record<string, ChainMapData> = {
   DT: c_dt as ChainMapData,
   DUOL: c_duol as ChainMapData,
   EGHT: c_eght as ChainMapData,
+  ENPH: c_enph as ChainMapData,
   ENTG: c_entg as ChainMapData,
   ESTC: c_estc as ChainMapData,
   ETN: c_etn as ChainMapData,
+  FICO: c_fico as ChainMapData,
   FIVN: c_fivn as ChainMapData,
   FLEX: c_flex as ChainMapData,
   FORM: c_form as ChainMapData,
@@ -320,10 +329,12 @@ const available: Record<string, ChainMapData> = {
   FROG: c_frog as ChainMapData,
   FRSH: c_frsh as ChainMapData,
   FTNT: c_ftnt as ChainMapData,
+  GDDY: c_gddy as ChainMapData,
   GEV: c_gev as ChainMapData,
   GFS: c_gfs as ChainMapData,
   GLW: c_glw as ChainMapData,
   GOOGL: c_googl as ChainMapData,
+  GRMN: c_grmn as ChainMapData,
   GTLB: c_gtlb as ChainMapData,
   HIMX: c_himx as ChainMapData,
   HPE: c_hpe as ChainMapData,
@@ -442,6 +453,7 @@ const available: Record<string, ChainMapData> = {
   TTWO: c_ttwo as ChainMapData,
   TWLO: c_twlo as ChainMapData,
   TXN: c_txn as ChainMapData,
+  TYL: c_tyl as ChainMapData,
   UBER: c_uber as ChainMapData,
   UCTT: c_uctt as ChainMapData,
   UMC: c_umc as ChainMapData,

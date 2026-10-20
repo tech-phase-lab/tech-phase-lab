@@ -52,12 +52,14 @@ export function validateCompanyIntroductions(value: unknown): asserts value is C
     }
     for (const lang of ["ja", "en"]) {
       const answers = item[lang];
-      check(object(answers) && companyIntroductionFields.every(field => text(answers[field])), `${cik}: missing ${lang} answer`);
+      // Competition and relationships may both be empty (answer and map) for a company whose filings name nothing to show.
+      check(object(answers) && companyIntroductionFields.every(field => typeof answers[field] === "string") && ["business", "revenue", "strength", "risks"].every(field => text(answers[field])), `${cik}: missing ${lang} answer`);
     }
     check(object(item.maps), `${cik}: missing maps`);
     for (const topic of ["competition", "relationships"]) {
       const entries = item.maps[topic];
-      check(Array.isArray(entries) && entries.length > 0, `${cik}: missing ${topic} map`);
+      check(Array.isArray(entries), `${cik}: missing ${topic} map`);
+      for (const lang of ["ja", "en"]) check(text((item[lang] as Record<string, unknown>)[topic]) === entries.length > 0, `${cik}: ${lang} ${topic} answer and map must both be present or both be empty`);
       const seen = new Set<string>();
       for (const entry of entries) {
         check(object(entry) && text(entry.name), `${cik}: invalid map entry`);

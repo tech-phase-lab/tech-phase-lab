@@ -41396,5 +41396,645 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1467373,
+    "tickers": [
+      "ACN"
+    ],
+    "name": "Accenture",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Accenture Form 10-K (filed 2026-10-16) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1467373/000146737326000049/acn-20260831.htm"
+      }
+    ],
+    "ja": {
+      "business": "戦略から技術、AIまで幅広く支援するコンサルティングと技術の会社。",
+      "revenue": "コンサルティングやマネージドサービスを、米州・EMEA・アジア太平洋の地域市場で提供する。顧客は9,000社以上。",
+      "strength": "業界ごとの深い知見と、サービスの幅広さが強み。",
+      "risks": "顧客や自社のデータをサイバー攻撃から守れなければ、法的責任、信用の低下、財務損失が生じる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A consulting and technology company that helps clients with strategy, technology and AI.",
+      "revenue": "Consulting and managed services are delivered across the Americas, EMEA and Asia Pacific. Clients number more than 9,000.",
+      "strength": "Deep industry expertise and a broad range of services are its strengths.",
+      "risks": "If client or company data is not protected from cyberattacks, legal liability, reputational damage and financial loss follow.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1058290,
+    "tickers": [
+      "CTSH"
+    ],
+    "name": "Cognizant",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Cognizant Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1058290/000105829026000008/ctsh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けにデジタルやAIを活用した技術サービスを提供する会社。",
+      "revenue": "2025年の売上は21,108百万ドル。金融サービスやヘルスサイエンスなどの部門と、北米・欧州などの地域で稼ぐ。",
+      "strength": "評判と経験、戦略助言、デジタルとAIの力、信頼性、対応の速さで競う。",
+      "risks": "技術の変化で従来型サービスの需要が減りうる。AIの利用に伴う法規制や信用の問題も抱える。",
+      "competition": "主な競合にアクセンチュア、CGI、DXCテクノロジー、EPAMシステムズ、ジェンパクトがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides technology services to businesses, using digital and AI capabilities.",
+      "revenue": "Revenue in 2025 was $21,108 million, earned across segments such as Financial Services and Health Sciences and regions such as North America and Europe.",
+      "strength": "It competes on reputation and experience, strategic advisory, digital and AI capabilities, reliability and responsiveness.",
+      "risks": "Technology change can reduce demand for older services, and the use of AI brings legal and reputational issues.",
+      "competition": "Main competitors include Accenture, CGI, DXC Technology, EPAM Systems, Genpact.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Accenture",
+          "nameJa": "アクセンチュア",
+          "ticker": "ACN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CGI",
+          "nameJa": "CGI",
+          "ticker": "GIB",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "DXC Technology",
+          "nameJa": "DXCテクノロジー",
+          "ticker": "DXC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "EPAM Systems",
+          "nameJa": "EPAMシステムズ",
+          "ticker": "EPAM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Genpact",
+          "nameJa": "ジェンパクト",
+          "ticker": "G",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 814547,
+    "tickers": [
+      "FICO"
+    ],
+    "name": "Fair Isaac",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Fair Isaac Form 10-K (filed 2025-11-07) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "信用スコア(FICOスコア)と、意思決定のための分析ソフトを提供する会社。",
+      "revenue": "事業はスコアとソフトウェアの二つ。スコアは信用情報機関を通じて1件ごとに手数料を受け取り、ソフトは複数年の購読が中心。",
+      "strength": "FICOスコアは米国の消費者信用リスクの標準的な尺度で、米国の多くの与信判断に使われる。",
+      "risks": "収益が少数の製品に偏る。ソフトウェア戦略が実を結ばない可能性や、AIと無料の信用情報の広がりも重荷になる。",
+      "competition": "主な競合にトランスユニオンがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides credit scores (the FICO Score) and analytics software for business decisions.",
+      "revenue": "Two businesses: Scores earns a per-use fee through credit bureaus, and Software is mostly multi-year subscriptions.",
+      "strength": "The FICO Score is the standard measure of US consumer credit risk and is used in many US lending decisions.",
+      "risks": "Revenue is concentrated in a few products. The software strategy may not succeed, and AI and free credit information are spreading.",
+      "competition": "Main competitors include TransUnion.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "TransUnion",
+          "nameJa": "トランスユニオン",
+          "ticker": "TRU",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 860731,
+    "tickers": [
+      "TYL"
+    ],
+    "name": "Tyler Technologies",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Tyler Technologies Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/860731/000086073126000016/tyl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "地方・州・連邦政府向けの業務ソフトと関連サービスを提供する会社。",
+      "revenue": "政府機関向けのソフトと、導入・データ移行・研修・継続サポートなどのサービスで稼ぐ。継続収入の基盤が大きい。",
+      "strength": "政府業務への深い知識、幅広い製品群、部門をつなぐ統合システムが強み。",
+      "risks": "サイバー攻撃やAI利用に伴う情報漏えいが、事業と評判を傷つけうる。",
+      "competition": "主な競合にオラクル、SAP、ワークデイ、トムソン・ロイター、モトローラ・ソリューションズがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides software and related services to local, state and federal governments.",
+      "revenue": "Revenue comes from software for government agencies and services such as implementation, data conversion, training and ongoing support. A large base of recurring revenue underpins it.",
+      "strength": "Deep government know-how, a broad product range and integrated systems that connect departments are its strengths.",
+      "risks": "Cyberattacks and data leaks from AI use can damage the business and its reputation.",
+      "competition": "Main competitors include Oracle Corporation, SAP AG, Workday, Inc., Thomson Reuters Corporation, Motorola Solutions, Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Oracle Corporation",
+          "nameJa": "オラクル",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "SAP AG",
+          "nameJa": "SAP",
+          "ticker": "SAP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Workday, Inc.",
+          "nameJa": "ワークデイ",
+          "ticker": "WDAY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Thomson Reuters Corporation",
+          "nameJa": "トムソン・ロイター",
+          "ticker": "TRI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Motorola Solutions, Inc.",
+          "nameJa": "モトローラ・ソリューションズ",
+          "ticker": "MSI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 882835,
+    "tickers": [
+      "ROP"
+    ],
+    "name": "Roper Technologies",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Roper Technologies Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニッチ市場向けに専門ソフトと技術製品を手がける多角的な技術企業。",
+      "revenue": "売上はアプリケーションソフト、ネットワークソフト、技術搭載製品の三部門から。アプリケーションソフトが56.7%を占める。",
+      "strength": "多くのニッチ市場で、市場リーダーか、その有力な代替の地位にある。",
+      "risks": "クラウドなど第三者の技術に頼るため、障害で業務が止まりうる。サイバー事故を防ぎきれない可能性もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A diversified technology company that makes specialized software and technology products for niche markets.",
+      "revenue": "Revenue comes from three segments: application software, network software and technology-enabled products. Application software is 56.7%.",
+      "strength": "In many niche markets it is the market leader or a strong alternative to it.",
+      "risks": "Reliance on third-party technology such as cloud services means outages can disrupt operations, and cyber incidents may not be fully prevented.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 864749,
+    "tickers": [
+      "TRMB"
+    ],
+    "name": "Trimble",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Trimble Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000015/trmb-20260102.htm"
+      }
+    ],
+    "ja": {
+      "business": "建設や運輸などの現場と事務所をつなぐ技術・ソフトを提供する会社。",
+      "revenue": "ソフトは、サブスクリプション、期間ライセンス、永久ライセンスで販売する。ハードウェアとサービスも提供する。",
+      "strength": "ソフト、ハード、データを組み合わせる統合力と、建設と運輸の二つのクラウド基盤が特徴。",
+      "risks": "自社や委託先のシステムが、サイバー攻撃や障害、遅延にさらされる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company offering technology and software that connect office and field work in construction, transportation and other industries.",
+      "revenue": "Software is sold by subscription, term license and perpetual license. Hardware and services are also offered.",
+      "strength": "It combines software, hardware and data, and runs two cloud platforms, one for construction and one for transportation.",
+      "risks": "Its own and its contractors' systems are exposed to cyberattacks, outages and delays.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1121788,
+    "tickers": [
+      "GRMN"
+    ],
+    "name": "Garmin",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Garmin Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm"
+      }
+    ],
+    "ja": {
+      "business": "GPSを使った時計や航空機器、船舶機器などを作る会社。",
+      "revenue": "フィットネス、アウトドア、航空、船舶、自動車メーカー向けの機器とサービスを販売して稼ぐ。",
+      "strength": "設計から製造、販売まで自社で行う垂直統合の製造力が中核の強み。",
+      "risks": "市場の競争が激しい。保有する特許が競争優位につながらない可能性もある。",
+      "competition": "主な競合にアップル、グーグル、ハネウェル、アプティブがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes GPS watches and aviation, marine and other navigation devices.",
+      "revenue": "It sells devices and services for fitness, outdoor, aviation, marine and automotive makers.",
+      "strength": "Its core strength is vertical integration, handling design, manufacturing and sales in-house.",
+      "risks": "Competition in its markets is intense, and its patents may not give a competitive advantage.",
+      "competition": "Main competitors include Apple, Google, Honeywell Aerospace & Defense, Aptiv.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Apple",
+          "nameJa": "アップル",
+          "ticker": "AAPL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "nameJa": "グーグル",
+          "ticker": "GOOGL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Honeywell Aerospace & Defense",
+          "nameJa": "ハネウェル",
+          "ticker": "HON",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Aptiv",
+          "nameJa": "アプティブ",
+          "ticker": "APTV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1274494,
+    "tickers": [
+      "FSLR"
+    ],
+    "name": "First Solar",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "First Solar Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "薄膜方式の太陽光発電モジュールを製造する米国の会社。",
+      "revenue": "太陽光モジュールの販売が純売上の中心。大口顧客との契約が売上を左右する。",
+      "strength": "CdTeの薄膜技術と、連続した一貫生産の工程が特徴。",
+      "risks": "結晶シリコン製モジュールメーカーとの激しい競争、補助金・税優遇の縮小、原材料の調達先の限定が重なる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. company that makes thin film solar power modules.",
+      "revenue": "Sales of solar modules make up most of net sales, and large customer contracts drive the result.",
+      "strength": "Its features are CdTe thin-film technology and a continuous, integrated production process.",
+      "risks": "Fierce competition from crystalline silicon module makers, shrinking subsidies and tax benefits, and a limited set of raw-material suppliers weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1463101,
+    "tickers": [
+      "ENPH"
+    ],
+    "name": "Enphase Energy",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "Enphase Energy Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "家庭向けの太陽光発電と蓄電を管理するマイクロインバーターなどを作る会社。",
+      "revenue": "設置業者や販売店のパートナーを通じ、オンラインストアも使って家庭用エネルギー製品を売る。",
+      "strength": "太陽光発電と蓄電を一つの技術基盤で管理する、システム全体の手法が特徴。",
+      "risks": "自社より大きい競合がいて、低価格販売で売上やシェアを失う恐れがある。",
+      "competition": "主な競合にソーラーエッジ、テスラ、チャージポイントがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes microinverters and other products that manage home solar power and storage.",
+      "revenue": "It sells home energy products through installer and distributor partners and also through an online store.",
+      "strength": "Its feature is a whole-system approach that manages solar generation and storage on one technology platform.",
+      "risks": "Some competitors are larger, and low-price sales could cost it revenue and share.",
+      "competition": "Main competitors include SolarEdge Technologies, Inc., Tesla, ChargePoint Holdings, Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "SolarEdge Technologies, Inc.",
+          "nameJa": "ソーラーエッジ",
+          "ticker": "SEDG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Tesla",
+          "nameJa": "テスラ",
+          "ticker": "TSLA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ChargePoint Holdings, Inc.",
+          "nameJa": "チャージポイント",
+          "ticker": "CHPT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1609711,
+    "tickers": [
+      "GDDY"
+    ],
+    "name": "GoDaddy",
+    "reviewedOn": "2026-10-20",
+    "sources": [
+      {
+        "label": "GoDaddy Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ドメインやホームページ作成など、起業家向けのネット事業の道具を提供する会社。",
+      "revenue": "ドメイン、サイト構築・ホスティング、決済やPOSなど、小規模事業者向けのサービスで稼ぐ。",
+      "strength": "AIツールのAiroと、電話やデジタルでの個別の案内を組み合わせた支援が特徴。",
+      "risks": "顧客への販売拡大の失敗、競争の激化、システム障害、AI利用に伴うリスクがある。",
+      "competition": "主な競合にショッピファイ、ウィックス、クラウドフレアがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides online business tools for entrepreneurs, such as domains and website building.",
+      "revenue": "It earns from services for small businesses, such as domains, website building and hosting, payments and POS.",
+      "strength": "Its feature is support that pairs the AI tool Airo with personal guidance by phone and digital channels.",
+      "risks": "Risks include failing to expand sales to customers, tougher competition, system outages and AI-related risks.",
+      "competition": "Main competitors include Shopify, Wix, Cloudflare.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Shopify",
+          "nameJa": "ショッピファイ",
+          "ticker": "SHOP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Wix",
+          "nameJa": "ウィックス",
+          "ticker": "WIX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cloudflare",
+          "nameJa": "クラウドフレア",
+          "ticker": "NET",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
   }
 ]
