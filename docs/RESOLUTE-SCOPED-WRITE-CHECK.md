@@ -170,3 +170,48 @@ change, production SQL, save activation or credential transfer was performed
 during the browser troubleshooting. Existing approval for the narrowly scoped
 in-container rollback check remains valid. Do not retry denied CLI endpoints or
 copy Postgres admin credentials into another service.
+
+
+## 2026-10-20 23:02 JST — production rollback and effective ACL verified
+
+The authenticated browser recovered and showed the correct radiant-magic project.
+The existing Postgres Console exposed an allowed in-container shell. Read-only
+preflight confirmed all three exact Railway IDs, /usr/bin/psql and the existing
+Unix socket. No CLI policy-denied endpoint was retried, no DB restart/start-command
+change occurred, and no administrator credential left the Postgres container.
+
+The reviewed SQL was pasted into a private mktemp directory (umask077); remote
+SHA25614abb5cb35417c878cd666a8393d3e696b862f70d8e650a9a7d26bb7cdcf9f81
+matched the repository exactly. The runner retained all executable statements
+unchanged; its pasted copy omitted three explanatory comments, so its byte digest
+was5886a4685fb2991d8b8a62fbcd2c4790f90a6c0b7d7041a41b95fcf450b215b7
+rather than repository b7b60c83f6dd49a07f506fa0a5c0429a0bc1d45114b843dacb01e9fe1a8169ea.
+Do not claim the shell files were byte-identical. Exact service/project/environment
+checks, no-argument guard, env-i, local socket, --no-password and ON_ERROR_STOP
+were preserved and executed.
+
+Actual output at2026-10-20T13:59:48Z: plan INSERT/readback/delete, deletion ledger,
+notification settings/readback, three protection trigger events, receipt-column
+UPDATE3, privilege-denial assertions, ROLLBACK and five-table absence assertions.
+RESOLUTE_SCOPED_ROLLBACK_OK / committed_rows0 / activation=false; CHECK_EXIT=0.
+The zero receipt was synthetic inside the rolled-back transaction, never an
+external publication. Storage roles stayed NOLOGIN; customer saving stayed OFF.
+
+A separate BEGIN READ ONLY connection at14:00:29.085166Z returned probe plans0,
+all production plan_deletions0, notification_suppressions0, unpublished outbox0,
+LOGIN storage roles0 and storage-role sessions0. This is a point-in-time postcheck,
+not a maintained write fence or complete external inventory.
+
+A catalog-only PL/pgSQL translation of storage-permissions.mjs checked database,
+all3 role attributes/membership/database CREATE, non-system schema CREATE/required
+USAGE, all non-system table/column/grant-option and sequence rights, relation
+ownership, expected-table existence and owned/executable SECURITY DEFINER functions.
+The initial read-only audit stopped on a local record/table-alias name collision;
+its session disconnected without data changes. Renamed local column record and
+function alias; rerun emitted RESOLUTE_FULL_ACL_OK at14:01:56.397285Z with3 dormant
+roles, ROLLBACK, ACL_EXIT=0. This was the translated SQL, not Node execution inside
+the DB container. No Node/Python runtime was available there.
+
+Remaining distinct gates: maintained write fence and fresh complete manifest,
+actual public HTTPS publication/readback/receipt, independently restored nonempty
+history and repeat replay. Never interpret the DB rollback test as those gates.

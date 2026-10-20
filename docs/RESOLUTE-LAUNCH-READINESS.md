@@ -14,22 +14,24 @@ to repeat completed operations. Other product work is unchanged.
   Synthetic loopback HTTP plus real S3 persisted three events and verified
   readback after an in-process server restart. Neither proves production
   nonempty-history recovery, public HTTPS acceptance or container-restart durability.
-- Guarded rollback-only production SQL is implemented in
-  `scripts/resolute/check-storage-write.sh` and `.sql`, but has NOT run against
-  production. Local evidence: Node1257/Python2523; integrated CI39388517701 passed
-  for e847d03a. This is not a test claim for subsequent coworker commits.
-- Remaining: execute the reviewed scoped rollback check inside the existing DB
-  container without exporting admin credentials; establish a fresh complete
-  write-fenced inventory; verify real gateway receipts and durable objects, then
-  isolated restore/replay of nonempty history before reviewing save activation.
-  Never reuse the initial empty manifest after writes or treat NOLOGIN alone as
-  proof of a maintained fence. See [cutover evidence](RESOLUTE-STORAGE-CUTOVER.md)
-  and [scoped check](RESOLUTE-SCOPED-WRITE-CHECK.md).
-- Access blocker: Railway CLI endpoint access is denied in this environment;
-  the connected app has no SQL/SSH operation. Browser control repeatedly timed
-  out, including its reset. Owner reported successful email login at20:09 JST;
-  agent-side signed-in state and a DB query interface remain unverified. Do not
-  send the owner through another login just because browser control timed out.
+- Production rollback-only check PASSED at2026-10-20T13:59:48Z through the
+  existing Postgres browser Console/local socket. Exact reviewed SQL SHA256
+  14abb5cb35417c878cd666a8393d3e696b862f70d8e650a9a7d26bb7cdcf9f81;
+  RESOLUTE_SCOPED_ROLLBACK_OK, committed_rows0, activation=false, psql exit0.
+  No admin credentials were exported and no persistent probe rows remain.
+- Independent read-only postcheck at14:00:29Z found production deletion and
+  suppression histories0, unpublished outbox0, LOGIN roles0 and writer sessions0.
+  Full effective catalog ACL audit passed at14:01:56Z for all3 dormant roles.
+- Remaining: fresh complete write-fenced inventory, actual public HTTPS gateway
+  receipts/durable objects, then isolated nonempty-history restore/replay before
+  reviewing customer-save activation. The rollback receipt was synthetic and
+  rolled back; it is not proof of external durability or authenticated saving.
+  Never reuse the initial empty manifest after writes. See
+  [cutover evidence](RESOLUTE-STORAGE-CUTOVER.md) and
+  [scoped check](RESOLUTE-SCOPED-WRITE-CHECK.md).
+- Browser access is now verified: correct radiant-magic production project and
+  existing Postgres Console. CLI policy denial remains; no retry or workaround.
+  No owner login, key re-entry or Run now is needed.
 - No live payment, charge, email, additional AI call or billing change. Preserve
   morning/backup/restore schedules and reservations. October20 morning news is
   not a successful acquisition. Keep RIZEL90 hidden and approved copy/UI intact.
