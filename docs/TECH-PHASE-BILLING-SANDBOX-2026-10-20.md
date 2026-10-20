@@ -559,3 +559,31 @@ unauthenticated GET status and POST cancel each returned 401/service-auth;
 unsigned public notification returned 401/signature. No identity or payment data
 was exposed. GitHub Actions 39384025241 completed SUCCESS, including both the
 preview lint/test/build job and the PostgreSQL concurrency job.
+
+## Owner Sandbox missed-notification recovery
+
+Added `services/tech-phase-billing/recovery.mjs` and a separate one-shot entry in
+`scripts/tech-phase/billing-recovery-entry.mjs`. This watchdog reads the exact
+owner's current status, reconciles only that existing contract through the same
+verified-payment path, then rereads status. It never invokes create/cancel/capture.
+An explicit enable switch, Sandbox mode, preview branch setting and service/owner
+identity are required. The upstream domain/origin are fixed in code. Responses
+are bounded to 16 KiB, redirects rejected, each request times out at 55 seconds,
+and an ambiguous failure is not retried within the same run. Logs contain only
+outcome/state/plan/change flag, never identifiers, credentials or provider payloads.
+
+Tests cover disabled/live/main/missing-credential rejection before network access,
+missed-payment repair, repeat runs, cancelled paid access, pending/manual-review
+outcomes, absence of a contract, oversized/malformed status, and no mutation retry.
+This is deliberately the existing single-owner Sandbox acceptance path, not a
+production multi-customer reconciliation worker. A new dedicated PRO-only hourly
+job is planned; no RESOLUTE service/schedule is reused or modified.
+
+Recovery final local gates: Node 1,252 passed, Python 2,523 passed, production
+build passed, lint 0 errors/5 existing warnings, compileall and diff check passed.
+Railway inventory confirms no existing PRO recovery job; the new job must be
+created only in environment 3a80776d-15a3-4ca1-bd0c-e0c915ccf73b, with no domain,
+restart NEVER and cron `17 * * * *`. Bundle the checked entry with esbuild
+`--bundle --platform=node --format=esm`; credentials are runtime references to the
+existing PRO Sandbox service, not embedded in the function source. Deployment
+and the initial real recovery run remain pending at this code publication.
