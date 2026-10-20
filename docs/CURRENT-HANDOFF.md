@@ -1768,3 +1768,15 @@ Validation: Node1183/1183, Python2508/2508 (266.840s), lint0 errors
 (5 existing warnings), Next build, compileall and diff check passed.
 Total3691 tests. No actual provider/model calls were made. Live rollout and
 next scheduled generation/storage remain separate verification steps.
+
+## 2026-10-20 — Recovery subprocess lifecycle prerequisite
+
+Freshness commit9ff1ed6f CI39356200347 completed successfully (verified via
+GitHub Actions API). Morning remains pinned to20a3069e; no schedule change.
+Added services/resolute-recovery/process.mjs: trusted fixed Linux commands,
+explicit environment, no shell/stdin, bounded stdout+stderr, redacted failures,
+abort/deadline TERM then KILL to the process group, and awaited close. Real-child
+regressions cover resistant descendants and abort despite exit0. This is a
+prerequisite for the fixed PG/API/writer executor, which remains unimplemented;
+no actual authenticated recovery acceptance or production saving is claimed.
+No new deployment, credentials, DB changes, provider calls or AI/mail/payment.

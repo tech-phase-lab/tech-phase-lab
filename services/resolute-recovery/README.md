@@ -41,3 +41,20 @@ Tests verify real ephemeral RSA signatures, rejection, concurrent/failed/restart
 requests and evidence filtering. Their executor returns synthetic reports; they
 are not evidence of live PostgreSQL/S3 acceptance. Full deployed acceptance remains
 an explicit launch blocker.
+
+## Bounded subprocess execution
+
+`process.mjs` supplies `runIsolatedProcess` for the fixed executor's Linux CLI
+steps. It requires an explicit environment, rejects inherited PostgreSQL/database
+connection and runtime-injection variables, uses no shell or stdin, and bounds
+total stdout/stderr. Abort/timeout/overflow sends TERM to the process group then
+KILL after a bounded grace period. It waits for close, discards output on failure,
+and never returns stderr. Descendants in the group are killed even if the leader
+exits first. Child code must not deliberately create an unrelated process group;
+this runs trusted fixed commands, not arbitrary user code or a security sandbox.
+
+Real-child tests cover a TERM-resistant descendant, caller abort with exit0,
+output overflow, missing executable and environment separation. These prove
+process lifecycle behavior only. The actual PG/API/writer executor, deployed
+owner-session acceptance and production key custody are still required; this
+helper does not enable any service or establish recovery acceptance by itself.

@@ -91,3 +91,18 @@ alone does not establish isolation or prove execution; correlate actual runner
 logs and saved results. Tests currently use synthetic response reports solely
 to verify transport rejection/redaction. Production custody, DB gates and the
 complete authenticated real PostgreSQL/S3 dump/restore acceptance remain open.
+
+## 2026-10-20 — Bounded subprocess prerequisite
+
+Added a Linux process-group runner for the pending fixed isolated executor.
+Explicit environment only, no shell/stdin, bounded combined output, redacted
+failures, abort/timeout TERM then KILL, and close awaited before completion.
+Actual child-process tests cover resistant descendants and abort with exit0;
+no synthetic report is substituted for a real recovery result. This is not yet
+the full authenticated PostgreSQL/API/writer executor. No service, production
+key, migration, saving gate, schedule, mail or provider was activated.
+
+Validation: Node1188/1188 and Python2508/2508 (242.753s), total3696;
+lint0 errors/5 existing warnings, Next build, compileall and diff check passed.
+These results include actual local child processes but not live PostgreSQL/S3
+or owner-session restore acceptance. Do not enable saving from these results.
