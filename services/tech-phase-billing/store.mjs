@@ -10,10 +10,26 @@ export function billingStore(pool) {
     finally { client.release(); }
   }
   return {
-    async summary(userId) {
-      const row=(await pool.query(`SELECT id,currency,state FROM ${S}.subscriptions WHERE user_id=$1
-        ORDER BY (state NOT IN ('cancelled','expired')) DESC,created_at DESC,id DESC LIMIT 1`,[userId])).rows[0];
-      return {...await this.entitlement(userId),subscription:row ?? null};
+    async summary(userId, now = Date.now()) {
+      if (!Number.isFinite(now)) throw Error('INVALID_TIME');
+      // One statement gives access, selected contract and review state the same
+      // database snapshot, even if a refund arrives while this request runs.
+      const row=(await pool.query(`WITH selected AS (
+        SELECT id,currency,state FROM ${S}.subscriptions WHERE user_id=$1
+        ORDER BY (state NOT IN ('cancelled','expired')) DESC,created_at DESC,id DESC LIMIT 1
+      ), access AS (
+        SELECT max(period_end) AS until FROM ${S}.entitlement_periods
+        WHERE user_id=$1 AND period_start <= $2 AND period_end > $2
+      ) SELECT s.id,s.currency,s.state,a.until,EXISTS (
+        SELECT 1 FROM selected chosen WHERE
+          EXISTS (SELECT 1 FROM ${S}.review_holds h WHERE h.subscription_id=chosen.id) OR
+          EXISTS (SELECT 1 FROM ${S}.payments p JOIN ${S}.adverse_transactions adverse USING(transaction_id)
+            WHERE p.subscription_id=chosen.id)
+      ) AS review_required FROM access a LEFT JOIN selected s ON true`,[userId,new Date(now)])).rows[0];
+      const until=row.until ? new Date(row.until).toISOString() : null;
+      return {environment:'sandbox',plan:until ? 'pro' : 'free',proExpiresAt:until,
+        subscription:row.id ? {id:row.id,currency:row.currency,state:row.state} : null,
+        reviewRequired:row.review_required === true};
     },
     async reserve(userId, currency, termsVersion) {
       const q = offer(currency);
@@ -54,7 +70,7 @@ export function billingStore(pool) {
         WHERE user_id=$1 AND id=$2 AND state NOT IN ('cancelled','expired')`,[userId,id,states[state]]);
     },
     async holdTransaction(transactionId, reason) {
-      if (!/^[A-Za-z0-9-]{3,50}$/.test(transactionId ?? '') || !['REFUNDED','REVERSED'].includes(reason)) throw Error('INVALID_HOLD');
+      if (!/^[A-Za-z0-9-]{3,50}$/.test(transactionId ?? '') || !['REFUNDED','REVERSED','DISPUTED'].includes(reason)) throw Error('INVALID_HOLD');
       await pool.query(`INSERT INTO ${S}.adverse_transactions(transaction_id,reason) VALUES ($1,$2)
         ON CONFLICT DO NOTHING`,[transactionId,reason]);
     },
@@ -64,6 +80,15 @@ export function billingStore(pool) {
         WHERE user_id=$1 AND period_start <= $2 AND period_end > $2`,[userId,new Date(now)])).rows[0];
       const until = row?.until ? new Date(row.until).toISOString() : null;
       return { environment:'sandbox', plan:until ? 'pro' : 'free', proExpiresAt:until };
+    },
+    async hasReviewHold(userId, id) {
+      const row = (await pool.query(`SELECT EXISTS (
+        SELECT 1 FROM ${S}.subscriptions s WHERE s.user_id=$1 AND s.id=$2 AND (
+          EXISTS (SELECT 1 FROM ${S}.review_holds h WHERE h.subscription_id=s.id) OR
+          EXISTS (SELECT 1 FROM ${S}.payments p JOIN ${S}.adverse_transactions a USING(transaction_id)
+            WHERE p.subscription_id=s.id)
+        )) AS held`,[userId,id])).rows[0];
+      return row?.held === true;
     },
     async hold(userId, id, reason) {
       if (!['REFUNDED','PARTIALLY_REFUNDED','REVERSED','DISPUTED'].includes(reason)) throw Error('INVALID_HOLD');

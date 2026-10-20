@@ -105,6 +105,59 @@ test('durable checkout resumes after response loss; another member cannot cancel
  assert.equal((await svc.cancel('user_a',first.id)).status,'cancelled');assert.equal(cancels,1);
  assert.equal((await db.query('SELECT state FROM tech_phase_billing_sandbox.subscriptions')).rows[0].state,'cancelled');
 }));
+test('JPY and USD cancellation recover a local save failure without repeating provider cancellation',()=>database(async(store,db)=>{
+ for(const currency of ['JPY','USD'])for(const initialState of ['ACTIVE','SUSPENDED']) {
+  const user=`user_${currency}_${initialState}`;
+  const row=await store.reserve(user,currency,'sandbox-v1');
+  const providerId=`I-${currency}${initialState}`;
+  await store.attach(user,row.id,providerId);await store.providerState(user,row.id,initialState);
+  const transactionId=`TX-${currency}-${initialState}`;
+  await store.recordPayment({eventId:`WH-${transactionId}`,eventType:'PAYMENT.SALE.COMPLETED',id:row.id,transactionId,currency,minor:offer(currency).minor,paidAt:'2026-10-20T00:00:00Z'});
+  let providerState=initialState,cancelCalls=0,fail=true;
+  const paypal={get:async()=>({id:providerId,custom_id:row.id,status:providerState}),cancel:async()=>{cancelCalls++;providerState='CANCELLED';}};
+  const svc=checkoutService({store:{...store,cancelled:async(...args)=>{
+   if(fail){fail=false;throw Error('LOCAL_SAVE_FAILED');}
+   return store.cancelled(...args);
+  }},paypal,termsVersion:'sandbox-v1'});
+  await assert.rejects(svc.cancel(user,row.id),/LOCAL_SAVE_FAILED/);
+  assert.equal((await store.get(user,row.id)).state,initialState.toLowerCase());
+  for(let retry=0;retry<2;retry++)assert.deepEqual(await svc.cancel(user,row.id),{status:'cancelled'});
+  assert.equal(cancelCalls,1);assert.equal((await store.get(user,row.id)).state,'cancelled');
+  assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.payments WHERE subscription_id=$1',[row.id])).rows[0].n,1);
+ }
+}));
+test('JPY and USD checkout reuse the durable key after provider response loss or local attach failure',async()=>database(async(store,db)=>{
+ for(const currency of ['JPY','USD']) for(const failure of ['provider-response','local-attach']) {
+  const user=`user_${currency}_${failure}`,requests=[],providerRows=new Map();
+  let fail=true,attachCalls=0;
+  const wrapped={...store,attach:async(...args)=>{
+   attachCalls++;
+   if(failure==='local-attach'&&fail){fail=false;throw Error('database unavailable');}
+   return store.attach(...args);
+  }};
+  const paypal={create:async request=>{
+   requests.push(request);
+   if(!providerRows.has(request.id))providerRows.set(request.id,{
+    id:`I-${currency}${failure==='local-attach'?'ATTACH':'REMOTE'}`,
+    approvalUrl:remote().links[0].href,
+   });
+   if(failure==='provider-response'&&fail){fail=false;throw Error('response lost');}
+   return providerRows.get(request.id);
+  }};
+  const svc=checkoutService({store:wrapped,paypal,termsVersion:'sandbox-v1'});
+  await assert.rejects(svc.start(user,currency,'sandbox-v1'),/response lost|database unavailable/);
+  const pending=(await db.query('SELECT * FROM tech_phase_billing_sandbox.subscriptions WHERE user_id=$1',[user])).rows;
+  assert.equal(pending.length,1);assert.equal(pending[0].paypal_id,null);
+  assert.equal(pending[0].state,'creating');
+  const resumed=await svc.start(user,currency,'sandbox-v1');
+  assert.equal(resumed.id,pending[0].id);
+  assert.deepEqual(requests,[{id:resumed.id,currency},{id:resumed.id,currency}]);
+  assert.equal(providerRows.size,1);assert.equal(attachCalls,failure==='local-attach'?2:1);
+  const saved=(await db.query('SELECT * FROM tech_phase_billing_sandbox.subscriptions WHERE user_id=$1',[user])).rows;
+  assert.equal(saved.length,1);assert.equal(saved[0].paypal_id,providerRows.get(resumed.id).id);
+ }
+ assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.payments')).rows[0].n,0);
+}));
 test('ledger deduplicates renewals and rolls back conflicts, cancellation retains payments',async()=>database(async(store,db)=>{
  const row=await store.reserve('user_a','USD','sandbox-v1');
  assert.equal((await store.reserve('user_a','USD','sandbox-v1')).id,row.id);

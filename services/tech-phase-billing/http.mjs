@@ -13,6 +13,7 @@ async function readBody(request,limit) {
     if (!result || typeof result !== 'object' || Array.isArray(result)) throw Error('INVALID_INPUT');
     return result;
   } catch { await reader.cancel().catch(()=>{});throw Error('INVALID_INPUT'); }
+  finally { reader.releaseLock(); }
 }
 export function sandboxHandler({env,identity,ownerId,services}) {
   return async(request,action)=>{

@@ -73,7 +73,7 @@ export function reconciliationService({ store, paypal, plans, now = Date.now }) 
       assertSubscription(local,first,plans);
       await store.providerState(userId,id,first.status);
       const paid = Date.parse(first.billing_info?.last_payment?.time);
-      if (!Number.isFinite(paid)) return { status:'payment-pending', ...(await store.entitlement(userId,now())) };
+      if (!Number.isFinite(paid)) return { status:await store.hasReviewHold(userId,id) ? 'review-required' : 'payment-pending', ...(await store.entitlement(userId,now())) };
       if (paid > now()) reject();
       const result = await paypal.transactions(local.paypal_id,new Date(paid - 1000).toISOString(),new Date(paid + 1000).toISOString());
       if (!Array.isArray(result?.transactions)) reject();
@@ -95,7 +95,7 @@ export function reconciliationService({ store, paypal, plans, now = Date.now }) 
       // A crash between the payment and period writes remains FREE and is
       // recoverable. Each insert is immutable and keyed by the same transaction.
       await store.grantPeriod(userId,id,payment);
-      return { status:'verified', ...(await store.entitlement(userId,now())) };
+      return { status:await store.hasReviewHold(userId,id) ? 'review-required' : 'verified', ...(await store.entitlement(userId,now())) };
     },
   };
 }

@@ -23,7 +23,7 @@ export default function BillingScreen() {
   const [summary, setSummary] = useState<BillingSummary | null>(null);
   const [currency, setCurrency] = useState<"JPY" | "USD">("JPY");
   const [agreed, setAgreed] = useState(false);
-  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState<string | null>(null);
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -64,10 +64,10 @@ export default function BillingScreen() {
         if (result.approvalUrl) { window.location.assign(sandboxApproval(result.approvalUrl)); return; }
         setNotice("check-payment");
       } else if (action === "reconcile" || action === "cancel") {
-        if (!summary?.subscription || (action === "cancel" && !confirmCancel)) return;
+        if (!summary?.subscription || (action === "cancel" && confirmCancel !== summary.subscription.id)) return;
         const result = await billingRequest(action, { id: summary.subscription.id }, signal);
         setNotice(action === "cancel" ? "cancelled" : result.status === "verified" ? "verified" : result.status === "review-required" ? "review" : "pending");
-        setConfirmCancel(false);
+        setConfirmCancel(null);
       }
       await load(signal);
     } catch (e) {
@@ -105,9 +105,10 @@ export default function BillingScreen() {
     <section className={styles.card} aria-busy={busy}>
       <h2>PayPal Sandbox</h2>
       <p>{t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
-      {notice && <p role="status">{notices[notice]}</p>}
+      {notice && !(notice === "verified" && summary?.reviewRequired) && <p role="status">{notices[notice]}</p>}
       {error && <p role="alert">{errorText}</p>}
       {summary && <div>
+        {summary.reviewRequired && <p role="status">{t("この契約のお支払いは運営側での確認が必要です。", "Payment for this subscription needs review.")}</p>}
         <p>{t("契約状況：", "Subscription: ")}{sub ? states[sub.state] : t("契約なし", "None")}</p>
         <p>{t("テスト環境の利用状態：", "Sandbox access: ")}{summary.plan.toUpperCase()}</p>
         {summary.proExpiresAt && <p>{t("確認済みの利用期限：", "Verified access until: ")}<time dateTime={summary.proExpiresAt}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(summary.proExpiresAt))} JST</time></p>}
@@ -122,8 +123,8 @@ export default function BillingScreen() {
       {ready && sub && sub.state !== "creating" && <button type="button" disabled={busy} onClick={() => void act("reconcile")}>{t("支払いを確認", "Verify payment")}</button>}
       {ready && sub && ["active", "suspended"].includes(sub.state) && <fieldset disabled={busy}>
         <legend>{t("自動更新を停止", "Stop automatic renewal")}</legend>
-        <label className={styles.check}><input type="checkbox" checked={confirmCancel} onChange={e => setConfirmCancel(e.target.checked)} />{t("次回以降の自動更新を停止します。", "Stop future automatic renewals.")}</label>
-        <button type="button" disabled={!confirmCancel || busy} onClick={() => void act("cancel")}>{t("テスト契約を解約", "Cancel test subscription")}</button>
+        <label className={styles.check}><input type="checkbox" checked={confirmCancel === sub.id} onChange={e => setConfirmCancel(e.target.checked ? sub.id : null)} />{t("次回以降の自動更新を停止します。", "Stop future automatic renewals.")}</label>
+        <button type="button" disabled={confirmCancel !== sub.id || busy} onClick={() => void act("cancel")}>{t("テスト契約を解約", "Cancel test subscription")}</button>
       </fieldset>}
       <Link href="/research/account">{t("マイアカウントへ戻る", "Back to my account")}</Link>
     </section>

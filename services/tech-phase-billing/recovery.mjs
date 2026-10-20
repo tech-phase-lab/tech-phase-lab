@@ -5,19 +5,25 @@ const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}
 const STATES=new Set(['creating','approval_pending','active','suspended','cancelled','expired']);
 function summary(value) {
   if(value?.environment!=='sandbox'||!['free','pro'].includes(value.plan)||
-    (value.plan==='pro'&&!Number.isFinite(Date.parse(value.proExpiresAt)))||
+    (value.reviewRequired!==undefined&&typeof value.reviewRequired!=='boolean')||
+    (value.reviewRequired===true&&!value.subscription)||
+    (value.plan==='pro'&&(typeof value.proExpiresAt!=='string'||!Number.isFinite(Date.parse(value.proExpiresAt))))||
     (value.plan==='free'&&value.proExpiresAt!==null)||
     (value.subscription!==null&&(!UUID.test(value.subscription?.id??'')||!STATES.has(value.subscription?.state))))throw Error('INVALID_RECOVERY_STATUS');
   return value;
 }
 async function read(response) {
-  if(!response.ok||!response.headers.get('content-type')?.startsWith('application/json'))throw Error('RECOVERY_UNAVAILABLE');
+  if(!response.ok||response.headers.get('content-type')?.split(';')[0].trim().toLowerCase()!=='application/json'){
+    await response.body?.cancel().catch(()=>{});
+    throw Error('RECOVERY_UNAVAILABLE');
+  }
   const reader=response.body?.getReader();if(!reader)throw Error('RECOVERY_UNAVAILABLE');
   let size=0;const chunks=[];
   try {
     for(;;){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>16384)throw Error('RECOVERY_RESPONSE_LIMIT');chunks.push(value);}
     return JSON.parse(Buffer.concat(chunks).toString('utf8'));
   }catch{await reader.cancel().catch(()=>{});throw Error('RECOVERY_UNAVAILABLE');}
+  finally {reader.releaseLock();}
 }
 export async function runOwnerRecovery(env,fetcher=fetch) {
   if(env.TECH_PHASE_BILLING_RECOVERY_ENABLED!=='true')return {outcome:'disabled'};
@@ -36,6 +42,7 @@ export async function runOwnerRecovery(env,fetcher=fetch) {
   const after=summary(await call('status'));
   if(after.subscription?.id!==before.subscription.id)throw Error('RECOVERY_CONTRACT_CHANGED');
   // Operational logs contain no payer, user, contract ID, token or raw response.
-  return {outcome:result.status,plan:after.plan,state:after.subscription.state,
-    changed:before.plan!==after.plan||before.proExpiresAt!==after.proExpiresAt||before.subscription.state!==after.subscription.state};
+  return {outcome:after.reviewRequired===true?'review-required':result.status,plan:after.plan,state:after.subscription.state,
+    changed:before.plan!==after.plan||before.proExpiresAt!==after.proExpiresAt||before.subscription.state!==after.subscription.state||
+      (before.reviewRequired===true)!==(after.reviewRequired===true)};
 }

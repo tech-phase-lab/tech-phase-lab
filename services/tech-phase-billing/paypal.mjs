@@ -54,7 +54,10 @@ export function approvalUrl(remote) {
   return url.href;
 }
 async function json(response) {
-  if (!response.headers.get('content-type')?.toLowerCase().startsWith('application/json')) fail();
+  if (response.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json') {
+    await response.body?.cancel().catch(() => {});
+    fail();
+  }
   const reader = response.body?.getReader();
   if (!reader) fail();
   const chunks = []; let size = 0;
@@ -65,6 +68,7 @@ async function json(response) {
     }
     return JSON.parse(Buffer.concat(chunks).toString('utf8'));
   } catch { await reader.cancel().catch(() => {}); fail(); }
+  finally { reader.releaseLock(); }
 }
 export function createPaypal(config, fetcher = fetch) {
   if (config.base !== BASE || !config.clientId || !config.secret || !config.webhookId) fail('BILLING_DISABLED');

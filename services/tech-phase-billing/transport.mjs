@@ -11,11 +11,12 @@ export function transportConfig(env) {
   if(url.protocol!=='https:'||!url.hostname.endsWith('.up.railway.app')||url.port||url.username||url.password||url.search||url.hash||url.pathname!=='/') throw Error('INVALID_TRANSPORT');
   return {url:url.origin,token};
 }
-async function bounded(body,limit) {
+async function bounded(body,limit,code='BODY_LIMIT') {
   if(!body)return undefined;
   const reader=body.getReader(),chunks=[];let length=0;
-  try {for(;;){const {done,value}=await reader.read();if(done)break;length+=value.byteLength;if(length>limit)throw Error('BODY_LIMIT');chunks.push(value);}return Buffer.concat(chunks);}
+  try {for(;;){const {done,value}=await reader.read();if(done)break;length+=value.byteLength;if(length>limit)throw Error(code);chunks.push(value);}return Buffer.concat(chunks);}
   catch(error){await reader.cancel().catch(()=>{});throw error;}
+  finally {reader.releaseLock();}
 }
 export function billingGateway({env,identity,ownerId,fetcher=fetch}) {
   return async(request,action)=>{
@@ -40,8 +41,11 @@ export function billingGateway({env,identity,ownerId,fetcher=fetch}) {
         const value=request.headers.get(name);if(value)headers.set(name,value);
       }
       const upstream=await fetcher(`${config.url}/sandbox/${action}`,{method:request.method,headers,body,redirect:'error',cache:'no-store',signal:AbortSignal.timeout(55000)});
-      const bytes=await bounded(upstream.body,16384);
-      if(!upstream.headers.get('content-type')?.startsWith('application/json'))return reply({error:'billing-unavailable'},503);
+      if(upstream.headers.get('content-type')?.split(';')[0].trim().toLowerCase()!=='application/json') {
+        await upstream.body?.cancel().catch(()=>{});
+        return reply({error:'billing-unavailable'},503);
+      }
+      const bytes=await bounded(upstream.body,16384,'UPSTREAM_BODY_LIMIT');
       const result=JSON.parse(bytes?.toString('utf8')||'null');
       return reply(result,upstream.status);
     }catch(error){return reply({error:error?.message==='BODY_LIMIT'?'input':'billing-unavailable'},error?.message==='BODY_LIMIT'?400:503);}

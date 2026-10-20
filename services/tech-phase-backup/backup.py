@@ -158,7 +158,10 @@ def verify_ledger(env):
         FROM {SCHEMA}.periods g JOIN {SCHEMA}.payments p USING(transaction_id)
         JOIN {SCHEMA}.subscriptions s ON s.id=p.subscription_id
         WHERE NOT EXISTS (SELECT 1 FROM {SCHEMA}.review_holds h WHERE h.subscription_id=s.id)
-          AND NOT EXISTS (SELECT 1 FROM {SCHEMA}.adverse_transactions a WHERE a.transaction_id=p.transaction_id)
+          AND NOT EXISTS (
+            SELECT 1 FROM {SCHEMA}.adverse_transactions a
+            JOIN {SCHEMA}.payments affected ON affected.transaction_id=a.transaction_id
+            WHERE affected.subscription_id=s.id)
       ) SELECT count(*) FROM (
         (SELECT * FROM expected EXCEPT ALL SELECT * FROM {SCHEMA}.entitlement_periods)
         UNION ALL

@@ -43,3 +43,58 @@ test('ambiguous provider error is not retried, and malformed or oversized status
   calls=0;await assert.rejects(runOwnerRecovery(env,async()=>{calls++;return Response.json(value);}));assert.equal(calls,1);
  }
 });
+
+test('recovery cancels rejected bodies and releases readers without retrying mutations',async()=>{
+ for(const [type,code,payload,closed] of [
+  ['text/html',200,'private proxy detail',false],
+  ['application/jsonp',200,JSON.stringify(status()),false],
+  ['application/json',503,'private upstream detail',false],
+  ['application/json',200,'malformed',true],
+  ['application/json',200,'x'.repeat(16385),false],
+ ]) {
+  let calls=0,cancelled=0;
+  const response=new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode(payload));if(closed)c.close();},cancel(){cancelled++;}}),{status:code,headers:{'content-type':type}});
+  await assert.rejects(runOwnerRecovery(env,async()=>{calls++;return response;}),{message:'RECOVERY_UNAVAILABLE'});
+  assert.equal(calls,1);assert.equal(response.body.locked,false);assert.equal(cancelled,closed?0:1);
+ }
+ const responses=[];
+ const result=await runOwnerRecovery(env,async url=>{
+  const response=Response.json(url.endsWith('/status')?status():{environment:'sandbox',status:'payment-pending'},{headers:{'content-type':'Application/JSON; charset=utf-8'}});
+  responses.push(response);return response;
+ });
+ assert.equal(result.outcome,'payment-pending');assert.equal(responses.length,3);
+ assert.ok(responses.every(response=>!response.body.locked));
+});
+
+test('invalid expiry cannot trigger reconciliation and a changed contract is not reported as recovered',async()=>{
+ for(const proExpiresAt of [0,2026,null,[],{},'not-a-date']) {
+  let calls=0;
+  await assert.rejects(runOwnerRecovery(env,async()=>{calls++;return Response.json({...status('pro'),proExpiresAt});}),/INVALID_RECOVERY_STATUS/);
+  assert.equal(calls,1);
+ }
+ let calls=0;
+ await assert.rejects(runOwnerRecovery(env,async url=>{
+  calls++;
+  if(url.endsWith('/reconcile'))return Response.json({environment:'sandbox',status:'verified'});
+  return Response.json(calls===1?status():{...status('pro'),subscription:{id:'00000000-0000-4000-8000-000000000002',state:'active'}});
+ }),/RECOVERY_CONTRACT_CHANGED/);
+ assert.equal(calls,3);
+});
+
+test('watchdog reports a late review hold even when reconciliation returned verified',async()=>{
+ for(const alreadyHeld of [false,true]) {
+  let calls=0;
+  const result=await runOwnerRecovery(env,async url=>{
+   calls++;
+   if(url.endsWith('/reconcile'))return Response.json({environment:'sandbox',status:'verified'});
+   return Response.json({...status(),reviewRequired:calls===1?alreadyHeld:true});
+  });
+  assert.deepEqual(result,{outcome:'review-required',plan:'free',state:'active',changed:!alreadyHeld});
+  assert.equal(calls,3);
+ }
+ for(const value of [{...status(),reviewRequired:'true'},{...status(),reviewRequired:null},{...status(),subscription:null,reviewRequired:true}]) {
+  let calls=0;
+  await assert.rejects(runOwnerRecovery(env,async()=>{calls++;return Response.json(value);}),/INVALID_RECOVERY_STATUS/);
+  assert.equal(calls,1);
+ }
+});

@@ -5,6 +5,26 @@ const token='s'.repeat(48),ownerId='user_owner';
 const env={VERCEL_ENV:'preview',TECH_PHASE_BILLING_SANDBOX_ENABLED:'true',TECH_PHASE_PAYPAL_ENV:'sandbox',TECH_PHASE_BILLING_SERVICE_TOKEN:token,TECH_PHASE_BILLING_SERVICE_URL:'https://pro-test.up.railway.app'};
 const backendEnv={...env,TECH_PHASE_BILLING_RUNTIME:'railway-sandbox',RAILWAY_GIT_BRANCH:'codex/research-preview'};
 const request=(action,body,headers={})=>new Request(`https://preview.example/api/${action}`,{method:body===undefined?'GET':'POST',headers:{origin:'https://preview.example','content-type':'application/json',...headers},body:body===undefined?undefined:JSON.stringify(body)});
+test('upstream limit is a service failure; incoming limit remains an input failure',async()=>{
+ let cancelled=0;
+ const upstream=new Response(new ReadableStream({start(c){c.enqueue(new Uint8Array(16385));},cancel(){cancelled++;}}),{headers:{'content-type':'application/json'}});
+ const gateway=billingGateway({env,ownerId,identity:async()=>ownerId,fetcher:async()=>upstream});
+ const result=await gateway(request('status'),'status');
+ assert.equal(result.status,503);assert.deepEqual(await result.json(),{error:'billing-unavailable'});
+ assert.equal(cancelled,1);assert.equal(upstream.body.locked,false);
+ const incoming=request('create',{padding:'x'.repeat(2049)});
+ assert.equal((await gateway(incoming,'create')).status,400);assert.equal(incoming.body.locked,false);
+});
+test('unexpected upstream media type is cancelled and successful reads release locks',async()=>{
+ for(const type of ['text/html','application/jsonp','Application/JSON; charset=utf-8']) {
+  let cancelled=0;
+  const valid=type.startsWith('Application');
+  const upstream=new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('{}'));if(valid)c.close();},cancel(){cancelled++;}}),{headers:{'content-type':type}});
+  const gateway=billingGateway({env,ownerId,identity:async()=>ownerId,fetcher:async()=>upstream});
+  assert.equal((await gateway(request('status'),'status')).status,valid?200:503);
+  assert.equal(cancelled,valid?0:1);assert.equal(upstream.body.locked,false);
+ }
+});
 test('public notification route keeps purchase closed and requires signature verification',async()=>{
  let calls=0;
  const config={...backendEnv,TECH_PHASE_BILLING_SANDBOX_ENABLED:'false',TECH_PHASE_BILLING_SANDBOX_WEBHOOK_ENABLED:'true'};
