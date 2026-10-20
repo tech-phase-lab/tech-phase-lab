@@ -53,7 +53,7 @@ class Objects:
  def put_object(self,**kw): self.files[kw['Key']]=kw['Body']
  def get_object(self,**kw): return {'Body':io.BytesIO(self.files[kw['Key']])}
  def get_paginator(self,op): return self
- def paginate(self,**kw): return [{'Contents':[{'Key':k,'Size':len(v),'ETag':str(len(v))} for k,v in self.files.items() if k.startswith(kw['Prefix'])]}]
+ def paginate(self,**kw): return [{'IsTruncated':False,'Contents':[{'Key':k,'Size':len(v),'ETag':str(len(v))} for k,v in self.files.items() if k.startswith(kw['Prefix'])]}]
 s3=Objects();key=bytes.fromhex(payload['key']);pin=events.seal_manifest(s3,'fixture',key,protection)
 ledger=events.load_manifest(s3,'fixture',key,pin,protection)
 print(protection.restore_sql(ledger))`],{input:JSON.stringify({key:key.toString('hex'),records:[...records].map(([k,v])=>[k,v.toString('hex')])}),encoding:'utf8'});

@@ -2140,3 +2140,48 @@ checks, wrong DB and shell connection isolation/exit status. Node1257/Python2523
 activation: current execution environment still blocks Railway CLI, and connected
 app lacks SQL/SSH. Owner permission persists; no repeat login/key/Run now.
 See RESOLUTE-SCOPED-WRITE-CHECK.md for exact procedure and evidence limits.
+
+## 2026-10-20 — Require an explicit terminal history-inventory page
+
+The resumed local command and Git fetch succeeded after the execution platform's
+session-metadata recovery timeout. No Railway/GitHub login changes were needed;
+the underlying platform root cause is not observable from this workspace.
+
+Found and reproduced a separate recovery issue: inventory() accepted an exhausted
+page iterator as a complete listing without checking ListObjectsV2 IsTruncated.
+An incomplete/invalid listing could therefore seal an empty manifest or validate
+an existing empty manifest in require_complete_inventory mode. Now each page must
+have a boolean IsTruncated, truncated pages must carry a nonempty continuation
+token, and enumeration must end with exactly one terminal page. Empty intermediate
+pages remain valid. Missing/invalid completion metadata and premature enumeration
+end fail closed before manifest publication or successful recovery acceptance.
+
+Regression evidence: the original implementation failed all seven negative
+subcases across two new tests. Updated code passed all11 event tests and all5
+restore-storage tests. These are local tests, not production provider acceptance.
+Reference: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+
+This change does not provide a maintained write fence. Fresh full inventory under
+stopped writes remains mandatory. No production DB connection, save activation,
+role change, schedule change, key operation or mail/payment/AI call was performed.
+Railway backup/restore payloads still contain8daeaf3c until a separately verified
+bundle rollout; publishing this source alone does not change those runtimes.
+
+Provider acceptance attempt: empty temporary service5b80a31a-3754-4ff0-a2ff-ed8807ce64b8
+was created without source. Automatic approval rejected setting restore-only
+backup/protection credential references and the candidate bundle: the prior
+explicit approval covered SQL/test code without production credentials/data.
+No variables were applied and no image was connected. The empty service was
+then deleted successfully, with no detached volumes. Do not bypass the rejection
+using another service/tool. Explicit approval for the backup/protection references
+is required before this additional provider acceptance. Production DB credentials
+are excluded from the proposed test. Candidate three-module digest:
+8e9cae071117da8b293ea3d6c3c529b29b6ef8a7b57e3cabadecd82330590063.
+
+Final integrated local gates on29ae7138: Node1257/1257 (81.063s),
+Python2547/2547 (298.713s), total3804 tests; lint0 errors/5 existing warnings,
+production build, compileall and git diff --check passed. The initial Node run
+caught missing IsTruncated in the cross-language fixture; that fixture now models
+an explicit final page, and the full Node suite was rerun successfully. No test
+was skipped or disabled. Provider acceptance of this candidate remains blocked
+as described above; existing deployed8daeaf3c evidence must not be relabeled.

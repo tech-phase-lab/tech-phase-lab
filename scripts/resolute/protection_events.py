@@ -36,14 +36,22 @@ def decrypt_event(body,key,name,protection):
     return ledger
 
 def inventory(s3,bucket):
-    items={}
+    items={};complete=False
     for page in s3.get_paginator('list_objects_v2').paginate(Bucket=bucket,Prefix=PREFIX):
+        # Exhausting an iterator is not proof that the provider returned every
+        # page. Require an explicit final page before sealing or restoring.
+        if complete or type(page.get('IsTruncated')) is not bool:
+            raise ValueError('invalid protection inventory pagination')
+        complete=not page['IsTruncated']
+        if not complete and (not isinstance(page.get('NextContinuationToken'),str) or not page['NextContinuationToken']):
+            raise ValueError('incomplete protection inventory pagination')
         for item in page.get('Contents',[]):
             name=item['Key']
             if not re.fullmatch(re.escape(PREFIX)+r'[0-9a-f]{64}\.bin',name) or name in items or not 33<=item['Size']<=2048:
                 raise ValueError('invalid protection inventory')
             items[name]={'size':item['Size'],'etag':item['ETag']}
             if len(items)>MAX_OBJECTS: raise ValueError('protection inventory exceeds reviewed limit')
+    if not complete: raise ValueError('incomplete protection inventory pagination')
     return items
 
 def read_object(s3,bucket,name,limit):

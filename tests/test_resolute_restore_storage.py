@@ -87,7 +87,7 @@ class RestoreStorageTests(unittest.TestCase):
         client = Mock(spec=['get_object', 'get_paginator'])
         client.get_object.side_effect = get_object
         client.get_paginator.return_value.paginate.return_value = [
-            {'Contents': [{'Key': name, 'Size': len(body), 'ETag': 'fixture'}]}]
+            {'IsTruncated': False, 'Contents': [{'Key': name, 'Size': len(body), 'ETag': 'fixture'}]}]
         self.factory.return_value = client
         config = object()
         ledger = backup.load_online_protection(self.env, self.factory, config)

@@ -25,7 +25,10 @@ class Objects:
         values=[{'Key':k,'Size':len(v),'ETag':str(len(v))} for k,v in self.files.items() if k.startswith(kw['Prefix'])]
         if self.mutate and self.calls>1:values=[]
         # Exercise pagination including an empty page.
-        return [{'Contents':values[:1]},{'Contents':[]},{'Contents':values[1:]}]
+        return [
+            {'Contents':values[:1],'IsTruncated':True,'NextContinuationToken':'page2'},
+            {'Contents':[],'IsTruncated':True,'NextContinuationToken':'page3'},
+            {'Contents':values[1:],'IsTruncated':False}]
 class EventsTests(unittest.TestCase):
     def fixture(self):
         script="""import {encryptProtection,protectionObjectKey} from './lib/resolute/protection-ledger.ts';
@@ -110,3 +113,25 @@ console.log(JSON.stringify({name:protectionObjectKey(event,key),body:encryptProt
             e.load_manifest(s3,'private',bytes([7])*32,'a'*64,p)
         self.assertEqual(stream.requested,32*1024*1024+1)
         self.assertTrue(stream.closed)
+
+    def test_incomplete_pagination_cannot_seal_empty_manifest(self):
+        invalid_pages = [
+            [], [{}], [{'IsTruncated': 'false'}],
+            [{'IsTruncated': True}],
+            [{'IsTruncated': True, 'NextContinuationToken': 'more'}],
+            [{'IsTruncated': False}, {'IsTruncated': False}],
+        ]
+        for pages in invalid_pages:
+            with self.subTest(pages=pages):
+                s3=Objects();s3.paginate=lambda **kwargs:iter(pages)
+                with self.assertRaisesRegex(ValueError,'inventory'):
+                    e.seal_manifest(s3,'private',bytes([7])*32,p)
+                self.assertEqual(s3.files,{})
+
+    def test_incomplete_pagination_cannot_validate_empty_restore(self):
+        s3=Objects();key=bytes([7])*32
+        pin=e.seal_manifest(s3,'private',key,p)
+        s3.paginate=lambda **kwargs:iter([
+            {'IsTruncated':True,'NextContinuationToken':'missing-page'}])
+        with self.assertRaisesRegex(ValueError,'inventory'):
+            e.load_manifest(s3,'private',key,pin,p,require_complete_inventory=True)
