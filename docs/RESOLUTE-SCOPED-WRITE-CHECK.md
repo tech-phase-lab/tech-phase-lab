@@ -98,6 +98,44 @@ compileall, shell syntax and diff checks passed. SQL relocation was also checked
 byte-for-byte against the prior approved document. No production execution is
 claimed; saving remains disabled and no schedule or live integration changed.
 
+## 2026-10-20 21:50 JST — real psql disconnect rehearsal passed
+
+Owner explicitly approved transferring only SQL/test code into a temporary
+service in the same Railway project after automatic review rejected the first
+transfer. The first empty service295a2b56 was deleted and verified absent;
+no alternate route was used to bypass the rejection. No production credentials,
+customer data, backup keys or application connection URLs were transferred.
+
+Approved service30f9cb1c-bde7-4032-a107-1e4b5aa63dad received only two code
+variables CHECK_SCRIPT_B64 and CHECK_FIXTURE_B64. Before image attachment,
+readback confirmed exactly these variables, no volume and no cron. It used
+postgres:18-bookworm,0.5CPU/0.5GB,NEVER restart and a300-second outer timeout.
+The harness initialized a disposable Unix-socket-only cluster (listen_addresses
+empty), with synthetic data and the same eight migration fixtures as the
+existing PGlite test. The production shell guard was not bypassed or spoofed:
+the exact SQL was invoked directly with real psql -XAt --no-password and
+ON_ERROR_STOP=1 against that disposable cluster.
+
+Deployment a324bbeb-e4c4-4bab-92c0-f5e2cb706f42 reached SUCCESS. Actual log at
+2026-10-20T12:50:48.550404455Z emitted RESOLUTE_REAL_PSQL_ROLLBACK_OK with:
+- SQL SHA25614abb5cb35417c878cd666a8393d3e696b862f70d8e650a9a7d26bb7cdcf9f81,
+  byte-for-byte equal to scripts/resolute/check-storage-write.sql.
+- Two successful passes, each leaving zero probe rows across all five tables.
+- A deliberately revoked notification INSERT failed after earlier writes;
+  psql exited3, and independent connections found zero probe rows without
+  issuing an explicit ROLLBACK to the failed session. Exclusive lock reacquisition
+  with a1-second lock timeout succeeded.
+- LOGIN role state rejected; pre-existing probe revision9 preserved on collision;
+  wrong database rejected; all three scoped roles ended NOLOGIN.
+- production_connected=false.
+
+The cluster was stopped in finally and the temporary service deleted after
+evidence capture; deletion returned no detached volumes. This replaces only the
+earlier simulated-disconnect evidence. It does not verify production socket
+authentication, actual production ACLs, the maintained write fence, external
+history durability or customer saving. The in-container production execution
+path remains unavailable; no repeated login or owner Run now is requested.
+
 
 ## 2026-10-20 18:36 JST — Integrated CI and execution access
 

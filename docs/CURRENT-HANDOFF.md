@@ -15,6 +15,12 @@ to repeat completed operations. Other product work is unchanged.
   remain pending. The one-shot service was deleted. See the final cutover entry.
 - Owner reports Vercel paused at100% usage. Do not resume it or change billing.
   Continue local/CI and scoped Railway work; frontend availability is not verified.
+- At21:50 JST the exact rollback SQL passed on isolated PostgreSQL18 with real
+  psql: two success passes, error-disconnect rollback, lock release, dormancy and
+  wrong-database rejection, collision preservation. No production credentials
+  or data were supplied; temporary service deleted. This closes the simulated
+  disconnect gap only. Production execution access remains blocked; see
+  RESOLUTE-SCOPED-WRITE-CHECK.md for evidence and the outstanding gate.
 
 - Completed: owner recovery-key custody and retrieval; production storage schemas
   and minimum-permission audit; three storage roles remain NOLOGIN. Do not request
