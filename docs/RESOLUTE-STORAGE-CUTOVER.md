@@ -723,3 +723,37 @@ Final local gates on the integrated 30eda76f base: lint passed (five existing
 warnings), Node 1,257/1,257, Python 2,545/2,545, production build, compileall and
 diff check passed. The three added Python cases are included in that total.
 These results do not establish deployment or production storage acceptance.
+
+## 2026-10-20 21:27 JST — stream cleanup bundle deployed; execution pending
+
+Owner reported Vercel paused at100% usage. No Vercel resume, plan/budget change
+or Vercel deployment was requested. The following work used existing Railway
+backup/restore services and did not create resources or change reservations.
+
+Rebuilt the existing three-module launcher from verified commit
+8daeaf3cd68753fb5e8f50de38bf542a9b3f3052 (CI39417464527 SUCCESS).
+Decoded previous V3 modules and matched each byte-for-byte to fafde179 source
+before replacing the embedded modules, digest and commit marker. New modules
+matched the checked source exactly and compiled. Ten local launcher checks
+verified extraction/source equality, valid mode, rejection of three invalid modes
+per launcher, and checksum rejection. runpy was intercepted: these checks did
+not execute backup/restore or connect to storage/DB.
+
+- Module JSON SHA256:480e4935f5d79d590447dcb852fd52778a95f215cd0f5b5ed0daa8d5ff22c9cf.
+- Backup launcher SHA256:328ae6b55b7517c475e27702f85126bcb6e4bec12ee2aff51eefb3670b0a4b1c.
+- Restore launcher SHA256:651d121fc63cc6913f7e1db86e59a82613be263f048d9cc70daf86d2e03fe5b9.
+
+Updated only RESOLUTE_PROTECTED_JOB_V3_B64 and retained the previous V3 source
+in RESOLUTE_PROTECTED_JOB_V3_ROLLBACK_B64, with skipDeploys=false on each service.
+Backup deployment80f739cf-3eed-4644-963d-b31ddbcd4295 and restore deployment
+7103f667-3049-431c-b892-44ac999b8b30 both reached SUCCESS. Readback confirmed
+daily0 0 * * *, weekly0 0 * * 1, rollback variable present, no staged changes.
+Start commands remain unchanged and continue selecting V3_B64. No credentials,
+keys, manifest pins, customer-saving flags or role permissions were modified.
+
+Both specific new deployment runtime-log reads returned zero entries. Therefore
+this is deployment evidence only: the new bundle has NOT yet been observed
+performing backup or restore. Do not substitute older logs or an initial empty
+manifest for fresh complete write-fenced inventory acceptance. Next runtime
+evidence must identify8daeaf3c and the module digest above, then show actual
+backup/restore checks. No owner Run now or login was requested.

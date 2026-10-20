@@ -7,8 +7,12 @@ to repeat completed operations. Other product work is unchanged.
 - Evening code follow-up: all four independent-history S3 reads now close their
   response on success and failure. Three regression cases were added; local
   gates passed: Node1,257, Python2,545, lint, build, compileall and diff check.
-  Based on coworker30eda76f; not deployed. The bundled backup/restore runtime
-  needs a separately verified rollout. See the final cutover entry for scope.
+  Based on coworker30eda76f; CI39417464527 passed for8daeaf3c. At21:27 JST,
+  rebuilt backup/restore bundles reached deployment SUCCESS with unchanged
+  schedules. Both new deployment log streams were empty: runtime acceptance
+  remains pending. See the final cutover entry for IDs and bundle digests.
+- Owner reports Vercel paused at100% usage. Do not resume it or change billing.
+  Continue local/CI and scoped Railway work; frontend availability is not verified.
 
 - Completed: owner recovery-key custody and retrieval; production storage schemas
   and minimum-permission audit; three storage roles remain NOLOGIN. Do not request
