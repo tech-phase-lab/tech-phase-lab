@@ -45,7 +45,7 @@ test('headlines that are not news about the company are left out', () => {
     'If you only have $1,000 to invest, buy this one ETF and hold for 20 years',
     'Disney to pay 66 Character.AI employees $60M a year - Alphabet (NASDAQ:GOOGL)',
     'もし株式市場の暴落が来るなら、歴史が示すこれら3つのETFが最も賢い買いだ',
-    'マイクロンとサンディスクを逃した？このメモリ株を見逃さないようにしよう。']) assert.equal(isNotNews(title), true, title);
+    'マイクロンとサンディスクを逃した？このメモリ株を見逃さないようにしよう。', 'コアウィーブ、オラクル：デフォルト懸念と買いの機会', 'CoreWeave, Oracle: Default Fears And A Buying Opportunity']) assert.equal(isNotNews(title), true, title);
   for (const title of ['Germany to unveil Nvidia AI agreement next week', 'StoneX maintains Buy rating on Microsoft, $600 price target', 'Micron raises its dividend']) assert.equal(isNotNews(title), false, title);
 });
 
