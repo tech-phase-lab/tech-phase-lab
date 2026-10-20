@@ -116,9 +116,30 @@ news/DB references cleared. Retirement717caebe-b8b3-4169-8833-09d5b707cbfe
 reached SUCCESS and logged RIZEL_INTAKE_DIAGNOSTIC_DISABLED at01:19:57.804Z.
 No public domain, cron, mail, payment, provider call or additional model call.
 
-Past user-context retrieval confirms the intended use of Stock News API for
-media reports/analyst changes, but did not establish an active subscription or
-installed credential. Do not invent contract status. Required owner input is
-whether that subscription already exists, followed by private key setup/allowed
-request scope before activating this prepared adapter. Do not request the key
-in chat. Source activation and a paid generation acceptance are separate steps.
+Owner-confirmed October20: Stock News API is NOT contracted; acquisition is
+planned for mid-November. Twelve Data is separately uncontracted and planned
+for mid-November. No further contract-status question is needed. Keep the
+report adapter disabled until that planned connection and acceptance.
+
+Owner freshness requirement: today's RESOLUTE candidates must have an explicit
+source publication timestamp within the current JST calendar day and not after
+execution time. The former96h window is superseded. Date-only, missing/unzoned,
+previous-day and future publications cannot be promoted using receipt/update
+clocks. US-calendar previous-day articles can qualify only when their actual
+publication instant is today in JST. This checks article publication, not proof
+that every event described happened today; historical context must stay historical.
+
+Implementation covers both private daily selection and the dormant public
+publisher SQL/defensive filtering. Late prior-day rows can remain in historical
+source/storage responses but never become today's candidates. Generation receives
+the unchanged publication timestamp and is instructed to preserve historical
+event dates; this instruction is not a factual correctness guarantee. Private
+review also refuses a generated article that changes the source timestamp.
+New tests cover JST midnight, US offsets, future/unzoned/date-only timestamps,
+calendar overflow, delayed receipt, no-model exclusion, storage results and
+generated timestamp substitution. All reports remain withheld.
+
+Validation: Node1183/1183, Python2508/2508 (266.840s), lint0 errors
+(5 existing warnings), Next build, compileall and diff check passed.
+Total3691 tests. No actual provider/model calls were made. Live rollout and
+next scheduled generation/storage remain separate verification steps.

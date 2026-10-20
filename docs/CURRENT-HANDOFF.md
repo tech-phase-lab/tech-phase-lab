@@ -1754,3 +1754,17 @@ adapter using the existing provider contract; no home/monitor edits, provider
 calls, new AI calls, publication or billing changes. See
 RESOLUTE-NEWS-COVERAGE-2026-10-20.md for evidence, exact enable conditions and the
 unverified live source/positive-generation boundary. Do not call this recovered.
+
+## 2026-10-20 — Confirmed subscription plan and publication-date guard
+
+Stock News API is uncontracted, planned for mid-November (owner reconfirmed).
+Twelve Data is separately uncontracted with the same planned timing. Do not ask
+again or enable paid intake now. Today-only RESOLUTE selection replaces96h with
+explicit publication timestamps in the current JST day, never acquisition dates.
+Date-only/previous-day/future articles stay out; the scheduled job remains unchanged.
+Validation and deployment evidence will follow; no live verification claimed here.
+
+Validation: Node1183/1183, Python2508/2508 (266.840s), lint0 errors
+(5 existing warnings), Next build, compileall and diff check passed.
+Total3691 tests. No actual provider/model calls were made. Live rollout and
+next scheduled generation/storage remain separate verification steps.

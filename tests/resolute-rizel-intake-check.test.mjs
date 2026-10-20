@@ -23,3 +23,14 @@ test('diagnostic rejects unavailable sources and CLI redacts configuration error
   assert.doesNotMatch(run.stderr,/credential|do-not-print/);
  }
 });
+
+ test('JST publication midnight is inclusive; delayed, undated and future news never become today',async()=>{
+ const times=['2026-10-19T14:59:59.999Z','2026-10-19T15:00:00Z','2026-10-19T11:00:00-04:00','2026-10-20T00:00:00Z','2026-10-20T00:00:00.001Z',undefined,'2026-10-20T01:00:00'];
+ const report=await checkIntake({now,readFeed:async()=>({ok:true,enabled:true,items:times.map((publishedAt,i)=>({...article,title:article.title+' '+i,url:article.url+'/'+i,publishedAt,observedAt:now.toISOString(),updatedAt:now.toISOString(),publishedOn:'2026-10-19'}))})});
+ assert.equal(report.candidateCount,3);assert.equal(report.diagnostics.outsideDailyWindow,1);assert.equal(report.diagnostics.rejected.date,3);
+ });
+
+test('calendar overflow is not normalized into a fresh publication',async()=>{
+ const report=await checkIntake({now:new Date('2026-03-02T00:00:00Z'),readFeed:async()=>({ok:true,enabled:true,items:[{...article,publishedAt:'2026-02-30T00:00:00Z'}]})});
+ assert.equal(report.candidateCount,0);assert.equal(report.diagnostics.rejected.date,1);
+});

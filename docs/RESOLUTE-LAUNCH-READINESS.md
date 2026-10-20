@@ -152,3 +152,12 @@ no runnable entrypoint or real executor yet. Production remains disabled; the
 remaining integration is the fixed real PostgreSQL/API/writer acceptance adapter,
 followed by actual logs and saved-result verification. See the recovery service
 README. Existing morning job and reservations were not touched.
+
+## 2026-10-20 — Confirmed subscription plan and publication-date guard
+
+Stock News API is uncontracted, planned for mid-November (owner reconfirmed).
+Twelve Data is separately uncontracted with the same planned timing. Do not ask
+again or enable paid intake now. Today-only RESOLUTE selection replaces96h with
+explicit publication timestamps in the current JST day, never acquisition dates.
+Date-only/previous-day/future articles stay out; the scheduled job remains unchanged.
+Validation and deployment evidence will follow; no live verification claimed here.

@@ -1,4 +1,4 @@
-import {inspectCandidateFeed,generate,publicationBounds} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isCurrentJstPublication} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
@@ -9,7 +9,7 @@ export function selectDailyCandidates(feed,now=new Date()){
  const diagnostics={...intake.diagnostics,outsideDailyWindow:0,duplicateHeadline:0,overDailyLimit:0};
  const seen=new Set();
  const selected=intake.candidates.filter(c=>{
-  if(now.getTime()-publicationBounds(c.publishedAt).earliest>96*3600000){diagnostics.outsideDailyWindow++;return false;}
+  if(!isCurrentJstPublication(c.publishedAt,now)){diagnostics.outsideDailyWindow++;return false;}
   if(seen.has(c.fingerprint)){diagnostics.duplicateHeadline++;return false;}
   seen.add(c.fingerprint);return true;
  });
@@ -42,7 +42,7 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    const draft=await summarize(candidate,budgetPool,now,fetcher);
    if(!draft)continue;
    const article=parseRiskArticle(draft);
-   if(article.id!==candidate.id||article.url!==candidate.url)throw Error('ARTICLE_MISMATCH');
+   if(article.id!==candidate.id||article.url!==candidate.url||article.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
    // Model classification is not verified evidence for D's factual conditions.
    const result=await select({article,evidence:[],selectionPool,budgetPool,apiKey,now});
    if(result.publication!=='withheld'||result.state!=='selected')throw Error('SELECTION_UNAVAILABLE');

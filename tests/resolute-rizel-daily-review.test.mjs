@@ -41,7 +41,7 @@ test('private daily review keeps a source date unchanged and excludes uncertain 
  const result=await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({ok:true,enabled:false,items:[],officialUpdates:[dateItem,{...dateItem,url:'https://example.com/old',publishedOn:'2026-10-10'}]}),
  summarize:async c=>{seen.push(c.publishedAt);return {...RISK_VISUAL_FIXTURE.articles[0],id:c.id,url:c.url,publishedAt:c.publishedAt};},
  select:async x=>({state:'selected',publication:'withheld',articleId:x.article.id,articleRevision:'private-date'})});
- assert.deepEqual(seen,['2026-10-13']);assert.equal(result.count,1);
+ assert.deepEqual(seen,[]);assert.equal(result.count,0);assert.equal(result.state,'no-candidates');
  }finally{await db.close();}
 });
 
@@ -70,4 +70,20 @@ test('missing or inconsistent saved result cannot be reported as verified',async
  assert.equal((await db.query('SELECT state FROM resolute_rizel_daily_runs')).rows[0].state,'failed');
  }finally{await db.close();}
  }
+});
+
+test('delayed previous-JST-day arrivals are excluded before any model or selection call',async()=>{
+ const db=await setup();let calls=0;
+ try{
+ const result=await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({...feed,items:[{...feed.items[0],publishedAt:'2026-10-14T14:59:59Z',observedAt:now.toISOString()}]}),summarize:async()=>{calls++;throw Error('must not generate');}});
+ assert.equal(result.state,'no-candidates');assert.equal(calls,0);assert.equal(result.diagnostics.outsideDailyWindow,1);
+ assert.equal((await db.query('SELECT candidate_count FROM resolute_rizel_daily_runs')).rows[0].candidate_count,0);
+ }finally{await db.close();}
+});
+test('generated publication timestamp cannot replace the original clock',async()=>{
+ const db=await setup();let selections=0;
+ try{
+ await assert.rejects(prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>feed,summarize:async c=>({...RISK_VISUAL_FIXTURE.articles[0],id:c.id,url:c.url,publishedAt:now.toISOString()}),select:async()=>{selections++;}}),/PRIVATE_DAILY_REVIEW_FAILED/);
+ assert.equal(selections,0);assert.equal((await db.query('SELECT state FROM resolute_rizel_daily_runs')).rows[0].state,'failed');
+ }finally{await db.close();}
 });
