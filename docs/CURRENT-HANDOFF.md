@@ -2223,3 +2223,24 @@ Provider confirmed deletion of the temporary service with no detached volumes.
 Coworker34fafeec (Maps/watchlist/company introductions) was fast-forwarded and
 preserved. This follow-up changes documentation only and passed diff check;
 3804 local tests/CI39429622017 apply tofb7c4eda, not a fresh combined-tree run.
+
+## 2026-10-20 22:42 JST — pagination bundle rolled out to scheduled services
+
+After the approved actual restore passed, rebuilt both launchers with a parsed
+payload replacement and verified all3 extracted modules byte-for-byte against
+fb7c4eda. Executed each launcher locally with runpy intercepted to verify exact
+extraction without running a job. Previous payloads matched8daeaf3c source.
+Only RESOLUTE_PROTECTED_JOB_V3_B64 and its ROLLBACK_B64 were updated on the
+existing daily/weekly services; rollback now retains the prior8daeaf3c launchers.
+No new credentials, keys, pins, role or saving flags were installed.
+
+Backup deploymentab1eba37-9af5-4438-be5b-71e086fdf49e and restore deployment
+20089892-946b-4c46-a184-764b3f27ec08 both reached SUCCESS. Readback confirmed
+unchanged start commands, daily0 0 * * *, weekly0 0 * * 1 and no staged changes.
+Both new deployment log queries returned0 entries: scheduled execution of these
+new deployments is still pending, not an actual new backup/restore success.
+The earlier isolated509de334 actual restore remains the runtime evidence for
+fb7c4eda with module digest8e9cae071117da8b293ea3d6c3c529b29b6ef8a7b57e3cabadecd82330590063.
+Do not request Run now or alter cron to manufacture evidence. Production DB
+scoped-write/fresh fenced nonempty history/gateway acceptance remain outstanding;
+customer saving remains disabled. Morning service and reservations untouched.
