@@ -51,3 +51,4 @@
 .tlFound{font-size:9.5px;color:#6f7b8c;letter-spacing:0}
 /* No ticker label (alert page): an opened story is just its text, with the × beside it. */
 .noLabel[open] summary{min-height:0;height:0;padding:0}.noLabel[open] .expand{top:12px}.noLabel[open] .body{padding-right:30px}
+.story[open] .body{cursor:pointer}

@@ -1,6 +1,14 @@
+"use client";
+import type { MouseEvent } from "react";
 import type { Language } from "@/lib/research/data";
 import { additionalNewsDetail } from "@/lib/research/news-detail";
 import styles from "./general-news.module.css";
+
+/** An opened story closes on a tap anywhere on it, not only on the × (owner, Oct 20); links and a text selection are left alone. */
+function closeOnTap(event: MouseEvent<HTMLDivElement>) {
+  if ((event.target as HTMLElement).closest("a") || window.getSelection()?.toString()) return;
+  event.currentTarget.closest("details")?.removeAttribute("open");
+}
 
 const SENTENCE = /(?<=[。！？])|(?<=[a-z0-9]{2}[.!?])\s+(?=[A-Z])/;
 
@@ -86,7 +94,7 @@ export default function NewsStory({ label, title, body, fullBody, publication, l
     ? <div className={styles.shortStory}>{tag}<span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>
     : <details className={`${styles.story} ${styles.replaces}${bare}`}>
       <summary>{tag}<span className={`${styles.headline} ${styles.clamped} ${styles.closedOnly}`} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
-      <div className={styles.body} lang={lang}>{title}<span className={styles.note}>{publication}</span></div>
+      <div className={styles.body} lang={lang} onClick={closeOnTap}>{title}<span className={styles.note}>{publication}</span></div>
     </details>;
   const detail = additionalNewsDetail([label, title, publication], body);
   if (!detail) return headlineOnly();
@@ -97,6 +105,6 @@ export default function NewsStory({ label, title, body, fullBody, publication, l
   if (!addsInformation(title, opened)) return headlineOnly();
   return <details className={replaces ? `${styles.story} ${styles.replaces}${bare}` : styles.story}>
     <summary>{tag}<span className={replaces ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
-    <div className={styles.body} lang={lang}>{opened}<span className={styles.note}>{publication}</span></div>
+    <div className={styles.body} lang={lang} onClick={closeOnTap}>{opened}<span className={styles.note}>{publication}</span></div>
   </details>;
 }
