@@ -2044,3 +2044,12 @@ Coworker accf4368 arrived during publication; ref update did not overwrite it.
 Integrated PRO checkout changes and repeated all gates: Node1245/Python2523
 (total3768) passed, lint0 errors/5 existing warnings, build/compileall/diff check
 passed. Sequential heavy gates avoided further OOM kills.
+
+
+2026-10-20 15:34 JST: CI39379931568 SUCCESS. Provisioned valid service-auth
+token (NOT encryption key) on disabled writer; API disabled gateway URL/token/key
+references stored with skipDeploys=true. Actual one-shot rendered configuration
+comparison passed ea42bc94 at06:33:55Z, no network/data writes. Original API and
+writer runtime deployments unchanged; no DB logins or saving enabled. Probe
+deleted. See STORAGE-CUTOVER for fingerprint-check correction and exact evidence
+boundaries. No repeat owner custody or Run now.

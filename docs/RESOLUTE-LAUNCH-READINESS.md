@@ -681,3 +681,45 @@ Coworker accf4368 arrived during publication; ref update did not overwrite it.
 Integrated PRO checkout changes and repeated all gates: Node1245/Python2523
 (total3768) passed, lint0 errors/5 existing warnings, build/compileall/diff check
 passed. Sequential heavy gates avoided further OOM kills.
+
+
+## 2026-10-20 15:34 JST — dormant gateway configuration prepared
+
+CI39379931568 for163a2e5c completed SUCCESS. No application source changed in
+this operation; the previous integrated3768 tests/build remain its code gates.
+
+The existing writer token failed the production format check (not sealed);
+provisioned a fresh48-random-byte base64url service-authentication token on
+resolute-protection-writer, skipDeploys=true. It is NOT a recovery/encryption key.
+The owner-installed encryption key and Google/Evernote custody were unchanged.
+Initial probe used raw SHA256 for the key comparison by mistake; corrected it
+to the existing protection_keys.fingerprint formula with
+resolute-online-protection-key-v1 + NUL + key bytes. Corrected runtime confirmed
+the previous installed-key fingerprint. This is continuity with earlier runtime
+evidence, not a new independent read of the owner's offline custody files.
+
+Writer-only confirmationd490af66-2f9b-41a9-83ce-6a341eefa95e at06:33:23Z passed.
+API now has RESOLUTE_PROTECTION_ENABLED=false, fixed writer HTTPS URL, and token/
+key references to the writer service. API receives NO bucket credentials and NO
+plan/settings/protection DB login. All four variables were set skipDeploys=true;
+API deployment5e22dac8 and source pinbb45d9d0 remained unchanged. Writer remains
+ENABLED=false, deploymentef0a1382/source4b3bdd8e unchanged. No API/writer restart.
+
+One-shot verificationea42bc94-8f01-4f7a-b010-521acbe64d8a logged
+RESOLUTE_CONNECTION_CONFIG_VERIFIED at2026-10-20T06:33:55.282118957Z:
+tokenValid=true,ownerKeyMatches=true,writerDisabled=true,
+applicationReferencesChecked=true,networkCalls0,writes0,activation=false.
+This checks Railway's rendered reference equality, format, fixed URL, disabled
+flags and installed-key continuity. It does NOT prove API runtime adoption,
+HTTPS reachability, a writer receipt, customer saving or recovery fencing.
+The legacy SYNTHETIC_ONLY variable is not used by the pinned writer code; do not
+rely on it as an isolation boundary. Actual safety here is disabled writer/API,
+NOLOGIN storage roles, no storage DB credentials and no data writes.
+
+Temporary verification servicec2190fbd-8371-45e0-beaf-6ece8e423b8f was deleted
+with no volumes after evidence capture. Its token/key references are removed
+with the service, not blanked. No secrets were printed to logs or committed.
+Schedules/reservations, UI/RIZEL visibility, production payments, mail and AI
+were untouched. Next: reviewed API/runtime and scoped storage connections,
+controlled receipt/recovery verification before customer-save activation.
+No repeat owner key-custody, token paste or Run now is needed for this milestone.
