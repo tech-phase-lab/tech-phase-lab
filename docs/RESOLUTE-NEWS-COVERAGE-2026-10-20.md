@@ -89,3 +89,36 @@ with the integration enabled. Confirm existing subscription/allowed use and
 request allowance before activation. No subscription, API key or paid setting
 was created or changed. Provider's real response and live positive-candidate
 AI/storage acceptance remain unverified. Mocked provider tests are not that proof.
+
+## 10:19 JST deployment and real read-only verification
+
+Code d31c686e93cb047ed1cc48b61dccfa668c90354f passed final local Node1179,
+Python2508 (254.840s), lint (0 errors/5 existing warnings), build, compileall
+and diff check. Git Data tree matched c6ebb98a6c8dad37f0e930238cf64db09c9a2ea5
+before the non-force update. CI39352416381 was still in progress at the check;
+this is not a CI pass claim.
+
+Morning deployment1d640818-32c5-4d1e-a66c-0b886913064c reached SUCCESS. Actual
+01:19:23.076Z preflight: ready, approvedPairs90, withheld, aiCalls0/writes0.
+Report variable names remain absent; cron stays `0 22 * * 0-4`. No staged patch.
+No full daily generation/storage run was started.
+
+Dedicated diagnostic30186467-5854-4728-a93a-6c6636904094 at01:19:21.940Z used
+the same new intake code against the currently connected monitor:
+reportConfigured=false, reportCount0; generalEnabled=false, generalCount0;
+officialCount72; rejected body28/unrelated16/noDownsideHeadline28; all other
+rejection/daily counters0; candidateCount0; unconsumedAnalystCount2; aiCalls0,
+writes0, publication withheld, historicalReplay=false. This confirms the current
+connection gap persists; candidate/generation/storage recovery is NOT established.
+
+After this one GET-only diagnostic, its flag was set false and all temporary
+news/DB references cleared. Retirement717caebe-b8b3-4169-8833-09d5b707cbfe
+reached SUCCESS and logged RIZEL_INTAKE_DIAGNOSTIC_DISABLED at01:19:57.804Z.
+No public domain, cron, mail, payment, provider call or additional model call.
+
+Past user-context retrieval confirms the intended use of Stock News API for
+media reports/analyst changes, but did not establish an active subscription or
+installed credential. Do not invent contract status. Required owner input is
+whether that subscription already exists, followed by private key setup/allowed
+request scope before activating this prepared adapter. Do not request the key
+in chat. Source activation and a paid generation acceptance are separate steps.
