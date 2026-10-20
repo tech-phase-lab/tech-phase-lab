@@ -504,3 +504,58 @@ commit `b23dd6385f8fe3e0196254bb9c29031210a59c16`; no application changes in tha
 merge, and reran the applicable diff check. Helper retirement
 `d533c6ed-135a-4b30-b4a8-21a587389b41` SUCCESS logged the retired marker; temporary
 writer/service-token references blanked. Runtime recovery still to be verified.
+
+## 2026-10-20 16:04 JST — Actual paid Sandbox recovery verified
+
+Published permission fix `69e8d80013f96c9fbe82e0d974be235e8940350a`, exact tree
+`e579a44d90d42fd88b51e9e244a725c177b61601`; local checkout aligned without losing
+parallel RESOLUTE work. Runtime `82b352cf-bf69-45c8-b4d9-5927ff8e5c37` SUCCESS.
+Vercel `dpl_9voMvWNRuB8Fe5ShYx1RT5ggrZfc` READY on the same SHA.
+
+Acceptance helper `f5fca7dc-dbe7-4b10-b5bf-e638b1ca7cb5` SUCCESS logged
+PRO_PAID_ACCEPTANCE_OK: two sequential reconciliation requests returned verified,
+Sandbox PRO and identical expiry 2026-11-20T10:00:00.000Z (19:00 JST). Fresh status
+returned active/PRO. Read-only database counts confirmed exactly one payment and
+one period for the original contract. No new checkout or charge was created.
+No production Clerk membership or RESOLUTE settings/data were modified.
+
+Temporary writer/service-token references blanked and helper source retired.
+GitHub Actions run 39384025241 was in progress at this observation; local final
+gates passed. Actual cancellation/renewal/refund acceptance and signed completed
+payment redelivery after the fix remain unverified. The user can refresh the
+existing page to see active/PRO; do not ask them to approve or purchase again.
+
+Final helper retirement `3328b7cb-2fa0-43f9-93cf-de82e2ae6d8d` SUCCESS with
+TECH_PHASE_PROVISION_RETIRED marker. Runtime HTTP logs independently confirmed
+reconcile 200 twice and fresh status 200 at 07:04 UTC. Operational evidence is
+staged locally for the next documentation batch; deployed implementation is current.
+
+## 2026-10-20 16:10 JST — Actual cancellation and expiry boundary accepted
+
+The user authorized continuing the announced cancellation test. Helper
+`ab4fb20b-45af-4ba5-b86d-dd0e4b13c6eb` SUCCESS logged
+PRO_CANCELLATION_ACCEPTANCE_OK. Starting from the existing paid Sandbox contract,
+POST cancel twice returned 200/cancelled; subsequent reconciliation returned
+200/verified. Fresh status is cancelled/PRO with unchanged expiry
+2026-11-20T10:00:00.000Z. The original paid period is preserved.
+
+Read-only queries against the real entitlement view found one valid period at
+09:59:59.999Z and none at 10:00:00Z on November 20. No server clock or stored
+expiry was modified to perform this boundary check. This verifies query semantics,
+not an elapsed real-time renewal test. No new purchase, charge or refund occurred.
+Runtime HTTP logs also show public PayPal notification 200 at 07:10:54 UTC after
+cancellation. The transport delegates this exact path to signature verification;
+no unsigned notification exemption was introduced. Specific completed-payment
+redelivery is still unverified.
+
+Temporary helper references were blanked and its source retired. Remaining live
+acceptance: USD buyer approval, actual renewal and refund/dispute scenarios.
+Production launch still requires PRO-specific backup/restore, missed-webhook
+recovery, production membership projection, and the polished customer checkout.
+
+Final cancellation helper retirement `740f6496-f135-4213-814f-db516640f9e5`
+SUCCESS with the retired marker. Public negative checks on the deployed runtime:
+unauthenticated GET status and POST cancel each returned 401/service-auth;
+unsigned public notification returned 401/signature. No identity or payment data
+was exposed. GitHub Actions 39384025241 completed SUCCESS, including both the
+preview lint/test/build job and the PostgreSQL concurrency job.
