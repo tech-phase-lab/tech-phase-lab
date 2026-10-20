@@ -1,0 +1,245 @@
+# Tech Phase PRO recurring billing foundation — 2026-10-20
+
+## Implemented locally
+
+`services/tech-phase-billing` is separate from RESOLUTE payment services.
+It includes a Sandbox-only PayPal subscriptions adapter, internal checkout/cancellation
+service, PostgreSQL ledger repository and dedicated database configuration.
+
+- Server offers: JPY 2,980 / USD 20.00, one monthly regular cycle, no trial/setup fee.
+- Read the configured plan before creating; reject different prices, currency,
+  interval, additional tax, quantity pricing or automatic outstanding-balance billing.
+  Pin the subscription's fixed price with a server-supplied plan override as well.
+- Persist an opaque checkout UUID and accepted terms version before calling PayPal;
+  reuse the UUID as PayPal-Request-Id. A unique open-member index prevents a second
+  local pending contract even with a different client request.
+- Recover provider-create response loss by reusing that UUID; stop automatic creation
+  retries after 71 hours (PayPal documents a 72-hour create-key retention window).
+- Validate Sandbox approval URL host/path/token. Return URLs are fixed on the server.
+- Cancel only a subscription owned by the authenticated member. Query provider state
+  before retrying cancellation so an interrupted successful response can be recovered.
+- Accept empty HTTP 204 cancellation responses; bound API timeouts and JSON response size;
+  share concurrent token refresh; mask provider errors and payer details.
+- Verify webhooks via PayPal's signature verification endpoint using the configured
+  webhook ID. Reject unexpected certificate hosts without fetching the supplied URL.
+- Persist payments and processed-event metadata transactionally. Unique transaction IDs
+  stop duplicate renewal records; conflicting transaction details roll back the event.
+  Cancellation preserves the payment history.
+
+## Settlement and owner-only HTTP continuation
+
+`settlement.mjs` now reconciles the server-fetched subscription with its completed
+transaction history. It requires the stored custom ID and configured plan, exact
+amount/currency, a single regular cycle, no outstanding balance or consecutive
+failure, and consistent monthly boundaries. It reads the subscription again after
+fetching transactions to reject mixed snapshots. Calendar boundaries retain the
+original day across short months (Jan 31 -> Feb 28 -> Mar 31).
+
+Migration 002 adds immutable periods keyed by verified transaction, review holds,
+and a narrow Sandbox entitlement view. A duplicate transaction cannot extend its
+period; a crash between payment and period insertion is repaired by retry. Current
+access is read from the period containing the current time, never a future period
+across a gap. Cancellation does not erase paid access. Refund/reversal tombstones
+survive notifications arriving before the corresponding local payment; a later
+completion cannot revive that period. Sandbox review holds do not define the
+production refund policy and cannot be automatically cleared by completion events.
+
+Dormant route: `/api/research/billing/sandbox/[action]`.
+- GET `status`: authenticated exact owner, Sandbox entitlement only, no writes.
+- POST `create`, `reconcile`, `cancel`: authenticated exact owner, same-origin JSON,
+  bounded bodies and exact allowed fields; identity comes from Clerk, not the body.
+- POST `webhook`: bounded JSON and PayPal signature verification; lifecycle/sale
+  completion triggers a fresh reconciliation instead of trusting event status.
+  Sale refund/reversal persists adverse evidence; unrelated events are ignored.
+
+Requires **all** of `VERCEL_ENV=preview`,
+`TECH_PHASE_BILLING_SANDBOX_ENABLED=true`, `TECH_PHASE_PAYPAL_ENV=sandbox` plus the
+separate credentials/database settings. Defaults remain disabled. The server
+factory performs no migrations. `sandbox-v1` is the test-only acceptance version.
+
+The API returns `{environment:'sandbox', plan, proExpiresAt}` using the same field
+meaning as membership, but never writes Clerk `plan`/`proExpiresAt`. Existing
+Tech Phase PRO access and RESOLUTE discount readers remain unchanged. Production
+projection/synchronization must be integrated separately after Sandbox acceptance.
+
+## Deliberately not activated
+
+The new owner-only routes are disabled and there is no purchase UI button. No deployment environment,
+PayPal plan, webhook registration, database or secret was changed. The SQL migration has
+only been applied to disposable PGlite test databases. No real or Sandbox charge was made.
+
+The repository's `recordPayment` remains an internal persistence boundary; the
+new reconciler owns verification before calling it. ACTIVE and return URLs are not
+proof of payment. `next_billing_time` alone never grants access. Automatic period
+assignment is intentionally conservative: unexpected provider scheduling, arrears,
+missing/multiple matching transactions or inconsistent cycle counts require review.
+The month-end/date convention is covered by synthetic tests but must still be
+confirmed against actual Sandbox subscription snapshots. Dispute workflows,
+missed-webhook background sweeps and production entitlement sync are still open.
+
+The existing account and membership implementation continues to operate as before.
+Sandbox state must never update production PRO metadata.
+
+## Configuration for the next integration step
+
+All values are dedicated to Tech Phase Sandbox, with no RESOLUTE or generic fallback:
+
+- `TECH_PHASE_PAYPAL_ENV=sandbox`
+- `TECH_PHASE_PAYPAL_CLIENT_ID`, `TECH_PHASE_PAYPAL_CLIENT_SECRET`
+- `TECH_PHASE_PAYPAL_WEBHOOK_ID`
+- `TECH_PHASE_PAYPAL_PLAN_JPY`, `TECH_PHASE_PAYPAL_PLAN_USD`
+- `TECH_PHASE_BILLING_SANDBOX_DATABASE_URL`: database `tech_phase_billing_sandbox`,
+  role `tech_phase_billing_sandbox_writer`; verified TLS outside the private Railway host.
+
+Provision with a separate migration administrator and grant the runtime role only the
+required schema/table permissions. Do not run this migration against news or RESOLUTE DBs.
+The HTTP layer now enforces identity/origin/size and exact-owner access. The server-fixed
+`sandbox-v1` version is a fixture, not approved production terms.
+
+Next: provision isolated Sandbox credentials/database, verify real monthly and month-end
+subscription snapshots, finish dispute/background reconciliation, then implement the
+production entitlement projection and retry strategy shared with RESOLUTE discount reads.
+Do not advertise the checkout as available before those steps pass.
+
+## References checked
+
+- https://developer.paypal.com/api/subscriptions/v1/subscriptions-create/
+- https://developer.paypal.com/api/subscriptions/v1/
+- https://developer.paypal.com/api/rest/webhooks/rest/
+- https://developer.paypal.com/platforms/subscriptions/integrate/
+
+Tests exercise fake HTTP responses and the real PostgreSQL schema through PGlite.
+They do not establish PayPal account eligibility or real provider acceptance.
+
+## RESOLUTE coordination checked on this continuation
+
+Remote preview HEAD was still 53fb0e46. Read RESOLUTE-LAUNCH-READINESS.md,
+RESOLUTE-LIVE-LEDGER.md and RESOLUTE-PAYMENT-VERIFICATION-2026-10-15.md.
+Recorded actual Sandbox observations include JPY/USD initial and JPY FREE annual
+renewal, with refund/replay behavior. Live payment routes and UI are prepared but
+sales remain disabled in those records; unfinished tests are not treated as passed.
+`services/resolute-api/payments/policy.mjs` reads verified Clerk privateMetadata
+`plan` and `proExpiresAt` for discounts and excludes owner/test preview flags.
+This batch does not modify that policy, RESOLUTE tables, deployment settings or keys.
+Unpublished work in the other chat is not represented by this repository check.
+
+Additional references: https://developer.paypal.com/api/subscriptions/v1/definitions/transaction/
+and https://developer.paypal.com/api/subscriptions/v1/definitions/subscription/.
+
+## Local verification of the continuation
+
+- `npm test`: 1,228 passed; includes 8 new settlement/HTTP behavior tests.
+- `npm run test:python`: 2,515 passed in 218.435 seconds.
+- `npm run build`: passed, including the new Sandbox route.
+- `npm run lint`: zero errors, five pre-existing warnings. The initial parallel
+  attempt encountered a disappearing test temporary directory; the sequential
+  rerun after Node tests finished passed.
+- `python3 -m compileall -q scripts/research tests` and diff whitespace checks passed.
+
+All changes remain local and staged. No commit, push, deployment, infrastructure
+provisioning, credentials, real payment or Clerk entitlement mutation in this batch.
+# Existing infrastructure inventory and PRO preflight (2026-10-20)
+
+Read-only Railway inventory confirmed the existing RESOLUTE API, PostgreSQL,
+backup and recovery services. No staged Railway changes were present. The
+RESOLUTE API already has its PayPal app, webhook, payment database and Clerk
+configuration. Those settings were not decrypted, changed or recreated.
+`CURRENT-HANDOFF.md` explicitly says connection setup and the six Sandbox price
+purchases need not be repeated. Recovery acceptance is also already recorded.
+
+Vercel project `prj_CCegV1VWucYpppYuMCDbBOAGF9s4` environment-name inventory
+contained no `TECH_PHASE_PAYPAL_*` or `TECH_PHASE_BILLING_SANDBOX_*` settings.
+This proves the PRO runtime is not configured there; it does not prove that no
+PRO plan exists in PayPal or that another chat has no unpublished work.
+Do not create duplicate PayPal apps/plans or PostgreSQL services on that basis.
+
+The preview-only, owner-authenticated GET endpoint
+`/api/research/billing/sandbox/readiness` now reports missing configuration names
+and safe problem codes even while sales are disabled. It never initializes the
+payment services, queries PayPal, connects to a database or reveals values.
+`configurationReady` is separate from `enabled`; `connectionVerified` remains
+false. It detects a RESOLUTE database/role supplied by mistake, a Railway-private
+hostname unreachable from Vercel, and one plan assigned to both currencies.
+Existing RESOLUTE names are never treated as PRO configuration fallbacks.
+
+External connection and real PRO Sandbox subscription verification remain
+outstanding. The existing database is private; do not expose it publicly or
+modify RESOLUTE routing to accommodate the new Vercel runtime. Resolve PRO's
+private-network service placement before provisioning. No infrastructure,
+credentials, migrations, purchases, notifications or production membership were
+changed by this inventory/preflight work. Changes remain local and unpublished.
+
+Preflight validation: `npm test` passed all 1,231 tests and `npm run build` passed.
+
+## Private-network service implementation (2026-10-20, local only)
+
+The Vercel route now uses an authenticated gateway instead of constructing a pg
+pool. `services/tech-phase-billing/server.mjs` is the standalone PRO Sandbox
+service, with its own Dockerfile and pinned pg dependency lock. The intended
+placement is the existing Railway project/environment alongside the private
+Postgres, using a separate logical database and writer role. No RESOLUTE process,
+route, credential, database role or backup job is changed. No additional physical
+Postgres instance is needed for this design.
+
+Vercel needs only `TECH_PHASE_BILLING_SERVICE_URL` (the PRO service's exact HTTPS
+Railway domain), `TECH_PHASE_BILLING_SERVICE_TOKEN` (a fresh PRO-only random token,
+43–128 URL-safe characters), and the existing preview/Sandbox enable switches.
+PayPal credentials and the PRO database URL belong only to the PRO service.
+The gateway requires Clerk owner authentication and same-origin mutations; it
+replaces caller-supplied identity, strips cookies/Authorization, bounds payloads,
+rejects redirects and never falls back to a RESOLUTE URL or key.
+
+The Railway service requires `TECH_PHASE_BILLING_RUNTIME=railway-sandbox`,
+`RAILWAY_GIT_BRANCH=codex/research-preview`, the matching service token,
+`TECH_PHASE_BILLING_OWNER_ID` matching the existing application's owner ID,
+`TECH_PHASE_PAYPAL_ENV=sandbox`, and the dedicated PRO settings above. The runtime
+requires the enable switch for payment operations, but authenticated owner
+readiness remains available while disabled. The backend verifies the service
+credential before using the identity asserted by the Clerk-authenticated gateway.
+PayPal webhook payloads and signature headers pass through the same gateway;
+PayPal signature verification still runs in the billing service before DB writes.
+Only `/healthz` is public; its result means the process is up, not that payment or
+DB acceptance has passed. No request payloads or credentials are logged.
+
+Deployment recipe (not executed): use service root `services/tech-phase-billing`,
+Dockerfile in that root, health path `/healthz`, preview branch only, and initially
+leave `TECH_PHASE_BILLING_SANDBOX_ENABLED` unset. First inventory PayPal resources
+and dedicated DB roles to avoid duplicates, then provision only missing PRO
+resources. Never reuse RESOLUTE's deployment/provisioning service or change its
+webhook. The PRO DB must be backed up separately; existing RESOLUTE backup success
+is not evidence of PRO coverage. Real connection/permission/concurrency checks,
+PRO Sandbox purchase acceptance and backup/restore acceptance remain outstanding.
+
+Validation for the private-network implementation: Node 1,235 passed; Next build
+passed; lint 0 errors (5 existing warnings); isolated service `npm ci --omit=dev
+--ignore-scripts` installed 14 packages successfully. Standalone Node smoke check
+passed `/healthz`, unauthorized direct access rejection, and authenticated
+readiness with no provider/DB settings. This does not replace real Railway or
+PayPal acceptance. No commit, push or deployment was performed.
+
+## 2026-10-20 14:11 JST — Actual PRO database preparation
+
+Owner authorized deployment/connection work. Integrated RESOLUTE updates through
+`76fdf9455cab2f228be3e72d03709dc9f39b8468`, preserving all seven changed files.
+Final integrated checks: Node 1,235; Python 2,520; build passed; lint 0 errors
+(5 existing warnings); compileall and staged diff check passed.
+
+New PRO runtime service: `430ca5db-6ec5-48ec-b16f-cfb03fd70972`, domain
+`https://tech-phase-billing-sandbox-production.up.railway.app`. Runtime deployment
+is still pending at this entry. Preview-only Vercel gateway variables were added;
+both purchase enable switches remain false. No production Clerk fields changed.
+
+PRO-only one-shot provisioning helper: `d6d32277-2a77-4548-a875-8188e59966f4`.
+Read-only inventory confirmed no pre-existing PRO DB or roles. Actual deployment
+`d50e1637-d1ea-471d-8320-48de1925052d` logged `TECH_PHASE_DB_PROVISION_OK`:
+new logical database `tech_phase_billing_sandbox`, separate NOLOGIN owner and
+non-admin writer, migrations 001/002, real writer insert/rollback successful.
+No new physical Postgres service and no RESOLUTE schema/role changes.
+
+Deployment `e1a8943a-c739-4975-87a2-ab6318eb7190` executed the current billingStore
+reserve logic against real PostgreSQL with 12 concurrent requests and 4 pool
+connections: exactly one subscription ID; FREE entitlement; writer cannot update
+payments, delete subscriptions or create schema objects. Its single test fixture
+was removed (`TECH_PHASE_DB_FIXTURE_CLEANED`). Writer can update subscriptions;
+other billing tables allow only SELECT/INSERT. Temporary provision credentials
+must be cleared after finishing this operation; do not rerun provisioning.

@@ -1,5 +1,9 @@
 # Payment implementation preparation — 2026-10-05
 
+> Historical October 5 planning snapshot. The owner subsequently selected PayPal.
+> Current Tech Phase implementation status: [Sandbox billing foundation, October 20](TECH-PHASE-BILLING-SANDBOX-2026-10-20.md).
+> The provider shortlist below is retained as history, not the current implementation decision.
+
 This is an implementation specification, not deployed billing functionality.
 No provider account, application, checkout or paid entitlement was changed.
 
