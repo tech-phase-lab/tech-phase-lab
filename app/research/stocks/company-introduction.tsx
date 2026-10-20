@@ -14,6 +14,23 @@ const mapHeadings = [
   ["relationships", "どこと繋がる？", "Who does it work with?"],
 ] as const;
 
+/** A company without a connection map: 05 shows the competitors its filing names as tickers, and 06 is a dimmed "coming soon" card
+ * so an empty map is never read as "no partners" (owner, Oct 20). */
+function LiteMaps({ introduction, lang }: { introduction: CompanyIntroduction; lang: "ja" | "en" }) {
+  const ja = lang === "ja";
+  const rivals = introduction.maps.competition.filter(entry => entry.kind === "company" && entry.ticker);
+  return <div className={styles.lite}>
+    {rivals.length > 0 && <section className={styles.liteRivals} data-topic="competition">
+      <h3><span>05</span>{ja ? "競合は？" : "Who competes with it?"}</h3>
+      <div>{rivals.map(entry => <span key={entry.ticker}>{entry.ticker}</span>)}</div>
+    </section>}
+    <section className={styles.liteMap} data-topic="relationships">
+      <h3><span>06</span>{ja ? "どこと繋がる？" : "Who does it work with?"}</h3>
+      <p>{ja ? "取引・提携のマップは準備中です。" : "The partner map is coming soon."}</p>
+    </section>
+  </div>;
+}
+
 export function CompanyIntroductionPanel({ introduction, network, lang }: { introduction: CompanyIntroduction; network?: CompanyNetwork | null; lang: "ja" | "en" }) {
   return <section className={styles.introduction} aria-label={lang === "ja" ? `${introduction.name}の企業紹介` : `About ${introduction.name}`}>
     <header><h2>{lang === "ja" ? "企業を知る" : "Know the company"}</h2></header>
@@ -23,7 +40,7 @@ export function CompanyIntroductionPanel({ introduction, network, lang }: { intr
         <dd>{introduction[lang][field]}</dd>
       </div>)}
     </dl>
-    {network ? <CompanyNetworkMap key={network.root} graph={network} lang={lang} /> : mapHeadings.some(([topic]) => introduction[lang][topic]) && <div className={styles.maps}>
+    {network ? <CompanyNetworkMap key={network.root} graph={network} lang={lang} /> : !introduction[lang].relationships ? <LiteMaps introduction={introduction} lang={lang} /> : mapHeadings.some(([topic]) => introduction[lang][topic]) && <div className={styles.maps}>
       {mapHeadings.map(([topic, ja, en], index) => introduction[lang][topic] && <section key={topic} className={styles.mapCard} data-topic={topic}>
         <h3><span>0{index + 5}</span>{lang === "ja" ? ja : en}</h3><p>{introduction[lang][topic]}</p>
       </section>)}
