@@ -60,6 +60,12 @@ test('only matching paid transaction, cycle, amount and schedule produces a PRO 
  assert.equal(verifiedPeriod(local,cancelled,[payment()],plans,now,result).periodEnd,result.periodEnd);
 });
 test('actual Sandbox billing clock settles once and survives cancellation without a guessed expiry',()=>database(async(store,db)=>{
+ // Exercise the deployed least-privilege writer, not only the database owner.
+ await db.exec(`CREATE ROLE billing_writer NOLOGIN;
+  GRANT USAGE ON SCHEMA tech_phase_billing_sandbox TO billing_writer;
+  GRANT SELECT,INSERT ON ALL TABLES IN SCHEMA tech_phase_billing_sandbox TO billing_writer;
+  GRANT UPDATE ON tech_phase_billing_sandbox.subscriptions TO billing_writer;
+  SET ROLE billing_writer;`);
  const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
  const r=remote(row);r.start_time='2026-10-20T06:17:10Z';
  r.billing_info.last_payment.time='2026-10-20T06:38:15Z';
@@ -75,6 +81,9 @@ test('actual Sandbox billing clock settles once and survives cancellation withou
  assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.periods')).rows[0].n,1);
  assert.equal(await store.paidPeriod('other',row.id,p.id),null);
  assert.equal(await store.paidPeriod(row.user_id,row.id,'OTHER-PAYMENT'),null);
+ await assert.rejects(db.query('UPDATE tech_phase_billing_sandbox.payments SET minor=1'),/permission denied/);
+ await assert.rejects(db.query('DELETE FROM tech_phase_billing_sandbox.periods'),/permission denied/);
+ await db.exec('RESET ROLE');
  // Migration is safe to reapply to a paid ledger and retains bounded duration.
  await db.exec(readFileSync(new URL('../db/tech-phase/003_provider_billing_clock.sql',import.meta.url),'utf8'));
  assert.equal((await store.entitlement(row.user_id,clock)).proExpiresAt,first.proExpiresAt);

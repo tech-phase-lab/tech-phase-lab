@@ -77,7 +77,7 @@ export function billingStore(pool) {
       if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) throw Error('INVALID_PERIOD');
       return transaction(async db => {
         const paid = (await db.query(`SELECT p.* FROM ${S}.payments p JOIN ${S}.subscriptions s ON s.id=p.subscription_id
-          WHERE p.transaction_id=$1 AND p.subscription_id=$2 AND s.user_id=$3 FOR UPDATE OF p`,[transactionId,id,userId])).rows[0];
+          WHERE p.transaction_id=$1 AND p.subscription_id=$2 AND s.user_id=$3 FOR UPDATE OF s`,[transactionId,id,userId])).rows[0];
         if (!paid || new Date(paid.paid_at).getTime() < start || new Date(paid.paid_at).getTime() >= end) throw Error('PAYMENT_MISMATCH');
         await db.query(`INSERT INTO ${S}.periods(transaction_id,period_start,period_end) VALUES ($1,$2,$3)
           ON CONFLICT DO NOTHING`,[transactionId,new Date(start),new Date(end)]);

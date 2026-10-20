@@ -478,3 +478,29 @@ diff check passed. Migration helper `b9bdf46d-07a6-4180-a15c-0d9e6d347258` SUCCE
 confirmed `PRO_BILLING_CLOCK_MIGRATION_OK` with rows preserved, using SET LOCAL ROLE
 to the PRO-only NOLOGIN owner in the explicitly selected PRO Sandbox database.
 The temporary administrator reference was blanked immediately afterward.
+
+## Paid-period writer permission correction
+
+Published clock fix `a4643daad5f89cd9abd239dcfc6fe3d8d3bc8c0f`; runtime
+`cd039e96-8a9e-4700-abef-680e0645247c` SUCCESS and Vercel
+`dpl_EhmQcFAFAiLYVDN2uB8ejQScqjmx` READY. Live reconciliation now recorded the
+single verified payment, but stopped before the period insert (503).
+Read-only diagnostic `52f26c85-8169-4f9e-8a7f-0bf4c0c7b5b0` confirmed 1 payment,
+0 periods, no payment UPDATE privilege, subscription UPDATE allowed, and the
+subscription-row lock succeeded while the payment-row lock failed.
+
+The immutable payment table intentionally lacks UPDATE permission, required by
+SELECT FOR UPDATE. Period grants now lock the parent subscription, using the
+existing allowed privilege and serializing grants for that contract. No role
+privileges were broadened. The real billing-clock test now runs as a matching
+least-privilege role and proves payment UPDATE/period DELETE remain forbidden.
+The existing payment is retained; the normal idempotent reconciliation repairs
+its missing period. Do not create or approve another subscription.
+
+Final permission-fix gates: Node 1,247 passed (including the least-privilege
+real-clock fixture), Python 2,523 passed, build passed, lint 0 errors/5 existing
+warnings, compileall and diff check passed. Integrated parallel RESOLUTE docs-only
+commit `b23dd6385f8fe3e0196254bb9c29031210a59c16`; no application changes in that
+merge, and reran the applicable diff check. Helper retirement
+`d533c6ed-135a-4b30-b4a8-21a587389b41` SUCCESS logged the retired marker; temporary
+writer/service-token references blanked. Runtime recovery still to be verified.
