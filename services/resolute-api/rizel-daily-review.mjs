@@ -2,6 +2,21 @@ import {inspectCandidateFeed,generate,publicationBounds} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
+/** Pure intake shared by the paid worker and read-only diagnostics. */
+export function selectDailyCandidates(feed,now=new Date()){
+ if(!(now instanceof Date)||!Number.isFinite(now.getTime()))throw Error('INVALID_CLOCK');
+ const intake=inspectCandidateFeed(feed,now,{allowDateOnly:true});
+ const diagnostics={...intake.diagnostics,outsideDailyWindow:0,duplicateHeadline:0,overDailyLimit:0};
+ const seen=new Set();
+ const selected=intake.candidates.filter(c=>{
+  if(now.getTime()-publicationBounds(c.publishedAt).earliest>96*3600000){diagnostics.outsideDailyWindow++;return false;}
+  if(seen.has(c.fingerprint)){diagnostics.duplicateHeadline++;return false;}
+  seen.add(c.fingerprint);return true;
+ });
+ diagnostics.overDailyLimit=Math.max(0,selected.length-3);selected.splice(3);
+ return {selected,diagnostics};
+}
+
 /** Trusted worker only, never a browser or customer read path.
  * No scheduler is enabled here. The owner must explicitly enable the worker.
  * Daily claims survive errors: retrying cannot silently repeat paid generation.
@@ -17,15 +32,9 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
  if(!claim.rows.length)return {state:'already-claimed',day};
  const refs=[];let stage='source',diagnostics;
  try{
-  const intake=inspectCandidateFeed(await readFeed(),now,{allowDateOnly:true});
-  diagnostics={...intake.diagnostics,outsideDailyWindow:0,duplicateHeadline:0,overDailyLimit:0};
-  const candidates=intake.candidates,seen=new Set();
-  const selected=candidates.filter(c=>{
-   if(now.getTime()-publicationBounds(c.publishedAt).earliest>96*3600000){diagnostics.outsideDailyWindow++;return false;}
-   if(seen.has(c.fingerprint)){diagnostics.duplicateHeadline++;return false;}
-   seen.add(c.fingerprint);return true;
-  });
-  diagnostics.overDailyLimit=Math.max(0,selected.length-3);selected.splice(3);
+  const intake=selectDailyCandidates(await readFeed(),now);
+  diagnostics=intake.diagnostics;
+  const selected=intake.selected;
   stage='storage';
   await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET candidate_count=$2 WHERE day=$1',[day,selected.length]);
   stage='generation';

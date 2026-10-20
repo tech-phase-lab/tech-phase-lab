@@ -58,3 +58,41 @@ all real-world risk news was covered.
 Diagnostic retirement: all three temporary credential/origin references cleared,
 DIAGNOSTIC_ENABLED=false. Deployment d49ab6ae-6bc3-4f5d-996a-903e1970c051 logged
 RIZEL_INTAKE_DIAGNOSTIC_DISABLED at 09:19:15 JST. No cron or domain was added.
+
+## 09:40 JST deployment verification
+
+Owner applied the pending single commit-pin update. Railway deployment
+baf2b22a-fd02-491f-ab0b-662f8177121d is SUCCESS at f9c167f5.
+Actual 00:40:38Z RIZEL_DAILY_PREFLIGHT log reports ready, approvedPairs90,
+publication withheld, aiCalls0, writes0. No new daily generation/storage run
+was observed. Cron remains `0 22 * * 0-4`; no staged changes. GitHub CI for
+f9c167f5 completed successfully. This does not repair October20's zero rows.
+
+## Intake follow-up implementation
+
+The English downside matcher incorrectly admitted `Urban` via `ban`, and also
+admitted bandwidth/cutting-edge/executive via fragments. It now matches bounded
+words and explicit inflections, including downgrade/downgraded and Japanese
+格下げ/引下げ. These changes are lexical screening, not semantic verification:
+model evidence checks and withholding remain mandatory. This follow-up is not
+included in f9c167f5's deployed image.
+
+Daily age filtering, headline deduplication and the three-item cap now use one
+pure selector shared with a GET-only diagnostic:
+
+`node services/resolute-api/rizel-intake-check.mjs --read-only`
+
+The command uses only RESOLUTE_NEWS_ORIGIN and RESOLUTE_NEWS_READ_TOKEN. It does
+not open a database pool, claim/reset a day, call AI, publish, or send mail.
+It runs the same authenticated reader and public sanitizer as the daily worker;
+reports contain aggregate reasons/counts only. Do not paste credential values
+into a terminal command or log. A current result is never a historical replay.
+
+Coverage remains incomplete. General-news enabled=false is honored, and no
+contract or source-wide flag is changed. The analyst public shape intentionally
+omits the original source URL (`lib/research/analyst-news.ts`); using it directly
+as sourced risk evidence would invent provenance. A separate authenticated,
+source-validated upstream contract is needed before admitting that lane. The
+shared news pipeline belongs to the other assigned developer; this follow-up
+changes only RESOLUTE intake, not that pipeline. Do not relax evidence/date/body
+requirements just to meet a daily count, or call zero candidates a quiet market.

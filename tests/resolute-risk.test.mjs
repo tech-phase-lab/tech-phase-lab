@@ -61,3 +61,11 @@ test('positive announcements are not risk candidates solely because their body m
  const feed={ok:true,enabled:true,items:[{...candidate,title:'NVIDIA expands partnership for safe automated driving',bodyEn:body}]};
  assert.deepEqual(candidatesFromFeed(feed,now),[]);
 });
+
+test('downside words do not match Urban, bandwidth or cutting-edge; inflections and downgrades remain eligible',()=>{
+ const select=title=>candidatesFromFeed({ok:true,enabled:true,items:[{...candidate,title,bodyEn:body}]},now);
+ for(const title of ['NVIDIA powers smarter Urban operations','NVIDIA expands bandwidth','NVIDIA introduces cutting-edge chips','NVIDIA introduces cutting edge chips','NVIDIA executive discusses chip design'])
+  assert.equal(select(title).length,0,title);
+ for(const title of ['NVIDIA faces export ban','NVIDIA banned from new market','NVIDIA warns of restrictions','NVIDIA shares fell','NVIDIA earnings decline','NVIDIA downgraded by analyst','NVIDIA faces losses','NVIDIA cuts outlook','NVIDIAの格下げ','NVIDIAの目標株価引下げ'])
+  assert.equal(select(title).length,1,title);
+});

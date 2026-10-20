@@ -3,7 +3,9 @@ import {pathToFileURL} from 'node:url';
 import {riskPool,hash,boundedJSON} from './risk-store.mjs';
 import {riskStars,parseRiskArticle,riskDate} from '../../lib/resolute/risk.ts';
 const relevant=/\b(AI|semiconductor|NVIDIA|NVDA|AMD|TSMC|Micron|MU|ASML|AVGO|NBIS|HBM|chip|export controls?)\b|半導体|人工知能|輸出規制|エヌビディア|マイクロン/i;
-const negative=/risk|fall|cut|delay|halt|ban|restrict|loss|warn|declin|default|lawsuit|shortage|不安|懸念|下落|引き下げ|遅延|停止|規制|損失|減益|警告|不足/i;
+// Match complete English words, including explicit inflections. Substrings such
+// as Urban, bandwidth and cutting-edge must not become downside evidence.
+const negative=/\b(?:risks?|risky|falls?|falling|fell|fallen|cuts?|cutting(?![- ]edge)|delays?|delayed|delaying|halts?|halted|halting|bans?|banned|banning|restrict(?:s|ed|ing|ions?)?|loss(?:es)?|warn(?:s|ed|ing|ings)?|declin(?:e|es|ed|ing)|defaults?|defaulted|defaulting|lawsuits?|shortages?|downgrad(?:e|es|ed|ing))\b|不安|懸念|下落|引き下げ|引下げ|格下げ|遅延|停止|規制|損失|減益|警告|不足/i;
 // Date-only intake is opt-in for private review. Keep the original date string;
 // bounds cover all UTC offsets rather than pretending the source published at midnight.
 export function publicationBounds(value){

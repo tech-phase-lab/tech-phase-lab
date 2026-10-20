@@ -1732,3 +1732,13 @@ one remaining candidate exceeded96h. This is current-feed evidence, not historic
 07:02 replay. Added no-candidates outcome, aggregate reasons/coverage and mandatory
 DB readback before reporting success. See RESOLUTE-MORNING-2026-10-20.md. No AI,
 mail, sales, daily claim reset or schedule/reservation change in the diagnostic.
+
+## 2026-10-20 — Morning deployment confirmed and intake follow-up
+
+Owner applied f9c167f5 to morning deployment baf2b22a: actual preflight ready,
+90 withheld pairs, zero AI/writes; cron unchanged. GitHub CI passed. No new daily
+saved output was observed. Follow-up fixes substring false positives (Urban/ban,
+bandwidth, cutting-edge, executive) and missing downgrade inflections. Added a
+GET-only diagnostic sharing the daily selector, without DB/AI/day claims. See
+RESOLUTE-MORNING-2026-10-20.md for exact command and remaining source-contract gap.
+No upstream news, schedule, public UI, publication gate or payment changes.
