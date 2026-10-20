@@ -157,6 +157,105 @@
           }
         }
       ]
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "クラウドストライク",
+      "sub": "サイバーセキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CrowdStrikeは、米国とカナダのArrowのチャネルパートナー向けにFalconプラットフォームを提供する流通契約をArrow Electronicsと結んだ",
+          "text_en": "CrowdStrike signed a distribution agreement with Arrow Electronics to bring its Falcon platform to Arrow channel partners across the U.S. and Canada",
+          "source": {
+            "label": "CrowdStrike の発表",
+            "label_en": "CrowdStrike press release",
+            "url": "https://www.crowdstrike.com/en-us/press-releases/arrow-electronics-distribution-agreement-to-accelerate-north-america-transformation/",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "CrowdStrike (NASDAQ: CRWD) today announced a distribution agreement with Arrow Electronics, bringing the industry-leading CrowdStrike Falcon® cybersecurity platform to Arrow channel partners and customers across the U.S. and Canada."
+          }
+        }
+      ],
+      "name_en": "CrowdStrike"
+    },
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ・テクノロジーズ",
+      "sub": "CDN・セキュリティ",
+      "sub_en": "CDN & security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Akamaiは、Arrow Electronicsのエンタープライズ・コンピューティング事業との新たな関係を発表し、クラウドやセキュリティ製品の提供先を広げる",
+          "text_en": "Akamai announced a new relationship with Arrow Electronics' enterprise computing solutions business to expand access to its cloud, security and application delivery solutions",
+          "source": {
+            "label": "Akamai の発表",
+            "label_en": "Akamai press release (GlobeNewswire copy)",
+            "url": "https://mfn.se/all/a/akamai-technologies/akamai-teams-with-arrow-electronics-to-power-and-protect-digital-experiences-at-scale-ac9f9aa3",
+            "level": "official",
+            "date": "2026-04-07",
+            "quote": "Akamai (NASDAQ: AKAM) today announced a new relationship with Arrow Electronics’ enterprise computing solutions (ECS) business that expands access to Akamai’s cloud, security, and application delivery solutions across Arrow’s growing ecosystem."
+          }
+        }
+      ],
+      "name_en": "Akamai Technologies"
+    },
+    {
+      "id": "LFUS",
+      "ticker": "LFUS",
+      "name": "Littelfuse",
+      "sub": "回路保護部品",
+      "sub_en": "Circuit protection",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Littelfuseは、欧州・中東・アフリカ向けの新しい流通契約をArrow Electronicsと結んだ",
+          "text_en": "Littelfuse signed a new distribution agreement for Europe, the Middle East and Africa with Arrow Electronics",
+          "source": {
+            "label": "Littelfuse の発表",
+            "label_en": "Littelfuse press release",
+            "url": "https://investor.littelfuse.com/news/news-details/2013/Littelfuse-And-Arrow-Electronics-Sign-New-EMEA-Distribution-Agreement-03-19-2013/default.aspx",
+            "level": "official",
+            "date": "2013-03-19",
+            "quote": "Littelfuse, Inc ., the global leader in circuit protection, today announced it has signed a new distribution agreement for Europe, the Middle East and Africa (EMEA) with Arrow Electronics Inc ., a global provider of electronic components and enterprise computing solutions.",
+            "note": "2013年の古い発表です。",
+            "note_en": "Announced in 2013; older."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSCC",
+      "ticker": "LSCC",
+      "name": "ラティス・セミコンダクター",
+      "sub": "プログラマブル半導体",
+      "sub_en": "Programmable chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Arrowの再販による売上は、Latticeの売上高の2009年度で約9%、2008年度で約11%を占めた",
+          "text_en": "Resales by Arrow accounted for approximately 9% of Lattice's revenue in fiscal 2009 and 11% in fiscal 2008",
+          "source": {
+            "label": "Lattice Semiconductor Form 8-K",
+            "label_en": "Lattice Semiconductor Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/0000855658/000119312510078941/d8k.htm",
+            "level": "official",
+            "date": "2010-04-01",
+            "quote": "Revenues attributable to resales of products by Arrow accounted for approximately 9% and 11% of Lattice’s revenue in each of fiscal 2009 and 2008, respectively.",
+            "note": "2010年の古い記載で、Latticeはその後Arrowとの流通契約の終了を通知しています。",
+            "note_en": "Dated 2010; Lattice gave notice to end its distribution agreements with Arrow."
+          }
+        }
+      ],
+      "name_en": "Lattice Semiconductor"
     }
   ],
   "far": [],

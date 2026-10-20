@@ -236,6 +236,36 @@
             "date": "2026-03-17",
             "quote": "Leading software providers — including Autodesk , Innoactive , Synopsys , Trifork , X-Plane and iRacing — are using the integration to deliver high-fidelity applications natively to Apple Vision Pro."
           }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAは、Omniverseが接続する業界有力アプリの提供元としてAutodeskを挙げている",
+          "text_en": "NVIDIA names Autodesk among software companies whose applications connect to its Omniverse ecosystem",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-launches-omniverse-design-collaboration-and-simulation-platform-for-enterprises",
+            "level": "official",
+            "date": "2021-04-12",
+            "quote": "The NVIDIA Omniverse ecosystem continues to grow, connecting industry-leading applications from software companies such as Bentley Systems, Adobe, Autodesk, Epic Games, ESRI, Graphisoft, Trimble, McNeel & Associates, Blender, Marvelous Designer, Reallusion and wrnch Inc.",
+            "note": "2021年の発表で、時期は古いです。",
+            "note_en": "Announced in 2021; older."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAは、Pixar、Adobe、Autodesk、Siemensなどと協力し、USDの機能を拡張する複数年のロードマップを進める",
+          "text_en": "NVIDIA will pursue a multi-year roadmap to expand USD capabilities together with Pixar, Adobe, Autodesk, Siemens and others",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-and-partners-build-out-universal-scene-description-to-accelerate-industrial-metaverse-and-next-wave-of-ai",
+            "level": "official",
+            "date": "2022-08-09",
+            "quote": "Working together with USD’s inventor, Pixar, as well as Adobe, Autodesk, Siemens and a host of other leading companies, NVIDIA will pursue a multi-year roadmap to expand USD’s capabilities beyond visual effects",
+            "note": "2022年の発表で、時期は古いです。",
+            "note_en": "Announced in 2022; older."
+          }
         }
       ]
     },
@@ -264,6 +294,32 @@
         }
       ],
       "name_en": "Apple"
+    },
+    {
+      "id": "SIE",
+      "ticker": "Siemens",
+      "name": "シーメンス",
+      "sub": "産業・PLMソフト",
+      "sub_en": "Industrial & PLM software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AutodeskとSiemensは、製品開発ソフトの非互換によるコストを減らすため、相互運用性に関する合意を発表した",
+          "text_en": "Autodesk and Siemens announced an interoperability agreement to help manufacturers decrease the costs of incompatibility among product development software",
+          "source": {
+            "label": "Autodesk の発表",
+            "label_en": "Autodesk press release",
+            "url": "https://adsknews.autodesk.com/en/pressrelease/autodesk-and-siemens-sign-agreement-to-increase-software-interoperability/",
+            "level": "official",
+            "date": "2016-03-01",
+            "quote": "Autodesk, Inc. (NASDAQ:ADSK) and Siemens today announced an interoperability agreement aimed at helping manufacturers decrease the costs associated with incompatibility among product development software applications and avoid potential data integrity problems.",
+            "note": "2016年の発表で、時期は古いです。",
+            "note_en": "Announced in 2016; older."
+          }
+        }
+      ],
+      "name_en": "Siemens"
     }
   ],
   "far": [],

@@ -10,6 +10,10 @@
       "en": "Financing & divestitures"
     },
     {
+      "ja": "顧客・取引先",
+      "en": "Customers & partners"
+    },
+    {
       "ja": "競合",
       "en": "Competitors"
     }
@@ -87,12 +91,38 @@
       "name_en": "TTM Technologies"
     },
     {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラム・リサーチ",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Lam Researchが、Lam-Novellus統合への支援と貢献についてMKSを特別表彰した",
+          "text_en": "Lam Research gave MKS special recognition for its support and contributions to integration goals during the Lam-Novellus merger",
+          "source": {
+            "label": "Lam Research ニュースルーム",
+            "label_en": "Lam Research newsroom",
+            "url": "https://newsroom.lamresearch.com/2014-10-27-Lam-Research-Announces-Supplier-Excellence-Awards",
+            "level": "official",
+            "date": "2014-10-27",
+            "quote": "In addition, MKS Instruments, Inc., ( Andover, Mass. ) received special recognition for its support and important contributions to integration goals during the Lam-Novellus merger.",
+            "note": "2014年の発表で、古い情報です。",
+            "note_en": "From a 2014 announcement; older."
+          }
+        }
+      ],
+      "name_en": "Lam Research"
+    },
+    {
       "id": "IPGP",
       "ticker": "IPGP",
       "name": "IPG Photonics",
       "sub": "ファイバーレーザー",
       "sub_en": "Fiber lasers",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -115,7 +145,7 @@
       "name": "Coherent",
       "sub": "レーザー・フォトニクス",
       "sub_en": "Lasers & photonics",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -138,7 +168,7 @@
       "name": "日立製作所",
       "sub": "総合電機",
       "sub_en": "Electronics conglomerate",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -162,7 +192,7 @@
       "name": "三菱電機",
       "sub": "総合電機",
       "sub_en": "Electronics conglomerate",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
