@@ -97,3 +97,18 @@ pinned-clock npm runner (257.494s); Next.js production build succeeded.
 compileall, shell syntax and diff checks passed. SQL relocation was also checked
 byte-for-byte against the prior approved document. No production execution is
 claimed; saving remains disabled and no schedule or live integration changed.
+
+
+## 2026-10-20 18:36 JST — Integrated CI and execution access
+
+GitHub Actions39388517701 completed successfully for e847d03a, which includes
+30faefae and the subsequent coworker backup work. The earlier run39387842953
+was cancelled by the newer branch push; it is not recorded as passing.
+
+The transient checkout was removed by workspace maintenance and recovered from
+GitHub; no user-authored change was lost. The connected Railway app still exposes
+no SQL/SSH operation. A standard Railway dashboard path was inspected separately:
+the target Postgres page currently shows Login/404 in this browser, so its Data
+screen cannot yet be inspected. Existing CLI authorization does not establish a
+signed-in dashboard session. No CLI policy-denied endpoint was retried, no admin
+credential was transferred, and no production write or save activation occurred.
