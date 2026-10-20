@@ -201,3 +201,63 @@ PRO復旧サービス `7950fd63-99a9-49f3-9d7a-a7f319620e9e` の2026-10-20T13:17
 テスト実行には実サービスの認証情報を引き継がず、Node/Pythonは外部HTTPプロキシを無効なローカル宛先へ設定した。ニュースのコード・稼働設定・取得サービス、RESOLUTE実装は変更していない。これらはローカル回帰検証であり、実PayPal受入や稼働ニュースの実測ではない。GitHub公開・外部DB更新・デプロイ前の記録。
 
 公開直前に企業紹介ページ等の別作業が入ったため、`de5ea3c9cb65b8d3ca5a4e5460f08373e37c08e0` をfast-forwardで保全して取り込み、全ゲートを再実行。最終統合ツリーはNode **1,287件**、Python **2,547件**（272.055秒）、Lint（エラー0/既存警告5件）、Next本番ビルド、compileall、差分チェックすべて成功。最終ブランチ照合でもリモートはde5ea3c9のまま。DB004と稼働バックエンドの対応版更新は引き続き未実施であり、このローカル検証を実Sandbox受入の完了とは扱わない。
+
+## 一括公開完了・PRO専用DB更新の承認待ち
+
+全21ファイルを `2c0562051f1fe1434c2cb975e3b6500245c92d34` でcodex/research-previewへ公開。Git Dataのtree `065426b9200bf35d28ec49349ec6e2f2f65e167a` とgit write-treeが完全一致。expected_sha=de5ea3c9、force=falseで更新し、ローカルも同一ツリーへ整合した。main変更なし。
+
+Vercel deployment `dpl_6mR9nDf2YfMm9MpYh3rjJTx8wH45` はREADYを確認。URLは `https://tech-phase-g9r18axvj-chehon7144-5412.vercel.app`。GitHub Actions `39441430451` は最後の確認時in_progressで、完了とは報告しない。実ブラウザー購入往復の検証は未実施。
+
+DB004は未適用で、PRO billing/復旧Function/復元検証サービスも今回の版へ未更新。画面の変更は既存APIのreviewRequired省略と互換性を持つため、画面反映を異議処理の実稼働完了とは扱わない。
+
+次の管理者操作はPRO専用DB `tech_phase_billing_sandbox` に004だけを適用するもの。既存PRO作業用サービス `d6d32277-2a77-4548-a875-8188e59966f4` は退役コード、restart NEVER、公開domainなし、staged changesなしを読み取り確認。一時的に管理者接続をここへ渡す新しい用途の承認を求める。前回のバックアップ用ユーザー作成承認をこのDDL操作の承認とみなさない。
+
+実行候補は `/tmp/tech-phase-apply-dispute-holds.mjs` に準備・構文確認済み、未実行。明示action、専用DB名、Railway private host、current_databaseを照合。トランザクション、5秒lock timeout、30秒statement timeoutで004を適用し、制約を確認してCOMMIT。エラー時ROLLBACK、ログは安全な結果のみ。承認後、実行直前にサービス/保留変更を再確認し、管理者接続を終了後直ちに消し、退役コードへ戻す。RESOLUTEとニュースのDB/サービスを変更しない。
+
+この公開後記録はローカルにステージするだけとし、文書のための追加Vercelビルドは発生させない。
+
+## 23:44 JST承認後 — PRO Sandbox DB004・稼働版反映
+
+ユーザーの「進めてください。ミスのないように。」で一時管理者接続による004適用を承認。既存PRO作業用FunctionだけにPostgres参照を一時設定し、専用DB/host/actionを検証してトランザクション実行。2026-10-20T14:59:04Z、deployment `6f6b7d5c-2f1c-4324-93e2-187ab556d4af` の `TECH_PHASE_DISPUTE_SCHEMA_READY` (migration=4, sandbox) を確認。
+
+空文字による後片付けでは実行ログがadminPresent=trueとなったため、削除成功とは扱わず、管理者接続とactionを非認証文字列RETIREDへ上書きした。退役コードdeployment `e1dca8e9-0c8a-4b70-b29f-82780846768c` の2026-10-20T15:00:39ZログでcredentialRemoved=trueを確認。DB接続コードも退役コードに置換済み。
+
+GitHub Actions `39441430451` の2ジョブ（PostgreSQL concurrency / Lint test build）は全ステップ成功。PRO billingと復元検証はコミット `2c0562051f1fe1434c2cb975e3b6500245c92d34` へ固定、復旧Functionも同版のバンドルへ更新。既存Cronは変更していない。
+
+- billing: `8a9bfba0-d8a4-4533-b9f1-9847cc57dc55` SUCCESS
+- restore-check: `4bb7b68b-1fe0-4eb3-8577-2365009f63ae` SUCCESS
+- recovery: `7bdf0d4b-e8b1-490d-a3f0-72b62b2f42d1` SUCCESS
+
+このSUCCESSは配備状態。更新後の復旧/復元処理の完了ログはこの記録時点では未確認。backupは既存版0c4bbce8を維持（dump暗号化処理に変更なし）。新スキーマを含むバックアップ作成を既存deploymentの再起動で開始した。復元検証は新バックアップの成功確認後に行う。
+
+## 2026-10-21 00:18 JST — PRO専用Webhook通知追加
+
+PRO専用Webhook `8RC86242WT392843H` と完全一致するURLを読み取り確認後、既存イベントを保持してCUSTOMER.DISPUTE.CREATED / UPDATED / RESOLVEDの3イベントだけを追加。再GETで既存イベント保持と追加3件を確認。deployment `1e3a6833-795c-4528-8712-593e8b67c490`、2026-10-20T15:18:14Z `TECH_PHASE_PRO_WEBHOOK_READY`。
+
+作業用コードは固定Sandbox API/固定Webhook ID/固定URL/actionを照合し、管理者DB接続がRETIREDであることを必須にした。実行前に追加・wildcard・異なるURL・異なる環境の4模擬ケースを検証。PayPalの異議申立てそのものや返金、追加購入は行っていない。設定後は一時PayPal参照/環境/actionをRETIREDへ置換し、全5項目を検証する退役コードへ更新した。退役後の実行ログ確認は続行中。
+
+今回の対象はPRO専用サービスとPRO用Webhookのみ。RESOLUTE Webhook、ニュース/決算取得、main、Clerk本番権限は変更していない。一般公開、本番PRO同期、実Sandbox USD購入・更新・返金/異議の受入は未完了。この記録はローカルに保持し、記録だけの追加Vercelビルドは行わない。
+
+### 00:20 JST — 配備後の実行確認完了
+
+- 作業用Function `16902486-b7ad-4f51-a506-7a9e91c37649`：15:19:07Z、TECH_PHASE_PROVISION_RETIRED / credentialRemoved=true。今回使用した管理者接続、PayPal参照、環境/actionの計5項目がRETIREDであることを実行時に確認。
+- 既存backup deployment `d0c57449-eaf8-44dc-9b13-67c7aa8e80da` を再ビルドなしで実行：15:19:06Z TECH_PHASE_BACKUP_OK、14,613 bytes、retained=1。監視start/finishともsent。
+- 更新済みrestore-checkを再ビルドなしで実行：15:19:56Z TECH_PHASE_RESTORE_CHECK_OK。authenticated_decryption / pg_restore / ledger / entitlement_viewすべて成功。subscriptions/payments/periods/events各1、adverse_transactions/review_holds各0、promotion=false。監視start/finishともsent。専用隔離PostgreSQLへの復元であり、稼働DBに書き戻していない。異議データ0件なので実異議の受入完了とは扱わない。
+- 更新済みrecoveryを実行：15:20:01Z TECH_PHASE_SANDBOX_RECOVERY、verified / pro / cancelled / changed=false。既存の支払済み解約契約を正常照合し、状態を保持した。create/cancel/captureは呼び出していない。
+- 最後のRailway staged changesはなし。追加Vercelビルドなし。残る実Sandbox USD購入のPayPal承認には購入者本人の操作が必要。
+
+## 2026-10-21 00:25 JST — USD購入後の照合409を調査・修正
+
+購入者から「支払いを確認できませんでした / 契約中 / PRO」と報告。HTTPログはcreate=200、支払後Webhook/reconcile=409。PROは以前のJPY購入による有効期間であり、今回USDの照合成功を示さない。
+
+専用backup読取ロールとBEGIN READ ONLYで最新の所有者USD契約のみ参照し、Sandbox PayPal GETで照合。管理者接続はRETIREDのまま。diagnosis deployment `1d80cc49-f560-489a-ae91-c83be1e9053b` SUCCESS、15:27:09Z：契約ID/custom_id/plan一致、ACTIVE、USD20.00 COMPLETED、同一支払時刻、未払0、失敗0、ローカルpayments=0/holds=0。
+
+実データはstart_time=2026-10-20T15:23:54Z、last_payment=15:24:34Z、next_billing_time=2026-11-21T10:00:00Z。初回更新がUTC暦日で翌日になっており、従来の同日必須判定が拒否原因。初回に限り月境界から24時間未満の正のずれを許容し、PayPalが返した実日時を保存する修正を追加。金額・通貨・契約・完了取引の一致、二重登録防止は維持。更新2回目以降の判定は今回緩めず、実更新の受入は引き続き未完了。
+
+実データ相当のPGlite回帰テストで初回照合、再照合による1件維持、解約後の同一期限保持、期限ちょうどの失効を確認。24時間以上/2日後への延長は拒否。既存テストも含めsettlement19件成功。DBマイグレーション追加は不要。
+
+調査後、今回使った6項目をRETIREDへ戻し、退役deployment `510f04c7-5762-47ba-ae82-09523061bb52` SUCCESS、15:27:58Z credentialRemoved=trueを確認。新規購入、返金、解約、DB修正は実行していない。
+
+並行作業の `c5eb09e847bbe9f2a872d8eba1328d2d8243e83a` をfast-forwardで保全して取り込み、PRO修正の全体公開ゲートを実行中。RESOLUTE側の変更を作り直したり変更したりしていない。
+
+公開前の並行更新7ab9e72e（RESOLUTE）、64e5b0f7（カレンダー）をそれぞれfast-forwardで保全。こちらで内容は変更していない。最終64e5b0f7統合ツリーでNode1,297件、Python2,549件（285.429秒）、Lint0 errors/既存5 warnings、Next本番ビルド、compileall成功。実サービス認証情報を引き継がないローカル検証。最後のブランチ照合は64e5b0f7で一致。公開対象はPRO settlement、回帰テスト、継続記録の3ファイルのみ。

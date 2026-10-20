@@ -151,6 +151,28 @@ test('actual Sandbox billing clock settles once and survives cancellation withou
   await assert.rejects(db.query('UPDATE tech_phase_billing_sandbox.periods SET period_end=$1 WHERE transaction_id=$2',[end,p.id]),/check constraint/);
  }
 }));
+test('actual USD first renewal on the next UTC date settles once and retains its verified expiry after cancellation',()=>database(async(store,db)=>{
+ const row=await store.reserve('user_owner','USD','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const r=remote(row);r.plan_id=plans.USD;r.start_time='2026-10-20T15:23:54Z';
+ r.billing_info.last_payment={amount:{currency_code:'USD',value:'20.0'},time:'2026-10-20T15:24:34Z'};
+ r.billing_info.outstanding_balance={currency_code:'USD',value:'0.0'};
+ r.billing_info.next_billing_time='2026-11-21T10:00:00Z';
+ const p={id:'TX-USD-UTC',status:'COMPLETED',time:'2026-10-20T15:24:34.000Z',amount_with_breakdown:{gross_amount:{currency_code:'USD',value:'20.00'}}};
+ const clock=Date.parse('2026-10-20T15:27:00Z');
+ const svc=reconciliationService({store,paypal:{get:async()=>structuredClone(r),transactions:async()=>({transactions:[p]})},plans,now:()=>clock});
+ const first=await svc.reconcile(row.user_id,row.id);
+ assert.equal(first.status,'verified');assert.equal(first.proExpiresAt,'2026-11-21T10:00:00.000Z');
+ assert.deepEqual(await svc.reconcile(row.user_id,row.id),first);
+ for(const end of ['2026-11-21T15:23:54Z','2026-11-22T10:00:00Z']) {
+  const copy=structuredClone(r);copy.billing_info.next_billing_time=end;
+  assert.throws(()=>verifiedPeriod({...row,paypal_id:sid},copy,[p],plans,clock),/REVIEW/);
+ }
+ r.status='CANCELLED';delete r.billing_info.next_billing_time;
+ assert.deepEqual(await svc.reconcile(row.user_id,row.id),first);
+ assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.payments')).rows[0].n,1);
+ assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.periods')).rows[0].n,1);
+ assert.equal((await store.entitlement(row.user_id,Date.parse(first.proExpiresAt))).plan,'free');
+}));
 test('provider clock respects monthly dates, renewals and month-end anchors without loosening payment evidence',()=>{
  const r=remote(local,2);r.start_time='2026-01-31T06:17:10Z';
  r.billing_info.last_payment.time='2026-02-28T10:00:03Z';

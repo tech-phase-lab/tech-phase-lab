@@ -36,8 +36,9 @@ export function verifiedPeriod(local, remote, transactions, plans, now = Date.no
       amountMinor(info.last_payment?.amount,q.currency) !== q.minor) reject();
   const expectedStart = monthlyBoundary(remote.start_time,cycle.cycles_completed - 1);
   const expectedEnd = monthlyBoundary(remote.start_time,cycle.cycles_completed);
-  // PayPal's billing clock need not equal the creation/start clock. Accept only
-  // the expected monthly calendar date, using the provider's time on that date.
+  // PayPal can schedule the first renewal on the following UTC date (observed
+  // in Sandbox). Bound that initial offset to less than 24 hours; retain the
+  // existing strict renewal rule instead of extrapolating an unverified clock.
   // Never infer extra cycles from an arbitrary next_billing_time.
   const next = Date.parse(info.next_billing_time);
   let start, end;
@@ -51,9 +52,12 @@ export function verifiedPeriod(local, remote, transactions, plans, now = Date.no
     start = storedPeriod.periodStart; end = storedPeriod.periodEnd;
   }
   const paid = Date.parse(info.last_payment?.time);
+  const endOffset = Date.parse(end) - Date.parse(expectedEnd);
+  const firstRenewalOffset = cycle.cycles_completed === 1 && endOffset >= 0 && endOffset < 86400000;
   if (typeof start !== 'string' || typeof end !== 'string' ||
       !Number.isFinite(Date.parse(start)) || !Number.isFinite(Date.parse(end)) ||
-      start.slice(0,10) !== expectedStart.slice(0,10) || end.slice(0,10) !== expectedEnd.slice(0,10) ||
+      start.slice(0,10) !== expectedStart.slice(0,10) ||
+      (end.slice(0,10) !== expectedEnd.slice(0,10) && !firstRenewalOffset) ||
       !Number.isFinite(paid) || paid < Date.parse(start) || paid >= Date.parse(end) || paid > now ||
       !Array.isArray(transactions)) reject();
   const matches = transactions.filter(t => Date.parse(t.time) === paid);
