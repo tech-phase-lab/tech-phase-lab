@@ -2074,3 +2074,13 @@ service retired with actual referencesNeutralized=true log (981857b9,07:18:58Z).
 This proves synthetic loopback HTTP + real S3 durability, NOT public HTTPS or
 production save/restore. Saving OFF; in-container production DB execution remains
 blocked, with owner approval already retained. See STORAGE-CUTOVER latest entry.
+
+
+2026-10-20 RESOLUTE: added guarded local-socket-only check-storage-write.sh and
+moved reviewed rollback SQL unchanged into check-storage-write.sql. Five regression
+tests cover success/repeat, mid-write privilege failure rollback, dormant/collision
+checks, wrong DB and shell connection isolation/exit status. Node1257/Python2523
+(3780) pass; build/compileall/shell/diff checks pass. No production connection or
+activation: current execution environment still blocks Railway CLI, and connected
+app lacks SQL/SSH. Owner permission persists; no repeat login/key/Run now.
+See RESOLUTE-SCOPED-WRITE-CHECK.md for exact procedure and evidence limits.
