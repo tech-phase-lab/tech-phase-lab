@@ -8,6 +8,10 @@
     {
       "ja": "連携先",
       "en": "Integrations & partners"
+    },
+    {
+      "ja": "買収の合意",
+      "en": "Pending acquisition"
     }
   ],
   "rivals": [],
@@ -310,6 +314,31 @@
             "quote": "Announced protection for OpenAI’s ChatGPT Enterprise to help customers automatically identify sensitive data uploads, monitor prompts and responses, and prevent breaches and compliance violations.",
             "note": "OpenAIは未上場です。",
             "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Proofpoint",
+      "ticker": "Proofpoint",
+      "name": "Proofpoint",
+      "sub": "セキュリティ",
+      "sub_en": "Security software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Varonisは2026年10月15日、Proofpointとの合併契約に署名した（買収の合意）",
+          "text_en": "Varonis signed a merger agreement with Proofpoint on October 15, 2026 (an agreement to be acquired)",
+          "source": {
+            "label": "Varonis Form 8-K",
+            "label_en": "Varonis Form 8-K (merger agreement)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000121390026109901/ea0308610-8k_varonis.htm",
+            "level": "official",
+            "date": "2026-10-15",
+            "quote": "Varonis Systems, Inc., a Delaware corporation (the “Company”), entered into an Agreement and Plan of Merger (the “Merger Agreement”) with Proofpoint, Inc., a Delaware corporation (“Parent”)",
+            "note": "Proofpointは未上場です。買収は完了前です。",
+            "note_en": "Proofpoint is not listed. The deal has not closed."
           }
         }
       ]
