@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -138,6 +139,33 @@ def sha(path):
             h.update(block)
     return h.hexdigest()
 
+def load_online_protection(env, client_factory, config):
+    """Read the isolated history store, never fall back to dump credentials."""
+    names = ('ENDPOINT', 'BUCKET', 'REGION', 'ACCESS_KEY_ID', 'SECRET_ACCESS_KEY')
+    values = {name: env.get('RESOLUTE_RESTORE_PROTECTION_' + name) for name in names}
+    if any(not isinstance(value, str) or not value.strip() for value in values.values()):
+        raise RuntimeError('independent protection store configuration required')
+    endpoint = urlsplit(values['ENDPOINT'])
+    if (endpoint.scheme != 'https' or not endpoint.hostname or endpoint.username
+            or endpoint.password or endpoint.query or endpoint.fragment
+            or endpoint.path not in ('', '/')):
+        raise RuntimeError('invalid independent protection endpoint')
+    backup_endpoint = urlsplit(env.get('BACKUP_ENDPOINT', ''))
+    if (endpoint.netloc.lower() == backup_endpoint.netloc.lower()
+            and values['BUCKET'] == env.get('BACKUP_BUCKET')):
+        raise RuntimeError('protection history must be separate from dump storage')
+    key_hex = env.get('RESOLUTE_PROTECTION_KEY_HEX', '')
+    pin = env.get('RESOLUTE_PROTECTION_EVENTS_MANIFEST_SHA256', '')
+    if (not re.fullmatch('[0-9a-f]{64}', key_hex)
+            or not re.fullmatch('[0-9a-f]{64}', pin)):
+        raise RuntimeError('independent protection key and manifest pin required')
+    client = client_factory('s3', endpoint_url=values['ENDPOINT'],
+                            aws_access_key_id=values['ACCESS_KEY_ID'],
+                            aws_secret_access_key=values['SECRET_ACCESS_KEY'],
+                            region_name=values['REGION'], config=config)
+    return protection_events.load_manifest(client, values['BUCKET'],
+                                           bytes.fromhex(key_hex), pin, protection)
+
 def main():
     import boto3
     from botocore.config import Config
@@ -241,9 +269,10 @@ def main():
                     if online not in ('true', 'false'):
                         raise RuntimeError('invalid online protection schema result')
                     if online == 'true':
-                        ledger = protection_events.load_manifest(s3, bucket,
-                            bytes.fromhex(os.environ['RESOLUTE_PROTECTION_KEY_HEX']),
-                            os.environ.get('RESOLUTE_PROTECTION_EVENTS_MANIFEST_SHA256'), protection)
+                        ledger = load_online_protection(os.environ, boto3.client,
+                            Config(s3={'addressing_style': 'virtual'},
+                                   retries={'max_attempts': 3}, connect_timeout=15,
+                                   read_timeout=120))
                         run(['psql', '-Xq', '-v', 'ON_ERROR_STOP=1'], env=e,
                             data=protection.restore_sql(ledger).encode())
                         protection_result = {'state':'verified', 'source':'independent_online_manifest',

@@ -1883,3 +1883,24 @@ fence. Keep active connection verification and post-replay checks in the cutover
 Do not enable mail, payments, AI, or alter the morning job/reservations.
 Other contributor53fb0e46 notification/account changes were fast-forwarded and
 preserved unchanged. This record is documentation-only; diff validation applies.
+
+
+## 2026-10-20 — Separate online-history reads from DB dump storage
+
+Found and fixed a cutover blocker in scripts/resolute/backup.py: online manifest
+recovery was using the DB dump S3 client/bucket despite the isolated writer's
+separate history bucket. Online recovery now requires the five explicit
+RESOLUTE_RESTORE_PROTECTION_* connection settings and independently pinned
+key/manifest, rejects the dump bucket and unsafe endpoint forms, and never falls
+back to dump credentials. The legacy checkpoint path is unchanged. No production
+key was read, no schema/grants/flags were changed and no service was deployed.
+
+New regression coverage decrypts an actual synthetic AES-GCM event through the
+manifest loader, verifies independent GETs only, and rejects missing config,
+invalid pins, tampering, missing history and unsafe/same-store configuration.
+See RESOLUTE-STORAGE-CUTOVER.md for read-only Railway evidence, payload packaging
+check and ordered production steps. The actual new provider read path remains
+unverified; production saving stays disabled. Owner custody remains completed,
+not a reason to request another key or repeat the owner setup.
+
+Final integrated local validation on base86a329d4: Node1207/1207, Python2520/2520 (278.110s), lint0 errors/5 existing warnings, Next build, compileall and diff check passed. No production deployment or new live recovery pass is claimed.
