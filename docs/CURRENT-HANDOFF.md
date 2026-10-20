@@ -1742,3 +1742,15 @@ bandwidth, cutting-edge, executive) and missing downgrade inflections. Added a
 GET-only diagnostic sharing the daily selector, without DB/AI/day claims. See
 RESOLUTE-MORNING-2026-10-20.md for exact command and remaining source-contract gap.
 No upstream news, schedule, public UI, publication gate or payment changes.
+
+## 2026-10-20 — Concrete missing-news comparison and disabled report intake
+
+Located October19 reporting on continuing AI financing concerns despite rebound
+headlines. Fixed headline-only exclusion with a conservative concrete body-risk
+fallback; ordinary disclaimers/negation remain excluded. Staging health shows
+many separate company RSS headlines but these contain no body; general feed0,
+Stock News API configuration absent. Added a separate disabled RESOLUTE reporting
+adapter using the existing provider contract; no home/monitor edits, provider
+calls, new AI calls, publication or billing changes. See
+RESOLUTE-NEWS-COVERAGE-2026-10-20.md for evidence, exact enable conditions and the
+unverified live source/positive-generation boundary. Do not call this recovered.

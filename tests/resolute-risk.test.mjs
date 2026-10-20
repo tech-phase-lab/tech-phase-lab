@@ -69,3 +69,19 @@ test('downside words do not match Urban, bandwidth or cutting-edge; inflections 
  for(const title of ['NVIDIA faces export ban','NVIDIA banned from new market','NVIDIA warns of restrictions','NVIDIA shares fell','NVIDIA earnings decline','NVIDIA downgraded by analyst','NVIDIA faces losses','NVIDIA cuts outlook','NVIDIAの格下げ','NVIDIAの目標株価引下げ'])
   assert.equal(select(title).length,1,title);
 });
+
+test('a rebound headline does not hide concrete AI financing pressure in its body',()=>{
+ const select=(title,bodyEn)=>candidatesFromFeed({ok:true,enabled:true,items:[{...candidate,title,bodyEn}]},now);
+ // Synthetic paraphrases reproduce the October19 mixed-news failure without
+ // copying a source article into fixtures or presenting it as a live feed.
+ const financing='AI stocks recovered during the session. Analysts said higher borrowing costs could delay investment in data centers and pressure semiconductor suppliers.';
+ assert.equal(select('AI stocks recover during the session',financing).length,1);
+ const debt='CoreWeave shares recovered during the session. Its debt triggered a crisis of confidence among investors concerned about financing the AI infrastructure buildout.';
+ assert.equal(select('CoreWeave shares recover',debt).length,1);
+ for(const text of [
+  'NVIDIA announced new AI data centers. The company expects strong investment demand and improved efficiency. Financing costs are discussed without any claim of pressure.',
+  'AI stocks recovered during the session. Analysts denied that higher borrowing costs could delay investment in data centers and pressure semiconductor suppliers.',
+  'NVIDIA announced an AI product for enterprise customers with new networking features and improved efficiency.\nForward-looking statements: higher borrowing costs could delay AI investments.',
+  'Higher borrowing costs could delay investment in a grocery store. This company sells food and has reported an improved business outlook.\nNVIDIA released an AI processor.'
+ ])assert.equal(select('NVIDIA announces new products',text).length,0,text);
+});

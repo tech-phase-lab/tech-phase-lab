@@ -1,3 +1,4 @@
+import {createReportReader,withReportReader} from './rizel-report-source.mjs';
 import {Pool} from 'pg';
 import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {riskPool} from './risk-store.mjs';
@@ -13,7 +14,7 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
   const config=resoluteDatabaseConfig(process.env.RESOLUTE_RIZEL_DB_URL);
   if(new URL(config.connectionString).username!=='resolute_rizel_writer')throw Error('SCOPE');
   if(!process.env.RESOLUTE_OPENAI_API_KEY)throw Error('KEY_REQUIRED');
-  const readFeed=createNewsReader({origin:process.env.RESOLUTE_NEWS_ORIGIN,token:process.env.RESOLUTE_NEWS_READ_TOKEN});
+  const readFeed=withReportReader(createNewsReader({origin:process.env.RESOLUTE_NEWS_ORIGIN,token:process.env.RESOLUTE_NEWS_READ_TOKEN}),createReportReader({enabled:process.env.RESOLUTE_REPORT_SOURCE_ENABLED==='true',token:process.env.RESOLUTE_REPORT_SOURCE_TOKEN,tickers:process.env.RESOLUTE_REPORT_SOURCE_TICKERS}));
   selectionPool=new Pool({...config,max:2});selectionPool.on('error',()=>{});budgetPool=riskPool();
   const result=await prepareDailyReview({enabled:true,selectionPool,budgetPool,apiKey:process.env.RESOLUTE_OPENAI_API_KEY,
    readFeed});

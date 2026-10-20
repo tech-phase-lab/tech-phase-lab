@@ -1,3 +1,4 @@
+import {createReportReader,withReportReader} from './rizel-report-source.mjs';
 import {pathToFileURL} from 'node:url';
 import {createNewsReader} from './rizel-news-source.mjs';
 import {selectDailyCandidates} from './rizel-daily-review.mjs';
@@ -15,7 +16,7 @@ export async function checkIntake({readFeed,now=new Date()}){
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  try{
   if(process.argv.length!==3||process.argv[2]!=='--read-only')throw Error('READ_ONLY_REQUIRED');
-  const readFeed=createNewsReader({origin:process.env.RESOLUTE_NEWS_ORIGIN,token:process.env.RESOLUTE_NEWS_READ_TOKEN});
+  const readFeed=withReportReader(createNewsReader({origin:process.env.RESOLUTE_NEWS_ORIGIN,token:process.env.RESOLUTE_NEWS_READ_TOKEN}),createReportReader({enabled:process.env.RESOLUTE_REPORT_SOURCE_ENABLED==='true',token:process.env.RESOLUTE_REPORT_SOURCE_TOKEN,tickers:process.env.RESOLUTE_REPORT_SOURCE_TICKERS}));
   console.log(JSON.stringify(await checkIntake({readFeed})));
  }catch{
   console.error(JSON.stringify({event:'RIZEL_INTAKE_CHECK_FAILED',aiCalls:0,writes:0}));
