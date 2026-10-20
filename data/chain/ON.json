@@ -121,8 +121,8 @@
         },
         {
           "type": "rival",
-          "text": "Diodes Incorporatedの年次報告が、オン・セミコンダクターを競合として挙げている",
-          "text_en": "Names onsemi as a competitor in its annual report",
+          "text": "onsemiと競合する",
+          "text_en": "Competes with onsemi",
           "source": {
             "label": "Diodes Incorporated 10-K",
             "label_en": "Diodes Incorporated 10-K",
@@ -275,8 +275,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Monolithic Power Systemsの年次報告が、オン・セミコンダクターを競合として挙げている",
-          "text_en": "Names onsemi as a competitor in its annual report",
+          "text": "onsemiと競合する",
+          "text_en": "Competes with onsemi",
           "source": {
             "label": "Monolithic Power Systems 10-K",
             "label_en": "Monolithic Power Systems 10-K",
@@ -298,8 +298,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Power Integrationsの年次報告が、オン・セミコンダクターを競合として挙げている",
-          "text_en": "Names onsemi as a competitor in its annual report",
+          "text": "onsemiと競合する",
+          "text_en": "Competes with onsemi",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",
@@ -321,8 +321,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Navitas Semiconductorの年次報告が、オン・セミコンダクターを競合として挙げている",
-          "text_en": "Names onsemi as a competitor in its annual report",
+          "text": "onsemiと競合する",
+          "text_en": "Competes with onsemi",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -344,8 +344,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Alpha and Omega Semiconductorの年次報告が、オン・セミコンダクターを競合として挙げている",
-          "text_en": "Names onsemi as a competitor in its annual report",
+          "text": "onsemiと競合する",
+          "text_en": "Competes with onsemi",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",

@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Shopifyとの連携が終了または低下すると顧客を失う可能性があると、Klaviyoの年次報告が述べている",
-          "text_en": "Klaviyo says terminating or degrading its Shopify integration could cause it to lose customers",
+          "text": "Shopifyとの連携が終了または低下すると、Klaviyoは顧客を失う可能性がある",
+          "text_en": "If its Shopify integration ends or degrades, Klaviyo could lose customers.",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",
@@ -61,8 +61,8 @@
         },
         {
           "type": "tie",
-          "text": "Shopifyの年次報告は、Klaviyo株を買う選択権が2025年12月31日時点で7,500万ドルの投資だと記している",
-          "text_en": "Shopify's annual report records its option to buy Klaviyo Series B common shares as $75 million of investments as of December 31, 2025",
+          "text": "Shopifyが持つKlaviyo株の購入選択権は、2025年12月31日時点で7,500万ドルの投資に当たる",
+          "text_en": "Shopify's option to buy Klaviyo Series B common shares represents $75 million of its investments as of December 31, 2025",
           "source": {
             "label": "Shopify 10-K",
             "label_en": "Shopify 10-K",
@@ -84,8 +84,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Googleなどの技術プラットフォームとの連携を、Klaviyoの年次報告が挙げている",
-          "text_en": "Klaviyo's annual report lists Google among the technology platforms it integrates with",
+          "text": "Klaviyoの連携先には、Googleなどの技術プラットフォームが含まれる",
+          "text_en": "Klaviyo integrates with technology platforms including Google.",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",
@@ -155,8 +155,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "クラビヨの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Klaviyo’s annual report",
+          "text": "Klaviyoと競合する",
+          "text_en": "Competes with Klaviyo",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",
@@ -168,8 +168,8 @@
         },
         {
           "type": "tie",
-          "text": "Magento(Adobe)を含む主要コマース基盤と提携していると、Klaviyoの年次報告が述べている",
-          "text_en": "Klaviyo says it partners with major commerce platforms including Magento (Adobe)",
+          "text": "Magento(Adobe)を含む主要コマース基盤が、Klaviyoの提携先に並ぶ",
+          "text_en": "Klaviyo partners with major commerce platforms including Magento (Adobe).",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",
@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Klaviyoの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Klaviyo's annual report",
+          "text": "Klaviyoと競合する",
+          "text_en": "Competes with Klaviyo",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",
@@ -227,8 +227,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Brazeの年次報告が、クラビヨを競合として挙げている",
-          "text_en": "Names Klaviyo as a competitor in its annual report",
+          "text": "Klaviyoと競合する",
+          "text_en": "Competes with Klaviyo",
           "source": {
             "label": "Braze 10-K",
             "label_en": "Braze 10-K",
@@ -240,8 +240,8 @@
         },
         {
           "type": "rival",
-          "text": "Klaviyoの年次報告も、競合としてBrazeを挙げている",
-          "text_en": "Klaviyo's own annual report also names Braze as a competitor",
+          "text": "Brazeも、Klaviyoの競合相手に入る",
+          "text_en": "Braze is also a Klaviyo competitor.",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",

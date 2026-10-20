@@ -291,8 +291,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OpenTextの年次報告が、SAPと提携し、同社の製品がSAPの基盤に組み込まれていると述べている",
-          "text_en": "OpenText's annual report says it partners with SAP and its content products are embedded in the SAP infrastructure",
+          "text": "OpenTextはSAPとコンテンツサービスで提携し、自社製品がSAPの基盤に組み込まれている",
+          "text_en": "OpenText partners with SAP on content services, and its content products are embedded in the SAP infrastructure.",
           "source": {
             "label": "OpenText 10-K",
             "label_en": "OpenText 10-K",
@@ -314,8 +314,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "BlackLineの年次報告が、SAPなどの再販業者が自社製品を販売し得ると述べている",
-          "text_en": "BlackLine's annual report says resellers such as SAP may sell its products",
+          "text": "BlackLineの製品は、SAPなどの再販業者を通じて販売されることがある",
+          "text_en": "BlackLine's products may be sold through resellers such as SAP.",
           "source": {
             "label": "BlackLine 10-K",
             "label_en": "BlackLine 10-K",
@@ -327,8 +327,8 @@
         },
         {
           "type": "tie",
-          "text": "BlackLineの年次報告が、SAPなどの技術ベンダーとの関係を販売に活用していると述べている",
-          "text_en": "BlackLine's annual report says its sales force leverages relationships with technology vendors such as SAP",
+          "text": "BlackLineの営業部隊は、SAPなどの技術ベンダーとの関係を販売に生かす",
+          "text_en": "BlackLine's sales force leverages its relationships with technology vendors such as SAP.",
           "source": {
             "label": "BlackLine 10-K",
             "label_en": "BlackLine 10-K",
@@ -350,8 +350,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Sprinklrの年次報告が、SAPを含む企業向けプラットフォームとの連携を挙げている",
-          "text_en": "Sprinklr's annual report lists integrations with enterprise platforms including SAP",
+          "text": "Sprinklrは、SAPを含む企業向けプラットフォームとの連携を持つ",
+          "text_en": "Sprinklr integrates with enterprise platforms including SAP.",
           "source": {
             "label": "Sprinklr 10-K",
             "label_en": "Sprinklr 10-K",
@@ -373,8 +373,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Docusignの年次報告が、SAPを戦略的な技術パートナーとし、製品連携と共同販売があると述べている",
-          "text_en": "Docusign's annual report names SAP as a strategic technology partner with product integrations and co-selling",
+          "text": "Docusignは、SAPを戦略的な技術パートナーとして製品連携と共同販売を進める",
+          "text_en": "Docusign works with SAP as a strategic technology partner, with product integrations and co-selling.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -396,8 +396,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Oktaの年次報告が、連携先の例にSAPを挙げている",
-          "text_en": "Okta's annual report lists SAP among its integrations",
+          "text": "OktaはSAPを連携先に持つ",
+          "text_en": "Okta integrates with SAP.",
           "source": {
             "label": "Okta 10-K",
             "label_en": "Okta 10-K",
@@ -419,8 +419,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Dynatraceの年次報告が、SAPのマーケットプレイスでも自社ソフトを購入できると述べている",
-          "text_en": "Dynatrace's annual report says customers can procure its software through the SAP marketplace",
+          "text": "DynatraceのソフトウェアはSAPのマーケットプレイスでも購入できる",
+          "text_en": "Customers can buy Dynatrace's software through the SAP marketplace.",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -442,8 +442,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "RISE with SAP on Azureの導入企業として、Samsungが挙げられている",
-          "text_en": "Samsung is named among enterprises transforming with RISE with SAP on Azure",
+          "text": "RISE with SAP on Azureの導入企業にはSamsungも含まれる",
+          "text_en": "Samsung is among the enterprises transforming with RISE with SAP on Azure",
           "source": {
             "label": "May 11, 2026 · RISE with SAP on Azure",
             "label_en": "May 11, 2026 · RISE with SAP on Azure",
@@ -466,8 +466,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleの年次報告が、SAPを競合として挙げている",
-          "text_en": "Names SAP as a competitor in its annual report",
+          "text": "SAPと競合する",
+          "text_en": "Competes with SAP",
           "source": {
             "label": "Oracle annual filing · named competition",
             "label_en": "Oracle annual filing · named competition",
@@ -488,8 +488,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Workdayの年次報告が、SAPを競合として挙げている",
-          "text_en": "Names SAP as a competitor in its annual report",
+          "text": "SAPと競合する",
+          "text_en": "Competes with SAP",
           "source": {
             "label": "Workday 10-K",
             "label_en": "Workday 10-K",
@@ -511,8 +511,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pegasystemsの年次報告が、SAPを競合として挙げている",
-          "text_en": "Names SAP as a competitor in its annual report",
+          "text": "SAPと競合する",
+          "text_en": "Competes with SAP",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -534,8 +534,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycom Softwareの年次報告が、SAPを競合として挙げている",
-          "text_en": "Names SAP as a competitor in its annual report",
+          "text": "SAPと競合する",
+          "text_en": "Competes with SAP",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -557,8 +557,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "PTCの年次報告が、SAPを競合として挙げている",
-          "text_en": "Names SAP as a competitor in its annual report",
+          "text": "SAPと競合する",
+          "text_en": "Competes with SAP",
           "source": {
             "label": "PTC 10-K",
             "label_en": "PTC 10-K",
@@ -580,8 +580,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Freshworksの年次報告が、SAPを競合として挙げている",
-          "text_en": "Names SAP as a competitor in its annual report",
+          "text": "SAPと競合する",
+          "text_en": "Competes with SAP",
           "source": {
             "label": "Freshworks 10-K",
             "label_en": "Freshworks 10-K",

@@ -75,8 +75,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSインスツルメンツの年次報告が、IPGフォトニクスを競合として挙げている",
-          "text_en": "Names IPG Photonics as a competitor in its annual report",
+          "text": "IPGフォトニクスと競合する",
+          "text_en": "Competes with IPG Photonics",
           "source": {
             "label": "MKS Inc. 10-K",
             "label_en": "MKS Inc. 10-K",
@@ -99,8 +99,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IPGフォトニクスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in IPG Photonics’s annual report",
+          "text": "IPGフォトニクスと競合する",
+          "text_en": "Competes with IPG Photonics",
           "source": {
             "label": "IPG Photonics 10-K",
             "label_en": "IPG Photonics 10-K",
@@ -186,8 +186,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IPGフォトニクスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in IPG Photonics’s annual report",
+          "text": "IPGフォトニクスと競合する",
+          "text_en": "Competes with IPG Photonics",
           "source": {
             "label": "IPG Photonics annual report",
             "label_en": "IPG Photonics annual report (10-K)",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IPGフォトニクスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in IPG Photonics’s annual report",
+          "text": "IPGフォトニクスと競合する",
+          "text_en": "Competes with IPG Photonics",
           "source": {
             "label": "IPG Photonics annual report",
             "label_en": "IPG Photonics annual report (10-K)",

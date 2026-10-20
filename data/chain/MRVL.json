@@ -225,8 +225,8 @@
         },
         {
           "type": "rival",
-          "text": "NVIDIAの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -238,8 +238,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -451,8 +451,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -464,8 +464,8 @@
         },
         {
           "type": "rival",
-          "text": "AMDの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "AMD 10-K(2025年度)",
             "label_en": "AMD 10-K (FY2025)",
@@ -502,8 +502,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -551,8 +551,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rambusが四半期報告で、Marvellを特許のライセンス先の1社として挙げている",
-          "text_en": "Rambus’ Q2 2026 10-Q lists Marvell among companies that have licensed its patents",
+          "text": "Rambusは、特許のライセンス先の1社にMarvellを持つ",
+          "text_en": "Marvell is one of the companies that have licensed Rambus' patents.",
           "source": {
             "label": "Rambus 10-Q(2026年第2四半期)",
             "label_en": "Rambus 10-Q (Q2 2026)",
@@ -564,8 +564,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -587,8 +587,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Armが、Armコンピュート・プラットフォームのシリコンへの拡大を支える業界リーダーの1社としてMarvellを挙げている",
-          "text_en": "Arm cites Marvell among industry leaders supporting expansion of the Arm compute platform into silicon",
+          "text": "Marvellは、Armコンピュート・プラットフォームのシリコンへの拡大を支える業界リーダーの1社に名を連ねる",
+          "text_en": "Marvell is one of the industry leaders supporting the expansion of the Arm compute platform into silicon.",
           "source": {
             "label": "Arm 6-K",
             "label_en": "Arm 6-K (Ex. 99.1)",
@@ -612,8 +612,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -635,8 +635,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -659,8 +659,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -672,8 +672,8 @@
         },
         {
           "type": "rival",
-          "text": "Astera Labsの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -695,8 +695,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -718,8 +718,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -731,8 +731,8 @@
         },
         {
           "type": "rival",
-          "text": "Credo Technology Groupの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -754,8 +754,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -777,8 +777,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -790,8 +790,8 @@
         },
         {
           "type": "rival",
-          "text": "MACOM Technology Solutionsの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "MACOM 10-K(2025年度)",
             "label_en": "MACOM 10-K (FY2025)",
@@ -813,8 +813,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -836,8 +836,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -859,8 +859,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -882,8 +882,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -905,8 +905,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -929,8 +929,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -952,8 +952,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -975,8 +975,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -998,8 +998,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -1021,8 +1021,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Marvellの年次報告が、競合として挙げている",
-          "text_en": "Named as a direct competitor in Marvell’s annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -1045,8 +1045,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "MaxLinear 10-K(2025年度)",
             "label_en": "MaxLinear 10-K (FY2025)",
@@ -1068,8 +1068,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cienaの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Ciena 10-K(2025年度)",
             "label_en": "Ciena 10-K (FY2025)",
@@ -1091,8 +1091,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CEVAの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "CEVA 10-K(2025年度)",
             "label_en": "CEVA 10-K (FY2025)",
@@ -1114,8 +1114,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Silicomの年次報告が、Marvellを競合として挙げている",
-          "text_en": "Names Marvell as a competitor in its annual report",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
           "source": {
             "label": "Silicom 20-F(2025年度)",
             "label_en": "Silicom 20-F (FY2025)",

@@ -27,8 +27,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "CloudflareはOpenAIとの提携に言及し、顧客への利点を説明している",
-          "text_en": "Cloudflare refers to its partnership with OpenAI and the potential resulting benefits to Cloudflare customers",
+          "text": "CloudflareはOpenAIと提携しており、顧客に利点が生じる可能性がある",
+          "text_en": "Cloudflare partners with OpenAI, which could benefit Cloudflare customers",
           "source": {
             "label": "Cloudflare — OpenAI research pilot, July 8, 2026",
             "label_en": "Cloudflare — OpenAI research pilot, July 8, 2026",
@@ -211,8 +211,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Cloudflare OSに取り込む業務アプリ連携の例として、Asanaが挙げられている",
-          "text_en": "Asana is named among the applications integrated into Cloudflare OS",
+          "text": "AsanaはCloudflare OSに取り込む業務アプリ連携の一つだ",
+          "text_en": "Asana is one of the enterprise applications integrated into Cloudflare OS",
           "source": {
             "label": "Cloudflare の発表",
             "label_en": "Cloudflare press release",
@@ -234,8 +234,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Cloudflare OSに取り込む業務アプリ連携の例として、Boxが挙げられている",
-          "text_en": "Box is named among the applications integrated into Cloudflare OS",
+          "text": "BoxはCloudflare OSと連携し、自社ツールを取り込む",
+          "text_en": "Box integrates with Cloudflare OS to bring its tools in",
           "source": {
             "label": "Cloudflare の発表",
             "label_en": "Cloudflare press release",

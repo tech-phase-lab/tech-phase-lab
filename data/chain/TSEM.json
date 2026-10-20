@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "特殊プロセス分野ではGlobalFoundriesなどのファウンドリと最も直接的に競合すると述べている",
-          "text_en": "Says it competes most directly in the specialty segment with foundries such as GlobalFoundries",
+          "text": "特殊プロセス分野で最も直接的に競合する相手は、GlobalFoundriesなどのファウンドリ",
+          "text_en": "In the specialty segment, Tower competes most directly with foundries such as GlobalFoundries.",
           "source": {
             "label": "Tower Semiconductor 20-F",
             "label_en": "Tower Semiconductor 20-F",
@@ -204,8 +204,8 @@
         },
         {
           "type": "rival",
-          "text": "GlobalFoundriesの年次報告が、タワーセミコンダクターを競合として挙げている",
-          "text_en": "Names Tower Semiconductor as a competitor in its annual report",
+          "text": "タワーセミコンダクターと競合する",
+          "text_en": "Competes with Tower Semiconductor",
           "source": {
             "label": "GlobalFoundries 20-F",
             "label_en": "GlobalFoundries 20-F",

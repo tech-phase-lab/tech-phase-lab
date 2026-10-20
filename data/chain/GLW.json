@@ -186,8 +186,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コーニングの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Corning’s annual report",
+          "text": "コーニングと競合する",
+          "text_en": "Competes with Corning",
           "source": {
             "label": "Corning 10-K",
             "label_en": "Corning 10-K",
@@ -199,8 +199,8 @@
         },
         {
           "type": "rival",
-          "text": "アンフェノールの年次報告が、コーニングを競合として挙げている",
-          "text_en": "Names Corning as a competitor in its annual report",
+          "text": "コーニングと競合する",
+          "text_en": "Competes with Corning",
           "source": {
             "label": "Amphenol 10-K",
             "label_en": "Amphenol 10-K",
@@ -223,8 +223,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コーニングの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Corning’s annual report",
+          "text": "コーニングと競合する",
+          "text_en": "Competes with Corning",
           "source": {
             "label": "Corning 10-K",
             "label_en": "Corning 10-K",
@@ -247,8 +247,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コーニングの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Corning’s annual report",
+          "text": "コーニングと競合する",
+          "text_en": "Competes with Corning",
           "source": {
             "label": "Corning 10-K",
             "label_en": "Corning 10-K",
@@ -271,8 +271,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コーニングの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Corning’s annual report",
+          "text": "コーニングと競合する",
+          "text_en": "Competes with Corning",
           "source": {
             "label": "Corning 10-K",
             "label_en": "Corning 10-K",
@@ -295,8 +295,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コーニングの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Corning’s annual report",
+          "text": "コーニングと競合する",
+          "text_en": "Competes with Corning",
           "source": {
             "label": "Corning 10-K",
             "label_en": "Corning 10-K",

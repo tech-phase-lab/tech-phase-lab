@@ -49,8 +49,8 @@
         },
         {
           "type": "down",
-          "text": "KlaviyoはShopifyと連携しており、その終了や劣化が顧客喪失につながり得ると述べている",
-          "text_en": "Klaviyo says termination or degradation of its integration with Shopify could cause it to lose customers",
+          "text": "KlaviyoはShopifyと連携しており、その終了や劣化は顧客喪失につながり得る",
+          "text_en": "Klaviyo integrates with Shopify, and termination or degradation of that integration could cost it customers.",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",
@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rokuは、Shopifyなどと提携したアクション広告を展開していると述べている",
-          "text_en": "Roku says many of its action ads are in partnership with companies such as Shopify",
+          "text": "Rokuは、Shopifyなどとの提携でアクション広告を展開した",
+          "text_en": "Roku runs many of its action ads in partnership with companies such as Shopify.",
           "source": {
             "label": "Roku 10-K",
             "label_en": "Roku 10-K",

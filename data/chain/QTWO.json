@@ -38,8 +38,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、Force.comの変更や料金引き上げの可能性をリスクとして挙げている",
-          "text_en": "The annual report notes Salesforce.com may discontinue or modify Force.com or increase its fees",
+          "text": "Salesforce.comによるForce.comの変更や料金引き上げの可能性が、リスクとして残る",
+          "text_en": "Salesforce.com may discontinue or modify Force.com or increase its fees.",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -126,8 +126,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Q2ホールディングスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Q2 Holdings’s annual report",
+          "text": "Q2ホールディングスと競合する",
+          "text_en": "Competes with Q2 Holdings",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -139,8 +139,8 @@
         },
         {
           "type": "rival",
-          "text": "Helixのクラウドコア分野の競合として、Fiserv傘下のFinxactを挙げている",
-          "text_en": "Names Finxact, a Fiserv company, as a cloud-core competitor to Helix",
+          "text": "Fiserv傘下のFinxactは、Helixのクラウドコア分野の競合に当たる",
+          "text_en": "Finxact, a Fiserv company, is a cloud-core competitor to Helix.",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -163,8 +163,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Q2ホールディングスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Q2 Holdings’s annual report",
+          "text": "Q2ホールディングスと競合する",
+          "text_en": "Competes with Q2 Holdings",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -187,8 +187,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コア処理ベンダーの競合として、Jack Henry and Associatesを挙げている",
-          "text_en": "Names Jack Henry and Associates among competing core processing vendors",
+          "text": "Jack Henry and Associatesは、コア処理ベンダーの競合に当たる",
+          "text_en": "Jack Henry and Associates is a competing core processing vendor.",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -211,8 +211,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Q2ホールディングスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Q2 Holdings’s annual report",
+          "text": "Q2ホールディングスと競合する",
+          "text_en": "Competes with Q2 Holdings",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -235,8 +235,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "デジタル融資分野の競合として、nCinoを挙げている",
-          "text_en": "Names nCino among competitors in digital lending",
+          "text": "nCinoは、デジタル融資分野の競合だ",
+          "text_en": "nCino is a competitor in digital lending.",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HelixのBaaS・組み込み金融分野の競合として、Marqetaを挙げている",
-          "text_en": "Names Marqeta among competitors to Helix in BaaS and embedded finance",
+          "text": "Helixは、BaaS・組み込み金融分野でMarqetaと競合する",
+          "text_en": "Marqeta competes with Q2's Helix in BaaS and embedded finance.",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -281,8 +281,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HelixのBaaS・組み込み金融分野の競合として、Green Dotを挙げている",
-          "text_en": "Names Green Dot among competitors to Helix in BaaS and embedded finance",
+          "text": "Green Dotは、HelixのBaaS・組み込み金融分野で主な競合相手となる",
+          "text_en": "Green Dot is a primary competitor to Helix in BaaS and embedded finance.",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",
@@ -304,8 +304,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HelixのBaaS・組み込み金融分野の競合として、Galileo Financial Technologiesを挙げている",
-          "text_en": "Names Galileo Financial Technologies among competitors to Helix in BaaS and embedded finance",
+          "text": "子会社のGalileo Financial Technologiesが、HelixのBaaS・組み込み金融分野で競合している",
+          "text_en": "Through its subsidiary Galileo Financial Technologies, SoFi competes with Helix in BaaS and embedded finance.",
           "source": {
             "label": "Q2 Holdings 10-K",
             "label_en": "Q2 Holdings 10-K",

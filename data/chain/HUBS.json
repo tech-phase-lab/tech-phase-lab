@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告で、データ収集・処理の拡張にElasticsearchなどのオープンソース基盤を使っていると述べている",
-          "text_en": "The annual report says it uses open-source distributed systems including Elasticsearch to scale data collection and processing",
+          "text": "HubSpotは、データ収集・処理の拡張にElasticsearchなどのオープンソース基盤を使う",
+          "text_en": "HubSpot uses open-source systems such as Elasticsearch to scale its data collection and processing.",
           "source": {
             "label": "HubSpot 10-K",
             "label_en": "HubSpot 10-K",
@@ -86,8 +86,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "HubSpot経由で共有されたデータをAnthropicがモデルの学習に使わないと説明している",
-          "text_en": "Explains that Anthropic does not use data shared through HubSpot to train its models, in the Claude CRM connector",
+          "text": "Anthropicは、HubSpot経由のデータをモデルの学習に使わない(顧客の選択時などを除く)",
+          "text_en": "Anthropic does not use data shared through HubSpot to train its models, except in certain instances such as when a customer provides feedback or opts into training.",
           "source": {
             "label": "HubSpot — Claude CRM connector, July 29, 2025",
             "label_en": "HubSpot — Claude CRM connector, July 29, 2025",
@@ -110,8 +110,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "RingCentralの年次報告が、CRM連携先の1社にHubSpotを挙げている",
-          "text_en": "RingCentral's annual report names HubSpot among its CRM integrations",
+          "text": "RingCentralは、CRM連携先の1社としてHubSpotを持つ",
+          "text_en": "RingCentral integrates with HubSpot as one of its CRM integrations.",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",
@@ -157,8 +157,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Freshworksの年次報告が、HubSpotを競合として挙げている",
-          "text_en": "Names HubSpot as a competitor in its annual report",
+          "text": "HubSpotと競合する",
+          "text_en": "Competes with HubSpot",
           "source": {
             "label": "Freshworks 10-K",
             "label_en": "Freshworks 10-K",

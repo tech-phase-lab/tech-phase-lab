@@ -97,8 +97,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、Amazon Web Servicesなどのパブリッククラウド事業者との戦略的提携を挙げている",
-          "text_en": "The annual report cites strategic partnerships with public cloud providers including Amazon Web Services",
+          "text": "WorkdayはAmazon Web Servicesなどのパブリッククラウド事業者と、戦略的に提携する",
+          "text_en": "Workday has strategic partnerships with public cloud providers, including Amazon Web Services.",
           "source": {
             "label": "Workday 10-K",
             "label_en": "Workday 10-K",
@@ -167,8 +167,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "BlackLineの年次報告が、自社の基盤がWorkdayなどのERPと連携すると述べている",
-          "text_en": "BlackLine's annual report says its platform integrates with ERP systems from Workday and others",
+          "text": "BlackLineのプラットフォームは、WorkdayなどのERPと連携する",
+          "text_en": "BlackLine's platform integrates with ERP systems from Workday and others.",
           "source": {
             "label": "BlackLine 10-K",
             "label_en": "BlackLine 10-K",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxの年次報告が、連携先の技術パートナーにWorkdayを挙げている",
-          "text_en": "Box's annual report names Workday among its technology partners for integrations",
+          "text": "Boxは、Workdayを連携先の技術パートナーに持つ",
+          "text_en": "Box offers integrations with technology partners such as Workday.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -236,8 +236,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Docusignの年次報告が、販売を広げる技術提携先にWorkdayを挙げている",
-          "text_en": "Docusign's annual report names Workday among technology partners that help it sell to more accounts",
+          "text": "Docusignは、Workdayなどの技術提携先と組んで販売先を広げている",
+          "text_en": "Docusign partners with technology providers such as Workday to sell into more accounts.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -259,8 +259,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianの年次報告が、アプリの相互運用先としてWorkdayを挙げている",
-          "text_en": "Atlassian's annual report names Workday among the platforms its apps are interoperable with",
+          "text": "AtlassianのアプリはWorkdayと相互運用できる",
+          "text_en": "Atlassian's apps are interoperable with Workday.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -331,8 +331,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Workdayの年次報告が、主な競合としてOracleを挙げている",
-          "text_en": "Workday's annual report names Oracle as a primary competitor",
+          "text": "Oracleは、Workdayの主な競合",
+          "text_en": "Oracle is a primary competitor of Workday.",
           "source": {
             "label": "Workday 10-K",
             "label_en": "Workday 10-K",
@@ -355,8 +355,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Workdayの年次報告が、主な競合としてSAPを挙げている",
-          "text_en": "Workday's annual report names SAP as a primary competitor",
+          "text": "WorkdayにとってSAPは、主な競合に当たる",
+          "text_en": "SAP is a primary competitor of Workday.",
           "source": {
             "label": "Workday 10-K",
             "label_en": "Workday 10-K",
@@ -378,8 +378,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、Workdayを競合として挙げている",
-          "text_en": "Names Workday as a competitor in its annual report",
+          "text": "Workdayと競合する",
+          "text_en": "Competes with Workday",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",

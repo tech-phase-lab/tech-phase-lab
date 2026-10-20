@@ -29,8 +29,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、ITサービス管理ツールのServiceNowなどとの連携を挙げている",
-          "text_en": "The annual report cites integration with IT service management tools such as ServiceNow",
+          "text": "Zscalerは、ITサービス管理ツールのServiceNowなどと連携する",
+          "text_en": "Zscaler integrates with IT service management tools such as ServiceNow.",
           "source": {
             "label": "Zscaler 10-K",
             "label_en": "Zscaler 10-K",
@@ -52,8 +52,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Fortinetの年次報告が、Zscalerを競合として挙げている",
-          "text_en": "Names Zscaler as a competitor in its annual report",
+          "text": "Zscalerと競合する",
+          "text_en": "Competes with Zscaler",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -148,8 +148,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "CoreWeaveは、Project AI-Guardianを通じてZscalerと連携すると述べている",
-          "text_en": "CoreWeave says it is working with Zscaler through Project AI-Guardian",
+          "text": "CoreWeaveは、Project AI-Guardianを通じてZscalerと連携する",
+          "text_en": "CoreWeave is working with Zscaler through Project AI-Guardian.",
           "source": {
             "label": "Zscaler の発表",
             "label_en": "Zscaler press release",
@@ -171,8 +171,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Equinixは、Zscalerとの長年の提携をAIの保護に生かすと述べている",
-          "text_en": "Equinix describes its longstanding partnership with Zscaler, combining global digital infrastructure with zero trust security",
+          "text": "Equinixは、Zscalerとの長年の提携をAIの保護に生かす",
+          "text_en": "Equinix combines its global digital infrastructure with Zscaler's zero trust security through a longstanding partnership to help customers protect their AI interactions.",
           "source": {
             "label": "Zscaler の発表",
             "label_en": "Zscaler press release",
@@ -194,8 +194,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "OpenAIは、Zscalerとの提携とProject AI-Guardianを通じてAIの責任ある活用を進めると述べている",
-          "text_en": "OpenAI cites its partnership with Zscaler and Project AI-Guardian in advancing responsible AI deployment",
+          "text": "OpenAIは、ZscalerとのProject AI-Guardianなどの取り組みで、AIの責任ある活用を進める",
+          "text_en": "OpenAI advances responsible AI deployment through its partnership with Zscaler and Project AI-Guardian.",
           "source": {
             "label": "Zscaler の発表",
             "label_en": "Zscaler press release",
@@ -219,8 +219,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NTT DATAは、Project AI GuardianでZscalerと協業していると述べている",
-          "text_en": "NTT DATA says it is collaborating with Zscaler on Project AI Guardian",
+          "text": "NTT DATAはProject AI GuardianでZscalerと協業している",
+          "text_en": "NTT DATA collaborates with Zscaler on Project AI Guardian.",
           "source": {
             "label": "Zscaler の発表",
             "label_en": "Zscaler press release",

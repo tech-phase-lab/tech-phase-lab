@@ -30,8 +30,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告は、Google CloudをAWSとともにハイパースケーラーの提携エコシステムに挙げている",
-          "text_en": "The annual report lists Google Cloud, with AWS, in its partner ecosystem of hyperscalers and cloud providers",
+          "text": "Google Cloudは、AWSとともにGitLabのハイパースケーラー提携エコシステムを構成する",
+          "text_en": "Google Cloud, together with AWS, forms the hyperscaler part of GitLab's partner ecosystem.",
           "source": {
             "label": "GitLab 10-K",
             "label_en": "GitLab 10-K",
@@ -67,8 +67,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告は、AWSをGoogle Cloudとともにハイパースケーラーの提携エコシステムに挙げている",
-          "text_en": "The annual report lists AWS, with Google Cloud, in its partner ecosystem of hyperscalers and cloud providers",
+          "text": "AWSは、Google CloudとともにGitLabのハイパースケーラー提携エコシステムに加わる",
+          "text_en": "AWS, together with Google Cloud, forms the hyperscaler part of GitLab's partner ecosystem.",
           "source": {
             "label": "GitLab 10-K",
             "label_en": "GitLab 10-K",
@@ -168,8 +168,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ギットラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in GitLab’s annual report",
+          "text": "GitLabと競合する",
+          "text_en": "Competes with GitLab",
           "source": {
             "label": "GitLab 10-K",
             "label_en": "GitLab 10-K",
@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ギットラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in GitLab’s annual report",
+          "text": "GitLabと競合する",
+          "text_en": "Competes with GitLab",
           "source": {
             "label": "GitLab 10-K",
             "label_en": "GitLab 10-K",
@@ -204,8 +204,8 @@
         },
         {
           "type": "rival",
-          "text": "ジェイフロッグの年次報告が、ギットラボを競合として挙げている",
-          "text_en": "Names GitLab as a competitor in its annual report",
+          "text": "GitLabと競合する",
+          "text_en": "Competes with GitLab",
           "source": {
             "label": "JFrog 10-K",
             "label_en": "JFrog 10-K",
@@ -228,8 +228,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ギットラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in GitLab’s annual report",
+          "text": "GitLabと競合する",
+          "text_en": "Competes with GitLab",
           "source": {
             "label": "GitLab 10-K",
             "label_en": "GitLab 10-K",

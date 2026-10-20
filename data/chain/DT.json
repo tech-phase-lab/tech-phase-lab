@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、AWSなどのハイパースケーラーと提携・統合する構成だと述べている",
-          "text_en": "The annual report says the platform partners and integrates with hyperscalers such as AWS",
+          "text": "DynatraceのプラットフォームはAWSなどのハイパースケーラーと提携・統合する。",
+          "text_en": "The Dynatrace platform partners and integrates with hyperscalers such as AWS.",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -85,8 +85,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、Azureなどのハイパースケーラーと提携・統合する構成だと述べている",
-          "text_en": "The annual report says the platform partners and integrates with hyperscalers such as Azure",
+          "text": "Dynatraceは、Azureなどのハイパースケーラーと提携・統合する構成を採る。",
+          "text_en": "The Dynatrace platform partners and integrates with hyperscalers such as Azure.",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -109,8 +109,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、GCPなどのハイパースケーラーと提携・統合する構成だと述べている",
-          "text_en": "The annual report says the platform partners and integrates with hyperscalers such as GCP",
+          "text": "GCPは、Dynatraceが提携・統合するハイパースケーラーの例。",
+          "text_en": "GCP is one of the hyperscalers the Dynatrace platform partners and integrates with.",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -146,8 +146,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告が、Accentureを戦略的なGSI(グローバルSI)として挙げている",
-          "text_en": "The annual report names Accenture among its strategic GSIs",
+          "text": "Accentureは、Dynatraceの戦略的なGSI(グローバルSI)を務める。",
+          "text_en": "Accenture is one of Dynatrace's strategic GSIs.",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -194,8 +194,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Atlassianを連携開発の提携先として挙げている",
-          "text_en": "The annual report names Atlassian among partners for developing integrations",
+          "text": "Dynatraceは、Atlassianと連携開発で提携する。",
+          "text_en": "Dynatrace partners with Atlassian to develop integrations.",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -303,8 +303,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ダイナトレースの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dynatrace’s annual report",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -327,8 +327,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データドッグの年次報告が、ダイナトレースを競合として挙げている",
-          "text_en": "Names Dynatrace as a competitor in its annual report",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -340,8 +340,8 @@
         },
         {
           "type": "rival",
-          "text": "ダイナトレースの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dynatrace’s annual report",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -364,8 +364,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ダイナトレースの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Dynatrace’s annual report",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",

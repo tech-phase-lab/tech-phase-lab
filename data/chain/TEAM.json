@@ -43,8 +43,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告で、クラウド基盤などをAmazon Web Servicesなど第三者に依存していると述べている",
-          "text_en": "The annual report says it depends on third parties such as Amazon Web Services for cloud computing infrastructure",
+          "text": "Atlassianは、クラウド基盤などをAmazon Web Servicesなど第三者に依存する",
+          "text_en": "Atlassian depends on third parties such as Amazon Web Services for cloud computing infrastructure.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -66,8 +66,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Atlassianの決算発表が、顧客の例にこの会社を挙げている",
-          "text_en": "Atlassian's earnings release names this company among its customers",
+          "text": "Rivianは、Atlassianの顧客である",
+          "text_en": "Rivian is a customer of Atlassian.",
           "source": {
             "label": "Atlassian 8-K Ex.99 の発表",
             "label_en": "Atlassian 8-K Ex.99 press release",
@@ -89,8 +89,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Atlassianの決算発表が、顧客の例にこの会社を挙げている",
-          "text_en": "Atlassian's earnings release names this company among its customers",
+          "text": "ドイツ銀行はAtlassianの顧客だ",
+          "text_en": "Deutsche Bank is an Atlassian customer.",
           "source": {
             "label": "Atlassian 8-K Ex.99 の発表",
             "label_en": "Atlassian 8-K Ex.99 press release",
@@ -113,8 +113,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Atlassianの決算発表が、顧客の例にこの会社を挙げている",
-          "text_en": "Atlassian's earnings release names this company among its customers",
+          "text": "ユナイテッド航空は、Atlassianの顧客に名を連ねる",
+          "text_en": "United Airlines is among Atlassian's customers.",
           "source": {
             "label": "Atlassian 8-K Ex.99 の発表",
             "label_en": "Atlassian 8-K Ex.99 press release",
@@ -174,8 +174,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
-          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "text": "AtlassianのアプリはMicrosoftと相互運用できる",
+          "text_en": "Atlassian's apps are open and interoperable with Microsoft.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -197,8 +197,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
-          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "text": "Atlassianは、Salesforceと連携して動くアプリを提供している",
+          "text_en": "Atlassian makes its apps open and interoperable with Salesforce.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -221,8 +221,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
-          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "text": "Atlassianは、Workdayと相互運用できるアプリを提供している",
+          "text_en": "Atlassian's apps are open and interoperable with Workday.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -245,8 +245,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
-          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "text": "AtlassianのアプリはZoomとオープンに連携する設計になっている",
+          "text_en": "Atlassian's apps are open and interoperable with Zoom.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -258,8 +258,8 @@
         },
         {
           "type": "tie",
-          "text": "Zoomの年次報告が、Atlassianなどとの連携を挙げている",
-          "text_en": "Zoom's annual report lists integrations with Atlassian and others",
+          "text": "ZoomはAtlassianとの連携機能を備える",
+          "text_en": "Zoom has integrations with Atlassian.",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -281,8 +281,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianの年次報告が、アプリの相互運用先としてこの会社を挙げている",
-          "text_en": "Atlassian's annual report names this company among the platforms its apps are open and interoperable with",
+          "text": "AtlassianのアプリはDropboxとの相互運用を前提に作られている",
+          "text_en": "Atlassian's apps are open and interoperable with Dropbox.",
           "source": {
             "label": "Atlassian 10-K",
             "label_en": "Atlassian 10-K",
@@ -294,8 +294,8 @@
         },
         {
           "type": "rival",
-          "text": "Dropboxの年次報告が、Atlassianを競合として挙げている",
-          "text_en": "Names Atlassian as a competitor in its annual report",
+          "text": "Atlassianと競合する",
+          "text_en": "Competes with Atlassian",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",
@@ -317,8 +317,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Dynatraceの年次報告が、Atlassianと連携機能を開発するために提携していると述べている",
-          "text_en": "Dynatrace's annual report says it partners with Atlassian to develop integrations",
+          "text": "DynatraceはAtlassianと提携し、連携機能を共同開発する",
+          "text_en": "Dynatrace partners with Atlassian to develop integrations.",
           "source": {
             "label": "Dynatrace 10-K",
             "label_en": "Dynatrace 10-K",
@@ -363,8 +363,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "2023年からOpenAIとの提携を続けていると説明している",
-          "text_en": "Describes a partnership with OpenAI that began in 2023",
+          "text": "AtlassianとOpenAIは、2023年の提携開始から協業を続けてきた",
+          "text_en": "Atlassian and OpenAI have partnered since 2023.",
           "source": {
             "label": "Atlassian — OpenAI strategic partnership update, October 6, 2026",
             "label_en": "Atlassian — OpenAI strategic partnership update, October 6, 2026",
@@ -483,8 +483,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "GitLabの年次報告が、Atlassianを競合として挙げている",
-          "text_en": "Names Atlassian as a competitor in its annual report",
+          "text": "Atlassianと競合する",
+          "text_en": "Competes with Atlassian",
           "source": {
             "label": "GitLab 2026年度 Form 10-K · Competition",
             "label_en": "GitLab FY2026 Form 10-K · Competition",
@@ -505,8 +505,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Freshworksの年次報告が、Atlassianを競合として挙げている",
-          "text_en": "Names Atlassian as a competitor in its annual report",
+          "text": "Atlassianと競合する",
+          "text_en": "Competes with Atlassian",
           "source": {
             "label": "Freshworks 10-K",
             "label_en": "Freshworks 10-K",

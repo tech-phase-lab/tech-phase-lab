@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "TeradyneとFlextronics Corporationの標準製造契約の第6次修正(2009年7月27日付)が挙げられている",
-          "text_en": "Teradyne lists the Sixth Amendment (July 27, 2009) to its Standard Manufacturing Agreement with Flextronics Corporation",
+          "text": "TeradyneとFlextronics Corporationは、標準製造契約の第6次修正を2009年7月27日付で結んだ",
+          "text_en": "Teradyne and Flextronics Corporation executed the Sixth Amendment to their Standard Manufacturing Agreement, dated July 27, 2009",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -51,8 +51,8 @@
         },
         {
           "type": "up",
-          "text": "Flextronics Sales & Marketing North Asia (L) LTDとの同契約の第8次修正(2012年4月13日付)も挙げられている",
-          "text_en": "The Eighth Amendment (April 13, 2012) with Flextronics Sales & Marketing North Asia (L) LTD is also listed",
+          "text": "TeradyneとFlextronics Sales & Marketing North Asia (L) LTDは、同契約の第8次修正を2012年4月13日付で締結した",
+          "text_en": "Teradyne and Flextronics Sales & Marketing North Asia (L) LTD executed the Eighth Amendment to the same agreement, dated April 13, 2012",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -77,8 +77,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "ASEは、Teradyneなどの主要な国際メーカーから試験装置を購入していると説明している",
-          "text_en": "ASE says it purchases testers from major international manufacturers, primarily Teradyne, Tokyo Electron and Advantest",
+          "text": "ASEの試験装置の主な調達先は、Teradyne、Tokyo Electron、Advantestなどの国際メーカー",
+          "text_en": "ASE buys testers from major international manufacturers, primarily Teradyne, Tokyo Electron and Advantest.",
           "source": {
             "label": "ASE Technology Holding 20-F",
             "label_en": "ASE Technology Holding 20-F",
@@ -101,8 +101,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コーヒューの年次報告が、テラダインを競合として挙げている",
-          "text_en": "Names Teradyne as a competitor in its annual report",
+          "text": "Teradyneと競合する",
+          "text_en": "Competes with Teradyne",
           "source": {
             "label": "Cohu 10-K",
             "label_en": "Cohu 10-K",
@@ -114,8 +114,8 @@
         },
         {
           "type": "rival",
-          "text": "テラダインの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "text": "Teradyneと競合する",
+          "text_en": "Competes with Teradyne",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -138,8 +138,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テラダインの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "text": "Teradyneと競合する",
+          "text_en": "Competes with Teradyne",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -162,8 +162,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テラダインの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "text": "Teradyneと競合する",
+          "text_en": "Competes with Teradyne",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -186,8 +186,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テラダインの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Teradyne’s annual report",
+          "text": "Teradyneと競合する",
+          "text_en": "Competes with Teradyne",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",

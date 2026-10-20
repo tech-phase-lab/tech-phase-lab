@@ -38,8 +38,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、Amazon Web Servicesとの自社製品の標準連携を説明している",
-          "text_en": "The annual report describes NetApp's first-party native integration with Amazon Web Services",
+          "text": "NetAppの自社製品はAmazon Web Servicesと標準連携する",
+          "text_en": "NetApp's first-party products integrate natively with Amazon Web Services",
           "source": {
             "label": "NetApp 10-K",
             "label_en": "NetApp 10-K",
@@ -75,8 +75,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、NVIDIA、Cisco、Microsoftなどとの協業を挙げている",
-          "text_en": "The annual report cites collaborations with technology leaders including Microsoft",
+          "text": "NetAppはNVIDIA、Cisco、Microsoftなどと協業して統合ソリューションを提供する",
+          "text_en": "NetApp collaborates with technology leaders including NVIDIA, Cisco and Microsoft to deliver integrated solutions",
           "source": {
             "label": "NetApp 10-K",
             "label_en": "NetApp 10-K",
@@ -99,8 +99,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、Google Cloudとの標準連携を説明している",
-          "text_en": "The annual report describes NetApp's native integration with Google Cloud",
+          "text": "NetAppはGoogle Cloudとの標準連携を持つ",
+          "text_en": "NetApp has native integration with Google Cloud",
           "source": {
             "label": "NetApp 10-K",
             "label_en": "NetApp 10-K",
@@ -136,8 +136,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、NVIDIAなどとの協業を挙げている",
-          "text_en": "The annual report cites collaborations with technology leaders including NVIDIA",
+          "text": "NVIDIAなどとの協業が、NetAppの統合ソリューション提供を支える",
+          "text_en": "NetApp's collaboration with technology leaders including NVIDIA underpins its integrated solutions",
           "source": {
             "label": "NetApp 10-K",
             "label_en": "NetApp 10-K",
@@ -172,8 +172,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、Ciscoなどとの協業を挙げている",
-          "text_en": "The annual report cites collaborations with technology leaders including Cisco",
+          "text": "CiscoはNetAppが協業するテクノロジーリーダー",
+          "text_en": "Cisco is one of the technology leaders NetApp collaborates with",
           "source": {
             "label": "NetApp 10-K",
             "label_en": "NetApp 10-K",
@@ -294,8 +294,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "NetAppの年次報告が、Lenovoへの一部OEM販売に触れている",
-          "text_en": "NetApp's annual report mentions certain OEM sales to Lenovo",
+          "text": "NetAppはLenovoに一部のOEM販売を行う",
+          "text_en": "NetApp makes certain OEM sales to Lenovo",
           "source": {
             "label": "NetApp 10-K",
             "label_en": "NetApp 10-K",
@@ -344,8 +344,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ヒューレット・パッカード・エンタープライズの年次報告が、NetAppを競合として挙げている",
-          "text_en": "Hewlett Packard Enterprise's annual report names NetApp as a competitor",
+          "text": "ネットアップと競合する",
+          "text_en": "Competes with NetApp",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",

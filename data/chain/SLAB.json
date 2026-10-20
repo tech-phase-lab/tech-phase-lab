@@ -39,8 +39,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主にTSMCと提携していると説明している",
-          "text_en": "Silicon Labs says it partners primarily with TSMC",
+          "text": "Silicon Labsは、主にTSMCと提携する",
+          "text_en": "Silicon Labs partners primarily with TSMC.",
           "source": {
             "label": "Silicon Laboratories 10-K",
             "label_en": "Silicon Laboratories 10-K",
@@ -125,8 +125,8 @@
         },
         {
           "type": "tie",
-          "text": "買収により、Silicon Labsの製造を外部ファウンドリからTexas Instrumentsの自社生産能力へ移す方針を示している",
-          "text_en": "Texas Instruments says the transaction would reshore Silicon Labs' manufacturing from external foundries to TI's internally owned capacity",
+          "text": "Texas InstrumentsによるSilicon Labsの買収後は、製造を外部ファウンドリからTI自社の生産能力へ移す計画",
+          "text_en": "Under Texas Instruments' planned acquisition, Silicon Labs' manufacturing would move from external foundries to TI's internally owned capacity.",
           "source": {
             "label": "Texas Instruments · Agreement to acquire Silicon Labs, expected first half 2027",
             "label_en": "Texas Instruments · Agreement to acquire Silicon Labs, expected first half 2027",
@@ -202,8 +202,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "プレスリリースが、GlobalFoundriesをパートナーと記している",
-          "text_en": "A press release refers to GlobalFoundries as a partner",
+          "text": "GlobalFoundriesはシリコン・ラボラトリーズのパートナーだ",
+          "text_en": "GlobalFoundries is a partner of Silicon Labs",
           "source": {
             "label": "Silicon Laboratories 8-K Ex.99 の発表",
             "label_en": "Silicon Laboratories 8-K Ex.99 press release",
@@ -267,8 +267,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シリコン・ラボラトリーズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Silicon Labs’s annual report",
+          "text": "シリコン・ラボラトリーズと競合する",
+          "text_en": "Competes with Silicon Laboratories",
           "source": {
             "label": "Silicon Laboratories 10-K",
             "label_en": "Silicon Laboratories 10-K",
@@ -291,8 +291,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CEVAの年次報告が、エッジAI(NPU)プロセッサ市場で社内開発チームを持つ企業の例にSilicon Labsを挙げている",
-          "text_en": "CEVA's annual report names Silicon Labs among companies with internal engineering teams in the edge AI (NPU) processor market",
+          "text": "Silicon Labsは、エッジAI(NPU)プロセッサ市場でCEVAと競う社内開発チームを抱える",
+          "text_en": "Silicon Labs has internal engineering teams that compete with CEVA in the edge AI (NPU) processor market.",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -304,8 +304,8 @@
         },
         {
           "type": "rival",
-          "text": "同年次報告は、短距離無線市場でも社内開発チームを持つ企業の例にSilicon Labsを挙げている",
-          "text_en": "The same annual report names Silicon Labs among companies with internal engineering teams in the short-range wireless markets",
+          "text": "Silicon Labsの社内開発チームは、短距離無線市場でもCEVAと競合する",
+          "text_en": "Silicon Labs' internal engineering teams also compete with CEVA in the short-range wireless markets.",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",

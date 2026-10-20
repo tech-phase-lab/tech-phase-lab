@@ -96,8 +96,8 @@
         },
         {
           "type": "rival",
-          "text": "ケイデンスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cadence’s annual report",
+          "text": "ケイデンスと競合する",
+          "text_en": "Competes with Cadence Design Systems",
           "source": {
             "label": "Cadence Design Systems 10-K",
             "label_en": "Cadence Design Systems 10-K",
@@ -142,8 +142,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "IP売上の伸びは、Intelとの重要な契約が牽引したと説明している",
-          "text_en": "IP revenue growth was highlighted by a significant agreement with Intel",
+          "text": "ケイデンスのIP売上は伸び、Intelとの重要な契約が成長を際立たせた",
+          "text_en": "Cadence's IP revenue grew more than 40% year over year, highlighted by a significant agreement with Intel.",
           "source": {
             "label": "Cadence Design Systems 8-K Ex.99 の発表",
             "label_en": "Cadence Design Systems 8-K Ex.99 press release",
@@ -166,8 +166,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "UMCは、28HPC+プロセスのアナログ・ミックスドシグナル・フローの認証でCadenceと協業していると記している",
-          "text_en": "UMC says it collaborates with Cadence on certification of the analog/mixed-signal flow for its 28HPC+ process",
+          "text": "UMCは、28HPC+プロセスのアナログ・ミックスドシグナル・フローの認証でCadenceと協業する",
+          "text_en": "UMC collaborates with Cadence on certification of the analog/mixed-signal flow for its 28HPC+ process",
           "source": {
             "label": "United Microelectronics 20-F",
             "label_en": "United Microelectronics 20-F",
@@ -189,8 +189,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Towerは、Cadenceなどの設計自動化大手と協業していると記している",
-          "text_en": "Tower says it collaborates with leading design automation providers including Cadence",
+          "text": "Towerは、Cadenceなど設計自動化大手と手を組んでいる",
+          "text_en": "Tower collaborates with leading design automation providers including Cadence",
           "source": {
             "label": "Tower Semiconductor 20-F",
             "label_en": "Tower Semiconductor 20-F",
@@ -278,8 +278,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ケイデンスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cadence’s annual report",
+          "text": "ケイデンスと競合する",
+          "text_en": "Competes with Cadence Design Systems",
           "source": {
             "label": "Cadence Design Systems 10-K",
             "label_en": "Cadence Design Systems 10-K",
@@ -302,8 +302,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ケイデンスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cadence’s annual report",
+          "text": "ケイデンスと競合する",
+          "text_en": "Competes with Cadence Design Systems",
           "source": {
             "label": "Cadence Design Systems 10-K",
             "label_en": "Cadence Design Systems 10-K",

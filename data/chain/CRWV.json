@@ -89,8 +89,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "CoreWeaveが年次報告で、NVIDIAは半導体の製造をTSMCに頼っていると説明",
-          "text_en": "CoreWeave states NVIDIA relies on TSMC for semiconductor fabrication, an upstream dependency of CoreWeave’s GPU supply",
+          "text": "CoreWeaveのGPU供給元NVIDIAは、半導体の製造をTSMCに頼っている",
+          "text_en": "NVIDIA relies on TSMC for semiconductor fabrication, an upstream dependency of CoreWeave's GPU supply",
           "source": {
             "label": "CoreWeave 10-K(2025年度)",
             "label_en": "CoreWeave 10-K (FY2025)",
@@ -311,8 +311,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Sprout Socialが、2026年第2四半期に取引を伸ばせた顧客の1社としてCoreWeaveを挙げている",
-          "text_en": "Sprout Social lists CoreWeave among customers it grew with in Q2 2026",
+          "text": "CoreWeaveはSprout Socialの顧客の1社で、2026年第2四半期に取引を伸ばした。",
+          "text_en": "CoreWeave is a Sprout Social customer, and Sprout grew its business with CoreWeave in Q2 2026.",
           "source": {
             "label": "Sprout Social 2026年第2四半期の決算発表",
             "label_en": "Sprout Social Q2 2026 earnings release",
@@ -349,8 +349,8 @@
         },
         {
           "type": "rival",
-          "text": "CoreWeaveが決算書類で、汎用クラウドの主な競合の1社としてMicrosoft(Azure)を挙げている",
-          "text_en": "CoreWeave names Microsoft (Azure) as a key competitor in general-purpose cloud computing (and notes some are also customers)",
+          "text": "Microsoft(Azure)は汎用クラウドの主な競合の1社で、競合の一部はCoreWeaveの顧客でもある。",
+          "text_en": "Microsoft (Azure) is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
           "source": {
             "label": "CoreWeave 10-Q(2026年第2四半期)",
             "label_en": "CoreWeave 10-Q (Q2 2026)",
@@ -412,8 +412,8 @@
         },
         {
           "type": "tie",
-          "text": "CoreWeaveとOpenAI OpCoが2025年3月7日付のStock Issuance Agreement(株式発行契約)の当事者として、重要な添付書類に記載",
-          "text_en": "CoreWeave and OpenAI OpCo are party to a Stock Issuance Agreement dated March 7, 2025, listed as a material exhibit",
+          "text": "CoreWeaveとOpenAI OpCoは、2025年3月7日付のStock Issuance Agreement(株式発行契約)の当事者となる",
+          "text_en": "CoreWeave and OpenAI OpCo are party to a Stock Issuance Agreement dated March 7, 2025",
           "source": {
             "label": "CoreWeave 10-K(2025年度) exhibit index",
             "label_en": "CoreWeave 10-K (FY2025) exhibit index",
@@ -685,8 +685,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CoreWeaveが決算書類で、汎用クラウドの主な競合の1社としてAmazon(AWS)を挙げている",
-          "text_en": "CoreWeave names Amazon (AWS) as a key competitor in general-purpose cloud computing (and notes some are also customers)",
+          "text": "Amazon(AWS)は、汎用クラウドでCoreWeaveと競う主要企業の1社。",
+          "text_en": "Amazon (AWS) is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
           "source": {
             "label": "CoreWeave 10-Q(2026年第2四半期)",
             "label_en": "CoreWeave 10-Q (Q2 2026)",
@@ -710,8 +710,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CoreWeaveが決算書類で、汎用クラウドの主な競合の1社としてAlphabet(Google Cloud)を挙げている",
-          "text_en": "CoreWeave names Google (Google Cloud Platform) as a key competitor in general-purpose cloud computing (and notes some are also customers)",
+          "text": "汎用クラウドでは、Alphabet(Google Cloud)もCoreWeaveの主な競合の1社に入る。",
+          "text_en": "Google (Google Cloud Platform) is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
           "source": {
             "label": "CoreWeave 10-Q(2026年第2四半期)",
             "label_en": "CoreWeave 10-Q (Q2 2026)",
@@ -735,8 +735,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CoreWeaveが決算書類で、汎用クラウドの主な競合の1社としてOracleを挙げている",
-          "text_en": "CoreWeave names Oracle as a key competitor in general-purpose cloud computing (and notes some are also customers)",
+          "text": "CoreWeaveの汎用クラウド分野の主な競合の1社に、Oracleがいる。",
+          "text_en": "Oracle is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
           "source": {
             "label": "CoreWeave 10-Q(2026年第2四半期)",
             "label_en": "CoreWeave 10-Q (Q2 2026)",
@@ -760,8 +760,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Nebius Groupが年次報告(20-F、2025年度)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "Nebius Group names CoreWeave as a competitor",
+          "text": "Nebius Group(2025年度の20-F)にとって、CoreWeaveは競合の1社を成す。",
+          "text_en": "CoreWeave is one of Nebius Group's key competitors (FY2025 20-F).",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -783,8 +783,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告(2026年6月期、10-K)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "IREN names CoreWeave as a competitor",
+          "text": "IRENは、AI特化クラウド事業者の1社であるCoreWeaveと競合する(2026年6月期、10-K)。",
+          "text_en": "IREN competes with CoreWeave among specialized AI cloud providers (FY ended June 2026).",
           "source": {
             "label": "IREN 10-K",
             "label_en": "IREN 10-K (FY ended June 2026)",
@@ -806,8 +806,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cerebras Systemsが決算書類(2026年第2四半期、10-Q)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "Cerebras Systems names CoreWeave as a competitor",
+          "text": "Cerebras Systemsは、競合の1社であるCoreWeaveを抱える(2026年第2四半期、10-Q)。",
+          "text_en": "Cerebras Systems competes with AI-optimized specialized clouds such as CoreWeave (Q2 2026).",
           "source": {
             "label": "Cerebras 10-Q(2026年第2四半期)",
             "label_en": "Cerebras 10-Q (Q2 2026)",
@@ -829,8 +829,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "WhiteFiberが年次報告(2025年度、10-K)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "WhiteFiber names CoreWeave as a competitor",
+          "text": "WhiteFiberのクラウド事業(2025年度、10-K)では、CoreWeaveが競合の1社だ。",
+          "text_en": "CoreWeave is one of WhiteFiber's primary competitors in cloud services (FY2025).",
           "source": {
             "label": "WhiteFiber 10-K(2025年度)",
             "label_en": "WhiteFiber 10-K (FY2025)",
@@ -852,8 +852,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cipher Digitalが年次報告(2025年度、10-K)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "Cipher Digital names CoreWeave as a competitor",
+          "text": "Cipher Digitalの属する業界(2025年度、10-K)では、CoreWeaveが競合の1社を占める。",
+          "text_en": "CoreWeave is one of Cipher Digital's competitors (FY2025).",
           "source": {
             "label": "Cipher Digital 10-K(2025年度)",
             "label_en": "Cipher Digital 10-K (FY2025)",
@@ -875,8 +875,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HIVE Digital Technologiesが年次報告(2026年3月期、10-K)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "HIVE Digital Technologies names CoreWeave as a competitor",
+          "text": "HIVE Digital Technologies(2026年3月期、10-K)は、競合の1社としてCoreWeaveとも競い合う。",
+          "text_en": "HIVE Digital Technologies also competes with CoreWeave (FY ended March 2026).",
           "source": {
             "label": "HIVE 10-K",
             "label_en": "HIVE 10-K (FY ended March 2026)",
@@ -898,8 +898,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Soluna Holdingsが年次報告(2025年度、10-K)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "Soluna Holdings names CoreWeave as a competitor",
+          "text": "Soluna Holdings(2025年度、10-K)は、競合の1社のCoreWeaveとネオクラウド分野で競合関係にある。",
+          "text_en": "Soluna Holdings competes with neocloud companies such as CoreWeave (FY2025).",
           "source": {
             "label": "Soluna 10-K(2025年度)",
             "label_en": "Soluna 10-K (FY2025)",
@@ -921,8 +921,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CleanSparkが年次報告(2025年9月期、10-K)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "CleanSpark names CoreWeave as a competitor",
+          "text": "CoreWeaveは、CleanSpark(2025年9月期、10-K)の競合の1社に含まれる。",
+          "text_en": "CoreWeave is among CleanSpark's competitors (FY ended September 2025).",
           "source": {
             "label": "CleanSpark 10-K",
             "label_en": "CleanSpark 10-K (FY ended Sept 2025)",
@@ -944,8 +944,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Digi Power Xが年次報告(2025年度、10-K)で、競合の1社としてCoreWeaveを挙げている",
-          "text_en": "Digi Power X names CoreWeave as a competitor",
+          "text": "Digi Power X(2025年度、10-K)の競合の1社にも、CoreWeaveが入る。",
+          "text_en": "CoreWeave is also among Digi Power X's competitors (FY2025).",
           "source": {
             "label": "Digi Power X 10-K(2025年度)",
             "label_en": "Digi Power X 10-K (FY2025)",
@@ -967,8 +967,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SpaceXが目論見書で、CoreWeaveなどのAIクラウド事業者の競合になる可能性があると記載",
-          "text_en": "SpaceX says it may emerge as a competitor to AI cloud providers such as CoreWeave",
+          "text": "SpaceXは、CoreWeaveなどのAIクラウド事業者の競合になる可能性がある",
+          "text_en": "SpaceX may emerge as a competitor to AI cloud providers such as CoreWeave",
           "source": {
             "label": "SpaceX 424B4 目論見書",
             "label_en": "SpaceX 424B4 prospectus",

@@ -159,8 +159,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IPGが年次報告で、材料加工で競合するレーザーメーカーの1社として「Coherent, Inc.」を挙げている",
-          "text_en": "IPG Photonics’ FY2025 10-K lists Coherent, Inc. among laser makers it competes with in materials processing",
+          "text": "IPGは材料加工で、レーザーメーカーの1社「Coherent, Inc.」と競合する",
+          "text_en": "IPG Photonics competes with laser makers such as Coherent, Inc. in materials processing.",
           "source": {
             "label": "IPG Photonics 10-K(2025年度)",
             "label_en": "IPG Photonics 10-K (FY2025)",
@@ -184,8 +184,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "nLIGHTが年次報告で、競合する半導体レーザー・ファイバーレーザーなどの企業の1社としてCoherentを挙げている",
-          "text_en": "nLIGHT’s FY2025 10-K lists Coherent among companies offering competing semiconductor lasers, fiber lasers and other laser products",
+          "text": "nLIGHTと競合する半導体レーザー・ファイバーレーザー企業の1社がCoherentだ",
+          "text_en": "Coherent is among the companies offering semiconductor lasers, fiber lasers and other laser products that compete with nLIGHT.",
           "source": {
             "label": "nLIGHT 10-K(2025年度)",
             "label_en": "nLIGHT 10-K (FY2025)",
@@ -209,8 +209,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、主要な競合の1社としてCoherent Corporationを挙げている",
-          "text_en": "Applied Optoelectronics’ FY2025 10-K lists Coherent Corporation among its major competitors",
+          "text": "Coherent CorporationはAAOIの主要な競合の1社に当たる",
+          "text_en": "Coherent Corporation is one of Applied Optoelectronics' major competitors.",
           "source": {
             "label": "Applied Optoelectronics 10-K(2025年度)",
             "label_en": "Applied Optoelectronics 10-K (FY2025)",
@@ -232,8 +232,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSが年次報告で、Coherent Corp.の製品はMKSのレーザー・フォトニクス製品と競合すると記載",
-          "text_en": "MKS Instruments’ FY2025 10-K states that Coherent Corp. offers products that compete with MKS’s laser and photonics products",
+          "text": "Coherent Corp.の製品は、MKSのレーザー・フォトニクス製品と競合関係にある",
+          "text_en": "Coherent Corp. offers products that compete with MKS's laser and photonics products",
           "source": {
             "label": "MKS Instruments 10-K(2025年度)",
             "label_en": "MKS Instruments 10-K (FY2025)",
@@ -255,8 +255,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Viaviが年次報告で、光セキュリティ・性能事業で競合する受動部品などのメーカーの1社としてCoherentを挙げている",
-          "text_en": "Viavi’s FY2026 10-K lists Coherent among manufacturers of passive and other optical components that it competes with in its optical security and performance business",
+          "text": "Coherentは、Viaviの光セキュリティ・性能事業で競合する受動部品などのメーカーの1社だ",
+          "text_en": "Coherent is one of the manufacturers of passive and other optical components that compete with Viavi's optical security and performance business.",
           "source": {
             "label": "Viavi Solutions 10-K(2026年度)",
             "label_en": "Viavi Solutions 10-K (FY2026)",
@@ -280,8 +280,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Fabrinetが年次報告で、カスタム光学・ガラス事業の競合として、Coherent傘下のPhotop Technologiesを挙げている",
-          "text_en": "Fabrinet’s FY2026 10-K lists Photop Technologies, a subsidiary of Coherent Corp., among competitors of its customized optics and glass operations",
+          "text": "Fabrinetのカスタム光学・ガラス事業は、Coherent傘下のPhotop Technologiesと競合する",
+          "text_en": "Fabrinet's customized optics and glass operations compete with Photop Technologies, a subsidiary of Coherent Corp.",
           "source": {
             "label": "Fabrinet 10-K(2026年度)",
             "label_en": "Fabrinet 10-K (FY2026)",

@@ -317,8 +317,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Five9が年次報告で、パートナー網に含まれる主要CRMソフト企業の1社としてSalesforceを挙げている",
-          "text_en": "Five9’s FY2025 10-K lists Salesforce among leading CRM software vendors in its partner ecosystem",
+          "text": "Five9は、主要CRMソフト企業の1社であるSalesforceとパートナー網を築く",
+          "text_en": "Five9 has a partner ecosystem that includes leading CRM software vendors such as Salesforce.",
           "source": {
             "label": "Five9 10-K(2025年度)",
             "label_en": "Five9 10-K (FY2025)",
@@ -342,8 +342,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "DocuSignが年次報告で、Salesforceとの提携(製品連携と共同販売)を挙げている",
-          "text_en": "DocuSign’s FY2026 10-K cites a partnership with Salesforce, with product integrations and co-selling",
+          "text": "DocuSignはSalesforceと提携し、製品連携と共同販売を進める",
+          "text_en": "DocuSign partners with Salesforce on product integrations and co-selling.",
           "source": {
             "label": "DocuSign 10-K(2026年度)",
             "label_en": "DocuSign 10-K (FY2026)",
@@ -367,8 +367,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxが年次報告で、連携しているパートナーの1社としてSalesforceを挙げている",
-          "text_en": "Box’s FY2026 10-K lists Salesforce among partners it offers integrations with",
+          "text": "Boxは、連携するパートナーの1社にSalesforceを持つ",
+          "text_en": "Box offers integrations with partners including Salesforce.",
           "source": {
             "label": "Box 10-K(2026年度)",
             "label_en": "Box 10-K (FY2026)",
@@ -392,8 +392,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Zoomが年次報告で、Zoom Meetingsが連携するツールの提供元の1社としてSalesforceを挙げている",
-          "text_en": "Zoom’s FY2026 10-K says Zoom Meetings integrates with tools created by companies such as Salesforce",
+          "text": "Zoom Meetingsは、連携ツールの提供元の1社であるSalesforceと連携する",
+          "text_en": "Zoom Meetings integrates with tools created by companies such as Salesforce.",
           "source": {
             "label": "Zoom 10-K(2026年度)",
             "label_en": "Zoom 10-K (FY2026)",
@@ -417,8 +417,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Oktaが年次報告で、連携するアプリ・基盤提供企業の1社としてSalesforceを挙げている",
-          "text_en": "Okta’s FY2026 10-K lists Salesforce among the applications and infrastructure providers it integrates with",
+          "text": "Oktaの連携先となるアプリ・基盤提供企業の1社がSalesforceだ",
+          "text_en": "Okta integrates with applications and infrastructure providers such as Salesforce.",
           "source": {
             "label": "Okta 10-K(2026年度)",
             "label_en": "Okta 10-K (FY2026)",
@@ -442,8 +442,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Atlassianが年次報告で、自社アプリの相互運用先としてSalesforceを挙げている",
-          "text_en": "Atlassian’s FY2026 10-K lists Salesforce among platforms its apps are kept interoperable with",
+          "text": "AtlassianのアプリはSalesforceなどのプラットフォームと相互運用を保つ",
+          "text_en": "Atlassian keeps its apps interoperable with platforms such as Salesforce.",
           "source": {
             "label": "Atlassian 10-K(2026年度)",
             "label_en": "Atlassian 10-K (FY2026)",
@@ -467,8 +467,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Cognizantが年次報告で、技術パートナーとしてSalesforceと緊密に連携していると述べている",
-          "text_en": "Cognizant’s FY2025 10-K says it works closely with Salesforce as a technology partner",
+          "text": "CognizantはSalesforceと技術パートナーとして緊密に協働している",
+          "text_en": "Cognizant works closely with Salesforce as a technology partner.",
           "source": {
             "label": "Cognizant 10-K(2025年度)",
             "label_en": "Cognizant 10-K (FY2025)",
@@ -492,8 +492,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Infosysが20年以上にわたるSalesforceの戦略的パートナーだと述べている",
-          "text_en": "Infosys describes itself as a strategic Salesforce partner for over two decades",
+          "text": "Infosysは20年以上にわたり、Salesforceの戦略的パートナーを務める",
+          "text_en": "Infosys has been a strategic Salesforce partner for over two decades.",
           "source": {
             "label": "Infosys 20-F(2026年度)",
             "label_en": "Infosys 20-F (FY2026)",
@@ -517,8 +517,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Wiproが年次報告で、戦略的な技術提携先の1社としてSalesforceを挙げている",
-          "text_en": "Wipro’s FY2026 20-F lists Salesforce among its strategic technology partnerships",
+          "text": "Wiproは、戦略的な技術提携先の1社としてSalesforceと組む",
+          "text_en": "Wipro has a strategic technology partnership with Salesforce.",
           "source": {
             "label": "Wipro 20-F(2026年度)",
             "label_en": "Wipro 20-F (FY2026)",
@@ -567,8 +567,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IBMが年次報告で、ソフトウェア部門の主な競合の1社としてSalesforceを挙げている",
-          "text_en": "IBM’s FY2025 10-K names Salesforce among the principal competitors in its software segment",
+          "text": "SalesforceはIBMのソフトウェア部門で、主な競合の1社として競っている",
+          "text_en": "Salesforce is one of the principal competitors in IBM's software segment.",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -582,8 +582,8 @@
         },
         {
           "type": "tie",
-          "text": "IBMが年次報告で、戦略的パートナーの1社としてSalesforceを挙げている",
-          "text_en": "IBM’s FY2025 10-K lists Salesforce among its strategic partners",
+          "text": "IBMにとってSalesforceは戦略的パートナーの1社だが、競合になる場合もある",
+          "text_en": "Salesforce is one of IBM's strategic partners, although partners can also become competitors.",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -607,8 +607,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Freshworksが年次報告で、顧客体験製品の競合としてSalesforceを挙げている",
-          "text_en": "Freshworks’s FY2025 10-K names Salesforce as a competitor in customer experience products",
+          "text": "Freshworksは顧客体験製品で、Salesforceなどのカスタマーサービススイートと競合する",
+          "text_en": "Freshworks competes with customer service suites such as Salesforce in customer experience products.",
           "source": {
             "label": "Freshworks 10-K(2025年度)",
             "label_en": "Freshworks 10-K (FY2025)",
@@ -630,8 +630,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Brazeが年次報告で、マーケティングソフト競合の1社としてSalesforceを挙げている",
-          "text_en": "Braze’s FY2026 10-K names Salesforce among marketing software competitors",
+          "text": "Salesforceは、Brazeのマーケティングソフト分野の競合の1社だ",
+          "text_en": "Salesforce is one of Braze's marketing software competitors.",
           "source": {
             "label": "Braze 10-K(2026年度)",
             "label_en": "Braze 10-K (FY2026)",
@@ -653,8 +653,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Klaviyoが年次報告で、主な競合の1社としてSalesforceを挙げている",
-          "text_en": "Klaviyo’s FY2025 10-K names Salesforce among its main competitors",
+          "text": "Klaviyoは、主な競合の1社であるSalesforceなど大手マーケティング自動化ソフト企業と競う",
+          "text_en": "Klaviyo competes with large marketing automation software providers such as Salesforce.",
           "source": {
             "label": "Klaviyo 10-K(2025年度)",
             "label_en": "Klaviyo 10-K (FY2025)",
@@ -676,8 +676,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pegasystemsが年次報告で、競合の1社としてSalesforceを挙げている",
-          "text_en": "Pegasystems’ FY2025 10-K names Salesforce among its competitors",
+          "text": "Pegasystemsは、競合の1社であるSalesforceと競い合う",
+          "text_en": "Pegasystems competes with Salesforce.",
           "source": {
             "label": "Pegasystems 10-K(2025年度)",
             "label_en": "Pegasystems 10-K (FY2025)",
@@ -699,8 +699,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、競合の1社としてSalesforceを挙げている",
-          "text_en": "Oracle’s FY2026 10-K names Salesforce among its competitors",
+          "text": "Salesforceは、Oracleの競合の1社にあたる",
+          "text_en": "Oracle competes with Salesforce.",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -722,8 +722,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合する企業向けソフト大手の1社としてSalesforceを挙げている",
-          "text_en": "ServiceNow’s FY2025 10-K names Salesforce among enterprise application software competitors",
+          "text": "Salesforceは、ServiceNowが競合する企業向けソフト大手の1社だ",
+          "text_en": "Salesforce is one of the enterprise application software competitors of ServiceNow.",
           "source": {
             "label": "ServiceNow 10-K(2025年度)",
             "label_en": "ServiceNow 10-K (FY2025)",
@@ -745,8 +745,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Guidewireが年次報告で、競合する汎用ソフト企業の1社としてSalesforceを挙げている",
-          "text_en": "Guidewire’s FY2026 10-K names Salesforce among horizontal software vendors it competes with",
+          "text": "Salesforceは、Guidewireが競合する汎用ソフト企業の1社だ",
+          "text_en": "Guidewire competes with horizontal software vendors such as Salesforce.",
           "source": {
             "label": "Guidewire 10-K(2026年度)",
             "label_en": "Guidewire 10-K (FY2026)",
@@ -768,8 +768,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ExlServiceが年次報告で、競合する純粋なAIソリューション・プラットフォーム企業の1社としてSalesforceを挙げている",
-          "text_en": "EXL’s FY2025 10-K names Salesforce among pure-play AI solutions/platform vendors it competes against",
+          "text": "ExlServiceは、純粋なAIソリューション・プラットフォーム企業の1社であるSalesforceと競合する。",
+          "text_en": "EXL competes with Salesforce, one of the pure-play AI solutions and platform vendors.",
           "source": {
             "label": "ExlService 10-K(2025年度)",
             "label_en": "ExlService 10-K (FY2025)",

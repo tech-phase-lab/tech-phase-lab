@@ -88,8 +88,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載",
-          "text_en": "Named as a primary contract manufacturing partner",
+          "text": "Jabilは主な製造委託先だ",
+          "text_en": "Jabil is a primary contract manufacturing partner",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -111,8 +111,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載",
-          "text_en": "Named as a primary contract manufacturing partner",
+          "text": "Sanminaは、主な製造委託先の一社",
+          "text_en": "Sanmina is a primary contract manufacturing partner",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -134,8 +134,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載",
-          "text_en": "Named as a primary contract manufacturing partner",
+          "text": "Hon Hai(Foxconn)は主な製造委託先を務める",
+          "text_en": "Hon Hai (Foxconn) is a primary contract manufacturing partner",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -257,8 +257,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Aristaが年次報告で、データセンター・キャンパス向けネットワークの競合としてCiscoを挙げている",
-          "text_en": "Arista’s annual report names Cisco among competitors in data center and campus networking",
+          "text": "Ciscoは、Aristaのデータセンター・キャンパス向けネットワークの競合に当たる",
+          "text_en": "Cisco competes with Arista in data center and campus networking",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -270,8 +270,8 @@
         },
         {
           "type": "rival",
-          "text": "Ciscoが年次報告で、競合としてAristaを挙げている",
-          "text_en": "Cisco’s annual report lists Arista among its competitors",
+          "text": "Ciscoの競合には、Aristaも含まれる",
+          "text_en": "Arista is among Cisco's competitors",
           "source": {
             "label": "Cisco 10-K(2026年度)",
             "label_en": "Cisco 10-K (FY2026)",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Aristaが年次報告で、データセンター・キャンパス向けネットワークの競合としてDellを挙げている",
-          "text_en": "Arista’s annual report names Dell among competitors in data center and campus networking",
+          "text": "Aristaは、データセンター・キャンパス向けネットワークでDellと競い合っている",
+          "text_en": "Arista and Dell compete in data center and campus networking",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Aristaが年次報告で、競合としてExtreme Networksを挙げている",
-          "text_en": "Arista’s annual report names Extreme Networks among competitors in data center and campus networking",
+          "text": "Extreme Networksも、Aristaのデータセンター・キャンパス向けネットワークの競合だ",
+          "text_en": "Extreme Networks is also a competitor of Arista in data center and campus networking",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -329,8 +329,8 @@
         },
         {
           "type": "rival",
-          "text": "Extremeが年次報告で、Aristaとは程度は小さいが競合すると記載",
-          "text_en": "Extreme’s annual report says it competes to a lesser extent with Arista",
+          "text": "Extremeは、程度は小さいがAristaとも競合する",
+          "text_en": "Extreme competes with Arista to a lesser extent",
           "source": {
             "label": "Extreme Networks 10-K(2026年度)",
             "label_en": "Extreme Networks 10-K (FY2026)",
@@ -352,8 +352,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Aristaが年次報告で、データセンター・キャンパス向けネットワークの競合としてHPEを挙げている",
-          "text_en": "Arista’s annual report names HPE among competitors in data center and campus networking",
+          "text": "Aristaのデータセンター・キャンパス向けネットワークには、HPEという競合がいる",
+          "text_en": "HPE competes with Arista in data center and campus networking",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -365,8 +365,8 @@
         },
         {
           "type": "rival",
-          "text": "HPEが年次報告で、接続分野の主な競合としてAristaを挙げている",
-          "text_en": "HPE’s annual report lists Arista among its primary connectivity competitors",
+          "text": "HPEの接続分野では、Aristaが主な競合ベンダーのひとつとなる",
+          "text_en": "Arista is one of HPE's primary competitors in connectivity",
           "source": {
             "label": "HPE 10-K(2025年度)",
             "label_en": "HPE 10-K (FY2025)",
@@ -388,8 +388,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Aristaが年次報告で、データセンター向けネットワークの競合としてNVIDIAを挙げている",
-          "text_en": "Arista’s annual report names NVIDIA among competitors in data center and campus networking",
+          "text": "NVIDIAもまた、Aristaとデータセンター向けネットワークで競合する",
+          "text_en": "NVIDIA also competes with Arista in data center networking",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -401,8 +401,8 @@
         },
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、ネットワーク製品の競合としてAristaを挙げている",
-          "text_en": "NVIDIA’s annual report lists Arista among competitors in networking products",
+          "text": "NVIDIAのネットワーク製品市場には、競合のAristaが存在する",
+          "text_en": "Arista is one of NVIDIA's competitors in networking products",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -424,8 +424,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Aristaが年次報告で、ネットワークパケットブローカーの競合としてKeysightを挙げている",
-          "text_en": "Arista’s annual report says DANZ Monitoring Fabric competes with Keysight in network packet brokers",
+          "text": "AristaのDANZ Monitoring Fabricは、ネットワークパケットブローカー分野でKeysightと競合する",
+          "text_en": "Arista's DANZ Monitoring Fabric competes with Keysight in network packet brokers",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -447,8 +447,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Aristaが年次報告で、ネットワークパケットブローカーの競合としてNetScoutを挙げている",
-          "text_en": "Arista’s annual report says DANZ Monitoring Fabric competes with NetScout in network packet brokers",
+          "text": "パケットブローカー分野で、AristaのDANZ Monitoring Fabricの競合にNetScoutがいる",
+          "text_en": "Arista's DANZ Monitoring Fabric competes with NetScout in network packet brokers",
           "source": {
             "label": "ANET 10-K(2025年度)",
             "label_en": "ANET 10-K (FY2025)",
@@ -470,8 +470,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Celesticaが年次報告で、データセンター向けスイッチの競合としてAristaを挙げている",
-          "text_en": "Celestica’s annual report says it competes with OEMs including Arista in data center switching",
+          "text": "Celesticaは、データセンター向けスイッチ分野でOEMのAristaと競合している",
+          "text_en": "Celestica competes with OEMs including Arista in data center switching",
           "source": {
             "label": "Celestica 10-K(2025年度)",
             "label_en": "Celestica 10-K (FY2025)",

@@ -112,8 +112,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主要な組立・テスト委託先の1社としてAmkor Technologyを挙げている",
-          "text_en": "Lists Amkor Technology among its primary assembly and test houses",
+          "text": "Amkor TechnologyはCirrus Logicの主要な組立・テスト委託先の1社だ。",
+          "text_en": "Amkor Technology is one of Cirrus Logic's primary assembly and test houses.",
           "source": {
             "label": "Cirrus Logic 10-K",
             "label_en": "Cirrus Logic 10-K",
@@ -208,8 +208,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "CEVAが、公表済みのライセンシーの1社としてCirrus Logicを挙げている",
-          "text_en": "CEVA lists Cirrus Logic among its publicly announced licensees",
+          "text": "Cirrus Logicは、CEVAが公表しているライセンシーの1社となる。",
+          "text_en": "Cirrus Logic is one of CEVA's publicly announced licensees.",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",
@@ -271,8 +271,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シーラス・ロジックの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cirrus Logic’s annual report",
+          "text": "Cirrus Logicと競合する",
+          "text_en": "Competes with Cirrus Logic",
           "source": {
             "label": "Cirrus Logic 10-K",
             "label_en": "Cirrus Logic 10-K",
@@ -294,8 +294,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シーラス・ロジックの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cirrus Logic’s annual report",
+          "text": "Cirrus Logicと競合する",
+          "text_en": "Competes with Cirrus Logic",
           "source": {
             "label": "Cirrus Logic 10-K",
             "label_en": "Cirrus Logic 10-K",
@@ -317,8 +317,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シーラス・ロジックの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cirrus Logic’s annual report",
+          "text": "Cirrus Logicと競合する",
+          "text_en": "Competes with Cirrus Logic",
           "source": {
             "label": "Cirrus Logic 10-K",
             "label_en": "Cirrus Logic 10-K",
@@ -340,8 +340,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Skyworks Solutionsの年次報告が、シーラス・ロジックを競合として挙げている",
-          "text_en": "Names Cirrus Logic as a competitor in its annual report",
+          "text": "Cirrus Logicと競合する",
+          "text_en": "Competes with Cirrus Logic",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",

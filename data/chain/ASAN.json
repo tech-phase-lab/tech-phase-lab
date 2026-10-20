@@ -48,8 +48,8 @@
         },
         {
           "type": "down",
-          "text": "顧客例としてAmazonが挙げられている",
-          "text_en": "Amazon is named among Asana's example customers",
+          "text": "AmazonはAsanaの顧客の一社だ",
+          "text_en": "Amazon is one of Asana's customers",
           "source": {
             "label": "Asana 8-K Ex.99 の発表",
             "label_en": "Asana 8-K Ex.99 press release",
@@ -72,8 +72,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例としてAccentureが挙げられている",
-          "text_en": "Accenture is named among Asana's example customers",
+          "text": "AccentureもAsanaを利用する顧客である",
+          "text_en": "Accenture is also an Asana customer",
           "source": {
             "label": "Asana 8-K Ex.99 の発表",
             "label_en": "Asana 8-K Ex.99 press release",
@@ -96,8 +96,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例としてMorningstarが挙げられている",
-          "text_en": "Morningstar is named among Asana's example customers",
+          "text": "MorningstarはAsanaの顧客に名を連ねる",
+          "text_en": "Morningstar is one of Asana's customers",
           "source": {
             "label": "Asana 8-K Ex.99 の発表",
             "label_en": "Asana 8-K Ex.99 press release",
@@ -120,8 +120,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "顧客例としてスズキが挙げられている",
-          "text_en": "Suzuki is named among Asana's example customers",
+          "text": "スズキはAsanaを利用する顧客企業のひとつ",
+          "text_en": "Suzuki is one of Asana's customers",
           "source": {
             "label": "Asana 8-K Ex.99 の発表",
             "label_en": "Asana 8-K Ex.99 press release",
@@ -184,8 +184,8 @@
         },
         {
           "type": "down",
-          "text": "顧客例としてAnthropicも挙げられている",
-          "text_en": "Anthropic is also named among Asana's example customers",
+          "text": "AnthropicもAsanaの顧客となっている",
+          "text_en": "Anthropic is also one of Asana's customers",
           "source": {
             "label": "Asana 8-K Ex.99 の発表",
             "label_en": "Asana 8-K Ex.99 press release",

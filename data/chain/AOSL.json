@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "ODMの顧客としてFoxconnを挙げている",
-          "text_en": "Foxconn is named among AOS's ODM customers",
+          "text": "Foxconnは、AOSのODM顧客のひとつだ",
+          "text_en": "Foxconn is one of AOS's ODM customers",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",
@@ -109,8 +109,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Alpha and Omega Semiconductor’s annual report",
+          "text": "アルファ・アンド・オメガ・セミコンダクターと競合する",
+          "text_en": "Competes with Alpha and Omega Semiconductor",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Alpha and Omega Semiconductor’s annual report",
+          "text": "アルファ・アンド・オメガ・セミコンダクターと競合する",
+          "text_en": "Competes with Alpha and Omega Semiconductor",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",
@@ -156,8 +156,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Alpha and Omega Semiconductor’s annual report",
+          "text": "アルファ・アンド・オメガ・セミコンダクターと競合する",
+          "text_en": "Competes with Alpha and Omega Semiconductor",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",

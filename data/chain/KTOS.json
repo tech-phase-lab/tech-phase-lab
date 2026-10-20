@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Northrop Grumman(Kratosのチームメイト)が競争入札で受注したと説明している",
-          "text_en": "Describes Northrop Grumman as Kratos' teammate that was competitively awarded a U.S. contract",
+          "text": "Northrop Grumman(Kratosのチームメイト)が競争入札で受注した",
+          "text_en": "Northrop Grumman, Kratos' teammate, was competitively awarded a U.S. contract.",
           "source": {
             "label": "Kratos Defense 10-K",
             "label_en": "Kratos Defense 10-K",
@@ -121,8 +121,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "クラトス・ディフェンスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Kratos’s annual report",
+          "text": "クラトス・ディフェンスと競合する",
+          "text_en": "Competes with Kratos Defense",
           "source": {
             "label": "Kratos Defense 10-K",
             "label_en": "Kratos Defense 10-K",

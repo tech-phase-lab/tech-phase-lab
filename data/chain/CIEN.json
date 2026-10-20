@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Viaviの年次報告が、顧客例の1社としてCienaを挙げている",
-          "text_en": "Viavi's annual report lists Ciena among its example customers",
+          "text": "Viaviの顧客例の1社がCienaだ",
+          "text_en": "Ciena is one of Viavi's customers.",
           "source": {
             "label": "Viavi Solutions 10-K",
             "label_en": "Viavi Solutions 10-K",
@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シエナの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Ciena’s annual report",
+          "text": "Cienaと競合する",
+          "text_en": "Competes with Ciena",
           "source": {
             "label": "Ciena 10-K",
             "label_en": "Ciena 10-K",
@@ -152,8 +152,8 @@
         },
         {
           "type": "rival",
-          "text": "シエナの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Ciena’s annual report",
+          "text": "Cienaと競合する",
+          "text_en": "Competes with Ciena",
           "source": {
             "label": "Ciena 10-K",
             "label_en": "Ciena 10-K",
@@ -176,8 +176,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シエナの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Ciena’s annual report",
+          "text": "Cienaと競合する",
+          "text_en": "Competes with Ciena",
           "source": {
             "label": "Ciena 10-K",
             "label_en": "Ciena 10-K",
@@ -200,8 +200,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シエナの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Ciena’s annual report",
+          "text": "Cienaと競合する",
+          "text_en": "Competes with Ciena",
           "source": {
             "label": "Ciena 10-K",
             "label_en": "Ciena 10-K",
@@ -224,8 +224,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "データセンター内外の相互接続分野への拡大に伴い、今後Broadcomとも競合する見通しと説明している",
-          "text_en": "Ciena says that as it expands its interconnect strategy it will begin to compete with Broadcom",
+          "text": "Cienaはデータセンター内外の相互接続分野への拡大に伴い、今後Broadcomとも競合する見通し",
+          "text_en": "As Ciena expands its interconnect strategy inside and around the data center, it will begin to compete with Broadcom.",
           "source": {
             "label": "Ciena 10-K",
             "label_en": "Ciena 10-K",

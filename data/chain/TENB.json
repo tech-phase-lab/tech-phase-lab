@@ -123,8 +123,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テナブルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Tenable’s annual report",
+          "text": "テナブルと競合する",
+          "text_en": "Competes with Tenable",
           "source": {
             "label": "Tenable 10-K",
             "label_en": "Tenable 10-K",
@@ -136,8 +136,8 @@
         },
         {
           "type": "rival",
-          "text": "Qualysの年次報告が、テナブルを競合として挙げている",
-          "text_en": "Names Tenable as a competitor in its annual report",
+          "text": "テナブルと競合する",
+          "text_en": "Competes with Tenable",
           "source": {
             "label": "Qualys 10-K",
             "label_en": "Qualys 10-K",
@@ -159,8 +159,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テナブルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Tenable’s annual report",
+          "text": "テナブルと競合する",
+          "text_en": "Competes with Tenable",
           "source": {
             "label": "Tenable 10-K",
             "label_en": "Tenable 10-K",
@@ -182,8 +182,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テナブルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Tenable’s annual report",
+          "text": "テナブルと競合する",
+          "text_en": "Competes with Tenable",
           "source": {
             "label": "Tenable 10-K",
             "label_en": "Tenable 10-K",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Microsoftが脆弱性管理の製品を持つ競合として挙げられている",
-          "text_en": "Microsoft is cited as having a vulnerability management offering",
+          "text": "Microsoftは脆弱性管理の製品を持ち、競合となる",
+          "text_en": "Microsoft competes with Tenable through its vulnerability management offering",
           "source": {
             "label": "Tenable 10-K",
             "label_en": "Tenable 10-K",

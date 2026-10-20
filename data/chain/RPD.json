@@ -46,8 +46,8 @@
         },
         {
           "type": "tie",
-          "text": "Rapid7の年次報告が、技術アライアンスの例としてMicrosoftを挙げている",
-          "text_en": "Rapid7's 10-K lists Microsoft among its recent technology alliances",
+          "text": "Rapid7はMicrosoftと技術アライアンスを組む",
+          "text_en": "Rapid7 has a technology alliance with Microsoft.",
           "source": {
             "label": "Rapid7 10-K",
             "label_en": "Rapid7 10-K",
@@ -72,8 +72,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rapid7の年次報告が、技術アライアンスの例としてServiceNowを挙げている",
-          "text_en": "Rapid7's 10-K lists ServiceNow among its recent technology alliances",
+          "text": "ServiceNowは、Rapid7の技術アライアンスの相手先",
+          "text_en": "ServiceNow is one of Rapid7's recent technology alliance partners.",
           "source": {
             "label": "Rapid7 10-K",
             "label_en": "Rapid7 10-K",
@@ -98,8 +98,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rapid7の年次報告が、技術アライアンスの例としてAWSを挙げている",
-          "text_en": "Rapid7's 10-K lists AWS among its recent technology alliances",
+          "text": "Rapid7の技術アライアンスには、AWSが加わっている",
+          "text_en": "AWS is part of Rapid7's recent technology alliances.",
           "source": {
             "label": "Rapid7 10-K",
             "label_en": "Rapid7 10-K",
@@ -124,8 +124,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rapid7の年次報告が、技術アライアンスの例としてGCPを挙げている",
-          "text_en": "Rapid7's 10-K lists GCP among its recent technology alliances",
+          "text": "Rapid7は、GCPとの技術アライアンスを築いた",
+          "text_en": "Rapid7 has built a technology alliance with GCP.",
           "source": {
             "label": "Rapid7 10-K",
             "label_en": "Rapid7 10-K",
@@ -150,8 +150,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Rapid7の年次報告が、技術アライアンスの例としてPalo Alto Networksを挙げている",
-          "text_en": "Rapid7's 10-K lists Palo Alto Networks among its recent technology alliances",
+          "text": "Rapid7の技術アライアンスに、Palo Alto Networksも名を連ねる",
+          "text_en": "Palo Alto Networks is also among Rapid7's recent technology alliances.",
           "source": {
             "label": "Rapid7 10-K",
             "label_en": "Rapid7 10-K",
@@ -227,8 +227,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "クオリスの年次報告が、ラピッド7を競合として挙げている",
-          "text_en": "Names Rapid7 as a competitor in its annual report",
+          "text": "Rapid7と競合する",
+          "text_en": "Competes with Rapid7",
           "source": {
             "label": "Qualys 10-K",
             "label_en": "Qualys 10-K",
@@ -251,8 +251,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テナブルの年次報告が、ラピッド7を競合として挙げている",
-          "text_en": "Names Rapid7 as a competitor in its annual report",
+          "text": "Rapid7と競合する",
+          "text_en": "Competes with Rapid7",
           "source": {
             "label": "Tenable 10-K",
             "label_en": "Tenable 10-K",

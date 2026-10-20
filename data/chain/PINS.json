@@ -43,8 +43,8 @@
         },
         {
           "type": "rival",
-          "text": "Pinterestの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pinterest’s annual report",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
           "source": {
             "label": "Pinterest 10-K",
             "label_en": "Pinterest 10-K",
@@ -67,8 +67,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Klaviyoの年次報告が、連携先の技術プラットフォームの1つとしてPinterestを挙げている",
-          "text_en": "Klaviyo's annual report lists Pinterest among the technology platforms it integrates with",
+          "text": "Pinterestは、Klaviyoの連携先の技術プラットフォームの1つだ",
+          "text_en": "Pinterest is one of the technology platforms Klaviyo integrates with.",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",
@@ -90,8 +90,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Sprout Socialの年次報告が、主要SNSの1つとしてPinterestとの関係を挙げている",
-          "text_en": "Sprout Social's annual report lists Pinterest among the leading social networks it has strategic relationships with",
+          "text": "Sprout Socialは、主要SNSの1つであるPinterestと戦略的な関係を築いた",
+          "text_en": "Sprout Social has built a strategic relationship with Pinterest, one of the leading social networks.",
           "source": {
             "label": "Sprout Social 10-K",
             "label_en": "Sprout Social 10-K",
@@ -113,8 +113,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pinterestの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pinterest’s annual report",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
           "source": {
             "label": "Pinterest 10-K",
             "label_en": "Pinterest 10-K",
@@ -137,8 +137,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pinterestの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pinterest’s annual report",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
           "source": {
             "label": "Pinterest 10-K",
             "label_en": "Pinterest 10-K",
@@ -150,8 +150,8 @@
         },
         {
           "type": "rival",
-          "text": "Snapの年次報告が、Pinterestを競合として挙げている",
-          "text_en": "Snap's annual report names Pinterest as a competitor",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -174,8 +174,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pinterestの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Pinterest’s annual report",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
           "source": {
             "label": "Pinterest 10-K",
             "label_en": "Pinterest 10-K",

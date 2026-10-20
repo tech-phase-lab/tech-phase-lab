@@ -173,8 +173,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ロブロックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Roblox’s annual report",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
           "source": {
             "label": "Roblox 10-K",
             "label_en": "Roblox 10-K",
@@ -197,8 +197,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ロブロックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Roblox’s annual report",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
           "source": {
             "label": "Roblox 10-K",
             "label_en": "Roblox 10-K",
@@ -221,8 +221,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ロブロックスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Roblox’s annual report",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
           "source": {
             "label": "Roblox 10-K",
             "label_en": "Roblox 10-K",
@@ -245,8 +245,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テイクツー・インタラクティブの年次報告が、ロブロックスを競合として挙げている",
-          "text_en": "Names Roblox as a competitor in its annual report",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",
@@ -269,8 +269,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スナップの年次報告が、ロブロックスを競合として挙げている",
-          "text_en": "Names Roblox as a competitor in its annual report",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "レディットの年次報告が、ロブロックスを競合として挙げている",
-          "text_en": "Names Roblox as a competitor in its annual report",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
           "source": {
             "label": "Reddit 10-K",
             "label_en": "Reddit 10-K",

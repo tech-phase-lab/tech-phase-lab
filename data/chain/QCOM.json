@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載",
-          "text_en": "Named as a primary foundry supplier",
+          "text": "TSMCはQualcommの主な製造委託先だ",
+          "text_en": "TSMC is one of Qualcomm's primary foundry suppliers",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "主な製造委託先として実名で記載",
-          "text_en": "Named as a primary foundry supplier",
+          "text": "GlobalFoundriesも主な製造委託先に入る",
+          "text_en": "GlobalFoundries is one of Qualcomm's primary foundry suppliers",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -82,8 +82,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "半導体の組み立て・テストの主な委託先として実名で記載",
-          "text_en": "Named as a primary assembly and test supplier",
+          "text": "Amkor Technologyが半導体の組み立て・テストを主に請け負う",
+          "text_en": "Amkor Technology is one of Qualcomm's primary assembly and test suppliers",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "半導体の組み立て・テストの主な委託先として実名で記載",
-          "text_en": "Named as a primary assembly and test supplier",
+          "text": "ASE Technologyは半導体の組み立て・テストの主な委託先の一つ",
+          "text_en": "ASE Technology is one of Qualcomm's primary assembly and test suppliers",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -128,8 +128,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "自社のカスタムコアとSoCは、アーキテクチャ ライセンス契約などで全面的にライセンスを受けていると記載",
-          "text_en": "Says its custom cores and SoCs are fully licensed under its Architecture License Agreement and related agreements",
+          "text": "QualcommのカスタムコアとSoCは、Armとのアーキテクチャ ライセンス契約などで全面的にライセンスされている",
+          "text_en": "Qualcomm's custom cores and SoCs are fully licensed under its Architecture License Agreement with Arm and related agreements",
           "source": {
             "label": "Qualcomm 10-Q(Q3 2026年度)",
             "label_en": "Qualcomm 10-Q (Q3 FY2026)",
@@ -143,8 +143,8 @@
         },
         {
           "type": "rival",
-          "text": "ArmがQualcommおよびNuviaと、Nuvia Architecture License Agreementをめぐる訴訟中と記載",
-          "text_en": "Arm states it is in pending litigation with Qualcomm and Nuvia over the Nuvia Architecture License Agreement",
+          "text": "ArmはQualcommおよびNuviaと、Nuvia Architecture License Agreementをめぐる訴訟中だ",
+          "text_en": "Arm is in pending litigation with Qualcomm and Nuvia over the Nuvia Architecture License Agreement",
           "source": {
             "label": "Arm Holdings 20-F(2026年度)",
             "label_en": "Arm Holdings 20-F (FY2026)",
@@ -354,8 +354,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Intelが年次報告で、競合としてQualcommとAMDを挙げている",
-          "text_en": "Intel’s annual report names Qualcomm and AMD among its platform-product competitors",
+          "text": "Intelの競合には、プラットフォーム製品を手がけるQualcommとAMDがある",
+          "text_en": "Qualcomm and AMD are Intel's platform-product competitors.",
           "source": {
             "label": "Intel 10-K(2025年度)",
             "label_en": "Intel 10-K (FY2025)",
@@ -377,8 +377,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、車載・ゲームなどのSoCの競合としてQualcommを挙げている",
-          "text_en": "NVIDIA’s annual report lists Qualcomm among SoC competitors for automotive, autonomous machines and gaming",
+          "text": "NVIDIAの車載・ゲームなどのSoC分野では、Qualcommが競合に名を連ねる",
+          "text_en": "Qualcomm competes with NVIDIA in SoCs for automotive, autonomous machines and gaming.",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -400,8 +400,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualcommが年次報告で、半導体の競合としてBroadcomを挙げている",
-          "text_en": "Qualcomm’s annual report lists Broadcom among competitors in integrated circuit products",
+          "text": "Qualcommの半導体分野では、Broadcomが競合に挙がる",
+          "text_en": "Broadcom competes with Qualcomm in integrated circuit products.",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -423,8 +423,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualcommが年次報告で、半導体の競合としてMediaTekを挙げている",
-          "text_en": "Qualcomm’s annual report lists MediaTek among competitors in integrated circuit products",
+          "text": "Qualcommは、半導体でMediaTekと競う",
+          "text_en": "Qualcomm competes with MediaTek in integrated circuit products.",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -446,8 +446,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qualcommが年次報告で、車載分野の競合としてMobileyeを挙げている",
-          "text_en": "Qualcomm’s annual report lists Mobileye among competitors (automotive)",
+          "text": "車載分野ではMobileyeがQualcommの競合となる",
+          "text_en": "Mobileye competes with Qualcomm in automotive.",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -469,8 +469,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Skyworksが年次報告で、競合としてQualcommを挙げている",
-          "text_en": "Skyworks’ annual report lists Qualcomm among its competitors",
+          "text": "Skyworksにとって、Qualcommは競合だ",
+          "text_en": "Qualcomm is a competitor of Skyworks.",
           "source": {
             "label": "Skyworks 10-K(2025年度)",
             "label_en": "Skyworks 10-K (FY2025)",

@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、主要3クラウド事業者との提携拡大を挙げている",
-          "text_en": "MongoDB's annual report says it expanded business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure)",
+          "text": "MongoDBは、AWSを含む主要3クラウド事業者との提携を拡大した",
+          "text_en": "MongoDB expanded its business partnerships with all three major cloud providers, including AWS.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -63,8 +63,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、主要3クラウド事業者との提携拡大を挙げている",
-          "text_en": "MongoDB's annual report says it expanded business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure)",
+          "text": "MongoDBは、GCPを含む主要3クラウド事業者との提携関係を広げた",
+          "text_en": "MongoDB expanded its business partnerships with all three major cloud providers, including GCP.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -87,8 +87,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、主要3クラウド事業者との提携拡大を挙げている",
-          "text_en": "MongoDB's annual report says it expanded business partnerships with all three major cloud providers (AWS, GCP and Microsoft Azure)",
+          "text": "MongoDBとMicrosoft Azureの提携は、主要3クラウド事業者との拡大の対象となった",
+          "text_en": "MongoDB expanded its business partnerships with all three major cloud providers, including Microsoft Azure.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -100,8 +100,8 @@
         },
         {
           "type": "rival",
-          "text": "MongoDBの年次報告が、競合の既存データベース大手の1社に挙げている",
-          "text_en": "Named among established legacy database providers MongoDB competes with in its annual report",
+          "text": "Microsoftは、MongoDBが主に競合する既存データベース大手の1社だ",
+          "text_en": "Microsoft is one of the established legacy database providers MongoDB primarily competes with.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -123,8 +123,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
-          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "text": "MongoDBは、独立系ソフトウェアベンダー・システムインテグレーターのIBMとの既存提携を拡大した",
+          "text_en": "MongoDB expanded its existing partnership with IBM, an independent software vendor and global systems integrator.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -149,8 +149,8 @@
         },
         {
           "type": "rival",
-          "text": "MongoDBの年次報告が、競合の既存データベース大手の1社に挙げている",
-          "text_en": "Named among established legacy database providers MongoDB competes with in its annual report",
+          "text": "MongoDBが主に競合する既存データベース大手の1社に、IBMがある",
+          "text_en": "IBM is one of the established legacy database providers MongoDB primarily competes with.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -172,8 +172,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
-          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "text": "Accentureは、MongoDBが既存提携を拡大した独立系ソフトウェアベンダー・システムインテグレーターの一社だ",
+          "text_en": "MongoDB expanded its existing partnership with Accenture, a global systems integrator.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -196,8 +196,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
-          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "text": "MongoDBは、既存提携を拡大した独立系ソフトウェアベンダー・システムインテグレーターにInfosysを数える",
+          "text_en": "MongoDB expanded its existing partnership with Infosys, a global systems integrator.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -220,8 +220,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
-          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "text": "Cognizantは、MongoDBが既存提携を拡大する独立系ソフトウェアベンダー・システムインテグレーターに含まれる",
+          "text_en": "MongoDB expanded its existing partnership with Cognizant, a global systems integrator.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -244,8 +244,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
-          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "text": "MongoDBは、独立系ソフトウェアベンダー・システムインテグレーターのWiproとの既存提携を広げた",
+          "text_en": "MongoDB expanded its existing partnership with Wipro, a global systems integrator.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -268,8 +268,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBの年次報告が、独立系ソフトウェアベンダー・システムインテグレーターとの既存提携の拡大に挙げている",
-          "text_en": "MongoDB's annual report lists it among the independent software vendors and global systems integrators with which it expanded existing partnerships",
+          "text": "Confluentは、MongoDBが既存提携を拡大した独立系ソフトウェアベンダー・システムインテグレーターの一つだ",
+          "text_en": "MongoDB expanded its existing partnership with Confluent, an independent software vendor.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -375,8 +375,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "MongoDBとMorgan Stanley & Co.の購入契約(2018年6月25日付)が年次報告の添付書類に挙げられている",
-          "text_en": "A Purchase Agreement dated June 25, 2018 between MongoDB and Morgan Stanley & Co. is listed in the annual report exhibits",
+          "text": "MongoDBとMorgan Stanley & Co.は、2018年6月25日付で購入契約を結んだ",
+          "text_en": "MongoDB and Morgan Stanley & Co. entered into a Purchase Agreement dated June 25, 2018",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -390,8 +390,8 @@
         },
         {
           "type": "tie",
-          "text": "同様の購入契約(2020年1月9日付)も挙げられている",
-          "text_en": "A second Purchase Agreement dated January 9, 2020 is also listed",
+          "text": "2020年1月9日付でも同様の購入契約を交わしている",
+          "text_en": "MongoDB and Morgan Stanley & Co. entered into a second Purchase Agreement dated January 9, 2020",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -414,8 +414,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MongoDBの年次報告が、競合の既存データベース大手の1社に挙げている",
-          "text_en": "Named among established legacy database providers MongoDB competes with in its annual report",
+          "text": "MongoDBの主な競合には、既存データベース大手の1社、Oracleがいる",
+          "text_en": "Oracle is one of the established legacy database providers MongoDB primarily competes with.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -438,8 +438,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Elasticの年次報告が、MongoDBを競合として挙げている",
-          "text_en": "Names MongoDB as a competitor in its annual report",
+          "text": "MongoDBと競合する",
+          "text_en": "Competes with MongoDB",
           "source": {
             "label": "Elastic 10-K",
             "label_en": "Elastic 10-K",

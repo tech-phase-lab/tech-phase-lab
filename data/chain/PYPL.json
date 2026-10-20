@@ -30,8 +30,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Asanaの年次報告が、顧客の支払い方法にPayPalを挙げている",
-          "text_en": "Asana's annual report names PayPal among payment methods its customers use",
+          "text": "Asanaは、顧客の支払い方法としてPayPalを受け付ける",
+          "text_en": "Asana accepts PayPal as a customer payment method.",
           "source": {
             "label": "Asana 10-K",
             "label_en": "Asana 10-K",
@@ -53,8 +53,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Robloxの年次報告が、Robux購入の入金経路にPayPalを挙げている",
-          "text_en": "Roblox's annual report lists PayPal among channels for receiving cash proceeds from Robux purchases",
+          "text": "RobloxのRobux購入では、PayPalが入金経路の役割を担う",
+          "text_en": "PayPal is a channel through which Roblox receives cash proceeds from Robux purchases.",
           "source": {
             "label": "Roblox 10-K",
             "label_en": "Roblox 10-K",
@@ -76,8 +76,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "DoorDashの年次報告が、StripeおよびPayPalと商用契約を結んでいると述べている",
-          "text_en": "DoorDash's annual report says it has commercial agreements with Stripe and PayPal",
+          "text": "DoorDashは、StripeおよびPayPalと商用契約を結ぶ",
+          "text_en": "DoorDash has commercial agreements with Stripe and PayPal.",
           "source": {
             "label": "DoorDash 10-K",
             "label_en": "DoorDash 10-K",
@@ -112,8 +112,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Shopifyの年次報告が、PayPalとの契約は初期期間後、12か月ごとに自動更新されると述べている",
-          "text_en": "Shopify's annual report says the PayPal agreement renews automatically every 12 months after its initial term",
+          "text": "ShopifyとPayPalの契約は、初期期間後、12か月ごとに自動更新される",
+          "text_en": "The Shopify-PayPal agreement renews automatically every 12 months after its initial term.",
           "source": {
             "label": "Shopify 10-K",
             "label_en": "Shopify 10-K",

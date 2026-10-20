@@ -378,8 +378,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Seagateが年次報告で、世界のHDDの競合としてWestern Digitalを挙げている",
-          "text_en": "Seagate’s FY2026 10-K lists Western Digital as a global HDD competitor",
+          "text": "Seagateは、世界のHDD市場でWestern Digitalと競合する",
+          "text_en": "Seagate competes with Western Digital in the global HDD market.",
           "source": {
             "label": "Seagate 10-K(2026年度)",
             "label_en": "Seagate 10-K (FY2026)",
@@ -391,8 +391,8 @@
         },
         {
           "type": "rival",
-          "text": "Western Digitalが年次報告で、HDDの競合としてSeagateを挙げている",
-          "text_en": "Western Digital’s FY2026 10-K lists Seagate as an HDD competitor",
+          "text": "Western DigitalにとってSeagateは、HDDの競合相手",
+          "text_en": "Seagate is one of Western Digital's HDD competitors.",
           "source": {
             "label": "Western Digital 10-K(2026年度)",
             "label_en": "Western Digital 10-K (FY2026)",

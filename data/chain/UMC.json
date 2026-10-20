@@ -116,8 +116,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "MaxLinearは、台湾とシンガポールのUMCを主要なファウンドリ・パートナーに挙げている",
-          "text_en": "MaxLinear names UMC, in Taiwan and Singapore, among its key foundry partners",
+          "text": "MaxLinearにとって、台湾とシンガポールのUMCは主要なファウンドリ・パートナー",
+          "text_en": "UMC, in Taiwan and Singapore, is one of MaxLinear's key foundry partners.",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -129,8 +129,8 @@
         },
         {
           "type": "down",
-          "text": "MaxLinearは、UMCを最大級の製造パートナー4社の1社に挙げている",
-          "text_en": "MaxLinear names UMC among four of its largest manufacturing partners",
+          "text": "UMCは、MaxLinearの最大級の製造パートナー4社の1社に入る",
+          "text_en": "UMC is one of MaxLinear's four largest manufacturing partners.",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -166,8 +166,8 @@
         },
         {
           "type": "down",
-          "text": "SiTimeは、MEMSタイミング製品とアナログ回路の主な供給元にBosch、TSMC、UMC、Teledyneを挙げている",
-          "text_en": "SiTime names Bosch, TSMC, UMC and Teledyne as primary foundries and suppliers for its MEMS timing devices and analog circuits",
+          "text": "SiTimeのMEMSタイミング製品とアナログ回路は、Bosch、TSMC、UMC、Teledyneが主に製造を担う",
+          "text_en": "Bosch, TSMC, UMC and Teledyne are SiTime's primary foundries and suppliers for its MEMS timing devices and analog circuits.",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
@@ -190,8 +190,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Himaxは、ここ数年のファウンドリ・サービスの調達先にTSMC、UMCなどを挙げている",
-          "text_en": "Himax lists TSMC, UMC and others among foundries it has obtained foundry services from in the past few years",
+          "text": "Himaxはここ数年、TSMC、UMCなどからファウンドリ・サービスを調達してきた",
+          "text_en": "Himax has obtained foundry services from TSMC, UMC and others in the past few years.",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",
@@ -237,8 +237,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "UMCは、主な顧客としてTexas InstrumentsやIntelなどの統合デバイスメーカーを挙げている",
-          "text_en": "UMC names integrated device manufacturers such as Texas Instruments and Intel among its primary customers",
+          "text": "UMCの主な顧客には、Texas InstrumentsやIntelなどの統合デバイスメーカーがいる",
+          "text_en": "UMC's primary customers include integrated device manufacturers such as Texas Instruments and Intel.",
           "source": {
             "label": "United Microelectronics 20-F",
             "label_en": "United Microelectronics 20-F",
@@ -261,8 +261,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "UMCは、顧客としてMediaTek、Realtek、Novatek、Texas Instrumentsを挙げている",
-          "text_en": "UMC names MediaTek, Realtek, Novatek and Texas Instruments among its customers",
+          "text": "UMCの顧客に、MediaTek、Realtek、Novatek、Texas Instrumentsが並ぶ",
+          "text_en": "UMC's customers include MediaTek, Realtek, Novatek and Texas Instruments.",
           "source": {
             "label": "United Microelectronics 20-F",
             "label_en": "United Microelectronics 20-F",
@@ -285,8 +285,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Intelは2024年に、UMCと12nmプロセス・プラットフォームを開発する戦略的協業を発表し、量産は2027年開始の見込みと記載している",
-          "text_en": "Intel announced in 2024 a strategic collaboration with UMC to develop a 12 nm process platform, with production expected to begin in 2027",
+          "text": "Intelは2024年にUMCと12nmプロセス・プラットフォームを開発する戦略的協業を発表し、量産は2027年開始の見込み",
+          "text_en": "In 2024, Intel announced a strategic collaboration with UMC to develop a 12 nm process platform, with production expected to begin in 2027.",
           "source": {
             "label": "Intel 10-K",
             "label_en": "Intel 10-K",
@@ -298,8 +298,8 @@
         },
         {
           "type": "tie",
-          "text": "UMCは、Intelとの協業契約が、Intelの米国での大規模製造能力とUMCの成熟ノードのファウンドリ経験を組み合わせるものだと説明している",
-          "text_en": "UMC says its collaboration agreements combine Intel's at-scale U.S. manufacturing capacity with UMC's foundry experience on mature nodes",
+          "text": "UMCとIntelの協業契約では、Intelの米国での大規模製造能力とUMCの成熟ノードのファウンドリ経験を組み合わせる",
+          "text_en": "UMC's collaboration agreements with Intel combine Intel's at-scale U.S. manufacturing capacity with UMC's foundry experience on mature nodes.",
           "source": {
             "label": "United Microelectronics 20-F",
             "label_en": "United Microelectronics 20-F",
@@ -311,8 +311,8 @@
         },
         {
           "type": "rival",
-          "text": "インテルの年次報告が、ユナイテッド・マイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names UMC as a competitor in its annual report",
+          "text": "United Microelectronicsと競合する",
+          "text_en": "Competes with United Microelectronics",
           "source": {
             "label": "Intel 10-K",
             "label_en": "Intel 10-K",
@@ -432,8 +432,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "グローバルファウンドリーズの年次報告が、ユナイテッド・マイクロエレクトロニクスを競合として挙げている",
-          "text_en": "Names UMC as a competitor in its annual report",
+          "text": "United Microelectronicsと競合する",
+          "text_en": "Competes with United Microelectronics",
           "source": {
             "label": "GlobalFoundries 20-F",
             "label_en": "GlobalFoundries 20-F",

@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "1250ボルトと1700ボルトのPowiGaN技術について、800 VDC電力アーキテクチャでNVIDIAと協力していると述べている",
-          "text_en": "Power Integrations says it is collaborating with NVIDIA on 800 VDC power architecture, citing its 1250- and 1700-volt PowiGaN technologies",
+          "text": "Power Integrationsは、1250ボルトと1700ボルトのPowiGaN技術を軸に、800 VDC電力アーキテクチャでNVIDIAと協力する",
+          "text_en": "Power Integrations collaborates with NVIDIA on 800 VDC power architecture, built on its 1250- and 1700-volt PowiGaN technologies.",
           "source": {
             "label": "Power Integrations 8-K Ex.99 の発表",
             "label_en": "Power Integrations 8-K Ex.99 press release",
@@ -98,8 +98,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "モノリシック・パワー・システムズの年次報告が、パワー・インテグレーションズを競合として挙げている",
-          "text_en": "Names Power Integrations as a competitor in its annual report",
+          "text": "パワー・インテグレーションズと競合する",
+          "text_en": "Competes with Power Integrations",
           "source": {
             "label": "Monolithic Power Systems 10-K",
             "label_en": "Monolithic Power Systems 10-K",
@@ -122,8 +122,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、パワー・インテグレーションズを競合として挙げている",
-          "text_en": "Names Power Integrations as a competitor in its annual report",
+          "text": "パワー・インテグレーションズと競合する",
+          "text_en": "Competes with Power Integrations",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -146,8 +146,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "パワー・インテグレーションズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Power Integrations’s annual report",
+          "text": "パワー・インテグレーションズと競合する",
+          "text_en": "Competes with Power Integrations",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",
@@ -159,8 +159,8 @@
         },
         {
           "type": "rival",
-          "text": "モータードライバーICの競合として、パワーモジュールを手がけるSTMicroelectronicsを挙げている",
-          "text_en": "Names STMicroelectronics among competing power-module suppliers for its motor-driver ICs",
+          "text": "パワーモジュールを手がけるSTMicroelectronicsが、モータードライバーICの競合となる",
+          "text_en": "STMicroelectronics power modules compete with Power Integrations' motor-driver ICs.",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",
@@ -183,8 +183,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "パワー・インテグレーションズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Power Integrations’s annual report",
+          "text": "パワー・インテグレーションズと競合する",
+          "text_en": "Competes with Power Integrations",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",
@@ -207,8 +207,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ゲートドライバー製品の競合として、三菱電機を挙げている",
-          "text_en": "Names Mitsubishi Electric among competitors to its gate-driver products",
+          "text": "ゲートドライバー製品の競合は、三菱電機だ",
+          "text_en": "Mitsubishi Electric competes with its gate-driver products.",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",

@@ -27,8 +27,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ACMリサーチの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "text": "ACM Researchと競合する",
+          "text_en": "Competes with ACM Research",
           "source": {
             "label": "ACM Research 10-K",
             "label_en": "ACM Research 10-K",
@@ -40,8 +40,8 @@
         },
         {
           "type": "rival",
-          "text": "PECVD製品とTrack製品の主要な競合としても、ラム・リサーチを挙げている",
-          "text_en": "Also names Lam Research Corporation as a principal competitor for its PECVD and Track products",
+          "text": "ラム・リサーチも、ACM ResearchのPECVD製品とTrack製品の主要な競合に数えられる",
+          "text_en": "Lam Research is also a principal competitor of ACM Research's PECVD and Track products",
           "source": {
             "label": "ACM Research 10-K",
             "label_en": "ACM Research 10-K",
@@ -64,8 +64,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ACMリサーチの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "text": "ACM Researchと競合する",
+          "text_en": "Competes with ACM Research",
           "source": {
             "label": "ACM Research 10-K",
             "label_en": "ACM Research 10-K",
@@ -88,8 +88,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ACMリサーチの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "text": "ACM Researchと競合する",
+          "text_en": "Competes with ACM Research",
           "source": {
             "label": "ACM Research 10-K",
             "label_en": "ACM Research 10-K",
@@ -112,8 +112,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ACMリサーチの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in ACM Research’s annual report",
+          "text": "ACM Researchと競合する",
+          "text_en": "Competes with ACM Research",
           "source": {
             "label": "ACM Research 10-K",
             "label_en": "ACM Research 10-K",
@@ -136,8 +136,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "PECVD製品とTrack製品の主要な競合として、アプライド マテリアルズも挙げている",
-          "text_en": "Also names Applied Materials, Inc. as a principal competitor for its PECVD and Track products",
+          "text": "アプライド マテリアルズも、ACM ResearchのPECVD製品とTrack製品の主要な競合だ",
+          "text_en": "Applied Materials is also a principal competitor of ACM Research's PECVD and Track products",
           "source": {
             "label": "ACM Research 10-K",
             "label_en": "ACM Research 10-K",

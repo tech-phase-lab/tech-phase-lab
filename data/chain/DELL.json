@@ -167,8 +167,8 @@
         },
         {
           "type": "down",
-          "text": "IRENが年次報告で、AIクラウド向けGPU・ネットワーク・ストレージの限られた供給元の1社としてDell Technologiesを挙げている",
-          "text_en": "IREN lists Dell Technologies among its limited set of hardware suppliers for GPUs, networking and storage used in AI Cloud Services",
+          "text": "IRENは、AIクラウド向けGPU・ネットワーク・ストレージを限られた供給元の1社、Dell Technologiesから調達する。",
+          "text_en": "Dell Technologies is one of the limited set of suppliers from which IREN sources GPUs, networking and storage for AI Cloud Services.",
           "source": {
             "label": "IREN 10-K",
             "label_en": "IREN 10-K (FY ended 2026-06-30)",
@@ -218,8 +218,8 @@
         },
         {
           "type": "rival",
-          "text": "Nutanixが年次報告で、競合する従来型ITシステムベンダーの1社としてDellを挙げている",
-          "text_en": "Nutanix names Dell among traditional IT systems vendors it competes with",
+          "text": "Nutanixは、競合する従来型ITシステムベンダーの1社であるDellと競合する。",
+          "text_en": "Nutanix competes with traditional IT systems vendors such as Dell.",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K (FY ended 2026-07-31)",
@@ -241,8 +241,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "NVIDIAが、RTX PRO 6000 Blackwell Server Edition GPU搭載の2U RTX PROサーバーを提供するシステムパートナーの1社としてDell Technologiesを挙げた",
-          "text_en": "NVIDIA named Dell Technologies among system partners offering 2U RTX PRO servers with RTX PRO 6000 Blackwell Server Edition GPUs",
+          "text": "Dell Technologiesは、NVIDIAのRTX PRO 6000 Blackwell Server Edition GPU搭載の2U RTX PROサーバーを提供する予定のシステムパートナー1社だ",
+          "text_en": "Dell Technologies is one of the system partners that will offer 2U RTX PRO servers with NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs",
           "source": {
             "label": "NVIDIA の発表",
             "label_en": "NVIDIA press release (RTX PRO Servers)",
@@ -306,8 +306,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Hewlett Packard Enterpriseが年次報告で、Dell Technologiesを競合として挙げている",
-          "text_en": "Hewlett Packard Enterprise names Dell as a competitor in its FY2025 10-K",
+          "text": "Hewlett Packard Enterpriseのデータセンター基盤事業では、Dell Technologiesが主な競合となる。",
+          "text_en": "Dell Technologies is one of Hewlett Packard Enterprise's primary competitors in data center infrastructure (FY2025).",
           "source": {
             "label": "HPE 10-K",
             "label_en": "HPE 10-K (FY ended 2025-10-31)",
@@ -329,8 +329,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HP Inc.が年次報告で、Dell Technologiesを競合として挙げている",
-          "text_en": "HP Inc. names Dell as a competitor in its FY2025 10-K",
+          "text": "HP Inc.の主な競合に、Dell Technologiesが入る。",
+          "text_en": "Dell is one of HP Inc.'s primary competitors (FY2025).",
           "source": {
             "label": "HP Inc. 10-K",
             "label_en": "HP Inc. 10-K (FY ended 2025-10-31)",
@@ -352,8 +352,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Super Micro Computerが年次報告で、Dell Technologiesを競合として挙げている",
-          "text_en": "Super Micro Computer names Dell as a competitor in its FY2026 10-K",
+          "text": "Super Micro Computerの主な競合には、Dell Technologiesがいる。",
+          "text_en": "Dell is among Super Micro Computer's principal competitors (FY2026).",
           "source": {
             "label": "Super Micro 10-K",
             "label_en": "Super Micro 10-K (FY ended 2026-06-30)",
@@ -375,8 +375,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cisco Systemsが年次報告で、Dell Technologiesを競合として挙げている",
-          "text_en": "Cisco Systems names Dell as a competitor in its FY2026 10-K",
+          "text": "Cisco SystemsはDell Technologiesを競合とみなす。",
+          "text_en": "Cisco Systems treats Dell Technologies as a competitor (FY2026).",
           "source": {
             "label": "Cisco 10-K",
             "label_en": "Cisco 10-K (FY ended 2026-07-25)",
@@ -398,8 +398,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IBMが年次報告で、Dell Technologiesを競合として挙げている",
-          "text_en": "IBM names Dell as a competitor in its FY2025 10-K",
+          "text": "IBMの主な競合は、Dell Technologiesだ。",
+          "text_en": "Dell Technologies is among IBM's principal competitors (FY2025).",
           "source": {
             "label": "IBM 10-K(2025年度)",
             "label_en": "IBM 10-K (FY2025)",
@@ -421,8 +421,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pure Storage(Everpure)が年次報告で、Dell Technologiesを競合として挙げている",
-          "text_en": "Pure Storage (Everpure) names Dell as a competitor in its September 2026 10-Q",
+          "text": "Pure Storage(Everpure)は、Dell Technologies(Dell EMC)など既存の大手と競合する。",
+          "text_en": "Pure Storage (Everpure) competes with established companies such as Dell EMC (September 2026 10-Q).",
           "source": {
             "label": "Pure Storage 10-Q",
             "label_en": "Pure Storage 10-Q (quarter ended 2026-08-02)",

@@ -54,8 +54,8 @@
         },
         {
           "type": "up",
-          "text": "WistronはFortinetの製造パートナーの1社として挙げられている",
-          "text_en": "Wistron is named among Fortinet’s manufacturers",
+          "text": "WistronはFortinetの製造パートナーの1社だ",
+          "text_en": "Wistron is one of Fortinet's manufacturing partners",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -93,8 +93,8 @@
         },
         {
           "type": "up",
-          "text": "機器向けの限定調達部品として、Toshibaのメモリ素子が挙げられている",
-          "text_en": "Toshiba is listed as a supplier of memory devices among limited-source components",
+          "text": "Toshibaは、機器向けの限定調達部品であるメモリ素子の供給元を担う",
+          "text_en": "Toshiba supplies memory devices that are limited-source components for Fortinet's appliances",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -117,8 +117,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "機器向けの限定調達部品として、Western Digitalのメモリ素子が挙げられている",
-          "text_en": "Western Digital is listed as a supplier of memory devices among limited-source components",
+          "text": "Western Digitalは、機器向けの限定調達部品であるメモリ素子を供給する",
+          "text_en": "Western Digital supplies memory devices that are limited-source components for Fortinet's appliances",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -348,8 +348,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Fortinet’s annual report",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -372,8 +372,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Fortinet’s annual report",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -396,8 +396,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Fortinet’s annual report",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -420,8 +420,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Fortinet’s annual report",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -444,8 +444,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Fortinet’s annual report",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",

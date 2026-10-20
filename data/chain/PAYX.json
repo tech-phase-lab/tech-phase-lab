@@ -31,8 +31,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "BILLの年次報告が、Paychexとの提携を挙げている",
-          "text_en": "BILL's annual report cites its partnership with Paychex",
+          "text": "BILLは最近、Paychexとの提携を発表した",
+          "text_en": "BILL has announced a partnership with Paychex.",
           "source": {
             "label": "BILL 10-K",
             "label_en": "BILL 10-K",
@@ -179,8 +179,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "トライネット・グループの年次報告が、ペイチェックスを競合として挙げている",
-          "text_en": "Names Paychex as a competitor in its annual report",
+          "text": "Paychexと競合する",
+          "text_en": "Competes with Paychex",
           "source": {
             "label": "TriNet 2025年度 Form 10-K · PEO competition names ADP TotalSource and Paychex",
             "label_en": "TriNet FY2025 Form 10-K · PEO competition names ADP TotalSource and Paychex",
@@ -202,8 +202,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペイコム・ソフトウェアの年次報告が、ペイチェックスを競合として挙げている",
-          "text_en": "Names Paychex as a competitor in its annual report",
+          "text": "Paychexと競合する",
+          "text_en": "Competes with Paychex",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -226,8 +226,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ペイロシティの年次報告が、ペイチェックスを競合として挙げている",
-          "text_en": "Names Paychex as a competitor in its annual report",
+          "text": "Paychexと競合する",
+          "text_en": "Competes with Paychex",
           "source": {
             "label": "Paylocity 10-K",
             "label_en": "Paylocity 10-K",

@@ -41,8 +41,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、主要なファウンドリ提携先として台湾のTSMCを挙げている",
-          "text_en": "The annual report lists TSMC in Taiwan among its key foundry partners",
+          "text": "台湾のTSMCは、MaxLinearの主要なファウンドリ提携先だ",
+          "text_en": "TSMC in Taiwan is one of MaxLinear's key foundry partners.",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -54,8 +54,8 @@
         },
         {
           "type": "up",
-          "text": "年次報告が、最大級の製造パートナー4社の1つとしてTSMCを挙げている",
-          "text_en": "The annual report names TSMC among four of its largest manufacturing partners",
+          "text": "TSMCはMaxLinearの最大級の製造パートナー4社の1つだ",
+          "text_en": "TSMC is one of MaxLinear's four largest manufacturing partners",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -77,8 +77,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、主要なファウンドリ提携先として台湾・シンガポールのUMCを挙げている",
-          "text_en": "The annual report lists UMC in Taiwan and Singapore among its key foundry partners",
+          "text": "UMCは台湾・シンガポールでMaxLinearの主要ファウンドリ提携先を担う",
+          "text_en": "UMC, in Taiwan and Singapore, is one of MaxLinear's key foundry partners",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -90,8 +90,8 @@
         },
         {
           "type": "up",
-          "text": "年次報告が、最大級の製造パートナー4社の1つとしてUMCを挙げている",
-          "text_en": "The annual report names UMC among four of its largest manufacturing partners",
+          "text": "UMCはMaxLinearの最大級の製造パートナー4社の1つに入る",
+          "text_en": "UMC is one of MaxLinear's four largest manufacturing partners",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -113,8 +113,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、最大級の製造パートナー4社の1つとしてASEを挙げている",
-          "text_en": "The annual report names ASE among four of its largest manufacturing partners",
+          "text": "ASEはMaxLinearの最大級の製造パートナー4社の1つ",
+          "text_en": "ASE is one of MaxLinear's four largest manufacturing partners",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -136,8 +136,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告が、OEMの顧客である大手ペイTV事業者の1社としてComcastを挙げている",
-          "text_en": "The annual report names Comcast among large Pay-TV companies that are customers of its OEMs",
+          "text": "ComcastはMaxLinearのOEMの顧客である大手ペイTV事業者の1社",
+          "text_en": "Comcast is one of the large Pay-TV companies that are customers of MaxLinear's OEMs",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -176,8 +176,8 @@
         },
         {
           "type": "tie",
-          "text": "合併契約の終了に関する法的手続きで損害賠償を支払う可能性を、年次報告がリスクとして挙げている",
-          "text_en": "The annual report cites as a risk possible damages in legal proceedings over the termination of the merger agreement with Silicon Motion",
+          "text": "Silicon Motionとの合併契約の終了を巡る法的手続きで、MaxLinearが損害賠償を支払う可能性がある",
+          "text_en": "MaxLinear may have to pay damages in legal proceedings over the termination of its merger agreement with Silicon Motion",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -237,8 +237,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -260,8 +260,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -283,8 +283,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -306,8 +306,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -319,8 +319,8 @@
         },
         {
           "type": "rival",
-          "text": "MACOMの年次報告が、マックスリニアを競合として挙げている",
-          "text_en": "Names MaxLinear as a competitor in its annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MACOM Technology Solutions 10-K",
             "label_en": "MACOM Technology Solutions 10-K",
@@ -342,8 +342,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -365,8 +365,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -388,8 +388,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -411,8 +411,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "マックスリニアの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in MaxLinear’s annual report",
+          "text": "MaxLinearと競合する",
+          "text_en": "Competes with MaxLinear",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",

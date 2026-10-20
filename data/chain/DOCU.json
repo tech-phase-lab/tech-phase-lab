@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Salesforceを販売拡大に役立つ提携先として挙げている",
-          "text_en": "The annual report lists Salesforce among partners that help sell into more accounts",
+          "text": "Salesforceとの提携により、Docusignは自力より多くの顧客に販売できる。",
+          "text_en": "Docusign's partnership with Salesforce helps it sell into more accounts than it could alone.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Microsoftを販売拡大に役立つ提携先として挙げている",
-          "text_en": "The annual report lists Microsoft among partners that help sell into more accounts",
+          "text": "MicrosoftはDocusignの販売拡大を支える提携先となる。",
+          "text_en": "Microsoft is one of Docusign's partners that help it sell into more accounts.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -95,8 +95,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、SAPとは製品連携と共同販売の関係があると述べている",
-          "text_en": "The annual report says Docusign has product integrations and co-selling relationships with SAP",
+          "text": "DocusignとSAPは、製品連携と共同販売の関係を持つ。",
+          "text_en": "Docusign and SAP have both product integrations and co-selling relationships.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Googleを販売拡大に役立つ提携先として挙げている",
-          "text_en": "The annual report lists Google among partners that help sell into more accounts",
+          "text": "Googleとの提携も、Docusignの販売先拡大に役立つ。",
+          "text_en": "Docusign's partnership with Google helps it sell into more accounts.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -168,8 +168,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、ServiceNowを販売拡大に役立つ提携先として挙げている",
-          "text_en": "The annual report lists ServiceNow among partners that help sell into more accounts",
+          "text": "ServiceNowは、Docusignの販売拡大に寄与する提携先だ。",
+          "text_en": "ServiceNow is a Docusign partner that helps it sell into more accounts.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Workdayを販売拡大に役立つ提携先として挙げている",
-          "text_en": "The annual report lists Workday among partners that help sell into more accounts",
+          "text": "Workdayは、Docusignの提携先として販売拡大を後押しする。",
+          "text_en": "Workday is a Docusign partner that helps it sell into more accounts.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -351,8 +351,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "nCinoが、自社基盤に統合された技術パートナーとしてDocusignを挙げている",
-          "text_en": "nCino names Docusign among technology partners integrated within its platform",
+          "text": "Docusignは、nCinoの基盤に統合された技術パートナーだ。",
+          "text_en": "Docusign is one of the technology partners integrated within nCino's platform.",
           "source": {
             "label": "nCino 10-K",
             "label_en": "nCino 10-K",
@@ -374,8 +374,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Deutsche Telekomを業種・地域別の専門性を持つ提携先として挙げている",
-          "text_en": "The annual report lists Deutsche Telekom among global solution provider partners with vertical and regional expertise",
+          "text": "Docusignは、業種・地域別の専門性を持つDeutsche Telekomと提携する。",
+          "text_en": "Docusign partners with Deutsche Telekom, a global solution provider with vertical and regional expertise.",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",
@@ -398,8 +398,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Bank of America, N.A.などとのクレジット契約(2021年1月11日付)が年次報告に挙げられている",
-          "text_en": "The annual report lists a Credit Agreement dated January 11, 2021 with Bank of America, N.A. and others",
+          "text": "DocuSignは、Bank of America, N.A.などと2021年1月11日付のクレジット契約を結ぶ",
+          "text_en": "DocuSign has a Credit Agreement dated January 11, 2021 with Bank of America, N.A. and others",
           "source": {
             "label": "Docusign 10-K",
             "label_en": "Docusign 10-K",

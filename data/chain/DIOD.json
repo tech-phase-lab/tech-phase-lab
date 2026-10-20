@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ダイオード・インコーポレーテッドの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Diodes Incorporated’s annual report",
+          "text": "Diodesと競合する",
+          "text_en": "Competes with Diodes",
           "source": {
             "label": "Diodes Incorporated 10-K",
             "label_en": "Diodes Incorporated 10-K",
@@ -98,8 +98,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ダイオード・インコーポレーテッドの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Diodes Incorporated’s annual report",
+          "text": "Diodesと競合する",
+          "text_en": "Competes with Diodes",
           "source": {
             "label": "Diodes Incorporated 10-K",
             "label_en": "Diodes Incorporated 10-K",
@@ -137,8 +137,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ダイオード・インコーポレーテッドの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Diodes Incorporated’s annual report",
+          "text": "Diodesと競合する",
+          "text_en": "Competes with Diodes",
           "source": {
             "label": "Diodes Incorporated 10-K",
             "label_en": "Diodes Incorporated 10-K",
@@ -161,8 +161,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サイタイムの年次報告が、ダイオード・インコーポレーテッドを競合として挙げている",
-          "text_en": "Names Diodes Incorporated as a competitor in its annual report",
+          "text": "Diodesと競合する",
+          "text_en": "Competes with Diodes",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
@@ -185,8 +185,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、ダイオード・インコーポレーテッドを競合として挙げている",
-          "text_en": "Names Diodes Incorporated as a competitor in its annual report",
+          "text": "Diodesと競合する",
+          "text_en": "Competes with Diodes",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",

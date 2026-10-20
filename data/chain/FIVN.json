@@ -72,8 +72,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、UCパートナーとしてMicrosoft Teamsとの連携を挙げている",
-          "text_en": "The annual report lists integrations with UC partners such as Microsoft Teams",
+          "text": "ファイブナインは、Microsoft TeamsなどのUCパートナーと統合する。",
+          "text_en": "Five9 integrates with UC partners such as Microsoft Teams.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -85,8 +85,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告で、連携するCRMベンダーとしてMicrosoftを挙げている",
-          "text_en": "The annual report names Microsoft among the CRM vendors it integrates with",
+          "text": "Microsoftは、ファイブナインが連携するCRMベンダーの一社だ",
+          "text_en": "Microsoft is one of the CRM vendors Five9 integrates with.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -109,8 +109,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、連携するCRMベンダーとしてSalesforceを挙げている",
-          "text_en": "The annual report names Salesforce among the CRM vendors it integrates with",
+          "text": "SalesforceのCRMは、ファイブナインと連携する",
+          "text_en": "Salesforce's CRM integrates with Five9.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、連携するCRMベンダーとしてOracleを挙げている",
-          "text_en": "The annual report names Oracle among the CRM vendors it integrates with",
+          "text": "OracleはCRMソフトの主要パートナーとして、ファイブナインのエコシステムに加わる",
+          "text_en": "Oracle joins Five9's partner ecosystem as a leading CRM software vendor.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -157,8 +157,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告で、連携するCRMベンダーとしてServiceNowを挙げている",
-          "text_en": "The annual report names ServiceNow among the CRM vendors it integrates with",
+          "text": "ファイブナインのCRM連携先には、ServiceNowが入る",
+          "text_en": "ServiceNow is among the CRM vendors Five9 integrates with.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -181,8 +181,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、IBMをシステムインテグレーターの例として挙げている",
-          "text_en": "The annual report names IBM among its system integrators",
+          "text": "IBMは、ファイブナインと組むシステムインテグレーターの一つだ",
+          "text_en": "IBM is one of Five9's system integrators.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -204,8 +204,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Accentureをシステムインテグレーターの例として挙げている",
-          "text_en": "The annual report names Accenture among its system integrators",
+          "text": "Accentureは、ファイブナインのシステムインテグレーターに名を連ねる",
+          "text_en": "Accenture is one of Five9's system integrators.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -228,8 +228,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、Kyndrylをシステムインテグレーターの例として挙げている",
-          "text_en": "The annual report names Kyndryl among its system integrators",
+          "text": "Kyndrylも、ファイブナインのシステムインテグレーターとして位置する",
+          "text_en": "Kyndryl is one of Five9's system integrators.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -251,8 +251,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、付加価値再販業者の例としてAT&Tを挙げている",
-          "text_en": "The annual report names AT&T among its value-added resellers",
+          "text": "AT&Tは、ファイブナインの付加価値再販業者の例にあたる",
+          "text_en": "AT&T is one of Five9's value-added resellers.",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -274,8 +274,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Bandwidthの年次報告が、主要CCaaS基盤とのBYOC提携の1社としてFive9を挙げている",
-          "text_en": "Bandwidth's annual report names Five9 among the leading CCaaS platforms it has BYOC partnerships with",
+          "text": "BandwidthはBYOC提携を結ぶ主要CCaaS基盤の1社として、Five9を持つ",
+          "text_en": "Bandwidth has BYOC partnerships with leading CCaaS platforms, including Five9.",
           "source": {
             "label": "Bandwidth 10-K",
             "label_en": "Bandwidth 10-K",
@@ -297,8 +297,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ファイブナインの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Five9’s annual report",
+          "text": "ファイブナインと競合する",
+          "text_en": "Competes with Five9",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -310,8 +310,8 @@
         },
         {
           "type": "rival",
-          "text": "ファイブナインの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Five9’s annual report",
+          "text": "ファイブナインと競合する",
+          "text_en": "Competes with Five9",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -334,8 +334,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ファイブナインの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Five9’s annual report",
+          "text": "ファイブナインと競合する",
+          "text_en": "Competes with Five9",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -358,8 +358,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナイスの年次報告が、ファイブナインを競合として挙げている",
-          "text_en": "Names Five9 as a competitor in its annual report",
+          "text": "ファイブナインと競合する",
+          "text_en": "Competes with Five9",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -382,8 +382,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エイトバイエイトの年次報告が、ファイブナインを競合として挙げている",
-          "text_en": "Names Five9 as a competitor in its annual report",
+          "text": "ファイブナインと競合する",
+          "text_en": "Competes with Five9",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",

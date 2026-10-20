@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Planet Labsの年次報告が、衛星を打ち上げられる事業者の1社としてRocket Labを挙げている",
-          "text_en": "Planet Labs' annual report names Rocket Lab among the suppliers able to launch its satellites",
+          "text": "Rocket Labは、Planet Labsの衛星を打ち上げられる限られた事業者の1社",
+          "text_en": "Rocket Lab is one of a limited number of suppliers able to launch Planet Labs' satellites.",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",
@@ -216,8 +216,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ロケット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rocket Lab’s annual report",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
           "source": {
             "label": "Rocket Lab 10-K",
             "label_en": "Rocket Lab 10-K",
@@ -240,8 +240,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ロケット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rocket Lab’s annual report",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
           "source": {
             "label": "Rocket Lab 10-K",
             "label_en": "Rocket Lab 10-K",
@@ -264,8 +264,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ロケット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rocket Lab’s annual report",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
           "source": {
             "label": "Rocket Lab 10-K",
             "label_en": "Rocket Lab 10-K",
@@ -277,8 +277,8 @@
         },
         {
           "type": "rival",
-          "text": "レッドワイヤーの年次報告が、ロケット・ラボを競合として挙げている",
-          "text_en": "Names Rocket Lab as a competitor in its annual report",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
           "source": {
             "label": "Redwire 10-K",
             "label_en": "Redwire 10-K",
@@ -301,8 +301,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ロケット・ラボの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rocket Lab’s annual report",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
           "source": {
             "label": "Rocket Lab 10-K",
             "label_en": "Rocket Lab 10-K",

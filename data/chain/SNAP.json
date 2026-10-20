@@ -100,8 +100,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Snap's annual report",
+          "text": "Snapと競合する",
+          "text_en": "Competes with Snap",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -113,8 +113,8 @@
         },
         {
           "type": "rival",
-          "text": "Snapの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Snap's annual report",
+          "text": "Snapと競合する",
+          "text_en": "Competes with Snap",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -136,8 +136,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Snap's annual report",
+          "text": "Snapと競合する",
+          "text_en": "Competes with Snap",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -160,8 +160,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Snap's annual report",
+          "text": "Snapと競合する",
+          "text_en": "Competes with Snap",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -184,8 +184,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Snap's annual report",
+          "text": "Snapと競合する",
+          "text_en": "Competes with Snap",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -208,8 +208,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Snap's annual report",
+          "text": "Snapと競合する",
+          "text_en": "Competes with Snap",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -232,8 +232,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ユーザーの時間を奪い合う相手として、DiscordとともにRobloxを挙げている",
-          "text_en": "Names Roblox, with Discord, as a company competing for users and their time",
+          "text": "Snapは、ユーザーの時間をめぐってDiscordやRobloxと競い合う",
+          "text_en": "Snap competes with Discord and Roblox for users and their time.",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -256,8 +256,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アジアでの競合として、Kakao、LINE、Naverとともに挙げている",
-          "text_en": "Named with Kakao, LINE and Naver as a competitor in Asia",
+          "text": "Tencentは、Kakao、LINE、Naverとともに、Snapのアジアでの競合に当たる",
+          "text_en": "Tencent, along with Kakao, LINE and Naver, competes with Snap in Asia.",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",

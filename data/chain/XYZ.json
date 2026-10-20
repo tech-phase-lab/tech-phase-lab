@@ -31,8 +31,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Cash App CardはVisaカードが使える場所で利用できると説明している",
-          "text_en": "Block says Cash App funds can be spent anywhere that accepts Visa cards",
+          "text": "Cash App Cardは、Visaカードが使える場所で利用できる",
+          "text_en": "Cash App funds can be spent anywhere that accepts Visa cards.",
           "source": {
             "label": "Block 10-K",
             "label_en": "Block 10-K",
@@ -67,8 +67,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告で、Appleなどのアプリ配信市場の運営者が行う変更が、Blockの製品へのアクセスを難しくし得ると述べている",
-          "text_en": "The 10-K says changes by Apple, Google, or other app marketplace operators may make access to Block's products and services more difficult",
+          "text": "Appleなどアプリ配信市場の運営者による変更で、Blockの製品へのアクセスが難しくなる可能性がある",
+          "text_en": "Changes by Apple, Google or other app marketplace operators may make access to Block's products and services more difficult.",
           "source": {
             "label": "Block 10-K",
             "label_en": "Block 10-K",
@@ -82,8 +82,8 @@
         },
         {
           "type": "up",
-          "text": "Appleなどが提供するソフト更新が、Blockの製品でうまく動作しない可能性があると述べている",
-          "text_en": "Software updates from Apple, Google, or others may not operate effectively with Block's products and services",
+          "text": "Appleなどが提供するソフト更新が、Blockの製品でうまく動作しない可能性もある",
+          "text_en": "Software updates from Apple, Google or others may not operate effectively with Block's products and services.",
           "source": {
             "label": "Block 10-K",
             "label_en": "Block 10-K",
@@ -139,8 +139,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Blockの決算発表が、InstacartやUberなどの法人パートナーとの拡大に触れている",
-          "text_en": "Block's earnings release cites continued expansion with enterprise partners like Instacart and Uber",
+          "text": "Blockは、InstacartやUberなどの法人パートナーとの取り組みを拡大している",
+          "text_en": "Block continues to expand with enterprise partners like Instacart and Uber.",
           "source": {
             "label": "Block 8-K Ex.99 の発表",
             "label_en": "Block 8-K Ex.99 press release",

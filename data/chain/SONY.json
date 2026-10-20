@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "AMDの年次報告が、Sony向けを含むゲーム機のSoC事業の成否は、ゲーム機の成功に左右されると述べている",
-          "text_en": "AMD's annual report says its semi-custom SoC business depends on the success of game consoles for Sony and Microsoft",
+          "text": "AMDのゲーム機向けセミカスタムSoC事業は、Sony向けを含むゲーム機の成否に左右される",
+          "text_en": "AMD's semi-custom SoC business depends on the success of game consoles, including those for Sony and Microsoft.",
           "source": {
             "label": "AMD 10-K",
             "label_en": "AMD 10-K",
@@ -83,8 +83,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Robloxの年次報告が、Robux購入の入金経路にSonyのPlayStation Networkを挙げている",
-          "text_en": "Roblox's annual report lists Sony's PlayStation Network among channels for receiving cash proceeds from Robux purchases",
+          "text": "Robloxは、SonyのPlayStation Networkなどの経路でRobuxの購入代金を受け取る",
+          "text_en": "Roblox receives cash proceeds from Robux purchases through channels including Sony's PlayStation Network.",
           "source": {
             "label": "Roblox 10-K",
             "label_en": "Roblox 10-K",
@@ -121,8 +121,8 @@
         },
         {
           "type": "tie",
-          "text": "TSMCの年次報告が、Sony子会社がJASMの20%未満の株式を取得したと述べている",
-          "text_en": "TSMC's annual report says a Sony subsidiary acquired less than a 20% equity interest in JASM",
+          "text": "TSMCのJASMでは、Sony子会社が20%未満の株式を取得した",
+          "text_en": "A Sony subsidiary acquired a less than 20% equity interest in TSMC's JASM.",
           "source": {
             "label": "TSMC 20-F",
             "label_en": "TSMC 20-F",
@@ -180,8 +180,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Disneyの年次報告が、Sony Picturesがマーベルからライセンスを受けSpider-Man映画の制作・配給権を持つと述べている",
-          "text_en": "Disney's annual report says Sony Pictures has the rights to produce and distribute Spider-Man films, licensed from Marvel",
+          "text": "Disneyによるマーベル買収前から、Sony Picturesはライセンスに基づきSpider-Man映画の制作・配給権を持つ",
+          "text_en": "Sony Pictures holds the rights to produce and distribute Spider-Man films under a license from Marvel obtained before Disney acquired Marvel.",
           "source": {
             "label": "Disney 10-K",
             "label_en": "Disney 10-K",
@@ -203,8 +203,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Spotifyの年次報告が、Sony Music Entertainmentとの契約による楽曲が配信の大半を占めると述べている",
-          "text_en": "Spotify's annual report says music licensed under its agreements with Sony Music Entertainment and others makes up the majority of music consumed",
+          "text": "Spotifyで配信される楽曲の大半は、Sony Music Entertainmentなどとの契約に基づく",
+          "text_en": "Most of the music consumed on Spotify is licensed under agreements with Sony Music Entertainment and others.",
           "source": {
             "label": "Spotify Technology 20-F",
             "label_en": "Spotify Technology 20-F",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Himax Technologiesの年次報告が、ソニーグループを競合として挙げている",
-          "text_en": "Names Sony Group as a competitor in its annual report",
+          "text": "Sony Groupと競合する",
+          "text_en": "Competes with Sony Group",
           "source": {
             "label": "Himax Technologies 20-F",
             "label_en": "Himax Technologies 20-F",

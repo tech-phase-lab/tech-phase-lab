@@ -122,8 +122,8 @@
         },
         {
           "type": "tie",
-          "text": "次世代AI計算向けの電源・冷却インフラでNVIDIAと提携と記載",
-          "text_en": "Says its partnership with NVIDIA supports power and thermal infrastructure for next-generation AI computing",
+          "text": "Vertivは次世代AI計算向けの電源・冷却インフラでNVIDIAと提携している",
+          "text_en": "Vertiv partners with NVIDIA on power and thermal infrastructure for next-generation AI computing",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",
@@ -135,8 +135,8 @@
         },
         {
           "type": "tie",
-          "text": "NVIDIAが、800VDCのAIファクトリー電源構想のデータセンター電源システムの提携先の1社としてVertivを掲載",
-          "text_en": "NVIDIA lists Vertiv among data center power system partners for its 800 VDC AI factory power architecture (NVIDIA Technical Blog)",
+          "text": "VertivはNVIDIAの800VDC AIファクトリー電源構想で、データセンター電源システムの提携先の1社に名を連ねる",
+          "text_en": "Vertiv is one of NVIDIA's data center power system partners for its 800 VDC AI factory power architecture",
           "source": {
             "label": "NVIDIA 技術ブログ(800 VDC)",
             "label_en": "NVIDIA Technical Blog (800 VDC)",
@@ -207,8 +207,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Vertivが年次報告で、世界規模の競合としてSchneider Electricを挙げている",
-          "text_en": "Vertiv’s annual report names Schneider Electric among large-scale global competitors",
+          "text": "Schneider Electricは、Vertivと競合する世界規模の企業",
+          "text_en": "Schneider Electric is one of Vertiv's large-scale global competitors.",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",
@@ -230,8 +230,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Vertivが年次報告で、世界規模の競合としてEatonを挙げている",
-          "text_en": "Vertiv’s annual report names Eaton among large-scale global competitors",
+          "text": "Eatonも、Vertivの世界規模の競合に数えられる",
+          "text_en": "Eaton is one of Vertiv's large-scale global competitors.",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",
@@ -253,8 +253,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Vertivが年次報告で、世界規模の競合としてLegrandを挙げている",
-          "text_en": "Vertiv’s annual report names Legrand among large-scale global competitors",
+          "text": "Vertivは世界規模で、Legrandと競い合っている",
+          "text_en": "Legrand is one of Vertiv's large-scale global competitors.",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",
@@ -276,8 +276,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Vertivが年次報告で、製品ごとの競合としてDelta Electronicsを挙げている",
-          "text_en": "Vertiv’s annual report names Delta Electronics among niche offering-specific competitors",
+          "text": "Delta Electronicsは、製品ごとにVertivと競合するニッチ企業",
+          "text_en": "Delta Electronics is one of Vertiv's niche offering-specific competitors.",
           "source": {
             "label": "Vertiv 10-K(2025年度)",
             "label_en": "Vertiv 10-K (FY2025)",
@@ -299,8 +299,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Johnson Controlsが年次報告で、より大きな競合としてVertivを挙げている",
-          "text_en": "Johnson Controls’ annual report names Vertiv among larger competitors",
+          "text": "Johnson Controlsにとって、Vertivはより大きな競合に当たる",
+          "text_en": "Vertiv is one of Johnson Controls' larger competitors.",
           "source": {
             "label": "Johnson Controls 10-K(2025年度)",
             "label_en": "Johnson Controls 10-K (FY2025)",
@@ -322,8 +322,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAONが年次報告で、熱管理製品の主な競合としてVertivを挙げている",
-          "text_en": "AAON’s annual report says its thermal management products primarily compete with Vertiv",
+          "text": "AAONの熱管理製品は、主にVertivと競合する",
+          "text_en": "AAON's thermal management products primarily compete with Vertiv.",
           "source": {
             "label": "AAON 10-K(2025年度)",
             "label_en": "AAON 10-K (FY2025)",
@@ -347,8 +347,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "EnerSysが年次報告で、エナジーシステム事業の競合としてVertivを挙げている",
-          "text_en": "EnerSys’ annual report names Vertiv among competitors in its Energy Systems segment",
+          "text": "VertivはEnerSysのエナジーシステム事業で競合する",
+          "text_en": "Vertiv is a competitor of EnerSys in its Energy Systems segment.",
           "source": {
             "label": "EnerSys 10-K(2026年度)",
             "label_en": "EnerSys 10-K (FY2026)",

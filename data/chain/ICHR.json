@@ -28,8 +28,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2025年の売上が最大の顧客として、Lam Researchなどが挙げられている",
-          "text_en": "Lam Research is named among the largest customers by sales in 2025",
+          "text": "Lam Researchは2025年の売上が最大の顧客の一社だ",
+          "text_en": "Lam Research is among Ichor's largest customers by sales in 2025",
           "source": {
             "label": "Ichor Holdings 10-K",
             "label_en": "Ichor Holdings 10-K",
@@ -78,8 +78,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2025年の売上が最大の顧客として、Applied Materialsなどが挙げられている",
-          "text_en": "Applied Materials is named among the largest customers by sales in 2025",
+          "text": "Applied Materialsは2025年に売上が最大だった顧客の一つになる",
+          "text_en": "Applied Materials is among Ichor's largest customers by sales in 2025",
           "source": {
             "label": "Ichor Holdings 10-K",
             "label_en": "Ichor Holdings 10-K",
@@ -128,8 +128,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "2025年の売上が最大の顧客として、ASMLなどが挙げられている",
-          "text_en": "ASML is named among the largest customers by sales in 2025",
+          "text": "ASMLは2025年の売上で最大規模の顧客に入る",
+          "text_en": "ASML is among Ichor's largest customers by sales in 2025",
           "source": {
             "label": "Ichor Holdings 10-K",
             "label_en": "Ichor Holdings 10-K",
@@ -151,8 +151,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アイコーの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Ichor’s annual report",
+          "text": "Ichorと競合する",
+          "text_en": "Competes with Ichor",
           "source": {
             "label": "Ichor Holdings 10-K",
             "label_en": "Ichor Holdings 10-K",
@@ -164,8 +164,8 @@
         },
         {
           "type": "rival",
-          "text": "ウルトラクリーン・ホールディングスの年次報告が、アイコーを競合として挙げている",
-          "text_en": "Names Ichor as a competitor in its annual report",
+          "text": "Ichorと競合する",
+          "text_en": "Competes with Ichor",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",

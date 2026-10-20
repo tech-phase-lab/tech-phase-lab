@@ -59,8 +59,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Rambusが年次報告で、メモリーインターフェース用チップの販売先にMicronを挙げている",
-          "text_en": "Rambus’ annual report says its memory interface chips are sold to DRAM makers including Micron",
+          "text": "Micronは、Rambusのメモリーインターフェース用チップの販売先だ",
+          "text_en": "Rambus sells its memory interface chips to DRAM makers including Micron.",
           "source": {
             "label": "Rambus 10-K(2025年度)",
             "label_en": "Rambus 10-K (FY2025)",
@@ -72,8 +72,8 @@
         },
         {
           "type": "tie",
-          "text": "Rambusが年次報告で、特許のライセンスを受けた半導体会社の1社としてMicronを挙げている",
-          "text_en": "Rambus’ annual report lists Micron among semiconductor companies that have licensed its patents",
+          "text": "Micronは、Rambusから特許のライセンスを受けた半導体会社の1社",
+          "text_en": "Micron is one of the semiconductor companies that have licensed Rambus' patents.",
           "source": {
             "label": "Rambus 10-K(2025年度)",
             "label_en": "Rambus 10-K (FY2025)",
@@ -95,8 +95,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "NVIDIAが年次報告で、SK hynix・Micron・Samsungからメモリーを購入していると記載",
-          "text_en": "NVIDIA’s annual report says it buys memory from SK hynix, Micron and Samsung",
+          "text": "NVIDIAはSK hynix・Micron・Samsungからメモリーを購入している",
+          "text_en": "NVIDIA buys memory from SK hynix, Micron and Samsung",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -118,8 +118,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Penguin Solutionsが年次報告で、メモリーの供給元の1社としてMicronを挙げている",
-          "text_en": "Penguin Solutions’ annual report lists Micron among its memory suppliers",
+          "text": "Penguin Solutionsは、メモリーの供給元の1社にMicronを持つ",
+          "text_en": "Penguin Solutions sources memory from Micron.",
           "source": {
             "label": "Penguin Solutions 10-K(2025年度)",
             "label_en": "Penguin Solutions 10-K (FY2025)",
@@ -164,8 +164,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Micronが年次報告で、メモリー・ストレージの競合としてSamsung Electronicsを挙げている",
-          "text_en": "Micron’s annual report names Samsung Electronics as a competitor in memory and storage",
+          "text": "Micronは、メモリー・ストレージ市場でSamsung Electronicsと激しく競争する",
+          "text_en": "Micron faces intense competition from Samsung Electronics in memory and storage.",
           "source": {
             "label": "Micron 10-K(2026年度)",
             "label_en": "Micron 10-K (FY2026)",
@@ -187,8 +187,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Micronが年次報告で、メモリー・ストレージの競合としてSK hynixを挙げている",
-          "text_en": "Micron’s annual report names SK hynix as a competitor in memory and storage",
+          "text": "メモリー・ストレージ市場でMicronが直面する競合に、SK hynixがある",
+          "text_en": "SK hynix competes with Micron in memory and storage.",
           "source": {
             "label": "Micron 10-K(2026年度)",
             "label_en": "Micron 10-K (FY2026)",
@@ -210,8 +210,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Micronが年次報告で、メモリー・ストレージの競合としてKioxiaを挙げている",
-          "text_en": "Micron’s annual report names Kioxia as a competitor in memory and storage",
+          "text": "Kioxiaは、メモリー・ストレージ市場におけるMicronの競合企業だ",
+          "text_en": "Kioxia competes with Micron in memory and storage.",
           "source": {
             "label": "Micron 10-K(2026年度)",
             "label_en": "Micron 10-K (FY2026)",
@@ -233,8 +233,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Micronが年次報告で、メモリー・ストレージの競合としてSandiskを挙げている",
-          "text_en": "Micron’s annual report names Sandisk as a competitor in memory and storage",
+          "text": "Micronは、メモリー・ストレージ市場でSandiskと競う",
+          "text_en": "Micron competes with Sandisk in memory and storage.",
           "source": {
             "label": "Micron 10-K(2026年度)",
             "label_en": "Micron 10-K (FY2026)",
@@ -246,8 +246,8 @@
         },
         {
           "type": "rival",
-          "text": "Sandiskが年次報告で、競合する垂直統合型のフラッシュメーカーとしてMicronを挙げている",
-          "text_en": "Sandisk’s annual report names Micron among its vertically integrated flash competitors",
+          "text": "Micronは、Sandiskと競合する垂直統合型フラッシュメーカーの一角だ",
+          "text_en": "Micron is one of the vertically integrated flash makers Sandisk competes with.",
           "source": {
             "label": "Sandisk 10-K(2026年度)",
             "label_en": "Sandisk 10-K (FY2026)",
@@ -269,8 +269,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Everspinが年次報告で、STT-MRAMが競合するDRAM・NVSRAMメーカーの1社としてMicronを挙げている",
-          "text_en": "Everspin’s annual report names Micron among DRAM and NVSRAM suppliers its STT-MRAM products compete with",
+          "text": "Micronは、EverspinのSTT-MRAMが競合するDRAM・NVSRAMメーカーの1社である",
+          "text_en": "Micron is one of the DRAM and NVSRAM suppliers Everspin's STT-MRAM products compete with.",
           "source": {
             "label": "Everspin 10-K(2025年度)",
             "label_en": "Everspin 10-K (FY2025)",

@@ -161,8 +161,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ベンチマーク・エレクトロニクスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Benchmark’s annual report",
+          "text": "Benchmark Electronicsと競合する",
+          "text_en": "Competes with Benchmark Electronics",
           "source": {
             "label": "Benchmark Electronics 10-K",
             "label_en": "Benchmark Electronics 10-K",
@@ -174,8 +174,8 @@
         },
         {
           "type": "rival",
-          "text": "ベンチマーク・エレクトロニクスの年次報告が、主な競合として挙げている",
-          "text_en": "Named as a primary competitor in Benchmark’s annual report",
+          "text": "ベンチマーク・エレクトロニクスにとって、フレックスは主な競合企業",
+          "text_en": "Flex is one of Benchmark's primary competitors.",
           "source": {
             "label": "Benchmark Electronics 10-K",
             "label_en": "Benchmark Electronics 10-K",
@@ -198,8 +198,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サンミナの年次報告が、ベンチマーク・エレクトロニクスを競合として挙げている",
-          "text_en": "Names Benchmark as a competitor in its annual report",
+          "text": "Benchmark Electronicsと競合する",
+          "text_en": "Competes with Benchmark Electronics",
           "source": {
             "label": "Sanmina 10-K",
             "label_en": "Sanmina 10-K",
@@ -222,8 +222,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ウルトラ・クリーン・ホールディングスの年次報告が、ベンチマーク・エレクトロニクスを競合として挙げている",
-          "text_en": "Names Benchmark as a competitor in its annual report",
+          "text": "Benchmark Electronicsと競合する",
+          "text_en": "Competes with Benchmark Electronics",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",

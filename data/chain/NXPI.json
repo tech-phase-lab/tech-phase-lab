@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Impinjは、NXPとの和解契約に基づくライセンス収入の大きな割合を得ており、NXPを主要なエンドポイントIC競合と位置づけている",
-          "text_en": "Impinj derives a substantial share of its licensing revenue from NXP, its primary endpoint IC competitor, under a Settlement Agreement",
+          "text": "ImpinjはNXPとの和解契約に基づくライセンス収入の大きな割合を得ており、NXPは主要なエンドポイントIC競合でもある",
+          "text_en": "Impinj derives a substantial share of its licensing revenue from NXP under a Settlement Agreement, and NXP is its primary endpoint IC competitor",
           "source": {
             "label": "Impinj 10-K",
             "label_en": "Impinj 10-K",
@@ -172,8 +172,8 @@
         },
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -233,8 +233,8 @@
         },
         {
           "type": "down",
-          "text": "最大の販売パートナー5社の1つとしてAvnetを挙げている",
-          "text_en": "NXP names Avnet among its five largest distribution partners",
+          "text": "AvnetはNXPの最大の販売パートナー5社の1社",
+          "text_en": "Avnet is one of NXP's five largest distribution partners",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -256,8 +256,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "最大10社のエンドカスタマーの1社としてAppleを挙げている",
-          "text_en": "NXP names Apple among its 10 largest end customers",
+          "text": "AppleはNXPの最大10社のエンドカスタマーの1社",
+          "text_en": "Apple is one of NXP's 10 largest end customers",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -281,8 +281,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -304,8 +304,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -327,8 +327,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -350,8 +350,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -373,8 +373,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -396,8 +396,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -419,8 +419,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXPセミコンダクターズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NXP’s annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -442,8 +442,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Skyworks Solutionsの年次報告が、NXPセミコンダクターズを競合として挙げている",
-          "text_en": "Names NXP as a competitor in its annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -465,8 +465,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Monolithic Power Systemsの年次報告が、NXPセミコンダクターズを競合として挙げている",
-          "text_en": "Names NXP as a competitor in its annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "Monolithic Power Systems 10-K",
             "label_en": "Monolithic Power Systems 10-K",
@@ -488,8 +488,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "indie Semiconductorの年次報告が、NXPセミコンダクターズを競合として挙げている",
-          "text_en": "Names NXP as a competitor in its annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "indie Semiconductor 10-K",
             "label_en": "indie Semiconductor 10-K",
@@ -511,8 +511,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Silicon Laboratoriesの年次報告が、NXPセミコンダクターズを競合として挙げている",
-          "text_en": "Names NXP as a competitor in its annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "Silicon Laboratories 10-K",
             "label_en": "Silicon Laboratories 10-K",
@@ -534,8 +534,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Diodes Incorporatedの年次報告が、NXPセミコンダクターズを競合として挙げている",
-          "text_en": "Names NXP as a competitor in its annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "Diodes Incorporated 10-K",
             "label_en": "Diodes Incorporated 10-K",
@@ -557,8 +557,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MACOM Technology Solutionsの年次報告が、NXPセミコンダクターズを競合として挙げている",
-          "text_en": "Names NXP as a competitor in its annual report",
+          "text": "NXP Semiconductorsと競合する",
+          "text_en": "Competes with NXP Semiconductors",
           "source": {
             "label": "MACOM Technology Solutions 10-K",
             "label_en": "MACOM Technology Solutions 10-K",

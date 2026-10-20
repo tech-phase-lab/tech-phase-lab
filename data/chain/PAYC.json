@@ -73,8 +73,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてAutomatic Data Processingを挙げている",
-          "text_en": "Paycom's annual report names Automatic Data Processing as a competitor",
+          "text": "PaycomはAutomatic Data Processingと競合する",
+          "text_en": "Paycom competes with Automatic Data Processing.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -96,8 +96,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてPaychexを挙げている",
-          "text_en": "Paycom's annual report names Paychex as a competitor",
+          "text": "Paychexは、Paycomの競合だ",
+          "text_en": "Paychex is a competitor of Paycom.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -119,8 +119,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてPaylocityを挙げている",
-          "text_en": "Paycom's annual report names Paylocity as a competitor",
+          "text": "Paylocityは、Paycomの競合相手だ",
+          "text_en": "Paylocity is a competitor of Paycom.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -132,8 +132,8 @@
         },
         {
           "type": "rival",
-          "text": "Paylocityの年次報告が、ペイコムを競合として挙げている",
-          "text_en": "Names Paycom as a competitor in its annual report",
+          "text": "ペイコムと競合する",
+          "text_en": "Competes with Paycom Software",
           "source": {
             "label": "Paylocity 10-K",
             "label_en": "Paylocity 10-K",
@@ -155,8 +155,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてWorkdayを挙げている",
-          "text_en": "Paycom's annual report names Workday as a competitor",
+          "text": "Paycomは、Workdayと競合関係にある",
+          "text_en": "Paycom competes with Workday.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -178,8 +178,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてOracleを挙げている",
-          "text_en": "Paycom's annual report names Oracle as a competitor",
+          "text": "Oracleは、Paycomと市場で競り合う",
+          "text_en": "Oracle competes with Paycom in the market.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -201,8 +201,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてSAPを挙げている",
-          "text_en": "Paycom's annual report names SAP as a competitor",
+          "text": "SAPは、Paycomの競合に名を連ねる",
+          "text_en": "SAP is a competitor of Paycom.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -224,8 +224,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてServiceNowを挙げている",
-          "text_en": "Paycom's annual report names ServiceNow as a competitor",
+          "text": "ServiceNowも、Paycomの競合に含まれる",
+          "text_en": "ServiceNow is also a competitor of Paycom.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",
@@ -247,8 +247,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Paycomの年次報告が、競合としてIntuitを挙げている",
-          "text_en": "Paycom's annual report names Intuit as a competitor",
+          "text": "Paycomは、Intuitを競合に抱える",
+          "text_en": "Intuit competes with Paycom.",
           "source": {
             "label": "Paycom Software 10-K",
             "label_en": "Paycom Software 10-K",

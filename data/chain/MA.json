@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "D-Wave Quantumの年次報告が、Mastercardを顧客例に挙げている",
-          "text_en": "D-Wave Quantum's annual report lists Mastercard among its customers",
+          "text": "D-Wave Quantumは、Mastercardを顧客に持つ",
+          "text_en": "Mastercard is among D-Wave Quantum's customers.",
           "source": {
             "label": "D-Wave Quantum 10-K",
             "label_en": "D-Wave Quantum 10-K",
@@ -271,8 +271,8 @@
         },
         {
           "type": "rival",
-          "text": "マスターカードの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Mastercard’s annual report",
+          "text": "Mastercardと競合する",
+          "text_en": "Competes with Mastercard",
           "source": {
             "label": "Mastercard 10-K",
             "label_en": "Mastercard 10-K",

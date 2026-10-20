@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Navitasは、GaNの米国内ファウンドリ・パートナーとしてGlobalFoundriesとの協業を、競争上の強みと位置づけている",
-          "text_en": "Navitas considers its collaboration with GlobalFoundries for GaN a competitive advantage",
+          "text": "Navitasは、GaNの米国内ファウンドリ・パートナーであるGlobalFoundriesとの協業を競争上の強みとする",
+          "text_en": "Navitas treats its collaboration with GlobalFoundries on GaN as a competitive advantage.",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -137,8 +137,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "GlobalFoundriesは、自社の200mm GaN-on-Si基盤と米国内製造をonsemiの製品知見と組み合わせると説明している",
-          "text_en": "GlobalFoundries says it is combining its 200mm GaN-on-Si platform and U.S.-based manufacturing with onsemi's system and product expertise",
+          "text": "GlobalFoundriesは、200mm GaN-on-Si基盤と米国内製造をonsemiの製品知見と組み合わせる",
+          "text_en": "GlobalFoundries is combining its 200mm GaN-on-Si platform and U.S.-based manufacturing with onsemi's system and product expertise.",
           "source": {
             "label": "Official commercial / product / listing disclosure; checked October17,2026",
             "label_en": "Official commercial / product / listing disclosure; checked October17,2026",
@@ -305,8 +305,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "グローバルファウンドリーズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in GlobalFoundries’s annual report",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
           "source": {
             "label": "GlobalFoundries 20-F",
             "label_en": "GlobalFoundries 20-F",
@@ -328,8 +328,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "グローバルファウンドリーズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in GlobalFoundries’s annual report",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
           "source": {
             "label": "GlobalFoundries 20-F",
             "label_en": "GlobalFoundries 20-F",
@@ -352,8 +352,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "グローバルファウンドリーズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in GlobalFoundries’s annual report",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
           "source": {
             "label": "GlobalFoundries 20-F",
             "label_en": "GlobalFoundries 20-F",
@@ -365,8 +365,8 @@
         },
         {
           "type": "rival",
-          "text": "タワーセミコンダクターの年次報告が、グローバルファウンドリーズを競合として挙げている",
-          "text_en": "Names GlobalFoundries as a competitor in its annual report",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
           "source": {
             "label": "Tower Semiconductor 20-F",
             "label_en": "Tower Semiconductor 20-F",
@@ -389,8 +389,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "グローバルファウンドリーズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in GlobalFoundries’s annual report",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
           "source": {
             "label": "GlobalFoundries 20-F",
             "label_en": "GlobalFoundries 20-F",
@@ -413,8 +413,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インテルの年次報告が、グローバルファウンドリーズを競合として挙げている",
-          "text_en": "Names GlobalFoundries as a competitor in its annual report",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
           "source": {
             "label": "Intel 10-K",
             "label_en": "Intel 10-K",
@@ -437,8 +437,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CEVAの年次報告が、グローバルファウンドリーズを競合として挙げている",
-          "text_en": "Names GlobalFoundries as a competitor in its annual report",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
           "source": {
             "label": "CEVA 10-K",
             "label_en": "CEVA 10-K",

@@ -71,8 +71,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "アリスタは主な製造パートナーとしてJabil、Sanmina、Foxconn Hon Haiを挙げている",
-          "text_en": "Arista names Jabil, Sanmina and Foxconn Hon Hai as its primary manufacturing partners",
+          "text": "Jabilは、Sanmina、Foxconn Hon Haiと並ぶアリスタの主な製造パートナーだ",
+          "text_en": "Jabil, Sanmina and Foxconn Hon Hai are Arista's primary manufacturing partners.",
           "source": {
             "label": "Arista Networks 10-K",
             "label_en": "Arista Networks 10-K",
@@ -232,8 +232,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ベンチマーク・エレクトロニクスの年次報告が、ジェイビルを競合として挙げている",
-          "text_en": "Names Jabil as a competitor in its annual report",
+          "text": "ジェイビルと競合する",
+          "text_en": "Competes with Jabil",
           "source": {
             "label": "Benchmark Electronics 10-K",
             "label_en": "Benchmark Electronics 10-K",
@@ -256,8 +256,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ウルトラ・クリーン・ホールディングスの年次報告が、ジェイビルを競合として挙げている",
-          "text_en": "Names Jabil as a competitor in its annual report",
+          "text": "ジェイビルと競合する",
+          "text_en": "Competes with Jabil",
           "source": {
             "label": "Ultra Clean Holdings 10-K",
             "label_en": "Ultra Clean Holdings 10-K",

@@ -274,8 +274,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "RingCentralとOpenAIの提携が、Aragon ResearchによるRingCXの評価で言及されている",
-          "text_en": "Aragon Research cited the OpenAI partnership in naming RingCX a Leader",
+          "text": "RingCentralとOpenAIは提携しており、Aragon ResearchはRingCXの評価でこの提携を強みとした",
+          "text_en": "RingCentral partners with OpenAI, and Aragon Research credited that partnership in naming RingCX a Leader",
           "source": {
             "label": "RingCentral 8-K Ex.99 の発表",
             "label_en": "RingCentral 8-K Ex.99 press release",
@@ -390,8 +390,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "text": "リングセントラルと競合する",
+          "text_en": "Competes with RingCentral",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",
@@ -414,8 +414,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "text": "リングセントラルと競合する",
+          "text_en": "Competes with RingCentral",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",
@@ -438,8 +438,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "text": "リングセントラルと競合する",
+          "text_en": "Competes with RingCentral",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",
@@ -451,8 +451,8 @@
         },
         {
           "type": "rival",
-          "text": "8x8の年次報告が、リングセントラルを競合として挙げている",
-          "text_en": "Names RingCentral as a competitor in its annual report",
+          "text": "リングセントラルと競合する",
+          "text_en": "Competes with RingCentral",
           "source": {
             "label": "8x8 10-K",
             "label_en": "8x8 10-K",
@@ -474,8 +474,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Five9の年次報告が、リングセントラルを競合として挙げている",
-          "text_en": "Names RingCentral as a competitor in its annual report",
+          "text": "リングセントラルと競合する",
+          "text_en": "Competes with RingCentral",
           "source": {
             "label": "Five9 10-K",
             "label_en": "Five9 10-K",
@@ -497,8 +497,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "text": "リングセントラルと競合する",
+          "text_en": "Competes with RingCentral",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",
@@ -521,8 +521,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in RingCentral’s annual report",
+          "text": "リングセントラルと競合する",
+          "text_en": "Competes with RingCentral",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",

@@ -143,8 +143,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、特許のライセンスを受けた企業としてAMDを挙げている",
-          "text_en": "The annual report lists AMD among companies that have licensed its patents",
+          "text": "AMDは、Rambusの特許のライセンスを受けている",
+          "text_en": "AMD has licensed Rambus's patents.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -168,8 +168,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、特許のライセンスを受けた企業としてNVIDIAを挙げている",
-          "text_en": "The annual report lists NVIDIA among companies that have licensed its patents",
+          "text": "NVIDIAはRambusの特許のライセンシーに含まれる",
+          "text_en": "NVIDIA is among the licensees of Rambus's patents.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -193,8 +193,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、特許のライセンスを受けた企業としてQualcommを挙げている",
-          "text_en": "The annual report lists Qualcomm among companies that have licensed its patents",
+          "text": "Qualcommは、Rambusの特許をライセンスした企業の一角",
+          "text_en": "Qualcomm is one of the companies that have licensed Rambus's patents.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -218,8 +218,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、特許のライセンスを受けた企業としてBroadcomを挙げている",
-          "text_en": "The annual report lists Broadcom among companies that have licensed its patents",
+          "text": "Broadcomが、Rambusの特許ライセンスを取得した",
+          "text_en": "Broadcom has taken a license to Rambus's patents.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -243,8 +243,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、特許のライセンスを受けた企業としてMarvellを挙げている",
-          "text_en": "The annual report lists Marvell among companies that have licensed its patents",
+          "text": "Marvellも、Rambusの特許のライセンスを受けた顧客だ",
+          "text_en": "Marvell is also a customer that has licensed Rambus's patents.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -268,8 +268,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、特許のライセンスを受けた企業としてSilicon Motionを挙げている",
-          "text_en": "The annual report lists Silicon Motion among companies that have licensed its patents",
+          "text": "Silicon Motionは、Rambusから特許のライセンスを受ける企業",
+          "text_en": "Silicon Motion licenses patents from Rambus.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "年次報告が、特許のライセンスを受けた企業としてInfineonを挙げている",
-          "text_en": "The annual report lists Infineon among companies that have licensed its patents",
+          "text": "InfineonはRambusの特許をライセンス契約のもとで使う",
+          "text_en": "Infineon uses Rambus's patents under a license.",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -344,8 +344,8 @@
         },
         {
           "type": "rival",
-          "text": "ランバスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rambus’s annual report",
+          "text": "Rambusと競合する",
+          "text_en": "Competes with Rambus",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -367,8 +367,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ランバスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rambus’s annual report",
+          "text": "Rambusと競合する",
+          "text_en": "Competes with Rambus",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -390,8 +390,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ランバスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rambus’s annual report",
+          "text": "Rambusと競合する",
+          "text_en": "Competes with Rambus",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",
@@ -413,8 +413,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Astera Labsの年次報告が、ランバスを競合として挙げている",
-          "text_en": "Names Rambus as a competitor in its annual report",
+          "text": "Rambusと競合する",
+          "text_en": "Competes with Rambus",
           "source": {
             "label": "Astera Labs 10-K",
             "label_en": "Astera Labs 10-K",

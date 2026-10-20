@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "クラウド基盤を提供する戦略パートナーとしてAmazonを挙げている",
-          "text_en": "Amazon is named as a strategic partner providing cloud platforms",
+          "text": "AmazonはNiCEにクラウド基盤を提供する戦略パートナー",
+          "text_en": "Amazon is a strategic partner that provides NiCE with cloud platforms",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -50,8 +50,8 @@
         },
         {
           "type": "rival",
-          "text": "CCaaS市場の競合としてAmazon Connectを挙げている",
-          "text_en": "Amazon Connect is named as a competitor in the CCaaS market",
+          "text": "Amazon ConnectはCCaaS市場でNiCEと競合する",
+          "text_en": "Amazon Connect competes with NiCE in the CCaaS market",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -73,8 +73,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "クラウド基盤を提供する戦略パートナーとしてMicrosoftを挙げている",
-          "text_en": "Microsoft is named as a strategic partner providing cloud platforms",
+          "text": "MicrosoftはNiCEのクラウド基盤を支える戦略パートナーだ",
+          "text_en": "Microsoft is a strategic partner that provides NiCE with cloud platforms",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -135,8 +135,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CCaaS市場の競合としてCiscoを挙げている",
-          "text_en": "Cisco is named as a competitor in the CCaaS market",
+          "text": "CiscoはCCaaS市場でNiCEの競合に当たる",
+          "text_en": "Cisco competes with NiCE in the CCaaS market",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -158,8 +158,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "CCaaS市場の競合としてFive9を挙げている",
-          "text_en": "Five9 is named as a competitor in the CCaaS market",
+          "text": "Five9もCCaaS市場でNiCEと競う",
+          "text_en": "Five9 competes with NiCE in the CCaaS market",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -181,8 +181,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "対話型・エージェント型AI市場の競合としてSalesforceを挙げている",
-          "text_en": "Salesforce is named as a competitor in the Conversational and Agentic AI market",
+          "text": "Salesforceは対話型・エージェント型AI市場でNiCEの競合となる",
+          "text_en": "Salesforce competes with NiCE in the Conversational and Agentic AI market",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -204,8 +204,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アンチ・マネーロンダリング市場の競合としてOracleを挙げている",
-          "text_en": "Oracle is named as a competitor in the Anti-Money Laundering market",
+          "text": "OracleはNiCEとアンチ・マネーロンダリング市場で競合関係にある",
+          "text_en": "Oracle competes with NiCE in the Anti-Money Laundering market",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -217,8 +217,8 @@
         },
         {
           "type": "rival",
-          "text": "金融市場コンプライアンス市場でも競合として挙げている",
-          "text_en": "Oracle is also named as a competitor in the Financial Markets Compliance market",
+          "text": "金融市場コンプライアンス市場でも、OracleはNiCEのライバルだ",
+          "text_en": "Oracle also competes with NiCE in the Financial Markets Compliance market",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -240,8 +240,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナイスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in NiCE’s annual report",
+          "text": "NiCEと競合する",
+          "text_en": "Competes with NiCE",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",
@@ -263,8 +263,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "基本的なCCaaS機能を持つUCaaS・コラボ系ベンダーとして挙げている",
-          "text_en": "Zoom is named among UCaaS and collaboration vendors offering basic CCaaS capabilities",
+          "text": "ZoomはUCaaS・コラボ系ベンダーとして基本的なCCaaS機能を持ち、NiCEと競合する",
+          "text_en": "Zoom, a UCaaS and collaboration vendor offering basic CCaaS capabilities, competes with NiCE",
           "source": {
             "label": "NiCE 20-F",
             "label_en": "NiCE 20-F",

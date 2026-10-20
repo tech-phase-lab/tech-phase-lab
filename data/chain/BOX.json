@@ -52,8 +52,8 @@
         },
         {
           "type": "rival",
-          "text": "Boxの年次報告が、競合としてGoogle(Drive)を挙げている",
-          "text_en": "Named as a competitor (Google Drive) in Box's annual report",
+          "text": "Boxは企業向けファイル同期・共有市場で、Google(Drive)を主な競合とする",
+          "text_en": "Google (Drive) is one of Box's primary competitors in enterprise file sync and share.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -88,8 +88,8 @@
         },
         {
           "type": "rival",
-          "text": "Boxの年次報告が、競合としてMicrosoft(OneDrive)を挙げている",
-          "text_en": "Named as a competitor (OneDrive) in Box's annual report",
+          "text": "Microsoft(OneDrive)は、企業向けファイル同期・共有市場でBoxの主な競合だ",
+          "text_en": "Microsoft (OneDrive) is one of Box's primary competitors in enterprise file sync and share.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -206,8 +206,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxは年次報告で、Appleなどを技術パートナーとして挙げている",
-          "text_en": "Box's annual report lists Apple among its technology partners",
+          "text": "BoxはAppleなどの技術パートナーと製品連携を提供する",
+          "text_en": "Box offers integrations with technology partners such as Apple.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -229,8 +229,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxは年次報告で、Adobeなどを技術パートナーとして挙げている",
-          "text_en": "Box's annual report lists Adobe among its technology partners",
+          "text": "AdobeはBoxの技術パートナーで、製品連携が用意されている",
+          "text_en": "Adobe is a Box technology partner with product integrations.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -252,8 +252,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxは年次報告で、Salesforceなどを技術パートナーとして挙げている",
-          "text_en": "Box's annual report lists Salesforce among its technology partners",
+          "text": "BoxとSalesforceは、製品連携で結ばれた技術パートナー同士だ",
+          "text_en": "Box and Salesforce are technology partners with product integrations.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -275,8 +275,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Boxは年次報告で、ServiceNowなどを技術パートナーとして挙げている",
-          "text_en": "Box's annual report lists ServiceNow among its technology partners",
+          "text": "ServiceNowはBoxの技術パートナーエコシステムに加わる",
+          "text_en": "ServiceNow is part of Box's technology partner ecosystem.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -382,8 +382,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Boxの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Box’s annual report",
+          "text": "Boxと競合する",
+          "text_en": "Competes with Box",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",

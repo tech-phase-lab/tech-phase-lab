@@ -56,8 +56,8 @@
         },
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてAmazonを挙げている",
-          "text_en": "IonQ’s FY2025 10-K lists Amazon among its current competitors in quantum computing",
+          "text": "Amazonは、量子コンピューターでIonQと現在競合する1社だ",
+          "text_en": "Amazon is one of the large technology companies currently competing with IonQ in quantum computing.",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -92,8 +92,8 @@
         },
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてMicrosoftを挙げている",
-          "text_en": "IonQ’s FY2025 10-K lists Microsoft among its current competitors in quantum computing",
+          "text": "Microsoftは、量子コンピューターにおけるIonQの現在の競合の1社に当たる",
+          "text_en": "Microsoft is one of the large technology companies currently competing with IonQ in quantum computing.",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -128,8 +128,8 @@
         },
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてAlphabet(Google)を挙げている",
-          "text_en": "IonQ’s FY2025 10-K lists Alphabet (Google) among its current competitors in quantum computing",
+          "text": "Alphabet(Google)は、IonQが量子コンピューターで現在競う相手の1社となる",
+          "text_en": "Alphabet (Google) is one of the large technology companies currently competing with IonQ in quantum computing.",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -394,8 +394,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてIBMを挙げている",
-          "text_en": "IonQ’s FY2025 10-K lists IBM among its current competitors in quantum computing",
+          "text": "IBMは、量子コンピューター分野でIonQと現在競合する1社である",
+          "text_en": "IBM is one of the large technology companies currently competing with IonQ in quantum computing.",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -417,8 +417,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IonQが年次報告で、量子コンピューターの現在の競合の1社としてIntelを挙げている",
-          "text_en": "IonQ’s FY2025 10-K lists Intel among its current competitors in quantum computing",
+          "text": "Intelも、IonQの量子コンピューター事業の現在の競合1社に入る",
+          "text_en": "Intel is one of the large technology companies currently competing with IonQ in quantum computing.",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -440,8 +440,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IonQが年次報告で、超伝導方式で競合する企業としてRigetti Computingを挙げている",
-          "text_en": "IonQ’s 10-K names Rigetti Computing as a competitor pursuing a superconducting-qubit approach",
+          "text": "IonQの超伝導方式の競合に、Rigetti Computingがいる",
+          "text_en": "Rigetti Computing competes with IonQ using a superconducting circuit technology approach.",
           "source": {
             "label": "IonQ 10-K(2025年度)",
             "label_en": "IonQ 10-K (FY2025)",
@@ -453,8 +453,8 @@
         },
         {
           "type": "rival",
-          "text": "Rigettiが年次報告で、量子コンピューターの競合の1社としてIonQを挙げている",
-          "text_en": "Rigetti’s FY2025 10-K names IonQ among its competitors in quantum computing",
+          "text": "IonQは、Rigettiが競合とみなす量子コンピューター企業の1社だ",
+          "text_en": "IonQ is one of the quantum computing competitors Rigetti identifies.",
           "source": {
             "label": "Rigetti 10-K(2025年度)",
             "label_en": "Rigetti 10-K (FY2025)",
@@ -476,8 +476,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "D-Waveが年次報告で、ゲート方式の量子コンピューターに取り組む企業の1社としてIonQを挙げている",
-          "text_en": "D-Wave’s FY2025 10-K names IonQ among other companies pursuing gate-model quantum computing",
+          "text": "IonQは、D-Waveと競合する、ゲート方式の量子コンピューターに取り組む1社だ",
+          "text_en": "IonQ is one of the companies pursuing gate-model quantum computing in competition with D-Wave.",
           "source": {
             "label": "D-Wave 10-K(2025年度)",
             "label_en": "D-Wave 10-K (FY2025)",
@@ -499,8 +499,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Quantum Computing Inc.が年次報告で、競合の1社としてIonQを挙げている",
-          "text_en": "Quantum Computing Inc.’s FY2025 10-K lists IonQ among its competitors",
+          "text": "IonQは、Quantum Computing Inc.が競合とみなす企業の1社に数えられる",
+          "text_en": "IonQ is one of the competitors of Quantum Computing Inc.",
           "source": {
             "label": "Quantum Computing Inc 10-K(2025年度)",
             "label_en": "Quantum Computing Inc 10-K (FY2025)",

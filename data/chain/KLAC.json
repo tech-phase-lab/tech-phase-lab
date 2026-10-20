@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "売上の10%超を占める顧客としてTSMCを記載",
-          "text_en": "Lists TSMC as a customer accounting for more than 10% of total revenues, primarily in semiconductor process control",
+          "text": "TSMCは売上の10%超を占める顧客だ",
+          "text_en": "TSMC is a customer accounting for more than 10% of KLA's total revenues, primarily in semiconductor process control",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -61,8 +61,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載",
-          "text_en": "Named among competitors",
+          "text": "Applied Materialsは競合の一社だ",
+          "text_en": "Applied Materials is one of KLA's competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -84,8 +84,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載",
-          "text_en": "Named among competitors",
+          "text": "ASMLとは競合関係にある",
+          "text_en": "ASML is one of KLA's competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -97,8 +97,8 @@
         },
         {
           "type": "rival",
-          "text": "ASMLが年次報告(20-F)で、複雑なパターニングを支えるアプリケーションの競合の例としてKLAを挙げている",
-          "text_en": "ASML’s annual report (20-F) names KLA among competitors for patterning-support applications",
+          "text": "複雑なパターニングを支えるアプリケーションで、KLAはASMLの競合の例となる(20-F)",
+          "text_en": "ASML competes with providers of applications that support complex patterning, such as KLA (20-F).",
           "source": {
             "label": "ASML 20-F(2025年度)",
             "label_en": "ASML 20-F / Annual Report 2025",
@@ -122,8 +122,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載",
-          "text_en": "Named among competitors",
+          "text": "レーザーテックは競合に含まれる",
+          "text_en": "Lasertec is one of KLA's competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -146,8 +146,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "競合として実名で記載",
-          "text_en": "Named among competitors",
+          "text": "Onto Innovationも競合に名を連ねる",
+          "text_en": "Onto Innovation is one of KLA's competitors",
           "source": {
             "label": "KLA 10-K(2026年度)",
             "label_en": "KLA 10-K (fiscal 2026)",
@@ -159,8 +159,8 @@
         },
         {
           "type": "rival",
-          "text": "Ontoが年次報告で、OCD計測と先端パッケージ検査の主要な競合としてKLAを挙げている",
-          "text_en": "Onto’s annual report names KLA a principal competitor in OCD metrology and advanced packaging inspection",
+          "text": "Ontoは、OCD計測と先端パッケージ検査でKLAを主要な競合とする",
+          "text_en": "Onto's principal competitor in OCD metrology and advanced packaging inspection is KLA.",
           "source": {
             "label": "Onto Innovation 10-K(2025年度)",
             "label_en": "Onto Innovation 10-K (FY2025)",
@@ -182,8 +182,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Novaが年次報告(20-F)で、主な競合としてOntoとKLAを挙げている",
-          "text_en": "Nova’s annual report (20-F) says it competes mainly with Onto Innovation and KLA",
+          "text": "Novaは主にOntoとKLAを相手に競い合う(20-F)",
+          "text_en": "Nova competes mainly with Onto Innovation and KLA (20-F).",
           "source": {
             "label": "Nova 20-F(2025年度)",
             "label_en": "Nova 20-F (FY2025)",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cohuが年次報告で、半導体の検査の主要な競合としてKLAを挙げている",
-          "text_en": "Cohu’s annual report lists KLA among its primary competitors in semiconductor test and inspection",
+          "text": "CohuにとってKLAは、半導体の検査分野の主要な競合だ",
+          "text_en": "KLA is one of Cohu's primary competitors in semiconductor test and inspection.",
           "source": {
             "label": "Cohu 10-K(2025年度)",
             "label_en": "Cohu 10-K (FY2025)",
@@ -228,8 +228,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "PDF Solutionsが年次報告で、歩留まり管理システムの競合としてKLAを挙げている",
-          "text_en": "PDF Solutions’ annual report lists KLA among its competitors in yield management systems",
+          "text": "PDF Solutionsは、歩留まり管理システムでKLAと競合関係にある",
+          "text_en": "PDF Solutions faces competition from KLA in yield management systems.",
           "source": {
             "label": "PDF Solutions 10-K(2025年度)",
             "label_en": "PDF Solutions 10-K (FY2025)",

@@ -148,8 +148,8 @@
         },
         {
           "type": "tie",
-          "text": "2026年3月12日の引受契約でも、Morgan Stanleyが引受会社の代表の1社に挙げられている",
-          "text_en": "Morgan Stanley is also named a representative of the underwriters in the March 12, 2026 underwriting agreement",
+          "text": "2026年3月12日の引受契約で、Morgan Stanleyは引受会社の代表の1社を務める",
+          "text_en": "Morgan Stanley is also a representative of the underwriters in the March 12, 2026 underwriting agreement",
           "source": {
             "label": "Airbnb Form 8-K",
             "label_en": "Airbnb Form 8-K",
@@ -299,8 +299,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エアビーアンドビーの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Airbnb’s annual report",
+          "text": "Airbnbと競合する",
+          "text_en": "Competes with Airbnb",
           "source": {
             "label": "Airbnb 10-K",
             "label_en": "Airbnb 10-K",

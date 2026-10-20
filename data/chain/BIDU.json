@@ -81,8 +81,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "百度(バイドゥ)の年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Baidu’s annual report",
+          "text": "Baiduと競合する",
+          "text_en": "Competes with Baidu",
           "source": {
             "label": "Baidu 20-F",
             "label_en": "Baidu 20-F",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "米国の検索・広告事業者としてGoogleなどが、強い知名度と大きな資金力を持つと百度が述べている",
-          "text_en": "Baidu says U.S.-based search and marketing platforms such as Google have strong brand names and greater financial resources",
+          "text": "米国の検索・広告事業者のGoogleなどは、強いブランド力と百度を上回る資金力を持つ",
+          "text_en": "U.S.-based search and marketing platforms such as Google have strong brand names and greater financial resources than Baidu.",
           "source": {
             "label": "Baidu 20-F",
             "label_en": "Baidu 20-F",
@@ -129,8 +129,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "iQIYIの年次報告が、動画配信の競合としてTencent Videoなどを挙げている",
-          "text_en": "iQIYI's annual report lists Tencent Video among its video-streaming competitors",
+          "text": "百度子会社のiQIYIは、動画配信でTencent Videoなどと競合する",
+          "text_en": "Baidu's subsidiary iQIYI competes with Tencent Video and others in video streaming.",
           "source": {
             "label": "Baidu 20-F",
             "label_en": "Baidu 20-F",

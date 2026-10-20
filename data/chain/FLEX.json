@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "年次報告で、Fordの年次サプライヤー表彰で優良サプライヤーに選ばれたと述べている",
-          "text_en": "The annual report says Flex was named a top-performing supplier at Ford's annual Supplier event",
+          "text": "FlexはFordの年次サプライヤー表彰で優良サプライヤーに選ばれた",
+          "text_en": "Flex was named a top-performing supplier at Ford's annual Supplier event.",
           "source": {
             "label": "Flex 10-K",
             "label_en": "Flex 10-K",
@@ -61,8 +61,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Palo Alto Networksの年次報告が、Flextronics Telecom Systems Ltd.との製造サービス契約(2019年4月1日付)を挙げている",
-          "text_en": "Palo Alto Networks lists a Manufacturing Services Agreement with Flextronics Telecom Systems Ltd. dated April 1, 2019",
+          "text": "Palo Alto Networksは、Flextronics Telecom Systems Ltd.と製造サービス契約(2019年4月1日付)を結んでいる",
+          "text_en": "Palo Alto Networks has a Manufacturing Services Agreement with Flextronics Telecom Systems Ltd. dated April 1, 2019.",
           "source": {
             "label": "Palo Alto Networks 10-K",
             "label_en": "Palo Alto Networks 10-K",
@@ -87,8 +87,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Teradyneの年次報告が、Flextronics Corporationとの標準製造契約の第6次修正(2009年7月27日付契約)を挙げている",
-          "text_en": "Teradyne lists the Sixth Amendment to its Standard Manufacturing Agreement with Flextronics Corporation (dated July 27, 2009)",
+          "text": "Teradyneは、Flextronics Corporationとの標準製造契約に第6次修正(2009年7月27日付契約)を持つ",
+          "text_en": "Teradyne's Standard Manufacturing Agreement with Flextronics Corporation carries a Sixth Amendment dated July 27, 2009.",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -102,8 +102,8 @@
         },
         {
           "type": "down",
-          "text": "同じく、Flextronics Sales & Marketing North Asia (L) LTD.との標準製造契約の第8次修正(2012年4月13日付)を挙げている",
-          "text_en": "It also lists the Eighth Amendment to its Standard Manufacturing Agreement with Flextronics Sales & Marketing North Asia (L) LTD. (dated April 13, 2012)",
+          "text": "Flextronics Sales & Marketing North Asia (L) LTD.との標準製造契約も、第8次修正(2012年4月13日付)を受ける",
+          "text_en": "Teradyne's Standard Manufacturing Agreement with Flextronics Sales & Marketing North Asia (L) LTD. also carries an Eighth Amendment dated April 13, 2012.",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -175,8 +175,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ASEの20-Fが、Flextronics Manufacturing (M) Sdn.が当事者の資産購入契約を挙げている",
-          "text_en": "ASE's 20-F lists an Asset Purchase Agreement involving Flextronics Manufacturing (M) Sdn.",
+          "text": "Flextronics Manufacturing (M) Sdn.は、ASEの20-F記載の資産購入契約の当事者に入る",
+          "text_en": "Flextronics Manufacturing (M) Sdn. is a party to an Asset Purchase Agreement in ASE's 20-F.",
           "source": {
             "label": "ASE Technology Holding 20-F",
             "label_en": "ASE Technology Holding 20-F",
@@ -201,8 +201,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ベンチマーク・エレクトロニクスの年次報告が、フレックスを競合として挙げている",
-          "text_en": "Names Flex as a competitor in its annual report",
+          "text": "フレックスと競合する",
+          "text_en": "Competes with Flex",
           "source": {
             "label": "Benchmark Electronics 10-K",
             "label_en": "Benchmark Electronics 10-K",
@@ -214,8 +214,8 @@
         },
         {
           "type": "rival",
-          "text": "ベンチマーク・エレクトロニクスの年次報告が、フレックスを競合として挙げている",
-          "text_en": "Names Flex as a competitor in its annual report",
+          "text": "フレックスと競合する",
+          "text_en": "Competes with Flex",
           "source": {
             "label": "Benchmark Electronics 10-K",
             "label_en": "Benchmark Electronics 10-K",
@@ -238,8 +238,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サンミナの年次報告が、フレックスを競合として挙げている",
-          "text_en": "Names Flex as a competitor in its annual report",
+          "text": "フレックスと競合する",
+          "text_en": "Competes with Flex",
           "source": {
             "label": "Sanmina 10-K",
             "label_en": "Sanmina 10-K",

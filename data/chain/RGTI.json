@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "提携先・顧客としてAmazon Web Servicesが挙げられている",
-          "text_en": "Amazon Web Services is named among Rigetti's partners and customers",
+          "text": "Amazon Web Servicesはリゲッティ・コンピューティングの提携先であり顧客でもある",
+          "text_en": "Amazon Web Services is one of Rigetti's partners and customers",
           "source": {
             "label": "Rigetti Computing 10-K",
             "label_en": "Rigetti Computing 10-K",
@@ -72,8 +72,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Microsoft Azureが販売経路となる顧客として挙げられている",
-          "text_en": "Microsoft Azure is named among Rigetti's distribution relationships",
+          "text": "Microsoft Azureは、同社の販売経路となる顧客の一つだ",
+          "text_en": "Microsoft Azure is a customer and distribution channel for Rigetti",
           "source": {
             "label": "Rigetti Computing 10-K",
             "label_en": "Rigetti Computing 10-K",
@@ -109,8 +109,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "提携先・顧客としてMoody’sが挙げられている",
-          "text_en": "Moody’s is named among Rigetti's partners and customers",
+          "text": "Moody’sは提携先かつ顧客の関係にある",
+          "text_en": "Moody’s is one of Rigetti's partners and customers",
           "source": {
             "label": "Rigetti Computing 10-K",
             "label_en": "Rigetti Computing 10-K",
@@ -146,8 +146,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "提携先・顧客としてStandard Chartered Bankが挙げられている",
-          "text_en": "Standard Chartered Bank is named among Rigetti's partners and customers",
+          "text": "Standard Chartered Bankは提携先と顧客を兼ねる",
+          "text_en": "Standard Chartered Bank is one of Rigetti's partners and customers",
           "source": {
             "label": "Rigetti Computing 10-K",
             "label_en": "Rigetti Computing 10-K",
@@ -232,8 +232,8 @@
         },
         {
           "type": "tie",
-          "text": "パートナーの1社としてQuanta Computerが挙げられている",
-          "text_en": "Quanta Computer is named among Rigetti's ecosystem partners",
+          "text": "Quanta Computerはパートナーの1社として、Rigettiのエコシステムを支える",
+          "text_en": "Quanta Computer is one of Rigetti's ecosystem partners",
           "source": {
             "label": "Rigetti Computing 8-K Ex.99 の発表",
             "label_en": "Rigetti Computing 8-K Ex.99 press release",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "パートナーの1社としてNVIDIAが挙げられている",
-          "text_en": "NVIDIA is named among Rigetti's ecosystem partners",
+          "text": "NVIDIAはパートナー1社として同社のエコシステムに加わる",
+          "text_en": "NVIDIA is one of Rigetti's ecosystem partners",
           "source": {
             "label": "Rigetti Computing 8-K Ex.99 の発表",
             "label_en": "Rigetti Computing 8-K Ex.99 press release",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "クアンタム・コンピューティングの年次報告が、リゲッティ・コンピューティングを競合として挙げている",
-          "text_en": "Names Rigetti Computing as a competitor in its annual report",
+          "text": "リゲッティ・コンピューティングと競合する",
+          "text_en": "Competes with Rigetti Computing",
           "source": {
             "label": "Quantum Computing Inc. 10-K",
             "label_en": "Quantum Computing Inc. 10-K",
@@ -340,8 +340,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リゲッティ・コンピューティングの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rigetti Computing’s annual report",
+          "text": "リゲッティ・コンピューティングと競合する",
+          "text_en": "Competes with Rigetti Computing",
           "source": {
             "label": "Rigetti Computing 10-K",
             "label_en": "Rigetti Computing 10-K",
@@ -364,8 +364,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リゲッティ・コンピューティングの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Rigetti Computing’s annual report",
+          "text": "リゲッティ・コンピューティングと競合する",
+          "text_en": "Competes with Rigetti Computing",
           "source": {
             "label": "Rigetti Computing 10-K",
             "label_en": "Rigetti Computing 10-K",

@@ -113,8 +113,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、光トランシーバーなどの主要な競合としてCoherentを挙げている",
-          "text_en": "AAOI’s annual report names Coherent among its major competitors in optical transceivers and related components",
+          "text": "光トランシーバーなどの市場で、AAOIはCoherentと競合する",
+          "text_en": "AAOI competes with Coherent in optical transceivers and related components",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -136,8 +136,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、光トランシーバーなどの主要な競合としてLumentumを挙げている",
-          "text_en": "AAOI’s annual report names Lumentum among its major competitors in optical transceivers and related components",
+          "text": "Lumentumは、AAOIが光トランシーバーなどで競う主要な相手だ",
+          "text_en": "Lumentum is one of AAOI's major competitors in optical transceivers and related components",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -159,8 +159,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、光トランシーバーなどの主要な競合としてIntelを挙げている",
-          "text_en": "AAOI’s annual report names Intel among its major competitors in optical transceivers and related components",
+          "text": "IntelはAAOIの光トランシーバーなどの市場で主な競合となる",
+          "text_en": "Intel is one of AAOI's major competitors in optical transceivers and related components",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -182,8 +182,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、光トランシーバーなどの主要な競合としてEoptolinkを挙げている",
-          "text_en": "AAOI’s annual report names Eoptolink among its major competitors in optical transceivers and related components",
+          "text": "AAOIは光トランシーバーなどでEoptolinkと競い合っている",
+          "text_en": "AAOI and Eoptolink are major competitors in optical transceivers and related components",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -206,8 +206,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、光トランシーバーなどの主要な競合としてZhongji InnoLightを挙げている",
-          "text_en": "AAOI’s annual report names Zhongji InnoLight among its major competitors in optical transceivers and related components",
+          "text": "Zhongji InnoLightは、AAOIの光トランシーバー事業における主要な競合である",
+          "text_en": "Zhongji InnoLight is a major competitor of AAOI in optical transceivers and related components",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -230,8 +230,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、光トランシーバーなどの主要な競合としてFoxconn Interconnect Technologyを挙げている",
-          "text_en": "AAOI’s annual report names Foxconn Interconnect Technology among its major competitors in optical transceivers and related components",
+          "text": "AAOIの光トランシーバーなどの市場には、競合のFoxconn Interconnect Technologyがいる",
+          "text_en": "Foxconn Interconnect Technology competes with AAOI in optical transceivers and related components",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",
@@ -253,8 +253,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AAOIが年次報告で、光トランシーバーなどの主要な競合としてSumitomo Electricを挙げている",
-          "text_en": "AAOI’s annual report names Sumitomo Electric among its major competitors in optical transceivers and related components",
+          "text": "光トランシーバーなどでAAOIと競合する主要企業、Sumitomo Electric",
+          "text_en": "Sumitomo Electric is one of AAOI's major competitors in optical transceivers and related components",
           "source": {
             "label": "AAOI 10-K(2025年度)",
             "label_en": "AAOI 10-K (FY2025)",

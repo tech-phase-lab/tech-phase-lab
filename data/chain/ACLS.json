@@ -29,8 +29,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アクセリスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Axcelis’s annual report",
+          "text": "Axcelis Technologiesと競合する",
+          "text_en": "Competes with Axcelis Technologies",
           "source": {
             "label": "Axcelis Technologies 10-K",
             "label_en": "Axcelis Technologies 10-K",
@@ -53,8 +53,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アクセリスの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Axcelis’s annual report",
+          "text": "Axcelis Technologiesと競合する",
+          "text_en": "Competes with Axcelis Technologies",
           "source": {
             "label": "Axcelis Technologies 10-K",
             "label_en": "Axcelis Technologies 10-K",

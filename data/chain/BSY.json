@@ -106,8 +106,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Autodeskの年次報告が、ベントレー・システムズを競合として挙げている",
-          "text_en": "Names Bentley Systems as a competitor in its annual report",
+          "text": "Bentley Systemsと競合する",
+          "text_en": "Competes with Bentley Systems",
           "source": {
             "label": "Autodesk 10-K",
             "label_en": "Autodesk 10-K",
@@ -119,8 +119,8 @@
         },
         {
           "type": "rival",
-          "text": "ベントレー・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Bentley Systems’s annual report",
+          "text": "Bentley Systemsと競合する",
+          "text_en": "Competes with Bentley Systems",
           "source": {
             "label": "Bentley Systems 10-K",
             "label_en": "Bentley Systems 10-K",
@@ -142,8 +142,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ベントレー・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Bentley Systems’s annual report",
+          "text": "Bentley Systemsと競合する",
+          "text_en": "Competes with Bentley Systems",
           "source": {
             "label": "Bentley Systems 10-K",
             "label_en": "Bentley Systems 10-K",
@@ -165,8 +165,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ベントレー・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Bentley Systems’s annual report",
+          "text": "Bentley Systemsと競合する",
+          "text_en": "Competes with Bentley Systems",
           "source": {
             "label": "Bentley Systems 10-K",
             "label_en": "Bentley Systems 10-K",
@@ -188,8 +188,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Bentleyの年次報告が、資産性能管理の競合としてSchneider ElectricのAVEVA部門を挙げている",
-          "text_en": "Bentley's annual report names the AVEVA unit of Schneider Electric as a key competitor in asset performance systems",
+          "text": "Schneider ElectricのAVEVA部門は、資産性能管理でBentleyの主な競合となる",
+          "text_en": "The AVEVA unit of Schneider Electric is a key competitor of Bentley in asset performance systems.",
           "source": {
             "label": "Bentley Systems 10-K",
             "label_en": "Bentley Systems 10-K",

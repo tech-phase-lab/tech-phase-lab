@@ -20,7 +20,7 @@ test('every published company has six bilingual answers and dated primary source
     }
     for (const lang of ['ja', 'en']) {
       assert.deepEqual(Object.keys(company[lang]), [...companyIntroductionFields]);
-      for (const answer of Object.values(company[lang])) assert.ok(answer.trim().length > 15);
+      for (const [field, answer] of Object.entries(company[lang])) assert.ok(answer.trim().length > 15 || (['competition', 'relationships'].includes(field) && answer === '' && company.maps[field].length === 0), `${company.tickers[0]} ${lang} ${field}`);
     }
   }
 });

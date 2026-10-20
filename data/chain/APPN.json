@@ -83,8 +83,8 @@
         },
         {
           "type": "tie",
-          "text": "年次報告が、Accentureとの戦略的パートナーシップを挙げている",
-          "text_en": "The annual report lists a strategic partnership with Accenture",
+          "text": "AppianはAccentureと戦略的パートナーシップを結ぶ",
+          "text_en": "Appian has a strategic partnership with Accenture.",
           "source": {
             "label": "Appian 10-K",
             "label_en": "Appian 10-K",
@@ -237,8 +237,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アピアンの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Appian’s annual report",
+          "text": "Appianと競合する",
+          "text_en": "Competes with Appian",
           "source": {
             "label": "Appian 10-K",
             "label_en": "Appian 10-K",

@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Nebiusが年次報告で、NVIDIAやOEMとの強い関係が最新GPUの提供を支えると記載",
-          "text_en": "Nebius says its strong relationships with NVIDIA and OEM partners support providing the latest GPUs",
+          "text": "NVIDIAやOEMとの強い関係が、Nebiusによる最新GPUの提供を支える",
+          "text_en": "Nebius's strong relationships with NVIDIA and OEM partners support its ability to provide the latest GPUs",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -201,8 +201,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Nebiusが年次報告で、特化型AIクラウドの主な競合としてCoreWeaveを挙げている",
-          "text_en": "Nebius’ annual report names CoreWeave among its key competitors among specialized AI cloud providers",
+          "text": "CoreWeaveは、特化型AIクラウドでNebiusの主な競合に当たる",
+          "text_en": "CoreWeave is a key competitor of Nebius among specialized AI cloud providers",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -224,8 +224,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Nebiusが年次報告で、汎用クラウドの競合としてOracleを挙げている",
-          "text_en": "Nebius’ annual report names Oracle among general-purpose cloud competitors",
+          "text": "Oracleは、汎用クラウドでNebiusと競合する",
+          "text_en": "Oracle competes with Nebius among general-purpose cloud providers",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -247,8 +247,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Nebiusが年次報告で、汎用クラウドの競合としてAmazon(AWS)を挙げている",
-          "text_en": "Nebius’ annual report names Amazon (AWS) among general-purpose cloud competitors",
+          "text": "Amazon(AWS)も汎用クラウドでNebiusの競合相手だ",
+          "text_en": "Amazon (AWS) competes with Nebius among general-purpose cloud providers",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -270,8 +270,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Nebiusが年次報告で、汎用クラウドの競合としてGoogle Cloudを挙げている",
-          "text_en": "Nebius’ annual report names Google Cloud among general-purpose cloud competitors",
+          "text": "Google Cloudは汎用クラウドでNebiusと競う",
+          "text_en": "Google Cloud competes with Nebius among general-purpose cloud providers",
           "source": {
             "label": "Nebius 20-F(2025年度)",
             "label_en": "Nebius 20-F (FY2025)",
@@ -293,8 +293,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "IRENが年次報告で、競合する特化型AIクラウドの1社としてNebiusを挙げている",
-          "text_en": "IREN’s annual report lists Nebius among specialized AI cloud providers it competes with",
+          "text": "IRENは、特化型AIクラウドの競合の1社としてNebiusと競合関係にある",
+          "text_en": "IREN competes with Nebius among specialized AI cloud providers",
           "source": {
             "label": "IREN 10-K(2026年6月期)",
             "label_en": "IREN 10-K (FY ended 2026-06-30)",
@@ -316,8 +316,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "WhiteFiberが年次報告で、主な競合としてNebiusを挙げている",
-          "text_en": "WhiteFiber’s annual report names Nebius among its primary competitors",
+          "text": "WhiteFiberにとって、Nebiusは主な競合になる",
+          "text_en": "Nebius is one of WhiteFiber's primary competitors",
           "source": {
             "label": "WhiteFiber 10-K(2025年度)",
             "label_en": "WhiteFiber 10-K (FY2025)",

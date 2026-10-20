@@ -34,8 +34,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Uberの年次報告が、Apple App Storeなどのアプリ配信市場に依存していると述べている",
-          "text_en": "Uber's annual report says its platform relies on open marketplaces including the Apple App Store",
+          "text": "Uberのプラットフォームは、Apple App Storeなどのアプリ配信市場に依存する",
+          "text_en": "Uber's platform relies on open marketplaces including the Apple App Store.",
           "source": {
             "label": "Uber Technologies 10-K",
             "label_en": "Uber Technologies 10-K",
@@ -57,8 +57,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Uberの年次報告が、Google Playなどのアプリ配信市場に依存していると述べている",
-          "text_en": "Uber's annual report says its platform relies on open marketplaces including Google Play",
+          "text": "UberはGoogle Playなどのアプリ配信市場に頼っている",
+          "text_en": "Uber's platform relies on open marketplaces including Google Play.",
           "source": {
             "label": "Uber Technologies 10-K",
             "label_en": "Uber Technologies 10-K",
@@ -129,8 +129,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Nebiusの年次報告が、2025年10月にAvrideがUberと戦略提携を発表したと述べている",
-          "text_en": "Nebius's annual report says Avride announced a strategic partnership with Uber in October 2025",
+          "text": "Nebius傘下のAvrideは、2025年10月にUberとの戦略提携を発表した",
+          "text_en": "Nebius's Avride announced a strategic partnership with Uber in October 2025.",
           "source": {
             "label": "Nebius 20-F",
             "label_en": "Nebius 20-F",
@@ -244,8 +244,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Uberの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Uber’s annual report",
+          "text": "Uber Technologiesと競合する",
+          "text_en": "Competes with Uber Technologies",
           "source": {
             "label": "Uber Technologies 10-K",
             "label_en": "Uber Technologies 10-K",
@@ -267,8 +267,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Uberの年次報告が、配送事業の競合としてDoorDashを挙げている",
-          "text_en": "Uber's annual report names DoorDash among competitors in delivery",
+          "text": "Uberのデリバリー事業は、DoorDashと競合関係にある",
+          "text_en": "Uber's Delivery offering competes with DoorDash.",
           "source": {
             "label": "Uber Technologies 10-K",
             "label_en": "Uber Technologies 10-K",
@@ -280,8 +280,8 @@
         },
         {
           "type": "rival",
-          "text": "DoorDashの年次報告が、競合としてUber Eatsを挙げている",
-          "text_en": "DoorDash's annual report names Uber Eats among its competitors",
+          "text": "DoorDashにとってUber Eatsは競合だ",
+          "text_en": "Uber Eats competes with DoorDash.",
           "source": {
             "label": "DoorDash 10-K",
             "label_en": "DoorDash 10-K",

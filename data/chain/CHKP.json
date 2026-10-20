@@ -196,8 +196,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "パロアルトネットワークスの年次報告が、チェック・ポイントを競合として挙げている",
-          "text_en": "Names Check Point as a competitor in its annual report",
+          "text": "Check Point Software Technologiesと競合する",
+          "text_en": "Competes with Check Point Software Technologies",
           "source": {
             "label": "Palo Alto Networks annual report",
             "label_en": "Palo Alto Networks annual report (10-K)",
@@ -220,8 +220,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、チェック・ポイントを競合として挙げている",
-          "text_en": "Names Check Point as a competitor in its annual report",
+          "text": "Check Point Software Technologiesと競合する",
+          "text_en": "Competes with Check Point Software Technologies",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -244,8 +244,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "チェック・ポイントの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Check Point’s annual report",
+          "text": "Check Point Software Technologiesと競合する",
+          "text_en": "Competes with Check Point Software Technologies",
           "source": {
             "label": "Check Point Software Technologies 20-F",
             "label_en": "Check Point Software Technologies 20-F",

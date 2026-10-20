@@ -36,8 +36,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "ADIは年次報告で、外部のウェハー・ファウンドリ購入の過半を、TSMCなど限られた供給元から調達していると述べている",
-          "text_en": "ADI's annual report says more than half of its purchases of external wafer and foundry services are from a limited number of suppliers, such as TSMC and others",
+          "text": "ADIは外部のウェハー・ファウンドリ購入の過半を、TSMCなど限られた供給元から調達する",
+          "text_en": "ADI buys more than half of its external wafer and foundry services from a limited number of suppliers, such as TSMC",
           "source": {
             "label": "Analog Devices 10-K",
             "label_en": "Analog Devices 10-K",
@@ -111,8 +111,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "NXP Semiconductorsの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -134,8 +134,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Skyworks Solutionsの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "Skyworks Solutions 10-K",
             "label_en": "Skyworks Solutions 10-K",
@@ -157,8 +157,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Monolithic Power Systemsの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "Monolithic Power Systems 10-K",
             "label_en": "Monolithic Power Systems 10-K",
@@ -180,8 +180,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Qorvoの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "Qorvo 10-K",
             "label_en": "Qorvo 10-K",
@@ -203,8 +203,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MACOM Technology Solutionsの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "MACOM Technology Solutions 10-K",
             "label_en": "MACOM Technology Solutions 10-K",
@@ -226,8 +226,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cirrus Logicの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "Cirrus Logic 10-K",
             "label_en": "Cirrus Logic 10-K",
@@ -249,8 +249,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "MaxLinear 10-K",
             "label_en": "MaxLinear 10-K",
@@ -272,8 +272,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDの年次報告が、アナログ・デバイセズを競合として挙げている",
-          "text_en": "Names Analog Devices as a competitor in its annual report",
+          "text": "Analog Devicesと競合する",
+          "text_en": "Competes with Analog Devices",
           "source": {
             "label": "AMD 10-K",
             "label_en": "AMD 10-K",

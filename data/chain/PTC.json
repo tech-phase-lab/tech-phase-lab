@@ -95,8 +95,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "戦略パートナーの紹介ページで、Microsoftとともにデジタルトランスフォーメーションとスマート製造を進めると説明している",
-          "text_en": "PTC's strategic partner page says PTC and Microsoft are accelerating digital transformation and smart manufacturing",
+          "text": "PTCはMicrosoftと戦略的に組み、デジタルトランスフォーメーションとスマート製造を進める",
+          "text_en": "PTC and Microsoft are accelerating digital transformation and smart manufacturing.",
           "source": {
             "label": "PTC — named strategic partner directory, checked October 16, 2026",
             "label_en": "PTC — named strategic partner directory, checked October 16, 2026",
@@ -158,8 +158,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "PTCの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in PTC’s annual report",
+          "text": "PTCと競合する",
+          "text_en": "Competes with PTC",
           "source": {
             "label": "PTC 10-K",
             "label_en": "PTC 10-K",
@@ -181,8 +181,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "企業向けCADとPLMの競合として、Dassault Systèmesを挙げている",
-          "text_en": "Names Dassault Systèmes among competitors in enterprise CAD and PLM",
+          "text": "企業向けCADとPLMの競合には、Dassault Systèmesが顔を出す",
+          "text_en": "Dassault Systèmes competes with PTC in enterprise CAD and PLM.",
           "source": {
             "label": "PTC 10-K",
             "label_en": "PTC 10-K",
@@ -205,8 +205,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ALM製品の競合として、Siemens AGを挙げている",
-          "text_en": "Names Siemens AG among competitors for its ALM products",
+          "text": "ALM製品の競合は、Siemens AGだ",
+          "text_en": "Siemens AG competes with PTC's ALM products.",
           "source": {
             "label": "PTC 10-K",
             "label_en": "PTC 10-K",
@@ -229,8 +229,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ALM製品の競合として、IBMを挙げている",
-          "text_en": "Names IBM among competitors for its ALM products",
+          "text": "ALM製品では、IBMも競合の一角を占める",
+          "text_en": "IBM also competes with PTC's ALM products.",
           "source": {
             "label": "PTC 10-K",
             "label_en": "PTC 10-K",
@@ -252,8 +252,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SLM製品の競合として、Salesforceなどを挙げている",
-          "text_en": "Names Salesforce among competitors for its SLM products",
+          "text": "SLM製品の競合には、Salesforceなどが加わる",
+          "text_en": "Salesforce competes with PTC's SLM products.",
           "source": {
             "label": "PTC 10-K",
             "label_en": "PTC 10-K",

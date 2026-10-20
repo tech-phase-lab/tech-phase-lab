@@ -40,8 +40,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ichorが年次報告で、最上位のOEM顧客の1社としてASMLを挙げている",
-          "text_en": "Ichor’s annual report names ASML among its top-tier OEM customers",
+          "text": "ASMLは、Ichorにとって最上位のOEM顧客の1社となる",
+          "text_en": "ASML is one of Ichor's top-tier OEM customers.",
           "source": {
             "label": "Ichor Holdings Form 10-K(2025年度)",
             "label_en": "Ichor Holdings Form 10-K (FY2025)",
@@ -64,8 +64,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Intelが年次報告で、Intel 4・Intel 3・Intel 18AなどのEUV露光装置はASMLが唯一の供給元と記載",
-          "text_en": "Intel’s annual report states ASML is the sole supplier of the EUV lithography tools it deploys",
+          "text": "Intel 4・Intel 3・Intel 18AなどのEUV露光装置は、ASMLが唯一の供給元となる",
+          "text_en": "ASML is the sole supplier of the EUV lithography tools Intel deploys in Intel 4, Intel 3 and Intel 18A",
           "source": {
             "label": "Intel Form 10-K(2025年度)",
             "label_en": "Intel Form 10-K (FY2025)",
@@ -162,8 +162,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DUV露光装置ではCanonとNikonが主な競合と記載",
-          "text_en": "Names Canon and Nikon as its primary competitors in DUV systems",
+          "text": "ASMLはDUV露光装置で、主にCanonとNikonと競う",
+          "text_en": "ASML competes primarily with Canon and Nikon in DUV systems",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -184,8 +184,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DUV露光装置ではCanonとNikonが主な競合と記載",
-          "text_en": "Names Canon and Nikon as its primary competitors in DUV systems",
+          "text": "DUV露光装置では、NikonとCanonが主な競合相手だ",
+          "text_en": "Nikon and Canon are ASML's primary competitors in DUV systems",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -206,8 +206,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "複雑なパターニングを支えるアプリケーションの競合の例としてApplied Materialsを記載",
-          "text_en": "Named as a competitor in applications supporting complex patterning",
+          "text": "Applied Materialsは、複雑なパターニングを支えるアプリケーション分野でASMLの競合の一例だ",
+          "text_en": "Applied Materials is an example of a competitor in applications supporting complex patterning",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -230,8 +230,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "複雑なパターニングを支えるアプリケーションの競合の例としてKLAを記載",
-          "text_en": "Named as a competitor in applications supporting complex patterning",
+          "text": "KLAは、複雑なパターニングを支えるアプリケーション分野でASMLと競合関係にある",
+          "text_en": "KLA competes with ASML in applications supporting complex patterning",
           "source": {
             "label": "ASML Form 20-F(2025年度)",
             "label_en": "ASML Form 20-F (FY2025)",
@@ -244,8 +244,8 @@
         },
         {
           "type": "rival",
-          "text": "KLAが年次報告で、競合としてASMLを挙げている",
-          "text_en": "KLA’s annual report lists ASML among its competitors",
+          "text": "ASMLはKLAの競合企業に含まれる",
+          "text_en": "ASML is one of KLA's competitors.",
           "source": {
             "label": "KLA Form 10-K(2026年度)",
             "label_en": "KLA Form 10-K (FY2026)",
@@ -266,8 +266,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Novaが年次報告で、工程内センサーの競合としてASML・Lam・Applied Materialsを挙げている",
-          "text_en": "Nova’s annual report names ASML, Lam and Applied Materials among process equipment makers developing in-situ sensors",
+          "text": "Novaは工程内センサー・計測製品で、ASML・Lam・Applied Materialsと競合する立場にある",
+          "text_en": "Nova competes with process equipment makers such as ASML, Lam and Applied Materials, which develop (or may acquire companies that develop) in-situ sensors and metrology products.",
           "source": {
             "label": "Nova Ltd Form 20-F(2025年度)",
             "label_en": "Nova Ltd Form 20-F (FY2025)",

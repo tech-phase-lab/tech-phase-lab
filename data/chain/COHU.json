@@ -35,8 +35,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Cohuの年次報告は、Jabilの施設にある専用の半導体ATE製造拠点を戦略的パートナーとの関係として挙げている",
-          "text_en": "Cohu's annual report cites dedicated semiconductor ATE manufacturing operations at a Jabil facility among its strategic partner relationships",
+          "text": "CohuはJabilと長年の戦略的パートナー関係にあり、同社施設内に専用の半導体ATE製造拠点を持つ",
+          "text_en": "Cohu has a long-standing strategic partnership with Jabil, including dedicated semiconductor ATE manufacturing operations at a Jabil facility.",
           "source": {
             "label": "Cohu 10-K",
             "label_en": "Cohu 10-K",
@@ -72,8 +72,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "テラダインの年次報告が、コヒューを競合として挙げている",
-          "text_en": "Names Cohu as a competitor in its annual report",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
           "source": {
             "label": "Teradyne 10-K",
             "label_en": "Teradyne 10-K",
@@ -85,8 +85,8 @@
         },
         {
           "type": "rival",
-          "text": "コヒューの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cohu’s annual report",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
           "source": {
             "label": "Cohu 10-K",
             "label_en": "Cohu 10-K",
@@ -109,8 +109,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コヒューの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cohu’s annual report",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
           "source": {
             "label": "Cohu 10-K",
             "label_en": "Cohu 10-K",
@@ -132,8 +132,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "コヒューの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Cohu’s annual report",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
           "source": {
             "label": "Cohu 10-K",
             "label_en": "Cohu 10-K",
@@ -156,8 +156,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Cohuの年次報告は、STMicroelectronicsを連結売上高の10%以上を占めた顧客に挙げている",
-          "text_en": "Cohu's annual report lists STMicroelectronics among customers with 10% or more of consolidated net sales",
+          "text": "STMicroelectronicsは、Cohuの連結売上高の10%以上を占めた顧客となった",
+          "text_en": "STMicroelectronics was a customer comprising 12.0% of Cohu's consolidated net sales in 2023.",
           "source": {
             "label": "Cohu 10-K",
             "label_en": "Cohu 10-K",
@@ -182,8 +182,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Cohuの年次報告は、Analog Devicesを連結売上高の10%以上を占めた顧客に挙げている",
-          "text_en": "Cohu's annual report lists Analog Devices among customers with 10% or more of consolidated net sales",
+          "text": "Analog Devicesは、Cohuの連結売上高の10%以上を占めた大口顧客だった",
+          "text_en": "Analog Devices was a customer comprising 14.1% of Cohu's consolidated net sales in 2021.",
           "source": {
             "label": "Cohu 10-K",
             "label_en": "Cohu 10-K",

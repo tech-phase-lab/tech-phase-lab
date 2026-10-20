@@ -279,8 +279,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合の1社としてBroadcomを挙げている",
-          "text_en": "Credo’s FY2026 10-K names Broadcom as a principal competitor",
+          "text": "CredoはBroadcomを主な競合の1社に抱える",
+          "text_en": "Broadcom is one of Credo's principal competitors.",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -304,8 +304,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合の1社としてMarvellを挙げている",
-          "text_en": "Credo’s FY2026 10-K names Marvell as a principal competitor",
+          "text": "Marvellは製品面でCredoの主な競合の1社となる",
+          "text_en": "Marvell is one of Credo's principal competitors.",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -317,8 +317,8 @@
         },
         {
           "type": "rival",
-          "text": "Marvellが年次報告で、直接の競合の1社としてCredoを挙げている",
-          "text_en": "Marvell’s FY2026 10-K names Credo among its direct competitors",
+          "text": "Credoは、Marvellと直接競合する企業の1社だ",
+          "text_en": "Credo is one of Marvell's direct competitors.",
           "source": {
             "label": "Marvell 10-K(2026年度)",
             "label_en": "Marvell 10-K (FY2026)",
@@ -340,8 +340,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Credoが年次報告で、主な競合の1社としてAstera Labsを挙げている",
-          "text_en": "Credo’s FY2026 10-K names Astera Labs as a principal competitor",
+          "text": "Astera Labsは、Credoの主な競合の1社を成す",
+          "text_en": "Astera Labs is one of Credo's principal competitors.",
           "source": {
             "label": "Credo 10-K(2026年度)",
             "label_en": "Credo 10-K (FY2026)",
@@ -353,8 +353,8 @@
         },
         {
           "type": "rival",
-          "text": "Astera Labsが年次報告で、主な競合の1社としてCredoを挙げている",
-          "text_en": "Astera Labs’ FY2025 10-K names Credo as a principal competitor",
+          "text": "Credoは、Astera Labsの主な競合の1社として一部の製品・ソリューションで競り合う",
+          "text_en": "Credo is one of Astera Labs' principal competitors for some of its products and solutions.",
           "source": {
             "label": "Astera Labs 10-K(2025年度)",
             "label_en": "Astera Labs 10-K (FY2025)",
@@ -378,8 +378,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MACOMが年次報告で、重要な競合の1社としてCredoを挙げている",
-          "text_en": "MACOM’s FY2025 10-K names Credo as a significant competitor",
+          "text": "Credoは、MACOMにとって重要な競合の1社となる",
+          "text_en": "Credo is one of MACOM's significant competitors.",
           "source": {
             "label": "MACOM 10-K(2025年度)",
             "label_en": "MACOM 10-K (FY2025)",
@@ -401,8 +401,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Cienaが年次報告で、データセンター間接続で今後競合する追加の企業の1社としてCredoを挙げている",
-          "text_en": "Ciena’s FY2025 10-K names Credo among additional competitors it will face in data-center interconnects",
+          "text": "Cienaは、データセンター間接続で今後Credoを追加の競合の1社に迎える見込み",
+          "text_en": "Ciena expects to begin competing with Credo in data-center interconnects.",
           "source": {
             "label": "Ciena 10-K(2025年度)",
             "label_en": "Ciena 10-K (FY2025)",
@@ -426,8 +426,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MaxLinearが年次報告で、主なマーチャント半導体の競合の1社としてCredo Semiconductorを挙げている",
-          "text_en": "MaxLinear’s FY2025 10-K names Credo Semiconductor among its primary merchant semiconductor competitors",
+          "text": "Credoの子会社Credo Semiconductorは、MaxLinearの主な汎用半導体の競合の1社に当たる",
+          "text_en": "Credo Semiconductor, a Credo subsidiary, is one of MaxLinear's primary merchant semiconductor competitors.",
           "source": {
             "label": "MaxLinear 10-K(2025年度)",
             "label_en": "MaxLinear 10-K (FY2025)",

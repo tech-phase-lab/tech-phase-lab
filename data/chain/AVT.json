@@ -27,8 +27,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "NXPの年次報告が、同社の主要な流通パートナー5社の1つとしてAvnetを挙げている",
-          "text_en": "NXP's annual report lists Avnet among its five largest distribution partners",
+          "text": "AvnetはNXPの最大の流通パートナー5社の1社を担う",
+          "text_en": "Avnet is one of NXP's five largest distribution partners.",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -40,8 +40,8 @@
         },
         {
           "type": "up",
-          "text": "NXPの年次報告によると、Avnetは2025年のNXPの売上の23%(2024年は22%)を占めた",
-          "text_en": "NXP's annual report says Avnet accounted for 23% of its revenue in 2025 and 22% in 2024",
+          "text": "Avnetは2025年のNXPの売上の23%(2024年は22%)を占めた",
+          "text_en": "Avnet accounted for 23% of NXP's revenue in 2025 and 22% in 2024",
           "source": {
             "label": "NXP Semiconductors 10-K",
             "label_en": "NXP Semiconductors 10-K",
@@ -166,8 +166,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Navitasが、WT MicroelectronicsとAvnetとの世界的な流通提携を結んだと説明している",
-          "text_en": "Navitas says it forged a strategic and global distribution partnership with WT Microelectronics and Avnet",
+          "text": "GaNと高電圧SiCの普及に向け、NavitasはWT MicroelectronicsおよびAvnetと世界的な流通提携を結んだ",
+          "text_en": "Navitas forged a strategic, global distribution partnership with WT Microelectronics and Avnet to accelerate GaN and high-voltage SiC adoption in AI data centers.",
           "source": {
             "label": "Navitas Semiconductor results の発表",
             "label_en": "Navitas Semiconductor results press release",

@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "液冷のGrace Blackwell GPUを数十万基導入し、Vera Rubinを動かす最初の大手クラウドになるとMicrosoftが説明",
-          "text_en": "Says it has deployed hundreds of thousands of liquid-cooled Grace Blackwell GPUs and will be first to power on Vera Rubin",
+          "text": "Microsoftは液冷のGrace Blackwell GPUを数十万基導入済みで、Vera Rubinを動かす最初の大手クラウドになる",
+          "text_en": "Microsoft has deployed hundreds of thousands of liquid-cooled Grace Blackwell GPUs and will be first to power on Vera Rubin",
           "source": {
             "label": "Microsoft ブログ(2026年3月)",
             "label_en": "Microsoft blog (Mar 2026)",
@@ -52,8 +52,8 @@
         },
         {
           "type": "rival",
-          "text": "NVIDIAが年次報告で、AI計算機能を自社の仕組みに組み込む企業の1社としてMicrosoftを挙げている",
-          "text_en": "NVIDIA’s annual report names Microsoft among companies building accelerated/AI computing into their own solutions",
+          "text": "Microsoftは、AI計算機能を自社の仕組みに組み込む企業の1社として、NVIDIAの競合に入る",
+          "text_en": "Microsoft is one of the companies building accelerated and AI computing into their own solutions, competing with NVIDIA.",
           "source": {
             "label": "NVIDIA 10-K(2026年度)",
             "label_en": "NVIDIA 10-K (FY2026)",
@@ -188,8 +188,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "CoreWeaveが年次報告で、最大の顧客としてMicrosoftを挙げている",
-          "text_en": "CoreWeave’s annual report says Microsoft was its top customer, about 67% of its 2025 revenue",
+          "text": "Microsoftは、CoreWeaveの最大の顧客だ",
+          "text_en": "Microsoft was CoreWeave's top customer, about 67% of its 2025 revenue.",
           "source": {
             "label": "CoreWeave 10-K(2025年度)",
             "label_en": "CoreWeave 10-K (FY2025)",
@@ -348,8 +348,8 @@
         },
         {
           "type": "rival",
-          "text": "Oracleが年次報告で、最も競合する企業の1社としてMicrosoftを挙げている",
-          "text_en": "Oracle’s annual report lists Microsoft among its principal competitors",
+          "text": "Oracleにとって、Microsoftは最も競合する企業の1社に当たる",
+          "text_en": "Microsoft is one of Oracle's principal competitors.",
           "source": {
             "label": "Oracle 10-K(2026年度)",
             "label_en": "Oracle 10-K (FY2026)",
@@ -371,8 +371,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snowflakeが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Snowflake’s annual report names Microsoft among its competitors",
+          "text": "Microsoftは、Snowflakeが競合するパブリッククラウド事業者の一つだ",
+          "text_en": "Microsoft is one of the public cloud providers Snowflake competes with.",
           "source": {
             "label": "Snowflake 10-K",
             "label_en": "Snowflake 10-K",
@@ -394,8 +394,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "SentinelOneが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "SentinelOne’s annual report names Microsoft among its competitors",
+          "text": "Microsoftは、SentinelOneの競合に位置する",
+          "text_en": "Microsoft is a competitor of SentinelOne.",
           "source": {
             "label": "SentinelOne 10-K",
             "label_en": "SentinelOne 10-K",
@@ -417,8 +417,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Pegasystemsが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Pegasystems’s annual report names Microsoft among its competitors",
+          "text": "Pegasystemsの競合にはMicrosoftが名を連ねる",
+          "text_en": "Microsoft is among Pegasystems' competitors.",
           "source": {
             "label": "Pegasystems 10-K",
             "label_en": "Pegasystems 10-K",
@@ -440,8 +440,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Oktaが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Okta’s annual report names Microsoft among its competitors",
+          "text": "Oktaの主な競合はMicrosoftだ",
+          "text_en": "Microsoft is Okta's principal competitor.",
           "source": {
             "label": "Okta 10-K",
             "label_en": "Okta 10-K",
@@ -463,8 +463,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ServiceNowが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "ServiceNow’s annual report names Microsoft among its competitors",
+          "text": "ServiceNowのライバルには、Microsoftなど企業向けアプリケーションソフト大手が並ぶ",
+          "text_en": "ServiceNow competes with enterprise application software vendors such as Microsoft.",
           "source": {
             "label": "ServiceNow 10-K",
             "label_en": "ServiceNow 10-K",
@@ -486,8 +486,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Workdayが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Workday’s annual report names Microsoft among its competitors",
+          "text": "Workdayにとって、Microsoftは競合の一角を占める",
+          "text_en": "Microsoft is among Workday's competitors.",
           "source": {
             "label": "Workday 10-K",
             "label_en": "Workday 10-K",
@@ -509,8 +509,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Zoomが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Zoom’s annual report names Microsoft among its competitors",
+          "text": "ZoomはMicrosoftと競合する",
+          "text_en": "Zoom competes with Microsoft.",
           "source": {
             "label": "Zoom 10-K",
             "label_en": "Zoom 10-K",
@@ -532,8 +532,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Datadogが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Datadog’s annual report names Microsoft among its competitors",
+          "text": "Datadogの競合には、Microsoftも含まれる",
+          "text_en": "Microsoft is among Datadog's competitors.",
           "source": {
             "label": "Datadog 10-K",
             "label_en": "Datadog 10-K",
@@ -555,8 +555,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Palo Alto Networksが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Palo Alto Networks’s annual report names Microsoft among its competitors",
+          "text": "Microsoftは、Palo Alto Networksと競合する大企業の一つだ",
+          "text_en": "Microsoft is one of the large companies Palo Alto Networks competes with.",
           "source": {
             "label": "Palo Alto Networks 10-K",
             "label_en": "Palo Alto Networks 10-K",
@@ -578,8 +578,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Fortinetが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Fortinet’s annual report names Microsoft among its competitors",
+          "text": "FortinetはMicrosoftを競合とする",
+          "text_en": "Fortinet competes with Microsoft.",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -601,8 +601,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MongoDBが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "MongoDB’s annual report names Microsoft among its competitors",
+          "text": "MongoDBが主に競合する既存データベース大手に、Microsoftがある",
+          "text_en": "Microsoft is one of the established legacy database providers MongoDB primarily competes with.",
           "source": {
             "label": "MongoDB 10-K",
             "label_en": "MongoDB 10-K",
@@ -624,8 +624,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Boxが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Box’s annual report names Microsoft among its competitors",
+          "text": "Boxの主な競合の一つが、Microsoftだ",
+          "text_en": "Microsoft is one of Box's primary competitors.",
           "source": {
             "label": "Box 10-K",
             "label_en": "Box 10-K",
@@ -647,8 +647,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Dropboxが年次報告で、競合としてMicrosoftを挙げている",
-          "text_en": "Dropbox’s annual report names Microsoft among its competitors",
+          "text": "Dropboxは、Microsoftとクラウドストレージ市場で競争している",
+          "text_en": "Dropbox competes with Microsoft in the cloud storage market.",
           "source": {
             "label": "Dropbox 10-K",
             "label_en": "Dropbox 10-K",

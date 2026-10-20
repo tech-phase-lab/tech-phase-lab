@@ -23,8 +23,8 @@ export function CompanyIntroductionPanel({ introduction, network, lang }: { intr
         <dd>{introduction[lang][field]}</dd>
       </div>)}
     </dl>
-    {network ? <CompanyNetworkMap key={network.root} graph={network} lang={lang} /> : <div className={styles.maps}>
-      {mapHeadings.map(([topic, ja, en], index) => <section key={topic} className={styles.mapCard} data-topic={topic}>
+    {network ? <CompanyNetworkMap key={network.root} graph={network} lang={lang} /> : mapHeadings.some(([topic]) => introduction[lang][topic]) && <div className={styles.maps}>
+      {mapHeadings.map(([topic, ja, en], index) => introduction[lang][topic] && <section key={topic} className={styles.mapCard} data-topic={topic}>
         <h3><span>0{index + 5}</span>{lang === "ja" ? ja : en}</h3><p>{introduction[lang][topic]}</p>
       </section>)}
     </div>}

@@ -150,8 +150,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ウーバー・テクノロジーズの年次報告が、DoorDashを競合として挙げている",
-          "text_en": "Uber's annual report names DoorDash as a competitor",
+          "text": "ドアダッシュと競合する",
+          "text_en": "Competes with DoorDash",
           "source": {
             "label": "Uber Technologies 10-K",
             "label_en": "Uber Technologies 10-K",
@@ -163,8 +163,8 @@
         },
         {
           "type": "rival",
-          "text": "DoorDashの年次報告が、Uber Eatsを競合として挙げている",
-          "text_en": "DoorDash's annual report names Uber Eats as a competitor",
+          "text": "ドアダッシュと競合する",
+          "text_en": "Competes with DoorDash",
           "source": {
             "label": "DoorDash 10-K",
             "label_en": "DoorDash 10-K",
@@ -187,8 +187,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DoorDashの年次報告が、Amazonを競合として挙げている",
-          "text_en": "DoorDash's annual report names Amazon as a competitor",
+          "text": "ドアダッシュと競合する",
+          "text_en": "Competes with DoorDash",
           "source": {
             "label": "DoorDash 10-K",
             "label_en": "DoorDash 10-K",
@@ -224,8 +224,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "DoorDashの年次報告が、Delivery Heroを競合として挙げている",
-          "text_en": "DoorDash's annual report names Delivery Hero as a competitor",
+          "text": "ドアダッシュと競合する",
+          "text_en": "Competes with DoorDash",
           "source": {
             "label": "DoorDash 10-K",
             "label_en": "DoorDash 10-K",

@@ -34,8 +34,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、Googleを最大の広告枠供給元の1社と位置づけている",
-          "text_en": "The annual report calls Google one of its largest advertising inventory suppliers",
+          "text": "Googleは、The Trade Deskにとって最大の広告枠供給元の1社であり、競合でもある",
+          "text_en": "Google is one of The Trade Desk's largest advertising inventory suppliers and also one of its competitors.",
           "source": {
             "label": "The Trade Desk 10-K",
             "label_en": "The Trade Desk 10-K",
@@ -70,8 +70,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "年次報告が、GoogleやAmazonを大手企業の部門として競合のDSP事業者に挙げている",
-          "text_en": "The annual report names Google and Amazon as divisions of large companies competing as demand-side platform providers",
+          "text": "The Trade DeskはDSP事業で、GoogleやAmazonといった大手企業の部門と競合する",
+          "text_en": "The Trade Desk competes as a demand-side platform provider with divisions of large companies such as Google and Amazon.",
           "source": {
             "label": "The Trade Desk 10-K",
             "label_en": "The Trade Desk 10-K",
@@ -108,8 +108,8 @@
         },
         {
           "type": "tie",
-          "text": "同じ2021年6月15日付の貸付・担保契約(Credit Facility)が記載されている",
-          "text_en": "The same June 15, 2021 Loan and Security Agreement (the Credit Facility) is described",
+          "text": "JPMorgan Chase主導の銀行団と2021年6月15日付の貸付・担保契約(Credit Facility)を結んだ",
+          "text_en": "The Trade Desk and a bank syndicate led by JPMorgan Chase Bank, N.A. as agent entered into the June 15, 2021 Loan and Security Agreement (the Credit Facility)",
           "source": {
             "label": "The Trade Desk 10-K",
             "label_en": "The Trade Desk 10-K",
@@ -312,8 +312,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "旅行・宿泊・移動分野の連携先の1社としてUberを挙げている",
-          "text_en": "Names Uber among the travel, hospitality and mobility companies it integrated with",
+          "text": "Uberは、The Trade Deskが連携を広げた旅行・宿泊・移動分野の企業の1社",
+          "text_en": "The Trade Desk expanded its commerce media ecosystem through integrations with travel, hospitality and mobility companies including Uber.",
           "source": {
             "label": "The Trade Desk 8-K Ex.99.1 earnings release",
             "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",

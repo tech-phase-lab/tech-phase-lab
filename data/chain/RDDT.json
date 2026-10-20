@@ -56,8 +56,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Sprout Socialの年次報告が、主要SNSの1つとしてRedditとの関係を挙げている",
-          "text_en": "Sprout Social's annual report lists Reddit among the leading social networks it has strategic relationships with",
+          "text": "Sprout Socialは、主要SNSの1つであるRedditと戦略的な関係を築いた",
+          "text_en": "Sprout Social has built a strategic relationship with Reddit, one of the leading social networks.",
           "source": {
             "label": "Sprout Social 10-K",
             "label_en": "Sprout Social 10-K",
@@ -105,8 +105,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "スナップの年次報告が、レディットを競合として挙げている",
-          "text_en": "Names Reddit as a competitor in its annual report",
+          "text": "Redditと競合する",
+          "text_en": "Competes with Reddit",
           "source": {
             "label": "Snap 10-K",
             "label_en": "Snap 10-K",
@@ -129,8 +129,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ピンタレストの年次報告が、レディットを競合として挙げている",
-          "text_en": "Names Reddit as a competitor in its annual report",
+          "text": "Redditと競合する",
+          "text_en": "Competes with Reddit",
           "source": {
             "label": "Pinterest 10-K",
             "label_en": "Pinterest 10-K",
@@ -153,8 +153,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "レディットの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Reddit’s annual report",
+          "text": "Redditと競合する",
+          "text_en": "Competes with Reddit",
           "source": {
             "label": "Reddit 10-K",
             "label_en": "Reddit 10-K",

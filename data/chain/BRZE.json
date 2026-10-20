@@ -224,8 +224,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ブレイズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Braze’s annual report",
+          "text": "Brazeと競合する",
+          "text_en": "Competes with Braze",
           "source": {
             "label": "Braze 10-K",
             "label_en": "Braze 10-K",
@@ -247,8 +247,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ブレイズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Braze’s annual report",
+          "text": "Brazeと競合する",
+          "text_en": "Competes with Braze",
           "source": {
             "label": "Braze 10-K",
             "label_en": "Braze 10-K",
@@ -270,8 +270,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ブレイズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Braze’s annual report",
+          "text": "Brazeと競合する",
+          "text_en": "Competes with Braze",
           "source": {
             "label": "Braze 10-K",
             "label_en": "Braze 10-K",
@@ -283,8 +283,8 @@
         },
         {
           "type": "rival",
-          "text": "Klaviyoの年次報告が、ブレイズを競合として挙げている",
-          "text_en": "Names Braze as a competitor in its annual report",
+          "text": "Brazeと競合する",
+          "text_en": "Competes with Braze",
           "source": {
             "label": "Klaviyo 10-K",
             "label_en": "Klaviyo 10-K",

@@ -106,8 +106,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Lamが年次報告で、最も重要な顧客の1社としてTSMCを挙げている",
-          "text_en": "Lam’s annual report names TSMC among its most significant customers",
+          "text": "TSMCはLamの最も重要な顧客の1社に数えられる",
+          "text_en": "TSMC is one of Lam's most significant customers.",
           "source": {
             "label": "Lam Research Form 10-K(2026年度)",
             "label_en": "Lam Research Form 10-K (FY2026)",
@@ -129,8 +129,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ontoが年次報告で、売上の大きな部分を台湾のファウンドリ(TSMCなど)への販売から得ていると記載",
-          "text_en": "Onto’s annual report says it derives substantial revenue from sales to foundries in Taiwan such as TSMC",
+          "text": "Ontoは売上の大きな部分を、TSMCなど台湾のファウンドリへの販売で得ている",
+          "text_en": "Onto derives substantial revenue from sales to foundries in Taiwan such as TSMC",
           "source": {
             "label": "Onto Innovation Form 10-K(2025年度)",
             "label_en": "Onto Innovation Form 10-K (FY2025)",
@@ -151,8 +151,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "NVIDIAが年次報告で、ウエハーの製造をTSMCなどのファウンドリに委託していると記載",
-          "text_en": "NVIDIA’s annual report says it uses foundries such as TSMC to produce its wafers",
+          "text": "NVIDIAのウエハーはTSMCなどのファウンドリが製造を担う",
+          "text_en": "NVIDIA uses foundries such as TSMC to produce its wafers",
           "source": {
             "label": "NVIDIA Form 10-K(2026年度)",
             "label_en": "NVIDIA Form 10-K (FY2026)",
@@ -173,8 +173,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "AMDが年次報告で、7nm以下のウエハーは全てTSMCに依存と記載",
-          "text_en": "AMD’s annual report says it relies on TSMC for all wafers at 7nm or smaller nodes",
+          "text": "AMDは7nm以下のウエハーの全てをTSMCに依存する",
+          "text_en": "AMD relies on TSMC for all wafers at 7nm or smaller nodes",
           "source": {
             "label": "AMD Form 10-K(2025年度)",
             "label_en": "AMD Form 10-K (FY2025)",
@@ -195,8 +195,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Broadcomが年次報告で、前工程の製造の大半をTSMCなどに委託していると記載",
-          "text_en": "Broadcom’s annual report says it outsources most front-end wafer manufacturing to foundries including TSMC",
+          "text": "Broadcomは前工程の製造の大半をTSMCなどに委託している",
+          "text_en": "Broadcom outsources most front-end wafer manufacturing to foundries including TSMC",
           "source": {
             "label": "Broadcom Form 10-K(2025年度)",
             "label_en": "Broadcom Form 10-K (FY2025)",
@@ -217,8 +217,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Qualcommが年次報告で、主なファウンドリの供給元としてTSMCを挙げている",
-          "text_en": "Qualcomm’s annual report names TSMC among its primary foundry suppliers",
+          "text": "TSMCは、Qualcommの主なファウンドリ供給元に含まれる",
+          "text_en": "TSMC is one of Qualcomm's primary foundry suppliers.",
           "source": {
             "label": "Qualcomm Form 10-K(2025年度)",
             "label_en": "Qualcomm Form 10-K (FY2025)",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Astera Labsが年次報告で、全てのICの製造をTSMCに委託(唯一の製造パートナー)と記載",
-          "text_en": "Astera Labs’ annual report says TSMC is its sole manufacturing partner for ICs",
+          "text": "Astera Labsは全てのICの製造をTSMCだけに任せる",
+          "text_en": "Astera Labs partners with TSMC to fabricate all of its ICs, making TSMC its sole manufacturing partner",
           "source": {
             "label": "Astera Labs Form 10-K(2025年度)",
             "label_en": "Astera Labs Form 10-K (FY2025)",
@@ -261,8 +261,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Credoが年次報告で、2026年度はウエハー製造にTSMCだけを使ったと記載",
-          "text_en": "Credo’s annual report says it exclusively used TSMC for wafer production in fiscal 2026",
+          "text": "Credoは2026年度、ウエハー製造にTSMCだけを使った",
+          "text_en": "Credo used only TSMC for wafer production in fiscal 2026",
           "source": {
             "label": "Credo Technology Form 10-K(2026年度)",
             "label_en": "Credo Technology Form 10-K (FY2026)",
@@ -283,8 +283,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Intelが年次報告で、一部の製品でTSMCの生産能力を使っていると記載",
-          "text_en": "Intel’s annual report says it uses TSMC foundry capacity for some tiles or products",
+          "text": "IntelはTSMCの生産能力を一部の製品に使っており、今後も使い続ける見込み",
+          "text_en": "Intel uses TSMC foundry capacity for some tiles and products and expects to continue doing so",
           "source": {
             "label": "Intel Form 10-K(2025年度)",
             "label_en": "Intel Form 10-K (FY2025)",
@@ -295,8 +295,8 @@
         },
         {
           "type": "rival",
-          "text": "Intelが年次報告で、先端プロセス技術の主な競合としてTSMCを挙げている",
-          "text_en": "Intel’s annual report names TSMC as its primary competitor in leading-edge process technology",
+          "text": "先端プロセス技術でIntelが主な競合に置くのは、TSMC",
+          "text_en": "TSMC is Intel's primary competitor in leading-edge process technology.",
           "source": {
             "label": "Intel Form 10-K(2025年度)",
             "label_en": "Intel Form 10-K (FY2025)",
@@ -497,8 +497,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "GlobalFoundriesが年次報告で、主な競合としてTSMC・UMC・SMICを挙げている",
-          "text_en": "GlobalFoundries’ annual report names TSMC, UMC and SMIC as key competitors",
+          "text": "GlobalFoundriesの主な競合は、TSMC、UMC、SMICである",
+          "text_en": "TSMC, UMC and SMIC are key competitors of GlobalFoundries.",
           "source": {
             "label": "GlobalFoundries Form 20-F(2025年度)",
             "label_en": "GlobalFoundries Form 20-F (FY2025)",
@@ -519,8 +519,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Towerが年次報告で、一部の分野でTSMC・UMC・SMICなどのファウンドリと競合すると記載",
-          "text_en": "Tower’s annual report says it competes in some areas with foundries including TSMC, UMC and SMIC",
+          "text": "TowerはTSMC・UMC・SMICなどのファウンドリと一部の分野で競合する",
+          "text_en": "Tower competes in some areas with foundries including TSMC, UMC and SMIC",
           "source": {
             "label": "Tower Semiconductor Form 20-F(2025年度)",
             "label_en": "Tower Semiconductor Form 20-F (FY2025)",

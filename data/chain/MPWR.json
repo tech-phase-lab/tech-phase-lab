@@ -55,8 +55,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "モノリシック・パワー・システムズの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Monolithic Power Systems’s annual report",
+          "text": "モノリシック・パワー・システムズと競合する",
+          "text_en": "Competes with Monolithic Power Systems",
           "source": {
             "label": "Monolithic Power Systems 10-K",
             "label_en": "Monolithic Power Systems 10-K",
@@ -79,8 +79,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アルファ・アンド・オメガ・セミコンダクターの年次報告が、モノリシック・パワー・システムズを競合として挙げている",
-          "text_en": "Names Monolithic Power Systems as a competitor in its annual report",
+          "text": "モノリシック・パワー・システムズと競合する",
+          "text_en": "Competes with Monolithic Power Systems",
           "source": {
             "label": "Alpha and Omega Semiconductor 10-K",
             "label_en": "Alpha and Omega Semiconductor 10-K",
@@ -103,8 +103,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "インディ・セミコンダクターの年次報告が、モノリシック・パワー・システムズを競合として挙げている",
-          "text_en": "Names Monolithic Power Systems as a competitor in its annual report",
+          "text": "モノリシック・パワー・システムズと競合する",
+          "text_en": "Competes with Monolithic Power Systems",
           "source": {
             "label": "indie Semiconductor 10-K",
             "label_en": "indie Semiconductor 10-K",
@@ -127,8 +127,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ラムバスの年次報告が、モノリシック・パワー・システムズを競合として挙げている",
-          "text_en": "Names Monolithic Power Systems as a competitor in its annual report",
+          "text": "モノリシック・パワー・システムズと競合する",
+          "text_en": "Competes with Monolithic Power Systems",
           "source": {
             "label": "Rambus 10-K",
             "label_en": "Rambus 10-K",

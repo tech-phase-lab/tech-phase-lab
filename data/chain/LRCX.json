@@ -154,8 +154,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "成膜とエッチングで主要な競合として実名で記載",
-          "text_en": "Named as a primary competitor in deposition and etch",
+          "text": "Applied Materialsは成膜とエッチングの主要な競合だ",
+          "text_en": "Applied Materials is a primary competitor of Lam in deposition and etch",
           "source": {
             "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
             "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
@@ -176,8 +176,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ALD・PECVD(成膜)で競合として実名で記載",
-          "text_en": "Named as a competitor in ALD and PECVD deposition",
+          "text": "ASMはALD・PECVD(成膜)でも競合する",
+          "text_en": "ASM International competes with Lam in ALD and PECVD deposition",
           "source": {
             "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
             "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
@@ -198,8 +198,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エッチングと湿式洗浄で主要な競合として実名で記載",
-          "text_en": "Named as a primary competitor in etch and wet clean",
+          "text": "Tokyo Electronはエッチングと湿式洗浄で主要な競合となる",
+          "text_en": "Tokyo Electron is a primary competitor of Lam in etch and wet clean",
           "source": {
             "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
             "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
@@ -220,8 +220,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "エッチングで主要な競合として実名で記載",
-          "text_en": "Named as a primary competitor in etch",
+          "text": "日立製作所はエッチングの主要な競合に当たる",
+          "text_en": "Hitachi, Ltd. is a primary competitor of Lam in etch",
           "source": {
             "label": "Lam Research 10-K(2026年6月28日終了の会計年度)",
             "label_en": "Lam Research 10-K (fiscal year ended June 28, 2026)",
@@ -244,8 +244,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ultra Cleanが年次報告で、売上の10%超を占める2大顧客の1社としてLam Researchを挙げている",
-          "text_en": "Ultra Clean’s annual report names Lam Research one of its two largest customers (over 10% of revenue each)",
+          "text": "Ultra Cleanの売上の10%超を占める2大顧客の1社が、Lam Researchだ",
+          "text_en": "Lam Research is one of Ultra Clean's two largest customers, each over 10% of revenue.",
           "source": {
             "label": "Ultra Clean 10-K(2025年度)",
             "label_en": "Ultra Clean 10-K (FY2025)",
@@ -269,8 +269,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Ichorが年次報告で、最上位のOEM顧客・最大の顧客の1社としてLam Researchを挙げている",
-          "text_en": "Ichor’s annual report names Lam Research among its top-tier OEM customers and largest customers",
+          "text": "Lam Researchは、Ichorの最上位OEM顧客であり最大の顧客の1社でもある",
+          "text_en": "Lam Research is one of Ichor's top-tier OEM customers and largest customers.",
           "source": {
             "label": "Ichor 10-K(2025年度)",
             "label_en": "Ichor 10-K (FY2025)",
@@ -419,8 +419,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ALD・PECVDの競合として実名で記載",
-          "text_en": "Named as a competitor in ALD and PECVD",
+          "text": "Wonik IPSはALD・PECVDの競合を担う",
+          "text_en": "Wonik IPS competes with Lam in ALD and PECVD",
           "source": {
             "label": "Lam 10-K(2026年度)",
             "label_en": "Lam 10-K (fiscal 2026)",
@@ -442,8 +442,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "湿式洗浄の主要な競合として実名で記載",
-          "text_en": "Named as a primary competitor in wet clean",
+          "text": "湿式洗浄ではScreen Holdingが主要な競合に入る",
+          "text_en": "Screen Holding is a primary competitor of Lam in wet clean",
           "source": {
             "label": "Lam 10-K(2026年度)",
             "label_en": "Lam 10-K (fiscal 2026)",
@@ -466,8 +466,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ACM Researchが年次報告で、ウエハー洗浄・めっきなどの主要な競合としてLam Researchを挙げている",
-          "text_en": "ACM Research’s annual report lists Lam Research among its principal competitors in wafer cleaning and plating",
+          "text": "ACM Researchは、ウエハー洗浄・めっきなどでLam Researchを主要な競合とみなす",
+          "text_en": "Lam Research is one of ACM Research's principal competitors in wafer cleaning and plating.",
           "source": {
             "label": "ACM Research 10-K(2025年度)",
             "label_en": "ACM Research 10-K (FY2025)",
@@ -489,8 +489,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Novaが年次報告で、工程内センサー・計測の競合としてLAM Researchを挙げている",
-          "text_en": "Nova’s annual report names LAM Research among competitors for in-situ sensors and metrology",
+          "text": "Novaは工程内センサー・計測で、LAM Researchと競い合う",
+          "text_en": "Nova competes with LAM Research in in-situ sensors and metrology.",
           "source": {
             "label": "Nova 20-F(2025年度)",
             "label_en": "Nova 20-F (FY2025)",

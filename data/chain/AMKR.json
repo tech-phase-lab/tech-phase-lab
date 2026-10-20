@@ -37,8 +37,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Latticeの年次報告が、主要な組立委託先の1社としてAmkorを挙げている",
-          "text_en": "Lattice's 10-K lists Amkor as one of two qualified major assembly partners",
+          "text": "Latticeは、Amkorを認定済みの主要な組立委託先の1社とする",
+          "text_en": "Lattice has qualified Amkor as one of its two major assembly partners",
           "source": {
             "label": "Lattice Semiconductor 10-K",
             "label_en": "Lattice Semiconductor 10-K",
@@ -122,8 +122,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Qualcommの年次報告が、主な組立・テスト委託先の1社としてAmkorを挙げている",
-          "text_en": "Qualcomm's 10-K names Amkor among its primary assembly and test suppliers",
+          "text": "Qualcommは、Amkorを主な組立・テスト委託先の1社に使う",
+          "text_en": "Qualcomm uses Amkor as one of its primary assembly and test suppliers",
           "source": {
             "label": "Qualcomm 10-K",
             "label_en": "Qualcomm 10-K",
@@ -183,8 +183,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Cirrus Logicは、主な組立・テスト業者の1社としてAmkorを挙げている",
-          "text_en": "Cirrus Logic lists Amkor among its primary assembly and test houses",
+          "text": "AmkorはCirrus Logicの主要な組立・テスト業者の1社を担う",
+          "text_en": "Amkor is one of Cirrus Logic's primary assembly and test houses",
           "source": {
             "label": "Cirrus Logic 10-K",
             "label_en": "Cirrus Logic 10-K",
@@ -220,8 +220,8 @@
         },
         {
           "type": "down",
-          "text": "AppleのCOOが、TSMCの新工場で作られるApple向けシリコンをAmkorがパッケージする日を待つと述べている",
-          "text_en": "Apple's COO says Apple looks forward to Amkor packaging Apple silicon produced at TSMC's new facility",
+          "text": "AppleのCOOは、TSMCの新工場で作るApple向けシリコンをAmkorがパッケージする日を待ち望む",
+          "text_en": "Apple's COO looks forward to Amkor packaging Apple silicon produced at TSMC's new facility",
           "source": {
             "label": "Amkor Technology 8-K Ex.99 の発表",
             "label_en": "Amkor Technology 8-K Ex.99 press release",
@@ -307,8 +307,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アムコー・テクノロジーの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Amkor Technology’s annual report",
+          "text": "Amkor Technologyと競合する",
+          "text_en": "Competes with Amkor Technology",
           "source": {
             "label": "Amkor Technology 10-K",
             "label_en": "Amkor Technology 10-K",

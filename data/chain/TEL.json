@@ -31,8 +31,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "ASEの年次報告は、TE Connectivity Ltd.から切り出した車載ワイヤレス事業を特別目的会社が取得したと述べている",
-          "text_en": "ASE's annual report says an SPV acquired the automotive wireless business carved out from TE Connectivity Ltd.",
+          "text": "ASEの特別目的会社が、TE Connectivity Ltd.から切り出された車載ワイヤレス事業を買収した",
+          "text_en": "An ASE special purpose vehicle acquired the automotive wireless business carved out from TE Connectivity Ltd.",
           "source": {
             "label": "ASE Technology Holding 20-F",
             "label_en": "ASE Technology Holding 20-F",
@@ -96,8 +96,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "TEコネクティビティの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in TE Connectivity’s annual report",
+          "text": "TE Connectivityと競合する",
+          "text_en": "Competes with TE Connectivity",
           "source": {
             "label": "TE Connectivity 10-K",
             "label_en": "TE Connectivity 10-K",
@@ -109,8 +109,8 @@
         },
         {
           "type": "rival",
-          "text": "アンフェノールの年次報告が、TEコネクティビティを競合として挙げている",
-          "text_en": "Names TE Connectivity as a competitor in its annual report",
+          "text": "TE Connectivityと競合する",
+          "text_en": "Competes with TE Connectivity",
           "source": {
             "label": "Amphenol 10-K",
             "label_en": "Amphenol 10-K",
@@ -133,8 +133,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "TE Connectivityの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in TE Connectivity’s annual report",
+          "text": "TE Connectivityと競合する",
+          "text_en": "Competes with TE Connectivity",
           "source": {
             "label": "TE Connectivity 10-K",
             "label_en": "TE Connectivity 10-K",
@@ -157,8 +157,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "TE Connectivityの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in TE Connectivity’s annual report",
+          "text": "TE Connectivityと競合する",
+          "text_en": "Competes with TE Connectivity",
           "source": {
             "label": "TE Connectivity 10-K",
             "label_en": "TE Connectivity 10-K",
@@ -181,8 +181,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "TE Connectivityの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in TE Connectivity’s annual report",
+          "text": "TE Connectivityと競合する",
+          "text_en": "Competes with TE Connectivity",
           "source": {
             "label": "TE Connectivity 10-K",
             "label_en": "TE Connectivity 10-K",

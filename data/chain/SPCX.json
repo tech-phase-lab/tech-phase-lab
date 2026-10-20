@@ -70,8 +70,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "STMicroelectronicsの年次報告が、主要顧客としてSpaceXを挙げている",
-          "text_en": "STMicroelectronics' annual report lists SpaceX among its major customers",
+          "text": "STMicroelectronicsは、SpaceXを主要顧客に持つ",
+          "text_en": "SpaceX is one of STMicroelectronics' major customers.",
           "source": {
             "label": "STMicroelectronics 20-F",
             "label_en": "STMicroelectronics 20-F",
@@ -191,8 +191,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ASTスペースモバイルの年次報告が、スペースXを競合として挙げている",
-          "text_en": "Names SpaceX as a competitor in its annual report",
+          "text": "SpaceXと競合する",
+          "text_en": "Competes with SpaceX",
           "source": {
             "label": "AST SpaceMobile 10-K",
             "label_en": "AST SpaceMobile 10-K",
@@ -215,8 +215,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "アイレンの年次報告が、スペースXを競合として挙げている",
-          "text_en": "Names SpaceX as a competitor in its annual report",
+          "text": "SpaceXと競合する",
+          "text_en": "Competes with SpaceX",
           "source": {
             "label": "IREN 10-K",
             "label_en": "IREN 10-K",
@@ -239,8 +239,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Planet Labsの年次報告が、SpaceXが直接競合に参入する可能性に言及している",
-          "text_en": "Planet Labs' annual report says SpaceX could offer more advanced or lower priced offerings if it decided to compete with it directly",
+          "text": "SpaceXが直接競合に乗り出せば、Planet Labsより高度で安価な製品を出せる可能性がある",
+          "text_en": "If SpaceX decided to compete directly with Planet Labs, it could offer more advanced or lower priced products.",
           "source": {
             "label": "Planet Labs 10-K",
             "label_en": "Planet Labs 10-K",

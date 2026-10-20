@@ -62,8 +62,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告が、Microsoftをゲーム発売元の競合に挙げている",
-          "text_en": "The annual report lists Microsoft among competing game publishers",
+          "text": "ゲーム発売元のMicrosoftも、Take-Twoの競合に入る",
+          "text_en": "Microsoft competes with Take-Two as a game publisher.",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",
@@ -111,8 +111,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告が、Sonyをゲーム発売元の競合に挙げている",
-          "text_en": "The annual report lists Sony among competing game publishers",
+          "text": "SonyもTake-Twoと競合するゲーム発売元だ",
+          "text_en": "Sony competes with Take-Two as a game publisher.",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",
@@ -148,8 +148,8 @@
         },
         {
           "type": "rival",
-          "text": "年次報告が、Nintendoをゲーム発売元の競合に挙げている",
-          "text_en": "The annual report lists Nintendo among competing game publishers",
+          "text": "Take-Twoは、ゲーム発売元のNintendoと市場で競い合う",
+          "text_en": "Nintendo competes with Take-Two as a game publisher.",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",
@@ -235,8 +235,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Take-Twoの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Take-Two’s annual report",
+          "text": "Take-Two Interactiveと競合する",
+          "text_en": "Competes with Take-Two Interactive",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",
@@ -271,8 +271,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Take-Twoの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Take-Two’s annual report",
+          "text": "Take-Two Interactiveと競合する",
+          "text_en": "Competes with Take-Two Interactive",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",
@@ -320,8 +320,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Take-Twoの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Take-Two’s annual report",
+          "text": "Take-Two Interactiveと競合する",
+          "text_en": "Competes with Take-Two Interactive",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",
@@ -356,8 +356,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Take-Twoの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Take-Two’s annual report",
+          "text": "Take-Two Interactiveと競合する",
+          "text_en": "Competes with Take-Two Interactive",
           "source": {
             "label": "Take-Two Interactive 10-K",
             "label_en": "Take-Two Interactive 10-K",

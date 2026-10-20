@@ -72,8 +72,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "GaNでは、米国拠点のファウンドリ提携先であるGlobalFoundriesとの協業を競争上の強みと位置づけている",
-          "text_en": "Considers its collaboration with US-based foundry partner GlobalFoundries for GaN to be a competitive advantage",
+          "text": "NavitasはGaNで米国拠点のGlobalFoundriesとの協業を競争上の強みとする",
+          "text_en": "Navitas treats its collaboration with US-based foundry partner GlobalFoundries for GaN as a competitive advantage",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -131,8 +131,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "800 VDC配電の電力供給先として、NVIDIA Rubin Ultraプラットフォームを挙げている",
-          "text_en": "Cites the NVIDIA Rubin Ultra platform as infrastructure powered by 800 VDC distribution",
+          "text": "800 VDC配電は、NVIDIA Rubin Ultraプラットフォームなどの先端インフラに電力を供給する",
+          "text_en": "800 VDC distribution powers advanced infrastructure such as the NVIDIA Rubin Ultra platform",
           "source": {
             "label": "NVTS / NVIDIA — official relationship source; checked October 17, 2026",
             "label_en": "NVTS / NVIDIA — official relationship source; checked October 17, 2026",
@@ -153,8 +153,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -176,8 +176,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -189,8 +189,8 @@
         },
         {
           "type": "rival",
-          "text": "Power Integrationsの年次報告が、ナビタス・セミコンダクターを競合として挙げている",
-          "text_en": "Names Navitas Semiconductor as a competitor in its annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Power Integrations 10-K",
             "label_en": "Power Integrations 10-K",
@@ -212,8 +212,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -235,8 +235,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -258,8 +258,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -281,8 +281,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",
@@ -304,8 +304,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ナビタス・セミコンダクターの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Navitas Semiconductor’s annual report",
+          "text": "Navitas Semiconductorと競合する",
+          "text_en": "Competes with Navitas Semiconductor",
           "source": {
             "label": "Navitas Semiconductor 10-K",
             "label_en": "Navitas Semiconductor 10-K",

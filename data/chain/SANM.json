@@ -32,8 +32,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Arista Networksの年次報告が、主要な製造パートナーとしてSanminaを挙げている",
-          "text_en": "Arista Networks' 10-K names Sanmina among its primary manufacturing partners",
+          "text": "Sanminaは、Arista Networksの主要な製造パートナーを担う",
+          "text_en": "Sanmina is one of Arista Networks' primary manufacturing partners.",
           "source": {
             "label": "Arista Networks 10-K",
             "label_en": "Arista Networks 10-K",
@@ -106,8 +106,8 @@
         },
         {
           "type": "tie",
-          "text": "AMDの年次報告によると、AMDは2025年10月にZTのデータセンター製造事業をSanminaに現金24億ドルと同社株式120万株で売却した",
-          "text_en": "AMD's 10-K says that in October 2025 it sold the ZT data center infrastructure manufacturing business to Sanmina for $2.4 billion in cash and 1.2 million shares of Sanmina common stock",
+          "text": "AMDは2025年10月、ZTのデータセンター製造事業をSanminaに現金24億ドルと同社株式120万株で売却した",
+          "text_en": "AMD sold the ZT data center infrastructure manufacturing business to Sanmina in October 2025 for $2.4 billion in cash and 1.2 million shares of Sanmina common stock",
           "source": {
             "label": "AMD 10-K",
             "label_en": "AMD 10-K",
@@ -233,8 +233,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サンミナの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in Sanmina’s annual report",
+          "text": "Sanminaと競合する",
+          "text_en": "Competes with Sanmina",
           "source": {
             "label": "Sanmina 10-K",
             "label_en": "Sanmina 10-K",
@@ -246,8 +246,8 @@
         },
         {
           "type": "rival",
-          "text": "ベンチマーク・エレクトロニクスの年次報告が、サンミナを競合として挙げている",
-          "text_en": "Names Sanmina as a competitor in its annual report",
+          "text": "Sanminaと競合する",
+          "text_en": "Competes with Sanmina",
           "source": {
             "label": "Benchmark Electronics 10-K",
             "label_en": "Benchmark Electronics 10-K",

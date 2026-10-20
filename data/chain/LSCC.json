@@ -70,8 +70,8 @@
         },
         {
           "type": "up",
-          "text": "シリコンウェハーの調達先のファウンドリとしてUMCを挙げている",
-          "text_en": "Lattice lists UMC among the foundry partners from which it sources silicon wafers",
+          "text": "UMCは、シリコンウェハーの調達先となるファウンドリだ",
+          "text_en": "UMC is one of the foundry partners from which Lattice sources silicon wafers.",
           "source": {
             "label": "Lattice Semiconductor 10-K",
             "label_en": "Lattice Semiconductor 10-K",
@@ -214,8 +214,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "AMDの年次報告が、ラティスセミコンダクターを競合として挙げている",
-          "text_en": "Names Lattice Semiconductor as a competitor in its annual report",
+          "text": "ラティスセミコンダクターと競合する",
+          "text_en": "Competes with Lattice Semiconductor",
           "source": {
             "label": "AMD 10-K",
             "label_en": "AMD 10-K",

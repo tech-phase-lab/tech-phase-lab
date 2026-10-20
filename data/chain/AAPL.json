@@ -178,8 +178,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Qualcommが年次報告で、2025年度の売上の10%以上を占める顧客・ライセンス先の1社としてAppleを挙げている",
-          "text_en": "Qualcomm’s annual report lists Apple among customers/licensees each accounting for 10% or more of fiscal 2025 revenues",
+          "text": "Appleは、Qualcommの2025年度の売上の10%以上を占める顧客・ライセンス先の1社だ",
+          "text_en": "Apple is one of the customers/licensees that each account for 10% or more of Qualcomm's fiscal 2025 revenues",
           "source": {
             "label": "Qualcomm 10-K(2025年度)",
             "label_en": "Qualcomm 10-K (FY2025)",
@@ -354,8 +354,8 @@
         },
         {
           "type": "tie",
-          "text": "Apple製品でGoogle検索を提供するライセンスの収入を得ていると記載",
-          "text_en": "Earns revenue from licensing arrangements with Google to offer Google search on Apple platforms",
+          "text": "AppleはGoogleとのライセンス契約で、Apple製品にGoogle検索を提供して収入を得る",
+          "text_en": "Apple earns revenue from licensing arrangements with Google to offer Google search on Apple platforms",
           "source": {
             "label": "Apple 10-K(2025年度)",
             "label_en": "Apple 10-K (FY2025)",
@@ -454,8 +454,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Spotifyが年次報告で、競合として機器に自社サービスを事前搭載する企業の1社にAppleを挙げている",
-          "text_en": "Spotify’s annual report names Apple among competitors with devices that preload competing audio services",
+          "text": "Appleは、音声配信サービスを事前搭載した機器を開発してSpotifyと競合する企業の1社だ",
+          "text_en": "Apple competes with Spotify, developing devices with its own audio streaming service preloaded",
           "source": {
             "label": "Spotify 20-F(2025年度)",
             "label_en": "Spotify 20-F (FY2025)",
@@ -477,8 +477,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Garminが年次報告で、フィットネス・アウトドア製品の主な競合としてAppleを挙げている",
-          "text_en": "Garmin’s annual report lists Apple among its principal competitors in fitness and outdoor products",
+          "text": "Garminのフィットネス・アウトドア製品にとって、Appleは主な競合に当たる",
+          "text_en": "Apple is one of Garmin's principal competitors in fitness and outdoor products",
           "source": {
             "label": "Garmin 10-K(2025年度)",
             "label_en": "Garmin 10-K (FY2025)",
@@ -500,8 +500,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Rokuが年次報告で、競合するTV向けストリーミング端末を出す企業としてAppleを挙げている",
-          "text_en": "Roku’s annual report says Apple offers TV streaming devices that compete with Roku devices",
+          "text": "Rokuのストリーミング端末は、TV向けストリーミング端末を出すAppleと競っている",
+          "text_en": "Apple offers TV streaming devices that compete with Roku's streaming devices",
           "source": {
             "label": "Roku 10-K(2025年度)",
             "label_en": "Roku 10-K (FY2025)",
@@ -571,8 +571,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "Skyworksが年次報告で、主要顧客の1社としてAppleを挙げている",
-          "text_en": "Skyworks lists Apple among its key customers",
+          "text": "Appleは、Skyworksの主要顧客の1社だ",
+          "text_en": "Apple is one of Skyworks' key customers",
           "source": {
             "label": "Skyworks 10-K(2025年度)",
             "label_en": "Skyworks 10-K (FY2025)",
@@ -619,8 +619,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Snapが年次報告で、競合する企業の1社としてAppleを挙げている",
-          "text_en": "Snap’s annual report names Apple among companies it competes with",
+          "text": "Appleは、Snapが競合する企業の1社に当たる",
+          "text_en": "Snap competes with Apple",
           "source": {
             "label": "Snap 10-K(2025年度)",
             "label_en": "Snap 10-K (FY2025)",

@@ -42,8 +42,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、x86プロセッサの単一供給元の例としてAMDを挙げている",
-          "text_en": "The annual report names AMD as a single-source supplier of certain x86 processors",
+          "text": "AMDは、HPEにx86プロセッサを供給する単一供給元の一例だ",
+          "text_en": "AMD is a single-source supplier of certain x86 processors to HPE.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -67,8 +67,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、x86プロセッサの単一供給元の例としてIntelを挙げている",
-          "text_en": "The annual report names Intel as a single-source supplier of certain x86 processors",
+          "text": "Intelも、HPEのx86プロセッサの単一供給元に含まれる",
+          "text_en": "Intel is a single-source supplier of certain x86 processors to HPE.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -93,8 +93,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、標準ASSPの単一供給元の例としてBroadcomを挙げている",
-          "text_en": "The annual report names Broadcom as a single-source supplier of industry standard ASSPs",
+          "text": "Broadcomは、HPEの標準ASSPの単一供給元となる",
+          "text_en": "Broadcom is a single-source supplier of industry standard ASSPs to HPE.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -108,8 +108,8 @@
         },
         {
           "type": "rival",
-          "text": "HPEの年次報告が、インフラ・クラウド管理ソフトの主な競合としてBroadcomを挙げている",
-          "text_en": "Named as a primary competitor in infrastructure and cloud management software in HPE's annual report",
+          "text": "BroadcomはHPEのインフラ・クラウド管理ソフトの主な競合に当たる",
+          "text_en": "Broadcom is a primary competitor of HPE in infrastructure and cloud management software.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -132,8 +132,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "年次報告が、GPUの単一供給元の例としてNVIDIAを挙げている",
-          "text_en": "The annual report names NVIDIA as a single-source supplier of GPUs",
+          "text": "NVIDIAは、HPEにGPUを供給する単一供給元の一例だ",
+          "text_en": "NVIDIA is a single-source supplier of GPUs to HPE.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -206,8 +206,8 @@
         },
         {
           "type": "tie",
-          "text": "HPEの年次報告が、DXC Tax Matters Agreementについて説明している",
-          "text_en": "The annual report describes the DXC Tax Matters Agreement",
+          "text": "HPEとDXCテクノロジーの間には、DXC Tax Matters Agreementが存在する",
+          "text_en": "HPE and DXC Technology are party to the DXC Tax Matters Agreement.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -269,8 +269,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HPEの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in HPE’s annual report",
+          "text": "ヒューレット・パッカード・エンタープライズと競合する",
+          "text_en": "Competes with Hewlett Packard Enterprise",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -282,8 +282,8 @@
         },
         {
           "type": "rival",
-          "text": "アリスタネットワークスの年次報告が、HPEを競合として挙げている",
-          "text_en": "Names HPE as a competitor in its annual report",
+          "text": "ヒューレット・パッカード・エンタープライズと競合する",
+          "text_en": "Competes with Hewlett Packard Enterprise",
           "source": {
             "label": "Arista Networks 10-K",
             "label_en": "Arista Networks 10-K",
@@ -306,8 +306,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HPEの年次報告が、データセンター・インフラの主な競合としてシスコを挙げている",
-          "text_en": "Named as a primary competitor in data center infrastructure in HPE’s annual report",
+          "text": "シスコは、データセンター・インフラでHPEの主な競合を担う",
+          "text_en": "Cisco is a primary competitor of HPE in data center infrastructure.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -330,8 +330,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "HPEの年次報告が、金融サービス事業の競合としてIBM Global Financingを挙げている",
-          "text_en": "Named in HPE’s annual report as a competitor of its Financial Services business (IBM Global Financing)",
+          "text": "IBM Global Financingは、HPEの金融サービス事業の競合である",
+          "text_en": "IBM Global Financing competes with HPE's Financial Services business.",
           "source": {
             "label": "Hewlett Packard Enterprise 10-K",
             "label_en": "Hewlett Packard Enterprise 10-K",
@@ -355,8 +355,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "シエナの年次報告が、ヒューレット・パッカード・エンタープライズを競合として挙げている",
-          "text_en": "Names Hewlett Packard Enterprise as a competitor in its annual report",
+          "text": "ヒューレット・パッカード・エンタープライズと競合する",
+          "text_en": "Competes with Hewlett Packard Enterprise",
           "source": {
             "label": "Ciena 10-K",
             "label_en": "Ciena 10-K",
@@ -379,8 +379,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "フォーティネットの年次報告が、ヒューレット・パッカード・エンタープライズを競合として挙げている",
-          "text_en": "Names Hewlett Packard Enterprise as a competitor in its annual report",
+          "text": "ヒューレット・パッカード・エンタープライズと競合する",
+          "text_en": "Competes with Hewlett Packard Enterprise",
           "source": {
             "label": "Fortinet 10-K",
             "label_en": "Fortinet 10-K",
@@ -403,8 +403,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "ニュータニックスの年次報告が、ヒューレット・パッカード・エンタープライズを競合として挙げている",
-          "text_en": "Names Hewlett Packard Enterprise as a competitor in its annual report",
+          "text": "ヒューレット・パッカード・エンタープライズと競合する",
+          "text_en": "Competes with Hewlett Packard Enterprise",
           "source": {
             "label": "Nutanix 10-K",
             "label_en": "Nutanix 10-K",

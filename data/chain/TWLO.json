@@ -64,8 +64,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "リングセントラルの年次報告が、Twilioを競合として挙げている",
-          "text_en": "Names Twilio as a competitor in its annual report",
+          "text": "トゥイリオと競合する",
+          "text_en": "Competes with Twilio",
           "source": {
             "label": "RingCentral 10-K",
             "label_en": "RingCentral 10-K",
@@ -88,8 +88,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "8x8の年次報告が、Twilioを競合として挙げている",
-          "text_en": "Names Twilio as a competitor in its annual report",
+          "text": "トゥイリオと競合する",
+          "text_en": "Competes with Twilio",
           "source": {
             "label": "8x8 2026年度 Form 10-K · Communications competition",
             "label_en": "8x8 FY2026 Form 10-K · Communications competition",

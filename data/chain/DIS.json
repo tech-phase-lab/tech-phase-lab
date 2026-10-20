@@ -26,8 +26,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Disneyの年次報告が、物理媒体の流通を第三者に許諾し、第三者がAmazonなどの小売に販売すると述べている",
-          "text_en": "Disney's annual report says it licenses physical distribution rights to third parties who sell to retailers such as Amazon",
+          "text": "Disneyは物理媒体の流通権を第三者に許諾し、その第三者がAmazonなどの小売に販売する。",
+          "text_en": "Disney licenses physical distribution rights to third parties, who sell to retailers such as Amazon.",
           "source": {
             "label": "Disney 10-K",
             "label_en": "Disney 10-K",
@@ -39,8 +39,8 @@
         },
         {
           "type": "down",
-          "text": "Disneyの年次報告が、電子版をAmazonなどのe-tailer経由で配信すると述べている",
-          "text_en": "Disney's annual report says it distributes electronic formats through e-tailers such as Amazon",
+          "text": "Disneyの電子版は、Amazonなどのe-tailer経由で配信される。",
+          "text_en": "Disney distributes electronic formats through e-tailers such as Amazon.",
           "source": {
             "label": "Disney 10-K",
             "label_en": "Disney 10-K",
@@ -62,8 +62,8 @@
       "relations": [
         {
           "type": "down",
-          "text": "Disneyの年次報告が、電子版をAppleなどのe-tailer経由で配信すると述べている",
-          "text_en": "Disney's annual report says it distributes electronic formats through e-tailers such as Apple",
+          "text": "Disneyは電子版をAppleなどのe-tailerで配信する。",
+          "text_en": "Disney distributes electronic formats through e-tailers such as Apple.",
           "source": {
             "label": "Disney 10-K",
             "label_en": "Disney 10-K",
@@ -85,8 +85,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Foxの年次報告が、21CFとDisneyとの関係を定める分離・配分契約を結んでいると述べている",
-          "text_en": "Fox's annual report says it is party to a separation and distribution agreement governing its relationship with 21CF and Disney",
+          "text": "Foxは、21CFおよびDisneyとの関係の一部を、分離・配分契約で定めている。",
+          "text_en": "Fox is party to a separation and distribution agreement that governs certain aspects of its relationship with 21CF and Disney.",
           "source": {
             "label": "Fox Corporation 10-K",
             "label_en": "Fox Corporation 10-K",
@@ -98,8 +98,8 @@
         },
         {
           "type": "tie",
-          "text": "Foxの年次報告が、FOX SportsとDisney/ESPNをUFLの試合の国内配信パートナーとしている",
-          "text_en": "Fox's annual report names FOX Sports and Disney/ESPN as the domestic distribution partners of UFL games",
+          "text": "FOX SportsとDisney/ESPNは、UFLの試合の国内配信パートナーとなる",
+          "text_en": "FOX Sports and Disney/ESPN are the domestic distribution partners of UFL games",
           "source": {
             "label": "Fox Corporation 10-K",
             "label_en": "Fox Corporation 10-K",
@@ -121,8 +121,8 @@
       "relations": [
         {
           "type": "tie",
-          "text": "Disneyの2026年2月の発表が、OpenAIとの提携を挙げている",
-          "text_en": "Disney's February 2026 press release cites the partnership just announced with OpenAI",
+          "text": "Disneyは2026年2月に、OpenAIとの提携を発表した。",
+          "text_en": "In February 2026, Disney announced its partnership with OpenAI.",
           "source": {
             "label": "Disney 8-K Ex.99 の発表",
             "label_en": "Disney 8-K Ex.99 press release",

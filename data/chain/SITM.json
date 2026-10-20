@@ -78,8 +78,8 @@
       "relations": [
         {
           "type": "up",
-          "text": "SiTimeは、MEMSタイミング製品とアナログ回路の主要な製造委託先・供給元として、Bosch、TSMC、UMC、Teledyneを挙げている",
-          "text_en": "SiTime relies on Bosch, TSMC, UMC, and Teledyne as its primary foundries and suppliers for MEMS timing devices and analog circuits",
+          "text": "SiTimeは、MEMSタイミング製品とアナログ回路の製造を主にBosch、TSMC、UMC、Teledyneに頼る",
+          "text_en": "SiTime relies on Bosch, TSMC, UMC and Teledyne as its primary foundries and suppliers for MEMS timing devices and analog circuits.",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
@@ -204,8 +204,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サイタイムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in SiTime’s annual report",
+          "text": "SiTimeと競合する",
+          "text_en": "Competes with SiTime",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
@@ -228,8 +228,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サイタイムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in SiTime’s annual report",
+          "text": "SiTimeと競合する",
+          "text_en": "Competes with SiTime",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
@@ -252,8 +252,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サイタイムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in SiTime’s annual report",
+          "text": "SiTimeと競合する",
+          "text_en": "Competes with SiTime",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
@@ -276,8 +276,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サイタイムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in SiTime’s annual report",
+          "text": "SiTimeと競合する",
+          "text_en": "Competes with SiTime",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
@@ -300,8 +300,8 @@
       "relations": [
         {
           "type": "rival",
-          "text": "サイタイムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in SiTime’s annual report",
+          "text": "SiTimeと競合する",
+          "text_en": "Competes with SiTime",
           "source": {
             "label": "SiTime 10-K",
             "label_en": "SiTime 10-K",
