@@ -2,8 +2,9 @@
 
 Current status: the dedicated PRO database and backend are deployed. Following
 explicit owner approval at 14:47 JST, PRO now references the existing Sandbox app
-credentials and has its own product, two monthly plans and webhook. Purchases are
-still disabled. See the latest dated entries below for IDs and acceptance evidence.
+credentials and has its own product, two monthly plans and webhook. Owner-only Sandbox checkout is now enabled for acceptance; public customer checkout
+and production membership projection remain disabled. See the latest dated entries
+below for IDs and acceptance evidence.
 Earlier sections record implementation stages; their "not provisioned" statements
 describe those earlier stages, not the current infrastructure.
 
@@ -396,3 +397,84 @@ PRO access are shown separately. The return URL now points to the dedicated page
 Planned activation is restricted to this one owner in Sandbox for buyer acceptance;
 it is not customer checkout or production launch. PRO backup/restore and production
 projection remain launch gates. No real-money purchase is authorized by this switch.
+
+## 2026-10-20 15:18 JST — Owner checkout deployed and provider create verified
+
+Published `accf4368803ab8dbe302bb759f90733be79aa93d`, preserving parallel
+RESOLUTE documentation through `fb27c78`. Final Node 1,243, Python 2,523, build,
+lint (0 errors/5 existing warnings), compileall and diff check passed. Initial
+concurrent build exited 137; rerun after Node tests completed succeeded.
+GitHub tree matched local `a3fd9ace055e045abce3956c3872e6072caf5214`.
+
+Railway `cd64d770-71ef-44a6-9aff-1d085693bda3` SUCCESS, pinned to `accf436`.
+Vercel `dpl_76WYprEUMqBoep3WXhrQyuFLnJHN` READY on the same commit.
+Only the exact-owner Sandbox purchase switches were enabled, on the existing
+preview branch and dedicated Sandbox runtime. Production settings unchanged.
+
+Actual acceptance helper `7c6b466c-2dbd-4698-af14-e780fa66dfe8` SUCCESS logged
+`TECH_PHASE_CHECKOUT_ACCEPTANCE_OK`: wrong owner status 403; empty owner status
+read before creation; JPY create 200 and repeated create 200 returned the same
+contract; reloaded status is approval_pending and FREE. Local contract UUID
+`1608c7d4-cc97-4ccc-a4f5-d7eb920dfbf8`. Leave this contract for buyer approval;
+do not create another one or delete it. Both returned approval URLs were Sandbox.
+Runtime HTTP logs also show POST `/webhooks/paypal/sandbox` 200 after creation;
+this is not yet a completed-payment notification or a verified paid period.
+
+The helper's temporary service token was blanked and source retired. Retirement
+deployment `bd5bab4a-08f9-4697-881c-3051d35bfe27` SUCCESS logged the retired marker.
+No Sandbox buyer approval, actual charge, renewal, cancellation, production Clerk
+write or PRO backup/restore acceptance has occurred. Next user action: open
+`/research/account/billing` as the owner and resume the JPY Sandbox approval.
+Use a Sandbox buyer account; then Verify payment. The user's production PRO
+status is deliberately independent. GitHub Actions `39379392059` was in progress
+at last observation; do not mark unobserved CI or buyer acceptance as passed.
+
+Post-deploy Vercel check with an approved temporary share cookie: unsigned API
+readiness returned 401/sign-in. The owner page streamed a Next redirect to the
+account login (HTTP 200 shell containing redirect, no checkout heading). Do not
+interpret that streaming status as an unauthenticated checkout render. Actual
+owner browser session and buyer approval remain user-interactive checks. Final
+operational evidence is staged locally for the next publication batch.
+
+## 2026-10-20 — First buyer approval exposed provider billing-clock mismatch
+
+Buyer approved the existing JPY contract; do not create another checkout.
+Read-only diagnostic `162b82a1-f6fa-414a-9eff-199905eb06f6` found ACTIVE,
+matching contract/custom/plan IDs, one COMPLETED JPY 2,980 transaction at
+2026-10-20T06:38:15Z, zero outstanding balance and zero failed payments.
+Only whitelisted non-PII comparison flags, amounts, dates and statuses were logged.
+The broader diagnostic was rejected by automatic review before execution; it was
+replaced with the minimal-field diagnostic. Temporary provider/DB references were
+blanked and the helper retired afterward.
+
+Root cause: start_time was 2026-10-20T06:17:10Z, while PayPal's next_billing_time
+was 2026-11-20T10:00:00Z. The original exact-clock monthly comparison rejected a
+valid completed payment (409 for both webhook and manual reconciliation).
+PayPal documents next_billing_time as the next billing date/time; it does not
+promise the creation clock is retained:
+https://developer.paypal.com/api/subscriptions/v1/definitions/subscription/
+
+Correction uses the provider clock only on the expected monthly calendar date;
+transaction, amount, currency, cycle, outstanding balance, subscription identity
+and double-read consistency checks remain required. Other calendar dates remain
+manual review. Month-end dates still derive from the original anchor. Cancelled
+contracts without a next billing date retain only a previously verified immutable
+period for the exact transaction, never a guessed new expiry. Migration 003
+replaces the old elapsed-duration check (28–31 days) with a bounded 27–<32 day
+window because the first monthly period can exceed 31 days by the clock shift.
+Exact monthly calendar validation stays in the application. No rows or privileges
+are changed; both existing-row preservation and invalid-duration rejection are tested.
+UI errors now read contract status once without retrying a mutation, so a failed
+payment check does not leave an old approval-pending state displayed.
+
+Regression fixtures cover the observed provider clock, repeated reconciliation,
+cancellation without next billing date, exact transaction/owner lookup isolation,
+renewal at month-end and continued rejection of wrong amounts/currencies/statuses
+or an unexpected billing date. Deployment and live recovery are still pending.
+
+Local final gates on integrated remote `7875e99`: Node 1,247 passed, Python 2,523
+passed, production build passed, lint 0 errors/5 existing warnings, compileall and
+diff check passed. Migration helper `b9bdf46d-07a6-4180-a15c-0d9e6d347258` SUCCESS
+confirmed `PRO_BILLING_CLOCK_MIGRATION_OK` with rows preserved, using SET LOCAL ROLE
+to the PRO-only NOLOGIN owner in the explicitly selected PRO Sandbox database.
+The temporary administrator reference was blanked immediately afterward.

@@ -39,6 +39,13 @@ export function billingStore(pool) {
     async get(userId, id) {
       return (await pool.query(`SELECT * FROM ${S}.subscriptions WHERE user_id=$1 AND id=$2`,[userId,id])).rows[0] ?? null;
     },
+    async paidPeriod(userId, id, transactionId) {
+      const row = (await pool.query(`SELECT r.period_start,r.period_end FROM ${S}.periods r
+        JOIN ${S}.payments p ON p.transaction_id=r.transaction_id
+        JOIN ${S}.subscriptions s ON s.id=p.subscription_id
+        WHERE s.user_id=$1 AND s.id=$2 AND p.transaction_id=$3`,[userId,id,transactionId])).rows[0];
+      return row ? { periodStart:new Date(row.period_start).toISOString(), periodEnd:new Date(row.period_end).toISOString() } : null;
+    },
     async providerState(userId, id, state) {
       const states={ACTIVE:'active',SUSPENDED:'suspended',CANCELLED:'cancelled',EXPIRED:'expired',
         APPROVAL_PENDING:'approval_pending',APPROVED:'approval_pending'};

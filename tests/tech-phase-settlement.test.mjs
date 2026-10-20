@@ -17,7 +17,7 @@ const payment=(count=1)=>({id:'TX-'+count,status:'COMPLETED',time:monthlyBoundar
 async function database(work) {
  const db=new PGlite();
  try {
-  for(const name of ['001_billing_sandbox.sql','002_paid_periods_sandbox.sql'])await db.exec(readFileSync(new URL('../db/tech-phase/'+name,import.meta.url),'utf8'));
+  for(const name of ['001_billing_sandbox.sql','002_paid_periods_sandbox.sql','003_provider_billing_clock.sql'])await db.exec(readFileSync(new URL('../db/tech-phase/'+name,import.meta.url),'utf8'));
   const pool={query:(...args)=>db.query(...args),connect:async()=>({query:(...args)=>db.query(...args),release(){}})};
   await work(billingStore(pool),db);
  } finally {await db.close();}
@@ -56,7 +56,48 @@ test('only matching paid transaction, cycle, amount and schedule produces a PRO 
  assert.throws(()=>verifiedPeriod(local,remote(),[payment(),payment()],plans,now));
  assert.throws(()=>verifiedPeriod(local,remote(),[],plans,now));
  const cancelled=remote();cancelled.status='CANCELLED';delete cancelled.billing_info.next_billing_time;
- assert.equal(verifiedPeriod(local,cancelled,[payment()],plans,now).periodEnd,result.periodEnd);
+ assert.throws(()=>verifiedPeriod(local,cancelled,[payment()],plans,now),/REVIEW/);
+ assert.equal(verifiedPeriod(local,cancelled,[payment()],plans,now,result).periodEnd,result.periodEnd);
+});
+test('actual Sandbox billing clock settles once and survives cancellation without a guessed expiry',()=>database(async(store,db)=>{
+ const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const r=remote(row);r.start_time='2026-10-20T06:17:10Z';
+ r.billing_info.last_payment.time='2026-10-20T06:38:15Z';
+ r.billing_info.next_billing_time='2026-11-20T10:00:00Z';
+ const p={...payment(),time:'2026-10-20T06:38:15.000Z'};
+ const clock=Date.parse('2026-10-20T06:46:00Z');
+ const svc=reconciliationService({store,paypal:{get:async()=>structuredClone(r),transactions:async()=>({transactions:[p]})},plans,now:()=>clock});
+ const first=await svc.reconcile(row.user_id,row.id);
+ assert.equal(first.plan,'pro');assert.equal(first.proExpiresAt,'2026-11-20T10:00:00.000Z');
+ await svc.reconcile(row.user_id,row.id);
+ r.status='CANCELLED';delete r.billing_info.next_billing_time;
+ assert.deepEqual(await svc.reconcile(row.user_id,row.id),first);
+ assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.periods')).rows[0].n,1);
+ assert.equal(await store.paidPeriod('other',row.id,p.id),null);
+ assert.equal(await store.paidPeriod(row.user_id,row.id,'OTHER-PAYMENT'),null);
+ // Migration is safe to reapply to a paid ledger and retains bounded duration.
+ await db.exec(readFileSync(new URL('../db/tech-phase/003_provider_billing_clock.sql',import.meta.url),'utf8'));
+ assert.equal((await store.entitlement(row.user_id,clock)).proExpiresAt,first.proExpiresAt);
+ for(const end of ['2026-11-15T06:17:10Z','2026-11-21T06:17:10Z']) {
+  await assert.rejects(db.query('UPDATE tech_phase_billing_sandbox.periods SET period_end=$1 WHERE transaction_id=$2',[end,p.id]),/check constraint/);
+ }
+}));
+test('provider clock respects monthly dates, renewals and month-end anchors without loosening payment evidence',()=>{
+ const r=remote(local,2);r.start_time='2026-01-31T06:17:10Z';
+ r.billing_info.last_payment.time='2026-02-28T10:00:03Z';
+ r.billing_info.next_billing_time='2026-03-31T10:00:00Z';
+ const p={...payment(2),time:r.billing_info.last_payment.time},clock=Date.parse('2026-02-28T10:01:00Z');
+ const verified=verifiedPeriod(local,r,[p],plans,clock);
+ assert.equal(verified.periodStart,'2026-02-28T10:00:00.000Z');
+ assert.equal(verified.periodEnd,'2026-03-31T10:00:00.000Z');
+ for(const next of ['2026-03-30T10:00:00Z','2026-04-01T10:00:00Z','invalid','']) {
+  const copy=structuredClone(r);copy.billing_info.next_billing_time=next;
+  assert.throws(()=>verifiedPeriod(local,copy,[p],plans,clock),/REVIEW/);
+ }
+ for(const patch of [{status:'PENDING'},{amount_with_breakdown:{gross_amount:{currency_code:'JPY',value:'1'}}},
+  {amount_with_breakdown:{gross_amount:{currency_code:'USD',value:'2980'}}}]) {
+  assert.throws(()=>verifiedPeriod(local,r,[{...p,...patch}],plans,clock),/REVIEW/);
+ }
 });
 test('reconciliation persists first purchase, renews once, expires, and preserves paid access on cancellation',()=>database(async(store,db)=>{
  const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);

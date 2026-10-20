@@ -71,7 +71,17 @@ export default function BillingScreen() {
       }
       await load(signal);
     } catch (e) {
-      if (!signal?.aborted) { setError(e instanceof Error ? e.message : "billing-unavailable"); setReady(false); }
+      if (!signal?.aborted) {
+        // A failed payment check can still have refreshed the contract state.
+        // Read it once without retrying the mutation or retaining stale approval.
+        setError(e instanceof Error ? e.message : "billing-unavailable"); setReady(false); setSummary(null);
+        if (action === "reconcile" || action === "cancel") {
+          try {
+            const current = billingSummary(await billingRequest("status", undefined, signal));
+            if (!signal?.aborted) setSummary(current);
+          } catch { /* Keep the original error and no stale subscription state. */ }
+        }
+      }
     } finally { locked.current = false; if (!signal?.aborted) setBusy(false); }
   }
   const sub = summary?.subscription;

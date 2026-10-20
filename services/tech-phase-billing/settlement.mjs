@@ -26,7 +26,7 @@ export function assertSubscription(local, remote, plans) {
 // Conservative automatic settlement: only the latest paid regular cycle with a
 // matching completed transaction, no arrears, and a consistent monthly schedule.
 // Dates alone, cycle counts alone, approval and ACTIVE never grant access.
-export function verifiedPeriod(local, remote, transactions, plans, now = Date.now()) {
+export function verifiedPeriod(local, remote, transactions, plans, now = Date.now(), storedPeriod = null) {
   assertSubscription(local,remote,plans);
   const q = offer(local.currency), info = remote.billing_info, cycles = info?.cycle_executions, cycle = cycles?.[0];
   if (!['ACTIVE','CANCELLED','SUSPENDED','EXPIRED'].includes(remote.status) || local.minor !== q.minor ||
@@ -34,13 +34,26 @@ export function verifiedPeriod(local, remote, transactions, plans, now = Date.no
       !Number.isInteger(cycle.cycles_completed) || cycle.cycles_completed < 1 ||
       info.failed_payments_count !== 0 || amountMinor(info.outstanding_balance,q.currency) !== 0 ||
       amountMinor(info.last_payment?.amount,q.currency) !== q.minor) reject();
-  const start = monthlyBoundary(remote.start_time,cycle.cycles_completed - 1);
-  const end = monthlyBoundary(remote.start_time,cycle.cycles_completed);
+  const expectedStart = monthlyBoundary(remote.start_time,cycle.cycles_completed - 1);
+  const expectedEnd = monthlyBoundary(remote.start_time,cycle.cycles_completed);
+  // PayPal's billing clock need not equal the creation/start clock. Accept only
+  // the expected monthly calendar date, using the provider's time on that date.
+  // Never infer extra cycles from an arbitrary next_billing_time.
+  const next = Date.parse(info.next_billing_time);
+  let start, end;
+  if (Number.isFinite(next)) {
+    end = new Date(next).toISOString();
+    start = cycle.cycles_completed === 1 ? expectedStart : expectedStart.slice(0,10) + end.slice(10);
+  } else {
+    // Cancellation can remove next_billing_time. Retain an already verified
+    // immutable period for this exact payment; do not guess a new expiry.
+    if (remote.status === 'ACTIVE' || info.next_billing_time || !storedPeriod) reject();
+    start = storedPeriod.periodStart; end = storedPeriod.periodEnd;
+  }
   const paid = Date.parse(info.last_payment?.time);
-  // Require provider's next billing boundary when supplied. For a cancelled
-  // subscription it may be absent; the same completed cycle evidence is required.
-  if ((remote.status === 'ACTIVE' && !info.next_billing_time) ||
-      (info.next_billing_time && Date.parse(info.next_billing_time) !== Date.parse(end)) ||
+  if (typeof start !== 'string' || typeof end !== 'string' ||
+      !Number.isFinite(Date.parse(start)) || !Number.isFinite(Date.parse(end)) ||
+      start.slice(0,10) !== expectedStart.slice(0,10) || end.slice(0,10) !== expectedEnd.slice(0,10) ||
       !Number.isFinite(paid) || paid < Date.parse(start) || paid >= Date.parse(end) || paid > now ||
       !Array.isArray(transactions)) reject();
   const matches = transactions.filter(t => Date.parse(t.time) === paid);
@@ -74,7 +87,10 @@ export function reconciliationService({ store, paypal, plans, now = Date.now }) 
         await store.hold(userId,id,result.transactions.find(t=>['REFUNDED','PARTIALLY_REFUNDED'].includes(t.status)).status);
         return { status:'review-required', ...(await store.entitlement(userId,now())) };
       }
-      const payment = verifiedPeriod(local,latest,result.transactions,plans,now());
+      const matches = result.transactions.filter(t => Date.parse(t.time) === paid);
+      const storedPeriod = !latest.billing_info?.next_billing_time && matches.length === 1
+        ? await store.paidPeriod(userId,id,matches[0].id) : null;
+      const payment = verifiedPeriod(local,latest,result.transactions,plans,now(),storedPeriod);
       await store.recordPayment({ eventId:`reconcile.${payment.transactionId}`,eventType:'PAYMENT.SALE.COMPLETED',id,...payment });
       // A crash between the payment and period writes remains FREE and is
       // recoverable. Each insert is immutable and keyed by the same transaction.
