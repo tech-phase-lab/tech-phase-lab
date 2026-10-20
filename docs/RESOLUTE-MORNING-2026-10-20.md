@@ -96,3 +96,32 @@ source-validated upstream contract is needed before admitting that lane. The
 shared news pipeline belongs to the other assigned developer; this follow-up
 changes only RESOLUTE intake, not that pipeline. Do not relax evidence/date/body
 requirements just to meet a daily count, or call zero candidates a quiet market.
+
+## 09:54 JST follow-up deployed and live intake checked
+
+Code26a329325eb615dc7e1acb861b9c5d4e01fb0c04 integrated coworker46ffd28e.
+Final local gates: Node1175, Python2508 (211.597s), lint0 errors/5 existing
+warnings, build, compileall and diff check passed. Git Data tree exactly matched
+a5bf9faa1de72848175b42fc5c4c78c8202d9f85 before the non-force branch update.
+
+Morning deployment21d15d62-07ff-484e-b740-3ba6b1caa943 reached SUCCESS.
+Actual00:54:00.860Z preflight: ready, approvedPairs90, publication withheld,
+aiCalls0, writes0. Cron unchanged; no customer publication or daily-claim reset.
+This verifies deployment/preflight only, not the next scheduled generation/save.
+
+Dedicated read-only diagnostic61245e09-ff98-4389-a013-0de5a2041df4 ran the bundled
+unchanged reader/checkIntake/selector at00:54:12.280Z (09:54 JST):
+- generalEnabled=false; generalCount0; officialCount72; inspected72.
+- rejected: body27, unrelated16, noDownsideHeadline29; all other counters0.
+- candidateCount0; outsideDailyWindow0; duplicateHeadline0; overDailyLimit0.
+- unconsumed analyst2/market0; configured-feed-only; historicalReplay=false.
+- aiCalls0; writes0; publication withheld.
+The former Urban substring candidate is no longer admitted. Current candidate
+coverage still yields zero: do not report a recovered daily news service or
+infer that no relevant downside exists in the world.
+
+Diagnostic DB reference remained empty. After the one GET-only check, enabled
+was set false and both news references cleared. Retirement deployment
+bd327cc7-7620-49eb-a27d-104418904032 reached SUCCESS; actual00:54:41.162Z log
+RIZEL_INTAKE_DIAGNOSTIC_DISABLED confirmed. It has no cron, domains or listeners.
+All existing morning/backup/confirmation schedules remain unchanged.
