@@ -6,8 +6,8 @@
   },
   "rows": [
     {
-      "ja": "資金調達",
-      "en": "Financing"
+      "ja": "資金調達・事業売却",
+      "en": "Financing & divestitures"
     },
     {
       "ja": "競合",
@@ -61,6 +61,32 @@
       "name_en": "JPMorgan Chase"
     },
     {
+      "id": "TTMI",
+      "ticker": "TTMI",
+      "name": "TTMテクノロジーズ",
+      "sub": "プリント基板・防衛電子",
+      "sub_en": "PCBs & defense electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MKSは、Ophir Optics事業を現金6億5,000万ドルでTTM Technologiesに売却する最終契約を結んだと発表した",
+          "text_en": "MKS announced a definitive agreement to sell its Ophir Optics business to TTM Technologies in an all-cash transaction for $650 million",
+          "source": {
+            "label": "MKS の発表",
+            "label_en": "MKS press release (SEC 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526424709/mksi-ex99_1.htm",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "MKS Inc. (NASDAQ: MKSI), a global provider of enabling technologies that transform our world, today announced that it has entered into a definitive agreement to sell its Ophir® Optics business to TTM Technologies, Inc. (“TTM”) in an all-cash transaction for $650 million, subject to customary closing adjustments.",
+            "note": "発表された契約で、取引の完了は確認していません。",
+            "note_en": "Announced agreement; completion not confirmed."
+          }
+        }
+      ],
+      "name_en": "TTM Technologies"
+    },
+    {
       "id": "IPGP",
       "ticker": "IPGP",
       "name": "IPG Photonics",
@@ -70,7 +96,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSの年次報告が、競合として挙げている",
+          "text": "MKSインスツルメンツの年次報告が、競合として挙げている",
           "text_en": "Named as a competitor in MKS’s annual report",
           "source": {
             "label": "MKS Inc. 10-K",
@@ -93,7 +119,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSの年次報告が、競合として挙げている",
+          "text": "MKSインスツルメンツの年次報告が、競合として挙げている",
           "text_en": "Named as a competitor in MKS’s annual report",
           "source": {
             "label": "MKS Inc. 10-K",
@@ -116,7 +142,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSの年次報告が、競合として挙げている",
+          "text": "MKSインスツルメンツの年次報告が、競合として挙げている",
           "text_en": "Named as a competitor in MKS’s annual report",
           "source": {
             "label": "MKS Inc. 10-K",
@@ -140,7 +166,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "MKSの年次報告が、競合として挙げている",
+          "text": "MKSインスツルメンツの年次報告が、競合として挙げている",
           "text_en": "Named as a competitor in MKS’s annual report",
           "source": {
             "label": "MKS Inc. 10-K",

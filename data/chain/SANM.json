@@ -10,8 +10,8 @@
       "en": "Customers"
     },
     {
-      "ja": "買収・資金調達",
-      "en": "Acquisition & financing"
+      "ja": "提携・買収・資金調達",
+      "en": "Partnerships, acquisition & financing"
     },
     {
       "ja": "競合",
@@ -118,6 +118,19 @@
             "note": "価格調整の対象となる記載です。",
             "note_en": "Subject to purchase price adjustments."
           }
+        },
+        {
+          "type": "tie",
+          "text": "Sanminaは2025年10月27日の発表で、AMDと戦略的提携を結んだとしている",
+          "text_en": "Sanmina's October 27, 2025 release says Sanmina and AMD have committed to a strategic partnership",
+          "source": {
+            "label": "Sanmina の発表",
+            "label_en": "Sanmina press release",
+            "url": "https://s201.q4cdn.com/209924174/files/doc_news/SANMINA-COMPLETES-ACQUISITION-OF-ZT-SYSTEMS-DATA-CENTER-INFRASTRUCTURE-MANUFACTURING-BUSINESS-FROM-AMD-2025.pdf",
+            "level": "official",
+            "date": "2025-10-27",
+            "quote": "As part of the agreement, Sanmina and AMD have committed to a strategic partnership"
+          }
         }
       ]
     },
@@ -158,6 +171,57 @@
         }
       ],
       "name_en": "Bank of America"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sanminaの事業部門42Qが、Amazon Web Services(AWS)のManufacturing and Industrial Competencyを取得した",
+          "text_en": "Sanmina's 42Q division achieved the Amazon Web Services (AWS) Manufacturing and Industrial Competency",
+          "source": {
+            "label": "Sanmina の発表",
+            "label_en": "Sanmina press release",
+            "url": "https://www.sanmina.com/42q-achieves-aws-manufacturing-and-industrial-competency/",
+            "level": "official",
+            "date": "2023-04-18",
+            "quote": "42Q, a Sanmina division, is a full-featured smart, connected, cloud-based Manufacturing Execution System (MES) solution developed by manufacturers for manufacturers, announced today that it has achieved the Amazon Web Services (AWS) Manufacturing and Industrial Competency.",
+            "note": "事業部門レベルの記載で、2023年の発表です。",
+            "note_en": "Division-level item; announced in 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RELIANCE",
+      "ticker": "Reliance",
+      "name": "リライアンス・インダストリーズ",
+      "sub": "複合企業",
+      "sub_en": "Conglomerate",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SanminaはRelianceの完全子会社Reliance Strategic Business Ventures Limitedと、インド法人への投資による合弁会社の設立で合意した",
+          "text_en": "Sanmina agreed with Reliance Strategic Business Ventures Limited, a wholly-owned subsidiary of Reliance Industries Limited, to create a joint venture through an investment in Sanmina's existing Indian entity",
+          "source": {
+            "label": "Sanmina の発表",
+            "label_en": "Sanmina press release",
+            "url": "https://www.sanmina.com/sanmina-and-reliance-create-manufacturing-joint-venture-in-india/",
+            "level": "official",
+            "date": "2022-03-02",
+            "quote": "Sanmina Corporation (Sanmina) (NASDAQ: SANM), a leading integrated manufacturing solutions company and Reliance Strategic Business Ventures Limited (RSBVL), a wholly-owned subsidiary of Reliance Industries Limited (RIL), India’s largest private sector company, today announced that they have entered into an agreement to create a joint venture through an investment in Sanmina’s existing Indian entity (Sanmina SCI India Private Ltd, “SIPL”).",
+            "note": "子会社(Reliance Strategic Business Ventures)との合意で、2022年の発表です。",
+            "note_en": "Agreement with a subsidiary (Reliance Strategic Business Ventures); announced in 2022."
+          }
+        }
+      ],
+      "name_en": "Reliance Industries"
     },
     {
       "id": "BHE",

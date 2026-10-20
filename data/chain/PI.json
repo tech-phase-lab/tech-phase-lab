@@ -11,8 +11,8 @@
       "above": true
     },
     {
-      "ja": "提携・ライセンス",
-      "en": "Partnerships & licensing"
+      "ja": "提携・ライセンス・顧客",
+      "en": "Partnerships, licensing & customers"
     },
     {
       "ja": "競合・和解",
@@ -132,6 +132,32 @@
         }
       ],
       "name_en": "Microchip Technology"
+    },
+    {
+      "id": "AVY",
+      "ticker": "AVY",
+      "name": "エイブリィ・デニソン",
+      "sub": "素材・RFIDラベル",
+      "sub_en": "Materials & RFID labels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Avery Dennisonの食品小売向けRFIDインレイ「AD IdentiFresh」は、ImpinjのM800シリーズICを活用している",
+          "text_en": "Avery Dennison's AD IdentiFresh RFID inlay series for food retail leverages Impinj's M800 series ICs",
+          "source": {
+            "label": "Impinj website",
+            "label_en": "Impinj website (Avery Dennison announcement)",
+            "url": "https://www.impinj.com/library/blog/avery-dennison-launches-ad-identifresh-to-unlock",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Avery Dennison launches AD IdentiFresh™ to unlock efficiency, freshness and waste reduction in food retail RFID inlay series builds on breakthrough innovation in bakery, meat, deli and produce, leveraging Impinj's M800 series ICs",
+            "note": "Avery Dennisonによる2026年2月の発表で、Impinjのサイトに掲載されています。",
+            "note_en": "Avery Dennison's February 2026 announcement, published on Impinj's website."
+          }
+        }
+      ],
+      "name_en": "Avery Dennison"
     },
     {
       "id": "NXPI",

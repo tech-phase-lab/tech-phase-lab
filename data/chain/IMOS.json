@@ -54,6 +54,21 @@
             "date": "2026-04-14",
             "quote": "We subsequently purchased additional TCP-related testers from Advantest Corporation and assembly equipment from Shibaura Mechatronics Corp."
           }
+        },
+        {
+          "type": "up",
+          "text": "機械設備と付属品の取得の取引相手に、アドバンテストの台湾法人が挙げられている",
+          "text_en": "Advantest Taiwan Inc. is named as the trading counterparty for the acquisition of machinery equipment and related accessories",
+          "source": {
+            "label": "ChipMOS Form 6-K",
+            "label_en": "ChipMOS Form 6-K (Taiwan Stock Exchange filing)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526138852/acquisition_ppe_260402.htm",
+            "level": "official",
+            "date": "2026-04-02",
+            "quote": "Trading counterparty: ADVANTEST TAIWAN INC. Relation with the Company: None",
+            "note": "取引相手は台湾の子会社(Advantest Taiwan)です。",
+            "note_en": "The counterparty is the Taiwan subsidiary (Advantest Taiwan)."
+          }
         }
       ],
       "name_en": "Advantest"
@@ -81,6 +96,32 @@
         }
       ],
       "name_en": "Shibaura Mechatronics"
+    },
+    {
+      "id": "INX",
+      "ticker": "Innolux",
+      "name": "群創光電",
+      "sub": "ディスプレイパネル",
+      "sub_en": "Display panels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ChipMOSが、建物と付帯設備を取得する取引の相手方として群創光電を挙げている",
+          "text_en": "ChipMOS's filing names Innolux as the trading counterparty in its acquisition of building and facilities",
+          "source": {
+            "label": "ChipMOS Form 6-K",
+            "label_en": "ChipMOS Form 6-K (Taiwan Stock Exchange filing)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526099286/acquisition_of_ppe_26031.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Trading counterpart: INNOLUX Corporation; Relation with the Company: None",
+            "note": "提出書類の「取引相手」欄の記載のみです。",
+            "note_en": "Named only as the trading counterparty in the filing."
+          }
+        }
+      ],
+      "name_en": "Innolux"
     },
     {
       "id": "HIMX",

@@ -10,6 +10,10 @@
       "en": "Business acquisition"
     },
     {
+      "ja": "主要株主",
+      "en": "Principal shareholder"
+    },
+    {
       "ja": "競合",
       "en": "Competitors"
     }
@@ -61,7 +65,7 @@
       "name": "オントゥ・イノベーション",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -78,6 +82,31 @@
         }
       ],
       "name_en": "Onto Innovation"
+    },
+    {
+      "id": "Chroma ATE",
+      "ticker": "Chroma",
+      "name": "致茂電子",
+      "sub": "電子計測・試験装置",
+      "sub_en": "Electronic test & measurement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、致茂電子(Chroma ATE)がPriortechと合計でCamtek普通株の38.24%を保有するとしている",
+          "text_en": "The annual report says Priortech and Chroma ATE together beneficially hold 38.24% of Camtek's issued and outstanding ordinary shares",
+          "source": {
+            "label": "Camtek annual report",
+            "label_en": "Camtek annual report (20-F)",
+            "url": "https://www.camtek.com/wp-content/uploads/20-F.pdf",
+            "level": "official",
+            "quote": "As of March 5, 2025, Priortech Ltd. (“Priortech”) and Chroma ATE Inc. (“Chroma”), beneficially hold in the aggregate 38.24% of our issued and outstanding ordinary shares.",
+            "note": "2025年3月5日時点の記載です。",
+            "note_en": "As of March 5, 2025."
+          }
+        }
+      ],
+      "name_en": "Chroma ATE"
     }
   ],
   "far": [],

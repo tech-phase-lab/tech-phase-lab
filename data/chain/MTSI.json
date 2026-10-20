@@ -2,10 +2,15 @@
   "root": {
     "ticker": "MTSI",
     "name": "マコム・テクノロジー・ソリューションズ",
-    "name_en": "MACOM Technology Solutions",
-    "cik": 1493594
+    "cik": 1493594,
+    "name_en": "MACOM Technology Solutions"
   },
   "rows": [
+    {
+      "ja": "仕入先・提携先",
+      "en": "Suppliers & partners",
+      "above": true
+    },
     {
       "ja": "資金調達",
       "en": "Financing"
@@ -27,7 +32,7 @@
       "name": "ゴールドマン・サックス",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
-      "row": 0,
+      "row": 1,
       "relations": [
         {
           "type": "tie",
@@ -53,7 +58,7 @@
       "name": "ブロードコム",
       "sub": "半導体",
       "sub_en": "Semiconductors",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -77,7 +82,7 @@
       "name": "アナログ・デバイセズ",
       "sub": "アナログ半導体",
       "sub_en": "Analog semiconductors",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -101,7 +106,7 @@
       "name": "マックスリニア",
       "sub": "通信用半導体",
       "sub_en": "Communications semiconductors",
-      "row": 1,
+      "row": 2,
       "relations": [
         {
           "type": "rival",
@@ -118,6 +123,94 @@
         }
       ],
       "name_en": "MaxLinear"
+    },
+    {
+      "id": "IQE",
+      "ticker": "IQE",
+      "name": "IQE",
+      "sub": "化合物半導体ウエハー",
+      "sub_en": "Compound semiconductor wafers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MACOMは、IQEを重要な供給元だと述べている",
+          "text_en": "MACOM calls IQE an important supplier",
+          "source": {
+            "label": "MACOM の発表",
+            "label_en": "MACOM press release",
+            "url": "https://ir.macom.com/news-releases/news-release-details/macom-enter-agreements-further-strengthen-supply-chain",
+            "level": "official",
+            "date": "2026-04-27",
+            "quote": "IQE is an important supplier to MACOM."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MACOMは、IQEへの出資を、株式と転換社債で計45百万ポンドとする方針を発表した",
+          "text_en": "MACOM announced a proposed investment in IQE totaling £45 million in equity and a convertible loan note",
+          "source": {
+            "label": "MACOM の発表",
+            "label_en": "MACOM press release",
+            "url": "https://ir.macom.com/news-releases/news-release-details/macom-enter-agreements-further-strengthen-supply-chain",
+            "level": "official",
+            "date": "2026-04-27",
+            "quote": "MACOM’s proposed investment in IQE will total £45 million, in the form of equity and a convertible loan note."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MACOMとSTは、STが製造するシリコン基板上のGaNウエハーを共同開発する契約を発表した",
+          "text_en": "MACOM and ST announced an agreement to develop GaN on Silicon wafers to be manufactured by ST for MACOM",
+          "source": {
+            "label": "MACOM の発表",
+            "label_en": "MACOM press release",
+            "url": "https://ir.macom.com/news-releases/news-release-details/macom-and-stmicroelectronics-bring-gan-silicon-mainstream-rf?ReleaseID=1056555",
+            "level": "official",
+            "date": "2018-02-06",
+            "quote": "MACOM Technology Solutions Holdings, Inc. (NASDAQ: MTSI) (\"MACOM\"), a leading supplier of high-performance RF, microwave, millimeterwave and lightwave semiconductor products, and STMicroelectronics ( NYSE : STM), a global semiconductor leader serving customers across the spectrum of electronics applications, today announced an agreement to develop GaN (Gallium Nitride) on Silicon wafers to be manufactured by ST for MACOM's use across an array of RF applications.",
+            "note": "2018年の発表に基づく記載です。",
+            "note_en": "Based on a 2018 announcement."
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "AAOI",
+      "ticker": "AAOI",
+      "name": "アプライド・オプトエレクトロニクス",
+      "sub": "光トランシーバー",
+      "sub_en": "Optical transceivers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AOIは、100Gトランシーバーに、MACOMのCDR、ドライバー、TIAのチップセットを使う",
+          "text_en": "AOI will use MACOM's CDR, driver and TIA chipsets in its 100G QSFP28 transceivers",
+          "source": {
+            "label": "MACOM の発表",
+            "label_en": "MACOM press release",
+            "url": "https://ir.macom.com/news-releases/news-release-details/macom-and-aoi-collaborate-enable-production-shipments-100g/",
+            "level": "official",
+            "date": "2016-01-26",
+            "quote": "As part of the collaboration, AOI will leverage MACOM's broad portfolio of CDRs, drivers and TIA chipsets in its QSFP28 solution.",
+            "note": "2016年の発表に基づく記載です。",
+            "note_en": "Based on a 2016 announcement."
+          }
+        }
+      ],
+      "name_en": "Applied Optoelectronics"
     }
   ],
   "far": [],

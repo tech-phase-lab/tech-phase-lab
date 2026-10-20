@@ -2,10 +2,14 @@
   "root": {
     "ticker": "ALKT",
     "name": "アルカミ・テクノロジー",
-    "name_en": "Alkami Technology",
-    "cik": 1529274
+    "cik": 1529274,
+    "name_en": "Alkami Technology"
   },
   "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
     {
       "ja": "競合",
       "en": "Competitors"
@@ -21,7 +25,7 @@
       "name": "Q2 Holdings",
       "sub": "デジタルバンキング",
       "sub_en": "Digital banking",
-      "row": 0,
+      "row": 1,
       "relations": [
         {
           "type": "rival",
@@ -37,6 +41,32 @@
           }
         }
       ]
+    },
+    {
+      "id": "PFS",
+      "ticker": "PFS",
+      "name": "プロビデント・ファイナンシャル・サービシズ",
+      "sub": "地域銀行",
+      "sub_en": "Regional bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のProvident Bankが、135店舗網でMANTLの口座開設を稼働させたとAlkamiが発表した",
+          "text_en": "Alkami announced that Provident Bank is live with MANTL Business Account Opening and Retail Account Opening across its 135-branch network",
+          "source": {
+            "label": "Alkami の発表",
+            "label_en": "Alkami press release",
+            "url": "https://www.alkami.com/news/provident-bank-goes-live-with-mantl-business-and-retail-account-opening-across-its-135-branch-network/",
+            "level": "official",
+            "date": "2026-09-24",
+            "quote": "Alkami Technology, Inc. (Nasdaq: ALKT), a digital sales and service platform provider for financial institutions in the U.S., today announced that Provident Bank (Provident) is live with MANTL Business Account Opening and Retail Account Opening across its 135-branch network.",
+            "note": "傘下のProvident Bankとの関係で、Alkamiの子会社MANTLの製品です。",
+            "note_en": "Relationship is with subsidiary Provident Bank, for a product of Alkami's MANTL unit."
+          }
+        }
+      ],
+      "name_en": "Provident Financial Services"
     }
   ],
   "far": [],

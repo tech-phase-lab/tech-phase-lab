@@ -71,6 +71,56 @@
       "name_en": "JPMorgan Chase"
     },
     {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Paylocityは、PNC Bank, National Associationほか複数の貸し手とリボルビング与信契約を結んでいる",
+          "text_en": "Paylocity maintains a revolving credit agreement with PNC Bank, National Association, and other lenders",
+          "source": {
+            "label": "Paylocity annual report",
+            "label_en": "Paylocity annual report (Form 10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1591698/000159169826000069/pcty-20260630.htm",
+            "level": "official",
+            "date": "2026-08-01",
+            "quote": "The Company maintains a revolving credit agreement with PNC Bank, National Association, and other lenders",
+            "note": "資金調達のみの関係で、PNC Bankは子会社です。",
+            "note_en": "Financing relationship only; PNC Bank is a subsidiary."
+          }
+        }
+      ],
+      "name_en": "PNC Financial Services"
+    },
+    {
+      "id": "OKTA",
+      "ticker": "OKTA",
+      "name": "オクタ",
+      "sub": "IDセキュリティ",
+      "sub_en": "Identity security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oktaの連携カタログに、シングルサインオンとユーザー同期を提供するPaylocity連携が掲載されている",
+          "text_en": "Okta's integration catalog lists a Paylocity integration providing single sign-on and user provisioning",
+          "source": {
+            "label": "Okta integration catalog",
+            "label_en": "Okta integration catalog",
+            "url": "https://www.okta.com/integrations/paylocity/",
+            "level": "official",
+            "date": "2026-07-02",
+            "quote": "Okta’s Paylocity Integration provides clients the benefits of single-sign on and user provisioning."
+          }
+        }
+      ],
+      "name_en": "Okta"
+    },
+    {
       "id": "ADP",
       "ticker": "ADP",
       "name": "オートマティック・データ・プロセッシング",

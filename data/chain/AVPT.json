@@ -9,6 +9,10 @@
       "ja": "クラウド提携先",
       "en": "Cloud partners",
       "above": true
+    },
+    {
+      "ja": "対応するSaaS",
+      "en": "Supported SaaS apps"
     }
   ],
   "rivals": [],
@@ -45,6 +49,119 @@
             "level": "official",
             "date": "2026-02-26",
             "quote": "We maintain strategic partnerships with Microsoft, Google, and AWS that incorporate technology, sales, and marketing initiatives."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AvePointのConfidence Platformは、Google GCPの仮想マシンのデータ保護にも対応した",
+          "text_en": "The AvePoint Confidence Platform now supports data protection for Google GCP Virtual Machines",
+          "source": {
+            "label": "AvePoint の発表",
+            "label_en": "AvePoint press release",
+            "url": "https://www.avepoint.com/news/avepoint-expands-data-protection-solutions-and-agentic-ai-support-within-the-avepoint-confidence-platform",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "The Confidence Platform also now supports data protection for Google GCP Virtual Machines, bringing secure and flexible backup technology to more infrastructure sources and further supporting multi-cloud customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvePointは、Microsoftとの20年にわたる提携の節目として、Microsoft 365 Backupとの連携を発表した",
+          "text_en": "AvePoint announced integration with Microsoft 365 Backup as the latest milestone in its 20-year partnership with Microsoft",
+          "source": {
+            "label": "AvePoint の発表",
+            "label_en": "AvePoint press release",
+            "url": "https://avepoint.com/news/avepoint-expands-20-year-microsoft-relationship-with-microsoft-365-backup-enhancing-data-resiliency-suite",
+            "level": "official",
+            "date": "2023-07-20",
+            "quote": "AvePoint (NASDAQ: AVPT), the global leader in data security, governance, and resilience, today announced the evolution of its Cloud Backup offering and the latest milestone in its 20-year partnership with Microsoft, working with them to integrate with Microsoft 365 Backup",
+            "note": "2023年の発表です。",
+            "note_en": "Announced in 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MNDY",
+      "ticker": "MNDY",
+      "name": "monday.com",
+      "sub": "業務管理SaaS",
+      "sub_en": "Work management SaaS",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvePointのConfidence Platformは、monday.comのデータバックアップと保護に対応している",
+          "text_en": "The AvePoint Confidence Platform provides automated data backup and protection for Monday.com",
+          "source": {
+            "label": "AvePoint の発表",
+            "label_en": "AvePoint press release",
+            "url": "https://www.avepoint.com/news/avepoint-expands-data-protection-solutions-and-agentic-ai-support-within-the-avepoint-confidence-platform",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "The expansion of AvePoint’s already comprehensive data protection capabilities means that the AvePoint Confidence Platform now provides automated data backup and protection for business-critical applications Monday.com, Docusign, Smartsheet, Okta and Confluence.",
+            "note": "製品の対応範囲としての記載です。",
+            "note_en": "Product support listing only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOCU",
+      "ticker": "DOCU",
+      "name": "Docusign",
+      "sub": "電子署名",
+      "sub_en": "E-signature",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvePointのConfidence Platformは、Docusignのデータバックアップと保護に対応している",
+          "text_en": "The AvePoint Confidence Platform provides automated data backup and protection for Docusign",
+          "source": {
+            "label": "AvePoint の発表",
+            "label_en": "AvePoint press release",
+            "url": "https://www.avepoint.com/news/avepoint-expands-data-protection-solutions-and-agentic-ai-support-within-the-avepoint-confidence-platform",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "The expansion of AvePoint’s already comprehensive data protection capabilities means that the AvePoint Confidence Platform now provides automated data backup and protection for business-critical applications Monday.com, Docusign, Smartsheet, Okta and Confluence.",
+            "note": "製品の対応範囲としての記載です。",
+            "note_en": "Product support listing only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKTA",
+      "ticker": "OKTA",
+      "name": "Okta",
+      "sub": "ID管理",
+      "sub_en": "Identity management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvePointのConfidence Platformは、Oktaのデータバックアップと保護に対応している",
+          "text_en": "The AvePoint Confidence Platform provides automated data backup and protection for Okta",
+          "source": {
+            "label": "AvePoint の発表",
+            "label_en": "AvePoint press release",
+            "url": "https://www.avepoint.com/news/avepoint-expands-data-protection-solutions-and-agentic-ai-support-within-the-avepoint-confidence-platform",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "The expansion of AvePoint’s already comprehensive data protection capabilities means that the AvePoint Confidence Platform now provides automated data backup and protection for business-critical applications Monday.com, Docusign, Smartsheet, Okta and Confluence.",
+            "note": "製品の対応範囲としての記載です。",
+            "note_en": "Product support listing only."
           }
         }
       ]

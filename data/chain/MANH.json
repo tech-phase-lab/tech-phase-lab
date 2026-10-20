@@ -6,13 +6,20 @@
   },
   "rows": [
     {
+      "ja": "提携・連携先",
+      "en": "Partners & integrations",
+      "above": true
+    },
+    {
       "ja": "競合(Manhattan Associatesの年次報告に記載)",
       "en": "Competitors (named in Manhattan Associates' annual report)"
     }
   ],
   "rivals": [
     "PCRHY",
-    "IBM"
+    "IBM",
+    "ORCL",
+    "SAP"
   ],
   "companies": [
     {
@@ -21,7 +28,7 @@
       "name": "パナソニック ホールディングス",
       "sub": "電機",
       "sub_en": "Electronics",
-      "row": 0,
+      "row": 1,
       "relations": [
         {
           "type": "rival",
@@ -47,7 +54,7 @@
       "name": "IBM",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "row": 0,
+      "row": 1,
       "relations": [
         {
           "type": "rival",
@@ -62,6 +69,136 @@
             "quote": "• Supply chain execution and planning vendors, including Blue Yonder/Panasonic (formerly JDA), E2Open, Infios (formerly Korber, HighJump), SAS Institute, the Sterling Commerce division of IBM, Relex, and others;",
             "note": "部門レベルの記載です。",
             "note_en": "Division-level mention."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Google Cloud",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Manhattan Associatesが、Google Cloudとの販売面の提携拡大を発表し、全Manhattan ActiveソリューションがGoogle Cloud Marketplaceで利用できるとした",
+          "text_en": "Manhattan announced an expanded go-to-market partnership with Google Cloud, with all Manhattan Active solutions available on Google Cloud Marketplace",
+          "source": {
+            "label": "Manhattan Associates の発表",
+            "label_en": "Manhattan Associates press release",
+            "url": "https://www.manh.com/about-us/newsroom/press-releases/manhattan-associates-launches-supply-chain-commerce-solutions-on-google-cloud-marketplace",
+            "level": "official",
+            "date": "2025-05-20",
+            "quote": "Manhattan Associates Inc. (NASDAQ: MANH), the global leader in supply chain commerce, today announced an expanded go-to-market (GTM) partnership with Google Cloud ."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Manhattan Associatesが、2025 Google Cloud Business Applications Partner of the Year Award(サプライチェーン・物流部門)を受賞した",
+          "text_en": "Manhattan announced it received the 2025 Google Cloud Business Applications Partner of the Year Award for Supply Chain and Logistics",
+          "source": {
+            "label": "Manhattan Associates の発表",
+            "label_en": "Manhattan Associates press release",
+            "url": "https://www.manh.com/about-us/newsroom/press-releases/manhattan-associates-wins-google-cloud-business-applications-partner-of-the-year-award-for-supply-chain-and-logistics",
+            "level": "official",
+            "date": "2025-04-09",
+            "quote": "Manhattan Associates Inc. (NASDAQ: MANH) today announced that it has received the 2025 Google Cloud Business Applications Partner of the Year Award for Supply Chain and Logistics."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "sub": "産業・自動化",
+      "sub_en": "Industrial & automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Manhattanは、ハネウェルの音声ソリューションの専門性を評価し、パートナー賞の対象とした",
+          "text_en": "Manhattan recognized Honeywell in its partner awards for voice-solution expertise that helped Manhattan customers raise productivity",
+          "source": {
+            "label": "Manhattan Associates の発表",
+            "label_en": "Manhattan Associates press release",
+            "url": "https://www.manh.com/en-in/about-us/newsroom/press-releases/manhattan-recognises-its-valued-partners-at-momentum-2025",
+            "level": "official",
+            "date": "2025-05-21",
+            "quote": "Honeywell for their deep expertise in voice solutions, leading Manhattan customers to achieve record-breaking productivity while also improving accuracy."
+          }
+        }
+      ],
+      "name_en": "Honeywell"
+    },
+    {
+      "id": "SHOP",
+      "ticker": "SHOP",
+      "name": "Shopify",
+      "sub": "ECプラットフォーム",
+      "sub_en": "E-commerce platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Manhattan Active Order ManagementのコネクターアプリがShopify App Storeで利用可能になった",
+          "text_en": "A connector app to Manhattan Active Order Management is now available in the Shopify App Store",
+          "source": {
+            "label": "Manhattan Associates の発表",
+            "label_en": "Manhattan Associates press release",
+            "url": "https://www.manh.com/about-us/newsroom/press-releases/manhattan-and-shopify-deliver-seamless-omnichannel-shopping-experiences-with-latest-order-management-collaboration",
+            "level": "official",
+            "date": "2025-05-21",
+            "quote": "a connector app to Manhattan Active ® Order Management is now available in the Shopify App Store."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "ERP・クラウド",
+      "sub_en": "ERP & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "年次報告が、ERPベンダーの競合としてOracleを挙げている",
+          "text_en": "The annual report lists Oracle among competing ERP vendors",
+          "source": {
+            "label": "Manhattan Associates 10-K",
+            "label_en": "Manhattan Associates 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1056696/000119312526037138/manh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "ERP vendors, including: Oracle, SAP and Infor, among others;"
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "ERPソフト",
+      "sub_en": "ERP software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "年次報告が、ERPベンダーの競合としてSAPを挙げている",
+          "text_en": "The annual report lists SAP among competing ERP vendors",
+          "source": {
+            "label": "Manhattan Associates 10-K",
+            "label_en": "Manhattan Associates 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1056696/000119312526037138/manh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "ERP vendors, including: Oracle, SAP and Infor, among others;"
           }
         }
       ]

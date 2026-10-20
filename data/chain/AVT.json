@@ -131,6 +131,54 @@
         }
       ],
       "name_en": "Wells Fargo"
+    },
+    {
+      "id": "SENS",
+      "ticker": "Sensirion",
+      "name": "センシリオン",
+      "sub": "センサー",
+      "sub_en": "Sensors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Sensirionが、Avnetを自社の流通網に加えたと発表した",
+          "text_en": "Sensirion announced that it has added Avnet to its distribution network",
+          "source": {
+            "label": "Sensirion の発表",
+            "label_en": "Sensirion press release",
+            "url": "https://sensirion.com/company/news/press-releases-and-news/article/sensirion-expands-global-distribution-network-with-addition-of-avnet",
+            "level": "official",
+            "date": "2025-10-02",
+            "quote": "Sensirion, a leading manufacturer of smart sensor solutions, has added Avnet to its distribution network, further strengthening its ability to serve a diverse and growing customer base."
+          }
+        }
+      ],
+      "name_en": "Sensirion Holding"
+    },
+    {
+      "id": "NVTS",
+      "ticker": "NVTS",
+      "name": "ナビタス・セミコンダクター",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Navitasが、WT MicroelectronicsとAvnetとの世界的な流通提携を結んだと説明している",
+          "text_en": "Navitas says it forged a strategic and global distribution partnership with WT Microelectronics and Avnet",
+          "source": {
+            "label": "Navitas Semiconductor results の発表",
+            "label_en": "Navitas Semiconductor results press release",
+            "url": "https://ir.navitassemi.com/news-releases/news-release-details/navitas-semiconductor-announces-fourth-quarter-and-full-year-0",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Consolidated Asian distribution channel and forged strategic and global distribution partnership with WT Microelectronics and Avnet to accelerate GaN and high-voltage SiC adoption in AI data centers, high-performance computing and additional target end markets globally."
+          }
+        }
+      ],
+      "name_en": "Navitas Semiconductor"
     }
   ],
   "far": [],

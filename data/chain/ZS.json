@@ -64,6 +64,175 @@
           }
         }
       ]
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "CrowdStrike",
+      "sub": "エンドポイントセキュリティ",
+      "sub_en": "Endpoint security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZscalerのRed Canaryが、戦略パートナーのCrowdStrikeとの提携を拡大した",
+          "text_en": "Zscaler announced an expanded partnership between Red Canary, a Zscaler company, and strategic partner CrowdStrike",
+          "source": {
+            "label": "Zscaler の発表",
+            "label_en": "Zscaler press release",
+            "url": "https://www.zscaler.com/press/zscaler-and-crowdstrike-expand-partnership-strengthen-ai-driven-security-operations",
+            "level": "official",
+            "date": "2025-08-20",
+            "quote": "Zscaler, Inc. (NASDAQ: ZS), the leader in cloud security, today announced an expanded partnership between Red Canary, a Zscaler company, and strategic partner CrowdStrike to deliver enhanced protection across endpoints, users, and workloads.",
+            "note": "Zscaler傘下のRed Canaryを通じた記載です。",
+            "note_en": "Described via Zscaler's subsidiary Red Canary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Google",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZscalerはGoogleのワークロード向けセキュリティやGoogle SecOps、Vertex AIとの連携を提供している",
+          "text_en": "Zscaler provides security for Google workloads, DLP for Workspace users, and integration with Google SecOps and the Vertex AI platform",
+          "source": {
+            "label": "Zscaler の発表",
+            "label_en": "Zscaler press release",
+            "url": "https://www.zscaler.com/press/zscaler-wins-2026-google-cloud-partner-year-award-security-application-category",
+            "level": "official",
+            "date": "2026-04-21",
+            "quote": "Zscaler provides security for Google workloads, DLP for Workspace users, and integration with Google SecOps and the Vertex AI platform."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZscalerはNVIDIAとの協業を発表し、NVIDIAのAI技術をcopilotサービスに活用するとした",
+          "text_en": "Zscaler announced a collaboration with NVIDIA and said it will leverage NVIDIA AI technologies for its copilot services",
+          "source": {
+            "label": "Zscaler の発表",
+            "label_en": "Zscaler press release",
+            "url": "https://www.zscaler.com/press/zscaler-deliver-generative-ai-powered-zero-trust-security-innovations-collaboration-nvidia",
+            "level": "official",
+            "date": "2024-06-11",
+            "quote": "Zscaler, Inc. (NASDAQ: ZS), a leader in cloud security, today announced a collaboration with NVIDIA to accelerate AI-powered copilot technologies. Zscaler will leverage NVIDIA AI technologies to deliver new user experience and security-centric copilot services to the enterprise.",
+            "note": "2024年6月の発表に基づきます。",
+            "note_en": "Per a June 2024 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CoreWeaveは、Project AI-Guardianを通じてZscalerと連携すると述べている",
+          "text_en": "CoreWeave says it is working with Zscaler through Project AI-Guardian",
+          "source": {
+            "label": "Zscaler の発表",
+            "label_en": "Zscaler press release",
+            "url": "https://www.zscaler.com/press/zscaler-expands-ai-guardian-uniting-tech-giants-secure-enterprise-ai-scale",
+            "level": "official",
+            "date": "2026-06-09",
+            "quote": "working with Zscaler through Project AI-Guardian means customers will be able to enforce zero trust access controls at every layer of their AI stack, from compute to agent interaction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQIX",
+      "ticker": "EQIX",
+      "name": "Equinix",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Equinixは、Zscalerとの長年の提携をAIの保護に生かすと述べている",
+          "text_en": "Equinix describes its longstanding partnership with Zscaler, combining global digital infrastructure with zero trust security",
+          "source": {
+            "label": "Zscaler の発表",
+            "label_en": "Zscaler press release",
+            "url": "https://www.zscaler.com/press/zscaler-expands-ai-guardian-uniting-tech-giants-secure-enterprise-ai-scale",
+            "level": "official",
+            "date": "2026-06-09",
+            "quote": "Our longstanding partnership with Zscaler makes that vision even more powerful, by combining global digital infrastructure with zero trust security to help customers protect their AI interactions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenAIは、Zscalerとの提携とProject AI-Guardianを通じてAIの責任ある活用を進めると述べている",
+          "text_en": "OpenAI cites its partnership with Zscaler and Project AI-Guardian in advancing responsible AI deployment",
+          "source": {
+            "label": "Zscaler の発表",
+            "label_en": "Zscaler press release",
+            "url": "https://www.zscaler.com/press/zscaler-expands-ai-guardian-uniting-tech-giants-secure-enterprise-ai-scale",
+            "level": "official",
+            "date": "2026-06-09",
+            "quote": "Through our partnership with Zscaler and initiatives like Trusted Access for Cyber and Project AI-Guardian, we're advancing a shared commitment to deploying AI responsibly",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTT",
+      "ticker": "NTT",
+      "name": "NTT",
+      "sub": "通信・ITサービス",
+      "sub_en": "Telecom & IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NTT DATAは、Project AI GuardianでZscalerと協業していると述べている",
+          "text_en": "NTT DATA says it is collaborating with Zscaler on Project AI Guardian",
+          "source": {
+            "label": "Zscaler の発表",
+            "label_en": "Zscaler press release",
+            "url": "https://www.zscaler.com/press/zscaler-expands-ai-guardian-uniting-tech-giants-secure-enterprise-ai-scale",
+            "level": "official",
+            "date": "2026-06-09",
+            "quote": "By collaborating with Zscaler on Project AI Guardian, NTT DATA is combining Zscaler's Zero Trust Everywhere framework with our full-stack Security for AI capabilities to help enterprises prepare for frontier AI risks",
+            "note": "子会社NTT DATAによる記載です。",
+            "note_en": "Stated by subsidiary NTT DATA."
+          }
+        }
+      ]
     }
   ],
   "far": [],

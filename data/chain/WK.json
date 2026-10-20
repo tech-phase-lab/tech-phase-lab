@@ -9,6 +9,10 @@
       "ja": "クラウド基盤の供給元",
       "en": "Cloud infrastructure supplier",
       "above": true
+    },
+    {
+      "ja": "提携先",
+      "en": "Partners"
     }
   ],
   "rivals": [],
@@ -36,6 +40,43 @@
         }
       ],
       "name_en": "Amazon"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Workivaは、SAP Cloud Platform Integrationサービスを使った第一者連携を提供するSAPの技術パートナーである",
+          "text_en": "Workiva is an SAP technology partner and delivers a first-party integration using the SAP Cloud Platform Integration service",
+          "source": {
+            "label": "Workiva partner page",
+            "label_en": "Workiva partner page",
+            "url": "https://www.workiva.com/uk/partners/sap",
+            "level": "official",
+            "quote": "As an SAP technology partner, Workiva delivers a first-party integration with Workiva solutions using the SAP ® Cloud Platform Integration (CPI) service."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "WorkivaはSAPとOEM契約を結んだと発表した",
+          "text_en": "Workiva announced it signed an original equipment manufacturer (OEM) agreement with SAP",
+          "source": {
+            "label": "Workiva の発表",
+            "label_en": "Workiva press release",
+            "url": "https://newsroom.workiva.com/press-releases/workiva-signs-oem-agreement-sap-offer-sapr-cloud-platform-integration-workiva-wdesk",
+            "level": "official",
+            "date": "2018-05-24",
+            "quote": "Workiva (NYSE:WK), a leader in cloud-based data collaboration, reporting and compliance solutions, today announced it has signed an original equipment manufacturer (OEM) agreement with SAP (NYSE:SAP).",
+            "note": "2018年の発表で、古い情報です。",
+            "note_en": "From a 2018 announcement; older."
+          }
+        }
+      ]
     }
   ],
   "far": [],

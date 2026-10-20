@@ -145,9 +145,74 @@
             "date": "2026-02-12",
             "quote": "Revolving Credit Agreement, dated October 31, 2022, by and among the Registrant, certain subsidiaries of the Registrant, and Morgan Stanley Senior, as amended on February 16, 2023"
           }
+        },
+        {
+          "type": "tie",
+          "text": "2026年3月12日の引受契約でも、Morgan Stanleyが引受会社の代表の1社に挙げられている",
+          "text_en": "Morgan Stanley is also named a representative of the underwriters in the March 12, 2026 underwriting agreement",
+          "source": {
+            "label": "Airbnb Form 8-K",
+            "label_en": "Airbnb Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000119312526108514/d106317d8k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 12, 2026, Airbnb, Inc. (the “Company”) entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Goldman Sachs & Co. LLC, and Morgan Stanley & Co. LLC, as representatives of the several underwriters named therein"
+          }
         }
       ],
       "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年3月12日、AirbnbはBofA Securitiesなどと、シニアノート発行に関する引受契約を結んだ",
+          "text_en": "On March 12, 2026, Airbnb entered into an underwriting agreement with BofA Securities, Goldman Sachs and Morgan Stanley as representatives of the underwriters",
+          "source": {
+            "label": "Airbnb Form 8-K",
+            "label_en": "Airbnb Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000119312526108514/d106317d8k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 12, 2026, Airbnb, Inc. (the “Company”) entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Goldman Sachs & Co. LLC, and Morgan Stanley & Co. LLC, as representatives of the several underwriters named therein",
+            "note": "資金調達のみの関係で、引受会社の代表としての記載です。",
+            "note_en": "Financing only; named as a representative of the underwriters."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "ゴールドマン・サックス",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年3月12日、AirbnbはGoldman Sachsなどと、シニアノート発行に関する引受契約を結んだ",
+          "text_en": "On March 12, 2026, Airbnb entered into an underwriting agreement with BofA Securities, Goldman Sachs and Morgan Stanley as representatives of the underwriters",
+          "source": {
+            "label": "Airbnb Form 8-K",
+            "label_en": "Airbnb Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000119312526108514/d106317d8k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 12, 2026, Airbnb, Inc. (the “Company”) entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Goldman Sachs & Co. LLC, and Morgan Stanley & Co. LLC, as representatives of the several underwriters named therein",
+            "note": "資金調達のみの関係で、引受会社の代表としての記載です。",
+            "note_en": "Financing only; named as a representative of the underwriters."
+          }
+        }
+      ],
+      "name_en": "Goldman Sachs"
     },
     {
       "id": "GOOG",
@@ -159,7 +224,7 @@
       "relations": [
         {
           "type": "rival",
-          "text": "Airbnbの年次報告が、競合として挙げている",
+          "text": "エアビーアンドビーの年次報告が、競合として挙げている",
           "text_en": "Named as a competitor in Airbnb’s annual report",
           "source": {
             "label": "Airbnb 10-K",

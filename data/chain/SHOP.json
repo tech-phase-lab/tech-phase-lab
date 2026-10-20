@@ -145,6 +145,126 @@
           }
         }
       ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・動画・クラウド",
+      "sub_en": "Search, video & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ShopifyはGoogleと共同でUniversal Commerce Protocolを開発したと発表した",
+          "text_en": "Shopify announced the Universal Commerce Protocol, an open standard co-developed with Google",
+          "source": {
+            "label": "Shopify の発表",
+            "label_en": "Shopify press release",
+            "url": "https://www.shopify.com/news/ai-commerce-at-scale",
+            "level": "official",
+            "date": "2026-01-11",
+            "quote": "We're announcing the Universal Commerce Protocol (UCP), a new open standard co-developed with Google to bring commerce to agents at scale."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ShopifyがOpenAIとの提携を発表した",
+          "text_en": "Shopify announced its partnership with OpenAI",
+          "source": {
+            "label": "Shopify の発表",
+            "label_en": "Shopify press release",
+            "url": "https://www.shopify.com/news/shopify-open-ai-commerce",
+            "level": "official",
+            "date": "2025-09-29",
+            "quote": "Today, we’re taking another step toward that vision through our partnership with OpenAI.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AFRM",
+      "ticker": "AFRM",
+      "name": "アファーム",
+      "sub": "後払い決済",
+      "sub_en": "Buy now, pay later",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AffirmとShopifyが、拡大した世界規模の契約を発表した",
+          "text_en": "Affirm and Shopify announced an expanded global agreement",
+          "source": {
+            "label": "Affirm 8-K exhibit(joint の発表)",
+            "label_en": "Affirm 8-K exhibit (joint press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1820953/000182095325000017/shopifypressreleasefebru.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Affirm (NASDAQ: AFRM), the payment network that empowers consumers and helps merchants drive growth, and Shopify, a provider of essential internet infrastructure for commerce, today announced an expanded global agreement."
+          }
+        }
+      ],
+      "name_en": "Affirm"
+    },
+    {
+      "id": "COIN",
+      "ticker": "COIN",
+      "name": "コインベース",
+      "sub": "暗号資産取引",
+      "sub_en": "Crypto exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ShopifyがCoinbaseおよびStripeと提携し、安定通貨決済を提供すると発表した",
+          "text_en": "Shopify announced a partnership with Coinbase and Stripe to bring stablecoin payments to merchants",
+          "source": {
+            "label": "Shopify の発表",
+            "label_en": "Shopify press release",
+            "url": "https://www.shopify.com/news/stablecoins-on-shopify",
+            "level": "official",
+            "quote": "And today, Shopify is excited to partner with Coinbase and Stripe to bring stablecoins to everyday commerce."
+          }
+        }
+      ],
+      "name_en": "Coinbase"
+    },
+    {
+      "id": "GLBE",
+      "ticker": "GLBE",
+      "name": "グローバル・イー",
+      "sub": "越境EC",
+      "sub_en": "Cross-border e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Global-eがShopifyとの新たな提携契約に基づき、Shop Payを提供すると発表した",
+          "text_en": "Global-e announced Shop Pay availability under its new partnership agreement with Shopify",
+          "source": {
+            "label": "Global-e の発表",
+            "label_en": "Global-e press release",
+            "url": "https://www.prnewswire.com/news-releases/shop-pay-one-click-checkout-now-available-on-global-e-platform-302584546.html",
+            "level": "official",
+            "date": "2025-10-15",
+            "quote": "As part of the new partnership agreement with Shopify, Global-e can now enable its Shopify platform-based merchants to offer Shop Pay's one-click checkout with pre-filled details as part of the shopping journey operated by Global-e."
+          }
+        }
+      ],
+      "name_en": "Global-e"
     }
   ],
   "far": [],

@@ -137,6 +137,103 @@
       "name_en": "JPMorgan Chase"
     },
     {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MastercardはMicrosoftと、エージェント型コマースを広げる新しい用途で協業する",
+          "text_en": "Mastercard will collaborate with Microsoft on new use cases to scale agentic commerce",
+          "source": {
+            "label": "Mastercard の発表",
+            "label_en": "Mastercard press release",
+            "url": "https://newsroom.mastercard.com/news/press/2025/april/mastercard-unveils-agent-pay-pioneering-agentic-payments-technology-to-power-commerce-in-the-age-of-ai/",
+            "level": "official",
+            "date": "2025-04-29",
+            "quote": "Mastercard will collaborate with Microsoft on new use cases to scale agentic commerce, with other leading AI platforms to follow.",
+            "note": "2025年4月の発表で、計画段階の記載です。",
+            "note_en": "Announced April 2025; described as planned."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・ソフト",
+      "sub_en": "IT & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MastercardはIBMのwatsonx Orchestrateを使い、法人間取引の用途を加速するために提携する",
+          "text_en": "Mastercard will partner with IBM, with its watsonx Orchestrate product, to accelerate B2B use cases",
+          "source": {
+            "label": "Mastercard の発表",
+            "label_en": "Mastercard press release",
+            "url": "https://newsroom.mastercard.com/news/press/2025/april/mastercard-unveils-agent-pay-pioneering-agentic-payments-technology-to-power-commerce-in-the-age-of-ai/",
+            "level": "official",
+            "date": "2025-04-29",
+            "quote": "Mastercard will also partner with technology enablers like IBM, with its watsonx Orchestrate product, to accelerate B2B use cases.",
+            "note": "2025年4月の発表で、計画段階の記載です。",
+            "note_en": "Announced April 2025; described as planned."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPAY",
+      "ticker": "CPAY",
+      "name": "Corpay",
+      "sub": "法人決済",
+      "sub_en": "Corporate payments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MastercardはCorpayの国際送金事業部門に出資し、Corpayは法人向け国際送金で独占的なパートナーになる",
+          "text_en": "Mastercard invests in Corpay's cross-border business unit, and Corpay becomes exclusive partner for commercial cross-border payments distributed to Mastercard's financial institution customers",
+          "source": {
+            "label": "Mastercard の発表",
+            "label_en": "Mastercard press release",
+            "url": "https://newsroom.mastercard.com/news/press/2025/april/mastercard-and-corpay-launch-strategic-partnership-in-cross-border-payments/",
+            "level": "official",
+            "date": "2025-04-29",
+            "quote": "Mastercard invests in Corpay’s cross-border business unit. Corpay becomes exclusive partner for commercial cross-border payments distributed to Mastercard’s financial institution customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DB",
+      "ticker": "DB",
+      "name": "ドイツ銀行",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Deutsche Bankと、欧州の加盟店向けオープンバンキング決済に関する戦略的提携を発表した",
+          "text_en": "Mastercard and Deutsche Bank announced a strategic partnership on open banking payments for merchants across Europe",
+          "source": {
+            "label": "Mastercard の発表",
+            "label_en": "Mastercard press release",
+            "url": "https://newsroom.mastercard.com/news/europe/en/newsroom/press-releases/en/2025/deutsche-bank-and-mastercard-partner-to-power-merchant-solutions-with-open-banking-payments/",
+            "level": "official",
+            "date": "2025-06-03",
+            "quote": "Deutsche Bank and Mastercard are proud to announce a strategic partnership designed to accelerate the evolution of open banking and redefine the payment experience for merchants and consumers across Europe."
+          }
+        }
+      ],
+      "name_en": "Deutsche Bank"
+    },
+    {
       "id": "V",
       "ticker": "V",
       "name": "ビザ",

@@ -2,8 +2,8 @@
   "root": {
     "ticker": "FOXA",
     "name": "フォックス・コーポレーション",
-    "name_en": "Fox Corporation",
-    "cik": 1754301
+    "cik": 1754301,
+    "name_en": "Fox Corporation"
   },
   "rows": [
     {
@@ -14,6 +14,10 @@
     {
       "ja": "提携・資金調達",
       "en": "Partnerships & financing"
+    },
+    {
+      "ja": "配信・広告の提携先",
+      "en": "Distribution & advertising partners"
     }
   ],
   "rivals": [],
@@ -103,6 +107,208 @@
         }
       ],
       "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "TVストリーミング",
+      "sub_en": "TV streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FOXがRokuを1株160.00ドルで買収する正式契約を結んだ",
+          "text_en": "FOX and Roku entered into a definitive agreement under which FOX will acquire Roku for $160.00 per share in cash and FOX Class A common stock",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-corporation-to-acquire-roku-inc/",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "today announced they have entered into a definitive agreement under which FOX will acquire Roku for $160.00 per share in a combination of cash and FOX Class A common stock, valuing Roku at approximately $22 billion in enterprise value.",
+            "note": "買収は発表段階で、完了前です。",
+            "note_en": "The acquisition is announced and not yet completed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "ケーブル・通信",
+      "sub_en": "Cable & telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "FOXとCharterは、FOXの主要ニュース・娯楽・スポーツ局の配信契約を長期で更新した",
+          "text_en": "FOX and Charter announced a long-term renewal of their distribution agreement for FOX's news, entertainment and sports networks",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/?p=1391",
+            "level": "official",
+            "date": "2019-10-21",
+            "quote": "Fox Corporation (Nasdaq: FOXA, FOX) (“FOX”) and Charter Communications, Inc. (Nasdaq: CHTR) (“Charter”) today announced a long-term, comprehensive renewal of their distribution agreement for FOX’s full portfolio of leading news, entertainment and sports networks.",
+            "note": "2019年の発表で、古い情報です。",
+            "note_en": "Announced in 2019 (older)."
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "通信・メディア",
+      "sub_en": "Telecom & media",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "FOXとComcastは、Xfinity向けのFOX全チャンネル配信契約を長期で更新した",
+          "text_en": "FOX and Comcast announced a long-term renewal of their distribution agreement for FOX's channels, including retransmission consent for the FOX Television Stations to Xfinity customers",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/?p=2915",
+            "level": "official",
+            "date": "2020-04-01",
+            "quote": "Fox Corporation (Nasdaq: FOXA, FOX) and Comcast Corporation (Nasdaq: CMCSA) today announced a long-term renewal of their distribution agreement for FOX’s full portfolio of channels, including retransmission consent for the FOX Television Stations to Xfinity customers.",
+            "note": "2020年の発表で、古い情報です。",
+            "note_en": "Announced in 2020 (older)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Universal Ads by Comcastが、AI支援のデジタル広告購入・配信を可能にする形でFOX AdStudioに参加している",
+          "text_en": "Universal Ads by Comcast is a FOX AdStudio partner, enabling digital buying and activation through AI-assisted briefing and transaction workflows",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-advertising-to-launch-industrys-first-end-to-end-agentic-advertising-platform-powered-by-fox-adstudio/",
+            "level": "official",
+            "date": "2026-06-17",
+            "quote": "Universal Ads by Comcast – Enabling streamlined digital buying and activation for buyers through AI-assisted briefing and transaction workflows.",
+            "note": "Comcast傘下の事業単位としての記載です。",
+            "note_en": "Stated at the level of a Comcast business unit."
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・コミュニケーションズ",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "FOXはVerizonのFios TV向け配信契約を複数年で更新した",
+          "text_en": "FOX completed a multi-year renewal of its distribution agreement with Verizon for its Fios TV platform",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/?p=4292",
+            "level": "official",
+            "date": "2022-08-03",
+            "quote": "Fox Corporation (Nasdaq: FOXA, FOX) today announced the completion of a multi-year renewal of its distribution agreement with Verizon for its Fios TV platform.",
+            "note": "2022年の発表で、古い情報です。",
+            "note_en": "Announced in 2022 (older)."
+          }
+        }
+      ],
+      "name_en": "Verizon Communications"
+    },
+    {
+      "id": "WPP",
+      "ticker": "WPP",
+      "name": "WPP",
+      "sub": "広告・マーケティング",
+      "sub_en": "Advertising & marketing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FOX AdvertisingのAIエージェント広告取引で、WPPがライブキャンペーンの連携先に加わった",
+          "text_en": "WPP is among the partners executing agentic linear transactions for live campaigns with FOX Advertising",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-adstudio-advances-to-next-phase-as-leading-agency-partners-put-agentic-advertising-into-action/",
+            "level": "official",
+            "date": "2026-10-15",
+            "quote": "Now, FOX Advertising is advancing that foundation with WPP, Omnicom, Horizon Media, Stagwell and Simulmedia executing agentic linear transactions for live campaigns through an evolved agentic infrastructure designed to support broader real-world execution."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "WPPは、FOXのエコシステム全体でオーディエンス発見や需要予測などの計画業務を共同で進めている",
+          "text_en": "WPP is collaborating with FOX on planning workflows for audience discovery, forecasting and media recommendations",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-advertising-to-launch-industrys-first-end-to-end-agentic-advertising-platform-powered-by-fox-adstudio/",
+            "level": "official",
+            "date": "2026-06-17",
+            "quote": "WPP – Collaborating on intelligent planning workflows that help agencies accelerate audience discovery, forecasting and media recommendations across FOX’s ecosystem."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OMC",
+      "ticker": "OMC",
+      "name": "オムニコム・グループ",
+      "sub": "広告・マーケティング",
+      "sub_en": "Advertising & marketing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FOX Advertisingのエージェント型リニア取引で、Omnicomがライブキャンペーンの連携先に加わった",
+          "text_en": "Omnicom is among the partners executing agentic linear transactions for live campaigns with FOX Advertising",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-adstudio-advances-to-next-phase-as-leading-agency-partners-put-agentic-advertising-into-action/",
+            "level": "official",
+            "date": "2026-10-15",
+            "quote": "Now, FOX Advertising is advancing that foundation with WPP, Omnicom, Horizon Media, Stagwell and Simulmedia executing agentic linear transactions for live campaigns through an evolved agentic infrastructure designed to support broader real-world execution."
+          }
+        }
+      ],
+      "name_en": "Omnicom Group"
+    },
+    {
+      "id": "STGW",
+      "ticker": "STGW",
+      "name": "ステッグウェル",
+      "sub": "広告・マーケティング",
+      "sub_en": "Advertising & marketing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FOX Advertisingのエージェント型リニア取引で、Stagwellがライブキャンペーンの連携先に加わった",
+          "text_en": "Stagwell is among the partners executing agentic linear transactions for live campaigns with FOX Advertising",
+          "source": {
+            "label": "Fox Corporation の発表",
+            "label_en": "Fox Corporation press release",
+            "url": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-adstudio-advances-to-next-phase-as-leading-agency-partners-put-agentic-advertising-into-action/",
+            "level": "official",
+            "date": "2026-10-15",
+            "quote": "Now, FOX Advertising is advancing that foundation with WPP, Omnicom, Horizon Media, Stagwell and Simulmedia executing agentic linear transactions for live campaigns through an evolved agentic infrastructure designed to support broader real-world execution."
+          }
+        }
+      ],
+      "name_en": "Stagwell"
     }
   ],
   "far": [],

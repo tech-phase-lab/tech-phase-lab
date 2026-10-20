@@ -2,14 +2,18 @@
   "root": {
     "ticker": "PCOR",
     "name": "プロコア",
-    "name_en": "Procore",
-    "cik": 1611052
+    "cik": 1611052,
+    "name_en": "Procore"
   },
   "rows": [
     {
       "ja": "クラウド基盤の供給元",
       "en": "Cloud infrastructure supplier",
       "above": true
+    },
+    {
+      "ja": "提携先",
+      "en": "Partners"
     }
   ],
   "rivals": [],
@@ -36,6 +40,57 @@
           }
         }
       ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ProcoreとMicrosoftが、Microsoft Azure OpenAI Serviceを用いたProcore Copilotを、顧客が日常使うMicrosoft製品へ広げるため協力している",
+          "text_en": "Procore and Microsoft are working together to extend Procore Copilot, enabled by Microsoft Azure OpenAI Service, into Microsoft products Procore's customers use every day",
+          "source": {
+            "label": "Procore の発表",
+            "label_en": "Procore press release",
+            "url": "https://www.procore.com/press/procore-revolutionizes-construction-workflows-with-innovative-ai-powered-copilot",
+            "level": "official",
+            "date": "2023-09-19",
+            "quote": "And, two of the construction industry’s most trusted technological partners, Procore and Microsoft, are working together to extend the power of Procore Copilot enabled by Microsoft Azure OpenAI Service, into the Microsoft products Procore’s customers use every day.",
+            "note": "2023年の発表で、やや古い情報です。",
+            "note_en": "From a 2023 announcement; older."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEM",
+      "ticker": "Nemetschek",
+      "name": "ネメチェック",
+      "sub": "建設・設計ソフト",
+      "sub_en": "AEC software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のBluebeamがProcoreと、2つの新しい連携を含む戦略的提携を発表した",
+          "text_en": "Nemetschek's Bluebeam announced a strategic partnership with Procore featuring two new integrations",
+          "source": {
+            "label": "Bluebeam の発表",
+            "label_en": "Bluebeam press release",
+            "url": "https://press.bluebeam.com/2025/09/bluebeam-expands-procore-partnership-for-construction-collaboration-with-two-powerful-integrations/",
+            "level": "official",
+            "date": "2025-09-23",
+            "quote": "and a part of the Nemetschek Group, today announced a strategic partnership featuring two new integrations with Procore",
+            "note": "子会社Bluebeamの発表です。",
+            "note_en": "Announced by subsidiary Bluebeam."
+          }
+        }
+      ],
+      "name_en": "Nemetschek"
     }
   ],
   "far": [],

@@ -6,8 +6,8 @@
   },
   "rows": [
     {
-      "ja": "クラウド基盤の供給元",
-      "en": "Cloud infrastructure supplier",
+      "ja": "基盤・モデルの供給元",
+      "en": "Infrastructure & model suppliers",
       "above": true
     },
     {
@@ -62,6 +62,21 @@
             "level": "official",
             "date": "2026-02-25",
             "quote": "In addition to our proprietary AI Technologies, we use AI Technologies licensed from third parties in our technologies, including under our partnership with OpenAI, and our ability to continue to use such technologies at the scale we need may be dependent on access to specific third-party software and infrastructure.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年1月、ZetaはOpenAIとの戦略的協業を発表し、Athena by Zetaの対話知能とエージェント機能を支える",
+          "text_en": "In January 2026, Zeta announced a strategic collaboration with OpenAI to power the conversational intelligence and agentic applications behind Athena by Zeta",
+          "source": {
+            "label": "Zeta Global の発表",
+            "label_en": "Zeta Global press release",
+            "url": "https://www.zetaglobal.com/news/zeta-global-and-openai-team-up-to-deliver-answer-driven-marketing-with-athena-by-zeta/",
+            "level": "official",
+            "date": "2026-01-05",
+            "quote": "Today, at CES 2026, Zeta Global (NYSE: ZETA), the AI Marketing Cloud, announced a strategic collaboration with OpenAI to power the conversational intelligence and agentic applications behind Athena by Zeta",
             "note": "OpenAIは未上場です。",
             "note_en": "OpenAI is not listed."
           }
@@ -129,6 +144,54 @@
         }
       ],
       "name_en": "Bank of America"
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "sub": "データ分析ソフト",
+      "sub_en": "Data analytics software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZetaのData CloudをPalantirのFoundry上で再構築する、戦略提携を結んだ",
+          "text_en": "Zeta's Data Cloud will be rearchitected on Palantir's Foundry under a strategic partnership",
+          "source": {
+            "label": "Zeta Global and Palantir の発表",
+            "label_en": "Zeta Global and Palantir press release",
+            "url": "https://s25.q4cdn.com/525061491/files/doc_news/Palantir-and-Zeta-Global-Announce-Strategic-Partnership-to-Build-a-Unified-Data-and-AI-Infrastructure-for-the-Future-of-Marketing-wit-0IIKV.pdf",
+            "level": "official",
+            "date": "2026-06-23",
+            "quote": "Palantir Foundry brings the ontology, governance, and operational infrastructure that enterprise data demands. Zeta's Data Cloud will be rearchitected on Foundry, with Athena by Zeta™, Zeta's AI-powered intelligence layer, turning that data into decisions and measurable outcomes at enterprise scale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ZetaのAthena Inference Modelsは、NVIDIA Nemotronのオープンモデルを基盤としている",
+          "text_en": "Zeta's Athena Inference Models are powered by NVIDIA Nemotron open models",
+          "source": {
+            "label": "Zeta Global の発表",
+            "label_en": "Zeta Global press release",
+            "url": "https://www.zetaglobal.com/news/zeta-global-fireworks-new-athena-inference-models-nvidia-nemotron/",
+            "level": "official",
+            "date": "2026-10-08",
+            "quote": "Developed in collaboration with Fireworks and powered by NVIDIA Nemotron open models, Athena Inference Models work across enterprise data and Zeta’s proprietary intelligence to connect changes in customer demand and what it means for the business.",
+            "note": "Fireworksとの共同開発による記載です。",
+            "note_en": "Developed in collaboration with Fireworks."
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -62,6 +62,57 @@
       "name_en": "Applied Materials"
     },
     {
+      "id": "OUST",
+      "ticker": "OUST",
+      "name": "オースター",
+      "sub": "ライダーセンサー",
+      "sub_en": "Lidar sensors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Ouster向けの大量生産を支えており、2022年の同社の製造パートナー・オブ・ザ・イヤーに選ばれた",
+          "text_en": "Benchmark was named Ouster's 2022 Supply and Manufacturing Partner of the Year and supports high volume production of Ouster sensors",
+          "source": {
+            "label": "Benchmark company ブログ",
+            "label_en": "Benchmark company blog",
+            "url": "https://www.bench.com/setting-the-benchmark/ouster-selects-benchmark-as-its-supply-and-manufacturing-partner-of-the-year",
+            "level": "official",
+            "date": "2022-10-14",
+            "quote": "we were very proud to be named the 2022 Supply and Manufacturing Partner of the Year for Ouster, a leading provider of high-resolution digital lidar sensors for the automotive, industrial, robotics, and smart infrastructure industries. Benchmark supports high volume production of Ouster sensors",
+            "note": "2022年の記載で、古い情報です。",
+            "note_en": "From 2022 (older)."
+          }
+        }
+      ],
+      "name_en": "Ouster"
+    },
+    {
+      "id": "LIDR",
+      "ticker": "LIDR",
+      "name": "AEye",
+      "sub": "ライダーセンサー",
+      "sub_en": "Lidar sensors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AEyeは次世代ライダー用の光学モジュールの製造先にBenchmarkを選んだ",
+          "text_en": "AEye selected Benchmark to manufacture the optical module for its next-gen adaptive lidar sensors",
+          "source": {
+            "label": "Benchmark company ブログ",
+            "label_en": "Benchmark company blog",
+            "url": "https://www.bench.com/setting-the-benchmark/aeye-partners-with-benchmark-for-manufacturing-of-optical-module-for-its-next-gen-adaptive-lidar-sensors",
+            "level": "official",
+            "date": "2021-08-31",
+            "quote": "AEye announces it has selected Benchmark to manufacture the optical module for its next-gen adaptive lidar sensors.",
+            "note": "2021年の記載で、古い情報です。",
+            "note_en": "From 2021 (older)."
+          }
+        }
+      ]
+    },
+    {
       "id": "BAC",
       "ticker": "BAC",
       "name": "バンク・オブ・アメリカ",

@@ -14,6 +14,10 @@
       "en": "Separation, ventures & licensing"
     },
     {
+      "ja": "エコシステム提携",
+      "en": "Ecosystem partners"
+    },
+    {
       "ja": "競合",
       "en": "Competitors"
     }
@@ -79,6 +83,34 @@
             "date": "2026-08-14",
             "quote": "The graph assumes that $100 was invested in our common stock at the close of market on July 2, 2021 and that all dividends, including the distribution of Sandisk shares at Separation, were reinvested."
           }
+        },
+        {
+          "type": "tie",
+          "text": "Western DigitalはSandiskを、同社のプラットフォーム向けにSSDの認定を済ませた提供元の1社に挙げている",
+          "text_en": "Western Digital lists Sandisk among providers whose SSDs it has qualified for its platforms",
+          "source": {
+            "label": "Western Digital の発表",
+            "label_en": "Western Digital press release",
+            "url": "https://www.westerndigital.com/company/newsroom/press-releases/2025/2025-05-19-western-digital-advances-ecosystem-collaboration-at-computex-2025",
+            "level": "official",
+            "date": "2025-05-19",
+            "quote": "Western Digital’s Platforms business now offers customers enhanced flexibility and choice in building their storage infrastructure. By supporting a multi-SSD vendor strategy, Western Digital has currently qualified SSDs with leading providers such as DapuStor, Kioxia, Phison, Sandisk and ScaleFlux with additional vendors in the qualification process.",
+            "note": "認定の記載で、供給量は示されていません。",
+            "note_en": "Qualification only; no supply volume is stated."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Western Digitalは、保有するSandisk株1,038,681株を今後の交換や配当で処分する意向である",
+          "text_en": "Western Digital will continue to own 1,038,681 shares of Sandisk common stock and intends to dispose of them in later exchanges or distributions",
+          "source": {
+            "label": "Western Digital の発表",
+            "label_en": "Western Digital press release",
+            "url": "https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-05-06-wd-announces-equity-for-equity-exchange",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "Upon the settlement of the exchanges, WD will continue to own 1,038,681 shares of Sandisk common stock, which it intends to dispose of in one or more subsequent exchanges for WD debt held by WD creditors and/or in exchange for outstanding shares of WD common stock and/or through distributions to WD stockholders as dividends."
+          }
         }
       ],
       "name_en": "Sandisk"
@@ -104,6 +136,21 @@
             "quote": "All business ventures with Kioxia and Unis Venture were distributed to Sandisk in connection with the Separation and are included in discontinued operations.",
             "note": "分離によりSandiskへ移管済みです。",
             "note_en": "Transferred to Sandisk in the Separation."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Western DigitalはKioxiaを、同社のプラットフォーム向けにSSDの認定を済ませた提供元の1社に挙げている",
+          "text_en": "Western Digital lists Kioxia among providers whose SSDs it has qualified for its platforms",
+          "source": {
+            "label": "Western Digital の発表",
+            "label_en": "Western Digital press release",
+            "url": "https://www.westerndigital.com/company/newsroom/press-releases/2025/2025-05-19-western-digital-advances-ecosystem-collaboration-at-computex-2025",
+            "level": "official",
+            "date": "2025-05-19",
+            "quote": "Western Digital’s Platforms business now offers customers enhanced flexibility and choice in building their storage infrastructure. By supporting a multi-SSD vendor strategy, Western Digital has currently qualified SSDs with leading providers such as DapuStor, Kioxia, Phison, Sandisk and ScaleFlux with additional vendors in the qualification process.",
+            "note": "認定の記載で、供給量は示されていません。",
+            "note_en": "Qualification only; no supply volume is stated."
           }
         }
       ],
@@ -134,12 +181,115 @@
       "name_en": "Rambus"
     },
     {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてNVIDIAが挙げられている",
+          "text_en": "NVIDIA is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "source": {
+            "label": "Western Digital の発表",
+            "label_en": "Western Digital press release",
+            "url": "https://www.westerndigital.com/company/newsroom/press-releases/2025/2025-05-19-western-digital-advances-ecosystem-collaboration-at-computex-2025",
+            "level": "official",
+            "date": "2025-05-19",
+            "quote": "OCCL 2.0's growing list of ecosystem participants include: Arista Networks, Broadcom, DapuStor, Graid Technology Inc., Ingrasys, Intel, Kioxia, MinIO, NVIDIA, OSNexus, PEAK:AIO, Phison, Sandisk, ScaleFlux, ThinkParQ Gmbh/BeeGFS, and Xinnor.",
+            "note": "OCCL 2.0の参加企業の一覧に挙げられている。",
+            "note_en": "Listed among participants in Western Digital's Open Composable Compatibility Lab."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "通信・半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてBroadcomが挙げられている",
+          "text_en": "Broadcom is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "source": {
+            "label": "Western Digital の発表",
+            "label_en": "Western Digital press release",
+            "url": "https://www.westerndigital.com/company/newsroom/press-releases/2025/2025-05-19-western-digital-advances-ecosystem-collaboration-at-computex-2025",
+            "level": "official",
+            "date": "2025-05-19",
+            "quote": "OCCL 2.0's growing list of ecosystem participants include: Arista Networks, Broadcom, DapuStor, Graid Technology Inc., Ingrasys, Intel, Kioxia, MinIO, NVIDIA, OSNexus, PEAK:AIO, Phison, Sandisk, ScaleFlux, ThinkParQ Gmbh/BeeGFS, and Xinnor.",
+            "note": "OCCL 2.0の参加企業の一覧に挙げられている。",
+            "note_en": "Listed among participants in Western Digital's Open Composable Compatibility Lab."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてIntelが挙げられている",
+          "text_en": "Intel is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "source": {
+            "label": "Western Digital の発表",
+            "label_en": "Western Digital press release",
+            "url": "https://www.westerndigital.com/company/newsroom/press-releases/2025/2025-05-19-western-digital-advances-ecosystem-collaboration-at-computex-2025",
+            "level": "official",
+            "date": "2025-05-19",
+            "quote": "OCCL 2.0's growing list of ecosystem participants include: Arista Networks, Broadcom, DapuStor, Graid Technology Inc., Ingrasys, Intel, Kioxia, MinIO, NVIDIA, OSNexus, PEAK:AIO, Phison, Sandisk, ScaleFlux, ThinkParQ Gmbh/BeeGFS, and Xinnor.",
+            "note": "OCCL 2.0の参加企業の一覧に挙げられている。",
+            "note_en": "Listed among participants in Western Digital's Open Composable Compatibility Lab."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Western DigitalのOpen Composable Compatibility Labの参加企業としてArista Networksが挙げられている",
+          "text_en": "Arista Networks is listed among ecosystem participants of Western Digital's Open Composable Compatibility Lab",
+          "source": {
+            "label": "Western Digital の発表",
+            "label_en": "Western Digital press release",
+            "url": "https://www.westerndigital.com/company/newsroom/press-releases/2025/2025-05-19-western-digital-advances-ecosystem-collaboration-at-computex-2025",
+            "level": "official",
+            "date": "2025-05-19",
+            "quote": "OCCL 2.0's growing list of ecosystem participants include: Arista Networks, Broadcom, DapuStor, Graid Technology Inc., Ingrasys, Intel, Kioxia, MinIO, NVIDIA, OSNexus, PEAK:AIO, Phison, Sandisk, ScaleFlux, ThinkParQ Gmbh/BeeGFS, and Xinnor.",
+            "note": "OCCL 2.0の参加企業の一覧に挙げられている。",
+            "note_en": "Listed among participants in Western Digital's Open Composable Compatibility Lab."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
       "id": "STX",
       "ticker": "STX",
       "name": "シーゲイト・テクノロジー",
       "sub": "HDD",
       "sub_en": "Hard drives",
-      "row": 2,
+      "row": 3,
       "relations": [
         {
           "type": "rival",

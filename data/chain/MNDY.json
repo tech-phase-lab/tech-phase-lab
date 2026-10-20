@@ -63,6 +63,19 @@
             "date": "2026-03-13",
             "quote": "We have partnered with some of the world's leading tech companies, such as Amazon AWS, as well as with a broad set of independent software vendors, in order to increase in scope, deepen our products, and strengthen our ability to serve as the connective layer across organizations."
           }
+        },
+        {
+          "type": "tie",
+          "text": "AWSとAnthropicとの協業でAgentalent.aiを構築した",
+          "text_en": "Agentalent.ai was built in collaboration with AWS and Anthropic",
+          "source": {
+            "label": "monday.com の発表",
+            "label_en": "monday.com press release",
+            "url": "https://monday.com/p/press-release/monday-com-launches-agentalent-ai-a-hiring-platform-for-enterprise-ai-agents/",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Agentalent.ai was built in collaboration with AWS and Anthropic, leveraging the most advanced frontier models, which handle highly complex agent workloads and are built specifically for the enterprise."
+          }
         }
       ]
     },
@@ -85,6 +98,142 @@
             "level": "official",
             "date": "2026-03-13",
             "quote": "We distribute the mobile monday.com application through smartphone and tablet application stores managed by Apple and Google, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AWSとAnthropicとの協業でAgentalent.aiを構築した",
+          "text_en": "Agentalent.ai was built in collaboration with AWS and Anthropic",
+          "source": {
+            "label": "monday.com の発表",
+            "label_en": "monday.com press release",
+            "url": "https://monday.com/p/press-release/monday-com-launches-agentalent-ai-a-hiring-platform-for-enterprise-ai-agents/",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Agentalent.ai was built in collaboration with AWS and Anthropic, leveraging the most advanced frontier models, which handle highly complex agent workloads and are built specifically for the enterprise.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AIエコシステムに、AnthropicのClaudeへのワンクリック連携を加えた",
+          "text_en": "The AI ecosystem adds one-click connectors to Anthropic's Claude",
+          "source": {
+            "label": "monday.com の発表",
+            "label_en": "monday.com press release",
+            "url": "https://monday.com/p/press-release/monday-com-goes-all-in-on-ai-from-work-management-platform-to-ai-work-platform/",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "The launch also expands monday.com’s AI ecosystem with one-click connectors to leading AI platforms, including Anthropic’s Claude, Microsoft 365 Copilot, and OpenAI’s ChatGPT, giving customers the flexibility to bring their preferred AI into existing workflows.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WIX",
+      "ticker": "WIX",
+      "name": "Wix",
+      "sub": "ウェブサイト構築",
+      "sub_en": "Website platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AWS、Anthropicとともに、Wixなどの組織との協業でAgentalent.aiを構築した",
+          "text_en": "Agentalent.ai was built in collaboration with organizations including AWS, Anthropic and Wix",
+          "source": {
+            "label": "monday.com の発表",
+            "label_en": "monday.com press release",
+            "url": "https://monday.com/p/press-release/monday-com-launches-agentalent-ai-a-hiring-platform-for-enterprise-ai-agents/",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Built in collaboration with forward-thinking organizations, including AWS, Anthropic, and Wix, Agentalent.ai helps enterprises evaluate, hire, and manage AI agents for operational roles."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AIエコシステムに、OpenAIのChatGPTへのワンクリック連携を加えた",
+          "text_en": "The AI ecosystem adds one-click connectors to OpenAI's ChatGPT",
+          "source": {
+            "label": "monday.com の発表",
+            "label_en": "monday.com press release",
+            "url": "https://monday.com/p/press-release/monday-com-goes-all-in-on-ai-from-work-management-platform-to-ai-work-platform/",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "The launch also expands monday.com’s AI ecosystem with one-click connectors to leading AI platforms, including Anthropic’s Claude, Microsoft 365 Copilot, and OpenAI’s ChatGPT, giving customers the flexibility to bring their preferred AI into existing workflows.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AIエコシステムに、Microsoft 365 Copilotへのワンクリック連携を加えた",
+          "text_en": "The AI ecosystem adds one-click connectors to Microsoft 365 Copilot",
+          "source": {
+            "label": "monday.com の発表",
+            "label_en": "monday.com press release",
+            "url": "https://monday.com/p/press-release/monday-com-goes-all-in-on-ai-from-work-management-platform-to-ai-work-platform/",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "The launch also expands monday.com’s AI ecosystem with one-click connectors to leading AI platforms, including Anthropic’s Claude, Microsoft 365 Copilot, and OpenAI’s ChatGPT, giving customers the flexibility to bring their preferred AI into existing workflows."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Microsoftの資料が、monday.comとMicrosoft Entra IDの統合方法を説明している",
+          "text_en": "Microsoft's documentation explains how to integrate monday.com with Microsoft Entra ID",
+          "source": {
+            "label": "Microsoft Learn documentation",
+            "label_en": "Microsoft Learn documentation",
+            "url": "https://learn.microsoft.com/en-us/entra/identity/saas-apps/mondaycom-tutorial",
+            "level": "official",
+            "quote": "In this article, you learn how to integrate monday.com with Microsoft Entra ID."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "マンデー・ドットコムの年次報告が、競合として挙げている",
+          "text_en": "Named as a competitor in monday.com’s annual report",
+          "source": {
+            "label": "monday.com 20-F",
+            "label_en": "monday.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "For example, we currently directly compete with several large technology companies whose applications interface with our products, including Google and Microsoft."
           }
         }
       ]
@@ -121,29 +270,6 @@
             "level": "official",
             "date": "2026-03-13",
             "quote": "We distribute the mobile monday.com application through smartphone and tablet application stores managed by Apple and Google, among others."
-          }
-        }
-      ]
-    },
-    {
-      "id": "MSFT",
-      "ticker": "MSFT",
-      "name": "Microsoft",
-      "sub": "ソフト・クラウド",
-      "sub_en": "Software & cloud",
-      "row": 1,
-      "relations": [
-        {
-          "type": "rival",
-          "text": "マンデー・ドットコムの年次報告が、競合として挙げている",
-          "text_en": "Named as a competitor in monday.com’s annual report",
-          "source": {
-            "label": "monday.com 20-F",
-            "label_en": "monday.com 20-F",
-            "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm",
-            "level": "official",
-            "date": "2026-03-13",
-            "quote": "For example, we currently directly compete with several large technology companies whose applications interface with our products, including Google and Microsoft."
           }
         }
       ]

@@ -6,13 +6,17 @@
   },
   "rows": [
     {
-      "ja": "アプリ配信(供給元)",
-      "en": "App distribution (suppliers)",
+      "ja": "アプリ配信・クラウド(供給元)",
+      "en": "App distribution & cloud (suppliers)",
       "above": true
     },
     {
       "ja": "広告・提携",
       "en": "Advertising & partnerships"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
     }
   ],
   "rivals": [],
@@ -73,6 +77,19 @@
             "date": "2025-08-04",
             "quote": "Our integration with Google Ad Manager and AdMob went live in April."
           }
+        },
+        {
+          "type": "up",
+          "text": "事業運営は、最大のクラウド事業者であるGoogle Cloud Platformなどに大きく依存している",
+          "text_en": "Its operations depend largely on its cloud providers, the largest of which are Amazon Web Services and Google Cloud Platform",
+          "source": {
+            "label": "MercadoLibre annual report",
+            "label_en": "MercadoLibre annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our ability to operate our business on a day-to-day basis largely depends on the efficient operation of our information technology infrastructure and our cloud providers, the largest of which are Amazon Web Services and Google Cloud Platform."
+          }
         }
       ]
     },
@@ -98,6 +115,174 @@
           }
         }
       ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "事業運営は、最大のクラウド事業者であるAmazon Web Servicesなどに大きく依存している",
+          "text_en": "Its operations depend largely on its cloud providers, the largest of which are Amazon Web Services and Google Cloud Platform",
+          "source": {
+            "label": "MercadoLibre annual report",
+            "label_en": "MercadoLibre annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our ability to operate our business on a day-to-day basis largely depends on the efficient operation of our information technology infrastructure and our cloud providers, the largest of which are Amazon Web Services and Google Cloud Platform."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Citibank, N.A.が管理代理人を務める、2024年9月27日付の改訂リボルビング・クレジット契約を結んでいる",
+          "text_en": "It has an Amended and Restated Revolving Credit Agreement dated September 27, 2024 with Citibank, N.A. as administrative agent",
+          "source": {
+            "label": "MercadoLibre annual report",
+            "label_en": "MercadoLibre annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Amended and Restated Revolving Credit Agreement, dated September 27, 2024, among MercadoLibre, Inc., as borrower, the lenders party thereto, Citibank, N.A., as administrative agent,",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2036年満期の米ドル建て10億ドルの無担保社債の発行を、Citigroupなどが主幹事として主導した",
+          "text_en": "Citigroup was among the global coordinators and lead book-running managers of its USD 1,000 million 2036 senior unsecured notes",
+          "source": {
+            "label": "MercadoLibre の発表",
+            "label_en": "MercadoLibre press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000114036126036136/ef20081842_ex99-1.htm",
+            "level": "official",
+            "date": "2026-09-09",
+            "quote": "The transaction was led by BofA Securities, Citigroup, Goldman Sachs & Co. LLC, J.P. Morgan and Morgan Stanley as Global Coordinators and Lead Book-Running Managers, and Allen & Company and Santander as Joint Book-Running Managers.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Citigroup"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2036年満期の社債の発行を、BofA Securitiesなどが主幹事として主導した",
+          "text_en": "BofA Securities was among the global coordinators and lead book-running managers of the 2036 senior unsecured notes",
+          "source": {
+            "label": "MercadoLibre の発表",
+            "label_en": "MercadoLibre press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000114036126036136/ef20081842_ex99-1.htm",
+            "level": "official",
+            "date": "2026-09-09",
+            "quote": "The transaction was led by BofA Securities, Citigroup, Goldman Sachs & Co. LLC, J.P. Morgan and Morgan Stanley as Global Coordinators and Lead Book-Running Managers, and Allen & Company and Santander as Joint Book-Running Managers.",
+            "note": "資金調達のみの関係です。証券子会社としての記載です。",
+            "note_en": "Financing relationship only; named at the securities-subsidiary level."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "ゴールドマン・サックス",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2036年満期の社債の発行を、Goldman Sachs & Co. LLCなどが主幹事として主導した",
+          "text_en": "Goldman Sachs & Co. LLC was among the global coordinators and lead book-running managers of the 2036 senior unsecured notes",
+          "source": {
+            "label": "MercadoLibre の発表",
+            "label_en": "MercadoLibre press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000114036126036136/ef20081842_ex99-1.htm",
+            "level": "official",
+            "date": "2026-09-09",
+            "quote": "The transaction was led by BofA Securities, Citigroup, Goldman Sachs & Co. LLC, J.P. Morgan and Morgan Stanley as Global Coordinators and Lead Book-Running Managers, and Allen & Company and Santander as Joint Book-Running Managers.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Goldman Sachs"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPMorgan",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2036年満期の社債の発行を、J.P. Morganなどが主幹事として主導した",
+          "text_en": "J.P. Morgan was among the global coordinators and lead book-running managers of the 2036 senior unsecured notes",
+          "source": {
+            "label": "MercadoLibre の発表",
+            "label_en": "MercadoLibre press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000114036126036136/ef20081842_ex99-1.htm",
+            "level": "official",
+            "date": "2026-09-09",
+            "quote": "The transaction was led by BofA Securities, Citigroup, Goldman Sachs & Co. LLC, J.P. Morgan and Morgan Stanley as Global Coordinators and Lead Book-Running Managers, and Allen & Company and Santander as Joint Book-Running Managers.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2036年満期の社債の発行を、Morgan Stanleyなどが主幹事として主導した",
+          "text_en": "Morgan Stanley was among the global coordinators and lead book-running managers of the 2036 senior unsecured notes",
+          "source": {
+            "label": "MercadoLibre の発表",
+            "label_en": "MercadoLibre press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099590/000114036126036136/ef20081842_ex99-1.htm",
+            "level": "official",
+            "date": "2026-09-09",
+            "quote": "The transaction was led by BofA Securities, Citigroup, Goldman Sachs & Co. LLC, J.P. Morgan and Morgan Stanley as Global Coordinators and Lead Book-Running Managers, and Allen & Company and Santander as Joint Book-Running Managers.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
     }
   ],
   "far": [],

@@ -83,6 +83,19 @@
             "note": "子会社(Advantest America)による取得です。",
             "note_en": "Acquired by a subsidiary (Advantest America)."
           }
+        },
+        {
+          "type": "tie",
+          "text": "2025年1月7日の発表で、アドバンテストによるFormFactor株の取得と技術提携の拡大が、2020年のプローブカード資産の買収を含む複数年の協業を土台にするとしている",
+          "text_en": "The January 2025 release says the expanded partnership and Advantest's purchase of FormFactor shares build on a multi-year collaboration, including FormFactor's 2020 purchase of Advantest's probe-card assets",
+          "source": {
+            "label": "FormFactor の発表",
+            "label_en": "FormFactor press release",
+            "url": "https://www.formfactor.com/press-release/formfactor-expands-partnership-with-advantest/",
+            "level": "official",
+            "date": "2025-01-07",
+            "quote": "The expanded partnership and purchase of FormFactor shares by Advantest build upon a multi-year collaboration between the companies, including FormFactor's 2020 purchase of Advantest's probe-card assets and the recent announcement to partner in developing wafer-level test cells for high-volume manufacturing of silicon photonics integrated circuits."
+          }
         }
       ],
       "name_en": "Advantest"
@@ -119,6 +132,19 @@
             "level": "official",
             "date": "2026-10-13",
             "quote": "The collaboration brings together FormFactor’s industry-leading expertise in probe technologies, interface solutions, test engineering, and device characterization with Teradyne’s advanced automated test platforms to help customers address growing semiconductor complexity."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Teradyneは3億ドルの戦略的な株式投資を行うことで合意した",
+          "text_en": "Teradyne has agreed to make a $300 million strategic equity investment in FormFactor",
+          "source": {
+            "label": "FormFactor の発表",
+            "label_en": "FormFactor press release",
+            "url": "https://www.formfactor.com/press-release/formfactor-and-teradyne-announce-strategic-collaboration-to-accelerate-next-generation-semiconductor-testing/",
+            "level": "official",
+            "date": "2026-10-12",
+            "quote": "Under the terms of the agreement, Teradyne has agreed to make a $300 million strategic equity investment."
           }
         }
       ],
@@ -162,6 +188,32 @@
         }
       ],
       "name_en": "Wells Fargo"
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "キーサイト・テクノロジー",
+      "sub": "電子計測器",
+      "sub_en": "Electronic test & measurement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Keysight、FormFactor、DMPI、VDIが共同で新しいVNAソリューションを開発した",
+          "text_en": "Keysight, FormFactor, DMPI and VDI jointly developed a new VNA solution for on-wafer millimeter-wave component characterization",
+          "source": {
+            "label": "FormFactor の発表",
+            "label_en": "FormFactor press release",
+            "url": "https://www.formfactor.com/press-release/keysight-formfactor-dmpi-and-vdi-join-forces-to-deliver-a-new-170-ghz-220-ghz-broadband-vector-network-analysis-solution/",
+            "level": "official",
+            "date": "2022-05-24",
+            "quote": "Keysight, FormFactor, DMPI and VDI have jointly developed this new VNA solution to provide on-wafer millimeter-wave component characterization under various conditions.",
+            "note": "2022年の発表で、古い情報です。",
+            "note_en": "Announced in 2022; older item."
+          }
+        }
+      ],
+      "name_en": "Keysight"
     },
     {
       "id": "Tokyo Electron",

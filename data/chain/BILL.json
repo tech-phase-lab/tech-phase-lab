@@ -93,6 +93,19 @@
             "date": "2026-08-20",
             "quote": "In addition, we launched embed partnerships with Paychex, Oracle NetSuite, and Acumatica as part of our \"Embed 2.0\" initiative to deploy our platform offerings as a set of embeddable capabilities through third-party platforms."
           }
+        },
+        {
+          "type": "tie",
+          "text": "Oracle NetSuiteとBILLが、米国の顧客向けに支払い処理を強化する戦略的提携を結んだ",
+          "text_en": "Oracle NetSuite and BILL formed a strategic partnership to deliver enhanced payment processing to US customers",
+          "source": {
+            "label": "BILL の発表",
+            "label_en": "BILL press release",
+            "url": "https://www.bill.com/press-release/netsuite-and-bill-partner-to-accelerate-accounts-payable-processes",
+            "level": "official",
+            "date": "2025-10-07",
+            "quote": "Oracle NetSuite, the #1 AI Cloud ERP, and BILL (NYSE: BILL), the intelligent finance platform trusted by half a million businesses to manage, move and maximize their money, have formed a strategic partnership to deliver enhanced payment processing to US customers."
+          }
         }
       ],
       "name_en": "Oracle"
@@ -209,6 +222,106 @@
         }
       ],
       "name_en": "Goldman Sachs"
+    },
+    {
+      "id": "BLKB",
+      "ticker": "BLKB",
+      "name": "ブラックボード",
+      "sub": "非営利向けソフト",
+      "sub_en": "Nonprofit software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackbaudのFinancial Edge NXT向けに、BILLの企業間決済ネットワークと決済処理機能を組み込む戦略的提携を発表した",
+          "text_en": "BILL announced a strategic partnership to embed its business payments network and payment-processing capabilities into Blackbaud Financial Edge NXT's accounts payable workflow",
+          "source": {
+            "label": "BILL の発表",
+            "label_en": "BILL press release",
+            "url": "https://www.bill.com/press-release/bill-and-blackbaud-partner-to-simplify-vendor-payments",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "Payment Assistant™, powered by BILL, the new experience for Blackbaud Financial Edge NXT® customers, will embed BILL’s business payments network and payment-processing capabilities into Blackbaud’s automated accounts payable workflow."
+          }
+        }
+      ],
+      "name_en": "Blackbaud"
+    },
+    {
+      "id": "PAYX",
+      "ticker": "PAYX",
+      "name": "ペイチェックス",
+      "sub": "給与・人事",
+      "sub_en": "Payroll & HR",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PaychexがBILLの提供する買掛金管理の新サービスを、Paychex Flexで開始すると発表した",
+          "text_en": "Paychex announced a new accounts payable solution provided by BILL, launching through Paychex Flex",
+          "source": {
+            "label": "Paychex の発表",
+            "label_en": "Paychex press release",
+            "url": "https://www.paychex.com/newsroom/news-releases/paychex-new-financial-management-solution",
+            "level": "official",
+            "date": "2025-09-10",
+            "quote": "Paychex, Inc. (Nasdaq: PAYX), an industry-leading human capital management (HCM) company, today announced a new financial management solution for accounts payable provided by BILL (NYSE: BILL), a leading intelligent financial operations platform for small and midsize businesses (SMBs)."
+          }
+        }
+      ],
+      "name_en": "Paychex"
+    },
+    {
+      "id": "INTU",
+      "ticker": "INTU",
+      "name": "インテュイット",
+      "sub": "会計ソフト",
+      "sub_en": "Accounting software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IntuitのQuickBooks Online Advanced利用者向けに、BILLの単独製品を共同で販売促進する契約を延長した",
+          "text_en": "BILL extended an agreement with Intuit to jointly promote its standalone offering to customers of QuickBooks Online Advanced",
+          "source": {
+            "label": "BILL results release",
+            "label_en": "BILL results release (SEC exhibit 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000119312520233136/d38765dex991.htm",
+            "level": "official",
+            "date": "2020-08-06",
+            "quote": "Extended an agreement with Intuit to jointly promote our standalone offering to customers of QuickBooks Online Advanced as part of Intuit’s application ecosystem.",
+            "note": "2020年の発表で、古い情報です。",
+            "note_en": "From a 2020 announcement; older."
+          }
+        }
+      ],
+      "name_en": "Intuit"
+    },
+    {
+      "id": "KEY",
+      "ticker": "KEY",
+      "name": "キーコープ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KeyBankと提携し、Key CashFlowを導入した",
+          "text_en": "BILL partnered with KeyBank to introduce Key CashFlow",
+          "source": {
+            "label": "BILL results release",
+            "label_en": "BILL results release (SEC exhibit 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000119312520233136/d38765dex991.htm",
+            "level": "official",
+            "date": "2020-08-06",
+            "quote": "Partnered with KeyBank to introduce Key CashFlow",
+            "note": "2020年の発表で、子会社の銀行との関係です。",
+            "note_en": "From a 2020 announcement; relationship is with the KeyCorp bank subsidiary."
+          }
+        }
+      ],
+      "name_en": "KeyCorp"
     }
   ],
   "far": [],

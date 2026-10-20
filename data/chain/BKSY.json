@@ -114,6 +114,21 @@
             "level": "official",
             "quote": "BlackSky is one of our earliest and longest-standing commercial satellite customers, and it’s great to be heading back to the pad with them once again to continue to advance and expand their constellation,” said Sir Peter Beck, Rocket Lab founder and CEO."
           }
+        },
+        {
+          "type": "up",
+          "text": "BlackSkyとRocket Labは、5回分の打ち上げをまとめて購入する契約を結んだ",
+          "text_en": "BlackSky and Rocket Lab signed an agreement to buy a block of five launches",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-signs-five-launch-deal-with-rocket-lab-to-launch-next-gen-capabilities-and-meet-growing-demand-for-high-frequency-monitoring/",
+            "level": "official",
+            "date": "2023-08-09",
+            "quote": "BlackSky Technology Inc. (NYSE: BKSY ) and Rocket Lab USA, Inc. (Nasdaq: RKLB) signed an agreement to buy a block of five launches that will increase capacity and introduce new capabilities into BlackSky’s rapid-revisit, high-res constellation.",
+            "note": "2023年の発表です。",
+            "note_en": "Announced in 2023."
+          }
         }
       ]
     },
@@ -154,8 +169,127 @@
             "note": "2021年の発表です。",
             "note_en": "Announced in 2021."
           }
+        },
+        {
+          "type": "tie",
+          "text": "BlackSkyとPalantirは共同の試験事業を完了し、BlackSkyの画像と分析をPalantir Foundryに統合した",
+          "text_en": "BlackSky completed a joint pilot project with Palantir that integrated its imagery and analytics into Palantir Foundry",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-and-palantir-collaboration-aids-government-agencies-in-predicting-events/",
+            "level": "official",
+            "date": "2021-08-16",
+            "quote": "BlackSky Holdings, Inc. (“BlackSky”), a leading global geospatial intelligence company, announced the completion of a joint pilot project with Palantir Technologies Inc. (NYSE: PLTR) that integrated BlackSky’s commercial satellite imagery and analytics into Palantir Foundry, Palantir’s enterprise platform.",
+            "note": "2021年の発表です。",
+            "note_en": "Announced in 2021."
+          }
         }
       ]
+    },
+    {
+      "id": "SPIR",
+      "ticker": "SPIR",
+      "name": "スパイア・グローバル",
+      "sub": "衛星データ",
+      "sub_en": "Satellite data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackSkyとSpire Globalは、船舶を追跡するリアルタイムの海上監視サービスを共同で作った",
+          "text_en": "BlackSky and Spire Global teamed up to create a real-time commercially available Maritime Custody Service",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-and-spire-team-up-to-create-real-time-commercially-available-ai-driven-maritime-custody-service/",
+            "level": "official",
+            "date": "2023-05-24",
+            "quote": "BlackSky Technology Inc. (NYSE: BKSY ) and Spire Global, Inc. (NYSE: SPIR ) have teamed up to create a real-time, commercially available Maritime Custody Service (MCS) that can automatically detect, identify and track more than 270 thousand vessels worldwide in open water, along rivers and canals, and while docked at port.",
+            "note": "2023年の発表です。",
+            "note_en": "Announced in 2023."
+          }
+        }
+      ],
+      "name_en": "Spire Global"
+    },
+    {
+      "id": "EADSY",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空宇宙",
+      "sub_en": "Aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BlackSkyとAirbusは再販契約を結び、BlackSkyがAirbusの衛星画像を提供できるようにした",
+          "text_en": "BlackSky and Airbus signed a reseller agreement enabling BlackSky to expand its satellite imagery offerings",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-expands-its-dynamic-monitoring-capabilities-with-airbus-reseller-partnership/",
+            "level": "official",
+            "date": "2022-08-03",
+            "quote": "BlackSky Technology Inc. (NYSE: BKSY ) and Airbus (EPA: AIR ) have signed a reseller agreement enabling BlackSky to expand its dynamic monitoring platform’s all-weather, day and night, and very high-resolution satellite imagery offerings for BlackSky customers.",
+            "note": "2022年の発表です。",
+            "note_en": "Announced in 2022."
+          }
+        }
+      ],
+      "name_en": "Airbus"
+    },
+    {
+      "id": "STE",
+      "ticker": "ST Engineering",
+      "name": "STエンジニアリング",
+      "sub": "防衛・エンジニアリング",
+      "sub_en": "Engineering & defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ST Engineering Geo-InsightsがBlackSkyと提携し、東南アジアの顧客向けに画像提供を広げる",
+          "text_en": "ST Engineering Geo-Insights partnered with BlackSky to serve customers in Southeast Asia",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/st-engineering-geo-insights-partners-with-blacksky-to-offer-expanded-satellite-imaging-and-analytics-insights-portfolio-for-customers-in-southeast-asia/",
+            "level": "official",
+            "date": "2021-03-01",
+            "quote": "ST Engineering’s earth observation and geospatial analysis business, ST Engineering Geo-Insights (“Geo-Insights”), today announced that it has partnered with BlackSky , a leading provider of real-time geospatial intelligence and global monitoring services",
+            "note": "子会社による提携で、2021年の発表です。",
+            "note_en": "Partnership by a subsidiary, announced in 2021."
+          }
+        }
+      ],
+      "name_en": "ST Engineering"
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "スペースX",
+      "sub": "打ち上げ",
+      "sub_en": "Launch",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BlackSkyは、SpaceXによる相乗り打ち上げで衛星2基を星座に加える予定だった",
+          "text_en": "BlackSky planned to add two satellites through a rideshare launch with SpaceX",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-continues-aggressive-business-expansion-adding-two-satellites-with-upcoming-spacex-launch/",
+            "level": "official",
+            "date": "2021-11-30",
+            "quote": "BlackSky (NYSE: BKSY ) will soon add two additional satellites to its constellation through a scheduled Spaceflight Inc.-managed rideshare launch with SpaceX.",
+            "note": "2021年の記載で、古い情報です。",
+            "note_en": "From 2021 (older)."
+          }
+        }
+      ],
+      "name_en": "SpaceX"
     },
     {
       "id": "PL",

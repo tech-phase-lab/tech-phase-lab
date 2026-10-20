@@ -54,6 +54,19 @@
             "date": "2026-03-17",
             "quote": "In the UK, Apollo Go advanced partnerships with Uber and Lyft to pilot autonomous vehicles in London."
           }
+        },
+        {
+          "type": "tie",
+          "text": "2026年8月、Apollo Goの完全自動運転車がドバイのUberプラットフォームで利用可能になった",
+          "text_en": "In August 2026, Baidu's fully driverless Apollo Go vehicles became available to riders on the Uber platform in Dubai",
+          "source": {
+            "label": "Baidu の発表",
+            "label_en": "Baidu press release",
+            "url": "https://www.nasdaq.com/press-release/baidus-apollo-go-goes-live-uber-dubai-offering-new-way-users-hail-fully-driverless",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Baidu's fully driverless Apollo Go vehicles are now available to riders on the Uber platform in Dubai"
+          }
         }
       ],
       "name_en": "Uber Technologies"
@@ -131,6 +144,66 @@
         }
       ],
       "name_en": "Tencent"
+    },
+    {
+      "id": "LYFT",
+      "ticker": "LYFT",
+      "name": "Lyft",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BaiduとLyftが戦略提携を結び、LyftのプラットフォームでApollo Goの自動運転車を欧州の主要市場に展開する",
+          "text_en": "Baidu and Lyft announced a strategic partnership for Lyft to deploy Apollo Go autonomous vehicles across key European markets through the Lyft platform",
+          "source": {
+            "label": "Baidu and Lyft の発表",
+            "label_en": "Baidu and Lyft press release",
+            "url": "https://www.nasdaq.com/press-release/lyft-partners-baidu-deploy-autonomous-rides-across-europe-2025-08-04",
+            "level": "official",
+            "date": "2025-08-04",
+            "quote": "today announced a strategic partnership for Lyft to deploy Baidu's Apollo Go autonomous vehicles (AVs) across key European markets through the Lyft platform."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Lyftが運営と顧客基盤を担い、Baiduが車両、技術検証、技術サポートを提供する",
+          "text_en": "Lyft will own the operational value chain and marketplace while Baidu provides vehicles, technology validation, and technical support",
+          "source": {
+            "label": "Baidu and Lyft の発表",
+            "label_en": "Baidu and Lyft press release",
+            "url": "https://www.nasdaq.com/press-release/lyft-partners-baidu-deploy-autonomous-rides-across-europe-2025-08-04",
+            "level": "official",
+            "date": "2025-08-04",
+            "quote": "Strategic Partnership : Lyft will own the operational value chain and marketplace while Baidu provides vehicles, technology validation, and comprehensive technical support."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTC",
+      "ticker": "DTC",
+      "name": "ドバイ・タクシー",
+      "sub": "タクシー・移動サービス",
+      "sub_en": "Taxi & mobility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Apollo Goがドバイ・タクシーと戦略的に協業し、ドバイでの完全自動運転配車サービスを支える",
+          "text_en": "Apollo Go has a strategic collaboration with Dubai Taxi Company to support its fully driverless ride-hailing service in Dubai",
+          "source": {
+            "label": "Baidu の発表",
+            "label_en": "Baidu press release",
+            "url": "https://www.nasdaq.com/press-release/baidus-apollo-go-commences-fully-driverless-commercial-ride-hailing-dubai-partners",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "This comes alongside Apollo Go's strategic collaboration with Dubai Taxi Company (DTC), the emirate's leading mobility service provider, bringing strong local operational expertise to support the service."
+          }
+        }
+      ],
+      "name_en": "Dubai Taxi Company"
     }
   ],
   "far": [],
