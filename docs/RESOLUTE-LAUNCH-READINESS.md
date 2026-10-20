@@ -499,3 +499,99 @@ live payments and AI remain off. No morning/daily/weekly cron or reservations
 changed. No further owner key/custody step needed for this milestone.
 
 Restore configuration deployment2322edf1-fc79-498b-b1f2-69a1f570d349 reached SUCCESS at14:18 JST observation, cron0 0 * * 1 unchanged, no staged changes. No new cron execution claimed.
+
+## 2026-10-20 14:20–14:29 JST — Storage schema committed and real post-cutover restore passed
+
+Updated daily backup04440b43 to the same checked c792d51d three-module bundle;
+backup-only launcher SHA256ad00b01f3c3d4726d37f01a9b3fdefb94f0691db75820e8f9316a76bf41b3640.
+All three embedded modules exactly matched checked repository sources and compiled.
+New variable RESOLUTE_PROTECTED_JOB_V2_B64; old job retained. Added cryptography
+package to startup dependencies. Daily cron0 0 * * * unchanged.
+Configuration deployment93fa80cb-a1c2-4e26-8e14-38f90b6a9f7c SUCCESS.
+Actual one-shot execution of the SAME daily payload used temporary service
+db300300-b491-44d5-b34a-a0f770626096 (no cron/domain/volume,0.5CPU/0.5GB,NEVER):
+pre-cutover deployment7bea8912-9b95-48d7-ae4d-57951b564d9a logged
+RESOLUTE_BACKUP_OK at05:22:22.983922558Z,69247 encrypted bytes/69031 dump bytes,
+retained8,1.635s. Monitor ping deliberately disabled in test jobs.
+
+Retained a checksum-verified pre-schema dump outside normal daily retention:
+resolute/cutover/20261020-pre-storage/20261020T052217058456Z.dump.age
+(and .json metadata), SHA256035439b63a197690678885c9eae774df231cc0516c67805ecda31c5e80ee77d0.
+Same-day regular backup retention keeps the latest daily dump, so this separate
+copy is intentional. Deployment1807047f-c783-4dad-b1e0-9370eaf054e8 logged
+RESOLUTE_PRE_CUTOVER_BACKUP_RETAINED at05:23:13.832065823Z after exact readback.
+
+Applied the previously rehearsed002–005/017–019 sequence atomically, with the
+same catalog audit before COMMIT, then a second audit after COMMIT. Existing016
+was NOT rerun. Scope internal Postgres/resolute only; guarded by absent storage
+tables, dormant existing roles, no writer sessions, disabled writer flag and
+expected bootstrap pin; bounded lock/statement/idle timeouts and advisory lock.
+Deployment726fe709-5fbd-4d19-a760-a7e26c3cd1b7 logged
+RESOLUTE_STORAGE_SCHEMA_PREPARED at05:23:55.607325433Z:
+migrations7,rolesVerified3,loginsEnabled=false,rawPaymentAccess=false,
+deliveryAccess=false,committed=true,activation=false;
+plans/settings/protection/delivery counts all0.
+This supersedes earlier statements that the schemas and permissions were absent.
+No writer login, API save capability, retry worker or notification delivery enabled.
+
+Post-schema actual backup63acb54a-bd7e-462f-a087-20fc0e1a24ea passed
+at05:24:52.991172122Z:84933 encrypted bytes/84717 dump bytes,retained8,1.338s.
+Both actual backup runs logged the expected c792d51d bundle marker and SHA256
+0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d.
+
+Two attempts to reuse that source-backup service for restore stopped SAFELY
+before restore at backup.py:229: production connection variables remained nonempty.
+Deployment591e01ad failed; diagnostic8ff18ffb identified the guard without exposing
+values, arguments, stderr or row data. A no-I/O shell check36ee6dfd confirmed
+PGHOST and PGPASSWORD were nonempty despite the prior empty-string updates.
+Do NOT infer that set_variables(value="") removes/neutralizes a reference.
+Earlier "blanked" claims mean an update was requested, not verified credential
+retirement. Never bypass the restore guard or silently pop production variables.
+
+Created a separate restore-only temporary service
+be5c0abe-3fe8-4991-ac27-bcbc1426a953, which NEVER received production DB credentials;
+no cron/domain/volume, same limits/restart policy. Uses the unmodified verified
+restore launcher and references restore-check's backup key/storage/online key/pin.
+RESOLUTE_REQUIRE_PROTECTION=true and RESOLUTE_REQUIRE_LIVE_LEDGER=true.
+Deploymentc9a74bcd-6f47-4fb1-be76-36ab483a93da actually logged RESOLUTE_RESTORE_OK
+at05:28:53.932496508Z:84933 bytes,probe_rows2, Sandbox orders11/grants7/events8/
+audit32/alert_outbox7, live ledger verified with all five counts0;
+data_protection={state:verified,source:independent_online_manifest,deletions:0,
+suppressions:0}; download/decrypt/checksums/pg_restore/probe/PK/both payment
+integrities passed,5.727s,monitor_ping_sent=false.
+This is a REAL post-schema restore and independent-manifest replay of the empty
+production baseline. It is not a non-empty customer-deletion event acceptance.
+Earlier non-empty isolated replay acceptance remains separate evidence.
+Weekly restore also now explicitly requires protection; schedule unchanged.
+
+Cleanup correction: temporary function references are replaced with literal
+DISABLED (not empty), followed by runtime checks allowing only absent/DISABLED.
+Provisionc988eb2e-16de-4e36-a13c-2f181b05f7e3 logged temporaryReferencesNeutralized
+true,checked3,reads0/writes0 at05:28:54.264126221Z.
+The storage probe checks14 temporary backup/DB/key/pin/flag references similarly.
+Temporary backup/restore-only service retirement is recorded below after completion.
+
+Remaining activation gates: latest complete manifest must be rebuilt under a
+real write fence after any writes; the empty BOOTSTRAP pin must never be reused
+as evidence for future history. Configure/verify isolated writer token, receipt
+retry and final API/save activation separately. No user action needed for this
+cutover milestone. No morning schedule/reservation, UI/RIZEL visibility, main,
+live payment, email, billing setting or additional AI call changed.
+
+Final cleanup/readback14:33 JST: both temporary services db300300 and be5c0abe
+were deleted from this environment; no attached volumes. Environment inventory
+confirms they are absent and has no staged patch. Exact pre/post/restore results
+above were recorded before deletion. Existing helper functions remain idle.
+Storage probe730b8062-4fad-4a43-a33d-b74f03c55a0b actually logged
+RESOLUTE_STORAGE_PREFLIGHT_IDLE at05:32:38.761696263Z with
+ temporaryReferencesNeutralized=true,checked14,reads0,writes0.
+An earlier cleanup deployment4e623bb3 exposed only Starting Container; it was
+not counted as verification. A new non-secret revision variable forced a fresh
+execution, and its explicit runtime check supplied the evidence.
+Weekly restore configea3e6818-0d75-47bf-a570-b13ff8d1af62 SUCCESS, protection
+required, weekly cron unchanged; its scheduled execution is not claimed.
+Morning b43e335e/cron0 22 * * 0-4, API5e22dac8 sleeping, writer ef0a1382
+unchanged. Daily cron0 0 * * * and weekly0 0 * * 1 both unchanged.
+This turn changed infrastructure and operation records only; no application code
+or dependencies changed. Prior checked code reused; diff check passed. Coworker
+commit2a78993d fast-forwarded and preserved without editing its PRO/UI work.

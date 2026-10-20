@@ -1999,3 +1999,8 @@ Latest 2026-10-20 14:03 JST: production protection bucket prepared separately; r
 
 
 2026-10-20 14:18 JST RESOLUTE update: owner online key installed and runtime AES-GCM check passed; restore references match key and read back pinned empty bootstrap manifest. Seven migrations and three-role ACL audit passed on real DB inside a rolled-back transaction; no schemas installed. Probes retired, temporary secrets blanked. See RESOLUTE-STORAGE-CUTOVER.md for exact evidence and remaining backup/schema/replay gates. Empty bootstrap pin MUST NOT survive customer-write activation without fresh fenced inventory. No repeated owner custody step needed. Other担当 PRO commit33dbd918 preserved by fast-forward.
+
+
+2026-10-20 14:29 JST RESOLUTE: storage migrations002–005/017–019 COMMITTED,3-role ACL audit passed before/after; all roles NOLOGIN and app saving OFF. Daily backup upgraded to checked three-module payload; real pre/post backups passed. Post-schema isolated restore of84933-byte dump passed including independent online empty baseline. Read RESOLUTE-STORAGE-CUTOVER.md latest entry for exact IDs, retained pre-schema dump, remaining activation gates, and IMPORTANT discovery: empty-string variable update did NOT neutralize referenced PGHOST/PGPASSWORD. Use fresh restore-only service; guard blocked unsafe attempts. Temp function references now DISABLED with runtime verification. Never use empty bootstrap pin after customer writes begin.
+
+Final14:33 JST cleanup confirmed: temporary cutover services deleted, no volumes; probe14/provision3 temporary references verified absent or DISABLED at runtime. Daily/weekly/morning schedules unchanged. All detailed evidence appended to storage cutover record.
