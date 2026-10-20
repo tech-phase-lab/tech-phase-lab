@@ -52,6 +52,13 @@ export function billingBackend({env,ownerId,services}) {
     const url=new URL(request.url),action=url.pathname.split('/')[2];
     const secret=env.TECH_PHASE_BILLING_SERVICE_TOKEN;
     if(env.TECH_PHASE_BILLING_RUNTIME!=='railway-sandbox'||env.RAILWAY_GIT_BRANCH!=='codex/research-preview'||typeof secret!=='string'||!/^[A-Za-z0-9_-]{43,128}$/.test(secret))return reply({error:'billing-disabled'},503);
+    // PayPal cannot supply the private gateway credential. Only this exact
+    // notification route is public; sandboxHandler verifies PayPal signatures
+    // before webhookService touches any persisted billing state.
+    if(url.pathname==='/webhooks/paypal/sandbox'&&!url.search) {
+      const handler=sandboxHandler({env:{...env,VERCEL_ENV:'preview'},ownerId,services,identity:async()=>null});
+      return handler(request,'webhook');
+    }
     const received=Buffer.from(request.headers.get('authorization')||''),expected=Buffer.from(`Bearer ${secret}`);
     if(received.length!==expected.length||!timingSafeEqual(received,expected))return reply({error:'service-auth'},401);
     if(url.search||url.pathname!==`/sandbox/${action}`||!actions.has(action))return reply({error:'not-found'},404);

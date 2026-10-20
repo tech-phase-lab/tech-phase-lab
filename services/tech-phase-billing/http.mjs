@@ -25,7 +25,9 @@ export function sandboxHandler({env,identity,ownerId,services}) {
         return response(sandboxReadiness(env));
       } catch { return response({error:'billing-unavailable'},503); }
     }
-    if(!sandboxEnabled(env)) return response({error:'billing-disabled'},503);
+    const notificationsEnabled=action==='webhook' && env.VERCEL_ENV==='preview' &&
+      env.TECH_PHASE_PAYPAL_ENV==='sandbox' && env.TECH_PHASE_BILLING_SANDBOX_WEBHOOK_ENABLED==='true';
+    if(!sandboxEnabled(env)&&!notificationsEnabled) return response({error:'billing-disabled'},503);
     try {
       if(action==='webhook') {
         if(request.method!=='POST') return response({error:'method'},405);

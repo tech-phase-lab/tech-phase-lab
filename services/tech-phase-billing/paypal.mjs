@@ -1,5 +1,6 @@
 // Tech Phase recurring billing. This adapter is deliberately Sandbox-only.
-// No RESOLUTE credentials, payment tables, or entitlement writers are reused.
+// Explicit PRO configuration only. The owner approved sharing the Sandbox app
+// credentials; payment tables, plans, webhook and entitlement writers stay separate.
 const BASE = 'https://api-m.sandbox.paypal.com';
 export const RETURN_URL = 'https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research/account';
 export const OFFERS = Object.freeze({

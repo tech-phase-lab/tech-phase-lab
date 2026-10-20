@@ -1,5 +1,12 @@
 # Tech Phase PRO recurring billing foundation — 2026-10-20
 
+Current status: the dedicated PRO database and backend are deployed. Following
+explicit owner approval at 14:47 JST, PRO now references the existing Sandbox app
+credentials and has its own product, two monthly plans and webhook. Purchases are
+still disabled. See the latest dated entries below for IDs and acceptance evidence.
+Earlier sections record implementation stages; their "not provisioned" statements
+describe those earlier stages, not the current infrastructure.
+
 ## Implemented locally
 
 `services/tech-phase-billing` is separate from RESOLUTE payment services.
@@ -277,3 +284,64 @@ and extended the existing real-Next-matcher test. Full gates are being rerun;
 verify the fixed preview endpoint returns unauthenticated 401 before considering
 this issue resolved. Authenticated gateway-to-backend with a real Clerk session
 and PayPal end-to-end acceptance remain distinct, unverified gates.
+
+## 2026-10-20 — Authentication fix verified on deployed preview
+
+Fix commit `fd5babcf677d02096ee87d3e944f23434f0518fc` passed local Node 1,235,
+Python 2,520, build, lint (0 errors/5 existing warnings), compileall and diff check.
+Preserved parallel RESOLUTE documentation commit `deef9349` before publishing.
+Vercel `dpl_6M87kNVY2raFde5wKa4asSv6s2y3` reached READY on the fix SHA.
+
+The generic Vercel web-fetch tool classified the application's 401 as deployment
+protection and hid the body. Used the connector's approved temporary share URL
+with a cookie-aware HTTP client against that exact deployment; readiness returned
+`401 application/json {"error":"sign-in"}`. This verifies the original 503 is
+resolved and the deployed unauthenticated route fails correctly. No Vercel
+protection settings were disabled. Real Clerk-owner gateway session still needs
+its separate acceptance check; backend owner/service authentication was verified.
+
+Another contributor published `2a78993df8263334b343e68f2ce4e13ca08fa2c8` (news/UI)
+after the fix. Fast-forwarded locally and preserved it. Our earlier workflow runs
+were cancelled by subsequent branch pushes, not reported as passed. Latest shared
+branch CI `39374487817` was still running at the last observation. Do not claim
+full remote CI success yet. PRO Railway runtime remains pinned to `33dbd918`;
+only the Vercel proxy changed in the later fix, so it needs no backend redeploy.
+
+Remaining blocker: automatic approval review requires explicit owner approval
+before expanding RESOLUTE Sandbox-app credential use to PRO. No discovery
+credential variables were created; existing RESOLUTE app settings untouched.
+Ask whether the existing Sandbox app credentials may be used by the PRO-only
+service, then inventory existing resources before adding dedicated PRO plans
+and webhook. Keep both purchase switches false until checks are complete.
+This final evidence entry is local/staged for the next publication batch.
+
+## 2026-10-20 14:47 JST — Shared Sandbox app explicitly approved
+
+Owner explicitly approved using the existing Sandbox app credentials in PRO
+(「使っていいですよ」), resolving the previous automatic-review boundary.
+Only PRO services receive references to the existing client ID/secret; no source
+RESOLUTE variables or settings are changed.
+
+Discovery deployment `e8284c25-8875-4ef1-9a20-ad337f324caf` authenticated against
+the fixed Sandbox API: zero recurring plans and one RESOLUTE webhook.
+Provision deployment `e6d060a3-f26d-4812-aa01-cc7d64687e1f` completed successfully:
+
+- Product: `PROD-8X64325433408084T` (Tech Phase PRO Sandbox).
+- JPY monthly 2,980: `P-03V83272JR2001350NLLQDHA`.
+- USD monthly 20: `P-1HN77466YK762545WNLLQDHI`.
+- PRO webhook: `8RC86242WT392843H`.
+- URL: `https://tech-phase-billing-sandbox-production.up.railway.app/webhooks/paypal/sandbox`.
+
+Both plans are ACTIVE, one infinite monthly REGULAR cycle, zero setup fee,
+no trial, quantity pricing or outstanding-balance auto-billing. Read back actual
+provider plan details. Existing RESOLUTE webhook `24H44192YT965133R` retained
+its original URL and all six event subscriptions, checked after creation.
+No buyer subscription or payment created.
+
+Added exact public notification route on PRO Railway backend: runtime/branch
+guards, JSON/body limit, POST only, and PayPal signature validation before ledger
+access. Other service paths still require the private gateway credential.
+A separate `TECH_PHASE_BILLING_SANDBOX_WEBHOOK_ENABLED` switch permits receiving
+notifications while both purchase switches remain false. Do not point PayPal
+to the deployment-protected Vercel preview. Configuration is staged live for
+the next PRO backend deployment; deployed acceptance is still pending.

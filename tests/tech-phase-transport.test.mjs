@@ -5,6 +5,26 @@ const token='s'.repeat(48),ownerId='user_owner';
 const env={VERCEL_ENV:'preview',TECH_PHASE_BILLING_SANDBOX_ENABLED:'true',TECH_PHASE_PAYPAL_ENV:'sandbox',TECH_PHASE_BILLING_SERVICE_TOKEN:token,TECH_PHASE_BILLING_SERVICE_URL:'https://pro-test.up.railway.app'};
 const backendEnv={...env,TECH_PHASE_BILLING_RUNTIME:'railway-sandbox',RAILWAY_GIT_BRANCH:'codex/research-preview'};
 const request=(action,body,headers={})=>new Request(`https://preview.example/api/${action}`,{method:body===undefined?'GET':'POST',headers:{origin:'https://preview.example','content-type':'application/json',...headers},body:body===undefined?undefined:JSON.stringify(body)});
+test('public notification route keeps purchase closed and requires signature verification',async()=>{
+ let calls=0;
+ const config={...backendEnv,TECH_PHASE_BILLING_SANDBOX_ENABLED:'false',TECH_PHASE_BILLING_SANDBOX_WEBHOOK_ENABLED:'true'};
+ const backend=billingBackend({env:config,ownerId,services:()=>({webhook:async(headers)=>{
+  calls++;if(headers.get('paypal-transmission-sig')!=='valid-test-signature')throw Error('INVALID_SIGNATURE');
+  return {status:'ignored'};
+ }})});
+ const notify=(path='/webhooks/paypal/sandbox',body='{}',headers={})=>new Request('https://internal.test'+path,{method:'POST',headers:{'content-type':'application/json',...headers},body});
+ assert.equal((await backend(notify())).status,401);
+ assert.equal((await backend(notify(undefined,'{}',{'paypal-transmission-sig':'valid-test-signature'}))).status,200);
+ assert.equal((await backend(notify(undefined,'{"padding":"'+'x'.repeat(131072)+'"}'))).status,400);
+ assert.equal((await backend(new Request('https://internal.test/webhooks/paypal/sandbox'))).status,405);
+ for(const path of ['/webhooks/paypal/sandbox?extra=1','/webhooks/paypal/sandbox/','/sandbox/create','/sandbox/webhook'])assert.equal((await backend(notify(path))).status,401);
+ assert.equal((await backend(notify('/sandbox/create','{}',{authorization:`Bearer ${token}`,'x-tech-phase-user':ownerId}))).status,503);
+ for(const change of [{TECH_PHASE_BILLING_SANDBOX_WEBHOOK_ENABLED:'false'},{TECH_PHASE_PAYPAL_ENV:'live'},{RAILWAY_GIT_BRANCH:'main'}]){
+  const guarded=billingBackend({env:{...config,...change},ownerId,services:()=>assert.fail('disabled route initialized services')});
+  assert.equal((await guarded(notify())).status,503);
+ }
+ assert.equal(calls,2);
+});
 test('gateway verifies owner and origin then backend receives only trusted identity',async()=>{
  let user=ownerId,calls=0;
  const backend=billingBackend({env:backendEnv,ownerId,services:()=>({checkout:{start:async(...args)=>{calls++;return {args};}}})});
