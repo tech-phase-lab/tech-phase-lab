@@ -7,7 +7,8 @@ const permissions={
  resolute_protection_writer:{'resolute.protection_outbox':['SELECT']},
 };
 function fail(){throw Error('RESOLUTE_STORAGE_PERMISSIONS_UNSAFE');}
-export async function verifyStoragePermissions(client){
+export async function verifyStoragePermissions(client,{loginRoles=[]}={}){
+ if(!Array.isArray(loginRoles)||new Set(loginRoles).size!==loginRoles.length||loginRoles.some(role=>!storageRoles.includes(role)))fail();
  const {rows:scope}=await client.query("SELECT current_database() AS name,current_setting('server_version_num')::int AS version");
  if(scope[0]?.name!=='resolute')fail();
  const privileges=['SELECT','INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER'];
@@ -18,7 +19,7 @@ export async function verifyStoragePermissions(client){
    has_database_privilege(r.oid,current_database(),'CREATE') AS db_create
    FROM pg_roles r WHERE rolname=$1`,[role]);
   const identity=rows[0];
-  if(!identity||Object.entries(identity).some(([k,v])=>k!=='oid'&&v!==false))fail();
+  if(!identity||Object.entries(identity).some(([k,v])=>k!=='oid'&&v!==(k==='rolcanlogin'&&loginRoles.includes(role))))fail();
   const {rows:schemas}=await client.query(`SELECT nspname,has_schema_privilege($1,oid,'CREATE') AS writable,
    has_schema_privilege($1,oid,'USAGE') AS usable
    FROM pg_namespace WHERE left(nspname,3)<>'pg_' AND nspname<>'information_schema'`,[role]);
@@ -61,5 +62,5 @@ export async function verifyStoragePermissions(client){
    AND (p.proowner=$2::oid OR (p.prosecdef AND has_function_privilege($1,p.oid,'EXECUTE')))`,[role,identity.oid]);
   if(dangerous.length)fail();
  }
- return {rolesVerified:storageRoles.length,loginsEnabled:false,rawPaymentAccess:false,deliveryAccess:false};
+ return {rolesVerified:storageRoles.length,loginsEnabled:loginRoles.length>0,rawPaymentAccess:false,deliveryAccess:false};
 }

@@ -1,3 +1,20 @@
+## RESOLUTE runtime connection preparation — 2026-10-21
+
+Prior c5eb09e8 passed CI39446888627 (both jobs). A read-only scoped runtime
+identity/ACL checker is now implemented; see RESOLUTE-RUNTIME-CONNECTION-CHECK.md.
+The default preparation audit still requires all3 roles NOLOGIN. The new check
+requires the explicit expected LOGIN set and rejects administrator SET ROLE,
+wrong host/user, unexpected LOGIN and excess table/column/schema/function grants.
+Integrated local gates: Node1,296,Python2,549,lint0errors/5existing warnings,
+build,compileall,diff check passed. No production role, password, runtime flag,
+scheduler or API start changed.
+Production actual scoped login/normal save-route acceptance remains pending;
+local PGlite session checks do not prove production password authentication.
+Prior nonempty restore evidence and retained manifest remain valid dated evidence,
+not a reusable activation inventory. Saving remains OFF.
+
+---
+
 ## RESOLUTE update — 2026-10-21 00:12 JST
 
 This dated update supersedes older pending claims for the checks below.

@@ -5,6 +5,7 @@ import {PGlite} from '@electric-sql/pglite';
 import {prepareStoragePermissions,main} from '../scripts/resolute/provision-storage-permissions.mjs';
 import {checkStorageReadiness,main as readinessMain} from '../scripts/resolute/check-storage-readiness.mjs';
 import {verifyStoragePermissions} from '../scripts/resolute/storage-permissions.mjs';
+import {checkStorageRuntime,main as runtimeMain} from '../scripts/resolute/check-storage-runtime.mjs';
 async function fixture(){
  const boot=new PGlite();await boot.exec('CREATE DATABASE resolute');const data=await boot.dumpDataDir();await boot.close();
  const db=new PGlite({database:'resolute',loadDataDir:data});
@@ -20,6 +21,45 @@ async function fixture(){
  const client={query:async(sql,args)=>args?db.query(sql,args):(await db.exec(sql)).at(-1)};
  return {db,client};
 }
+test('runtime check is inert and rejects admin, foreign host and ambiguous login expectations before connecting',async()=>{
+ assert.deepEqual(await runtimeMain({}),{event:'RESOLUTE_STORAGE_RUNTIME_DISABLED'});
+ const base={RESOLUTE_CHECK_STORAGE_RUNTIME:'true',RESOLUTE_STORAGE_CHECK_DB_URL:'postgresql://resolute_plan_writer:disposable@postgres.railway.internal/resolute',RESOLUTE_STORAGE_EXPECTED_LOGIN_ROLES:'["resolute_plan_writer"]'};
+ for(const patch of [
+  {RESOLUTE_STORAGE_CHECK_DB_URL:'postgresql://postgres:disposable@postgres.railway.internal/resolute'},
+  {RESOLUTE_STORAGE_CHECK_DB_URL:'postgresql://resolute_plan_writer:disposable@other.internal/resolute'},
+  {RESOLUTE_STORAGE_EXPECTED_LOGIN_ROLES:'[]'},
+  {RESOLUTE_STORAGE_EXPECTED_LOGIN_ROLES:'["postgres"]'},
+  {RESOLUTE_STORAGE_EXPECTED_LOGIN_ROLES:'["resolute_plan_writer","resolute_plan_writer"]'},
+ ])await assert.rejects(()=>runtimeMain({...base,...patch}),/INVALID_RUNTIME_SCOPE/);
+});
+test('runtime audit requires the scoped session and rejects overprivilege or unexpected LOGIN',async()=>{
+ const role='resolute_plan_writer';
+ for(const [setup,expectedRoles,unsafe] of [
+  ['', [role], false],
+  ['GRANT SELECT(secret) ON resolute_payments_live.orders TO resolute_plan_writer', [role], true],
+  ['ALTER ROLE resolute_notification_writer LOGIN', [role], true],
+  ['ALTER ROLE resolute_notification_writer LOGIN', [role,'resolute_notification_writer'], false],
+ ]){
+  const {db,client}=await fixture();
+  try{
+   await prepareStoragePermissions(client);
+   await db.exec('ALTER ROLE resolute_plan_writer LOGIN');
+   await assert.rejects(()=>verifyStoragePermissions(client),/UNSAFE/);
+   await db.exec('SET ROLE resolute_plan_writer');
+   await assert.rejects(()=>checkStorageRuntime(client,role,[role]),/INVALID_RUNTIME_IDENTITY/);
+   await db.exec('RESET ROLE');
+   if(setup)await db.exec(setup);
+   await db.exec('SET SESSION AUTHORIZATION resolute_plan_writer');
+   if(unsafe)await assert.rejects(()=>checkStorageRuntime(client,role,expectedRoles),/UNSAFE/);
+   else{
+    const result=await checkStorageRuntime(client,role,expectedRoles);
+    assert.equal(result.loginsEnabled,true);assert.equal(result.readOnly,true);
+    assert.equal(result.rolesVerified,3);assert.equal(result.activation,false);
+    assert.equal(result.recoveryFenceVerified,false);
+   }
+  }finally{await db.close();}
+ }
+});
 test('storage preparation is off by default and rejects wrong database scope before connecting',async()=>{
  assert.deepEqual(await main({}),{event:'RESOLUTE_STORAGE_PREPARE_DISABLED'});
  await assert.rejects(()=>main({RESOLUTE_PREPARE_STORAGE_PERMISSIONS:'true',RESOLUTE_SETUP_DB_URL:'postgresql://user@wrong.internal/resolute'}),/INVALID_STORAGE_SCOPE/);
