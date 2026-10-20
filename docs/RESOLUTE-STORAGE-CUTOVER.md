@@ -410,3 +410,41 @@ changes during reading, complete replay and unavailable LIST permission.
 Validation and deployment evidence follow below when completed.
 
 Full gates: Node1236/Python2523 passed (3759 total), lint0 errors/5 existing warnings, build/compileall/diff check passed. Stale generated build cache was preserved outside the repository and build repeated successfully. Runtime verification follows separately.
+
+
+## 2026-10-20 14:53 JST — complete inventory runtime accepted
+
+Code commit fafde179fec86ae861469591e0c2839b64b92e4e rejects incomplete or
+changing live protection inventories and reports whole retry queue backlog.
+Three-module bundle SHA256:
+730cf53f6408a171539a4a899d1dc092941acb5fa44f018ce9e338550af032de.
+
+Fresh restore-only service4e993fbe-e5d6-49a8-93ab-e805282f740c was never given
+production DB connection variables. Deploymentf70b1204-0a1e-40ac-a61a-e8925fd8092f
+logged the matching RESOLUTE_PROTECTED_BUNDLE_READY and RESOLUTE_RESTORE_OK at
+2026-10-20T05:51:24.351987561Z. Encrypted bytes84933, probe_rows2; Sandbox
+orders11/grants7/events8/audit32/alert_outbox7; live ledger verified with all five
+counts0; data_protection verified, source independent_online_manifest,
+deletions0/suppressions0; download/decrypt/checksums/pg_restore/probe/primary-key/
+Sandbox/live payment integrity passed,2.591s,monitor_ping_sent=false.
+This proves the stricter GET+LIST runtime works against the actual empty baseline;
+it does not claim nonempty production deletion acceptance. Writers still must
+be fenced and the complete manifest resealed before recovery after writes begin.
+
+Daily backup deployment89161667-8504-498e-b417-b00f8af18a7c and weekly restore
+f0f20b52-cc18-4367-b127-b910bf280533 now select RESOLUTE_PROTECTED_JOB_V3_B64.
+Previous V2 payloads retained for rollback. Both config deployments SUCCESS;
+this is not evidence of a scheduled V3 execution. Daily0 0 * * *,weekly0 0 * * 1,
+morning0 22 * * 0-4 unchanged. Morning service not modified.
+The fresh verification service was deleted after evidence capture; no volumes.
+Customer saving, role logins, writer and retry scheduling remain disabled.
+No payments, email, AI calls, key regeneration or owner Run now required.
+
+Local code gates passed3759 tests (Node1236/Python2523),lint/build/compileall.
+CI39376987144 was cancelled by the next branch push, not reported as passed.
+Coworker af8af671/d10c04f8 changes fast-forward integrated; final combined gates
+and successor CI are being verified separately.
+
+Final combined d10c04f8 gates: Node1237/Python2523 (3760 total) passed;
+lint0 errors/5 existing warnings, build, compileall and diff check passed.
+Deployed three-module payload verified byte-for-byte against integrated source.

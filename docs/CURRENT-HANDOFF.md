@@ -2014,3 +2014,16 @@ while delayed or unselected events remain. Saving and retry scheduling stay OFF.
 Validation: Node1236 + Python2523 =3759 passed; lint0 errors/5 existing warnings,
 build passed after preserving and replacing stale generated cache, compileall and
 diff check passed. Railway runtime validation is pending in this entry.
+
+
+2026-10-20 14:53 JST: fafde179 complete-inventory/whole-retry-queue fix passed
+3759 local tests and actual isolated production-backup restore (f70b1204,05:51:24Z).
+V3 bundle730cf53f deployed to daily/weekly configs; schedules unchanged. Temporary
+restore-only service deleted. Source saving/writer/retry remain OFF. Empty
+baseline acceptance only; actual recovery requires fencing and resealing. No owner
+key/Run now step. CI cancelled by coworker push; d10c04f8 integrated and combined
+gates rerunning. See STORAGE-CUTOVER latest evidence for exact IDs.
+
+Final combined d10c04f8 gates: Node1237/Python2523 (3760 total) passed;
+lint0 errors/5 existing warnings, build, compileall and diff check passed.
+Deployed three-module payload verified byte-for-byte against integrated source.
