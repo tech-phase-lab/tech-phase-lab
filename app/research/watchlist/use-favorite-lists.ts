@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { favoriteStocksKey } from "@/lib/research/favorites";
 import { favoriteListsKey, parseFavoriteLists, type FavoriteLists } from "@/lib/research/favorite-lists";
+import { useIdentityRefresh } from "../identity-provider";
 import { createFavoriteSync, favoriteDisplayDocument, type CloudFavorites, type FavoriteSyncStatus } from "@/lib/research/favorite-sync";
 const eventName = "tech-phase:favorite-lists";
 function snapshot() {
@@ -42,11 +43,24 @@ export function useFavoriteLists() {
   const [cloud, setCloud] = useState<CloudFavorites | null>(null);
   const [status, setStatus] = useState<FavoriteSyncStatus>("loading");
   const sync = useRef<ReturnType<typeof createFavoriteSync> | null>(null);
+  // Renew the identity session before asking the server, as the other member screens do. After a long idle the
+  // session cookie can be stale while the page still shows the signed-in header: a 401 then made the list fall
+  // back to this device's copy until the owner changed screens (owner, Oct 20).
+  const refreshIdentity = useIdentityRefresh();
+  const identity = useRef(refreshIdentity);
+  useEffect(() => { identity.current = refreshIdentity; }, [refreshIdentity]);
   useEffect(() => {
-    const controller = createFavoriteSync(init => fetch("/api/research/favorites", {
+    const request = (init?: { body: string }) => fetch("/api/research/favorites", {
       method: init ? "POST" : "GET", cache: "no-store", signal: AbortSignal.timeout(12000),
       ...(init ? { headers: { "Content-Type": "application/json" }, body: init.body } : {}),
-    }), (next, state) => { setCloud(next); setStatus(state); }, {
+    });
+    const controller = createFavoriteSync(async init => {
+      try { await identity.current(); } catch { /* identity not ready: the server decides */ }
+      const first = await request(init);
+      if (first.status !== 401) return first;
+      try { await identity.current(true); } catch { return first; }
+      return request(init);
+    }, (next, state) => { setCloud(next); setStatus(state); }, {
       // Account-scoped and tab-local: never mix with signed-out favorites or
       // another tab's pending changes. Survives navigation and reload in this tab.
       load: account => sessionStorage.getItem(`tech-phase:favorite-pending:${account}`),
