@@ -143,3 +143,15 @@ Validation: Node1183/1183, Python2508/2508 (266.840s), lint0 errors
 (5 existing warnings), Next build, compileall and diff check passed.
 Total3691 tests. No actual provider/model calls were made. Live rollout and
 next scheduled generation/storage remain separate verification steps.
+
+### Freshness rollout evidence (10:55 JST)
+
+Code20a3069e479eca51ca71d9ac9671bcdb0246bc68 / tree
+e644dddc3b2666a823e329b290cae300af03037c was published after all gates.
+Morning deployment b43e335e-918e-48a2-9779-433cf47b0738 reached SUCCESS.
+Actual01:55:26.358Z preflight: ready, approvedPairs90, publication withheld,
+aiCalls0/writes0. Cron and seven existing variables unchanged; no staged changes.
+This is deployment/preflight evidence, NOT new news generation or stored-output
+acceptance. No daily claim reset, provider request, new model invocation, email,
+public release, billing change or reservation change. CI39355975366 was still
+in progress when inspected, so CI success is not yet claimed.
