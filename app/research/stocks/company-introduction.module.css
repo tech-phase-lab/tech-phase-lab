@@ -27,3 +27,11 @@
   .card { padding: 11px 13px; }
   .card dd { margin-top: 5px; line-height: 1.7; }
 }
+.lite { display: grid; gap: 16px; margin-top: 14px; }
+.liteRivals { display: grid; gap: 8px; }
+.liteRivals h3, .liteMap h3 { display: flex; align-items: baseline; gap: 8px; margin: 0; font-size: 16px; line-height: 1.5; }
+.liteRivals h3 > span { color: #b9a4e6; font-size: 11px; } .liteMap h3 > span { color: #82ccda; font-size: 11px; }
+.liteRivals div { display: flex; flex-wrap: wrap; gap: 8px; }
+.liteRivals div span { font: 600 13px ui-monospace, monospace; padding: 6px 12px; border: 1px dashed #b9a4e6; border-radius: 8px; color: #e4dcf8; background: #1b1628; }
+.liteMap { display: grid; gap: 8px; padding: 18px 16px; border: 1px dashed #2c3a4d; border-radius: 10px; opacity: .55; }
+.liteMap p { margin: 0; color: #93a7ba; font-size: 14px; line-height: 1.7; }

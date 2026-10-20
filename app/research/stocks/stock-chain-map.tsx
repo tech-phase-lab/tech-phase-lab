@@ -32,16 +32,21 @@ function Source({ source, lang }: { source: ChainSource; lang: "ja" | "en" }) {
 }
 
 /** A card is one company: a one-line text and its sources behind a tap. Several relations share one card. */
-function Card({ company, lang, anchor = true }: { company: ChainCompany; lang: "ja" | "en"; anchor?: boolean }) {
+/** The stock page's only rival sentence in every map ("X competes with <root>") adds nothing beside the tag and the source, so it is not shown (owner, Oct 20). */
+const standardRival = (relation: ChainCompany["relations"][number], root: ChainMapData["root"], ja: boolean) =>
+  relation.type === "rival" && (ja ? relation.text === `${root.name}と競合する` : relation.text_en === `Competes with ${root.name_en ?? root.name}`);
+
+function Card({ company, lang, root, anchor = true }: { company: ChainCompany; lang: "ja" | "en"; root: ChainMapData["root"]; anchor?: boolean }) {
   const ja = lang === "ja";
   const many = company.relations.length > 1;
+  const line = company.relations.find(relation => !standardRival(relation, root, ja));
   return <div className={styles.it} id={anchor ? CARD + company.id : undefined} data-tone={company.relations[0].type}>
     <div className={styles.itHead}><b>{company.ticker}</b><span>{ja ? company.name : (company.name_en ?? company.name).replace(/([A-Za-z0-9])\(/g, "$1 (")}</span>
       {chainKinds(company).map(kind => <span key={kind} className={styles.tg} data-tone={kind}>{chainText(kind, "tag", lang)}</span>)}</div>
-    <p className={styles.ln}>{ja ? company.relations[0].text : company.relations[0].text_en}</p>
+    {line && <p className={styles.ln}>{ja ? line.text : line.text_en}</p>}
     <details><summary>{ja ? "出典・引用・発表日" : "Sources, quotes & dates"}{many ? (ja ? `(${company.relations.length}件)` : ` (${company.relations.length})`) : ""}</summary>
       {company.relations.map((relation, index) => <div key={index} className={styles.srcBlock}>
-        {many && <span><span className={styles.tg} data-tone={relation.type}>{chainText(relation.type, "tag", lang)}</span> {ja ? relation.text : relation.text_en}</span>}
+        {many && <span><span className={styles.tg} data-tone={relation.type}>{chainText(relation.type, "tag", lang)}</span>{standardRival(relation, root, ja) ? "" : ` ${ja ? relation.text : relation.text_en}`}</span>}
         <Source source={relation.source} lang={lang} />
       </div>)}
     </details>
@@ -163,7 +168,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
       </div>
       {picked && <div className={styles.picked} role="status">
         <button type="button" className={styles.close} onClick={() => setSel(null)} aria-label={t("閉じる", "Close")}>×</button>
-        <Card company={picked} lang={lang} anchor={false} />
+        <Card company={picked} lang={lang} root={data.root} anchor={false} />
       </div>}
       </div>
       <div className={styles.lists}>
@@ -177,14 +182,14 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
               ? (() => {
                 const { shown, more } = foldRivals(members, kind === "rival" ? data.rivals : [], kind === "rival" ? 5 : GROUP_KEEP);
                 return <>
-                  <div className={styles.items}>{shown.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
+                  <div className={styles.items}>{shown.map(company => <Card key={company.id} company={company} lang={lang} root={data.root} />)}</div>
                   <details className={styles.more}>
                     <summary>{ja ? `＋ 残り${more.length}社を開く` : `+ Show ${more.length} more`}</summary>
-                    <div className={styles.items}>{more.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>
+                    <div className={styles.items}>{more.map(company => <Card key={company.id} company={company} lang={lang} root={data.root} />)}</div>
                   </details>
                 </>;
               })()
-              : <div className={styles.items}>{members.map(company => <Card key={company.id} company={company} lang={lang} />)}</div>}
+              : <div className={styles.items}>{members.map(company => <Card key={company.id} company={company} lang={lang} root={data.root} />)}</div>}
           </div>;
         })}
         {data.far.length > 0 && <div className={styles.grp} data-tone="far">

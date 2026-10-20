@@ -152,3 +152,15 @@ test('the stock page gets a network record for every company that has a quoted c
   assert.equal(companyNetworkFor({ cik: 0, ticker: 'ZZZZ' }), null);
   assert.equal(companyNetworkFor({ cik: 1, ticker: 'ZM' }), null);
 });
+
+test('the repeated "competes with <root>" sentence is not drawn on rival cards, but more specific rival text still is', () => {
+  const standard = chain.chainDataFor('SANM');
+  for (const lang of ['ja', 'en']) {
+    const html = renderToStaticMarkup(createElement(StockChainMap, { data: standard, lang }));
+    assert.ok(!html.includes(lang === 'ja' ? `${standard.root.name}と競合する` : `Competes with ${standard.root.name_en ?? standard.root.name}`), lang);
+    assert.ok(html.includes('data-tone="rival"'));
+  }
+  const specific = chain.chainDataFor('CRDO');
+  const text = specific.companies.flatMap(company => company.relations).find(relation => relation.type === 'rival' && relation.text !== `${specific.root.name}と競合する`).text;
+  assert.ok(renderToStaticMarkup(createElement(StockChainMap, { data: specific, lang: 'ja' })).includes(text.replace(/&/g, '&amp;')));
+});
