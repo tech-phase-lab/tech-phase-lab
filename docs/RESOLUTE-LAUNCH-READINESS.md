@@ -1,3 +1,41 @@
+## Current RESOLUTE status — 2026-10-20 evening JST
+
+This summary supersedes older pending/completed statements below for RESOLUTE
+storage only. Earlier dated entries remain historical evidence, not instructions
+to repeat completed operations. Other product work is unchanged.
+
+- Completed: owner recovery-key custody and retrieval; production storage schemas
+  and minimum-permission audit; three storage roles remain NOLOGIN. Do not request
+  key regeneration, re-entry or another owner Run now for those completed checks.
+- API is deployed at 7875e998 (actual READY plus reader-only DB/HTTP checks).
+  Customer saving and protection publishing remain disabled. Token/reference
+  equality does not establish an operational writer or successful storage.
+- Actual post-schema production-backup restore passed with an empty history.
+  Synthetic loopback HTTP plus real S3 persisted three events and verified
+  readback after an in-process server restart. Neither proves production
+  nonempty-history recovery, public HTTPS acceptance or container-restart durability.
+- Guarded rollback-only production SQL is implemented in
+  `scripts/resolute/check-storage-write.sh` and `.sql`, but has NOT run against
+  production. Local evidence: Node1257/Python2523; integrated CI39388517701 passed
+  for e847d03a. This is not a test claim for subsequent coworker commits.
+- Remaining: execute the reviewed scoped rollback check inside the existing DB
+  container without exporting admin credentials; establish a fresh complete
+  write-fenced inventory; verify real gateway receipts and durable objects, then
+  isolated restore/replay of nonempty history before reviewing save activation.
+  Never reuse the initial empty manifest after writes or treat NOLOGIN alone as
+  proof of a maintained fence. See [cutover evidence](RESOLUTE-STORAGE-CUTOVER.md)
+  and [scoped check](RESOLUTE-SCOPED-WRITE-CHECK.md).
+- Access blocker: Railway CLI endpoint access is denied in this environment;
+  the connected app has no SQL/SSH operation. Browser control repeatedly timed
+  out, including its reset. Owner reported successful email login at20:09 JST;
+  agent-side signed-in state and a DB query interface remain unverified. Do not
+  send the owner through another login just because browser control timed out.
+- No live payment, charge, email, additional AI call or billing change. Preserve
+  morning/backup/restore schedules and reservations. October20 morning news is
+  not a successful acquisition. Keep RIZEL90 hidden and approved copy/UI intact.
+
+---
+
 # RESOLUTE launch readiness — reconstructed record
 
 Reconstructed 2026-10-19 after workspace maintenance removed the former scratch

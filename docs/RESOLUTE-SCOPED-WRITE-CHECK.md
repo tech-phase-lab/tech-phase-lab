@@ -112,3 +112,23 @@ the target Postgres page currently shows Login/404 in this browser, so its Data
 screen cannot yet be inspected. Existing CLI authorization does not establish a
 signed-in dashboard session. No CLI policy-denied endpoint was retried, no admin
 credential was transferred, and no production write or save activation occurred.
+
+
+## 2026-10-20 evening JST — Browser access is not a pending owner task
+
+The owner supplied account settings matching the connected Railway profile and
+showing GitHub linked as tech-phase-lab but GitHub login disabled. The earlier
+instruction to authenticate through GitHub confused repository integration with
+a login method. Do not repeat it or enable/change the integration to work around
+it. The owner reported successful email login at20:09 JST. Browser-control calls
+and the reset subsequently timed out; the agent has not verified the final
+signed-in dashboard or an available SQL interface. This is an execution-access
+blocker, not evidence of bad credentials, deleted projects or a completed probe.
+
+The connected app separately confirmed the original radiant-magic project
+0872be15-db75-4e5a-ae0f-881911fb442d in workspace わたがし's Projects. Its connection
+does not establish the browser's account/session. No logout, account linkage
+change, production SQL, save activation or credential transfer was performed
+during the browser troubleshooting. Existing approval for the narrowly scoped
+in-container rollback check remains valid. Do not retry denied CLI endpoints or
+copy Postgres admin credentials into another service.
