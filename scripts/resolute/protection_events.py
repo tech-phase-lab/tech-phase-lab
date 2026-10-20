@@ -46,24 +46,33 @@ def inventory(s3,bucket):
             if len(items)>MAX_OBJECTS: raise ValueError('protection inventory exceeds reviewed limit')
     return items
 
+def read_object(s3,bucket,name,limit):
+    # Bounded reads may leave unread bytes on failure. Always release the HTTP
+    # response, including when the provider raises during streaming.
+    stream=s3.get_object(Bucket=bucket,Key=name)['Body']
+    try:
+        return stream.read(limit)
+    finally:
+        stream.close()
+
 def seal_manifest(s3,bucket,key,protection):
     before=inventory(s3,bucket);objects=[]
     for name in sorted(before):
-        body=s3.get_object(Bucket=bucket,Key=name)['Body'].read(2049)
+        body=read_object(s3,bucket,name,2049)
         decrypt_event(body,key,name,protection)
         objects.append({'key':name,'sha256':hashlib.sha256(body).hexdigest()})
     if inventory(s3,bucket)!=before: raise ValueError('protection inventory changed; fence writers first')
     body=json.dumps({'version':1,'objects':objects},sort_keys=True,separators=(',',':')).encode()
     pin=hashlib.sha256(body).hexdigest()
     s3.put_object(Bucket=bucket,Key=MANIFEST_PREFIX+pin+'.json',Body=body)
-    if s3.get_object(Bucket=bucket,Key=MANIFEST_PREFIX+pin+'.json')['Body'].read(len(body)+1)!=body:
+    if read_object(s3,bucket,MANIFEST_PREFIX+pin+'.json',len(body)+1)!=body:
         raise ValueError('protection manifest readback mismatch')
     return pin
 
 def load_manifest(s3,bucket,key,pin,protection,*,require_complete_inventory=False):
     if not isinstance(pin,str) or not re.fullmatch('[0-9a-f]{64}',pin):
         raise ValueError('independent online protection manifest required')
-    raw=s3.get_object(Bucket=bucket,Key=MANIFEST_PREFIX+pin+'.json')['Body'].read(32*1024*1024+1)
+    raw=read_object(s3,bucket,MANIFEST_PREFIX+pin+'.json',32*1024*1024+1)
     if len(raw)>32*1024*1024 or hashlib.sha256(raw).hexdigest()!=pin:
         raise ValueError('protection manifest checksum mismatch')
     manifest=json.loads(raw)
@@ -78,7 +87,7 @@ def load_manifest(s3,bucket,key,pin,protection,*,require_complete_inventory=Fals
         if not isinstance(item,dict) or set(item)!={'key','sha256'} or not isinstance(item['key'],str) or not re.fullmatch(re.escape(PREFIX)+r'[0-9a-f]{64}\.bin',item['key']) or not isinstance(item['sha256'],str) or not re.fullmatch('[0-9a-f]{64}',item['sha256']) or item['key'] in seen:
             raise ValueError('invalid protection manifest entry')
         seen.add(item['key'])
-        body=s3.get_object(Bucket=bucket,Key=item['key'])['Body'].read(2049)
+        body=read_object(s3,bucket,item['key'],2049)
         if hashlib.sha256(body).hexdigest()!=item['sha256']: raise ValueError('protection event checksum mismatch')
         event=decrypt_event(body,key,item['key'],protection)
         for group in ('deletions','suppressions'):ledger[group].extend(event[group])

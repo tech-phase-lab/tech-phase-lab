@@ -4,6 +4,12 @@ This summary supersedes older pending/completed statements below for RESOLUTE
 storage only. Earlier dated entries remain historical evidence, not instructions
 to repeat completed operations. Other product work is unchanged.
 
+- Evening code follow-up: all four independent-history S3 reads now close their
+  response on success and failure. Three regression cases were added; local
+  gates passed: Node1,257, Python2,545, lint, build, compileall and diff check.
+  Based on coworker30eda76f; not deployed. The bundled backup/restore runtime
+  needs a separately verified rollout. See the final cutover entry for scope.
+
 - Completed: owner recovery-key custody and retrieval; production storage schemas
   and minimum-permission audit; three storage roles remain NOLOGIN. Do not request
   key regeneration, re-entry or another owner Run now for those completed checks.

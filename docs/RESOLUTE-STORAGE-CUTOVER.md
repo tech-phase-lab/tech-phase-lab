@@ -696,3 +696,30 @@ Coworker d3d723c1 landed during publication; its recovery watchdog changes were
 preserved by rebase. The final change here remains documentation-only and passed
 diff check; the1247-test result above predates d3d723c1 and is not a new test claim
 for that coworker code. No remote ref was forced or unrelated file replaced.
+
+
+## 2026-10-20 evening — Close independent-history responses on every read
+
+Code inspection found four bounded S3 response reads in protection_events.py
+without explicit response cleanup: event reads during sealing/loading, manifest
+readback, and manifest loading. A bounded oversized read or streaming exception
+can leave unread response data. All four now use a try/finally helper that closes
+the response before validation or the next request. Size limits, checksums,
+authentication and complete-inventory comparisons are unchanged.
+
+The storage test double refuses a second GET while any previous response is
+open. Regression cases exercise successful seal/load, checksum/authentication
+failure, interrupted streams and the bounded oversized-manifest rejection.
+All three new cases reject the original implementation; all nine related tests
+pass with the fix. This is local regression evidence, not provider acceptance.
+
+The code has not been deployed to Railway. Backup/restore services use bundled
+module payloads, so a GitHub commit alone does not update their runtime. A future
+rollout must rebuild and verify the three-module bundle, retain existing
+schedules and disabled-save gates, and inspect actual runtime results. No owner
+key custody, login, Run now or production write was requested for this fix.
+
+Final local gates on the integrated 30eda76f base: lint passed (five existing
+warnings), Node 1,257/1,257, Python 2,545/2,545, production build, compileall and
+diff check passed. The three added Python cases are included in that total.
+These results do not establish deployment or production storage acceptance.
