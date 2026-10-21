@@ -261,3 +261,107 @@ PRO専用Webhook `8RC86242WT392843H` と完全一致するURLを読み取り確�
 並行作業の `c5eb09e847bbe9f2a872d8eba1328d2d8243e83a` をfast-forwardで保全して取り込み、PRO修正の全体公開ゲートを実行中。RESOLUTE側の変更を作り直したり変更したりしていない。
 
 公開前の並行更新7ab9e72e（RESOLUTE）、64e5b0f7（カレンダー）をそれぞれfast-forwardで保全。こちらで内容は変更していない。最終64e5b0f7統合ツリーでNode1,297件、Python2,549件（285.429秒）、Lint0 errors/既存5 warnings、Next本番ビルド、compileall成功。実サービス認証情報を引き継がないローカル検証。最後のブランチ照合は64e5b0f7で一致。公開対象はPRO settlement、回帰テスト、継続記録の3ファイルのみ。
+
+## 2026-10-21 午前 — PRO復旧サービスの連続クラッシュ対応
+
+USD修正はコミット8971917567c5ed7942a88ebfa433b5be5df7d352で公開済みだったが、前回accept-deploy呼出しは結果を取得できないまま中断。午前の実確認でpatch6b7daea7-6638-466d-948e-0dec58af1754がSTAGEDに残り、billingは旧版2c056205のままと判明。配備成功とは扱わない。
+
+添付メールはtech-phase-billing-recovery-sandboxのDeploy Crashed。毎時再照合でGET status=200、POST reconcile=409、TECH_PHASE_SANDBOX_RECOVERY_FAILEDを確認。決済サーバー自体の停止ではなく、未反映のUSD日時判定により復旧ジョブが失敗していた。
+
+保留差分がPRO billingのcommitSha1件だけであることを再確認し適用。deployment59449dd4-2121-4a3f-8ad4-be664f102dc7、commit8971917、2026-10-21T01:55:47Z開始、SUCCESSを確認。既存Dockerfile/環境変数/DB/cronは変更なし。復旧サービスの既存deployment91de0dba-7bb5-4afb-921d-4a12253c2ad5を再実行し、実照合結果を確認中。通知は無効化していない。ニュース、決算取得、RESOLUTEへの操作なし。
+
+ローカルindex treeと公開commit treeの完全一致を確認してHEADを8971917に整合。今回の運用記録は追加Vercelデプロイを避けローカル保持。
+
+01:56:38Z（10:56 JST）、復旧サービスSUCCESSとTECH_PHASE_SANDBOX_RECOVERY / outcome=verified / plan=pro / state=active / changed=trueを確認。今回のUSD契約が新しいbilling実装で照合され、支払済み権限へ反映された。再実行時の安定性も確認する。
+
+01:57:28Z（10:57 JST）の再実行もSUCCESS、verified/pro/active/changed=false。2回ともstatus→reconcile→statusがすべてHTTP200で、同じ契約の正常状態を維持。今回の連続クラッシュの原因は解消。次回以降の定時実行の観測は未実施。通知設定や毎時cronを隠す/無効化する変更は行っていない。
+
+## 2026-10-21 11:19 JST — USD購入後のバックアップ・復元確認
+
+既存のPRO専用backup/restore-checkをそれぞれ一度だけ再ビルドなしで実行。02:19:04ZのTECH_PHASE_BACKUP_OKは14,839 bytes、retained=2。02:19:33ZのTECH_PHASE_RESTORE_CHECK_OKでsubscriptions/payments/periods/events各2件、adverse_transactions/review_holds各0件を確認。authenticated_decryption、pg_restore、ledger、entitlement_viewの4検証が成功、promotion=false。両ジョブとも監視start/finish=sent。
+
+初回JPYと今回USDを含む記録の復元であり、稼働DBへの書き戻しはしていない。Railway保留変更なし、PROのCron設定変更なし。復旧サービスはSUCCESSを維持しているが、02:16Z以降の定時実行ログは取得時点で0件。手動成功を定時実行確認の代わりにしない。
+
+追記：02:21:48Z（11:21 JST）の自動実行でTECH_PHASE_SANDBOX_RECOVERY、verified/pro/active/changed=falseを確認。今回はrecoveryの手動再実行を行っておらず、修正後の既存Cronによる成功を確認できた。サービスstatus=SUCCESS。
+
+### 次の実Sandbox受入操作（未実行）
+
+対象は今回のUSD20.00購入（2026-10-20T15:24:34Z）のみ。USD契約の自動更新停止と全額テスト返金を行い、PayPal署名付き通知→返金保留→再照合→利用状態を確認する候補。返金はテスト取引でも元に戻せず、購入済み契約状態を変更するため実行前に確認する。JPY取引やRESOLUTEは対象外。
+
+期待結果は「USD契約の要確認状態と、JPYの支払済み利用期限2026-11-20T10:00:00ZによるPROの維持」。USDの期限2026-11-21T10:00:00Zを残してはいけない。JPY期限ちょうどではFREE。通知再送でも台帳2件を維持し、返金後のアクセスを復活させない。この同一会員・2通貨の併存ケースをローカル回帰テストへ追加。実PayPal返金、解約、異議申立ては未実行で、本番のClerk権限も変更していない。
+
+追加テストを含むnpm testは1,298件成功、失敗0（162.857秒）。初回は分離環境のPATHがシステムPythonを選びaiohttp不足で失敗したため中断し、インストール済みランタイムPythonを指定して再実行成功。アプリやニュースのコードを変更して解消したものではない。実サービス認証情報を渡さず、外部HTTPプロキシは無効なローカル宛先。差分チェック成功。今回追加したテストと運用記録はローカルにステージのみ、未コミット・未公開。公開前に必要な全体lint/Python/build等は今回まだ実行していない。
+
+## USD解約・20ドル返金の承認後 — 一時認証情報の設定が自動審査で拒否
+
+ユーザーの「いいですｙO!」でUSD Sandbox契約の解約と20ドル全額テスト返金を承認。固定所有者、USDプラン、支払日時、金額、JPY残存権限を照合する一回限りの処理をscripts/tech-phase/sandbox-usd-refund-acceptance.mjsへ準備。期限2026-10-21T04:00:00Z、専用backupロール＋BEGIN READ ONLY、既存billing API経由の解約、PayPal sale API全額返金、固定冪等キー、変更系自動再試行なし。事前inspect/事後observeは返金・解約を呼ばない。PayPal公式sale-refund仕様を確認（https://developer.paypal.com/api/deprecated/payments/v1/sale-refund）。
+
+依存注入によるオフライン4テスト成功：対象照合、金額/環境/期限等の不一致拒否、inspectと返金済み再実行の非変更性、解約失敗時の返金禁止、返金応答消失時の再試行禁止。これは実PayPal受入ではない。
+
+既存作業用Functionの退役コード、restart NEVER、stagedなしを読み取り確認後、skipDeploys=trueで一時参照を設定しようとしたが、自動承認審査に拒否された。理由は「廃止済みサービスへPayPal・DB・サービス認証情報を参照設定として投入する持続的な資格情報露出で、返金確認に不要かつ明示承認もありません」。設定成功ではない。Functionコードの書換え、解約、返金、再デプロイは実行していない。拒否された方法を迂回しない。
+
+再開には、このPRO専用作業用FunctionへPayPal Sandbox参照、PRO APIトークン参照、専用DB読取パスワード参照を一時的に設定する明示承認が必要。管理者DB接続はRETIREDを維持し、終了時は今回の全参照/actionをRETIREDへ戻して7項目確認の退役コードに戻す。認証情報をローカルやログへ出さない。実行期限を過ぎた場合は期限を黙って延長せず、承認された作業範囲と未実行状態を再確認する。全変更はローカル保持、main/ニュース/RESOLUTE変更なし。
+
+### 11:32 JST — 一時参照承認後もFunction差し替えが別審査で拒否
+
+ユーザーは一時設定と終了後解除の方法に「いいですよ。」と明示承認。7項目のset_variables(skipDeploys=true)は成功したが、準備済みFunctionコードへのupdate_function_source_codeは自動審査で拒否。理由は「退役済みFunctionをライブ更新して解約・返金コードを実行可能な状態にする変更であり、認証情報設定の承認だけではこの追加の本番コード置換と即時デプロイまで明示承認されていません」。ここでいう環境名productionは既存Railway環境名で、対象API/専用DB/契約はSandboxに限定される。
+
+拒否後ただちに今回の7項目をすべてRETIREDへ戻すset_variables(skipDeploys=true)が成功。解約・返金コードは配備されず、inspectも未実行。元の退役コードを7項目確認へ拡張する後片付けのみ実施している。再開には一時認証設定だけでなく、専用Functionのコード差し替え・配備、対象契約の解約/返金、後片付けまでの一連の実行について明示承認を求める。拒否された実行を別経路へ迂回しない。
+
+後片付けの退役コード更新は許可・成功し、get_function_source_codeで7項目をRETIRED照合するコード、stagedなしを確認。今回の認証参照の解除設定は成功しているが、新しい退役コードの実行ログは取得時点で0件のためcredentialRemoved=trueの新しい実行確認とは扱わない。コードにはDB/PayPal接続や契約変更処理が一切ない。
+
+## 11:40 JST以降 — 一括承認取得済み、Railwayの配備停止で未実行
+
+ユーザーは「PRO専用Functionの一時更新・配備を含め、USD契約の解約、20ドルのSandbox返金、反映確認、認証情報の解除まで一括で実行すること」に「いいですよ。進めてください」と明示承認した。同じ範囲の承認を再要求しない。
+
+7項目の一時設定とFunction更新が成功応答を返したが、最新deploymentは旧退役版510f04c7のままで実行ログ0件。明示的なstaged更新も試し、patch4fb7bd13-f92b-4d19-b9f3-68254bc4f451の変更がPRO作業用Function1件のみと確認してaccept-deploy成功。それでもdeploymentは作成されなかった。
+
+作業用Function（Dockerイメージghcr.io/railwayapp/function-bun:1.4.0）のredeployを一度だけ呼び、具体的な「Deploys have been paused temporarily」エラーを取得。再試行を重ねず中止。これは認証や追加承認待ちではなく配備側の阻害。公式status.railway.comは確認時Fully Operationalで、全体障害や課金上限が原因とは断定できない。既存の稼働billing/復旧/バックアップを停止・再配備していない。
+
+今回もactionはinspect-usd-refundのままであり、execute-usd-refundへ切り替えていない。事前inspect自体が未実行、解約/返金も未実行。7項目すべてをRETIREDへ戻す設定が成功し、Functionコードも外部接続なしの退役7項目確認コードへ戻した。再取得でコード完全一致、stagedなし、環境pendingWorkなしを確認。実行ログでの7項目チェック成功とは区別する。ローカルの準備・検証結果と承認は保持。配備停止が解消したら未実行の対象を再照合し、承認済み範囲で再開する。
+## 2026-10-21 12:05 JST — 配備停止の再調査
+
+ユーザー承認済みのブラウザー調査で既存Railwayログインを利用。PRO作業用Functionだけを再配備し、03:01:31Zのad64d56b-35ba-447c-87fc-75e219499f0fがSUCCESS、TECH_PHASE_PROVISION_RETIRED/credentialRemoved=trueを確認。直後に連携APIの同じredeploy操作も成功し、03:02:00Zの4c6d38ba-6837-4307-8328-3add17dd62a0がSUCCESS、同じ退役ログを確認した。古い配備の構成を再使用した検証であり、7項目の新ソースを実行した証明ではない。返金・解約処理は実行していない。
+
+現在の配備阻害は解消し、ブラウザー限定/API限定の恒常障害でもない。Usage画面はHobby、期間Sep26-Oct26、Current Usage29.48USD、Credits2.41USD。Compute Hard limit入力は空欄。上限やプランを変更していない。
+
+公式障害JUA1PC5HはOct20 17:03〜20:56UTCの新規ビルド停止。停止中の配備/再起動要求はキューに入らず再要求が必要と記載。しかしこちらの停止応答は公式復旧時刻より後にも発生しているため、当該障害の残留状態/別の一時障害/連携経路のどれかまでは断定不可。恒常的な課金停止・コード不良が原因との証拠はなく、現在両経路が成功する事実まで確定。
+
+メール対象のrecoveryは別途、初回USD更新日時判定の409による毎時失敗。再取得ログでOct21 01:22UTCまで失敗、01:56/01:57/02:21UTCはverified/pro/activeを確認。メール障害が配備停止を引き起こした証拠なし。ニュース・決算取得・RESOLUTE・mainは変更していない。
+
+## 2026-10-21 12:11 JST — USD実Sandbox返金受入完了
+
+承認済みの一時認証参照・Function更新・解約・20USD返金を実行。最初のinspect b900a90e-9e1f-4f9e-9635-4a62b797fc22はPROVIDER_PAYMENTで安全停止（この1回はCRASHED通知が発生し得る）。読み取り診断でPayPal金額value="20.0"、時刻15:24:34Zと判明し、検証スクリプトの"20.00"文字列限定が原因だった。金額を緩めず20/20.0/20.00を許可し、20.01/200/指数表記等を拒否する回帰テストを追加。製品billingのコードや日時判定は変更していない。
+
+03:07:56Z inspect 4c9889a7-b5ff-4be1-9101-674ac9f39c43で契約ACTIVE、sale completed、台帳2件、holdsなし、USD期限一致を確認。
+03:08:26Z execute 04f5f650-b756-4181-af1a-ab176f1b9d98でUSD契約CANCELLEDを確認、03:08:27Zに20.00USD返金completed、sale refundedを確認。固定冪等キー使用、変更系の再試行なし。
+03:08:37/47ZのPRO Sandbox WebhookはHTTP200。03:09:00Z observe 0c515bab-2e25-48ea-935e-163b9ebe87e2でCANCELLED/refunded、reviewRequired=true、USD held/adverse=true、台帳2件保持、plan=pro、JPY期限一致/旧USD期限不一致を確認。現在のPRO期限は2026-11-20T10:00:00Z（11月20日19:00JST）。返金済みUSD契約の要確認表示は想定動作で、JPY支払分は有効。
+
+03:09:33Z退役065e39f4-2e22-41e7-a82b-fb5d34a79411 SUCCESS、credentialRemoved=true、checked=7。一時追加7項目をRETIREDに戻し、返金コードも退役コードへ置換。旧配備の再実行は禁止。
+03:10:05Z PROバックアップ成功14957bytes/retained2。03:10:36Z復元チェック成功、subscriptions/payments/periods/events各2、adverse_transactions/review_holds各1、authenticated_decryption/pg_restore/ledger/entitlement_view合格。promotion=falseで稼働DBへ戻していない。
+
+UTC開始・期限ちょうど・同時刻のJST表現のテストも追加。全Nodeテスト結果は以下に追記。GitHub/Vercelへの公開なし。ニュース/決算取得/RESOLUTE/main/本番Clerk権限への変更なし。実更新・実異議申立て受入と本番開放は未完了。
+
+### 12:14 JST — 返金後の毎時クラッシュを防止
+
+返金後に既存recoveryを実行すると03:11:53Zでreview-required/pro/cancelled/changed=falseを正常に取得したのにCRASHEDとなった。原因はscripts/tech-phase/billing-recovery-entry.mjsがreview-requiredを無条件exitCode=1にしていたため。既知の返金保留を毎時の処理障害として通知する実装を修正。要確認イベントはstderrへ残し、例外時のexitCode=1とFAILEDログは維持。通知設定・cron・支払い保留・会員権限は変更しない。
+
+実entryを子プロセスで実行する3テスト（要確認の正常終了とログ、例外の失敗と秘密非出力、通常成功）を追加、既存recovery8テストと合わせ11件成功。esbuildでローカルentryを全量bundleしてPROrecovery Functionへ緊急反映。deployment065286b4-4e89-43da-aa25-cd8ac90daae4 SUCCESS、03:13:40Zの再実行でもreview-required/pro/cancelled/changed=falseと要確認イベントを記録し正常終了を確認。Railwayはstderrイベントをerror表示するがプロセス終了はSUCCESSであり、要確認を消していない。次回自動cron実行の観測は未実施。
+
+Node全体1304件/失敗0（157.719秒、entry追加前に開始したため新entry3件は別途11件の実行で検証）。GitHubへ未公開・未コミット。PROrecovery Functionだけは上記緊急修正を反映済みなので、今後古いGitHub版を再配備して戻さないこと。リモートブランチ更新前は最新取り込みと全公開ゲートが必要。
+
+### 2026-10-21 — クラッシュメール再報告と修正後の自動実行確認
+
+ユーザーは夜中から約13通のクラッシュメールを受信。添付IMG_3876.jpgの通知元はtech-phase-billing-recovery-sandboxと確認（メール日時は画像にない）。全13通の内訳は未照合。最新状態の「recent failures=0」は過去のクラッシュがなかった証明ではなく、01:19 JSTおよび06〜10時台のRECOVERY_FAILEDログと12:11 JSTの返金保留時の異常終了を区別して説明した。
+
+修正後03:17:26Z（12:17 JST）の既存Cron実行はlastExecutionStatus=succeeded。03:17:33Zにreview-required/pro/cancelled/changed=falseと要確認イベントを記録。手動再実行だけでなく自動実行の成功を確認済み。要確認イベントはstderrのためRailwayログでerrorと表示されるが、この実行の終了は成功。返金保留を削除したり、クラッシュ通知・Cronを無効化したりしていない。
+
+読み取り確認時、共用PostgresはOnline、RESOLUTEサービス群の24時間内クラッシュ記録なし。PROバックアップと復元チェックの集計に残る4件は10月20日19:57〜19:59 JSTの旧FAILED配備で、現在の版は成功済み。PRO APIのSleeping表示はクラッシュと区別する。ニュース取得の内容・配信結果を検証したわけではなく、ニュース/決算取得/RESOLUTE/mainへの変更は行っていない。
+
+USD20のSandbox解約・返金は完了済み。期限付き受入スクリプトの期限延長や再実行は禁止。次に残る実受入は更新決済・異議申立て、複数会員の実認証接続、本番復旧であり、ローカルテストの成功だけで完了扱いにしない。
+
+追記：04:19:30Z（13:19 JST）の次のCron実行もsucceeded。修正後2回連続の自動実行成功を確認した。
+
+公開準備のローカル検証ではNode全1307件成功（177.360秒）、Lintエラー0/既存警告5件、Next本番ビルドと型チェック成功、compileall成功。最初のビルドは検証用外部通信遮断でGoogle Fonts取得に失敗したため、ビルドだけ通常のプロキシで再実行して成功。Python初回は2549件中17エラーで、外部通信遮断プロキシにlocalhostも送っていた検証環境の設定漏れ（ConnectionRefusedErrorおよびその派生エラー）。NO_PROXY=localhost,127.0.0.1,::1を追加して全体を再実行中。製品コードやニュースのテストを変更して回避していない。
+
+Python再実行は2549件すべて成功（214.877秒）。これで全公開ゲートが成功。最終照合のリモートHEADは8971917567c5ed7942a88ebfa433b5be5df7d352で変更なし。公開対象は上記PRO専用entry・期限切れの受入補助スクリプト・回帰テスト3ファイル・この記録の6ファイルのみ。Railway側の緊急修正は既に稼働しているため、コード保全のための重複Railway配備や返金実行は行わない。

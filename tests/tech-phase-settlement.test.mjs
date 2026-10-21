@@ -241,6 +241,40 @@ test('payment write survives period-write interruption and next reconciliation r
  assert.equal((await svc.reconcile(row.user_id,row.id)).plan,'pro');
  assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.payments')).rows[0].n,1);
 }));
+test('refunding USD preserves the same member paid JPY period without retaining the USD expiry',()=>database(async(store,db)=>{
+ const owner='user_owner';
+ const jpy=await store.reserve(owner,'JPY','sandbox-v1');
+ await store.attach(owner,jpy.id,'I-JPYAAAAAAAAA');
+ const jpyEnd='2026-11-20T10:00:00Z',usdEnd='2026-11-21T10:00:00Z';
+ const add=async(row,transactionId,currency,minor,periodEnd)=>{
+  const paidAt='2026-10-20T15:24:34Z';
+  await store.recordPayment({id:row.id,eventId:`reconcile.${transactionId}`,eventType:'PAYMENT.SALE.COMPLETED',transactionId,currency,minor,paidAt});
+  await store.grantPeriod(owner,row.id,{transactionId,periodStart:paidAt,periodEnd});
+ };
+ await add(jpy,'TX-JPY-PAID','JPY',2980,jpyEnd);
+ await store.cancelled(owner,jpy.id);
+ const usd=await store.reserve(owner,'USD','sandbox-v1');
+ await store.attach(owner,usd.id,'I-USDAAAAAAAAA');
+ await store.providerState(owner,usd.id,'ACTIVE');
+ await add(usd,'TX-USD-REFUND','USD',2000,usdEnd);
+ const at=Date.parse('2026-10-21T02:00:00Z');
+ assert.equal(Date.parse((await store.entitlement(owner,at)).proExpiresAt),Date.parse(usdEnd));
+ const hook=webhookService({store,paypal:{verify:async()=>true},reconciliation:{},ownerId:owner});
+ const event={id:'WH-USD-REFUND',event_type:'PAYMENT.SALE.REFUNDED',resource:{sale_id:'TX-USD-REFUND'}};
+ for(let n=0;n<2;n++) {
+  assert.equal((await hook(new Headers(),event)).status,'review-required');
+  const summary=await store.summary(owner,at);
+  assert.equal(summary.subscription.id,usd.id);
+  assert.equal(summary.reviewRequired,true);
+  assert.equal(summary.plan,'pro');
+  assert.equal(Date.parse(summary.proExpiresAt),Date.parse(jpyEnd));
+ }
+ await store.cancelled(owner,usd.id);
+ assert.equal((await store.entitlement(owner,Date.parse(jpyEnd)-1)).plan,'pro');
+ assert.equal((await store.entitlement(owner,Date.parse(jpyEnd))).plan,'free');
+ assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.payments')).rows[0].n,2);
+ assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.periods')).rows[0].n,2);
+}));
 test('unverified webhook never queries or changes billing records',async()=>{
  let calls=0;const webhook=webhookService({paypal:{verify:async()=>false},store:{findSubscription(){calls++;}},reconciliation:{},ownerId:'user_owner'});
  await assert.rejects(webhook(new Headers(),{id:'WH-test',event_type:'PAYMENT.SALE.COMPLETED',resource:{billing_agreement_id:sid}}),/SIGNATURE/);
