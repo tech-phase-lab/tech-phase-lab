@@ -39,6 +39,7 @@ export default function BillingScreen() {
     const next = billingSummary(await billingRequest("status", undefined, signal));
     if (signal?.aborted) return;
     setSummary(next);
+    setError("");
     if (next.subscription) setCurrency(next.subscription.currency);
   }
   useEffect(() => {

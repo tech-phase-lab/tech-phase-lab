@@ -8,6 +8,35 @@ import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {billingReturn,billingSummary,sandboxApproval,billingRequest} from '../lib/membership/billing-client.ts';
 const id='00000000-0000-4000-8000-000000000001';
+test('checkout clears an earlier identity-loading error only after a successful status read',async()=>{
+ const require=createRequire(import.meta.url);
+ const source=readFileSync(new URL('../app/research/account/billing/screen.tsx',import.meta.url),'utf8');
+ const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
+ const m={exports:{}},state=[],refs=[],calls=[];
+ let stateIndex=0,refIndex=0,effect,identityLoaded=false,statusFails=false;
+ const summary={environment:'sandbox',plan:'free',proExpiresAt:null,subscription:null};
+ new Function('require','module','exports',compiled)(name=>{
+  if(name==='react')return {...require(name),useState:initial=>{
+   const index=stateIndex++;if(!(index in state))state[index]=initial;
+   return [state[index],value=>{state[index]=value;}];
+  },useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
+  if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{if(!identityLoaded)throw Error('identity-loading');}};
+  if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
+  if(name==='@/lib/membership/billing-client')return {billingReturn:()=>({id:null}),billingSummary,billingRequest:async action=>{
+   calls.push(action);if(action==='readiness')return {environment:'sandbox',enabled:true,configurationReady:true};
+   if(statusFails)throw Error('billing-unavailable');return summary;
+  }};
+  if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
+  return require(name);
+ },m,m.exports);
+ const previousWindow=globalThis.window;globalThis.window={location:{search:''}};
+ const run=async()=>{stateIndex=0;refIndex=0;m.exports.default();const cleanup=effect();await new Promise(resolve=>setImmediate(resolve));return cleanup;};
+ try {
+  let cleanup=await run();assert.equal(state[6],'identity-loading');assert.equal(state[1],null);assert.deepEqual(calls,[]);cleanup();
+  identityLoaded=true;statusFails=true;cleanup=await run();assert.equal(state[6],'billing-unavailable');assert.equal(state[1],null);assert.equal(state[0],false);cleanup();
+  statusFails=false;cleanup=await run();assert.equal(state[6],'');assert.deepEqual(state[1],summary);assert.equal(state[0],true);assert.deepEqual(calls,['readiness','status','readiness','status']);cleanup();
+ }finally{if(previousWindow===undefined)delete globalThis.window;else globalThis.window=previousWindow;}
+});
 test('checkout waits for server status and displays persisted review state in both languages',()=>{
  const require=createRequire(import.meta.url);
  const source=readFileSync(new URL('../app/research/account/billing/screen.tsx',import.meta.url),'utf8');

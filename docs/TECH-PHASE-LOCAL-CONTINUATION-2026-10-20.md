@@ -379,3 +379,23 @@ Python再実行は2549件すべて成功（214.877秒）。これで全公開ゲ
 検証結果：Node全1310件成功（172.235秒）、Python2549件成功（255.806秒）、lintエラー0/既存警告5件、Next本番ビルド・型チェック・compileall・差分チェック成功。初回Nodeは購入ページを直接コンパイルする既存テストが新importを解決できず1件失敗したため、実access関数を読み込ませ、指定会員の成功とlive/productionでの拒否も追加して再実行成功。テスト用IDしか使用していない。公開前リモートは50b54d77で変更なし。
 
 実受入の開始前にPRO backendにもこの版を配備し、両側のリストを揃えること。フロントの公開だけでは別会員の購入は有効にならない。追加会員は別の実Clerkログインで本人確認し、メールアドレスやブラウザー申告値をそのまま許可IDにしない。
+
+## 2026-10-21 16:04 JST — 追加Sandbox会員の実登録
+
+ユーザーが別GoogleアカウントでTech Phaseへログインし、指定メールとClerk developmentの会員詳細を管理画面で照合。追加ID user_3Kzfz892Wv7mb3PU9I01OQrxXBW（10月21日作成）。所有者とは別会員。Clerkメタデータ・本番PRO権限は変更なし。
+
+TECH_PHASE_BILLING_SANDBOX_TEST_USERSのJSON配列にこの1件を登録。Vercel tech-phase-lab / preview / codex/research-preview限定（env ID Lu1EasAW6IRHMadi）、Railway PRO billing 430ca5db-6ec5-48ec-b16f-cfb03fd70972のみ。既存リストは両側とも未設定と確認。Railway変数はskipDeploys=trueで設定後、ソースを検証済み8b8c5815へ固定する変更1件のみをstaged確認して配備。
+
+Railway deployment bb7914b9-0de8-4fb3-9c97-d28a413a8815は07:03:40Zに起動、SUCCESS。設定commitShaは8b8c5815だがdeployment metaはef0ea77c。fetch差分で追加5ファイルはRESOLUTE記録のみ、services/tech-phase-billingに差分なしと確認。RESOLUTEの設定・実装には触れていない。
+
+Vercelは8b8c5815の既存Preview deploymentを再配備。最初のtarget=previewはAPI400で未作成、受理されるtarget=stagingへ修正しdpl_CcLLybpeREmLikjRPydKaddhHDw3を作成。配備完了と追加会員の実ログイン状態でのreadiness/status確認は後続に追記。購入・解約・返金は今回未実行。
+
+追記：Vercel dpl_CcLLybpeREmLikjRPydKaddhHDw3 READY、aliasError=null、commit8b8c5815を確認。追加会員の購入画面を本人のログイン済みブラウザーで開いてもらい、接続状態と未購入FREEを確認する段階。管理画面のログイン成功は購入画面の実認証検証の代わりにしない。今回の作業記録はローカル保存のみ。
+
+## 2026-10-21 16:05 JST — 接続成功後に残る画面エラー
+
+追加会員のスクリーンショットに「通信を確認できませんでした」と契約なし/FREE/購入フォームが同時表示。Railway bb7914b9の07:05:17Z readiness HTTP200/33ms、07:05:18Z status HTTP200/81msを確認。Vercel対象Previewログに対応readiness呼出しあり。画面コードではidentity-loading等の初回失敗後、認証SDKの準備完了でeffectが再実行され成功してもerrorが消えない。フォーム表示はreadyとsummary成立が条件で、通信失敗継続ではなくエラー表示残留と整合。
+
+app/research/account/billing/screen.tsxのloadで状態取得・検証成功後にsetError("")を追加。共有認証Providerは変更しない。新しいライフサイクルテストでidentity-loading→status失敗→成功を同じstateで再現、失敗時購入不可、成功時エラー解除、readiness/status以外の決済操作0を確認。限定10テスト成功。全体公開ゲート実行中。ニュース/決算/RESOLUTE/mainの変更なし、購入未実行。
+
+公開ゲート結果：Node1311件成功（175.665秒）、Python全体成功（詳細は検証ログ）、lintエラー0/既存警告5件、Nextビルド・型チェック・compileall・diffcheck成功。リモートef0ea77cと統合済みで、最新照合も変更なし。公開対象はPRO購入画面1行、再現テスト、この記録の3ファイルのみ。
