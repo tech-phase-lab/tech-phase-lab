@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemberDisplay } from "./member-display-provider";
+import { useMemberDisplay, useMemberSettled } from "./member-display-provider";
 import Link from "next/link";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { dateLabel } from "@/lib/research/presentation";
@@ -11,6 +11,8 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const plan = useMemberDisplay();
   const locked = plan !== "pro";
+  // The DESK stays covered until PRO is known, but the lock mark and PRO wording wait for the membership answer so a PRO member never sees them flash.
+  const settled = useMemberSettled();
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
       <Link href="/research/calendar"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📅</span><strong>{t("決算・経済指標", "Earnings & Economy")}</strong></span><small>{t("今週の予定を確認", "This week")}</small></Link>
@@ -26,10 +28,10 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
       {locked && <div className={styles.deskOverlay}>
-        <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span>{locked && <strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong>}</div>
+        <div className={styles.overlayCaption}>{settled && <><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></>}</div>
       </div>}
     </nav>
-    {locked && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
+    {locked && settled && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
   </>;
 }
 
