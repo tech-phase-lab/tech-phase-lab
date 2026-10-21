@@ -137,7 +137,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   <section className={`${styles.rt} ${open ? styles.open : ""} ${hasFresh ? styles.fresh : ""}`} aria-label={ja?'銘柄監視':'Company monitor'}>
     <h2 className={styles.rtTitle}><button type="button" className={styles.head} aria-expanded={open} aria-controls={bodyId} onClick={toggle}>
       <span className={styles.ttl}><svg className={styles.chev} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 4l6 6-6 6"/></svg>{ja ? 'リアルタイム監視' : 'Live monitor'}</span>
-      <span className={styles.state} data-failed={failed}>{hasFresh && <span className={styles.badge}>{ja ? "新着" : "New"} {freshCount > 9 ? "9+" : freshCount}</span>}<span>{status}</span><i className={styles.dot} data-live={!!data && !failed && !paused} aria-hidden="true"/></span>
+      <span className={styles.state} data-failed={failed}>{hasFresh ? <span className={styles.badge}>{ja ? "新着" : "New"} {freshCount > 9 ? "9+" : freshCount}</span> : <span>{status}</span>}<i className={styles.dot} data-live={!!data && !failed && !paused} aria-hidden="true"/></span>
       {!open && <span className={styles.peek}>{newest ? <>{newest.kind === "date" ? <time>{newest.at.slice(5).replace("-", "/")}</time> : <time>{clock(newest.at)}</time>}<span>{newest.title}</span></> : <span>{data ? (ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window.") : (ja ? "配信済み記事を読み込んでいます…" : "Loading published updates…")}</span>}</span>}
     </button></h2>
     <div id={bodyId} hidden={!open}>

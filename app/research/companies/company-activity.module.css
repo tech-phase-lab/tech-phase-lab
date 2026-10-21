@@ -2,7 +2,7 @@
 .rtTitle{margin:0}
 .head{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:center;width:100%;padding:22px 22px 20px;cursor:pointer;color:#eef2f8}
 .head:focus-visible,.bell:focus-visible{outline:2px solid var(--live);outline-offset:2px}
-.ttl{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:700;letter-spacing:.05em}
+.ttl{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:21px;font-weight:700;letter-spacing:.05em}
 .chev{width:16px;height:16px;color:#586376;transition:transform .25s;flex:none}
 .open .chev{transform:rotate(90deg)}
 .state{display:flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.08em;color:#8c98ab;white-space:nowrap}
