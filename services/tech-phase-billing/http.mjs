@@ -1,3 +1,4 @@
+import { sandboxMemberAllowed } from './access.mjs';
 import { sandboxReadiness } from './readiness.mjs';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const response = (body,status=200) => Response.json(body,{status,headers:{'Cache-Control':'private, no-store',Vary:'Cookie'}});
@@ -22,7 +23,7 @@ export function sandboxHandler({env,identity,ownerId,services}) {
       try {
         const userId=await identity();
         if(!userId) return response({error:'sign-in'},401);
-        if(userId!==ownerId) return response({error:'owner-only'},403);
+        if(!sandboxMemberAllowed(env,ownerId,userId)) return response({error:'owner-only'},403);
         return response(sandboxReadiness(env));
       } catch { return response({error:'billing-unavailable'},503); }
     }
@@ -40,7 +41,7 @@ export function sandboxHandler({env,identity,ownerId,services}) {
       if(request.method==='POST' && request.headers.get('origin')!==new URL(request.url).origin) return response({error:'origin'},403);
       const userId=await identity();
       if(!userId) return response({error:'sign-in'},401);
-      if(userId!==ownerId) return response({error:'owner-only'},403);
+      if(!sandboxMemberAllowed(env,ownerId,userId)) return response({error:'owner-only'},403);
       if(action==='status') return response(await (await services()).store.summary(userId));
       const body=await readBody(request,2048);
       const keys=action==='create'?['currency','acceptedTerms']:['id'];

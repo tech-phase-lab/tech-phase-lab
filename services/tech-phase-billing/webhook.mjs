@@ -1,4 +1,4 @@
-export function webhookService({ store, paypal, reconciliation, ownerId }) {
+export function webhookService({ store, paypal, reconciliation, ownerId, allowedUser = userId => userId === ownerId }) {
   return async (headers,event) => {
     if (!event || typeof event !== 'object' || !/^[A-Za-z0-9-]{1,128}$/.test(event.id ?? '') ||
         typeof event.event_type !== 'string') throw Error('INVALID_EVENT');
@@ -15,9 +15,9 @@ export function webhookService({ store, paypal, reconciliation, ownerId }) {
       let matched = false;
       for (const transactionId of new Set(transactions.map(t => t.seller_transaction_id))) {
         const local = await store.findPayment(transactionId);
-        if (local && local.user_id !== ownerId) continue;
+        if (local && !allowedUser(local.user_id)) continue;
         await store.holdTransaction(transactionId,'DISPUTED');
-        if (!local || local.user_id !== ownerId) continue;
+        if (!local || !allowedUser(local.user_id)) continue;
         await store.hold(local.user_id,local.id,'DISPUTED');
         matched = true;
       }
@@ -27,7 +27,7 @@ export function webhookService({ store, paypal, reconciliation, ownerId }) {
       const providerId = type === 'PAYMENT.SALE.COMPLETED' ? event.resource?.billing_agreement_id : event.resource?.id;
       if (!/^I-[A-Z0-9]{8,32}$/.test(providerId ?? '')) throw Error('INVALID_EVENT');
       const local = await store.findSubscription(providerId);
-      if (!local || local.user_id !== ownerId) return { status:'ignored' };
+      if (!local || !allowedUser(local.user_id)) return { status:'ignored' };
       // Signed notifications trigger a fresh query; event dates/status are never
       // applied directly, so delayed lifecycle messages cannot roll state back.
       return reconciliation.reconcile(local.user_id,local.id);
@@ -38,9 +38,9 @@ export function webhookService({ store, paypal, reconciliation, ownerId }) {
       if (!/^[A-Za-z0-9-]{3,50}$/.test(transactionId ?? '')) throw Error('INVALID_EVENT');
       const reason = type.endsWith('REFUNDED') ? 'REFUNDED' : 'REVERSED';
       const local = await store.findPayment(transactionId);
-      if (local && local.user_id !== ownerId) return {status:'ignored'};
+      if (local && !allowedUser(local.user_id)) return {status:'ignored'};
       await store.holdTransaction(transactionId,reason);
-      if (!local || local.user_id !== ownerId) return { status:'ignored' };
+      if (!local || !allowedUser(local.user_id)) return { status:'ignored' };
       await store.hold(local.user_id,local.id,type.endsWith('REFUNDED') ? 'REFUNDED' : 'REVERSED');
       return { status:'review-required' };
     }

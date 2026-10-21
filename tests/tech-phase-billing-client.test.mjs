@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import ts from 'typescript';
+import {sandboxMemberAllowed} from '../services/tech-phase-billing/access.mjs';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {billingReturn,billingSummary,sandboxApproval,billingRequest} from '../lib/membership/billing-client.ts';
@@ -144,8 +145,10 @@ test('checkout and reconciliation require usable protocol evidence before the UI
   }
  } finally {globalThis.fetch=original;}
 });
-test('billing page gates preview and exact owner before rendering checkout',async()=>{
- const require=createRequire(import.meta.url),old=process.env.VERCEL_ENV;
+test('billing page gates preview and enrolled Sandbox identity before rendering checkout',async()=>{
+ const require=createRequire(import.meta.url);
+ const keys=['VERCEL_ENV','TECH_PHASE_PAYPAL_ENV','TECH_PHASE_BILLING_SANDBOX_TEST_USERS'];
+ const old=Object.fromEntries(keys.map(key=>[key,process.env[key]]));
  let user=null,authCalls=0;
  const source=readFileSync(new URL('../app/research/account/billing/page.tsx',import.meta.url),'utf8');
  const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
@@ -154,6 +157,7 @@ test('billing page gates preview and exact owner before rendering checkout',asyn
   if(name==='@clerk/nextjs/server')return {auth:async()=>{authCalls++;return {userId:user};}};
   if(name==='next/navigation')return {notFound:()=>{throw Error('404');},redirect:path=>{throw Error('REDIRECT:'+path);}};
   if(name==='@/lib/membership/entitlements')return {OWNER_ACCOUNT_ID:'owner'};
+  if(name==='@/services/tech-phase-billing/access.mjs')return {sandboxMemberAllowed};
   if(name==='./screen')return {default:function Screen(){}};
   return require(name);
  },m,m.exports);
@@ -162,5 +166,11 @@ test('billing page gates preview and exact owner before rendering checkout',asyn
   process.env.VERCEL_ENV='preview';await assert.rejects(m.exports.default(),/REDIRECT:\/research\/account/);
   user='another-admin';await assert.rejects(m.exports.default(),/404/);
   user='owner';assert.ok(await m.exports.default());
- } finally {if(old===undefined)delete process.env.VERCEL_ENV;else process.env.VERCEL_ENV=old;}
+  user='user_Member2';await assert.rejects(m.exports.default(),/404/);
+  process.env.TECH_PHASE_PAYPAL_ENV='sandbox';
+  process.env.TECH_PHASE_BILLING_SANDBOX_TEST_USERS='["user_Member2"]';
+  assert.ok(await m.exports.default());
+  process.env.TECH_PHASE_PAYPAL_ENV='live';await assert.rejects(m.exports.default(),/404/);
+  process.env.VERCEL_ENV='production';await assert.rejects(m.exports.default(),/404/);
+ } finally {for(const key of keys){if(old[key]===undefined)delete process.env[key];else process.env[key]=old[key];}}
 });

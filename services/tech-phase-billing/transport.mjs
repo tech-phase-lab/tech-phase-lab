@@ -1,3 +1,4 @@
+import { sandboxMemberAllowed } from './access.mjs';
 import { timingSafeEqual } from 'node:crypto';
 import { RETURN_URL } from './paypal.mjs';
 import { sandboxHandler, sandboxEnabled } from './http.mjs';
@@ -28,7 +29,7 @@ export function billingGateway({env,identity,ownerId,fetcher=fetch}) {
       if(action!=='webhook') {
         userId=await identity();
         if(!userId)return reply({error:'sign-in'},401);
-        if(userId!==ownerId)return reply({error:'owner-only'},403);
+        if(!sandboxMemberAllowed(env,ownerId,userId))return reply({error:'owner-only'},403);
         if(request.method==='POST'&&request.headers.get('origin')!==new URL(request.url).origin)return reply({error:'origin'},403);
       }
       let config;try{config=transportConfig(env);}catch{
