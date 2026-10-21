@@ -34,5 +34,7 @@
 .liteRivals div { display: flex; flex-wrap: wrap; gap: 8px; }
 .liteRivals div span { font: 600 13px ui-monospace, monospace; padding: 6px 12px; border: 1px dashed #b9a4e6; border-radius: 8px; color: #e4dcf8; background: #1b1628; }
 .liteMap { display: grid; gap: 14px; padding: 18px 16px; border: 1px solid #2a2d33; border-radius: 14px; background: radial-gradient(120% 120% at 50% 0%, #0b0e13 0%, #040507 70%); }
-.liteMap h3 { opacity: 1; }
-.liteMap p { margin: 0; padding: 26px 0; text-align: center; color: #6f7782; font-size: 14px; letter-spacing: .12em; }
+.liteMap h3 { opacity: .3; }
+.liteRivals > p { margin: 0; color: #93a7ba; font-size: 14px; }
+.liteMap p { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; padding: 22px 0 26px; color: #8d96a3; font-size: 20px; font-weight: 600; letter-spacing: .14em; }
+.liteMap p svg { flex: none; }

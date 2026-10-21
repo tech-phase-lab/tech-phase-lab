@@ -1,4 +1,3 @@
-import { initialMemberDisplay } from "@/lib/membership/display-server";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { MemberDisplayProvider } from "./member-display-provider";
@@ -15,7 +14,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech Phase" }, icons: { apple: "/tech-phase-192.png" } };
 
-export default async function ResearchLayout({ children }: { children: ReactNode }) {
-  const initial = await initialMemberDisplay();
-  return <><LaunchBrand /><AccountReturnTracker /><ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider initial={initial}>{children}<PullToRefresh /><BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider></>;
+// The shell does no identity lookup before it streams: the member badge is settled by the client check
+// (which never shows FREE before it answers), so opening the app does not wait on the identity service (owner, Oct 21).
+export default function ResearchLayout({ children }: { children: ReactNode }) {
+  return <><LaunchBrand /><AccountReturnTracker /><ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider>{children}<PullToRefresh /><BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider></>;
 }

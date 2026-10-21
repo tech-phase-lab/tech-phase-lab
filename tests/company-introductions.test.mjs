@@ -350,17 +350,18 @@ test('stock maps exclude private and unresolved entities while retaining the two
   assert.equal(networkHelpers.isStockMapCompany({...node('Anonymous'),'kind':'industry'}),false);
 });
 
-test('a company without a connection map shows competitor tickers in 05 and a dimmed "coming soon" 06; no competitor means no 05', () => {
+test('a company without a connection map shows competitor tickers in 05 and a dimmed "coming soon" 06; no competitor reads 05 なし', () => {
   const withRivals = companyIntroductionFor({cik:1058290,ticker:'CTSH'});
   const without = companyIntroductionFor({cik:1467373,ticker:'ACN'});
   for (const lang of ['ja','en']) {
     const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction:withRivals,lang,network:null}));
     for (const ticker of ['ACN','GIB','DXC','EPAM','G']) assert.match(html, new RegExp(`<span>${ticker}</span>`));
     assert.match(html, /<span>05<\/span>/);
-    assert.match(html, lang === 'ja' ? /<p>準備中<\/p>/ : /<p>Coming soon<\/p>/);
+    assert.match(html, lang === 'ja' ? /準備中<\/p>/ : /Coming soon<\/p>/);
     assert.ok(!/Competes with [A-Z]|と競合する/.test(html), (html.match(/.{30}(competes with|と競合する).{30}/i)||[])[0]);
     const bare = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction:without,lang,network:null}));
-    assert.ok(!/<span>05<\/span>/.test(bare));
+    assert.match(bare, /<span>05<\/span>/);
+    assert.match(bare, lang === 'ja' ? /<p>なし<\/p>/ : /<p>None<\/p>/);
     assert.match(bare, /<span>06<\/span>/);
   }
 });

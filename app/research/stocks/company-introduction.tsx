@@ -20,13 +20,13 @@ function LiteMaps({ introduction, lang }: { introduction: CompanyIntroduction; l
   const ja = lang === "ja";
   const rivals = introduction.maps.competition.filter(entry => entry.kind === "company" && entry.ticker);
   return <div className={styles.lite}>
-    {rivals.length > 0 && <section className={styles.liteRivals} data-topic="competition">
+    <section className={styles.liteRivals} data-topic="competition">
       <h3><span>05</span>{ja ? "競合は？" : "Who competes with it?"}</h3>
-      <div>{rivals.map(entry => <span key={entry.ticker}>{entry.ticker}</span>)}</div>
-    </section>}
+      {rivals.length > 0 ? <div>{rivals.map(entry => <span key={entry.ticker}>{entry.ticker}</span>)}</div> : <p>{ja ? "なし" : "None"}</p>}
+    </section>
     <section className={styles.liteMap} data-topic="relationships">
       <h3><span>06</span>{ja ? "どこと繋がる？" : "Who does it work with?"}</h3>
-      <p>{ja ? "準備中" : "Coming soon"}</p>
+      <p><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>{ja ? "準備中" : "Coming soon"}</p>
     </section>
   </div>;
 }
