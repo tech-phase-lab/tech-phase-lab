@@ -63,5 +63,10 @@ test('Japanese headlines drop the comma after a bracket and keep a name with its
   assert.equal(out.replaceAll('⁠', ''), 'アルファベット（GOOGL）2028年までにトロントでロボタクシーサービスを計画');
   assert.ok(out.startsWith('ア⁠ル'));
   assert.equal(tidyJapanese(out), out);
+  // A long name leaves its front free to break, so no two-character stub is stranded on the first line.
+  const lumentum = tidyJapanese('ルメンタム・ホールディングス（LITE）株価が急伸');
+  assert.equal(lumentum.replaceAll('⁠', ''), 'ルメンタム・ホールディングス（LITE）株価が急伸');
+  assert.ok(lumentum.startsWith('ルメンタム・ホール'));
+  assert.equal(tidyJapanese(lumentum), lumentum);
   assert.equal(tidyJapanese('Alphabet (GOOGL), plans robotaxis'), 'Alphabet (GOOGL), plans robotaxis');
 });
