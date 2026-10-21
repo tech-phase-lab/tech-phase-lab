@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {runOwnerRecovery} from '../services/tech-phase-billing/recovery.mjs';
+import {runOwnerRecovery,runSandboxRecovery} from '../services/tech-phase-billing/recovery.mjs';
 const id='00000000-0000-4000-8000-000000000001';
 const env={TECH_PHASE_BILLING_RECOVERY_ENABLED:'true',TECH_PHASE_PAYPAL_ENV:'sandbox',TECH_PHASE_BILLING_RECOVERY_BRANCH:'codex/research-preview',TECH_PHASE_BILLING_SERVICE_TOKEN:'s'.repeat(64),TECH_PHASE_BILLING_OWNER_ID:'user_owner'};
 const status=(plan='free',state='active')=>({environment:'sandbox',plan,proExpiresAt:plan==='pro'?'2026-11-20T10:00:00.000Z':null,subscription:{id,state}});
@@ -97,4 +97,54 @@ test('watchdog reports a late review hold even when reconciliation returned veri
   await assert.rejects(runOwnerRecovery(env,async()=>{calls++;return Response.json(value);}),/INVALID_RECOVERY_STATUS/);
   assert.equal(calls,1);
  }
+});
+
+const cohort={...env,TECH_PHASE_BILLING_SANDBOX_TEST_USERS:'["user_extra","user_last"]'};
+test('cohort recovery checks each identity sequentially once and logs only counts',async()=>{
+ const calls=[];let active=0;
+ const result=await runSandboxRecovery(cohort,async(url,options)=>{
+  assert.equal(active++,0);await Promise.resolve();active--;
+  const member=options.headers['X-Tech-Phase-User'];calls.push([member,url.split('/').at(-1)]);
+  assert.ok(options.signal);assert.equal(options.redirect,'error');
+  return Response.json(url.endsWith('/status')?{...status('pro'),reviewRequired:member==='user_owner'}:{environment:'sandbox',status:'verified'});
+ });
+ assert.deepEqual(result,{outcome:'completed',total:3,checked:3,failed:0,unprocessed:0,reviewRequired:1,changed:0});
+ assert.deepEqual(calls,['user_owner','user_extra','user_last'].flatMap(member=>['status','reconcile','status'].map(action=>[member,action])));
+ assert.doesNotMatch(JSON.stringify(result),/user_|00000000|Bearer/);
+});
+test('one ambiguous reconciliation failure does not retry or prevent later member checks',async()=>{
+ const calls=[];
+ const result=await runSandboxRecovery(cohort,async(url,options)=>{
+  const member=options.headers['X-Tech-Phase-User'];calls.push([member,url.split('/').at(-1)]);
+  if(member==='user_owner'&&url.endsWith('/reconcile'))throw Error('private-provider-token');
+  return Response.json(url.endsWith('/status')?status():{environment:'sandbox',status:'payment-pending'});
+ });
+ assert.deepEqual(result,{outcome:'partial-failure',total:3,checked:3,failed:1,unprocessed:0,reviewRequired:0,changed:0});
+ assert.equal(calls.length,8);assert.equal(calls.filter(([m,a])=>m==='user_owner'&&a==='reconcile').length,1);
+ assert.equal(calls.at(-1)[0],'user_last');
+});
+test('invalid allowlists and runtime gates fail before any network activity',async()=>{
+ const never=()=>assert.fail('no network');
+ for(const raw of ['null','{}','["user_x","user_x"]','["bad"]','[42]','x'.repeat(1025),JSON.stringify(Array.from({length:6},(_,i)=>`user_${i}`))])
+  await assert.rejects(runSandboxRecovery({...cohort,TECH_PHASE_BILLING_SANDBOX_TEST_USERS:raw},never),/CONFIG/);
+ for(const patch of [{TECH_PHASE_PAYPAL_ENV:'live'},{TECH_PHASE_BILLING_RECOVERY_BRANCH:'main'},{TECH_PHASE_BILLING_OWNER_ID:''},{TECH_PHASE_BILLING_SERVICE_TOKEN:''}])
+  await assert.rejects(runSandboxRecovery({...cohort,...patch},never),/CONFIG/);
+ assert.deepEqual(await runSandboxRecovery({...cohort,TECH_PHASE_BILLING_RECOVERY_ENABLED:'false'},never),{outcome:'disabled'});
+});
+test('missing cohort preserves owner behavior and listing owner never doubles reconciliation',async()=>{
+ for(const raw of [undefined,'','[]','["user_owner"]']) {
+  let calls=0;
+  const result=await runSandboxRecovery({...env,TECH_PHASE_BILLING_SANDBOX_TEST_USERS:raw},async()=>{calls++;return Response.json({...status(),subscription:null});});
+  assert.deepEqual(result,{outcome:'no-provider-contract'});assert.equal(calls,1);
+ }
+});
+test('batch cancellation aborts the current request and prevents starting remaining members',async()=>{
+ const controller=new AbortController();let calls=0;
+ const result=await runSandboxRecovery(cohort,async(url,options)=>{
+  calls++;controller.abort();assert.equal(options.signal.aborted,true);options.signal.throwIfAborted();
+ },controller.signal);
+ assert.deepEqual(result,{outcome:'partial-failure',total:3,checked:1,failed:1,unprocessed:2,reviewRequired:0,changed:0});
+ assert.equal(calls,1);
+ const stopped=await runSandboxRecovery(cohort,()=>assert.fail('no calls after deadline'),controller.signal);
+ assert.equal(stopped.checked,0);assert.equal(stopped.unprocessed,3);
 });

@@ -411,3 +411,23 @@ app/research/account/billing/screen.tsxのloadで状態取得・検証成功後�
 更新決済・異議申立ての実受入、実台帳照合、全対象会員の定期回復、本番権限反映は未完了。既存所有者用recoveryや完了済みUSD返金を再実行しない。追加会員の許可IDを削除しない。
 
 公開前の最終検証：Node1317件成功（197.835秒）、Python2549件成功（299.024秒）、lintエラー0/既存警告5件、Next本番ビルド・型チェック・compileall・diffcheck成功。復元した読み取りSQLもローカルPGliteで5項目0件を再確認。リモート55998188から変更なし。PRO画面/クライアント/テストと作業記録の6ファイルに限定して保存する。実ブラウザーでの新しい購入・自動照合の受入は未実施。
+
+## 2026-10-21 — 追加Sandbox会員の定期確認
+
+既存recovery Functionの実配備コードと設定を読み取り、所有者限定の実装であることを確認。既存reconcile経路を使うrunSandboxRecoveryを追加。明示したSandboxテスト会員だけを順番に処理し、最大5件・JSON形式・ID・重複・1024文字上限を検査。所有者の重複掲載は1回にまとめる。未設定は従来の所有者のみの結果形式を維持する。
+
+1会員の失敗は記録して後続の確認を続行し、再POSTはしない。全体240秒、各HTTP呼出し55秒の上限を設ける。上限到達後は新しい会員を開始せず未処理件数を記録する。ログは件数だけで会員ID・契約ID・秘密情報を含めない。review-requiredは従来どおり正常終了、実際の失敗/未処理は非ゼロ終了で見落とさない。購入/解約/返金のAPIは追加しない。
+
+対象はPRO専用recoveryサービス7950fd63-99a9-49f3-9d7a-a7f319620e9e。毎時17分UTC・再起動NEVERを維持し、backendと同じ追加会員1件だけを設定する予定。ニュース・決算・RESOLUTE・mainは変更対象外。更新前配備065286b4-4e89-43da-aa25-cd8ac90daae4、stagedなしを確認。実配備と実行結果は検証後に追記する。
+
+初回検証はNode1323件/Python2552件成功、lintエラー0/既存警告5件、build/compileall/diffcheck成功。公開直前の並行変更b492c1c5（企業紹介データのみ）をfast-forwardで保持し、統合後の全ゲートを再実行。
+
+Railway Functionのソースとstagedなしを再確認後、TECH_PHASE_BILLING_SANDBOX_TEST_USERSにbackendと同じ追加ID1件をskipDeploys=trueで設定。update_function_source_codeはchanged=trueを返し、読み戻しコードはローカルbundleと一致。ただしlist_deployments/get_statusの最新は従来065286b4のまま、pendingWorkは空、新しい実行ログなし。保存APIの成功を2会員の実行成功とは扱わない。redeploy要求は自動承認レビューが「既存成功配備とコード一致のため重複・費用増加リスク」として拒否。迂回せず、既存Cronの次回実行結果で判断する。
+
+統合後b492c1c5での最終ゲート：Node1323件成功（195.495秒）、Python2552件成功（279.114秒）、lintエラー0/既存警告5件、Next本番ビルド/型チェック/compileall/diffcheck成功。リモートHEADもb492c1c5と一致。今回の追加テスト6件を含む。未確認の実決済台帳照合や本番受入を完了とは記録しない。
+
+20:19 JST（11:19Z）の既存Cron実行は従来のreview-required/plan=pro/state=cancelled/changed=falseで正常終了。2会員の集計結果ではなく旧コードが実行されていることを確認した。この新しい証拠を根拠に必要な再配備を再申請したところ、自動承認ではなくRailwayが「Deploys have been paused temporarily」を返した（INVALID_ARGUMENT）。最新deploymentは引き続き065286b4。新しい配備は作成されていない。CLIや別サービス作成による迂回・課金設定変更は行わない。
+
+現在の状態：拡張コードと追加会員設定はサービス設定に保存済み、稼働中Cronは旧版で所有者確認を正常継続。追加会員の定期確認はまだ稼働していない。Railwayの配備停止を解除後、このPRO recoveryサービスだけを再配備し、outcome=completed/total=2/checked=2/failed=0/unprocessed=0の実ログを確認する必要がある。既存の購入・Webhook・手動照合に今回のコード変更はない。更新時もニュース/決算/RESOLUTE/mainや課金上限を変更しない。
+
+最終保存前にRESOLUTE側627f73d5もfast-forwardで保持。統合後の再検証はNode1323件成功（180.940秒）、Python2554件成功（269.691秒）、lintエラー0/既存警告5件、build/型チェック/compileall/diffcheck成功。変更対象はPRO recoveryの実装・テストとPRO記録の6ファイルのみ。
