@@ -11,8 +11,10 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const plan = useMemberDisplay();
   const locked = plan !== "pro";
-  // The DESK stays covered until PRO is known, but the lock mark and PRO wording wait for the membership answer so a PRO member never sees them flash.
+  // Until the membership check answers, the DESK shows no dark cover, lock or PRO wording, so a PRO member never sees them flash (owner, Oct 21).
+  // Once it answers, anyone who is not PRO gets the cover, the lock and the PRO wording as before.
   const settled = useMemberSettled();
+  const covered = locked && settled;
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
       <Link href="/research/calendar"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📅</span><strong>{t("決算・経済指標", "Earnings & Economy")}</strong></span><small>{t("今週の予定を確認", "This week")}</small></Link>
@@ -20,18 +22,18 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
       <Link href="/research/capital-map"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🗺️</span><strong>{t("資本マップ", "Capital Map")}</strong></span><small>{t("運用会社・ETFの投資先", "Funds and ETFs")}</small></Link>
       <Link href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onWatch(); }}><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🔭</span><strong>{t("監視22銘柄", "22 Tracked Stocks")}</strong></span><small>{t("厳選株をリアルタイムで", "Live, curated")}</small></Link>
     </nav>
-    <nav className={`${styles.reading} ${locked ? styles.readingLocked : ""}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
+    <nav className={`${styles.reading} ${covered ? styles.readingLocked : ""}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
       <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
       <div className={styles.deskPair}>
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
-      {locked && <div className={styles.deskOverlay}>
-        <div className={styles.overlayCaption}>{settled && <><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></>}</div>
+      {covered && <div className={styles.deskOverlay}>
+        <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>
       </div>}
     </nav>
-    {locked && settled && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
+    {covered && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
   </>;
 }
 
