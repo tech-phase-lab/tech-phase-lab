@@ -167,6 +167,12 @@ class TargetPublicationTests(unittest.TestCase):
         self.assertIn('MELI', signals.PRICE_TARGET_UNIVERSES['large-cap'])
         self.assertIn('MU', signals.PRICE_TARGET_UNIVERSES['large-cap'])
 
+    def test_target_universe_includes_spacex(self):
+        text = '$SPCX | JPMorgan maintains Overweight on SpaceX, raises PT to $500 from $240'
+        self.add(43, text, tickers='["SPCX"]', body=text)
+        limited = {**self.source, 'targetUniverse': 'large-cap'}
+        self.assertEqual(signals.price_target_observation(self.row(43), limited, self.now)[1], 'eligible')
+
     def test_rejection_reasons_preserve_safety_gates(self):
         cases = [
             ('$MU PT boosted to $110 from $100 at Citi', {}, 'unsupported-target-syntax'),
