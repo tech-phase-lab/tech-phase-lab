@@ -1,3 +1,19 @@
+## RESOLUTE runtime update — 2026-10-21 16:00 JST
+
+Supersedes older NOLOGIN/pending runtime statements below. All three existing
+scoped roles now LOGIN with unchanged minimum grants. Actual API password
+connections and full ACL checks passed for all three, including a repeat using
+the deployed DB_URL references. Deployment46d3e773 reached SUCCESS and actual
+API_READY; final checks06:58:25–33Z. Storage/protection/retry remain OFF.
+Post-check06:59:11Z: scoped connections0, deletion history0, notification rows0,
+outbox0. Health200 and unauthenticated plan/notification401 verified.
+See [runtime evidence and remaining gates](RESOLUTE-RUNTIME-CONNECTION-CHECK.md).
+Owner password entry, variable entry and deployment are complete: do not request
+these again. Next: authenticated route acceptance and fresh write-fenced complete
+inventory before activation. Prior restore evidence is not a new inventory.
+
+---
+
 ## RESOLUTE runtime connection preparation — 2026-10-21
 
 Prior c5eb09e8 passed CI39446888627 (both jobs). A read-only scoped runtime
