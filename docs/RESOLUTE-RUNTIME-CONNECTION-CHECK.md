@@ -97,3 +97,30 @@ durable receipts/retry acceptance and a freshly collected complete write-fenced
 restore inventory before customer-save activation. The prior three-event manifest
 is dated evidence only and must not be reused as a new activation inventory.
 Writer remains disabled. No scheduler, Vercel, billing, mail or AI operation changed.
+
+## Signed storage-route CI coverage — 2026-10-21
+
+The existing signed-session flow can now also run against the CI-only disposable
+PostgreSQL service. It requires an explicit disposable flag, an empty resolute DB,
+a loopback host and a connection URL without query/fragment overrides. Fixture
+roles receive generated temporary passwords after the permission migrations;
+application requests use dedicated role pools, not administrator SET ROLE.
+Both session/current identities are asserted and incorrect passwords must fail.
+
+The same real HTTP/authentication/SQL/protection/replay flow verifies that stale
+PUT/DELETE requests receive409 after deletion and cannot restore the old plan;
+stale notification PUT cannot turn either stop back on. It independently reads
+three receipts and replays deletion and both stops twice into an isolated stale
+snapshot. External object storage and a real Clerk owner session remain outside
+this CI fixture; its writer stores encrypted test objects in memory. This is
+additional regression coverage, not production activation or a new manifest.
+
+The local environment cannot run a system PostgreSQL service; the real-server
+mode is executed in GitHub Actions alongside the existing disposable PostgreSQL
+job. Production API flags, roles, schedules and credentials are not changed by
+this test work. Do not request owner password entry or deployment again.
+
+Final integrated gates with coworker7fb58a21 preserved: Node1,311 and Python2,549 passed;
+lint0errors/5existing warnings, build, compileall and diff check passed.
+Real PostgreSQL mode must be confirmed from the new GitHub Actions step; local
+PGlite success alone is not its acceptance evidence.

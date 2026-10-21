@@ -5,6 +5,19 @@ import {once} from 'node:events';
 import {readFileSync} from 'node:fs';
 import {spawnSync} from 'node:child_process';
 import {PGlite} from '@electric-sql/pglite';
+import pg from 'pg';
+
+// Explicit CI-only disposable service; never accept a production/private host.
+const postgresUrl=process.env.RESOLUTE_TEST_STORAGE_POSTGRES_URL;
+if(postgresUrl){
+ const url=new URL(postgresUrl);
+ assert.ok(['postgres:','postgresql:'].includes(url.protocol));
+ assert.equal(url.search,'');assert.equal(url.hash,'');
+ assert.ok(['localhost','127.0.0.1','[::1]'].includes(url.hostname));
+ assert.equal(url.pathname,'/resolute');
+ assert.equal(process.env.RESOLUTE_TEST_DISPOSABLE_POSTGRES,'true');
+}
+const scopedPools=new Map();
 import {authConfig} from '../services/resolute-api/auth.mjs';
 import {createHandler} from '../services/resolute-api/handler.mjs';
 import {createApiServer} from '../services/resolute-api/http-server.mjs';
@@ -27,6 +40,23 @@ const enabled={deliveryHourJst:7,alertsEnabled:true,morningEnabled:true,watchIte
 const stopped={...enabled,alertsEnabled:false,morningEnabled:false};
 
 async function database(name){
+ if(postgresUrl){
+  assert.ok(['resolute','resolute_restore_test'].includes(name));
+  const url=new URL(postgresUrl);
+  if(name==='resolute_restore_test'){
+   const admin=new pg.Client({connectionString:url.href});await admin.connect();
+   try{await admin.query('CREATE DATABASE resolute_restore_test');}finally{await admin.end();}
+  }
+  url.pathname='/'+name;
+  // Fixture assertions use numeric revisions like PGlite; application pools retain pg defaults.
+  const client=new pg.Client({connectionString:url.href,statement_timeout:10000,types:{getTypeParser:(oid,format)=>oid===20?Number:pg.types.getTypeParser(oid,format)}});await client.connect();
+  try{
+   assert.equal((await client.query("SELECT count(*)::int n FROM information_schema.tables WHERE table_schema NOT IN ('pg_catalog','information_schema')")).rows[0].n,0,'Disposable empty DB required');
+   if(name==='resolute')await client.query('CREATE ROLE resolute_plan_writer NOLOGIN NOINHERIT;CREATE ROLE resolute_notification_writer NOLOGIN NOINHERIT');
+   for(const file of migrations){let sql=readFileSync(new URL('../db/resolute/'+file,import.meta.url),'utf8');if(name==='resolute_restore_test')sql=sql.replaceAll("'resolute'","'resolute_restore_test'");await client.query(sql);}
+   return {query:(...args)=>client.query(...args),exec:sql=>client.query(sql),close:()=>client.end()};
+  }catch(error){await client.end();throw error;}
+ }
  const boot=new PGlite();await boot.exec(`CREATE DATABASE ${name}`);const data=await boot.dumpDataDir();await boot.close();
  const db=new PGlite({database:name,loadDataDir:data});
  await db.exec('CREATE ROLE resolute_plan_writer NOLOGIN NOINHERIT;CREATE ROLE resolute_notification_writer NOLOGIN NOINHERIT');
@@ -39,6 +69,7 @@ async function database(name){
  return db;
 }
 function pool(db,role){
+ if(postgresUrl)return scopedPools.get(role);
  return {async connect(){await db.exec(`SET ROLE ${role}`);return {
   async query(sql,args){const r=await db.query(sql,args);return {...r,rowCount:sql.trimStart().startsWith('SELECT')?r.rows.length:r.affectedRows};},
   release(){},
@@ -63,6 +94,21 @@ print(protection.restore_sql(ledger))`],{input:JSON.stringify({key:key.toString(
 test('signed session through browser routes, scoped DB, HTTP writer and Python replay preserves deletion and stops across a stale snapshot',async t=>{
  const db=await database('resolute');t.after(()=>db.close());
  const restored=await database('resolute_restore_test');t.after(()=>restored.close());
+ if(postgresUrl){
+  for(const role of ['resolute_plan_writer','resolute_notification_writer']){
+   const password=randomBytes(32).toString('hex');
+   // Static role names and hex-only disposable credentials, local fixture only.
+   await db.exec(`ALTER ROLE ${role} LOGIN PASSWORD '${password}'`);
+   const url=new URL(postgresUrl);url.username=role;url.password=password;
+   const scoped=new pg.Pool({connectionString:url.href,max:3,statement_timeout:10000});
+   scopedPools.set(role,scoped);t.after(()=>scoped.end());
+   assert.deepEqual((await scoped.query('SELECT session_user AS login,current_user AS effective')).rows[0],{login:role,effective:role});
+   const wrong=new URL(url);wrong.password=randomBytes(32).toString('hex');
+   const denied=new pg.Client({connectionString:wrong.href,connectionTimeoutMillis:3000});
+   try{await assert.rejects(()=>denied.connect(),e=>e.code==='28P01');}finally{await denied.end();}
+  }
+ }
+
  const records=new Map();let offline=false;
  const key=randomBytes(32),writerToken=randomBytes(48).toString('base64url');
  const writer=createWriter({key,token:writerToken,objects:{
@@ -123,6 +169,14 @@ test('signed session through browser routes, scoped DB, HTTP writer and Python r
  assert.equal((await call(plans,'GET')).status,200);
  assert.equal((await call(notifications,'PUT',{baseRevision:1,settings:stopped})).status,200);
  assert.equal(records.size,3);
+ // A stale tab/retry must not resurrect the erased plan or re-enable either stop.
+ for(const [routes,method,body,expected] of [
+  [plans,'PUT',{baseRevision:1,plan},{plan:null,revision:2}],
+  [plans,'DELETE',{baseRevision:1},{plan:null,revision:2}],
+  [notifications,'PUT',{baseRevision:1,settings:enabled},{settings:stopped,revision:2}],
+ ]){const conflict=await call(routes,method,body);assert.equal(conflict.status,409);assert.deepEqual(await conflict.json(),expected);}
+ assert.equal(records.size,3);
+ assert.deepEqual(await (await call(notifications,'GET')).json(),{settings:stopped,revision:2});
  const response=await call(plans,'GET');assert.deepEqual(await response.json(),{plan:null,revision:2});
  await db.exec('RESET ROLE');
  assert.equal((await db.query('SELECT count(*)::int n FROM resolute.protection_outbox WHERE published_at IS NOT NULL')).rows[0].n,3);
