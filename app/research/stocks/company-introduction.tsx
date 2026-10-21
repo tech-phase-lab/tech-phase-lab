@@ -26,7 +26,7 @@ function LiteMaps({ introduction, lang }: { introduction: CompanyIntroduction; l
     </section>}
     <section className={styles.liteMap} data-topic="relationships">
       <h3><span>06</span>{ja ? "どこと繋がる？" : "Who does it work with?"}</h3>
-      <p>{ja ? "取引・提携のマップは準備中です。" : "The partner map is coming soon."}</p>
+      <p>{ja ? "準備中" : "Coming soon"}</p>
     </section>
   </div>;
 }
