@@ -56717,5 +56717,871 @@
       "competition": [],
       "relationships": []
     }
+  },
+  {
+    "cik": 1090012,
+    "tickers": [
+      "DVN"
+    ],
+    "name": "Devon Energy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Devon Energy Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1090012/000119312526056485/dvn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国の陸上で石油・天然ガス・NGLを開発、生産する独立系エネルギー会社。",
+      "revenue": "石油、天然ガス、NGLの生産で稼ぐ。事業は米国内の陸上地域に集中している。",
+      "strength": "設備投資と運営費を上回るキャッシュを生む優良資産の保有が持ち味。強い財務と流動性の維持も特徴だ。",
+      "risks": "石油やガスの価格変動が大きい。Coterraとの合併に伴う制約や統合の難しさも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An independent energy company that explores for, develops and produces oil, natural gas and NGLs onshore in the U.S.",
+      "revenue": "It earns money by producing oil, natural gas and NGLs, with operations concentrated in onshore U.S. areas.",
+      "strength": "It aims to own premier assets that generate cash beyond capital and operating needs, and keeps a strong balance sheet and liquidity.",
+      "risks": "Oil, gas and NGL prices are volatile, and the Coterra merger brings operating restrictions and integration risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 29534,
+    "tickers": [
+      "DG"
+    ],
+    "name": "Dollar General",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dollar General Form 10-K (filed 2026-03-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/29534/000110465926032325/dg-20260130x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "全米最大の店舗数を持つ、小型店のディスカウント小売り。",
+      "revenue": "食品や日用品などの消耗品が売上の82.0%を占める。残りは季節品、家庭用品、衣料で稼ぐ。",
+      "strength": "低価格と近さが特徴。小型店を客の近くに構え、米国人口の約75%が店舗の近くに住む。",
+      "risks": "競争が激しい。資金力や仕入れ条件で上回る競合を抱える。",
+      "competition": "主な競合にWalmart、Dollar Treeがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A discount retailer with the most stores in the U.S., using small-box locations.",
+      "revenue": "Consumables make up 82.0% of net sales. Seasonal, home products and apparel make up the rest.",
+      "strength": "Low prices and nearby small stores set it apart, with about 75% of the U.S. population close to one.",
+      "risks": "Competition is intense, and some rivals have more financial and distribution resources and may get better supplier terms.",
+      "competition": "Main competitors include Walmart, Dollar Tree.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Walmart",
+          "ticker": "WMT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dollar Tree",
+          "ticker": "DLTR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1489393,
+    "tickers": [
+      "LYB"
+    ],
+    "name": "LyondellBasell",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "LyondellBasell Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1489393/000148939326000012/lyb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界で石油化学を手がける独立系の化学会社。",
+      "revenue": "炭化水素の原料をプラスチック樹脂や化学品に加工して稼ぐ。ポリオレフィンの技術ライセンスや触媒の販売も手がける。",
+      "strength": "石油化学のバリューチェーン全体に事業が広がる。米国では天然ガス由来の安い原料が収益を支える。",
+      "risks": "原料費の変動が大きく、競争が激しいため価格転嫁は難しい。供給過剰や操業停止も業績を圧迫しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global, independent chemical company.",
+      "revenue": "It turns hydrocarbon feedstocks into plastic resins and chemicals, and also licenses process technologies and sells catalysts.",
+      "strength": "Its business spans the petrochemical value chain, and cheap natural gas-based feedstocks in the U.S. help profits.",
+      "risks": "Raw material costs swing widely and heavy competition makes passing them on hard. Oversupply and plant outages can hurt results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 912595,
+    "tickers": [
+      "MAA"
+    ],
+    "name": "MAA",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MAA Form 10-K (filed 2026-02-06) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/912595/000119312526041208/maa-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国南部を中心にアパートを所有・運営する不動産投資信託。",
+      "revenue": "アパートの賃貸収入で稼ぐ。2025年末時点で293のアパートを保有・運営し、16州に広がる。",
+      "strength": "38の市場と約150の副市場に分散し、物件の種類も幅広い。一つの地域の景気変動の影響を和らげる構え。",
+      "risks": "景気が悪化すれば家賃の回収や需要が弱まりうる。変動金利の借入が676.0百万ドルあり、金利高の影響を受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A real estate investment trust that owns and runs apartment communities, mainly in the southern U.S.",
+      "revenue": "It earns rent from apartments. At the end of 2025 it owned and operated 293 communities across 16 states.",
+      "strength": "Its portfolio is spread over 38 markets and about 150 submarkets with varied property types, which cushions local downturns.",
+      "risks": "A weaker economy could hurt rent collection and demand. It holds $676.0 million of variable rate debt exposed to high interest rates.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 797468,
+    "tickers": [
+      "OXY"
+    ],
+    "name": "Occidental",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Occidental Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026009059/oxy-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "石油とガスを生産する国際的なエネルギー会社。",
+      "revenue": "原油・NGL・天然ガスの販売で稼ぐ。米国と中東・北アフリカが中心で、中流・マーケティング部門が流通を担う。",
+      "strength": "パーミアン、DJ両盆地とメキシコ湾沖で主要な地位を持つ。オマーン最大の独立系石油生産者でもある。",
+      "risks": "業績は原油価格に強く左右される。OxyChemの売却で、価格変動の影響がさらに大きくなった。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An international energy company that produces oil and gas.",
+      "revenue": "It earns from selling oil, NGL and natural gas, mainly in the U.S., the Middle East and North Africa, with midstream and marketing handling flow.",
+      "strength": "It holds leading positions in the Permian and DJ Basins and offshore Gulf of America, and is the largest independent oil producer in Oman.",
+      "risks": "Results track oil prices closely, and the OxyChem sale leaves the company more exposed to price swings.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 822416,
+    "tickers": [
+      "PHM"
+    ],
+    "name": "PulteGroup",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PulteGroup Form 10-K (filed 2026-02-04) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/822416/000082241626000007/phm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅の建設・販売と、住宅ローンなどの金融を手がける会社。",
+      "revenue": "稼ぎの大半は住宅の販売。金融サービスは住宅ローンや権原サービスで稼ぐ。",
+      "strength": "在庫住宅を30〜90日で引き渡せる量だけ用意し、土地オプションで柔軟性を高めるのが特徴。",
+      "risks": "住宅ローン金利や住宅費の高さで需要が弱く、粗利益率は26.3%に低下。土地コストの上昇も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that builds and sells homes and also offers mortgage and other financial services.",
+      "revenue": "Most of its income comes from selling homes. Financial services earn from mortgages and title services.",
+      "strength": "It keeps enough spec homes to close in 30 to 90 days and adds land options for flexibility.",
+      "risks": "High mortgage rates and housing costs weaken demand, and gross margin fell to 26.3%. Land costs keep rising.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 726728,
+    "tickers": [
+      "O"
+    ],
+    "name": "Realty Income",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Realty Income Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "店舗など単独の商業用不動産を長期のネットリースで貸す不動産投資信託。",
+      "revenue": "契約で決まった賃料で稼ぐ。賃料は多くが段階的に増える。物件は15,500超に上る。",
+      "strength": "英国・欧州の大規模なネットリース網が競争上の強み。規模と独自のデータ・技術も武器にする。",
+      "risks": "投資物件の取得で競争にさらされる。他のREITなど、似た物件を持つ競合が同じ地域に多い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A REIT that leases freestanding commercial properties such as retail sites under long-term net leases.",
+      "revenue": "It earns contractually defined rent, and many leases include built-in rent escalations. It holds over 15,500 properties.",
+      "strength": "Its large U.K. and European net lease platform is a competitive advantage, backed by scale and proprietary data and technology.",
+      "risks": "Buying properties means facing competition. Other REITs own similar properties in many of the same areas.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1035002,
+    "tickers": [
+      "VLO"
+    ],
+    "name": "Valero Energy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Valero Energy Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "石油系と低炭素の輸送用燃料を作って売る会社。",
+      "revenue": "製油、再生ディーゼル、エタノールの各事業で稼ぐ。米国、カナダ、英国に製油所15カ所を持つ。",
+      "strength": "低コストで効率的、信頼できる液体燃料の供給者であることが特徴。低炭素燃料の大手生産者でもある。",
+      "risks": "製油業界は競争が激しい。原油の自社産出や小売網を持つ大手は、不採算期を他事業で補いやすい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes and sells petroleum-based and low-carbon transportation fuels.",
+      "revenue": "It earns from refining, renewable diesel and ethanol. It owns 15 refineries in the U.S., Canada and the U.K.",
+      "strength": "It is a low-cost, efficient and reliable supplier of liquid fuels, and a leading producer of low-carbon fuels.",
+      "risks": "Refining is highly competitive. Rivals with their own crude output or retail networks can offset weak downstream results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 277135,
+    "tickers": [
+      "GWW"
+    ],
+    "name": "Grainger",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Grainger Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/277135/000027713526000011/gww-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "工場や施設の保守・修理・運営用品を幅広く扱う卸売会社。",
+      "revenue": "対面型のHigh-Touch Solutionsと、ZoroやMonotaROのオンライン通販Endless Assortmentの二つで稼ぐ。",
+      "strength": "二つの事業モデルを併用し、規模と有利な供給網を活かす。顧客は世界で4.6百万社超。",
+      "risks": "価格競争の激化、関税や貿易政策、仕入れ先の混乱、ECとAIの施策の失敗などを抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A broad line distributor of maintenance, repair and operating (MRO) products and services.",
+      "revenue": "It earns through two segments: High-Touch Solutions and the online Endless Assortment (Zoro and MonotaRO).",
+      "strength": "It runs two business models and uses its scale and advantaged supply chain. It serves more than 4.6 million customers.",
+      "risks": "Pricing pressure, tariffs and trade policy, supply disruption, and failed eCommerce or AI initiatives are risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1035443,
+    "tickers": [
+      "ARE"
+    ],
+    "name": "Alexandria Real Estate",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Alexandria Real Estate Form 10-K (filed 2026-01-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ライフサイエンス向けの研究施設を持つ不動産投資信託（REIT）。",
+      "revenue": "北米の340物件を製薬・バイオ企業などに貸して稼ぐ。稼働率は90.9%。",
+      "strength": "AAA立地の集積地でMegacampusを開発・運営するのが特徴。大手の優良テナントが賃料収入の53%を占める。",
+      "risks": "近隣の研究・技術系物件や、他のREIT、ファンド、開発業者と投資機会を争う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A REIT that owns research and laboratory space for the life science industry.",
+      "revenue": "It earns rent by leasing 340 properties in North America to pharma and biotech firms. Occupancy is 90.9%.",
+      "strength": "Its feature is developing and running Megacampus clusters in AAA locations. Large investment-grade tenants make up 53% of rent.",
+      "risks": "Other laboratory and technology properties sit nearby, and it competes with other REITs, funds and developers for deals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1841666,
+    "tickers": [
+      "APA"
+    ],
+    "name": "APA Corp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "APA Corp Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000015/apa-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国、エジプト、北海で石油・天然ガスを探して生産する独立系エネルギー会社。",
+      "revenue": "原油、天然ガス、NGLを売って稼ぐ。2025年の生産量は米国が62%、エジプトが31%、北海が7%。",
+      "strength": "パーミアン盆地を軸に、陸上と海上、在来型と非在来型の資産を分散して持つのが特徴。",
+      "risks": "原油・天然ガス・NGLの価格変動が業績を左右する。低価格が続けば設備投資や株主還元が制約されうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An independent energy company that explores for and produces oil and gas in the U.S., Egypt and the North Sea.",
+      "revenue": "It sells crude oil, natural gas and NGLs. In 2025, the U.S. made up 62% of production, Egypt 31% and the North Sea 7%.",
+      "strength": "Its feature is a diversified mix of onshore and offshore, conventional and unconventional assets, centered on the Permian Basin.",
+      "risks": "Swings in oil, gas and NGL prices drive its results. Prolonged low prices could limit capital spending and shareholder returns.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 947484,
+    "tickers": [
+      "ACGL"
+    ],
+    "name": "Arch Capital",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Arch Capital Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "保険、再保険、住宅ローン保険を世界で手がけるバミューダ拠点の会社。",
+      "revenue": "保険、再保険、住宅ローン保険の3部門で稼ぐ。世界で特化型の保険料を引き受ける。",
+      "strength": "専門性の高い保険・再保険に絞るのが特徴。経験ある経営陣と厚い資本が土台になる。",
+      "risks": "業界の競争は激しい。市況の循環や自然災害の大きな損失で業績がぶれうる。",
+      "competition": "主な競合にAmerican Financial Group, Inc.、American International Group, Inc.、AXIS Capital Holdings Limited、Chubb Limited、CNA Financial Corp.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Bermuda-based company offering insurance, reinsurance and mortgage insurance worldwide.",
+      "revenue": "It earns in three segments: insurance, reinsurance and mortgage, writing specialty lines worldwide.",
+      "strength": "It focuses on specialty insurance and reinsurance, built on an experienced management team and a strong capital base.",
+      "risks": "Competition in the industry is intense. Market cycles and large catastrophe losses can swing its results.",
+      "competition": "Main competitors include American Financial Group, Inc., American International Group, Inc., AXIS Capital Holdings Limited, Chubb Limited, CNA Financial Corp..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "American Financial Group, Inc.",
+          "ticker": "AFG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "American International Group, Inc.",
+          "ticker": "AIG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AXIS Capital Holdings Limited",
+          "ticker": "AXS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Chubb Limited",
+          "ticker": "CB",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CNA Financial Corp.",
+          "ticker": "CNA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1000697,
+    "tickers": [
+      "WAT"
+    ],
+    "name": "Waters",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Waters Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "液体クロマトグラフィーと質量分析の装置を作る分析機器の会社。",
+      "revenue": "LCやMSの装置、カラムなどの消耗品、保守サービスを製薬や食品、環境分野の顧客に売って稼ぐ。",
+      "strength": "LCとMSを組み合わせた統合システムと共通ソフトが特徴。サービスは競合と差別化していると自負する。",
+      "risks": "競合は事業が幅広く、資金力や販売網で上回る会社もある。大型買収で事業の統合も課題になる。",
+      "competition": "主な競合にAgilent Technologies, Inc.、Bruker Corporation、Danaher Corporation、Thermo Fisher Scientific Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of analytical instruments built around liquid chromatography and mass spectrometry.",
+      "revenue": "It earns by selling LC and MS systems, consumables such as columns, and service plans to pharma, food and environmental customers.",
+      "strength": "Its edge is integrated LC-MS systems on common software, and it sees its service offering as clearly differentiated.",
+      "risks": "Rivals are more diversified, and some have more money and wider distribution. Integrating its large acquisition is also a task.",
+      "competition": "Main competitors include Agilent Technologies, Inc., Bruker Corporation, Danaher Corporation, Thermo Fisher Scientific Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Agilent Technologies, Inc.",
+          "ticker": "A",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bruker Corporation",
+          "ticker": "BRKR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Danaher Corporation",
+          "ticker": "DHR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Thermo Fisher Scientific Inc.",
+          "ticker": "TMO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 106535,
+    "tickers": [
+      "WY"
+    ],
+    "name": "Weyerhaeuser",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Weyerhaeuser Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/106535/000119312526051422/wy-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "広大な森林を持ち、木材製品も作る北米の林業会社。",
+      "revenue": "木を育てて伐採する事業、土地の売却やリース、木材製品の製造販売で稼ぐ。",
+      "strength": "米国に広大な森林を所有し、持続可能な森林管理を続けるのが特徴。",
+      "risks": "米国の住宅市場の動きに業績が大きく左右される。冬は建設活動が落ち、木材需要も減る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A North American forestry company that owns vast timberlands and also makes wood products.",
+      "revenue": "It earns by growing and harvesting trees, selling or leasing land, and making and selling wood products.",
+      "strength": "It owns more than 10 million acres of U.S. timberlands and manages them on a sustainable basis.",
+      "risks": "Results swing with the U.S. housing market, and winter slows construction and cuts demand for logs and wood products.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1050446,
+    "tickers": [
+      "MSTR"
+    ],
+    "name": "Strategy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Strategy Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ビットコインを大量に保有しつつ、企業向け分析ソフトも手がける会社。",
+      "revenue": "収益源は単一のソフトウェア基盤と関連サービス。ビットコイン保有から価値を生む施策も進める。",
+      "strength": "自らを世界初で最大のビットコイン・トレジャリー企業と位置づけ、AI分析ソフトの事業も併せ持つ。",
+      "risks": "ビットコイン価格の急変動が業績と株価を揺らす。負債も抱え、黒字に戻れない可能性もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that holds large amounts of bitcoin and also sells enterprise analytics software.",
+      "revenue": "Its revenue comes from a single software platform and related services, alongside efforts to create value from its bitcoin.",
+      "strength": "It calls itself the first and largest Bitcoin Treasury Company and also runs an AI-powered analytics software business.",
+      "risks": "Bitcoin price swings hit its results and share price. It also carries debt and may not return to profit.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1437107,
+    "tickers": [
+      "WBD"
+    ],
+    "name": "Warner Bros. Discovery",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Warner Bros. Discovery Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000020/wbd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "映画、テレビ、配信を手がける世界的なメディア・娯楽会社。",
+      "revenue": "配信料と広告、映画やテレビ番組のライセンス、ゲーム販売などで稼ぐ。",
+      "strength": "HBO MaxやCNN、DC Studiosなどのブランドと、世界有数の自社コンテンツ群が特徴。",
+      "risks": "従来型テレビの契約者と広告の減少が続く。関税による制作費の上昇も響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global media and entertainment company in film, television and streaming.",
+      "revenue": "It earns from distributor and subscription fees, advertising, film and TV licensing, and game sales.",
+      "strength": "Its brands include HBO Max, CNN and DC Studios, backed by one of the world's largest owned content libraries.",
+      "risks": "Linear TV subscribers and advertising keep shrinking, and tariffs could raise production costs.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1811210,
+    "tickers": [
+      "LCID"
+    ],
+    "name": "Lucid",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lucid Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "高級電気自動車のLucid AirとGravityを作る会社。",
+      "revenue": "車を直営店とオンラインで消費者に直接売って稼ぐ。技術提供やロボタクシーにも広げる。",
+      "strength": "パワートレインやソフトを自社開発し、走行距離と充電の速さが特徴。",
+      "risks": "創業以来、毎年赤字が続く。少数のモデルに売上を頼り、部品も単一の供給元に依存する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of luxury electric vehicles, the Lucid Air and Lucid Gravity.",
+      "revenue": "It earns by selling cars directly to consumers through its own stores and online, and aims to add technology licensing and robotaxis.",
+      "strength": "It develops its powertrain and software in-house, and stands out for driving range and charging speed.",
+      "risks": "It has posted a net loss every year since inception, relies on a few models and depends on single-source suppliers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 313927,
+    "tickers": [
+      "CHD"
+    ],
+    "name": "Church & Dwight",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Church & Dwight Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ARM & HAMMER重曹を軸に、家庭用品とパーソナルケア品を売る会社。",
+      "revenue": "家庭用品が連結売上の約41%、パーソナルケアが約36%を占める。国際部門は約18%、法人向けは約5%。",
+      "strength": "重曹の技術が土台。TROJANやWATERPIK、BATISTEなど、各分野で首位とされるブランドを複数持つのが特徴。",
+      "risks": "洗剤など日用品は価格競争が激しい。大手小売店の値下げ要求で、利益率が下がりうる。",
+      "competition": "主な競合にProcter & Gamble Company、The Clorox Company、Colgate-Palmolive Companyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company selling household and personal care products, built around ARM & HAMMER baking soda.",
+      "revenue": "Household products are about 41% of consolidated net sales and personal care about 36%. International is about 18% and business sales about 5%.",
+      "strength": "Baking soda technology is its base. It owns several brands ranked number one in their categories, such as TROJAN, WATERPIK and BATISTE.",
+      "risks": "Household products like laundry detergent face heavy price competition. Pricing demands from big retailers can squeeze margins.",
+      "competition": "Main competitors include Procter & Gamble Company, The Clorox Company, Colgate-Palmolive Company.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Procter & Gamble Company",
+          "ticker": "PG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "The Clorox Company",
+          "ticker": "CLX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Colgate-Palmolive Company",
+          "ticker": "CL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1163165,
+    "tickers": [
+      "COP"
+    ],
+    "name": "ConocoPhillips",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ConocoPhillips Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界有数の石油・天然ガス開発(E&P)会社。",
+      "revenue": "原油と天然ガスの生産で稼ぐ。2025年の生産量は2,375 MBOED。",
+      "strength": "低コストで多様な資産群が特徴。北米のシェール、オイルサンド、LNGなど幅広く持つ。価格は無ヘッジで臨む。",
+      "risks": "原油価格は周期的で値動きが荒い。利益や投資、株主還元が価格に左右されうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "One of the world's leading oil and gas exploration and production (E&P) companies.",
+      "revenue": "It earns from producing crude oil and natural gas. 2025 production was 2,375 MBOED.",
+      "strength": "A diverse, low cost of supply portfolio is its feature, spanning North American unconventional plays, oil sands and LNG. It stays unhedged.",
+      "risks": "Commodity prices are cyclical and volatile. Profits, investment and shareholder returns can swing with them.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1047862,
+    "tickers": [
+      "ED"
+    ],
+    "name": "Con Edison",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Con Edison Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1047862/000104786226000031/ed-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニューヨークで電気・ガス・蒸気を届ける公益事業の持株会社。",
+      "revenue": "規制された配送事業で稼ぐ。CECONYは電気で約3.7 million、ガスで約1.1 millionの顧客に届ける。",
+      "strength": "米国最大の蒸気配送網を運営する。電気・ガス・蒸気を併せ持つのが特徴。",
+      "risks": "料金は規制当局が承認する料金計画に縛られる。法令違反には重い罰則もありうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A holding company for utilities delivering electricity, gas and steam in New York.",
+      "revenue": "It earns from regulated delivery businesses. CECONY serves approximately 3.7 million electric and 1.1 million gas customers.",
+      "strength": "It runs the largest steam distribution system in the U.S., alongside electric and gas delivery.",
+      "risks": "Rates are bound by rate plans that regulators approve. Penalties for violating utility rules could be material.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
   }
 ]
