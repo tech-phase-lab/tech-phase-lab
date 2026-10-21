@@ -167,13 +167,29 @@ def load_online_protection(env, client_factory, config):
                                            bytes.fromhex(key_hex), pin, protection,
                                            require_complete_inventory=True)
 
+def validate_restore_environment(env):
+    """Reject source database credentials before client imports or any I/O.
+
+    PostgreSQL image metadata is harmless; all other PG variables can affect
+    libpq or a child process and must not enter the isolated restore job.
+    """
+    image_metadata = {'PG_MAJOR', 'PG_VERSION', 'PGDATA'}
+    for name, value in env.items():
+        if value and ((name.startswith('PG') and name not in image_metadata)
+                      or name.endswith(('_DB_URL', 'DATABASE_URL'))
+                      or name.startswith(('DATABASE_', 'POSTGRES_'))):
+            raise RuntimeError('restore environment contains production connection variables')
+
+
 def main():
-    import boto3
-    from botocore.config import Config
-    started = time.monotonic()
     mode = os.environ['RESOLUTE_BACKUP_MODE']
     if mode not in ('bootstrap', 'backup', 'restore', 'protection-export'):
         raise RuntimeError('invalid mode')
+    if mode == 'restore':
+        validate_restore_environment(os.environ)
+    import boto3
+    from botocore.config import Config
+    started = time.monotonic()
     bucket = os.environ['BACKUP_BUCKET']
     s3 = boto3.client('s3', endpoint_url=os.environ['BACKUP_ENDPOINT'],
                      aws_access_key_id=os.environ['BACKUP_ACCESS_KEY_ID'],
@@ -226,8 +242,6 @@ def main():
                       'dump_bytes': dump.stat().st_size, 'retained': len(keep)}
         else:
             # Production credentials must never be present in a restore container.
-            if any(os.environ.get(k) for k in ('PGHOST', 'PGPASSWORD', 'DATABASE_URL', 'ENTITLEMENT_DB_URL')):
-                raise RuntimeError('restore environment contains production connection variables')
             manifest = json.loads(s3.get_object(Bucket=bucket, Key=PREFIX+'latest.json')['Body'].read())
             if not manifest['key'].startswith(PREFIX+'dumps/'):
                 raise RuntimeError('invalid backup key')

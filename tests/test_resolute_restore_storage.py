@@ -3,9 +3,11 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
+import builtins
 from pathlib import Path
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 spec = importlib.util.spec_from_file_location('backup',
     Path(__file__).resolve().parents[1] / 'scripts/resolute/backup.py')
@@ -106,3 +108,44 @@ class RestoreStorageTests(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             backup.load_online_protection(self.env, self.factory, None)
         self.assertEqual(self.factory.call_count, 1)
+
+
+class RestoreEnvironmentTests(unittest.TestCase):
+    def test_connection_variants_fail_before_imports_or_io(self):
+        names = ('PGHOST', 'PGHOSTADDR', 'PGPORT', 'PGUSER', 'PGDATABASE',
+                 'PGPASSWORD', 'PGSERVICE', 'PGSERVICEFILE', 'PGPASSFILE',
+                 'PGOPTIONS', 'PGSSLCERT', 'PGSSLKEY', 'DATABASE_URL',
+                 'DATABASE_PRIVATE_URL', 'ENTITLEMENT_DB_URL',
+                 'RESOLUTE_PLAN_DB_URL', 'RESOLUTE_NOTIFICATION_DB_URL',
+                 'RESOLUTE_PROTECTION_DB_URL', 'SOURCE_DATABASE_URL',
+                 'POSTGRES_PASSWORD', 'POSTGRES_PASSWORD_FILE', 'POSTGRES_USER')
+        for name in names:
+            with self.subTest(name=name):
+                env = {'RESOLUTE_BACKUP_MODE': 'restore', name: 'private-value'}
+                with patch.dict(os.environ, env, clear=True), \
+                     patch.object(builtins, '__import__') as imports, \
+                     patch.object(backup.tempfile, 'TemporaryDirectory') as temporary, \
+                     patch.object(backup, 'run') as run:
+                    with self.assertRaisesRegex(RuntimeError, 'production connection') as caught:
+                        backup.main()
+                    imports.assert_not_called()
+                    temporary.assert_not_called()
+                    run.assert_not_called()
+                self.assertNotIn('private-value', str(caught.exception))
+
+    def test_postgres_image_metadata_and_independent_storage_are_allowed(self):
+        backup.validate_restore_environment({
+            'PG_MAJOR': '18', 'PG_VERSION': '18.0', 'PGDATA': '/var/lib/postgresql/data',
+            'BACKUP_BUCKET': 'dumps', 'BACKUP_SECRET_ACCESS_KEY': 'fixture',
+            'RESOLUTE_RESTORE_PROTECTION_SECRET_ACCESS_KEY': 'fixture',
+            'RESOLUTE_PROTECTION_KEY_HEX': '07' * 32, 'DATABASE_URL': '',
+        })
+
+    def test_backup_keeps_its_required_source_connection(self):
+        with patch.dict(os.environ, {'RESOLUTE_BACKUP_MODE': 'backup',
+                                     'PGHOST': 'postgres.railway.internal'}, clear=True), \
+             patch.object(backup, 'validate_restore_environment') as validate, \
+             patch.object(builtins, '__import__', side_effect=ImportError('client sentinel')):
+            with self.assertRaisesRegex(ImportError, 'client sentinel'):
+                backup.main()
+            validate.assert_not_called()

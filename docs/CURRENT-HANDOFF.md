@@ -1,3 +1,17 @@
+## RESOLUTE restore isolation — 2026-10-21
+
+Scheduled daily backup actual logs confirm upload/readback success at00:04:24Z
+with bundle fb7c4eda. New weekly-bundle execution remains unconfirmed; deployment
+SUCCESS alone is not restore evidence. Restore source now rejects scoped DB URLs
+and libpq alternate connection configuration before any client imports/I/O.
+See [isolation change and dated evidence](RESOLUTE-RESTORE-ISOLATION-CHECK.md).
+The source guard is not yet in the pinned Railway job bundle. Storage stays OFF;
+schedules and Vercel remain unchanged. Next: verify CI, roll out the reviewed
+restore guard without schedule changes, then fresh write-fenced inventory and
+live owner acceptance before activation. Owner action is not needed now.
+
+---
+
 ## RESOLUTE signed-route verification — 2026-10-21 16:44 JST
 
 Implemented and verified CI-only real PostgreSQL coverage in d9999b8a, preserving
