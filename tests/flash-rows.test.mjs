@@ -29,14 +29,14 @@ test('live monitor rows come from watched stocks only, newest first, earnings re
   assert.deepEqual(ids, ['wire:w1', 'official:a']);
 });
 
-test('earnings rows cover all 37 stocks; the Japanese view leaves out an unchecked translation', () => {
+test('earnings rows cover every announced result, as the calendar does; the Japanese view leaves out an unchecked translation', () => {
   const [earningsOnly] = earningsOnlyProviders.map(p => p.ticker);
   const brief = (id, ticker, titleJa) => ({ id, kind: 'earnings', ticker, period: 'Q3', titleJa, titleEn: `${ticker} Q3`, publishedAt: '2026-10-14T05:00:00Z', url: `https://x.com/a/status/${id}`, publisher: 'X', facts: [] });
   const feed = { resultBriefs: [brief('1', earningsOnly, '決算速報'), brief('2', 'ZZZZ', '対象外'), brief('3', 'MU', null)] };
   const ja = flashRows(feed, {}, 'ja').filter(row => row.kind === 'earnings');
-  assert.deepEqual(ja.map(row => row.tickers[0]), [earningsOnly]);
+  assert.deepEqual(ja.map(row => row.tickers[0]).sort(), [earningsOnly, 'ZZZZ'].sort());
   const en = flashRows(feed, {}, 'en').filter(row => row.kind === 'earnings');
-  assert.deepEqual(en.map(row => row.tickers[0]).sort(), [earningsOnly, 'MU'].sort());
+  assert.deepEqual(en.map(row => row.tickers[0]).sort(), [earningsOnly, 'MU', 'ZZZZ'].sort());
 });
 
 test('the page has All / Earnings tabs only, shows one date heading per day (month/day), and no source line or stock filter', async () => {
@@ -44,6 +44,8 @@ test('the page has All / Earnings tabs only, shows one date heading per day (mon
   assert.match(source, /\["all", "earnings"\] as const/);
   assert.doesNotMatch(source, /銘柄で絞る|<select/);
   assert.match(source, /ニュース取得リスト/);
+  // Earnings rows of stocks outside the 22 (Tesla, Meta, Lam Research) must survive the page filter (owner, Oct 22).
+  assert.match(source, /row\.kind === "earnings" \|\| row\.tickers\.some\(ticker => WATCH_TICKERS\.has\(ticker\)\)/);
   assert.match(source, /className=\{styles\.day\}/);
   assert.doesNotMatch(source, /timeline\.src|row\.source/);
   assert.match(source, /const dayKey = /);

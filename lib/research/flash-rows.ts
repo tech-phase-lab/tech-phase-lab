@@ -9,11 +9,9 @@ import { NEWS_MAX_AGE_MS, officialTime } from "./news-time.ts";
 import { wireStories } from "./wire-stories.ts";
 
 /** The 速報 page: one newest-first timeline of what each watched company's
- * live monitor shows (the 22 stocks) and earnings results (those 22 plus the
- * 15 earnings-only stocks). SEC filings are not listed here yet (owner, Oct 14). */
+ * live monitor shows (the 22 stocks) and every announced earnings result. SEC filings are not listed here yet (owner, Oct 14). */
 export const WATCH_TICKERS: ReadonlySet<string> = new Set(providers.map(p => p.ticker));
 export const FLASH_TICKERS: readonly string[] = [...WATCH_TICKERS, ...earningsOnlyProviders.map(p => p.ticker)].sort();
-const ROSTER: ReadonlySet<string> = new Set(FLASH_TICKERS);
 
 export type FlashKind = "news" | "earnings";
 export type FlashRow = {
@@ -59,7 +57,8 @@ export function flashRows(feed: Partial<GeneralNewsFeed> | null | undefined, wir
   }
   for (const row of earningsResults(official, briefs)) {
     const result = ja ? row.result.ja : row.result.en;
-    if (!ROSTER.has(row.ticker) || (ja && !row.result.ja)) continue;
+    // Every announced result is listed, as on the calendar (owner, Oct 22: Tesla, Meta and Lam Research were missing).
+    if (ja && !row.result.ja) continue;
     rows.push({ id: `earnings:${row.id}`, kind: "earnings", tickers: [row.ticker], title: result ? `${row.title[lang]}｜${result}` : row.title[lang],
       body: [...row.facts.map(fact => ja ? fact.ja : fact.en), (ja ? row.body.ja : row.body.en) ?? ""].filter(Boolean).join("\n") || undefined,
       at: row.releasedAt, timeKind: "published", source: row.sourceName });
