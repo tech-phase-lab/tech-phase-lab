@@ -4,7 +4,7 @@ import Link from "next/link";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
 import { useIdentityRefresh } from "../../identity-provider";
-import { billingRequest, billingReturn, billingSummary, sandboxApproval, type BillingSummary } from "@/lib/membership/billing-client";
+import { billingRequest, billingReturn, billingSummary, sandboxApproval, verifyBillingReturn, type BillingSummary } from "@/lib/membership/billing-client";
 import styles from "./styles.module.css";
 
 const messages: Record<string, [string, string]> = {
@@ -29,6 +29,7 @@ export default function BillingScreen() {
   const [notice, setNotice] = useState("");
   const locked = useRef(false);
   const lifetime = useRef<AbortController | null>(null);
+  const automaticCheck = useRef<string | null>(null);
   const t = (jp: string, en: string) => ja ? jp : en;
   async function load(signal?: AbortSignal) {
     const configuration = await billingRequest("readiness", undefined, signal);
@@ -41,13 +42,29 @@ export default function BillingScreen() {
     setSummary(next);
     setError("");
     if (next.subscription) setCurrency(next.subscription.currency);
+    return next;
   }
   useEffect(() => {
     const controller = new AbortController(); lifetime.current = controller;
     const returned = billingReturn(window.location.search);
-    if (returned.id) setNotice(returned.cancelled ? "returned-cancelled" : "returned");
+    if (returned.id && automaticCheck.current !== returned.id) setNotice(returned.cancelled ? "returned-cancelled" : "returned");
     // Callback values never grant access or trigger a new purchase.
-    refreshIdentity().then(() => load(controller.signal))
+    setBusy(true);
+    refreshIdentity().then(() => load(controller.signal)).then(async current => {
+      if (!current || controller.signal.aborted || !returned.id || returned.cancelled ||
+          returned.id !== current.subscription?.id) return;
+      if (current.plan === "pro" || current.reviewRequired) {
+        setNotice(current.reviewRequired ? "review" : "verified"); return;
+      }
+      if (automaticCheck.current === returned.id) { setNotice("pending"); return; }
+      automaticCheck.current = returned.id;
+      setNotice("checking-payment");
+      const result = await verifyBillingReturn(returned, current, controller.signal);
+      if (!controller.signal.aborted) {
+        if (result) { setSummary(result.summary); setNotice(result.notice); }
+        else setNotice("pending");
+      }
+    })
       .catch(e => { if (!controller.signal.aborted) { setReady(false); setSummary(null); setError(e instanceof Error ? e.message : "billing-unavailable"); } })
       .finally(() => { if (!controller.signal.aborted) setBusy(false); });
     return () => controller.abort();
@@ -93,6 +110,7 @@ export default function BillingScreen() {
     returned: t("PayPalから戻りました。下の「支払いを確認」で結果を確認してください。", "You returned from PayPal. Use Verify payment below to check the result."),
     "returned-cancelled": t("PayPalでの承認を中断しました。契約の解約完了を意味するものではありません。", "PayPal approval was interrupted. This does not confirm subscription cancellation."),
     "check-payment": t("契約が見つかりました。支払いを確認してください。", "A subscription was found. Verify its payment."),
+    "checking-payment": t("お支払いを確認しています。", "Checking your payment."),
     verified: t("支払いの照合が完了しました。利用状態は下に表示しています。", "Payment reconciliation finished. Access status is shown below."),
     cancelled: t("自動更新を停止しました。確認済みの支払期間は保持されます。", "Automatic renewal stopped. Verified paid access is retained."),
     pending: t("支払いはまだ確認できていません。時間をおいて再確認してください。", "Payment has not been verified yet. Check again shortly."),

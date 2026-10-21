@@ -6,7 +6,7 @@ import ts from 'typescript';
 import {sandboxMemberAllowed} from '../services/tech-phase-billing/access.mjs';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {billingReturn,billingSummary,sandboxApproval,billingRequest} from '../lib/membership/billing-client.ts';
+import {billingReturn,billingSummary,sandboxApproval,billingRequest,verifyBillingReturn} from '../lib/membership/billing-client.ts';
 const id='00000000-0000-4000-8000-000000000001';
 test('checkout clears an earlier identity-loading error only after a successful status read',async()=>{
  const require=createRequire(import.meta.url);
@@ -202,4 +202,73 @@ test('billing page gates preview and enrolled Sandbox identity before rendering 
   process.env.TECH_PHASE_PAYPAL_ENV='live';await assert.rejects(m.exports.default(),/404/);
   process.env.VERCEL_ENV='production';await assert.rejects(m.exports.default(),/404/);
  } finally {for(const key of keys){if(old[key]===undefined)delete process.env[key];else process.env[key]=old[key];}}
+});
+
+const pendingReturnSummary={environment:'sandbox',plan:'free',proExpiresAt:null,subscription:{id,currency:'JPY',state:'approval_pending'}};
+test('automatic return verification requires the saved contract and never creates or cancels',async()=>{
+ for(const [returned,current] of [
+  [{id:null,cancelled:false},pendingReturnSummary],
+  [{id,cancelled:true},pendingReturnSummary],
+  [{id:'00000000-0000-4000-8000-000000000002',cancelled:false},pendingReturnSummary],
+  [{id,cancelled:false},{...pendingReturnSummary,subscription:null}],
+  ...['creating','cancelled','expired'].map(state=>[{id,cancelled:false},{...pendingReturnSummary,subscription:{...pendingReturnSummary.subscription,state}}]),
+  [{id,cancelled:false},{...pendingReturnSummary,reviewRequired:true}],
+  [{id,cancelled:false},{...pendingReturnSummary,plan:'pro',proExpiresAt:'2026-11-21T00:00:00Z'}],
+ ]) assert.equal(await verifyBillingReturn(returned,current,new AbortController().signal,()=>assert.fail('must not call')),null);
+ const controller=new AbortController();controller.abort();
+ assert.equal(await verifyBillingReturn({id,cancelled:false},pendingReturnSummary,controller.signal,()=>assert.fail('must not call')),null);
+});
+test('automatic verification trusts durable access, not reconcile success alone',async()=>{
+ for(const [plan,reviewRequired,notice] of [['pro',false,'verified'],['free',false,'pending'],['free',true,'review']]) {
+  const calls=[],summary={...pendingReturnSummary,plan,reviewRequired,proExpiresAt:plan==='pro'?'2026-11-21T00:00:00Z':null};
+  const result=await verifyBillingReturn({id,cancelled:false},pendingReturnSummary,new AbortController().signal,async(action,body)=>{
+   calls.push(action);if(action==='reconcile'){assert.deepEqual(body,{id});return {status:'verified'};}return summary;
+  });
+  assert.deepEqual(calls,['reconcile','status']);assert.deepEqual(result,{summary,notice});
+ }
+});
+test('lost reconciliation response recovers paid access with one read and no mutation retry',async()=>{
+ const paid={...pendingReturnSummary,plan:'pro',proExpiresAt:'2026-11-21T00:00:00Z'},calls=[];
+ const result=await verifyBillingReturn({id,cancelled:false},pendingReturnSummary,new AbortController().signal,async action=>{
+  calls.push(action);if(action==='reconcile')throw Error('billing-unavailable');return paid;
+ });
+ assert.equal(result.notice,'verified');assert.deepEqual(calls,['reconcile','status']);
+});
+test('automatic verification preserves manual review and rejects unavailable or changed status',async()=>{
+ const controller=new AbortController();
+ const reviewed=await verifyBillingReturn({id,cancelled:false},pendingReturnSummary,controller.signal,async action=>{
+  if(action==='reconcile')throw Error('settlement-review-required');return pendingReturnSummary;
+ });
+ assert.equal(reviewed.notice,'review');
+ for(const final of [null,{...pendingReturnSummary,subscription:null},{...pendingReturnSummary,subscription:{...pendingReturnSummary.subscription,id:'00000000-0000-4000-8000-000000000002'}}]) {
+  await assert.rejects(verifyBillingReturn({id,cancelled:false},pendingReturnSummary,controller.signal,async action=>action==='reconcile'?{status:'verified'}:final),/billing-unavailable/);
+ }
+});
+test('leaving the purchase page stops automatic verification without a second request',async()=>{
+ const controller=new AbortController(),calls=[];
+ const result=await verifyBillingReturn({id,cancelled:false},pendingReturnSummary,controller.signal,async action=>{
+  calls.push(action);controller.abort();return {status:'verified'};
+ });
+ assert.equal(result,null);assert.deepEqual(calls,['reconcile']);
+});
+
+test('purchase screen automatically verifies a matching return only once across effect reruns',async()=>{
+ const require=createRequire(import.meta.url),source=readFileSync(new URL('../app/research/account/billing/screen.tsx',import.meta.url),'utf8');
+ const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
+ const m={exports:{}},state=[],refs=[],calls=[];let stateIndex=0,refIndex=0,effect;
+ const request=async action=>{calls.push(action);return action==='readiness'?{environment:'sandbox',enabled:true,configurationReady:true}:action==='reconcile'?{status:'payment-pending'}:pendingReturnSummary;};
+ new Function('require','module','exports',compiled)(name=>{
+  if(name==='react')return {...require(name),useState:initial=>{const i=stateIndex++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
+  if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
+  if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
+  if(name==='@/lib/membership/billing-client')return {billingReturn,billingSummary,billingRequest:request,verifyBillingReturn:(returned,current,signal)=>verifyBillingReturn(returned,current,signal,request)};
+  if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
+  return require(name);
+ },m,m.exports);
+ const previous=globalThis.window;globalThis.window={location:{search:'?billing='+id}};
+ const run=async()=>{stateIndex=0;refIndex=0;m.exports.default();const cleanup=effect();await new Promise(r=>setImmediate(r));return cleanup;};
+ try {
+  let cleanup=await run();assert.deepEqual(calls,['readiness','status','reconcile','status']);assert.equal(state[7],'pending');assert.equal(state[5],false);cleanup();
+  cleanup=await run();assert.equal(calls.filter(x=>x==='reconcile').length,1);assert.deepEqual(state[1],pendingReturnSummary);cleanup();
+ }finally{if(previous===undefined)delete globalThis.window;else globalThis.window=previous;}
 });

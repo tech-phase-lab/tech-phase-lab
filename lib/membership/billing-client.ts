@@ -26,6 +26,32 @@ export function billingSummary(value: unknown): BillingSummary {
       ["creating", "approval_pending", "active", "suspended", "cancelled", "expired"].includes(v.subscription.state)))) throw Error("billing-unavailable");
   return v;
 }
+// A return URL is only a hint to reconcile the already authenticated member's
+// persisted contract. It never creates a purchase or grants access itself.
+export async function verifyBillingReturn(
+  returned: ReturnType<typeof billingReturn>, current: BillingSummary,
+  signal: AbortSignal, request = billingRequest,
+) {
+  const sub = current.subscription;
+  if (signal.aborted || returned.cancelled || !returned.id || returned.id !== sub?.id ||
+      current.plan === "pro" || current.reviewRequired ||
+      !["approval_pending", "active", "suspended"].includes(sub.state)) return null;
+  let review = false;
+  try {
+    const result = await request("reconcile", { id: sub.id }, signal);
+    review = result.status === "review-required";
+  } catch (error) {
+    if (signal.aborted) throw error;
+    // An interrupted response is not proof of failed payment. Do not retry the
+    // mutation; read the durable result, including concurrent webhook updates.
+    review = error instanceof Error && error.message === "settlement-review-required";
+  }
+  if (signal.aborted) return null;
+  const next = billingSummary(await request("status", undefined, signal));
+  if (signal.aborted) return null;
+  if (next.subscription?.id !== sub.id) throw Error("billing-unavailable");
+  return { summary: next, notice: next.reviewRequired || review ? "review" : next.plan === "pro" ? "verified" : "pending" };
+}
 export async function billingRequest(action: string, body?: Record<string, unknown>, signal?: AbortSignal) {
   if (!["readiness", "status", "create", "reconcile", "cancel"].includes(action)) throw Error("input");
   const response = await fetch(`/api/research/billing/sandbox/${action}`, {
