@@ -9,7 +9,7 @@ There is no evidence that production credentials entered the deployed restore
 service: its declared variable names contain none of these connection settings.
 
 Restore now rejects nonempty PG variables (except image metadata PG_MAJOR,
-PG_VERSION and PGDATA), *_DB_URL, *DATABASE_URL, DATABASE_* and POSTGRES_*
+PG_VERSION, PG_SHA256 and PGDATA), *_DB_URL, *DATABASE_URL, DATABASE_* and POSTGRES_*
 before optional client imports, temporary directories or subprocesses. Error text
 contains no values. Backup mode retains its required source connection.
 Regression tests cover all three scoped URLs, libpq alternate configuration,
@@ -50,3 +50,50 @@ overwriting its billing changes. Final local gates passed: lint0 errors (five
 existing warnings), Node1,317/1,317 with test-concurrency2, Python2,552/2,552,
 production build, compileall and diff check. Focused restore tests8/8 passed.
 These are code verification results, not a production restore execution.
+
+## Deployment preflight correction
+
+The PostgreSQL18 image also supplies PG_SHA256. The image-metadata exception
+now includes that checksum; connection variables are still rejected.
+The executable entry point now validates restore credentials before either
+/start or /fail monitoring requests. Calling main directly was already guarded,
+but the previous __main__ wrapper could send /start first. Regression tests
+cover blocked entry without any heartbeat and valid execution with preserved
+start/failure reporting. No secret values enter the failure message.
+
+The prepared restore-only V4 launcher is intended to preserve the prior V3 variable for rollback,
+verifies the three-module payload digest and exact filenames, compiles modules,
+and logs the checked source commit/digest. Six local launcher checks verify
+byte-for-byte extraction, four rejected modes and checksum failure. They intercept
+runpy and do not perform network or database operations.
+
+## Provider deployment blocker — 2026-10-21 20:09 JST
+
+The attempt to create an empty isolated verification service returned
+`Deploys have been paused temporarily` (INVALID_ARGUMENT). Subsequent project
+inventory contains no resolute-restore-guard-check-20261021 service and no pending
+changes. No credential reference, start command, schedule or deployed code was
+changed. The prepared candidate module digest is
+2f872384be957be82b4537c7e2a6a616a90ac326d1033d41e56f147a3f2fc2ce;
+local extraction tests are not runtime acceptance.
+
+Railway's official status at https://status.railway.com/ reports
+"Dashboard and API unavailable, builds paused"; October21 09:28UTC update says
+new builds remain paused in every region. The separate October20 incident is
+resolved and must not be substituted for this current incident. Browser access
+also remained on a site-served browser-check screen; no login, challenge bypass,
+CLI/network workaround, billing change or repeated deployment was attempted.
+
+Next: after provider recovery, verify service inventory and no pending changes,
+pin the final CI-verified source in the three-module V4 bundle, and run a bounded
+isolated restore with existing backup/independent-history references only. Do not
+pass source DB credentials, a monitor ping URL, cron, public domain or volume.
+Require actual bundle digest plus RESOLUTE_RESTORE_OK, then roll the same checked
+code into the weekly service with its existing cron and V3 rollback retained.
+The old manifest is dated restore evidence, never a fresh activation inventory.
+Customer storage stays OFF. No owner re-login, password/key re-entry or Run now
+is required for the completed work. Runtime rollout remains incomplete.
+
+Final integrated local gates on b492c1c5: lint0 errors/five existing warnings,
+Node1,317/1,317, Python2,554/2,554, build, compileall and diff check passed.
+Both company-introduction batches bf31a270 and b492c1c5 are preserved.

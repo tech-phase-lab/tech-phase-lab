@@ -1,3 +1,18 @@
+## RESOLUTE restore rollout blocked by Railway — 2026-10-21 20:09 JST
+
+Preflight found and fixed PostgreSQL image PG_SHA256 compatibility and the
+entry-point heartbeat preceding credential validation. Focused tests10/10.
+V4 bundle prepared and exact-source/mode/digest checks passed; not deployed.
+Railway rejected isolated service creation with "Deploys have been paused
+temporarily". Inventory confirms no new service and no pending changes.
+Official status reports current dashboard/API outage and all-region build pause.
+No production settings or schedules were changed. Storage remains OFF.
+See [fix, blocker and recovery steps](RESOLUTE-RESTORE-ISOLATION-CHECK.md).
+Next: complete CI, then provider recovery, isolated actual restore, and weekly
+bundle rollout. Do not ask for completed login/password/key/Run now steps again.
+
+---
+
 ## RESOLUTE restore isolation — 2026-10-21
 
 Scheduled daily backup actual logs confirm upload/readback success at00:04:24Z

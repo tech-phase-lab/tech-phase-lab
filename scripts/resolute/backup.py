@@ -173,7 +173,7 @@ def validate_restore_environment(env):
     PostgreSQL image metadata is harmless; all other PG variables can affect
     libpq or a child process and must not enter the isolated restore job.
     """
-    image_metadata = {'PG_MAJOR', 'PG_VERSION', 'PGDATA'}
+    image_metadata = {'PG_MAJOR', 'PG_VERSION', 'PG_SHA256', 'PGDATA'}
     for name, value in env.items():
         if value and ((name.startswith('PG') and name not in image_metadata)
                       or name.endswith(('_DB_URL', 'DATABASE_URL'))
@@ -316,14 +316,22 @@ def main():
         report['monitor_ping_sent'] = heartbeat()
         print(json.dumps(report), flush=True)
 
-if __name__ == '__main__':
+def entrypoint():
+    notify_monitor = False
     try:
-        if os.environ.get('RESOLUTE_BACKUP_MODE') != 'protection-export':
+        if os.environ.get('RESOLUTE_BACKUP_MODE') == 'restore':
+            validate_restore_environment(os.environ)
+        notify_monitor = os.environ.get('RESOLUTE_BACKUP_MODE') != 'protection-export'
+        if notify_monitor:
             heartbeat('/start')
         main()
     except Exception as exc:
-        if os.environ.get('RESOLUTE_BACKUP_MODE') != 'protection-export':
+        if notify_monitor:
             heartbeat('/fail')
         # No exception details: third-party errors can embed secret material.
         print(json.dumps({'event':'RESOLUTE_JOB_FAILED','error_type':type(exc).__name__}), flush=True)
         raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    entrypoint()

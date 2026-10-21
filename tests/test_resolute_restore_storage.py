@@ -135,7 +135,7 @@ class RestoreEnvironmentTests(unittest.TestCase):
 
     def test_postgres_image_metadata_and_independent_storage_are_allowed(self):
         backup.validate_restore_environment({
-            'PG_MAJOR': '18', 'PG_VERSION': '18.0', 'PGDATA': '/var/lib/postgresql/data',
+            'PG_MAJOR': '18', 'PG_VERSION': '18.0', 'PG_SHA256': 'image-checksum', 'PGDATA': '/var/lib/postgresql/data',
             'BACKUP_BUCKET': 'dumps', 'BACKUP_SECRET_ACCESS_KEY': 'fixture',
             'RESOLUTE_RESTORE_PROTECTION_SECRET_ACCESS_KEY': 'fixture',
             'RESOLUTE_PROTECTION_KEY_HEX': '07' * 32, 'DATABASE_URL': '',
@@ -149,3 +149,36 @@ class RestoreEnvironmentTests(unittest.TestCase):
             with self.assertRaisesRegex(ImportError, 'client sentinel'):
                 backup.main()
             validate.assert_not_called()
+
+
+    def test_entrypoint_rejects_credentials_before_start_or_failure_heartbeat(self):
+        with patch.dict(os.environ, {'RESOLUTE_BACKUP_MODE': 'restore',
+                                     'RESOLUTE_PLAN_DB_URL': 'private-value'}, clear=True), \
+             patch.object(backup, 'heartbeat') as heartbeat, \
+             patch.object(backup, 'main') as main, \
+             patch('sys.stdout', new_callable=io.StringIO) as output:
+            with self.assertRaises(SystemExit) as caught:
+                backup.entrypoint()
+            self.assertEqual(caught.exception.code, 1)
+            heartbeat.assert_not_called()
+            main.assert_not_called()
+            self.assertEqual(json.loads(output.getvalue()),
+                             {'event': 'RESOLUTE_JOB_FAILED', 'error_type': 'RuntimeError'})
+
+    def test_valid_restore_keeps_monitoring_and_failure_reporting(self):
+        for fails in (False, True):
+            with self.subTest(fails=fails), \
+                 patch.dict(os.environ, {'RESOLUTE_BACKUP_MODE': 'restore',
+                                         'PG_SHA256': 'image-checksum'}, clear=True), \
+                 patch.object(backup, 'heartbeat') as heartbeat, \
+                 patch.object(backup, 'main') as main, \
+                 patch('sys.stdout', new_callable=io.StringIO):
+                if fails:
+                    main.side_effect = RuntimeError('private-value')
+                    with self.assertRaises(SystemExit):
+                        backup.entrypoint()
+                else:
+                    backup.entrypoint()
+                self.assertEqual([call.args for call in heartbeat.call_args_list],
+                                 [('/start',), ('/fail',)] if fails else [('/start',)])
+                main.assert_called_once()
