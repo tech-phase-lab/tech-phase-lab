@@ -12,11 +12,11 @@
 
 /* New items per company: the dot turns bright mint and blinks, with a "新着 N" tag (owner, Oct 14). */
 .freshDot{display:inline-block;width:8px!important;height:8px!important;border-radius:50%;background:#5dffb4!important;box-shadow:0 0 10px #5dffb4;animation:freshBlink .9s ease-out infinite}
-.freshTag{display:inline-flex;align-items:center;gap:5px;font:600 10px var(--font-geist-mono),monospace;letter-spacing:.06em;color:#06201a;background:#5dffb4;border-radius:999px;padding:1px 8px 1px 6px;line-height:16px;box-shadow:0 0 12px rgba(93,255,180,.5)}
+.freshTag{display:inline-flex;align-items:center;gap:4px;font:600 9px var(--font-geist-mono),monospace;letter-spacing:.04em;color:#06201a;background:#5dffb4;border-radius:999px;padding:1px 6px 1px 8px;line-height:15px;box-shadow:0 0 12px rgba(93,255,180,.5)}
 .freshTag .freshDot{width:6px!important;height:6px!important;background:#06201a!important;box-shadow:none;animation:freshBlinkDark .9s ease-in-out infinite}
 .freshChip{display:inline-flex;align-items:center;gap:8px;color:#5dffb4;font-weight:600}
 .tiles a:has(.freshTag){border-color:rgba(93,255,180,.55);background:linear-gradient(135deg,rgba(93,255,180,.10),#0c131a)}
 @keyframes freshBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.85),0 0 10px #5dffb4}70%{box-shadow:0 0 0 9px rgba(93,255,180,0),0 0 10px #5dffb4}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px #5dffb4}}
 @keyframes freshBlinkDark{0%,100%{opacity:1}50%{opacity:.25}}
 @media(prefers-reduced-motion:reduce){.freshDot,.freshTag .freshDot{animation:none}}
-.tiles strong .freshTag{color:#06201a;font-size:10px;line-height:16px;overflow:visible}
+.tiles strong .freshTag{color:#06201a;font-size:9px;line-height:15px;overflow:visible}
