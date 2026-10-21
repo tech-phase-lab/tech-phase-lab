@@ -74,11 +74,13 @@ test('all issuers render same-page selection maps in both languages', () => {
       assert.ok(!html.includes('href="/research/stocks'));
       assert.ok(!html.includes(lang==='ja'?'最初に戻る':'Reset'));
       const network = companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]});
+      // A company without a connection map shows the dimmed 06 card instead (covered by its own test).
+      if (!network) { assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'), introduction.tickers[0]); continue; }
       const focus = networkHelpers.networkFocus(network, network.root, network.root === 'NBIS' ? 'direct' : 'two');
       const visible = network.nodes.filter(node => (node.id === network.root || networkHelpers.isStockMapCompany(node)) && (network.root === 'NVDA' || focus.distances.has(node.id) || focus.competitors.has(node.id)));
       for (const node of network.nodes.filter(node => node.id !== network.root && !networkHelpers.isStockMapCompany(node))) assert.ok(!html.includes('aria-label=\"' + node.name.replaceAll('&','&amp;') + '\"'), introduction.tickers[0]+':'+node.id);
       assert.equal((html.match(/<button/g)??[]).length,3 + visible.length);
-      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name}"`), introduction.tickers[0]);
+      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name.replaceAll('&','&amp;')}"`), introduction.tickers[0]);
       assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     }
   }
@@ -355,7 +357,7 @@ test('a company without a connection map shows competitor tickers in 05 and a di
     const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction:withRivals,lang,network:null}));
     for (const ticker of ['ACN','GIB','DXC','EPAM','G']) assert.match(html, new RegExp(`<span>${ticker}</span>`));
     assert.match(html, /<span>05<\/span>/);
-    assert.match(html, lang === 'ja' ? /取引・提携のマップは準備中です。/ : /The partner map is coming soon\./);
+    assert.match(html, lang === 'ja' ? /<p>準備中<\/p>/ : /<p>Coming soon<\/p>/);
     assert.ok(!/Competes with [A-Z]|と競合する/.test(html), (html.match(/.{30}(competes with|と競合する).{30}/i)||[])[0]);
     const bare = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction:without,lang,network:null}));
     assert.ok(!/<span>05<\/span>/.test(bare));
