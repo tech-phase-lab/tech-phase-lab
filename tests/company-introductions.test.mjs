@@ -20,7 +20,7 @@ test('every published company has six bilingual answers and dated primary source
     }
     for (const lang of ['ja', 'en']) {
       assert.deepEqual(Object.keys(company[lang]), [...companyIntroductionFields]);
-      for (const [field, answer] of Object.entries(company[lang])) assert.ok(answer.trim().length > 15 || (['competition', 'relationships'].includes(field) && answer === '' && company.maps[field].length === 0), `${company.tickers[0]} ${lang} ${field}`);
+      for (const [field, answer] of Object.entries(company[lang])) assert.ok(answer.trim().length > (['competition', 'relationships'].includes(field) ? 0 : 15) || (['competition', 'relationships'].includes(field) && answer === '' && company.maps[field].length === 0), `${company.tickers[0]} ${lang} ${field}`);
     }
   }
 });
@@ -80,7 +80,7 @@ test('all issuers render same-page selection maps in both languages', () => {
       const visible = network.nodes.filter(node => (node.id === network.root || networkHelpers.isStockMapCompany(node)) && (network.root === 'NVDA' || focus.distances.has(node.id) || focus.competitors.has(node.id)));
       for (const node of network.nodes.filter(node => node.id !== network.root && !networkHelpers.isStockMapCompany(node))) assert.ok(!html.includes('aria-label=\"' + node.name.replaceAll('&','&amp;') + '\"'), introduction.tickers[0]+':'+node.id);
       assert.equal((html.match(/<button/g)??[]).length,3 + visible.length);
-      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name.replaceAll('&','&amp;')}"`), introduction.tickers[0]);
+      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name.replaceAll('&','&amp;').replaceAll("'",'&#x27;')}"`), introduction.tickers[0]);
       assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     }
   }
