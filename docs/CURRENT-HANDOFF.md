@@ -1,3 +1,22 @@
+## RESOLUTE signed-route verification — 2026-10-21 16:44 JST
+
+Implemented and verified CI-only real PostgreSQL coverage in d9999b8a, preserving
+coworker7fb58a21. Run39562964611: both jobs SUCCESS; actual logs confirm scoped
+password-authenticated signed HTTP save/delete/notification stop and isolated
+replay test1/1, payment concurrency5/5, Node1,311, Python2,549 and build success.
+Wrong passwords are rejected; stale save/stop requests return409 without reviving
+deleted plans or notifications; independent encrypted receipt readback and two
+replays succeed. The CI object store is in memory and the signed session is a
+fixture, not the live owner's Clerk session. See
+[full evidence](RESOLUTE-RUNTIME-CONNECTION-CHECK.md).
+Production remains at the prior verified scoped-connection state with storage OFF.
+Next: live-member/browser-route acceptance (Vercel currently paused), and a newly
+collected complete write-fenced manifest before any customer-save activation.
+No owner password entry, key entry, login, Run now or redeployment is needed for
+the completed steps. No schedule, payment, mail, AI, UI or Vercel setting changed.
+
+---
+
 ## RESOLUTE runtime update — 2026-10-21 16:00 JST
 
 Supersedes older NOLOGIN/pending runtime statements below. All three existing

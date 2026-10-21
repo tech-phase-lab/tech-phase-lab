@@ -124,3 +124,18 @@ Final integrated gates with coworker7fb58a21 preserved: Node1,311 and Python2,54
 lint0errors/5existing warnings, build, compileall and diff check passed.
 Real PostgreSQL mode must be confirmed from the new GitHub Actions step; local
 PGlite success alone is not its acceptance evidence.
+
+### Real PostgreSQL CI result — 2026-10-21 16:35 JST
+
+Commit d9999b8a, run39562964611, job119098336338: the new signed-storage step
+completed successfully. Actual job log07:35:28.659Z reports tests1/pass1/fail0,
+no skips. The preceding PostgreSQL payment concurrency tests passed5/5.
+The storage step explicitly supplied the disposable PostgreSQL URL and flag,
+so this result exercised actual scoped password sessions, including wrong-password
+rejection, rather than the default PGlite/SET ROLE fixture. The live owner
+Clerk session and Vercel browser transport remain unverified while Vercel is paused.
+No production saving or new restore-manifest activation is claimed.
+
+Run39562964611 completed successfully in both jobs. The main job log confirms
+Node1,311 passed, Python2,549 passed and successful production build. This is CI
+evidence for d9999b8a; the following documentation-only update changes no runtime.
