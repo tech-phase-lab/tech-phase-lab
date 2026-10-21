@@ -57583,5 +57583,3188 @@
       "competition": [],
       "relationships": []
     }
+  },
+  {
+    "cik": 935036,
+    "tickers": [
+      "ACIW"
+    ],
+    "name": "ACI Worldwide",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ACI Worldwide Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "銀行や加盟店、請求事業者向けに決済ソフトを提供する会社。",
+      "revenue": "銀行、決済代行業者、加盟店、請求事業者にソフトとサービスを売って稼ぐ。",
+      "strength": "決済の流れ全体を網羅するソフト群が強み。AIと人とデータの専門性で不正も防ぐ。",
+      "risks": "競合には自社より大きい企業が多い。顧客の社内開発に置き換わる恐れも抱える。",
+      "competition": "主な競合にFidelity National Information Service, Inc.、Mastercard、Visa、Fair Isaac Corporationがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides payment software to banks, merchants and billers.",
+      "revenue": "It earns by selling software and services to banks, payment processors, merchants and billers.",
+      "strength": "Its strength is a software line covering the whole payments value chain, with AI, human and data expertise to fight fraud.",
+      "risks": "Many competitors are larger than it is, and customers may switch to in-house systems.",
+      "competition": "Main competitors include Fidelity National Information Service, Inc., Mastercard, Visa, Fair Isaac Corporation.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Fidelity National Information Service, Inc.",
+          "ticker": "FIS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Mastercard",
+          "ticker": "MA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Visa",
+          "ticker": "V",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Fair Isaac Corporation",
+          "ticker": "FICO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1803696,
+    "tickers": [
+      "ADEA"
+    ],
+    "name": "Adeia",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Adeia Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "メディアと半導体の特許を貸し出す技術会社。",
+      "revenue": "メディアや半導体などの大手企業に、特許をライセンスして稼ぐ。",
+      "strength": "約13,750件の特許を持つ。特許の約80%は自社の研究開発から生まれたものが特徴。",
+      "risks": "ライセンス契約を有利な条件で結べない恐れがある。人材の確保や借入金も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A technology company that licenses media and semiconductor patents.",
+      "revenue": "It earns by licensing patents to major media, entertainment, consumer electronics, social media and semiconductor companies.",
+      "strength": "It holds about 13,750 patent assets, and about 80% of its portfolio comes from its own R&D.",
+      "risks": "It may fail to sign new and renewal licenses on favorable terms, and it also faces hiring and debt risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 78749,
+    "tickers": [
+      "AGYS"
+    ],
+    "name": "Agilysys",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Agilysys Form 10-K (filed 2026-05-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "ホテルやカジノ、クルーズ向けにPOSや客室管理ソフトを作る会社。",
+      "revenue": "売上は319,312千ドル(2026年3月期)。サブスクリプションと保守が205,941千ドルで最も大きい。",
+      "strength": "ホスピタリティ向けソフトで45年超の実績がある。POS、PMS、在庫調達、決済を一貫して提供する。",
+      "risks": "景気や旅行需要の悪化で、顧客がIT予算を減らしうる。AIなどの新技術で製品が時代遅れになる恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes POS and property management software for hotels, casinos and cruise lines.",
+      "revenue": "Revenue was $319,312 thousand in fiscal 2026, with subscription and maintenance the largest part at $205,941 thousand.",
+      "strength": "It has more than 45 years in hospitality software, and offers POS, PMS, inventory and procurement, and payments together.",
+      "risks": "Weak economies or travel demand can make customers cut IT budgets, and new technology such as AI could make its products obsolete.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1736946,
+    "tickers": [
+      "ARLO"
+    ],
+    "name": "Arlo",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Arlo Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "家庭向けの見守りカメラと、月額の安全サービスを提供する会社。",
+      "revenue": "スマートカメラなどの機器と、Arlo Secureなどの有料サブスクリプションで稼ぐ。",
+      "strength": "クラウド基盤、AIと映像解析、無線接続の技術が特徴。他社のIoT製品とも連携できる。",
+      "risks": "主要部品は少数の供給元に、製造は少数の外部メーカーに頼る。資金力のある競合も抱える。",
+      "competition": "主な競合にAmazonがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that offers home security cameras and paid monthly security services.",
+      "revenue": "It earns from smart cameras and other devices, and from paid subscriptions such as Arlo Secure.",
+      "strength": "Its features are a cloud platform, AI and computer vision, and wireless connectivity, and it works with third-party IoT products.",
+      "risks": "It relies on a few suppliers for key parts and a few outside makers for manufacturing, and faces competitors with more resources.",
+      "competition": "Main competitors include Amazon.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1580808,
+    "tickers": [
+      "ATEN"
+    ],
+    "name": "A10 Networks",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "A10 Networks Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業や通信事業者向けに、ネットワークの保護と最適化の製品を作る会社。",
+      "revenue": "製品の販売と、保守サポートなどのサービスで稼ぐ。販売は直販と販売代理店経由。",
+      "strength": "アプリ配信、DDoSとAPIの防御、統合管理を一つの基盤にまとめる。ソフト、クラウド、ハードで提供できる。",
+      "risks": "少数の大口顧客に売上が偏る。競争が激しく、クラウド化の流れへの対応も迫られる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes products to protect and optimize networks for enterprises and service providers.",
+      "revenue": "It earns from product sales and from services such as maintenance and support, sold directly and through resellers and distributors.",
+      "strength": "It combines application delivery, DDoS and API protection, and unified management in one platform, offered as software, cloud or hardware.",
+      "risks": "A few large customers make up much of its revenue, and it faces intense competition and cloud computing trends.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1280058,
+    "tickers": [
+      "BLKB"
+    ],
+    "name": "Blackbaud",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Blackbaud Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005826000006/blkb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "非営利団体や学校向けに、寄付や財務管理のAIソフトを提供する会社。",
+      "revenue": "クラウドソフトの利用料と、決済・取引サービスで稼ぐ。契約ベースの継続収益が売上の約64%。",
+      "strength": "複数の製品を統合したAI搭載の製品群が特徴。Raiser's Edge NXTの顧客の半数超が機械学習機能を使う。",
+      "risks": "市場は競争が激しく細分化している。開発の簡素化で、競合が基本的なアプリを作りやすくなる。",
+      "competition": "主な競合にMicrosoft、Oracle、Salesforce.com、Facebookがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides AI-powered fundraising and financial software to nonprofits and schools.",
+      "revenue": "It earns from fees for cloud software and from payment and transaction services. Contractual recurring revenue is about 64% of revenue.",
+      "strength": "Its feature is an integrated suite of AI-driven products, and more than half of Raiser's Edge NXT customers use its machine learning features.",
+      "risks": "The market is competitive and fragmented, and easier software development lets rivals build basic apps quickly.",
+      "competition": "Main competitors include Microsoft, Oracle, Salesforce.com, Facebook.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce.com",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Facebook",
+          "ticker": "META",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 9092,
+    "tickers": [
+      "BMI"
+    ],
+    "name": "Badger Meter",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Badger Meter Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "水の流量を測るメーターやスマート水道システムを作る会社。",
+      "revenue": "水道事業者向けのメーターや通信機器、ソフトを売って稼ぐ。2025年は純売上の約89%がこの分野。",
+      "strength": "メーターから通信、ソフトまで一体で出せるBlueEdgeが特徴。",
+      "risks": "技術で優位を保つには投資が要る。静的メーターの普及で競争環境が変わりうる。",
+      "competition": "主な競合にXylem、Roper Technologies、Veralto、Itron、Hubbellがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes flow meters and smart water systems.",
+      "revenue": "It earns by selling meters, communication gear and software to water utilities, about 89% of net sales in 2025.",
+      "strength": "Its BlueEdge suite covers meters, communications and software in one offering.",
+      "risks": "Staying ahead on technology takes steady investment, and wider use of static meters could change the competitive picture.",
+      "competition": "Main competitors include Xylem, Roper Technologies, Veralto, Itron, Hubbell.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Xylem",
+          "ticker": "XYL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Roper Technologies",
+          "ticker": "ROP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Veralto",
+          "ticker": "VLTO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Itron",
+          "ticker": "ITRI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Hubbell",
+          "ticker": "HUBB",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1406666,
+    "tickers": [
+      "CALX"
+    ],
+    "name": "Calix",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Calix Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "通信事業者向けに、AIを備えたブロードバンド基盤を提供する会社。",
+      "revenue": "通信事業者にプラットフォームやクラウド、マネージドサービスを売って稼ぐ。",
+      "strength": "アクセス網から家庭内まで、機器とクラウドを一貫して出せるのが特徴。",
+      "risks": "部品の調達先への依存や、通信事業者の設備投資の増減を抱える。競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that supplies AI-powered broadband platforms to service providers.",
+      "revenue": "It earns by selling platform, cloud and managed services to communication service providers.",
+      "strength": "It offers an end-to-end setup, from the access edge to the subscriber's premises, with devices and cloud together.",
+      "risks": "It relies on outside suppliers and is exposed to swings in provider capital spending, amid intense competition.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1494259,
+    "tickers": [
+      "CARG"
+    ],
+    "name": "CarGurus",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CarGurus Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1494259/000119312526059435/carg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "車の売買を支える自動車マーケットプレイスを運営する会社。",
+      "revenue": "ディーラー向けの市場サービスやソフトで稼ぐ。CarOffer事業は2025年に終了した。",
+      "strength": "米国で最も訪問される自動車ショッピングサイトで、掲載台数とディーラー網が大きい。",
+      "risks": "業界は競争が激しい。自動車の供給問題や金利、景気の変動も影響しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs an automotive marketplace for buying and selling vehicles.",
+      "revenue": "It earns from marketplace services and software for dealers. The CarOffer business was wound down in 2025.",
+      "strength": "It is the most visited automotive shopping site in the U.S., with a large inventory and dealer network.",
+      "risks": "Competition is intense, and auto supply problems, interest rates and the economy can weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1158324,
+    "tickers": [
+      "CCOI"
+    ],
+    "name": "Cogent",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Cogent Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1158324/000110465926017968/ccoi-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "高速インターネット接続や光回線を提供する通信会社。",
+      "revenue": "57か国の企業や通信事業者に、ネット接続、専用線、光波長、データセンター設備を売って稼ぐ。",
+      "strength": "単一プロトコルのIP網で運用費が低く、設置が速いのが特徴。",
+      "risks": "Sprint光ファイバー事業の統合や、競争による値下がりを抱える。債務の返済も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A telecom company that provides high-speed internet access and optical network services.",
+      "revenue": "It earns by selling internet access, private networks, optical wavelengths and data center space to customers in 57 countries.",
+      "strength": "Its single-protocol IP network keeps operating costs low and installation fast.",
+      "risks": "It faces the integration of the Sprint fiber business, falling prices from competition, and debt payments.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 827876,
+    "tickers": [
+      "CLSK"
+    ],
+    "name": "CleanSpark",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CleanSpark Form 10-K (filed 2025-11-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "ビットコイン採掘とAI向けのデータセンターを手がける会社。",
+      "revenue": "主な稼ぎはビットコイン採掘。契約電力は2025年9月末で約1,027MW。",
+      "strength": "米国で大規模なデータセンターと電力資産を自社で持ち、運営するのが特徴。",
+      "risks": "ビットコイン価格に左右される。AI・HPCは新分野で経験が浅く、資金も多く要る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that mines bitcoin and develops data centers, including for AI.",
+      "revenue": "Bitcoin mining is its main source of revenue, with about 1,027 MW of contracted power as of September 30, 2025.",
+      "strength": "It owns and operates a large portfolio of U.S. data centers and power assets.",
+      "risks": "Its profit depends on the bitcoin price, and the new AI and HPC business is unfamiliar and capital intensive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1385280,
+    "tickers": [
+      "CNK"
+    ],
+    "name": "Cinemark",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Cinemark Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1385280/000119312526056015/cnk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国とラテンアメリカで映画館を運営する会社。",
+      "revenue": "2025年末に496劇場、5,637スクリーンを運営し、映画の興行で稼ぐ。",
+      "strength": "米国と中南米に広く展開し、映画会社にとって重要な配給先となっている。",
+      "risks": "配信など他の娯楽との競争を抱える。公開される映画の本数やヒット作にも左右される。",
+      "competition": "主な競合にAMC Entertainmentがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that operates movie theaters in the U.S. and Latin America.",
+      "revenue": "It earns from theatrical exhibition, with 496 theaters and 5,637 screens at the end of 2025.",
+      "strength": "Its wide presence across the U.S. and Latin America makes it an important channel for movie studios.",
+      "risks": "It faces competition from streaming and other entertainment, and depends on the number and success of films released.",
+      "competition": "Main competitors include AMC Entertainment.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "AMC Entertainment",
+          "ticker": "AMC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1050377,
+    "tickers": [
+      "CNXN"
+    ],
+    "name": "PC Connection",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PC Connection Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "IT機器やソフト、サービスを法人や官公庁に販売する会社。",
+      "revenue": "売上の44.6%は大企業向け、37.7%は中小企業向け、17.7%は官公庁・教育機関向け。",
+      "strength": "460,000点超の商品と1,600社超の取引先をそろえ、設計から導入、保守までこなすのが特徴。",
+      "risks": "競争の激化でシェアや利益率が下がりうる。主要な仕入先を失えば、扱える商品が減る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that sells IT hardware, software and services to businesses and governments.",
+      "revenue": "About 44.6% of sales come from large businesses, 37.7% from small and mid-sized firms, and 17.7% from government and schools.",
+      "strength": "It carries over 460,000 products from more than 1,600 suppliers and handles design, deployment and support.",
+      "risks": "Tougher competition could cut its market share and margins, and losing a major vendor would narrow what it can offer.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1743759,
+    "tickers": [
+      "CRSR"
+    ],
+    "name": "Corsair Gaming",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Corsair Gaming Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ゲーマーや配信者向けの高性能な周辺機器とPC部品を作る会社。",
+      "revenue": "周辺機器と、PC部品・システムの二本柱で稼ぐ。販売は小売店経由と直販。",
+      "strength": "ブランド力と製品の幅が特徴。iCUEやElgatoのソフトで機器をまとめて制御できる。",
+      "risks": "全製品で激しい競争を受け、値引き攻勢にもさらされる。新分野に進めば新たな競合も現れる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes high-performance peripherals and PC components for gamers and streamers.",
+      "revenue": "It earns from two lines: peripherals, and PC components and systems, sold through retailers and directly.",
+      "strength": "Its brand and broad product range stand out, and its iCUE and Elgato software tie devices together.",
+      "risks": "It faces intense competition and aggressive discounting across all products, and new categories bring new rivals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 26058,
+    "tickers": [
+      "CTS"
+    ],
+    "name": "CTS",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CTS Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "センサーや接続部品、アクチュエーターを作る製造会社。",
+      "revenue": "輸送向けが売上の43%、産業26%、医療16%、航空宇宙・防衛15%。売上の86%は自社の営業技術者が担う。",
+      "strength": "主要メーカー向けの特注設計品で最も成果を上げているのが特徴。約285件の特許も持つ。",
+      "risks": "トヨタが売上の11.2%を占め、大口客の取引減が響きうる。より大きく手広い競合もいる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A manufacturer of sensors, connectivity components and actuators.",
+      "revenue": "Transportation is 43% of sales, industrial 26%, medical 16% and aerospace and defense 15%. Its own sales engineers handle 86%.",
+      "strength": "It does best with custom-engineered products for major OEMs, and holds approximately 285 patents.",
+      "risks": "Toyota is 11.2% of sales, so a drop in big-customer orders would hurt, and some rivals are larger and more diversified.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 854775,
+    "tickers": [
+      "DGII"
+    ],
+    "name": "Digi International",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Digi International Form 10-K (filed 2025-11-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/854775/000085477525000026/dgii-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けにIoT通信機器とサービスを提供する会社。",
+      "revenue": "機器・サービス部門が売上の大半を占める。ソリューション部門は売上の約25%で、定額課金が中心。",
+      "strength": "製品とサービスの幅が広い。機器と遠隔管理を組み合わせた定額型の提供が特徴。",
+      "risks": "製造の大半を外部に任せ、単一供給元の部品もある。資源が豊富な大手との競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides IoT connectivity products and services to businesses.",
+      "revenue": "The products and services segment brings in most sales. The solutions segment is about 25% of revenue and runs mainly on subscriptions.",
+      "strength": "Its range of products and services is broad, and it bundles hardware with remote management on subscription.",
+      "risks": "It outsources most manufacturing and has single-source parts, and some rivals have far more resources.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1688568,
+    "tickers": [
+      "DXC"
+    ],
+    "name": "DXC Technology",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "DXC Technology Form 10-K (filed 2026-05-08) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1688568/000168856826000022/dxc-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けにITインフラの運用やアプリ刷新、保険ソフトを提供する会社。",
+      "revenue": "コンサルティング・エンジニアリング、グローバルインフラ、保険ソフトの各部門で稼ぐ。どの顧客も売上の10%を超えない。",
+      "strength": "独自のXponential枠組みでAI活用を試行から本番へ広げる点が特徴。約115,000人の従業員が60カ国で支える。",
+      "risks": "競争が激しく、インドなど低コスト地域の事業者や顧客の社内部門とも競合する。AI活用やサイバー攻撃も重荷になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs IT infrastructure, modernizes applications and supplies insurance software for enterprises.",
+      "revenue": "It earns from its Consulting & Engineering, Global Infrastructure and Insurance Software segments. No customer exceeds 10% of revenue.",
+      "strength": "Its proprietary Xponential framework takes AI from pilot to production. About 115,000 employees support clients in 60 countries.",
+      "risks": "Competition is aggressive, including low-cost offshore providers in India and clients' in-house teams. AI use and cyber-attacks can also hurt the business.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 890564,
+    "tickers": [
+      "EFOR"
+    ],
+    "name": "Everforth (ASGN)",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Everforth (ASGN) Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ITコンサルティングと専門人材の提供を手がける会社。",
+      "revenue": "商用部門が売上の70%、連邦政府部門が30%を占める。ITコンサルは2025年の売上の62%を占める。",
+      "strength": "厚い専門人材のプールから、案件ごとに最適なチームを素早く組める。大きな待機要員には頼らない。",
+      "risks": "競争は今後さらに強まりうる。必要な技術者の確保や、連邦政府部門の受注残の維持が課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides IT consulting and specialist professionals.",
+      "revenue": "The Commercial segment brings in 70% of revenue and the Federal Government segment 30%. IT consulting made up 62% of 2025 revenue.",
+      "strength": "A deep talent pool lets it build tailored teams quickly for each project, without relying on a large bench.",
+      "risks": "Competition is expected to keep growing. Hiring enough qualified professionals and keeping federal contract backlog are open challenges.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1352010,
+    "tickers": [
+      "EPAM"
+    ],
+    "name": "EPAM Systems",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "EPAM Systems Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ソフトウェア開発を軸に、デジタル変革とAI活用を支援する会社。",
+      "revenue": "ソフトウェア開発、クラウド、AIなどのサービスで稼ぐ。収益の大半は時間・材料契約から得る。",
+      "strength": "30年以上のソフトウェア開発の経験と、独自のグローバル提供基盤が特徴。",
+      "risks": "技術の変化が速く、競合は世界の大手から低コスト地域の事業者まで幅広い。ウクライナ戦争などの地政学リスクも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that helps clients with digital transformation and AI, built on software engineering.",
+      "revenue": "It earns from software engineering, cloud, AI and related services. Most revenue comes from time-and-materials contracts.",
+      "strength": "Its features are 30+ years of software engineering and a proprietary global delivery platform.",
+      "risks": "Markets change fast and rivals range from global providers to low-cost outsourcers. The war in Ukraine and other geopolitical events are also risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1078271,
+    "tickers": [
+      "EXTR"
+    ],
+    "name": "Extreme Networks",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Extreme Networks Form 10-K (filed 2026-08-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "AIを備えたクラウド型のネットワーク機器とソフトを手がける会社。",
+      "revenue": "ネットワーク機器、ソフトの定額利用、保守契約の販売で全売上を稼ぐ。",
+      "strength": "ネットワーク、セキュリティ、AIを一つにまとめたExtreme Platform ONEが特徴。",
+      "risks": "ネットワーク機器市場は競争と統合が激しい。供給網の混乱やサイバー攻撃、国際販売への依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes AI-powered, cloud-based networking equipment and software.",
+      "revenue": "It earns all its revenue from networking equipment, software subscriptions and related maintenance contracts.",
+      "strength": "Extreme Platform ONE combines networking, security and AI in a single platform.",
+      "risks": "The networking market is marked by intense competition and consolidation. Supply chain problems, cyberattacks and reliance on international sales add risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 851310,
+    "tickers": [
+      "HLIT"
+    ],
+    "name": "Harmonic",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Harmonic Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/851310/000119312526067506/hlit-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ケーブル事業者向けにブロードバンド接続の機器とソフトを提供する会社。",
+      "revenue": "売上の約89%は米州。欧州・中東・アフリカが9%、アジア太平洋が2%。",
+      "strength": "ソフトウェア型のブロードバンド接続技術cOSが特徴。",
+      "risks": "ケーブル・通信業界の投資に左右される。主要顧客を失うことや、映像事業の売却効果が出ないことも懸念。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that supplies broadband access equipment and software to cable operators.",
+      "revenue": "About 89% of revenue comes from the Americas, 9% from EMEA and 2% from APAC.",
+      "strength": "Its cOS software-based broadband access solution is a core feature.",
+      "risks": "Revenue depends on cable and telecom spending. Losing a key customer or missing the benefits of the Video sale are also risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1418819,
+    "tickers": [
+      "IRDM"
+    ],
+    "name": "Iridium",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Iridium Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1418819/000141881926000009/irdm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "衛星を使い、音声・データ・測位の通信サービスを世界で提供する会社。",
+      "revenue": "約120の通信事業者、約310の再販業者、約90のメーカーを通じて、企業や政府、個人に売って稼ぐ。",
+      "strength": "低軌道の衛星網で、地上回線が届かない海や極地まで通信できるのが強み。",
+      "risks": "衛星通信業界は競争が激しい。静止衛星を使う地域の競合が、代わりの選択肢になりうる。",
+      "competition": "主な競合にViasat、Globalstarがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides global satellite voice, data and positioning services.",
+      "revenue": "It earns by selling to businesses, governments and consumers through about 120 service providers, about 310 resellers and about 90 manufacturers.",
+      "strength": "Its low-Earth orbit satellite network reaches oceans and polar regions where ground networks do not.",
+      "risks": "The satellite communications industry is highly competitive, and regional rivals using GEO satellites can be a viable alternative.",
+      "competition": "Main competitors include Viasat, Globalstar.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Viasat",
+          "ticker": "VSAT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Globalstar",
+          "ticker": "GSAT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1587523,
+    "tickers": [
+      "KN"
+    ],
+    "name": "Knowles",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Knowles Form 10-K (filed 2026-02-09) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "コンデンサやRFフィルター、マイクなどの電子部品を作る会社。",
+      "revenue": "防衛、産業、医療機器、電化・エネルギー向けの部品を、OEMへの直販や代理店経由で売って稼ぐ。",
+      "strength": "顧客の用途に合わせた特注品を、量産規模で作れるのが特徴。",
+      "risks": "金属などの原材料価格の変動を受ける。特殊な仕入先に頼る部品もあり、供給が止まると業績に響きうる。",
+      "competition": "主な競合にVishay Intertechnologyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes specialty electronic parts such as capacitors, RF filters and microphones.",
+      "revenue": "It earns by selling parts for defense, industrial, medtech and electrification/energy markets, directly to OEMs and through reps and distributors.",
+      "strength": "Its feature is making custom-engineered parts to customer applications at scale.",
+      "risks": "Prices of metals and other raw materials swing, and some parts rely on specialized suppliers, so a supply stop could hurt results.",
+      "competition": "Main competitors include Vishay Intertechnology.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Vishay Intertechnology",
+          "ticker": "VSH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1581760,
+    "tickers": [
+      "LIF"
+    ],
+    "name": "Life360",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Life360 Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1581760/000158176026000016/lifx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "家族の位置共有や安全機能のアプリと、追跡タグを手がける会社。",
+      "revenue": "2025年の売上は489.5百万ドル。購読が369.3百万ドルで、ほかにハードウェアや広告でも稼ぐ。",
+      "strength": "基本機能は無料のフリーミアム型。月間利用者は95.8百万人にのぼる。",
+      "risks": "競争が激しく、資金力のある世界的企業との競争が増える。ハードウェアの製造はJabilに頼る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company behind a family location-sharing and safety app, plus tracking tags.",
+      "revenue": "Revenue in 2025 was $489.5 million, with $369.3 million from subscriptions and the rest from hardware, ads and other sources.",
+      "strength": "Its core app is free under a freemium model, with 95.8 million monthly active users.",
+      "risks": "Competition is intense and rising from better funded global companies, and hardware manufacturing depends on Jabil.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 18926,
+    "tickers": [
+      "LUMN"
+    ],
+    "name": "Lumen",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lumen Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けにネットワークと通信サービスを提供する会社。",
+      "revenue": "企業・卸向けの事業と一般向けの事業で稼ぐ。2026年に一般向け光ファイバー事業をAT&Tへ売却した。",
+      "strength": "光ファイバー網が強み。約163,000棟のビルに直結し、路線は340,000マイル超に及ぶ。",
+      "risks": "古いシステムの刷新が遅れたり、費用がかさんだりしうる。AI需要が想定を下回る可能性も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides network and communications services to businesses.",
+      "revenue": "It earns from enterprise and wholesale business and from mass-market customers. It sold its consumer fiber-to-the-home business to AT&T in 2026.",
+      "strength": "Its fiber network is its feature, with about 163,000 fiber on-net buildings and over 340,000 route miles of fiber.",
+      "risks": "Modernizing legacy systems may run late or over budget, and AI demand may fall short of its assumptions.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1507605,
+    "tickers": [
+      "MARA"
+    ],
+    "name": "MARA",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MARA Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1507605/000150760526000007/mara-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "エネルギーとデジタルインフラの会社で、ビットコインの採掘を行う。",
+      "revenue": "ビットコインの採掘で稼ぐ。AI推論とHPCの事業も立ち上げている。",
+      "strength": "自社保有の拠点が約70%に広がり、運営の主導権を握れるのが特徴。",
+      "risks": "ビットコイン価格の変動と資金調達の難しさを抱える。AI分野では資金力のある企業と競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An energy and digital infrastructure company that mines Bitcoin.",
+      "revenue": "It earns from Bitcoin mining and is building AI inference and HPC businesses.",
+      "strength": "Owning about 70% of its capacity gives it more control over operations.",
+      "risks": "It faces Bitcoin price swings and funding needs, and competes with better-funded firms in AI.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1809987,
+    "tickers": [
+      "MIR"
+    ],
+    "name": "Mirion",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Mirion Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "原子力や医療向けに放射線の検出・測定機器を提供する会社。",
+      "revenue": "2025年の売上は925.4百万ドル。原子力・安全部門が66.4%、医療部門が33.6%を占める。",
+      "strength": "世界の原子力発電所の98%超に製品が入り、がんセンターの80%超にも展開する。",
+      "risks": "競合は小さな専業から大手多国籍企業まで幅広い。特許の公開が競争力を損ないうる。",
+      "competition": "主な競合にThermo Fisher Scientific、Curtiss-Wright、Ortec (Ametek)、FLIR (Teledyne)、Fluke (Fortive)がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides radiation detection and measurement products for nuclear and medical markets.",
+      "revenue": "Revenue in 2025 was $925.4 million, 66.4% from Nuclear & Safety and 33.6% from Medical.",
+      "strength": "Its products are in more than 98% of nuclear power plants and more than 80% of cancer centers.",
+      "risks": "Rivals range from small niche firms to large multinationals, and patent disclosure could hurt its position.",
+      "competition": "Main competitors include Thermo Fisher Scientific, Curtiss-Wright, Ortec (Ametek), FLIR (Teledyne), Fluke (Fortive).",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Thermo Fisher Scientific",
+          "ticker": "TMO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Curtiss-Wright",
+          "ticker": "CW",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Ortec (Ametek)",
+          "ticker": "AME",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "FLIR (Teledyne)",
+          "ticker": "TDY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Fluke (Fortive)",
+          "ticker": "FTV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1636519,
+    "tickers": [
+      "MSGS"
+    ],
+    "name": "MSG Sports",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MSG Sports Form 10-K (filed 2026-08-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "NBAのニックスとNHLのレンジャーズを持つスポーツ会社。",
+      "revenue": "チケット、プレーオフ、リーグ分配金、スポンサーで稼ぐ。2026年度の売上は1,153,822千ドル。",
+      "strength": "有名球団と全米最大のメディア市場、NBAとNHLの全国放映権が強み。",
+      "risks": "人気や成績に左右される。不況で観戦やスイートの需要が落ちうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A sports company that owns the NBA's Knicks and the NHL's Rangers.",
+      "revenue": "It earns from tickets, playoffs, league distributions and sponsorships. Fiscal 2026 revenue was $1,153,822 thousand.",
+      "strength": "Iconic franchises, the nation's largest media market and national NBA and NHL media rights are its strengths.",
+      "risks": "Results depend on team popularity and performance, and an economic downturn could cut ticket and suite demand.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1834488,
+    "tickers": [
+      "NABL"
+    ],
+    "name": "N-able",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "N-able Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1834488/000183448826000007/nabl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "中小企業向けにサイバーセキュリティのソフトを提供する会社。",
+      "revenue": "売上の99.0%がサブスクリプション。米国が49.6%を占める。",
+      "strength": "端末管理、セキュリティ運用、データ保護を一つの基盤で扱う。販売はパートナー経由。",
+      "risks": "サイバー攻撃や更新率の低下、負債が重荷になりうる。支配株主のいる会社でもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides cybersecurity software, mainly to small and mid-sized businesses.",
+      "revenue": "Subscriptions make up 99.0% of revenue, and U.S. customers bring in 49.6%.",
+      "strength": "One platform covers endpoint management, security operations and data protection, sold through channel partners.",
+      "risks": "Cyberattacks, falling renewal rates and debt could hurt it, and it is a controlled company.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 69633,
+    "tickers": [
+      "NSSC"
+    ],
+    "name": "NAPCO Security",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "NAPCO Security Form 10-K (filed 2026-08-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/69633/000110465926100081/nssc-20260630x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "電子セキュリティ機器とセルラー通信サービスを手がける会社。",
+      "revenue": "2026年6月期の売上は202.3百万ドル。通信サービスが約48%を占める。",
+      "strength": "警報、アクセス制御、錠前を自社で作るのが特徴。通信サービスの粗利益率は約90.3%。",
+      "risks": "競合は約12社。競争力を保てなければ業績に響く。部品調達の環境も変わった。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes electronic security devices and cellular communication services.",
+      "revenue": "Fiscal 2026 revenue was $202.3 million, and communication services were about 48% of it.",
+      "strength": "It makes alarms, access control and locks itself, and its services earn a gross margin of about 90.3%.",
+      "risks": "It faces about 12 competitors, and failing to keep up could hurt results. Component supply has also shifted.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1078075,
+    "tickers": [
+      "NTCT"
+    ],
+    "name": "NetScout",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "NetScout Form 10-K (filed 2026-05-14) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "ネットワークの可視化とセキュリティ、DDoS対策の製品を作る会社。",
+      "revenue": "企業や政府機関、通信事業者にネットワーク監視とサイバーセキュリティの製品を販売して稼ぐ。",
+      "strength": "長年の経験と、パケットを深く解析する独自技術で得るデータ基盤が特徴。",
+      "risks": "競争が激しく変化の速い市場にいる。新製品が受け入れられるかが業績を左右しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes network visibility, security and DDoS protection products.",
+      "revenue": "It earns by selling network monitoring and cybersecurity products to enterprises, government agencies and service providers.",
+      "strength": "Its features are long experience and a data foundation built on its own deep packet inspection technology.",
+      "risks": "It operates in a very competitive, fast-changing market, and market acceptance of new products can swing its results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1039065,
+    "tickers": [
+      "OSIS"
+    ],
+    "name": "OSI Systems",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "OSI Systems Form 10-K (filed 2026-08-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465926099752/osis-20260630x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "保安検査装置、医療機器、光半導体部品を設計・製造する会社。",
+      "revenue": "セキュリティ、光電子・製造、ヘルスケアの各部門で稼ぐ。検査装置や患者モニターなどを販売する。",
+      "strength": "設計から製造まで自社で行う垂直統合が差別化点。低コストで特殊な電子システムを作る力が強み。",
+      "risks": "技術の変化や顧客の要望、競合の動きに合わせて製品を広げ続ける必要がある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs and makes security screening systems, healthcare devices and optoelectronic components.",
+      "revenue": "It earns through its Security, Optoelectronics and Manufacturing, and Healthcare divisions, selling inspection systems, patient monitors and more.",
+      "strength": "Vertical integration, from design to manufacturing, sets it apart. Its strength is making specialized electronic systems cost-effectively.",
+      "risks": "It has to keep broadening its products as technology, customer demands and competitive pressures change.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1120914,
+    "tickers": [
+      "PDFS"
+    ],
+    "name": "PDF Solutions",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PDF Solutions Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体メーカー向けにデータ解析ソリューションを提供する会社。",
+      "revenue": "ソフトウェアのライセンスやSaaSなどのプラットフォーム収入と、利用量に応じた従量課金で稼ぐ。",
+      "strength": "製造データを共通の基盤にまとめ、AIで歩留まり改善を狙う。DirectScanという検査システムも持つ。",
+      "risks": "研究開発投資が技術の変化に追いつかない恐れがある。契約の締結が遅れれば売上計上も遅れうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides data analytics solutions to semiconductor makers.",
+      "revenue": "It earns platform revenue from software licenses and SaaS, plus volume-based fees tied to usage.",
+      "strength": "It puts manufacturing data on one shared platform and applies AI to improve yield. It also has its DirectScan inspection system.",
+      "risks": "Its R&D spending may fail to keep up with technology change, and delayed contracts can delay revenue.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1022408,
+    "tickers": [
+      "PLUS"
+    ],
+    "name": "ePlus",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ePlus Form 10-K (filed 2026-05-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "AIやクラウド、セキュリティなどのIT製品とサービスを提供する会社。",
+      "revenue": "製品販売、マネージドサービス、プロフェッショナルサービスで稼ぐ。顧客は4,200社で、通信・メディア向けが30%。",
+      "strength": "多くのメーカーの技術を組み合わせ、顧客ごとに最適なマルチベンダー提案を行う。",
+      "risks": "Verizonへの依存が大きく、2026年3月末の売掛金の36%を占める。大手競合との競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides IT products and services in AI, cloud, security and more.",
+      "revenue": "It earns from product sales, managed services and professional services. It has 4,200 customers, and telecom and media account for 30%.",
+      "strength": "It combines technologies from many vendors into multi-vendor solutions fitted to each customer.",
+      "risks": "It relies heavily on Verizon, which made up 36% of receivables in March 2026, and it faces larger rivals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 785786,
+    "tickers": [
+      "PLXS"
+    ],
+    "name": "Plexus",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Plexus Form 10-K (filed 2025-11-14) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/785786/000078578625000064/plxs-20250927.htm"
+      }
+    ],
+    "ja": {
+      "business": "医療・航空宇宙・産業機器向けに複雑な製品を設計・製造する会社。",
+      "revenue": "航空宇宙・防衛、ヘルスケア、産業の各分野の顧客から、設計や製造、保守を請け負って稼ぐ。",
+      "strength": "設計、サプライチェーン、製造、保守を製品ライフサイクル全体でつなぐ一貫対応が特徴。",
+      "risks": "顧客は長期の購入確約をせず、注文を取り消したり変更したりする。需要の急変が業績を揺らしうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs and makes complex products for medical, aerospace and industrial customers.",
+      "revenue": "It earns by taking on design, manufacturing and service work for customers in Aerospace/Defense, Healthcare/Life Sciences and Industrial.",
+      "strength": "It links design, supply chain, manufacturing and service across the whole product lifecycle.",
+      "risks": "Customers make no long-term commitments and may cancel or change orders, so sudden demand shifts can hit results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1800227,
+    "tickers": [
+      "PPLI"
+    ],
+    "name": "People Inc",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "People Inc Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1800227/000162828026009997/iaci-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "PEOPLEやAllrecipesなど多数のブランドを持つ米国の大手出版社。",
+      "revenue": "デジタル記事と雑誌の印刷事業で稼ぐ。デジタル広告が中心で、連結売上の大きな部分を広告が占める。",
+      "strength": "エンタメ、料理、住まいなど分野ごとに40以上のブランドを持つのが特徴。毎月175百万人以上が利用する。",
+      "risks": "検索エンジンやGoogleへの依存が大きい。AIで情報の探し方が変わりうる。印刷事業は減収が続く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A large US publisher with many brands, including PEOPLE and Allrecipes.",
+      "revenue": "It earns from digital content and print magazines. Digital advertising is central, and advertising is a significant share of consolidated revenue.",
+      "strength": "Its feature is over 40 brands across entertainment, food, home and other topics, reaching more than 175 million people each month.",
+      "risks": "It relies heavily on search engines and Google. AI is changing how people find information. The Print business faces ongoing revenue decline.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 876167,
+    "tickers": [
+      "PRGS"
+    ],
+    "name": "Progress Software",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Progress Software Form 10-K (filed 2026-01-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616726000008/prgs-20251130.htm"
+      }
+    ],
+    "ja": {
+      "business": "AI対応アプリの開発・運用を支える企業向けソフトを提供する会社。",
+      "revenue": "ソフトの販売とSaaSで稼ぐ。売上の半分近くはISVやOEMなどの販売パートナー経由。",
+      "strength": "買収で製品群を広げてきた。OpenEdge、MOVEit、ShareFileなど幅広い製品が特徴。",
+      "risks": "OpenEdgeとShareFileが売上の半分強を占める。AI対応が遅れれば競争力を失いうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides software for building and running AI-powered business applications.",
+      "revenue": "It earns from software licenses, maintenance and SaaS. Nearly half of revenue comes through channel partners such as ISVs and OEMs.",
+      "strength": "It has widened its lineup through acquisitions, with products such as OpenEdge, MOVEit and ShareFile.",
+      "risks": "OpenEdge and ShareFile together bring in slightly more than half of revenue. Falling behind on AI could weaken its position.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1117297,
+    "tickers": [
+      "QNST"
+    ],
+    "name": "QuinStreet",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "QuinStreet Form 10-K (filed 2026-08-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1117297/000119312526367160/qnst-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "金融や住宅サービス業界向けに、ネット経由の見込み客を届ける会社。",
+      "revenue": "クリックや見込み客などの成果に応じて顧客から料金を受け取って稼ぐ。大半は北米。",
+      "strength": "メディアの買付力、独自技術、データと経験が強み。オンライン媒体で大きなシェアを持つ。",
+      "risks": "検索会社や外部メディアへの依存が大きい。規制の変化や景気の影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that delivers online customers to the financial services and home services industries.",
+      "revenue": "It is paid per click, lead, call or other action by clients. Most operations and revenue are in North America.",
+      "strength": "Its advantages are media buying power, proprietary technology, extensive data and experience, and significant online media market share.",
+      "risks": "It depends on Internet search companies and third-party media sources. Regulatory changes and economic conditions also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 733269,
+    "tickers": [
+      "RAMP"
+    ],
+    "name": "LiveRamp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "LiveRamp Form 10-K (filed 2026-05-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/733269/000073326926000025/ramp-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業間でデータを安全に共有・活用させる、データ連携の技術会社。",
+      "revenue": "プラットフォームの利用料、データ取引の分配料、利用量に応じた料金、専門サービスで稼ぐ。",
+      "strength": "データ、識別、接続、管理の力が強み。中立性と相互運用性を土台にネットワーク効果を生む。",
+      "risks": "競合は提携先でもあり、競争が常態。大手プラットフォームの囲い込みも影響しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A data collaboration technology company that lets businesses share and use data securely.",
+      "revenue": "It earns from subscription fees, revenue-sharing on data transactions, usage-based fees and professional services.",
+      "strength": "Its strengths are data access, identity, connectivity and data stewardship, built on neutrality and interoperability.",
+      "risks": "Its competitors are often also its partners, so competition is the norm. Walled gardens can cut into its services.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 84748,
+    "tickers": [
+      "ROG"
+    ],
+    "name": "Rogers",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Rogers Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/84748/000008474826000007/rog-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電子機器や自動車向けに高機能素材と部品を作る会社。",
+      "revenue": "EV、ADAS、携帯機器、再生可能エネルギー、航空宇宙などの顧客向けの素材・部品で稼ぐ。",
+      "strength": "革新性、顧客との関係、品質、技術支援、幅広い製品、製造力で競う。",
+      "risks": "競争が激しく、値下げ圧力を受ける。特定の原材料を一部の供給元に頼る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes engineered materials and components for electronics and automotive uses.",
+      "revenue": "It sells materials and components for markets such as EV/HEV, ADAS, portable electronics, renewable energy, and aerospace and defense.",
+      "strength": "It competes on innovation, customer relationships, quality, technical support, product breadth and manufacturing capability.",
+      "risks": "Competition is intense and brings pricing pressure. It relies on sole or limited source suppliers for some raw materials.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 918965,
+    "tickers": [
+      "SCSC"
+    ],
+    "name": "ScanSource",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ScanSource Form 10-K (filed 2026-08-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "専門的な技術製品やクラウドサービスを販売パートナーに卸す技術ディストリビューター。",
+      "revenue": "米国とブラジルで、バーコードやPOSなどの機器の卸売と、通信・クラウドサービスの仲介の2事業で稼ぐ。",
+      "strength": "約25,000社の販売パートナーと、500社超の仕入先との関係が競争上の強み。",
+      "risks": "競争が激しく、値下げや利益率の低下を招きうる。人材の確保や買収の失敗も課題になる。",
+      "competition": "主な競合にIngram Micro、TD Synnex、Wescoがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A technology distributor that supplies specialty technology products and cloud services to channel sales partners.",
+      "revenue": "It earns in the U.S. and Brazil from wholesale of barcode, POS and similar devices, and from brokering connectivity and cloud services.",
+      "strength": "Its ties with about 25,000 channel sales partners and more than 500 suppliers are its competitive edge.",
+      "risks": "Intense competition can cut prices and margins. Hiring and retaining staff and failed acquisitions are also concerns.",
+      "competition": "Main competitors include Ingram Micro, TD Synnex, Wesco.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Ingram Micro",
+          "ticker": "INGM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "TD Synnex",
+          "ticker": "SNX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Wesco",
+          "ticker": "WCC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1419612,
+    "tickers": [
+      "SEDG"
+    ],
+    "name": "SolarEdge",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "SolarEdge Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm"
+      }
+    ],
+    "ja": {
+      "business": "太陽光発電の出力を最適化するインバーターなどを作る会社。",
+      "revenue": "インバーターやオプティマイザーなどの機器を、販売店や大手の施工会社を通じて売って稼ぐ。",
+      "strength": "モジュール単位で出力を最大化する仕組みと、安全機能、遠隔監視が特徴。",
+      "risks": "太陽光市場の変動や関税、競合の新製品が重荷。少数の製造委託先への依存も抱える。",
+      "competition": "主な競合にTesla Inc.、Enphase Energy, Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes inverters and other equipment that optimize solar power output.",
+      "revenue": "It sells inverters, optimizers and related hardware through distributors and directly to large installers.",
+      "strength": "Module-level output optimization, built-in safety features and remote monitoring set its system apart.",
+      "risks": "Solar market swings, tariffs and rival product launches weigh on it. It also relies on a few contract manufacturers.",
+      "competition": "Main competitors include Tesla Inc., Enphase Energy, Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Tesla Inc.",
+          "ticker": "TSLA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Enphase Energy, Inc.",
+          "ticker": "ENPH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 354963,
+    "tickers": [
+      "SHEN"
+    ],
+    "name": "Shentel",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Shentel Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/354963/000035496326000125/shen-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国東部で光ファイバーとケーブルのブロードバンドを提供する通信会社。",
+      "revenue": "ブロードバンド、動画、音声のほか、法人向けのイーサネットやダークファイバー貸しで稼ぐ。",
+      "strength": "約19,000ルートマイルの光ファイバー網を自社で持つ。Glo Fiberのブランドで拡大中。",
+      "risks": "光ファイバーやケーブルの競合が増える。動画の契約者減や、ケーブル網の更新費用も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A telecom company that provides fiber-optic and cable broadband in the eastern U.S.",
+      "revenue": "It earns from broadband, video and voice, plus business Ethernet and dark fiber leasing.",
+      "strength": "It owns about 19,000 route miles of fiber and is expanding under the Glo Fiber brand.",
+      "risks": "More fiber and cable rivals are arriving. Video subscriber losses and cable network upgrade costs also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1795250,
+    "tickers": [
+      "SPHR"
+    ],
+    "name": "Sphere Entertainment",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sphere Entertainment Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ラスベガスの球体型会場Sphereと、スポーツ専門局MSG Networksを運営する会社。",
+      "revenue": "Sphereでの没入型の上演、コンサート、広告、スポンサー料と、MSG Networksの放映で稼ぐ。",
+      "strength": "世界最大のLED画面を持つ会場と、自前の制作スタジオが強み。",
+      "risks": "金利の上昇による利払いの増加や、ユーロなど為替の変動を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs the Sphere venue in Las Vegas and the MSG Networks sports channels.",
+      "revenue": "It earns from immersive shows, concerts, advertising and sponsorship at Sphere, and from MSG Networks programming.",
+      "strength": "A venue with the world's largest LED screen and an in-house content studio are its strengths.",
+      "risks": "Higher interest rates can raise its interest costs, and currency swings such as the euro add exposure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1092699,
+    "tickers": [
+      "SPSC"
+    ],
+    "name": "SPS Commerce",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "SPS Commerce Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1092699/000109269926000012/spsc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "小売や卸、メーカーをつなぐ、クラウド型のサプライチェーン網を運営する会社。",
+      "revenue": "2025年の売上は751.5百万ドルで、96%が継続課金の顧客から。受発注や分析などの製品で稼ぐ。",
+      "strength": "一度つなげば多数の取引先と取引できる網が特徴。参加者が増えるほど価値が高まる。",
+      "risks": "多くの顧客は30日から90日前の通知で解約できる。新規顧客や追加販売が伸びないと業績が悪化する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs a cloud-based supply chain network linking retailers, suppliers and manufacturers.",
+      "revenue": "Revenue was $751.5 million in 2025, 96% from recurring customers, from products like fulfillment and analytics.",
+      "strength": "Customers connect once and can transact with many trading partners. The network grows more valuable as it adds participants.",
+      "risks": "Most customers can cancel on 30 to 90 days' notice. Revenue suffers if new customer and add-on sales fall short.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1051512,
+    "tickers": [
+      "TDS"
+    ],
+    "name": "TDS",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "TDS Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "光ファイバーなどで通信サービスを届ける米国の通信会社。",
+      "revenue": "子会社TDS Telecomのブロードバンド、動画、音声、無線の提供で稼ぐ。子会社Arrayの携帯タワーの賃貸も収益源。",
+      "strength": "光ファイバー網への投資と、地域密着の営業が特徴。高速のブロードバンドを軸に他サービスを組み合わせて売る。",
+      "risks": "動画や音声の接続は減り続けている。ケーブルや無線など他の通信手段との価格競争も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US telecom company that delivers communications services over fiber and other networks.",
+      "revenue": "It earns from broadband, video, voice and wireless services at TDS Telecom, plus tower leasing at its subsidiary Array.",
+      "strength": "Investment in fiber networks and a hyper-local sales approach set it apart. Broadband leads, with other services bundled in.",
+      "risks": "Video and voice connections keep declining, and price competition from cable, wireless and other providers weighs on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1526520,
+    "tickers": [
+      "TRIP"
+    ],
+    "name": "Tripadvisor",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Tripadvisor Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1526520/000119312526051281/trip-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "旅行の体験やホテル、レストランを探して予約できるサイトを運営する会社。",
+      "revenue": "体験予約サイトViatorの手数料と、Tripadvisorのクリック型広告、TheForkのレストラン予約料で稼ぐ。",
+      "strength": "旅行者の口コミと、世界的に知られたブランドが特徴。体験の予約先を多数そろえた共通の供給基盤を持つ。",
+      "risks": "競争が激しい市場で事業を行う。競合には資金やデータで上回る相手もいる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs sites for finding and booking travel experiences, hotels and restaurants.",
+      "revenue": "It earns commissions on Viator experiences, click-based ads on Tripadvisor, and per-diner and subscription fees at TheFork.",
+      "strength": "Traveler reviews and globally recognized brands are its features. Its brands share one supply platform of bookable experiences.",
+      "risks": "It operates in very competitive markets, and some rivals have more customers, data and financial resources.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 2020795,
+    "tickers": [
+      "UNIT"
+    ],
+    "name": "Uniti",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Uniti Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/2020795/000162828026013196/unit-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "全米で光ファイバー網を持ち、通信サービスを提供するデジタル基盤の会社。",
+      "revenue": "家庭や企業向けの光ファイバーブロードバンド、大企業向けクラウド通信、通信事業者向け回線で稼ぐ。2025年の売上は2,234.5百万ドル。",
+      "strength": "約240,000の光ファイバールートマイルと、約1.9百万世帯に届く光網が特徴。",
+      "risks": "無線やケーブル各社との競争を抱える。約9.5十億ドルの借入があり、財務の自由度も狭めうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A digital infrastructure company that runs a fiber network across the US and sells communications services.",
+      "revenue": "It earns from fiber broadband for homes and businesses, cloud communications for large enterprises, and transport for carriers. 2025 revenue was $2,234.5 million.",
+      "strength": "Its network spans approximately 240,000 fiber route miles and reaches approximately 1.9 million fiber-equipped households.",
+      "risks": "It faces competition from wireless and cable companies. About $9.5 billion of debt can limit its flexibility.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 103145,
+    "tickers": [
+      "VECO"
+    ],
+    "name": "Veeco",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Veeco Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/veco-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "先端半導体の製造装置を作る会社。",
+      "revenue": "イオンビーム、レーザーアニール、MOCVDなどの装置を、半導体、化合物半導体、データストレージなどの顧客に売って稼ぐ。",
+      "strength": "多様な成膜・エッチング技術が特徴。EUVマスクブランク向けのイオンビーム成膜装置は複数の市場で先行する。",
+      "risks": "景気の波が大きく、注文や出荷の時期で四半期業績が揺れる。米中の貿易摩擦や輸出規制も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of advanced semiconductor process equipment.",
+      "revenue": "It sells ion beam, laser annealing and MOCVD tools to semiconductor, compound semiconductor and data storage customers.",
+      "strength": "A broad set of deposition and etch technologies is its feature. Its ion beam deposition system holds a leading position in several markets, including EUV mask blanks.",
+      "risks": "Its markets are highly cyclical, and order timing makes quarterly results swing. US-China trade disputes and export controls weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 797721,
+    "tickers": [
+      "VSAT"
+    ],
+    "name": "Viasat",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Viasat Form 10-K (filed 2026-05-29) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "衛星を使った通信サービスと機器を提供する会社。",
+      "revenue": "通信サービス部門と防衛・先端技術部門の2つで稼ぐ。航空、海運、企業、家庭、軍や政府向けにブロードバンドなどを売る。",
+      "strength": "自社の衛星群と地上設備、端末を一貫して持つ垂直統合が特徴。政府向けと民間向けで技術を使い回せる。",
+      "risks": "衛星の建造や打ち上げには失敗のおそれがある。米政府契約への依存や借入も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides satellite-based communications services and equipment.",
+      "revenue": "It earns through two segments, communication services and defense and advanced technologies, selling broadband to aviation, maritime, enterprise, consumer, military and government users.",
+      "strength": "Its own satellite fleet, ground infrastructure and user terminals are vertically integrated. Technology can be shared between government and commercial uses.",
+      "risks": "Satellite construction and launch carry failure risk. It also depends on US Government contracts and carries debt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 103730,
+    "tickers": [
+      "VSH"
+    ],
+    "name": "Vishay",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Vishay Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体やコンデンサー、抵抗器などの電子部品を作る会社。",
+      "revenue": "MOSFETやダイオードなどのディスクリート半導体と、抵抗器、インダクター、コンデンサーを自動車、産業、通信などの市場に売って稼ぐ。",
+      "strength": "ディスクリート半導体と受動部品を幅広くそろえる品ぞろえが強み。特定の市場や地域への依存を抑えられる。",
+      "risks": "電子部品業界は景気の波が大きい。需要が急減すると利益率が下がり、増設した設備が余りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of electronic components such as discrete semiconductors, capacitors and resistors.",
+      "revenue": "It sells discrete semiconductors such as MOSFETs and diodes, plus resistors, inductors and capacitors, to automotive, industrial and telecom markets.",
+      "strength": "One of the broadest lines of discrete semiconductors and passive components is its edge. It reduces exposure to any one market or region.",
+      "risks": "The electronic components industry is highly cyclical. A sudden drop in demand cuts margins and can leave added capacity idle.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 70866,
+    "tickers": [
+      "VYX"
+    ],
+    "name": "NCR Voyix",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "NCR Voyix Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/70866/000007086626000006/ncr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "小売店と飲食店向けに、店舗と通販をつなぐ販売システムを提供する会社。",
+      "revenue": "小売とレストランの両事業で、ソフト、サービス、決済、ハードを売って稼ぐ。",
+      "strength": "ソフト、ハード、サービス、決済を一体で提供できるのが特徴。",
+      "risks": "クラウド基盤が普及しないと収益が伸びない。ハード事業の外部委託も、効果が出ない恐れがある。",
+      "competition": "主な競合にBlock、Diebold Nixdorf、Global Payments、HP Inc.、Oracleがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides retailers and restaurants with systems linking in-store and online sales.",
+      "revenue": "It earns from software, services, payments and hardware sold to its Retail and Restaurants segments.",
+      "strength": "It offers software, hardware, services and payments together as one suite.",
+      "risks": "Revenue suffers if its cloud platform is not adopted, and the hardware outsourcing may not deliver its expected benefits.",
+      "competition": "Main competitors include Block, Diebold Nixdorf, Global Payments, HP Inc., Oracle.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Block",
+          "ticker": "XYZ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Diebold Nixdorf",
+          "ticker": "DBD",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Global Payments",
+          "ticker": "GPN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "HP Inc.",
+          "ticker": "HPQ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1345016,
+    "tickers": [
+      "YELP"
+    ],
+    "name": "Yelp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Yelp Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "地元のお店と消費者をつなぐ、口コミサイトを運営する会社。",
+      "revenue": "売上の95%は広告。クリック課金の広告が中心で、購読型サービスも手がける。",
+      "strength": "人が書いた信頼性の高い口コミと、購買意欲の高い大きな利用者層が強み。",
+      "risks": "景気が悪いと広告主が支出を絞る。飲食や小売の広告収入は2025年に6%減った。",
+      "competition": "主な競合にGoogleがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs a review site connecting consumers with local businesses.",
+      "revenue": "Advertising brings in 95% of revenue, mostly pay-per-click ads, with subscription services on the side.",
+      "strength": "Its strengths are trusted, human-written reviews and a large, high-intent audience.",
+      "risks": "Weak local economies cut advertiser spending, and restaurant and retail ad revenue fell 6% in 2025.",
+      "competition": "Main competitors include Google.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOGL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1856314,
+    "tickers": [
+      "YOU"
+    ],
+    "name": "Clear Secure",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Clear Secure Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "空港の優先レーンなどを提供する、本人確認サービスの会社。",
+      "revenue": "旅行向けCLEAR+の会員費と、企業向けの本人確認CLEAR1の利用料で稼ぐ。",
+      "strength": "大きな会員基盤と、空港などの物理的なネットワークが特徴。",
+      "risks": "競争の激しい市場で勝てない恐れがある。最大の入会経路である空港の係員の働きにも左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A secure identity company that offers priority airport lanes and identity verification.",
+      "revenue": "It earns from CLEAR+ travel memberships and from fees paid by business partners using CLEAR1.",
+      "strength": "A large member base and a physical network of airports and partners set it apart.",
+      "risks": "It may fail to compete in a highly competitive market, and its main sign-up channel depends on airport staff.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1084048,
+    "tickers": [
+      "ZD"
+    ],
+    "name": "Ziff Davis",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ziff Davis Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ITやゲーム、健康などのメディアと、セキュリティ事業を持つ会社。",
+      "revenue": "広告と成果報酬型マーケティング、そして購読料とライセンス料で稼ぐ。",
+      "strength": "信頼される編集コンテンツのブランドと、買収を重ねて事業を広げる手法が特徴。",
+      "risks": "広告は短期契約が多い。競争が激しく、生成AIによる無断利用も抱える。",
+      "competition": "主な競合にDoximity、Alphabet、Meta、Snapがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company with media brands in tech, gaming and health, plus cybersecurity businesses.",
+      "revenue": "It earns from advertising and performance marketing, and from subscriptions and licensing.",
+      "strength": "Trusted editorial brands and a habit of growing through repeated acquisitions define it.",
+      "risks": "Most ad deals are short-term, competition is intense, and generative AI may use its content without permission.",
+      "competition": "Main competitors include Doximity, Alphabet, Meta, Snap.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Doximity",
+          "ticker": "DOCS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOGL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "ticker": "META",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Snap",
+          "ticker": "SNAP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 927003,
+    "tickers": [
+      "AEIS"
+    ],
+    "name": "Advanced Energy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Advanced Energy Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体装置やデータセンター向けに、精密な電源機器を作る会社。",
+      "revenue": "半導体装置、データセンター、産業・医療、通信の各市場へ電源を売り、修理でも稼ぐ。",
+      "strength": "電力変換効率、電力密度、信頼性が特徴。プラズマ電源は主力用途で大きなシェアを持つ。",
+      "risks": "市場の好不況の波が大きい。大口顧客の売上比率は23%、19%、12%と高い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes precision power products for chip equipment and data centers.",
+      "revenue": "It sells power products into semiconductor, data center, industrial and medical, and telecom markets, and earns from repairs.",
+      "strength": "Power conversion efficiency, density and reliability are its features, with leading share in core plasma power uses.",
+      "risks": "Its markets swing sharply, and its largest customers account for 23%, 19% and 12% of revenue.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 866291,
+    "tickers": [
+      "ALGM"
+    ],
+    "name": "Allegro MicroSystems",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Allegro MicroSystems Form 10-K (filed 2026-05-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/866291/000119312526233537/algm-20260327.htm"
+      }
+    ],
+    "ja": {
+      "business": "センサーICと用途特化の電源ICを設計・販売する半導体会社。",
+      "revenue": "センサーICと電源ICを売って稼ぐ。販売は代理店頼みで、自動車と産業向けの需要に左右される。",
+      "strength": "センシングと電源の技術で、電動化や自動化、AI、ロボットの進展を後押しすることが狙い。",
+      "risks": "競争が激しい。半導体の製造を少数の外部工場に頼り、自動車市場の悪化にも弱い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A semiconductor company that designs and markets sensor ICs and application-specific power ICs.",
+      "revenue": "It earns by selling sensor and power ICs through distributors, and demand swings with the automotive and industrial markets.",
+      "strength": "Its sensing and power technology aims to move electrification, automation, AI and robotics forward.",
+      "risks": "Competition is intense. It relies on a few outside wafer fabs, and a downturn in automotive would hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 913142,
+    "tickers": [
+      "BDC"
+    ],
+    "name": "Belden",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Belden Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/913142/000091314226000009/bdc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ネットワークや産業オートメーション向けの接続製品を作る会社。",
+      "revenue": "スマートインフラとオートメーションの2事業で稼ぐ。販売先は流通業者やOEM。2025年は売上の約42%が米国外。",
+      "strength": "製品の幅広さと品質、顧客サポートが特徴。想定する市場シェアは約5%から15%。",
+      "risks": "サイバー攻撃や関税、銅など原材料の供給難を抱える。コストが上がれば利益率が下がりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes connection products for networks and industrial automation.",
+      "revenue": "It earns through two businesses, Smart Infrastructure Solutions and Automation Solutions, selling via distributors and OEMs. About 42% of 2025 sales were outside the U.S.",
+      "strength": "Its features are a broad product range, quality and customer support. Its estimated market share is about 5% to 15%.",
+      "risks": "It faces cyber attacks, tariffs and shortages of raw materials such as copper. Higher costs could cut margins.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 851205,
+    "tickers": [
+      "CGNX"
+    ],
+    "name": "Cognex",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Cognex Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/851205/000085120526000012/cgnx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "工場や物流向けの産業用マシンビジョンを作る会社。",
+      "revenue": "物流、包装、家電、自動車の4市場で、2025年の売上の約85%を占める。",
+      "strength": "ハードとソフトを組み合わせ、AI対応の画像技術やバーコード読み取りを備えるのが特徴。",
+      "risks": "同業のほか、顧客の社内設計部門やAIを使うオープンソースのツールとも競う。自動車市場は逆風が続く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes industrial machine vision systems for factories and distribution.",
+      "revenue": "Logistics, packaging, consumer electronics and automotive together made up about 85% of 2025 revenue.",
+      "strength": "It blends hardware and software, with AI-enabled vision and barcode reading as features.",
+      "risks": "It competes with other vendors, customers' in-house engineering teams and open-source AI tools. Automotive faced headwinds.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1169561,
+    "tickers": [
+      "CVLT"
+    ],
+    "name": "Commvault",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Commvault Form 10-K (filed 2026-05-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000017/cvlt-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "データを守り復旧するサイバーレジリエンス製品の会社。",
+      "revenue": "SaaSや期間契約のサブスクリプションが中心。永久ライセンス、サポート、専門サービスでも稼ぐ。",
+      "strength": "クラウド基盤のCommvault Cloudで、保護、復旧、セキュリティをまとめて提供するのが特徴。",
+      "risks": "競争が激しい。競合は資金力で上回ることがあり、価格を下げられうる。",
+      "competition": "主な競合にRubrikがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides cyber resilience products to protect and recover data.",
+      "revenue": "Mostly subscriptions, either SaaS or term-based. It also earns from perpetual licenses, support and professional services.",
+      "strength": "Its Commvault Cloud platform brings data protection, recovery and security together.",
+      "risks": "Competition is intense. Some rivals have more money and can price lower.",
+      "competition": "Main competitors include Rubrik.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Rubrik",
+          "ticker": "RBRK",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 25445,
+    "tickers": [
+      "CXT"
+    ],
+    "name": "Crane NXT",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Crane NXT Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/25445/000002544526000009/cxt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "紙幣の偽造防止や決済機器を手がける産業技術会社。",
+      "revenue": "決済機器のCPIと、セキュリティ認証のSATの2部門で稼ぐ。2025年は売上の50%が米国外。",
+      "strength": "独自のマイクロ光学技術と、検知・センシング技術が中核。",
+      "risks": "景気の変動や現金利用の減少を抱える。中央銀行の紙幣発注の時期で業績が振れる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An industrial technology company that makes banknote security and payment equipment.",
+      "revenue": "It earns through two segments, Crane Payment Innovations and Security and Authentication Technologies. 50% of 2025 sales went outside the U.S.",
+      "strength": "Proprietary micro-optics and detection and sensing technology are at its core.",
+      "risks": "Economic swings and less cash use hurt it. Central bank banknote orders make results uneven.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1308547,
+    "tickers": [
+      "DLB"
+    ],
+    "name": "Dolby",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dolby Form 10-K (filed 2025-11-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1308547/000130854725000007/dlb-20250926.htm"
+      }
+    ],
+    "ja": {
+      "business": "音と映像の技術を機器メーカーにライセンスする会社。",
+      "revenue": "2025年度の売上の93%がライセンス、7%が製品とサービス。約1,000社の機器メーカーと契約する。",
+      "strength": "信号処理の知見と、映画や音楽の制作者との近い関係が持ち味。Dolby AtmosとDolby Visionが柱。",
+      "risks": "ストリーミング移行でセットトップボックスの需要が減った。スマホ市場は集中し、技術を外されやすい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that licenses audio and video technology to device makers.",
+      "revenue": "Licensing was 93% of fiscal 2025 revenue and products and services 7%. About 1,000 device makers license from it.",
+      "strength": "Its signal processing expertise and close ties with film and music creators set it apart, led by Dolby Atmos and Dolby Vision.",
+      "risks": "The shift to streaming cut demand for set-top boxes. The mobile market is concentrated, so its technology is easy to drop.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1408710,
+    "tickers": [
+      "FN"
+    ],
+    "name": "Fabrinet",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Fabrinet Form 10-K (filed 2026-08-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm"
+      }
+    ],
+    "ja": {
+      "business": "光通信や車載などの機器メーカー向けに、精密な光学・電子部品の製造を請け負う会社。",
+      "revenue": "光通信、自動車、産業用レーザー、医療、センサーの機器メーカーから製造サービスを受注して稼ぐ。",
+      "strength": "設計、調達、組み立て、試験まで製造工程全体を担える。多様な製品をどんな量でも作れるのが特徴。",
+      "risks": "売上は少数の顧客に偏る。大口顧客が売上に占める割合は57.4%。注文の減少や価格圧力を受けうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A contract manufacturer of precision optical and electronic products for makers of optical communication and automotive equipment.",
+      "revenue": "It earns money by taking manufacturing orders from makers of optical communications, automotive, industrial laser, medical and sensor products.",
+      "strength": "It covers the whole manufacturing process, from design and supply chain to assembly and testing. It can build a wide variety of products in any mix and any volume.",
+      "risks": "Sales depend on a few customers, which made up 57.4% of revenue. Order cuts or pricing pressure from them can hurt results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1528396,
+    "tickers": [
+      "GWRE"
+    ],
+    "name": "Guidewire",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Guidewire Form 10-K (filed 2026-09-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm"
+      }
+    ],
+    "ja": {
+      "business": "損害保険会社向けに、契約や保険金支払いを管理するクラウド基盤を提供する会社。",
+      "revenue": "保険会社へのクラウド型サブスクリプションが中心。料金は管理する元受保険料の額などで決まる。ライセンスやサービスでも稼ぐ。",
+      "strength": "契約、料金計算、引受、請求、保険金支払いまでを一つの基盤で扱える。AIや分析機能も組み合わせる。",
+      "risks": "損害保険業界の少数の顧客に売上が偏る。販売や導入に時間がかかり、収益化まで時間と費用を要しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides cloud platforms to property and casualty insurers for managing policies and claims.",
+      "revenue": "Cloud subscriptions to insurers are its core. Fees are mostly based on the direct written premium managed on the platform. It also earns from licenses and services.",
+      "strength": "One platform handles pricing, underwriting, policy administration, billing and claims, combined with AI and analytics features.",
+      "risks": "A small number of P&C insurers account for much of its revenue. Long sales and implementation cycles can eat time and cost before revenue arrives.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1405495,
+    "tickers": [
+      "IDCC"
+    ],
+    "name": "InterDigital",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "InterDigital Form 10-K (filed 2026-02-05) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "無線や動画、AIの基礎技術を研究開発し、特許を供与する会社。",
+      "revenue": "スマホ、家電、車などのメーカーへの特許ライセンスが主な収入源。2025年の売上は834.0百万ドル。",
+      "strength": "38,000件を超える特許と出願を持つ。無線の3Gから5G、動画の標準規格にも技術を提供してきた。",
+      "risks": "新規契約や更新の交渉は長引きやすい。動画配信向けのライセンス市場は未成熟で、収益化は不透明。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A research company that develops core wireless, video and AI technologies and licenses its patents.",
+      "revenue": "Patent licenses to makers of phones, consumer electronics and cars are its main income. Revenue in 2025 was $834.0 million.",
+      "strength": "It holds a portfolio of more than 38,000 patents and applications, and has contributed technology to wireless and video standards.",
+      "risks": "License talks for new deals and renewals can drag on. The video services licensing market is less developed, so that revenue is uncertain.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1867072,
+    "tickers": [
+      "KD"
+    ],
+    "name": "Kyndryl",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Kyndryl Form 10-K (filed 2026-05-29) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けにITインフラの設計、構築、運用を担うサービス会社。",
+      "revenue": "助言、導入、運用代行のサービスで稼ぐ。米国、日本、主要市場、戦略市場の4地域区分で事業を管理する。",
+      "strength": "世界最大のITインフラサービス企業を自認し、60カ国超の顧客に提供する。クラウドや基幹システムまで幅広く扱う。",
+      "risks": "顧客に契約更新の義務はない。成長や生産性の目標を達成できない恐れがあり、AIなど新しい提供モデルが需要を損なうこともある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A services company that designs, builds and runs IT infrastructure for businesses.",
+      "revenue": "It earns from advisory, implementation and managed services, split into four geographic segments: the U.S., Japan, Principal Markets and Strategic Markets.",
+      "strength": "It calls itself the world's largest IT infrastructure services provider, serving customers in more than 60 countries across cloud and core enterprise systems.",
+      "risks": "Customers have no obligation to renew. It may miss growth and productivity goals, and new delivery models such as agentic AI could hurt demand.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 889331,
+    "tickers": [
+      "LFUS"
+    ],
+    "name": "Littelfuse",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Littelfuse Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/889331/000162828026009585/lfus-20251227.htm"
+      }
+    ],
+    "ja": {
+      "business": "ヒューズなど回路保護部品と、パワー半導体を手がける電子部品メーカー。",
+      "revenue": "電子部品、輸送、産業の3事業で稼ぐ。データセンターや車載、エネルギー関連の機器向けに部品を売る。",
+      "strength": "幅広い製品群を持ち、顧客の近くに製造拠点を置く。顧客の開発段階から技術者が加わるのが特徴。",
+      "risks": "競争が激しく、価格や需要に影響しうる。資金力の大きい競合や低コストのメーカーと競うほか、買収の統合に失敗する恐れもある。",
+      "competition": "主な競合にEaton Corporation、ON Semiconductor Corporation、STMicroelectronics NV、Semtech Corporation、Vishay Intertechnology Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An electronics maker of circuit protection parts such as fuses, plus power semiconductors.",
+      "revenue": "It earns from three segments: Electronics, Transportation and Industrial. Parts go into data center, vehicle and energy equipment.",
+      "strength": "It has a broad product range and manufacturing close to customers. Its engineers often join customers' design work early.",
+      "risks": "Competition is intense and can hit prices and demand. It faces rivals with more resources or lower costs, and acquisitions may not integrate well.",
+      "competition": "Main competitors include Eaton Corporation, ON Semiconductor Corporation, STMicroelectronics NV, Semtech Corporation, Vishay Intertechnology Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Eaton Corporation",
+          "ticker": "ETN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ON Semiconductor Corporation",
+          "ticker": "ON",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "STMicroelectronics NV",
+          "ticker": "STM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Semtech Corporation",
+          "ticker": "SMTC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Vishay Intertechnology Inc.",
+          "ticker": "VSH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1076930,
+    "tickers": [
+      "NOVT"
+    ],
+    "name": "Novanta",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Novanta Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1076930/000119312526064230/novt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "医療や産業用機器メーカー向けに、中核となる精密技術部品を供給する会社。",
+      "revenue": "医療、ライフサイエンス、先端産業の機器メーカーに部品やサブシステムを売って稼ぐ。医療向けの比率を高める方針。",
+      "strength": "独自技術を生かし、極めて高い精度と性能の製品を顧客の用途に合わせて作る。ロボットや手術分野にも強い。",
+      "risks": "ほぼ全ての市場で激しい競争にさらされる。医療機器の規制が厳しく、承認が得られない恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A supplier of core precision technology to makers of medical and industrial equipment.",
+      "revenue": "It earns by selling components and sub-systems to medical, life science and advanced industrial OEMs. It aims to raise the medical share of sales.",
+      "strength": "Its proprietary technology delivers extreme precision and performance, tailored to each customer's application, including robotics and surgery.",
+      "risks": "It faces strong competition in virtually all its markets. Strict medical device rules can block approvals or force recalls.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1142417,
+    "tickers": [
+      "NXST"
+    ],
+    "name": "Nexstar Media",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Nexstar Media Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1142417/000119312526078361/nxst-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "全米最大の地方テレビ局グループを持つメディア会社。",
+      "revenue": "地方テレビ局の広告収入と、配信事業者からの配信料で稼ぐ。CWやNewsNationなど全国向けの放送網も持つ。",
+      "strength": "200を超える局が116市場にあり、米国のテレビ世帯の約70%に届く規模が特徴。",
+      "risks": "有料放送の契約者減や、配信契約・系列契約の更新難が収益を圧迫しうる。多額の負債も抱える。",
+      "competition": "主な競合にFOX News、Newsmaxがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A media company that owns the largest group of local TV stations in the U.S.",
+      "revenue": "It earns from local station advertising and distribution fees paid by distributors, and also runs national networks such as The CW and NewsNation.",
+      "strength": "Its scale stands out: over 200 stations in 116 markets reaching approximately 70% of U.S. television households.",
+      "risks": "Fewer pay-TV subscribers and trouble renewing distribution or affiliation deals can hurt results. It also carries substantial debt.",
+      "competition": "Main competitors include FOX News, Newsmax.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "FOX News",
+          "ticker": "FOXA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Newsmax",
+          "ticker": "NMAX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 71691,
+    "tickers": [
+      "NYT"
+    ],
+    "name": "The New York Times",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "The New York Times Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニューヨーク・タイムズ紙などを手がける世界的な報道機関。",
+      "revenue": "購読料と広告で稼ぐ。デジタル中心で、The AthleticやCooking、Gamesなどの商品も持つ。",
+      "strength": "独自で質の高い報道が強み。2025年末の購読者は約12.78百万人で、過去最多。",
+      "risks": "ニュースアグリゲーターやSNS、AI企業などとの競争が激しい。AIによる無断利用も課題。",
+      "competition": "主な競合にApple、Alphabet、Meta Platforms、Microsoftがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global news organization that publishes The New York Times and related products.",
+      "revenue": "It earns mainly from subscriptions and advertising, with digital products such as The Athletic, Cooking and Games.",
+      "strength": "Original, high-quality reporting is its core feature. It had approximately 12.78 million subscribers at the end of 2025, a record.",
+      "risks": "It faces tough competition from aggregators, social media and AI companies, and from unauthorized use of its content by AI developers.",
+      "competition": "Main competitors include Apple, Alphabet, Meta Platforms, Microsoft.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOGL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta Platforms",
+          "ticker": "META",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1005284,
+    "tickers": [
+      "OLED"
+    ],
+    "name": "Universal Display",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Universal Display Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "有機EL(OLED)の技術と材料を研究・開発し、ディスプレイ向けに提供する会社。",
+      "revenue": "OLED材料を製造・販売し、特許とノウハウのライセンスを表示装置メーカーに与えて稼ぐ。",
+      "strength": "技術力と知的財産、20年超にわたるOLEDメーカーとの協業が強み。7,000件超の特許を持つ。",
+      "risks": "基本特許の期限切れ後に競争力を保てるかが課題。顧客の材料の使用効率化や関税、輸出規制も響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that researches, develops and commercializes OLED technologies and materials for displays and lighting.",
+      "revenue": "It earns by making and selling OLED materials and by licensing its patents and know-how to display and lighting makers.",
+      "strength": "Its technology leadership, intellectual property and more than 20 years working with OLED display makers set it apart. It holds more than 7,000 patents issued and pending.",
+      "risks": "Keeping its competitive position after its fundamental PHOLED patents expire is a concern. Customers using materials more efficiently, tariffs and export limits can also hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1786842,
+    "tickers": [
+      "VNT"
+    ],
+    "name": "Vontier",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Vontier Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1786842/000162828026007648/vnt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "給油所向けの決済機器や環境・給油設備、車両修理工具を扱う会社。",
+      "revenue": "2025年の売上は3,075.6百万ドル。環境・給油ソリューション、モビリティ技術、修理ソリューションの3部門で稼ぐ。",
+      "strength": "環境・給油ソリューションが営業利益率29.4%と高い稼ぎ頭。決済や車両管理などのデジタル製品も特徴。",
+      "risks": "米国の関税や供給網の混乱でコストが増えうる。修理ソリューションは販売が減少している。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes payment systems, environmental and fueling equipment, and vehicle repair tools.",
+      "revenue": "2025 sales were $3,075.6 million, earned across three segments: Environmental & Fueling Solutions, Mobility Technologies and Repair Solutions.",
+      "strength": "Environmental & Fueling Solutions is its top earner, with a 29.4% operating margin. Digital products for payments and fleets add to its mix.",
+      "risks": "US tariffs and supply chain disruption can raise its costs. Repair Solutions sales have been falling.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1319161,
+    "tickers": [
+      "WMG"
+    ],
+    "name": "Warner Music Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Warner Music Group Form 10-K (filed 2025-11-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "レコード会社と音楽出版を持つ、世界的な大手音楽会社。",
+      "revenue": "レコード音楽が2025年度の売上の81%、音楽出版が19%。アーティストの楽曲や著作権で稼ぐ。",
+      "strength": "Atlantic RecordsやWarner Recordsなど有名レーベルを抱える。音楽出版は190,000人超の作詞作曲家の作品を扱う。",
+      "risks": "人気アーティストを次々に育て続ける必要がある。AIによる偽の楽曲が人の作品の価値を下げうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A major global music company with record labels and a music publishing arm.",
+      "revenue": "Recorded Music made up 81% of fiscal 2025 revenue and Music Publishing 19%, earned from artists' recordings and songs.",
+      "strength": "It owns well-known labels such as Atlantic Records and Warner Records. Its publishing arm covers works by over 190,000 songwriters.",
+      "risks": "It must keep finding and developing new artists. AI-made fakes could cut the value of human-created music.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1178670,
+    "tickers": [
+      "ALNY"
+    ],
+    "name": "Alnylam",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Alnylam Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "RNA干渉(RNAi)の技術で新薬を作るバイオ医薬品会社。",
+      "revenue": "AMVUTTRAやONPATTROなどのRNAi薬を販売して稼ぐ。LeqvioとQfitliaは提携先が販売する。",
+      "strength": "RNAi薬を先駆けて実用化したのが特徴。承認済みの薬に加え、臨床試験中の候補薬も複数ある。",
+      "risks": "AMVUTTRAの売上が伸びなければ打撃が大きい。赤字の歴史があり、製造や提携先にも頼る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharma company that develops new drugs based on RNA interference (RNAi).",
+      "revenue": "It earns by selling RNAi drugs such as AMVUTTRA and ONPATTRO. Partners sell Leqvio and Qfitlia.",
+      "strength": "It pioneered RNAi medicines. Alongside its approved drugs, it has several candidates in clinical trials.",
+      "risks": "Weak AMVUTTRA sales would hurt badly. It has a history of losses and relies on partners and third-party manufacturers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
   }
 ]
