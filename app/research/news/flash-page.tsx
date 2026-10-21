@@ -110,7 +110,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   // The page shell shows the shared branded loader until the first feed (or its failure) is known (owner, Oct 20).
   useEffect(() => { if (feed || failed) onReady?.(); }, [feed, failed, onReady]);
 
-  const rows = flashRows(feed, wire, lang).filter(row => row.tickers.some(ticker => WATCH_TICKERS.has(ticker)) && (view === "all" || row.kind === "earnings"));
+  const rows = flashRows(feed, wire, lang).filter(row => (row.kind === "earnings" || row.tickers.some(ticker => WATCH_TICKERS.has(ticker))) && (view === "all" || row.kind === "earnings"));
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   const current = Math.min(page, pages);
   const shown = rows.slice((current - 1) * PAGE, current * PAGE);
@@ -151,6 +151,6 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       })}</div>}
     </div>
     <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと決算を、新しい順に掲載しています。時刻は日本時間です。" : "News and earnings for the 22 tracked stocks, newest first. All times are JST."}</p>
+    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News for the 22 tracked stocks and announced earnings, newest first. All times are JST."}</p>
   </section>;
 }
