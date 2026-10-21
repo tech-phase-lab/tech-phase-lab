@@ -6,7 +6,7 @@ import { lateDetection, officialTime } from "./news-time.ts";
 
 /** A company has something new when an item was published within this window,
  * found promptly, and after the owner last opened that company's monitor. */
-export const FRESH_WINDOW_MS = 3 * 3_600_000;
+export const FRESH_WINDOW_MS = 3_600_000;
 const SEEN_KEY = "tech-phase:company-seen:v1";
 
 export function readSeen(): Record<string, number> {
