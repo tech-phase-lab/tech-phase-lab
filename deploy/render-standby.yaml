@@ -1,0 +1,65 @@
+# Draft Render Blueprint for the standby research monitor (not deployed).
+# Keep it suspended/stopped in normal times; start it only during a Railway outage.
+# See docs/FAILOVER-PLAN-2026-10-22.md. Secret values are never written here: `sync: false`
+# makes Render ask for each value in its dashboard. Names come from the staging monitor.
+services:
+  - type: web
+    name: research-monitor-standby
+    runtime: docker
+    dockerfilePath: ./Dockerfile.research-monitor
+    plan: starter
+    autoDeploy: false
+    healthCheckPath: /livez
+    disk:
+      name: monitor-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: RESEARCH_DATA_DIR
+        value: /data
+      # Keys and tokens: enter in the Render dashboard (new values, never reuse another service's).
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: X_BEARER_TOKEN
+        sync: false
+      - key: RESEARCH_API_TOKEN
+        sync: false
+      - key: RESEARCH_EDITOR_TOKEN
+        sync: false
+      - key: RESOLUTE_NEWS_READ_TOKEN
+        sync: false
+      - key: WEB_PUSH_PRIVATE_KEY
+        sync: false
+      - key: WEB_PUSH_PUBLIC_KEY
+        sync: false
+      - key: WEB_PUSH_MEMBERSHIP_BYPASS
+        sync: false
+      - key: STOCK_NEWS_API_KEY
+        sync: false
+      # Switches and settings: copy the current values from the staging monitor's Variables.
+      - key: X_API_ENABLED
+        sync: false
+      - key: X_API_DAILY_REQUEST_LIMIT
+        sync: false
+      - key: RESEARCH_SIGNALS_ENABLED
+        sync: false
+      - key: OFFICIAL_HEADLINE_TRANSLATION_ENABLED
+        sync: false
+      - key: OFFICIAL_HEADLINE_TRANSLATION_MODEL
+        sync: false
+      - key: OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT
+        sync: false
+      - key: NOTE_TRANSLATION_ENABLED
+        sync: false
+      - key: NOTE_TRANSLATION_MODEL
+        sync: false
+      - key: RESEARCH_DEEP_MODEL
+        sync: false
+      - key: RESEARCH_USER_AGENT
+        sync: false
+      - key: WEB_PUSH_ENABLED
+        sync: false
+      - key: WEB_PUSH_SUBJECT
+        sync: false
+      - key: WEB_PUSH_MEMBERSHIP_URL
+        sync: false
