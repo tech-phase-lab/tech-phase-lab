@@ -43498,7 +43498,7 @@
     ],
     "ja": {
       "business": "カード発行、加盟店契約、カード網を一体で持つ世界的な決済・プレミアム会員ブランド。",
-      "revenue": "自社発行カードの利用で稼ぐ。2025年の利用額は1,670十億ドル。加盟店手数料やカード網サービスも収益源。",
+      "revenue": "自社発行カードの利用で稼ぐ。2025年の利用額は1兆6,700億ドル。加盟店手数料やカード網サービスも収益源。",
       "strength": "発行側と加盟店側の両方と直接つながり、取引の両端の情報を得られる点が特徴。",
       "risks": "景気に左右されやすい。中小企業・法人の利用が2025年の利用額の約41%を占め、不況で減りうる。",
       "competition": "主な競合にVisa、Mastercard、PayPalがある。",
@@ -53081,7 +53081,7 @@
     ],
     "ja": {
       "business": "モーションコントロール技術で航空宇宙や産業機器向けの製品を作る会社。",
-      "revenue": "2026年度の売上は21.5十億ドル。産業機器部門が67%、航空宇宙部門が33%を占める。",
+      "revenue": "2026年度の売上は215億ドル。産業機器部門が67%、航空宇宙部門が33%を占める。",
       "strength": "油圧、空圧、電動、ろ過など幅広い中核技術と、経営システムのWin Strategyが特徴。",
       "risks": "世界景気に左右される。米国外の売上は約36%で、為替や関税、貿易規制の影響を受けうる。",
       "competition": "主な競合にDanaher、Donaldson、Emerson、Gates、Crane Co.がある。",
@@ -59573,7 +59573,7 @@
       "business": "全米で光ファイバー網を持ち、通信サービスを提供するデジタル基盤の会社。",
       "revenue": "家庭や企業向けの光ファイバーブロードバンド、大企業向けクラウド通信、通信事業者向け回線で稼ぐ。2025年の売上は2,234.5百万ドル。",
       "strength": "約240,000の光ファイバールートマイルと、約1.9百万世帯に届く光網が特徴。",
-      "risks": "無線やケーブル各社との競争を抱える。約9.5十億ドルの借入があり、財務の自由度も狭めうる。",
+      "risks": "無線やケーブル各社との競争を抱える。約95億ドルの借入があり、財務の自由度も狭めうる。",
       "competition": "",
       "relationships": ""
     },
@@ -67528,7 +67528,7 @@
     ],
     "ja": {
       "business": "企業とフリーランスなどの人材をつなぐ仕事のマーケットプレイスを運営する会社。",
-      "revenue": "2025年の取引総額は4.0十億ドル。Connectsの購入、決済処理、メンバーシップなどの手数料で稼ぐ。",
+      "revenue": "2025年の取引総額は40億ドル。Connectsの購入、決済処理、メンバーシップなどの手数料で稼ぐ。",
       "strength": "180か国超の顧客と、1万を超えるスキルを扱う幅広さが特徴。",
       "risks": "変化の速い競争環境に置かれる。取引損失への備えも必要になる。",
       "competition": "",
@@ -67748,6 +67748,3744 @@
     },
     "maps": {
       "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 940942,
+    "tickers": [
+      "HUBG"
+    ],
+    "name": "Hub Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hub Group Form 10-K (filed 2025-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/940942/000095017025026866/hubg-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "貨物輸送と物流管理を一括で手がける供給網サービス会社。",
+      "revenue": "2024年は売上の57%を、インターモーダル輸送などを担うITS部門が占めた。物流部門でも稼ぐ。",
+      "strength": "自社資産と外部委託を組み合わせ、輸送から物流管理まで幅広く扱えるのが特徴。",
+      "risks": "上位10社の顧客が売上の44%を占める。鉄道会社への依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A supply chain company that handles freight transportation and logistics management.",
+      "revenue": "In 2024, 57% of revenue came from the ITS segment, which covers intermodal transport. The Logistics segment also earns revenue.",
+      "strength": "It mixes owned assets with contracted third parties, so it covers everything from transport to logistics management.",
+      "risks": "Its 10 largest customers make up 44% of revenue, and it depends on railroads.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 80172,
+    "tickers": [
+      "NPK"
+    ],
+    "name": "National Presto",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "National Presto Form 10-K (filed 2026-03-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/80172/000143774926008214/npk20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "圧力鍋などの家電、弾薬、煙警報器を手がける会社。",
+      "revenue": "家庭用品・小型家電、防衛、安全の3部門で稼ぐ。家電は主に米国とカナダの小売店に売る。",
+      "strength": "防衛部門は技術力、品質、製造経験、価格で受注を競う。40mm弾薬の製造が柱。",
+      "risks": "家電は価格競争が激しい。原材料費の上昇や、アジアの少数の供給元への依存も弱点。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of pressure cookers and other appliances, ammunition and smoke alarms.",
+      "revenue": "It earns from three segments: housewares and small appliances, defense and safety. Appliances sell to retailers in the U.S. and Canada.",
+      "strength": "The defense segment competes on technical competence, quality, manufacturing experience and price. 40mm ammunition is a mainstay.",
+      "risks": "Appliances face fierce price competition. Rising raw material costs and reliance on a handful of suppliers in Asia are weak points.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1361538,
+    "tickers": [
+      "PRIM"
+    ],
+    "name": "Primoris Services",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Primoris Services Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1361538/000110465926018677/prim-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国とカナダで電力・ガス・エネルギー関連の建設や保守を担う会社。",
+      "revenue": "UtilitiesとEnergyの2部門で稼ぐ。電力会社やガス会社、再生可能エネルギー事業者から工事と保守を請け負う。",
+      "strength": "建設機械を自社保有または長期リースし、熟練した作業員を安定して抱える。複数年のMSAも柱。",
+      "risks": "天候や景気で業績が振れやすい。固定価格契約ではコストや工期の超過も起こりうる。",
+      "competition": "主な競合にQuanta Services、Dycom Industries、MYR Group、MasTec、Sterling Constructionがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that builds and maintains utility and energy infrastructure in the U.S. and Canada.",
+      "revenue": "It earns through two segments, Utilities and Energy, doing construction and maintenance for utilities, power producers and renewable developers.",
+      "strength": "It owns or long-term leases its construction fleet and keeps a stable skilled workforce. Multi-year MSAs are a core part of its work.",
+      "risks": "Results swing with weather and the economy. Fixed-price contracts can bring cost or schedule overruns.",
+      "competition": "Main competitors include Quanta Services, Dycom Industries, MYR Group, MasTec, Sterling Construction.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Quanta Services",
+          "ticker": "PWR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dycom Industries",
+          "ticker": "DY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MYR Group",
+          "ticker": "MYRG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MasTec",
+          "ticker": "MTZ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Sterling Construction",
+          "ticker": "STRL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1740332,
+    "tickers": [
+      "REZI"
+    ],
+    "name": "Resideo",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Resideo Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1740332/000174033226000005/rezi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅やビルの空調制御・安全・セキュリティ機器を作り、販売する会社。",
+      "revenue": "機器を作るProducts and Solutionsと、ADI Global Distributionの流通事業の2部門で稼ぐ。",
+      "strength": "約100 thousandの施工業者などプロとの関係と、幅広い製品群が成功の原動力。",
+      "risks": "競合が多く競争が激しい。変動金利の長期借入を抱え、金利の影響も受けうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes and sells heating and cooling controls, safety and security products for homes and buildings.",
+      "revenue": "It earns through two segments: Products and Solutions, and ADI Global Distribution.",
+      "strength": "Ties with about 100 thousand professional installers and a broad product range drive its success.",
+      "risks": "Competition is intense across many rivals, and its variable-rate long-term debt exposes it to interest rates.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1718227,
+    "tickers": [
+      "ROAD"
+    ],
+    "name": "Construction Partners",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Construction Partners Form 10-K (filed 2025-11-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1718227/000162828025053871/road-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国南東部で道路の建設や補修を手がける土木会社。",
+      "revenue": "アスファルト混合物の製造・販売、舗装工事、用地造成、骨材の採掘で稼ぐ。公共と民間のインフラ工事が相手。",
+      "strength": "アスファルト混合物や骨材を自社で作る垂直統合戦略が特徴。買収で拠点を広げてきた。",
+      "risks": "地元市場での案件獲得競争や、公共インフラ予算の減少を抱える。多額の債務も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A civil infrastructure company that builds and maintains roads in the southeastern and southern US.",
+      "revenue": "It earns from making and selling hot mix asphalt, paving, site development and aggregates mining, for public and private infrastructure projects.",
+      "strength": "Its vertical integration strategy, producing its own hot mix asphalt and aggregates, sets it apart. It has grown by acquisitions.",
+      "risks": "It faces competition for projects in local markets and possible cuts in public infrastructure funding. Substantial debt adds to the burden.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 912562,
+    "tickers": [
+      "ROCK"
+    ],
+    "name": "Gibraltar",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Gibraltar Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/912562/000091256226000025/rock-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅、アグテック、インフラ向けの製品とサービスを作る会社。",
+      "revenue": "住宅、施設園芸、インフラ市場向けの製品とサービスで稼ぐ。2026年2月にOmniMaxを買収した。",
+      "strength": "品質と納期の評判で、多くの顧客に選ばれる供給元。入札を通じて受注する。",
+      "risks": "景気や金利、物価など自社で制御できない要因が需要と利益率に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes products and services for the residential, agtech and infrastructure markets.",
+      "revenue": "It earns from products and services for residential, controlled environment agriculture and infrastructure markets. It acquired OmniMax in February 2026.",
+      "strength": "Its reputation for quality and on-time delivery makes it a preferred provider for many customers.",
+      "risks": "Economic factors outside its control, such as interest rates and inflation, can hurt demand and margins.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1469367,
+    "tickers": [
+      "RUN"
+    ],
+    "name": "Sunrun",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sunrun Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1469367/000162828026012289/run-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅向けに太陽光と蓄電池をサブスクで提供する会社。",
+      "revenue": "リースや電力購入契約で住宅に設備を設置し、長期の利用料で稼ぐ。顧客の大半は住宅所有者。",
+      "strength": "初期費用なしで使える契約と、直販やパートナーを組み合わせた複数の販売経路が特徴。",
+      "risks": "設備の導入を進めるため、多額の外部資金が必要。資金を調達できなければ事業に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides residential solar and storage as a subscription service.",
+      "revenue": "It earns long-term fees by installing systems on homes under leases and power purchase agreements. Most customers are homeowners.",
+      "strength": "Its features are contracts with no upfront cost and several sales channels, including direct sales and partners.",
+      "risks": "It needs large outside financing to deploy more systems. If capital is unavailable, the business suffers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1012019,
+    "tickers": [
+      "RUSHA"
+    ],
+    "name": "Rush Enterprises",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Rush Enterprises Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "商用トラックの販売・整備・リースを手がけるディーラー。",
+      "revenue": "新車・中古車の販売、部品、整備、リース、金融・保険で稼ぐ。主力はPeterbiltのトラック。",
+      "strength": "126の販売拠点網とRushブランドの評判、まとめ買いによる価格交渉力が強み。",
+      "risks": "売上の大半をPeterbilt車と部品に頼る。PACCARとの販売契約を維持できなければ打撃となる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A dealer that sells, services and leases commercial trucks.",
+      "revenue": "It earns from new and used vehicle sales, parts, service, leasing, and financing and insurance. Peterbilt trucks lead sales.",
+      "strength": "Its strengths are a network of 126 dealerships, the Rush brand reputation and purchasing power from volume buying.",
+      "risks": "Most of its revenue depends on Peterbilt trucks and parts. Losing its dealership agreements with PACCAR would hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1929561,
+    "tickers": [
+      "RXO"
+    ],
+    "name": "RXO",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "RXO Form 10-K (filed 2026-02-09) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "トラックの貨物輸送を仲介するデジタル物流の会社。",
+      "revenue": "荷主の貨物を独立した運送業者につなぐトラック仲介が最大の柱。マネージド輸送とラストマイルでも稼ぐ。",
+      "strength": "自社開発のデジタル仲介基盤が差別化の源。重量物の最終配送では米国最大の外部委託事業者。",
+      "risks": "業界は競争が激しく、収益の低下やシェア喪失を招きうる。競合には資源の大きい企業もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A digital logistics company that brokers truck freight between shippers and carriers.",
+      "revenue": "Truck brokerage, which places shippers' freight with independent carriers, is the largest part. Managed transportation and last mile add more.",
+      "strength": "Its proprietary digital brokerage platform is the main differentiator. It is the largest outsourced last mile provider for heavy goods in the U.S.",
+      "risks": "Competition is intense and can cut revenue, squeeze margins or cost market share. Some rivals have more resources.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 793733,
+    "tickers": [
+      "SKYW"
+    ],
+    "name": "SkyWest",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "SkyWest Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/793733/000110465926016358/skyw-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "大手航空会社の便を請け負って運航する米国最大の地域航空会社。",
+      "revenue": "ユナイテッド、デルタ、アメリカン、アラスカと結ぶ路線運航契約で稼ぐ。固定料金方式が中心。",
+      "strength": "長期の固定料金契約で、安全で確実な運航を大手に提供するのが特徴。1972年から飛ぶ。",
+      "risks": "収入は大手航空会社に左右される。パイロット確保や燃料費、航空機の債務負担を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The largest US regional airline, flying routes on behalf of major airlines.",
+      "revenue": "It earns from code-share agreements with United, Delta, American and Alaska, mostly on fixed fees.",
+      "strength": "Long-term fixed-fee contracts supply major airlines with reliable, safe flying. It has been flying since 1972.",
+      "risks": "Revenue depends on its major airline partners. Pilot staffing, fuel costs and aircraft debt weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1692063,
+    "tickers": [
+      "SNDR"
+    ],
+    "name": "Schneider National",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Schneider National Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1692063/000169206326000013/sndr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米でトラック輸送や鉄道連携、物流サービスを手がける会社。",
+      "revenue": "トラックロード、インターモーダル、ロジスティクスの3部門で稼ぐ。専用輸送の長期契約や貨物仲介も担う。",
+      "strength": "陸送と鉄道を組み合わせた複合輸送と、14,000超の提携運送会社の網が特徴。",
+      "risks": "同業が多く競争が激しい。冬は整備費や燃料費がかさみ、売上は第1四半期が最も低い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides trucking, rail-linked intermodal and logistics services across North America.",
+      "revenue": "It earns through three segments: Truckload, Intermodal and Logistics. Dedicated long-term contracts and freight brokerage add to this.",
+      "strength": "It combines trucking with rail in multimodal service and draws on a network of over 14,000 qualified third-party carriers.",
+      "risks": "It faces a crowded, highly competitive industry. Winter raises maintenance and fuel costs, and revenue is lowest in the first quarter.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 715787,
+    "tickers": [
+      "TILE"
+    ],
+    "name": "Interface",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Interface Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/715787/000071578726000006/tile-20251228.htm"
+      }
+    ],
+    "ja": {
+      "business": "カーペットタイルやLVT、ゴム床材などを作る世界的な床材メーカー。",
+      "revenue": "南北アメリカが売上の61%、欧州・アフリカ・アジア・豪州が39%。オフィスや教育、医療向けの床材で稼ぐ。",
+      "strength": "品質、デザイン、サービス、環境負荷の低さが競争上の強み。InterfaceとFLORのブランドを持つ。",
+      "risks": "同業との価格競争が厳しい。商業オフィス市場の低迷や関税、景気の波も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global flooring maker offering carpet tile, LVT and rubber flooring.",
+      "revenue": "The Americas bring in 61% of sales and Europe, Africa, Asia and Australia 39%, mostly from floors for offices, schools and healthcare.",
+      "strength": "Quality, service, design and a low environmental footprint are its edge, backed by the Interface and FLOR brands.",
+      "risks": "Price competition is tough, and weak commercial office demand, tariffs and economic cycles weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 77543,
+    "tickers": [
+      "TPC"
+    ],
+    "name": "Tutor Perini",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Tutor Perini Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/77543/000007754326000028/tpc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "土木、建築、専門工事の3部門で大型建設を手がける会社。",
+      "revenue": "2025年の売上は前年から28%増えた。橋、トンネル、地下鉄などの土木工事と建築工事で稼ぐ。",
+      "strength": "垂直統合により自社施工の範囲が広く、大型で複雑な案件の元請けになれるのが強み。",
+      "risks": "大型の固定価格案件は工事の見積もりや遂行にリスクがある。2024年は建設事業で損失を出した。",
+      "competition": "主な競合にAECOMがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A construction company working in three segments: Civil, Building and Specialty Contractors.",
+      "revenue": "Revenue in 2025 was $5.5 billion, earned from civil work such as bridges, tunnels and transit, and from building projects.",
+      "strength": "Vertical integration lets it self-perform more work and lead large, complex projects.",
+      "risks": "Large fixed-price projects carry bidding and execution risk. It posted a loss from construction operations in 2024.",
+      "competition": "Main competitors include AECOM.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "AECOM",
+          "ticker": "ACM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 99780,
+    "tickers": [
+      "TRN"
+    ],
+    "name": "Trinity Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Trinity Industries Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/99780/000009978026000014/trn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "鉄道貨車のリース、製造、整備を手がける会社。",
+      "revenue": "貨車の定額リースが中心。リース車両は101,485両で、稼働率は97.1%。",
+      "strength": "リース、製造、整備を一社で担う総合力が特徴。品質と職人技、価格、顧客対応で競う。",
+      "risks": "顧客業界は景気循環の影響が大きい。特にエネルギー、農産物、消費財で需要が揺れうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that leases, manufactures and maintains railcars.",
+      "revenue": "Fixed-rent railcar leases are the core. The lease fleet has 101,485 railcars, 97.1% utilized.",
+      "strength": "It covers leasing, manufacturing and maintenance under one platform. It competes on railcar quality, price and customer experience.",
+      "risks": "Its customers' industries are cyclical, so demand can swing, especially in energy, agriculture and consumer products.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 717954,
+    "tickers": [
+      "UNF"
+    ],
+    "name": "UniFirst",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "UniFirst Form 10-K (filed 2025-10-29) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/717954/000119312525256222/unf-20250830.htm"
+      }
+    ],
+    "ja": {
+      "business": "作業服や制服のレンタル・清掃を手がける会社。",
+      "revenue": "制服や保護衣、マットなどを貸し出し、回収・洗浄・配達を繰り返して稼ぐ。応急処置用品や安全用品も売る。",
+      "strength": "制服の多くを自社で設計・製造し、品質や価格、納期を管理しやすいのが強み。",
+      "risks": "競争が激しく、値下げや利益率の低下、シェア喪失を招きうる。原材料や人件費の変動も抱える。",
+      "competition": "主な競合にCintas Corporation、Vestis Corporationがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that rents and cleans work uniforms and protective clothing.",
+      "revenue": "It rents uniforms, protective clothing and mats, then collects, cleans and delivers them on a cycle. It also sells first aid and safety supplies.",
+      "strength": "It designs and makes most of its own uniforms, so it controls quality, price and speed.",
+      "risks": "Intense competition can force price cuts, lower margins and lost share. Swings in raw material and labor costs add pressure.",
+      "competition": "Main competitors include Cintas Corporation, Vestis Corporation.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Cintas Corporation",
+          "ticker": "CTAS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Vestis Corporation",
+          "ticker": "VSTS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1601548,
+    "tickers": [
+      "VVX"
+    ],
+    "name": "V2X",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "V2X Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "防衛向けに訓練、補給、通信、整備などを提供する政府サービス会社。",
+      "revenue": "2025年の売上は4,480,038千ドル。陸軍と海軍向けが大半で、主に米国政府から稼ぐ。",
+      "strength": "訓練から補給、通信、整備まで一貫して担う。349拠点、49の国と地域で展開する。",
+      "risks": "競合が統合や提携で力を増しうる。入札は価格に敏感で、契約満了時には再入札がある。",
+      "competition": "主な競合にAmentum Holdings、Leidos Holdings、Science Applications International Corp.、General Dynamics Corporation、KBRがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A government services company providing training, supply chain, communications and maintenance to defense customers.",
+      "revenue": "Revenue in 2025 was $4,480,038 thousand, mostly from the Army and Navy, and mainly from the U.S. government.",
+      "strength": "It covers training, supply chain, communications and maintenance end to end, across 349 locations in 49 countries and territories.",
+      "risks": "Competitors may consolidate or team up to grow stronger. Bids are price sensitive, and contracts go to rebid when they expire.",
+      "competition": "Main competitors include Amentum Holdings, Leidos Holdings, Science Applications International Corp., General Dynamics Corporation, KBR.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Amentum Holdings",
+          "ticker": "AMTM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Leidos Holdings",
+          "ticker": "LDOS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Science Applications International Corp.",
+          "ticker": "SAIC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "General Dynamics Corporation",
+          "ticker": "GD",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "KBR",
+          "ticker": "KBR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 793074,
+    "tickers": [
+      "WERN"
+    ],
+    "name": "Werner",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Werner Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/793074/000079307426000071/wern-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国でトラック輸送と物流サービスを手がける運送会社。",
+      "revenue": "2025年はトラック輸送部門が売上の69%、物流部門が29%を占めた。小売・消費財の荷主が中心。",
+      "strength": "専用輸送を含む幅広いトラック網と物流サービスを持つ。米国有数の大手トラック輸送会社の一つ。",
+      "risks": "大口顧客への依存が高い。最大の顧客ドルゼネラルは売上の11%を占める。景気の影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. trucking and logistics company.",
+      "revenue": "In 2025, truckload services made up 69% of revenue and logistics 29%. Retail and consumer products shippers lead.",
+      "strength": "It runs a broad truckload network, including dedicated fleets, plus logistics services. It is one of the largest U.S. truckload carriers.",
+      "risks": "It leans on a few big customers. Dollar General alone was 11% of 2025 revenue. Economic swings also hit it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 108516,
+    "tickers": [
+      "WOR"
+    ],
+    "name": "Worthington Enterprises",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Worthington Enterprises Form 10-K (filed 2026-07-30) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/108516/000119312526325872/wor-20260531.htm"
+      }
+    ],
+    "ja": {
+      "business": "工具やアウトドア用品、建築向け金属製品を作るメーカー。",
+      "revenue": "建築製品と消費者製品の2部門で稼ぐ。消費者向けは主に小売店経由で売る。",
+      "strength": "有力ブランドと大規模生産力、多様な市場の顧客との関係が持ち味。",
+      "risks": "競合は国内外に多く、価格・サービス・品質で争う。プライベートブランドとの競争もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of tools, outdoor living goods and metal building products.",
+      "revenue": "It earns from two segments, Building Products and Consumer Products. Consumer goods sell mainly through retailers.",
+      "strength": "Market-leading brands, manufacturing at scale and ties with customers in diverse end markets set it apart.",
+      "risks": "It faces many domestic and foreign rivals and competes on price, service and quality. Private-label products add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1647088,
+    "tickers": [
+      "WSC"
+    ],
+    "name": "WillScot",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "WillScot Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1647088/000164708826000011/wsc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "仮設オフィスや収納コンテナを貸し出す、仮設スペースの会社。",
+      "revenue": "米国、カナダ、メキシコの約260の拠点から、モジュール式の建物や収納ユニットをリースして稼ぐ。",
+      "strength": "耐用年数が20年を超えることも多い資産を貸し続ける力が独自の強み。家具や電源などの付加商品も扱う。",
+      "risks": "同業との価格競争が激しく、景気後退で需要が減りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that leases temporary space, such as modular offices and portable storage containers.",
+      "revenue": "It earns by leasing modular buildings and storage units from about 260 branches in the US, Canada and Mexico.",
+      "strength": "Its edge is leasing assets that often last over 20 years. It also adds furniture, power and other value-added products.",
+      "risks": "Price competition in a fragmented industry is intense, and economic downturns can cut demand.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1439288,
+    "tickers": [
+      "ZWS"
+    ],
+    "name": "Zurn Elkay",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Zurn Elkay Form 10-K (filed 2026-02-09) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1439288/000162828026006372/zws-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "商業ビルや公共施設向けに水まわりの設備を作る会社。",
+      "revenue": "新しい商業・公共ビルの建設と既存建物の改修向けが中心。上下水道や住宅向けは一部。",
+      "strength": "建築基準を満たす製品を設計段階で指定してもらう仕組みが特徴。買収で製品群を広げてきた。",
+      "risks": "建設市況の悪化や原材料の値上がり、関税が重荷。独立系の販売店への依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes water management products for commercial and institutional buildings.",
+      "revenue": "Demand comes mainly from new commercial and institutional construction and retrofits, with some from waterworks and housing.",
+      "strength": "Its products meet strict codes and get specified into projects. Acquisitions have widened its product lines.",
+      "risks": "Weak construction markets, higher raw material costs and tariffs hurt, and it depends on independent distributors.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 824142,
+    "tickers": [
+      "AAON"
+    ],
+    "name": "AAON",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AAON Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "業務用・産業用の空調と液冷設備を作る会社。",
+      "revenue": "受注生産の空調機を独立系の販売代理店網で売って稼ぐ。海外売上は2025年で2.6%。",
+      "strength": "顧客の仕様に合わせた量産型のカスタム生産が特徴。価格ではなく技術力と成果で競う。",
+      "risks": "新築市場の景気循環に左右される。大口顧客を失えば売上に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes heating, ventilation, air conditioning and liquid cooling equipment for commercial and industrial buildings.",
+      "revenue": "It sells build-to-order equipment through independent sales representatives. Foreign sales were 2.6% of net sales in 2025.",
+      "strength": "Mass semi-customization is its feature. It competes on technical excellence and customer outcomes, not price.",
+      "risks": "It depends on the cycles of new construction, and losing a major customer could cut sales.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 868857,
+    "tickers": [
+      "ACM"
+    ],
+    "name": "AECOM",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AECOM Form 10-K (filed 2025-11-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/868857/000086885725000013/acm-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "政府や企業向けにインフラの設計とコンサルを行う会社。",
+      "revenue": "顧客のプロジェクトに充てた社員の時間を請求して稼ぐ。米州と国際の2部門が中心で、不動産開発も手がける。",
+      "strength": "世界的な技術者網と、助言から設計、運営管理までこなす幅広さが強み。評判や低コストも武器にする。",
+      "risks": "競合が多く、参入障壁も低い。競争に負ければ売上や利益、シェアが落ちる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides infrastructure design and consulting for governments and businesses.",
+      "revenue": "It bills clients for staff time spent on projects. Its main units are Americas and International, plus real estate development.",
+      "strength": "Its strengths are a global network of technical experts and a range of services from advice to design and program management.",
+      "risks": "Competitors are many and barriers to entry are low. Losing out could cut revenue, profit and market share.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 880266,
+    "tickers": [
+      "AGCO"
+    ],
+    "name": "AGCO",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AGCO Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/880266/000088026626000010/agco-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "農業機械と精密農業技術を世界で手がけるメーカー。",
+      "revenue": "2025年はトラクターが売上の66%、交換部品が19%を占める。約140か国の約2,800の独立ディーラーを通じて売る。",
+      "strength": "Fendt、Massey Ferguson、Valtraなどのブランドを持つ、農業機械の世界的大手。",
+      "risks": "農業業界は競争が激しい。販売の多くを独立ディーラーに頼る。",
+      "competition": "主な競合にDeere & Company、CNH Industrial N.V.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of farm machinery and precision agriculture technology around the world.",
+      "revenue": "In 2025, tractors made up 66% of net sales and replacement parts 19%. Products reach farmers through about 2,800 independent dealers in about 140 countries.",
+      "strength": "It is a global leader in farm machinery with brands such as Fendt, Massey Ferguson and Valtra.",
+      "risks": "The agricultural industry is highly competitive. Most of its products are sold through independent dealers.",
+      "competition": "Main competitors include Deere & Company, CNH Industrial N.V..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Deere & Company",
+          "ticker": "DE",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CNH Industrial N.V.",
+          "ticker": "CNH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 109563,
+    "tickers": [
+      "AIT"
+    ],
+    "name": "Applied Industrial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Applied Industrial Form 10-K (filed 2026-08-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/109563/000010956326000033/ait-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "ベアリングや流体制御など産業用部品を扱う専門商社。",
+      "revenue": "ベアリング、動力伝達部品、流体動力機器、オートメーション機器などを工場へ販売して稼ぐ。",
+      "strength": "技術に強い営業と修理力が特徴。広い在庫と、顧客工場に近い拠点網を持つ。",
+      "risks": "顧客の稼働水準や景気に大きく左右される。顧客が操業を落とすと需要が減りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A distributor of industrial parts such as bearings and fluid power components.",
+      "revenue": "It earns by selling bearings, power transmission parts, fluid power and automation products to industrial customers.",
+      "strength": "Deep technical expertise and repair skills set it apart. It also has broad in-stock supply and sites close to customer plants.",
+      "risks": "Its results depend heavily on customers' operating levels and the economy. Demand can fall if customers cut output.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 766421,
+    "tickers": [
+      "ALK"
+    ],
+    "name": "Alaska Air Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Alaska Air Group Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "アラスカ航空とハワイアン航空を運航する米国の航空会社グループ。",
+      "revenue": "旅客と貨物の航空輸送で稼ぐ。地域路線はホライゾン航空などが運航し、アラスカ航空が全座席を買い取る。",
+      "strength": "安全を最優先の価値に掲げる。ワンワールド加盟で、ハワイアン航空のブランドも残している。",
+      "risks": "航空業界は競争が激しい。燃料費や人件費、ハワイアン統合の成否が業績を左右する。",
+      "competition": "主な競合にDelta Air Lines、Southwest Airlines、United Airlinesがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US airline group that runs Alaska Airlines and Hawaiian Airlines.",
+      "revenue": "It earns from air transport of passengers and cargo. Regional flights run by Horizon and others are bought in full by Alaska.",
+      "strength": "Safety comes first among its values. It belongs to the one world alliance and keeps Hawaiian as a distinct brand.",
+      "risks": "The airline industry is fiercely competitive. Fuel and labor costs and the Hawaiian integration can swing results.",
+      "competition": "Main competitors include Delta Air Lines, Southwest Airlines, United Airlines.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Delta Air Lines",
+          "ticker": "DAL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Southwest Airlines",
+          "ticker": "LUV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "United Airlines",
+          "ticker": "UAL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1411207,
+    "tickers": [
+      "ALSN"
+    ],
+    "name": "Allison Transmission",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Allison Transmission Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1411207/000119312526065627/alsn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "商用車や軍用車向けの全自動トランスミッションを作る会社。",
+      "revenue": "商用車メーカーなどに変速機を売って稼ぐ。2025年の売上の約76%は北米で、約1,500の販売店網を通す。",
+      "strength": "中・大型商用車向け全自動変速機で世界最大の製造企業。信頼性や耐久性のブランド力も特徴。",
+      "risks": "競争の激しい市場にいる。上位5顧客に売上が集中し、買収した事業の統合費用もかさむ。",
+      "competition": "主な競合にFord Motor Companyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes fully automatic transmissions for commercial and defense vehicles.",
+      "revenue": "It earns by selling transmissions to vehicle makers. About 76% of 2025 revenue came from North America, via about 1,500 distributor and dealer sites.",
+      "strength": "It is the world's largest maker of fully automatic transmissions for medium- and heavy-duty commercial vehicles, with a brand tied to reliability and durability.",
+      "risks": "It operates in competitive markets. Sales are concentrated in its top five customers, and integrating the acquired business is costly.",
+      "competition": "Main competitors include Ford Motor Company.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Ford Motor Company",
+          "ticker": "F",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1018963,
+    "tickers": [
+      "ATI"
+    ],
+    "name": "ATI",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ATI Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828026010140/ati-20251228.htm"
+      }
+    ],
+    "ja": {
+      "business": "航空機エンジンなどに使う特殊素材や部品をつくる会社。",
+      "revenue": "売上の約68%は航空宇宙・防衛向け。ジェットエンジンや機体向けの素材・部品で稼ぐ。",
+      "strength": "材料科学の知見と先進的な製造技術が特徴。ニッケル合金やチタン合金に強い。",
+      "risks": "顧客業界の景気循環で需要が変動しうる。民間航空機向けは厳しい性能基準も課される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes specialty materials and components, mainly for jet engines and airframes.",
+      "revenue": "About 68% of sales come from aerospace and defense, from materials and parts for jet engines and airframes.",
+      "strength": "Materials science expertise and advanced process technologies set it apart, with strength in nickel and titanium alloys.",
+      "risks": "Cyclical customer industries make demand swing. Commercial aerospace work also carries exacting performance requirements.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1144215,
+    "tickers": [
+      "AYI"
+    ],
+    "name": "Acuity",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Acuity Form 10-K (filed 2025-10-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1144215/000114421525000082/ayi-20250831.htm"
+      }
+    ],
+    "ja": {
+      "business": "照明と建物向けのスマート制御機器・サービスを作る会社。",
+      "revenue": "照明事業と、建物管理や音響映像を扱うインテリジェントスペース事業の2本柱。独立系の販売代理店や電気資材の卸などを通じて売る。",
+      "strength": "照明器具に高度な電子部品を組み合わせた提案が特徴。新製品の開発で成長を狙う。",
+      "risks": "景気、金利、関税、原材料費などの影響を受けやすい。AIやソフトの分野では多様な競合とぶつかる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes lighting and smart building control products and services.",
+      "revenue": "It has two segments: lighting, and intelligent spaces for building management and audio-video. Sales run through independent sales agencies, electrical distributors and others.",
+      "strength": "Its offer pairs luminaires with advanced electronics. It pursues growth through new products and services.",
+      "risks": "Economic conditions, interest rates, tariffs and commodity costs hit it hard. In AI and software it faces a wide range of competitors.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 78890,
+    "tickers": [
+      "BCO"
+    ],
+    "name": "Brink’s",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Brink’s Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/78890/000007889026000010/bco-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "現金や貴重品の輸送・管理とATM運用を手がける警備輸送会社。",
+      "revenue": "現金・貴重品の輸送や保管の契約で稼ぐ。小売店、金融機関、政府機関、造幣局などが顧客。",
+      "strength": "ブランドの知名度、サービスと安全性の評判、リスク管理と物流の知見が強み。",
+      "risks": "競争が激しく、価格圧力を受ける。キャッシュレス化で現金関連の需要が減りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that moves and manages cash and valuables and runs ATM services.",
+      "revenue": "It earns from contracts to transport and store cash and valuables for retailers, financial institutions, government agencies and mints.",
+      "strength": "Its strengths are brand recognition, a reputation for service and security, and risk management and logistics expertise.",
+      "risks": "Competition is intense and brings pricing pressure. Wider use of other payment options could cut demand for cash services.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1486957,
+    "tickers": [
+      "BWXT"
+    ],
+    "name": "BWXT",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BWXT Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695726000007/bwxt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "原子力部品や核燃料を作る、米国の原子力専門メーカー。",
+      "revenue": "米政府向けの海軍用原子炉部品と核燃料が柱。原子力発電や医療用放射性同位元素でも稼ぐ。",
+      "strength": "100年以上の経験を持つ。参入障壁が高く、政府向けの原子力部品や燃料は競争が限られる。",
+      "risks": "米政府契約が売上の約68%を占める。議会の予算次第で契約が止まりうる。大型案件にも偏る。",
+      "competition": "主な競合にCameco Corporationがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. specialty maker of nuclear components and fuel.",
+      "revenue": "Naval nuclear reactor components and fuel for the U.S. Government are the core. Nuclear power and medical radioisotopes add more.",
+      "strength": "It has over 100 years of experience. High entry barriers keep competition limited for government nuclear components and fuel.",
+      "risks": "U.S. Government contracts were about 68% of revenue and depend on congressional funding. A few large projects also weigh heavily.",
+      "competition": "Main competitors include Cameco Corporation.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Cameco Corporation",
+          "ticker": "CCJ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 16058,
+    "tickers": [
+      "CACI"
+    ],
+    "name": "CACI",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CACI Form 10-K (filed 2026-08-06) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/16058/000162828026054195/caci-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "国家安全保障向けにIT技術と人材を提供する米国の企業。",
+      "revenue": "売上のほぼ全てが米連邦政府との契約。2026会計年度は95.6%を占めた。",
+      "strength": "独自の技術と専門人材の組み合わせが特徴。分野を支配する単独の競合はないとする。",
+      "risks": "連邦政府への依存が大きい。政府の予算方針が変われば業績に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US company providing IT technology and expertise for national security.",
+      "revenue": "Nearly all revenue comes from federal government contracts, which made up 95.6% in fiscal 2026.",
+      "strength": "Its mix of proprietary technology and skilled people is the feature. No single competitor dominates its fields.",
+      "risks": "It leans heavily on the federal government. Shifts in government budget priorities can hit results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 723612,
+    "tickers": [
+      "CAR"
+    ],
+    "name": "Avis Budget Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Avis Budget Group Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000012/car-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "Avis、Budget、Zipcarのブランドでレンタカーやカーシェアを運営する会社。",
+      "revenue": "約180カ国で車両レンタルとカーシェアを行い、南北米州と国際の2部門で稼ぐ。ブランド使用料も得る。",
+      "strength": "北米・欧州・豪州の空港レンタカーで主要なシェアを保つ。平日の法人需要と週末の個人需要が補い合う。",
+      "risks": "価格とサービスの競争が激しい。配車サービスとも短距離の利用で競合する。",
+      "competition": "主な競合にHertz Global Holdingsがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs car rental and car sharing under the Avis, Budget and Zipcar brands.",
+      "revenue": "It earned about $11.7 billion in 2025 from vehicle rental and car sharing in its Americas and International segments, plus brand licensing.",
+      "strength": "It keeps a leading share of airport car rental in North America, Europe and Australasia. Weekday business demand balances weekend leisure demand.",
+      "risks": "Price and service competition is intense, and ride-hailing firms compete for short urban trips.",
+      "competition": "Main competitors include Hertz Global Holdings.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Hertz Global Holdings",
+          "ticker": "HTZ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 822818,
+    "tickers": [
+      "CLH"
+    ],
+    "name": "Clean Harbors",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Clean Harbors Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米で産業廃棄物の処理や使用済み油の再生を手がける環境サービス会社。",
+      "revenue": "有害・無害廃棄物の収集と処理を行う環境サービスと、使用済み油から潤滑油を作るSafety-Kleenの2部門で稼ぐ。",
+      "strength": "安全とコンプライアンスを重んじる姿勢が強み。100を超える廃棄物処理施設を持つ。",
+      "risks": "地域から国際までの企業との競争が激しい。施設が規制違反で指摘を受けたこともある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An environmental services company handling industrial waste and re-refining used oil in North America.",
+      "revenue": "It earns from two segments: Environmental Services for waste handling, and Safety-Kleen Sustainability Solutions, which turns used oil into lubricants.",
+      "strength": "Its focus on safety and compliance is a core strength, backed by over 100 waste disposal facilities.",
+      "risks": "Competition from local to international firms is robust, and its facilities have been cited for regulatory violations.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1567094,
+    "tickers": [
+      "CNH"
+    ],
+    "name": "CNH",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CNH Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1567094/000156709426000006/cnhi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "農業機械と建設機械をつくり、販売する世界的な機械メーカー。",
+      "revenue": "2025年の総収益は18,095百万ドル。農業・建設機械の販売と、購入者向けの金融サービスで稼ぐ。",
+      "strength": "Case IHとNew Hollandという2大ブランドを持つ。精密農業技術を機械に組み込む戦略が特徴。",
+      "risks": "2025年は大型農業機械の需要減や関税の負担に直面した。農業機械市場は景気の波を受けやすい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global maker and seller of agricultural and construction equipment.",
+      "revenue": "Total revenues in 2025 were $18,095 million, from equipment sales and financial services for buyers.",
+      "strength": "It has two leading global brands, Case IH and New Holland, and builds precision technology into its machines.",
+      "risks": "In 2025 it faced lower demand for large agricultural equipment and tariff pressure. The market is cyclical.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1856525,
+    "tickers": [
+      "CNM"
+    ],
+    "name": "Core & Main",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Core & Main Form 10-K (filed 2026-03-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1856525/000185652526000031/cnm-20260201.htm"
+      }
+    ],
+    "ja": {
+      "business": "水道・下水・排水・消火設備用の資材を扱う専門商社。",
+      "revenue": "自治体、非住宅、住宅向けの資材販売で稼ぐ。2025年度の売上は自治体が44%、非住宅が38%、住宅が18%。",
+      "strength": "370を超える拠点網と22万5,000点超の品ぞろえが特徴。全米規模の競合は1社だけ。",
+      "risks": "住宅・非住宅の建設市況や、自治体のインフラ予算の鈍化に左右される。入札で勝てるかも課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty distributor of water, wastewater, storm drainage and fire protection products.",
+      "revenue": "It earns by selling to municipal, non-residential and residential markets. In fiscal 2025, municipal was 44% of net sales, non-residential 38% and residential 18%.",
+      "strength": "A network of over 370 branches and more than 225,000 products is its feature. Only one other distributor competes at national level.",
+      "risks": "Swings in construction markets and slower municipal infrastructure spending can hurt it. Winning competitive bids is also a risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1944013,
+    "tickers": [
+      "CR"
+    ],
+    "name": "Crane",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Crane Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1944013/000194401326000095/cr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "航空宇宙や防衛、プロセス産業向けに高機能部品を作る会社。",
+      "revenue": "航空宇宙・先端技術と、プロセスフロー技術の2つの部門で稼ぐ。",
+      "strength": "独自の差別化技術と深い業界知識、顧客ごとの要望への対応力で競う。",
+      "risks": "需要の変動が大きい。航空需要が落ち込めば、航空機向けの部品の受注が減りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes highly engineered components for aerospace, defense, space and process industries.",
+      "revenue": "It earns through two segments: Aerospace & Advanced Technologies and Process Flow Technologies.",
+      "strength": "It competes on proprietary, differentiated technology, deep vertical expertise and responsiveness to customer needs.",
+      "risks": "Demand swings widely. A drop in air travel could reduce orders for its aircraft parts.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 17843,
+    "tickers": [
+      "CRS"
+    ],
+    "name": "Carpenter Technology",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Carpenter Technology Form 10-K (filed 2026-08-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/17843/000001784326000034/crs-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "特殊合金を作って販売する素材メーカー。",
+      "revenue": "航空宇宙、防衛、医療、輸送、エネルギーなど幅広い市場に特殊合金を供給して稼ぐ。",
+      "strength": "135年以上の冶金と製造の経験、技術力、研究開発が、新規参入の壁になる。",
+      "risks": "ニッケルやコバルトなど原料の価格変動と供給の途絶を抱える。競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker and seller of premium specialty alloys.",
+      "revenue": "It earns by supplying specialty alloys to markets such as aerospace, defense, medical, transportation and energy.",
+      "strength": "Over 135 years of metallurgical and manufacturing expertise, technical capability and R&D act as barriers to competitors.",
+      "risks": "It faces volatile raw material prices, such as nickel and cobalt, and possible supply interruptions. Competition is also tough.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 26324,
+    "tickers": [
+      "CW"
+    ],
+    "name": "Curtiss-Wright",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Curtiss-Wright Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/26324/000162828026007587/cw-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "航空宇宙・防衛向けを中心に高性能な機器を作る会社。",
+      "revenue": "航空宇宙・産業、防衛エレクトロニクス、海軍・電力の3部門で稼ぐ。顧客は防衛大手や航空機メーカー。",
+      "strength": "技術力と精密製造、顧客との長い関係が強み。故障が許されない用途に製品が使われる。",
+      "risks": "サイバー攻撃でシステムが侵害されうる。競争は技術と価格が軸になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of high-performance equipment, mainly for aerospace and defense.",
+      "revenue": "It earns from three segments: Aerospace & Industrial, Defense Electronics, and Naval & Power. Customers include defense primes and aircraft makers.",
+      "strength": "Engineering strength, precision manufacturing and long customer ties are its edge. Its products serve must-not-fail uses.",
+      "risks": "Cyber intrusions can compromise its systems. Competition turns on technology and pricing.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 29644,
+    "tickers": [
+      "DCI"
+    ],
+    "name": "Donaldson",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Donaldson Form 10-K (filed 2026-09-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/29644/000002964426000085/dci-20260731.htm"
+      }
+    ],
+    "ja": {
+      "business": "エンジンや産業設備、バイオ向けのろ過製品を作る会社。",
+      "revenue": "Mobile Solutionsが純売上の62.3%、Industrial Solutionsが29.1%、Life Sciencesが8.6%。米国・カナダが42.5%を占める。",
+      "strength": "PowerCoreやUltra-Webなど独自のろ過技術を持つ。6大陸の150超の拠点で顧客に対応するのが特徴。",
+      "risks": "関税や貿易規制、各国の法令順守など世界展開のリスクを抱える。ろ過市場は競争が激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes filtration products for engines, industrial equipment and life sciences.",
+      "revenue": "Mobile Solutions is 62.3% of net sales, Industrial Solutions 29.1% and Life Sciences 8.6%. The U.S. and Canada make up 42.5%.",
+      "strength": "It owns filtration technologies such as PowerCore and Ultra-Web, and serves customers from more than 150 locations on six continents.",
+      "risks": "Its global reach brings tariffs, trade limits and compliance burdens, and its filtration markets are highly competitive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 67215,
+    "tickers": [
+      "DY"
+    ],
+    "name": "Dycom",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dycom Form 10-K (filed 2026-03-09) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "通信網やデジタル基盤の工事を請け負う、米国の専門建設会社。",
+      "revenue": "光ファイバーなどの敷設工事を行うCommunications部門と、データセンター向けのBuilding Systems部門の2部門で稼ぐ。",
+      "strength": "38の事業会社と全米50州に広がる拠点を持つ。業界の知識と顧客との関係が特徴。",
+      "risks": "顧客が特定の企業に集中している。負債の返済負担や天候、季節の影響も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US specialty contractor building telecom and digital infrastructure.",
+      "revenue": "It earns through two segments: Communications, which lays fiber and other cable, and Building Systems for data centers.",
+      "strength": "It runs 38 operating companies serving customers in all 50 states, backed by deep industry knowledge and customer ties.",
+      "risks": "Its customer base is highly concentrated, and it carries debt service costs and exposure to weather and seasonality.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1289308,
+    "tickers": [
+      "ENS"
+    ],
+    "name": "EnerSys",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "EnerSys Form 10-K (filed 2026-05-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1289308/000162828026036900/ens-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "産業用の蓄電池や電源システムを設計・製造・販売する会社。",
+      "revenue": "通信、データセンター、フォークリフト、航空宇宙・防衛向けなどの電池と電源で稼ぐ。",
+      "strength": "100を超える国で10,000社超の顧客を持ち、流通網と自社営業で支える。",
+      "risks": "産業用蓄電市場は競争が激しい。開発段階の企業から大手まで競合は幅広い。",
+      "competition": "主な競合にVertiv、Amphenolがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs, makes and sells industrial batteries and power systems.",
+      "revenue": "It earns from batteries and power equipment for telecom, data centers, forklifts, and aerospace and defense.",
+      "strength": "It serves over 10,000 customers in more than 100 countries through distributors and its own sales force.",
+      "risks": "The industrial energy storage market is highly competitive, with rivals from start-ups to large corporations.",
+      "competition": "Main competitors include Vertiv, Amphenol.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Vertiv",
+          "ticker": "VRT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amphenol",
+          "ticker": "APH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1877322,
+    "tickers": [
+      "ESAB"
+    ],
+    "name": "ESAB",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ESAB Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1877322/000187732226000007/esab-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "溶接・切断用の装置や消耗品、ガス制御機器を作る会社。",
+      "revenue": "独立系の販売店と直販で、約150カ国の顧客に売る。2025年の売上の約52%は高成長市場。",
+      "strength": "世界のあらゆる主要市場で一定の地位を持つ。経営手法EBXaiの活用が主な強み。",
+      "risks": "先進国の溶接・切断市場は成熟していて景気循環が大きい。設備投資が減れば需要が落ちる。",
+      "competition": "主な競合にLincoln Electric、Illinois Tool Worksがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes welding and cutting equipment, consumables and gas control equipment.",
+      "revenue": "It sells through independent distributors and direct sales to customers in approximately 150 countries. About 52% of 2025 revenue came from high growth markets.",
+      "strength": "It holds a substantial position in every major market in the world. Its EBXai management method is a primary competitive strength.",
+      "risks": "The welding and cutting industry is mature and cyclical in developed markets. Weaker capital spending cuts demand.",
+      "competition": "Main competitors include Lincoln Electric, Illinois Tool Works.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Lincoln Electric",
+          "ticker": "LECO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Illinois Tool Works",
+          "ticker": "ITW",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1297989,
+    "tickers": [
+      "EXLS"
+    ],
+    "name": "EXL",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "EXL Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "データとAIを使って企業の業務改革を支援する会社。",
+      "revenue": "データ・AI関連の事業と、デジタル運用の代行サービスで稼ぐ。保険や医療、金融などの顧客が中心。",
+      "strength": "世界各地の拠点網と、業界特化のAIや自社開発のAIプラットフォームが特徴。",
+      "risks": "AIなど技術の変化で従来のサービスが置き換わりうる。投資が遅れれば競争力を失う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that helps businesses reinvent operations with data and AI.",
+      "revenue": "It earns from data and AI-led solutions and digital operations services, serving insurance, healthcare and banking clients, among others.",
+      "strength": "Its features are a global delivery network, industry-specific AI and its own AI platform.",
+      "risks": "New technology such as AI can replace its older services. Falling behind on investment would erode its edge.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 851520,
+    "tickers": [
+      "EXPO"
+    ],
+    "name": "Exponent",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Exponent Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/851520/000119312526082508/expo-20260102.htm"
+      }
+    ],
+    "ja": {
+      "business": "事故や故障の原因を分析する科学・工学のコンサルティング会社。",
+      "revenue": "企業のほか、訴訟に備える弁護士や保険会社の依頼で稼ぐ。2025年は消費財が売上の21%、エネルギー・公益が20%。",
+      "strength": "90を超える技術分野の専門家が、55年以上の事故・故障分析の経験を生かす。",
+      "risks": "参入障壁が低く、競争が強まっている。顧客はいつでも契約を打ち切れる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A science and engineering consulting firm that analyzes accidents and failures.",
+      "revenue": "It earns from engagements by companies, and by lawyers and insurers preparing for litigation. In 2025, consumer products made up 21% of revenue and energy and utilities 20%.",
+      "strength": "Experts from more than 90 technical disciplines draw on over 55 years of experience analyzing accidents and failures.",
+      "risks": "Barriers to entry are low and competition is increasing. Clients can end engagements at any time.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1519751,
+    "tickers": [
+      "FBIN"
+    ],
+    "name": "Fortune Brands",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Fortune Brands Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1519751/000119312526063960/fbin-20251227.htm"
+      }
+    ],
+    "ja": {
+      "business": "水回り製品や防犯製品など住宅向け商品を扱う会社。",
+      "revenue": "キッチン・バス販売店、卸、ホームセンター、ネット通販などを通じ、主に北米と中国で売って稼ぐ。",
+      "strength": "多くの製品分野で有力ブランドを持つ。接続機能付き製品やデジタル化への投資も特徴。",
+      "risks": "北米と中国の住宅リフォームや新築の動向に左右される。主要顧客や仕入先への依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of home products such as plumbing and security goods.",
+      "revenue": "It sells through kitchen and bath dealers, wholesalers, home centers and e-commerce, mainly in North America and China.",
+      "strength": "It holds leading brands in many product categories. Investment in connected products and digital tools is also a feature.",
+      "risks": "Results follow home remodeling and new construction in North America and China. It also depends on key customers and suppliers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 887936,
+    "tickers": [
+      "FCN"
+    ],
+    "name": "FTI Consulting",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "FTI Consulting Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/887936/000088793626000013/fcn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "危機や変革に直面する企業を支える世界的な専門家集団。",
+      "revenue": "企業財務、訴訟コンサル、経済コンサルなど5部門で稼ぐ。売上の63%は米国の拠点が生む。",
+      "strength": "特定分野に深い専門知識と実績を持つ。大手法律事務所からの紹介や依頼も多い。",
+      "risks": "競争が激しく、環境の変化も速い。新しいリスクが次々に生まれる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global expert firm serving organizations in crisis and transformation.",
+      "revenue": "It earns from five segments, including Corporate Finance and Economic Consulting. 63% of revenue comes from U.S. locations.",
+      "strength": "Deep expertise in specialized areas backed by a track record. Major law firms refer clients or engage it directly.",
+      "risks": "It works in a very competitive, fast-changing setting, and new risks keep emerging.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1124198,
+    "tickers": [
+      "FLR"
+    ],
+    "name": "Fluor",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Fluor Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1124198/000112419826000007/flr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界でエンジニアリングと建設、プロジェクト管理を請け負う会社。",
+      "revenue": "都市、エネルギー、ミッションの3部門で稼ぐ。受注残の81%は実費精算型の契約。",
+      "strength": "大型で複雑なプロジェクトを安全にやり遂げる力が競争上の強み。LNGや原子力などの分野に対応する。",
+      "risks": "市場は競争が激しく、定額入札では価格で負ければ受注を逃す。",
+      "competition": "主な競合にAECOM、Amentum、BWXT Technologies、EMCOR Group、Jacobs Solutionsがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides engineering, construction and project management services worldwide.",
+      "revenue": "It earns through three segments: Urban Solutions, Energy Solutions and Mission Solutions. 81% of its backlog is reimbursable.",
+      "strength": "Its competitive edge is safely completing large, complex projects, in fields such as LNG, nuclear-derived power and data centers.",
+      "risks": "Its markets are highly competitive, and a higher lump-sum bid can lose the work.",
+      "competition": "Main competitors include AECOM, Amentum, BWXT Technologies, EMCOR Group, Jacobs Solutions.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "AECOM",
+          "ticker": "ACM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amentum",
+          "ticker": "AMTM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "BWXT Technologies",
+          "ticker": "BWXT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "EMCOR Group",
+          "ticker": "EME",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Jacobs Solutions",
+          "ticker": "J",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 30625,
+    "tickers": [
+      "FLS"
+    ],
+    "name": "Flowserve",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Flowserve Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ポンプやバルブ、シールなどの流体制御機器を作り、保守も行う会社。",
+      "revenue": "エネルギーや化学、発電、水処理向けの機器と、据付や保守などのアフターマーケット事業で稼ぐ。",
+      "strength": "10,000社超の顧客を持つ。特注品が多く、アフターマーケットでは自社が頼られてきた。",
+      "risks": "標準品の交換市場は競争が激しい。共通規格のため他社品に置き換わりやすい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of pumps, valves and seals for flow control, with aftermarket service.",
+      "revenue": "It earns from equipment sold to energy, chemical, power and water industries, plus aftermarket services such as installation and maintenance.",
+      "strength": "It sells to over 10,000 customers, and its highly engineered, customized products keep clients coming back for aftermarket parts.",
+      "risks": "The aftermarket for standard products is competitive, since common standards make replacement easier.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1398659,
+    "tickers": [
+      "G"
+    ],
+    "name": "Genpact",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Genpact Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1398659/000139865926000004/g-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "業務プロセスとAI技術で企業の変革を支える会社。",
+      "revenue": "Advanced Technology SolutionsとCore Business Servicesで稼ぐ。前者は2025年の売上の23.7%を占める。",
+      "strength": "業務プロセスと業界の深い知識に加え、元GE部門としての運用の厳密さが強み。",
+      "risks": "AIなど先端技術の影響が大きく、競争や評判、法律の面でリスクを抱える。AI投資が成果を生まない恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that helps businesses transform their operations with process expertise and AI technology.",
+      "revenue": "It earns from Advanced Technology Solutions and Core Business Services; the former made up 23.7% of 2025 net revenues.",
+      "strength": "Deep process and industry knowledge, plus operational rigor from its past as GE's capability center, are its features.",
+      "risks": "AI and other advanced technologies bring competitive, reputational and legal risks, and its AI investments may not succeed.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 40211,
+    "tickers": [
+      "GATX"
+    ],
+    "name": "GATX",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "GATX Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/40211/000004021126000018/gmt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "貨車と航空機予備エンジンのリースを手がける会社。",
+      "revenue": "貨車のリースが柱。北米、欧州、インドで約156,000両を保有する。航空機予備エンジンのリースでも稼ぐ。",
+      "strength": "世界最大級の貨車リース車両群が強み。航空機予備エンジンはロールス・ロイスとの合弁も使い大規模に保有する。",
+      "risks": "景気悪化や高金利で顧客の需要が落ちうる。ロールス・ロイスへの依存や、買収の統合リスクも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that leases railcars and aircraft spare engines.",
+      "revenue": "Railcar leasing is the core, with a fleet of approximately 156,000 railcars in North America, Europe and India. Aircraft spare engine leasing adds earnings.",
+      "strength": "Its railcar lease fleet is one of the largest in the world. It also holds a large aircraft spare engine portfolio, partly through joint ventures with Rolls-Royce.",
+      "risks": "Weak economies and high interest rates can cut customer demand. It also relies on Rolls-Royce and faces acquisition risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 42888,
+    "tickers": [
+      "GGG"
+    ],
+    "name": "Graco",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Graco Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/42888/000004288826000081/ggg-20251226.htm"
+      }
+    ],
+    "ja": {
+      "business": "液体や塗料を移送・吹き付ける機器を作る会社。",
+      "revenue": "コントラクター、インダストリアル、エクスパンション・マーケッツの3部門で稼ぐ。売上の約60%は米州。",
+      "strength": "高粘度や腐食性の扱いにくい材料向けの装置に特化し、製品の差別化で専門市場に応える。",
+      "risks": "景気が悪化すれば機器の需要が落ちる。低価格の競合や模倣品も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes equipment to move, mix and spray fluids and coatings.",
+      "revenue": "It earns through three segments: Contractor, Industrial and Expansion Markets. About 60 percent of sales come from the Americas.",
+      "strength": "It specializes in equipment for difficult materials, such as high-viscosity or corrosive ones, and serves niche markets through product differentiation.",
+      "risks": "An economic downturn can depress demand. Lower-priced rivals and counterfeits add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1852244,
+    "tickers": [
+      "GXO"
+    ],
+    "name": "GXO Logistics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "GXO Logistics Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1852244/000185224426000007/gxo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "倉庫運営や配送、通販の物流を請け負う契約物流の会社。",
+      "revenue": "大企業から倉庫、配送、注文処理などの物流業務を請け負って稼ぐ。1,043か所の拠点で運営する。",
+      "strength": "世界最大の純粋な契約物流会社で、技術を使った個別対応の倉庫サービスを大規模に提供する。",
+      "risks": "競争が激しく、顧客は価格とサービス品質を重視する。人件費の上昇も重荷になりうる。",
+      "competition": "主な競合にRyder Systemがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A contract logistics company that runs warehouses, distribution and e-commerce fulfillment for clients.",
+      "revenue": "It earns by taking over warehousing, distribution and order fulfillment for large companies, operating 1,043 facilities.",
+      "strength": "It is the largest pure-play contract logistics provider in the world, offering technology-enabled, customized warehouse services at scale.",
+      "risks": "Competition is intense, and customers focus on price and service quality. Rising labor costs can also weigh on results.",
+      "competition": "Main competitors include Ryder System.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Ryder System",
+          "ticker": "R",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 717605,
+    "tickers": [
+      "HXL"
+    ],
+    "name": "Hexcel",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hexcel Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "航空機向けの炭素繊維などの先端複合材料メーカー。",
+      "revenue": "売上の約80%は複合材料部門。民間・軍用航空機や宇宙、自動車などの向けに素材を売って稼ぐ。",
+      "strength": "炭素繊維から樹脂、ハニカムまで幅広い製品を持つ。ボーイングやエアバスなど大手が主要顧客。",
+      "risks": "風力向け事業は物価高や物流の混乱で採算が悪化し、撤退した。航空宇宙需要への依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of advanced composite materials such as carbon fiber for aircraft.",
+      "revenue": "About 80% of sales come from Composite Materials, sold for commercial and military aircraft, space and automotive uses.",
+      "strength": "Its range runs from carbon fiber to resins and honeycomb. Boeing and Airbus are among its key customers.",
+      "risks": "Its wind-energy business lost appeal amid inflation and logistics problems, and it exited. It also leans on aerospace demand.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1048268,
+    "tickers": [
+      "IESC"
+    ],
+    "name": "IES Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "IES Holdings Form 10-K (filed 2025-11-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1048268/000104826825000174/iesc-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "データセンターや住宅向けに電気・技術システムを施工する会社。",
+      "revenue": "住宅、通信、産業インフラ、商業・産業の4部門で稼ぐ。住宅が売上の38.7%で最大。",
+      "strength": "品質とサービス、価格で競う。長年の顧客関係と財務力、現地市場の知識が持ち味。",
+      "risks": "需要は景気循環に左右され、建設や住宅市場の悪化に弱い。景気後退や物価高の影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A contractor installing electrical and technology systems for data centers and homes.",
+      "revenue": "It earns from four segments: Communications, Residential, Infrastructure Solutions and Commercial & Industrial. Residential is the largest at 38.7% of revenue.",
+      "strength": "It competes on service quality and price. Long customer ties, financial capability and local market knowledge are its edge.",
+      "risks": "Demand is cyclical and hurt by downturns in construction and housing. Inflation and recession can also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 216228,
+    "tickers": [
+      "ITT"
+    ],
+    "name": "ITT",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ITT Form 10-K (filed 2026-02-09) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/216228/000021622826000012/itt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ブレーキパッドやポンプ、コネクターなどの精密部品を作る会社。",
+      "revenue": "Motion Technologies、Industrial Process、Connect & Control Technologiesの3部門で稼ぐ。売上の65%は米国外。",
+      "strength": "エンジニアリング力を軸に、自動車メーカーなどの長寿命の製品群で継続的な収益と補修需要を取り込む。",
+      "risks": "景気後退や関税など世界経済の悪化が響きうる。ポンプや弁の市場は価格競争が激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes engineered components such as brake pads, pumps and connectors.",
+      "revenue": "It earns through Motion Technologies, Industrial Process, and Connect & Control Technologies. 65% of revenue comes from outside the U.S.",
+      "strength": "Engineering is the core of its model, capturing recurring revenue and aftermarket demand on long-lived OEM platforms.",
+      "risks": "Recession, tariffs and other global economic stress can hurt results, and pricing in pumps and valves is very competitive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1357615,
+    "tickers": [
+      "KBR"
+    ],
+    "name": "KBR",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "KBR Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1357615/000135761526000051/kbr-20260102.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国などの政府向けに防衛や宇宙、エンジニアリングのサービスを提供する会社。",
+      "revenue": "2025年の売上は7,786百万ドル。防衛・情報関連のMTS部門と、エンジニアリング・専門サービスのSTS部門で稼ぐ。",
+      "strength": "機器メーカーから独立した立場で能力を統合する信頼できる事業者として、需要に応える。",
+      "risks": "政府の予算や資金の優先順位が変われば、防衛関連の事業に響きうる。米政府機関の閉鎖で契約や入金も遅れた。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides defense, space and engineering services mainly to governments such as the US.",
+      "revenue": "Revenue in 2025 was $7,786 million, from the MTS segment in defense and intel and the STS segment in engineering and professional services.",
+      "strength": "It positions itself as a trusted capability integrator independent of equipment makers.",
+      "risks": "Shifts in government budgets or funding priorities can hit its defense work. The US government shutdown delayed contracts and payments.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 56047,
+    "tickers": [
+      "KEX"
+    ],
+    "name": "Kirby",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Kirby Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国最大のタンクバージ運航会社で、発電機器の販売も手がける。",
+      "revenue": "石油化学品や石油製品をバージで運ぶ海上輸送と、発電設備や部品・サービスの販売で稼ぐ。",
+      "strength": "ミシシッピ川水系やメキシコ湾岸、全米沿岸にまたがる国内最大級のバージ網が特徴。",
+      "risks": "タンクバージ業界は競争が激しく、価格と信頼性で争う。内陸水路の老朽化も費用と混乱を招く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The largest US domestic tank barge operator, which also sells power generation equipment.",
+      "revenue": "It earns from moving petrochemicals and petroleum products by barge, and from selling power equipment, parts and services.",
+      "strength": "Its barge network spans the Mississippi River System, the Gulf Intracoastal Waterway and all three US coasts.",
+      "risks": "The tank barge business is very competitive on price and reliability. Aging inland waterways add costs and disruptions.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1492691,
+    "tickers": [
+      "KNX"
+    ],
+    "name": "Knight-Swift",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Knight-Swift Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1492691/000149269126000016/knx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米で大型のトラック輸送と物流サービスを手がける会社。",
+      "revenue": "2025年の売上は75億ドル。トラックロード、LTL、物流、複合一貫輸送の4部門で稼ぐ。",
+      "strength": "北米有数の規模と多角化が特徴。自社の車両に加え、外部の運送会社とも組んで幅広く運ぶ。",
+      "risks": "業界は分散して競争が激しい。景気、金利、関税、規制の動きが響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs one of North America's largest trucking and logistics businesses.",
+      "revenue": "Revenue in 2025 was $7.5 billion, earned across four segments: Truckload, LTL, Logistics and Intermodal.",
+      "strength": "Its scale and diversified services are its features. It uses its own fleet and also contracts with third-party carriers.",
+      "risks": "The industry is fragmented and highly competitive. Economic conditions, interest rates, tariffs and regulation can weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 59527,
+    "tickers": [
+      "LECO"
+    ],
+    "name": "Lincoln Electric",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lincoln Electric Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/59527/000005952726000006/leco-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "溶接機器や溶接材料、切断システムを作る会社。",
+      "revenue": "アーク溶接機、溶接材料、切断システムなどの製品に加え、自動化ソリューションや加工サービスを、販売店経由や直販で売って稼ぐ。",
+      "strength": "研究開発への投資と、訓練された技術営業、広い販売店網が競争上の強み。",
+      "risks": "米国の関税や貿易交渉の行方が不透明。鋼材や電子部品などの原材料にも左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes welding equipment, filler metals and cutting systems.",
+      "revenue": "It earns by selling arc welding equipment, consumables and cutting systems, plus automation solutions and services, through distributors and direct to users.",
+      "strength": "Its edge comes from heavy R&D investment, a trained technical sales force and a broad distributor network.",
+      "risks": "U.S. tariffs and trade talks add uncertainty. It also depends on raw materials such as steel and electronic components.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 60519,
+    "tickers": [
+      "LPX"
+    ],
+    "name": "Louisiana-Pacific",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Louisiana-Pacific Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/60519/000006051926000012/lpx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅向けの外装材や構造用パネルを作る建材メーカー。",
+      "revenue": "2025年の売上2,708百万ドルのうち、サイディングが62%、OSB(構造用パネル)が31%を占める。",
+      "strength": "北米最大の木質サイディングメーカー。LP SmartSideなどの製品を持つ。",
+      "risks": "火災や天災で工場の生産が止まりうる。建材業界は競争が激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A building products maker that produces siding and structural panels for homes.",
+      "revenue": "Of $2,708 million in net sales in 2025, Siding was 62% and OSB (oriented strand board) 31%.",
+      "strength": "It is the largest maker of engineered wood siding in North America, with products such as LP SmartSide.",
+      "risks": "Fires and natural disasters can halt plant output. The building products industry is highly competitive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 853816,
+    "tickers": [
+      "LSTR"
+    ],
+    "name": "Landstar",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Landstar Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/853816/000119312526064756/d66072d10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "自社トラックを持たずに貨物輸送を手配する物流会社。",
+      "revenue": "代理店と外部の運送業者を通じ、トラックや航空、海運の輸送サービスで稼ぐ。",
+      "strength": "約960の独立代理店と7万超の外部運送業者のネットワークが特徴。デジタル技術で結びつける。",
+      "risks": "事故やその請求が重くなりうる。商用トラックの請求は一定額まで自己負担で抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An asset-light logistics company that arranges freight transport without owning trucks.",
+      "revenue": "Revenue was $4.7 billion in its latest fiscal year, earned from truck, air, ocean and rail transport through agents and outside carriers.",
+      "strength": "A network of about 960 independent agents and over 70,000 outside capacity providers is its hallmark, linked by digital tools.",
+      "risks": "Accidents and related claims can be severe. It keeps liability for trucking claims up to $5 million per occurrence.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 769520,
+    "tickers": [
+      "MIDD"
+    ],
+    "name": "Middleby",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Middleby Form 10-K (filed 2026-03-04) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/769520/000076952026000011/midd-20260103.htm"
+      }
+    ],
+    "ja": {
+      "business": "業務用の厨房機器と食品加工機器を作るメーカー。",
+      "revenue": "業務用フードサービス機器と食品加工機器の2部門で稼ぐ。顧客は飲食店、ホテル、食品工場など。",
+      "strength": "数多くの有力ブランドを持ち、幅広い製品を揃える。短い納期と顧客サポートが売り。",
+      "risks": "業界は競争が激しく分散している。競合には自社より大きい企業もある。",
+      "competition": "主な競合にIllinois Tool Works、JBT Marelがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of commercial kitchen equipment and food processing machinery.",
+      "revenue": "It earns from two segments, Commercial Foodservice Equipment and Food Processing Equipment. Customers include restaurants, hotels and food processors.",
+      "strength": "A large stable of leading brands and a broad product line. Short lead times and customer support are selling points.",
+      "risks": "The industry is highly competitive and fragmented. Some rivals are larger than the company.",
+      "competition": "Main competitors include Illinois Tool Works, JBT Marel.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Illinois Tool Works",
+          "ticker": "ITW",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "JBT Marel",
+          "ticker": "JBTM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 89439,
+    "tickers": [
+      "MLI"
+    ],
+    "name": "Mueller Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Mueller Industries Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/89439/000008943926000008/mli-20251227.htm"
+      }
+    ],
+    "ja": {
+      "business": "銅管や真ちゅう棒、アルミ製品などを作る金属加工会社。",
+      "revenue": "Piping Systems、Industrial Metals、Climateの3部門で稼ぐ。住宅や商業建設の空調・配管向けが中心。",
+      "strength": "銅管と真ちゅう棒の米国需要は今も主に米国メーカーが賄う。原料高は販売価格に転嫁する。",
+      "risks": "銅やエネルギーの価格変動が利益率を圧迫しうる。空調などではアルミ製品への切り替えも脅威。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A metalworking company that makes copper tube, brass rod and aluminum products.",
+      "revenue": "It earns through three segments: Piping Systems, Industrial Metals and Climate, mostly for plumbing, HVAC and refrigeration in housing and construction.",
+      "strength": "U.S. demand for copper tube and brass rod is still mostly met by U.S. makers, and raw material cost changes are passed on to customers.",
+      "risks": "Volatile copper and energy costs can squeeze margins, and aluminum systems are a substitution threat in air conditioning.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 66570,
+    "tickers": [
+      "MSA"
+    ],
+    "name": "MSA Safety",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MSA Safety Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/66570/000006657026000005/msa-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "作業員や設備を守る安全製品とソリューションをつくる会社。",
+      "revenue": "検知機器、消防用機器、産業用保護具を、米州と国際の2つの地域で販売して稼ぐ。",
+      "strength": "1914年から続く安全分野の実績と研究開発が特徴。新製品は特許で守られることが多い。",
+      "risks": "製品で負傷者が出れば、訴訟やリコール、評判の悪化を招きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes safety products and solutions to protect workers and facilities.",
+      "revenue": "It sells detection, fire service and industrial protective equipment through two reportable segments, Americas and International.",
+      "strength": "It has focused on safety innovation since 1914 and invests heavily in R&D, with products often protected by intellectual property.",
+      "risks": "Injuries linked to its products could bring claims, recalls and reputational harm.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1003078,
+    "tickers": [
+      "MSM"
+    ],
+    "name": "MSC Industrial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MSC Industrial Form 10-K (filed 2025-10-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1003078/000100307825000123/msm-20250830.htm"
+      }
+    ],
+    "ja": {
+      "business": "金属加工と工場の保守用品を扱う北米の産業用品販売会社。",
+      "revenue": "約2.5 million点の在庫品を、ウェブや在庫管理サービス、カタログ、営業担当を通じて売って稼ぐ。",
+      "strength": "在庫品は受注当日に出荷し、条件を満たせば翌日配送する。取引だけでなく課題解決型の提案が特徴。",
+      "risks": "顧客である製造業の稼働や景気に需要が左右される。競合の強気な価格戦略や供給網の混乱も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A North American distributor of metalworking and industrial maintenance products.",
+      "revenue": "It earns by selling approximately 2.5 million in-stock items through its website, inventory management solutions, catalogs and sales staff.",
+      "strength": "In-stock orders ship the day they arrive, and qualifying orders get next-day delivery. A value-added solutions approach sets it apart.",
+      "risks": "Demand follows its manufacturing customers' output and the economy. Aggressive competitor pricing and supply chain disruptions are also risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 15615,
+    "tickers": [
+      "MTZ"
+    ],
+    "name": "MasTec",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MasTec Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/15615/000001561526000020/mtz-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "通信や電力、パイプラインなどのインフラを建設する会社。",
+      "revenue": "通信、クリーンエネルギー・インフラ、送電、パイプラインなどの部門で稼ぐ。大半は複数年のサービス契約か個別の工事契約。",
+      "strength": "通信から電力、再生可能エネルギー、土木まで幅広く手がけ、顧客層も多様。",
+      "risks": "規制や補助政策の変更で、案件の遅れや中止が起こりうる。再生可能エネルギーへの支援縮小も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that builds communications, energy and other infrastructure.",
+      "revenue": "It earns through segments such as Communications, Clean Energy and Infrastructure, Power Delivery and Pipeline Infrastructure, under multi-year service agreements or project contracts.",
+      "strength": "It covers a wide range of work, from communications and power to renewables and civil projects, for a diversified customer base.",
+      "risks": "Changes in regulation or funding policy can delay or cancel projects, and reduced support for renewable energy is a risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1720635,
+    "tickers": [
+      "NVT"
+    ],
+    "name": "nVent",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "nVent Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1720635/000162828026008608/nvt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電気の接続と保護の製品を作る電機機器メーカー。",
+      "revenue": "システム保護と電気接続の部門で稼ぐ。インフラ、産業、商業・住宅、エネルギー向けに売る。",
+      "strength": "HOFFMAN、ERICO、CADDYなどのブランドを持ち、品質、信頼性、革新性が評価される。",
+      "risks": "世界の景気や需要の変動に左右される。競合には大手のほか低コストの製造業者もいる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of electrical connection and protection products.",
+      "revenue": "It earns through its Systems Protection and Electrical Connections segments, selling to infrastructure, industrial, commercial and residential, and energy customers.",
+      "strength": "It owns brands such as HOFFMAN, ERICO and CADDY, and is recognized globally for quality, reliability and innovation.",
+      "risks": "Demand moves with global economic conditions. It also competes with large players and lower-cost manufacturers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1852131,
+    "tickers": [
+      "NXT"
+    ],
+    "name": "Nextpower",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Nextpower Form 10-K (filed 2026-05-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1852131/000185213126000017/nxt-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "大規模太陽光発電所向けの架台や関連技術を手がける会社。",
+      "revenue": "構造、電気、デジタルの各製品を、発電所の設計から運営までの各段階で提供して稼ぐ。",
+      "strength": "太陽光追尾システムで世界首位を自認する。各列が独立して動く追尾方式と、発電量管理のTrueCaptureが特徴。",
+      "risks": "太陽光の需要や政府の優遇策に左右される。追尾装置業界の競争や、供給元への依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A provider of solar tracking systems and related technology for utility-scale power plants.",
+      "revenue": "It earns by supplying structural, electrical and digital products across the life of a solar plant, from design to operations.",
+      "strength": "It is the global leader in solar tracking. Its independent row tracker and TrueCapture energy yield system are key features.",
+      "risks": "Results depend on solar demand and government incentives. Tracker competition and reliance on suppliers add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1370946,
+    "tickers": [
+      "OC"
+    ],
+    "name": "Owens Corning",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Owens Corning Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1370946/000137094626000067/oc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "屋根材、断熱材、ドアを作る建材メーカー。",
+      "revenue": "屋根材43%、断熱材36%、ドア21%の3部門で稼ぐ。屋根材は主に米国の流通業者やホームセンターへ売る。",
+      "strength": "アスファルト加工まで自社で行う垂直統合型の事業が特徴。米国でアスファルトシングル第2位の生産者。",
+      "risks": "需要は住宅の新築や改修の動きに左右される。アスファルトの投入コストは原油価格に連動する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A building materials maker producing roofing, insulation and doors.",
+      "revenue": "It earns from Roofing at 43%, Insulation at 36% and Doors at 21% of segment sales. Roofing sells mainly through distributors and home centers in the U.S.",
+      "strength": "Its integrated model runs through asphalt processing. It is the second largest US producer of asphalt roofing shingles.",
+      "risks": "Demand follows housing construction and remodeling. Asphalt input costs track crude oil prices.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 775158,
+    "tickers": [
+      "OSK"
+    ],
+    "name": "Oshkosh",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Oshkosh Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "高所作業車や消防車、軍用車などの特殊車両を作る会社。",
+      "revenue": "Access、Vocational、Transportの3部門で稼ぐ。2025年の純売上は順に43%、36%、20%。米国政府向けも約20%。",
+      "strength": "用途に合わせた専用設計の車両づくりが特徴。製造の柔軟性と販売網で大手の量産メーカーに対抗する。",
+      "risks": "建設や自治体の予算で需要が大きく動く、景気循環の強い市場にいる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that builds specialty vehicles such as access lifts, fire trucks and defense vehicles.",
+      "revenue": "It earns through three segments: Access, Vocational and Transport, at 43%, 36% and 20% of 2025 net sales. U.S. government sales were about 20%.",
+      "strength": "Purpose-built vehicles are its hallmark. Manufacturing flexibility and distribution networks let it compete with large mass producers.",
+      "risks": "Its markets are highly cyclical, with demand tied to construction spending and municipal budgets.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 275880,
+    "tickers": [
+      "PSN"
+    ],
+    "name": "Parsons",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Parsons Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/275880/000119312526045495/psn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "防衛・安全保障やインフラ向けの技術とサービスを提供する会社。",
+      "revenue": "売上の51%が連邦政府向けのFederal Solutions、49%がCritical Infrastructureの部門。",
+      "strength": "サイバー、宇宙・ミサイル防衛、交通、水など6つの市場に専門性を持つ。",
+      "risks": "政府予算の変動や、長期の政府契約の更新に左右される。入札での競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing technology and services for defense, security and infrastructure.",
+      "revenue": "Federal Solutions brings in 51% of revenue and Critical Infrastructure 49%.",
+      "strength": "It has deep expertise in six end markets, including cyber, space and missile defense, transportation and water.",
+      "risks": "It depends on volatile government budgets and the renewal of long-term government contracts, and faces competitive bidding.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 85961,
+    "tickers": [
+      "R"
+    ],
+    "name": "Ryder",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ryder Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/85961/000008596126000007/r-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米で物流と輸送サービスを請け負う会社。",
+      "revenue": "車両リースやレンタル、整備を行う車両管理、サプライチェーン、専用輸送の3事業で稼ぐ。",
+      "strength": "港から玄関先まで、物流のすべての段階を一貫して手がけるのが特徴。",
+      "risks": "競争の激しい市場で戦う。顧客が自社で物流を担う道も選べる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A provider of outsourced logistics and transportation services across North America.",
+      "revenue": "It earns from three segments: fleet management with leasing, rental and maintenance, supply chain solutions, and dedicated transportation.",
+      "strength": "It covers every step of the supply chain, from port to door, in one network.",
+      "risks": "It operates in highly competitive markets, and customers can choose to run these services themselves.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1324948,
+    "tickers": [
+      "RBC"
+    ],
+    "name": "RBC Bearings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "RBC Bearings Form 10-K (filed 2026-05-15) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1324948/000121390026057626/ea0288814-10k_rbcbear.htm"
+      }
+    ],
+    "ja": {
+      "business": "高精度のベアリングや部品を作る会社。",
+      "revenue": "産業用と航空宇宙・防衛用の2つの市場に、ベアリングや歯車、部品を売って稼ぐ。",
+      "strength": "ベアリングや歯車の高価格帯に絞り、技術力と応用ノウハウで差別化する。",
+      "risks": "鋼材など原材料費や関税の影響を受ける。主要顧客を失えば打撃になり、米政府の防衛支出の削減も響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes precision bearings and engineered components.",
+      "revenue": "It earns by selling bearings, gearing and components to two markets: Industrial and Aerospace & Defense.",
+      "strength": "It focuses on the higher end of bearings and gearing, differentiating through engineering and application expertise.",
+      "risks": "Raw material costs, especially steel, and tariffs weigh on it. Losing a major customer or cuts in U.S. defense spending would hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 82811,
+    "tickers": [
+      "RRX"
+    ],
+    "name": "Regal Rexnord",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Regal Rexnord Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/82811/000008281126000054/rbc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "モーター、動力伝達部品、制御機器を作る産業機器メーカー。",
+      "revenue": "自動化・モーション制御、産業用動力伝達、電力効率の各部門で稼ぐ。工場自動化、航空宇宙、空調などに売る。",
+      "strength": "80/20の手法で有望な事業に資源を集める。継続改善の枠組みRBSも運用する。",
+      "risks": "市場は競合が多く分散している。欧州やアジアのモーターメーカーが北米で攻勢を強める。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of electric motors, power transmission parts and motion controls for industry.",
+      "revenue": "It earns through its automation and motion control, industrial powertrain and power efficiency segments, selling to factory automation, aerospace and HVAC markets.",
+      "strength": "It uses 80/20 initiatives to focus resources on the best growth opportunities, and runs the RBS continuous improvement framework.",
+      "risks": "Its markets are crowded and fragmented. Motor makers from Europe and Asia are pushing into North America.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1177702,
+    "tickers": [
+      "SAIA"
+    ],
+    "name": "Saia",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Saia Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1177702/000119312526067030/saia-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国で小口の混載貨物(LTL)を運ぶトラック輸送会社。",
+      "revenue": "売上の約97%は小口混載の輸送。ブローカー輸送や物流でも稼ぐ。",
+      "strength": "213の拠点網を持ち、時間指定や急ぎの輸送もこなす。過去5年で設備と技術に投資を重ねた。",
+      "risks": "競争が激しい環境にある。2025年の営業利益は352.2百万ドルで、前年の482.2百万ドルから減った。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. trucking company that moves less-than-truckload (LTL) freight.",
+      "revenue": "About 97% of revenue comes from LTL shipments. Brokered truckload and logistics add more, on $3.2 billion of 2025 revenue.",
+      "strength": "It runs 213 terminals and offers time-definite and expedited service. It has invested heavily in equipment and technology.",
+      "risks": "It works in a highly competitive market. Operating income in 2025 was $352.2 million, down from $482.2 million in 2024.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1571123,
+    "tickers": [
+      "SAIC"
+    ],
+    "name": "SAIC",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "SAIC Form 10-K (filed 2026-03-16) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1571123/000157112326000029/saic-20260130.htm"
+      }
+    ],
+    "ja": {
+      "business": "米政府向けに技術・エンジニアリングとIT業務を提供する会社。",
+      "revenue": "国防・情報部門と民間部門の2部門で稼ぐ。売上の98%が米政府との契約。",
+      "strength": "長年の顧客関係で任務への理解が深く、高度で独自性のあるIT技術サービスに重点を置く。",
+      "risks": "米政府機関への依存が大きい。評判や関係が傷つけば業績に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A provider of technical, engineering and IT services to the U.S. government.",
+      "revenue": "It earns from two segments, Defense and Intelligence and Civilian. 98% of revenue comes from U.S. government contracts.",
+      "strength": "Long customer ties give it deep insight into missions, and it focuses on higher-end, differentiated technology services.",
+      "risks": "It leans heavily on U.S. government agencies. Damage to its reputation or relationships could hurt results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 920371,
+    "tickers": [
+      "SSD"
+    ],
+    "name": "Simpson Manufacturing",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Simpson Manufacturing Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/920371/000162828026012920/ssd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "木造やコンクリート建築向けの接合金物などの建築資材をつくる会社。",
+      "revenue": "北米を中心に、住宅や商業施設の建設向けに接合金物やアンカーを売って稼ぐ。欧州にも拠点を持つ。",
+      "strength": "1956年から続くSimpson Strong-Tieブランドの知名度が強み。多くの注文を24-48時間で届ける体制も持つ。",
+      "risks": "住宅市況や景気の変動、関税、原材料の需給変動に左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes building products such as connectors and anchors for wood and concrete construction.",
+      "revenue": "It sells connectors, fasteners and anchors for residential and commercial building, mainly in North America, with operations in Europe too.",
+      "strength": "The Simpson Strong-Tie brand, in use since 1956, is well known, and most orders ship within 24-48 hours.",
+      "risks": "Housing market swings, economic conditions, tariffs and volatile raw material markets can hurt it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 874238,
+    "tickers": [
+      "STRL"
+    ],
+    "name": "Sterling Infrastructure",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sterling Infrastructure Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/874238/000087423826000024/strl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "データセンターや道路などの工事を手がける建設会社。",
+      "revenue": "Eインフラ、交通、ビルディングの3部門で稼ぐ。造成や電気工事、道路・橋の工事、住宅の基礎工事が柱。",
+      "strength": "造成工事では、納期を守り工程を保証する力が差別化の源泉。高収益の案件に絞る方針をとる。",
+      "risks": "不況で需要が減り、案件が遅れたり中止になったりしうる。資材や下請けへの依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A construction company building data center sites, roads and building foundations.",
+      "revenue": "It earns through three segments: E-Infrastructure, Transportation and Building Solutions, covering site work, electrical, roads and bridges, and foundations.",
+      "strength": "On-time delivery and schedule assurance set its site development work apart. It targets higher-margin projects.",
+      "risks": "Recessions can cut demand and delay or cancel projects. It also depends on material suppliers and subcontractors.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 97216,
+    "tickers": [
+      "TEX"
+    ],
+    "name": "Terex",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Terex Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/97216/000009721626000035/tex-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "廃棄物処理や資材処理、高所作業台などの産業機械メーカー。",
+      "revenue": "環境ソリューション、資材処理、高所作業機器の各部門で稼ぐ。廃棄物・リサイクルや電力インフラ向けが中心。",
+      "strength": "部品とサービスで製品のライフサイクルを支える。電動やハイブリッドの製品もそろえる。",
+      "risks": "価格、性能、信頼性で競争が激しい。REVの買収後の統合が進まない可能性もある。",
+      "competition": "主な競合にFederal Signal、Oshkosh、Astec Industries、Deere、Caterpillarがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of industrial machinery for waste handling, materials processing and aerial work platforms.",
+      "revenue": "It earns through its Environmental Solutions, Material Processing and Aerials segments, serving waste and recycling and electric utility customers.",
+      "strength": "It supports products across their life cycle with parts and service, and offers electric and hybrid products.",
+      "risks": "Competition is tough on price, performance and reliability. Integrating the REV acquisition may not go smoothly.",
+      "competition": "Main competitors include Federal Signal, Oshkosh, Astec Industries, Deere, Caterpillar.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Federal Signal",
+          "ticker": "FSS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oshkosh",
+          "ticker": "OSK",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Astec Industries",
+          "ticker": "ASTE",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Deere",
+          "ticker": "DE",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Caterpillar",
+          "ticker": "CAT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 98362,
+    "tickers": [
+      "TKR"
+    ],
+    "name": "Timken",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Timken Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/98362/000009836226000012/tkr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ベアリングや産業用の動力伝達製品を作る会社。",
+      "revenue": "産業流通、再生可能エネルギー、自動車、鉄道、航空宇宙など幅広い分野へ売って稼ぐ。",
+      "strength": "テーパーローラーベアリングの技術が原点。44か国に拠点を持ち、応用設計や品質で差をつける。",
+      "risks": "ベアリング業界は競争が激しい。世界で事業を営むため、各国の法規制や通商規則の影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of engineered bearings and industrial motion products.",
+      "revenue": "It sells to a wide range of sectors, including industrial distribution, renewable energy, automotive, rail and aerospace.",
+      "strength": "Its roots are in tapered roller bearing technology. It operates in 44 countries and competes on application engineering and quality.",
+      "risks": "The bearing industry is highly competitive. Global operations also expose it to many national laws and trade rules.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1069878,
+    "tickers": [
+      "TREX"
+    ],
+    "name": "Trex",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Trex Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ウッドデッキ用の複合素材と手すりを作る世界最大手。",
+      "revenue": "複合デッキと手すりなどの屋外生活製品を売って稼ぐ。世界で6,700以上の小売店に並ぶ。",
+      "strength": "Trexブランドの強さが中核。流通網と大手ホームセンターでの存在感、低コスト原料も特徴。",
+      "risks": "競合は木材が中心で、他の木材代替品メーカーもいる。原材料の価格や調達、天候による需要変動も弱点。",
+      "competition": "主な競合にJames Hardie、UFP Industries、Fortune Brandsがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The world's largest maker of composite decking and railing.",
+      "revenue": "It earns by selling composite decking, railing and other outdoor living products. They are stocked in more than 6,700 retail locations worldwide.",
+      "strength": "The strength of the Trex brand is the core. A strong distribution network, big home improvement retail presence and low-cost raw materials add to it.",
+      "risks": "Wood is its main rival, alongside other wood-alternative makers. Raw material costs and supply, and weather-driven demand swings, are weak points.",
+      "competition": "Main competitors include James Hardie, UFP Industries, Fortune Brands.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "James Hardie",
+          "ticker": "JHX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "UFP Industries",
+          "ticker": "UFPI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Fortune Brands",
+          "ticker": "FBIN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1552033,
+    "tickers": [
+      "TRU"
+    ],
+    "name": "TransUnion",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "TransUnion Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/tru-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "信用情報やデータ分析を企業と個人に提供する会社。",
+      "revenue": "与信管理、マーケティング、不正対策のソリューションを企業に売って稼ぐ。30を超える国と地域で展開。",
+      "strength": "信用や本人確認など幅広いデータ資産を持つ。OneTruというプラットフォームにデータとAI分析を集約する。",
+      "risks": "収益は米国の金融サービスと消費者信用業界に集中する。無料の消費者情報が増えれば需要が減りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides credit information and data analytics to businesses and consumers.",
+      "revenue": "It earns by selling credit risk, marketing and fraud solutions to businesses, in over 30 countries and territories.",
+      "strength": "It holds broad data assets, from credit to identity, and is moving data and AI analytics onto its OneTru platform.",
+      "risks": "Revenue is concentrated in U.S. financial services and consumer credit. More free consumer information could cut demand.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 737758,
+    "tickers": [
+      "TTC"
+    ],
+    "name": "Toro",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Toro Form 10-K (filed 2025-12-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/737758/000073775825000115/ttc-20251031.htm"
+      }
+    ],
+    "ja": {
+      "business": "芝生管理機器や散水設備、除雪機、地下工事機器などを作る会社。",
+      "revenue": "売上の80.3%がプロ向け、19.0%が家庭向け。販売店や量販店、ネット経由で売る。",
+      "strength": "革新性と品質、顧客サービスを重視する。Toro、Ditch Witch、Lawn-Boyなど多数のブランドを持つ。",
+      "risks": "資金力が大きい競合もいる。部品の価格は、インフレや関税、貿易規制で変動しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of turf care equipment, irrigation systems, snow throwers and underground construction machines.",
+      "revenue": "Professional products bring in 80.3 percent of sales and residential 19.0 percent, sold via dealers, retailers and online.",
+      "strength": "It stresses innovation, quality and customer service, with brands such as Toro, Ditch Witch and Lawn-Boy.",
+      "risks": "Some rivals have far larger resources, and component costs swing with inflation, tariffs and trade rules.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 831641,
+    "tickers": [
+      "TTEK"
+    ],
+    "name": "Tetra Tech",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Tetra Tech Form 10-K (filed 2025-11-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/831641/000083164125000032/ttek-20250928.htm"
+      }
+    ],
+    "ja": {
+      "business": "水や環境、持続可能なインフラ分野の高度なコンサルティングと設計を行う会社。",
+      "revenue": "政府サービスと、民間・国際サービスの2つのグループで、公共と民間の顧客から稼ぐ。",
+      "strength": "科学を軸にした「Leading with Science」が特徴。水処理や環境分野で高く評価される。",
+      "risks": "プロジェクトを期限内に終えられなければ、業績に悪影響が及びうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A provider of high-end consulting and engineering services focused on water, environment and sustainable infrastructure.",
+      "revenue": "It earns from public and private clients through its Government Services Group and Commercial/International Services Group.",
+      "strength": "Its Leading with Science approach is its hallmark, and it is ranked #1 in Water Treatment and Desalination by ENR.",
+      "risks": "Failing to finish a project on time or meet a performance standard can seriously hurt its results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 912767,
+    "tickers": [
+      "UFPI"
+    ],
+    "name": "UFP Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "UFP Industries Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/912767/000110465926019567/ufpi-20251227x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "木材や複合材を使った製品を作り、供給する会社。",
+      "revenue": "小売、梱包、建設の3部門が柱。小売はホームセンターや独立系の卸に圧力処理木材などを売って稼ぐ。",
+      "strength": "価格の安い木材製品から付加価値品まで全国規模で扱う。自動化と垂直統合で低コスト生産を狙う。",
+      "risks": "インフレや金利、為替、天候など景気の不透明さが響く。関税の変更も影響しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs, makes and supplies products from wood and wood composites.",
+      "revenue": "Three segments are its pillars: retail, packaging and construction. Retail sells pressure-treated lumber and other products to big box retailers and distributors.",
+      "strength": "It supplies a full line of value-added and commodity products nationally. Automation and vertical integration support low-cost production.",
+      "risks": "Inflation, interest rates, currency swings and weather add economic uncertainty. Tariff changes can also affect it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1901440,
+    "tickers": [
+      "ULS"
+    ],
+    "name": "UL Solutions",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "UL Solutions Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1901440/000190144026000005/uls-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "製品の安全試験や認証を行う会社。",
+      "revenue": "認証試験や継続認証、試験サービス、ソフトウェアで稼ぐ。工業、消費者、ソフトとアドバイザリーの各部門が担う。",
+      "strength": "UL認証マークと世界の試験所網、約9,900人の技術者が強み。",
+      "risks": "競争が激しい。UL Standards & Engagementが議決権の多数を握り、株式の二層構造も株価の重しになりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that tests and certifies product safety.",
+      "revenue": "It earns from certification testing, ongoing certification, other testing and software, across its Industrial, Consumer and Software and Advisory segments.",
+      "strength": "Its strengths are the UL Mark, a global network of laboratories and about 9,900 technical experts.",
+      "risks": "Competition is intense. UL Standards & Engagement holds most voting power, and the dual-class share structure may weigh on the stock.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 751978,
+    "tickers": [
+      "VICR"
+    ],
+    "name": "Vicor",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Vicor Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/751978/000119312526085102/vicr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電力変換用のモジュール部品と電源システムを作る会社。",
+      "revenue": "電源製品の販売と、顧客とのライセンス契約による特許料で稼ぐ。製品はAdvanced ProductsとBrick Productsに分かれる。",
+      "strength": "独自の半導体回路などで性能に差をつけた製品を持つ。Factorized Power Architectureが特徴。",
+      "risks": "業績は四半期ごとに変動しやすい。少数の大口顧客と少数の供給元の動向に左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes modular power components and power systems for converting electrical power.",
+      "revenue": "It earns by selling power products and from royalties on licensing arrangements with customers. Products fall into Advanced Products and Brick Products.",
+      "strength": "Its products stand out on performance, built on proprietary semiconductor circuitry. Its Factorized Power Architecture is a distinctive feature.",
+      "risks": "Results swing from quarter to quarter. It depends on a few large customers and a few suppliers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 102729,
+    "tickers": [
+      "VMI"
+    ],
+    "name": "Valmont",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Valmont Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/102729/000010272926000007/vmi-20251227x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "電力・通信・照明の支柱と農業用灌漑設備を作る会社。",
+      "revenue": "インフラ部門と農業部門の2本柱。送電用構造物、照明・交通用ポール、通信設備、灌漑装置を売って稼ぐ。",
+      "strength": "ガルバナイズなどの塗装サービスまで自社で手がける。品質と技術力、納期の正確さで競う。",
+      "risks": "顧客業界は景気の波が大きく、過去に売上が落ちた。弱い需要期には価格競争が激しくなる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of utility, lighting and telecom structures and irrigation equipment.",
+      "revenue": "Its two segments are Infrastructure and Agriculture. It earns from transmission structures, poles, telecom gear and irrigation systems.",
+      "strength": "It also offers coatings such as galvanizing in-house. It competes on quality, engineering expertise and on-time delivery.",
+      "risks": "Its customer industries are highly cyclical, and downturns have cut sales before. Price competition gets intense when demand is weak.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 929008,
+    "tickers": [
+      "WCC"
+    ],
+    "name": "Wesco",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Wesco Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/929008/000092900826000008/wcc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電気・通信資材などを企業に卸す、物流込みの流通会社。",
+      "revenue": "電気・電子、通信・セキュリティ、公益・ブロードバンドの3部門で稼ぐ。顧客は産業、通信、公益事業など。",
+      "strength": "数百万点の商品と一貫した供給網サービス、デジタル力を備える。データセンター向けにも強い。",
+      "risks": "市場は細分化され、各分野で競争が激しい。世界経済の悪化や金融市場の混乱にも弱い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A business-to-business distributor of electrical and communications supplies with logistics services.",
+      "revenue": "It earns from three segments: Electrical & Electronic, Communications & Security, and Utility & Broadband. Customers span industry, telecom and utilities.",
+      "strength": "Millions of products, end-to-end supply chain services and digital capabilities. It is also a leader in data center solutions.",
+      "risks": "Its markets are fragmented and highly competitive. A weak global economy or financial market disruption can hurt it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1604028,
+    "tickers": [
+      "WMS"
+    ],
+    "name": "Advanced Drainage Systems",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Advanced Drainage Systems Form 10-K (filed 2026-05-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1604028/000160402826000019/wms-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "雨水排水や浄化槽向けの排水製品を作る水管理の会社。",
+      "revenue": "住宅、非住宅、インフラ、農業向けに排水管や汚水処理製品を売って稼ぐ。全国の販売網を通す。",
+      "strength": "全国をカバーする販売網と幅広い品ぞろえが特徴。雨が地面に落ちてから戻るまでの水を一貫して扱う。",
+      "risks": "業績は景気に左右されやすい。金利や新築住宅の需要、道路などインフラ支出の影響を受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes drainage products for stormwater and onsite wastewater.",
+      "revenue": "It earns by selling drainage pipe and wastewater products for residential, non-residential, infrastructure and agriculture uses, through a national distribution platform.",
+      "strength": "Its national sales network and broad product line stand out, covering water from the moment rain hits the ground until it returns to the ecosystem.",
+      "risks": "Results are cyclical and follow the economy, including interest rates, new home demand and infrastructure spending.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 105016,
+    "tickers": [
+      "WSO"
+    ],
+    "name": "Watsco",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Watsco Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/105016/000119312526082486/wso-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "空調・暖房・冷凍機器と部品を販売する北米最大の卸売会社。",
+      "revenue": "2025年のHVAC/R流通の売上は7.2 billionドル。695拠点から、13万超の施工業者に売る。",
+      "strength": "買収した企業を伸ばす「buy and build」の戦略が特徴。北米で最大の流通網を持つ。",
+      "risks": "仕入先が集中している。上位10社が購入の85%、Carrierだけで62%を占める。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The largest North American distributor of air conditioning, heating and refrigeration equipment and parts.",
+      "revenue": "HVAC/R distribution revenue reached $7.2 billion in 2025, sold from 695 locations to more than 130,000 active contractors.",
+      "strength": "Its buy and build strategy of acquiring market leaders and growing them is a hallmark, and it has the largest distribution network in the industry.",
+      "risks": "Suppliers are concentrated: the top ten made up 85% of purchases in 2025, with Carrier alone at 62%.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 795403,
+    "tickers": [
+      "WTS"
+    ],
+    "name": "Watts Water",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Watts Water Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/795403/000110465926018541/wts-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ビルや住宅向けの水まわり製品とソリューションをつくる会社。",
+      "revenue": "米州、欧州、アジア太平洋・中東・アフリカの3地域で、商業用と住宅用の水関連製品を売って稼ぐ。",
+      "strength": "安全と規制、省エネ、節水の3テーマが軸。スマート水管理のNexaなど、デジタル分野にも投資する。",
+      "risks": "商業・住宅の着工や改修の景気循環に業績が左右される。取引先の資金繰り悪化も響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A manufacturer of water technologies and solutions for commercial and residential buildings.",
+      "revenue": "It sells water-related products for commercial and residential buildings in three regions: the Americas, Europe, and APMEA.",
+      "strength": "Its focus is safety and regulation, energy efficiency and water conservation, and it invests in digital tools like Nexa.",
+      "risks": "Results swing with economic cycles in building starts and remodeling, and customers' financial trouble can also hit it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1166003,
+    "tickers": [
+      "XPO"
+    ],
+    "name": "XPO",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "XPO Form 10-K (filed 2026-02-05) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166003/000116600326000016/xpo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米と欧州で貨物輸送サービスを提供する会社。",
+      "revenue": "北米の小口貨物(LTL)輸送と欧州の輸送の2部門で稼ぐ。北米LTLが最大。",
+      "strength": "自社開発の技術とAI、トレーラー工場、運転手養成校が競争上の強み。",
+      "risks": "景気後退で貨物量が減ると業績に響く。輸送業界は競争が激しい。",
+      "competition": "主な競合にOld Dominion Freight Line、Saiaがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides freight transportation in North America and Europe.",
+      "revenue": "It earns through two segments: North American less-than-truckload (LTL), the largest, and European Transportation.",
+      "strength": "Its edges are proprietary technology and AI, a trailer plant and truck driver schools.",
+      "risks": "A recession that cuts freight volumes hurts results. The transport market is highly competitive.",
+      "competition": "Main competitors include Old Dominion Freight Line, Saia.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Old Dominion Freight Line",
+          "ticker": "ODFL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Saia",
+          "ticker": "SAIA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
       "relationships": []
     }
   }
