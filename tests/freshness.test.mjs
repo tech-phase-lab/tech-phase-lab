@@ -16,6 +16,8 @@ test('a stale cycle, or the monitor saying it is stale, is a delay with the last
   assert.deepEqual(old, { status: 'delayed', lastCycleAt: '2026-10-22T09:00:00Z' });
   const flagged = assessFreshness(live({ lastCycleAt: '2026-10-22T11:59:00Z', lastCycleAgeSeconds: 60, health: { status: 'degraded', issues: ['discovery-poll-stale'], monitorStaleAfterSeconds: 900 } }), NOW);
   assert.equal(flagged.status, 'delayed');
+  const bodies = assessFreshness(live({ lastCycleAt: '2026-10-22T11:59:00Z', lastCycleAgeSeconds: 60, health: { status: 'degraded', issues: ['body-fetch-stale'], monitorStaleAfterSeconds: 900 } }), NOW);
+  assert.equal(bodies.status, 'delayed');
   const unrelated = assessFreshness(live({ lastCycleAt: '2026-10-22T11:59:00Z', lastCycleAgeSeconds: 60, health: { status: 'degraded', issues: ['backup-failed'], monitorStaleAfterSeconds: 900 } }), NOW);
   assert.equal(unrelated.status, 'ok');
 });

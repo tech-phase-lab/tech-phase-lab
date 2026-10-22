@@ -3,7 +3,7 @@
 export type FreshnessStatus = "ok" | "delayed" | "unreachable";
 export type Freshness = { status: FreshnessStatus; lastCycleAt?: string };
 
-const DELAY_ISSUES = new Set(["monitor-stale", "discovery-poll-stale"]);
+const DELAY_ISSUES = new Set(["monitor-stale", "discovery-poll-stale", "body-fetch-stale"]);
 const record = (value: unknown): Record<string, unknown> | null => value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : null;
 
 export function assessFreshness(payload: unknown, now = Date.now()): Freshness {
