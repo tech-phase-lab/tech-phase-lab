@@ -1,3 +1,34 @@
+## 2026-10-22 — External recovery preparation (not deployed)
+
+Prepared on remote5a44a2f2 in an isolated worktree; coworker local8a7f801a
+is preserved. Node Docker pins24.22.1/22.23.4 and CI22.23.4 now explicitly
+select the October21 security fixes. .nvmrc selects24.22.1. No running
+provider version has been verified or changed by this preparation.
+
+Added opt-in encrypted-dump external copy with source/destination checksum and
+manifest readback, no database/decryption/deletion, and no latest-pointer update.
+Five regression tests pass. This does NOT copy deletion/suppression history or
+prove a complete recovery set. Added a schema-validated Render API standby
+Blueprint: no auto-deploys, schedules or DB provisioning; saving/payments/AI OFF.
+Importing it would incur cost; no external resource was created or configured.
+
+Local final gates on Node24.22.1: Node1323, Python2560 (total3883), lint0errors/
+5existingwarnings, build, compileall and diff check passed. Synthetic API startup
+verified READY, health200, unauthenticated401, disabled payments503 without DB
+or external calls. Docker tags exist but no Docker build/provider runtime test.
+See [configuration, cost boundaries and recovery procedure](RESOLUTE-EXTERNAL-RECOVERY-PLAN.md).
+CI result for this publication must be checked separately.
+
+User reports OpenAI/X plus DB management and3scoped passwords/variables rotated;
+runtime adoption remains unverified. Do not repeat those inputs. Saving OFF,
+Vercel pause, all jobs/reservations, UI and main unchanged. Next: agree external
+storage/service cost, provision independent backup/history custody, then actual
+isolated restoration and measured failover. No user operation needed for the
+completed source preparation. Fresh complete write-fenced history inventory is
+still mandatory before activation; old empty/3-event manifests are not reusable.
+
+---
+
 ## RESOLUTE restore rollout blocked by Railway — 2026-10-21 20:09 JST
 
 Preflight found and fixed PostgreSQL image PG_SHA256 compatibility and the
