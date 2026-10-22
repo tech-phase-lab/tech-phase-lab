@@ -1,3 +1,26 @@
+## 2026-10-23 JST — Source upload implementation, real R2 still pending
+
+Owner asks assistant to perform transfer/verification. Added
+scripts/tech-phase/upload_source_recovery.py, which seals the package, uploads
+conditionally, fully downloads/checksums the ciphertext, authenticates/decrypts
+and restores Git in isolation, then publishes/readbacks the manifest last.
+Default disabled; R2 HTTPS allowlist; no delete/latest/cron/deploy/provider API.
+Five tests cover downloaded-byte restore, corruption/oversize, manifest/write
+failures, trusted revision rejection and destination/opt-in validation.
+
+Current environment has none of the five MIRROR_DESTINATION settings and no
+TECH_PHASE_EXTERNAL_KEY_HEX (presence-only check; no secrets printed). Owner
+has retained R2 credentials already; do not regenerate or request them in chat.
+Actual external upload remains pending secure credential/key availability.
+Railway remains untouched. No Cloudflare plugin was found. A dedicated cloud
+browser reaches the Cloudflare sign-in screen and has no signed-in session;
+owner browser sessions are separate. Secure browser authentication is required
+before UI work, and is not proof that S3 credentials are configured.
+Do not count fake-storage success as R2 evidence.
+See TECH-PHASE-RECOVERY-SETTINGS.md for executable command and boundaries.
+
+---
+
 ## 2026-10-23 JST — Offline authenticated source sealing
 
 Railway login screenshot reports OAuth invalid_request / id_token_hint validation

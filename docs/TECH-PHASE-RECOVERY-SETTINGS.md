@@ -105,3 +105,39 @@ This verifies source recovery only. It does not contain live databases, provider
 secret values, external image payloads or Clerk/PayPal account state.
 `external_storage_verified` and `runtime_restore_verified` remain false.
 R2 upload/readback and key custody are separate unfinished steps.
+
+## Source upload and readback (2026-10-23 JST)
+
+`upload_source_recovery.py` combines sealing, conditional R2 upload, full bounded
+download, authenticated decryption and isolated Git restore. The completion
+manifest is uploaded last and itself read back. Success means source recovery
+from downloaded bytes, not whole-site/runtime recovery.
+
+Required secure environment: existing five `MIRROR_DESTINATION_*` variables
+(ENDPOINT, BUCKET, REGION, ACCESS_KEY_ID, SECRET_ACCESS_KEY), independently retained
+`TECH_PHASE_EXTERNAL_KEY_HEX`, and `TECH_PHASE_SOURCE_UPLOAD_ENABLED=true`.
+Default is disabled. Only HTTPS R2 endpoints are accepted. The existing
+`resolute-backup-external` bucket can be used with region `auto`; no new bucket
+or token is needed. Keep secrets out of command arguments/chat/repository.
+
+```sh
+python3 scripts/tech-phase/upload_source_recovery.py --package /private/source-package --expected-commit FULL_TRUSTED_COMMIT_SHA
+```
+
+Dependencies are already pinned in services/tech-phase-backup/requirements.txt.
+Objects use tech-phase/source/v1/<commit>/<cipher-sha256>.aesgcm plus .json.
+No latest pointer, public ACL, deletion, retention/cron change or deployment.
+Every PUT uses IfNoneMatch=*. A failed run may leave an orphan encrypted object;
+it must not be considered verified or automatically deleted. Re-running sealing
+uses a fresh nonce and therefore a new object and incurs another upload.
+
+Implementation/tests use fake storage and disposable keys. Actual R2 credentials
+and an independently retained external-backup encryption key are not available
+in the current execution environment; no real R2 upload has been performed.
+
+Browser connection checkpoint: Cloudflare sign-in page was visible with multiple
+methods. Subsequent field inspection was denied by automatic safety review,
+which reported unapproved accounts.google.com access without a user-selected
+method. No method was selected by the assistant and no credentials were entered.
+Do not bypass or retry that access. Ask the owner which sign-in method they use
+before resuming the secure authentication flow; do not infer sign-in success.
