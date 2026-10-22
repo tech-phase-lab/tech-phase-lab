@@ -1,3 +1,30 @@
+## 2026-10-23 JST — Offline authenticated source sealing
+
+Railway login screenshot reports OAuth invalid_request / id_token_hint validation
+failure. Root cause is not established; owner requests work without Railway.
+No login retry, Railway mutation, deployment, cron change or R2 call was made.
+
+Added seal_source_recovery.py: AES-256-GCM streaming encryption, trusted commit
+bound as authenticated context, authenticated decryption before parsing, exact
+three-file extraction, isolated Git restore, and exclusive output publication.
+Wrong keys/commits, tampering, links/traversal, extra files and existing outputs
+are rejected. The encryption key is supplied only via environment; none created
+for production. See TECH-PHASE-RECOVERY-SETTINGS.md for commands.
+
+Actual fa8347c8 source package round-trip passed: tree1bce1f08, encrypted archive
+16,803,868 bytes. Used a disposable test key; test ciphertext and plaintext were
+deleted on exit. This is validation, NOT a retained production backup.
+Prior CI39807323003 is confirmed SUCCESS. Current change gates are recorded in
+the subsequent commit/report; do not infer remote CI success from local tests.
+
+Remaining: secure external-backup key custody/injection and R2 transfer/readback
+for source; live DB acquisition waits for Railway access. Cloudflare remains the
+intended external store. All live/runtime/external storage verification remains
+false. Existing bucket credentials and recovery keys must not be regenerated.
+User operation currently unnecessary.
+
+---
+
 ## 2026-10-23 JST — Offline source recovery and settings inventory
 
 Owner confirms Railway outage continues: do NOT retry Railway access or ask for
