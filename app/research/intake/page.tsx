@@ -4,6 +4,9 @@ import { snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
 import { events } from "@/lib/research/content-server";
 import IntakeDashboard from "./intake-dashboard";
 
+
+// This page is built per request; only the research home is prerendered (owner, Oct 22: faster app open).
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "資料の取得・確認状況 | Tech Phase Research",
   description: "公式発表の自動監視と取得記録を確認する運営用プレビュー。",
