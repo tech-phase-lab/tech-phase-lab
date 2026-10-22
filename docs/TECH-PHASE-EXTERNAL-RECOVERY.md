@@ -113,7 +113,7 @@ R2のObject Read & Writeを対象バケットだけに限定したことは、�
 次の順序で進める:
 
 1. Railway障害復旧後に全サービス/volume/bucketを読み取り照合。障害中の再認証や回転済み秘密の再入力を再依頼しない。
-2. 確認した実行環境へ保存済みR2キーを秘密入力。研究用暗号鍵の独立保管も用意する。
+2. 確認した実行環境で保存済みR2キーと独立保管済み暗号鍵を安全に参照できるようにする。GitHubの登録完了とRailwayの反映完了を分けて確認する。
 3. 研究DB・RESOLUTE・PRO・履歴をそれぞれ実転送し、時刻/サイズ/hash/readbackを記録。
 4. ソース/静的資産、設定台帳、Clerkの復元材料を揃える。未同期ブラウザデータの扱いを明示。
 5. Railway資格情報を渡さない環境で全データ復元、認証付きAPI読取、権限・削除/停止の整合性を検査。
@@ -128,7 +128,9 @@ R2のObject Read & Writeを対象バケットだけに限定したことは、�
  / https://developers.cloudflare.com/r2/api/s3/api/
  / https://cryptography.io/en/latest/hazmat/primitives/symmetric-encryption/
 
-## ローカル検証の記録
+## 初期実装時のローカル検証記録（履歴）
+
+以下は初期実装時点の記録。R2ソース保存・実復元の状態は冒頭の成功記録で更新済み。
 
 - Node 1,323件、Python 2,570件成功（計3,893件）。lintはエラー0、既存警告5。
 - build、compileall、git diff --check成功。
