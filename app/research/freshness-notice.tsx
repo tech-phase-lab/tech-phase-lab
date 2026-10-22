@@ -28,8 +28,9 @@ export default function FreshnessNotice({ lang }: { lang: Language }) {
   if (!freshness || freshness.status === "ok") return null;
   const ja = lang === "ja";
   const at = freshness.lastCycleAt ? jst(freshness.lastCycleAt) : null;
+  // One short line (owner, Oct 22): the kind of problem first, the last update time in the same line.
   const text = freshness.status === "delayed"
-    ? (ja ? `情報の取得に遅れが出ています。${at ? `最新の更新は${at}（日本時間）です。` : ""}` : `Updates are running behind.${at ? ` Latest update: ${at} JST.` : ""}`)
-    : (ja ? "情報の取得先に接続できていません。表示は保存済みの内容です。" : "We can't reach the data source right now. Showing saved content.");
+    ? (ja ? `更新が遅れています${at ? `（最終 ${at}）` : ""}` : `Updates are delayed${at ? ` (last ${at} JST)` : ""}`)
+    : (ja ? "最新情報を取得できていません" : "Can't fetch the latest updates");
   return <p className={styles.notice} role="status" lang={lang}>{text}</p>;
 }
