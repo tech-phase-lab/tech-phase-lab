@@ -1,3 +1,24 @@
+## 2026-10-23 JST — GitHub runner route bypasses shared-browser login dependency
+
+Owner confirms Google sign-in works without a password in their own browser,
+but three shared-browser attempts failed. Do not ask their registration method
+again or repeat Google sign-in. Root cause remains unproven.
+
+Prepared .github/workflows/source-external-backup.yml: preview branch only,
+explicit workflow/request-file push trigger, contents:read, no schedule/deploy.
+Requires four repository secrets; missing values fail BACKUP_NOT_STARTED before
+checkout/upload. Checkout full history at exact triggering SHA; credentials not
+persisted. Existing uploader performs full readback and isolated source restore.
+No real R2 operation is confirmed. User must once register retained R2 values
+and a new independently retained TECH_PHASE_EXTERNAL_KEY_HEX in GitHub Secrets.
+No existing keys are rotated. Offline local key generator provided; no keys
+created/stored by assistant. See SOURCE-BACKUP-GITHUB-SETUP.md for exact steps.
+After registration, assistant can rerun failed job via connected GitHub app,
+verify logs and record actual commit/tree/object/hash. Re-runs back up original
+trigger SHA; do not describe it as latest without comparing remote head.
+
+---
+
 ## 2026-10-23 JST — Source upload implementation, real R2 still pending
 
 Owner asks assistant to perform transfer/verification. Added
