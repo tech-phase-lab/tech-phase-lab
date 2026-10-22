@@ -17,18 +17,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Prerendered and refreshed every minute: the shell reaches the phone from the edge without waking a server function (owner, Oct 22).
-export const revalidate = 60;
-
 async function LiveHomeData() {
-  const live = await loadLiveHomeNews().catch(() => null);
-  // Without live data the page is still complete; the browser fetches the news itself.
-  if (!live) return null;
+  const live = await loadLiveHomeNews();
   const currentEvents = deduplicateResearchEvents(live.events);
   for (const event of currentEvents) {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
-    // A rejected record must never fail the prerender: the home then shows without live events and the browser loads them.
-    if (issues.length) { console.error(`Invalid research record ${event.id}: ${issues.join(", ")}`); return null; }
+    if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
   }
   return <LiveHomeUpdate events={currentEvents.map(publicEvent)} news={live.news} />;
 }
