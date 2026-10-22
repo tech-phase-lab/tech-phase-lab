@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import SiteHeader from "./site-header";
+import FreshnessNotice from "./freshness-notice";
 import { usePathname } from "next/navigation";
 import HomeSidebar from "./home-sidebar";
 import type { ReactNode } from "react";
@@ -9,7 +10,7 @@ import type { Language } from "@/lib/research/data";
 import base from "./research.module.css";
 import styles from "./research-tools.module.css";
 
-export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, showTools = true, showHeading = true }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; showTools?: boolean; showHeading?: boolean }) {
+export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, showTools = true, showHeading = true, freshness = false }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; showTools?: boolean; showHeading?: boolean; freshness?: boolean }) {
   const pathname = usePathname();
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#tool-main">{lang === "ja" ? "本文へ移動" : "Skip to content"}</a>
@@ -24,6 +25,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
         <Link href="/research/qa" aria-current={pathname?.startsWith("/research/qa") ? "page" : undefined}>{lang === "ja" ? "リゼルに聞く" : "Ask RIZEL"}</Link>
         <Link href="/research/weekly" aria-current={pathname === "/research/weekly" ? "page" : undefined}>{lang === "ja" ? "週刊PRO" : "Weekly"}</Link>
       </nav>}
+      {freshness && <FreshnessNotice lang={lang} />}
       {children}
     </main>
     </div>

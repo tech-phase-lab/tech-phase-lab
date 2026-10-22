@@ -56,7 +56,7 @@ export default function MarketPage() {
     { name: ja ? "為替" : "Forex", options: [["FX:USDJPY", "USD / JPY"], ["FX:EURUSD", "EUR / USD"], ["FX:EURJPY", "EUR / JPY"]] },
   ];
   const selectedGroup = groups.find(group => group.options.some(([value]) => value === symbol))!;
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="">
+  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="" freshness>
     <IndexStrip lang={lang} />
     <MacroCards ja={ja} />
     <div className={styles.sectionSwitch} role="group" aria-label={ja ? "マーケットの表示" : "Market view"}>

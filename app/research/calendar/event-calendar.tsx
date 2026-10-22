@@ -49,7 +49,7 @@ export default function EventCalendar() {
     ? reported.map(row => calendarDateKey(new Date(row.at).toISOString(), zone).slice(0, 7))
     : now === null ? [] : [...selectCalendarEvents(calendarEvents, kind, "today-upcoming", now, zone).map(event => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...selectDateOnlyEvents(dateOnlyEvents, kind, "today-upcoming", now).map(event => event.date.slice(0, 7))])].sort();
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
-  return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("all"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")}>
+  return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("all"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")} freshness>
     <div className={calendarStyles.filters}>
       <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => { setKind(value); setPeriod("all"); }}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
     </div>
