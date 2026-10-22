@@ -71488,5 +71488,4724 @@
       ],
       "relationships": []
     }
+  },
+  {
+    "cik": 1158449,
+    "tickers": [
+      "AAP"
+    ],
+    "name": "Advance Auto Parts",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Advance Auto Parts Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1158449/000119312526051305/aap-20260103.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米で自動車の交換部品や用品を売る大手の小売会社。",
+      "revenue": "プロの整備業者とDIY客向けに、部品やバッテリー、メンテナンス用品を店舗で売って稼ぐ。",
+      "strength": "AdvanceとCarquestの店名で4,305店を運営し、プロとDIYの両方の客に対応するのが特徴。",
+      "risks": "競争が激しい業界で、再編計画や負債の増加に伴うリスクを抱える。",
+      "competition": "主な競合にAutoZone、O'Reilly Automotiveがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A major North American retailer of replacement auto parts and supplies.",
+      "revenue": "It earns by selling parts, batteries and maintenance items in stores to professional installers and DIY customers.",
+      "strength": "It runs 4,305 stores under the Advance and Carquest names, serving both professional and DIY customers.",
+      "risks": "It operates in a highly competitive industry and carries risks from its restructuring plans and higher debt.",
+      "competition": "Main competitors include AutoZone, O'Reilly Automotive.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "AutoZone",
+          "ticker": "AZO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "O'Reilly Automotive",
+          "ticker": "ORLY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1144980,
+    "tickers": [
+      "ABG"
+    ],
+    "name": "Asbury Automotive",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Asbury Automotive Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1144980/000114498026000051/abg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国最大級の新車フランチャイズ販売店グループ。",
+      "revenue": "新車販売が売上の52.8%を占め、中古車、整備・部品、金融・保険商品でも稼ぐ。",
+      "strength": "ブランドと地域を分散し、特定メーカーへの依存を抑えた事業構成が特徴。整備・部品は比較的安定している。",
+      "risks": "新車1台あたりの粗利益が下がり続けている。価格、サービス、立地、品ぞろえをめぐる競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "One of the largest franchised new-car dealership groups in the U.S.",
+      "revenue": "New vehicles bring in 52.8% of revenue; used cars, parts and service, and finance and insurance add the rest.",
+      "strength": "Its mix of brands and regions limits reliance on any one manufacturer, and parts and service revenue is steadier.",
+      "risks": "Gross profit per new vehicle is falling, and competition on price, service, location and selection is intense.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1670541,
+    "tickers": [
+      "ADNT"
+    ],
+    "name": "Adient",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Adient Form 10-K (filed 2025-11-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1670541/000167054125000152/adnt-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車用シートを設計・製造・販売する会社。",
+      "revenue": "世界の大手自動車メーカー向けに、完成シートや部品を供給して稼ぐ。",
+      "strength": "設計から製造まで自社で行う垂直統合と、世界各地の生産拠点網が特徴。",
+      "risks": "新車需要の弱さで生産台数が減る。中国の地場メーカーの台頭による価格圧力も抱える。",
+      "competition": "主な競合にLear Corporation、Magna International Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs, makes and sells automotive seating.",
+      "revenue": "It earns by supplying complete seats and components to the world's major automakers.",
+      "strength": "Its features are vertical integration from design to manufacturing and a global network of plants.",
+      "risks": "Weak new-vehicle demand lowers production volumes, and local Chinese automakers add pricing pressure.",
+      "competition": "Main competitors include Lear Corporation, Magna International Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Lear Corporation",
+          "ticker": "LEA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Magna International Inc.",
+          "ticker": "MGA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1703056,
+    "tickers": [
+      "ADT"
+    ],
+    "name": "ADT",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ADT Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1703056/000170305626000022/adt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅や小規模事業者向けにセキュリティとスマートホームを提供する会社。",
+      "revenue": "セキュリティ機器の設置と監視サービスで稼ぐ。追加機器の導入が月額収入を増やす。契約者は約6.1百万。",
+      "strength": "ADTブランドが最大の強み。1874年から続く信頼と、設置・監視・顧客対応の経験が支える。",
+      "risks": "技術や業界標準の変化が速く、新技術への対応を迫られる。新規参入者も増えている。",
+      "competition": "主な競合にComcast、NRGがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing security and smart home solutions to homes and small businesses in the U.S.",
+      "revenue": "It earns from installing security systems and monitoring them. Added equipment lifts monthly revenue. It has about 6.1 million subscribers.",
+      "strength": "The ADT brand is its key advantage, backed by trust since 1874 and experience in sales, installation and monitoring.",
+      "risks": "Technology and industry standards change fast, so it must keep up. New entrants are also increasing.",
+      "competition": "Main competitors include Comcast, NRG.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Comcast",
+          "ticker": "CMCSA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NRG",
+          "ticker": "NRG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 919012,
+    "tickers": [
+      "AEO"
+    ],
+    "name": "American Eagle Outfitters",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "American Eagle Outfitters Form 10-K (filed 2026-03-30) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/919012/000119312526132097/aeo-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "American EagleやAerieなどの衣料ブランドを展開する専門小売会社。",
+      "revenue": "店舗、オンライン、店内店舗で消費者に直接売って稼ぐ。アジアや欧州などでは提携先にライセンスも出す。",
+      "strength": "American EagleとAerieを軸にしたブランドの幅が特徴。ジーンズで存在感を広げてきた。",
+      "risks": "景気悪化で消費者の支出が冷えると売上が落ちる。関税や供給網の問題でコストが上がりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty retailer running apparel brands such as American Eagle and Aerie.",
+      "revenue": "It sells directly to consumers in stores, online and shops-within-shops, and licenses its brands to partners in Asia, Europe and elsewhere.",
+      "strength": "A portfolio of brands led by American Eagle and Aerie is its feature, and it has broadened its leadership in jeans.",
+      "risks": "Weak economies cut consumer spending and hurt sales. Tariffs and supply chain problems can raise costs.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1817358,
+    "tickers": [
+      "ASO"
+    ],
+    "name": "Academy Sports",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Academy Sports Form 10-K (filed 2026-03-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1817358/000181735826000031/aso-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国南部を中心にスポーツ用品とアウトドア用品を売る小売会社。",
+      "revenue": "アウトドア31%、スポーツ・レクリエーション22%、アパレル27%、フットウェア20%の売上構成。店舗とネット通販で稼ぐ。",
+      "strength": "有名ブランドと自社ブランドを並べ、地域に合わせた品ぞろえで売るのが特徴。",
+      "risks": "関税や消費の冷え込みが響きうる。スポーツ用品店との競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A sporting goods and outdoor recreation retailer mainly in the South of the U.S.",
+      "revenue": "Sales split into outdoors 31%, sports & recreation 22%, apparel 27% and footwear 20%, earned through stores and e-commerce.",
+      "strength": "It stocks leading national brands alongside private labels, with a merchandising mix tailored to each locality.",
+      "risks": "Tariffs and weak consumer spending can hurt it, and competition in sporting goods retail is intense.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1437578,
+    "tickers": [
+      "BFAM"
+    ],
+    "name": "Bright Horizons",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Bright Horizons Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の従業員向けに保育や育児支援を提供する会社。",
+      "revenue": "売上の71%は認可型の保育センター。バックアップケアが25%、教育アドバイザリーが4%を占める。",
+      "strength": "1,450社超の雇用主と複数年契約で取引するのが特徴。厳格な品質基準と研究に基づく運営を掲げる。",
+      "risks": "保育は人手に頼る事業で、教員の採用と定着が課題。業界は離職率が高く、人手不足なら受け入れを絞りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides child care and family support as an employee benefit for employers.",
+      "revenue": "Full service center-based child care brings in 71% of revenue, back-up care 25% and educational advisory services 4%.",
+      "strength": "It serves more than 1,450 employers, mostly under multi-year contracts, and stresses rigorous quality standards and research-informed practices.",
+      "risks": "Child care is labor intensive, so hiring and keeping qualified teachers is a challenge. Turnover is high in the industry, and shortages may force it to limit enrollment.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1013488,
+    "tickers": [
+      "BJRI"
+    ],
+    "name": "BJ's Restaurants",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BJ's Restaurants Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1013488/000119312526083331/bjri-20251230.htm"
+      }
+    ],
+    "ja": {
+      "business": "全米で219店舗を直営する、クラフトビールとピザが看板のレストランチェーン。",
+      "revenue": "約90品の料理と自社クラフトビール、バーの飲み物を、31州の直営店で売って稼ぐ。",
+      "strength": "店の雰囲気、幅広い独自メニュー、受賞歴のある自社クラフトビールが差別化の軸。",
+      "risks": "外食産業は競争が激しく成熟している。59店がカリフォルニア州に集中する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A restaurant chain that owns and runs 219 restaurants across the U.S., known for craft beer and deep-dish pizza.",
+      "revenue": "It earns by selling about 90 menu items, its own craft beer and bar drinks at company-owned restaurants in 31 states.",
+      "strength": "Its restaurant atmosphere, broad distinctive menu and award-winning in-house craft beer set it apart.",
+      "risks": "The restaurant industry is highly competitive and mature, and 59 restaurants are concentrated in California.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 885245,
+    "tickers": [
+      "BKE"
+    ],
+    "name": "Buckle",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Buckle Form 10-K (filed 2026-04-01) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "10〜30代向けのカジュアル服や靴を売る米国の専門小売店。",
+      "revenue": "米国42州の440店舗で衣料や靴を売って稼ぐ。売上の42.5%はデニム。",
+      "strength": "接客の良さと品ぞろえの広さが武器。無料の裾上げなどのサービスも特徴。",
+      "risks": "競合の多くは自社より大きく、資金力でも上回る。流行の変化や好立地をめぐる競争も重荷。",
+      "competition": "主な競合にAbercrombie & Fitch、American Eagle Outfitters、Boot Barn、Dick's Sporting Goods、Gapがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. specialty retailer of casual apparel and footwear for fashion-conscious young shoppers.",
+      "revenue": "It earns money selling apparel and shoes in 440 stores across 42 states. Denim is 42.5% of sales.",
+      "strength": "Customer service and a wide selection are its main edge, along with extras like free hemming.",
+      "risks": "Many rivals are larger with far more resources. Shifting fashion trends and the fight for prime store sites add pressure.",
+      "competition": "Main competitors include Abercrombie & Fitch, American Eagle Outfitters, Boot Barn, Dick's Sporting Goods, Gap.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Abercrombie & Fitch",
+          "ticker": "ANF",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "American Eagle Outfitters",
+          "ticker": "AEO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Boot Barn",
+          "ticker": "BOOT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dick's Sporting Goods",
+          "ticker": "DKS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Gap",
+          "ticker": "GAP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1610250,
+    "tickers": [
+      "BOOT"
+    ],
+    "name": "Boot Barn",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Boot Barn Form 10-K (filed 2026-05-14) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1610250/000110465926061346/boot-20260328x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "西部劇風・作業用の靴や衣料を売る米国最大の専門店チェーン。",
+      "revenue": "539店舗と通販で、ウエスタンブーツやワークブーツ、衣料、小物を売って稼ぐ。",
+      "strength": "最も近い同業の4倍超の店舗網による規模のメリットが特徴。",
+      "risks": "競争の激化や来店客の減少を抱える。店舗がカリフォルニアなど一部の州に偏る点も弱み。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The largest US lifestyle retail chain for western and work footwear, apparel and accessories.",
+      "revenue": "It earns money selling western and work boots, apparel and accessories through 539 stores and e-commerce.",
+      "strength": "Its store network is more than four times as large as its nearest direct competitor, giving it scale benefits.",
+      "risks": "Rising competition and lower store traffic are risks. Its stores are also concentrated in places like California and Texas.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 887596,
+    "tickers": [
+      "CAKE"
+    ],
+    "name": "Cheesecake Factory",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Cheesecake Factory Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/887596/000110465926018643/cake-20251230x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国とカナダで368店のレストランを運営する会社。",
+      "revenue": "自社店舗の料理や酒類の販売に加え、ベーカリー部門のチーズケーキ販売や海外のライセンス料で稼ぐ。",
+      "strength": "幅広いメニューを店内で一から作るのが特徴。独自のチーズケーキなどのデザートも競争力の柱。",
+      "risks": "外食は景気に左右されやすい。物価や人件費の上昇が業績を圧迫しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs 368 restaurants in the U.S. and Canada.",
+      "revenue": "It earns from food and drink sales at its restaurants, plus cheesecake sales from its bakery and international licensing.",
+      "strength": "Its feature is a very broad menu made from scratch in each restaurant, along with its own cheesecakes and desserts.",
+      "risks": "Dining out depends on the economy, and rising commodity and wage costs can hurt its results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1067294,
+    "tickers": [
+      "CBRL"
+    ],
+    "name": "Cracker Barrel",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Cracker Barrel Form 10-K (filed 2026-09-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067294/000110465926110772/cbrl-20260731x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "田舎の雑貨店風の店で、家庭的な料理と雑貨を売る会社。",
+      "revenue": "売上の約81%はレストランで、残りは併設のギフトショップの商品販売で稼ぐ。",
+      "strength": "田舎の雑貨店を模した独自の店舗デザインが特徴。レストラン客がそのまま雑貨の買い手になる。",
+      "risks": "外食と小売の競争が激しい。ブランド刷新への悪評で、ロゴを元に戻した経緯も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that sells home-style country food and gifts in old country store-style venues.",
+      "revenue": "About 81% of revenue comes from restaurants, and the rest from gift shop sales in the same stores.",
+      "strength": "Its trademarked rustic country-store design stands out, and restaurant guests become its gift shop buyers.",
+      "risks": "Restaurant and retail competition is intense, and bad publicity over brand changes forced a return to the old logo.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1576940,
+    "tickers": [
+      "CCS"
+    ],
+    "name": "Century Communities",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Century Communities Form 10-K (filed 2026-01-29) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1576940/000157694026000005/ccs-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国16州で戸建て・集合住宅を建てて売る住宅建設会社。",
+      "revenue": "新築住宅の販売で稼ぐ。2025年は10,387戸を引き渡し、住宅ローンや保険などの金融事業も持つ。",
+      "strength": "手頃な価格帯と、すぐ入居できる完成済み住宅が特徴。引き渡した住宅の約99%が完成済みだった。",
+      "risks": "金利や住宅ローン費用の上昇、土地や資材、人手の不足が重しになる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A homebuilder that designs, builds and sells single-family homes in 16 states.",
+      "revenue": "It earns from new home sales, delivering 10,387 homes in 2025, and from mortgage, title and insurance services.",
+      "strength": "It focuses on affordable homes, and about 99% of homes delivered in 2025 were move-in ready.",
+      "risks": "Higher interest rates and mortgage costs, plus shortages of land, materials and labor, can hurt it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1060822,
+    "tickers": [
+      "CRI"
+    ],
+    "name": "Carter's",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Carter's Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm"
+      }
+    ],
+    "ja": {
+      "business": "赤ちゃんと幼児向けの衣料に特化した北米の会社。",
+      "revenue": "Carter'sとOshKoshのブランドを軸に稼ぐ。Walmart、Target、Amazon向けの専用ブランドも持つ。",
+      "strength": "赤ちゃんと幼児の衣料だけを扱う北米最大級の会社で、信頼されるブランド名が特徴。",
+      "risks": "消費者の好みの変化や個人消費の落ち込みに左右される。貿易政策の不透明さも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A North American company focused only on apparel for babies and young children.",
+      "revenue": "It earns mainly from the Carter's and OshKosh brands, plus exclusive brands made for Walmart, Target and Amazon.",
+      "strength": "It is North America's largest apparel company exclusively for babies and young children, with brand names consumers trust.",
+      "risks": "Shifts in consumer tastes and weak consumer spending hit sales. Uncertain trade policy adds more risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 278166,
+    "tickers": [
+      "CVCO"
+    ],
+    "name": "Cavco",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Cavco Form 10-K (filed 2026-05-22) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/278166/000162828026037782/cvco-20260328.htm"
+      }
+    ],
+    "ja": {
+      "business": "工場で造る組み立て式住宅(マニュファクチャードハウス)を作る会社。",
+      "revenue": "住宅の製造販売が柱。住宅ローンの金融子会社と、住宅向け損害保険の子会社でも稼ぐ。",
+      "strength": "米国有数の製造会社で、客の要望に合わせたカスタム対応を量産ラインで行えるのが強み。",
+      "risks": "価格や品質、販売網、ローン条件を巡る競争が激しい。需要は景気や季節で変動する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of factory-built homes such as manufactured homes.",
+      "revenue": "It earns mainly from building and selling homes, and also from a mortgage finance unit and a home insurance unit.",
+      "strength": "It is one of the largest US manufactured home producers and offers custom features on an assembly line.",
+      "risks": "Competition on price, quality, distribution and financing terms is fierce, and demand is cyclical and seasonal.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 730464,
+    "tickers": [
+      "CVSA"
+    ],
+    "name": "Covista",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Covista Form 10-K (filed 2026-08-06) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/730464/000110465926092044/cvsa-20260630x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "看護や医学、獣医学などの医療系教育を行う大学グループ。",
+      "revenue": "シャンバレン、ウォルデン、医学・獣医学校の3セグメントで学生を教えて稼ぐ。",
+      "strength": "米国最大の医療系教育機関を自称し、100,000人の学生を抱える。ウォルデンは看護などの博士号授与で有数。",
+      "risks": "規制の厳しい業界で、監査や調査、訴訟を受けうる。競合も多く、価格や評判、学習形態で競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A university group that teaches nursing, medicine, veterinary medicine and other health fields.",
+      "revenue": "It earns tuition across three segments: Chamberlain, Walden, and the medical and veterinary schools.",
+      "strength": "It calls itself America's largest healthcare educator, with 100,000 students. Walden is one of the leading conferrers of doctoral degrees in nursing and other fields.",
+      "risks": "It operates in a heavily regulated industry and may face audits, investigations and lawsuits. Competition is broad, with rivals vying on price, reputation and learning format.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1590895,
+    "tickers": [
+      "CZR"
+    ],
+    "name": "Caesars Entertainment",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Caesars Entertainment Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1590895/000159089526000011/czr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "カジノやホテル、スポーツ賭博を手がける米国のゲーミング・ホスピタリティ会社。",
+      "revenue": "2025年はカジノ事業が売上の約58%。ホテルが約17%、飲食が約15%を占める。",
+      "strength": "米国18州に52施設を持ち、34地域でスポーツ賭博を運営する地理的な分散が特徴。",
+      "risks": "カジノ業界は競争が激しい。部族系カジノやオンライン賭博との競合を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. gaming and hospitality company running casinos, hotels and sports betting.",
+      "revenue": "In 2025, casino operations made up about 58% of revenue, hotels about 17% and food and beverage about 15%.",
+      "strength": "Its 52 domestic properties in 18 states and sports betting in 34 jurisdictions give it wide geographic reach.",
+      "risks": "The casino business is highly competitive, with pressure from tribal casinos and online betting.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 26780,
+    "tickers": [
+      "DAN"
+    ],
+    "name": "Dana",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dana Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界の自動車メーカー向けに車軸や駆動系部品を作る部品会社。",
+      "revenue": "乗用車向けと商用車向けの2部門で、自動車メーカーに部品を納めて稼ぐ。",
+      "strength": "車軸、ドライブシャフト、トランスミッション、電動化部品まで幅広く手がける。ほぼ全ての大手車メーカーに供給する。",
+      "risks": "景気が悪化すると車の需要が落ち込み、業績に響く。気候変動への規制や自然災害もコスト増の要因。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A parts maker supplying axles and driveline components to vehicle makers worldwide.",
+      "revenue": "It earns money supplying parts to vehicle makers through its Light Vehicle and Commercial Vehicle segments.",
+      "strength": "Its range runs from axles, driveshafts and transmissions to electrification products, supplying nearly every major on-highway vehicle maker.",
+      "risks": "A weak economy cuts vehicle demand and hits results. Climate rules and natural disasters can raise costs.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1062231,
+    "tickers": [
+      "DCH"
+    ],
+    "name": "Dauch",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dauch Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車向けの駆動系部品と金属成形部品を作る部品メーカー。",
+      "revenue": "GMが連結売上の約44%、Fordが約15%を占める。駆動系と金属成形の2部門で稼ぐ。",
+      "strength": "電動車、ハイブリッド車、エンジン車のどれにも対応できる製品群が特徴。",
+      "risks": "主要部品や素材を少数の供給元に頼る。供給網の混乱で生産が乱れうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A car parts maker that builds driveline and metal forming components.",
+      "revenue": "GM made up about 44% of 2025 net sales and Ford about 15%. It earns through its Driveline and Metal Forming segments.",
+      "strength": "Its product range works across electric, hybrid and internal combustion vehicles.",
+      "risks": "It relies on a limited number of suppliers for key parts and materials. Supply chain disruptions can upset its production.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1825088,
+    "tickers": [
+      "DFH"
+    ],
+    "name": "Dream Finders Homes",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dream Finders Homes Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1825088/000162828026010837/dfh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅を設計・建築して販売する住宅会社。",
+      "revenue": "一戸建ての販売が中心。投資家向けの賃貸用住宅や、住宅ローン・権原保険などの金融事業でも稼ぐ。",
+      "strength": "土地を先に抱え込まない「アセットライト」の用地取得戦略が特徴。",
+      "risks": "住宅業界は景気循環の影響を受けやすい。競合が大きく、資金力で上回られうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs, builds and sells homes.",
+      "revenue": "It earns mainly from single-family home sales, plus homes sold to investors for rent and financial services such as mortgage and title.",
+      "strength": "Its feature is an asset-light lot acquisition strategy that avoids holding land on its balance sheet.",
+      "risks": "The homebuilding industry is cyclical, and larger rivals with more resources may outcompete it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 868780,
+    "tickers": [
+      "DORM"
+    ],
+    "name": "Dorman Products",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dorman Products Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車アフターマーケット向けの交換・アップグレード部品の大手供給会社。",
+      "revenue": "約144,000種の部品を小売店、ディーラー、卸売業者経由で販売する。売上の大半は北米で、主に米国。",
+      "strength": "製品の約76%を自社ブランドで販売。かつて純正品か廃品業者でしか手に入らなかった部品を供給するのが特徴。",
+      "risks": "業界は競争が激しく、資金力のある競合も多い。車や部品の品質が上がると交換需要が減りうる。",
+      "competition": "主な競合にStandard Motor Products、Gates Corporation、General Motors、Ford、Cumminsがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A leading supplier of replacement and upgrade parts for the motor vehicle aftermarket.",
+      "revenue": "It sells about 144,000 parts through retailers, dealers and wholesalers, mostly in North America and primarily the U.S.",
+      "strength": "About 76% of products carry its own brands. It supplies parts once available only from OEMs or salvage yards.",
+      "risks": "The industry is highly competitive, with better-funded rivals. Better vehicle and part quality could cut replacement demand.",
+      "competition": "Main competitors include Standard Motor Products, Gates Corporation, General Motors, Ford, Cummins.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Standard Motor Products",
+          "ticker": "SMP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Gates Corporation",
+          "ticker": "GTES",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "General Motors",
+          "ticker": "GM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Ford",
+          "ticker": "F",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cummins",
+          "ticker": "CMI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1370637,
+    "tickers": [
+      "ETSY"
+    ],
+    "name": "Etsy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Etsy Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1370637/000137063726000019/etsy-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "手作り品や個性的な商品を売買するオンライン市場を運営する会社。",
+      "revenue": "2025年の取扱高は11,916.9百万ドル。うちEtsyのマーケットプレイスが87.8%を占める。",
+      "strength": "出品者ならではの商品、検索のしやすさ、人とのつながり、信頼されるブランドが強み。",
+      "risks": "景気や金利、関税などで四半期の業績がぶれやすい。消費者の裁量支出の弱さも響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "It runs online marketplaces for handmade and unique goods from independent sellers.",
+      "revenue": "Gross merchandise sales in 2025 were $11,916.9 million, with the Etsy marketplace making up 87.8%.",
+      "strength": "Its edge is unique seller items, strong search and discovery, human connection and a trusted brand.",
+      "risks": "Quarterly results swing with inflation, interest rates and tariffs, and weak discretionary spending hurts.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1424929,
+    "tickers": [
+      "FOXF"
+    ],
+    "name": "Fox Factory",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Fox Factory Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm"
+      }
+    ],
+    "ja": {
+      "business": "自転車やオフロード車向けのサスペンションなど高性能部品を作る会社。",
+      "revenue": "自転車や各種車両のメーカー向けと、販売店を通じた消費者向けの部品販売で稼ぐ。",
+      "strength": "プロ選手が大会で使う実績に裏打ちされた、革新的で耐久性の高い製品が特徴。",
+      "risks": "競合には資金や開発力で勝る企業もある。価格競争の圧力を受けうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of high-performance parts such as suspension for bikes and off-road vehicles.",
+      "revenue": "It earns by selling parts to bike and vehicle makers and to consumers through dealers and distributors.",
+      "strength": "Its products stand out for innovative design and durability, proven by pro athletes in major events.",
+      "risks": "Some rivals have more financial and R&D resources, and pricing pressure can weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1727263,
+    "tickers": [
+      "FTDR"
+    ],
+    "name": "Frontdoor",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Frontdoor Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1727263/000119312526076548/ftdr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅設備の故障を保証する住宅保証サービスの会社。",
+      "revenue": "年間のサービスプランを顧客に販売して稼ぐ。新築住宅の保証や、HVAC更新などの保証外サービスも手がける。",
+      "strength": "売上ベースで米国の住宅保証の最大手。約17,000社の契約業者網で修理を手配するのが特徴。",
+      "risks": "新規の直販や不動産経由の販売に依存する。部品価格の上昇や契約業者の確保、景気の変化も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that sells home warranties covering breakdowns of home systems and appliances.",
+      "revenue": "It earns by selling annual service plans to homeowners. It also offers new home builder warranties and non-warranty services such as HVAC upgrades.",
+      "strength": "It is the leading U.S. home warranty provider by revenue, with a network of approximately 17,000 independent contractor firms handling repairs.",
+      "risks": "It depends on first-year direct-to-consumer and real estate sales channels. Higher parts prices, contractor relations and macroeconomic shifts also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1999001,
+    "tickers": [
+      "FUN"
+    ],
+    "name": "Six Flags",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Six Flags Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1999001/000199900126000048/fun-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米最大の地域型遊園地運営会社。",
+      "revenue": "入場料のほか、園内の飲食・グッズ・ゲーム、宿泊で稼ぐ。売上の約70%は夏場に集中する。",
+      "strength": "遊園地26、ウォーターパーク15、リゾート9を持ち、米国の主要10市場すべてをカバーする。",
+      "risks": "旧シックス・フラッグスと旧シダーフェアの統合が計画どおり進まない可能性を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "North America's largest regional amusement park operator.",
+      "revenue": "It earns from park admission, in-park food, merchandise and games, and lodging. About 70% of revenue falls in the second and third quarters.",
+      "strength": "With 26 amusement parks, 15 water parks and nine resorts, it serves each of the top 10 U.S. market areas.",
+      "risks": "Integrating the former Six Flags and former Cedar Fair businesses may not go as planned.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 821002,
+    "tickers": [
+      "GIII"
+    ],
+    "name": "G-III Apparel",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "G-III Apparel Form 10-K (filed 2026-03-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "DKNYやカール・ラガーフェルドなどの衣料ブランドを展開する会社。",
+      "revenue": "自社ブランドとライセンスブランドの衣料や小物を売って稼ぐ。ライセンス品は純売上高の43.0%。",
+      "strength": "デザインから調達、流通、販売までの力が特徴。30を超えるブランドを持つ。",
+      "risks": "ライセンス契約を更新できないと大きな売上を失う。大口顧客への依存や関税の影響も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A fashion company running apparel brands such as DKNY and Karl Lagerfeld.",
+      "revenue": "It earns money selling apparel and accessories under owned and licensed brands. Licensed products were 43.0% of net sales.",
+      "strength": "Its edge is design, sourcing, distribution and marketing under more than 30 brands.",
+      "risks": "Losing a key license would cost large revenue. It also faces heavy customer concentration and tariff effects.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1672013,
+    "tickers": [
+      "GOLF"
+    ],
+    "name": "Acushnet",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Acushnet Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "TitleistやFootJoyのゴルフボール・用品を作る会社。",
+      "revenue": "ゴルフボール、クラブ、シューズ、手袋、ウェアなどを世界で売って稼ぐ。",
+      "strength": "2025年のプロツアーで使われたボールの72%がTitleist。",
+      "risks": "ゴルフ人口やラウンド数の減少を抱える。天候や関税の影響も受けうる。",
+      "competition": "主な競合にNikeがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes golf balls and gear under the Titleist and FootJoy brands.",
+      "revenue": "It earns by selling golf balls, clubs, shoes, gloves and apparel worldwide.",
+      "strength": "Titleist balls made up 72% of all balls used on the 2025 worldwide professional tours.",
+      "risks": "Fewer golfers or rounds played would hurt it. Weather and tariffs can also weigh on results.",
+      "competition": "Main competitors include Nike.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Nike",
+          "ticker": "NKE",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1373670,
+    "tickers": [
+      "GRBK"
+    ],
+    "name": "Green Brick Partners",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Green Brick Partners Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1373670/000162828026011798/grbk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "テキサスなどで土地開発と住宅建設を手がける会社。",
+      "revenue": "テキサス、ジョージア、フロリダで住宅を売って稼ぐ。土地開発や、権原・住宅ローン・保険代理の事業も持つ。",
+      "strength": "土地の取得から設計、建設、販売まで一貫して担うのが特徴。約48,900区画の住宅用地を保有または契約済み。",
+      "risks": "景気後退や金利上昇で住宅需要が落ちうる。競争は激しく、資金力で勝る大手とも争う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A homebuilder and land developer active in Texas and other growth markets.",
+      "revenue": "It earns by selling homes in Texas, Georgia and Florida, and also runs land development, title, mortgage and insurance agency services.",
+      "strength": "It handles every stage from land acquisition to design, construction and sales, with about 48,900 home sites owned or under contract.",
+      "risks": "A downturn or higher interest rates could cut housing demand. Competition is intense, including larger rivals with more resources.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 42582,
+    "tickers": [
+      "GT"
+    ],
+    "name": "Goodyear",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Goodyear Form 10-K (filed 2026-02-10) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界各地でタイヤを開発・製造・販売する大手メーカー。",
+      "revenue": "売上の約84%は新品タイヤ。自動車メーカー向けの新車用と、交換用の両方を売って稼ぐ。",
+      "strength": "世界19カ国の49工場で生産する。トラック向けサービスや再生タイヤ拠点の運営でも大手。",
+      "risks": "世界のタイヤ市場は競争が激しい。2025年は1,721百万ドルの純損失を出し、販売本数も減った。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A leading tire maker that develops, makes and sells tires around the world.",
+      "revenue": "About 84% of sales are new tires, sold both to automakers as original equipment and as replacements.",
+      "strength": "It makes tires in 49 plants across 19 countries and is a large operator of truck service and retreading centers.",
+      "risks": "Tire markets are highly competitive. In 2025 it posted a net loss of $1,721 million, and tire unit sales fell.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1057060,
+    "tickers": [
+      "HZO"
+    ],
+    "name": "MarineMax",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MarineMax Form 10-K (filed 2025-11-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312525284680/hzo-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "ボートやヨットの販売、マリーナ運営を手がける会社。",
+      "revenue": "新品・中古ボートの販売に加え、修理、保管、金融・保険で稼ぐ。Brunswick製の新艇が売上の約18%。",
+      "strength": "気軽に買える販売方法、好立地の店舗、高級ブランドの品ぞろえ、手厚い顧客対応が特徴。",
+      "risks": "天候や季節による変動、金利、市場の弱さが業績に響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that sells boats and yachts and operates marinas worldwide.",
+      "revenue": "It earns from new and used boat sales, repairs, storage and finance and insurance. New Brunswick boats were about 18% of revenue.",
+      "strength": "Its features are a hassle-free sales approach, prime retail locations, premium brands and strong customer service.",
+      "risks": "Weather, seasonality, interest rates and weak market conditions can weigh on results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1580905,
+    "tickers": [
+      "IBP"
+    ],
+    "name": "Installed Building Products",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Installed Building Products Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1580905/000158090526000004/ibp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅や商業ビルの断熱材を施工する米国の会社。",
+      "revenue": "断熱材の施工が売上の約58%を占める。防水や車庫ドアなどの施工、資材の流通でも稼ぐ。",
+      "strength": "約250の拠点網を持つ全国規模と、地域に根ざした営業が特徴。メーカーから直接仕入れて価格を抑える。",
+      "risks": "インフレで人手が逼迫し、人件費が上がる。サイバー攻撃の脅威も増している。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US company that installs insulation in homes and commercial buildings.",
+      "revenue": "Insulation installation makes up about 58% of net revenue. It also earns from other installations such as waterproofing and garage doors, and from distribution.",
+      "strength": "Its national scale of about 250 branches combined with a strong local presence is its feature, and buying directly from manufacturers helps its terms.",
+      "risks": "Inflation has tightened the labor market and raised labor costs. Cyber threats are also growing.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1170010,
+    "tickers": [
+      "KMX"
+    ],
+    "name": "CarMax",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CarMax Form 10-K (filed 2026-04-15) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm"
+      }
+    ],
+    "ja": {
+      "business": "中古車を小売りする米国最大手の会社。",
+      "revenue": "中古車の小売と卸売オークション、自社の自動車ローンで稼ぐ。",
+      "strength": "値引き交渉なしの価格と、店舗とネットを組み合わせた購入体験が特徴。",
+      "risks": "新車ディーラーやネット販売会社、個人との競争が激しい。金利や景気の影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The largest US retailer of used vehicles.",
+      "revenue": "It earns from retail used car sales, wholesale auctions and its own auto loan business.",
+      "strength": "No-haggle prices and an omni-channel experience combining stores and online set it apart.",
+      "risks": "Competition from dealers, online platforms and private sellers is intense, and rates and the economy affect it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 885639,
+    "tickers": [
+      "KSS"
+    ],
+    "name": "Kohl's",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Kohl's Form 10-K (filed 2026-03-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/885639/000119312526115982/kss-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "手頃な価格の衣料や靴、住居用品を売る米国の百貨店。",
+      "revenue": "1,153の店舗とウェブサイトで、衣料、靴、小物、美容、ホーム用品を売って稼ぐ。",
+      "strength": "自社限定ブランドを持つのが特徴。全国ブランドより売値は低いが、粗利益率は高い。",
+      "risks": "小売業界は競争が激しい。ネット通販やオフプライス店、量販店などが相手で、商品と価格で争う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. department store chain selling moderately priced apparel, footwear and home goods.",
+      "revenue": "It earns by selling apparel, footwear, accessories, beauty and home products through 1,153 stores and a website.",
+      "strength": "Its proprietary brands, sold only at Kohl's, set it apart. They carry lower selling prices than national brands but higher gross margins.",
+      "risks": "Retail is highly competitive. Online retailers, off-price chains and mass merchandisers compete mainly on product and value.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1760965,
+    "tickers": [
+      "KTB"
+    ],
+    "name": "Kontoor Brands",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Kontoor Brands Form 10-K (filed 2026-03-04) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1760965/000176096526000014/ktb-20260103.htm"
+      }
+    ],
+    "ja": {
+      "business": "Wrangler、Lee、Helly Hansenを展開する世界的なライフスタイル衣料会社。",
+      "revenue": "衣料・靴・小物を卸売と直販で売り、ブランドのライセンス料でも稼ぐ。",
+      "strength": "デニムやアウトドア、ワークウェアで歴史あるブランドを持ち、90を超える国に展開する。",
+      "risks": "上位10社が売上の53%、Walmart1社で30%を占める。関税で粗利益率も押し下げられた。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global lifestyle apparel company behind Wrangler, Lee and Helly Hansen.",
+      "revenue": "It sells apparel, footwear and accessories through wholesale and direct-to-consumer channels, and also earns from brand licensing.",
+      "strength": "It owns heritage brands in denim, outdoor and workwear, with a presence in over 90 countries.",
+      "risks": "Its ten largest customers account for 53% of revenue and Walmart alone 30%. Tariffs have also cut gross margins.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 912766,
+    "tickers": [
+      "LAUR"
+    ],
+    "name": "Laureate Education",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Laureate Education Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/912766/000162828026009479/laur-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "メキシコとペルーで大学を運営する高等教育の会社。",
+      "revenue": "両国の5校の大学で約497,700人の学生を教えて稼ぐ。",
+      "strength": "実務的な内容と理工系・ビジネス分野に力を入れる。私費で学ぶ学生が中心。",
+      "risks": "授業料や入学者数を維持・拡大できないおそれがある。為替の変動や規制の変更も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A higher education company running universities in Mexico and Peru.",
+      "revenue": "It earns money teaching about 497,700 students at five institutions in the two countries.",
+      "strength": "It focuses on applied, career-oriented programs in STEM and business, and on private-pay students.",
+      "risks": "It may fail to hold or raise tuition and enrollment. Currency swings and regulatory changes also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 763744,
+    "tickers": [
+      "LCII"
+    ],
+    "name": "LCI Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "LCI Industries Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "RVや船舶、住宅向けの部品を作る部品メーカー。",
+      "revenue": "完成品メーカー向けのOEM部門が売上の77%、補修市場が23%を占める。",
+      "strength": "品質や信頼性、製品の革新性、顧客対応が強み。顧客との結びつきも強い。",
+      "risks": "OEM部門は季節性を抱える。RV業界への依存が大きい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of components for RVs, boats and housing.",
+      "revenue": "The OEM Segment brings in 77% of net sales and the Aftermarket Segment 23%.",
+      "strength": "Product quality and reliability, innovation and customer service are its edge, along with long-standing customer ties.",
+      "risks": "Its OEM Segment is seasonal, and it leans heavily on the RV industry.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1580670,
+    "tickers": [
+      "LGIH"
+    ],
+    "name": "LGI Homes",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "LGI Homes Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1580670/000158067026000019/lgih-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国21州で新築住宅を設計・建築して売る会社。",
+      "revenue": "初めて家を買う層向けの住宅が中心。大口投資家向けの一括販売や賃貸住宅でも稼ぐ。",
+      "strength": "エントリー向けのLGI Homesと高級のTerrata Homesのブランドを持ち、完成まで約105〜135日。",
+      "risks": "住宅業界は競争が激しい。他の住宅会社や中古住宅、賃貸と顧客や土地、資金、資材、人材を奪い合う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs, builds and sells new homes in 21 states.",
+      "revenue": "It sells mainly entry-level homes, and also earns from bulk sales to institutional investors and from leased homes.",
+      "strength": "It has two brands, LGI Homes for entry-level and Terrata Homes for luxury, with homes completed in about 105 to 135 days.",
+      "risks": "Homebuilding is highly competitive, with rivals, existing home sales and rentals all vying for buyers, land, financing, materials and labor.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1065696,
+    "tickers": [
+      "LKQ"
+    ],
+    "name": "LKQ",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "LKQ Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569626000012/lkq-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "車の交換部品や用品を世界で扱う流通会社。",
+      "revenue": "北米、欧州、特殊用品の3事業で、衝突修理部品や機械部品などを販売して稼ぐ。",
+      "strength": "新品の純正品以外の代替部品を幅広く扱う。流通網の規模、在庫管理、独自技術が差別化の軸。",
+      "risks": "景気や政治情勢、関税の影響を受けやすい。純正部品メーカーや小規模業者との価格競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global distributor of vehicle replacement parts and accessories.",
+      "revenue": "It earns by selling collision, mechanical and specialty parts through three segments: North America, Europe and Specialty.",
+      "strength": "It carries a broad range of alternative parts. Its distribution scale, inventory systems and proprietary technology set it apart.",
+      "risks": "Economic and political conditions and tariffs can hit results. It also faces price competition from OEMs and smaller suppliers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1157408,
+    "tickers": [
+      "LRN"
+    ],
+    "name": "Stride",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Stride Form 10-K (filed 2026-08-05) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "学校向けにオンライン学習の基盤を提供する教育テクノロジー会社。",
+      "revenue": "教材・システム・授業・支援をまとめた学校丸ごとのサービスで主に稼ぐ。顧客は公立・私立学校や学区が中心。",
+      "strength": "学校向けサービスの契約は平均5年超で、多くが自動更新される。幼稚園から高校までの幅広い講座も特徴。",
+      "risks": "売上は生徒1人あたりの公的資金に左右される。法令違反や学業成績への批判で、契約や資金を失いうる。",
+      "competition": "主な競合にPearson PLC、McGraw Hillがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A technology company that provides an online learning platform to schools.",
+      "revenue": "It earns mainly from a school-as-a-service package of curriculum, systems, instruction and support, sold mostly to public and private schools and districts.",
+      "strength": "Its school contracts average more than five years, and most renew automatically. It also offers programs from kindergarten through high school.",
+      "risks": "Revenue depends on per-pupil public funding. Legal violations or criticism of academic results could cost it contracts and funding.",
+      "competition": "Main competitors include Pearson PLC, McGraw Hill.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Pearson PLC",
+          "ticker": "PSO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "McGraw Hill",
+          "ticker": "MH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 57131,
+    "tickers": [
+      "LZB"
+    ],
+    "name": "La-Z-Boy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "La-Z-Boy Form 10-K (filed 2026-06-16) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/57131/000005713126000019/lzb-20260425.htm"
+      }
+    ],
+    "ja": {
+      "business": "リクライニングチェアを中心に家具を作り、売る米国の会社。",
+      "revenue": "自社運営のLa-Z-Boy Storesで消費者に売る小売と、独立系の販売店に卸す卸売の二本立てで稼ぐ。",
+      "strength": "リクライニングチェアで世界をリードし、378店のLa-Z-Boy Stores網を持つのが特徴。",
+      "risks": "消費者の好みが低価格品へ移ると競争力が落ちうる。ネット専業の販売や直販ブランドとの競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US company that makes and sells furniture, led by reclining chairs.",
+      "revenue": "It earns from two segments: retail, selling to consumers through company-owned La-Z-Boy Stores, and wholesale, selling to independent retailers.",
+      "strength": "It is the leading global producer of reclining chairs and runs a network of 378 La-Z-Boy Stores.",
+      "risks": "A shift in taste toward lower-priced goods could weaken its position. Digital-only retailers and direct-to-consumer brands add competition.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 63296,
+    "tickers": [
+      "MATW"
+    ],
+    "name": "Matthews",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Matthews Form 10-K (filed 2025-11-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/63296/000006329625000070/matw-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "墓碑や棺などの葬祭用品と、産業向け技術を手がける会社。",
+      "revenue": "葬祭用品が最大の事業で、産業技術とブランド関連サービスが続く。売上は北米71%、欧州24%。",
+      "strength": "品質の高さと幅広い製品群、独自のデザイン、納期対応力が競争上の強み。",
+      "risks": "セキュリティ事故が起きれば、事業の混乱や法的請求、信用の低下を招きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of memorials and caskets for funerals, and of industrial technologies.",
+      "revenue": "Memorialization is the largest business, followed by industrial technologies and brand services. North America brings in 71% of sales and Europe 24%.",
+      "strength": "Its competitive edge lies in superior quality, broad product lines, innovative designs and delivery capability.",
+      "risks": "A security or privacy breach could disrupt operations and bring legal claims and reputational damage.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 907242,
+    "tickers": [
+      "MCRI"
+    ],
+    "name": "Monarch Casino & Resort",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Monarch Casino & Resort Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/907242/000110465926018717/mcri-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ネバダ州リノとコロラド州ブラックホークでカジノホテルを運営する会社。",
+      "revenue": "アトランティスとモナーク・ブラックホークで、カジノ、飲食、ホテルの事業から稼ぐ。",
+      "strength": "アトランティスはリノ・スパークス・コンベンションセンターと直結する唯一のホテル。会員制度のMonarch Rewardsで再来店を促す。",
+      "risks": "リノのカジノ競争は激しい。競合は客室数がより多いところもある。夏に売上が増え、冬は減る季節性もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs casino hotels in Reno, Nevada and Black Hawk, Colorado.",
+      "revenue": "It earns from casino, food and beverage and hotel operations at the Atlantis and Monarch Black Hawk.",
+      "strength": "The Atlantis is the only hotel physically connected to the Reno-Sparks Convention Center, and the Monarch Rewards program builds repeat visits.",
+      "risks": "Gaming competition in Reno is intense, and some rivals have significantly more guest rooms. Revenue is also seasonal, higher in summer and lower in winter.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 851968,
+    "tickers": [
+      "MHK"
+    ],
+    "name": "Mohawk Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Mohawk Industries Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/851968/000085196826000011/mhk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "タイルやカーペットなどを作る世界最大の床材メーカー。",
+      "revenue": "売上の約54%が米国、約46%が海外。部門別ではグローバルセラミック40%、北米床材34%、その他地域床材26%。",
+      "strength": "原料から製造、流通まで一貫する垂直統合が競争上の強み。タイルから木質床材まで幅広く扱う。",
+      "risks": "景気や住宅需要の波を受けやすい。関税で一部製品の粗利益率が下がった。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The world's largest flooring maker, producing tile, carpet and other floor coverings.",
+      "revenue": "About 54% of sales come from the U.S. and about 46% from abroad. Global Ceramic is 40% of revenue, Flooring NA 34% and Flooring ROW 26%.",
+      "strength": "Vertical integration from raw materials to manufacturing and distribution gives it a competitive edge across a broad range of flooring.",
+      "risks": "It is exposed to swings in the economy and housing demand, and tariffs have lowered margins on some products.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 799292,
+    "tickers": [
+      "MHO"
+    ],
+    "name": "M/I Homes",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "M/I Homes Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/799292/000079929226000006/mho-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国で戸建て住宅を建てて売る住宅メーカー。",
+      "revenue": "住宅販売が売上の97%を占め、残りの3%は住宅ローンや権原サービスで稼ぐ。",
+      "strength": "設計と施工の質、手厚い接客、ローン・権原サービスまで一括で提供できる点が特徴。",
+      "risks": "物価高や高い住宅ローン金利で、住宅の買いやすさが落ちる。販売促進の値引きやローン金利補助が必要になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. homebuilder that designs and sells single-family homes.",
+      "revenue": "Home sales bring in 97% of revenue. The other 3% comes from mortgage and title services.",
+      "strength": "It stands out for design and construction quality, strong customer service, and in-house mortgage and title services.",
+      "risks": "Inflation and high mortgage rates hurt affordability, so it must offer incentives and rate buydowns to sell homes.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 833079,
+    "tickers": [
+      "MTH"
+    ],
+    "name": "Meritage Homes",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Meritage Homes Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/833079/000083307926000010/mth-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国で戸建て住宅を設計・販売する住宅メーカー。",
+      "revenue": "336のコミュニティで新築住宅を売って稼ぐ。所有権や保険などの金融サービスも手がける。",
+      "strength": "全戸を事前着工する100%見込み建築の方式が特徴。入居準備の整った家を売る。",
+      "risks": "金利の上昇や住宅ローン融資の減少で売れにくくなりうる。中古住宅との競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US designer and builder of single-family homes.",
+      "revenue": "It earns by selling new homes in 336 communities, and also runs title, mortgage and insurance services.",
+      "strength": "It follows a 100% spec home strategy, pre-starting every home and selling move-in ready houses.",
+      "risks": "Higher interest rates or tighter mortgage availability can make homes harder to sell. It also competes with resale homes.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1758488,
+    "tickers": [
+      "OSW"
+    ],
+    "name": "OneSpaWorld",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "OneSpaWorld Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "クルーズ船やリゾートでスパ・健康施設を運営する会社。",
+      "revenue": "売上と利益の大半は、クルーズ会社との長期契約で稼ぐ。契約は平均約5年で、売上の一定割合をクルーズ会社が受け取る。",
+      "strength": "船上の健康・ウェルネス市場で、自社推計のシェアは90%超。採用・研修や物流の基盤も特徴。",
+      "risks": "感染症の流行、景気や競争環境の変化、経営陣への依存が不確実要因となる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "Runs health and wellness centers on cruise ships and at destination resorts.",
+      "revenue": "Most revenue and profit come from long-term cruise line contracts averaging about five years, with cruise lines keeping a share of sales.",
+      "strength": "Its own estimate puts its share of the outsourced maritime wellness market above 90%. Recruiting, training and logistics platforms back it up.",
+      "risks": "Illness outbreaks, shifts in the economy and competition, and reliance on its management team are key uncertainties.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 76605,
+    "tickers": [
+      "PATK"
+    ],
+    "name": "Patrick Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Patrick Industries Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/76605/000007660526000013/patk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "RVやボートなどの部品を作り、販売する会社。",
+      "revenue": "売上の74%は製造部門、26%は流通部門で稼ぐ。RV、ボート、パワースポーツ、工場生産住宅向けが中心。",
+      "strength": "全米に約191の製造工場と50の倉庫・物流拠点を持つ。顧客の工場の近くから届けられるのが特徴。",
+      "risks": "RVやボートの需要は景気、金利、消費者心理で上下する。原材料費や関税、金融環境の影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes and distributes components for RVs, boats and other markets.",
+      "revenue": "Manufacturing brings in 74% of sales and distribution 26%, mainly for RV, marine, powersports and manufactured housing customers.",
+      "strength": "It runs about 191 plants and 50 warehouse and distribution sites nationwide, so it can supply customers' factories from nearby.",
+      "risks": "Demand for RVs and boats swings with the economy, interest rates and consumer confidence. Raw material costs and tariffs also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 921738,
+    "tickers": [
+      "PENN"
+    ],
+    "name": "PENN Entertainment",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PENN Entertainment Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/921738/000092173826000008/penn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米でカジノ、競馬場、オンラインスポーツ賭博を運営する会社。",
+      "revenue": "カジノの賭け事や飲食、宿泊で稼ぐ。オンライン部門はスポーツ賭博とiCasinoで収益を上げる。",
+      "strength": "PENN Playの会員は33百万人超。店舗とデジタルの相互送客が特徴。",
+      "risks": "競争が激しいオンライン市場を抱える。2025年は825.0百万ドルののれん減損も出た。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs casinos, racetracks and online sports betting across North America.",
+      "revenue": "Retail casinos earn from gaming, food and beverage and hotel stays. The Interactive segment earns from online sports betting and iCasino.",
+      "strength": "Its PENN Play loyalty program has over 33 million members, and it cross-sells between retail and digital.",
+      "risks": "It faces a highly competitive online market, and booked an $825.0 million goodwill impairment on its Interactive unit.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1968915,
+    "tickers": [
+      "PHIN"
+    ],
+    "name": "PHINIA",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PHINIA Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車や産業機器向けの燃料噴射システムなどを作る会社。",
+      "revenue": "2025年の売上は3,483百万ドル。燃料システム部門が2,320百万ドル、アフターマーケット部門が1,306百万ドル。",
+      "strength": "多くの主要自動車メーカーに納める世界的な供給元で、排出削減と燃費向上の技術が特徴。",
+      "risks": "景気後退で車の生産が落ちると業績が下がる。インフレや関税でコストが上がりうる。",
+      "competition": "主な競合にCummins Inc.、Dorman Products, Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes fuel injection systems and related parts for vehicles and industrial equipment.",
+      "revenue": "Net sales in 2025 were $3,483 million: $2,320 million from Fuel Systems and $1,306 million from Aftermarket.",
+      "strength": "It is a global supplier to most major automakers, with technology that cuts emissions and improves fuel economy.",
+      "risks": "Recessions that cut vehicle production hurt results. Inflation and tariffs can raise costs.",
+      "competition": "Main competitors include Cummins Inc., Dorman Products, Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Cummins Inc.",
+          "ticker": "CMI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dorman Products, Inc.",
+          "ticker": "DORM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 945841,
+    "tickers": [
+      "POOL"
+    ],
+    "name": "Pool Corp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Pool Corp Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/945841/000119312526074833/pool-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "プール用品を扱う世界最大の卸売会社。",
+      "revenue": "プール用品や機器、散水・造園用品を、プール施工業者や小売店などへ売って稼ぐ。",
+      "strength": "456の営業拠点網と幅広い品ぞろえ、手厚い顧客対応で販売する。",
+      "risks": "新設プールの工事は消費者の慎重な支出と高い資金調達コストで減った。地域の卸や量販店との競争も厳しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The world's largest wholesale distributor of swimming pool supplies.",
+      "revenue": "It earns by selling pool supplies and equipment plus irrigation and landscape products to pool builders, retailers and contractors.",
+      "strength": "A network of 456 sales centers, a broad product range and strong customer service drive its sales.",
+      "risks": "New pool construction fell on cautious consumer spending and high financing costs, and competition from regional distributors and mass retailers is intense.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1046568,
+    "tickers": [
+      "PRDO"
+    ],
+    "name": "Perdoceo Education",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Perdoceo Education Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1046568/000119312526059331/prdo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "オンライン中心で社会人向けの大学教育を行う会社。",
+      "revenue": "CTU、AIUS、USAHSの3校が学位課程や専門教育を提供して稼ぐ。",
+      "strength": "学生の約91%が完全オンライン課程。intellipathという学習基盤も特色。",
+      "risks": "高等教育市場は細分化され、競争が激しい。オンライン講座を広げる大学が増え、規制も厳しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs mostly online universities for working adults.",
+      "revenue": "It earns from degree and professional programs at three institutions: CTU, AIUS and USAHS.",
+      "strength": "About 91% of students study in fully online programs, and the intellipath learning platform is a distinctive feature.",
+      "risks": "The postsecondary education industry is fragmented and highly competitive. More schools are offering online programs, and regulation is heavy.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1564902,
+    "tickers": [
+      "PRKS"
+    ],
+    "name": "United Parks & Resorts",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "United Parks & Resorts Form 10-K (filed 2026-03-03) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1564902/000119312526088288/prks-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "SeaWorldやBusch Gardensなど13のテーマパークを運営する会社。",
+      "revenue": "入園料と、園内での飲食やグッズなどの購入で稼ぐ。",
+      "strength": "世界最大級の動物コレクションと知名度の高いブランドが特徴。800を超える施設を持つ。",
+      "risks": "人材の確保が難しく、労働組合の組織化活動も増えている。大株主の影響も受けうる。",
+      "competition": "主な競合にThe Walt Disney Company、Six Flags Entertainment Corporationがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A theme park company running 13 parks, including SeaWorld and Busch Gardens.",
+      "revenue": "It earns mainly from park admission and from food, merchandise and other purchases inside the parks.",
+      "strength": "One of the world's largest zoological collections and well-known brands set it apart, with over 800 attractions.",
+      "risks": "Hiring and keeping staff is hard, and union organizing is rising. A major shareholder may also sway decisions.",
+      "competition": "Main competitors include The Walt Disney Company, Six Flags Entertainment Corporation.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "The Walt Disney Company",
+          "ticker": "DIS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Six Flags Entertainment Corporation",
+          "ticker": "FUN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 884219,
+    "tickers": [
+      "PRSU"
+    ],
+    "name": "Pursuit",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Pursuit Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/884219/000119312526071582/prsu-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "国立公園など名所で観光施設とロッジを運営する会社。",
+      "revenue": "米国、カナダ、アイスランド、コスタリカの観光施設17か所とロッジ29か所で稼ぐ。",
+      "strength": "名所に根ざした独自性のある施設が特徴。飲食、物販、交通まで一体で提供する。",
+      "risks": "景気の悪化や旅行業界の混乱、天候や災害に左右される。事業の季節性も大きい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs sightseeing attractions and lodges in national parks and other famous places.",
+      "revenue": "It earns money from 17 sightseeing attractions and 29 lodges in the U.S., Canada, Iceland and Costa Rica.",
+      "strength": "Distinctive facilities in iconic places set it apart, with food, retail and transport offered alongside.",
+      "risks": "A weaker economy, travel disruptions, bad weather and disasters can hurt it. Its business is also highly seasonal.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1639825,
+    "tickers": [
+      "PTON"
+    ],
+    "name": "Peloton",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Peloton Form 10-K (filed 2026-08-06) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1639825/000163982526000038/pton-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "自宅で使えるフィットネス機器と運動配信を手がける会社。",
+      "revenue": "バイクなどの機器の販売と、月額や年額の会員サービスで稼ぐ。",
+      "strength": "機器とソフト、インストラクター、会員コミュニティを組み合わせた体験が特徴。",
+      "risks": "過去に営業赤字を出した。今後も黒字を保てない可能性を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that sells connected home fitness equipment and workout content.",
+      "revenue": "It earns from equipment sales and from monthly or annual memberships.",
+      "strength": "Its feature is combining equipment, software, instructors and a member community.",
+      "risks": "It has posted operating losses in the past and may not stay profitable.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 901491,
+    "tickers": [
+      "PZZA"
+    ],
+    "name": "Papa John's",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Papa John's Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/901491/000162828026011965/pzza-20251228.htm"
+      }
+    ],
+    "ja": {
+      "business": "宅配とテイクアウトのピザ店を運営し、フランチャイズ展開する会社。",
+      "revenue": "直営店のピザ販売に加え、加盟店からのロイヤルティや、加盟店向けの食材販売で稼ぐ。",
+      "strength": "6,083店の店舗網を持つ。売上の多くはデジタル経由で、品質重視の「BETTER INGREDIENTS. BETTER PIZZA.」が看板。",
+      "risks": "ピザ宅配は成熟して競争が激しい。資金力で上回る競合や、配達代行サービスとも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that operates and franchises pizza delivery and carryout restaurants.",
+      "revenue": "It earns from pizza sales at company-owned restaurants, franchise royalties, and sales of food and supplies to franchisees.",
+      "strength": "It has 6,083 restaurants, most sales come through digital channels, and its tagline is BETTER INGREDIENTS. BETTER PIZZA.",
+      "risks": "The pizza delivery market is mature and highly competitive, with some rivals holding more resources, plus delivery aggregators.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1793659,
+    "tickers": [
+      "RSI"
+    ],
+    "name": "Rush Street Interactive",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Rush Street Interactive Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1793659/000179365926000009/rsi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国・カナダ・中南米でオンラインカジノとスポーツ賭博を運営する会社。",
+      "revenue": "BetRiversなどのブランドで、オンラインカジノとスポーツ賭博の利用者から稼ぐ。",
+      "strength": "自社のオンラインゲーム基盤が強み。陸上カジノの後ろ盾がなくても、競争の激しい市場で成功してきた。",
+      "risks": "オンライン賭博の競争は激しい。ライセンスの取得や維持に失敗すれば、事業の拡大を妨げられうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs online casino and sports betting in the U.S., Canada and Latin America.",
+      "revenue": "It earns from players of its online casino and sports betting brands, such as BetRivers.",
+      "strength": "Its proprietary online gaming platform is a core strength, and it has won in competitive markets without a land-based casino behind it.",
+      "risks": "Competition in online betting is intense, and failing to win or keep licenses could block its expansion.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1597033,
+    "tickers": [
+      "SABR"
+    ],
+    "name": "Sabre",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sabre Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1597033/000162828026008800/sabr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "航空会社やホテルと旅行会社をつなぐ旅行向け技術プラットフォームの会社。",
+      "revenue": "航空会社やホテルの情報を旅行会社へ届ける流通事業と、航空会社向けソフトウェアで稼ぐ。",
+      "strength": "多様な旅行サプライヤーと旅行会社をつなぐ流通網と、AI対応の航空会社向け基盤が特徴。",
+      "risks": "競争が激しい市場にある。システム障害や情報漏えいが信用と事業を傷つけうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A travel technology company that links airlines, hotels and other suppliers with travel buyers.",
+      "revenue": "It earns from a distribution network that brings supplier content to travel agencies, and from software sold to airlines.",
+      "strength": "Its features are a broad network of travel suppliers and buyers, and an AI-enabled retailing platform for airlines.",
+      "risks": "It operates in highly competitive markets, and system failures or security incidents could harm its reputation and business.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1043509,
+    "tickers": [
+      "SAH"
+    ],
+    "name": "Sonic Automotive",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sonic Automotive Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "新車・中古車の販売店を全米で運営する自動車小売会社。",
+      "revenue": "売上の約85.0%はフランチャイズ販売店部門。車の販売に加え、整備や部品、金融・保険商品の仲介でも稼ぐ。",
+      "strength": "米国最大級の自動車小売で、メーカー保証の修理は正規販売店でしか行えない点が追い風。",
+      "risks": "自動車小売は競争が激しい。ネットの仲介業者やオンライン直販とも客を奪い合う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US automotive retailer operating new and used vehicle dealerships.",
+      "revenue": "About 85.0% of revenue comes from its franchised dealerships. Besides vehicle sales, it earns from service, parts and arranging financing and insurance products.",
+      "strength": "It is one of the largest US automotive retailers, and manufacturer warranty repairs can only be done at franchised dealerships like its own.",
+      "risks": "Auto retail is highly competitive. It also competes for sales with internet brokers and online sellers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1368458,
+    "tickers": [
+      "SBH"
+    ],
+    "name": "Sally Beauty",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sally Beauty Form 10-K (filed 2025-11-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1368458/000119312525280122/sbh-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "美容師向けの美容用品を売る国際的な専門小売・卸売会社。",
+      "revenue": "ヘアカラーやヘアケア、スタイリング用品、ネイル用品を、店舗とネットで売って稼ぐ。",
+      "strength": "ヘアカラーとヘアケアの幅広い品ぞろえと専門知識が強み。BSGは北米最大の卸売業者。",
+      "risks": "ネット通販や量販店、メーカーの直販など、多方面からの競争にさらされる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global specialty retailer and distributor of professional beauty supplies.",
+      "revenue": "It earns by selling hair color, hair care, styling tools and nail products through stores and digital channels.",
+      "strength": "Its broad hair color and care range and expert knowledge are its core. BSG is the largest North American distributor of professional hair color and care.",
+      "risks": "It faces competition on many fronts, including online retailers, mass merchandisers and manufacturers selling direct.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 866729,
+    "tickers": [
+      "SCHL"
+    ],
+    "name": "Scholastic",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Scholastic Form 10-K (filed 2026-07-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/866729/000086672926000018/schl-20260531.htm"
+      }
+    ],
+    "ja": {
+      "business": "児童書の出版と販売、学校向け教材を手がける会社。",
+      "revenue": "4セグメントのうち、児童書の出版・流通が最大。総売上1,581.9百万ドルのうち964.2百万ドルを占める。",
+      "strength": "学校内のブッククラブとブックフェアを運営する最大手。出版と流通の両方を持つ点が特色。",
+      "risks": "児童書や教材、エンタメの市場は競争が激しい。新規参入や競合の新商品、新しい販売経路が脅威になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that publishes and distributes children's books and school learning materials.",
+      "revenue": "Children's Book Publishing and Distribution is the largest of four segments, with $964.2 million of $1,581.9 million in total revenue.",
+      "strength": "It is the leading operator of school-based book clubs and book fairs, and being both publisher and distributor is a distinctive feature.",
+      "risks": "Markets for children's books, educational products and entertainment are highly competitive. New entrants, rival products and new sales channels could add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1620533,
+    "tickers": [
+      "SHAK"
+    ],
+    "name": "Shake Shack",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Shake Shack Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000018/shak-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "上質な素材のバーガーやシェイクで知られるファインカジュアルのチェーン。",
+      "revenue": "バーガーやチキン、シェイクなどを直営373店で売って稼ぐ。ライセンス店は286店ある。",
+      "strength": "注文ごとに作るアンガス牛のバーガーなど、厳選素材が特徴。高級レストラン発祥のブランド力も持つ。",
+      "risks": "出店に合う立地の確保が課題。人件費や食材費の上昇、競争の激しさも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A fine casual chain known for premium-ingredient burgers and milkshakes.",
+      "revenue": "It earns by selling burgers, chicken and shakes at 373 company-operated Shacks. Another 286 are licensed.",
+      "strength": "Made-to-order Angus beef burgers and premium ingredients are its hallmark, backed by a brand with fine-dining roots.",
+      "risks": "Finding suitable sites for new Shacks is a challenge, and rising labor and food costs and heavy competition weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 913241,
+    "tickers": [
+      "SHOO"
+    ],
+    "name": "Steven Madden",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Steven Madden Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "靴やバッグ、衣料を企画して売るファッション企業。",
+      "revenue": "卸売の靴事業が売上の40.9%、バッグ・衣料の卸売が25.3%。直営店やネット販売でも稼ぐ。",
+      "strength": "デザインの創造性と、流行に合った商品を素早く届ける力が強み。柔軟な調達体制も武器。",
+      "risks": "流行を読み違えると売上やブランドへの支持を失う。業界は競争が激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A fashion company that designs and sells footwear, handbags and apparel.",
+      "revenue": "Wholesale footwear is 40.9% of revenue and wholesale accessories and apparel is 25.3%. Its own stores and e-commerce add more.",
+      "strength": "Design creativity and fast delivery of trend-right products are its strengths, backed by flexible sourcing.",
+      "risks": "Misreading fashion trends can cost sales and brand loyalty. The industry is highly competitive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 832988,
+    "tickers": [
+      "SIG"
+    ],
+    "name": "Signet Jewelers",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Signet Jewelers Form 10-K (filed 2026-03-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/832988/000083298826000055/sig-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国などで宝飾品を売る専門小売り。",
+      "revenue": "2,582の店舗とネット通販で宝飾品を売って稼ぐ。",
+      "strength": "各ブランドの知名度や独自の品ぞろえ、店とネットをつなぐ購買体験が強み。",
+      "risks": "宝飾品の小売りは競争が激しい。関税や素材価格の変動、衰退するモールも負担になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A jewelry retailer that sells through its own brands.",
+      "revenue": "It earns by selling jewelry through 2,582 stores and its websites.",
+      "strength": "Strong brand awareness, exclusive merchandise and a store-plus-online shopping experience are its strengths.",
+      "risks": "Jewelry retailing is highly fragmented and competitive. Tariffs, commodity prices and declining malls add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 90896,
+    "tickers": [
+      "SKY"
+    ],
+    "name": "Champion Homes",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Champion Homes Form 10-K (filed 2026-05-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/90896/000119312526239333/sky-20260328.htm"
+      }
+    ],
+    "ja": {
+      "business": "工場で造る住宅を手がける北米の大手メーカー。",
+      "revenue": "独立系や直営の販売店などを通じて住宅を売るほか、施工サービスや輸送サービスでも稼ぐ。",
+      "strength": "モジュラー住宅で米国首位、工場生産の住宅で2位。46の工場を持つ。",
+      "risks": "住宅市場の景気循環や金利、関税、人手不足、資材価格に左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A leading North American maker of factory-built housing.",
+      "revenue": "It sells homes through independent and company-owned retail centers and other channels, and also earns from construction and trucking services.",
+      "strength": "It is number one in modular homes in the U.S. and number two in manufactured housing, with 46 plants.",
+      "risks": "Its results depend on housing cycles, interest rates, tariffs, labor availability and material prices.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 93389,
+    "tickers": [
+      "SMP"
+    ],
+    "name": "Standard Motor Products",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Standard Motor Products Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/93389/000009338926000012/smp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車アフターマーケット向けの交換部品の大手メーカー。",
+      "revenue": "4つの事業で、小売店や卸売業者、自動車メーカーに部品を売って稼ぐ。主な市場は米国、欧州、カナダ、メキシコ。",
+      "strength": "垂直統合と低コスト地域の工場網が強み。ブランド力と、技術訓練を受けた営業部隊も特徴。",
+      "risks": "売上の25.2%、18.6%、10.5%を大口顧客3社が占める。関税や原材料コストの上昇も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A leading maker of replacement parts for the automotive aftermarket.",
+      "revenue": "Four segments sell parts to retailers, warehouse distributors and vehicle makers, mainly in the U.S., Europe, Canada and Mexico.",
+      "strength": "Vertical integration and factories in low-cost regions are key advantages, along with its brands and technically trained sales force.",
+      "risks": "Three key customers account for 25.2%, 18.6% and 10.5% of sales. Tariffs and higher material costs also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1314727,
+    "tickers": [
+      "SONO"
+    ],
+    "name": "Sonos",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sonos Form 10-K (filed 2025-11-14) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1314727/000131472725000090/sono-20250927.htm"
+      }
+    ],
+    "ja": {
+      "business": "家庭用のスピーカーやヘッドホンなどの音響機器を作る会社。",
+      "revenue": "ホームシアター用スピーカー、ポータブルスピーカー、ヘッドホンなどを販売して稼ぐ。",
+      "strength": "2005年に複数部屋で使える無線オーディオを先駆けた。世界60カ国以上の世帯で使われ、既存客の買い足しが多い。",
+      "risks": "新製品を出し続けないと競争に負ける。関税や貿易障壁の影響も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes home audio products such as speakers and headphones.",
+      "revenue": "It earns by selling home theater speakers, portable speakers, headphones and related products.",
+      "strength": "It pioneered multi-room wireless audio in 2005. Households in 60+ countries use it, and many existing customers buy more.",
+      "risks": "It must keep launching new products to stay competitive, and tariffs and trade barriers affect it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1013934,
+    "tickers": [
+      "STRA"
+    ],
+    "name": "Strategic Education",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Strategic Education Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1013934/000101393426000006/stra-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "社会人向けの大学教育と企業向け学習支援を手がける会社。",
+      "revenue": "CapellaやStrayerなどの大学の授業料で稼ぐ。2025年の売上は1.3 billionドル。",
+      "strength": "働きながら学べる柔軟で手頃な学位・資格プログラムが特徴。成績ではなく習得度で進める方式もある。",
+      "risks": "米教育省の規制や学生の学費調達に左右される。夏の入学が少ない季節性もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An education company offering degree and skills programs, mainly to working adults.",
+      "revenue": "It earns mostly from tuition at universities such as Capella and Strayer. Revenue was $1.3 billion in 2025.",
+      "strength": "Its features are flexible, affordable programs for working adults, including competency-based learning at its own pace.",
+      "risks": "Department of Education rules and students' ability to pay for school affect it, and summer enrollment is the lowest.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 903129,
+    "tickers": [
+      "THRM"
+    ],
+    "name": "Gentherm",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Gentherm Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/903129/000119312526059602/thrm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "車のシートの温度調節や快適機能と、医療用の体温管理装置を作る会社。",
+      "revenue": "自動車部門と医療部門の二つで稼ぐ。主力は空調シートや腰部サポート、マッサージ機能などの自動車向け製品。",
+      "strength": "技術力、自動車メーカーの設計に合わせる柔軟さ、世界に広がる拠点、幅広い製品が特徴。",
+      "risks": "自動車部品業界は競争が非常に激しい。Modineとの取引も、完了に株主の承認など多くの条件が要る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes seat climate and comfort systems for cars, and patient temperature management devices for hospitals.",
+      "revenue": "It earns through two segments, Automotive and Medical. Automotive products such as climate control seats, lumbar and massage systems are the core.",
+      "strength": "Its technical expertise, flexibility in fitting each automaker's design, global footprint and broad product range are its features.",
+      "risks": "The auto parts industry is extremely competitive. The Modine deal also needs many conditions met, including shareholder approval, before it can close.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1336917,
+    "tickers": [
+      "UA"
+    ],
+    "name": "Under Armour",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Under Armour Form 10-K (filed 2026-05-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1336917/000133691726000073/ua-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "スポーツ向けの衣料や靴、小物を企画して世界に売る会社。",
+      "revenue": "衣料68%、靴22%、小物8%、ライセンス2%の売上構成。小売店への卸と自社店舗、ネット販売で稼ぐ。",
+      "strength": "機能性素材を使った製品が特徴。UNDER ARMOURやHEATGEARなどの商標を世界で持つ。",
+      "risks": "景気後退やインフレで消費が冷え込みうる。関税や競争の激化も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs and sells athletic apparel, footwear and accessories worldwide.",
+      "revenue": "Revenue splits into apparel 68%, footwear 22%, accessories 8% and licensing 2%, earned through wholesale, its own stores and e-commerce.",
+      "strength": "Its products use performance-driven materials, and it holds trademarks such as UNDER ARMOUR and HEATGEAR worldwide.",
+      "risks": "Recession and inflation can cut consumer spending, and tariffs and tougher competition add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 912615,
+    "tickers": [
+      "URBN"
+    ],
+    "name": "Urban Outfitters",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Urban Outfitters Form 10-K (filed 2026-04-01) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/912615/000119312526137916/urbn-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "アンソロポロジーやフリーピープルなどを展開する生活雑貨・衣料の会社。",
+      "revenue": "店舗とネットの小売が純売上高の85.7%。レンタル定額のNuulyと卸売でも稼ぐ。",
+      "strength": "ブランドごとに店内に専門売り場を設ける方式で、品ぞろえと各ブランドの個性を高める。",
+      "risks": "流行の予測が難しく、競合の価格や販促にも左右される。関税など貿易政策の変更も重荷。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A lifestyle company behind brands like Anthropologie, Free People and Urban Outfitters.",
+      "revenue": "Retail, in stores and online, is 85.7% of net sales. Nuuly rentals and wholesale add to it.",
+      "strength": "A shop-within-shop model gives fuller product displays and sharpens each brand's image.",
+      "risks": "Fashion shifts are hard to predict, and rivals' pricing and promotions matter. Tariffs and other trade policy changes add risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1261654,
+    "tickers": [
+      "UTI"
+    ],
+    "name": "Universal Technical Institute",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Universal Technical Institute Form 10-K (filed 2025-11-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車整備や医療補助などの職業教育を行う学校運営会社。",
+      "revenue": "運輸・技能職のUTIと、医療系のConcordeの2部門で稼ぐ。収入の約78%は連邦などの学費支援に由来する。",
+      "strength": "業界との結びつきと全米の拠点が強み。卒業後の就職支援も他校との違い。",
+      "risks": "規制を守れないと罰則や学費支援の停止を招く。入学者の減少も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A school operator that trains students for trades, transportation and healthcare careers.",
+      "revenue": "It earns through two divisions, UTI for transport and skilled trades and Concorde for healthcare. About 78% of revenue comes from federal and veterans' aid programs.",
+      "strength": "Industry relationships and a national campus presence are its strengths, along with career services after graduation.",
+      "risks": "Breaking regulations could bring penalties and loss of student aid funding. Falling enrollment is another risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1524358,
+    "tickers": [
+      "VAC"
+    ],
+    "name": "Marriott Vacations Worldwide",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Marriott Vacations Worldwide Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1524358/000152435826000010/vac-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "バケーションオーナーシップ（休暇用の会員制リゾート）と交換サービスを手がける会社。",
+      "revenue": "マリオットやシェラトン、ウェスティンなどのブランドで会員権を売り、交換網やリゾート管理でも稼ぐ。",
+      "strength": "Marriott Vacation ClubやHyatt Vacation Clubなど複数のブランドと、Interval Internationalの交換網を持つ。",
+      "risks": "旅行需要に左右されやすい。ハリケーンや山火事でリゾートが長期閉鎖されることもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company in vacation ownership and exchange services.",
+      "revenue": "It sells vacation ownership under brands such as Marriott, Sheraton and Westin, and also earns from exchange and resort management.",
+      "strength": "It has several brands, including Marriott Vacation Club and Hyatt Vacation Club, and the Interval International exchange network.",
+      "risks": "It depends on travel demand, and hurricanes and wildfires have closed its resorts for long periods.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1856437,
+    "tickers": [
+      "VSXY"
+    ],
+    "name": "Victoria's Secret",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Victoria's Secret Form 10-K (filed 2026-03-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1856437/000185643726000004/vsco-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "女性用下着やビューティー商品を売る専門小売会社。",
+      "revenue": "約860店の直営店とオンラインで売る。約70カ国の提携先からは、ロイヤルティや卸売でも稼ぐ。",
+      "strength": "Victoria's SecretとPINKの2ブランドを持つ、世界最大の下着会社。柔軟な調達網も特徴。",
+      "risks": "関税が2025年の営業利益を約85百万ドル押し下げた。専門店や百貨店、通販との競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty retailer of women's intimates, apparel and beauty products.",
+      "revenue": "It sells through about 860 stores and online, and earns royalties and wholesale revenue from partners in about 70 countries.",
+      "strength": "It owns two brands, Victoria's Secret and PINK, and is the world's largest intimate apparel company, with a flexible sourcing base.",
+      "risks": "Tariffs cut 2025 operating income by about $85 million. Specialty retailers, department stores and online sellers compete hard.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 30697,
+    "tickers": [
+      "WEN"
+    ],
+    "name": "Wendy's",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Wendy's Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/30697/000003069726000009/wen-20251228.htm"
+      }
+    ],
+    "ja": {
+      "business": "ハンバーガーを中心にしたクイックサービス・レストランを運営する会社。",
+      "revenue": "直営店の売上と、加盟店からのロイヤルティや加盟料で稼ぐ。店舗の大半は加盟店が運営する。",
+      "strength": "米国のハンバーガー分野で店舗の客数と売上シェアが2位。生の牛肉を使った注文後調理の四角いハンバーガーが特徴。",
+      "risks": "クイックサービス業界は競争が激しい。競合の値引きや販促、出店用地の取り合いも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that operates and franchises quick-service restaurants centered on hamburgers.",
+      "revenue": "It earns from company-operated restaurant sales and from royalties and fees paid by franchisees, who run most of the restaurants.",
+      "strength": "It ranks second in U.S. hamburger quick-service by traffic and dollar share, and is known for made-to-order square hamburgers made with fresh beef.",
+      "risks": "The quick-service industry is highly competitive, with rivals' discounting and promotions and competition for restaurant sites.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 107687,
+    "tickers": [
+      "WGO"
+    ],
+    "name": "Winnebago Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Winnebago Industries Form 10-K (filed 2026-10-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/107687/000162828026066701/wgo-20260829.htm"
+      }
+    ],
+    "ja": {
+      "business": "RVやボート、バッテリーを作る北米のアウトドア製品メーカー。",
+      "revenue": "牽引式RV、モーターホーム、ボートを作り、主に独立系ディーラー経由で米国とカナダに売って稼ぐ。",
+      "strength": "Winnebago、Grand Design、Chris-Craft、Newmar、Barlettaの複数ブランドと、自社のバッテリー技術が特徴。",
+      "risks": "RVやボートは景気に左右される裁量消費。ディーラーへの依存、金融の利用しやすさ、関税も不安材料。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A North American maker of outdoor lifestyle products such as RVs, boats and batteries.",
+      "revenue": "It builds towable RVs, motorhomes and boats and earns by selling them mainly through independent dealers in the U.S. and Canada.",
+      "strength": "It owns several brands, including Winnebago, Grand Design, Chris-Craft, Newmar and Barletta, and makes its own battery solutions.",
+      "risks": "RVs and boats are discretionary purchases tied to the economy, and it depends on dealers, financing availability and tariffs.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 908315,
+    "tickers": [
+      "WINA"
+    ],
+    "name": "Winmark",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Winmark Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/908315/000090831526000007/wina-20251227x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "中古品を売買するリサイクル小売店のフランチャイズを展開する会社。",
+      "revenue": "Plato's ClosetやPlay It Again Sportsなど五つのブランドを加盟店に提供して稼ぐ。米国とカナダに1,378店。",
+      "strength": "約35年にわたり中古品の循環を支えてきた点が特徴。加盟契約の99%を更新に結びつけている。",
+      "risks": "加盟店は古着店やネット市場と競合する。直営と違い、加盟店の運営を完全には管理できない。",
+      "competition": "主な競合にeBay、thredUP、Amazon、American Eagle、Gapがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A franchisor of resale stores that buy and sell used goods.",
+      "revenue": "It earns by franchising five brands such as Plato's Closet and Play It Again Sports, with 1,378 franchises in the US and Canada.",
+      "strength": "It has offered a way to recycle used goods for over 35 years, and it renewed 99% of franchise agreements up for renewal.",
+      "risks": "Franchisees compete with thrift shops and online marketplaces. Winmark also has less control over franchisees than over its own stores.",
+      "competition": "Main competitors include eBay, thredUP, Amazon, American Eagle, Gap.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "eBay",
+          "ticker": "EBAY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "thredUP",
+          "ticker": "TDUP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "American Eagle",
+          "ticker": "AEO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Gap",
+          "ticker": "GAP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 110471,
+    "tickers": [
+      "WWW"
+    ],
+    "name": "Wolverine World Wide",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Wolverine World Wide Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/110471/000162828026012614/www-20260103.htm"
+      }
+    ],
+    "ja": {
+      "business": "カジュアルやアウトドア、作業用の靴と衣料を企画・販売する会社。",
+      "revenue": "Merrell、Saucony、Wolverine、Catなどのブランド品を卸や直営で売る。流通業者や提携先の収入も加わる。",
+      "strength": "知名度の高いブランドと独自設計、快適さを生む技術が特徴。幅広い販路と分散した生産・調達網も持つ。",
+      "risks": "ブランドイメージの維持や流行の読みが課題。関税や原材料費の上昇、主要卸先の喪失も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs and sells casual, outdoor and work footwear and apparel.",
+      "revenue": "It sells brands such as Merrell, Saucony, Wolverine and Cat through wholesale and its own stores. Distributors, licensees and joint ventures add more revenue.",
+      "strength": "Well-recognized brands, patented proprietary designs and comfort technologies set it apart. It also has wide distribution channels and a diversified manufacturing and sourcing base.",
+      "risks": "Keeping brand images strong and reading fashion trends are challenges. Higher tariffs and raw material costs and the loss of major wholesale customers also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1767258,
+    "tickers": [
+      "XPEL"
+    ],
+    "name": "XPEL",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "XPEL Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1767258/000176725826000014/xpel-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車向けの保護フィルムやコーティングを供給する会社。",
+      "revenue": "売上の大半は自動車向け製品と関連サービス。販売先は後付け市場、新車ディーラー、自動車メーカー。",
+      "strength": "製品に加え、ソフトウェアや集客支援、顧客対応まで提供して差別化する。知的財産も競争力の柱。",
+      "risks": "製造を外部の委託先に頼る。自動車産業への依存が高く、中国での規制対応も課題。",
+      "competition": "主な競合にEastman Chemical Companyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A supplier of protective films and coatings for vehicles.",
+      "revenue": "Most revenue comes from automotive products and related services sold to the aftermarket, new car dealerships and automakers.",
+      "strength": "It differentiates with software, marketing, lead generation and customer service on top of its products, and its intellectual property supports its position.",
+      "risks": "It relies on contract manufacturers, depends heavily on the auto industry, and faces regulatory demands in China.",
+      "competition": "Main competitors include Eastman Chemical Company.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Eastman Chemical Company",
+          "ticker": "EMN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1034670,
+    "tickers": [
+      "ALV"
+    ],
+    "name": "Autoliv",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Autoliv Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車向けのエアバッグやシートベルトを作る安全部品会社。",
+      "revenue": "2025年の売上のうち、エアバッグとハンドルが約68%、シートベルトが約32%を占める。",
+      "strength": "受動安全システムの幅広い品ぞろえが特徴。62の生産拠点を23か国に持つ。",
+      "risks": "自動車の生産台数の増減に左右される。競争の激化や原材料費の上昇、関税も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A safety supplier making airbags and seatbelts for carmakers.",
+      "revenue": "Sales in 2025 were $10.8 billion. Airbag and steering wheel products were about 68% and seatbelts about 32%.",
+      "strength": "It offers a broad range of passive safety systems, with 62 production facilities in 23 countries.",
+      "risks": "Swings in vehicle production hit it. Tougher competition, higher raw material costs and tariffs add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 350698,
+    "tickers": [
+      "AN"
+    ],
+    "name": "AutoNation",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AutoNation Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国で新車・中古車を売る最大級の自動車販売会社。",
+      "revenue": "新車、中古車、整備・部品、金融・保険商品の販売で稼ぐ。",
+      "strength": "大きな規模を生かし、豊富な在庫と透明な販売・整備の流れ、価格の競争力を打ち出す。",
+      "risks": "失業率や金利、関税などの景気要因に左右される。新車・中古車の販売台数に大きく頼る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "One of the largest US automotive retailers, selling new and used vehicles.",
+      "revenue": "It earns from new and used vehicles, parts and service, and finance and insurance products.",
+      "strength": "Its large scale supports broad inventory, transparent sales and service, and competitive pricing.",
+      "risks": "Unemployment, interest rates and tariffs can sway demand. It depends heavily on new and used vehicle sales levels.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1584509,
+    "tickers": [
+      "ARMK"
+    ],
+    "name": "Aramark",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Aramark Form 10-K (filed 2025-11-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1584509/000158450925000219/cik0-20251003.htm"
+      }
+    ],
+    "ja": {
+      "business": "大学・病院・スポーツ施設などに食事と施設管理を提供する会社。",
+      "revenue": "教育、医療、企業、スポーツ・矯正施設などの顧客から、食事や施設サービスの契約で稼ぐ。米国と海外の2事業で運営する。",
+      "strength": "売上ベースで、北米の食事・施設サービスは2位。海外の主要国の大半でも3位に入る。",
+      "risks": "景気悪化や顧客の財務難で需要が落ちうる。契約の維持・更新に失敗するリスクや、人件費の上昇、関税も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "Provides food and facilities services to schools, hospitals, sports venues and other clients.",
+      "revenue": "It earns from food and facilities service contracts with education, healthcare, business, sports and corrections clients, in two segments: U.S. and international.",
+      "strength": "By revenue it holds a top 2 position in North America and a top 3 position in most major countries abroad.",
+      "risks": "Downturns and client financial distress can cut demand. Failing to keep or renew contracts, higher labor costs and tariffs add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 701985,
+    "tickers": [
+      "BBWI"
+    ],
+    "name": "Bath & Body Works",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Bath & Body Works Form 10-K (filed 2026-03-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/701985/000070198526000008/bbwi-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "ボディケアやホームフレグランスを売る専門店チェーン。",
+      "revenue": "米国とカナダの1,927の直営店とネット通販、海外573店で、ボディケア用品やキャンドルを売って稼ぐ。",
+      "strength": "世界に2,500の店舗網と、40 million人の会員を持つロイヤルティ制度が特徴。国内中心の垂直統合型の供給網も持つ。",
+      "risks": "ボディケア市場は競争が激しい。ブランド立て直しの途上で、若い新規客を引き付ける必要がある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty retailer of personal care and home fragrance products.",
+      "revenue": "It earns by selling body care products and candles through 1,927 company-operated stores in the U.S. and Canada, e-commerce, and 573 international stores.",
+      "strength": "Its features are a global footprint of 2,500 locations, a loyalty program with 40 million active members, and a mostly domestic, vertically integrated supply chain.",
+      "risks": "The body care market is highly competitive, and the brand is mid-turnaround and needs to attract new, younger customers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 14930,
+    "tickers": [
+      "BC"
+    ],
+    "name": "Brunswick",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Brunswick Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/14930/000001493026000027/bcorp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "船外機やボート、マリン用部品を作る世界的なマリン機器メーカー。",
+      "revenue": "船舶用エンジン、ボート、マリンやRV向けの部品・アクセサリーを売って稼ぐ。ボートクラブも運営する。",
+      "strength": "複数の著名ブランド、幅広い製品、世界的な販売網、独自技術が強み。",
+      "risks": "景気が悪化すると消費者が高額な娯楽支出を控え、売上が減りうる。需要は季節で偏る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global marine company that makes engines, boats, and parts and accessories.",
+      "revenue": "It earns from marine engines, boats, and parts and accessories for marine and RV markets, and also runs a boat club.",
+      "strength": "Its strengths are recognized brands, a broad product line, a global distribution network and proprietary technology.",
+      "risks": "In a downturn, consumers cut discretionary spending and sales can fall. Demand is also seasonal.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1866581,
+    "tickers": [
+      "BROS"
+    ],
+    "name": "Dutch Bros",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dutch Bros Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1866581/000186658126000006/bros-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ドライブスルー型のコーヒー店を直営とフランチャイズで展開する会社。",
+      "revenue": "2025年末で1,136店。内訳は直営811店とフランチャイズ325店。売上の約50%はコーヒー系、約25%はエナジードリンク。",
+      "strength": "速さ、品質、サービスを掲げ、自分好みにカスタムできる飲み物が特徴。アプリ会員の取引が約72%を占める。",
+      "risks": "飲食業界は競争が激しい。店が米国西部に集中し、コーヒー豆や乳製品の値上がりも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs and franchises drive-thru shops serving hand-crafted beverages.",
+      "revenue": "It had 1,136 shops at the end of 2025: 811 company-operated and 325 franchised. About 50% of sales are coffee-based and about 25% are Rebel energy drinks.",
+      "strength": "Speed, quality and service define it, along with customizable drinks. Loyalty app members account for about 72% of transactions.",
+      "risks": "The food service industry is intensely competitive. Its shops are concentrated in the Western US, and coffee and dairy costs can rise.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1579298,
+    "tickers": [
+      "BURL"
+    ],
+    "name": "Burlington",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Burlington Form 10-K (filed 2026-03-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1579298/000119312526116001/burl-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "有名ブランドの服や雑貨を安く売るオフプライス小売の会社。",
+      "revenue": "売上の99%超を、1,212店の「Burlington Stores」で稼ぐ。服飾から家庭用品まで幅広く扱う。",
+      "strength": "ブランド品を他店より最大60%安い日常価格で売る。仕入れは流行を見ながら柔軟に行う。",
+      "risks": "百貨店やオフプライス店、ネット通販など競合が多い。好立地の確保も課題になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An off-price retailer selling brand-name apparel and home goods at low prices.",
+      "revenue": "Over 99% of net sales come from its 1,212 Burlington Stores, which carry everything from apparel to home goods.",
+      "strength": "It sells brand-name goods at up to 60% off other retailers' prices and buys flexibly, following sales trends.",
+      "risks": "It faces many rivals, from department stores and off-price chains to online retailers, and needs good store sites to grow.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 908255,
+    "tickers": [
+      "BWA"
+    ],
+    "name": "BorgWarner",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BorgWarner Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ガソリン車、ハイブリッド車、電気自動車向けの部品を作る会社。",
+      "revenue": "自動車メーカーに製品を売って稼ぐ。2025年の売上は電動車向けが18%、内燃機関関連が82%。",
+      "strength": "燃費や排ガス、性能を高める技術が特徴。ほぼ全ての大手自動車メーカーに部品を供給する。",
+      "risks": "競合には自社より大きく資金力のある企業が多い。大口顧客が内製に切り替える可能性も抱える。",
+      "competition": "主な競合にGarrett Motion、Magna Internationalがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes components for combustion, hybrid and electric vehicles.",
+      "revenue": "It earns by selling parts to automakers. In 2025, eProducts for EVs were 18% of revenue and Foundational products for combustion engines were 82%.",
+      "strength": "Its technologies improve fuel economy, emissions and performance. It supplies nearly every major automotive OEM in the world.",
+      "risks": "Many competitors are larger and have greater resources. Major OEM customers could also start making these products themselves.",
+      "competition": "Main competitors include Garrett Motion, Magna International.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Garrett Motion",
+          "ticker": "GTX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Magna International",
+          "ticker": "MGA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 906553,
+    "tickers": [
+      "BYD"
+    ],
+    "name": "Boyd Gaming",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Boyd Gaming Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/906553/000143774926004908/bgc20251121_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国11州で27のカジノ施設を運営するゲーミング会社。",
+      "revenue": "2025年はカジノでの賭博が売上の約64%。オンラインの費用精算収入が14%で続く。",
+      "strength": "「Boyd Style」と呼ぶ接客で差別化する。地理的な分散と、ラスベガスの地元客向け物件も特徴。",
+      "risks": "各州で競争が激しい。部族系カジノやオンライン事業者と競い、相手は税負担が軽いこともある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A gaming company operating 27 casino properties in 11 U.S. states.",
+      "revenue": "Gaming at its properties made up about 64% of 2025 revenue. Online reimbursements followed at 14%.",
+      "strength": "Its \"Boyd Style\" customer service sets it apart, along with geographic diversification and Las Vegas locals properties.",
+      "risks": "Competition is intense in every market, from Native American casinos and online operators. Some rivals pay lower or no taxes.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 20212,
+    "tickers": [
+      "CHDN"
+    ],
+    "name": "Churchill Downs",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Churchill Downs Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/20212/000002021226000025/chdn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ケンタッキーダービーを開く競馬場運営とカジノ、ネット賭け事業の会社。",
+      "revenue": "競馬の賭けの手数料、入場や協賛、カジノ運営、オンライン賭け事業で稼ぐ。",
+      "strength": "150年超の歴史を持つケンタッキーダービーが象徴的な資産。",
+      "risks": "他のスポーツ賭けやカジノとの競争が激しい。テロや感染症で来場者が減りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs Kentucky Derby racing, casinos and online wagering.",
+      "revenue": "It earns from race wagering commissions, admissions and sponsorships, casino gaming and online wagering.",
+      "strength": "The Kentucky Derby, part of a company history of over 150 years, is its iconic asset.",
+      "risks": "Competition from other betting and casinos is intense. Terrorism or disease outbreaks can cut attendance.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1046311,
+    "tickers": [
+      "CHH"
+    ],
+    "name": "Choice Hotels",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Choice Hotels Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1046311/000104631126000008/chh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ホテルのフランチャイズ本部。ブランドを加盟ホテルに貸して運営する。",
+      "revenue": "主な収入はフランチャイズ料。客室収入や客室数に応じて加盟ホテルから受け取るほか、提携企業との契約でも稼ぐ。",
+      "strength": "7,575軒、22ブランドの規模を持つ。客室を増やすほど効率が上がる仕組みが特徴。",
+      "risks": "ホテル需要には季節性があり、冬場は弱い。収入は客室の稼働率や料金に左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A hotel franchisor that licenses its brands to hotels.",
+      "revenue": "Its main income is franchise fees based on room revenues or room counts, plus deals with vendors and travel partners.",
+      "strength": "It has 7,575 hotels and 22 brands, and more franchised rooms improve efficiency through economies of scale.",
+      "risks": "Hotel demand is seasonal and weaker in winter, and its fees depend on occupancy and room rates.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1766502,
+    "tickers": [
+      "CHWY"
+    ],
+    "name": "Chewy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Chewy Form 10-K (filed 2026-03-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1766502/000176650226000034/chwy-20260201.htm"
+      }
+    ],
+    "ja": {
+      "business": "ペット用品、フード、処方薬を売るオンライン小売会社。",
+      "revenue": "約190,000点の商品とサービスを、サイトとアプリで販売して稼ぐ。定期購入のAutoshipが特徴。",
+      "strength": "約4,000ブランドを扱い、米国人口の80%超へ翌日配送できる物流網を持つ。顧客対応の質が中核。",
+      "risks": "ペット業界、特にネット販売は競争が激しい。新規顧客の獲得や維持に失敗すれば、売上や利益が伸びなくなりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An online retailer of pet products, supplies and prescriptions.",
+      "revenue": "It sells about 190,000 products and services through its websites and apps, including the Autoship subscription program.",
+      "strength": "It carries about 4,000 brands and can reach over 80% of the U.S. population overnight. Customer service is its core.",
+      "risks": "Pet retail, especially online, is intensely competitive. Failing to win and keep customers could stall sales and profit.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1050797,
+    "tickers": [
+      "COLM"
+    ],
+    "name": "Columbia Sportswear",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Columbia Sportswear Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050797/000105079726000028/colm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "アウトドア向けの衣類、靴、小物、用具を企画・販売する会社。",
+      "revenue": "Columbia、SOREL、Mountain Hardwear、prAnaの各ブランド商品を売って稼ぐ。売上は秋冬に偏る。",
+      "strength": "ブランドごとの製品設計と、素材の技術開発が特徴。1938年創業のアウトドアの老舗。",
+      "risks": "アウトドア市場は競争が激しい。関税など貿易政策の変化で、費用の増加や消費者の買い控えを抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs and sells outdoor apparel, footwear, accessories and equipment.",
+      "revenue": "It earns by selling products under its Columbia, SOREL, Mountain Hardwear and prAna brands. Sales are weighted toward the third and fourth quarters.",
+      "strength": "Its features are brand-specific product design and in-house work on new materials. It was founded in 1938.",
+      "risks": "The outdoor market is highly competitive, and shifting trade policy and tariffs can raise costs and curb consumer spending.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1334036,
+    "tickers": [
+      "CROX"
+    ],
+    "name": "Crocs",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Crocs Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1334036/000133403626000006/crox-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "クロッグ型サンダルなどカジュアル靴を作って売る会社。",
+      "revenue": "CrocsとHEYDUDEの2ブランドで稼ぐ。2025年はデジタル販売が連結売上の37.8%、Crocsの海外比率は48.6%。",
+      "strength": "独自素材Croslite製の軽くて快適な靴と、Jibbitzチャームによる個性づけが特徴。",
+      "risks": "HEYDUDEは米国市場の安定化が課題。為替の変動も業績に影響しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs and sells casual footwear, led by its molded clogs.",
+      "revenue": "It earns through the Crocs and HEYDUDE brands. In 2025, digital sales were 37.8% of revenue and international sales were 48.6% of Crocs Brand revenue.",
+      "strength": "Its shoes use proprietary Croslite material for a light, comfortable feel, and Jibbitz charms add personalization.",
+      "risks": "HEYDUDE still needs to stabilize in the U.S. market, and currency swings can affect results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1089063,
+    "tickers": [
+      "DKS"
+    ],
+    "name": "DICK'S Sporting Goods",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "DICK'S Sporting Goods Form 10-K (filed 2026-03-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1089063/000108906326000007/dks-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "スポーツ用品、衣料、靴を扱う世界的なスポーツ小売会社。",
+      "revenue": "DICK'SとFoot Lockerの二つの事業で稼ぐ。2025年度にFoot Lockerを買収し、スニーカー市場にも広がった。",
+      "strength": "体験型の店づくりと店舗網が特徴。有力ブランドの専用売り場を通じて豊富な品ぞろえを提供する。",
+      "risks": "景気や物価の変動で消費者が買い控えると、客足や売上が落ちる。地政学の混乱も響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global sports retailer selling sports equipment, apparel and footwear.",
+      "revenue": "It earns through two segments, DICK'S and Foot Locker. It bought Foot Locker in fiscal 2025, which extended its reach into sneakers.",
+      "strength": "Experiential stores and a physical store base are its features. Brand shops give access to wider and exclusive product ranges.",
+      "risks": "When inflation or a weak economy makes consumers hold back, traffic and sales fall. Geopolitical turmoil can also hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1177609,
+    "tickers": [
+      "FIVE"
+    ],
+    "name": "Five Below",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Five Below Form 10-K (filed 2026-03-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1177609/000117760926000010/five-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "多くが5ドル以下の流行雑貨を売る米国のバラエティ小売チェーン。",
+      "revenue": "46州の1,921店舗とネット通販で、菓子、雑貨、パーティー用品、テック製品などを売って稼ぐ。",
+      "strength": "10代前後の層に狙いを絞った、流行を捉えた絞り込み品揃えが特徴。柔軟な出店戦略も打ち出す。",
+      "risks": "競合は割引店からネット小売まで幅広い。自社より資金力や販売力が大きい相手もいる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. specialty value retailer selling trend-right products, most priced at $5 and below.",
+      "revenue": "It earns by selling candy, style, party, room, tech and other goods through 1,921 stores in 46 states and online.",
+      "strength": "An edited, trend-right assortment aimed at a focused customer group is its hallmark, along with a flexible real estate strategy.",
+      "risks": "Rivals range from discount stores to online retailers. Some have greater financial, distribution and marketing resources.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1507079,
+    "tickers": [
+      "FND"
+    ],
+    "name": "Floor & Decor",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Floor & Decor Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1507079/000162828026009770/fnd-20251225.htm"
+      }
+    ],
+    "ja": {
+      "business": "硬質系の床材を専門に売る小売会社。",
+      "revenue": "39州の倉庫型店舗270店と小型デザインスタジオ5店で、プロの施工業者と一般客に床材を売る。",
+      "strength": "在庫の幅広さと日常的な低価格が特徴。メーカーからの直接調達で低価格を支える。",
+      "risks": "高金利と住宅販売の低迷で需要が弱い。新店の出店コスト増も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty retailer of hard surface flooring.",
+      "revenue": "It sells flooring to professional installers and homeowners through 270 warehouse-format stores and five small design studios across 39 states.",
+      "strength": "A broad in-stock assortment at everyday low prices is its hallmark, supported by buying directly from manufacturers.",
+      "risks": "High interest rates and weak home sales are holding demand down, and new store costs are rising.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 39911,
+    "tickers": [
+      "GAP"
+    ],
+    "name": "Gap Inc.",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Gap Inc. Form 10-K (filed 2026-03-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/39911/000162828026018573/gap-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "オールドネイビーやギャップなどの衣料ブランドを持つ小売会社。",
+      "revenue": "直営2,474店とフランチャイズ約1,000店、ネット通販で衣料や小物を売って稼ぐ。",
+      "strength": "4ブランドを店舗とネットでつなぐ販売網が特徴。共通のポイント制度で顧客を囲い込む。",
+      "risks": "景気の悪化で衣料の購入が減りうる。米国の関税が原価を押し上げた。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A retailer owning apparel brands such as Old Navy and Gap.",
+      "revenue": "It earns money selling apparel and accessories through 2,474 company-operated stores, about 1,000 franchise stores and online.",
+      "strength": "Four brands are linked across stores and online, with one loyalty program shared among them.",
+      "risks": "A weak economy can cut spending on clothing. U.S. tariffs have pushed up its cost of goods sold.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1326380,
+    "tickers": [
+      "GME"
+    ],
+    "name": "GameStop",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "GameStop Form 10-K (filed 2026-03-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "ゲームやコレクタブル、娯楽商品を店舗とネットで売る小売会社。",
+      "revenue": "店舗とネット通販でゲームやコレクタブルを売って稼ぐ。店での下取り取引も扱う。",
+      "strength": "全米に広がる店舗網と豊富な手元資金が特徴。資金は買収や出資に回す方針。",
+      "risks": "ゲーム業界は競争が激しく、好みの変化も速い。売上は年末商戦の時期に偏る。",
+      "competition": "主な競合にSony、Microsoft、Walmart、Target、Best Buyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A retailer of games, collectibles and entertainment products through stores and online.",
+      "revenue": "It earns by selling games and collectibles in stores and online, and handles trade-ins at its stores.",
+      "strength": "Its features are a dense store network and large cash reserves, which it plans to deploy into acquisitions and investments.",
+      "risks": "The gaming industry is intensely competitive with fast-changing tastes, and sales peak in the holiday season.",
+      "competition": "Main competitors include Sony, Microsoft, Walmart, Target, Best Buy.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Sony",
+          "ticker": "SONY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Walmart",
+          "ticker": "WMT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Target",
+          "ticker": "TGT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Best Buy",
+          "ticker": "BBY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 355811,
+    "tickers": [
+      "GNTX"
+    ],
+    "name": "Gentex",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Gentex Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動調光ミラーなどの車載電子部品を作る会社。",
+      "revenue": "売上の約89%が自動車業界向け。調光ミラーが最大事業で、航空機の窓、防火機器、オーディオも手がける。",
+      "strength": "電気変色の独自技術による調光ミラーが中核。性能面の優位を保つため、研究開発への投資を続ける。",
+      "risks": "自動車の生産変動や関税、インフレの影響を受ける。Magnaなど大手との競争も強まりうる。",
+      "competition": "主な競合にMagna Internationalがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "Makes automatic-dimming mirrors and other automotive electronics.",
+      "revenue": "About 89% of net sales come from the auto industry. Dimming mirrors are the largest business, alongside aircraft windows, fire protection and audio.",
+      "strength": "Its core is auto-dimming mirrors built on proprietary electrochromic technology, backed by continued R&D investment.",
+      "risks": "Vehicle production swings, tariffs and inflation affect it. Larger rivals such as Magna could compete harder.",
+      "competition": "Main competitors include Magna International.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Magna International",
+          "ticker": "MGA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1468174,
+    "tickers": [
+      "H"
+    ],
+    "name": "Hyatt",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hyatt Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1468174/000146817426000007/h-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界のホテルやリゾートを運営・展開するホテル会社。",
+      "revenue": "運営受託、フランチャイズ、自社保有・賃借のホテルと、会員制バケーションクラブなどで稼ぐ。",
+      "strength": "Park HyattやGrand Hyatt、オールインクルーシブ型リゾートなど幅広いブランドを持つ。ロイヤルティ制度World of Hyattも特徴。",
+      "risks": "景気の波や災害、戦争で旅行需要が落ちうる。競争が激しく、新しい予約経路や代替宿泊の台頭も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A hotel company that operates and brands hotels and resorts around the world.",
+      "revenue": "It earns from managed and franchised hotels, owned and leased hotels, and licensing for vacation clubs and similar businesses.",
+      "strength": "It has a wide range of brands, from Park Hyatt and Grand Hyatt to all-inclusive resorts, plus the World of Hyatt loyalty program.",
+      "risks": "Economic cycles, disasters and war can cut travel demand. Competition is intense, and new distribution channels and alternatives to hotels add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 793952,
+    "tickers": [
+      "HOG"
+    ],
+    "name": "Harley-Davidson",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Harley-Davidson Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/793952/000079395226000011/hog-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "大型バイクを作って売り、購入ローンも手がけるアメリカの会社。",
+      "revenue": "二輪車部門の売上の74.3%がバイク本体。部品・アクセサリーが17.2%、衣料が6.0%。金融部門でも稼ぐ。",
+      "strength": "世界に1,174の販売拠点を持ち、自社の金融サービスでローンも用意できるのが特徴。小売価格は競合より高めを保つ。",
+      "risks": "バイク市場は価格や品質、販売網をめぐる競争が激しい。電動のLiveWireも既存大手や新興メーカーと競い合う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US company that makes and sells motorcycles and provides financing for buyers.",
+      "revenue": "Motorcycles are 74.3% of the motorcycle segment's revenue, parts and accessories 17.2% and apparel 6.0%. The financial services segment also earns revenue.",
+      "strength": "It has 1,174 dealership points worldwide and can offer financing through its own finance arm. Its motorcycles generally command a premium retail price.",
+      "risks": "Motorcycle makers compete hard on price, quality and dealer networks. Its electric brand LiveWire also faces established makers and smaller electric-focused rivals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 12659,
+    "tickers": [
+      "HRB"
+    ],
+    "name": "H&R Block",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "H&R Block Form 10-K (filed 2026-08-14) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/12659/000001265926000026/hrb-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "個人や小規模事業者向けに税務申告サービスを提供する会社。",
+      "revenue": "売上は3.95 billionドル。税理士による申告支援と、自分で申告するオンライン商品の両方で稼ぐ。",
+      "strength": "対面とオンラインを組み合わせた申告サービスと、家計管理アプリSpruceを持つのが特徴。",
+      "risks": "申告ソフトや会計事務所、税務当局まで競合が幅広い。法規制の変更も響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides tax preparation services for individuals and small businesses.",
+      "revenue": "Revenue was $3.95 billion, earned from both tax-professional assisted returns and paid DIY online products.",
+      "strength": "It blends in-person and online tax help and also offers the Spruce money app and small business tools.",
+      "risks": "Competition is broad, from software providers and accounting firms to tax authorities, and legal changes can hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1023128,
+    "tickers": [
+      "LAD"
+    ],
+    "name": "Lithia Motors",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lithia Motors Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1023128/000102312826000015/lad-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国、英国、カナダで458店を展開する自動車小売会社。",
+      "revenue": "新車、中古車、金融・保険商品、修理などのアフターセールスで稼ぐ。",
+      "strength": "新車54ブランドと全ブランドの中古車を扱い、400超のウェブサイトでも販売するのが特徴。",
+      "risks": "新車と中古車の1台あたり粗利益が下がっている。販売管理費の比率も上がった。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An automotive retailer with 458 stores across the U.S., the UK and Canada.",
+      "revenue": "It earns from new and used vehicles, finance and insurance products, and aftersales such as repair and maintenance.",
+      "strength": "It sells 54 new vehicle brands and all used brands, and also sells online through over 400 websites.",
+      "risks": "Gross profit per new and used vehicle is falling, and SG&A has risen as a share of gross profit.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 842162,
+    "tickers": [
+      "LEA"
+    ],
+    "name": "Lear",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lear Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車用シートと電装システムを作る部品会社。",
+      "revenue": "シートと電装の2事業で、世界の主要自動車メーカーに部品を納めて稼ぐ。",
+      "strength": "世界で最も垂直統合が進んだシート供給会社。500を超える車種に部品が載る。",
+      "risks": "顧客は自動車メーカーに限られる。製造拠点の見直しを続け、費用の最適化を迫られる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A parts maker supplying automotive seating and electrical systems.",
+      "revenue": "It earns money supplying parts to the world's major automakers through its Seating and E-Systems segments.",
+      "strength": "It is the most vertically integrated global seat supplier, with content on more than 500 vehicle nameplates.",
+      "risks": "Its customers are limited to automakers. It must keep reviewing its manufacturing footprint to hold down costs.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1434588,
+    "tickers": [
+      "LOPE"
+    ],
+    "name": "Grand Canyon Education",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Grand Canyon Education Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1434588/000110465926017047/lope-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "大学向けに運営支援サービスを提供する教育サービス会社。",
+      "revenue": "主力のGrand Canyon Universityなど20の提携大学に、基本サービス契約で運営支援を提供して稼ぐ。",
+      "strength": "大規模に運営できる技術基盤や業務の仕組みが特徴。入学受付から学生支援まで幅広く担う。",
+      "risks": "主要な提携契約が終われば痛手になる。連邦の学費支援に関わる規制も負担。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An education services company that supports colleges and universities.",
+      "revenue": "It earns by providing services to 20 university partners, led by Grand Canyon University, under master services agreements.",
+      "strength": "Its technology platform and operating processes run at large scale, covering everything from admissions to student support.",
+      "risks": "Losing a key university partner agreement would hurt. Federal student aid rules add a regulatory burden.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 63276,
+    "tickers": [
+      "MAT"
+    ],
+    "name": "Mattel",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Mattel Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "バービーやホットウィールを持つ世界的な玩具・家族向け娯楽会社。",
+      "revenue": "人形、車、乳幼児向け、アクション人形やゲームなどの玩具を売って稼ぐ。映画・テレビやライセンスの事業も広げている。",
+      "strength": "Barbie、Hot Wheels、Fisher-Priceなど、世界的に知られた自社ブランドを幅広く持つ。提携先のIPも扱う。",
+      "risks": "玩具業界は競争が激しく、デジタルゲームなどとも子どもの時間を奪い合う。少数の大手小売店への依存も抱える。",
+      "competition": "主な競合にHasbroがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global toy and family entertainment company that owns Barbie and Hot Wheels.",
+      "revenue": "It earns by selling dolls, vehicles, infant and preschool toys, action figures and games, and is expanding film, television and licensing.",
+      "strength": "It owns a wide range of well-known brands, including Barbie, Hot Wheels and Fisher-Price, and licenses partners' IP too.",
+      "risks": "Toy competition is intense, and digital games also compete for children's time. A few large retailers carry much of its sales.",
+      "competition": "Main competitors include Hasbro.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Hasbro",
+          "ticker": "HAS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 812011,
+    "tickers": [
+      "MTN"
+    ],
+    "name": "Vail Resorts",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Vail Resorts Form 10-K (filed 2026-09-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm"
+      }
+    ],
+    "ja": {
+      "business": "スキー場とホテルを運営するリゾート会社。",
+      "revenue": "売上の88%はスキー場部門、12%はホテル部門。リフト券やシーズンパス、スキー教室、飲食、レンタルで稼ぐ。",
+      "strength": "競合より設備投資が多い。自社で持つ42のスキー場網をパスで行き来できるのが特徴。",
+      "risks": "スキーや旅行は景気に左右される割高な娯楽。ホテルは季節性が強く、稼働率が低めになる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A resort company that runs ski resorts and hotels.",
+      "revenue": "88% of revenue comes from the Mountain segment and 12% from Lodging, through lift tickets and passes, ski school, dining and rentals.",
+      "strength": "It invests more in capital improvements than its competitors, and its pass lets guests use its owned network of 42 resorts and ski areas.",
+      "risks": "Skiing and travel are costly discretionary activities hit by economic slowdowns, and its lodging is highly seasonal with lower occupancy.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1573516,
+    "tickers": [
+      "MUSA"
+    ],
+    "name": "Murphy USA",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Murphy USA Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1573516/000157351626000090/musa-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国でガソリンスタンドとコンビニを運営する会社。",
+      "revenue": "1,800店でガソリンとコンビニ商品を売って稼ぐ。ウォルマート近くの店が多い。",
+      "strength": "低価格のガソリン、小型で低コストの店舗、燃料の調達力が特徴。",
+      "risks": "顧客データの漏えいや、事業に伴う事故の危険を抱える。保険で補えない場合もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs gas stations and convenience stores across the U.S.",
+      "revenue": "It earns by selling fuel and convenience merchandise at 1,800 stores, many near Walmart.",
+      "strength": "Its features are low fuel prices, small low-cost stores and strong fuel sourcing.",
+      "risks": "A breach of customer data or an operating accident is a risk, and insurance may not cover it fully.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 931015,
+    "tickers": [
+      "PII"
+    ],
+    "name": "Polaris",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Polaris Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/931015/000162828026008033/pii-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "オフロード車や雪上車、ボートなどのパワースポーツ車両を作る会社。",
+      "revenue": "オフロード、オンロード、マリンの3セグメントで、ディーラー経由やネットで車両と部品を売って稼ぐ。",
+      "strength": "北米のオフロード車でシェア首位。RZRやRANGERなど90モデルの品揃えが特徴。",
+      "risks": "オフロード車市場は競争が激しい。北米やアジアのメーカーと、価格や品質、性能で争う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes powersports vehicles such as off-road vehicles, snowmobiles and boats.",
+      "revenue": "It earns by selling vehicles and parts online and through dealers across three segments: Off Road, On Road and Marine.",
+      "strength": "It is the North America market share leader in off-road vehicles, with a full line of 90 models including RZR and RANGER.",
+      "risks": "The off-road vehicle industry is highly competitive. North American and Asian makers compete on price, quality and features.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1637207,
+    "tickers": [
+      "PLNT"
+    ],
+    "name": "Planet Fitness",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Planet Fitness Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1637207/000163720726000011/plnt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "フィットネスクラブをフランチャイズ展開し運営する世界有数の会社。",
+      "revenue": "2,896クラブのうち2,604がフランチャイズ、292が直営。フランチャイズからはロイヤルティ収入を得る。",
+      "strength": "誰でも入りやすい「Judgement Free Zone」が特徴。月15ドルからの会費と知名度の高いブランドも持つ。",
+      "risks": "フィットネス以外も含む幅広い余暇サービスと競う。競争は海外でより厳しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "One of the world's largest franchisors and operators of fitness clubs.",
+      "revenue": "Of 2,896 clubs, 2,604 are franchisee-owned and 292 are corporate-owned. Franchised clubs pay it royalties.",
+      "strength": "Its welcoming Judgement Free Zone sets it apart, along with memberships from $15 per month and a well-known brand.",
+      "risks": "It competes with a broad range of fitness and leisure options, and competition is tougher overseas.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 78239,
+    "tickers": [
+      "PVH"
+    ],
+    "name": "PVH",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PVH Form 10-K (filed 2026-03-31) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/78239/000007823926000021/pvh-20260201.htm"
+      }
+    ],
+    "ja": {
+      "business": "トミー ヒルフィガーとカルバン・クラインを展開する衣料大手。",
+      "revenue": "2025年の売上は8,950百万ドル。両ブランドが95%超を占め、卸売と直営店で稼ぐ。",
+      "strength": "価格帯や販路、地域を分散した展開が特徴。世界40か国超で事業を行う。",
+      "risks": "2社のブランドに売上が集中する。2025年は480百万ドルの減損を計上した。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A major apparel company behind TOMMY HILFIGER and Calvin Klein.",
+      "revenue": "Revenue in 2025 was $8,950 million, with the two brands above 95%. It sells through wholesale and its own stores.",
+      "strength": "Its brands span many price points, channels and regions, and it operates in more than 40 countries.",
+      "risks": "Sales are concentrated in two brands. It booked $480 million of goodwill and intangible impairments in 2025.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1528849,
+    "tickers": [
+      "RH"
+    ],
+    "name": "RH",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "RH Form 10-K (filed 2026-04-01) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1528849/000110465926037992/rh-20260131x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "高級家具やインテリアを売るホームファニシング小売り。",
+      "revenue": "家具、照明、ファブリック、アウトドア家具などをギャラリー店舗、ネット、カタログで売って稼ぐ。",
+      "strength": "高級路線のブランドと、他店との違いが際立つギャラリーが特徴。",
+      "risks": "多くの施策を同時に進めており、国際展開などが失敗すれば負担に。同じような商品を安く売る競合も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A luxury home furnishings retailer and lifestyle brand.",
+      "revenue": "It earns by selling furniture, lighting, textiles and outdoor items through Galleries, websites and Sourcebooks.",
+      "strength": "A luxury brand and Galleries that stand apart from other home furnishings retailers are its hallmarks.",
+      "risks": "It runs many initiatives at once, and a failed international push would weigh on results. Rivals sell similar goods at lower prices.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 89089,
+    "tickers": [
+      "SCI"
+    ],
+    "name": "Service Corporation International",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Service Corporation International Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/89089/000162828026007695/sci-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "北米で葬儀場と墓地を運営する最大手の葬祭会社。",
+      "revenue": "葬儀や墓地のサービス、生前契約（プレニード）の販売で稼ぐ。",
+      "strength": "葬儀場1,485か所と墓地500か所の網と、Dignity Memorialブランドが強み。",
+      "risks": "信託基金の運用益が市場環境に左右される。個人経営の葬儀社など地域の競合とも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "North America's largest provider of funeral and cemetery services.",
+      "revenue": "It earns from funeral and cemetery services and from preneed sales.",
+      "strength": "Its strengths are a network of 1,485 funeral locations and 500 cemeteries and the Dignity Memorial brand.",
+      "risks": "Its trust fund returns depend on market conditions, and it competes with local independent operators.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1206264,
+    "tickers": [
+      "SGI"
+    ],
+    "name": "Somnigroup",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Somnigroup Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1206264/000120626426000015/sgi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "Tempur-PedicやSealyを持つ、世界最大の寝具会社。",
+      "revenue": "100カ国超で、店舗とネット通販を通じてマットレスなどの寝具を売って稼ぐ。小売店は2,800店超。",
+      "strength": "Tempur-Pedic、Sealy、Stearns & Fosterなどの有名ブランドと、製造から小売まで一貫した体制が強み。",
+      "risks": "価格、品質、ブランド力をめぐる競争が激しい。ネット直販の台頭や、小売側の垂直統合も脅威となりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The world's largest bedding company, with brands such as Tempur-Pedic and Sealy.",
+      "revenue": "It sells mattresses and other bedding in over 100 countries through stores and e-commerce, with over 2,800 retail stores.",
+      "strength": "Well-known brands such as Tempur-Pedic, Sealy and Stearns & Foster, plus integrated design, manufacturing and retail, are its strengths.",
+      "risks": "Competition on price, quality and brand is intense. Online direct-to-consumer models and retailers' vertical integration could hurt sales.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 730263,
+    "tickers": [
+      "THO"
+    ],
+    "name": "THOR Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "THOR Industries Form 10-K (filed 2026-09-22) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho-20260731.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界最大のキャンピングカー（RV）メーカー。",
+      "revenue": "米国と欧州でRVを作り、主に独立系ディーラー経由で米国、カナダ、欧州に売って稼ぐ。部品や付属品も扱う。",
+      "strength": "AirstreamやJayco、Keystone、Hymerなど北米と欧州の多数のブランドを持つ。価格、デザイン、品質、保証で競う。",
+      "risks": "RV業界は循環的で季節性が強く、生産や売上、利益が大きく振れる。インフレや金利、関税にも左右される。",
+      "competition": "主な競合にWinnebago Industriesがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The world's largest maker of recreational vehicles (RVs).",
+      "revenue": "It builds RVs in the U.S. and Europe and sells them, plus parts and accessories, mainly through independent dealers in the U.S., Canada and Europe.",
+      "strength": "It owns many North American and European brands such as Airstream, Jayco, Keystone and Hymer, and competes on price, design, quality and warranty.",
+      "risks": "The RV industry is cyclical and seasonal, so production, sales and profit swing widely. Inflation, interest rates and tariffs also matter.",
+      "competition": "Main competitors include Winnebago Industries.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Winnebago Industries",
+          "ticker": "WGO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1361658,
+    "tickers": [
+      "TNL"
+    ],
+    "name": "Travel + Leisure",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Travel + Leisure Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1361658/000136165826000009/tnl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "タイムシェア型のバケーション会員権と旅行クラブを運営する会社。",
+      "revenue": "2025年の売上の46%は休暇所有権の販売、40%は手数料収入。消費者向け融資が11%。売上の88%は米国。",
+      "strength": "オーナー家族797,000と280超のリゾートを持つ、世界最大の休暇所有権事業が特徴。",
+      "risks": "タイムシェア業界は競争が激しい。ホテルやクルーズなどの短期旅行や、同業他社と客を奪い合う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company running timeshare vacation ownership and travel membership clubs.",
+      "revenue": "In 2025, 46% of revenue came from selling vacation ownership interests, 40% from fee-for-service and 11% from consumer financing. 88% of revenue was earned in the US.",
+      "strength": "Its vacation ownership business is the world's largest, with 797,000 owner families and more than 280 resort locations.",
+      "risks": "The timeshare industry is highly competitive. It competes with hotels, cruises and rentals as well as other timeshare firms.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 794170,
+    "tickers": [
+      "TOL"
+    ],
+    "name": "Toll Brothers",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Toll Brothers Form 10-K (filed 2025-12-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/794170/000079417025000112/tol-20251031.htm"
+      }
+    ],
+    "ja": {
+      "business": "高級戸建て住宅やマンションを設計・建設して売る住宅会社。",
+      "revenue": "24州で高級住宅を造って売り、住宅ローンや土地開発の関連事業でも稼ぐ。受注残は5.49 billionドル。",
+      "strength": "建築設計や住宅ローン、権原保険など関連会社を自社で持つ。高級住宅メーカーとしての評判が競争力を支える。",
+      "risks": "賃貸住宅などの不動産事業からは撤退を進める。情報システムの障害やデータ流出も抱えるリスク。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A homebuilder that designs, builds and sells luxury single-family homes and condominiums.",
+      "revenue": "It builds and sells luxury homes in 24 states and earns from related mortgage and land businesses too. Backlog stands at $5.49 billion.",
+      "strength": "It runs its own architecture, mortgage, title and other subsidiaries, and its luxury reputation supports its competitive position.",
+      "risks": "It is exiting the for-rent apartment business, and IT failures and data breaches are risks it faces.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1289460,
+    "tickers": [
+      "TXRH"
+    ],
+    "name": "Texas Roadhouse",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Texas Roadhouse Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1289460/000110465926021292/txrh-20251230x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ステーキを中心とするカジュアルダイニングのレストランチェーン。",
+      "revenue": "Texas Roadhouse、Bubba's 33、Jaggersの3業態を展開する。816店のうち714店が直営で、102店はフランチャイズ。",
+      "strength": "店ごとに「地元の人気店」を目指す方針が特徴。独自レシピで味を保ち、全ての料理を店長級が確認する。",
+      "risks": "食材や人件費の上昇、人手不足が重荷になる。競合の動きや消費者の好みの変化も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A casual dining restaurant company known for steaks.",
+      "revenue": "It runs three concepts: Texas Roadhouse, Bubba's 33 and Jaggers. Of 816 restaurants, 714 are company-owned and 102 are franchised.",
+      "strength": "Each restaurant aims to be the local hometown favorite. Proprietary recipes keep quality consistent, and a manager checks every entree before it leaves the kitchen.",
+      "risks": "Higher food and labor costs and labor shortages weigh on it. Competitor initiatives and shifting consumer preferences add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1111335,
+    "tickers": [
+      "VC"
+    ],
+    "name": "Visteon",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Visteon Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1111335/000111133526000006/vc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "デジタルコックピットなどの車載電子機器を作る自動車技術会社。",
+      "revenue": "デジタルメーターやディスプレイ、インフォテインメントなどをBMWやFord、Toyotaなど自動車メーカーに売って稼ぐ。",
+      "strength": "車載用OLEDディスプレイで業界をリードする。プラットフォーム型の開発も特徴。",
+      "risks": "半導体やDRAMの不足、限られた供給元への依存を抱える。自動車業界は競争が激しい。",
+      "competition": "主な競合にAptiv PLCがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An automotive technology company making in-car electronics such as digital cockpits.",
+      "revenue": "It sells digital instrument clusters, displays and infotainment to automakers such as BMW, Ford and Toyota.",
+      "strength": "It is the industry leader in automotive-grade OLED displays and develops products on a platform basis.",
+      "risks": "Shortages of semiconductors and DRAM and reliance on limited suppliers weigh on it. The auto sector is highly competitive.",
+      "competition": "Main competitors include Aptiv PLC.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Aptiv PLC",
+          "ticker": "APTV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 103379,
+    "tickers": [
+      "VFC"
+    ],
+    "name": "VF Corp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "VF Corp Form 10-K (filed 2026-05-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337926000030/vfc-20260328.htm"
+      }
+    ],
+    "ja": {
+      "business": "ザ・ノース・フェイスやヴァンズを持つアウトドア・アクティブ衣料の会社。",
+      "revenue": "地域別は米州50%、欧州35%、アジア太平洋15%。直営店やネットが売上の44%。",
+      "strength": "ノース・フェイス、ヴァンズ、ティンバーランドなど複数ブランドを抱え、商品や販路が分散している。",
+      "risks": "2026年度はActive部門の売上が7%減った。借入金を減らす立て直しの途中にある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An outdoor and active apparel company that owns The North Face and Vans.",
+      "revenue": "Revenue splits 50% Americas, 35% Europe and 15% Asia-Pacific. Direct-to-consumer is 44% of the total.",
+      "strength": "A portfolio of brands such as The North Face, Vans and Timberland spreads it across products and channels.",
+      "risks": "Active segment revenue fell 7% in Fiscal 2026. It is still mid-turnaround, working to cut debt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1674910,
+    "tickers": [
+      "VVV"
+    ],
+    "name": "Valvoline",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Valvoline Form 10-K (filed 2025-11-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1674910/000167491025000135/vvv-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "クルマのオイル交換などを手がける自動車整備チェーン。",
+      "revenue": "約2,200の直営・フランチャイズ店で、オイル交換や整備サービスを提供して稼ぐ。",
+      "strength": "乗ったままで受けられる約15分のオイル交換など、手軽で信頼できるサービスが特徴。",
+      "risks": "競争が激しく、価格や利益率に下押し圧力がかかる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An automotive maintenance chain best known for quick oil changes.",
+      "revenue": "It earns by providing oil changes and maintenance at about 2,200 company-run and franchised service centers.",
+      "strength": "Quick, easy, trusted service is its feature, such as oil changes of about 15 minutes without leaving the car.",
+      "risks": "Competition is intense and puts downward pressure on prices and margins.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1722684,
+    "tickers": [
+      "WH"
+    ],
+    "name": "Wyndham Hotels & Resorts",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Wyndham Hotels & Resorts Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1722684/000172268426000007/wh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "25ブランドのホテルをフランチャイズ展開する会社。",
+      "revenue": "加盟ホテルから受け取るロイヤルティなどのフランチャイズ料で稼ぐ。収入の77%を米国が占める。",
+      "strength": "資産を持たないアセットライトの事業モデルで、設備投資が少ない。エコノミーから中価格帯が中心。",
+      "risks": "ホテル業界は競争が激しい。個人情報の漏えいなど、セキュリティの問題も業績に響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that franchises hotels across 25 brands.",
+      "revenue": "It earns from franchise fees such as royalties from affiliated hotels, with the U.S. providing 77% of royalties.",
+      "strength": "Its asset-light model keeps capital needs low, and its brands focus on the economy to upper midscale range.",
+      "risks": "The hotel industry is highly competitive, and security failures involving personal data could hurt results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 106640,
+    "tickers": [
+      "WHR"
+    ],
+    "name": "Whirlpool",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Whirlpool Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/106640/000010664026000009/whr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "キッチン・洗濯向けの家電を世界で作る大手メーカー。",
+      "revenue": "北米と中南米の大型家電、世界の小型家電の3事業で稼ぐ。小型家電はKitchenAidブランドで小売店や消費者に売る。",
+      "strength": "創業から114年の歴史を持つ。新製品、ブランド力、地域ごとの生産・販売網の最適化が競争力の軸。",
+      "risks": "家電市場は競争が激しい。2025年には格付け会社3社が社債を投資適格未満に引き下げた。原材料費の上昇も響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A major maker of kitchen and laundry appliances sold worldwide.",
+      "revenue": "It earns from three segments: major appliances in North America and Latin America, and small appliances worldwide under KitchenAid.",
+      "strength": "Founded 114 years ago, it competes through new products, strong brands and an optimized regional footprint and trade channels.",
+      "risks": "Appliance competition is intense. In 2025 three rating agencies cut its debt to non-investment grade, and material costs are rising.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1636222,
+    "tickers": [
+      "WING"
+    ],
+    "name": "Wingstop",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Wingstop Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1636222/000163622226000008/wing-20251227.htm"
+      }
+    ],
+    "ja": {
+      "business": "チキンウィングを主力に売るファストカジュアル系の外食チェーン。",
+      "revenue": "主にフランチャイズ事業で、加盟店からのロイヤルティ、広告費、加盟料で稼ぐ。直営店も一部運営する。",
+      "strength": "チキンウィング専門のファストカジュアルとして世界最大で、店舗は3,050超。12種の味付けが特徴。",
+      "risks": "店の約98%が加盟店で、業績は加盟店の販売に左右される。国内の既存店売上は3.3%減った。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A fast casual restaurant chain focused on chicken wings.",
+      "revenue": "It earns mainly as a franchisor, collecting royalties, advertising fees and franchise fees, and also runs some of its own restaurants.",
+      "strength": "It is the largest fast casual chicken wings chain in the world, with more than 3,050 locations and 12 flavors.",
+      "risks": "About 98% of restaurants are franchised, so results depend on franchisee sales. Domestic same store sales fell 3.3%.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
   }
 ]
