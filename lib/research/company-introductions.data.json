@@ -63602,5 +63602,4153 @@
       "competition": [],
       "relationships": []
     }
+  },
+  {
+    "cik": 1070494,
+    "tickers": [
+      "ACAD"
+    ],
+    "name": "ACADIA Pharmaceuticals",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ACADIA Pharmaceuticals Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "神経疾患と希少疾患の治療薬を手がけるバイオ医薬品会社。",
+      "revenue": "パーキンソン病精神病の薬NUPLAZIDと、レット症候群の薬DAYBUEの製品売上で稼ぐ。",
+      "strength": "NUPLAZIDは同症状で唯一のFDA承認薬、DAYBUEはレット症候群で唯一の承認薬という立場が特徴。",
+      "risks": "大手企業との激しい競争を抱える。個人情報や情報システムの侵害リスクもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company making treatments for neurological and rare diseases.",
+      "revenue": "It earns from net product sales of NUPLAZID for Parkinson's disease psychosis and DAYBUE for Rett syndrome.",
+      "strength": "NUPLAZID is the only FDA-approved drug for PDP hallucinations and delusions, and DAYBUE the only approved Rett syndrome drug.",
+      "risks": "It faces intense competition from larger firms, plus the risk of privacy and IT system breaches.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1368514,
+    "tickers": [
+      "ADMA"
+    ],
+    "name": "ADMA Biologics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ADMA Biologics Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm"
+      }
+    ],
+    "ja": {
+      "business": "免疫不全の患者向けに特殊な生物学的製剤を作り販売するバイオ医薬品会社。",
+      "revenue": "ASCENIV、BIVIGAM、Nabi-HBといった免疫グロブリン製品を売って稼ぐ。",
+      "strength": "製造から販売までを一貫して手がける。製造能力の拡大や自社での充填・仕上げも進める。",
+      "risks": "充填や血漿の調達を外部に頼る。特定の少数顧客に売上が偏りやすい。FDAの検査も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company that makes and sells specialty biologics for immunodeficient patients.",
+      "revenue": "It earns money selling immune globulin products such as ASCENIV, BIVIGAM and Nabi-HB.",
+      "strength": "It runs an end-to-end model from manufacturing to sales, and is expanding capacity and in-house fill-finish.",
+      "risks": "It relies on outside parties for filling and plasma supply. A few customers have made up much of its revenue. FDA inspections also apply.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1468328,
+    "tickers": [
+      "ADUS"
+    ],
+    "name": "Addus HomeCare",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Addus HomeCare Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1468328/000143774926005352/adus20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "自宅で介護、ホスピス、訪問看護を提供する会社。",
+      "revenue": "個人介護、ホスピス、在宅医療の3事業で稼ぐ。売上の大半は個人介護が占める。",
+      "strength": "医療保険と介護保険の両方を使う高齢者が中心の顧客層。管理型医療機関との連携が特徴。",
+      "risks": "業界は競争が激しく細分化している。買収や新規拠点による成長をうまく管理できない恐れを抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides home-based personal care, hospice and home health services.",
+      "revenue": "It earns from three segments: personal care, hospice and home health. Personal care brings in most of the revenue.",
+      "strength": "Its customers are mostly people eligible for both Medicare and Medicaid, and it works closely with managed care organizations.",
+      "risks": "The industry is highly competitive and fragmented. Managing growth from acquisitions and new offices may not go well.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1725255,
+    "tickers": [
+      "AHCO"
+    ],
+    "name": "AdaptHealth",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AdaptHealth Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1725255/000162828026011213/ahco-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "在宅医療機器や医療用品を患者の自宅に届ける会社。",
+      "revenue": "消耗品の都度販売が純売上の約63%、毎月定額で受け取る機器が約33%。睡眠、呼吸器、糖尿病などの事業で稼ぐ。",
+      "strength": "睡眠療法から糖尿病機器まで幅広く扱い、複数の製品を必要とする退院患者を持つ病院に重宝される。",
+      "risks": "少数の仕入先に機器の大半を頼る。支払い側のコスト抑制や保険償還の変更も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that delivers home medical equipment and supplies to patients' homes.",
+      "revenue": "One-time sales of consumables are about 63% of net revenue, and fixed monthly payments for equipment about 33%. It earns across sleep, respiratory and diabetes businesses.",
+      "strength": "Its broad range, from sleep therapy to diabetes devices, suits hospitals that discharge patients needing several products.",
+      "risks": "It relies on a few suppliers for most of its equipment. Payor cost controls and reimbursement changes also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1832466,
+    "tickers": [
+      "ALHC"
+    ],
+    "name": "Alignment Healthcare",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Alignment Healthcare Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1832466/000162828026012545/alhc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "高齢者向けのメディケア・アドバンテージ保険を提供する会社。",
+      "revenue": "HMOとPPOの加入者を増やして稼ぐ。2025年末の加入者は約236,300人、45市場・5州で展開する。",
+      "strength": "自社の技術基盤AVAと、雇用した臨床チームによる医療の組み合わせが特徴。",
+      "risks": "メディケア・メディケイド・サービスセンターからの支払いに頼る。純損失の履歴も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that offers Medicare Advantage health plans for seniors.",
+      "revenue": "It earns by growing members in its HMO and PPO plans, with about 236,300 members at the end of 2025 across 45 markets and 5 states.",
+      "strength": "It pairs its AVA technology platform with employed clinical teams.",
+      "risks": "It depends on payments from CMS and has a history of net losses.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1142750,
+    "tickers": [
+      "AMN"
+    ],
+    "name": "AMN Healthcare",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AMN Healthcare Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "病院などに看護師や医師を紹介・派遣する医療人材の会社。",
+      "revenue": "人材派遣や紹介に加え、人材管理の仕組みや医療通訳、コンサルなどを企業向けに提供して稼ぐ。",
+      "strength": "人材サービスと技術を一体で出せる総合力と全国規模が特徴。応募者を集める力も売りになる。",
+      "risks": "景気後退や物価高で需要が減りうる。顧客がAIなどで自前の採用を効率化すれば、依頼が減る恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A healthcare staffing firm that places nurses and physicians at hospitals and other facilities.",
+      "revenue": "It earns from staffing and placement, plus workforce management technology, medical interpretation and consulting for clients.",
+      "strength": "Its features are a full range of talent services and technology, and a national footprint, which widens its pool of candidates.",
+      "risks": "Demand can fall in downturns or high inflation, and clients using AI to improve their own hiring could need fewer of its services.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1297184,
+    "tickers": [
+      "AMPH"
+    ],
+    "name": "Amphastar Pharmaceuticals",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Amphastar Pharmaceuticals Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "注射剤や吸入剤など難度の高い医薬品を作る製薬会社。",
+      "revenue": "2025年の売上は719.9百万ドル。BAQSIMIやPrimatene MIST、グルカゴンなどで稼ぐ。",
+      "strength": "複雑な分子の分析や薬剤送達の技術で、参入障壁の高い製品を開発できるのが強み。",
+      "risks": "新製品の開発や買収に成功できるかが課題。思うように進まない場合もありうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A drug maker focused on technically difficult injectable and inhalation products.",
+      "revenue": "Net revenues were $719.9 million in 2025, led by BAQSIMI, Primatene MIST, glucagon and epinephrine.",
+      "strength": "Its skills in complex molecules and drug delivery let it develop products with high barriers to entry.",
+      "risks": "Success depends on developing or acquiring new products, which may not go as planned.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1723128,
+    "tickers": [
+      "AMRX"
+    ],
+    "name": "Amneal",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Amneal Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ジェネリック薬や注射剤、専門薬を作り、売る世界的な製薬会社。",
+      "revenue": "ジェネリック・注射剤・バイオシミラーの事業と、中枢神経・内分泌向けの先発薬事業、連邦政府向けなどの医薬品卸で稼ぐ。",
+      "strength": "ジェネリックから先発薬、卸まで3つの事業を持つ幅の広さが特徴。米国、インド、アイルランドで事業を行う。",
+      "risks": "競合が新たに参入すると、対象製品の販売量と価格が下がりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global drugmaker that makes and sells generic drugs, injectables and specialty medicines.",
+      "revenue": "It earns from generics, injectables and biosimilars, branded drugs for central nervous system and endocrine disorders, and drug distribution to the U.S. government and other markets.",
+      "strength": "Its feature is breadth: three businesses spanning generics, branded drugs and distribution, run mainly in the U.S., India and Ireland.",
+      "risks": "When new competitors enter a market, the volume and pricing of the affected products tend to fall.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1023024,
+    "tickers": [
+      "ANIP"
+    ],
+    "name": "ANI Pharmaceuticals",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ANI Pharmaceuticals Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1023024/000102302426000014/anip-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "希少疾患薬、ジェネリック、ブランド薬を開発・製造・販売する製薬会社。",
+      "revenue": "希少疾患、ジェネリック、ブランド薬の各事業で稼ぐ。Cortrophin GelとILUVIENが主力のブランド薬。",
+      "strength": "自社工場で経口剤から外用剤、管理薬物まで幅広く作れる。この多様な製造力が競争上の強み。",
+      "risks": "原薬の供給元が限られる。委託先の製造に頼る製品もある。メディケイドの割戻し費用も増えている。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A pharmaceutical company that develops, makes and sells rare disease drugs, generics and brand-name drugs.",
+      "revenue": "It earns from its Rare Disease, Generics and Brands businesses, led by branded Cortrophin Gel and ILUVIEN.",
+      "strength": "Its own plants make everything from oral solids to topicals and controlled substances. This range of products is a competitive strength.",
+      "risks": "Few suppliers provide its API. Some products depend on contract manufacturers. Medicaid rebate accruals are rising.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 784199,
+    "tickers": [
+      "AORT"
+    ],
+    "name": "Artivion",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Artivion Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "大動脈疾患向けの人工血管や心臓弁、ヒト組織を扱う医療機器会社。",
+      "revenue": "医療機器と組織保存サービスの2事業で稼ぐ。ステントグラフトや人工心臓弁、外科用接着剤を販売する。",
+      "strength": "4つの主力製品群を持つ。On-X人工心臓弁は完全な90度の弁開口が特徴。",
+      "risks": "競合には資金や人員で上回る企業が多い。国際展開に伴う規制や為替の影響も受ける。",
+      "competition": "主な競合にAbbott Laboratories、Medtronicがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A medical device maker offering stent grafts, heart valves and human tissues for aortic disease.",
+      "revenue": "It earns from two segments: Medical Devices and Preservation Services. It sells stent grafts, mechanical heart valves and surgical sealants.",
+      "strength": "It has four major product families. On-X heart valves are known for full 90-degree leaflet opening.",
+      "risks": "Many rivals have greater financial and personnel resources. International operations also bring regulatory and currency exposure.",
+      "competition": "Main competitors include Abbott Laboratories, Medtronic.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Abbott Laboratories",
+          "ticker": "ABT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Medtronic",
+          "ticker": "MDT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 933974,
+    "tickers": [
+      "AZTA"
+    ],
+    "name": "Azenta",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Azenta Form 10-K (filed 2025-12-04) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/933974/000143774925036931/azta20250930_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "生命科学向けにサンプルの保管・管理と遺伝子解析を手がける会社。",
+      "revenue": "サンプル管理ソリューションとマルチオミクスの2部門で稼ぐ。顧客は世界で約14,000社。",
+      "strength": "自動保管システムから遺伝子サービスまで、サンプルの全過程を幅広くそろえるのが特徴。",
+      "risks": "技術の変化が速く、特許以外の独自ノウハウや新製品開発に頼る面がある。",
+      "competition": "主な競合にLaboratory Corporation of America、Thermo Fisher Scientific、Twist Bioscienceがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that stores and manages samples and provides genomic services for life sciences.",
+      "revenue": "It earns through two segments, Sample Management Solutions and Multiomics, serving about 14,000 customers worldwide.",
+      "strength": "Its range covers every stage of a sample's life, from automated storage to genomic services.",
+      "risks": "Technology changes fast, so it relies on know-how and new products as well as patents.",
+      "competition": "Main competitors include Laboratory Corporation of America, Thermo Fisher Scientific, Twist Bioscience.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Laboratory Corporation of America",
+          "ticker": "LH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Thermo Fisher Scientific",
+          "ticker": "TMO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Twist Bioscience",
+          "ticker": "TWST",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 834365,
+    "tickers": [
+      "BLFS"
+    ],
+    "name": "BioLife Solutions",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BioLife Solutions Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/834365/000162828026012294/blfs-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "細胞・遺伝子治療向けに、生物材料の保存培地などを作る会社。",
+      "revenue": "細胞処理製品を軸に、保存培地や解凍装置などの製品とサービスを売って稼ぐ。",
+      "strength": "独自の保存培地HypoThermosol FRSとCryoStorが中核。FDAのマスターファイルは750回超参照された。",
+      "risks": "自社製品や競合製品が期待通りに働かないと、売上減や評判悪化を招きうる。競合には大手も多い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes preservation media and related tools for the cell and gene therapy industry.",
+      "revenue": "It earns by selling cell processing products, biopreservation media, thawing devices and related services.",
+      "strength": "Its proprietary HypoThermosol FRS and CryoStor media are the core. Its FDA Master File has been cross referenced over 750 times.",
+      "risks": "Revenue and reputation can suffer if its products or competitors' products fail to perform as expected. Many rivals are larger.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1267565,
+    "tickers": [
+      "COLL"
+    ],
+    "name": "Collegium",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Collegium Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1267565/000162828026011992/coll-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ADHDと強い痛みの治療薬を米国で売る製薬会社。",
+      "revenue": "Jornay PM、Belbuca、Xtampza ER、Nucynta、Symproicの5製品群を米国で販売して稼ぐ。",
+      "strength": "乱用を防ぐ独自技術DETERxを使うXtampza ERを持つ。Jornay PMは夜に飲む唯一の承認済み刺激薬。",
+      "risks": "大手製薬会社などとの激しい競争がある。オピオイド関連の訴訟や調査、少数の顧客への集中も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A drugmaker that sells treatments for ADHD and moderate to severe pain in the U.S..",
+      "revenue": "It earns by selling Jornay PM, Belbuca, Xtampza ER, the Nucynta products and Symproic in the U.S..",
+      "strength": "It owns the abuse-deterrent DETERx technology behind Xtampza ER, and Jornay PM is the only FDA-approved stimulant dosed in the evening.",
+      "risks": "It faces intense competition from large drugmakers, plus opioid-related litigation and investigations and customer concentration.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 2014596,
+    "tickers": [
+      "CON"
+    ],
+    "name": "Concentra",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Concentra Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/2014596/000201459626000029/cghp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国最大級の規模を持つ、働く人向けの産業保健サービス会社。",
+      "revenue": "2025年の売上は2,163.4百万ドル。約93%を産業保健センターが占める。",
+      "strength": "拠点数で米国最大の産業保健事業者。628のセンターと411の職場内クリニックを持つ。",
+      "risks": "労災の発生が減れば需要が落ちうる。労災の報酬規定の変更や人手不足による費用増も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An occupational health services provider for American workers, the largest in the U.S. by number of locations.",
+      "revenue": "Revenue in 2025 was $2,163.4 million, with about 93% from occupational health centers.",
+      "strength": "It is the largest occupational health provider by locations, with 628 centers and 411 onsite clinics.",
+      "risks": "Fewer work injuries could cut demand. Workers' compensation fee changes and labor shortages can raise its costs.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1088856,
+    "tickers": [
+      "CORT"
+    ],
+    "name": "Corcept Therapeutics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Corcept Therapeutics Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1088856/000162828026011091/cort-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ストレスホルモン「コルチゾール」の働きを調整する薬を扱う製薬会社。",
+      "revenue": "クッシング症候群の治療薬Korlymとそのオーソライズド・ジェネリックの販売で稼ぐ。",
+      "strength": "GRだけに結合する選択的コルチゾール調節薬を1,000種類超発見し、特許で守る。",
+      "risks": "2024年1月からKorlymのジェネリックと競合する。製品の売上に依存し、臨床試験の失敗も抱える。",
+      "competition": "主な競合にTevaがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A drug company that makes medicines to modulate the stress hormone cortisol.",
+      "revenue": "It earns by selling Korlym, a treatment for Cushing's syndrome, and its authorized generic.",
+      "strength": "It has discovered more than 1,000 selective cortisol modulators that bind only to the GR, covered by patents.",
+      "risks": "A generic Korlym has competed since January 2024. It depends on its Products' sales and faces clinical trial failure.",
+      "competition": "Main competitors include Teva.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Teva",
+          "ticker": "TEVA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 874866,
+    "tickers": [
+      "CRVL"
+    ],
+    "name": "CorVel",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CorVel Form 10-K (filed 2026-05-22) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/874866/000119312526237024/crvl-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "労災保険などの医療費を抑える管理サービスを手がける会社。",
+      "revenue": "保険会社、TPA、政府機関、自家保険の企業に、請求管理や医療費審査などのサービスを提供して稼ぐ。",
+      "strength": "AIなどの技術と人の対応を組み合わせ、全国網で地域に根ざしたサービスを届けるのが特徴。",
+      "risks": "競合は自社より大きく資金力もある。労災の請求件数の減少や州ごとの規制変更も響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides managed care services to contain medical costs in workers' compensation and other insurance.",
+      "revenue": "It earns by serving insurers, TPAs, government entities and self-administered employers with claims management, bill review and similar services.",
+      "strength": "Its feature is combining technology such as AI with a human touch, delivered locally and backed by a national team.",
+      "risks": "Many competitors are larger and better funded. Fewer workers' compensation claims and rule changes by individual U.S. jurisdictions can also hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1420800,
+    "tickers": [
+      "ENOV"
+    ],
+    "name": "Enovis",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Enovis Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1420800/000142080026000012/cfx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "人工関節や装具などの整形外科向け医療機器を作る会社。",
+      "revenue": "予防・回復部門と再建部門の2つで、医療機器を販売して稼ぐ。",
+      "strength": "傷害の予防から手術後のリハビリまで、患者のケア全体をカバーする製品群が特徴。",
+      "risks": "競争が激しく細分化した市場にいる。再建部門では資金力で上回る大手と競う。",
+      "competition": "主な競合にStryker、Zimmer Biomet、Johnson & Johnsonがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes orthopedic medical devices such as joint implants and braces.",
+      "revenue": "It sells medical devices through two segments, Prevention & Recovery and Reconstructive.",
+      "strength": "Its products cover patient care from injury prevention to rehabilitation after surgery.",
+      "risks": "Its markets are highly competitive and fragmented, and in Reconstructive it faces larger rivals with greater resources.",
+      "competition": "Main competitors include Stryker, Zimmer Biomet, Johnson & Johnson.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Stryker",
+          "ticker": "SYK",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Zimmer Biomet",
+          "ticker": "ZBH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Johnson & Johnson",
+          "ticker": "JNJ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1965040,
+    "tickers": [
+      "FTRE"
+    ],
+    "name": "Fortrea",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Fortrea Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1965040/000162828026012244/ftre-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "製薬・医療機器会社の臨床試験を請け負う世界的なCRO。",
+      "revenue": "臨床試験の管理、臨床薬理、コンサルティングで稼ぐ。最大の収益源は臨床開発サービス。",
+      "strength": "世界規模、科学と治療領域の知見、30年超の経験が特徴。約100カ国で事業を行える。",
+      "risks": "新規受注が伸びないと業績が悪化しうる。治験の被験者集めや、特定顧客への集中も弱点。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global contract research organization that runs clinical trials for drug and device makers.",
+      "revenue": "It earns from clinical trial management, clinical pharmacology and consulting. Clinical Development is its largest source of revenue.",
+      "strength": "Its features are global scale, scientific and therapeutic expertise, and more than 30 years of experience. It can operate in approximately 100 countries.",
+      "risks": "Weak new business awards can hurt results. Recruiting trial patients and relying on a few customers are also weak points.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1802665,
+    "tickers": [
+      "HRMY"
+    ],
+    "name": "Harmony Biosciences",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Harmony Biosciences Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ナルコレプシー向け治療薬WAKIXを販売する製薬会社。",
+      "revenue": "唯一の承認製品WAKIXの販売で稼ぐ。",
+      "strength": "WAKIXは6歳以上のナルコレプシー患者の日中の過度の眠気や脱力発作で、FDAの承認を得ている。",
+      "risks": "WAKIX1製品への依存が大きい。Bioprojetへの支払いや、資金力で勝る競合も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A drug company selling WAKIX, a treatment for narcolepsy.",
+      "revenue": "It earns from sales of WAKIX, its only approved product.",
+      "strength": "WAKIX is FDA-approved for excessive daytime sleepiness and cataplexy in narcolepsy patients aged six and older.",
+      "risks": "It depends heavily on WAKIX, owes payments to Bioprojet, and faces better-funded competitors.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1095565,
+    "tickers": [
+      "HSTM"
+    ],
+    "name": "HealthStream",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "HealthStream Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "病院などの人材向けに教育や資格管理のソフトを提供する会社。",
+      "revenue": "医療機関を主な顧客に、学習、資格審査、シフト管理などのクラウド型ソフトを売って稼ぐ。",
+      "strength": "自社基盤hStreamで各アプリをつなぐ単一プラットフォーム戦略が特徴。医療人材向けに特化している。",
+      "risks": "教育・研修分野は細分化され、多様な企業が顧客を奪い合う。大手の汎用ソフト会社とも競合する。",
+      "competition": "主な競合にOracle、SAP、Workday、AMN Healthcareがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides training and credentialing software for healthcare workers.",
+      "revenue": "It earns by selling cloud-based learning, credentialing and scheduling software, mainly to healthcare organizations.",
+      "strength": "Its single-platform strategy links its apps through its own hStream platform, and it focuses only on the healthcare workforce.",
+      "risks": "The training market is fragmented, with many firms competing for customers, including large multi-industry software vendors.",
+      "competition": "Main competitors include Oracle, SAP, Workday, AMN Healthcare.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "SAP",
+          "ticker": "SAP",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Workday",
+          "ticker": "WDAY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AMN Healthcare",
+          "ticker": "AMN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 917520,
+    "tickers": [
+      "IART"
+    ],
+    "name": "Integra LifeSciences",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Integra LifeSciences Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "脳神経外科用の機器や創傷治療の製品を作る医療技術会社。",
+      "revenue": "脳神経外科などの機器を扱うCSS部門が売上の約70%。創傷ケアなどのTT部門が約30%を占める。",
+      "strength": "脳神経外科で世界首位を自負する。手術器具でも米国の上位に入る。",
+      "risks": "FDAなど各国の規制違反は売上減や回収につながる。多額の債務や人材獲得の競争も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A medical technology company that makes neurosurgery instruments and wound care products.",
+      "revenue": "The CSS segment, which covers neurosurgery and similar tools, is about 70% of revenue. The TT segment, focused on wound care, is about 30%.",
+      "strength": "It is the world leader in neurosurgery and ranks among the top U.S. providers of surgical instruments.",
+      "risks": "Breaking FDA or other rules can mean lost sales and recalls. Heavy debt and tight competition for staff add pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 883984,
+    "tickers": [
+      "ICUI"
+    ],
+    "name": "ICU Medical",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ICU Medical Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "点滴や血管アクセス用の医療機器を作る会社。",
+      "revenue": "病院や卸、外来施設向けに輸液ポンプや点滴セット、カテーテルなどを販売して稼ぐ。",
+      "strength": "輸液ポンプからIVセット、安全ソフトまで幅広くそろえる。Plum 360は8年連続でBest in KLASを獲得。",
+      "risks": "買収時の借入を抱える。借入の満期が前倒しになり、早期返済を求められる可能性もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes medical products for infusion therapy and vascular access.",
+      "revenue": "It sells infusion pumps, IV sets and catheters to hospitals, wholesalers and outpatient sites.",
+      "strength": "Its range runs from infusion pumps to IV sets and safety software. Plum 360 was named Best in KLAS eight years in a row.",
+      "risks": "It carries debt taken on for acquisitions. The maturity could move earlier, forcing earlier repayment.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1609550,
+    "tickers": [
+      "INSP"
+    ],
+    "name": "Inspire Medical Systems",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Inspire Medical Systems Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1609550/000160955026000016/insp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "睡眠時無呼吸症候群向けの神経刺激治療機器を作る会社。",
+      "revenue": "Inspire systemの販売で稼ぐ。",
+      "strength": "呼吸を常に監視し、舌下神経を刺激して気道を保つ閉ループ方式が特徴。",
+      "risks": "収益をInspire systemに頼る。保険の償還や規制承認の動向にも左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes a nerve-stimulation device for obstructive sleep apnea.",
+      "revenue": "It earns by selling the Inspire system.",
+      "strength": "Its closed-loop design monitors breathing and stimulates a nerve to keep the airway open.",
+      "risks": "It relies on one product and is exposed to reimbursement coverage and regulatory approvals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1080014,
+    "tickers": [
+      "INVA"
+    ],
+    "name": "Innoviva",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Innoviva Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "呼吸器薬のロイヤルティと、重症感染症向けの薬を持つバイオ医薬品会社。",
+      "revenue": "GSKが売る呼吸器薬のロイヤルティと、GIAPREZAなど自社の病院向け薬の販売で稼ぐ。",
+      "strength": "ロイヤルティ事業から、病院向けの重症治療・感染症事業へ広げた点が特徴。承認済みの自社製品を持つ。",
+      "risks": "ロイヤルティはGSKに依存し、競合品や後発薬の影響を受けやすい。負債の返済負担も抱える。",
+      "competition": "主な競合にAbbVie、AstraZeneca、Merck、Pfizerがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company with respiratory royalties and a hospital-focused critical care and infectious disease business.",
+      "revenue": "It earns from royalties on respiratory drugs that GSK sells and from its own hospital drugs such as GIAPREZA.",
+      "strength": "It has grown from a pure royalty business into a hospital-focused critical care and infectious disease platform with approved products.",
+      "risks": "Its royalties depend on GSK and are exposed to competing and generic drugs. Debt repayment is also a burden.",
+      "competition": "Main competitors include AbbVie, AstraZeneca, Merck, Pfizer.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "AbbVie",
+          "ticker": "ABBV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AstraZeneca",
+          "ticker": "AZN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Merck",
+          "ticker": "MRK",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Pfizer",
+          "ticker": "PFE",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1114483,
+    "tickers": [
+      "ITGR"
+    ],
+    "name": "Integer Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Integer Holdings Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "医療機器メーカー向けに部品や製品を設計・製造する受託メーカー。",
+      "revenue": "心臓・血管、神経刺激、心臓リズム管理などの市場向けに部品や完成品を作って稼ぐ。",
+      "strength": "大手医療機器メーカーを顧客に持つ世界最大級の受託開発製造会社。買収で技術と規模を広げた。",
+      "risks": "売上の約49%を上位3顧客に頼る。顧客が発注を減らせば売上が大きく落ちる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A contract developer and manufacturer of components and devices for medical device makers.",
+      "revenue": "It earns by making components and finished devices for cardio and vascular, neuromodulation and cardiac rhythm markets.",
+      "strength": "It is one of the world's largest medical device CDMOs, serving large OEMs, and has added capabilities through acquisitions.",
+      "risks": "Its top three customers made up about 49% of 2025 revenue, so a cut in their orders would cost it a large share of sales.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1845257,
+    "tickers": [
+      "LFST"
+    ],
+    "name": "LifeStance Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "LifeStance Health Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1845257/000119312526071462/lfst-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "外来のメンタルヘルス診療を対面とオンラインで提供する会社。",
+      "revenue": "8,040人の臨床医が提供する診察や心理療法の診療報酬で稼ぐ。保険会社の支払いが頼り。",
+      "strength": "全米有数の臨床医数と地理的な広がりが特徴。保険の適用範囲内で受診できる。",
+      "risks": "保険会社の支払額が下がると打撃を受ける。臨床医の採用と定着が成長を左右する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing outpatient mental health care in person and online.",
+      "revenue": "It earns from fees for care given by 8,040 clinicians, largely paid by insurers.",
+      "strength": "It has one of the nation's largest clinician bases and reach, and patients can use in-network insurance benefits.",
+      "risks": "Lower insurer reimbursement would hurt it, and growth hinges on recruiting and keeping clinicians.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 886163,
+    "tickers": [
+      "LGND"
+    ],
+    "name": "Ligand",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ligand Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "新薬の売上から入るロイヤルティ(権利料)を集める製薬投資会社。",
+      "revenue": "提携先が売る薬のロイヤルティが中心。Captisol素材の販売と、契約金やマイルストーン収入でも稼ぐ。",
+      "strength": "自社で開発や販売の設備を持たず、低コストで高い利益率を保つ点が特徴。多数の薬に分散して投資する。",
+      "risks": "同種の薬や技術との競合を抱える。Captisolも、溶けやすさを高める他社の素材と競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical investor that collects royalties from sales of other companies' medicines.",
+      "revenue": "Royalties on partners' product sales come first, backed by Captisol material sales and license fees and milestone payments.",
+      "strength": "It runs with little infrastructure and high margins, and spreads its investments across a diversified portfolio of royalty assets.",
+      "risks": "Its partners' drugs may face competing therapies, and Captisol competes with other solubility-boosting excipients.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1158895,
+    "tickers": [
+      "LMAT"
+    ],
+    "name": "LeMaitre Vascular",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "LeMaitre Vascular Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1158895/000119312526073360/ck0001158895-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "血管外科医向けの医療機器と組織の凍結保存サービスを手がける会社。",
+      "revenue": "売上の95%超は開腹手術などで使う機器。販売は主に直販の営業部隊が担う。",
+      "strength": "血管外科医という絞った顧客と、競争の少ないニッチ製品に集中する。買収した事業の統合経験も強み。",
+      "risks": "競合には資金力で勝る大手が多く、低価格の製品を出す相手もいる。部品は供給元が限られる。",
+      "competition": "主な競合にAbbott、Baxter、Artivion、Becton Dickinson、Edwards Lifesciencesがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that sells medical devices for vascular surgeons and offers human tissue cryopreservation services.",
+      "revenue": "Over 95% of net sales come from devices used in open surgery. A direct sales force handles most selling.",
+      "strength": "It focuses on vascular surgeons and low-rivalry niche products. Its experience integrating acquisitions is a competitive advantage.",
+      "risks": "Many larger rivals have more resources, and some sell at lower prices. Some suppliers are sole or limited source.",
+      "competition": "Main competitors include Abbott, Baxter, Artivion, Becton Dickinson, Edwards Lifesciences.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Abbott",
+          "ticker": "ABT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Baxter",
+          "ticker": "BAX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Artivion",
+          "ticker": "AORT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Becton Dickinson",
+          "ticker": "BDX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Edwards Lifesciences",
+          "ticker": "EW",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 856982,
+    "tickers": [
+      "MMSI"
+    ],
+    "name": "Merit Medical",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Merit Medical Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/856982/000085698226000008/mmsi-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "心臓・放射線科などで使う医療機器を作る会社。",
+      "revenue": "自社の営業部隊と販売代理店を通じて、各種の医療機器を販売して稼ぐ。",
+      "strength": "キットやトレー、手技用パックなど、顧客に合わせた手技向けの一式を用意できるのが特徴。",
+      "risks": "原材料や部品の供給を第三者の業者に頼る。供給が途切れると事業に響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes medical devices used in cardiology, radiology and other procedures.",
+      "revenue": "It sells medical devices through its own direct sales force and distributors.",
+      "strength": "It can supply custom procedural solutions such as kits, trays and procedural packs.",
+      "risks": "It relies on third-party vendors for materials and components, and supply disruptions could hurt its business.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1077183,
+    "tickers": [
+      "NEO"
+    ],
+    "name": "NeoGenomics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "NeoGenomics Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "がんの診断検査を行う臨床検査会社。",
+      "revenue": "米国と英国の検査所で、細胞遺伝学やFISH、フローサイトメトリーなどのがん検査を提供して稼ぐ。",
+      "strength": "病理医院や病院、研究機関の競合にならない提携先という立場が特徴。検査技術や情報システムも差別化点。",
+      "risks": "競合が多く、価格競争も激しい。技術の変化で検査サービスが時代遅れになる恐れもある。",
+      "competition": "主な競合にQuest Diagnostics、Laboratory Corporation of America、Guardant Health、Natera、Tempus AIがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A clinical lab company that runs cancer diagnostic tests.",
+      "revenue": "It earns by providing cancer tests such as cytogenetics, FISH and flow cytometry from labs in the US and the UK.",
+      "strength": "It positions itself as a non-competitive partner to pathology practices, hospitals and academic centers. Its testing technology and lab systems set it apart.",
+      "risks": "Competitors are numerous and price competition is intense. Technology change could make its tests obsolete.",
+      "competition": "Main competitors include Quest Diagnostics, Laboratory Corporation of America, Guardant Health, Natera, Tempus AI.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Quest Diagnostics",
+          "ticker": "DGX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Laboratory Corporation of America",
+          "ticker": "LH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Guardant Health",
+          "ticker": "GH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Natera",
+          "ticker": "NTRA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Tempus AI",
+          "ticker": "TEM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 711377,
+    "tickers": [
+      "NEOG"
+    ],
+    "name": "Neogen",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Neogen Form 10-K (filed 2026-07-30) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/711377/000119312526326092/neog-20260531.htm"
+      }
+    ],
+    "ja": {
+      "business": "食品と動物の安全を守る検査キットや製品を作る会社。",
+      "revenue": "食品安全は検査キットや培地を、動物安全は動物用の医薬品や器具などを売って稼ぐ。",
+      "strength": "使いやすさ、速さ、正確さで競う。使い捨ての検査キットから動物医薬品まで幅広くそろえる点が特徴。",
+      "risks": "個別の製品ごとに激しい競争がある。3Mの食品安全事業の統合や関税、規制の強化も重荷になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes test kits and products for food safety and animal safety.",
+      "revenue": "It sells test kits and culture media in food safety, and veterinary drugs and instruments in animal safety.",
+      "strength": "It competes on ease of use, speed and accuracy, and its broad line runs from disposable tests to veterinary drugs.",
+      "risks": "Each product line faces intense competition, and integrating the 3M food safety business, tariffs and tighter regulation add strain.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1047335,
+    "tickers": [
+      "NHC"
+    ],
+    "name": "National HealthCare",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "National HealthCare Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1047335/000143774926005910/nhc20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "介護施設や在宅ケア、ホスピスなどを運営する会社。",
+      "revenue": "2025年は営業収益の96.8%を医療サービスで稼ぐ。中心は熟練看護施設の運営。",
+      "strength": "看護施設を中心に、住居型施設や在宅、ホスピスまで幅広く手がけるのが特徴。",
+      "risks": "メディケアやメディケイドの支払いに依存する。償還額が減ると収益と利益率が大きく下がりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs nursing homes, senior living, home care and hospice services.",
+      "revenue": "In 2025, 96.8% of net operating revenues came from health care services, led by skilled nursing facilities.",
+      "strength": "It spans skilled nursing, assisted and independent living, home care, hospice and behavioral health.",
+      "risks": "It relies on Medicare and Medicaid payments, and cuts in reimbursement could sharply reduce revenue and margins.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1821825,
+    "tickers": [
+      "OGN"
+    ],
+    "name": "Organon",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Organon Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "女性の健康を軸に、70超の医薬品を世界で売る製薬会社。",
+      "revenue": "避妊薬や不妊治療薬の女性の健康、バイオシミラー、既存ブランド薬を卸や病院などへ販売して稼ぐ。売上の約74%は米国外。",
+      "strength": "140を超える国と地域に届ける販売網が特徴。製品群から出る現金が成長投資を支える。",
+      "risks": "特許切れ後のジェネリックやバイオシミラーとの競争が激しい。債務の削減や経営陣の交代も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global drugmaker selling over 70 medicines, with a focus on women's health.",
+      "revenue": "It sells women's health drugs, biosimilars and established brands through wholesalers, hospitals and others, with about 74% of revenue outside the U.S.",
+      "strength": "Its network reaches patients in more than 140 countries and territories, and its product portfolio generates cash for growth.",
+      "risks": "Generic and biosimilar competition grows as products mature, and it is working on debt reduction after leadership changes.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 926326,
+    "tickers": [
+      "OMCL"
+    ],
+    "name": "Omnicell",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Omnicell Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/926326/000092632626000006/omcl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "病院や薬局向けに、薬の管理を自動化する機器とサービスを提供する会社。",
+      "revenue": "薬の保管・払い出しの自動化機器と、月額課金のSaaSや専門サービスで稼ぐ。顧客向けのリース融資も扱う。",
+      "strength": "薬の保管から払い出しまでの自動化と、それを動かす情報基盤を一体で提供する。",
+      "risks": "景気悪化で機器の導入が遅れうる。多額の債務を抱え、サイバー攻撃や規制対応のリスクもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides equipment and services to automate medication management for hospitals and pharmacies.",
+      "revenue": "It earns from medication storage and dispensing automation, plus subscription SaaS and Expert Services. It also offers lease financing to customers.",
+      "strength": "It offers medication storage and dispensing automation together with the intelligence platform that runs it.",
+      "risks": "A weak economy can delay installations. It carries substantial debt and faces cyber-attack and regulatory risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1069899,
+    "tickers": [
+      "PAHC"
+    ],
+    "name": "Phibro Animal Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Phibro Animal Health Form 10-K (filed 2026-08-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1069899/000110465926101493/pahc-20260630x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "家畜向けの動物用医薬品やミネラル栄養製品を作る会社。",
+      "revenue": "動物用医薬品、ミネラル栄養、機能性素材の3事業で稼ぐ。動物用医薬品が売上の77%を占める。",
+      "strength": "約790の製品ラインを約90カ国で販売する。長年のノウハウが後発品への防御になる。",
+      "risks": "資金力で上回る競合がいる。業界の統合が競合を強めうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes animal health and mineral nutrition products for livestock.",
+      "revenue": "It earns from three segments: Animal Health, Mineral Nutrition and Performance Products. Animal Health is 77% of sales.",
+      "strength": "It sells about 790 product lines in about 90 countries. Know-how built over many years helps guard against generics.",
+      "risks": "Some competitors have greater resources. Industry consolidation could make rivals stronger.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1396814,
+    "tickers": [
+      "PCRX"
+    ],
+    "name": "Pacira BioSciences",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Pacira BioSciences Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1396814/000162828026012297/pcrx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "麻薬を使わない痛み治療薬を開発・販売する製薬会社。",
+      "revenue": "EXPAREL、ZILRETTA、ioveraの3つの非オピオイド治療で稼ぐ。",
+      "strength": "術後の痛みに使う長時間作用の局所麻酔薬EXPARELが主力。独自の遺伝子治療候補も進める。",
+      "risks": "製薬業界は競争が激しく、技術の変化も速い。資金力で勝る大手が競合になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A drug company that develops and sells non-opioid pain therapies.",
+      "revenue": "It earns from three non-opioid treatments: EXPAREL, ZILRETTA and iovera.",
+      "strength": "Its flagship EXPAREL is a long-acting local analgesic for postsurgical pain, and it is advancing a gene therapy candidate.",
+      "risks": "The industry is intensely competitive and changes quickly, and rivals with greater resources can compete with it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1759655,
+    "tickers": [
+      "PRVA"
+    ],
+    "name": "Privia Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Privia Health Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1759655/000175965526000010/prva-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "医師の診療所を支援する技術主導の医師支援会社。",
+      "revenue": "提携する医療グループの診療を支える技術とサービスで稼ぐ。メディケアや民間保険など多様な報酬モデルに対応する。",
+      "strength": "クラウド型の技術基盤で、医師の自主性を保ちつつ大規模な医療グループの利点を提供するのが特徴。",
+      "risks": "一部は自社所有でない医療グループへの依存を抱える。電子カルテ会社athenahealthへの依存や、民間保険の支払い減もリスク。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A technology-driven company that supports physician practices.",
+      "revenue": "It earns by providing technology and services to affiliated Medical Groups, across payment models such as Medicare and commercial insurance.",
+      "strength": "Its cloud-based platform gives physicians the benefits of a large medical group while keeping their autonomy.",
+      "risks": "It depends on Medical Groups it does not always own and on EMR vendor athenahealth, and lower commercial payer rates could hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1377121,
+    "tickers": [
+      "PTGX"
+    ],
+    "name": "Protagonist Therapeutics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Protagonist Therapeutics Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1377121/000110465926019696/ptgx-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "炎症・免疫、血液、代謝の領域で新薬を探索・開発するバイオ企業。",
+      "revenue": "自社の新薬候補を製薬大手に導出し、提携で稼ぐ。Icotydeは J&J傘下のJanssen、rusfertideはTakedaと組む。",
+      "strength": "経口ペプチドなどの独自の技術基盤を持つ。既存薬との差別化が見込める標的に絞って開発する。",
+      "risks": "収益の大半を臨床試験の成否と当局の承認に依存する。肥満薬の分野は競合が急増している。",
+      "competition": "主な競合にNovartis、Eli Lilly、Bausch Health、Johnson & Johnson、AbbVieがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biotech that discovers and develops new drugs in inflammation and immunology, hematology and metabolic diseases.",
+      "revenue": "It earns through partnerships with big drugmakers: Icotyde with Janssen (a Johnson & Johnson company) and rusfertide with Takeda.",
+      "strength": "It has a validated technology platform, including oral peptides, and targets biologically validated targets where it can differentiate.",
+      "risks": "Its future depends on clinical trial results and regulatory approval. The obesity field is growing more crowded.",
+      "competition": "Main competitors include Novartis, Eli Lilly, Bausch Health, Johnson & Johnson, AbbVie.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Novartis",
+          "ticker": "NVS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Eli Lilly",
+          "ticker": "LLY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bausch Health",
+          "ticker": "BHC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Johnson & Johnson",
+          "ticker": "JNJ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AbbVie",
+          "ticker": "ABBV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1906324,
+    "tickers": [
+      "QDEL"
+    ],
+    "name": "QuidelOrtho",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "QuidelOrtho Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1906324/000190632426000008/qdel-20251228.htm"
+      }
+    ],
+    "ja": {
+      "business": "病院や検査室向けの体外診断用の検査機器と試薬を作る会社。",
+      "revenue": "検査室向け、輸血医療、迅速検査、分子診断の4部門で稼ぐ。",
+      "strength": "免疫測定と分子検査、臨床化学、輸血医療の専門性が土台。140を超える国と地域に顧客を持つ。",
+      "risks": "業界の競争が激しい。呼吸器系製品の売上の増減や、主要な販売代理店を失うリスクを抱える。",
+      "competition": "主な競合にAbbott Laboratories、Bio-Rad、Danaher、Qiagen、Revvityがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes diagnostic tests and instruments for hospitals, labs and clinics.",
+      "revenue": "It earns from four business units: Labs, Transfusion Medicine, Point of Care and Molecular Diagnostics.",
+      "strength": "Its base is expertise in immunoassay, molecular testing, clinical chemistry and transfusion medicine. Customers span more than 140 countries and territories.",
+      "risks": "The industry is highly competitive. Swings in respiratory product sales and the loss of a key distributor are risks.",
+      "competition": "Main competitors include Abbott Laboratories, Bio-Rad, Danaher, Qiagen, Revvity.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Abbott Laboratories",
+          "ticker": "ABT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bio-Rad",
+          "ticker": "BIO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Danaher",
+          "ticker": "DHR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Qiagen",
+          "ticker": "QGEN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Revvity",
+          "ticker": "RVTY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 790526,
+    "tickers": [
+      "RDNT"
+    ],
+    "name": "RadNet",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "RadNet Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/790526/000162828026013337/rdnt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "全米で画像診断センターを運営する会社。",
+      "revenue": "MRIやCTなどの画像診断サービスで稼ぐ。2025年末時点で418のセンターを運営する。",
+      "strength": "大半のセンターで複数の検査を受けられる点が差別化の要。AI事業のDigital Healthも持つ。",
+      "risks": "資金力で上回る競合が、より多くのセンターや新しい機器を持つ可能性がある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs diagnostic imaging centers in many US regions.",
+      "revenue": "It earns from imaging services such as MRI and CT, operating 418 centers as of December 31, 2025.",
+      "strength": "Most centers offer multiple imaging types, a key point of differentiation, and it also runs an AI-focused Digital Health segment.",
+      "risks": "Competitors with greater financial resources could open more centers and offer newer equipment.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1490978,
+    "tickers": [
+      "SDGR"
+    ],
+    "name": "Schrodinger",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Schrodinger Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1490978/000149097826000010/sdgr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "物理ベースの計算プラットフォームで創薬を進め、ソフトも売る会社。",
+      "revenue": "ソフトウェアの販売と、創薬の共同研究による収入で稼ぐ。自社の創薬プログラムも手がける。",
+      "strength": "物理ベースの計算プラットフォームが核。従来の手法より有望な分子を見つけ、創薬を速める潜在力がある。",
+      "risks": "営業損失の歴史があり、今後数年も赤字が続く見通し。顧客がライセンスを更新しないと業績が悪化する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that uses a physics-based computational platform for drug discovery and sells software.",
+      "revenue": "It earns from software sales and from drug discovery collaborations. It also runs its own drug discovery programs.",
+      "strength": "Its physics-based computational platform is the core. It has the potential to find more promising molecules than traditional methods and speed up drug discovery.",
+      "risks": "It has a history of operating losses and expects more losses for several years. Results suffer if customers do not renew licenses.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 718937,
+    "tickers": [
+      "STAA"
+    ],
+    "name": "STAAR Surgical",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "STAAR Surgical Form 10-K (filed 2026-03-03) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/718937/000071893726000004/staa-20260102.htm"
+      }
+    ],
+    "ja": {
+      "business": "目に埋め込む視力矯正用レンズ(ICL)を作る眼科医療機器会社。",
+      "revenue": "売上のほぼ100%がICLの販売。2026年1月2日までの1年は売上の91%が米国外。",
+      "strength": "独自素材Collamer製で、眼の水晶体を残したまま入れられる、取り外し可能なレンズが特徴。",
+      "risks": "レーザー手術など強い競合を抱える。中国の景気や手術件数の動向にも左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An eye-device maker selling implantable lenses (ICLs) that correct vision.",
+      "revenue": "About 100% of net sales come from ICLs, and 91% of revenue in the latest fiscal year was from outside the U.S.",
+      "strength": "Its ICLs use proprietary Collamer material and are implanted without removing the natural lens, and can be removed later.",
+      "risks": "Intense competition, mainly from laser vision procedures, and China's economy and procedure volumes can swing results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1356576,
+    "tickers": [
+      "SUPN"
+    ],
+    "name": "Supernus",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Supernus Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1356576/000135657626000011/supn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "脳や神経の病気の治療薬を開発し、売るバイオ製薬会社。",
+      "revenue": "ADHD、パーキンソン病、産後うつ、てんかん、片頭痛などの承認済みの治療薬を販売して稼ぐ。",
+      "strength": "30年にわたり積み上げた製品開発の経験が特徴。神経科学の分野で幅広い薬を持つ。",
+      "risks": "ジェネリック会社から特許をめぐる申し立てを受けている。サイバー攻撃で情報が漏れる恐れも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company that develops and sells treatments for brain and nervous system diseases.",
+      "revenue": "It earns by selling approved treatments for ADHD, Parkinson's disease, postpartum depression, epilepsy, migraine and more.",
+      "strength": "Its product development expertise was built over 30 years, and it holds a diverse neuroscience portfolio.",
+      "risks": "Generic drug makers challenge its patents, and cybersecurity breaches could expose its information.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 96943,
+    "tickers": [
+      "TFX"
+    ],
+    "name": "Teleflex",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Teleflex Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/96943/000009694326000019/tfx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "病院向けに使い捨ての医療機器を設計・製造・販売する会社。",
+      "revenue": "集中治療や外科で使う使い捨て機器を、直販部隊と販売代理店を通じて病院に売る。特定の市場や手技に依存しない。",
+      "strength": "研究開発力と低コスト生産を武器にする。臨床面の優位性や信頼性、サポートの手厚さで競う。",
+      "risks": "医療機器業界は競争が激しく、資金力で勝る大手もいる。新製品の開発に失敗すれば業績に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs, makes and sells single-use medical devices for hospitals.",
+      "revenue": "It sells single-use devices for critical care and surgery to hospitals through a direct sales force and distributors. It does not depend on any one end-market or procedure.",
+      "strength": "Its strengths are R&D and low-cost manufacturing. It competes on clinical superiority, reliability and customer support.",
+      "risks": "The medical device industry is highly competitive, and some rivals have far more financial resources. Failure to develop new products would hurt its business.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1001316,
+    "tickers": [
+      "TGTX"
+    ],
+    "name": "TG Therapeutics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "TG Therapeutics Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1001316/000143774926006133/tgtx20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "B細胞が関わる病気の治療薬を扱うバイオ医薬品会社。",
+      "revenue": "多発性硬化症の治療薬BRIUMVIの販売で稼ぐ。米国外は提携先のNeuraxpharmが販売する。",
+      "strength": "BRIUMVIは最初の投与後、24週ごとに1時間の点滴で使える。米国では12年間の独占期間がある。",
+      "risks": "特許を第三者に争われたり、回避されたりしうる。開発中の候補薬が承認されない恐れも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biotech company that develops treatments for B-cell diseases.",
+      "revenue": "It earns from sales of BRIUMVI, a multiple sclerosis drug. Partner Neuraxpharm sells it outside the U.S.",
+      "strength": "After the starting dose, BRIUMVI is given as a one-hour infusion every 24 weeks. It has 12 years of U.S. market exclusivity.",
+      "risks": "Its patents may be challenged or circumvented by third parties. Its pipeline candidates may also fail to win approval.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1756262,
+    "tickers": [
+      "TMDX"
+    ],
+    "name": "TransMedics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "TransMedics Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1756262/000119312526067032/tmdx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "臓器移植用の臓器ケアシステム(OCS)を作る医療技術会社。",
+      "revenue": "心臓、肺、肝臓用のOCSと、臓器の調達や輸送を請け負う全米OCSプログラム(NOP)のサービスで稼ぐ。",
+      "strength": "FDA承認を受けた、持ち運べる複数臓器対応の温灌流技術が特徴。氷で冷やす従来の保存を、動的な保存に変える。",
+      "risks": "OCSの成功に頼り、少数の顧客に売上が偏る。航空輸送の体制づくりと内部統制の重大な欠陥も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A medical technology company that makes the Organ Care System (OCS) for organ transplants.",
+      "revenue": "It earns from OCS products for heart, lung and liver, and from the National OCS Program (NOP), which handles organ procurement and transport.",
+      "strength": "Its feature is an FDA-approved, portable, multi-organ warm perfusion platform that replaces cold storage on ice with a dynamic environment.",
+      "risks": "It depends on the success of the OCS, and a few customers make up much of its revenue. Building its aviation capability and a material weakness in internal controls also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1438133,
+    "tickers": [
+      "TNDM"
+    ],
+    "name": "Tandem Diabetes Care",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Tandem Diabetes Care Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "糖尿病患者向けのインスリンポンプを作る会社。",
+      "revenue": "t:slim X2とTandem Mobiなどのポンプを販売して稼ぐ。25を超える国で、約500,000人に提供する。",
+      "strength": "Control-IQ+の先進的なハイブリッド・クローズドループ技術を載せたポンプが特徴。",
+      "risks": "医療機器業界は競争が激しく、変化も速い。新製品の登場に左右される。",
+      "competition": "主な競合にInsulet、Medtronicがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes insulin pumps for people with diabetes.",
+      "revenue": "It earns by selling pumps such as t:slim X2 and Tandem Mobi, serving nearly 500,000 people in more than 25 countries.",
+      "strength": "Its pumps feature Control-IQ+ advanced hybrid closed-loop technology.",
+      "risks": "The medical device industry is intensely competitive and sensitive to new product launches.",
+      "competition": "Main competitors include Insulet, Medtronic.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Insulet",
+          "ticker": "PODD",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Medtronic",
+          "ticker": "MDT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 914156,
+    "tickers": [
+      "UFPT"
+    ],
+    "name": "UFP Technologies",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "UFP Technologies Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "単回使用の医療機器を設計・受託製造する会社。",
+      "revenue": "手術用ドレープや創傷ケア品など、特注の医療製品を作り、直接の営業部隊で売って稼ぐ。",
+      "strength": "特殊素材へのアクセス、設計の知見、加工力が強み。クリーンルームでの製造もできる。",
+      "risks": "大口顧客2社が売上の24.3%と21.5%を占める。価格競争が激しく、材料費や人件費の上昇も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A contract developer and manufacturer of single-use and single-patient medical devices.",
+      "revenue": "It earns by making custom medical products, such as protective drapes for robotic surgery and wound care items, and selling them through a direct sales force.",
+      "strength": "Its strengths are access to specialty materials, engineering know-how and processing skills. It can also manufacture in a clean room.",
+      "risks": "Two customers make up 24.3% and 21.5% of net sales. Price competition is heavy, and material and labor costs keep rising.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 885978,
+    "tickers": [
+      "USPH"
+    ],
+    "name": "U.S. Physical Therapy",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "U.S. Physical Therapy Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/885978/000114036126007170/ef20060831_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "理学療法などのクリニックを運営する外来リハビリの会社。",
+      "revenue": "理学療法、言語療法、作業療法のクリニックと、企業向けの労災予防サービスで稼ぐ。",
+      "strength": "整形外科系の治療やスポーツ傷害のリハビリを手がける。労災予防は企業が直接契約し、Fortune 500の企業も顧客に含む。",
+      "risks": "メディケアなどの償還率が下がれば業績に響く。療法士の確保や、買収した事業の統合も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An operator of outpatient physical therapy and rehabilitation clinics.",
+      "revenue": "It earns from physical, speech and occupational therapy clinics, and from injury prevention services sold to employers.",
+      "strength": "It treats orthopedic and sports injuries, and most injury prevention work is paid for directly by employers, including Fortune 500 firms.",
+      "risks": "Lower Medicare and other reimbursement rates would hurt results, and finding therapists and integrating acquisitions are ongoing challenges.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 887359,
+    "tickers": [
+      "VCEL"
+    ],
+    "name": "Vericel",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Vericel Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/887359/000162828026012013/vcel-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "スポーツ医療と重度やけど向けの細胞治療製品を売る会社。",
+      "revenue": "膝軟骨の再生製品MACIと、皮膚再生製品Epicel、NexoBridの販売で稼ぐ。",
+      "strength": "FDA承認の自己細胞治療製品2つと特殊バイオ製品1つを米国で販売しているのが特徴。",
+      "risks": "四半期ごとの業績変動や、事業拡大を管理できるかが課題。大手との競争も抱える。",
+      "competition": "主な競合にZimmer Biometがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company selling cell therapies for sports medicine and severe burn care.",
+      "revenue": "It earns from MACI for knee cartilage repair, and from Epicel and NexoBrid for burns.",
+      "strength": "It markets two FDA-approved autologous cell therapy products and one specialty biologic product in the U.S.",
+      "risks": "Results can swing by quarter, managing growth is a challenge, and it faces competition from larger firms.",
+      "competition": "Main competitors include Zimmer Biomet.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Zimmer Biomet",
+          "ticker": "ZBH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1326732,
+    "tickers": [
+      "XNCR"
+    ],
+    "name": "Xencor",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Xencor Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326732/000132673226000015/xncr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "がんや自己免疫疾患向けの抗体医薬を開発する臨床段階のバイオ企業。",
+      "revenue": "提携先からの研究資金やマイルストーンが収入源。自社技術で開発された医薬品は、すでに三つが販売されている。",
+      "strength": "抗体のFc領域を設計し替える技術が特徴。二重特異性などの機能を持つXmAb候補を幅広く作れる。",
+      "risks": "臨床試験の成否や承認の時期に左右される。内部統制の不備で財務諸表を修正した経緯もあり、追加の不備も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A clinical-stage biotech developing engineered antibody drugs for cancer and autoimmune diseases.",
+      "revenue": "Income comes from research funding and milestones under partner collaborations. Three marketed medicines have been developed with its technologies.",
+      "strength": "Its feature is engineering the Fc domain of antibodies, which lets it design a broad range of XmAb candidates with bispecific and other functions.",
+      "risks": "Results depend on clinical trial outcomes and approval timing. A past restatement tied to weak internal controls leaves the risk of further material weaknesses.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 879407,
+    "tickers": [
+      "ARWR"
+    ],
+    "name": "Arrowhead Pharmaceuticals",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Arrowhead Pharmaceuticals Form 10-K (filed 2025-11-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940725000029/arwr-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "遺伝子の働きを止めるRNA干渉の医薬品を開発する会社。",
+      "revenue": "2025年に初の製品REDEMPLOを発売した。他社との提携契約からも資金を得る。",
+      "strength": "多様なRNA技術と投与方法を持ち、臨床試験中の候補薬は18本にのぼる。",
+      "risks": "販売体制の拡大が必要で、臨床試験の結果次第という面を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that develops RNA interference medicines that silence disease-causing genes.",
+      "revenue": "It launched its first product, REDEMPLO, in 2025, and also gets funding from license and collaboration agreements.",
+      "strength": "It has a broad range of RNA chemistries and delivery methods, with 18 drug candidates in clinical trials.",
+      "risks": "It must build out its commercial organization, and its pipeline depends on clinical trial results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1722482,
+    "tickers": [
+      "AVTR"
+    ],
+    "name": "Avantor",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Avantor Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1722482/000162828026007118/avtr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "研究室向けの消耗品や機器を扱い、高純度素材も作る会社。",
+      "revenue": "研究室向け販売網のVWRと、自社の専門製品で稼ぐ。売上の85%超は継続的な製品・サービス。",
+      "strength": "約180カ国、30万超の顧客拠点に届く世界網が特徴。J.T. BakerやMasterflex、NuSilなどのブランドを持つ。",
+      "risks": "競合は多様で細分化しており、競争が激しい。サイバー攻撃が事業に響く恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that distributes lab supplies and equipment and makes high-purity materials.",
+      "revenue": "It earns through VWR, its lab distribution channel, and its own specialty products. More than 85% of net sales are recurring in nature.",
+      "strength": "Its network reaches more than 300,000 customer locations in approximately 180 countries. It owns brands such as J.T. Baker, Masterflex and NuSil.",
+      "risks": "Competitors are diverse and fragmented, and competition is intense. Cybersecurity attacks could also hurt the business.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 12208,
+    "tickers": [
+      "BIO"
+    ],
+    "name": "Bio-Rad",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Bio-Rad Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/12208/000001220826000010/bio-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ライフサイエンス機器と臨床診断薬を手がける世界的企業。",
+      "revenue": "売上の約40%はライフサイエンス、約60%は臨床診断。約60%は米国外で稼ぐ。",
+      "strength": "検査装置を一度導入すると、試薬や消耗品の売上が続きやすい。2,100を超える特許を持つ。",
+      "risks": "競合は新興企業から大手多国籍企業まで幅広く、競争が激しい。部品を単一の供給元に頼る場合もある。",
+      "competition": "主な競合にBecton Dickinson、Danaher、Qiagen N.V.、Thermo Fisher Scientific、Abbott Laboratoriesがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global maker of life science research tools and clinical diagnostics products.",
+      "revenue": "About 40% of sales come from Life Science and about 60% from Clinical Diagnostics, and about 60% come from outside the U.S.",
+      "strength": "Its installed diagnostic systems tend to bring repeat sales of test kits and consumables, and it owns over 2,100 patents.",
+      "risks": "Competitors range from early-stage firms to large multinationals, and some components come from a single supplier.",
+      "competition": "Main competitors include Becton Dickinson, Danaher, Qiagen N.V., Thermo Fisher Scientific, Abbott Laboratories.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Becton Dickinson",
+          "ticker": "BDX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Danaher",
+          "ticker": "DHR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Qiagen N.V.",
+          "ticker": "QGEN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Thermo Fisher Scientific",
+          "ticker": "TMO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Abbott Laboratories",
+          "ticker": "ABT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1109354,
+    "tickers": [
+      "BRKR"
+    ],
+    "name": "Bruker",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Bruker Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1109354/000119312526082523/brkr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "研究や分析に使う高性能の科学機器を作り、売る会社。",
+      "revenue": "BioSpin、CALID、NANO、BESTの4事業で、研究機関や製薬会社に機器を売って稼ぐ。保守などの継続収入も狙う。",
+      "strength": "磁気共鳴や質量分析、顕微鏡など幅広い技術基盤が特徴。製造拠点は欧州と北米にある。",
+      "risks": "米国の研究予算の削減や関税、中国の景気対策の遅れが響く。新技術で製品が古くなる恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes and sells high-performance scientific instruments for research and analysis.",
+      "revenue": "It sells instruments to research institutions and drug makers through four segments: BioSpin, CALID, NANO and BEST, and also pursues recurring service revenue.",
+      "strength": "It has a broad technology base spanning magnetic resonance, mass spectrometry and microscopy, with manufacturing centers in Europe and North America.",
+      "risks": "Cuts in U.S. research funding, tariffs and delayed Chinese stimulus hurt results, and new technology could make its products obsolete.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1865782,
+    "tickers": [
+      "BTSG"
+    ],
+    "name": "BrightSpring Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BrightSpring Health Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1865782/000119312526079454/btsg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自宅や地域で受けられる薬局サービスと在宅ケアを提供する医療会社。",
+      "revenue": "薬局サービスと、在宅医療・ホスピス・リハビリなどのケアサービスの二本柱で稼ぐ。主な支払元はメディケアなどの公的保険。",
+      "strength": "薬局とケアを一体で届ける点が特徴。40年を超える経験があり、米国の50州に展開する。",
+      "risks": "業界の競争が激しい。薬剤師や医師、看護師などの人材確保でも他社と競う。",
+      "competition": "主な競合にOption Care Health, Inc.、CVS Health、Cigna、UnitedHealth Groupがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A healthcare company that delivers pharmacy and care services to patients at home and in their communities.",
+      "revenue": "It earns from two lines: pharmacy services, and provider services such as home health, hospice and rehab therapy. Medicare, Medicaid and commercial insurers pay for most of it.",
+      "strength": "Its feature is delivering pharmacy and care together. It has over 40 years of experience and operates in all 50 states.",
+      "risks": "The industry is highly competitive. It also competes for pharmacists, physicians, nurses and other staff.",
+      "competition": "Main competitors include Option Care Health, Inc., CVS Health, Cigna, UnitedHealth Group.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Option Care Health, Inc.",
+          "ticker": "OPCH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CVS Health",
+          "ticker": "CVS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cigna",
+          "ticker": "CI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "UnitedHealth Group",
+          "ticker": "UNH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 19584,
+    "tickers": [
+      "CHE"
+    ],
+    "name": "Chemed",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Chemed Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/19584/000156276226000020/che-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ホスピス事業のVITASと配管サービスのRoto-Rooterを持つ会社。",
+      "revenue": "VITASのホスピスと緩和ケア、Roto-Rooterの配管や排水清掃、水害復旧の2事業で稼ぐ。",
+      "strength": "Roto-Rooterの商標は1935年から使われ、米国で最も知名度の高い商標の一つ。",
+      "risks": "どちらの事業も競争が激しく、地域の中小業者が主な相手。規制が緩むとVITASに新規参入が増えうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that owns VITAS, a hospice provider, and Roto-Rooter, a plumbing service.",
+      "revenue": "It earns from two segments: VITAS hospice and palliative care, and Roto-Rooter plumbing, drain cleaning and water restoration.",
+      "strength": "The Roto-Rooter marks have been used since 1935 and rank among the most recognized trademarks in the U.S.",
+      "risks": "Both businesses face tough competition, mostly from local and regional firms. Looser rules could let more rivals enter VITAS markets.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1516513,
+    "tickers": [
+      "DOCS"
+    ],
+    "name": "Doximity",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Doximity Form 10-K (filed 2026-05-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651326000025/docs-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国の医師向けに、医療ネットワークとAIツールを提供する会社。",
+      "revenue": "製薬会社や医療機関向けのマーケティング、採用、業務支援サービスで稼ぐ。",
+      "strength": "米国の医師の85%超が登録する、国内最大の医療専門家ネットワークが強み。",
+      "risks": "会員や顧客を維持できないと収益が落ちる。少数の主要顧客に収入が集中している。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that gives US physicians a professional network and AI tools.",
+      "revenue": "It earns from marketing, hiring and workflow solutions sold to pharmaceutical companies and health systems.",
+      "strength": "Its strength is the largest medical professional network in the nation, with registered members representing more than 85% of US physicians.",
+      "risks": "Revenue falls if it cannot keep members and customers. Revenue is concentrated in a small number of key customers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 785161,
+    "tickers": [
+      "EHC"
+    ],
+    "name": "Encompass Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Encompass Health Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/785161/000078516126000081/ehc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "入院型のリハビリ病院を運営する米国最大手の会社。",
+      "revenue": "2025年の売上は5,935.2百万ドル。大半は入院リハビリ病院173か所の診療で稼ぐ。",
+      "strength": "脳卒中や骨折などの患者向けに、専門の治療と技術を組み合わせる。臨床成績とコスト効率を強みとする。",
+      "risks": "政府や民間保険からの支払いが減れば収益に響く。急性期病院からの紹介が患者の92%を占める点も弱み。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The largest US operator of inpatient rehabilitation hospitals.",
+      "revenue": "Revenue in 2025 was $5,935.2 million, mostly from treating patients at its 173 inpatient rehabilitation hospitals.",
+      "strength": "It pairs specialized therapy with technology for stroke and hip fracture patients, and stands on clinical outcomes and cost-effectiveness.",
+      "risks": "Lower payments from government or private payors would cut revenue, and 92% of its patients come via referrals from acute-care hospitals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1739104,
+    "tickers": [
+      "ELAN"
+    ],
+    "name": "Elanco Animal Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Elanco Animal Health Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1739104/000173910426000012/elan-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ペットと家畜向けの動物用医薬品を扱う動物医療の会社。",
+      "revenue": "ペット向け製品と家畜向け製品の販売で稼ぐ。2025年は売上の15%が動物専用の抗生物質。",
+      "strength": "首輪型のSerestoなど、ペット向けの主力製品を持つのが特徴。",
+      "risks": "特許切れ後の後発品との競争を抱える。家畜用抗生物質の規制や多額の負債も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An animal health company selling medicines and products for pets and farm animals.",
+      "revenue": "It earns from pet health and farm animal products, and animal-only antibiotics made up 15% of 2025 revenue.",
+      "strength": "It has leading pet products such as the Seresto collar.",
+      "risks": "Generic rivals after patent expiry, limits on farm antibiotics and heavy debt weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1125376,
+    "tickers": [
+      "ENSG"
+    ],
+    "name": "Ensign Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ensign Group Form 10-K (filed 2026-02-04) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1125376/000112537626000007/ensg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "熟練看護施設やシニア向け住宅を運営する持ち株会社。",
+      "revenue": "2025年は売上の95.6%を熟練看護施設で稼ぐ。残りは不動産、シニア住宅、関連サービスから得る。",
+      "strength": "各施設の現場に大きな権限を持たせる地域密着の運営が特徴。373の施設と158の保有不動産を持つ。",
+      "risks": "売上の大半が熟練看護施設に偏る。253の施設は長期リースで運営している。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A holding company whose independent subsidiaries run skilled nursing and senior living facilities.",
+      "revenue": "In 2025, about 95.6% of revenue came from skilled nursing facilities, with the rest from real estate, senior living and ancillary services.",
+      "strength": "Its local, field-driven model gives facility leaders wide authority. It has 373 facilities and 158 owned properties.",
+      "risks": "Revenue leans heavily on skilled nursing, and it operates 253 of its facilities under long-term leases.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 939767,
+    "tickers": [
+      "EXEL"
+    ],
+    "name": "Exelixis",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Exelixis Form 10-K (filed 2026-02-10) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/939767/000093976726000021/exel-20260102.htm"
+      }
+    ],
+    "ja": {
+      "business": "がん治療薬を開発・販売するバイオ医薬品会社。",
+      "revenue": "売上の大半は主力のカボザンチニブ関連。CABOMETYXやCOMETRIQを売って稼ぐ。",
+      "strength": "自社の創薬から4つの製品を市場に出した。主力薬は米国と68の国・地域で承認されている。",
+      "risks": "収益が主力のカボザンチニブに偏る。肝細胞がんの分野は競争が激しくなっている。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company that develops and sells cancer drugs.",
+      "revenue": "Most revenue comes from cabozantinib, sold as CABOMETYX and COMETRIQ.",
+      "strength": "Its own discovery work has produced four marketed products. Its flagship drug is approved by the FDA and in 68 other countries.",
+      "risks": "Revenue is concentrated in cabozantinib. The market for liver cancer therapies is becoming more competitive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 313143,
+    "tickers": [
+      "HAE"
+    ],
+    "name": "Haemonetics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Haemonetics Form 10-K (filed 2026-05-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm"
+      }
+    ],
+    "ja": {
+      "business": "血漿の採取装置や病院向け止血・輸血機器などを作る医療技術会社。",
+      "revenue": "血漿、血液センター、病院の三つの事業で稼ぐ。血漿では採取装置と消耗品、ドナー管理ソフトを売る。",
+      "strength": "血漿を採る専用の装置とソフトで、採取センターの効率と品質を高める。顧客との共同開発も技術力の支えになる。",
+      "risks": "血液センター事業は厳しい市場で戦う。特許が無効とされたり回避されたりしうる点も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A medical technology company that makes plasma collection systems and hospital hemostasis and transfusion products.",
+      "revenue": "It earns in three segments: Plasma, Blood Center and Hospital. Plasma sells collection devices, disposables and donor management software.",
+      "strength": "Its dedicated plasma devices and software raise the efficiency and quality of collection centers, and customer collaborations support its technology.",
+      "risks": "The Blood Center business faces tougher markets. Its patents could also be challenged, circumvented or found invalid.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1159036,
+    "tickers": [
+      "HALO"
+    ],
+    "name": "Halozyme Therapeutics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Halozyme Therapeutics Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "注射薬を皮下投与しやすくする薬物送達技術を提供する会社。",
+      "revenue": "ENHANZE技術を他の製薬会社にライセンスし、契約金やマイルストーン、ロイヤルティで稼ぐ。",
+      "strength": "独自の酵素rHuPH20で、高用量の注射薬を皮下から素早く投与できる点が特徴。",
+      "risks": "製薬業界は競争が激しい。技術が代替手法に押される可能性もある。",
+      "competition": "主な競合にAmphastar Pharmaceuticals、AbbVie、Perrigo、Lillyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides drug delivery technology for subcutaneous injection.",
+      "revenue": "It licenses ENHANZE to drug makers and earns upfront fees, milestone payments and royalties.",
+      "strength": "Its proprietary enzyme rHuPH20 allows high-volume injectable drugs to be delivered quickly under the skin.",
+      "risks": "The pharmaceutical industry is intensely competitive, and ENHANZE may face alternative approaches.",
+      "competition": "Main competitors include Amphastar Pharmaceuticals, AbbVie, Perrigo, Lilly.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Amphastar Pharmaceuticals",
+          "ticker": "AMPH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AbbVie",
+          "ticker": "ABBV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Perrigo",
+          "ticker": "PRGO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Lilly",
+          "ticker": "LLY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1773751,
+    "tickers": [
+      "HIMS"
+    ],
+    "name": "Hims & Hers Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hims & Hers Health Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1773751/000177375126000022/hims-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "遠隔診療と薬の宅配で、健康・美容の悩みに応える会社。",
+      "revenue": "脱毛、性の健康、減量、皮膚、メンタルなどの処方薬と、市販の健康品を自社サイトとアプリで売って稼ぐ。",
+      "strength": "医師網、電子カルテ、自社薬局を一体にしたプラットフォームが特徴。ブランドへの信頼も軸に据える。",
+      "risks": "大手医療機関や小売、製薬、テック企業との競争が激しい。遠隔診療や薬局、調剤に関わる規制も多い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A telehealth company that delivers health and wellness treatments online.",
+      "revenue": "It earns by selling prescription treatments for areas like hair loss, sexual health, weight loss and dermatology, plus over-the-counter products, through its sites and apps.",
+      "strength": "Its platform combines a provider network, an electronic medical record system and its own pharmacies. A trusted brand is central to it.",
+      "risks": "Competition from large healthcare providers, retailers, pharma and tech companies is intense. Telehealth, pharmacy and compounding rules add heavy regulation.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1428336,
+    "tickers": [
+      "HQY"
+    ],
+    "name": "HealthEquity",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "HealthEquity Form 10-K (filed 2026-03-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1428336/000142833626000010/hqy-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "医療費用の貯蓄口座HSAを管理する会社。",
+      "revenue": "口座の管理手数料、預かり資金からの収益、決済カードの手数料の3本柱で稼ぐ。",
+      "strength": "口座数で米最大のHSA事業者。顧客向けの手厚いサービスと独自技術が特徴。",
+      "risks": "収益のほぼすべてがHSAなど税優遇口座に依存する。税制優遇が縮小されれば大きな打撃になる。",
+      "competition": "主な競合にUnitedHealth Groupがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that administers health savings accounts (HSAs) for consumers.",
+      "revenue": "It earns from three sources: service fees, custodial revenue on held cash, and card interchange fees.",
+      "strength": "It is the largest HSA provider by number of accounts, with a service-driven culture and proprietary technology.",
+      "risks": "Substantially all revenue comes from tax-advantaged HSAs and similar benefits, so cutting those tax benefits would hit it hard.",
+      "competition": "Main competitors include UnitedHealth Group.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "UnitedHealth Group",
+          "ticker": "UNH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1232524,
+    "tickers": [
+      "JAZZ"
+    ],
+    "name": "Jazz Pharmaceuticals",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Jazz Pharmaceuticals Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "希少疾患の治療薬を開発・販売するバイオ医薬品会社。",
+      "revenue": "ナルコレプシー薬Xywav、てんかん薬Epidiolex、がん領域のZiiheraやZepzelcaなどの販売で稼ぐ。",
+      "strength": "希少な睡眠障害向けのオキシベート治療薬で先頭に立つのが特徴。",
+      "risks": "後発品や競合薬との競争で価格が下がりうる。Xywavなどは新規参入の影響を受ける。",
+      "competition": "主な競合にAlkermesがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company developing and selling medicines for rare diseases.",
+      "revenue": "It earns from Xywav for narcolepsy, Epidiolex for seizures, and cancer drugs such as Ziihera and Zepzelca.",
+      "strength": "It leads in oxybate therapy for rare sleep disorders.",
+      "risks": "Generics and rival drugs can push prices down, and Xywav faces new entrants.",
+      "competition": "Main competitors include Alkermes.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Alkermes",
+          "ticker": "ALKS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1668397,
+    "tickers": [
+      "MEDP"
+    ],
+    "name": "Medpace",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Medpace Form 10-K (filed 2026-02-10) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1668397/000166839726000006/medp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "新薬の臨床試験を製薬会社から請け負うCRO(開発業務受託)企業。",
+      "revenue": "バイオ、製薬、医療機器の企業向けに、第I相から第IV相までの臨床開発サービスを一括で提供して稼ぐ。",
+      "strength": "第I相から第IV相まで一貫して担う体制と、腫瘍、代謝、心臓などの分野の専門性が特徴。中小のバイオ医薬企業に向く。",
+      "risks": "契約の中止や遅れ、未回収に左右される。固定報酬契約でコストが膨らむリスクや、特定顧客への偏りも抱える。",
+      "competition": "主な競合にIQVIA、ICON、Fortreaがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A contract research organization that runs clinical trials for drug developers.",
+      "revenue": "It earns by providing full-service clinical development, from Phase I to Phase IV, to biotechnology, pharmaceutical and medical device companies.",
+      "strength": "Its feature is a full-service Phase I-IV model and therapeutic expertise in areas such as oncology, metabolic and cardiology, suited to small and mid-sized biopharma firms.",
+      "risks": "Contract loss, delay or non-payment can hurt results. Fixed-fee contracts that run over cost and customer concentration are also risks.",
+      "competition": "Main competitors include IQVIA, ICON, Fortrea.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "IQVIA",
+          "ticker": "IQV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ICON",
+          "ticker": "ICLR",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Fortrea",
+          "ticker": "FTRE",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1179929,
+    "tickers": [
+      "MOH"
+    ],
+    "name": "Molina Healthcare",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Molina Healthcare Form 10-K (filed 2026-02-10) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "公的保険のメディケイドやメディケアを扱う民間の医療保険会社。",
+      "revenue": "メディケイド、メディケア、マーケットプレイスの保険で稼ぐ。2025年の総収入は45,426百万ドル。",
+      "strength": "政府が支援する医療に特化した事業と、低コストの保険の提供が特徴。",
+      "risks": "州の契約を入札で失えば更新されない。医療費の急増にも悩まされる。",
+      "competition": "主な競合にCentene、CVS Health、Elevance Health、UnitedHealth Groupがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A health insurer focused on government programs such as Medicaid and Medicare.",
+      "revenue": "It earns from Medicaid, Medicare and Marketplace health plans, with total revenue of $45,426 million in 2025.",
+      "strength": "It focuses purely on government-sponsored healthcare and offers low-cost health plans.",
+      "risks": "It can lose government contracts through competitive rebids, and rising medical costs are a strain.",
+      "competition": "Main competitors include Centene, CVS Health, Elevance Health, UnitedHealth Group.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Centene",
+          "ticker": "CNC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CVS Health",
+          "ticker": "CVS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Elevance Health",
+          "ticker": "ELV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "UnitedHealth Group",
+          "ticker": "UNH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 914475,
+    "tickers": [
+      "NBIX"
+    ],
+    "name": "Neurocrine Biosciences",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Neurocrine Biosciences Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "神経・精神疾患などの治療薬を開発・販売するバイオ医薬品会社。",
+      "revenue": "遅発性ジスキネジア薬のINGREZZAと、副腎の希少疾患薬CRENESSITYの米国販売で稼ぐ。",
+      "strength": "INGREZZAは遅発性ジスキネジアで初の米FDA承認薬。CRENESSITYはCAH向けの新しい作用の承認薬。",
+      "risks": "製造を外部メーカーに頼っている。INGREZZAが製品売上の大きな割合を占める点も弱み。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company that develops and sells treatments for neurological and psychiatric disorders.",
+      "revenue": "It earns from US sales of INGREZZA for tardive dyskinesia and CRENESSITY for a rare adrenal disorder.",
+      "strength": "INGREZZA was the first FDA-approved drug for tardive dyskinesia. CRENESSITY is a first-in-class FDA-approved treatment of CAH.",
+      "risks": "It relies on third-party manufacturers. INGREZZA accounts for a significant portion of net product sales.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1014739,
+    "tickers": [
+      "OPCH"
+    ],
+    "name": "Option Care Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Option Care Health Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1014739/000101473926000008/bios-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自宅や専用施設で点滴治療を提供する輸液サービス会社。",
+      "revenue": "43州の196拠点で、抗感染症薬や栄養補給、免疫グロブリン療法などの在宅輸液サービスで稼ぐ。",
+      "strength": "独立系で最大の在宅輸液事業者であり、5,000人超の臨床チームが全米をカバーするのが特徴。",
+      "risks": "大手薬局や保険会社系の事業者を含む多数の競合を抱える。品質や価格、信頼性で競う。",
+      "competition": "主な競合にUnitedHealth Group、CVS Health、BrightSpring Healthがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing infusion therapy at home and in ambulatory infusion suites.",
+      "revenue": "It earns from home infusion services such as anti-infectives, nutrition support and immunoglobulin therapy, across 196 locations in 43 states.",
+      "strength": "It is the largest independent home infusion provider, with more than 5,000 clinicians covering nearly all U.S. patients.",
+      "risks": "It faces many rivals, including units of large insurers and pharmacy chains, and competes on quality, price and reliability.",
+      "competition": "Main competitors include UnitedHealth Group, CVS Health, BrightSpring Health.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "UnitedHealth Group",
+          "ticker": "UNH",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CVS Health",
+          "ticker": "CVS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "BrightSpring Health",
+          "ticker": "BTSG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1321732,
+    "tickers": [
+      "PEN"
+    ],
+    "name": "Penumbra",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Penumbra Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1321732/000132173226000007/pen-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "脳卒中などの血栓を取り除く医療機器を作る会社。",
+      "revenue": "血栓除去、塞栓、アクセス、脳神経外科向けの製品を専門医や医療機関に売って稼ぐ。",
+      "strength": "頭から足先まで血栓を取る幅広い製品群が特徴。製品は費用対効果の高さも売りにする。",
+      "risks": "少数の製品群に売上が偏る。ボストン・サイエンティフィックによる買収の不確実性や、競争、保険償還の変化を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes medical devices to remove blood clots in stroke and other conditions.",
+      "revenue": "It earns by selling thrombectomy, embolization, access and neurosurgical products to specialist physicians and other healthcare providers.",
+      "strength": "Its portfolio removes blood clots from head to toe, and it pitches the cost-effectiveness of its products.",
+      "risks": "Revenue rests on a few product families. It also faces merger uncertainty with Boston Scientific, competition and reimbursement changes.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 730272,
+    "tickers": [
+      "RGEN"
+    ],
+    "name": "Repligen",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Repligen Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/730272/000119312526076528/rgen-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "バイオ医薬品の製造を効率化する装置や消耗品を作る会社。",
+      "revenue": "売上の大半は使い捨てなどの消耗品。ろ過、クロマトグラフィー、プロセス分析、タンパク質の4分野で稼ぐ。",
+      "strength": "40年を超える業界経験を持つ。幅広い製品群を内製の研究開発と買収で築いた。",
+      "risks": "大口顧客への依存が大きい。供給元が限られ、1社に頼る製品もある。競争や供給網の混乱も響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes equipment and consumables that make biologic drug manufacturing more efficient.",
+      "revenue": "Most revenue comes from consumable and single-use products across filtration, chromatography, process analytics and proteins.",
+      "strength": "It has over 40 years of industry experience. Its broad product line was built through in-house R&D and acquisitions.",
+      "risks": "It has relied on a limited number of large customers. Some products depend on few suppliers, or even one. Competition and supply disruption also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1635088,
+    "tickers": [
+      "ROIV"
+    ],
+    "name": "Roivant Sciences",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Roivant Sciences Form 10-K (filed 2026-05-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "子会社「Vant」を通じて新薬を開発・事業化するバイオ医薬品会社。",
+      "revenue": "候補薬はすべて開発段階。承認を得て事業化できれば収益源になりうる。",
+      "strength": "2014年の創業以来、FDA承認8件と大型の第3相試験14件を完了した実績が強み。",
+      "risks": "競合は、より効果的で安全な薬を先に出しうる。候補薬は承認を得られない恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biopharmaceutical company that develops and commercializes medicines through subsidiaries called Vants.",
+      "revenue": "All its candidates are still in development. Approval and commercialization could become its revenue source.",
+      "strength": "Its track record is a strength: 8 FDA approvals and 14 large Phase 3 studies completed since its 2014 founding.",
+      "risks": "Rivals may bring out more effective or safer drugs first. Its candidates may also fail to win approval.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1822479,
+    "tickers": [
+      "SHC"
+    ],
+    "name": "Sotera Health",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sotera Health Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1822479/000182247926000015/shc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "医療機器などの滅菌、検査、助言サービスを提供する会社。",
+      "revenue": "医療機器、製薬、食品向けの滅菌と、検査サービスで稼ぐ。Sterigenicsの売上の90%超は複数年契約の顧客から。",
+      "strength": "13カ国の48施設を結ぶ滅菌網が競争上の強み。ガンマ線、EO、電子線の三つの主要な方法をそろえる。",
+      "risks": "EOやコバルト60などの原料の供給途絶や値上がりを抱える。EOの排出をめぐる訴訟や、環境・安全規制も重い。",
+      "competition": "主な競合にSTERISがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides sterilization, lab testing and advisory services for healthcare products.",
+      "revenue": "It earns from sterilization for medical device, pharmaceutical and food customers, plus lab testing. More than 90% of Sterigenics' revenues come from customers under multi-year contracts.",
+      "strength": "A network of 48 sterilization facilities in 13 countries is a competitive advantage. It offers all three major methods: gamma, EO and E-beam.",
+      "risks": "Supply disruptions or price increases for EO and Co-60 are a risk. Litigation over EO emissions and strict environmental and safety rules also weigh on it.",
+      "competition": "Main competitors include STERIS.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "STERIS",
+          "ticker": "STE",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 70318,
+    "tickers": [
+      "THC"
+    ],
+    "name": "Tenet Healthcare",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Tenet Healthcare Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/70318/000007031826000012/thc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "病院と外来手術センターを運営する米国の医療サービス会社。",
+      "revenue": "病院事業と外来手術の2部門で稼ぐ。2025年末に50の病院と533の外来手術センターを持つ。",
+      "strength": "病院のほか、外来施設や収益管理サービスのConiferまで手がける幅広い事業網が特徴。",
+      "risks": "保険会社との契約条件や支払い率の低下、回収の難しさで業績が悪化しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US healthcare services company that runs hospitals and ambulatory surgery centers.",
+      "revenue": "It earns through Hospital Operations and Ambulatory Care, with 50 hospitals and 533 surgery centers at the end of 2025.",
+      "strength": "Its network spans hospitals, outpatient sites and Conifer revenue cycle services.",
+      "risks": "Weaker managed care contract terms, lower payment rates or collection trouble could hurt its results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1082554,
+    "tickers": [
+      "UTHR"
+    ],
+    "name": "United Therapeutics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "United Therapeutics Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255426000006/uthr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "肺高血圧症などの重い病気向けの治療薬を作る会社。",
+      "revenue": "Tyvaso DPI、Nebulized Tyvaso、Remodulin、Orenitramというトレプロスチニル系薬の販売で稼ぐ。",
+      "strength": "トレプロスチニルを吸入や飲み薬、皮下注など多様な形で出せる。Remodulinは皮下注射での投与ができる。",
+      "risks": "売上の大半がトレプロスチニル系に集中する。後発薬や新薬の登場、薬価引き下げの圧力を受けやすい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes treatments for pulmonary hypertension and other serious diseases.",
+      "revenue": "It earns by selling treprostinil-based drugs: Tyvaso DPI, Nebulized Tyvaso, Remodulin and Orenitram.",
+      "strength": "It offers treprostinil in several forms, including inhaled and oral products. Remodulin can be given by subcutaneous infusion.",
+      "risks": "The vast majority of revenue comes from treprostinil drugs. Generics, new therapies and drug price cuts can erode sales.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 818479,
+    "tickers": [
+      "XRAY"
+    ],
+    "name": "Dentsply Sirona",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dentsply Sirona Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/818479/000081847926000075/xray-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "歯科用の機器や材料を作る世界最大級のメーカー。",
+      "revenue": "歯科機器、インプラント、透明アライナー、消耗品のほか、泌尿器向け製品を約140か国で売って稼ぐ。",
+      "strength": "幅広い製品群が特徴で、これほど品ぞろえの広い競合はいない。クラウド基盤DS Coreでデジタル診療をつなぐ。",
+      "risks": "クラウド基盤の拡大でサイバー攻撃を受けるリスクが増える。市場の競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The world's largest diversified maker of professional dental products and technologies.",
+      "revenue": "It earns by selling dental equipment, implants, clear aligners and consumables, plus urology products, in about 140 countries.",
+      "strength": "No single competitor matches the breadth of its products, and its cloud platform DS Core links digital dental workflows.",
+      "risks": "Its growing cloud systems raise exposure to cyber attacks, and its markets are highly competitive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 932696,
+    "tickers": [
+      "NSIT"
+    ],
+    "name": "Insight Enterprises",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Insight Enterprises Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/932696/000093269626000007/nsit-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けにIT機器やソフトウェア、クラウドサービスを提供する会社。",
+      "revenue": "2025年の売上の81%は北米。ハードウェア、ソフトウェア、サービスの販売で稼ぐ。",
+      "strength": "37年のIT経験と、世界規模の展開、各地の専門性、eコマースの経験が特徴。",
+      "risks": "IT業界は細分化され競争が激しい。メーカーやソフト会社とも競合しうる。",
+      "competition": "主な競合にAccenture、Infosys、CDW、Microsoft、Cisco Systemsがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing IT hardware, software and cloud services to businesses.",
+      "revenue": "North America made up 81% of 2025 net sales, earned from hardware, software and services.",
+      "strength": "It offers 37 years of IT expertise, global scale, local know-how and e-commerce experience.",
+      "risks": "The IT industry is fragmented and highly competitive, and it can compete with its own manufacturer and publisher partners.",
+      "competition": "Main competitors include Accenture, Infosys, CDW, Microsoft, Cisco Systems.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Accenture",
+          "ticker": "ACN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Infosys",
+          "ticker": "INFY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CDW",
+          "ticker": "CDW",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco Systems",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1164863,
+    "tickers": [
+      "NPO"
+    ],
+    "name": "Enpro",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Enpro Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1164863/000162828026009798/npo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体や産業向けに、重要な工程を支える部品や技術を作る会社。",
+      "revenue": "2025年の売上は1,143.3百万ドル。米国が647.1百万ドルで最大、次いでアジア太平洋で稼ぐ。",
+      "strength": "独自技術と応用エンジニアリング、信頼性が強み。顧客の厳しい認定審査を満たす実績も特徴。",
+      "risks": "半導体などの市況の波に左右される。関税や貿易摩擦による需要の落ち込みも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An industrial technology company that makes products for critical applications such as semiconductors.",
+      "revenue": "Sales in 2025 were $1,143.3 million, led by the U.S. at $647.1 million, then Asia Pacific.",
+      "strength": "Its edge is proprietary technology, applied engineering and reliability, which help it clear the strict qualification processes customers require.",
+      "risks": "Its markets, especially semiconductors, are cyclical, and tariffs and trade tensions have hurt demand.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 80420,
+    "tickers": [
+      "POWL"
+    ],
+    "name": "Powell Industries",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Powell Industries Form 10-K (filed 2025-11-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/80420/000008042025000152/powl-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "電力の配分や制御に使う設備を受注生産する会社。",
+      "revenue": "石油・ガス、石油化学、電力会社、商業・産業向けに、大型の特注設備と関連サービスを売って稼ぐ。",
+      "strength": "製品の統合力、技術と案件管理の力、専門工事の経験、財務の強さが持ち味。",
+      "risks": "案件は競争入札が中心で、少数の大型契約に売上が偏りうる。固定価格契約ではコスト超過が起こりうる。",
+      "competition": "主な競合にEatonがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that builds custom-engineered equipment that distributes and controls electrical power.",
+      "revenue": "It sells large custom equipment and related services to oil and gas, petrochemical, electric utility, and commercial and industrial customers.",
+      "strength": "Its strengths are integration capabilities, technical and project management skill, specialty contracting experience and financial strength.",
+      "risks": "Most work is competitively bid, and a few big contracts can make up much of revenue. Fixed-price contracts can bring cost overruns.",
+      "competition": "Main competitors include Eaton.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Eaton",
+          "ticker": "ETN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1682745,
+    "tickers": [
+      "VRRM"
+    ],
+    "name": "Verra Mobility",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Verra Mobility Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1682745/000119312526067293/vrrm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "通行料金の管理や交通取締りの技術を提供する会社。",
+      "revenue": "法人向け、政府向け、駐車場向けの3事業で稼ぐ。政府向けが売上の47%、法人向けが45%。",
+      "strength": "米国の大手レンタカー3社と長年の関係を築く。50を超える料金徴収機関ともつながる。",
+      "risks": "ニューヨーク市交通局との契約が売上の大きな部分を占める。多額の負債も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides tolling and traffic enforcement technology.",
+      "revenue": "It earns from three segments: Commercial Services, Government Solutions and Parking Solutions. Government is 47% of revenue and Commercial 45%.",
+      "strength": "It has long-standing ties with the three largest U.S. rental car companies and more than 50 tolling authorities.",
+      "risks": "Its contract with the New York City Department of Transportation is a material part of revenue. It also carries substantial debt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 102752,
+    "tickers": [
+      "VSEC"
+    ],
+    "name": "VSE Corp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "VSE Corp Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/102752/000010275226000015/vsec-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "航空機向けの交換部品の流通と整備(MRO)を手がける会社。",
+      "revenue": "航空会社、貨物会社、ビジネス機の所有者などに、部品の供給と整備・修理サービスを提供して稼ぐ。",
+      "strength": "世界の物流拠点から部品を届け、各地の修理施設で整備する。部品供給、供給網管理、整備を柱とする。",
+      "risks": "ビジネス航空や商用の航空需要の落ち込みに左右される。買収で成長する戦略には、統合の難しさも伴う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that distributes aftermarket aircraft parts and provides maintenance, repair and overhaul (MRO).",
+      "revenue": "It earns by supplying parts and providing MRO services to airlines, cargo carriers, corporate and private aircraft owners and others.",
+      "strength": "It ships parts from global distribution centers and repairs them at facilities in key locations. Parts supply, supply chain management and MRO are its core offerings.",
+      "risks": "Weaker demand for business and commercial air travel hits results. Its growth-by-acquisition strategy also brings integration challenges.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1967649,
+    "tickers": [
+      "VSTS"
+    ],
+    "name": "Vestis",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Vestis Form 10-K (filed 2025-12-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1967649/000162828025054597/vsts-20251003.htm"
+      }
+    ],
+    "ja": {
+      "business": "制服のレンタルや職場用品を提供する会社。",
+      "revenue": "制服やマット、タオルなどのレンタルで稼ぐ。収益の95%が定期的なレンタル事業。",
+      "strength": "制服のデザインから洗濯、補修、交換までを一括で担うフルサービスが強み。",
+      "risks": "景気の悪化が業績に響く。2025年度は純損失を計上した。",
+      "competition": "主な競合にCintas、UniFirstがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that rents uniforms and supplies workplace products.",
+      "revenue": "It earns from rentals of uniforms, mats and towels, with 95% of revenue coming from recurring rentals.",
+      "strength": "Its strength is a full-service offering that covers uniform design, laundering, mending and replacement.",
+      "risks": "Weak economic conditions hurt its results, and it posted a net loss in fiscal 2025.",
+      "competition": "Main competitors include Cintas, UniFirst.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Cintas",
+          "ticker": "CTAS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "UniFirst",
+          "ticker": "UNF",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1443669,
+    "tickers": [
+      "PRLB"
+    ],
+    "name": "Proto Labs",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Proto Labs Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1443669/000144366926000010/prlb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "試作から量産まで、カスタム部品をネットで受注製造する会社。",
+      "revenue": "自社工場と提携メーカーの網で、射出成形やCNC切削、3Dプリント、板金の部品を作って売る。",
+      "strength": "見積もりと製造を自動化する独自技術が特徴。自社工場と提携網を組み合わせた方式も差別化点。特許は60件。",
+      "risks": "競争の激しさや、システム障害、顧客情報への不正アクセスが課題。知的財産を守れるかも懸念になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes custom parts to order online, from prototypes to production.",
+      "revenue": "It earns by making and selling injection-molded, CNC-machined, 3D-printed and sheet metal parts through its own factories and a partner network.",
+      "strength": "Its proprietary technology automates quoting and manufacturing. Combining its factories with a partner network also sets it apart. It holds 60 patents.",
+      "risks": "Competition, system interruptions and unauthorized access to customer data are concerns. Protecting its intellectual property is another.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 310354,
+    "tickers": [
+      "SXI"
+    ],
+    "name": "Standex",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Standex Form 10-K (filed 2026-08-14) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926027789/sxi20260630_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "電子部品や航空宇宙部品などを作る多角的な産業メーカー。",
+      "revenue": "電子部品、航空宇宙・防衛、科学機器、刻印・油圧の4部門で稼ぐ。",
+      "strength": "顧客と密に組み、特注品や部品を作る「Customer Intimacy」が持ち味。電力網や宇宙などの成長市場に投資する。",
+      "risks": "中東情勢による物流の混乱、関税、原材料費の上昇を抱える。低価格の競合も脅威になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A diversified industrial maker of electronic components, aerospace parts and more.",
+      "revenue": "It earns across four segments: Electronics, Aerospace and Defense, Scientific, and Engraving & Hydraulics.",
+      "strength": "Its approach is Customer Intimacy, building custom solutions and components with customers, and it invests in markets like power grid and space.",
+      "risks": "Middle East shipping disruption, tariffs and higher raw material costs weigh on it, as does lower-cost competition.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1627475,
+    "tickers": [
+      "UPWK"
+    ],
+    "name": "Upwork",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Upwork Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1627475/000162747526000012/upwk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業とフリーランスなどの人材をつなぐ仕事のマーケットプレイスを運営する会社。",
+      "revenue": "2025年の取引総額は4.0十億ドル。Connectsの購入、決済処理、メンバーシップなどの手数料で稼ぐ。",
+      "strength": "180か国超の顧客と、1万を超えるスキルを扱う幅広さが特徴。",
+      "risks": "変化の速い競争環境に置かれる。取引損失への備えも必要になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company running a marketplace that connects businesses with freelance and other talent.",
+      "revenue": "Its platforms enabled $4.0 billion of GSV in 2025, with income from Connects, payment processing and memberships.",
+      "strength": "It has customers in over 180 countries and covers more than 10,000 skills.",
+      "risks": "It operates in a fast-changing, competitive market and must allow for transaction losses.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 315213,
+    "tickers": [
+      "RHI"
+    ],
+    "name": "Robert Half",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Robert Half Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/315213/000031521326000006/rhi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "経理やIT などの専門人材の紹介と、経営コンサルを行う会社。",
+      "revenue": "契約人材の派遣、正社員の紹介、Protivitiのコンサルで稼ぐ。契約人材は働いた時間分の料金を受け取る。",
+      "strength": "1948年から続く専門人材の実績と、Robert Halfブランドへの統一が特徴。直営の拠点網で品質を保つ。",
+      "risks": "景気が悪化すると人材需要が落ち込み、収益が減りうる。評判が傷つけば成績に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A firm that places specialized talent in fields like finance and IT, and offers business consulting.",
+      "revenue": "It earns from contract talent, permanent placement and Protiviti consulting, with contract clients paying a fixed rate for hours worked.",
+      "strength": "It has specialized in talent placement since 1948, unified its brands under Robert Half, and owns its offices directly to keep quality consistent.",
+      "risks": "An economic downturn can cut demand for its services and its profits, and damage to its reputation would hurt results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 97134,
+    "tickers": [
+      "TNC"
+    ],
+    "name": "Tennant",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Tennant Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/97134/000009713426000008/tnc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "床の清掃や維持管理のための機械と技術を作る会社。",
+      "revenue": "清掃機器を直販や代理店を通じて売って稼ぐ。顧客は清掃請負業者や、自社で施設を管理する企業。",
+      "strength": "営業とサービスの直販網は業界最大とされる。ロボット清掃機や洗剤不要の洗浄技術も持つ。",
+      "risks": "関税などで原材料の費用が変わりうる。大手の多国籍メーカーのほか、各地の小規模メーカーとも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that designs and makes floor cleaning and maintenance machines.",
+      "revenue": "It earns by selling cleaning equipment directly and through distributors, to contract cleaners and to businesses that clean their own facilities.",
+      "strength": "It has the industry's largest direct sales and service organization. It also offers robotic cleaning equipment and detergent-free cleaning technology.",
+      "risks": "Tariffs and other factors can swing input costs. It competes with large multinationals and many smaller regional makers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1000753,
+    "tickers": [
+      "NSP"
+    ],
+    "name": "Insperity",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Insperity Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "中小企業向けに人事業務を代行する会社。",
+      "revenue": "HR 360をはじめとする人事サービスの利用料で稼ぐ。HR 360が最大の収益源。",
+      "strength": "給与、福利厚生、労災保険、法令対応を一括で担う。Workdayと共同でHR Scaleを開発中。",
+      "risks": "他のPEOや業務サービス会社との競争がある。価格やサービスへの不満で顧客が離れうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that handles HR work for small and medium-sized businesses.",
+      "revenue": "It earns from fees for HR services such as HR 360, its largest source of revenue.",
+      "strength": "It handles payroll, benefits, workers' compensation and compliance in one package. It is building HR Scale with Workday.",
+      "risks": "It competes with other PEOs and business services firms. Clients may leave over price or service.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1423221,
+    "tickers": [
+      "NX"
+    ],
+    "name": "Quanex",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Quanex Form 10-K (filed 2025-12-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm"
+      }
+    ],
+    "ja": {
+      "business": "窓やドア、キャビネット向けの建材部品を作る会社。",
+      "revenue": "窓・ドア・キャビネットのメーカーや販売店に、部品を販売して稼ぐ。",
+      "strength": "断熱ガラス用スペーサーや樹脂の押出材など、顧客仕様に合わせた部品を作れる。",
+      "risks": "新築住宅や改築の需要に左右される。原材料の価格変動も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes building components for windows, doors and cabinets.",
+      "revenue": "It earns by selling components to window, door and cabinet makers and distributors.",
+      "strength": "It can make custom engineered parts such as insulating glass spacers and extruded vinyl profiles.",
+      "risks": "It depends on new home construction and remodeling demand, and is exposed to raw material prices.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1350593,
+    "tickers": [
+      "MWA"
+    ],
+    "name": "Mueller Water Products",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Mueller Water Products Form 10-K (filed 2025-11-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059325000066/mwa-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "水道用バルブや消火栓などの水インフラ製品を作る会社。",
+      "revenue": "2025年の売上の約60%〜65%は自治体の水道設備の補修・交換向け。住宅建設向けは約25%〜30%。",
+      "strength": "最新鋭の鋳造工場への移行で、効率を高めて真鍮製品の顧客に応える。国内製品の需要増にも備える。",
+      "risks": "イスラエル製品への関税で利益率が下がる。原材料価格の変動や、イスラエル拠点の混乱も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that makes water infrastructure products such as valves and fire hydrants.",
+      "revenue": "About 60% to 65% of 2025 net sales were tied to repair and replacement of municipal water infrastructure, and about 25% to 30% to residential construction.",
+      "strength": "A move to a new, modern foundry raises efficiency for service brass customers. It also prepares for rising demand for domestic product.",
+      "risks": "Tariffs on Israeli-made products dilute margins. Volatile raw material prices and disruption at its Israel facility also weigh.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 78814,
+    "tickers": [
+      "PBI"
+    ],
+    "name": "Pitney Bowes",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Pitney Bowes Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/78814/000162828026009650/pbi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "郵便・荷物の発送機器やサービスを提供する会社。",
+      "revenue": "2025年の売上は1,892,629千ドルで前年比7%減。発送機器とサービス、郵便物の仕分けで稼ぐ。",
+      "strength": "フォーチュン500企業の90%超が顧客。米郵便公社の最大の仕分け提携先で、全国の処理網で大量の郵便物を扱う。",
+      "risks": "郵便機器の競合やオンライン発送サービスと競う。仕分けでも地域の同業や大口の発送元と競合する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A technology company offering shipping and mailing equipment and services.",
+      "revenue": "Revenue in 2025 was $1,892,629 thousand, down 7%, earned from shipping and mailing solutions and mail presorting.",
+      "strength": "It serves more than 90 percent of the Fortune 500 and is the largest workshare partner of the USPS, handling 15 billion mail pieces a year.",
+      "risks": "It faces mail equipment rivals and online shipping services, plus regional presort providers and large mailers that sort in-house.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
   }
 ]
