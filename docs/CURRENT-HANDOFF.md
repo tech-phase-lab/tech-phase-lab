@@ -1,3 +1,22 @@
+## 2026-10-23 JST — Independent retrieval of EXISTING R2 backup restored successfully
+
+Owner explicitly requested a separate real retrieval/open/restore drill.
+New read-only workflow Existing source restore drill (run39820351545,
+job119969679972) downloaded the PREVIOUS stored18155548-byte ciphertext and
+verified pinned SHA-256, authenticated AES-GCM decryption and isolated Git
+restore. Log EXISTING_SOURCE_EXTERNAL_RESTORE_OK at02:10:57JST confirms
+source_restore_verified=true, new_upload=false, promotion=false.
+Source719ec8cd/tree483815e7 matches original receipt. No new backup substituted.
+See EXISTING-SOURCE-RESTORE-DRILL.md for complete evidence and run link.
+
+Implementation83f692e4 passed local3913tests and build; uses existing four
+GitHub Secrets, separate TECH_PHASE_SOURCE_RESTORE_ENABLED opt-in and GET only.
+No user login, credential reentry, key rotation, cron change or runtime startup.
+Source recovery confirmed; live DB/protection-history restore remains pending
+Railway access and fresh complete write-fenced inventory. User action unnecessary.
+
+---
+
 ## 2026-10-23 JST — Actual Cloudflare R2 source upload and recovery SUCCESS
 
 Owner registered four GitHub Secrets. Assistant re-ran backup job; actual log
