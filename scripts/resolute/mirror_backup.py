@@ -26,16 +26,27 @@ def read_bounded(client, bucket, key, limit):
         body.close()
 
 
-def copy_backup(source, source_bucket, destination, destination_bucket):
-    manifest_bytes = read_bounded(source, source_bucket, PREFIX + 'latest.json', 65536)
+def copy_backup(source, source_bucket, destination, destination_bucket, *, profile='resolute'):
+    profiles = {
+        'resolute': (PREFIX, 'dump.age', 'cipher_sha256', MAX_BYTES),
+        'tech-phase-sandbox': ('tech-phase/sandbox/v1/', 'aesgcm', 'sha256', 64 * 1024 ** 2 + 28),
+    }
+    if profile not in profiles:
+        raise ValueError('unsupported backup profile')
+    prefix, extension, hash_field, limit = profiles[profile]
+    manifest_bytes = read_bounded(source, source_bucket, prefix + 'latest.json', 65536)
     manifest = json.loads(manifest_bytes)
+    if not isinstance(manifest, dict):
+        raise ValueError('invalid manifest')
     key = manifest.get('key', '')
-    if not re.fullmatch(r'resolute/v1/dumps/\d{8}T\d{12}Z\.dump\.age', key):
+    if not isinstance(key, str) or not re.fullmatch(re.escape(prefix) + r'dumps/\d{8}T\d{12}Z\.' + re.escape(extension), key):
         raise ValueError('invalid dump key')
     size = manifest.get('bytes')
-    digest = manifest.get('cipher_sha256', '')
-    if type(size) is not int or not 0 < size <= MAX_BYTES or not re.fullmatch('[0-9a-f]{64}', digest):
+    digest = manifest.get(hash_field, '')
+    if type(size) is not int or not 0 < size <= limit or not isinstance(digest, str) or not re.fullmatch('[0-9a-f]{64}', digest):
         raise ValueError('invalid encrypted dump metadata')
+    if profile == 'tech-phase-sandbox' and (type(manifest.get('version')) is not int or manifest['version'] != 1 or size <= 28):
+        raise ValueError('invalid Sandbox manifest')
     with tempfile.TemporaryDirectory(prefix='resolute-mirror-') as temp:
         path = Path(temp) / 'encrypted.age'
         body = source.get_object(Bucket=source_bucket, Key=key)['Body']
@@ -54,7 +65,7 @@ def copy_backup(source, source_bucket, destination, destination_bucket):
         if count != size or actual.hexdigest() != digest:
             raise ValueError('source checksum mismatch')
         # The content-addressed namespace cannot replace an earlier valid dump.
-        target = PREFIX + 'external/' + digest + '/backup.dump.age'
+        target = prefix + 'external/' + digest + '/backup.' + extension
         with path.open('rb') as encrypted:
             destination.put_object(Bucket=destination_bucket, Key=target, Body=encrypted)
         body = destination.get_object(Bucket=destination_bucket, Key=target)['Body']
@@ -74,7 +85,7 @@ def copy_backup(source, source_bucket, destination, destination_bucket):
         destination.put_object(Bucket=destination_bucket, Key=manifest_key, Body=manifest_bytes)
         if read_bounded(destination, destination_bucket, manifest_key, 65536) != manifest_bytes:
             raise ValueError('manifest readback mismatch')
-        return {'event': 'RESOLUTE_EXTERNAL_DUMP_COPY_OK', 'bytes': size,
+        return {'event': 'RESOLUTE_EXTERNAL_DUMP_COPY_OK' if profile == 'resolute' else 'TECH_PHASE_SANDBOX_EXTERNAL_COPY_OK', 'bytes': size,
                 'cipher_sha256': digest, 'restore_verified': False,
                 'protection_history_copied': False}
 
@@ -97,19 +108,22 @@ def configuration(env):
     return configs
 
 
-def main():
-    source, destination = configuration(os.environ)
+def client(config):
     import boto3
     from botocore.config import Config
-    def client(config):
-        return boto3.client('s3', endpoint_url=config['ENDPOINT'],
+    return boto3.client('s3', endpoint_url=config['ENDPOINT'],
                             region_name=config['REGION'],
                             aws_access_key_id=config['ACCESS_KEY_ID'],
                             aws_secret_access_key=config['SECRET_ACCESS_KEY'],
                             config=Config(s3={'addressing_style': 'path'},
                                           connect_timeout=15, read_timeout=120,
                                           retries={'max_attempts': 3}))
-    report = copy_backup(client(source), source['BUCKET'], client(destination), destination['BUCKET'])
+
+
+def main():
+    source, destination = configuration(os.environ)
+    report = copy_backup(client(source), source['BUCKET'], client(destination), destination['BUCKET'],
+                         profile=os.environ.get('MIRROR_PROFILE', 'resolute'))
     print(json.dumps(report), flush=True)
 
 

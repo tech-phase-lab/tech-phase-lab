@@ -1,3 +1,36 @@
+## 2026-10-22 — Expand external backup to Tech Phase (not deployed)
+
+Owner requests all Tech Phase + RESOLUTE recovery data, not only RESOLUTE.
+Owner reports R2 bucket resolute-backup-external and scoped key created/saved.
+No credentials pasted here, no R2 production transfer or runtime configuration.
+Railway list_services currently returns UNAUTHORIZED / reauthentication required.
+Do not repeat bucket signup, token creation, previous rotations or key custody.
+
+Added opt-in research SQLite online snapshot of ALL tables, streamed AES-GCM,
+conditional upload + bounded checksum readback, and disposable authenticated
+restore check. Includes server-synced member saved research/annotations/favorites;
+browser-only or pending data is excluded. Added PRO Sandbox encrypted-copy profile
+and independent RESOLUTE protection-history copy requiring fresh fenced inventory.
+Old empty manifests, incomplete/changing inventories and bad readback fail closed.
+No copy event is evidence of full restoration, fresh state or verified writer fence.
+
+Local Node1323 + Python2570 = 3893 passed; lint0errors/5existingwarnings, build,
+compileall and diff-check passed. Actual SQLite WAL + AES-GCM fixture restored with
+saved notes intact. Source bundle of aad63d08 restored into empty repo with exact
+tree6365e6c9 match. All external storage clients in new tests are fakes.
+Previous CI39795559198 (aad63d08) is success; new publication CI is separate.
+
+See [full scope, safe commands and remaining gates](TECH-PHASE-EXTERNAL-RECOVERY.md).
+Still needed: real service/volume/bucket inventory; secure R2 runtime injection;
+separately retained research encryption key; real copy/restore; code/static asset
+offsite storage; Clerk recovery data; configuration/key inventory; latest payment
+and deletion reconciliation. No full-site recovery or free-cost guarantee.
+R2 Object Read & Write is NOT proof of no-delete permissions. Existing mirror
+re-PUTs need review before any bucket lock. Saving/payment/AI flags remain OFF;
+Vercel pause and all schedules remain unchanged. main/coworker work untouched.
+
+---
+
 ## 2026-10-22 — External recovery preparation (not deployed)
 
 Prepared on remote5a44a2f2 in an isolated worktree; coworker local8a7f801a

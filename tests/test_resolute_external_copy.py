@@ -26,6 +26,18 @@ class Store:
 
 
 class ExternalCopyTests(unittest.TestCase):
+    def test_sandbox_profile_is_separate_from_resolute(self):
+        data = b'synthetic encrypted sandbox archive' * 3
+        key = 'tech-phase/sandbox/v1/dumps/20261022T120000123456Z.aesgcm'
+        manifest = {'version': 1, 'key': key, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+        source = Store({key: data, 'tech-phase/sandbox/v1/latest.json': json.dumps(manifest).encode()})
+        destination = Store()
+        result = mirror.copy_backup(source, 'source', destination, 'external', profile='tech-phase-sandbox')
+        self.assertEqual(result['event'], 'TECH_PHASE_SANDBOX_EXTERNAL_COPY_OK')
+        self.assertTrue(all(k.startswith('tech-phase/sandbox/v1/external/') for k in destination.writes))
+        with self.assertRaises(ValueError):
+            mirror.copy_backup(source, 'source', destination, 'external', profile='tech-phase-live')
+
     def source(self):
         data = b'age-encryption.org/v1\nsynthetic-ciphertext'
         key = 'resolute/v1/dumps/20261022T120000123456Z.dump.age'

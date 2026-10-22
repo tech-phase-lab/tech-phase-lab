@@ -1,0 +1,198 @@
+"""One-shot SQLite snapshot -> encrypted R2 object, with bounded readback.
+
+Run beside the research volume, never against a downloaded main DB file without
+its live WAL. No cron changes, deletions, notifications or provider API calls.
+"""
+from contextlib import closing
+from datetime import datetime, timezone
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import re
+import sqlite3
+import tempfile
+import time
+from urllib.parse import urlsplit
+
+MAX_BYTES = 1024 ** 3
+PREFIX = 'tech-phase/research/v1/'
+ROOT = Path(__file__).resolve().parents[2]
+spec = importlib.util.spec_from_file_location('research_persistence', ROOT / 'scripts/research/persistence.py')
+persistence = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(persistence)
+
+
+def snapshot(source, destination):
+    source, destination = Path(source), Path(destination)
+    if source.is_symlink() or not source.is_file() or destination.exists():
+        raise ValueError('invalid snapshot path')
+    deadline = time.monotonic() + 120
+    def progress(status, remaining, total):
+        if time.monotonic() > deadline or total * page_size > MAX_BYTES:
+            raise ValueError('snapshot exceeds time or size limit')
+    with closing(sqlite3.connect(source.resolve().as_uri() + '?mode=ro', uri=True, timeout=5)) as src:
+        page_size = src.execute('PRAGMA page_size').fetchone()[0]
+        with closing(sqlite3.connect(destination)) as dst:
+            src.backup(dst, pages=256, progress=progress, sleep=0.1)
+            dst.execute('PRAGMA journal_mode=DELETE')
+    destination.chmod(0o600)
+    return persistence.validate_database(destination)
+
+
+def encrypt(source, target, key, object_key):
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+    if len(key) != 32:
+        raise ValueError('invalid encryption key')
+    nonce = os.urandom(12)
+    encryptor = Cipher(algorithms.AES(key), modes.GCM(nonce)).encryptor()
+    encryptor.authenticate_additional_data(object_key.encode())
+    with Path(source).open('rb') as plain, Path(target).open('xb') as cipher:
+        cipher.write(nonce)
+        while chunk := plain.read(1024 * 1024):
+            cipher.write(encryptor.update(chunk))
+        cipher.write(encryptor.finalize())
+        cipher.write(encryptor.tag)
+    Path(target).chmod(0o600)
+
+
+def readback(client, bucket, key, expected_size, expected_hash):
+    body = client.get_object(Bucket=bucket, Key=key)['Body']
+    digest = hashlib.sha256()
+    count = 0
+    try:
+        while chunk := body.read(1024 * 1024):
+            count += len(chunk)
+            if count > expected_size:
+                raise ValueError('readback too large')
+            digest.update(chunk)
+    finally:
+        body.close()
+    if count != expected_size or digest.hexdigest() != expected_hash:
+        raise ValueError('readback mismatch')
+
+
+def backup(source, client, bucket, key):
+    if len(key) != 32:
+        raise ValueError('invalid encryption key')
+    with tempfile.TemporaryDirectory(prefix='research-external-') as directory:
+        plain = Path(directory) / 'snapshot.sqlite'
+        cipher = Path(directory) / 'snapshot.aesgcm'
+        # A single SQLite transaction snapshot contains every table, not only
+        # news or the public JSON feed. Never prune existing local backups.
+        checked = snapshot(source, plain)
+        stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+        object_key = PREFIX + 'dumps/' + stamp + '.aesgcm'
+        encrypt(plain, cipher, key, object_key)
+        digest = persistence.digest(cipher)
+        size = cipher.stat().st_size
+        with cipher.open('rb') as body:
+            client.put_object(Bucket=bucket, Key=object_key, Body=body, IfNoneMatch='*')
+        readback(client, bucket, object_key, size, digest)
+        manifest = {'version': 1, 'key': object_key, 'bytes': size, 'sha256': digest,
+                    'plaintext_sha256': checked['sha256'], 'created_at': stamp,
+                    'format': 'nonce12-aes256gcm-ciphertext-tag16',
+                    'aad': object_key, 'scope': 'research-sqlite-all-tables',
+                    'full_site_recovery_verified': False}
+        raw = json.dumps(manifest, sort_keys=True).encode()
+        client.put_object(Bucket=bucket, Key=object_key + '.json', Body=raw, IfNoneMatch='*')
+        readback(client, bucket, object_key + '.json', len(raw), hashlib.sha256(raw).hexdigest())
+        return {'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_OK', 'bytes': size,
+                'key': object_key, 'sha256': digest, 'restore_verified': False}
+
+
+def configuration(env):
+    if env.get('TECH_PHASE_EXTERNAL_BACKUP_ENABLED') != 'true':
+        raise ValueError('external backup disabled')
+    values = {k: env.get('MIRROR_DESTINATION_' + k, '') for k in
+              ('ENDPOINT', 'BUCKET', 'REGION', 'ACCESS_KEY_ID', 'SECRET_ACCESS_KEY')}
+    url = urlsplit(values['ENDPOINT'])
+    if (not all(values.values()) or url.scheme != 'https' or not url.hostname
+            or url.username or url.password or url.query or url.fragment or url.path not in ('', '/')):
+        raise ValueError('invalid destination')
+    key = env.get('TECH_PHASE_EXTERNAL_KEY_HEX', '')
+    if not re.fullmatch('[a-f0-9]{64}', key):
+        raise ValueError('independently retained encryption key required')
+    source = env.get('RESEARCH_DB_PATH', '')
+    if not source or not Path(source).is_absolute():
+        raise ValueError('explicit research DB path required')
+    return source, values, bytes.fromhex(key)
+
+
+def verify_restore(archive, manifest, key):
+    """Decrypt into a disposable directory; never promote a DB or call S3."""
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+    archive = Path(archive)
+    if not isinstance(manifest, dict):
+        raise ValueError('invalid recovery manifest')
+    object_key = manifest.get('key', '')
+    if (not isinstance(object_key, str) or not re.fullmatch(
+            re.escape(PREFIX) + r'dumps/\d{8}T\d{12}Z\.aesgcm', object_key)
+            or type(manifest.get('version')) is not int or manifest['version'] != 1
+            or manifest.get('aad') != object_key
+            or manifest.get('format') != 'nonce12-aes256gcm-ciphertext-tag16'
+            or manifest.get('scope') != 'research-sqlite-all-tables'
+            or not isinstance(manifest.get('plaintext_sha256'), str)
+            or not re.fullmatch('[a-f0-9]{64}', manifest['plaintext_sha256'])
+            or type(manifest.get('bytes')) is not int or not 28 < manifest['bytes'] <= MAX_BYTES + 28
+            or len(key) != 32 or archive.is_symlink()
+            or archive.stat().st_size != manifest['bytes']
+            or persistence.digest(archive) != manifest.get('sha256')):
+        raise ValueError('invalid recovery archive')
+    with tempfile.TemporaryDirectory(prefix='research-restore-') as directory:
+        target = Path(directory) / 'snapshot.sqlite'
+        with archive.open('rb') as encrypted, target.open('xb') as plain:
+            nonce = encrypted.read(12)
+            encrypted.seek(-16, 2)
+            tag = encrypted.read(16)
+            encrypted.seek(12)
+            decryptor = Cipher(algorithms.AES(key), modes.GCM(nonce, tag)).decryptor()
+            decryptor.authenticate_additional_data(object_key.encode())
+            remaining = manifest['bytes'] - 28
+            while remaining:
+                chunk = encrypted.read(min(remaining, 1024 * 1024))
+                if not chunk:
+                    raise ValueError('truncated archive')
+                remaining -= len(chunk)
+                plain.write(decryptor.update(chunk))
+            plain.write(decryptor.finalize())
+        checked = persistence.validate_database(target, manifest.get('plaintext_sha256'))
+        return {'event': 'TECH_PHASE_RESEARCH_ISOLATED_RESTORE_OK',
+                'bytes': checked['bytes'], 'promotion': False}
+
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--verify-archive')
+    parser.add_argument('--manifest')
+    args = parser.parse_args()
+    if args.verify_archive or args.manifest:
+        if not args.verify_archive or not args.manifest:
+            raise ValueError('archive and manifest both required')
+        with Path(args.manifest).open('rb') as handle:
+            raw = handle.read(65537)
+        if len(raw) > 65536:
+            raise ValueError('manifest too large')
+        report = verify_restore(args.verify_archive, json.loads(raw),
+                                bytes.fromhex(os.environ['TECH_PHASE_EXTERNAL_KEY_HEX']))
+        print(json.dumps(report), flush=True)
+        return
+    source, values, key = configuration(os.environ)
+    import boto3
+    from botocore.config import Config
+    client = boto3.client('s3', endpoint_url=values['ENDPOINT'], region_name=values['REGION'],
+                          aws_access_key_id=values['ACCESS_KEY_ID'],
+                          aws_secret_access_key=values['SECRET_ACCESS_KEY'],
+                          config=Config(s3={'addressing_style': 'path'}, connect_timeout=15,
+                                        read_timeout=120, retries={'max_attempts': 3}))
+    print(json.dumps(backup(source, client, values['BUCKET'], key)), flush=True)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception:
+        print(json.dumps({'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED'}), flush=True)
+        raise SystemExit(1)
