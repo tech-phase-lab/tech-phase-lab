@@ -6,6 +6,18 @@ import { useIdentityRefresh } from "./identity-provider";
 
 type InitialDisplay = { plan: "free" | "pro"; owner: boolean; ownerMode: boolean; ownerAccount?: boolean; accessExpiresAt: number };
 type DisplayPlan = "free" | "pro" | null;
+// Presentation hint only (APIs still verify server-side): the last verified paid state lets the header and
+// RIZEL'S DESK render at once on the next open; the real check below confirms or clears it.
+const HINT_KEY = "tech-phase:member-hint";
+function readHint(): InitialDisplay | null {
+  try {
+    const hint = JSON.parse(window.localStorage.getItem(HINT_KEY) ?? "null") as InitialDisplay | null;
+    return hint?.plan === "pro" && Number.isFinite(hint.accessExpiresAt) && hint.accessExpiresAt > Date.now() ? hint : null;
+  } catch { return null; }
+}
+function writeHint(hint: InitialDisplay | null) {
+  try { if (hint) window.localStorage.setItem(HINT_KEY, JSON.stringify(hint)); else window.localStorage.removeItem(HINT_KEY); } catch { /* storage may be blocked */ }
+}
 const MemberDisplay = createContext<DisplayPlan>(null);
 const ResearchOwner = createContext(false);
 const OwnerMode = createContext(false);
@@ -52,6 +64,7 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         const pro = member.status === "signed-in" && member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
         // A signed-out or restoring session is not a verified FREE membership.
         setPlan(member.status === "signed-in" ? (pro ? "pro" : "free") : null);
+        writeHint(pro ? { plan: "pro", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: member.ownerAccount === true, accessExpiresAt: member.accessExpiresAt } : null);
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
       } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { setSettled(true); setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); } }
       finally { if (current === generation) request = null; }
@@ -60,6 +73,11 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
     const focused = () => { if (document.visibilityState === "visible") void check(false, true); };
     const periodic = () => { if (document.visibilityState === "visible") void check(); };
     if (initial?.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(initial.accessExpiresAt - Date.now(), 2147483647)));
+    const hint = initial ? null : readHint();
+    if (hint) {
+      setPlan("pro"); setOwner(hint.owner); setOwnerMode(hint.ownerMode); setOwnerAccount(hint.ownerAccount === true); setSettled(true);
+      expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(hint.accessExpiresAt - Date.now(), 2147483647)));
+    }
     void check(); const timer = setInterval(periodic, 60_000);
     window.addEventListener("tech-phase:membership-changed", changed);
     window.addEventListener("focus", focused);
