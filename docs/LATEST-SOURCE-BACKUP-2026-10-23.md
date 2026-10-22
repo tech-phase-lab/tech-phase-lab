@@ -55,3 +55,6 @@ This receipt is intentionally newer than the archived80ced071 snapshot.
 Do not retrigger backup merely to include its own receipt; the request file is
 unchanged. Next operational step is live-data acquisition after Railway access
 returns. No user action or credential re-entry is currently required.
+
+Follow-up: [runtime drill on the same source revision](RUNTIME-RECOVERY-DRILL-2026-10-23.md).
+This is a separate local-bundle build/start drill, not another R2 download or live DB acceptance.
