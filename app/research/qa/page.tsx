@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Questions from "./questions";
 import { GET } from "../../api/research/questions/route";
 
+
+// This page is built per request; only the research home is prerendered (owner, Oct 22: faster app open).
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "リゼルに聞く | Tech Phase Research", robots: { index: false, follow: false } };
 export default async function Page() {
   const response = await GET();

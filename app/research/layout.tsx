@@ -9,8 +9,8 @@ import BackToTop from "./back-to-top";
 import ResearchIdentityProvider from "./identity-provider";
 import { membershipConfigured } from "@/lib/membership/server";
 
-// Protected APIs verify membership independently; the public shell must not wait for a remote user lookup.
-export const dynamic = "force-dynamic";
+// Protected APIs verify membership independently; the shell does no lookup. Pages that need a per-request render declare
+// force-dynamic themselves; the research home is prerendered and refreshed every minute (owner, Oct 22: faster app open).
 
 export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech Phase" }, icons: { apple: "/tech-phase-192.png" } };
 

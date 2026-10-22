@@ -13,6 +13,9 @@ import CompanyWatch from "../company-watch";
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { buildCoverageCompanies, coverageCompanyIssues, providers, snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
 
+
+// This page is built per request; only the research home is prerendered (owner, Oct 22: faster app open).
+export const dynamic = "force-dynamic";
 export const dynamicParams = false;
 export function generateStaticParams() { return providers.map((provider) => ({ ticker: provider.ticker })); }
 const profiles = buildCompanyProfiles(events.map(publicEvent));
