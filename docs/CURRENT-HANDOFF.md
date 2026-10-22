@@ -1,3 +1,26 @@
+## 2026-10-23 JST — Actual Cloudflare R2 source upload and recovery SUCCESS
+
+Owner registered four GitHub Secrets. Assistant re-ran backup job; actual log
+SOURCE_EXTERNAL_UPLOAD_VERIFIED confirms R2 ciphertext upload, full download,
+authenticated decryption and isolated Git commit/tree match, plus manifest
+readback. Run39815593175/job119961269313 succeeded. Source commit719ec8cd,
+tree483815e7,1650files,207configuration names,18155548cipher bytes.
+See EXTERNAL-SOURCE-BACKUP-2026-10-23.md for exact object/hash and limitations.
+
+No actual .env or known key/token signatures found in reachable source scan;
+.env.example uses placeholders; historical SQLite fixtures contain zero rows.
+Data is encrypted; only non-secret checksum/revision manifest is plaintext.
+Existing bucket-scoped R2 token reused; no permission/key rotation. Successful
+readback is not an independent proof of other-bucket denial.
+
+THIS IS SOURCE RECOVERY ONLY. Live DB/protection-history acquisition remains
+pending Railway recovery and fresh complete write-fenced inventory. No runtime
+restore, saving activation, billing/email/AI calls or schedule changes.
+No further user operation currently needed. Existing Secrets are configured;
+do not ask the owner to re-register or retry shared-browser Google login.
+
+---
+
 ## 2026-10-23 JST — GitHub runner route bypasses shared-browser login dependency
 
 Owner confirms Google sign-in works without a password in their own browser,
