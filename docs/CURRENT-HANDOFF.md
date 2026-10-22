@@ -1,3 +1,35 @@
+## 2026-10-23 JST — Offline source recovery and settings inventory
+
+Owner confirms Railway outage continues: do NOT retry Railway access or ask for
+reconnection/login during the outage. A connector UNAUTHORIZED response does not
+establish that owner reauthentication can fix the outage. No Railway call was
+made in this continuation. R2 bucket/token custody and prior rotations stay done.
+
+Added scripts/tech-phase/prepare_source_recovery.py: explicit clean commit only,
+complete-history bundle, tracked-asset inventory, names-only configuration index,
+and empty-repo restore with exact commit/tree comparison. No provider calls,
+credential values, encryption, uploads, cron changes, or service startup.
+Dirty checkouts, wrong revisions, LFS pointers, symlinks/submodules, overwritten
+destinations and corrupt packages fail closed. Five regression tests pass.
+
+Actual offline source6c0ebd8a:1635files/206configuration names/treeabd10c2a match.
+Coworker8a7f801a:1625files/199names/tree7ac65c27 match in a separate package;
+original clean coworker checkout remains8a7f801a. These are private temporary
+verification packages, not durable R2 custody or full runtime recovery evidence.
+Full local Node1323 + Python2575 =3898 passed; lint0errors/5existingwarnings.
+Build, compileall and diff-check passed on the integrated tree.
+Prior publication CI39802323253 (6c0ebd8a) is SUCCESS; new CI is separate.
+
+See [settings and offline package procedure](TECH-PHASE-RECOVERY-SETTINGS.md).
+Dynamic env names, provider-only settings, Clerk export, live payment/deletion
+reconciliation, browser-only data and external image payloads still need separate
+coverage. Source package verification is self-consistency; compare the commit
+against trusted release records before adoption. No current user operation.
+Next after provider recovery: verify live inventory, securely configure existing
+R2 credentials, real copy/readback and isolated restore. No key recreation.
+
+---
+
 ## 2026-10-22 — Expand external backup to Tech Phase (not deployed)
 
 Owner requests all Tech Phase + RESOLUTE recovery data, not only RESOLUTE.
