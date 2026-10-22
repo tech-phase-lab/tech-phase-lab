@@ -5,11 +5,15 @@
 [オフラインのソース保管処理と設定照合表](TECH-PHASE-RECOVERY-SETTINGS.md)を追加。
 6c0ebd8aの1,635ファイルを完全履歴bundleにまとめ、空repoへの復元で全tree一致。
 206の設定名と参照ファイルを抽出（値は取得せず、実環境の網羅確認ではない）。
-同コミットのCI39802323253はsuccess。R2実保存はまだ未確認。
+同コミットのCI39802323253はsuccess。この記載時点ではR2実保存は未確認だった。下記の実行記録で更新。
 
 2026-10-22。R2バケット `resolute-backup-external` と接続キーの作成・手元保存は
 運営者から完了報告あり。名前を変えず、同じ非公開バケットのprefixで分離する。
-R2へ本番データを転送した証拠はまだない。全サイト復旧の受入は未完了。
+ソースのR2実保存・読み戻し・隔離復元は成功済み（719ec8cd、run39815593175）。
+別ジョブで同じ既存オブジェクトを再取得・復号・復元する検査も成功
+（run39820351545）。詳細は[保存記録](EXTERNAL-SOURCE-BACKUP-2026-10-23.md)と
+[独立復元記録](EXISTING-SOURCE-RESTORE-DRILL.md)を参照。
+本番DBの外部転送・全サイト復旧の受入は未完了。
 
 ## 保管対象を取り違えない
 
@@ -23,7 +27,7 @@ R2へ本番データを転送した証拠はまだない。全サイト復旧の
 | PRO決済台帳 | `tech_phase_billing_sandbox`、既存tech-phase-backup | 既存はSandbox専用。暗号化済みdumpを外部コピーするprofile追加。本番台帳のバックアップ完成とは別 |
 | RESOLUTE DB | 既存Postgres dumpとage manifest | 既存外部コピー処理。R2実通信未確認 |
 | 削除・両通知停止の履歴 | 独立protection bucket、暗号化イベントとpin済み一覧 | 外部コピー追加。全writer停止・未処理キュー0・新規完全一覧が前提。初期空一覧や合成3件を使い回さない |
-| サイトコード・承認済み文章・ローカル画像 | Gitの管理対象全体（app/lib/public等） | aad63d08の完全履歴bundleをローカル作成・別の空repoへ復元し全tree一致。R2への保管は未実施 |
+| サイトコード・承認済み文章・ローカル画像 | Gitの管理対象全体（app/lib/public等） | 719ec8cdの完全履歴bundleをR2へ保存し、実読戻し・別ジョブでの再取得・隔離復元まで成功。最新開発分は専用requestで追加保管し、実ログ確認後に成功を記録 |
 | 外部URLの画像・コンテンツ | 例: capital-map-profiles.tsの外部画像 | Gitに実体は入らない。提供条件と保存可否、実利用URLを確認して別に保管。URLだけを画像バックアップ扱いしない |
 | ログイン会員 | Clerk（外部管理） | DBのownerとClerk user IDの対応を保持。会員exportと復元可能範囲・認証設定を別途照合。DBだけでログイン復旧は保証しない |
 | 決済の最新状態 | PayPal（外部管理） | 古いdumpから権限を復活させない。復元前に返金/異議/解約/最新期間を再照合。本番決済・実課金は行わない |
@@ -56,7 +60,9 @@ Railway再接続後に行う。2026-10-22のlist_servicesはUNAUTHORIZEDで読�
 - `MIRROR_DESTINATION_ENDPOINT/BUCKET/REGION/ACCESS_KEY_ID/SECRET_ACCESS_KEY`: 各接尾辞を持つ5変数
 
 R2アクセスキーと暗号鍵は別物。既存RESOLUTE age鍵をhex化して使わない。
-研究DB用暗号鍵はまだ新規作成・投入していない。安全な設定先と独立保管先を用意後に行う。
+外部保管用暗号鍵とR2接続情報の4 SecretsはGitHubへ登録済みで、ソース保管で実通信を確認済み。
+研究DBを読めるRailway実行環境への安全な設定・鍵参照と実行確認は未完了。
+GitHubで成功したことをRailway側の設定反映済みと扱わない。
 既存の復旧鍵を再生成/再入力する手順ではない。
 
 ```sh

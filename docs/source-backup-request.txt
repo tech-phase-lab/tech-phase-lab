@@ -1,0 +1,10 @@
+Request: latest development source snapshot after independent restore drill
+Base commit: 47f939293cba8e6eb4e44ed13004211673476176
+Include coworker PR174 and independent existing-object restore tooling.
+Archive the request commit itself; retain all previous objects.
+One source-only execution: encrypt, upload, full readback, isolated Git restore.
+No live DB access, deployment, schedule change, notification or promotion.
+Prior source snapshot: 719ec8cd462a82cf8d3a756c4ed69aae5bf2555d
+New reachable history: 36 blobs screened; no known secret signature hits or sensitive filenames.
+Screening is limited detection, not proof of absence of every possible secret.
+Record actual object receipt after success without changing this trigger again.
