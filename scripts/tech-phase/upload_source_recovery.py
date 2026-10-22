@@ -15,9 +15,12 @@ import seal_source_recovery as sealed
 from external_research_backup import readback
 
 
-def configuration(env):
-    if env.get('TECH_PHASE_SOURCE_UPLOAD_ENABLED') != 'true':
-        raise ValueError('source upload disabled')
+def configuration(env, *, operation='upload'):
+    if operation not in ('upload', 'restore'):
+        raise ValueError('invalid source operation')
+    gate = 'TECH_PHASE_SOURCE_' + operation.upper() + '_ENABLED'
+    if env.get(gate) != 'true':
+        raise ValueError('source operation disabled')
     names = ('ENDPOINT', 'BUCKET', 'REGION', 'ACCESS_KEY_ID', 'SECRET_ACCESS_KEY')
     values = {name: env.get('MIRROR_DESTINATION_' + name, '') for name in names}
     url = urlsplit(values['ENDPOINT'])
