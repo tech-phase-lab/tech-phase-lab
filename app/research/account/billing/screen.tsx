@@ -8,6 +8,7 @@ import { billingRequest, billingReturn, billingSummary, sandboxApproval, verifyB
 import styles from "./styles.module.css";
 
 const messages: Record<string, [string, string]> = {
+  "identity-loading": ["ログイン状態を確認しています。", "Checking your sign-in status."],
   "billing-disabled": ["テスト購入の受付は停止中です。", "Test checkout is currently closed."],
   "sign-in": ["ログインし直してから再確認してください。", "Sign in again, then retry."],
   "owner-only": ["この画面は運営者専用です。", "This page is for the owner only."],
@@ -65,25 +66,30 @@ export default function BillingScreen() {
         else setNotice("pending");
       }
     })
-      .catch(e => { if (!controller.signal.aborted) { setReady(false); setSummary(null); setError(e instanceof Error ? e.message : "billing-unavailable"); } })
+      .catch(e => { if (!controller.signal.aborted) { setNotice(""); setReady(false); setSummary(null); setError(e instanceof Error ? e.message : "billing-unavailable"); } })
       .finally(() => { if (!controller.signal.aborted) setBusy(false); });
     return () => controller.abort();
   }, [refreshIdentity]);
   async function act(action: "refresh" | "create" | "reconcile" | "cancel") {
     if (locked.current) return;
     locked.current = true; setBusy(true); setError("");
-    if (action !== "refresh") setNotice("");
+    // Notices describe one attempt; a refresh must not retain an earlier
+    // pending/success message beside the newly loaded durable contract state.
+    setNotice("");
     const signal = lifetime.current?.signal;
     try {
       await refreshIdentity(true);
+      if (signal?.aborted) return;
       if (action === "create") {
         if (!agreed || !ready) throw Error("billing-disabled");
         const result = await billingRequest("create", { currency, acceptedTerms: "sandbox-v1" }, signal);
+        if (signal?.aborted) return;
         if (result.approvalUrl) { window.location.assign(sandboxApproval(result.approvalUrl)); return; }
         setNotice("check-payment");
       } else if (action === "reconcile" || action === "cancel") {
         if (!summary?.subscription || (action === "cancel" && confirmCancel !== summary.subscription.id)) return;
         const result = await billingRequest(action, { id: summary.subscription.id }, signal);
+        if (signal?.aborted) return;
         setNotice(action === "cancel" ? "cancelled" : result.status === "verified" ? "verified" : result.status === "review-required" ? "review" : "pending");
         setConfirmCancel(null);
       }
@@ -92,11 +98,22 @@ export default function BillingScreen() {
       if (!signal?.aborted) {
         // A failed payment check can still have refreshed the contract state.
         // Read it once without retrying the mutation or retaining stale approval.
-        setError(e instanceof Error ? e.message : "billing-unavailable"); setReady(false); setSummary(null);
+        setNotice(""); setError(e instanceof Error ? e.message : "billing-unavailable"); setReady(false); setSummary(null);
         if (action === "reconcile" || action === "cancel") {
           try {
             const current = billingSummary(await billingRequest("status", undefined, signal));
-            if (!signal?.aborted) setSummary(current);
+            if (!signal?.aborted) {
+              setSummary(current);
+              const interrupted = e instanceof Error &&
+                (e.message === "billing-unavailable" || ["TypeError", "TimeoutError"].includes(e.name));
+              if (interrupted && current.subscription?.id === summary?.subscription?.id) {
+                if (action === "reconcile" && current.plan === "pro" && !current.reviewRequired) {
+                  setError(""); setNotice("access-confirmed");
+                } else if (action === "cancel" && current.subscription?.state === "cancelled") {
+                  setError(""); setNotice("cancelled"); setConfirmCancel(null);
+                }
+              }
+            }
           } catch { /* Keep the original error and no stale subscription state. */ }
         }
       }
@@ -112,6 +129,7 @@ export default function BillingScreen() {
     "check-payment": t("契約が見つかりました。支払いを確認してください。", "A subscription was found. Verify its payment."),
     "checking-payment": t("お支払いを確認しています。", "Checking your payment."),
     verified: t("支払いの照合が完了しました。利用状態は下に表示しています。", "Payment reconciliation finished. Access status is shown below."),
+    "access-confirmed": t("保存済みのPRO利用状態を確認しました。利用期限は下に表示しています。", "Your saved PRO access is confirmed. Its expiry is shown below."),
     cancelled: t("自動更新を停止しました。確認済みの支払期間は保持されます。", "Automatic renewal stopped. Verified paid access is retained."),
     pending: t("支払いはまだ確認できていません。時間をおいて再確認してください。", "Payment has not been verified yet. Check again shortly."),
     review: t("この支払いには運営側での確認が必要です。", "This payment needs manual review."),
@@ -125,7 +143,7 @@ export default function BillingScreen() {
       <h2>PayPal Sandbox</h2>
       <p>{t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
       {notice && !(notice === "verified" && summary?.reviewRequired) && <p role="status">{notices[notice]}</p>}
-      {error && <p role="alert">{errorText}</p>}
+      {error && <p role={error === "identity-loading" ? "status" : "alert"}>{errorText}</p>}
       {summary && <div>
         {summary.reviewRequired && <p role="status">{t("この契約のお支払いは運営側での確認が必要です。", "Payment for this subscription needs review.")}</p>}
         <p>{t("契約状況：", "Subscription: ")}{sub ? states[sub.state] : t("契約なし", "None")}</p>
