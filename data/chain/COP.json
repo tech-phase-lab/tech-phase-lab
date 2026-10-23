@@ -1,0 +1,168 @@
+{
+  "root": {
+    "ticker": "COP",
+    "name": "コノコフィリップス",
+    "cik": 1163165,
+    "name_en": "ConocoPhillips"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "sub": "総合石油・ガス",
+      "sub_en": "Integrated oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルバ・プラントLLCは、LPG処理工場を運営するシェブロンとの合弁事業である",
+          "text_en": "Alba Plant LLC, which operates an LPG processing plant, is a joint venture with Chevron Corporation",
+          "source": {
+            "label": "コノコフィリップス 10-K(2025年12月期)",
+            "label_en": "ConocoPhillips 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "2 percent interest in the Alba Plant LLC, our joint venture with Chevron Corporation (27.8 percent) and Sociedad Nacional de Gas de Guinea Ecuatorial (SONAGAS) (20 percent), which operates an onshore liquified petroleum gas (LPG) processing plant."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "メタノール工場を運営するAMPCOの合弁相手で、シェブロンも45%を持つ",
+          "text_en": "Chevron Corporation holds 45 percent of AMPCO, which operates a methanol plant, alongside ConocoPhillips",
+          "source": {
+            "label": "コノコフィリップス 10-K(2025年12月期)",
+            "label_en": "ConocoPhillips 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We own a 45 percent interest in Atlantic Methanol Production Company LLC (AMPCO), our joint venture with Chevron Corporation (45 percent) and SONAGAS (10 percent), which operates a methanol plant."
+          }
+        }
+      ],
+      "name_en": "Chevron"
+    },
+    {
+      "id": "SONAGAS",
+      "ticker": "SONAGAS",
+      "name": "赤道ギニア国営ガス会社(SONAGAS)",
+      "sub": "国営ガス会社",
+      "sub_en": "State gas company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EG LNGの合弁相手で、同社が37.9%を保有している",
+          "text_en": "SONAGAS is a joint venture partner in EG LNG with a 37.9 percent stake",
+          "source": {
+            "label": "コノコフィリップス 10-K(2025年12月期)",
+            "label_en": "ConocoPhillips 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We own a 56 percent interest in EG LNG, our joint venture with SONAGAS (37.9 percent)"
+          }
+        }
+      ],
+      "name_en": "SONAGAS"
+    },
+    {
+      "id": "ORG",
+      "ticker": "Origin Energy",
+      "name": "オリジン・エナジー",
+      "sub": "豪州エネルギー",
+      "sub_en": "Australian energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "APLNGの合弁相手で、上流の生産とパイプラインはオリジンが運営している",
+          "text_en": "Origin Energy is a joint venture partner in APLNG and operates its upstream production and pipeline system",
+          "source": {
+            "label": "コノコフィリップス 10-K(2025年12月期)",
+            "label_en": "ConocoPhillips 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Origin operates APLNG’s upstream production and pipeline system, and we operate the downstream LNG facility, located on Curtis Island near Gladstone, Queensland, as well as the LNG export sales business."
+          }
+        }
+      ],
+      "name_en": "Origin Energy"
+    },
+    {
+      "id": "SNP",
+      "ticker": "SNP",
+      "name": "中国石油化工(シノペック)",
+      "sub": "中国の石油化学大手",
+      "sub_en": "Chinese energy & chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "APLNGの合弁相手の一社である",
+          "text_en": "Sinopec is a joint venture partner in APLNG",
+          "source": {
+            "label": "コノコフィリップス 10-K(2025年12月期)",
+            "label_en": "ConocoPhillips 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "(APLNG), our joint venture with Origin Energy Limited (Origin) and China Petrochemical Corporation (Sinopec), is focused on producing CBM from the Bowen and Surat basins in Queensland, Australia, to supply the domestic gas market and convert the CBM into LNG for export."
+          }
+        },
+        {
+          "type": "down",
+          "text": "APLNGのLNGを、7.6MTPAの20年間の販売契約でシノペックに販売している",
+          "text_en": "The LNG is sold to Sinopec under a 20-year sales agreement for 7.6 MTPA of LNG",
+          "source": {
+            "label": "コノコフィリップス 10-K(2025年12月期)",
+            "label_en": "ConocoPhillips 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The LNG is being sold to Sinopec under a 20-year sales agreement for 7.6 MTPA of LNG"
+          }
+        }
+      ],
+      "name_en": "China Petrochemical Corporation (Sinopec)"
+    },
+    {
+      "id": "QE",
+      "ticker": "QatarEnergy",
+      "name": "カタールエナジー",
+      "sub": "カタール国営エネルギー",
+      "sub_en": "Qatar state energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カタールのLNG事業N3は、カタールエナジーが68.5%、同社が30%を持つ共同開発である",
+          "text_en": "QatarEnergy LNG N(3) is jointly owned by QatarEnergy (68.5 percent) and ConocoPhillips (30 percent)",
+          "source": {
+            "label": "コノコフィリップス 10-K(2025年12月期)",
+            "label_en": "ConocoPhillips 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "QatarEnergy LNG N(3) (N3), is an integrated development jointly owned by QatarEnergy (68.5 percent), ConocoPhillips (30 percent)"
+          }
+        }
+      ],
+      "name_en": "QatarEnergy"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

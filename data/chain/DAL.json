@@ -1,0 +1,367 @@
+{
+  "root": {
+    "ticker": "DAL",
+    "name": "デルタ航空",
+    "cik": 27904,
+    "name_en": "Delta Air Lines"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "AAL",
+    "UAL",
+    "LUV"
+  ],
+  "companies": [
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "コブランドカード提携",
+      "sub_en": "Co-brand card partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SkyMilesのマイルを販売する最大の契約相手で、2025年の対価は82億ドルだった",
+          "text_en": "Delta's most significant contract to sell miles is with American Express, which paid $8.2 billion in 2025",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In 2025, remuneration from American Express totaled $8.2 billion, which we expect to grow to $10 billion over the next few years."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    },
+    {
+      "id": "AFKLM",
+      "ticker": "Air France-KLM",
+      "name": "エールフランスKLM",
+      "sub": "大西洋路線の提携",
+      "sub_en": "Transatlantic JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エールフランス、KLM、ヴァージン アトランティックと大西洋路線の共同事業契約を結んでいる",
+          "text_en": "Delta has a combined transatlantic joint venture agreement with Air France, KLM and Virgin Atlantic",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "A combined joint venture agreement with Air France, KLM and Virgin Atlantic with respect to transatlantic traffic flows."
+          }
+        }
+      ],
+      "name_en": "Air France-KLM"
+    },
+    {
+      "id": "VS",
+      "ticker": "Virgin Atlantic",
+      "name": "ヴァージン アトランティック",
+      "sub": "大西洋路線の提携",
+      "sub_en": "Transatlantic JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ヴァージン アトランティックの親会社の株式49%を持つ",
+          "text_en": "Delta owns a non-controlling 49% stake in Virgin Atlantic's parent",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we own a non-controlling 49% equity stake in Virgin Atlantic Limited, the parent company of Virgin Atlantic Airways"
+          }
+        }
+      ],
+      "name_en": "Virgin Atlantic"
+    },
+    {
+      "id": "AM",
+      "ticker": "Aeromexico",
+      "name": "アエロメヒコ",
+      "sub": "米墨路線の提携",
+      "sub_en": "US-Mexico cooperation partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アエロメヒコの親会社の株式を約19%持ち、米墨間の共同協力契約もある",
+          "text_en": "Delta holds about 19% of Aeromexico's parent and has a joint cooperation agreement with it",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we currently own an approximately 19% equity stake in Grupo Aeroméxico, S.A.B."
+          }
+        }
+      ],
+      "name_en": "Aeromexico"
+    },
+    {
+      "id": "LATAM",
+      "ticker": "LATAM Airlines",
+      "name": "ラタム航空",
+      "sub": "南北米路線の提携",
+      "sub_en": "Americas JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "LATAMとは南北アメリカ間の路線で共同事業契約を結び、株式約11%を持つ",
+          "text_en": "Delta has a joint venture with LATAM for North-South America traffic and owns about 11%",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We currently own an approximately 11% equity stake in LATAM."
+          }
+        }
+      ],
+      "name_en": "LATAM Airlines"
+    },
+    {
+      "id": "KE",
+      "ticker": "Korean Air",
+      "name": "大韓航空",
+      "sub": "米亜路線の提携",
+      "sub_en": "US-Asia JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大韓航空とは米国とアジア間の路線で共同事業契約を結んでいる",
+          "text_en": "Delta has a joint venture agreement with Korean Air for US-Asia traffic",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "A joint venture agreement with Korean Air with respect to traffic flows between the United States and certain countries in Asia."
+          }
+        }
+      ],
+      "name_en": "Korean Air"
+    },
+    {
+      "id": "WJ",
+      "ticker": "WestJet",
+      "name": "ウエストジェット",
+      "sub": "北米路線の提携",
+      "sub_en": "North America cooperation partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年にウエストジェットの株式約13%を取得し、商業協力契約を結んでいる",
+          "text_en": "Delta acquired about 13% of WestJet in 2025 and has a commercial cooperation agreement",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In 2025, we acquired an approximately 13% minority equity stake in WestJet, with whom we have a strategic commercial cooperation agreement"
+          }
+        }
+      ],
+      "name_en": "WestJet"
+    },
+    {
+      "id": "CEA",
+      "ticker": "China Eastern",
+      "name": "中国東方航空",
+      "sub": "中米路線の提携",
+      "sub_en": "China-US cooperation partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国東方航空の株式2%を持ち、中米間で共同マーケティング協力がある",
+          "text_en": "Delta owns a 2% stake in China Eastern and has a joint marketing arrangement for China-US traffic",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we own a 2% equity interest in China Eastern, with whom we have a strategic joint marketing and commercial cooperation arrangement covering traffic flows between China and the U.S."
+          }
+        }
+      ],
+      "name_en": "China Eastern"
+    },
+    {
+      "id": "SKYW",
+      "ticker": "SKYW",
+      "name": "スカイウエスト",
+      "sub": "地域路線の運航委託",
+      "sub_en": "Regional flying contractor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "スカイウエスト航空が収益按分契約でデルタの一部の便を運航している",
+          "text_en": "SkyWest Airlines operates some flights for Delta under a revenue proration agreement",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "SkyWest Airlines operates some flights for us under a revenue proration agreement."
+          }
+        }
+      ],
+      "name_en": "SkyWest"
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "航空機メーカー",
+      "sub_en": "Aircraft maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年1月にボーイング787-10型機30機を取得する正式契約を結んだ",
+          "text_en": "In January 2026 Delta agreed to acquire 30 Boeing 787-10 aircraft",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On January 12, 2026, we entered into a definitive agreement with The Boeing Company to acquire 30 Boeing 787-10 aircraft, with an option to purchase up to an additional 30 of the same aircraft."
+          }
+        }
+      ],
+      "name_en": "The Boeing Company"
+    },
+    {
+      "id": "AIRBUS",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空機メーカー",
+      "sub_en": "Aircraft maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年1月にA330-900を16機、A350-900を15機購入する正式契約を結んだ",
+          "text_en": "Delta agreed to buy 16 A330-900 and 15 A350-900 aircraft from Airbus",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "to purchase 16 Airbus A330-900 aircraft and 15 Airbus A350-900 aircraft, with an option to purchase up to an additional 20 widebody aircraft."
+          }
+        }
+      ],
+      "name_en": "Airbus S.A.S."
+    },
+    {
+      "id": "AAL",
+      "ticker": "AAL",
+      "name": "アメリカン航空",
+      "sub": "国内の競合",
+      "sub_en": "Domestic competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内線ではアメリカン航空やユナイテッド航空などの大手と競合する",
+          "text_en": "In the domestic market Delta competes with network carriers including American Airlines and United Airlines",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our domestic operations are subject to significant competition from traditional network carriers, including American Airlines and United Airlines"
+          }
+        }
+      ],
+      "name_en": "American Airlines"
+    },
+    {
+      "id": "UAL",
+      "ticker": "UAL",
+      "name": "ユナイテッド航空",
+      "sub": "国内の競合",
+      "sub_en": "Domestic competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内線の競合としてユナイテッド航空が挙がる",
+          "text_en": "United Airlines is named among Delta's domestic network-carrier competitors",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our domestic operations are subject to significant competition from traditional network carriers, including American Airlines and United Airlines"
+          }
+        }
+      ],
+      "name_en": "United Airlines"
+    },
+    {
+      "id": "LUV",
+      "ticker": "LUV",
+      "name": "サウスウエスト航空",
+      "sub": "国内の競合",
+      "sub_en": "Domestic competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内線では中堅の直行型航空会社のサウスウエストなどとも競合する",
+          "text_en": "Delta also competes with point-to-point carriers including Southwest Airlines",
+          "source": {
+            "label": "Delta Air Lines 10-K(2025年12月31日期)",
+            "label_en": "Delta Air Lines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "national point-to-point carriers, including Alaska Airlines, JetBlue Airways and Southwest Airlines"
+          }
+        }
+      ],
+      "name_en": "Southwest Airlines"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
