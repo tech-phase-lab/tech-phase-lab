@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "MAR",
+    "name": "マリオット・インターナショナル",
+    "cik": 1048286,
+    "name_en": "Marriott International"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "HLT",
+    "H",
+    "WH",
+    "CHH"
+  ],
+  "companies": [
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "sub": "提携カード",
+      "sub_en": "Co-brand cards",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国では、JPモルガン・チェースと複数年の提携契約を結んでいる",
+          "text_en": "In the U.S., Marriott has a multi-year agreement with JPMorgan Chase",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In the U.S., we have multi-year agreements with JPMorgan Chase and American Express."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "提携カード",
+      "sub_en": "Co-brand cards",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国では、アメリカン・エキスプレスとも複数年の提携契約がある",
+          "text_en": "In the U.S., Marriott also has a multi-year agreement with American Express",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In the U.S., we have multi-year agreements with JPMorgan Chase and American Express."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    },
+    {
+      "id": "VAC",
+      "ticker": "VAC",
+      "name": "マリオット・バケーションズ・ワールドワイド",
+      "sub": "タイムシェア",
+      "sub_en": "Timeshare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "タイムシェア事業のブランドをMVWにライセンスし、ロイヤルティを受け取る",
+          "text_en": "Marriott receives royalty fees from Marriott Vacations Worldwide under license agreements",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "For our timeshare properties, we receive royalty fees under license agreements with Marriott Vacations Worldwide Corporation and its affiliates (collectively, “MVW”) for certain brands."
+          }
+        }
+      ],
+      "name_en": "Marriott Vacations Worldwide"
+    },
+    {
+      "id": "SOND",
+      "ticker": "Sonder Holdings",
+      "name": "ソンダー・ホールディングス",
+      "sub": "短期賃貸",
+      "sub_en": "Short-term rentals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年にソンダーとのライセンス契約を終了した",
+          "text_en": "Marriott terminated its licensing agreement with Sonder Holdings Inc. during 2025",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "During 2025, we terminated our licensing agreement with Sonder Holdings Inc."
+          }
+        }
+      ],
+      "name_en": "Sonder Holdings"
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホテルブランドの競合としてヒルトンが挙がる",
+          "text_en": "Hilton is named among the competing hotel companies",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "we compete against many other companies with strong brands and guest appeal, including Hilton, IHG Hotels & Resorts, Hyatt, Wyndham Hotels & Resorts, Accor, Choice Hotels, Best Western Hotels & Resorts, and others."
+          }
+        }
+      ],
+      "name_en": "Hilton"
+    },
+    {
+      "id": "H",
+      "ticker": "H",
+      "name": "ハイアット",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホテルブランドの競合にハイアットがある",
+          "text_en": "Hyatt is named among the competing hotel companies",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "we compete against many other companies with strong brands and guest appeal, including Hilton, IHG Hotels & Resorts, Hyatt, Wyndham Hotels & Resorts, Accor, Choice Hotels, Best Western Hotels & Resorts, and others."
+          }
+        }
+      ],
+      "name_en": "Hyatt"
+    },
+    {
+      "id": "WH",
+      "ticker": "WH",
+      "name": "ウィンダム・ホテルズ",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合先にウィンダム・ホテルズ&リゾーツが含まれる",
+          "text_en": "Wyndham Hotels & Resorts is named among the competing hotel companies",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "we compete against many other companies with strong brands and guest appeal, including Hilton, IHG Hotels & Resorts, Hyatt, Wyndham Hotels & Resorts, Accor, Choice Hotels, Best Western Hotels & Resorts, and others."
+          }
+        }
+      ],
+      "name_en": "Wyndham Hotels & Resorts"
+    },
+    {
+      "id": "CHH",
+      "ticker": "CHH",
+      "name": "チョイス・ホテルズ",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合先にチョイス・ホテルズがある",
+          "text_en": "Choice Hotels is named among the competing hotel companies",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "we compete against many other companies with strong brands and guest appeal, including Hilton, IHG Hotels & Resorts, Hyatt, Wyndham Hotels & Resorts, Accor, Choice Hotels, Best Western Hotels & Resorts, and others."
+          }
+        }
+      ],
+      "name_en": "Choice Hotels"
+    },
+    {
+      "id": "IHG",
+      "ticker": "IHG",
+      "name": "IHGホテルズ&リゾーツ",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合先のひとつにIHGホテルズ&リゾーツがある",
+          "text_en": "IHG Hotels & Resorts is named among the competing hotel companies",
+          "source": {
+            "label": "Marriott International 10-K(2025年12月31日)",
+            "label_en": "Marriott International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "we compete against many other companies with strong brands and guest appeal, including Hilton, IHG Hotels & Resorts, Hyatt, Wyndham Hotels & Resorts, Accor, Choice Hotels, Best Western Hotels & Resorts, and others."
+          }
+        }
+      ],
+      "name_en": "IHG Hotels & Resorts"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

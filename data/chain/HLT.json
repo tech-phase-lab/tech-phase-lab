@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "HLT",
+    "name": "ヒルトン・ワールドワイド・ホールディングス",
+    "cik": 1585689,
+    "name_en": "Hilton Worldwide Holdings"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MAR",
+    "H",
+    "WH",
+    "CHH"
+  ],
+  "companies": [
+    {
+      "id": "HGV",
+      "ticker": "HGV",
+      "name": "ヒルトン・グランド・バケーションズ",
+      "sub": "タイムシェア",
+      "sub_en": "Timeshare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HGVはヒルトンのタイムシェアブランドを独占的に使う権利を持つ",
+          "text_en": "HGV has the exclusive right to use Hilton's timeshare brands under a long-term license agreement",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "HGV has the exclusive right to use our timeshare brands, subject to the terms of a long-term license agreement with us."
+          }
+        }
+      ],
+      "name_en": "Hilton Grand Vacations"
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "提携カード",
+      "sub_en": "Credit card partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ヒルトン・オナーズのポイントを使える提携先にアメリカン・エキスプレスがある",
+          "text_en": "American Express is among the strategic partners where Hilton Honors points can be used",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "many strategic partners, including credit card providers, such as American Express, airlines, rail and car rental companies, Amazon, Lyft and others"
+          }
+        }
+      ],
+      "name_en": "American Express"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "提携先",
+      "sub_en": "Strategic partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ヒルトン・オナーズのポイントを使える提携先にアマゾンが入る",
+          "text_en": "Amazon is among the strategic partners where Hilton Honors points can be used",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "many strategic partners, including credit card providers, such as American Express, airlines, rail and car rental companies, Amazon, Lyft and others"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "LYFT",
+      "ticker": "LYFT",
+      "name": "リフト",
+      "sub": "提携先",
+      "sub_en": "Strategic partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ヒルトン・オナーズのポイントを使える提携先にリフトも含まれる",
+          "text_en": "Lyft is among the strategic partners where Hilton Honors points can be used",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "many strategic partners, including credit card providers, such as American Express, airlines, rail and car rental companies, Amazon, Lyft and others"
+          }
+        }
+      ],
+      "name_en": "Lyft"
+    },
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット・インターナショナル",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界規模の主な競合にマリオット・インターナショナルがある",
+          "text_en": "Marriott International is named as a primary competitor",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "our primary competitors are Accor S.A., Choice Hotels International, Hyatt Hotels Corporation, Intercontinental Hotel Group, Marriott International and Wyndham Hotels & Resorts."
+          }
+        }
+      ],
+      "name_en": "Marriott International"
+    },
+    {
+      "id": "H",
+      "ticker": "H",
+      "name": "ハイアット",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界規模の主な競合にハイアットが入る",
+          "text_en": "Hyatt Hotels Corporation is named as a primary competitor",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "our primary competitors are Accor S.A., Choice Hotels International, Hyatt Hotels Corporation, Intercontinental Hotel Group, Marriott International and Wyndham Hotels & Resorts."
+          }
+        }
+      ],
+      "name_en": "Hyatt Hotels Corporation"
+    },
+    {
+      "id": "WH",
+      "ticker": "WH",
+      "name": "ウィンダム・ホテルズ",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界規模の主な競合にウィンダムも挙がる",
+          "text_en": "Wyndham Hotels & Resorts is named as a primary competitor",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "our primary competitors are Accor S.A., Choice Hotels International, Hyatt Hotels Corporation, Intercontinental Hotel Group, Marriott International and Wyndham Hotels & Resorts."
+          }
+        }
+      ],
+      "name_en": "Wyndham Hotels & Resorts"
+    },
+    {
+      "id": "CHH",
+      "ticker": "CHH",
+      "name": "チョイス・ホテルズ",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界規模の主な競合にチョイス・ホテルズがある",
+          "text_en": "Choice Hotels International is named as a primary competitor",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "our primary competitors are Accor S.A., Choice Hotels International, Hyatt Hotels Corporation, Intercontinental Hotel Group, Marriott International and Wyndham Hotels & Resorts."
+          }
+        }
+      ],
+      "name_en": "Choice Hotels International"
+    },
+    {
+      "id": "ACCOR",
+      "ticker": "Accor",
+      "name": "アコー",
+      "sub": "ホテル大手",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界規模の主な競合にアコーが含まれる",
+          "text_en": "Accor S.A. is named as a primary competitor",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年12月31日)",
+            "label_en": "Hilton Worldwide Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "our primary competitors are Accor S.A., Choice Hotels International, Hyatt Hotels Corporation, Intercontinental Hotel Group, Marriott International and Wyndham Hotels & Resorts."
+          }
+        }
+      ],
+      "name_en": "Accor S.A."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

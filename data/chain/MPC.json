@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "MPC",
+    "name": "マラソン・ペトロリアム",
+    "cik": 1510295,
+    "name_en": "Marathon Petroleum"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NESTE",
+      "ticker": "Neste",
+      "name": "ネステ",
+      "sub": "再生ディーゼル合弁",
+      "sub_en": "Renewable diesel JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マルティネス再生可能ディーゼル事業は、ネステと折半出資の合弁である",
+          "text_en": "The Martinez renewable diesel joint venture is a 50/50 joint venture with Neste Corporation",
+          "source": {
+            "label": "Marathon Petroleum 10-K(2025-12-31)",
+            "label_en": "Marathon Petroleum 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Martinez renewable diesel joint venture (the “Martinez Renewables joint venture”) is a partnership structured as a 50/50 joint venture with Neste Corporation to refine renewable feedstocks into renewable diesel."
+          }
+        }
+      ],
+      "name_en": "Neste Corporation"
+    },
+    {
+      "id": "ADM",
+      "ticker": "ADM",
+      "name": "アーチャー・ダニエルズ・ミッドランド",
+      "sub": "大豆処理の合弁",
+      "sub_en": "Soy processing JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "グリーン・バイソン大豆処理の合弁は、ADMが75%、同社が25%を持つ",
+          "text_en": "In the Green Bison Soy Processing JV, ADM owns 75 percent and MPC owns 25 percent",
+          "source": {
+            "label": "Marathon Petroleum 10-K(2025-12-31)",
+            "label_en": "Marathon Petroleum 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We formed the Green Bison Soy Processing, LLC (“Green Bison Soy Processing”) joint venture with Archer-Daniels-Midland Company (“ADM”) with ADM owning 75 percent of the joint venture and MPC owning 25 percent."
+          }
+        }
+      ],
+      "name_en": "Archer-Daniels-Midland Company"
+    },
+    {
+      "id": "ENB",
+      "ticker": "ENB",
+      "name": "エンブリッジ",
+      "sub": "パイプライン合弁",
+      "sub_en": "Pipeline JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウィスラー・パイプラインの合弁会社の19%の議決権を、エンブリッジの関連会社に発行した",
+          "text_en": "A 19 percent voting interest in the Whistler pipeline joint venture was issued to an Enbridge affiliate",
+          "source": {
+            "label": "Marathon Petroleum 10-K(2025-12-31)",
+            "label_en": "Marathon Petroleum 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On May 29, 2024, MPLX and its joint venture partner contributed their respective membership interests in Whistler Pipeline, LLC to a newly formed joint venture, WPC Parent, LLC, and issued a 19 percent voting interest in WPC Parent, LLC to an affiliate of Enbridge Inc."
+          }
+        }
+      ],
+      "name_en": "Enbridge Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

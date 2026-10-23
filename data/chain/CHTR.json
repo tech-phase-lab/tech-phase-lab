@@ -1,0 +1,188 @@
+{
+  "root": {
+    "ticker": "CHTR",
+    "name": "チャーター・コミュニケーションズ",
+    "cik": 1091667,
+    "name_en": "Charter Communications"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "T",
+    "VZ",
+    "TMUS"
+  ],
+  "companies": [
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "携帯網の提供",
+      "sub_en": "Mobile network provider",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Spectrum Mobileはベライゾンの携帯電話網を利用して全国をカバーしている",
+          "text_en": "Spectrum Mobile uses the Verizon cellular network for nationwide coverage",
+          "source": {
+            "label": "Charter 10-K(2025年12月31日)",
+            "label_en": "Charter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "We leverage the Verizon cellular network to provide nationwide coverage including unlimited calls, text and data using Verizon’s fourth generation and fifth generation (“5G”) service including their latest 5G technology."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "動画サービスで、主にベライゾンと競合している",
+          "text_en": "Charter's video service competes primarily with Verizon",
+          "source": {
+            "label": "Charter 10-K(2025年12月31日)",
+            "label_en": "Charter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "Our residential video service also faces competition from large telecommunications companies, primarily Verizon, which offer wireline video services in significant portions of our operating areas."
+          }
+        }
+      ],
+      "name_en": "Verizon Communications"
+    },
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル・US",
+      "sub": "携帯網の提供",
+      "sub_en": "Mobile network provider",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年7月、Spectrum Business向けモバイルの提供にT-Mobileの網を使う複数年契約を結んだ",
+          "text_en": "In July 2025 Charter signed a multi-year agreement to use T-Mobile's network for Spectrum Business mobile",
+          "source": {
+            "label": "Charter 10-K(2025年12月31日)",
+            "label_en": "Charter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "In addition, in July 2025, we entered into a multi-year agreement with T-Mobile US, Inc. (“T-Mobile”) to use their network to deliver mobile services to Spectrum Business customers which is set to launch in 2026."
+          }
+        }
+      ],
+      "name_en": "T-Mobile US"
+    },
+    {
+      "id": "LAL",
+      "ticker": "Los Angeles Lakers",
+      "name": "ロサンゼルス・レイカーズ",
+      "sub": "スポーツ放映権",
+      "sub_en": "Sports rights",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "レイカーズの地元放送試合すべての配信権を2032年まで持つ",
+          "text_en": "Charter holds rights to distribute all locally available Lakers games through 2032",
+          "source": {
+            "label": "Charter 10-K(2025年12月31日)",
+            "label_en": "Charter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "We have an agreement with the Los Angeles Lakers for rights to distribute all locally available Los Angeles Lakers’ games through 2032."
+          }
+        }
+      ],
+      "name_en": "Los Angeles Lakers"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "端末メーカー",
+      "sub_en": "Device maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "取り扱い端末にアップルの5G機種が含まれる",
+          "text_en": "Charter's device lineup includes 5G models from Apple",
+          "source": {
+            "label": "Charter 10-K(2025年12月31日)",
+            "label_en": "Charter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "Our device portfolio includes 5G models from Apple, Google and Samsung"
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "ケーブル・メディア",
+      "sub_en": "Cable & media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に、Spectrum Newsをコムキャストの映像契約者へ広げる契約を結んだ",
+          "text_en": "In 2025 Charter agreed with Comcast to expand distribution of Spectrum News to Comcast video customers",
+          "source": {
+            "label": "Charter 10-K(2025年12月31日)",
+            "label_en": "Charter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "In 2025, we entered into an agreement with Comcast to expand distribution of Spectrum News to their video customers in California, Connecticut, northern New Jersey, Orlando and Tampa."
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T(エーティーアンドティー)",
+      "sub": "通信大手",
+      "sub_en": "Telecom major",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光ファイバー(FTTH)の主な競合である",
+          "text_en": "AT&T is one of Charter's primary FTTH competitors",
+          "source": {
+            "label": "Charter 10-K(2025年12月31日)",
+            "label_en": "Charter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "AT&T Inc. (\"AT&T\") and Verizon are our primary FTTH competitors."
+          }
+        }
+      ],
+      "name_en": "AT&T Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

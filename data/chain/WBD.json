@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "WBD",
+    "name": "ワーナー・ブラザース・ディスカバリー",
+    "cik": 1437107,
+    "name_en": "Warner Bros. Discovery"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CEG",
+      "ticker": "Cutting Edge Group",
+      "name": "カッティング・エッジ・グループ",
+      "sub": "音楽カタログ合弁",
+      "sub_en": "Music catalog JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に音楽カタログの70%の持分を同社との合弁会社に拠出した",
+          "text_en": "In January 2025, WBD contributed a 70% interest in its music catalog to a joint venture with Cutting Edge Group",
+          "source": {
+            "label": "Warner Bros. Discovery 10-K(2025年12月期)",
+            "label_en": "Warner Bros. Discovery 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000020/wbd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In January 2025, we contributed a 70% interest in our music catalog to a joint venture with Cutting Edge Group in exchange for net proceeds of $601 million."
+          }
+        }
+      ],
+      "name_en": "Cutting Edge Group"
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ウォルト・ディズニー",
+      "sub": "メディア・娯楽",
+      "sub_en": "Media & entertainment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ESPN(ディズニーの子会社)とFoxとともに、スポーツ配信サービスVenu Sportsの合弁会社設立を発表した",
+          "text_en": "WBD announced a joint venture with ESPN, a Disney subsidiary, and Fox to form Venu Sports",
+          "source": {
+            "label": "Warner Bros. Discovery 10-K(2025年12月期)",
+            "label_en": "Warner Bros. Discovery 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000020/wbd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On February 6, 2024, the Company announced that it would enter into a joint venture with ESPN, a subsidiary of The Walt Disney Company (“Disney”), and Fox Corporation (“Fox”) to form Venu Sports, a sports-centric streaming service in the United States."
+          }
+        }
+      ],
+      "name_en": "The Walt Disney Company"
+    },
+    {
+      "id": "FOXA",
+      "ticker": "FOXA",
+      "name": "フォックス",
+      "sub": "メディア・放送",
+      "sub_en": "Media & broadcasting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ESPNおよびディズニーとともに、Venu Sportsの合弁会社設立を発表した",
+          "text_en": "WBD announced a joint venture with ESPN, Disney and Fox to form Venu Sports",
+          "source": {
+            "label": "Warner Bros. Discovery 10-K(2025年12月期)",
+            "label_en": "Warner Bros. Discovery 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000020/wbd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On February 6, 2024, the Company announced that it would enter into a joint venture with ESPN, a subsidiary of The Walt Disney Company (“Disney”), and Fox Corporation (“Fox”) to form Venu Sports, a sports-centric streaming service in the United States."
+          }
+        }
+      ],
+      "name_en": "Fox Corporation"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T(エーティーアンドティー)",
+      "sub": "通信・旧親会社",
+      "sub_en": "Telecom, former owner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ワーナーメディア合併に伴い、AT&Tと税務事項契約を結んだ",
+          "text_en": "In connection with the WarnerMedia Merger, WBD entered into a tax matters agreement with AT&T",
+          "source": {
+            "label": "Warner Bros. Discovery 10-K(2025年12月期)",
+            "label_en": "Warner Bros. Discovery 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000020/wbd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In connection with the WarnerMedia Merger, the Company entered into a tax matters agreement (“TMA”) with AT&T."
+          }
+        }
+      ],
+      "name_en": "AT&T Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
