@@ -81,3 +81,39 @@ verified tar (no existing node_modules symlink, no npm download/install):
   files fetched over HTTP matched their pinned SHA256. Server stopped afterward.
 - Total:3916 automated tests passed. No live data recovery or authenticated
   production API acceptance is claimed. Normal CI result is separate.
+
+## Actual external source backup receipt
+
+2026-10-23 10:58:26 JST (2026-10-23T01:58:26.3683583Z).
+Run39886950983 / job120197233624 succeeded. Actual logged event:
+
+```json
+{
+  "event": "SOURCE_EXTERNAL_UPLOAD_VERIFIED",
+  "key": "tech-phase/source/v1/658001656cd894186994cf2697b98b548e668306/0bb275d2e9baa282d0b719aae708c9cc309888043a47c7719aa130200718f7f5.aesgcm",
+  "sha256": "0bb275d2e9baa282d0b719aae708c9cc309888043a47c7719aa130200718f7f5",
+  "bytes": 18739228,
+  "commit": "658001656cd894186994cf2697b98b548e668306",
+  "tree": "610e7cad64c361a80512ccadb1e18bfcfcaceee0",
+  "source_restore_verified": true,
+  "external_storage_verified": true,
+  "runtime_restore_verified": false
+}
+```
+
+The encrypted source object was uploaded, fully downloaded, hash checked,
+authenticated and restored in an isolated Git repository. Commit/tree matched
+this implementation. The non-secret manifest was published/read back last.
+Bucket: resolute-backup-external. Existing objects retained.
+https://github.com/tech-phase-lab/tech-phase-lab/actions/runs/39886950983
+
+This includes committed fonts and the preparation tool, NOT the local359MB
+node_modules tar or any live database. Dependency-archive encryption/offsite
+custody, the matching runtime distribution and Python dependencies remain next
+steps. No request-file change is made for this receipt, avoiding a backup loop.
+
+Implementation CI39886950926 completed successfully on65800165: both the
+PostgreSQL concurrency/signed-storage recovery job and lint/test/build job passed.
+https://github.com/tech-phase-lab/tech-phase-lab/actions/runs/39886950926
+This receipt is a later documentation-only change; diff-check passed. It does
+not claim that a subsequent receipt-only CI run has already completed.
