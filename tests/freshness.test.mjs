@@ -33,7 +33,7 @@ test('the notice is small, quiet when up to date, and on the pages that show mon
   assert.match(route, /status: "unreachable"/);
   assert.doesNotMatch(route, /snapshot/);
   const notice = await readFile(new URL('../app/research/freshness-notice.tsx', import.meta.url), 'utf8');
-  assert.match(notice, /freshness\.status === "ok"\) return null/);
+  assert.match(notice, /freshness\.status === "ok" \|\| bad < 2\) return null/);
   for (const page of ['news/page.tsx', 'price-targets/page.tsx', 'calendar/event-calendar.tsx', 'general-news/page.tsx', 'market/page.tsx']) {
     assert.match(await readFile(new URL(`../app/research/${page}`, import.meta.url), 'utf8'), /freshness>/, page);
   }
