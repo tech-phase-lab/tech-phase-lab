@@ -1,3 +1,23 @@
+## 2026-10-24 JST — All seven runtime images restored from R2 and probed offline
+
+Source/runtime commit81b4e775 (tree172ec963) passed actual run39998902799.
+All seven encrypted image archives were uploaded, downloaded, authenticated, loaded,
+and checked with networking disabled. CI39998902797 passed Node1336, Python2613,
+build and Sandbox PostgreSQL concurrency. See [actual receipts and limits](EXTERNAL-RUNTIME-BACKUP-2026-10-24.md).
+This closes the Node/Python/PostgreSQL/OS custody gap for freshly built Linux amd64
+recovery images; it is not an export of deployed Railway containers.
+Frontend/API/billing/research servers booted; protection/recovery disabled CLIs and
+backup tools passed their narrower probes. No live DB/authenticated storage verified.
+The first run failed on restrictive source permissions; fixed without weakening container
+isolation. Only the successful corrected run is accepted as seven-runtime evidence.
+Next: fresh writer-fenced complete production DB/history/queue/consumed-claim inventory,
+external custody and isolated restore before saving activation; Render standby afterwards
+with exact endpoint allowlists, TLS, least privilege and configured frontend auth checks.
+Keep saving gates OFF, preserve owner-key-check-2026-10-23, no more AI calls,
+no Railway reconnect/key-entry requests. User operation currently unnecessary.
+
+---
+
 ## 2026-10-24 JST — Billing dependencies restored from R2 and booted offline
 
 Actual run39981635463 restored source f8312b9e and 139 billing dependency files.
