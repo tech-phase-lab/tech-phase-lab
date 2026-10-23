@@ -12,7 +12,7 @@ const HINT_KEY = "tech-phase:member-hint";
 function readHint(): InitialDisplay | null {
   try {
     const hint = JSON.parse(window.localStorage.getItem(HINT_KEY) ?? "null") as InitialDisplay | null;
-    return hint?.plan === "pro" && Number.isFinite(hint.accessExpiresAt) && hint.accessExpiresAt > Date.now() ? hint : null;
+    return (hint?.plan === "pro" || hint?.ownerAccount === true) && Number.isFinite(hint.accessExpiresAt) && hint.accessExpiresAt > Date.now() ? hint : null;
   } catch { return null; }
 }
 function writeHint(hint: InitialDisplay | null) {
@@ -64,7 +64,9 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         const pro = member.status === "signed-in" && member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
         // A signed-out or restoring session is not a verified FREE membership.
         setPlan(member.status === "signed-in" ? (pro ? "pro" : "free") : null);
-        writeHint(pro ? { plan: "pro", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: member.ownerAccount === true, accessExpiresAt: member.accessExpiresAt } : null);
+        // The owner account reads as a member without a paid plan, so it keeps its own short-lived hint.
+        const ownerHint = member.status === "signed-in" && member.ownerAccount === true;
+        writeHint(pro || ownerHint ? { plan: pro ? "pro" : "free", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: ownerHint, accessExpiresAt: pro ? member.accessExpiresAt : Date.now() + 6 * 3_600_000 } : null);
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
       } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { setSettled(true); setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); } }
       finally { if (current === generation) request = null; }
@@ -75,8 +77,8 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
     if (initial?.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(initial.accessExpiresAt - Date.now(), 2147483647)));
     const hint = initial ? null : readHint();
     if (hint) {
-      setPlan("pro"); setOwner(hint.owner); setOwnerMode(hint.ownerMode); setOwnerAccount(hint.ownerAccount === true); setSettled(true);
-      expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(hint.accessExpiresAt - Date.now(), 2147483647)));
+      setPlan(hint.plan); setOwner(hint.owner); setOwnerMode(hint.ownerMode); setOwnerAccount(hint.ownerAccount === true); setSettled(true);
+      if (hint.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(hint.accessExpiresAt - Date.now(), 2147483647)));
     }
     void check(); const timer = setInterval(periodic, 60_000);
     window.addEventListener("tech-phase:membership-changed", changed);
