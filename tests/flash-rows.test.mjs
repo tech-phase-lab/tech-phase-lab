@@ -71,4 +71,5 @@ test('conference session blogs and earnings "highlights" pages are not listed as
   assert.equal(isNotNews({ title: 'Bloom Energy Q3 2026 Highlights' }), true);
   assert.equal(isNotNews({ title: 'Vertiv launches a new liquid cooling product' }), false);
   assert.equal(isNotNews({ title: 'NVIDIA announces new GTC dates' }), false);
+  assert.equal(isNotNews({ title: "JCC's new lab: where Micron's future workforce grows" }), true);
 });

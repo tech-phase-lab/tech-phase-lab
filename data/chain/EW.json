@@ -1,0 +1,123 @@
+{
+  "root": {
+    "ticker": "EW",
+    "name": "エドワーズ・ライフサイエンシズ",
+    "cik": 1099800,
+    "name_en": "Edwards Lifesciences"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MDT",
+    "ABT"
+  ],
+  "companies": [
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "経皮的大動脈弁置換(TAVR)で、主要な競合の一社である",
+          "text_en": "Medtronic is a primary competitor in TAVR",
+          "source": {
+            "label": "エドワーズ・ライフサイエンシズ 10-K(2025-12-31)",
+            "label_en": "Edwards Lifesciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099800/000109980026000009/ew-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In TAVR, our primary competitors include Medtronic plc (“Medtronic”) and Abbott Laboratories (“Abbott”)"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "構造的心疾患の特許について、15年間の相互不訴訟契約を結んでいる",
+          "text_en": "Edwards entered into an agreement with Medtronic for a 15-year global covenant not to sue over certain structural heart patents",
+          "source": {
+            "label": "エドワーズ・ライフサイエンシズ 10-K(2025-12-31)",
+            "label_en": "Edwards Lifesciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099800/000109980026000009/ew-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On April 12, 2023, we entered into an intellectual property agreement with Medtronic pursuant to which the parties agreed to a 15-year global covenant not to sue (\"CNS\") for infringement of certain patents in the structural heart space owned or controlled by each other."
+          }
+        }
+      ],
+      "name_en": "Medtronic"
+    },
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット・ラボラトリーズ",
+      "sub": "医療機器・医薬",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TAVRのほか、僧帽弁・三尖弁治療でも主要な競合となる",
+          "text_en": "Abbott is a primary competitor in TAVR and in TMTT",
+          "source": {
+            "label": "エドワーズ・ライフサイエンシズ 10-K(2025-12-31)",
+            "label_en": "Edwards Lifesciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099800/000109980026000009/ew-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In TMTT, our primary competitor is Abbott, and there are a considerable number of large and small companies with development efforts in these fields."
+          }
+        }
+      ],
+      "name_en": "Abbott Laboratories"
+    },
+    {
+      "id": "JENAVALVE",
+      "ticker": "JenaValve",
+      "name": "ジェナバルブ・テクノロジー",
+      "sub": "心臓弁",
+      "sub_en": "Heart valves",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収に先立ち、ジェナバルブへつなぎ融資を行う契約を結んでいた",
+          "text_en": "Edwards agreed to provide bridge loan funding to JenaValve alongside the merger agreement",
+          "source": {
+            "label": "エドワーズ・ライフサイエンシズ 10-K(2025-12-31)",
+            "label_en": "Edwards Lifesciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099800/000109980026000009/ew-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Concurrently, the Company entered into a Promissory Note agreement (the “Bridge Loan”) under which it agreed to provide funding to JenaValve for up to $ 75.0 million"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "買収は差止命令を受け、双方は合併契約を終了させた",
+          "text_en": "The acquisition was enjoined and the two companies terminated the merger agreement",
+          "source": {
+            "label": "エドワーズ・ライフサイエンシズ 10-K(2025-12-31)",
+            "label_en": "Edwards Lifesciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099800/000109980026000009/ew-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On January 14, 2026, the Company and JenaValve entered into an incremental agreement terminating the Merger Agreement."
+          }
+        }
+      ],
+      "name_en": "JenaValve Technology"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

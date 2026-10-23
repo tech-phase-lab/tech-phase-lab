@@ -42839,7 +42839,7 @@
       "strength": "投資銀行、消費者向け金融、商業銀行、決済処理、資産運用を幅広く手がける。",
       "risks": "厳しい規制と監督を受ける。市場や信用の変動で損失を抱えうる。サイバー攻撃も脅威。",
       "competition": "",
-      "relationships": ""
+      "relationships": "アップルのクレジットカード事業の買収を約24か月後に完了予定。"
     },
     "en": {
       "business": "A major US financial firm in investment banking, consumer finance and asset management.",
@@ -42847,11 +42847,25 @@
       "strength": "It spans investment banking, consumer finance, commercial banking, payment processing and asset management.",
       "risks": "It faces extensive regulation and supervision. Market and credit swings can cause losses, and cyber attacks are a threat.",
       "competition": "",
-      "relationships": ""
+      "relationships": "The Firm agreed on December 30, 2025 to acquire the Apple credit card portfolio, with closing expected in approximately 24 months."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "partner",
+          "label": {
+            "ja": "Appleカード事業を取得予定",
+            "en": "To acquire Apple credit card portfolio"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
+        }
+      ]
     }
   },
   {
@@ -43035,6 +43049,10 @@
       {
         "label": "Bank of America Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      {
+        "label": "Bank of America press release (2024-02-15)",
+        "url": "https://newsroom.bankofamerica.com/content/newsroom/press-releases/2024/02/bank-of-america-and-starbucks-launch-loyalty-partnership.html"
       }
     ],
     "ja": {
@@ -43043,7 +43061,7 @@
       "strength": "消費者、富裕層、企業、市場取引の4部門を持ち、世界の金融市場で事業を広げる。",
       "risks": "銀行と非銀行の金融機関や新規参入者との競争が激しい。金利低下は利ざやを削りうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "バンク・オブ・アメリカとスターバックスはロイヤルティ提携を始めた。"
     },
     "en": {
       "business": "A major U.S. bank covering consumer banking, wealth management, corporate banking and markets trading.",
@@ -43051,11 +43069,25 @@
       "strength": "Four segments span consumer, wealth, corporate and markets businesses, operating across global financial markets.",
       "risks": "Competition from banks, nonbank firms and new entrants is intense, and falling interest rates can cut revenue.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Bank of America and Starbucks launched a loyalty partnership linking cardholders and Starbucks Rewards members."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Starbucks",
+          "role": "partner",
+          "label": {
+            "ja": "ロイヤルティ提携",
+            "en": "Loyalty partnership"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "SBUX"
+        }
+      ]
     }
   },
   {
@@ -43347,7 +43379,7 @@
       "strength": "幅広い製品群が特徴。診断では技術面の優位があるが、競合の新製品で薄れうる。",
       "risks": "後発薬への切り替えや競合の新製品で競争が強まる。規制変更で製品が時代遅れになる恐れもある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "アボットはエグザクト・サイエンシズの買収で最終契約を結んでいる。"
     },
     "en": {
       "business": "A company that makes a broad line of healthcare products, from medicines and diagnostics to nutrition and medical devices.",
@@ -43355,11 +43387,25 @@
       "strength": "Its broad product range is its mark. It has technology advantages in diagnostics, though rivals' new products can erode them.",
       "risks": "Generic substitution and competitors' new products raise pressure, and regulatory changes can make products obsolete.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Abbott has entered into a definitive agreement to acquire Exact Sciences."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Exact Sciences Corporation",
+          "role": "partner",
+          "label": {
+            "ja": "買収の最終契約",
+            "en": "Definitive acquisition agreement"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "EXAS"
+        }
+      ]
     }
   },
   {
@@ -43380,7 +43426,7 @@
       "revenue": "2025年の売上は33,986百万ドルで、約64%が米国外。大口向けは現地プラント、小口はシリンダーで供給して稼ぐ。",
       "strength": "世界最大の産業ガス会社で、非極低温の空気分離技術では市場をリードする。大口の現地供給は10-20年の長期契約が中心。",
       "risks": "化学・エネルギーや金属・鉱業の景気循環の影響を受ける。エネルギー費の上昇や為替の変動も響きうる。",
-      "competition": "",
+      "competition": "主な競合にエア・プロダクツ・アンド・ケミカルズ、エア・リキードがある。",
       "relationships": ""
     },
     "en": {
@@ -43388,11 +43434,37 @@
       "revenue": "Sales in 2025 were $33,986 million, with about 64% outside the US. It earns by supplying large users from on-site plants and small users by cylinder.",
       "strength": "It is the largest industrial gas company and the market leader in non-cryogenic air separation. Large on-site supply runs on contracts of 10-20 years.",
       "risks": "Cycles in chemicals, energy, metals and mining hit demand. Higher energy costs and currency swings can also hurt.",
-      "competition": "",
+      "competition": "Main competitors include Air Products and Chemicals, Inc., L’Air Liquide S.A..",
       "relationships": ""
     },
     "maps": {
-      "competition": [],
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Air Products and Chemicals, Inc.",
+          "role": "competitor",
+          "label": {
+            "ja": "産業ガスの競合",
+            "en": "Industrial gases competitor"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "APD"
+        },
+        {
+          "kind": "company",
+          "name": "L’Air Liquide S.A.",
+          "role": "competitor",
+          "label": {
+            "ja": "産業ガスの競合",
+            "en": "Industrial gases competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
       "relationships": []
     }
   },
@@ -46035,7 +46107,7 @@
       "strength": "規模の大きさ、運営の効率、ブランドと評判、サービス文化が強み。低コストで価格を抑えられる。",
       "risks": "個人向けは証券会社や銀行、フィンテック企業などと競う。情報セキュリティのリスクも抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年11月6日にフォージ・グローバルを買収する正式契約を結んだ。 2020年のアメリトレード買収に伴い、TD銀行側へ議決権なし普通株を発行した。"
     },
     "en": {
       "business": "A US financial services company in brokerage, banking, asset management and related services.",
@@ -46043,11 +46115,37 @@
       "strength": "Its features are scale, operating efficiency, brand and reputation, and a service culture. Low costs let it price competitively.",
       "risks": "It competes with brokers, banks and fintech firms for individual investors. Information security risk is another weak point.",
       "competition": "",
-      "relationships": ""
+      "relationships": "On November 6, 2025, Schwab entered into a definitive agreement to acquire Forge Global Holdings, Inc. In conjunction with its acquisition of Ameritrade in 2020, Schwab issued nonvoting common stock to TD Bank and its affiliates."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Forge Global Holdings, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "買収契約を締結",
+            "en": "Acquisition agreement signed"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "The Toronto-Dominion Bank",
+          "role": "partner",
+          "label": {
+            "ja": "TD銀行へ株式発行",
+            "en": "Stock issued to TD Bank"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TD"
+        }
+      ]
     }
   },
   {
@@ -46409,7 +46507,7 @@
       "strength": "歯磨きと手用歯ブラシの世界首位。液体ハンドソープでも世界首位に立つ。",
       "risks": "海外事業が大きく、為替や政情不安の影響を受ける。原材料の価格変動も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ウォルマートとその関連会社向けが2025年の純売上高の約11%を占める。"
     },
     "en": {
       "business": "A consumer goods maker selling toothpaste, soap and pet food worldwide.",
@@ -46417,11 +46515,25 @@
       "strength": "It leads globally in toothpaste and manual toothbrushes, and also in liquid hand soap.",
       "risks": "Large overseas operations expose it to currency swings and political instability, as well as raw material price changes.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Sales to Walmart and its affiliates were approximately 11% of Net sales in 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Walmart, Inc.",
+          "role": "customer",
+          "label": {
+            "ja": "最大顧客ウォルマート",
+            "en": "Largest customer Walmart"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "WMT"
+        }
+      ]
     }
   },
   {
@@ -47431,7 +47543,7 @@
       "strength": "独自の製品・プロセス技術、有名ブランド、顧客との近さ、世界の製造力が特徴。",
       "risks": "PFASをめぐる訴訟と費用を抱える。事業の分離や売却がうまく進まない可能性もある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "アラミド事業をArclinに売却する契約を結んでいる。"
     },
     "en": {
       "business": "A company that makes advanced materials for healthcare, water, construction and industrial markets.",
@@ -47439,11 +47551,24 @@
       "strength": "Proprietary technologies, well-known brands, customer intimacy and global manufacturing are its features.",
       "risks": "It carries PFAS litigation and costs, and its business separations and sales may not go as planned.",
       "competition": "",
-      "relationships": ""
+      "relationships": "DuPont agreed to sell its Aramids business to Arclin."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Arclin",
+          "role": "partner",
+          "label": {
+            "ja": "アラミド事業の売却先",
+            "en": "Buyer of Aramids business"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -47533,7 +47658,7 @@
       "strength": "技術力とデジタル、手厚い顧客サポートが特徴。顧客の水とエネルギーの使用削減に役立つ。",
       "risks": "競合は少数の大手と多数の地域企業。サイバー攻撃や情報システムの障害も課題になる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2020年の分離後も、ChampionXへ一部の製品を供給している。"
     },
     "en": {
       "business": "A company providing water, hygiene and infection prevention products and services.",
@@ -47541,11 +47666,25 @@
       "strength": "Technical expertise, digital technology and strong customer support set it apart, helping customers cut water and energy use.",
       "risks": "It faces a few large rivals and many regional ones, and cyber-attacks or system failures are a concern.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Following the 2020 separation, Ecolab continues to provide certain products to ChampionX."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "ChampionX",
+          "role": "customer",
+          "label": {
+            "ja": "分離後の供給先",
+            "en": "Supplies products after 2020 separation"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CHX"
+        }
+      ]
     }
   },
   {
@@ -47830,7 +47969,7 @@
       "strength": "ブルークロス・ブルーシールド協会の地域免許を持ち、Anthemなどのブランドで展開する点が特徴。",
       "risks": "医療費の予測や保険料の設定を誤ると収益が落ちる。メディケアやメディケイドの規制も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "Mosaic Healthを、Clayton, Dubilier & Riceとの合弁事業として運営している。 Liberty Dentalは、Welsh, Carson, Anderson & Stoweとの合弁事業である。"
     },
     "en": {
       "business": "A leading US health insurer offering medical, pharmacy and behavioral health services.",
@@ -47838,11 +47977,36 @@
       "strength": "It holds Blue Cross and Blue Shield licenses across many regions and operates under brands such as Anthem.",
       "risks": "Misjudging healthcare costs or premium rates can hurt profits. Medicare and Medicaid rules add further exposure.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Elevance Health runs Mosaic Health as a joint venture with Clayton, Dubilier & Rice. Liberty Dental is a joint venture with Welsh, Carson, Anderson & Stowe."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Clayton, Dubilier & Rice",
+          "role": "partner",
+          "label": {
+            "ja": "Mosaic Health合弁",
+            "en": "Mosaic Health joint venture"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Welsh, Carson, Anderson & Stowe",
+          "role": "partner",
+          "label": {
+            "ja": "Liberty Dental合弁",
+            "en": "Liberty Dental joint venture"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -49912,7 +50076,7 @@
       "strength": "全50州でメディケア向けのプランを出し、30年以上の実績がある。",
       "risks": "医療費が見積りを上回ると、保険料を上げられず利益が圧迫されうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "高齢者向けプライマリケアセンターの開発と運営で戦略的提携を結んでいる。"
     },
     "en": {
       "business": "A company that provides health insurance and care services, mainly for Medicare members.",
@@ -49920,11 +50084,24 @@
       "strength": "It has offered Medicare plans for over 30 years, with at least one plan type in all 50 states.",
       "risks": "If health care costs run above estimates, premiums are fixed for the year and profit can be squeezed.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Humana's CenterWell segment includes strategic partnerships with WCAS to develop and operate senior-focused primary care centers."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Welsh, Carson, Anderson & Stowe",
+          "role": "partner",
+          "label": {
+            "ja": "プライマリケアの戦略提携",
+            "en": "Primary care strategic partnership"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -50352,7 +50529,7 @@
       "strength": "包装に絞った事業構成と、コスト面の優位を狙う80/20の運営手法が特徴。",
       "risks": "景気やクレーム需要の波を受けやすい。2025年は北米も欧州も需要が弱かった。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年初めにDSスミスを買収し、企業価値は約99億ドルだった。"
     },
     "en": {
       "business": "A company that makes packaging products from renewable fiber-based materials.",
@@ -50360,11 +50537,24 @@
       "strength": "Its features are a pure-play packaging focus and the 80/20 operating system aimed at an advantaged cost position.",
       "risks": "Demand cycles hit it hard. In 2025, demand was weak in both North America and EMEA.",
       "competition": "",
-      "relationships": ""
+      "relationships": "International Paper acquired DS Smith in early 2025 for an enterprise value of approximately $9.9 billion."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "DS Smith",
+          "role": "partner",
+          "label": {
+            "ja": "DSスミスを買収",
+            "en": "Acquired DS Smith"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -51095,7 +51285,7 @@
       "strength": "約63百万世帯の顧客データと、売上39billionドル超の自社ブランドが武器。",
       "risks": "サイバー攻撃などの情報セキュリティリスクを抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "オカドとパートナーシップ枠組み契約を結んでいる。"
     },
     "en": {
       "business": "A U.S. retailer that runs supermarkets.",
@@ -51103,11 +51293,24 @@
       "strength": "Data on approximately 63 million households and Our Brands sales of over $39 billion are its assets.",
       "risks": "It faces cybersecurity and data protection risks.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Kroger has an Amended and Restated Partnership Framework Agreement with Ocado."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Ocado Group plc",
+          "role": "partner",
+          "label": {
+            "ja": "提携先",
+            "en": "Partnership framework partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -51913,7 +52116,7 @@
       "strength": "AIとデータを使った遠隔モニタリングなど、治療を個別化する戦略が特徴。",
       "risks": "大小の医療機器メーカーに加え、GLP-1薬など他の治療法とも競合する。価格圧力も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "SPRセラピューティクスの全株式の取得を2026年5月に発表した。 2026年4月にキャスワークスの残りの全株式を取得した。"
     },
     "en": {
       "business": "A healthcare technology company that makes medical devices for the heart, brain and surgery.",
@@ -51921,11 +52124,36 @@
       "strength": "Its strategy centers on using AI and data, such as remote monitoring, to tailor therapies.",
       "risks": "It faces both large and small device makers, plus other therapies such as GLP-1 drugs. Pricing pressure is another weakness.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Medtronic announced on May 20, 2026 its intent to acquire all outstanding equity of SPR Therapeutics. On April 20, 2026, Medtronic acquired all the remaining outstanding shares of CathWorks."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "SPR Therapeutics, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "買収予定先",
+            "en": "Announced acquisition target"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CathWorks Ltd.",
+          "role": "partner",
+          "label": {
+            "ja": "買収先",
+            "en": "Completed acquisition"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -52406,6 +52634,10 @@
       {
         "label": "NextEra Energy Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/nee-20251231.htm"
+      },
+      {
+        "label": "NextEra Energy Form 8-K (2026-05-18)",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000110465926063001/tm2614888d1_8k.htm"
       }
     ],
     "ja": {
@@ -52414,7 +52646,7 @@
       "strength": "天然ガス・風力・太陽光・原子力など多様な電源を持つ。低料金と高い信頼性が売り。",
       "risks": "料金は規制当局が決める。費用を回収できなかったり、適正な収益を得られなかったりしうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ネクステラとの合併契約に基づき、ドミニオンを買収する予定。"
     },
     "en": {
       "business": "One of North America's largest power companies, with Florida utility FPL and renewables developer NEER.",
@@ -52422,11 +52654,25 @@
       "strength": "It runs a mix of gas, wind, solar and nuclear plants, and stresses low bills and reliable service.",
       "risks": "Regulators set its rates, so it may fail to recover costs or earn a reasonable return.",
       "competition": "",
-      "relationships": ""
+      "relationships": "NextEra Energy signed a merger agreement under which Dominion Energy would become its wholly owned subsidiary."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Dominion Energy",
+          "role": "partner",
+          "label": {
+            "ja": "合併契約の相手",
+            "en": "Merger agreement counterparty"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "D"
+        }
+      ]
     }
   },
   {
@@ -52813,7 +53059,7 @@
       "strength": "北米最大のリサイクル企業で、スクラップを電炉で鉄にする。構造用鋼などで首位の供給元。",
       "risks": "市場は競争が激しく、価格とサービスで争う。海外からの鋼材供給の変動も不安定要因。",
       "competition": "",
-      "relationships": ""
+      "relationships": "JFEスチールとの合弁NJSMが、メキシコで亜鉛めっき鋼板工場を運営している。"
     },
     "en": {
       "business": "A North American company that makes steel and steel products.",
@@ -52821,11 +53067,24 @@
       "strength": "It is North America's largest recycler, making steel from scrap in electric arc furnaces, and a leading supplier in structural steel.",
       "risks": "Its markets are highly competitive, with price and service as the battleground, and foreign steel supply swings add volatility.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Nucor's NJSM joint venture with JFE Steel operates a galvanized sheet steel plant in central Mexico."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "JFE Steel Corporation",
+          "role": "partner",
+          "label": {
+            "ja": "合弁会社NJSMの相手",
+            "en": "NJSM joint venture partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -53085,7 +53344,7 @@
       "strength": "油圧、空圧、電動、ろ過など幅広い中核技術と、経営システムのWin Strategyが特徴。",
       "risks": "世界景気に左右される。米国外の売上は約36%で、為替や関税、貿易規制の影響を受けうる。",
       "competition": "主な競合にDanaher、Donaldson、Emerson、Gates、Crane Co.がある。",
-      "relationships": ""
+      "relationships": "CIRCOR Aerospaceを買収する正式契約を結んでいる。"
     },
     "en": {
       "business": "A company that makes motion and control products for aerospace and industrial equipment.",
@@ -53093,7 +53352,7 @@
       "strength": "Its features are a broad base of core technologies, such as hydraulics, pneumatics and filtration, and its Win Strategy business system.",
       "risks": "It is exposed to the global economy. About 36% of sales come from outside the U.S., so currencies, tariffs and trade rules can hurt it.",
       "competition": "Main competitors include Danaher, Donaldson, Emerson, Gates, Crane Co..",
-      "relationships": ""
+      "relationships": "Parker entered into a definitive agreement to acquire CIRCOR Aerospace for approximately $2.55 billion in cash."
     },
     "maps": {
       "competition": [
@@ -53163,7 +53422,20 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "CIRCOR Aerospace",
+          "role": "partner",
+          "label": {
+            "ja": "買収契約の相手",
+            "en": "Acquisition agreement counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -53396,7 +53668,7 @@
       "strength": "資産運用、資本市場・助言、カード・資金管理など、手数料の稼ぎ口が幅広い。",
       "risks": "関税や株価の下落、金利の動きが重しになりうる。合併に伴う統合費用も発生する。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2026年1月5日にファーストバンク・ホールディングの買収を完了した。"
     },
     "en": {
       "business": "A US banking group that offers loans, deposits and asset management.",
@@ -53404,11 +53676,24 @@
       "strength": "Its fee income comes from many lines, including asset management, capital markets and advisory, and card and cash management.",
       "risks": "Tariffs, falling equity prices and interest rate moves can weigh on it, and merger integration costs add to expenses.",
       "competition": "",
-      "relationships": ""
+      "relationships": "PNC completed its acquisition of FirstBank Holding Company on January 5, 2026."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "FirstBank Holding Company",
+          "role": "partner",
+          "label": {
+            "ja": "買収を完了",
+            "en": "Acquisition completed"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -54007,7 +54292,7 @@
       "strength": "独自技術による研究を土台に、開発から製造、販売まで自社で担う統合型が特徴。",
       "risks": "EYLEA HD、EYLEA、Dupixentへの依存が大きい。バイオシミラーなどの競合品や薬価規制の変化も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "サノフィがデュピクセントとケブザラを世界で販売し、リジェネロンは利益を分け合う。 米国外ではバイエルがEYLEA HDとEYLEAの純製品売上を計上する。"
     },
     "en": {
       "business": "A biotechnology company that invents, makes and sells medicines for serious diseases.",
@@ -54015,11 +54300,37 @@
       "strength": "Built on research with its own technologies, it is fully integrated across development, manufacturing and sales.",
       "risks": "It depends heavily on EYLEA HD, EYLEA and Dupixent. Competing products such as biosimilars and drug pricing changes add pressure.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Sanofi records global net product sales of Dupixent and Kevzara, and Regeneron records its share of profits. Bayer records net product sales of EYLEA HD and EYLEA outside the United States."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Sanofi",
+          "role": "partner",
+          "label": {
+            "ja": "共同開発・利益分配",
+            "en": "Collaboration and profit share"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "SNY"
+        },
+        {
+          "kind": "company",
+          "name": "Bayer",
+          "role": "partner",
+          "label": {
+            "ja": "米国外でEYLEA販売",
+            "en": "Sells EYLEA outside the US"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -54551,7 +54862,7 @@
       "strength": "米国やカナダなどに4,853店の直営専門店を構える。品質、革新、技術力、サービス、価格が競争の軸。",
       "risks": "競合は地域から国際まで多数。原材料やエネルギーのコスト上昇、景気や天候の影響も受ける。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年10月にブラジルの建築用塗料会社スヴィニルの買収を完了した。"
     },
     "en": {
       "business": "A company that develops, makes and sells paint, coatings and related products.",
@@ -54559,11 +54870,24 @@
       "strength": "It runs 4,853 company-operated specialty stores in the U.S., Canada and the Caribbean. Quality, innovation, technical expertise, service and price drive its competitiveness.",
       "risks": "Rivals range from local to international players. Higher raw material and energy costs, the economy and weather also hit it.",
       "competition": "",
-      "relationships": ""
+      "relationships": "In October 2025 Sherwin-Williams completed its acquisition of Suvinil, an architectural paints provider in Brazil."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Suvinil",
+          "role": "partner",
+          "label": {
+            "ja": "スヴィニルを買収",
+            "en": "Completed Suvinil acquisition"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -55227,7 +55551,7 @@
       "strength": "営業担当、自社ブランド商品、配送の信頼性、メニュー分析などの付帯サービスが強み。北米と欧州に拠点を持つ。",
       "risks": "低マージンの業界で、インフレや人件費、燃料費の上昇が利益を圧迫しうる。競争も激しい。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2026年3月30日に合併契約を結び、ジェトロ・レストラン・デポを買収する予定。"
     },
     "en": {
       "business": "A global distributor of food and related products to restaurants and other places that serve meals away from home.",
@@ -55235,11 +55559,24 @@
       "strength": "Its sales consultants, Sysco brand products, service reliability, ancillary services like menu analysis, and presence in North America and Europe are its strengths.",
       "risks": "Low margins leave it exposed to inflation, labor and fuel costs. Competition is also heavy.",
       "competition": "",
-      "relationships": ""
+      "relationships": "On March 30, 2026 Sysco entered into a merger agreement under which it will acquire Jetro Restaurant Depot."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Jetro Restaurant Depot",
+          "role": "partner",
+          "label": {
+            "ja": "JRD買収の合併契約",
+            "en": "Merger agreement to acquire JRD"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -55261,7 +55598,7 @@
       "strength": "幅広い運用戦略と、退職関連での存在感が特徴。ターゲットデート型商品が運用資産の31.6%を占める。",
       "risks": "パッシブ運用への移行や手数料の下落圧力にさらされる。市場の変動で収益が振れやすい。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2021年12月にOHAを買収し、最大9億ドルの条件付き対価が残っている。"
     },
     "en": {
       "business": "A financial holding company that provides investment management services to investors worldwide.",
@@ -55269,11 +55606,24 @@
       "strength": "It offers a broad range of strategies and a strong place in retirement. Target date products make up 31.6% of its managed assets.",
       "risks": "It faces a shift to passive products and steady fee pressure. Market swings move its revenue.",
       "competition": "",
-      "relationships": ""
+      "relationships": "T. Rowe Price acquired OHA in December 2021, with up to $900 million of contingent consideration."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "OHA",
+          "role": "partner",
+          "label": {
+            "ja": "2021年に買収",
+            "en": "Acquired in 2021"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -55465,7 +55815,7 @@
       "strength": "製品ラインの幅広さと技術革新が競争の軸。AIや機械学習を製品とサービスに取り込んでいる。",
       "risks": "市場の低迷や景気悪化、関税、為替が業績を押し下げうる。技術変化に遅れると製品が時代遅れになる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "クラリオ・ホールディングスを現金約88億7500万ドルで買収する契約を結んでいる。 2024年にオーリンクを買収し、遺伝科学事業の売上が伸びた。"
     },
     "en": {
       "business": "A company that supplies products and services to pharma, biotech and research customers.",
@@ -55473,11 +55823,36 @@
       "strength": "Breadth of product line and technological innovation drive its competitiveness. It is building AI and machine learning into its products and services.",
       "risks": "Weak markets, a poor economy, tariffs and currency swings can hurt results. If it falls behind on technology, its products can become obsolete.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Thermo Fisher has agreed to acquire Clario Holdings for approximately $8.875 billion in cash at closing. Thermo Fisher acquired Olink in 2024; genetic sciences grew $82 million."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Clario Holdings",
+          "role": "partner",
+          "label": {
+            "ja": "買収予定先",
+            "en": "Acquisition target"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Olink",
+          "role": "partner",
+          "label": {
+            "ja": "2024年に買収",
+            "en": "Acquired in 2024"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -55669,7 +56044,7 @@
       "strength": "中堅企業向けの業界別銀行業務、投資銀行、ウェルス、決済に力を入れる。個人ではPremier顧客の預金拡大を狙う。",
       "risks": "金利の変動で純金利収益が左右される。貸倒引当金が足りなくなる恐れや、自動車ローンなど消費者ローンの信用リスクも抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "保険子会社TIHの残り持分を、ストーンポイント主導の投資家グループへ売却する契約を結んだ。"
     },
     "en": {
       "business": "A banking group that offers loans and deposits to businesses, individuals and small businesses.",
@@ -55677,11 +56052,24 @@
       "strength": "It focuses on industry banking for the middle market, investment banking, wealth and payments. For individuals, it aims to grow deposits from Premier clients.",
       "risks": "Interest rate swings move its net interest income. Its loan loss reserves may fall short, and consumer loans such as indirect auto carry credit risk.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Truist agreed to sell its remaining TIH stake to an investor group led by Stone Point Capital and Clayton, Dubilier & Rice."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Stone Point Capital",
+          "role": "partner",
+          "label": {
+            "ja": "TIH持分の売却先",
+            "en": "Buyer of remaining TIH stake"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -55737,7 +56125,7 @@
       "strength": "2,075の支店と4,428台のATMにデジタルバンキングを組み合わせる。法人カードと法人信託サービスでは米国有数の提供会社。",
       "risks": "フィンテックなどとの競争が激しい。景気悪化、金利変動、貸出の信用悪化、サイバー攻撃も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "BTIGを最大10億ドルで買収する最終契約を結び、完了は未了。"
     },
     "en": {
       "business": "A financial holding company offering banking, cards, payments and asset management across the U.S.",
@@ -55745,11 +56133,24 @@
       "strength": "It combines 2,075 branches and 4,428 ATMs with digital banking. It is one of the largest providers of corporate card and corporate trust services in the U.S.",
       "risks": "Competition from fintechs and others is intense. It also faces economic downturns, interest rate changes, weaker loan credit quality and cyber attacks.",
       "competition": "",
-      "relationships": ""
+      "relationships": "U.S. Bancorp agreed in January 2026 to acquire BTIG for up to $1 billion; the deal is pending."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "BTIG",
+          "role": "partner",
+          "label": {
+            "ja": "BTIG買収(最終契約済)",
+            "en": "Pending acquisition of BTIG"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -56702,20 +57103,47 @@
       "revenue": "2025年の売上は9,467百万ドル。100を超える国で販売し、売上の58%は米ドル建て。",
       "strength": "約300の製品群と大規模な販売網、研究開発力が特徴。品質と供給の安定を重んじる顧客が多い。",
       "risks": "ネット通販や量販店への販路変化で利益率が下がりうる。家畜の病気の流行や天候にも左右される。",
-      "competition": "",
-      "relationships": ""
+      "competition": "主な競合にメルクがある。",
+      "relationships": "2024年に動物用の新規抗生物質の共同研究を始めた。"
     },
     "en": {
       "business": "An animal health company that develops and sells medicines, vaccines and diagnostics for animals.",
       "revenue": "Revenue in 2025 was $9,467 million. It sells in over 100 countries, and 58% of revenue is in U.S. dollars.",
       "strength": "About 300 product lines, a large sales organization and in-house R&D set it apart. Customers value quality and reliable supply.",
       "risks": "Shifting sales channels such as online and big-box retail may squeeze margins. Livestock disease outbreaks and weather also affect sales.",
-      "competition": "",
-      "relationships": ""
+      "competition": "Main competitors include Merck & Co..",
+      "relationships": "Zoetis started a collaboration with Blacksmith Medicines in 2024 to develop novel antibiotics for animal health."
     },
     "maps": {
-      "competition": [],
-      "relationships": []
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Merck & Co.",
+          "role": "competitor",
+          "label": {
+            "ja": "動物用医薬品の競合",
+            "en": "Animal health competitor"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MRK"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Blacksmith Medicines",
+          "role": "partner",
+          "label": {
+            "ja": "抗生物質の共同研究",
+            "en": "Antibiotic collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {

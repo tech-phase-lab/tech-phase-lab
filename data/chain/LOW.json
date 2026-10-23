@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "LOW",
+    "name": "ロウズ",
+    "cik": 60667,
+    "name_en": "Lowe's Companies"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FBM",
+      "ticker": "Foundation",
+      "name": "ファウンデーション・ビルディング・マテリアルズ",
+      "sub": "内装建材の卸売",
+      "sub_en": "Interior building products distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約88億ドルで買収する正式契約を結んだ",
+          "text_en": "Lowe's entered a definitive agreement to acquire Foundation Building Materials for approximately $8.8 billion",
+          "source": {
+            "label": "Lowe's 8-K(2025-08-20)",
+            "label_en": "Lowe's Form 8-K (2025-08-20)",
+            "url": "https://www.sec.gov/Archives/edgar/data/60667/000006066725000162/exhibit991-08012025fbm.htm",
+            "level": "official",
+            "date": "2025-08-20",
+            "quote": "today announced it has entered into a definitive agreement (the “Agreement”) to acquire Foundation Building Materials (“FBM”) for approximately $8.8 billion."
+          }
+        }
+      ],
+      "name_en": "Foundation Building Materials"
+    },
+    {
+      "id": "ADG",
+      "ticker": "Artisan Design",
+      "name": "アーティザン・デザイン・グループ",
+      "sub": "住宅内装の施工",
+      "sub_en": "Home interior installation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "当年度にアーティザン・デザイン・グループの買収を完了した",
+          "text_en": "Lowe's completed its acquisition of Artisan Design Group in the current year",
+          "source": {
+            "label": "Lowe's 10-K(2026年1月30日期)",
+            "label_en": "Lowe's 10-K (fiscal year ended January 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/60667/000006066726000029/low-20260130.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "which include our current year acquisitions of Foundation Building Materials (FBM) and Artisan Design Group (ADG)"
+          }
+        }
+      ],
+      "name_en": "Artisan Design Group"
+    },
+    {
+      "id": "SYF",
+      "ticker": "SYF",
+      "name": "シンクロニー銀行",
+      "sub": "消費者向け与信",
+      "sub_en": "Consumer credit",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "顧客向けの与信は、契約に基づきシンクロニー銀行が直接提供している",
+          "text_en": "Under an agreement, credit is extended directly to customers by Synchrony Bank",
+          "source": {
+            "label": "Lowe's 10-K(2026年1月30日期)",
+            "label_en": "Lowe's 10-K (fiscal year ended January 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/60667/000006066726000029/low-20260130.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Under an agreement with Synchrony Bank (Synchrony), credit is extended directly to customers by Synchrony."
+          }
+        }
+      ],
+      "name_en": "Synchrony Bank"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
