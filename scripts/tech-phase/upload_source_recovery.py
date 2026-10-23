@@ -16,7 +16,7 @@ from external_research_backup import readback
 
 
 def configuration(env, *, operation='upload', scope='source'):
-    if operation not in ('upload', 'restore') or scope not in ('source', 'dependencies'):
+    if operation not in ('upload', 'restore') or scope not in ('source', 'dependencies', 'runtime'):
         raise ValueError('invalid source operation')
     gate = 'TECH_PHASE_' + scope.upper() + '_' + operation.upper() + '_ENABLED'
     if env.get(gate) != 'true':
