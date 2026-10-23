@@ -40,7 +40,7 @@ jobs:
           mkdir "$custody"
           python scripts/tech-phase/prepare_source_recovery.py --repo "$GITHUB_WORKSPACE" --commit "$EXPECTED_COMMIT" --output "$custody/package"
           mkdir "$custody/context"
-          git archive "$EXPECTED_COMMIT" | tar --no-same-owner -x -C "$custody/context"
+          git -c tar.umask=0022 archive "$EXPECTED_COMMIT" | tar --no-same-owner --same-permissions -x -C "$custody/context"
           PYTHONPATH=scripts/tech-phase python -c 'import sys; from external_runtime import validate_source_context; print(validate_source_context(sys.argv[1]))' "$custody/context"
       - name: Encrypt, upload and restore exact source
         env:
@@ -111,7 +111,8 @@ jobs:
           umask 077
           custody="$RUNNER_TEMP/runtime-custody"
           mkdir -p "$custody/source"
-          git archive "$EXPECTED_COMMIT" | tar --no-same-owner -x -C "$custody/source"
+          # Keep the private parent 0700 while preserving Git source modes inside the image.
+          git -c tar.umask=0022 archive "$EXPECTED_COMMIT" | tar --no-same-owner --same-permissions -x -C "$custody/source"
           PYTHONPATH=scripts/tech-phase python -c 'import sys; from external_runtime import validate_source_context; print(validate_source_context(sys.argv[1]))' "$custody/source"
           tag="tech-phase-recovery/$RUNTIME_SERVICE:$EXPECTED_COMMIT"
           docker build --pull --label "org.opencontainers.image.revision=$EXPECTED_COMMIT" -f "$custody/source/$RUNTIME_DOCKERFILE" -t "$tag" "$custody/source/$RUNTIME_CONTEXT"
