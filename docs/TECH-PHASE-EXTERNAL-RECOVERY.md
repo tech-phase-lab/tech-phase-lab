@@ -58,12 +58,17 @@ Railway再接続後に行う。2026-10-22のlist_servicesはUNAUTHORIZEDで読�
 
 ## 研究DB: 暗号化・転送・隔離復元
 
+[保存処理に組み込んだ復元検査の条件と限界](RESEARCH-BACKUP-RESTORE-GATE.md)。
+
 新規 `scripts/tech-phase/external_research_backup.py`。通常ジョブへは未組込。
 既存朝ジョブ・バックアップ頻度・通知設定を変更しない。
 実volumeを読める環境で、SQLiteのonline backup APIを使う。稼働中のmainファイルだけを
 コピーするとWALの更新が落ちるので禁止。全テーブルを取得し、integrity_checkと既存必須
 スキーマ検証後にAES-256-GCMで暗号化。1GiB上限、コピー120秒上限、暗号化は分割処理。
-送信先の暗号文とmanifestのサイズ/SHA256を読み戻して照合後に成功を出す。
+送信先の暗号文をprivate一時ファイルへ取り出し、サイズ/SHA256を照合する。
+取り出した実バイトから復号し、認証タグ・平文SHA・SQLite整合性・必須テーブルを隔離検査する。
+復元検査が通った場合だけmanifestを保存し、そのサイズ/SHA256の読み戻しも通ってから成功を出す。
+`restore_verified=true` はこの研究DBの隔離復元を指し、全サイト復旧や本番保存の有効化を意味しない。
 平文一時ファイルはprivate一時ディレクトリに置き、通常終了/例外時とも削除する。
 異常終了時の媒体残存まで保証しないため、実行環境の一時領域は保護し、稼働前に容量も確認する。
 

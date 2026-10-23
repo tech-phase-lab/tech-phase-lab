@@ -3,7 +3,7 @@
 Run beside the research volume, never against a downloaded main DB file without
 its live WAL. No cron changes, deletions, notifications or provider API calls.
 """
-from contextlib import closing
+from contextlib import closing, nullcontext
 from datetime import datetime, timezone
 import hashlib
 import importlib.util
@@ -57,16 +57,21 @@ def encrypt(source, target, key, object_key):
     Path(target).chmod(0o600)
 
 
-def readback(client, bucket, key, expected_size, expected_hash):
+def readback(client, bucket, key, expected_size, expected_hash, destination=None):
     body = client.get_object(Bucket=bucket, Key=key)['Body']
     digest = hashlib.sha256()
     count = 0
     try:
-        while chunk := body.read(1024 * 1024):
-            count += len(chunk)
-            if count > expected_size:
-                raise ValueError('readback too large')
-            digest.update(chunk)
+        with (Path(destination).open('xb') if destination is not None else nullcontext()) as output:
+            if destination is not None:
+                Path(destination).chmod(0o600)
+            while chunk := body.read(1024 * 1024):
+                count += len(chunk)
+                if count > expected_size:
+                    raise ValueError('readback too large')
+                digest.update(chunk)
+                if output is not None:
+                    output.write(chunk)
     finally:
         body.close()
     if count != expected_size or digest.hexdigest() != expected_hash:
@@ -89,17 +94,23 @@ def backup(source, client, bucket, key):
         size = cipher.stat().st_size
         with cipher.open('rb') as body:
             client.put_object(Bucket=bucket, Key=object_key, Body=body, IfNoneMatch='*')
-        readback(client, bucket, object_key, size, digest)
+        downloaded = Path(directory) / 'downloaded.aesgcm'
+        readback(client, bucket, object_key, size, digest, downloaded)
         manifest = {'version': 1, 'key': object_key, 'bytes': size, 'sha256': digest,
                     'plaintext_sha256': checked['sha256'], 'created_at': stamp,
                     'format': 'nonce12-aes256gcm-ciphertext-tag16',
                     'aad': object_key, 'scope': 'research-sqlite-all-tables',
                     'full_site_recovery_verified': False}
+        # Verify the downloaded object, never the pre-upload local archive.
+        # Publish the completion manifest only after authenticated isolated restore.
+        verify_restore(downloaded, manifest, key)
+        manifest['restore_verified'] = True
         raw = json.dumps(manifest, sort_keys=True).encode()
         client.put_object(Bucket=bucket, Key=object_key + '.json', Body=raw, IfNoneMatch='*')
         readback(client, bucket, object_key + '.json', len(raw), hashlib.sha256(raw).hexdigest())
         return {'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_OK', 'bytes': size,
-                'key': object_key, 'sha256': digest, 'restore_verified': False}
+                'key': object_key, 'sha256': digest, 'restore_verified': True,
+                'full_site_recovery_verified': False}
 
 
 def configuration(env):
