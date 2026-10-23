@@ -9,14 +9,13 @@
 .tiles a:hover{border-color:#c3ac786e;background:#202623}.tiles a:focus-visible{outline:2px solid #d9bd7c;outline-offset:3px}
 @media(max-width:1000px){.desktop{display:none}.mobile{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.groups{gap:9px;margin-top:16px}.groups section{margin-bottom:9px;padding:11px}.groups h2{font-size:12px}.tiles{grid-template-columns:1fr}.tiles a{min-height:45px;padding:6px 8px}.tiles strong{font-size:14px}}
-
-/* New items per company: the dot turns bright mint and blinks, with a "新着 N" tag (owner, Oct 14). */
-.freshDot{display:inline-block;width:8px!important;height:8px!important;border-radius:50%;background:#5dffb4!important;box-shadow:0 0 10px #5dffb4;animation:freshBlink .9s ease-out infinite}
-.freshTag{display:inline-flex;align-items:center;gap:4px;font:600 9px var(--font-geist-mono),monospace;letter-spacing:.04em;color:#06201a;background:#5dffb4;border-radius:999px;padding:1px 6px 1px 8px;line-height:15px;box-shadow:0 0 12px rgba(93,255,180,.5)}
-.freshTag .freshDot{width:6px!important;height:6px!important;background:#06201a!important;box-shadow:none;animation:freshBlinkDark .9s ease-in-out infinite}
-.freshChip{display:inline-flex;align-items:center;gap:8px;color:#5dffb4;font-weight:600}
-.tiles a:has(.freshTag){border-color:rgba(93,255,180,.55);background:linear-gradient(135deg,rgba(93,255,180,.10),#0c131a)}
-@keyframes freshBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.85),0 0 10px #5dffb4}70%{box-shadow:0 0 0 9px rgba(93,255,180,0),0 0 10px #5dffb4}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px #5dffb4}}
-@keyframes freshBlinkDark{0%,100%{opacity:1}50%{opacity:.25}}
+/* New items per company (owner, Oct 23): a quiet outlined tag and a thin mint edge, with the mint dot still blinking, so many new items stay easy on the eyes. */
+.freshDot{display:inline-block;width:8px!important;height:8px!important;border-radius:50%;background:#5dffb4!important;box-shadow:0 0 8px #5dffb4;animation:freshBlink 1.2s ease-out infinite}
+.freshTag{display:inline-flex;align-items:center;gap:4px;font:600 9px var(--font-geist-mono),monospace;letter-spacing:.04em;color:#8fe9c0;background:rgba(93,255,180,.10);border:1px solid rgba(93,255,180,.35);border-radius:999px;padding:0 6px 0 8px;line-height:15px}
+.freshTag .freshDot{width:6px!important;height:6px!important;background:#5dffb4!important;box-shadow:0 0 6px #5dffb4}
+@keyframes freshBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.85),0 0 8px #5dffb4}70%{box-shadow:0 0 0 8px rgba(93,255,180,0),0 0 8px #5dffb4}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 8px #5dffb4}}
 @media(prefers-reduced-motion:reduce){.freshDot,.freshTag .freshDot{animation:none}}
-.tiles strong .freshTag{color:#06201a;font-size:9px;line-height:15px;overflow:visible}
+.freshChip{display:inline-flex;align-items:center;gap:8px;color:#5dffb4;font-weight:600}
+.tiles a:has(.freshTag){border-color:rgba(255,255,255,.10);box-shadow:inset 3px 0 0 rgba(93,255,180,.75)}
+
+.tiles strong .freshTag{font-size:9px;line-height:15px;overflow:visible}

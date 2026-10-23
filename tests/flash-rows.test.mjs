@@ -7,10 +7,10 @@ import { earningsOnlyProviders } from '../lib/research/intake.ts';
 const base = { url: 'https://www.example.com/a', publisher: 'Co', observedAt: '2026-10-14T01:00:00Z' };
 const wireItem = (id, titleJa, publishedAt) => ({ id, titleEn: `en ${id}`, titleJa, publisher: 'Wire', origin: 'wire', url: `https://example.com/${id}`, publishedAt });
 
-test('the roster is the 22 watched stocks plus the 17 earnings-only stocks', () => {
+test('the roster is the 22 watched stocks plus the 22 earnings-only stocks', () => {
   assert.equal(WATCH_TICKERS.size, 22);
-  assert.equal(earningsOnlyProviders.length, 17);
-  assert.equal(FLASH_TICKERS.length, 39);
+  assert.equal(earningsOnlyProviders.length, 22);
+  assert.equal(FLASH_TICKERS.length, 44);
   assert.ok(earningsOnlyProviders.every(p => FLASH_TICKERS.includes(p.ticker) && !WATCH_TICKERS.has(p.ticker)));
 });
 
@@ -62,4 +62,13 @@ test('a company X account post with no business content is left out (owner, Oct 
   assert.equal(socialChatter({ ...base, title: 'The Builders & Brews tour has wrapped: thousands of builders in 20 cities', translationJa: '20都市・17カ国の数千人のビルダーが参加したBuilders & Brewsツアーが終了しました。' }), true);
   assert.equal(socialChatter({ ...base, title: 'Nebius signs a multi-year agreement to supply GPU capacity', translationJa: 'Nebius、GPU容量の複数年契約を締結' }), false);
   assert.equal(socialChatter({ ...base, url: 'https://www.nvidia.com/blog/x', title: 'Builders tour', translationJa: 'ツアー' }), false);
+});
+
+test('conference session blogs and earnings "highlights" pages are not listed as news', async () => {
+  const { isNotNews } = await import('../lib/research/news-presentation.ts');
+  assert.equal(isNotNews({ title: 'GTC: How Vertiv and NVIDIA Cut AI Factory Deployment Time in Half' }), true);
+  assert.equal(isNotNews({ title: 'Bloom Energy Announces Third Quarter 2026 Earnings Highlights: Record Results' }), true);
+  assert.equal(isNotNews({ title: 'Bloom Energy Q3 2026 Highlights' }), true);
+  assert.equal(isNotNews({ title: 'Vertiv launches a new liquid cooling product' }), false);
+  assert.equal(isNotNews({ title: 'NVIDIA announces new GTC dates' }), false);
 });

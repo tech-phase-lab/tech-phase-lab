@@ -4,7 +4,7 @@ import type { CompanyWireItem } from "./company-wire.ts";
 import { earningsOnlyProviders, providers } from "./intake.ts";
 import { earningsResults, isEarningsRelated } from "./earnings-results.ts";
 import { analystNewsDisplay } from "./analyst-news.ts";
-import { officialNewsDisplay, shownInLanguage, socialChatter } from "./news-presentation.ts";
+import { isNotNews, officialNewsDisplay, shownInLanguage, socialChatter } from "./news-presentation.ts";
 import { NEWS_MAX_AGE_MS, officialTime } from "./news-time.ts";
 import { wireStories } from "./wire-stories.ts";
 
@@ -35,7 +35,7 @@ export function flashRows(feed: Partial<GeneralNewsFeed> | null | undefined, wir
       const time = officialTime(item);
       // Earnings releases belong to the earnings rows below; a story with no
       // source time is never listed (owner, Oct 10).
-      if (!tickers.length || isEarningsRelated(item) || socialChatter(item) || time.kind === "observed" || !shownInLanguage(item, lang)) continue;
+      if (!tickers.length || isEarningsRelated(item) || isNotNews(item) || socialChatter(item) || time.kind === "observed" || !shownInLanguage(item, lang)) continue;
       const display = officialNewsDisplay(item, lang, briefs);
       rows.push({ id: `official:${item.id}`, kind: "news", tickers, title: display.title, body: display.body ?? undefined, at: time.at,
         timeKind: time.kind === "date" ? "date" : "published", observedAt: item.observedAt, source: item.publisher });
