@@ -58,3 +58,21 @@ Renderでそのまま動くと判断しない。復旧先DBへの最小権限接
 [API専用依存のR2実保管・復元起動](EXTERNAL-API-DEPENDENCY-BACKUP-2026-10-23.md)まで成功。
 検証環境はUbuntu24.04/Node24.22.1/glibc2.39。BookwormコンテナやRenderでの稼働、
 本番DB接続・最新履歴の復元は別途確認する。Node実行ファイルとベースイメージは未保管。
+
+## 接続先制限の調査（稼働先はまだ変更しない）
+
+コード確認により、Renderに同じコンテナを置くだけでは接続できない箇所を確認した。
+現時点で許可先の拡張や本番変数の変更は行わない。復旧先が確定した段階で、
+承認した正確な接続先だけを許可し、認証・HTTPS・応答検査を維持して検証する。
+
+| 経路 | Railwayホスト制限がある実装 |
+| --- | --- |
+| 決済連携 | `services/tech-phase-billing/transport.mjs`。バックエンドにも環境・ブランチ確認がある |
+| RESOLUTE権限・投資ルール・通知設定 | `lib/resolute/transport.ts`、`plan-transport.ts`、`notification-http.ts` |
+| リスク・AI診断・オーナー確認 | `lib/resolute/risk-proxy.ts`。使用済みAI診断claimは再実行しない |
+| 保護履歴・隔離復元検査 | `lib/resolute/protection-runtime.ts`、`recovery-check.ts`。本番と復元先の分離も維持する |
+
+DB接続設定はRailway外で証明書検証付きTLSを要求する。
+`lib/resolute/database-config.ts` と決済側 `database-config.mjs` のDB名・役割・
+TLS検証を緩めて接続を通してはいけない。新しい接続先に対応した最小権限と
+実接続・保存・復元を確認する。ホスト制限の発見はRender稼働成功の証拠ではない。
