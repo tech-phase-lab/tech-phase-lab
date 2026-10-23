@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "GM",
+    "name": "ゼネラルモーターズ",
+    "cik": 1467858,
+    "name_en": "General Motors"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "LGES",
+      "ticker": "LGES",
+      "name": "LGエナジーソリューション",
+      "sub": "電池メーカー",
+      "sub_en": "Battery maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "電池セル生産のUltium Cellsを折半出資の合弁として運営している",
+          "text_en": "Ultium Cells, the battery cell producer, is run as an equally owned joint venture",
+          "source": {
+            "label": "GM 10-K(2025年12月31日期)",
+            "label_en": "GM 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467858/000146785826000013/gm-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "Our EV portfolio takes advantage of integrated supply chain development, including battery cell production from Ultium Cells Holdings LLC (a joint venture with LG Energy Solution) in plants in Warren, Ohio and Spring Hill, Tennessee."
+          }
+        }
+      ],
+      "name_en": "LG Energy Solution"
+    },
+    {
+      "id": "SAIC",
+      "ticker": "SAIC",
+      "name": "上海汽車集団",
+      "sub": "中国の自動車合弁",
+      "sub_en": "China auto JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁SGMをSAICと50%ずつで設立した",
+          "text_en": "SGM was set up with SAIC, with SAIC holding 50%",
+          "source": {
+            "label": "GM 10-K(2025年12月31日期)",
+            "label_en": "GM 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467858/000146785826000013/gm-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "SGM is a joint venture we established with Shanghai Automotive Industry Corporation (SAIC) ( 50 %)."
+          }
+        }
+      ],
+      "name_en": "Shanghai Automotive Industry Corporation"
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年にオペル/ボクスホール事業を売却した相手で、補償義務が残る",
+          "text_en": "Stellantis bought the Opel/Vauxhall business in 2017, and GM retains indemnification obligations",
+          "source": {
+            "label": "GM 10-K(2025年12月31日期)",
+            "label_en": "GM 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467858/000146785826000013/gm-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "In 2017, we sold the Opel/Vauxhall Business to PSA Group, now Stellantis N.V. (Stellantis), under a Master Agreement (the Agreement)."
+          }
+        }
+      ],
+      "name_en": "Stellantis"
+    },
+    {
+      "id": "LAC",
+      "ticker": "LAC",
+      "name": "リチウム・アメリカズ",
+      "sub": "リチウム開発",
+      "sub_en": "Lithium developer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "リチウム・アメリカズへ投資を行っている",
+          "text_en": "GM has made an investment in Lithium Americas",
+          "source": {
+            "label": "GM 10-K(2025年12月31日期)",
+            "label_en": "GM 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467858/000146785826000013/gm-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "$(0.3) billion investment in Lithium Americas in the years ended December 31, 2024 and 2023"
+          }
+        }
+      ],
+      "name_en": "Lithium Americas"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
