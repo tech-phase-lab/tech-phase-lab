@@ -1,0 +1,171 @@
+{
+  "root": {
+    "ticker": "DUK",
+    "name": "デューク・エナジー",
+    "cik": 1326160,
+    "name_en": "Duke Energy"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BSC",
+      "ticker": "Brookfield",
+      "name": "ブルックフィールド・スーパーコア・インフラ",
+      "sub": "インフラ投資会社",
+      "sub_en": "Infrastructure investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のフロリダ事業の少数持分について、系列会社と出資契約を結んだ",
+          "text_en": "Duke Energy signed an investment agreement with an affiliate over a minority stake in Duke Energy Florida",
+          "source": {
+            "label": "Duke Energy 10-K(2025-12-31)",
+            "label_en": "Duke Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616026000014/duk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In August 2025, Duke Energy, Progress Energy and Florida Progress entered into an investment agreement with an affiliate of Brookfield Super-Core Infrastructure Partners related to an indirect minority interest investment in Duke Energy Florida."
+          }
+        }
+      ],
+      "name_en": "Brookfield Super-Core Infrastructure Partners"
+    },
+    {
+      "id": "BEP",
+      "ticker": "BEP",
+      "name": "ブルックフィールド・リニューアブル",
+      "sub": "再生可能エネルギー",
+      "sub_en": "Renewable energy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "再エネ事業の資産を売却した相手先で、売却額は11億ドルだった",
+          "text_en": "Duke Energy sold its Commercial Renewables assets to an affiliate for $1.1 billion",
+          "source": {
+            "label": "Duke Energy 10-K(2025-12-31)",
+            "label_en": "Duke Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616026000014/duk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Duke Energy closed on the transaction with an affiliate of Brookfield Renewable Partners L.P. on October 25, 2023, for proceeds of $ 1.1 billion"
+          }
+        }
+      ],
+      "name_en": "Brookfield Renewable Partners"
+    },
+    {
+      "id": "SR",
+      "ticker": "SR",
+      "name": "スパイア",
+      "sub": "ガス公益事業",
+      "sub_en": "Gas utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社ピードモントのテネシー事業を売却する購入契約の相手である",
+          "text_en": "Piedmont agreed to sell its Tennessee business to Spire under a purchase agreement",
+          "source": {
+            "label": "Duke Energy 10-K(2025-12-31)",
+            "label_en": "Duke Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616026000014/duk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In July 2025, Piedmont entered into a purchase agreement with Spire Inc. for the sale of Piedmont's Tennessee business"
+          }
+        }
+      ],
+      "name_en": "Spire Inc."
+    },
+    {
+      "id": "NCEMC",
+      "ticker": "NCEMC",
+      "name": "ノースカロライナ電力協同組合",
+      "sub": "電力協同組合",
+      "sub_en": "Electric cooperative",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "既存の供給契約に基づき、新設ガス発電設備を共同保有する権利を持つ",
+          "text_en": "NCEMC has a right to co-own the new facility under its existing supply agreement with Duke Energy Progress",
+          "source": {
+            "label": "Duke Energy 10-K(2025-12-31)",
+            "label_en": "Duke Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616026000014/duk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "NCEMC has the right to co-own the facility under its existing supply agreement with Duke Energy Progress."
+          }
+        }
+      ],
+      "name_en": "North Carolina Electric Membership Corporation"
+    },
+    {
+      "id": "D",
+      "ticker": "D",
+      "name": "ドミニオン・エナジー",
+      "sub": "電力・ガス公益",
+      "sub_en": "Electric & gas utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大西洋岸パイプライン社を共同で所有している",
+          "text_en": "Dominion and Duke Energy jointly own Atlantic Coast Pipeline, LLC",
+          "source": {
+            "label": "Duke Energy 10-K(2025-12-31)",
+            "label_en": "Duke Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616026000014/duk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Atlantic Coast Pipeline, LLC, a limited liability company owned by Dominion and Duke Energy"
+          }
+        }
+      ],
+      "name_en": "Dominion Energy"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同社の供給地域で、クラウドとAIの拠点を新設する100億ドルの投資を計画している",
+          "text_en": "Amazon plans a $10 billion cloud computing and AI campus in Richmond County, North Carolina, within Duke Energy's territory",
+          "source": {
+            "label": "Duke Energy 10-K(2025-12-31)",
+            "label_en": "Duke Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616026000014/duk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Amazon's planned $10 billion investment to launch a new high-tech cloud computing and AI innovation campus in Richmond County, North Carolina."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

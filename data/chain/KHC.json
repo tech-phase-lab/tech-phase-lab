@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "KHC",
+    "name": "クラフト・ハインツ",
+    "cik": 1637459,
+    "name_en": "Kraft Heinz"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売大手",
+      "sub_en": "Retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、純売上高の約21%を占める",
+          "text_en": "Largest customer, about 21% of net sales in 2025",
+          "source": {
+            "label": "Kraft Heinz 10-K(2025-12-27)",
+            "label_en": "Kraft Heinz 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1637459/000163745926000009/khc-20251227.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our largest customer, Walmart Inc., represented approximately 21% of our net sales in 2025, 2024, and 2023."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "LACTALIS",
+      "ticker": "Groupe Lactalis",
+      "name": "ラクタリス",
+      "sub": "乳製品大手",
+      "sub_en": "Dairy group",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラクタリス系企業との契約で、相互に知的財産のライセンスを永続的に付与している",
+          "text_en": "Granted licenses to an affiliate of Lactalis for intellectual property in perpetuity under their agreements",
+          "source": {
+            "label": "Kraft Heinz 10-K(2025-12-27)",
+            "label_en": "Kraft Heinz 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1637459/000163745926000009/khc-20251227.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In our agreements with an affiliate of Groupe Lactalis (“Lactalis”), we granted the other party various licenses to use certain of our and their respective intellectual property rights in perpetuity, including perpetual licenses for the Kraft and Velveeta brands for certain cheese products."
+          }
+        }
+      ],
+      "name_en": "Groupe Lactalis"
+    },
+    {
+      "id": "BRK",
+      "ticker": "BRK.B",
+      "name": "バークシャー・ハサウェイ",
+      "sub": "大株主",
+      "sub_en": "Major shareholder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "当社の普通株式の約27.5%を保有している",
+          "text_en": "Owns about 27.5% of the common stock",
+          "source": {
+            "label": "Kraft Heinz 10-K(2025-12-27)",
+            "label_en": "Kraft Heinz 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1637459/000163745926000009/khc-20251227.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "As of January 16, 2026, Berkshire Hathaway Inc. (“Berkshire Hathaway”) owns approximately 27.5% of our common stock."
+          }
+        }
+      ],
+      "name_en": "Berkshire Hathaway"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

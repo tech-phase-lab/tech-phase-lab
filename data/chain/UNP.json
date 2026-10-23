@@ -1,0 +1,107 @@
+{
+  "root": {
+    "ticker": "UNP",
+    "name": "ユニオン・パシフィック",
+    "cik": 100885,
+    "name_en": "Union Pacific"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NSC",
+      "ticker": "NSC",
+      "name": "ノーフォーク・サザン",
+      "sub": "東部の鉄道会社",
+      "sub_en": "Eastern railroad",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノーフォーク・サザンの買収を二段階の合併で進める合意を結んでいる",
+          "text_en": "The two signed a merger agreement for Union Pacific to acquire Norfolk Southern through two mergers",
+          "source": {
+            "label": "Union Pacific 10-K(2025年12月31日期)",
+            "label_en": "Union Pacific 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000037/unp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The merger agreement provides, among other things, for the acquisition of Norfolk Southern by Union Pacific, subject to the satisfaction or waiver of the conditions specified therein, through two mergers"
+          }
+        }
+      ],
+      "name_en": "Norfolk Southern"
+    },
+    {
+      "id": "BNSF",
+      "ticker": "BNSF Railway",
+      "name": "BNSF鉄道",
+      "sub": "競合の鉄道",
+      "sub_en": "Rival railroad",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BNSFは、同社の主要な輸送路の多くで並行する路線を運行している",
+          "text_en": "BNSF operates parallel routes in many of Union Pacific's main traffic corridors",
+          "source": {
+            "label": "Union Pacific 10-K(2025年12月31日期)",
+            "label_en": "Union Pacific 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000037/unp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Its primary subsidiary, BNSF Railway Company (BNSF), operates parallel routes in many of our main traffic corridors."
+          }
+        }
+      ],
+      "name_en": "BNSF Railway"
+    },
+    {
+      "id": "TTX",
+      "ticker": "TTX",
+      "name": "TTX社",
+      "sub": "貨車プール会社",
+      "sub_en": "Rail car pooling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UPRRは、北米の他の鉄道会社とTTXを共同で所有している",
+          "text_en": "UPRR and other North American railroads jointly own TTX",
+          "source": {
+            "label": "Union Pacific 10-K(2025年12月31日期)",
+            "label_en": "Union Pacific 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000037/unp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "UPRR and other North American railroad companies jointly own TTX Company (TTX)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TTXの貨車は、各鉄道会社が賃借料を払って利用できる",
+          "text_en": "All railroads may rent TTX rail cars at stated rates",
+          "source": {
+            "label": "Union Pacific 10-K(2025年12月31日期)",
+            "label_en": "Union Pacific 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000037/unp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "All railroads may utilize TTX rail cars through car hire by renting rail cars at stated rates."
+          }
+        }
+      ],
+      "name_en": "TTX Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

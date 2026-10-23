@@ -1,0 +1,120 @@
+{
+  "root": {
+    "ticker": "LYB",
+    "name": "ライオンデルバセル・インダストリーズ",
+    "cik": 1489393,
+    "name_en": "LyondellBasell Industries"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SASOL",
+      "ticker": "Sasol Chemicals",
+      "name": "サソル",
+      "sub": "化学・合弁相手",
+      "sub_en": "Chemicals, JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ルイジアナ・インテグレイテッド・ポリエチレン合弁を、サソルのUS子会社と共同で保有する",
+          "text_en": "LyondellBasell shares ownership of the Louisiana Integrated PolyEthylene JV with Sasol Chemicals (USA)",
+          "source": {
+            "label": "LyondellBasell 10-K(2025年12月31日期)",
+            "label_en": "LyondellBasell 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1489393/000148939326000012/lyb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We share ownership in the Louisiana Integrated PolyEthylene JV LLC joint venture (the “Louisiana Joint Venture”) with Sasol Chemicals (USA) LLC."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "合弁の各パートナーは、エタン原料を持分に応じて出し、製品も現物で持分に応じて引き取る",
+          "text_en": "Each partner supplies its pro-rata share of ethane and takes pro-rata shares of cracker and polyethylene products in kind",
+          "source": {
+            "label": "LyondellBasell 10-K(2025年12月31日期)",
+            "label_en": "LyondellBasell 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1489393/000148939326000012/lyb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Under the terms of the joint venture agreement, each partner provides pro-rata share of ethane feedstocks and off-takes pro-rata shares of cracker and polyethylene products in-kind."
+          }
+        }
+      ],
+      "name_en": "Sasol Chemicals (USA)"
+    },
+    {
+      "id": "COVESTRO",
+      "ticker": "Covestro",
+      "name": "コベストロ",
+      "sub": "高機能素材・合弁相手",
+      "sub_en": "Materials, JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国とオランダの酸化プロピレン合弁2件を、コベストロと共同で保有している",
+          "text_en": "It co-owns a U.S. propylene oxide JV and a European PO/styrene JV with Covestro",
+          "source": {
+            "label": "LyondellBasell 10-K(2025年12月31日期)",
+            "label_en": "LyondellBasell 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1489393/000148939326000012/lyb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We share ownership with Covestro PO LLC, a subsidiary of Covestro AG (collectively “Covestro”), in a U.S. propylene oxide (“PO”) joint venture located in Texas (the “U.S. PO Joint Venture”) and a PO/styrene monomer (“SM” or “styrene”) joint venture located in The Netherlands (the “European PO Joint Venture”)."
+          }
+        }
+      ],
+      "name_en": "Covestro"
+    },
+    {
+      "id": "NATPET",
+      "ticker": "NPC",
+      "name": "ナショナル・ペトロケミカル・インダストリアル",
+      "sub": "サウジの石化合弁",
+      "sub_en": "Saudi petrochemical JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年5月に、サウジの石化会社の35%の持分をアルジャインから約5億ドルで取得した",
+          "text_en": "In May 2024 it acquired a 35% interest in this Saudi company from Alujain for about $500 million",
+          "source": {
+            "label": "LyondellBasell 10-K(2025年12月31日期)",
+            "label_en": "LyondellBasell 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1489393/000148939326000012/lyb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In May 2024, we acquired a 35 % interest in Saudi Arabia-based National Petrochemical Industrial Company from Alujain Corporation for approximately $ 500 million."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "この合弁の生産品の大半は、同社のグローバル販売チームが販売する",
+          "text_en": "LyondellBasell markets the majority of the joint venture's off-take through its global sales team",
+          "source": {
+            "label": "LyondellBasell 10-K(2025年12月31日期)",
+            "label_en": "LyondellBasell 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1489393/000148939326000012/lyb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We market the majority of the off-take through our global sales team."
+          }
+        }
+      ],
+      "name_en": "National Petrochemical Industrial Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

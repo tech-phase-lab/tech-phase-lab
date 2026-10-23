@@ -1,0 +1,134 @@
+{
+  "root": {
+    "ticker": "MCK",
+    "name": "マッケソン",
+    "cik": 927653,
+    "name_en": "McKesson Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "COR",
+    "CAH"
+  ],
+  "companies": [
+    {
+      "id": "CVS",
+      "ticker": "CVS",
+      "name": "CVSヘルス",
+      "sub": "薬局・最大顧客",
+      "sub_en": "Pharmacy, top customer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客であり、2026年度の連結売上高の約24%を占めた",
+          "text_en": "CVS is the largest customer, accounting for approximately 24% of consolidated revenues in fiscal 2026",
+          "source": {
+            "label": "McKesson 10-K(2026-03-31)",
+            "label_en": "McKesson 10-K (fiscal year ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000069/mck-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "Sales to our largest customer, CVS Health Corporation (“CVS”), accounted for approximately 24% of our total consolidated revenues in fiscal 2026."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CVSとの医薬品流通の提携を2027年6月まで延長した",
+          "text_en": "The pharmaceutical distribution partnership with CVS was extended to June 2027",
+          "source": {
+            "label": "McKesson 10-K(2026-03-31)",
+            "label_en": "McKesson 10-K (fiscal year ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000069/mck-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "In fiscal 2023, we extended our pharmaceutical distribution partnership with CVS to June 2027."
+          }
+        }
+      ],
+      "name_en": "CVS Health"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売・合弁",
+      "sub_en": "Retail, joint venture",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウォルマートとの合弁会社ClarusONEを通じて、ジェネリック医薬品を調達している",
+          "text_en": "Generic drugs are sourced through the ClarusONE joint venture with Walmart",
+          "source": {
+            "label": "McKesson 10-K(2026-03-31)",
+            "label_en": "McKesson 10-K (fiscal year ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000069/mck-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "We also source generic pharmaceutical drugs through our ClarusONE Sourcing Services LLP joint venture with Walmart Inc."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "センコラ",
+      "sub": "医薬品卸・競合",
+      "sub_en": "Drug wholesale rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "流通・卸売・物流分野の主な競合はCencoraとCardinal Healthである",
+          "text_en": "Cencora and Cardinal Health are the primary competitors in distribution, wholesaling, and logistics",
+          "source": {
+            "label": "McKesson 10-K(2026-03-31)",
+            "label_en": "McKesson 10-K (fiscal year ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000069/mck-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "Our primary competitors in distribution, wholesaling, and logistics are Cencora, Inc. and Cardinal Health, Inc."
+          }
+        }
+      ],
+      "name_en": "Cencora"
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸・競合",
+      "sub_en": "Drug wholesale rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "流通・卸売・物流分野の主な競合はCencoraとCardinal Healthである",
+          "text_en": "Cencora and Cardinal Health are the primary competitors in distribution, wholesaling, and logistics",
+          "source": {
+            "label": "McKesson 10-K(2026-03-31)",
+            "label_en": "McKesson 10-K (fiscal year ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000069/mck-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "Our primary competitors in distribution, wholesaling, and logistics are Cencora, Inc. and Cardinal Health, Inc."
+          }
+        }
+      ],
+      "name_en": "Cardinal Health"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "root": {
+    "ticker": "AFL",
+    "name": "アフラック・インコーポレーテッド",
+    "cik": 4977,
+    "name_en": "Aflac Incorporated"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JPHD",
+      "ticker": "Japan Post",
+      "name": "日本郵政",
+      "sub": "郵便・金融グループ",
+      "sub_en": "Postal & financial group",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アフラック・ジャパンは2008年に日本郵政グループと提携し、代理店チャネルの一つとして販売を担ってもらっている",
+          "text_en": "Aflac Japan's alliance with Japan Post Group was launched in 2008 as part of its affiliated corporate agencies channel",
+          "source": {
+            "label": "Aflac 10-K(2025年12月31日)",
+            "label_en": "Aflac 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Japan Post Group Aflac Japan's alliance with Japan Post Group, which is included in Aflac Japan's affiliated corporate agencies distribution channel, was launched in 2008."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "日本郵政とアフラック・ジャパンは、がん保険の既存の取り組みを再確認し、新たな共同の取り組みを検討することで合意した",
+          "text_en": "Japan Post Holdings and Aflac Japan agreed to reconfirm existing cancer insurance initiatives and to consider new joint initiatives",
+          "source": {
+            "label": "Aflac 10-K(2025年12月31日)",
+            "label_en": "Aflac 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Pursuant to the terms of the Basic Agreement, among other items, Japan Post Holdings and Aflac Japan agreed to reconfirm existing initiatives regarding cancer insurance and to consider new joint initiatives."
+          }
+        }
+      ],
+      "name_en": "Japan Post Holdings"
+    },
+    {
+      "id": "DAIICHI",
+      "ticker": "Dai-ichi Life",
+      "name": "第一生命",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2001年に始まった提携で、第一生命の約37,000人の営業職員がアフラック・ジャパンのがん保険を販売している",
+          "text_en": "The alliance started in 2001, and approximately 37,000 Dai-ichi Life representatives offer Aflac Japan's cancer products",
+          "source": {
+            "label": "Aflac 10-K(2025年12月31日)",
+            "label_en": "Aflac 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Aflac Japan's alliance with Dai-ichi Life was launched in 2001, and approximately 37,000 Dai-ichi Life representatives offer Aflac Japan's cancer products."
+          }
+        }
+      ],
+      "name_en": "Dai-ichi Life"
+    },
+    {
+      "id": "DAIDO",
+      "ticker": "Daido Life",
+      "name": "大同生命",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年に始まった提携で、大同生命の約3,700人の営業職員が主に中小企業の経営者や従業員向けにがん保険を販売している",
+          "text_en": "The alliance started in 2013, and approximately 3,700 Daido Life representatives offer Aflac Japan's cancer products mainly to small and medium-sized business owners, executives and employees",
+          "source": {
+            "label": "Aflac 10-K(2025年12月31日)",
+            "label_en": "Aflac 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Aflac Japan's alliance with Daido Life was launched in 2013, and approximately 3,700 Daido Life representatives offer Aflac Japan's cancer products to mainly small and medium-sized business owners, executives and employees."
+          }
+        }
+      ],
+      "name_en": "Daido Life"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

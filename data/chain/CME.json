@@ -1,0 +1,202 @@
+{
+  "root": {
+    "ticker": "CME",
+    "name": "CMEグループ",
+    "cik": 1156375,
+    "name_en": "CME Group"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ICE",
+    "CBOE"
+  ],
+  "companies": [
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル・クラウド",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2021年にグーグル・クラウドと10年間の戦略的提携を結んだ",
+          "text_en": "In 2021 CME entered a 10-year strategic partnership with Google Cloud",
+          "source": {
+            "label": "CME Group 10-K(2025年12月31日)",
+            "label_en": "CME Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Partnership with Google Cloud - In 2021, we entered into a 10-year strategic partnership with Google Cloud to accelerate our move to the cloud."
+          }
+        }
+      ],
+      "name_en": "Google Cloud"
+    },
+    {
+      "id": "FLUT",
+      "ticker": "FLUT",
+      "name": "フラッターのファンデュエル",
+      "sub": "予測市場の合弁",
+      "sub_en": "Prediction-market JV",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ファンデュエルとの合弁事業は2025年12月に始まった",
+          "text_en": "The joint venture with FanDuel launched in December 2025",
+          "source": {
+            "label": "CME Group 10-K(2025年12月31日)",
+            "label_en": "CME Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our joint venture with FanDuel, a part of Flutter Entertainment plc, launched in December 2025."
+          }
+        }
+      ],
+      "name_en": "FanDuel (Flutter Entertainment)"
+    },
+    {
+      "id": "SPGI",
+      "ticker": "SPGI",
+      "name": "S&Pグローバル",
+      "sub": "指数・格付け",
+      "sub_en": "Indices & ratings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "S&Pグローバルとの合弁を通じてS&P500の先物・オプションの独占ライセンスを持つ",
+          "text_en": "Through its JV with S&P Global, CME holds an exclusive license to list S&P 500 futures and options",
+          "source": {
+            "label": "CME Group 10-K(2025年12月31日)",
+            "label_en": "CME Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Through our joint venture with S&P Global, S&P Dow Jones Indices LLC, we have a long-term, ownership-linked, exclusive license to list futures and options based on the S&P 500 Index and certain other S&P indices."
+          }
+        }
+      ],
+      "name_en": "S&P Global"
+    },
+    {
+      "id": "SGX",
+      "ticker": "SGX",
+      "name": "シンガポール取引所",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シンガポール取引所とは2027年4月までの相互オフセット契約がある",
+          "text_en": "CME and SGX have a mutual offset agreement with a current term through April 2027",
+          "source": {
+            "label": "CME Group 10-K(2025年12月31日)",
+            "label_en": "CME Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "CME and Singapore Exchange Limited (SGX) maintain a mutual offset agreement with a current term through April 2027."
+          }
+        }
+      ],
+      "name_en": "Singapore Exchange"
+    },
+    {
+      "id": "DTCC",
+      "ticker": "DTCC",
+      "name": "預託信託決済機構(DTCC)",
+      "sub": "清算機関",
+      "sub_en": "Clearing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DTCCとの提携で、清算参加者の証拠金の効率が高まった",
+          "text_en": "A partnership with DTCC offers enhanced capital efficiencies to eligible clearing firms",
+          "source": {
+            "label": "CME Group 10-K(2025年12月31日)",
+            "label_en": "CME Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have enhanced our arrangement with FICC through the partnership with The Depository Trust & Clearing Corporation (DTCC) to offer enhanced capital efficiencies to our eligible clearing firms."
+          }
+        }
+      ],
+      "name_en": "DTCC"
+    },
+    {
+      "id": "ICE",
+      "ticker": "ICE",
+      "name": "インターコンチネンタル取引所",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前が挙がる取引所の一つ",
+          "text_en": "One of the exchanges named as competitors",
+          "source": {
+            "label": "CME Group 10-K(2025年12月31日)",
+            "label_en": "CME Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include, among other entities, exchanges such as Intercontinental Exchange, Inc. (ICE), Cboe Global Markets (Cboe), Euronext N.V., the Hong Kong Exchanges and Clearing Limited (HKEX), and Deutsche Börse AG."
+          }
+        }
+      ],
+      "name_en": "Intercontinental Exchange"
+    },
+    {
+      "id": "CBOE",
+      "ticker": "CBOE",
+      "name": "シーボー・グローバル・マーケッツ",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前が挙がる取引所の一つ",
+          "text_en": "One of the exchanges named as competitors",
+          "source": {
+            "label": "CME Group 10-K(2025年12月31日)",
+            "label_en": "CME Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include, among other entities, exchanges such as Intercontinental Exchange, Inc. (ICE), Cboe Global Markets (Cboe), Euronext N.V., the Hong Kong Exchanges and Clearing Limited (HKEX), and Deutsche Börse AG."
+          }
+        }
+      ],
+      "name_en": "Cboe Global Markets"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
