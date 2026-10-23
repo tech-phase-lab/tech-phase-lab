@@ -24,7 +24,7 @@ const parse = item => publicNewsPayload(payload([item])).officialUpdates[0];
 
 test('public reported-news ticker registry exactly matches both existing approved X source scopes', async () => {
   const sources = JSON.parse(await readFile(new URL('../scripts/research/signal_sources.json', import.meta.url), 'utf8'));
-  assert.equal(reportedNewsTickers.length, 41);
+  assert.equal(reportedNewsTickers.length, 42);
   assert.equal(new Set(reportedNewsTickers).size, reportedNewsTickers.length);
   for (const id of ['x-tipranks', 'x-wallstengine']) {
     const source = sources.find(source => source.id === id);
