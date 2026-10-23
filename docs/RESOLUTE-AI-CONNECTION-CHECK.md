@@ -1,3 +1,5 @@
+Latest source recovery: [actual R2 receipt](EXTERNAL-SOURCE-BACKUP-AFTER-AI-CHECK-2026-10-23.md).
+
 ## Live verification update — 2026-10-23 JST
 
 The preparation-only statements below are historical. Owner reports schema COMMIT
