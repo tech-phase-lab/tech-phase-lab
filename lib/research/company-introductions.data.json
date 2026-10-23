@@ -87373,5 +87373,1046 @@
       "competition": [],
       "relationships": []
     }
+  },
+  {
+    "cik": 1299709,
+    "tickers": [
+      "AX"
+    ],
+    "name": "Axos Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Axos Financial Form 10-K (filed 2025-08-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1299709/000129970925000125/ax-20250630.htm"
+      }
+    ],
+    "ja": {
+      "business": "ネット銀行と証券の清算・保管サービスを手がける金融会社。",
+      "revenue": "銀行部門は預金と住宅ローンや商業用不動産ローンなどの貸出で稼ぐ。証券部門は預かり資産や取引に応じた手数料と利息が柱。",
+      "strength": "オンラインとモバイルの銀行基盤を使い、低コストの販路や提携先を通じて全米に商品を届ける点が特徴。",
+      "risks": "金利の変動で収益が左右される。銀行や金融会社との顧客獲得競争、規制の変更や不動産ローンの焦げ付きも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial company running a digital bank plus securities clearing and custody services.",
+      "revenue": "The bank earns from deposits and loans such as home mortgages and commercial real estate loans. The securities side earns interest and fees tied to assets and transactions.",
+      "strength": "Its digital online and mobile banking platforms, low-cost distribution channels and affinity partners let it serve customers nationwide.",
+      "risks": "Changes in interest rates can hurt results. It also faces competition for customers, regulatory change and possible defaults on real estate loans.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1685040,
+    "tickers": [
+      "BHF"
+    ],
+    "name": "Brighthouse Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Brighthouse Financial Form 10-K (filed 2025-02-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504025000010/bhf-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "年金や生命保険を販売する米国の大手保険会社。",
+      "revenue": "年金と生命保険の商品を独立系の販売網を通じて売って稼ぐ。2024年12月末の契約は多数。",
+      "strength": "複数の独立した販売チャネルと多様な販売パートナーの網を持つのが特徴。",
+      "risks": "保証付き商品のリスク管理費用が重い。格付けの低下や金利の変動、競争の激化にも弱い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A large U.S. provider of annuity and life insurance products.",
+      "revenue": "It earns money selling annuity and life insurance products through independent channels.",
+      "strength": "A network of multiple independent distribution channels and diverse distribution partners is its hallmark.",
+      "risks": "Guarantees in its products raise risk management costs. A ratings downgrade, interest rate moves and tougher competition can hurt it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1048477,
+    "tickers": [
+      "BMRN"
+    ],
+    "name": "BioMarin",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BioMarin Form 10-K (filed 2025-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1048477/000104847725000007/bmrn-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "希少な遺伝性疾患の治療薬を開発・販売するバイオ企業。",
+      "revenue": "希少な遺伝性疾患向けの治療薬の販売で稼ぐ。売上の多くを米国外が占める。",
+      "strength": "8つの商品化済み治療薬と、臨床前を含む開発パイプラインを持つのが特徴。",
+      "risks": "患者数が少なく高い薬価に頼る。承認の遅れや保険償還、薬価規制が重荷になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A biotech company that develops medicines for rare genetic conditions.",
+      "revenue": "It earns money selling therapies for rare genetic conditions, with a significant share of sales outside the U.S.",
+      "strength": "Eight commercial therapies plus a clinical and preclinical pipeline are its core assets.",
+      "risks": "Small patient populations mean it relies on high prices. Approval delays, reimbursement and price controls can weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 354647,
+    "tickers": [
+      "CVBF"
+    ],
+    "name": "CVB Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "CVB Financial Form 10-K (filed 2025-02-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/354647/000095017025029985/cvbf-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "カリフォルニア州で中小企業向けの銀行サービスを行う持株会社。",
+      "revenue": "傘下のシチズンズ・ビジネス・バンクの62拠点で、預金口座のほか信託・投資商品などを提供して稼ぐ。",
+      "strength": "拠点網を通じた個人向けの手厚い対応が特徴。中小企業とその経営者を主な顧客に据える。",
+      "risks": "マネーロンダリング対策や消費者保護の法令に違反すると、罰金などの制裁を受けうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A California bank holding company serving small and medium-sized businesses.",
+      "revenue": "Through 62 Banking Centers of Citizens Business Bank, it earns from deposit accounts plus trust and investment products.",
+      "strength": "It stands out for personalized service through its center network, aimed at small and medium-sized businesses and their owners.",
+      "risks": "Breaking anti-money laundering or consumer protection laws could bring fines and other penalties.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1061983,
+    "tickers": [
+      "CYTK"
+    ],
+    "name": "Cytokinetics",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Cytokinetics Form 10-K (filed 2025-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1061983/000095017025029206/cytk-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "筋肉の働きを高めたり抑えたりする薬を開発する後期段階のバイオ医薬企業。",
+      "revenue": "主力候補のアフィカムテンは承認待ちの段階で、承認後に米国と欧州で販売して稼ぐ計画。",
+      "strength": "細胞骨格の研究から生まれた低分子薬の候補群が特徴。心臓と神経筋の病気に絞って開発する。",
+      "risks": "競合の大手製薬会社は資金力や開発体制で上回る。承認済みのCamzyosとの競争も控える。",
+      "competition": "主な競合にBristol Myers Squibb、Edgewise Therapeuticsがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A late-stage biopharma company developing drugs that activate or inhibit muscle function.",
+      "revenue": "Its lead candidate aficamten awaits approval; sales in the U.S. and Europe are planned after approval.",
+      "strength": "Its small-molecule candidates all come from cytoskeleton research, focused on heart and neuromuscular diseases.",
+      "risks": "Larger drug makers have more capital and staff, and it must also face the approved drug Camzyos.",
+      "competition": "Main competitors include Bristol Myers Squibb, Edgewise Therapeutics.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Bristol Myers Squibb",
+          "ticker": "BMY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Edgewise Therapeutics",
+          "ticker": "EWTX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1411342,
+    "tickers": [
+      "EFC"
+    ],
+    "name": "Ellington Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ellington Financial Form 10-K (filed 2025-03-03) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1411342/000141134225000015/efc-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅ローンや消費者ローンなどに投資する、外部運用のREIT。",
+      "revenue": "住宅ローン、商業用不動産債権、各種証券化商品に投資して稼ぐ。子会社Longbridgeは逆住宅ローンの組成や販売、管理も手がける。",
+      "strength": "運用会社Ellingtonから多様な資産の取得や売却の情報を得られる点が、競争上の優位。",
+      "risks": "競合には資金力で勝る大手が多い。調達コストが低い相手もいて、資産の取得で不利になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An externally managed REIT that invests in residential mortgage loans, consumer loans and other financial assets.",
+      "revenue": "It earns from investments in residential mortgage loans, commercial real estate debt and securitized assets. Its unit Longbridge also originates, sells and services reverse mortgages.",
+      "strength": "Access to a wide range of asset buy and sell opportunities through manager Ellington is a competitive advantage.",
+      "risks": "Many rivals are larger and better funded, and some borrow more cheaply, which can hurt it when buying assets.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 860413,
+    "tickers": [
+      "FIBK"
+    ],
+    "name": "First Interstate BancSystem",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "First Interstate BancSystem Form 10-K (filed 2025-02-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/860413/000086041325000022/fibk-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "14州で地域密着型の銀行業を営む持株会社。",
+      "revenue": "300の店舗網を通じ、個人や企業、政府機関向けの銀行商品・サービスで稼ぐ。",
+      "strength": "コミュニティバンキングが軸。オンラインやモバイルバンキングも含む幅広い商品を揃える。",
+      "risks": "金利変動や貸倒損失、融資先の業種集中を抱える。非銀行を含む金融機関との競争も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company focused on community banking across 14 states.",
+      "revenue": "It earns from banking products and services sold to individuals, businesses and governments through 300 banking offices.",
+      "strength": "Community banking is its core, with a broad product range that includes online and mobile banking.",
+      "risks": "Interest rate swings, loan losses and loan sector concentration weigh on it, as does competition from banks and non-banks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 37808,
+    "tickers": [
+      "FNB"
+    ],
+    "name": "F.N.B. Corporation",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "F.N.B. Corporation Form 10-K (filed 2025-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/37808/000003780825000071/fnb-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ペンシルベニア州ピッツバーグに本社を置く銀行持株会社。",
+      "revenue": "地域銀行、資産運用、保険の各事業で稼ぐ。349の支店をペンシルベニア州などとワシントンD.C.に持つ。",
+      "strength": "現場に権限を持たせた地域密着型で、融資業務やリスク管理は一本化して効率を高める。1864年から続く。",
+      "risks": "銀行や信用組合、フィンテック企業などと融資や預金を競う。人材確保と技術投資も競争力を左右する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company headquartered in Pittsburgh, Pennsylvania.",
+      "revenue": "It earns through community banking, wealth management and insurance, with 349 branches across Pennsylvania, Ohio, Maryland, Virginia and other areas, plus Washington, D.C.",
+      "strength": "Local managers have real autonomy, while loan operations and risk functions are centralized for efficiency. It has operated since 1864.",
+      "risks": "It competes for loans and deposits with banks, credit unions and fintech firms. Hiring staff and keeping up on technology also decide how well it competes.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1192448,
+    "tickers": [
+      "GKOS"
+    ],
+    "name": "Glaukos",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Glaukos Form 10-K (filed 2025-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1192448/000155837025001402/gkos-20241231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "緑内障などの目の病気に、点眼に頼らない治療を開発・販売する会社。",
+      "revenue": "2024年の売上の約79%はiStent製品群とiDose TR、約21%はiLink治療で稼ぐ。",
+      "strength": "極小の手術器具によるMIGSを2012年に初めて商品化した。豊富なデータに裏づけられた臨床上の優位性で競う。",
+      "risks": "大手を含む多くの企業と競い、新技術で製品が時代遅れになりうる。iDose TRの成否や保険償還にも左右される。",
+      "competition": "主な競合にAlcon、Sight Sciences、AbbVie Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company developing and selling dropless therapies for glaucoma and other eye diseases.",
+      "revenue": "About 79% of 2024 net sales came from the iStent family and iDose TR, and about 21% from iLink therapies.",
+      "strength": "It launched MIGS, a micro-scale glaucoma surgery, commercially in 2012. It competes on clinical superiority backed by extensive data.",
+      "risks": "It faces many competitors, including much larger ones, and new technology could make its products obsolete. iDose TR's success and reimbursement are also uncertain.",
+      "competition": "Main competitors include Alcon, Sight Sciences, AbbVie Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Alcon",
+          "ticker": "ALC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Sight Sciences",
+          "ticker": "SGHT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AbbVie Inc.",
+          "ticker": "ABBV",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 750577,
+    "tickers": [
+      "HWC"
+    ],
+    "name": "Hancock Whitney",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hancock Whitney Form 10-K (filed 2025-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/750577/000095017025028009/hwc-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ミシシッピ州を拠点とする銀行持株会社で、傘下の銀行が総合金融サービスを行う。",
+      "revenue": "南部の州で、預金・融資・信託・資産運用などのサービスを法人や個人向けに提供して稼ぐ。",
+      "strength": "大手地銀の商品力と、地域密着の銀行の対応力を併せ持つ点が特徴。",
+      "risks": "預金金利は地域の競合の金利などに左右される。Sabal Trust買収は規制当局の承認待ち。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Mississippi-based bank holding company whose bank subsidiary provides broad financial services.",
+      "revenue": "It earns money from deposits, loans, trust and investment services for businesses and individuals across the southern U.S.",
+      "strength": "It combines the product range of a regional bank with the service level of a community bank.",
+      "risks": "Deposit rates depend on rates offered by local competitors, and the Sabal Trust deal awaits regulatory approval.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1521036,
+    "tickers": [
+      "LNTH"
+    ],
+    "name": "Lantheus",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lantheus Form 10-K (filed 2025-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1521036/000162828025007970/lnth-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "放射性医薬品に特化し、がんなどの診断薬と治療薬を手がける会社。",
+      "revenue": "がん向け放射性医薬品、精密診断、提携事業の三つで稼ぐ。主に病院や画像診断施設、放射性薬局に販売する。",
+      "strength": "診断から治療まで担う「Find, Fight and Follow」が特徴。PYLARIFYはPSMA PET画像診断薬で最も使われている。",
+      "risks": "PYLARIFYは2026年に独占期間が切れ、後発品との競争が強まりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company focused on radiopharmaceuticals, making diagnostic and therapeutic products for cancer and other diseases.",
+      "revenue": "It earns from cancer radiopharmaceuticals, precision diagnostics and partnerships, selling mainly to hospitals, imaging centers and radiopharmacies.",
+      "strength": "Its Find, Fight and Follow approach spans diagnosis to treatment, and PYLARIFY is the most utilized PSMA PET imaging agent.",
+      "risks": "PYLARIFY's exclusivity period expires in 2026, which could invite generic competition.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1032220,
+    "tickers": [
+      "MMS"
+    ],
+    "name": "Maximus",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Maximus Form 10-K (filed 2024-11-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1032220/000103222024000094/mms-20240930.htm"
+      }
+    ],
+    "ja": {
+      "business": "政府向けに医療・福祉サービスの運営や技術支援を行う会社。",
+      "revenue": "連邦政府機関から約50%、州政府機関から36%、外国政府機関から12%の売上を得て稼ぐ。",
+      "strength": "政府プログラムの知見と、成果を出す実績が特徴。入札の経験も参入障壁になる。",
+      "risks": "主な競合は政府の内製部門。民間企業や非営利団体とも契約を争う。",
+      "competition": "主な競合にConduent、TTEC、IBMがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs health and human services programs and technology support for governments.",
+      "revenue": "It earns about 50% of revenue from U.S. federal agencies, 36% from U.S. state agencies and 12% from foreign governments.",
+      "strength": "Its government program expertise and record of delivering measurable outcomes set it apart. Bidding experience also raises barriers to entry.",
+      "risks": "Its main competitors are governments' own in-house operations, and it also contests contracts with private firms and nonprofits.",
+      "competition": "Main competitors include Conduent, TTEC, IBM.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Conduent",
+          "ticker": "CNDT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "TTEC",
+          "ticker": "TTEC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "IBM",
+          "ticker": "IBM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 821483,
+    "tickers": [
+      "PARR"
+    ],
+    "name": "Par Pacific",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Par Pacific Form 10-K (filed 2025-02-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/821483/000082148325000010/parr-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国西部で石油製品を作り売る、製油・小売・物流のエネルギー会社。",
+      "revenue": "ハワイやワシントン州などの製油所で燃料を作り、小売店と物流網でも稼ぐ。",
+      "strength": "原油処理能力は合計219 Mbpd。製油、小売、物流を一体で持つのが特徴。",
+      "risks": "火災や爆発などの事故が操業を止めうる。地政学的な対立で原油価格も振れる。",
+      "competition": "主な競合にShell、Costco、Chevron、Exxonがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An energy company that refines, retails and ships fuels across the western U.S..",
+      "revenue": "It makes fuel at refineries in Hawaii, Washington and elsewhere, and earns from retail outlets and logistics too.",
+      "strength": "Its refineries have total crude capacity of 219 Mbpd, and it runs refining, retail and logistics together.",
+      "risks": "Fires, explosions and other accidents can halt operations, and geopolitical conflicts make crude prices volatile.",
+      "competition": "Main competitors include Shell, Costco, Chevron, Exxon.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Shell",
+          "ticker": "SHEL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Costco",
+          "ticker": "COST",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Chevron",
+          "ticker": "CVX",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Exxon",
+          "ticker": "XOM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1551306,
+    "tickers": [
+      "PGNY"
+    ],
+    "name": "Progyny",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Progyny Form 10-K (filed 2025-03-03) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1551306/000155130625000040/pgny-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けに不妊治療や家族形成の福利厚生を運営する会社。",
+      "revenue": "530を超える雇用主の従業員向けに給付を提供して稼ぐ。従業員と家族が対象。",
+      "strength": "治療一式をまとめたSmart Cycleと、専任の患者支援担当者が特徴。専門医の厳選ネットワークも持つ。",
+      "risks": "主な競合は大手の医療保険会社。保険会社系の専門サービスや投資家出資の新興企業とも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs fertility and family-building benefits for employers.",
+      "revenue": "It earns by providing benefits to employees of more than 530 employer clients, covering their dependents too.",
+      "strength": "Its Smart Cycle bundles a full course of treatment, each member gets a dedicated Patient Care Advocate, and it keeps a selective network of fertility specialists.",
+      "risks": "Health insurance companies are its primary competition. Insurer-backed specialty services and venture-backed firms also compete.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1046102,
+    "tickers": [
+      "RBA"
+    ],
+    "name": "RB Global",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "RB Global Form 10-K (filed 2025-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1046102/000162828025008201/rba-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "商用資産や事故車などの売り手と買い手をつなぐ、世界展開の取引市場の会社。",
+      "revenue": "自動車保険会社や車両・機械の保有者などの売却を、オークションとオンラインで仲介して稼ぐ。自動車と、建設・商用輸送が中心。",
+      "strength": "世界の拠点網と買い手の厚み、データ分析、顧客との長い付き合いが特徴。Ritchie Bros.とIAAのブランドを持つ。",
+      "risks": "取引の中心を担う保険会社への依存が大きい。景気や金利の影響で機械の取引が鈍る点、Copartなどとの競争も抱える。",
+      "competition": "主な競合にCopart, Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global marketplace that connects buyers and sellers of commercial assets and damaged vehicles.",
+      "revenue": "It earns by brokering sales of vehicles and equipment, mostly for auto insurers and equipment owners, through auctions and online. Automotive and construction and transportation lead.",
+      "strength": "Its traits are a global site network, a deep buyer base, data analytics and long customer ties. It owns the Ritchie Bros. and IAA brands.",
+      "risks": "It leans on auto insurers as key sellers. Weaker equipment demand from rates and the economy, and rivals such as Copart, are pressures.",
+      "competition": "Main competitors include Copart, Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Copart, Inc.",
+          "ticker": "CPRT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1697500,
+    "tickers": [
+      "SEI"
+    ],
+    "name": "Solaris Energy Infrastructure",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Solaris Energy Infrastructure Form 10-K (filed 2025-03-05) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1697500/000169750025000013/sei-20241231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "移動式の発電設備と、油田向けの資材管理設備を提供する会社。",
+      "revenue": "発電設備のリースと、石油・ガス会社向けの物流サービスで稼ぐ。発電部門の売上は、データセンター1社に大きく偏る。",
+      "strength": "大型の現場発電を一括で提供できる企業が少なく、特許技術と設計・製造力が差別化の柱。",
+      "risks": "発電設備の調達を主要な1社に頼る。大口顧客への依存も大きい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides mobile power generation equipment and raw-material management equipment for oil and gas wells.",
+      "revenue": "It earns from leasing power equipment and from logistics services to oil and gas operators. Power segment revenue leans heavily on one data center customer.",
+      "strength": "Few rivals can offer an integrated large-scale on-site power solution, and patented technology and in-house design and manufacturing set it apart.",
+      "risks": "It relies on one leading supplier for power equipment, and a single large customer makes up most of its power segment revenue.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1706431,
+    "tickers": [
+      "VIR"
+    ],
+    "name": "Vir Biotechnology",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Vir Biotechnology Form 10-K (filed 2025-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1706431/000162828025008245/vir-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "免疫の力を使い、感染症とがんの薬を開発する臨床段階の会社。",
+      "revenue": "開発中の候補薬を承認・商業化できるかが収益のカギ。肝炎デルタとがんが柱。",
+      "strength": "抗体の発見・改良の基盤と、Sanofiから導入したPRO-XTENのT細胞エンゲージャー基盤を持つ。",
+      "risks": "競合が資金力や市場基盤で上回る。臨床試験の結果が良くない可能性もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A clinical-stage biotech developing medicines for infectious diseases and cancer by powering the immune system.",
+      "revenue": "Its income depends on getting its candidate drugs approved and launched. Hepatitis delta and cancer are the focus.",
+      "strength": "It has an antibody discovery and engineering platform plus the PRO-XTEN dual-masked T-cell engager platform in-licensed from Sanofi.",
+      "risks": "Many competitors have greater financial resources and market presence. Early-stage trial results may not hold up in larger studies.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1990354,
+    "tickers": [
+      "WAY"
+    ],
+    "name": "Waystar",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Waystar Form 10-K (filed 2025-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1990354/000141057825000148/way-20241231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "病院や診療所の医療費の支払い業務を楽にするクラウドソフトの会社。",
+      "revenue": "医療機関にソフトを提供して稼ぐ。顧客の請求件数が増えるほど事業も伸びる。",
+      "strength": "AIと独自のアルゴリズムで、事前確認から請求・回収まで一貫して扱える。",
+      "risks": "競争の激しい分散した市場で戦う。大手顧客への依存は小さい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A cloud software company that simplifies healthcare payments for providers.",
+      "revenue": "It earns by providing software to healthcare providers, and grows as clients' claims volumes grow.",
+      "strength": "Its platform uses AI and proprietary algorithms to cover the full payments workflow, from eligibility checks to collections.",
+      "risks": "It faces a highly fragmented, competitive market. Its top 10 clients made up only 11.2% of revenue.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1309108,
+    "tickers": [
+      "WEX"
+    ],
+    "name": "WEX",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "WEX Form 10-K (filed 2025-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910825000017/wex-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けに燃料カード、福利厚生管理、法人決済を提供する会社。",
+      "revenue": "モビリティ、福利厚生、法人決済の3つの事業で稼ぐ。",
+      "strength": "傘下のWEX Bankによる低コストの資金調達が強み。顧客の業務に深く組み込まれる。",
+      "risks": "燃料価格の変動や景気の悪化に左右される。信用損失や不正による損失も抱える。",
+      "competition": "主な競合にCorpay、HealthEquity、Alight Technologies、Global Payments、Marqetaがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company offering fleet payments, benefits administration and corporate payments to businesses.",
+      "revenue": "It earns across three segments: Mobility, Benefits and Corporate Payments.",
+      "strength": "Its WEX Bank gives it low-cost funding, and its solutions are embedded deep in customer workflows.",
+      "risks": "Fuel price swings and weak economic conditions hit it. It has also faced credit and fraud losses.",
+      "competition": "Main competitors include Corpay, HealthEquity, Alight Technologies, Global Payments, Marqeta.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Corpay",
+          "ticker": "CPAY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "HealthEquity",
+          "ticker": "HQY",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alight Technologies",
+          "ticker": "ALIT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Global Payments",
+          "ticker": "GPN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Marqeta",
+          "ticker": "MQ",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1262823,
+    "tickers": [
+      "WLK"
+    ],
+    "name": "Westlake",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Westlake Form 10-K (filed 2025-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282325000011/wlk-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "塩ビや化学素材、建材を一貫生産する世界的メーカー。",
+      "revenue": "基礎素材部門と、住宅・インフラ製品部門の2つの事業で稼ぐ。",
+      "strength": "エチレンや塩素から塩ビ、建材までつなぐ垂直統合が特徴。",
+      "risks": "素材市場は価格競争が中心。貿易規制や関税の影響も受けうる。",
+      "competition": "主な競合にDow Inc.、ExxonMobil Chemical Company、LyondellBasell Industries、Olin Corporationがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A vertically integrated maker of chemicals, PVC and building products.",
+      "revenue": "It earns through two segments: Performance and Essential Materials, and Housing and Infrastructure Products.",
+      "strength": "Its feature is deep integration from ethylene and chlor-alkali into PVC and building products.",
+      "risks": "Competition in materials is mainly on price. Trade rules and tariffs can also affect it.",
+      "competition": "Main competitors include Dow Inc., ExxonMobil Chemical Company, LyondellBasell Industries, Olin Corporation.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Dow Inc.",
+          "ticker": "DOW",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ExxonMobil Chemical Company",
+          "ticker": "XOM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "LyondellBasell Industries",
+          "ticker": "LYB",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Olin Corporation",
+          "ticker": "OLN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 203596,
+    "tickers": [
+      "WSBC"
+    ],
+    "name": "Wesbanco",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Wesbanco Form 10-K (filed 2025-03-03) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/203596/000095017025030795/wsbc-20241231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ウェストバージニア州を拠点に銀行・信託・保険を手がける地銀持株会社。",
+      "revenue": "銀行業務と信託・投資サービスの2つの事業で稼ぐ。",
+      "strength": "181の支店網と、信託・証券・保険まで扱う幅広い金融サービスが特徴。",
+      "risks": "大手銀行との競争が激しい。大都市圏では資金力で劣る相手と向き合う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company in West Virginia offering banking, trust and insurance services.",
+      "revenue": "It earns through two segments: community banking, and trust and investment services.",
+      "strength": "It runs 181 branches and offers a full range of services, including trust, brokerage and insurance.",
+      "risks": "Competition is intense. In larger metro markets it faces entrenched, bigger banks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 108312,
+    "tickers": [
+      "WWD"
+    ],
+    "name": "Woodward",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Woodward Form 10-K (filed 2024-11-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/108312/000095017024130891/wwd-20240930.htm"
+      }
+    ],
+    "ja": {
+      "business": "航空機や産業機械向けに、燃料・燃焼・動きの制御装置を作る会社。",
+      "revenue": "航空宇宙と産業の2部門で稼ぐ。機器メーカーへの販売と、補修などの保守も収益源。",
+      "strength": "燃料ポンプやアクチュエーターなど、エネルギー制御の技術が特徴。",
+      "risks": "インフレの影響や知的財産の保護、サイバー攻撃などを抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A maker of fuel, combustion and motion control systems for aircraft and industrial equipment.",
+      "revenue": "It earns through its Aerospace and Industrial segments, from OEM sales and aftermarket repair and service.",
+      "strength": "Its core is energy control technology, such as fuel pumps, actuators and fuel nozzles.",
+      "risks": "It faces inflation, protection of its intellectual property and potential cyberattacks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
   }
 ]
