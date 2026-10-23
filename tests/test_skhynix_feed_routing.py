@@ -52,6 +52,9 @@ def html(title=TITLE, url=URL):
 
 class SkhynixFeedRoutingTests(unittest.TestCase):
     def setUp(self):
+        # Discovery imports every test before execution. A long suite must not
+        # age this fixture past the real 900-second category freshness gate.
+        self.enterContext(patch(__name__ + '.TEST_NOW', datetime.now(timezone.utc) - timedelta(seconds=5)))
         # Discovery's service fixture can replace sys.modules['signals']. Bind
         # lazy imports to the same module whose source configuration is patched.
         self.enterContext(patch.dict(sys.modules, {'signals': signals}))
@@ -384,6 +387,17 @@ class SkhynixArticleTemplateTests(unittest.TestCase):
                 article_document.selected_body(value, URL)
         with self.assertRaisesRegex(ValueError, 'article-body-container-mismatch'):
             article_document.selected_body(html(), URL, 'post-body')
+
+
+class FixtureDiscoveryDelayTests(unittest.TestCase):
+    def test_publication_fixture_survives_delayed_discovery_without_relaxing_freshness(self):
+        result = unittest.TestResult()
+        with patch(__name__ + '.TEST_NOW', datetime.now(timezone.utc) - timedelta(hours=1)):
+            case = SkhynixFeedRoutingTests('test_saved_publication_disappears_on_category_withdrawal_without_read_writes')
+            case.run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(result.failures, [])
+        self.assertEqual(result.testsRun, 1)
 
 
 if __name__ == '__main__':

@@ -47,6 +47,8 @@ class ResearchServiceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             with patch.dict(os.environ, {'RESEARCH_SIGNALS_ENABLED': '1'}):
                 app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')
+            # Coordination bounds, not latency targets: keep workers blocked
+            # throughout observation even on a contended test runner.
             release, slow_started, x_repeated = (threading.Event() for _ in range(3))
             lock = threading.Lock()
             counts = {}
@@ -58,7 +60,7 @@ class ResearchServiceTests(unittest.TestCase):
                     if len([key for key in counts if key.startswith('slow-')]) == 2:
                         slow_started.set()
                 if source['format'] != 'x-api':
-                    release.wait(5)
+                    release.wait(30)
                 elif counts['fast-x'] >= 2:
                     self.assertEqual(x_due_ids, ['fast-x'])
                     x_repeated.set()
@@ -68,14 +70,14 @@ class ResearchServiceTests(unittest.TestCase):
                  patch.object(app, 'check_signal_source', side_effect=check):
                 try:
                     app.signals_thread.start()
-                    self.assertTrue(slow_started.wait(2))
-                    self.assertTrue(x_repeated.wait(3))
+                    self.assertTrue(slow_started.wait(10))
+                    self.assertTrue(x_repeated.wait(10))
                     self.assertNotIn('slow-2', counts)
                     self.assertFalse(release.is_set())
                 finally:
                     app.stop_event.set()
                     release.set()
-                    app.signals_thread.join(timeout=5)
+                    app.signals_thread.join(timeout=10)
                 self.assertFalse(app.signals_thread.is_alive())
 
     def test_new_signal_wakes_publication_only_after_commit(self):
@@ -175,6 +177,8 @@ class ResearchServiceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             with patch.dict(os.environ, {'RESEARCH_SIGNALS_ENABLED': '1'}):
                 app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')
+            # Coordination bounds, not latency targets: keep workers blocked
+            # throughout observation even on a contended test runner.
             release, three_started, later_served = (threading.Event() for _ in range(3))
             lock = threading.Lock()
             active, maximum = 0, 0
@@ -193,7 +197,7 @@ class ResearchServiceTests(unittest.TestCase):
                         later_served.set()
                 try:
                     if source['id'] in {'0', '1', '2'}:
-                        release.wait(5)
+                        release.wait(30)
                     if source['id'] == '0':
                         raise RuntimeError('private synthetic details')
                 finally:
@@ -205,17 +209,17 @@ class ResearchServiceTests(unittest.TestCase):
                  patch('builtins.print') as logged:
                 try:
                     app.signals_thread.start()
-                    self.assertTrue(three_started.wait(2))
+                    self.assertTrue(three_started.wait(10))
                     self.assertEqual(len(counts), 3)
                     release.set()
-                    self.assertTrue(later_served.wait(3))
+                    self.assertTrue(later_served.wait(10))
                     self.assertLessEqual(maximum, 3)
                     self.assertLessEqual(counts['0'], 2, 'later due sources must not be starved by repeated routes')
                     logged.assert_any_call('{"event":"signal-worker-error"}', flush=True)
                 finally:
                     app.stop_event.set()
                     release.set()
-                    app.signals_thread.join(timeout=5)
+                    app.signals_thread.join(timeout=10)
                 self.assertFalse(app.signals_thread.is_alive())
 
     def test_market_and_direct_facts_continue_while_other_translations_wait(self):

@@ -31,6 +31,12 @@ class PrimaryDiscoverySchedulerTests(unittest.TestCase):
         self.gates = []
         self.threads = []
         self.errors = []
+        self.pools = []
+        def pool(*args, **kwargs):
+            executor = ThreadPoolExecutor(*args, **kwargs)
+            self.pools.append(executor)
+            return executor
+        self.stack.enter_context(patch.object(service, 'ThreadPoolExecutor', new=pool))
         self.stack.enter_context(patch.object(socket, 'create_connection', side_effect=AssertionError('network forbidden')))
         self.stack.enter_context(patch.object(monitor, 'fetch', side_effect=AssertionError('live fetch forbidden')))
         self.stack.enter_context(patch.object(self.app, 'persist_priority_source_coverage_if_due'))
@@ -41,7 +47,11 @@ class PrimaryDiscoverySchedulerTests(unittest.TestCase):
         for gate in self.gates:
             gate.set()
         for thread in self.threads:
-            thread.join(3)
+            thread.join(10)
+        # Production shutdown leaves running readers to finish. Tests must drain
+        # those readers before deleting the SQLite directory or removing mocks.
+        for pool in self.pools:
+            pool.shutdown(wait=True, cancel_futures=True)
         self.assertFalse(any(thread.is_alive() for thread in self.threads))
         self.assertEqual(self.errors, [])
 

@@ -25,9 +25,9 @@ def ticket(secret="test-secret", origin="https://preview.example.com", exp=None)
 class StreamTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.items = []
-        self.fail = False
+        self.reader_fails = False
         def read():
-            if self.fail:
+            if self.reader_fails:
                 raise RuntimeError("database unavailable")
             return {"ok": True, "items": self.items, "generatedAt": str(time.time())}
         self.app, self.hub = create_gateway(read, "test-secret", "http://127.0.0.1:1", interval=.02, heartbeat=1, max_clients=20)
@@ -86,7 +86,7 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
     async def test_failure_is_not_silently_presented_as_fresh(self):
         response = await self.connect()
         await self.frame(response)
-        self.fail = True
+        self.reader_fails = True
         self.assertIn("event: unavailable", await self.frame(response))
         failed = await self.client.get(self.url + "/price-targets/stream-status", headers={
             "Authorization": "Bearer test-secret"})
@@ -96,8 +96,15 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
         self.assertGreaterEqual(failed_payload["consecutiveFailures"], 1)
         self.assertIsNotNone(failed_payload["lastFailureAt"])
         self.assertNotIn("error", failed_payload)
-        self.fail = False
-        self.assertIn("event: snapshot", await self.frame(response))
+        self.reader_fails = False
+        # Frames written before recovery can remain in the socket buffer.
+        # Require an actual recovery snapshot within a bounded deadline.
+        async with asyncio.timeout(10):
+            while True:
+                frame = await self.frame(response)
+                if "event: snapshot" in frame:
+                    break
+                self.assertTrue("event: unavailable" in frame or "event: ping" in frame, frame)
         recovered = await self.client.get(self.url + "/price-targets/stream-status", headers={
             "Authorization": "Bearer test-secret"})
         recovered_payload = await recovered.json()

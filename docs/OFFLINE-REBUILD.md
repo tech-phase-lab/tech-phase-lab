@@ -117,3 +117,47 @@ PostgreSQL concurrency/signed-storage recovery job and lint/test/build job passe
 https://github.com/tech-phase-lab/tech-phase-lab/actions/runs/39886950926
 This receipt is a later documentation-only change; diff-check passed. It does
 not claim that a subsequent receipt-only CI run has already completed.
+
+## Encrypted dependency custody implementation (2026-10-23 JST)
+
+`external_dependencies.py` adds a separate opt-in dependency operation. The
+one-shot `Dependencies external backup and rebuild` workflow packages a clean
+lockfile install without lifecycle scripts, seals it with AES-256-GCM, uploads
+only ciphertext and a non-secret receipt, downloads all bytes, authenticates,
+and restores each file/link into new private staging. It publishes the receipt
+only after the downloaded archive passes the restore checks. Existing objects
+are never replaced or removed. The existing four GitHub secrets are reused.
+
+Restore requires the trusted package-lock SHA256 and exact Node version/ABI,
+OS/architecture and libc match. Unsafe paths, escaping/broken/cyclic links,
+parent links, duplicate entries, oversized archives, existing outputs and
+checksum mismatches fail closed. Dependencies are never executed in the step
+that receives encryption/storage credentials. A subsequent secret-free step
+builds clean source using the restored dependencies in a Linux network namespace
+without public network access or another npm install. Matching source is also
+backed up and independently verified by the existing source helper.
+
+An upload receipt proves file restoration, not runtime success: the separate
+`DEPENDENCIES_OFFLINE_BUILD_OK` event and successful job are required for the
+build claim. The workflow creates no deployment and does not validate live DB,
+provider credentials, Python dependencies or availability of the Node binary.
+Until an actual run receipt is recorded, this section describes implementation,
+not completed offsite custody. The earlier local tar is not an external backup.
+
+Later recovery destination: [Render standby plan](RENDER-STANDBY-PLAN.md).
+
+For a later offline restore, retrieve the ciphertext named in the retained receipt
+and verify its SHA256/size against that receipt. Set the existing retained key
+privately in `TECH_PHASE_EXTERNAL_KEY_HEX`, then run:
+
+```sh
+python3 scripts/tech-phase/external_dependencies.py \
+  --archive /private/download.aesgcm \
+  --expected-lock TRUSTED_PACKAGE_LOCK_SHA256 \
+  --output /private/new-restored-directory
+```
+
+This offline command does not connect to R2 or require R2 access credentials.
+Obtain the lock hash from the matching trusted source, not from an untrusted
+archive. It fails on a different runtime/platform; recreate that environment
+before restoring. It neither installs Node nor runs the application.
