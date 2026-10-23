@@ -1,0 +1,171 @@
+{
+  "root": {
+    "ticker": "F",
+    "name": "フォード・モーター",
+    "cik": 37996,
+    "name_en": "Ford Motor"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OTOSAN",
+      "ticker": "Ford Otosan",
+      "name": "フォード・オトサン",
+      "sub": "トルコの合弁会社",
+      "sub_en": "Turkish joint venture",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トランジットなど複数の車種を、フォードに独占的に供給する合弁会社である",
+          "text_en": "Ford Otosan is the sole supplier to Ford of the Transit, Transit Custom, Transit Courier and the Puma for Europe",
+          "source": {
+            "label": "Ford 10-K(2025年12月31日終了年度)",
+            "label_en": "Ford 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Ford Otomotiv Sanayi Anonim Sirketi (“Ford Otosan”) — a joint venture in Türkiye among Ford (41%), the Koc Group of Türkiye (41%), and public investors (18%) that is the sole supplier to us of the Transit, Transit Custom, and Transit Courier commercial vehicles and the Puma for Europe"
+          }
+        }
+      ],
+      "name_en": "Ford Otosan"
+    },
+    {
+      "id": "SKON",
+      "ticker": "SK On",
+      "name": "SKオン",
+      "sub": "電池の合弁相手",
+      "sub_en": "Battery JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SKオンと折半出資でブルーオーバルSKを設立し、米国で電池工場を運営している",
+          "text_en": "Ford and SK On each hold half of BlueOval SK, which builds and operates EV battery plants in the US",
+          "source": {
+            "label": "Ford 10-K(2025年12月31日終了年度)",
+            "label_en": "Ford 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BlueOval SK, LLC (“BOSK”) — a 50/50 joint venture among Ford, SK On Co., Ltd. (“SK On”), and SK Battery America, Inc. (“SKBA,” a wholly owned subsidiary of SK On) formed to build and operate an EV battery plant in Tennessee and two EV battery plants in Kentucky to supply batteries to Ford and Ford affiliates"
+          }
+        }
+      ],
+      "name_en": "SK On"
+    },
+    {
+      "id": "MAZDA",
+      "ticker": "Mazda",
+      "name": "マツダ",
+      "sub": "タイの合弁相手",
+      "sub_en": "Thailand JV partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マツダと折半出資で、タイのラヨーン工場を所有し運営している",
+          "text_en": "Ford and Mazda each hold half of AutoAlliance Thailand, which runs a plant in Rayong",
+          "source": {
+            "label": "Ford 10-K(2025年12月31日終了年度)",
+            "label_en": "Ford 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "AutoAlliance (Thailand) Co., Ltd. (“AAT”) — a 50/50 joint venture between Ford and Mazda that owns and operates a manufacturing plant in Rayong, Thailand"
+          }
+        }
+      ],
+      "name_en": "Mazda"
+    },
+    {
+      "id": "CHANGAN",
+      "ticker": "Changan",
+      "name": "重慶長安汽車",
+      "sub": "中国の合弁相手",
+      "sub_en": "China JV partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "長安汽車と折半出資で、中国の長安フォードを運営している",
+          "text_en": "Ford and Changan each hold half of Changan Ford Automobile Corporation in China",
+          "source": {
+            "label": "Ford 10-K(2025年12月31日終了年度)",
+            "label_en": "Ford 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Changan Ford Automobile Corporation, Ltd. (“CAF”) — a 50/50 joint venture between Ford and Chongqing Changan Automobile Co., Ltd. (“Changan”)"
+          }
+        }
+      ],
+      "name_en": "Chongqing Changan Automobile"
+    },
+    {
+      "id": "JMC",
+      "ticker": "JMC",
+      "name": "江鈴汽車",
+      "sub": "中国の持分法会社",
+      "sub_en": "China affiliate",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁会社で、フォードの現地ブランド車を生産している",
+          "text_en": "Jiangling Motors is an unconsolidated Chinese joint venture that produces local brand units",
+          "source": {
+            "label": "Ford 10-K(2025年12月31日終了年度)",
+            "label_en": "Ford 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "local brand units produced by our unconsolidated Chinese joint venture Jiangling Motors Corporation, Ltd. (“JMC”) that are sold to dealerships or others"
+          }
+        }
+      ],
+      "name_en": "Jiangling Motors"
+    },
+    {
+      "id": "LIOHO",
+      "ticker": "Lio Ho",
+      "name": "六和集団",
+      "sub": "台湾の生産委託先",
+      "sub_en": "Taiwan producer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "台湾でフォード名義の車両を生産している",
+          "text_en": "Lio Ho Group produces Ford badged vehicles in Taiwan",
+          "source": {
+            "label": "Ford 10-K(2025年12月31日終了年度)",
+            "label_en": "Ford 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Ford badged vehicles produced in Taiwan by Lio Ho Group"
+          }
+        }
+      ],
+      "name_en": "Lio Ho Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

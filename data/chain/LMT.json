@@ -1,0 +1,185 @@
+{
+  "root": {
+    "ticker": "LMT",
+    "name": "ロッキード・マーチン",
+    "cik": 936468,
+    "name_en": "Lockheed Martin"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "BA",
+    "GD",
+    "LHX",
+    "NOC",
+    "RTX"
+  ],
+  "companies": [
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTXコーポレーション",
+      "sub": "合弁相手・競合",
+      "sub_en": "JV partner & rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジャベリンはRTXとの合弁会社が米陸軍と海兵隊向けに生産している",
+          "text_en": "Javelin is produced for the U.S. Army and U.S. Marine Corps by a joint venture between Lockheed Martin and RTX",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年12月31日終了年度)",
+            "label_en": "Lockheed Martin 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Javelin was developed and is currently produced for the U.S. Army and U.S. Marine Corps by a joint venture between Lockheed Martin and RTX Corporation."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "主要な競合先の一つとしてRTXが挙げられる",
+          "text_en": "RTX Corporation is named among its primary competitors",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年12月31日終了年度)",
+            "label_en": "Lockheed Martin 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "We compete with many different companies both within and outside of the defense and aerospace industry. The Boeing Company, General Dynamics, L3Harris Technologies, Northrop Grumman, and RTX Corporation are some of our primary competitors."
+          }
+        }
+      ],
+      "name_en": "RTX Corporation"
+    },
+    {
+      "id": "ULA",
+      "ticker": "ULA",
+      "name": "ユナイテッド・ローンチ・アライアンス",
+      "sub": "打上げサービス合弁",
+      "sub_en": "Launch services JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "宇宙部門の利益には、ULAへの出資による持分利益が含まれる",
+          "text_en": "Space segment operating profit includes its share of earnings from its investment in United Launch Alliance",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年12月31日終了年度)",
+            "label_en": "Lockheed Martin 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Operating profit for our Space business segment includes our share of earnings for our investment in United Launch Alliance (ULA), which provides expendable launch services to the U.S. Government and commercial customers."
+          }
+        }
+      ],
+      "name_en": "United Launch Alliance"
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "競合",
+      "sub_en": "Competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合先の一つとしてボーイングが挙げられる",
+          "text_en": "The Boeing Company is named among its primary competitors",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年12月31日終了年度)",
+            "label_en": "Lockheed Martin 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "We compete with many different companies both within and outside of the defense and aerospace industry. The Boeing Company, General Dynamics, L3Harris Technologies, Northrop Grumman, and RTX Corporation are some of our primary competitors."
+          }
+        }
+      ],
+      "name_en": "Boeing"
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "sub": "競合",
+      "sub_en": "Competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合先の一つとしてゼネラル・ダイナミクスが挙げられる",
+          "text_en": "General Dynamics is named among its primary competitors",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年12月31日終了年度)",
+            "label_en": "Lockheed Martin 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "We compete with many different companies both within and outside of the defense and aerospace industry. The Boeing Company, General Dynamics, L3Harris Technologies, Northrop Grumman, and RTX Corporation are some of our primary competitors."
+          }
+        }
+      ],
+      "name_en": "General Dynamics"
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "sub": "競合",
+      "sub_en": "Competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合先の一つとしてL3ハリスが挙げられる",
+          "text_en": "L3Harris Technologies is named among its primary competitors",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年12月31日終了年度)",
+            "label_en": "Lockheed Martin 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "We compete with many different companies both within and outside of the defense and aerospace industry. The Boeing Company, General Dynamics, L3Harris Technologies, Northrop Grumman, and RTX Corporation are some of our primary competitors."
+          }
+        }
+      ],
+      "name_en": "L3Harris Technologies"
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "sub": "競合",
+      "sub_en": "Competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合先の一つとしてノースロップ・グラマンが挙げられる",
+          "text_en": "Northrop Grumman is named among its primary competitors",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年12月31日終了年度)",
+            "label_en": "Lockheed Martin 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "We compete with many different companies both within and outside of the defense and aerospace industry. The Boeing Company, General Dynamics, L3Harris Technologies, Northrop Grumman, and RTX Corporation are some of our primary competitors."
+          }
+        }
+      ],
+      "name_en": "Northrop Grumman"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
