@@ -11,7 +11,7 @@ import signals
 from test_official_release_bridge import NOW
 
 # LITE and ALAB replaced DELL and ORCL on the roster later the same day.
-ADDED = {'AAPL', 'AMZN', 'META', 'TSLA', 'DELL', 'COHR', 'AAOI', 'IREN', 'APH', 'ORCL', 'VST', 'SOFI', 'IONQ', 'STX', 'CEG', 'IBM', 'LRCX', 'NOW', 'KLAC', 'INTC', 'NFLX', 'ADBE'}
+ADDED = {'AAPL', 'AMZN', 'META', 'TSLA', 'DELL', 'COHR', 'AAOI', 'IREN', 'APH', 'ORCL', 'VST', 'SOFI', 'IONQ', 'STX', 'CEG', 'IBM', 'LRCX', 'NOW', 'KLAC', 'INTC', 'NFLX', 'ADBE', 'QCOM', 'AMAT', 'CRM', 'CRWD', 'PANW', 'SNOW'}
 
 
 class EarningsOnlyScopeTests(unittest.TestCase):

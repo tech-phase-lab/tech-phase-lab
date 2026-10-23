@@ -200,7 +200,7 @@ test("calendar coverage tracks 50 unique companies (all 38 roster stocks include
   const { providers, earningsOnlyProviders } = await import("../lib/research/intake.ts");
   assert.equal(coverage.length, 50);
   assert.equal(new Set(coverage.map((company) => company.ticker)).size, 50);
-  // Owner, Oct 15: every roster stock (22 watched + 22 earnings-only) is always listed.
+  // Owner, Oct 15: every roster stock (22 watched + 28 earnings-only) is always listed.
   const listed = new Set(coverage.map((company) => company.ticker));
   assert.deepEqual([...providers, ...earningsOnlyProviders].map(provider => provider.ticker).filter(ticker => !listed.has(ticker)), []);
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
