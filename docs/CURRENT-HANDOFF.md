@@ -1,3 +1,16 @@
+## 2026-10-24 JST — Billing dependencies restored from R2 and booted offline
+
+Actual run39981635463 restored source f8312b9e and 139 billing dependency files.
+Kernel-network-isolated boot and 17 health/auth/disabled-payment checks passed.
+Implementation CI39981635331 also succeeded: Node1336, Python2598 and build.
+See [actual evidence](EXTERNAL-BILLING-DEPENDENCY-BACKUP-2026-10-24.md).
+No live payments, DB verification or AI calls. Node binary/Bookworm/Render remain unverified.
+Render endpoint restrictions were inventoried; no allowlist/authentication was weakened.
+Next: remaining Python services and complete runtime-image custody with offline probes.
+Keep saving gates OFF, preserve consumed AI claim, no Railway reconnect/key-entry requests.
+
+---
+
 ## 2026-10-23 JST — API dependencies restored from R2 and booted offline
 
 Actual run39959285394 restored source caaff68d and 5,384 API dependency files

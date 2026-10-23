@@ -76,3 +76,8 @@ DB接続設定はRailway外で証明書検証付きTLSを要求する。
 `lib/resolute/database-config.ts` と決済側 `database-config.mjs` のDB名・役割・
 TLS検証を緩めて接続を通してはいけない。新しい接続先に対応した最小権限と
 実接続・保存・復元を確認する。ホスト制限の発見はRender稼働成功の証拠ではない。
+
+## 決済連携の実復元確認
+
+[決済専用依存139ファイルのR2実保管・復元・17項目の隔離起動](EXTERNAL-BILLING-DEPENDENCY-BACKUP-2026-10-24.md)が成功。
+Node本体、Bookworm環境、Python系サービスと本番DBの復元は引き続き別途検証する。

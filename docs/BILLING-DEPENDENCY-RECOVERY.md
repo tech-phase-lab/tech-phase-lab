@@ -1,3 +1,6 @@
+実保存・復元・17項目の隔離起動が成功しました。
+[2026-10-24の実行記録と限界](EXTERNAL-BILLING-DEPENDENCY-BACKUP-2026-10-24.md)を参照。
+
 # 決済連携サービスの依存ライブラリ保管・復元検査
 
 対象は `services/tech-phase-billing` の専用lockfileと対応する依存。
