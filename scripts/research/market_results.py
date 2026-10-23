@@ -467,6 +467,10 @@ def projection(text, tickers):
             'titleEn':tickers[0]+' '+quarter+' earnings: '+', '.join(f['en']+' '+f['value'] for f in first)}
 
 
+# Earnings flashes stay on the calendar for seven days, so they may be published that late.
+EARNINGS_WINDOW = timedelta(days=7)
+
+
 def run_once(path, sources, reference=None):
     reference = reference or datetime.now(timezone.utc)
     allowed = {s['id']:s for s in sources if s.get('format') == 'x-api'}
@@ -489,7 +493,7 @@ def run_once(path, sources, reference=None):
             AND e.truncated=0 AND p.event_id IS NULL
             AND julianday(e.observed_at) BETWEEN julianday(?) AND julianday(?)
           ORDER BY julianday(e.observed_at),e.id''',
-          (*allowed, (reference-timedelta(hours=24)).isoformat(), reference.isoformat())).fetchall()
+          (*allowed, (reference-EARNINGS_WINDOW).isoformat(), reference.isoformat())).fetchall()
         for row in rows:
             if row['source_id'] not in allowed or row['truncated'] or row['sha'] != row['current_sha']:
                 continue
@@ -501,8 +505,10 @@ def run_once(path, sources, reference=None):
                 continue
             try:
                 release = datetime.fromisoformat(row['published_at'].replace('Z','+00:00'))
-                if release.tzinfo is None or not reference-timedelta(hours=24) <= release <= reference:
+                if release.tzinfo is None or not reference-EARNINGS_WINDOW <= release <= reference:
                     continue
+                observed_at = datetime.fromisoformat(row['observed_at'].replace('Z','+00:00'))
+                fresh = reference-timedelta(hours=24) <= release and reference-timedelta(hours=24) <= observed_at
             except (TypeError,ValueError,AttributeError):
                 continue
             started = time.monotonic()
@@ -515,11 +521,16 @@ def run_once(path, sources, reference=None):
             # Complete source-bound reports have one detailed-news owner before
             # either worker runs; a partial flash must not strand that route.
             # This does not alter any already stored result or approve copy.
-            if any(adapter.reserve_fresh_result_route(db, dict(row), reference)
-                   for adapter in (macro_source_publication, attributed_policy_publication)):
+            if fresh and any(adapter.reserve_fresh_result_route(db, dict(row), reference)
+                             for adapter in (macro_source_publication, attributed_policy_publication)):
                 continue
             result = projection(row['body'], tickers)
             if not result:
+                continue
+            # Only earnings flashes may be published late (owner, Oct 23: a company's results from
+            # two days earlier were never listed because the intake had been down); everything else
+            # keeps the 24-hour rule.
+            if not fresh and result.get('kind') != 'earnings':
                 continue
             result.update({'id':str(row['id']), 'url':row['url'], 'publisher':NAMES[match[1].lower()],
                            'publishedAt':row['published_at'], 'observedAt':row['observed_at'],

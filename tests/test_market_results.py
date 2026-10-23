@@ -405,6 +405,15 @@ class ResultWindowTests(unittest.TestCase):
             kept = [item['id'] for item in results.public_feed(db, later, earnings_hours=24 * 7)]
             self.assertEqual(kept, ['1'] if kind == 'earnings' else [])
 
+    def test_late_earnings_flash_is_published_but_late_non_earnings_stays_private(self):
+        # Owner, Oct 23: results detected a day or two after the post (intake had been down) still count.
+        self.add(1, observed=(self.reference - timedelta(hours=30)).isoformat())
+        self.add(2, '$MU price target raised to $110 from $100 at Citi', observed=(self.reference - timedelta(hours=30)).isoformat())
+        results.run_once(self.path, signals.SOURCES, self.reference)
+        with monitor.connect(self.path) as db:
+            ids = [item['id'] for item in results.public_feed(db, self.reference, earnings_hours=24 * 7)]
+        self.assertEqual(ids, ['1'])
+
     def test_already_published_rows_are_not_reprocessed(self):
         from unittest.mock import patch
         self.add(1)
@@ -426,7 +435,7 @@ class ResultWindowTests(unittest.TestCase):
     def test_future_stale_truncated_and_unapproved_rows_remain_private(self):
         from datetime import timedelta
         self.add(1, observed=(self.reference + timedelta(seconds=1)).isoformat())
-        self.add(2, observed=(self.reference - timedelta(hours=25)).isoformat())
+        self.add(2, observed=(self.reference - timedelta(days=8)).isoformat())
         self.add(3, truncated=1)
         self.add(4, source='unknown-route')
         self.add(5)
