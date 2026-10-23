@@ -50,8 +50,13 @@ export function socialChatter(item: OfficialUpdate) {
   return !BUSINESS.test(`${item.title} ${item.translationJa ?? ''}`);
 }
 
+/** Posts that are not news for readers (owner, Oct 23): a conference session blog ("GTC: How ... ") and an
+ * earnings "highlights" page, which repeats the earnings release already listed with the results. */
+const NOT_NEWS = /^\s*(?:GTC|Computex|OCP)(?:\s+\w+)?\s*[:：]|\b(?:Q[1-4]|first|second|third|fourth)\b.{0,30}\bhighlights?\b|\bhighlights?\b.{0,40}\b(?:Q[1-4]|quarter)\b/i;
+export const isNotNews = (item: OfficialUpdate) => NOT_NEWS.test(item.title);
+
 export function informativeOfficial(item: OfficialUpdate) {
-  if (socialChatter(item)) return false;
+  if (socialChatter(item) || isNotNews(item)) return false;
   if (item.bodyJa || item.bodyEn || item.brief || item.newsCategory || item.generalSource || item.researchId) return true;
   const text = `${item.title} ${item.translationJa ?? ''}`.toLowerCase();
   const names = [...item.tickers, item.publisher.split(/\s+/)[0]].filter(name => name && name.length > 1);

@@ -63,3 +63,12 @@ test('a company X account post with no business content is left out (owner, Oct 
   assert.equal(socialChatter({ ...base, title: 'Nebius signs a multi-year agreement to supply GPU capacity', translationJa: 'Nebius、GPU容量の複数年契約を締結' }), false);
   assert.equal(socialChatter({ ...base, url: 'https://www.nvidia.com/blog/x', title: 'Builders tour', translationJa: 'ツアー' }), false);
 });
+
+test('conference session blogs and earnings "highlights" pages are not listed as news', async () => {
+  const { isNotNews } = await import('../lib/research/news-presentation.ts');
+  assert.equal(isNotNews({ title: 'GTC: How Vertiv and NVIDIA Cut AI Factory Deployment Time in Half' }), true);
+  assert.equal(isNotNews({ title: 'Bloom Energy Announces Third Quarter 2026 Earnings Highlights: Record Results' }), true);
+  assert.equal(isNotNews({ title: 'Bloom Energy Q3 2026 Highlights' }), true);
+  assert.equal(isNotNews({ title: 'Vertiv launches a new liquid cooling product' }), false);
+  assert.equal(isNotNews({ title: 'NVIDIA announces new GTC dates' }), false);
+});
