@@ -82572,5 +82572,4806 @@
       "competition": [],
       "relationships": []
     }
+  },
+  {
+    "cik": 351569,
+    "tickers": [
+      "ABCB"
+    ],
+    "name": "Ameris Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ameris Bancorp Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/351569/000035156926000050/abcb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国南東部で個人と企業向けに銀行サービスを提供する銀行持株会社。",
+      "revenue": "ジョージア、アラバマなど南東部で、貸出や資金管理、保険料融資、住宅ローンを提供して稼ぐ。",
+      "strength": "分権型の運営が大手との違い。個人に寄り添う接客で、低コストの中核預金を集めてきた。",
+      "risks": "価格競争が激しく、預金金利の引き上げや貸出条件の悪化を迫られうる。大手やフィンテックなど競合も多い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company that offers banking services to individuals and businesses in the southeastern U.S.",
+      "revenue": "It earns from lending, treasury and cash management, insurance premium financing and mortgages across Georgia, Alabama and nearby markets.",
+      "strength": "Its decentralized structure sets it apart from larger rivals, and personal service has built a base of low-cost core deposits.",
+      "risks": "Price competition is heavy, so it may have to offer worse loan and deposit terms. Larger banks and fintechs add to the pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1253986,
+    "tickers": [
+      "ABR"
+    ],
+    "name": "Arbor Realty",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Arbor Realty Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1253986/000125398626000019/abr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "商業用不動産向けの融資と融資サービスを手がける、全米の不動産投資信託。",
+      "revenue": "ブリッジローンの利ざやのほか、政府系機関向け融資の組成手数料とサービシング収入で稼ぐ。",
+      "strength": "自社審査と全国の営業網で、構造化融資と政府系機関融資の両方を扱えるのが特徴。",
+      "risks": "高金利が続き不動産価格が下がると、延滞や貸倒引当金が増えうる。商業用不動産市場の混乱が長引いている。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A nationwide REIT and direct lender that originates and services loans for commercial real estate.",
+      "revenue": "It earns the interest margin on its bridge loans, plus origination fees and servicing income from agency lending.",
+      "strength": "Its feature is offering both structured loans and agency loans through in-house underwriting and a national sales network.",
+      "risks": "Lasting high rates and falling property values can raise delinquencies and loan loss reserves. The commercial real estate slump has dragged on.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1823529,
+    "tickers": [
+      "ACT"
+    ],
+    "name": "Enact",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Enact Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国で住宅ローンの民間保険を手がける会社。",
+      "revenue": "保険料と運用収益で稼ぐ。頭金が少ない住宅ローンを貸し手のために保証する。2025年の純利益は674百万ドル。",
+      "strength": "50州すべてで営業する。融資の審査データと信用リスク移転の仕組みで、損失のぶれを抑えるのが特徴。",
+      "risks": "政府系機関GSEが定める適格要件に事業が左右される。借り手の延滞が増えれば保険金の支払いも増えうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides private mortgage insurance in the U.S.",
+      "revenue": "It earns from premiums and investment income by insuring low down payment home loans for lenders. Net income in 2025 was $674 million.",
+      "strength": "It operates in all 50 states, and loan-level data and a credit risk transfer program help it limit swings in losses.",
+      "risks": "Its business depends on eligibility rules set by the GSEs. More borrower delinquencies would mean more claims to pay.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1459200,
+    "tickers": [
+      "ALRM"
+    ],
+    "name": "Alarm.com",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Alarm.com Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920026000005/alrm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅やビルをネットにつなぐ、クラウド型の防犯・管理サービスの会社。",
+      "revenue": "販売パートナーが再販するクラウド利用料が柱で、機器の販売も加わる。2025年のSaaS・ライセンス売上は689.4百万ドル。",
+      "strength": "加入者数とパートナー網、機器から集まるデータの規模が強み。数百件の特許も持つ。",
+      "risks": "競合が多く、資金力で上回る相手もいる。業績予想は前提が外れると大きくずれうる。",
+      "competition": "主な競合にHoneywell International Inc.、Napco Security Technologies, Inc.、Resideo Technologies Inc.、Arlo Technologies, Inc.がある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs a cloud platform connecting homes and commercial properties for security and management.",
+      "revenue": "It earns mainly from cloud service fees resold by its service provider partners, plus hardware sales. SaaS and license revenue in 2025 was $689.4 million.",
+      "strength": "Its strengths are the size of its subscriber base, partner network and device data, along with hundreds of patents.",
+      "risks": "Rivals are many and some have far more resources. Its guidance can miss badly if the underlying assumptions change.",
+      "competition": "Main competitors include Honeywell International Inc., Napco Security Technologies, Inc., Resideo Technologies Inc., Arlo Technologies, Inc..",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Honeywell International Inc.",
+          "ticker": "HON",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Napco Security Technologies, Inc.",
+          "ticker": "NSSC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Resideo Technologies Inc.",
+          "ticker": "REZI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Arlo Technologies, Inc.",
+          "ticker": "ARLO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1018979,
+    "tickers": [
+      "AMSF"
+    ],
+    "name": "AMERISAFE",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AMERISAFE Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018979/000119312526082513/amsf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "危険度の高い業種の中小企業向けに、労災保険を売る保険会社。",
+      "revenue": "建設、運送、林業、農業などの雇用主から受け取る労災保険料で稼ぐ。危険業種のため保険料率は高め。",
+      "strength": "危険業種に特化した引受力に、安全指導や保険金管理を組み合わせるのが特徴。2025年の更新率は93.1%。",
+      "risks": "景気循環の影響を受ける。請求が想定より多く重くなれば損失がふくらむ。競争や再保険の条件にも左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty insurer selling workers' compensation coverage to small and mid-sized employers in hazardous industries.",
+      "revenue": "It earns workers' compensation premiums from employers in construction, trucking, logging, agriculture and similar fields. Rates run high because the work is dangerous.",
+      "strength": "It pairs underwriting built for hazardous industries with safety services and claims management. Its 2025 renewal rate was 93.1%.",
+      "risks": "The business follows the insurance cycle. Claims that come in more often or heavier than expected raise losses, and competition and reinsurance terms also matter.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 883948,
+    "tickers": [
+      "AUB"
+    ],
+    "name": "Atlantic Union",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Atlantic Union Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/883948/000088394826000021/aub-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "バージニア州を拠点に、個人と企業向けに銀行サービスを提供する銀行持株会社。",
+      "revenue": "預金と、商業用不動産や住宅ローンなどの貸出で稼ぐ。資産運用、設備金融、資本市場サービスも手がける。",
+      "strength": "地域密着の姿勢が大手との差。Sandy Springの買収で50を超える支店を加え、拠点を広げた。",
+      "risks": "貸倒引当金が足りなくなる恐れがある。融資の多くが不動産担保のため、不動産市況の悪化が響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Virginia that offers banking services to individuals and businesses.",
+      "revenue": "It earns from deposits and loans such as commercial real estate and home mortgages, and also offers wealth management, equipment finance and capital markets services.",
+      "strength": "Its community-focused approach sets it apart from larger banks, and the Sandy Spring deal added more than 50 branches.",
+      "risks": "Its loan loss allowance may prove too small. Many loans are backed by real estate, so a weak property market could hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1169770,
+    "tickers": [
+      "BANC"
+    ],
+    "name": "Banc of California",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Banc of California Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1169770/000162828026012946/banc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "カリフォルニア州を中心に、中小・中堅企業向けの銀行サービスを提供する銀行持株会社。",
+      "revenue": "法人向けの貸出と預金、資金管理で稼ぐ。決済処理サービスや、管理組合向けの専用基盤も手がける。",
+      "strength": "関係重視の事業銀行。79店舗の網と、業種別の専門融資、SmartStreetという技術基盤が特徴。",
+      "risks": "新事業やフィンテック提携には、規制上の責任や新たなリスクが伴う。サイバー攻撃への備えが不十分になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company serving small and mid-sized businesses, mainly in California.",
+      "revenue": "It earns from business loans and deposits and from treasury management. It also runs payment processing and a platform for community association managers.",
+      "strength": "It is a relationship-based business bank with 79 branches, niche lending by industry and a technology platform called SmartStreet.",
+      "risks": "New products and fintech partnerships bring regulatory duties and fresh risks. Its cybersecurity measures may fall short.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 760498,
+    "tickers": [
+      "BANF"
+    ],
+    "name": "BancFirst",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BancFirst Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/760498/000119312526075954/banf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "オクラホマ州を中心に銀行サービスを提供する金融持株会社。",
+      "revenue": "中小企業向けの融資を中心に、不動産、農業、エネルギー、個人向けの融資で稼ぐ。信託や保険代理店も手がける。",
+      "strength": "109の店舗網を持つ。農村部の競合より貸出余力と商品の幅、規模で上回るのが特徴。",
+      "risks": "オクラホマは競争が激しく、北テキサスは全米有数の激戦区。金融政策やデビットカード手数料の上限規制も収益に響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial holding company providing banking services mainly in Oklahoma.",
+      "revenue": "It earns mostly from loans to small and mid-sized businesses, plus real estate, agricultural, energy and consumer lending. It also offers trust services and insurance agency work.",
+      "strength": "It has 109 banking locations, and in rural markets it has more lending capacity, a wider product line and greater scale than its rivals.",
+      "risks": "Oklahoma is very competitive and North Texas is among the toughest markets. Federal monetary policy and the cap on debit card fees can also cut earnings.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 946673,
+    "tickers": [
+      "BANR"
+    ],
+    "name": "Banner",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Banner Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/946673/000094667326000009/banr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ワシントン州などの米国西部で、個人・企業向けの銀行業務を行う持株会社。",
+      "revenue": "預金を集め、商業不動産、農業、住宅などの貸出で稼ぐ。住宅ローンの組成と売却も手がける。",
+      "strength": "135の支店と幅広い商品、ブランド認知を生かす「スーパー・コミュニティ・バンク」モデルが特徴。",
+      "risks": "景気悪化や金利変動、貸出の延滞、競争の激化が収益に響きうる。不動産価格の変動やAIなど技術の変化への対応も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company providing banking services to individuals and businesses in Washington and elsewhere in the western U.S..",
+      "revenue": "It earns by taking deposits and making commercial real estate, agricultural and home loans. It also originates and sells residential mortgages.",
+      "strength": "Its feature is a super community bank model built on 135 branch offices, a broad product line and brand awareness.",
+      "risks": "Weak economies, rate swings, loan delinquencies and tougher competition can hurt earnings. Property price changes and technology shifts such as AI are also challenges.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1108134,
+    "tickers": [
+      "BBT"
+    ],
+    "name": "Beacon Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Beacon Financial Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1108134/000162828026013247/brkl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニューイングランドとニューヨークで銀行と資産運用サービスを提供する銀行持株会社。",
+      "revenue": "貸出と預金を軸に、資金管理や資産運用でも稼ぐ。2025年の純利息収入は503.1百万ドル。",
+      "strength": "147の店舗網で長期の取引関係を深める。ブルックラインとの合併で規模が広がった。",
+      "risks": "金利の変動で利ざやが縮みうる。景気や政策の変動で、延滞や貸倒が増える可能性もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company offering banking and wealth management services in New England and New York.",
+      "revenue": "It earns from loans and deposits and also from cash management and wealth management. Net interest income in 2025 was $503.1 million.",
+      "strength": "It builds long-term relationships through 147 banking offices, and the Brookline merger expanded its scale.",
+      "risks": "Interest rate changes can squeeze its margin. Economic or policy swings could raise delinquencies and loan losses.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1504008,
+    "tickers": [
+      "BKU"
+    ],
+    "name": "BankUnited",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "BankUnited Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1504008/000150400826000011/bku-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "フロリダ州を拠点に個人から大企業まで幅広い銀行業務を行う銀行持株会社。",
+      "revenue": "個人・中小企業・中堅企業・大企業向けの預金と融資など、銀行商品の提供で稼ぐ。",
+      "strength": "サービス重視の取引関係とデジタル対応が特徴。地域の商業・中小企業向け銀行を目指す。",
+      "risks": "事業地域がフロリダとニューヨーク周辺に集中する。貸倒引当金の不足や、保険対象外の預金が多い点も弱みになりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Florida-based bank holding company offering a full range of banking services from individuals to large firms.",
+      "revenue": "It earns from deposit and lending products and other banking services for individuals, small businesses and corporations.",
+      "strength": "Service-oriented relationships and digital banking are its features, as it builds a regional commercial and small business bank.",
+      "risks": "Its markets are concentrated in Florida and the New York area. An inadequate loan loss allowance and many uninsured deposits could also hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 46195,
+    "tickers": [
+      "BOH"
+    ],
+    "name": "Bank of Hawaii",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Bank of Hawaii Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/46195/000004619526000015/boh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ハワイやグアムなど太平洋の島々で銀行業務を行う銀行持株会社。",
+      "revenue": "個人向け銀行業務、法人向け銀行業務、資金運用の三つの部門で稼ぐ。",
+      "strength": "広い支店網、質の高い接客、地元の動向への理解が競争上の強み。",
+      "risks": "ハワイや太平洋の島々の景気に左右される。規制の緩い競合とも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company providing banking services in Hawaii, Guam and other Pacific Islands.",
+      "revenue": "It earns through three segments: Consumer Banking, Commercial Banking, and Treasury and Other.",
+      "strength": "Its extensive branch network, service levels and knowledge of local conditions are its competitive edge.",
+      "risks": "Results depend on the economy of Hawaii and the Pacific Islands. It also faces rivals with lighter regulation.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1061630,
+    "tickers": [
+      "BXMT"
+    ],
+    "name": "Blackstone Mortgage Trust",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Blackstone Mortgage Trust Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1061630/000106163026000009/bxmt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "商業用不動産を担保とするシニアローンを組成・運用する不動産金融会社。",
+      "revenue": "北米・欧州・オーストラリアの商業用不動産向けシニアローンなどへの投資で稼ぐ。",
+      "strength": "運用会社はブラックストーンの関連会社。同社の不動産投資の知見や情報網を使えるのが特徴。",
+      "risks": "融資先の獲得競争が激しく、利回りが下がりうる。外部運用のため、役員らは当社専任ではない。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A real estate finance company that originates and manages senior loans backed by commercial real estate.",
+      "revenue": "It earns by investing in senior loans on commercial real estate in North America, Europe and Australia.",
+      "strength": "Its manager is an affiliate of Blackstone, giving it access to Blackstone's real estate expertise and network.",
+      "risks": "Competition for lending deals is intense and may push yields down. Its officers are not required to work only for the company.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 885550,
+    "tickers": [
+      "CACC"
+    ],
+    "name": "Credit Acceptance",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Credit Acceptance Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/885550/000088555026000047/cacc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "信用履歴に関係なく、自動車ディーラー経由でローンを提供する会社。",
+      "revenue": "ディーラーへの前払金で回収権を得る方式と、ローンを買い取る方式で稼ぐ。回収額の一部を手数料にする。",
+      "strength": "ディーラーへのサービス水準と、融資しにくい客層に対する効率的な資金提供の仕組みが特徴。",
+      "risks": "FICOスコア650未満か未取得の消費者が79.5%を占める。この市場は競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that finances car purchases through dealers, regardless of the buyer's credit history.",
+      "revenue": "It earns by advancing cash to dealers for the right to collect loans, or by buying loans outright, and takes a servicing fee.",
+      "strength": "It competes on the service level it gives dealers and an efficient way to finance harder-to-serve consumers.",
+      "risks": "79.5% of loans go to buyers with FICO scores below 650 or none. The market is also highly competitive.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 907471,
+    "tickers": [
+      "CASH"
+    ],
+    "name": "Pathward Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Pathward Financial Form 10-K (filed 2025-11-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/907471/000090747125000116/cash-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "決済と商業ファイナンスを全国で手がける銀行持株会社。",
+      "revenue": "提携先向けの決済ソリューションで預金と手数料収入を得る。預金は貸出やリース商品に回して稼ぐ。",
+      "strength": "フィンテックと従来型銀行業務の接点に立ち、提携先と組んで金融サービスを届けるのが特徴。",
+      "risks": "決済、商業金融、税務サービスなど各分野で競争が激しい。大手銀行や専門業者、ノンバンクと競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company running payments and commercial finance businesses nationwide.",
+      "revenue": "It gets deposits and fee income from partner payment solutions, then lends and leases out those deposits.",
+      "strength": "It sits where traditional banking meets fintech, working with partners to deliver financial products.",
+      "risks": "Competition is strong in payments, commercial finance, tax services and consumer lending, from large banks, specialists and non-banks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 723188,
+    "tickers": [
+      "CBU"
+    ],
+    "name": "Community Financial System",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Community Financial System Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/723188/000110465926021651/cbu-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニューヨーク州北部で銀行業務と従業員給付・保険・資産運用を手がける金融会社。",
+      "revenue": "銀行、従業員給付サービス、保険サービス、資産運用サービスの四つの事業で稼ぐ。",
+      "strength": "地域に根ざした性格、顧客への理解、支店ごとの素早い意思決定、デジタル銀行サービスが強み。",
+      "risks": "事業地域の銀行・金融サービス業界は競争が激しい。給付・信託事業では全国規模の大手とも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial company in upstate New York offering banking, employee benefits, insurance and wealth services.",
+      "revenue": "It earns from four businesses: banking, employee benefit services, insurance services and wealth management.",
+      "strength": "Its local character, customer knowledge, responsive branch-level decisions and digital banking help it compete.",
+      "risks": "The banking and financial services industry in its markets is highly competitive. Its benefits business also faces large national firms.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1490906,
+    "tickers": [
+      "CFFN"
+    ],
+    "name": "Capitol Federal Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Capitol Federal Financial Form 10-K (filed 2025-11-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1490906/000149090625000033/cffn-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "カンザス州トピーカに本拠を置く、貯蓄銀行の持株会社。",
+      "revenue": "預金を集めて商業ローンや住宅ローンに投じ、受取利息と支払利息の差である純金利収入で稼ぐ。",
+      "strength": "個人向け中心から商業向けへの転換を進める。資金管理サービスも商業顧客向けの特徴。",
+      "risks": "商業銀行取引の獲得競争が激しい。大手銀行や信用組合などが進出し、小規模地元行は強気の金利で挑む。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The holding company of a savings bank headquartered in Topeka, Kansas.",
+      "revenue": "It gathers deposits, lends them as commercial and home loans, and earns the net interest margin.",
+      "strength": "It is shifting from a retail focus to commercial banking, with treasury management services for business customers.",
+      "risks": "Competition for commercial banking relationships is intense, from larger banks and credit unions to smaller local lenders with aggressive pricing.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 726854,
+    "tickers": [
+      "CHCO"
+    ],
+    "name": "City Holding",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "City Holding Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685426000062/chco-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ウェストバージニア州を拠点に地域銀行業務を行う金融持株会社。",
+      "revenue": "法人・個人向けの銀行業務、住宅ローン、資産運用で稼ぐ。貸出の47%が住宅ローン関連、52%が法人・商業不動産。",
+      "strength": "96の支店網を持ち、顧客層が幅広い。銀行から信託、資産運用までそろえるのが特徴。",
+      "risks": "非銀行やフィンテックとの競争、貸倒引当金の不足、不動産市況の悪化を抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A West Virginia-based financial holding company running community banking.",
+      "revenue": "It earns from commercial and consumer banking, mortgage lending and wealth management. 47% of loans are residential and home equity; 52% are commercial.",
+      "strength": "A network of 96 bank branches and a diverse customer base. It covers banking, trust and investment management.",
+      "risks": "Competition from non-banks and fintechs, a possibly insufficient loan loss allowance, and real estate market declines.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 701347,
+    "tickers": [
+      "CPF"
+    ],
+    "name": "Central Pacific Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Central Pacific Financial Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/701347/000070134726000021/cpf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ハワイ州で商業銀行業務を行うセントラル・パシフィック銀行の持株会社。",
+      "revenue": "貸出の利息と手数料、有価証券の利息・配当、預金関連の手数料で稼ぐ。",
+      "strength": "ハワイの個人・小規模事業者の預金が低コストの資金源。人的な関係と接客、デジタル銀行が武器。",
+      "risks": "ハワイの不動産市況や観光の動向に左右される。フィンテックやネット専業の住宅ローン業者など、競争相手も多い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The holding company of Central Pacific Bank, which runs commercial banking in Hawaii.",
+      "revenue": "It earns from loan interest and fees, interest and dividends on securities, and deposit-related fees.",
+      "strength": "Hawaii retail and small business deposits give it low-cost funding. Personal relationships, service and digital banking set it apart.",
+      "risks": "Results swing with Hawaii's real estate market and tourism. It also faces many rivals, including fintechs and online mortgage lenders.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 846617,
+    "tickers": [
+      "DCOM"
+    ],
+    "name": "Dime Community Bancshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Dime Community Bancshares Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/846617/000084661726000013/dcom-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニューヨーク州ロングアイランドを地盤とする商業銀行の持ち株会社。",
+      "revenue": "預金を集め、商業用不動産やマルチファミリー、住宅向けなどの融資と証券で運用して稼ぐ。63店舗を展開。",
+      "strength": "1910年創業の銀行で、中小企業や自治体、個人との長い取引関係が特徴。",
+      "risks": "融資がロングアイランドとマンハッタンの不動産に集中する。大手との競争も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A holding company for a commercial bank based in Long Island, New York.",
+      "revenue": "It gathers deposits and earns by lending to commercial real estate, multi-family and residential borrowers and investing in securities. It runs 63 branches.",
+      "strength": "The bank dates to 1910 and is built on long-standing ties with small businesses, municipalities and consumers.",
+      "risks": "Its loans are concentrated in Long Island and Manhattan real estate, and it competes with much larger banks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1669811,
+    "tickers": [
+      "DFIN"
+    ],
+    "name": "Donnelley Financial Solutions",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Donnelley Financial Solutions Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1669811/000119312526054586/dfin-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "上場企業や投資会社向けに規制対応のソフトとサービスを提供する会社。",
+      "revenue": "ソフトウェア、テクノロジー型サービス、印刷・配布の三つで稼ぐ。中心はActiveDisclosureなどのソフト。",
+      "strength": "幅広い商品群、世界規模の基盤、規制分野の専門知識が強み。",
+      "risks": "業界は競争が激しく、参入障壁も下がっている。AIなど技術変化に乗り遅れれば痛手になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides regulatory compliance software and services to public companies and investment firms.",
+      "revenue": "It earns from software, tech-enabled services, and print and distribution, with software such as ActiveDisclosure at the core.",
+      "strength": "A wide product range, a global platform and regulatory expertise set it apart.",
+      "risks": "The industry is highly competitive and entry barriers are falling. Falling behind on technology such as AI would hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1810546,
+    "tickers": [
+      "EBC"
+    ],
+    "name": "Eastern Bankshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Eastern Bankshares Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1810546/000162828026013126/ebc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ボストンに本拠を置く銀行持ち株会社。傘下にイースタン銀行を持つ。",
+      "revenue": "預金を元手にした融資と、資産運用・信託サービスで稼ぐ。",
+      "strength": "融資、預金、資産運用を幅広く扱う。1818年創業の歴史ある銀行。",
+      "risks": "貸し倒れの増加や景気悪化、サイバー攻撃を抱える。買収した企業の統合がうまくいかない恐れもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Boston that owns Eastern Bank.",
+      "revenue": "It earns from lending funded by deposits, plus wealth management and trust services.",
+      "strength": "It offers a broad mix of lending, deposits and wealth management, and its bank was founded in 1818.",
+      "risks": "Higher credit losses, a weaker economy and cyberattacks are risks, and integrating acquired businesses may go poorly.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1084961,
+    "tickers": [
+      "ECPG"
+    ],
+    "name": "Encore Capital",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Encore Capital Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496126000009/ecpg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "延滞した消費者債権を買い取って回収する、国際的な専門金融会社。",
+      "revenue": "延滞債権を額面より大幅に安く買い、返済を受けて稼ぐ。米国はMCM、欧州はCabotが担う。",
+      "strength": "独自のデータと統計モデルで購入先を選ぶ分析力が特徴。デジタル回収も進めている。",
+      "risks": "競争で債権の入手しやすさと価格が左右される。規制対応の費用も重い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An international specialty finance company that buys and collects defaulted consumer debt.",
+      "revenue": "It buys defaulted receivables at deep discounts and earns as consumers repay. MCM covers the US and Cabot covers Europe.",
+      "strength": "Its edge is analytics: proprietary data and statistical models guide which portfolios it buys, and it is building digital collections.",
+      "risks": "Competition affects how easily it can get portfolios and at what price, and regulatory compliance is costly.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1050441,
+    "tickers": [
+      "EGBN"
+    ],
+    "name": "Eagle Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Eagle Bancorp Form 10-K (filed 2026-03-09) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050441/000105044126000021/egbn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ワシントンD.C.周辺で営業するイーグルバンクの持ち株会社。",
+      "revenue": "中小企業向けの事業融資や建設融資、個人向けの銀行サービスで稼ぐ。",
+      "strength": "超大手銀行に対する地元密着の代替役を担い、個別対応の手厚いサービスが特徴。",
+      "risks": "融資と預金の獲得競争が厳しい。フィンテックやネット専業の貸し手とも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "The holding company for EagleBank, a community bank serving the Washington, D.C. area.",
+      "revenue": "It earns from business and construction loans and banking services for consumers.",
+      "strength": "It positions itself as a local alternative to super-regional banks, with personalized, relationship-based service.",
+      "risks": "Competition for loans and deposits is stiff, including from fintech and internet-based lenders.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1379041,
+    "tickers": [
+      "EIG"
+    ],
+    "name": "Employers Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Employers Holdings Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1379041/000137904126000011/eig-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "中小企業向けの労災保険を専門に扱う保険持ち株会社。",
+      "revenue": "低リスク業種の中小企業に労災保険を販売し、保険料と運用で稼ぐ。",
+      "strength": "労災保険への専門性と引受の規律、データ活用で適正な価格を出せる点が特徴。",
+      "risks": "保険料の設定を誤れば業績に響く。競合には大手や州の基金も多い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An insurance holding company specializing in workers' compensation for small and mid-sized businesses.",
+      "revenue": "It sells workers' compensation insurance to small and mid-sized firms in lower hazard industries and earns from premiums and investments.",
+      "strength": "Its features are workers' compensation specialization, disciplined underwriting and data-driven pricing.",
+      "risks": "Underpricing policies would hurt results, and many rivals are much larger.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 876523,
+    "tickers": [
+      "EZPW"
+    ],
+    "name": "EZCORP",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "EZCORP Form 10-K (filed 2025-11-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/876523/000087652325000094/ezpw-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国とラテンアメリカで質屋を運営する会社。",
+      "revenue": "質草を担保にした貸付の手数料と、中古品の販売、貴金属の売却で稼ぐ。",
+      "strength": "米国とラテンアメリカで1,360店舗を展開。米国では店舗数で第2位の質屋。",
+      "risks": "質屋業を対象とする法律や規制の変更、違反が業績を左右しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs pawn stores in the U.S. and Latin America.",
+      "revenue": "It earns from fees on pawn loans, sales of pre-owned goods and jewelry scrapping.",
+      "strength": "It runs 1,360 stores across the U.S. and Latin America and is the second largest pawn operator in the U.S. by store count.",
+      "risks": "Changes in pawn-related laws and regulations, or failure to comply with them, could hit results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 811589,
+    "tickers": [
+      "FBNC"
+    ],
+    "name": "First Bancorp (NC)",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "First Bancorp (NC) Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ノースカロライナ州で営業する銀行持ち株会社。傘下にファースト・バンクを持つ。",
+      "revenue": "企業向けと個人向けの融資、預金の受け入れで稼ぐ。売掛金金融などはMagnolia Financialが担う。",
+      "strength": "ノースカロライナ州で4番目に大きい商業銀行持ち株会社。幅広い融資を扱う地域密着型。",
+      "risks": "景気後退や金利の変動が融資需要や資産の質を損ないうる。銀行・非銀行との競争も厳しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company in North Carolina that owns First Bank.",
+      "revenue": "It earns from business and consumer loans and from taking deposits. Magnolia Financial handles receivables financing.",
+      "strength": "It is the fourth largest commercial bank holding company headquartered in North Carolina, a community-focused bank with a broad lending range.",
+      "risks": "A recession or rate swings can hurt loan demand and asset quality, and competition from banks and non-banks is strong.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 712537,
+    "tickers": [
+      "FCF"
+    ],
+    "name": "First Commonwealth Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "First Commonwealth Financial Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ペンシルベニア州を地盤に、銀行と保険代理店を傘下に持つ金融持ち株会社。",
+      "revenue": "個人・法人向けの融資と預金、信託・資産運用、保険商品の販売で稼ぐ。",
+      "strength": "ペンシルベニア州とオハイオ州に126の地域店舗を構える。買収で拠点を広げてきた。",
+      "risks": "収益は純金利収入に左右される。金利が動けば融資や預金の獲得に響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Pennsylvania financial holding company that owns a bank and an insurance agency.",
+      "revenue": "It earns from consumer and commercial loans and deposits, trust and wealth management, and insurance products.",
+      "strength": "It has 126 community banking offices in Pennsylvania and Ohio and has widened its reach through acquisitions.",
+      "risks": "Earnings depend heavily on net interest income, so rate moves can affect loan and deposit growth.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 708955,
+    "tickers": [
+      "FFBC"
+    ],
+    "name": "First Financial Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "First Financial Bancorp Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/708955/000070895526000028/ffbc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "オハイオ州シンシナティに本拠を置く地域密着の銀行持ち株会社。",
+      "revenue": "商業融資や不動産融資、消費者向け金融、預金、信託・資産運用で稼ぐ。",
+      "strength": "フランチャイズ向けなど特定分野の融資を全米で手がける。地元での意思決定が速い。",
+      "risks": "景気の弱さや政策が預金や融資需要を左右する。大手銀行やネット貸し手との競争も強い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A regional bank holding company based in Cincinnati, Ohio.",
+      "revenue": "It earns from commercial, real estate and consumer lending, deposits, and trust and wealth management.",
+      "strength": "It runs niche lending nationwide, such as franchise finance, and makes decisions locally.",
+      "risks": "A weak economy and policy shifts can hit deposits and loan demand, and competition from large banks and online lenders is strong.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 36377,
+    "tickers": [
+      "FHB"
+    ],
+    "name": "First Hawaiian",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "First Hawaiian Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/36377/000110465926021544/fhb-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ハワイを拠点とする銀行持ち株会社。傘下のファースト・ハワイアン銀行を通じて営業する。",
+      "revenue": "個人と法人向けの預金、融資、資産運用で稼ぐ。店舗網はハワイ、グアム、サイパンに広がる。",
+      "strength": "1858年創業の歴史を持ち、ハワイ本社の銀行として融資と純利益で最大。関係重視の営業が特徴。",
+      "risks": "競争が激しい金融業界にいる。本土の大手銀行やプライベート融資会社などと顧客を奪い合う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Hawaii, operating through First Hawaiian Bank.",
+      "revenue": "It earns money from deposits, lending and wealth management for consumers and businesses, with branches in Hawaii, Guam and Saipan.",
+      "strength": "Founded in 1858, it is the largest bank headquartered in Hawaii by loans and net income. Long-term relationship banking is its approach.",
+      "risks": "It faces heavy competition. Large mainland banks and private credit lenders chase the same customers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 700564,
+    "tickers": [
+      "FULT"
+    ],
+    "name": "Fulton Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Fulton Financial Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/700564/000070056426000006/fult-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ペンシルベニアなど5州で営業する銀行持ち株会社。傘下にフルトン銀行を持つ。",
+      "revenue": "個人向け銀行、法人向け融資、資産運用で稼ぐ。商業用不動産ローンなどが貸出の大きな部分を占める。",
+      "strength": "地域密着の関係重視型バンキングが特徴。204の拠点とATM、モバイルなどの窓口を持つ。",
+      "risks": "ほかの銀行やフィンテック、プライベートファンドとの競争が激しい。商業用不動産ローンの信用リスクも抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company that runs Fulton Bank across Pennsylvania and four nearby areas.",
+      "revenue": "It earns from consumer banking, business lending and wealth management. Commercial real estate loans make up a large part of its loans.",
+      "strength": "Community-focused relationship banking is its trait. It runs 204 financial centers plus ATM, mobile and online channels.",
+      "risks": "Competition from other banks, fintechs and private funds is strong. Credit risk in commercial mortgage loans is also a weak spot.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1726978,
+    "tickers": [
+      "GSHD"
+    ],
+    "name": "Goosehead Insurance",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Goosehead Insurance Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1726978/000172697826000010/gshd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国で個人向け保険を200社超の保険会社から比較販売する独立系代理店。",
+      "revenue": "住宅保険や自動車保険など個人向け保険を代理販売して稼ぐ。保険契約の販売量が収益の土台になる。",
+      "strength": "200社超の保険会社との提携、自社開発の見積もりシステム、販売とサービスの分業が特徴。",
+      "risks": "保険の個人向け販売市場は競争が激しい。評判やサービス、商品力で他社と争う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An independent insurance agency that sells personal lines policies nationwide from over 200 carriers.",
+      "revenue": "It earns by selling personal insurance such as home and auto policies as an agent, so premiums placed drive its income.",
+      "strength": "Over 200 carrier relationships, proprietary quoting technology and a split between sales and service staff set it apart.",
+      "risks": "Personal lines distribution is competitive. It competes on reputation, client service and product offerings.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1109242,
+    "tickers": [
+      "HAFC"
+    ],
+    "name": "Hanmi Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hanmi Financial Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1109242/000119312526082425/hafc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "韓国系を中心とする地域に強い、カリフォルニア拠点の銀行持ち株会社。",
+      "revenue": "収入の84.5%は貸出の利息と手数料。有価証券の利息や預金口座の手数料、SBAローンの売却益も稼ぐ。",
+      "strength": "韓国系や多民族の地域社会に根ざした地域銀行で、事業向けの銀行業務が中心。",
+      "risks": "競争が激しい。貸出の大半が不動産向けで、不動産価値が下がると損失が膨らみうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A California-based bank holding company serving Korean-American and other multi-ethnic communities.",
+      "revenue": "Interest and fees on loans bring in 84.5% of revenue. Securities interest, deposit fees and SBA loan sales add the rest.",
+      "strength": "It is a community bank rooted in Korean-American and multi-ethnic markets, focused on business banking.",
+      "risks": "Competition is intense. Real estate makes up most of its loans, so falling property values can raise losses.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1561894,
+    "tickers": [
+      "HASI"
+    ],
+    "name": "HASI",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "HASI Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1561894/000156189426000007/hasi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "エネルギー転換を進める持続可能なインフラ資産に投資する会社。",
+      "revenue": "長期の安定した収入を生む実物資産に投資して稼ぐ。分野は3つの気候ソリューション市場。",
+      "strength": "米国の大手クリーンエネルギー事業者との長期的な関係が特徴。顧客とは競合しない方針を取る。",
+      "risks": "気候関連プロジェクトの市場が想定通りに育たない恐れがある。競争や政府支援の縮小も重荷になりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An investor in sustainable infrastructure assets that advance the energy transition.",
+      "revenue": "It earns by investing in income-producing real assets backed by long-term cash flows, across three climate solutions markets.",
+      "strength": "Long-standing ties with leading U.S. clean energy developers and operators are a feature. It never competes with its clients.",
+      "risks": "The climate solutions market may not develop as hoped. Competition and weaker government support could also hurt.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1400810,
+    "tickers": [
+      "HCI"
+    ],
+    "name": "HCI Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "HCI Group Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1400810/000119312526076743/hci-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "フロリダ州を中心に住宅向け損害保険を手がける保険会社。",
+      "revenue": "住宅保険の引き受けが中心。保険ソフトのExzeo、保険取引所の管理、商業不動産でも稼ぐ。",
+      "strength": "傘下のExzeoが開発した自社ソフトで、引き受けや保険金支払いの効率化を図るのが特徴。",
+      "risks": "競争が激しく、新規参入で値下げ圧力が強まりうる。売上の大半がフロリダ州に集中する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A property and casualty insurer focused on homeowners coverage, mainly in Florida.",
+      "revenue": "Homeowners insurance is its core. Exzeo software, managing reciprocal exchanges and commercial real estate also earn money.",
+      "strength": "Software built in-house by its subsidiary Exzeo helps it spot underwriting chances and speed up claims.",
+      "risks": "Competition is heavy, and new entrants may push premiums down. Revenue is concentrated in Florida.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1128361,
+    "tickers": [
+      "HOPE"
+    ],
+    "name": "Hope Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hope Bancorp Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1128361/000112836126000011/hope-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ロサンゼルスに本社を置く、韓国系ルーツの銀行持ち株会社。",
+      "revenue": "貸出や有価証券の利息が収益の軸。預金や手数料商品、金融資産の売却益でも稼ぐ。",
+      "strength": "カリフォルニア最大級の独立系商業銀行の一つ。多民族の顧客を対象に12州で展開する。",
+      "risks": "多くの競合が資産や資本、知名度で上回る。金利や規制の変化も業績を左右する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company in Los Angeles with Korean-American roots.",
+      "revenue": "Interest on loans and securities is the core. Deposit and fee products plus gains on financial asset sales add to it.",
+      "strength": "It is one of the largest independent commercial banks headquartered in California, serving multi-ethnic customers.",
+      "risks": "Many rivals are larger and better known, with more capital. Rate and rule changes also sway results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1265131,
+    "tickers": [
+      "HTH"
+    ],
+    "name": "Hilltop Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hilltop Holdings Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1265131/000110465926015264/hth-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "テキサス州を拠点に銀行、証券、住宅ローンを手がける金融持ち株会社。",
+      "revenue": "銀行業務、証券ブローカー業務、住宅ローン組成の3事業で稼ぐ。預金の主な出どころはテキサスの個人と企業。",
+      "strength": "銀行、証券、住宅ローンを一社で持つ多角的な構成が特徴。",
+      "risks": "競合は資金力や店舗網で上回る大手が多い。住宅ローン組成は金利や需要の影響で業績が振れやすい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Texas-based financial holding company with banking, securities and mortgage origination businesses.",
+      "revenue": "It earns from three segments: banking, broker-dealer and mortgage origination. Its deposits mostly come from Texas residents and businesses.",
+      "strength": "Owning banking, securities and mortgage arms under one roof makes it diversified.",
+      "risks": "Many rivals have more funds and bigger branch networks. Mortgage origination results swing with rates and demand.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 776901,
+    "tickers": [
+      "INDB"
+    ],
+    "name": "Independent Bank Corp.",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Independent Bank Corp. Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/776901/000077690126000058/indb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "マサチューセッツ州を拠点に、ロックランド・トラスト銀行を傘下に持つ銀行持ち株会社。",
+      "revenue": "貸出と預金を軸に、投資や金融サービスでも稼ぐ。東マサチューセッツ周辺で150超の支店を展開する。",
+      "strength": "2025年にエンタープライズ・バンコープを買収し、規模を拡大。モバイルやオンラインの窓口も整える。",
+      "risks": "競争が激しく、新規参入が続きうる。貸出は地元の借り手と不動産に偏る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Massachusetts bank holding company that owns Rockland Trust Company.",
+      "revenue": "Lending and deposits are the core, with investment and financial services too. It runs over 150 branches around Eastern Massachusetts.",
+      "strength": "It bought Enterprise Bancorp in 2025 to grow, and offers mobile and online banking as well.",
+      "risks": "Competition is strong and new entrants may keep coming. Its loans lean on local borrowers and real estate.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1311370,
+    "tickers": [
+      "LAZ"
+    ],
+    "name": "Lazard",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lazard Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1311370/000131137026000008/laz-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "1848年創業の、企業の買収助言と資産運用を手がける金融会社。",
+      "revenue": "M&Aや再建などの財務アドバイザリーと、資産運用の二つで稼ぐ。長期契約の収益源はなく、案件ごとに報酬を得る。",
+      "strength": "独立した立場と世界に広がる拠点網が特徴。幹部級の人材が顧客に直接付く体制を売りにする。",
+      "risks": "市場環境が悪化すると、案件数や運用資産が減りうる。優秀な人材の確保も課題になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial firm founded in 1848 that advises companies on deals and manages assets.",
+      "revenue": "It earns from financial advisory such as M&A and restructuring, and from asset management. It has no long-term contracted revenue and is paid deal by deal.",
+      "strength": "Its independent stance and global network set it apart, with senior people working directly with clients.",
+      "risks": "Weak markets can cut deal volume and managed assets. Keeping and hiring key professionals is also a challenge.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 721994,
+    "tickers": [
+      "LKFN"
+    ],
+    "name": "Lakeland Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Lakeland Financial Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/721994/000072199426000018/lkfn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "インディアナ州北部と中部で地域密着の銀行業を営む持株会社。",
+      "revenue": "傘下のレイクシティ銀行が、法人・個人向けの融資や預金、資産管理で稼ぐ。持株会社の主な収入は同行からの配当。",
+      "strength": "地域ごとに意思決定を現場に近づけ、大手並みの商品を揃える。支店は自力で増やしてきた。",
+      "risks": "収益がインディアナ州の景気に左右されやすい。金利政策の変化や競争も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company running community banking in northern and central Indiana.",
+      "revenue": "Its subsidiary Lake City Bank earns from business and consumer lending, deposits and wealth services. The parent's main income is dividends from the bank.",
+      "strength": "It keeps decisions close to customers by region while offering many products of larger banks. It has grown its branches organically.",
+      "risks": "Results depend heavily on the Indiana economy. Federal Reserve policy and competition also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1629019,
+    "tickers": [
+      "MBIN"
+    ],
+    "name": "Merchants Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Merchants Bancorp Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1629019/000110465926021549/mbin-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "集合住宅向け融資や住宅ローン倉庫金融を手がける銀行持株会社。",
+      "revenue": "低リスクの固定金利ローンを組成して売却し、売却益と管理手数料で稼ぐ。預金と融資の利ざやも収益源。",
+      "strength": "全国向けの住宅ローン事業と地域銀行を併せ持つ。景気や信用の波を受けにくい構造が特徴。",
+      "risks": "預金や融資の獲得競争が激しい。ネット銀行など新しい競合も増えている。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company in multi-family lending and mortgage warehouse financing.",
+      "revenue": "It originates low-risk fixed-rate loans and sells them, earning gains on sale and servicing fees, plus interest income from loans and deposits.",
+      "strength": "It combines national mortgage banking with a local community bank, a mix built to cushion cyclical economic and credit swings.",
+      "risks": "Competition for deposits and loans is strong, and online banks and lending platforms are a growing challenge.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1596967,
+    "tickers": [
+      "MC"
+    ],
+    "name": "Moelis",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Moelis Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1596967/000119312526076747/mc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "M&Aや財務の助言に特化した、独立系の国際投資銀行。",
+      "revenue": "企業、投資ファンド、政府などに、買収・再建・資金調達の助言を行って稼ぐ。",
+      "strength": "助言に専念する独立系で、融資や売買の利益に頼る大手と異なる。世界の20を超える拠点で対応する。",
+      "risks": "大手や独立系との競争が激しい。幹部や専門人材の流出が業績を傷つけうる。",
+      "competition": "主な競合にBank of America、Citigroup、The Goldman Sachs Group、JPMorgan Chase、Morgan Stanleyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An independent global investment bank focused on M&A and financial advisory work.",
+      "revenue": "It earns by advising corporations, financial sponsors and governments on deals, restructurings and capital raising.",
+      "strength": "It focuses on advice as an independent firm, unlike major rivals that earn much from lending, trading and underwriting. It serves clients from over 20 locations worldwide.",
+      "risks": "Competition from large banks and independent boutiques is strong. Losing senior bankers could hurt results.",
+      "competition": "Main competitors include Bank of America, Citigroup, The Goldman Sachs Group, JPMorgan Chase, Morgan Stanley.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Bank of America",
+          "ticker": "BAC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Citigroup",
+          "ticker": "C",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "The Goldman Sachs Group",
+          "ticker": "GS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "JPMorgan Chase",
+          "ticker": "JPM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Morgan Stanley",
+          "ticker": "MS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 64996,
+    "tickers": [
+      "MCY"
+    ],
+    "name": "Mercury General",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Mercury General Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/64996/000006499626000005/mcy-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "カリフォルニア州を中心に個人向け自動車保険を売る損害保険会社。",
+      "revenue": "保険料収入の60.0%が個人用自動車保険、27.3%が住宅保険。主に独立代理店を通じて販売する。",
+      "strength": "丁寧な引受と保険金の支払い手続き、代理店との関係が競争上の強み。",
+      "risks": "保険料の82.1%がカリフォルニア州に集中する。価格競争が激しく、代理店は他社商品も扱う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A property and casualty insurer selling mainly personal auto insurance, centered in California.",
+      "revenue": "Personal auto makes up 60.0% of premiums and homeowners 27.3%, sold mostly through independent agents.",
+      "strength": "Its careful underwriting and claims handling, along with its agent relationships, are its competitive edge.",
+      "risks": "California accounts for 82.1% of premiums. Price competition is fierce, and its agents also sell for rivals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1278021,
+    "tickers": [
+      "MKTX"
+    ],
+    "name": "MarketAxess",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MarketAxess Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "債券などの電子取引プラットフォームを運営する会社。",
+      "revenue": "2025年は売上の86.8%が取引手数料。情報サービスや取引後サービスでも稼ぐ。",
+      "strength": "参加者どうしが直接取引できるOpen Tradingで、厚い流動性を築く。約1,800社が参加する。",
+      "risks": "電話など従来の取引手法が主な競合。債券取引の電子化が進むかどうかに成長が左右されうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that runs electronic trading platforms for bonds and other fixed-income products.",
+      "revenue": "In 2025, 86.8% of revenue came from trading commissions. It also earns from information and post-trade services.",
+      "strength": "Its Open Trading marketplace lets participants trade with each other and builds deep liquidity, with about 1,800 firms taking part.",
+      "risks": "Traditional bilateral trading by phone is a main rival. Growth depends on fixed-income trading moving to electronic.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1974138,
+    "tickers": [
+      "NATL"
+    ],
+    "name": "NCR Atleos",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "NCR Atleos Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ATMなどのセルフ式銀行サービスを銀行や小売店に提供する会社。",
+      "revenue": "ATM機器とソフト、保守を売る部門と、ATMネットワーク、通信・技術の三部門で稼ぐ。長期契約による継続収益が中心。",
+      "strength": "機器からソフト、運用まで一括で請け負う。Allpointは米国最大級の手数料無料ATM網。",
+      "risks": "金融サービス大手や機器メーカーとの競争が激しい。研究開発費も継続的に必要。",
+      "competition": "主な競合にEuronet、Brink’s Company、Diebold Nixdorfがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing self-service banking such as ATMs to banks and retailers.",
+      "revenue": "It earns from ATM hardware, software and services, from its ATM network, and from telecom and technology work, mostly under long-term contracts.",
+      "strength": "It handles hardware, software and operations in one package. Its Allpoint network is the largest retail surcharge-free independent ATM network in the U.S.",
+      "risks": "It competes directly with large financial services firms and equipment makers. Heavy R&D spending is also needed.",
+      "competition": "Main competitors include Euronet, Brink’s Company, Diebold Nixdorf.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Euronet",
+          "ticker": "EEFT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Brink’s Company",
+          "ticker": "BCO",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Diebold Nixdorf",
+          "ticker": "DBD",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1475841,
+    "tickers": [
+      "NBHC"
+    ],
+    "name": "National Bank Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "National Bank Holdings Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1475841/000110465926019119/nbhc-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "コロラド州を中心に米国西部・中部で展開する銀行持株会社。",
+      "revenue": "法人と個人向けの預金・融資のほか、信託・資産管理でも稼ぐ。",
+      "strength": "90を超える拠点と、買収した銀行を一つの運営にまとめてきた実績が特徴。",
+      "risks": "上位3社の競合が預金の大きな割合を握る市場が多い。成長は買収にも頼る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company operating across Colorado and other western and central U.S. states.",
+      "revenue": "It earns from deposits and lending to businesses and consumers, and from trust and wealth management.",
+      "strength": "It runs over 90 banking centers and has turned its acquired banks into one banking operation.",
+      "risks": "In many of its markets the top three competitors hold a large share of deposits. Its growth also relies on acquisitions.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 790359,
+    "tickers": [
+      "NBTB"
+    ],
+    "name": "NBT Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "NBT Bancorp Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニューヨーク州北部などで地域密着の銀行業を営む持株会社。",
+      "revenue": "預金と融資の利ざやが収益の柱。口座手数料、カード、年金管理、資産運用の手数料も得る。",
+      "strength": "地元の知識と現地での意思決定が強み。大手が扱わない農業融資も手がける。",
+      "risks": "競合が多く、大手は資本力や商品数で上回る。ノンバンクは規制が緩く、コストが低いこともある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company running community banking in upstate New York and neighboring regions.",
+      "revenue": "Its core earnings are the spread between loan and deposit rates, plus fees from accounts, cards, retirement plan administration and wealth management.",
+      "strength": "Local market knowledge and local decision-making are its strengths, and it offers agricultural lending that many larger rivals do not.",
+      "risks": "Many rivals compete with it, and some have more capital and products. Nonbank competitors face fewer regulatory limits and may cost less.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1174850,
+    "tickers": [
+      "NIC"
+    ],
+    "name": "Nicolet Bankshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Nicolet Bankshares Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1174850/000117485026000077/nic-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ウィスコンシン州を拠点とする地域銀行の持株会社。",
+      "revenue": "傘下のNicolet National Bankが、預金や融資などの銀行業務で稼ぐ。",
+      "strength": "地域で一番の地元銀行を目指す。五つの価値観を掲げ、顧客への対応の速さを売りにする。",
+      "risks": "競争が激しく、規模が小さく地理的な分散も限られる。MidWest Oneの統合も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Wisconsin that runs a community bank.",
+      "revenue": "Its subsidiary Nicolet National Bank earns from deposits, lending and other banking services.",
+      "strength": "It aims to be the lead community bank in its markets and builds on five core values, with responsiveness to customers.",
+      "risks": "Competition is intense, and its smaller size and limited geographic spread are drawbacks. Integrating MidWest One is also a task.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1547903,
+    "tickers": [
+      "NMIH"
+    ],
+    "name": "NMI Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "NMI Holdings Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅ローンの貸し倒れに備える民間の住宅ローン保険会社。",
+      "revenue": "貸し手に保険を売り、保険料で稼ぐ。2,193社と契約している。",
+      "strength": "独自の価格設定基盤Rate GPSでリスクに応じて保険料を決める。全50州で営業免許を持つ。",
+      "risks": "同業他社やFHAなど政府の保険制度と競合する。事業は政府系住宅金融機関の需要と規制に左右される。",
+      "competition": "主な競合にArch Capital Group、Essent Group、Enact Holdings、MGIC Investment、Radian Groupがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A private mortgage insurer that protects lenders against defaults on home loans.",
+      "revenue": "It sells insurance to mortgage lenders and earns premiums. It has master policies with 2,193 customers.",
+      "strength": "Its Rate GPS pricing platform sets prices according to risk, and it is licensed in all 50 states.",
+      "risks": "It competes with other private insurers and government programs such as the FHA. Its business hinges on GSE demand and rules.",
+      "competition": "Main competitors include Arch Capital Group, Essent Group, Enact Holdings, MGIC Investment, Radian Group.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Arch Capital Group",
+          "ticker": "ACGL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Essent Group",
+          "ticker": "ESNT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Enact Holdings",
+          "ticker": "ACT",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MGIC Investment",
+          "ticker": "MTG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Radian Group",
+          "ticker": "RDN",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1471265,
+    "tickers": [
+      "NWBI"
+    ],
+    "name": "Northwest Bancshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Northwest Bancshares Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1471265/000147126526000008/nwbi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ペンシルベニア州を中心に地域密着の銀行業を営む持株会社。",
+      "revenue": "住宅ローン、消費者ローン、事業向け融資の利息が主な収入。預金などで資金を集める。",
+      "strength": "161の拠点で個人・法人向け銀行業務と資産運用・信託を提供する。買収を重ねて地域を広げた。",
+      "risks": "預金と融資の獲得競争が激しい。ネット銀行の普及で、地域外の金融機関との預金競争も強まった。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company running community banking centered in Pennsylvania.",
+      "revenue": "Interest on residential mortgages, consumer loans and business loans is its main income, funded mainly by deposits.",
+      "strength": "It serves people and businesses from 161 locations with banking, investment management and trust services, and has widened its footprint through acquisitions.",
+      "risks": "Competition for deposits and loans is strong. With internet banking spreading, rivals outside its market now compete for deposits too.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1030469,
+    "tickers": [
+      "OFG"
+    ],
+    "name": "OFG Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "OFG Bancorp Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1030469/000103046926000008/ofg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "プエルトリコを拠点に銀行などを営む金融持株会社。",
+      "revenue": "銀行、ウェルスマネジメント、トレジャリーの各部門で稼ぐ。顧客の大半はプエルトリコと米領ヴァージン諸島にいる。",
+      "strength": "融資、保険販売、投資助言、証券仲介、信託まで手がける総合力が特徴。デジタル化と顧客重視を戦略に据える。",
+      "risks": "事業の大半がプエルトリコにあり、同地の経済や政府の財政難の影響を受けやすい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial holding company based in Puerto Rico that runs a bank and related businesses.",
+      "revenue": "It earns through its Banking, Wealth Management and Treasury segments, mostly from clients in Puerto Rico and the U.S. Virgin Islands.",
+      "strength": "It offers lending, insurance sales, investment advice, brokerage and trust services. Its strategy is built on digital, customer-centric banking.",
+      "risks": "Most of its business is in Puerto Rico, so local economic and government fiscal troubles can hurt it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1845815,
+    "tickers": [
+      "PAYO"
+    ],
+    "name": "Payoneer",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Payoneer Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "中小企業の国境を越えた決済や資金管理を支えるフィンテック会社。",
+      "revenue": "2025年の売上は1,052.8百万ドル。多通貨口座を軸にした越境決済で稼ぐ。",
+      "strength": "世界の銀行や決済事業者との連携網と、規制対応を重視する姿勢が強み。",
+      "risks": "銀行パートナーとの関係悪化や越境ECの落ち込み、金利の変動が収益を圧迫しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A fintech company that helps small businesses pay and get paid across borders.",
+      "revenue": "Revenue in 2025 was $1,052.8 million, earned from cross-border payments built around a multi-currency account.",
+      "strength": "Its strength is a network of global banking and payment partners and a compliance-first approach.",
+      "risks": "Losing banking partners, a drop in cross-border e-commerce or interest rate swings could hurt earnings.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1178970,
+    "tickers": [
+      "PFS"
+    ],
+    "name": "Provident Financial Services",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Provident Financial Services Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1178970/000162828026012814/pfs-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニュージャージー州でプロビデント銀行を営む銀行持株会社。",
+      "revenue": "預金を集め、商業用不動産や事業向け、住宅、消費者向けの融資で稼ぐ。手数料や保険、資産運用の収入もある。",
+      "strength": "中核預金と顧客との関係を重視する銀行業務が特徴。141の支店網を持つ。",
+      "risks": "商業用不動産などの融資は住宅ローンより損失リスクが高い。金利変動の影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company that runs Provident Bank in New Jersey.",
+      "revenue": "It takes deposits and lends in commercial real estate, business, residential and consumer loans. It also earns fees from wealth, insurance and investment services.",
+      "strength": "Its banking centers on core deposits and customer relationships, backed by a network of 141 branches.",
+      "risks": "Commercial real estate and similar loans carry higher loss risk than home mortgages, and interest rate moves also affect it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1230245,
+    "tickers": [
+      "PIPR"
+    ],
+    "name": "Piper Sandler",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Piper Sandler Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1230245/000123024526000013/pipr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業や機関投資家向けの投資銀行・証券会社。",
+      "revenue": "財務アドバイザリー、株式・債券の引受と売買、公共金融、リサーチ、運用などで稼ぐ。",
+      "strength": "1895年創業。中堅企業向けを中心に、助言から売買まで幅広い商品をそろえる。",
+      "risks": "大手や中小の証券会社との競争が激しい。優秀な人材の確保も課題になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An investment bank and institutional securities firm serving companies and investors.",
+      "revenue": "It earns from financial advisory, equity and debt capital markets, public finance, brokerage, research and asset management.",
+      "strength": "Founded in 1895, it offers a broad range of products, with a focus on middle-market clients.",
+      "risks": "Competition is intense from large Wall Street firms and smaller brokers, and keeping talented staff is a constant challenge.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1626115,
+    "tickers": [
+      "PJT"
+    ],
+    "name": "PJT Partners",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PJT Partners Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1626115/000119312526076969/pjt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "M&Aや事業再建の助言を行う、助言特化型の投資銀行。",
+      "revenue": "M&A、資金調達、事業再生、私募ファンドの助言と資金調達支援で稼ぐ。",
+      "strength": "再建・特殊状況の助言と、私募ファンド向けのPJT Park Hillが特徴。若く機動的な組織を掲げる。",
+      "risks": "M&Aは景気循環の影響を受ける。人材をめぐる競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An advisory-focused investment bank that advises on M&A and restructuring.",
+      "revenue": "It earns from M&A and capital markets advice, restructuring work, and private fund advisory and fundraising.",
+      "strength": "Its features are restructuring and special situations advice and PJT Park Hill for private funds, run as a young, agile firm.",
+      "risks": "M&A is cyclical and depends on the economy, and competition for talent is intense.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1761312,
+    "tickers": [
+      "PLMR"
+    ],
+    "name": "Palomar Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Palomar Holdings Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "地震保険などを扱う特約損害保険会社。",
+      "revenue": "地震、損害、内陸海上・その他財物、農作物、フロンティングの保険を、代理店やブローカー経由で売って稼ぐ。",
+      "strength": "専門性の高い市場に絞り、データ分析で細かく価格を決める点が特徴。A.M. BestのA格付けを持つ。",
+      "risks": "地震など巨大災害による損失を抱える。再保険でぶれを抑える構えだ。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty insurance company that sells property and casualty cover, including earthquake insurance.",
+      "revenue": "It sells earthquake, casualty, inland marine and other property, crop and fronting insurance through agents and brokers.",
+      "strength": "It focuses on niche markets and prices risk finely with data analytics. Its insurers carry an A rating from A.M. Best.",
+      "risks": "Catastrophes such as earthquakes can cause large losses, which it tries to temper with reinsurance.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1808834,
+    "tickers": [
+      "PRG"
+    ],
+    "name": "PROG Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "PROG Holdings Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1808834/000180883426000012/prg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "リース購入や後払いの決済手段を提供するフィンテック会社。",
+      "revenue": "2025年は売上の約96%をProgressive Leasingのリース購入事業が占めた。",
+      "strength": "信用力の高くない層に、店頭・アプリ・ネットで即時に審査する独自の判定基盤を提供する。",
+      "risks": "リース購入市場は競争が激しい。後払い市場でも新しい競合が増えている。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A fintech company that offers lease-to-own and buy now, pay later payment options.",
+      "revenue": "About 96% of revenue in 2025 came from the Progressive Leasing lease-to-own business.",
+      "strength": "Its own decisioning platform approves customers at the point of sale, in store, in app and online, including those with weaker credit.",
+      "risks": "The lease-to-own market is highly competitive, and new rivals keep entering buy now, pay later.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1782170,
+    "tickers": [
+      "RELY"
+    ],
+    "name": "Remitly",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Remitly Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1782170/000162828026009038/rely-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "海外送金を中心とした国際金融サービスの会社。",
+      "revenue": "売上の大半は送金事業で、顧客から取る手数料と為替スプレッドで稼ぐ。",
+      "strength": "信頼、ネットワーク、規模の三つが強み。速さと手頃な価格を打ち出す。",
+      "risks": "競合は規模も地域も多様で、価格や信頼性、規制対応をめぐる競争が激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company that provides cross-border financial services, mainly international money transfers.",
+      "revenue": "Most revenue comes from money transfers, earned through transaction fees and foreign exchange spreads.",
+      "strength": "Its strengths are trust, network and scale, which support fast, reliable and affordable service.",
+      "risks": "It faces many rivals of different size and reach, competing on price, reliability and compliance.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 715072,
+    "tickers": [
+      "RNST"
+    ],
+    "name": "Renasant",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Renasant Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/715072/000071507226000017/rnst-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ミシシッピ州を拠点に南東部で銀行業を営む持株会社。",
+      "revenue": "銀行業のほか、ファクタリングや資産担保融資、投資助言、証券仲介で稼ぐ。",
+      "strength": "地域ごとの銀行がそれぞれ事業計画を実行するフランチャイズ方式が特徴。",
+      "risks": "融資リスクを抱え、金利上昇や景気悪化で返済や担保価値が下がりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A holding company that runs a bank across the Southeast, based in Mississippi.",
+      "revenue": "Besides banking, it earns from factoring, asset-based lending, investment advice and brokerage.",
+      "strength": "Its community banks follow a franchise model in which local presidents carry out their own business plans.",
+      "risks": "Lending risk is a weakness, since higher rates or a weaker economy can cut repayment and collateral value.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1172052,
+    "tickers": [
+      "SAFT"
+    ],
+    "name": "Safety Insurance",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Safety Insurance Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1172052/000117205226000005/saft-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "マサチューセッツ州を中心に自動車・住宅保険を扱う損害保険会社。",
+      "revenue": "マサチューセッツ、ニューハンプシャー、メーンの三つの州で、自動車や住宅などの保険を売って稼ぐ。",
+      "strength": "独立代理店だけで販売する体制が強み。マサチューセッツの商用自動車保険では最大手。",
+      "risks": "事業が三つの州に集中する。代理店の獲得をめぐる競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A property and casualty insurer focused on auto and homeowners cover in Massachusetts.",
+      "revenue": "It earns by selling auto, homeowners and other insurance in Massachusetts, New Hampshire and Maine.",
+      "strength": "It sells only through independent agents, and is the largest commercial auto insurer in Massachusetts.",
+      "risks": "Its business is concentrated in Massachusetts, New Hampshire and Maine, and it competes with other insurers for agents.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 705432,
+    "tickers": [
+      "SBSI"
+    ],
+    "name": "Southside Bancshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Southside Bancshares Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/705432/000070543226000034/sbsi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "テキサス州でサウスサイド銀行を営む銀行持株会社。",
+      "revenue": "融資と預金、信託・資産運用サービスで稼ぐ。2025年の純金利収入は221.1百万ドル。",
+      "strength": "53の支店を持ち、そのうち12はスーパー内にある。1970年以来、毎年配当を払う。",
+      "risks": "信用組合やフィンテックなどとの競争が激しい。金利の動きの影響も受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company that runs Southside Bank in Texas.",
+      "revenue": "It earns from lending, deposits, and trust and wealth management. Net interest income in 2025 was $221.1 million.",
+      "strength": "It runs 53 branches, 12 of them in grocery stores, and has paid a cash dividend every year since 1970.",
+      "risks": "Credit unions, fintechs and others compete hard, and interest rate moves also affect it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1662991,
+    "tickers": [
+      "SEZL"
+    ],
+    "name": "Sezzle",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sezzle Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1662991/000166299126000016/szl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "後払い（BNPL）を提供する決済会社。",
+      "revenue": "加盟店から受け取る手数料や、消費者の延滞・支払い失敗の手数料で稼ぐ。",
+      "strength": "若い世代向けに、柔軟で簡単な後払いを出す点が特徴。公益法人として運営する。",
+      "risks": "後払い業界への規制強化と競争の激化を抱える。大手EC事業者への依存も大きい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A payments company that offers buy now, pay later (BNPL).",
+      "revenue": "It earns from fees charged to merchants and from consumer late and failed payment fees.",
+      "strength": "Its feature is a simple, flexible alternative to credit aimed at younger consumers. It operates as a public benefit corporation.",
+      "risks": "Tighter BNPL regulation and fierce competition weigh on it, and it depends heavily on a few large e-commerce partners.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1430723,
+    "tickers": [
+      "SFBS"
+    ],
+    "name": "ServisFirst Bancshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "ServisFirst Bancshares Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1430723/000117184326001150/sfbs20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "米アラバマ州を本拠に、南東部で銀行を営む持株会社。",
+      "revenue": "貸出の利息と手数料、投資の利息や配当、サービス料が収入の柱。預金を集めて融資する。",
+      "strength": "支店数を絞り、1店あたりに多額の貸出と預金を集める戦略が特徴。",
+      "risks": "小売でも法人向けでも競争が激しい。銀行のほか信用組合や保険会社などとも競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Alabama that runs banks across the Southeast.",
+      "revenue": "Interest and fees on loans, interest and dividends on investments, and service charges are its main income. It takes deposits and lends.",
+      "strength": "Its strategy is a limited, efficient branch network, with large loan and deposit balances housed in each branch.",
+      "risks": "Its retail and commercial markets are highly competitive, with banks, credit unions, insurers and others as rivals.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 90498,
+    "tickers": [
+      "SFNC"
+    ],
+    "name": "Simmons First National",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Simmons First National Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/90498/000162828026011618/sfnc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "アーカンソー州発で6州に展開する地域金融持株会社。",
+      "revenue": "法人向け融資、個人向けの預金とローン、信託や保険で稼ぐ。",
+      "strength": "地域密着の姿勢に、集約した支援部門を組み合わせる。特定の顧客や業種に依存しない。",
+      "risks": "銀行間の競争が激しい。デジタル専業の競合は情報技術に多く投資でき、非銀行勢は規制が緩い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A regional financial holding company based in Arkansas, with operations across six U.S. states.",
+      "revenue": "It earns from business loans, consumer deposits and loans, and trust and insurance services.",
+      "strength": "A community-based mindset backed by centralized support functions. It does not depend on any single customer or industry.",
+      "risks": "Competition among banks is significant. Digital-only rivals can invest more in technology, and nonbank rivals face lighter regulation.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 913760,
+    "tickers": [
+      "SNEX"
+    ],
+    "name": "StoneX",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "StoneX Form 10-K (filed 2025-11-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/913760/000091376025000196/intl-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業や投資家を世界の市場につなぐ金融サービス会社。",
+      "revenue": "取引の手数料とスプレッド、顧客預り金の利息や手数料、助言料で稼ぐ。",
+      "strength": "市場への接続から清算、決済まで一貫して提供する垂直統合の商品群が特徴。",
+      "risks": "商業分野では非銀行系のFCM、大手銀行、スワップディーラーと競合する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial services firm that connects companies and investors to global markets.",
+      "revenue": "It earns commissions and spreads on trades, interest and fees on client balances, and consulting fees.",
+      "strength": "Its vertically integrated suite covers market access, execution, clearing, custody and settlement.",
+      "risks": "In the Commercial segment it competes with non-bank FCMs, global banks and swap dealers.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1576018,
+    "tickers": [
+      "SPNT"
+    ],
+    "name": "SiriusPoint",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "SiriusPoint Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1576018/000157601826000032/spnt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "バミューダに本社を置く、特殊保険と再保険の引受会社。",
+      "revenue": "保険引受の成績、傘下MGAのサービス手数料、投資の運用成績で稼ぐ。保険料の多くはMGA経由。",
+      "strength": "ニッチ分野に強いMGAとの提携網と、世界に広がる複数の販売経路が特徴。",
+      "risks": "保険・再保険市場は競争が激しい。債券型の資本や新たな参入者の増加で価格に圧力がかかる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Bermuda-based specialty underwriter of insurance and reinsurance.",
+      "revenue": "It earns from underwriting results, service fees from the MGAs it consolidates, and investment results. Most premium comes through MGAs.",
+      "strength": "Partnerships with MGAs in niche businesses and a global multi-channel distribution network set it apart.",
+      "risks": "Insurance and reinsurance markets are highly competitive. Non-traditional capital and program managers add pricing pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 719220,
+    "tickers": [
+      "STBA"
+    ],
+    "name": "S&T Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "S&T Bancorp Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/719220/000071922026000030/stba-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ペンシルベニア州とオハイオ州で銀行を営む持株会社。",
+      "revenue": "預金と貸出に加え、証券仲介、信託、資産運用サービスで稼ぐ。",
+      "strength": "72の支店網を持つ。「人を第一にする銀行」を掲げる個人重視の姿勢が特徴。",
+      "risks": "周辺は金融機関が密集し、より大きな競合も多い。規制が緩い競合は低コストで運営しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company operating banks in Pennsylvania and Ohio.",
+      "revenue": "It earns from deposits and loans, plus brokerage, trust and wealth management services.",
+      "strength": "It runs 72 branches and builds its identity on personal, people-first banking.",
+      "risks": "Its market is dense with financial institutions, many larger. Less-regulated rivals can run at lower cost.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1796022,
+    "tickers": [
+      "STEP"
+    ],
+    "name": "StepStone Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "StepStone Group Form 10-K (filed 2026-05-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1796022/000162828026038446/step-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "未公開市場の投資ソリューションと助言、データを提供する運用会社。",
+      "revenue": "年金基金や政府系ファンド、富裕層などに、投資運用、助言、データサービスを提供して稼ぐ。",
+      "strength": "複数の資産クラスにまたがる専門性と、自社開発のデータ・ソフトウェアが強み。",
+      "risks": "資産運用会社や銀行、証券会社など多数と競う。助言分野では大手コンサルとも競合する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A private markets investment firm offering customized solutions, advice and data.",
+      "revenue": "It serves pension funds, sovereign wealth funds, wealth clients and others with investment, advisory and data services.",
+      "strength": "Expertise across several private asset classes and proprietary data and software platforms are its strengths.",
+      "risks": "It competes with many asset managers, banks and broker-dealers, and with large consulting firms in advisory.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1295401,
+    "tickers": [
+      "TBBK"
+    ],
+    "name": "The Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "The Bancorp Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1295401/000129540126000002/tbbk-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "フィンテック企業向けに決済と融資を担う銀行持株会社。",
+      "revenue": "カード発行や決済処理の手数料と、提携先の預金を元にした貸出で稼ぐ。",
+      "strength": "フィンテック提携先に、カード発行、決済処理、提携融資をそろえる。",
+      "risks": "景気悪化や金利変動、サイバー攻撃を抱える。フィンテックへの傾斜が新たな法務リスクを生みうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company that handles payments and lending for fintech companies.",
+      "revenue": "It earns fees from card issuing and payment processing, and from lending funded by partner deposits.",
+      "strength": "It offers fintech partners card issuance, payment processing and sponsored lending in one bank.",
+      "risks": "Weak economies, rate swings and cyberattacks are risks. Its fintech focus may bring new operational and legal risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1539638,
+    "tickers": [
+      "TFIN"
+    ],
+    "name": "Triumph Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Triumph Financial Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1539638/000153963826000007/tfin-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国のトラック輸送向けに銀行、ファクタリング、決済を提供する会社。",
+      "revenue": "銀行部門が収入の57%、ファクタリングが31%、決済が11%を占める。",
+      "strength": "銀行、ファクタリング、決済、データを束ねた統合モデルが特徴。",
+      "risks": "地域・全国の銀行や非銀行のファクタリング会社、決済ソフト企業と競う。競合は資産で上回りうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing banking, factoring and payments to the for-hire trucking industry in the U.S.",
+      "revenue": "Banking brings in 57% of segment revenue, Factoring 31% and Payments 11%.",
+      "strength": "An integrated model that combines banking, factoring, payments and data sets it apart.",
+      "risks": "It competes with regional and national banks, non-bank factoring firms and payments software providers, some with more assets.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 36146,
+    "tickers": [
+      "TRMK"
+    ],
+    "name": "Trustmark",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Trustmark Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/36146/000119312526064009/trmk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ミシシッピ州発で、南東部とテキサスで営む銀行持株会社。",
+      "revenue": "法人・個人向けの融資と預金、住宅ローン、資産運用や信託サービスで稼ぐ。",
+      "strength": "一般銀行と資産運用の2部門で、融資から信託まで幅広く提供する。",
+      "risks": "金利変動や景気、貸出の質の悪化を抱える。新規参入で預金と貸出の価格競争も強まりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Mississippi, serving the Southeast and Texas.",
+      "revenue": "It earns from business and consumer loans and deposits, mortgage banking, and wealth and trust services.",
+      "strength": "Two segments, General Banking and Wealth Management, offer everything from loans to trust services.",
+      "risks": "Rate swings, a weaker economy and worse credit quality are risks. New entrants may sharpen loan and deposit pricing.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1371285,
+    "tickers": [
+      "TRUP"
+    ],
+    "name": "Trupanion",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Trupanion Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国やカナダなどで犬と猫の医療保険を販売する会社。",
+      "revenue": "主にペット保険の掛け金(購読料)で稼ぐ。他社向けの引受も別の収入源。",
+      "strength": "データを使い、引受から対応まで自社で担う垂直統合が特徴。ペットごとに価格を決める。",
+      "risks": "最大の競争相手は、クレジットカードなどで自費負担を選ぶ飼い主。他のペット保険ブランドも多い。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company selling medical insurance for cats and dogs in the U.S., Canada and parts of Europe.",
+      "revenue": "It earns mainly from pet insurance premiums, called subscription payments. Underwriting for third parties is a smaller source.",
+      "strength": "A data-driven, vertically integrated model prices each pet by its own characteristics and coverage.",
+      "risks": "Its main rival is pet owners who self-fund vet bills, mainly by credit card. Many pet insurance brands also compete.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 101199,
+    "tickers": [
+      "UFCS"
+    ],
+    "name": "United Fire Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "United Fire Group Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/101199/000010119926000015/ufcs-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "独立代理店網を通じて損害保険を販売する米国の保険会社。",
+      "revenue": "主に法人向けの損害保険と保証保険を売って稼ぐ。ロイズへの参加や再保険も手がける。",
+      "strength": "全50州で免許を持つ。約850の独立代理店を通じ、中小から中堅企業に商品を届ける。",
+      "risks": "業界の競争が激しく、より大きな競合も多い。代理店内の競争や代理店確保の競争もある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. insurer that sells property and casualty insurance through independent agencies.",
+      "revenue": "It earns mainly by selling commercial property and casualty insurance and surety bonds. It also takes part in Lloyd's and writes reinsurance.",
+      "strength": "Licensed in all 50 states, it reaches small and middle market businesses through about 850 independent agencies.",
+      "risks": "The industry is highly competitive and some rivals are much larger. It also competes within agencies and for agents.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1570827,
+    "tickers": [
+      "VCTR"
+    ],
+    "name": "Victory Capital",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Victory Capital Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1570827/000119312526077057/vctr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "複数の運用チームを束ねる資産運用会社。",
+      "revenue": "機関投資家や販売会社、個人向けに、投資信託やETFなどの運用商品を提供して稼ぐ。",
+      "strength": "各運用チームの自主性を保ちつつ、販売と運営を一本化した基盤が特徴。",
+      "risks": "顧客資産の獲得で他の運用会社と競う。企業買収でも他の買い手と競合する。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A diversified asset management firm that brings several investment teams together.",
+      "revenue": "It earns by offering funds, ETFs and other products to institutions, intermediaries and individual investors.",
+      "strength": "It keeps each investment team autonomous while centralizing distribution, marketing and operations.",
+      "risks": "It competes with other investment firms for client assets, and with other buyers when acquiring firms.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1592386,
+    "tickers": [
+      "VIRT"
+    ],
+    "name": "Virtu Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Virtu Financial Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "技術を武器に、世界の市場へ流動性と取引サービスを提供する金融会社。",
+      "revenue": "マーケットメイキングと執行サービスの二つの事業部門で稼ぐ。株式やETF、オプション、為替、先物など幅広い商品を扱う。",
+      "strength": "自社開発のマルチアセット技術基盤が特徴。取引所や顧客と直接つなぎ、大きな追加コストなしに事業を広げられる。",
+      "risks": "取引量の変動や規制の強化が収益に響く。クレジット契約が配当の支払いを制限しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial firm that uses technology to supply liquidity and trading services to global markets.",
+      "revenue": "It earns through two operating segments, Market Making and Execution Services, across equities, ETFs, options, FX and futures.",
+      "strength": "Its in-house multi-asset technology platform connects directly to exchanges and clients, so it can scale without much added cost.",
+      "risks": "Swings in trading activity and tighter regulation hit its income. Its credit agreement can also limit dividends.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 883237,
+    "tickers": [
+      "VRTS"
+    ],
+    "name": "Virtus Investment Partners",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Virtus Investment Partners Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/883237/000088323726000009/vrts-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "複数の運用会社を束ねて投資商品を提供する資産運用会社。",
+      "revenue": "投資信託やETF、機関投資家向け口座を運用し、運用資産に連動する手数料で稼ぐ。",
+      "strength": "各運用会社が独自の運用スタイルを持つマルチマネージャー型が特徴。幅広い商品で多様な投資家に応える。",
+      "risks": "運用資産が減ると手数料収入と利益が落ちる。競争や運用契約の解除も重荷になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An asset manager that brings several investment managers together under one product line.",
+      "revenue": "It runs mutual funds, ETFs and institutional accounts, and earns asset-based fees on the assets it manages.",
+      "strength": "Its multi-manager model gives each manager its own style, so a broad product range can serve many kinds of investors.",
+      "risks": "If assets under management fall, fee revenue and profit fall. Competition and terminated management agreements also weigh on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 311094,
+    "tickers": [
+      "WABC"
+    ],
+    "name": "Westamerica Bancorporation",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Westamerica Bancorporation Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/311094/000117184326001195/wabc20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "北・中部カリフォルニアで銀行サービスを提供する銀行持株会社。",
+      "revenue": "個人と法人向けの貸出や有価証券から得る利息と、預金などにかかる利息との差で稼ぐ。",
+      "strength": "小規模事業者の銀行ニーズに戦略の重点を置く。北カリフォルニアから中部まで広い地域に拠点を持つ。",
+      "risks": "金利の変動が収益と資金繰りを左右する。大手銀行や地銀、信用組合との預金・貸出競争にもさらされる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company providing banking services in Northern and Central California.",
+      "revenue": "It earns the gap between interest on loans and securities and interest paid on deposits and borrowings, from individuals and businesses.",
+      "strength": "Its strategic focus is the banking needs of small businesses, across a wide stretch of Northern and Central California.",
+      "risks": "Interest rate changes drive its income and cash flow. It also competes for deposits and loans with major banks, community banks and credit unions.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 936528,
+    "tickers": [
+      "WAFD"
+    ],
+    "name": "WaFd",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "WaFd Form 10-K (filed 2025-11-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/936528/000093652825000117/wfsl-20250930.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国西部で銀行サービスを手がけるWaFd銀行の持株会社。",
+      "revenue": "個人、中堅・大企業、商業不動産の事業主向けに、融資、預金、保険などの銀行サービスを提供して稼ぐ。",
+      "strength": "1917年創業の老舗で、上場以来、毎年黒字を続けてきた。2024年のLuther Burbank合併で西部に拠点を広げた。",
+      "risks": "金利の変動やインフレ、景気の悪化で貸出の質が落ちる恐れがある。サイバー攻撃や規制の変更も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company whose WaFd Bank provides banking services in the western U.S.",
+      "revenue": "It earns from lending, deposits, insurance and other banking services for consumers, small to large businesses, and commercial real estate owners.",
+      "strength": "Founded in 1917, it has been profitable every year since going public. The 2024 Luther Burbank merger widened its western footprint.",
+      "risks": "Interest rate swings, inflation and a weaker economy could hurt loan quality. Cyberattacks and regulatory changes are also risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 108385,
+    "tickers": [
+      "WRLD"
+    ],
+    "name": "World Acceptance",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "World Acceptance Form 10-K (filed 2026-06-04) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/108385/000010838526000014/wrld-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "少額の分割払いローンを個人に貸す米国の消費者金融会社。",
+      "revenue": "短期・中期の分割ローンと、関連する信用保険などの商品で稼ぐ。ローン利用者向けの税申告代行も手がける。",
+      "strength": "1962年から続く事業で、支店は1,009店。大きな規模が資金調達の有利さにつながる。",
+      "risks": "州ごとの厳しい規制や免許の下で営業する。法規制の変更で事業の継続や拡大が左右されうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. consumer finance company that lends small installment loans to individuals.",
+      "revenue": "It earns from short- and medium-term installment loans plus related credit insurance and other products. It also prepares tax returns for customers.",
+      "strength": "It has operated since 1962 and runs 1,009 branches. Its relatively large size lowers its cost of capital.",
+      "risks": "It operates under strict regulation and licensing rules. Changes in laws can limit how it continues or expands.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 828944,
+    "tickers": [
+      "WSFS"
+    ],
+    "name": "WSFS Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "WSFS Financial Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/828944/000082894426000006/wsfs-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "デラウェア州などで銀行と資産運用を手がける地域密着の金融会社。",
+      "revenue": "銀行業務に加え、信託・資産運用や、スマート金庫のCash Connectなど全国展開の事業でも稼ぐ。",
+      "strength": "顧客ごとに合わせた対応と素早い反応が差別化点。貸出上限が高く、成長する顧客の資金需要にも応えられる。",
+      "risks": "大手の競合との競争を抱える。事業に影響する厳しい法規制の下で営業している。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A community banking and wealth management company based mainly in Delaware and nearby areas.",
+      "revenue": "Besides banking, it earns from trust and wealth management and nationwide businesses such as Cash Connect smart safes.",
+      "strength": "Customized service and quick response set it apart. A high legal lending limit lets it meet the credit needs of growing clients.",
+      "risks": "It faces competition from larger rivals. Extensive laws and regulations also weigh on its earnings.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 880631,
+    "tickers": [
+      "WT"
+    ],
+    "name": "WisdomTree",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "WisdomTree Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/880631/000121465926002458/wti-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ETPを中心に運用商品を提供する資産運用会社。",
+      "revenue": "ETPの運用残高に応じた手数料が主な収入源。米国と欧州に上場する商品が中心。",
+      "strength": "独自指数を自社で持つセルフインデックスが特徴で、指数の使用料を抑えられる。トークン化など新分野にも広げる。",
+      "risks": "資産運用業界は競争が激しい。暗号資産の分野でも競争が強まり、国ごとの規制の違いも響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An asset manager built around ETPs and related investment products.",
+      "revenue": "Fees on assets under management in its ETPs are its main income, led by products traded in the U.S. and Europe.",
+      "strength": "Self-indexing is a core feature, cutting third-party index licensing fees. It is also expanding into tokenization and other new areas.",
+      "risks": "Asset management is highly competitive. Competition in digital assets is rising, and differing rules across countries add risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1365135,
+    "tickers": [
+      "WU"
+    ],
+    "name": "Western Union",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Western Union Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1365135/000119312526061340/wu-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "国境を越える送金と決済サービスを世界で提供する会社。",
+      "revenue": "売上は個人向け送金が87%、個人向けサービスが13%。サービスには公共料金の支払いやマネーオーダーなどがある。",
+      "strength": "世界200以上の国と地域に広がる代理店網とブランド力が特徴。約360,000の拠点で送金の実績がある。",
+      "risks": "世界経済の悪化や移民の動向、代理店網の維持に左右される。競争や技術の変化、規制への対応も負担になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A company providing cross-border money transfer, payments and digital financial services worldwide.",
+      "revenue": "Consumer Money Transfer brings in 87% of revenue and Consumer Services 13%, covering bill payments, money orders and more.",
+      "strength": "Its brand and agent network reach more than 200 countries and territories, with about 360,000 locations active in transfers.",
+      "risks": "It depends on the global economy, migration patterns and its agent network. Competition, tech change and compliance are also burdens.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1042046,
+    "tickers": [
+      "AFG"
+    ],
+    "name": "American Financial Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "American Financial Group Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204626000010/afg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "商業向けの特殊な損害保険を手がける保険持株会社。",
+      "revenue": "グレート・アメリカン・インシュランス・グループの36の保険事業を通じ、商業向けの損害保険を販売して保険料で稼ぐ。",
+      "strength": "各事業が現地の判断で引受や保険金の支払いを行う分散型の運営が特徴。特殊保険の保険料の55%超が上位10社に入る事業から生まれる。",
+      "risks": "自然災害などの大災害が業績を押し下げうる。再保険の確保や格付けの低下も課題になる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An insurance holding company that writes specialty commercial property and casualty insurance.",
+      "revenue": "It sells commercial coverages through 36 insurance businesses in the Great American Insurance Group and earns from premiums.",
+      "strength": "Each business makes its own underwriting and claims decisions locally. Over 55% of specialty premiums come from businesses ranked in the top 10.",
+      "risks": "Catastrophes and severe weather can hurt results. Securing reinsurance and keeping credit ratings are also challenges.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1423689,
+    "tickers": [
+      "AGNC"
+    ],
+    "name": "AGNC Investment",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "AGNC Investment Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1423689/000142368926000043/agnc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅ローン担保証券に投資する不動産投資信託(REIT)。",
+      "revenue": "政府系機関が保証する住宅ローン担保証券の利息から、借入とヘッジのコストを引いた分で稼ぐ。",
+      "strength": "投資の大半を政府や政府系企業が元本を保証する証券に置く。内部運営で、毎月の配当を重視する。",
+      "risks": "金利や期限前返済、スプレッドの変動に弱い。短期の変動金利で資金を借りるため、金利が上がれば借入コストが増える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A real estate investment trust that invests in mortgage-backed securities.",
+      "revenue": "It earns interest on Agency mortgage-backed securities, net of borrowing and hedging costs.",
+      "strength": "Most of its portfolio is in securities guaranteed by the U.S. government or a government-sponsored enterprise. It is internally managed and pays monthly dividends.",
+      "risks": "It is exposed to interest rate, prepayment and spread swings. Its financing is short-term and variable, so rising rates raise borrowing costs.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 40729,
+    "tickers": [
+      "ALLY"
+    ],
+    "name": "Ally Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ally Financial Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/40729/000004072926000005/ally-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "オンライン専業銀行と自動車ローン・保険を手がける金融会社。",
+      "revenue": "自動車ディーラー向けの金融・保険と、法人向け融資で稼ぐ。預金や証券取引、投資助言も扱う。",
+      "strength": "全米最大のオンライン専業銀行と、業界をリードする自動車金融・保険の事業が柱。",
+      "risks": "銀行として厳しい規制やストレステスト、資本・流動性の要件を負う。預金に頼る資金調達にも限りがありうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial-services company with an all-digital bank and an auto financing and insurance business.",
+      "revenue": "It earns from auto financing and insurance for dealers and from corporate finance. It also offers deposits, brokerage and advisory services.",
+      "strength": "Its pillars are the nation's largest all-digital bank and an industry-leading auto financing and insurance business.",
+      "risks": "As a bank it faces heavy regulation, stress tests and capital and liquidity rules. Its reliance on deposits for funding may be limited.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1004434,
+    "tickers": [
+      "AMG"
+    ],
+    "name": "Affiliated Managers Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Affiliated Managers Group Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1004434/000162828026008665/amg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "独立系の運用会社に出資し、その成長を支える投資持株会社。",
+      "revenue": "傘下の運用会社が受け取る資産連動や成功報酬の手数料が業績の元。生まれた現金は成長投資と株主還元に回す。",
+      "strength": "経営陣が出資し自主性を保つ運用会社と組む提携モデルが特徴。オルタナティブから長期運用まで分散している。",
+      "risks": "運用成績や手数料水準の変化で業績が揺れる。パッシブ商品の人気が、手数料を押し下げうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A holding company that invests in independent investment firms and supports their growth.",
+      "revenue": "Asset- and performance-based fees earned by its Affiliates drive results. Cash generated goes to growth investments and returns to shareholders.",
+      "strength": "Its partnership model lets Affiliates keep autonomy and equity ownership. Its mix spans alternatives and differentiated long-only strategies.",
+      "risks": "Results swing with investment performance and fee levels. Demand for passive products can push fees down.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 7789,
+    "tickers": [
+      "ASB"
+    ],
+    "name": "Associated Banc-Corp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Associated Banc-Corp Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778926000071/asb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米中西部で銀行サービスを提供する、ウィスコンシン州本拠の銀行持株会社。",
+      "revenue": "個人と法人向けに、預金や融資などの銀行・関連サービスを提供して稼ぐ。事業は三つの報告セグメントに分かれる。",
+      "strength": "資産ではウィスコンシン州本拠で最大の銀行持株会社。関係重視の事業で、特定の大口顧客に頼らない。",
+      "risks": "景気の後退や金利の変動が資産の質、預金、貸出需要に響く。銀行や金融テック企業との競争も激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Wisconsin serving the upper Midwest.",
+      "revenue": "It earns by offering deposits, loans and other banking and related services to individuals and businesses, in three reportable segments.",
+      "strength": "It is the largest bank holding company headquartered in Wisconsin by assets. Its relationship-driven business does not depend on a few large customers.",
+      "risks": "A recession or interest rate swings can hurt asset quality, deposits and loan demand. Competition from banks and fintechs is intense.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 22356,
+    "tickers": [
+      "CBSH"
+    ],
+    "name": "Commerce Bancshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Commerce Bancshares Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/22356/000002235626000069/cbsh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ミズーリ州を拠点に銀行サービスを手がける銀行持株会社。",
+      "revenue": "個人、企業、自治体向けに、リテール、住宅ローン、法人、投資、信託、資産運用の商品とサービスを提供して稼ぐ。",
+      "strength": "地元密着の担当チームを置き、大手銀行並みの商品も扱うスーパーコミュニティバンク型が特徴。",
+      "risks": "金利の変動や地域経済の悪化が響く。自社より大きく、規制も緩い競合と戦う必要がある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Missouri that runs a full-service bank.",
+      "revenue": "It earns money by providing retail, mortgage, corporate, investment, trust and asset management services to individuals, businesses and municipalities.",
+      "strength": "Its super-community banking format pairs local bankers in each market with product offerings usually found at larger banks.",
+      "risks": "Interest rate swings and weaker local economies hurt results. It also faces larger rivals, some under lighter regulation.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1029199,
+    "tickers": [
+      "EEFT"
+    ],
+    "name": "Euronet Worldwide",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Euronet Worldwide Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1029199/000155485526000131/eeft-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ATMや送金、プリペイド決済を世界で運営する決済会社。",
+      "revenue": "送金事業が約42%、EFT事業が約30%、epay事業が約28%。ATM運営、送金、携帯プリペイドの販売などで稼ぐ。",
+      "strength": "56,818台のATM網と、207の国と地域に届く送金網が特徴。送金のRia、Xe、Dandelionを持つ。",
+      "risks": "各国の規制変更やライセンス維持が負担になる。新興国の政情不安や景気悪化、利益の送金制限も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A payments company that runs ATMs, money transfer and prepaid payments worldwide.",
+      "revenue": "Money Transfer brings in about 42% of revenue, EFT about 30% and epay about 28%, from ATM services, remittances and prepaid top-ups.",
+      "strength": "It has a network of 56,818 ATMs and money transfers reaching 207 countries and territories, through Ria, Xe and Dandelion.",
+      "risks": "Changing rules and licence upkeep in many countries add burden. Emerging-market unrest, downturns and limits on sending profits home are further risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1333986,
+    "tickers": [
+      "EQH"
+    ],
+    "name": "Equitable Holdings",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Equitable Holdings Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "保険、資産運用、資産管理を手がける米国の金融グループ。",
+      "revenue": "手数料収入、投資収益、保険料で稼ぐ。退職、資産運用、ウェルス管理の3つの事業部門を持つ。",
+      "strength": "保険のEquitable、運用のAllianceBernstein、販売のEquitable Advisorsを一体で運営するのが特徴。",
+      "risks": "株式市場や金利の変動、変額年金の保証が重荷になる。保険業界は競争が激しく、運用はパッシブ化の流れも受ける。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A US financial group in insurance, asset management and wealth management.",
+      "revenue": "It earns mainly from fee income, investment income and insurance premiums, across Retirement, Asset Management and Wealth Management.",
+      "strength": "It runs a product maker (Equitable), an asset manager (AllianceBernstein) and a distributor (Equitable Advisors) as one integrated model.",
+      "risks": "Market and interest rate swings and variable annuity guarantees weigh on it. The insurance industry is highly competitive, and asset management faces a shift toward passive products.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1360901,
+    "tickers": [
+      "EVR"
+    ],
+    "name": "Evercore",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Evercore Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1360901/000162828026010273/evr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "M&Aなどの助言を手がける独立系の投資銀行。",
+      "revenue": "投資銀行・エクイティ部門が収益の98%を占める。M&A助言や引受の手数料で稼ぐ。",
+      "strength": "商業銀行業務や大きな自己売買をしない独立系で、利益相反が少ないのが売り。",
+      "risks": "市場や景気が悪化すると、取引の件数と金額が減って収益が落ちる。大手銀行や独立系助言会社との競争も激しい。",
+      "competition": "主な競合にBank of America、Citigroup、Goldman Sachs、JPMorgan Chase、Morgan Stanleyがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An independent investment bank that advises on M&A and other deals.",
+      "revenue": "Its Investment Banking & Equities segment brings in 98% of revenue, mostly from advisory and underwriting fees.",
+      "strength": "It is independent, with no commercial banking or significant proprietary trading, so it is free of the conflicts found at large banks.",
+      "risks": "Weak markets and economies cut deal volume and value, which can shrink revenue. Competition from big banks and independent advisers is intense.",
+      "competition": "Main competitors include Bank of America, Citigroup, Goldman Sachs, JPMorgan Chase, Morgan Stanley.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Bank of America",
+          "ticker": "BAC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Citigroup",
+          "ticker": "C",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Goldman Sachs",
+          "ticker": "GS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "JPMorgan Chase",
+          "ticker": "JPM",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Morgan Stanley",
+          "ticker": "MS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1069157,
+    "tickers": [
+      "EWBC"
+    ],
+    "name": "East West Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "East West Bancorp Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1069157/000106915726000009/ewbc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国とアジアをつなぐ銀行を傘下に持つ銀行持株会社。",
+      "revenue": "個人・法人向けの預金、貿易金融、不動産融資、為替、資産運用などの銀行サービスで稼ぐ。",
+      "strength": "中国で商業銀行免許を持ち、米国の地域銀行では珍しい。米国とアジアにまたがる顧客に強い。",
+      "risks": "金利や景気、不動産市況の変動が響く。米中など国家間の対立や、新技術を使う競合との競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company whose bank links the US and Asia.",
+      "revenue": "It earns money from banking services for individuals and businesses, such as deposits, trade finance, real estate loans, foreign exchange and wealth management.",
+      "strength": "It holds a commercial banking license in China, which is unusual among US regional banks, and focuses on clients operating in both the US and Asia.",
+      "risks": "Interest rates, the economy and real estate markets all affect results. Disputes between the US and China, and rivals using new technology, are also risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1472787,
+    "tickers": [
+      "FAF"
+    ],
+    "name": "First American Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "First American Financial Form 10-K (filed 2026-02-18) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1472787/000119312526055516/faf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "不動産取引向けの権原保険と決済サービスの会社。",
+      "revenue": "権原保険・サービス部門と住宅保証部門で稼ぐ。事業の大半は不動産と住宅ローン市場の動きに左右される。",
+      "strength": "自社データベース由来の不動産データを活用する点が特徴。サービス、品質、価格、顧客との関係で競う。",
+      "risks": "金利や不動産市況、資本市場の変動が響く。権原保険料の規制や、大手ライバルとの激しい競争も抱える。",
+      "competition": "主な競合にFidelity National Financial、Old Republic Internationalがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A title insurance and settlement services company for real estate deals.",
+      "revenue": "It earns through its title insurance and services segment and its home warranty segment, and most of its business depends on real estate and mortgage markets.",
+      "strength": "It uses real property data from its own proprietary databases. It competes on service, quality, price and relationships.",
+      "risks": "Interest rates, real estate conditions and capital market swings hurt results. Title insurance rate rules and strong rivals add pressure.",
+      "competition": "Main competitors include Fidelity National Financial, Old Republic International.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Fidelity National Financial",
+          "ticker": "FNF",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Old Republic International",
+          "ticker": "ORI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 36029,
+    "tickers": [
+      "FFIN"
+    ],
+    "name": "First Financial Bankshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "First Financial Bankshares Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/36029/000119312526071549/ffin-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "テキサス州で総合的な商業銀行業を営む金融持株会社。",
+      "revenue": "テキサス州の79の拠点で、銀行業務、信託・資産管理、保険代理、住宅ローンを手がけて稼ぐ。",
+      "strength": "地域ごとに諮問委員会と地元の責任者を置き、意思決定を現場に任せる。事業をテキサス州に絞る点も特徴。",
+      "risks": "金利の変動で利ざやが動く。景気や不動産市況、担保価値の変化、大手に集約される競合の動きにも左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial holding company running a full-service commercial bank in Texas.",
+      "revenue": "It earns from banking, trust and asset management, insurance agency and mortgage lending through 79 financial centers across Texas.",
+      "strength": "Each region has local advisory boards and presidents, so decisions are made locally. It keeps its focus on Texas alone.",
+      "risks": "Interest rate changes move its net interest income. The economy, real estate, collateral values and bank mergers that create larger rivals also affect it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 910073,
+    "tickers": [
+      "FLG"
+    ],
+    "name": "Flagstar",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Flagstar Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/910073/000091007326000025/fbc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニューヨーク州に本店を置く、預金と融資が柱の米国の銀行。",
+      "revenue": "預金と融資、住宅ローン、プライベートバンキングで稼ぐ。約340拠点で個人と企業に商品を提供する。",
+      "strength": "ニューヨークとニュージャージー、中西部に強い地盤を持つ。モバイルとウェブで24時間使えるのが特徴。",
+      "risks": "預金金利は短期金利や他行の水準に左右される。フィンテックや信用組合との競争も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. national bank based in New York that runs on deposits and lending.",
+      "revenue": "It earns from deposits, loans, mortgages and private banking, serving individuals and businesses at about 340 locations.",
+      "strength": "It has strong footholds in the New York and New Jersey area and the upper Midwest. Mobile and web banking give customers 24-hour access.",
+      "risks": "Deposit pricing depends on short-term rates and what other institutions offer. It also faces competition from fintechs and credit unions.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1331875,
+    "tickers": [
+      "FNF"
+    ],
+    "name": "Fidelity National Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Fidelity National Financial Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1331875/000133187526000026/fnf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "権原保険と不動産取引サービスを手がける米国の大手。",
+      "revenue": "権原保険、エスクロー、住宅ローン関連サービスで稼ぐ。傘下F&Gの年金・生命保険も柱。",
+      "strength": "傘下の権原保険会社群は、全米のどの権原保険会社よりも多くの保険証券を発行する。",
+      "risks": "不動産取引が減ると収益が落ちる。金利の変動や多額の負債、のれんの減損も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A large U.S. provider of title insurance and real estate transaction services.",
+      "revenue": "It earns from title insurance, escrow and mortgage transaction services, plus annuities and life insurance through F&G.",
+      "strength": "Its title insurance underwriters issue more policies than those of any other U.S. title company.",
+      "risks": "Less real estate activity cuts revenue. Interest rate swings, substantial indebtedness and goodwill write-downs are also risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1302215,
+    "tickers": [
+      "HLI"
+    ],
+    "name": "Houlihan Lokey",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Houlihan Lokey Form 10-K (filed 2026-05-22) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1302215/000130221526000053/hli-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "M&Aや事業再生を助言する独立系の国際投資銀行。",
+      "revenue": "企業金融（M&Aなど）、事業再生、財務・評価助言の各部門で稼ぐ。",
+      "strength": "融資や証券の売買・調査をせず、助言に特化する。1,900人超の専門家を抱える。",
+      "risks": "取引の量と規模は市況に左右される。幹部の確保や、同業との競争も課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An independent global investment bank advising on M&A and restructurings.",
+      "revenue": "It earns through its Corporate Finance, Financial Restructuring and Financial and Valuation Advisory segments.",
+      "strength": "It focuses on advice and does not lend, trade securities or do investment research. It has more than 1,900 financial professionals.",
+      "risks": "Deal volume and size depend on market conditions. Keeping senior staff and facing strong competition are also challenges.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1433642,
+    "tickers": [
+      "HLNE"
+    ],
+    "name": "Hamilton Lane",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Hamilton Lane Form 10-K (filed 2026-05-21) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1433642/000143364226000019/hlne-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "未公開株など非公開市場への投資を支援する運用会社。",
+      "revenue": "個別口座とファンドの運用、助言サービスで稼ぐ。運用資産は約$142 billion。",
+      "strength": "データと分析力、業界との関係を武器に、顧客ごとに個別設計の投資に応じる。",
+      "risks": "個別口座や助言の手数料は長期契約でなく、競争が激しい。ファンドの運用成績が悪いと収益が減る。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A manager that helps clients invest in private markets.",
+      "revenue": "It earns from managing customized accounts and specialized funds and from advisory services, with about $142 billion of discretionary AUM.",
+      "strength": "Its data and analytics, industry relationships and customized portfolios set it apart.",
+      "risks": "Account and advisory fees are not long-term contracted revenue and face intense competition. Weak fund performance would cut revenue.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1331520,
+    "tickers": [
+      "HOMB"
+    ],
+    "name": "Home BancShares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Home BancShares Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1331520/000133152026000051/homb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "アーカンソー州に本社を置く、センテニアル銀行の持株会社。",
+      "revenue": "企業や不動産開発業者、個人、自治体向けの商業・個人向け銀行業務で稼ぐ。",
+      "strength": "アーカンソー、フロリダ、テキサス、南アラバマ、ニューヨーク市に支店網を持つ。",
+      "risks": "商業用不動産ローンが貸出総額の53.2%を占める。厳しい規制も重荷。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company in Conway, Arkansas that owns Centennial Bank.",
+      "revenue": "It earns from commercial and retail banking for businesses, real estate developers, individuals and municipalities.",
+      "strength": "Centennial Bank has branches in Arkansas, Florida, Texas, South Alabama and New York City.",
+      "risks": "Commercial real estate loans make up 53.2% of gross loans. Extensive regulation also limits and burdens the business.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 315709,
+    "tickers": [
+      "IBOC"
+    ],
+    "name": "International Bancshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "International Bancshares Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/315709/000110465926020439/iboc-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "テキサス州ラレドに本社を置く銀行持株会社。",
+      "revenue": "傘下の銀行を通じ、商業・個人向けの預金と貸出で稼ぐ。テキサスとオクラホマで営業する。",
+      "strength": "テキサス州で最大級の独立系銀行持株会社。地元の顧問委員会を支店運営に生かす。",
+      "risks": "貸倒引当金が足りなくなる恐れがある。非銀行勢との競争や、メキシコの預金者の動向も響く。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Laredo, Texas.",
+      "revenue": "It earns from commercial and retail deposits and loans through its subsidiary banks in Texas and Oklahoma.",
+      "strength": "It is one of the largest independent bank holding companies in Texas, and uses local advisory boards to run its branches.",
+      "risks": "Its loan loss allowance may prove insufficient. Competition from non-bank firms and shifts in Mexican depositors also matter.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 96223,
+    "tickers": [
+      "JEF"
+    ],
+    "name": "Jefferies",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Jefferies Form 10-K (filed 2026-01-28) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/96223/000009622326000009/jef-20251130.htm"
+      }
+    ],
+    "ja": {
+      "business": "米国に本社を置く、世界展開の投資銀行・資本市場の会社。",
+      "revenue": "投資銀行業務、株や債券の売買、与信、オルタナティブ運用で稼ぐ。",
+      "strength": "1962年創業の米国ブローカーを中核に、ニューヨーク、ロンドン、香港に拠点を置く。",
+      "risks": "取引先の債務不履行など、信用リスクを大きく抱える。優秀な人材の確保も欠かせない。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S.-headquartered global investment banking and capital markets firm.",
+      "revenue": "It earns from investment banking, capital markets sales and trading, and credit and alternative asset management.",
+      "strength": "It is built around a U.S. broker-dealer founded in 1962, with headquarters in New York, London and Hong Kong.",
+      "risks": "It carries significant credit risk from counterparty nonperformance. Attracting and retaining talented professionals is also essential.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1669162,
+    "tickers": [
+      "KNSL"
+    ],
+    "name": "Kinsale",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Kinsale Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "標準市場で引き受けにくい危険を扱う、米国の損害保険会社。",
+      "revenue": "ブローカー経由で保険を売って稼ぐ。元受保険料の70.7%が賠償責任、29.3%が財物。",
+      "strength": "余剰・特殊保険（E&S）市場に特化し、技術と費用管理で他社と差をつける。",
+      "risks": "損害準備金が不足しうる。大災害や特定のブローカーへの依存も抱える。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. property and casualty insurer for hard-to-place risks.",
+      "revenue": "It sells insurance mainly through independent brokers. Gross written premiums were 70.7% casualty and 29.3% property.",
+      "strength": "It focuses only on the excess and surplus lines market and differentiates itself through technology and expense control.",
+      "risks": "Its loss reserves may be inadequate. Catastrophes and reliance on a select group of brokers are also risks.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1289419,
+    "tickers": [
+      "MORN"
+    ],
+    "name": "Morningstar",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Morningstar Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000013/morn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "投資データや調査、格付けを提供する独立系の会社。",
+      "revenue": "データ・調査ツールの提供、投資運用、指数、信用格付けで稼ぐ。運用・助言資産は約$378.0 billion。",
+      "strength": "データ、調査、設計、技術が中核。調査・格付け・運用・指数を一社で出せる点が特徴。",
+      "risks": "Bloombergなど競合が多い。サイバーセキュリティの脅威も抱える。",
+      "competition": "主な競合にFactSet、MSCIがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An independent provider of investment data, research and ratings.",
+      "revenue": "It earns from data and research tools, investment management, indexes and credit ratings, with about $378.0 billion in AUMA.",
+      "strength": "Data, research, design and technology are its core. It delivers research, ratings, management and indexes together.",
+      "risks": "It faces many competitors, such as Bloomberg, and cybersecurity threats.",
+      "competition": "Main competitors include FactSet, MSCI.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "FactSet",
+          "ticker": "FDS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MSCI",
+          "ticker": "MSCI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 876437,
+    "tickers": [
+      "MTG"
+    ],
+    "name": "MGIC Investment",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "MGIC Investment Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/876437/000087643726000010/mtg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "民間の住宅ローン保険を手がける保険持株会社。",
+      "revenue": "住宅ローンの信用リスクを引き受ける保険を提供して稼ぐ。2025年の総収入は12億ドル。",
+      "strength": "顧客体験とデジタル・分析力で差をつける戦略が特徴。景気を通じて財務の強さを保つ方針だ。",
+      "risks": "景気後退や住宅価格の下落で延滞や保険金支払いが増えうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A holding company that provides private mortgage insurance.",
+      "revenue": "It earns money by insuring the credit risk on home loans. Total revenues in 2025 were $1.2 billion.",
+      "strength": "Its strategy centers on customer experience and digital and analytical capabilities. It aims to stay financially strong through economic cycles.",
+      "risks": "Recessions and falling home prices can raise delinquencies and claims.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1043219,
+    "tickers": [
+      "NLY"
+    ],
+    "name": "Annaly Capital",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Annaly Capital Form 10-K (filed 2026-02-12) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1043219/000104321926000013/nly-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅ローン関連の債券や権利に投資する不動産投資信託(REIT)。",
+      "revenue": "借入資金も使って投資し、資産の利回りと調達コストの差で稼ぐ。",
+      "strength": "エージェンシーMBS、住宅ローン信用、サービシング権の3つの投資部門を持つのが特徴。",
+      "risks": "投資対象の獲得で金融機関や他のREITと競合する。競争が価格にも響きうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A REIT that invests in residential mortgage-related securities and rights.",
+      "revenue": "It invests with borrowed funds and earns the spread between asset yields and borrowing costs.",
+      "strength": "It runs three investment groups: Agency MBS, residential credit and mortgage servicing rights.",
+      "risks": "It competes with financial institutions and other REITs for assets. Competition can affect pricing.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 707179,
+    "tickers": [
+      "ONB"
+    ],
+    "name": "Old National Bancorp",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Old National Bancorp Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/707179/000070717926000010/onb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "米中西部と南東部で銀行・資産運用を手がける銀行持株会社。",
+      "revenue": "融資の利息収入と、融資の組成や各種サービスの手数料収入で稼ぐ。",
+      "strength": "346の銀行拠点を持ち、1834年にさかのぼる歴史が特徴。個人・法人銀行に加え資産運用も扱う。",
+      "risks": "競争や規制、金利やインフレ、与信リスクの影響を受ける。Bremerとの合併の統合コストも課題。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company offering banking and wealth management in the Midwest and Southeast.",
+      "revenue": "It earns interest income on loans and fee income from originating loans and other services.",
+      "strength": "It operates 346 banking centers and traces its roots to 1834. Beyond banking, it offers wealth management.",
+      "risks": "Competition, regulation, interest rates, inflation and credit risk weigh on it. Integration costs from the Bremer merger are another worry.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 74260,
+    "tickers": [
+      "ORI"
+    ],
+    "name": "Old Republic",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Old Republic Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/74260/000007426026000008/ori-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "損害保険と権原保険(タイトル保険)を手がける保険持株会社。",
+      "revenue": "専門保険と権原保険の2事業で保険料を得る。保険料と預かり資金の運用益で稼ぐ。",
+      "strength": "厳格なリスク選定と価格設定、リスクの分散を重視する。長期の保有を前提に運用する。",
+      "risks": "同業との競争が激しく、資金力で上回る相手もいる。保険金の支払額は保険料を決める時点で読めない。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A holding company in specialty insurance and title insurance.",
+      "revenue": "It earns from premiums in its Specialty and Title segments, plus investment income on invested funds.",
+      "strength": "It stresses disciplined risk selection and pricing, and spreads risk widely. It invests with long holding periods.",
+      "risks": "Competition is fierce, and some rivals have more financial resources. Ultimate loss costs are unknown when premiums are set.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1068851,
+    "tickers": [
+      "PB"
+    ],
+    "name": "Prosperity Bancshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Prosperity Bancshares Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1068851/000119312526077437/pb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "テキサス州とオクラホマ州で地域密着の銀行を営む金融持株会社。",
+      "revenue": "傘下のProsperity Bankの事業が収益のほぼすべて。預金を集め、企業や個人に貸し出して稼ぐ。",
+      "strength": "地域密着の姿勢と安定した顧客基盤で低い資金コストを保つのが特徴。買収と新店舗で成長してきた。",
+      "risks": "銀行業は競争が激しく、収益力は競う力しだい。業界の統合や技術変化で競争の形も変わりうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial holding company running community banks in Texas and Oklahoma.",
+      "revenue": "Nearly all its revenue comes from Prosperity Bank, which takes deposits and lends to businesses and consumers.",
+      "strength": "Stable customer ties give it a low cost of funds. It has grown through acquisitions and new banking centers.",
+      "risks": "Banking is highly competitive, and profits depend on its ability to compete. Consolidation and technology shifts may change that competition.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 2082866,
+    "tickers": [
+      "PNFP"
+    ],
+    "name": "Pinnacle Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Pinnacle Financial Form 10-K (filed 2026-03-02) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/2082866/000208286626000018/pnfp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "テネシー州ナッシュビルを拠点とする銀行持株会社。",
+      "revenue": "傘下のPinnacle Bankが支店網を通じて銀行業務を行い、貸出と預金で稼ぐ。",
+      "strength": "買収と自力成長で141の拠点に広がった。独自の企業文化と従業員の定着率が強みと考えている。",
+      "risks": "大手・地方銀行やネット銀行など、資金力で勝る競合が多い。中小企業向け融資は景気の圧力に弱い面がある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Nashville, Tennessee.",
+      "revenue": "Its unit Pinnacle Bank runs branch banking and earns from lending and deposits.",
+      "strength": "It grew to 141 offices through acquisitions and organic growth. It credits its culture and high associate retention.",
+      "risks": "Many rivals are larger with more resources, including big regional and internet banks. Its small and mid-sized business loans are vulnerable to economic pressure.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 84246,
+    "tickers": [
+      "RLI"
+    ],
+    "name": "RLI Corp.",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "RLI Corp. Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "専門性の高い損害保険と保証保険を手がける保険会社。",
+      "revenue": "専門の認可保険事業が総保険料収入の60パーセントを占める。残りは余剰・超過保険などで稼ぐ。",
+      "strength": "標準市場に収まらない特殊なリスクを個別に引き受ける。価格より補償内容やサービスで競う市場が特徴。",
+      "risks": "業界は景気循環の影響を受ける。損失コストの上昇や自然災害で収益が振れうる。",
+      "competition": "主な競合にAIG、Arch、Berkley、Chubb、CNAがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty insurer writing property, casualty and surety coverage.",
+      "revenue": "Its specialty admitted business brought in 60 percent of total gross premiums. The rest comes from excess and surplus lines and other products.",
+      "strength": "It covers unusual risks that standard carriers pass on, underwriting many one by one. In this market, competition centers less on price.",
+      "risks": "Results swing with the insurance cycle. Rising loss costs and catastrophes can hit earnings.",
+      "competition": "Main competitors include AIG, Arch, Berkley, Chubb, CNA.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "AIG",
+          "ticker": "AIG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Arch",
+          "ticker": "ACGL",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Berkley",
+          "ticker": "WRB",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Chubb",
+          "ticker": "CB",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CNA",
+          "ticker": "CNA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 913144,
+    "tickers": [
+      "RNR"
+    ],
+    "name": "RenaissanceRe",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "RenaissanceRe Form 10-K (filed 2026-02-11) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "再保険と保険を世界で提供するバミューダ拠点の会社。",
+      "revenue": "引受利益、手数料収入、運用収益の3つで稼ぐ。手数料は第三者資金の運用から得る。",
+      "strength": "リスク選別、顧客との関係、資本管理の3つの強みを一体で運用するのが特徴。",
+      "risks": "市場の競争は激しく、テック企業など新たな参入者も現れうる。引受事業には収益のぶれが伴う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A global provider of reinsurance and insurance.",
+      "revenue": "It earns from underwriting income, fee income and investment income. Fees come mainly from managing third-party capital.",
+      "strength": "It runs three advantages as one system: risk selection, customer relationships and capital management.",
+      "risks": "Its markets are highly competitive, and new entrants such as technology companies may appear. Underwriting brings earnings volatility.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1849253,
+    "tickers": [
+      "RYAN"
+    ],
+    "name": "Ryan Specialty",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Ryan Specialty Form 10-K (filed 2026-02-13) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1849253/000184925326000006/ryan-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "特殊な保険の卸売仲介と引受代行を行う保険仲介会社。",
+      "revenue": "保険ブローカーや保険会社向けに、販売、引受、商品開発などのサービスを提供して稼ぐ。",
+      "strength": "小売部門を持たず、小売ブローカーと利害が衝突しない点が特徴。2024年の保険料規模は卸売仲介で米国2位。",
+      "risks": "幹部や営業人材の確保・定着に左右される。保険会社や顧客との関係を失うリスクもある。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A specialty insurance intermediary doing wholesale brokerage and delegated underwriting.",
+      "revenue": "It earns by providing distribution, underwriting and administration services to insurance brokers, agents and carriers.",
+      "strength": "It has no retail operations, so it avoids channel conflicts with retail brokers. It ranked second among U.S. P&C wholesale brokers on 2024 premium volume.",
+      "risks": "It depends on recruiting and keeping senior managers and revenue producers. Losing ties with carriers or clients is a risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 350894,
+    "tickers": [
+      "SEIC"
+    ],
+    "name": "SEI Investments",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "SEI Investments Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "金融機関向けに技術・業務運営・資産運用を提供する会社。",
+      "revenue": "収益の57%が技術・業務の外部委託サービス、38%が資産運用手数料。",
+      "strength": "技術、信託型カストディ、運用を一つの基盤に統合しているのが強み。オルタナティブ投資の管理にも強い。",
+      "risks": "手数料は顧客資産の時価に連動する。市場が下落すると資産残高と収益が減る。",
+      "competition": "主な競合にFidelity National Information Services、LPL Financial、BlackRock、Charles Schwab、Goldman Sachsがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A provider of technology, operations and asset management solutions to financial firms.",
+      "revenue": "57% of revenue comes from technology and operations outsourcing, and 38% from asset management fees.",
+      "strength": "Its strength is one platform joining technology, trust-based custody and investment management. It also leads in alternative investment administration.",
+      "risks": "Fees track the market value of client assets. Falling markets cut assets and revenue.",
+      "competition": "Main competitors include Fidelity National Information Services, LPL Financial, BlackRock, Charles Schwab, Goldman Sachs.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Fidelity National Information Services",
+          "ticker": "FIS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "LPL Financial",
+          "ticker": "LPLA",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "BlackRock",
+          "ticker": "BLK",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Charles Schwab",
+          "ticker": "SCHW",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Goldman Sachs",
+          "ticker": "GS",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 230557,
+    "tickers": [
+      "SIGI"
+    ],
+    "name": "Selective Insurance",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Selective Insurance Form 10-K (filed 2026-02-09) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/230557/000023055726000006/sigi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "独立代理店を通じて損害保険を売る米国の保険持株会社。",
+      "revenue": "商業向け標準保険が総収入の71%を占める。ほかに個人向けや余剰・超過保険も扱う。",
+      "strength": "独立代理店や卸売ブローカーに絞った販売と、意思決定者を顧客の近くに置く運営が特徴。AM Bestの格付けはA+。",
+      "risks": "ハリケーンや竜巻などの大災害による損失を抱える。頻度も規模も予測しにくい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A U.S. insurance holding company selling property and casualty coverage through independent agents.",
+      "revenue": "Standard Commercial Lines makes up 71% of total revenues. It also sells personal lines and excess and surplus lines.",
+      "strength": "It sells only through independent agents and wholesale brokers, with decision-makers close to customers. Its AM Best rating is A+.",
+      "risks": "Catastrophes such as hurricanes and tornadoes can cause losses. Their frequency and severity are hard to predict.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1032033,
+    "tickers": [
+      "SLM"
+    ],
+    "name": "Sallie Mae",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Sallie Mae Form 10-K (filed 2026-02-19) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "大学など高等教育の学費向けローンを提供する金融会社。",
+      "revenue": "学生と家族向けにPrivate Education Loanを貸し出して稼ぐ。資金は預金で調達する。",
+      "strength": "無料の学習計画ツールや奨学金に加え、責任ある融資を組み合わせて学生を支える点が特徴。",
+      "risks": "預金を集められるか、競争力ある金利を示せるかに左右される。大手銀行やSoFiなどとの競争も抱える。",
+      "competition": "主な競合にCitizens Financial Group、PNC Bank、Sofi Technologiesがある。",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial company providing loans for higher education costs.",
+      "revenue": "It earns by making Private Education Loans to students and families. Deposits fund the lending.",
+      "strength": "It pairs free planning tools and scholarships with responsible financing to support students.",
+      "risks": "It depends on raising deposits and offering competitive rates. It also faces competition from large banks and SoFi.",
+      "competition": "Main competitors include Citizens Financial Group, PNC Bank, Sofi Technologies.",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Citizens Financial Group",
+          "ticker": "CFG",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "PNC Bank",
+          "ticker": "PNC",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Sofi Technologies",
+          "ticker": "SOFI",
+          "role": "competitor",
+          "label": {
+            "ja": "競合",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 764038,
+    "tickers": [
+      "SSB"
+    ],
+    "name": "SouthState",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "SouthState Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/764038/000110465926017884/ssb-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "フロリダ州本拠で南東部と南西部に支店を持つ銀行持株会社。",
+      "revenue": "融資の利息、証券の利息や配当、債券の販売手数料、預金口座の手数料などで稼ぐ。",
+      "strength": "1,200超の地域金融機関向けの代理銀行・資本市場業務を持つのが特徴。",
+      "risks": "預金と融資の獲得で強い競争にさらされる。不動産市場や金利政策の影響も大きい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Florida with branches across the Southeast and Texas.",
+      "revenue": "It earns from interest on loans and securities, bond sales commissions, deposit account fees and hedging fees.",
+      "strength": "A distinctive feature is its correspondent banking and capital markets division serving over 1,200 community financial institutions.",
+      "risks": "It faces strong competition for deposits and loans, and the real estate market and interest rate policy weigh heavily on it.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1465128,
+    "tickers": [
+      "STWD"
+    ],
+    "name": "Starwood Property Trust",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Starwood Property Trust Form 10-K (filed 2026-02-25) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1465128/000146512826000009/stwd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "不動産ローンなどの不動産投資を手がける不動産投資信託。",
+      "revenue": "商業・住宅向け融資、インフラ融資、不動産保有、不動産の投資・管理サービスの4部門で稼ぐ。",
+      "strength": "融資から物件保有、問題債権の管理まで幅広く手がけるのが特徴。",
+      "risks": "運用を担う外部マネージャーとその主要人材への依存が大きい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A real estate investment trust that originates, acquires and manages mortgage loans and other real estate investments.",
+      "revenue": "It earns through four segments: commercial and residential lending, infrastructure lending, property ownership, and real estate investing and servicing.",
+      "strength": "Its range runs from lending to property ownership to working out problem assets.",
+      "risks": "It depends heavily on its external Manager and the Manager's key personnel.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1077428,
+    "tickers": [
+      "TCBI"
+    ],
+    "name": "Texas Capital",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Texas Capital Form 10-K (filed 2026-02-10) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1077428/000107742826000010/tcbi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "テキサス州ダラスに本拠を置く、企業や個人向けの銀行持株会社。",
+      "revenue": "銀行業務と証券子会社を通じて稼ぐ。住宅ローン向け融資、住宅建設業者向け融資、オンライン銀行のBask Bankなども手がける。",
+      "strength": "テキサスに本拠と意思決定権を置くことで、迅速で個別対応のサービスを目指す。",
+      "risks": "事業はテキサスに集中し、同州の銀行市場は競争が激しい。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company in Dallas serving businesses, entrepreneurs and individuals.",
+      "revenue": "It earns through its bank and securities unit, with specialty lines such as mortgage finance, homebuilder finance and the online Bask Bank.",
+      "strength": "Its decision-making sits in Texas, which it presents as the basis for responsive, personalized service.",
+      "risks": "Its business is concentrated in Texas, a highly competitive banking market.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 729986,
+    "tickers": [
+      "UBSI"
+    ],
+    "name": "United Bankshares",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "United Bankshares Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/729986/000119312526081470/d90970d10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "ウェストバージニア州の銀行持株会社で、地域密着型の銀行業務を営む。",
+      "revenue": "預金、融資、住宅ローン、信託、証券仲介などの銀行サービスで稼ぐ。事業は地域銀行業務の1区分に集約している。",
+      "strength": "33の銀行を買収して拡大してきたのが特徴。人材も競争上の強みに数える。",
+      "risks": "預金集めや融資、運用資産の獲得で高い競争にさらされる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A West Virginia bank holding company focused on community banking.",
+      "revenue": "It earns from banking services such as deposits, loans, mortgages, trust and brokerage, all within one community banking segment.",
+      "strength": "It has grown by acquiring thirty-three banking institutions and counts its people as a key competitive advantage.",
+      "risks": "It faces a high degree of competition in gathering deposits, making loans and winning client assets.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 101382,
+    "tickers": [
+      "UMBF"
+    ],
+    "name": "UMB Financial",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "UMB Financial Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/101382/000119312526076496/umbf-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ミズーリ州カンザスシティの銀行持株会社で、銀行業務と資産管理を営む。",
+      "revenue": "法人・機関・個人の3部門で稼ぐ。資産管理、信託、カード、投資信託の事務代行なども手がける。",
+      "strength": "銀行業務に加え、子会社UMBFSの投資信託向け事務代行を持つのが特徴。",
+      "risks": "あらゆる事業分野で競争が激しく、フィンテック企業の参入も進む。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Kansas City, Missouri bank holding company offering banking and asset servicing.",
+      "revenue": "It earns across Commercial Banking, Institutional Banking and Personal Banking, plus asset management, trust and fund services.",
+      "strength": "Its subsidiary UMBFS provides fund accounting and transfer agency services to mutual fund groups.",
+      "risks": "Competition is intense in every segment, and fintech companies are increasingly joining in.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 5513,
+    "tickers": [
+      "UNM"
+    ],
+    "name": "Unum Group",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Unum Group Form 10-K (filed 2026-02-17) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/5513/000000551326000008/unm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "職場を通じて障害保障や生命保険などを販売する保険会社。",
+      "revenue": "米国、英国、ポーランドで、障害、生命、傷害、重大疾病、歯科・視力などの商品を売って稼ぐ。",
+      "strength": "米国と英国の財務保障給付の大手で、職場経由の販売が中心。",
+      "risks": "保険金の支払い見積もりが実績とずれると収益が揺らぐ。他社との競争やサイバー攻撃も懸念。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "An insurer that sells disability, life and related benefits through the workplace.",
+      "revenue": "It earns by selling disability, life, accident, critical illness, dental and vision products in the U.S., the U.K. and Poland.",
+      "strength": "It is a leading provider of financial protection benefits in the U.S. and the U.K., selling mainly through the workplace.",
+      "risks": "Earnings can swing if actual claims differ from its estimates, and competition and cyberattacks add risk.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 714310,
+    "tickers": [
+      "VLY"
+    ],
+    "name": "Valley National",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Valley National Form 10-K (filed 2026-02-27) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/714310/000071431026000017/vly-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ニュージャージー州の銀行持株会社で、全米・地域向けの銀行サービスを提供する。",
+      "revenue": "預金・融資、商業不動産融資、保険、資産運用などで稼ぐ。住宅所有者組合向けなどの特殊な金融も手がける。",
+      "strength": "ニュージャージー州本拠で最大の商業銀行。個別対応の関係重視型サービスが特徴。",
+      "risks": "大手の競合は資金力や知名度で上回りうる。フィンテックの参入も強まる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A New Jersey bank holding company offering national and regional banking services.",
+      "revenue": "It earns from deposits and lending, commercial real estate financing, insurance and wealth management, plus niche lines such as homeowners association banking.",
+      "strength": "It is the largest commercial bank headquartered in New Jersey and stresses personalized, relationship-based service.",
+      "risks": "Larger rivals may have more resources and name recognition, and fintech competitors are growing.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1535929,
+    "tickers": [
+      "VOYA"
+    ],
+    "name": "Voya",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Voya Form 10-K (filed 2026-02-20) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1535929/000153592926000043/voya-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "職場向けの福利厚生と貯蓄商品を提供する金融会社。",
+      "revenue": "退職金運用、リテール資産管理、福利厚生商品を米国の雇用主向けに販売し、資産運用でも稼ぐ。",
+      "strength": "個人顧客を多数抱え、退職金と福利厚生の両方に市場での強い地位を持つ。",
+      "risks": "金利の急変や資本市場の悪化、格付けの引き下げが業績を圧迫しうる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial firm providing workplace benefits and savings products.",
+      "revenue": "It earns by selling retirement, wealth and benefits products to U.S. employers, and through asset management.",
+      "strength": "It has strong market positions in both Retirement and Employee Benefits.",
+      "risks": "Swings in interest rates, weak capital markets or a ratings downgrade could hurt results.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1212545,
+    "tickers": [
+      "WAL"
+    ],
+    "name": "Western Alliance",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Western Alliance Form 10-K (filed 2026-02-23) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1212545/000162828026010336/wal-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "アリゾナ州フェニックスに本拠を置く銀行持株会社。",
+      "revenue": "融資、預金、資金管理に加え、AmeriHomeの住宅ローン事業や決済サービスで稼ぐ。",
+      "strength": "2025年に旧来の銀行ブランドをWestern Alliance Bankに統一した。",
+      "risks": "大手の競合は規模や資本で上回り、非銀行勢の参入も強まる。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A bank holding company based in Phoenix, Arizona.",
+      "revenue": "It earns from lending, deposits and treasury management, plus mortgage banking through AmeriHome and digital payment services.",
+      "strength": "It unified its legacy bank brands under the single name Western Alliance Bank in 2025.",
+      "risks": "Many rivals are much larger in assets and capital, and non-bank firms keep entering its markets.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 1015328,
+    "tickers": [
+      "WTFC"
+    ],
+    "name": "Wintrust",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Wintrust Form 10-K (filed 2026-02-26) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1015328/000101532826000007/wtfc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "シカゴ周辺で地域密着型の銀行業務を営む金融持株会社。",
+      "revenue": "16の傘下銀行の預金・融資、住宅ローン、保険料の分割融資、リース、資産運用などで稼ぐ。",
+      "strength": "傘下銀行が個別に運営し、地域に根ざした意思決定をするのが特徴。",
+      "risks": "預金や融資で競争が激しく、事業はシカゴ周辺などの地域経済に左右される。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A financial holding company providing community banking around Chicago.",
+      "revenue": "It earns through its sixteen banks' deposits and loans, mortgages, premium finance, leasing and wealth management.",
+      "strength": "Its banks run separately, which pushes decisions down to the local community.",
+      "risks": "Competition for deposits and loans is strong, and results depend on the Chicago-area economy.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
+  },
+  {
+    "cik": 109380,
+    "tickers": [
+      "ZION"
+    ],
+    "name": "Zions Bancorporation",
+    "reviewedOn": "2026-10-21",
+    "sources": [
+      {
+        "label": "Zions Bancorporation Form 10-K (filed 2026-02-24) · Business / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/109380/000010938026000046/zions-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ユタ州ソルトレークシティに本拠を置く、米西部11州の銀行。",
+      "revenue": "中小企業向け融資や預金、資産運用など幅広い銀行サービスで稼ぐ。7つの地域銀行部門が主な事業単位。",
+      "strength": "地域ごとに独立した経営陣と地元ブランドを持ち、地元の判断を重んじる。",
+      "risks": "信用組合やフィンテックなど競合が多く、規制の緩い相手と競う。",
+      "competition": "",
+      "relationships": ""
+    },
+    "en": {
+      "business": "A Salt Lake City bank covering 11 states in the West.",
+      "revenue": "It earns from small business and commercial lending, deposits and wealth services, through seven bank divisions.",
+      "strength": "Each division has its own local brand and management, stressing local authority.",
+      "risks": "It faces many rivals, including credit unions and fintechs, and many operate under fewer regulatory constraints.",
+      "competition": "",
+      "relationships": ""
+    },
+    "maps": {
+      "competition": [],
+      "relationships": []
+    }
   }
 ]

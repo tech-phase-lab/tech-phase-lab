@@ -1066,6 +1066,11 @@ class AutomaticMonitor:
         # on an existing volume and silently kill the discovery worker.
         with self.db_lock, monitor.connect(self.db_path) as db:
             watch_earnings.schema(db)
+        try:
+            with self.db_lock, monitor.connect(self.db_path) as db:
+                signals.release_x_routes_for_new_token(db)
+        except Exception as exc:
+            log_publication_failure("x-route-release-unavailable", exc)
         with self.db_lock:
             released = release_interrupted_jobs(self.db_path)
         if released:
