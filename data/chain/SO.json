@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "SO",
+    "name": "サザン・カンパニー",
+    "cik": 92122,
+    "name_en": "Southern Company"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OPC",
+      "ticker": "Oglethorpe Power",
+      "name": "オグルソープ・パワー",
+      "sub": "電力協同組合",
+      "sub_en": "Electric cooperative",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジョージア・パワーはハッチ、ボーグル、シャーラーの各発電所をOPCなどと共同保有している",
+          "text_en": "Georgia Power co-owns Plants Hatch, Vogtle, and Scherer with OPC and others",
+          "source": {
+            "label": "Southern Company 10-K(2025年12月31日)",
+            "label_en": "Southern Company 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92122/000009212226000006/so-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Georgia Power owns undivided interests in Plants Hatch, Vogtle, and Scherer in varying amounts jointly with one or more of the following entities: OPC, MEAG Power, Dalton, FP&L, and Jacksonville Electric Authority."
+          }
+        }
+      ],
+      "name_en": "Oglethorpe Power Corporation"
+    },
+    {
+      "id": "MEAG",
+      "ticker": "MEAG Power",
+      "name": "MEAGパワー",
+      "sub": "公営電力",
+      "sub_en": "Municipal power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジョージア・パワーはMEAGパワーと発電所の持ち分を分け合っている",
+          "text_en": "Georgia Power shares plant ownership with MEAG Power",
+          "source": {
+            "label": "Southern Company 10-K(2025年12月31日)",
+            "label_en": "Southern Company 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92122/000009212226000006/so-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Georgia Power owns undivided interests in Plants Hatch, Vogtle, and Scherer in varying amounts jointly with one or more of the following entities: OPC, MEAG Power, Dalton, FP&L, and Jacksonville Electric Authority."
+          }
+        }
+      ],
+      "name_en": "MEAG Power"
+    },
+    {
+      "id": "FPL",
+      "ticker": "FP&L",
+      "name": "FP&L(フロリダ電力)",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジョージア・パワーはFP&Lと発電所を共同保有している",
+          "text_en": "Georgia Power co-owns plants with FP&L",
+          "source": {
+            "label": "Southern Company 10-K(2025年12月31日)",
+            "label_en": "Southern Company 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92122/000009212226000006/so-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Georgia Power owns undivided interests in Plants Hatch, Vogtle, and Scherer in varying amounts jointly with one or more of the following entities: OPC, MEAG Power, Dalton, FP&L, and Jacksonville Electric Authority."
+          }
+        }
+      ],
+      "name_en": "FP&L"
+    },
+    {
+      "id": "JEA",
+      "ticker": "JEA",
+      "name": "ジャクソンビル電力公社",
+      "sub": "公営電力",
+      "sub_en": "Municipal power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジョージア・パワーはジャクソンビル電力公社と発電所を共同保有している",
+          "text_en": "Georgia Power co-owns plants with Jacksonville Electric Authority",
+          "source": {
+            "label": "Southern Company 10-K(2025年12月31日)",
+            "label_en": "Southern Company 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92122/000009212226000006/so-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Georgia Power owns undivided interests in Plants Hatch, Vogtle, and Scherer in varying amounts jointly with one or more of the following entities: OPC, MEAG Power, Dalton, FP&L, and Jacksonville Electric Authority."
+          }
+        }
+      ],
+      "name_en": "Jacksonville Electric Authority"
+    },
+    {
+      "id": "POWERSOUTH",
+      "ticker": "PowerSouth Energy",
+      "name": "パワーサウス・エナジー",
+      "sub": "電力協同組合",
+      "sub_en": "Electric cooperative",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アラバマ・パワーが運営する発電所をパワーサウスと共同保有している",
+          "text_en": "A plant operated by Alabama Power is jointly owned with PowerSouth",
+          "source": {
+            "label": "Southern Company 10-K(2025年12月31日)",
+            "label_en": "Southern Company 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92122/000009212226000006/so-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "(b) Jointly owned with PowerSouth and operated and maintained by Alabama Power."
+          }
+        }
+      ],
+      "name_en": "PowerSouth Energy Cooperative"
+    },
+    {
+      "id": "WMB",
+      "ticker": "WMB",
+      "name": "ウィリアムズ・カンパニーズ",
+      "sub": "天然ガスパイプライン",
+      "sub_en": "Gas pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウィリアムズと共同で115マイルのダルトン・パイプラインを保有している",
+          "text_en": "Southern Company Gas co-owns the 115-mile Dalton Pipeline with Williams",
+          "source": {
+            "label": "Southern Company 10-K(2025年12月31日)",
+            "label_en": "Southern Company 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92122/000009212226000006/so-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Jointly owned with The Williams Companies, Inc., the Dalton Pipeline is a 115 -mile natural gas pipeline that serves as an extension of the Transcontinental Gas Pipe Line Company, LLC pipeline system into northwest Georgia."
+          }
+        }
+      ],
+      "name_en": "The Williams Companies"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

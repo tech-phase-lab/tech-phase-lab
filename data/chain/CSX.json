@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "CSX",
+    "name": "CSX",
+    "cik": 277948,
+    "name_en": "CSX Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "NSC",
+    "UNP"
+  ],
+  "companies": [
+    {
+      "id": "NSC",
+      "ticker": "NSC",
+      "name": "ノーフォーク・サザン",
+      "sub": "鉄道・競合",
+      "sub_en": "Railroad rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CSXTの主な鉄道上の競合相手はノーフォーク・サザン鉄道で、CSXの営業地域の多くで事業を行っている",
+          "text_en": "Norfolk Southern Railway is CSXT's primary rail competitor and operates throughout much of the Company's territory",
+          "source": {
+            "label": "CSX 10-K(2025-12-31)",
+            "label_en": "CSX 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "CSXT’s primary rail competitor is Norfolk Southern Railway, which operates throughout much of the Company’s territory."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CSXとNSが共同で出資するConrailは、両社の共同利益のために鉄道インフラを保有し運営している",
+          "text_en": "Conrail, jointly owned by CSX and NS, owns rail infrastructure and operates for their joint benefit",
+          "source": {
+            "label": "CSX 10-K(2025-12-31)",
+            "label_en": "CSX 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Conrail owns rail infrastructure and operates for the joint benefit of CSX and NS."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CSXはNSとともに有限責任会社を通じてConrailを共同で所有し、経済的持分は42%である",
+          "text_en": "CSX and NS jointly own Conrail through a limited liability company, with CSX holding a 42% economic interest",
+          "source": {
+            "label": "CSX 10-K(2025-12-31)",
+            "label_en": "CSX 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Through a limited liability company, CSX and Norfolk Southern Corporation (“NS”) jointly own Conrail. CSX has a 42 % economic interest and 50 % voting interest in the jointly-owned entity"
+          }
+        }
+      ],
+      "name_en": "Norfolk Southern"
+    },
+    {
+      "id": "UNP",
+      "ticker": "UNP",
+      "name": "ユニオン・パシフィック",
+      "sub": "鉄道",
+      "sub_en": "Railroad",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "2025年にノーフォーク・サザン鉄道がユニオン・パシフィック鉄道との合併契約を結び、STBの承認が必要となっている",
+          "text_en": "In 2025 Norfolk Southern Railway entered into an agreement to merge with Union Pacific Railroad, which requires Surface Transportation Board approval",
+          "source": {
+            "label": "CSX 10-K(2025-12-31)",
+            "label_en": "CSX 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "During 2025, Norfolk Southern Railway entered into an agreement to merge with Union Pacific Railroad to form the nation's only transcontinental rail network, which requires the approval of the Surface Transportation Board."
+          }
+        }
+      ],
+      "name_en": "Union Pacific"
+    },
+    {
+      "id": "TTX",
+      "ticker": "TTX",
+      "name": "TTX社",
+      "sub": "貨車プール",
+      "sub_en": "Railcar pooling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CSXはTTXの普通株式の約20%を保有し、残りは他の北米大手鉄道会社などが保有している",
+          "text_en": "CSX owns about 20 percent of TTX's common stock and the other leading North American railroads and their affiliates own the remainder",
+          "source": {
+            "label": "CSX 10-K(2025-12-31)",
+            "label_en": "CSX 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "CSX owns about 20 percent of TTX's common stock, and the remainder is owned by the other leading North American railroads and their affiliates."
+          }
+        }
+      ],
+      "name_en": "TTX Company"
+    },
+    {
+      "id": "CONRAIL",
+      "ticker": "Conrail",
+      "name": "コンレール",
+      "sub": "共同保有の鉄道",
+      "sub_en": "Jointly owned rail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CSXはNSと共同でConrailを保有し、議決権の持分は50%である",
+          "text_en": "CSX and NS jointly own Conrail, and CSX holds a 50% voting interest",
+          "source": {
+            "label": "CSX 10-K(2025-12-31)",
+            "label_en": "CSX 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "CSX has a 42 % economic interest and 50 % voting interest in the jointly-owned entity, and NS has the remainder of the economic and voting interests."
+          }
+        }
+      ],
+      "name_en": "Conrail"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

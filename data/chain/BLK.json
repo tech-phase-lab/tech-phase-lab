@@ -1,0 +1,99 @@
+{
+  "root": {
+    "ticker": "BLK",
+    "name": "ブラックロック",
+    "cik": 2012383,
+    "name_en": "BlackRock"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフトウェア・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "主要な戦略的提携先の一つとしてマイクロソフトが挙がる",
+          "text_en": "Microsoft is named among BlackRock's key strategic partnerships",
+          "source": {
+            "label": "BlackRock 10-K(2025年12月31日)",
+            "label_en": "BlackRock 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "BlackRock has a number of key strategic partnerships, including with Microsoft."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud hosting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Aladdinの基盤はマイクロソフトAzureとアマゾンのAWS上で運用される",
+          "text_en": "Aladdin infrastructure is hosted on Microsoft Azure and Amazon Web Services",
+          "source": {
+            "label": "BlackRock 10-K(2025年12月31日)",
+            "label_en": "BlackRock 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For instance, the Aladdin infrastructure and environment for BlackRock and its external Aladdin clients are hosted on Microsoft Azure and Amazon Web Services."
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "CCB",
+      "ticker": "CCB Wealth",
+      "name": "CCBウェルス・マネジメント",
+      "sub": "中国の資産運用",
+      "sub_en": "China wealth mgmt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国でCCBウェルス・マネジメントと富裕層向け運用の合弁会社を持つ",
+          "text_en": "BlackRock has a wealth management joint venture company with CCB Wealth Management Co.",
+          "source": {
+            "label": "BlackRock 10-K(2025年12月31日)",
+            "label_en": "BlackRock 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "BlackRock CCB Wealth Management Limited, which is BlackRock’s wealth management joint venture company with CCB Wealth Management Co."
+          }
+        }
+      ],
+      "name_en": "CCB Wealth Management"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

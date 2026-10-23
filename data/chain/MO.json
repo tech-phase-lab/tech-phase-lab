@@ -1,0 +1,120 @@
+{
+  "root": {
+    "ticker": "MO",
+    "name": "アルトリア・グループ",
+    "cik": 764180,
+    "name_en": "Altria Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "PM"
+  ],
+  "companies": [
+    {
+      "id": "JT",
+      "ticker": "Japan Tobacco",
+      "name": "日本たばこ産業",
+      "sub": "加熱式たばこの合弁相手",
+      "sub_en": "Heated tobacco JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国の加熱式たばこ事業を担う合弁会社ホライズンの残り25%を、JTの子会社が持つ",
+          "text_en": "A subsidiary of Japan Tobacco holds the remaining 25% of the Horizon joint venture",
+          "source": {
+            "label": "アルトリア 10-K(2025年12月31日)",
+            "label_en": "Altria 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764180/000076418026000017/mo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "At December 31, 2025, we owned a 75% economic interest in Horizon Innovations LLC (“Horizon”), a joint venture with JTI (US) Holding, Inc. (“JTIUH”), a subsidiary of Japan Tobacco Inc. (“Japan Tobacco”), which owned the remaining 25% economic interest"
+          }
+        }
+      ],
+      "name_en": "Japan Tobacco"
+    },
+    {
+      "id": "PM",
+      "ticker": "PM",
+      "name": "フィリップ モリス インターナショナル",
+      "sub": "IQOS事業の相手先",
+      "sub_en": "IQOS rights counterparty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IQOSの米国での独占販売権をPMIに譲渡した",
+          "text_en": "Altria assigned the exclusive U.S. commercialization rights to the IQOS system to PMI",
+          "source": {
+            "label": "アルトリア 10-K(2025年12月31日)",
+            "label_en": "Altria 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764180/000076418026000017/mo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In April 2024, we assigned the exclusive U.S. commercialization rights to the IQOS Tobacco Heating System (“ IQOS System”) to Philip Morris International Inc. (“PMI”) pursuant to the terms of a purchase agreement entered into with PMI in October 2022"
+          }
+        }
+      ],
+      "name_en": "Philip Morris International"
+    },
+    {
+      "id": "BUD",
+      "ticker": "BUD",
+      "name": "アンハイザー・ブッシュ・インベブ",
+      "sub": "持分法投資先",
+      "sub_en": "Equity-method investee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ABIに出資し、持分法で会計処理している",
+          "text_en": "Altria invests in ABI and accounts for it under the equity method",
+          "source": {
+            "label": "アルトリア 10-K(2025年12月31日)",
+            "label_en": "Altria 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764180/000076418026000017/mo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our investments include Anheuser-Busch InBev SA/NV (“ABI”) and Cronos Group Inc. (“Cronos”), which we account for under the equity method of accounting using a one-quarter lag"
+          }
+        }
+      ],
+      "name_en": "Anheuser-Busch InBev"
+    },
+    {
+      "id": "CRON",
+      "ticker": "CRON",
+      "name": "クロノス・グループ",
+      "sub": "大麻関連の投資先",
+      "sub_en": "Cannabinoid investee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カナダの大麻関連企業クロノスに出資している",
+          "text_en": "Altria holds an investment in Cronos, a Canadian cannabinoid company",
+          "source": {
+            "label": "アルトリア 10-K(2025年12月31日)",
+            "label_en": "Altria 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764180/000076418026000017/mo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our investment in Cronos, a Canadian cannabinoid company, subjects us to various risks relating to Cronos’s business, such as legal, regulatory and reputational risks"
+          }
+        }
+      ],
+      "name_en": "Cronos Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

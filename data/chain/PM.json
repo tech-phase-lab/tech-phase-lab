@@ -1,0 +1,158 @@
+{
+  "root": {
+    "ticker": "PM",
+    "name": "フィリップ モリス インターナショナル",
+    "cik": 1413329,
+    "name_en": "Philip Morris International"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MO",
+    "BTI"
+  ],
+  "companies": [
+    {
+      "id": "MO",
+      "ticker": "MO",
+      "name": "アルトリア・グループ",
+      "sub": "米国のたばこ大手",
+      "sub_en": "US tobacco company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同業の競合として名前が挙がっている",
+          "text_en": "Named as a competitor in the industry",
+          "source": {
+            "label": "フィリップ モリス 10-K(2025年12月31日)",
+            "label_en": "Philip Morris International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc, new market entrants, particularly with respect to innovative products, several regional and local tobacco companies and, in some instances, state-owned tobacco enterprises"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "米国でのIQOSの商業提携を2024年4月末で終えた",
+          "text_en": "The U.S. IQOS commercial relationship with Altria ended as of April 30, 2024",
+          "source": {
+            "label": "フィリップ モリス 10-K(2025年12月31日)",
+            "label_en": "Philip Morris International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "On October 20, 2022, PMI announced that it had reached an agreement with Altria Group, Inc., (\"Altria\") to end the companies' commercial relationship as of April 30, 2024, with respect to IQOS in the U.S."
+          }
+        }
+      ],
+      "name_en": "Altria Group"
+    },
+    {
+      "id": "BTI",
+      "ticker": "BTI",
+      "name": "ブリティッシュ・アメリカン・タバコ",
+      "sub": "世界的たばこ大手",
+      "sub_en": "Global tobacco company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同業の競合として名前が挙がっている",
+          "text_en": "Named as a competitor in the industry",
+          "source": {
+            "label": "フィリップ モリス 10-K(2025年12月31日)",
+            "label_en": "Philip Morris International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc, new market entrants, particularly with respect to innovative products, several regional and local tobacco companies and, in some instances, state-owned tobacco enterprises"
+          }
+        }
+      ],
+      "name_en": "British American Tobacco"
+    },
+    {
+      "id": "JT",
+      "ticker": "Japan Tobacco",
+      "name": "日本たばこ産業",
+      "sub": "世界的たばこ大手",
+      "sub_en": "Global tobacco company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同業の競合として名前が挙がっている",
+          "text_en": "Named as a competitor in the industry",
+          "source": {
+            "label": "フィリップ モリス 10-K(2025年12月31日)",
+            "label_en": "Philip Morris International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc, new market entrants, particularly with respect to innovative products, several regional and local tobacco companies and, in some instances, state-owned tobacco enterprises"
+          }
+        }
+      ],
+      "name_en": "Japan Tobacco"
+    },
+    {
+      "id": "IMB",
+      "ticker": "Imperial Brands",
+      "name": "インペリアル・ブランズ",
+      "sub": "世界的たばこ大手",
+      "sub_en": "Global tobacco company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同業の競合として名前が挙がっている",
+          "text_en": "Named as a competitor in the industry",
+          "source": {
+            "label": "フィリップ モリス 10-K(2025年12月31日)",
+            "label_en": "Philip Morris International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc, new market entrants, particularly with respect to innovative products, several regional and local tobacco companies and, in some instances, state-owned tobacco enterprises"
+          }
+        }
+      ],
+      "name_en": "Imperial Brands"
+    },
+    {
+      "id": "KTG",
+      "ticker": "KT&G",
+      "name": "KT&G(韓国)",
+      "sub": "韓国のたばこ会社",
+      "sub_en": "South Korean tobacco firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KT&Gの加熱式製品を韓国以外で独占的に販売する長期協業を結んだ",
+          "text_en": "PMI entered a long-term collaboration to commercialize KT&G smoke-free products exclusively outside South Korea",
+          "source": {
+            "label": "フィリップ モリス 10-K(2025年12月31日)",
+            "label_en": "Philip Morris International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "On January 30, 2023, PMI announced a long-term collaboration with KT&G, South Korea’s leading tobacco and nicotine manufacturer, to continue to commercialize KT&G’s innovative smoke-free devices and consumables on an exclusive, worldwide basis (excluding South Korea)"
+          }
+        }
+      ],
+      "name_en": "KT&G"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

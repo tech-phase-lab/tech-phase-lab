@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "SPG",
+    "name": "サイモン・プロパティー・グループ",
+    "cik": 1063761,
+    "name_en": "Simon Property Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CATALYST",
+      "ticker": "Catalyst Brands",
+      "name": "カタリスト・ブランズ",
+      "sub": "小売事業",
+      "sub_en": "Retail operations",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "小売事業への投資先のひとつとして、カタリスト・ブランズに持分を持っている",
+          "text_en": "Catalyst Brands is listed among its investments in retail operations",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年12月31日期)",
+            "label_en": "Simon Property Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also have interests in investments in retail operations (such as Catalyst Brands LLC, or Catalyst); an e-commerce venture (Rue Gilt Groupe, or RGG, which operates shop.simon.com), and Jamestown (a global real estate investment and management company), collectively, our other platform investments."
+          }
+        }
+      ],
+      "name_en": "Catalyst Brands"
+    },
+    {
+      "id": "RGG",
+      "ticker": "Rue Gilt Groupe",
+      "name": "ルー・ギルト・グループ",
+      "sub": "Eコマース",
+      "sub_en": "E-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "shop.simon.comを運営するEコマース事業のルー・ギルト・グループにも投資している",
+          "text_en": "Rue Gilt Groupe, which operates shop.simon.com, is an e-commerce venture it invests in",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年12月31日期)",
+            "label_en": "Simon Property Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also have interests in investments in retail operations (such as Catalyst Brands LLC, or Catalyst); an e-commerce venture (Rue Gilt Groupe, or RGG, which operates shop.simon.com), and Jamestown (a global real estate investment and management company), collectively, our other platform investments."
+          }
+        }
+      ],
+      "name_en": "Rue Gilt Groupe"
+    },
+    {
+      "id": "JAMESTOWN",
+      "ticker": "Jamestown",
+      "name": "ジェームズタウン",
+      "sub": "不動産投資運用",
+      "sub_en": "Real estate investing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "グローバルな不動産投資運用会社ジェームズタウンも投資先に含まれる",
+          "text_en": "Jamestown, a global real estate investment and management company, is one of its platform investments",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年12月31日期)",
+            "label_en": "Simon Property Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also have interests in investments in retail operations (such as Catalyst Brands LLC, or Catalyst); an e-commerce venture (Rue Gilt Groupe, or RGG, which operates shop.simon.com), and Jamestown (a global real estate investment and management company), collectively, our other platform investments."
+          }
+        }
+      ],
+      "name_en": "Jamestown"
+    },
+    {
+      "id": "KLEPIERRE",
+      "ticker": "Klepierre",
+      "name": "クレピエール",
+      "sub": "欧州の商業不動産",
+      "sub_en": "European retail real estate",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パリに本社を置く上場不動産会社クレピエールの株式を22.2%保有している",
+          "text_en": "It owned a 22.2% equity stake in Klépierre, a Paris-based publicly traded real estate company",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年12月31日期)",
+            "label_en": "Simon Property Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "As of December 31, 2025, we also owned a 22.2% equity stake in Klépierre SA, or Klépierre, a publicly traded, Paris-based real estate company, which owns, or has an interest in, shopping centers located in 13 countries in Europe."
+          }
+        }
+      ],
+      "name_en": "Klepierre"
+    },
+    {
+      "id": "MEC",
+      "ticker": "Mitsubishi Estate",
+      "name": "三菱地所",
+      "sub": "日本のアウトレット",
+      "sub_en": "Japan outlets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本のプレミアム・アウトレット事業は三菱地所との合弁で運営している",
+          "text_en": "Its Japan Premium Outlet operations run through a joint venture with Mitsubishi Estate",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年12月31日期)",
+            "label_en": "Simon Property Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We conduct our international Premium Outlet operations in Japan through a joint venture with Mitsubishi Estate Co., Ltd."
+          }
+        }
+      ],
+      "name_en": "Mitsubishi Estate"
+    },
+    {
+      "id": "SHINSEGAE",
+      "ticker": "Shinsegae",
+      "name": "新世界インターナショナル",
+      "sub": "韓国のアウトレット",
+      "sub_en": "Korea outlets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "韓国のプレミアム・アウトレット事業は新世界インターナショナルとの合弁で運営している",
+          "text_en": "Its South Korea Premium Outlet operations run through a joint venture with Shinsegae International",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年12月31日期)",
+            "label_en": "Simon Property Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We conduct our international Premium Outlet operations in South Korea through a joint venture with Shinsegae International Co."
+          }
+        }
+      ],
+      "name_en": "Shinsegae International"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
