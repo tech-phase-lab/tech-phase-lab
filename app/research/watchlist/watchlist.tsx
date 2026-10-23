@@ -213,7 +213,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
                 </form>}
                 {alerts.filter(a => a.ticker === ticker).map(a => <div className={styles.savedAlert} key={a.direction}><span>{formatAlertPrice(a.price, lang === "ja" ? "ja-JP" : "en-US")} {a.currency} {a.direction === "above" ? t("以上", "or higher") : t("以下", "or lower")}</span><button disabled={!editable} onClick={() => update(current => ({ ...current, alerts: (current.alerts ?? []).filter(v => !(v.ticker === ticker && v.direction === a.direction)) }))}>{t("解除", "Remove")}</button></div>)}
                 </div>
-                {ticker === "SKHY" ? <a href="https://www.tradingview.com/symbols/KRX-000660/" target="_blank" rel="noreferrer">SK hynix · TradingView ↗</a> : <TradingViewChart ticker={ticker} exchange={item?.exchange ?? ""} lang={lang} />}
+                <TradingViewChart ticker={ticker} exchange={item?.exchange ?? ""} lang={lang} />
               </section>}
             </li>;
           })}</ul>

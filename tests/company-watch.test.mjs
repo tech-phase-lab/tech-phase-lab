@@ -30,7 +30,7 @@ test('currency, signs, accounting basis and non-US quote identifiers stay distin
  assert.equal(watchMetricValue(79.3187,'krw-trillion').en,'₩79.319T');
  assert.equal(watchMetricValue(-2,'percent').ja,'-2%');
  const by=Object.fromEntries(companyWatches.map(x=>[x.ticker,x]));
- assert.equal(by.SKHY.exchange,'KRX');assert.equal(by.SKHY.quoteTicker,'000660');
+ assert.equal(by.SKHY.exchange,'NASDAQ');assert.equal(by.SKHY.quoteTicker,'SKHY');
  assert.equal(by.PLTR.exchange,'NASDAQ');
  assert.equal(by.LITE.tiles[0].value.en,'$1.0063B');assert.equal(by.LITE.period,'Q4 FY2026');assert.equal(by.LITE.periodEnd,'2026-06-27');
  assert.equal(by.LITE.tiles[1].note.ja,'前年同期 −1.7%');assert.match(by.LITE.cards[2].points[0].ja,/\$7\.8B/);
