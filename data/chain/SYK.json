@@ -1,0 +1,340 @@
+{
+  "root": {
+    "ticker": "SYK",
+    "name": "ストライカー",
+    "cik": 310764,
+    "name_en": "Stryker"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ZBH",
+    "MDT",
+    "JNJ",
+    "CNMD",
+    "SNN"
+  ],
+  "companies": [
+    {
+      "id": "ZBH",
+      "ticker": "ZBH",
+      "name": "ジンマー・バイオメット",
+      "sub": "整形外科機器",
+      "sub_en": "Orthopaedic devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "器具分野で、世界の主要な競合5社のうちの1社に挙げられている",
+          "text_en": "Zimmer Biomet is named as one of the five leading global competitors in Instruments",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "the other four being Zimmer Biomet Holdings, Inc. (Zimmer), Medtronic plc (Medtronic), Johnson & Johnson MedTech (a subsidiary of Johnson & Johnson) and ConMed Linvatec, Inc. (a subsidiary of CONMED Corporation)"
+          }
+        }
+      ],
+      "name_en": "Zimmer Biomet"
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "器具、血管・脳神経分野で、主要な競合に挙げられている",
+          "text_en": "Medtronic is named as a leading global competitor in Instruments and in Vascular and Neuro Cranial",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "the other four being Zimmer Biomet Holdings, Inc. (Zimmer), Medtronic plc (Medtronic), Johnson & Johnson MedTech (a subsidiary of Johnson & Johnson) and ConMed Linvatec, Inc. (a subsidiary of CONMED Corporation)"
+          }
+        }
+      ],
+      "name_en": "Medtronic"
+    },
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "器具分野の主要な競合として、J&Jメドテックが挙がる",
+          "text_en": "Johnson & Johnson MedTech is listed among the leading global competitors in Instruments",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "the other four being Zimmer Biomet Holdings, Inc. (Zimmer), Medtronic plc (Medtronic), Johnson & Johnson MedTech (a subsidiary of Johnson & Johnson) and ConMed Linvatec, Inc. (a subsidiary of CONMED Corporation)"
+          }
+        }
+      ],
+      "name_en": "Johnson & Johnson MedTech"
+    },
+    {
+      "id": "CNMD",
+      "ticker": "CNMD",
+      "name": "コンメド",
+      "sub": "外科・内視鏡",
+      "sub_en": "Surgical & endoscopy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "器具と内視鏡の分野で、子会社コンメド・リンバテックが競合となる",
+          "text_en": "Its subsidiary ConMed Linvatec competes in Instruments and Endoscopy",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "the other four being Zimmer Biomet Holdings, Inc. (Zimmer), Medtronic plc (Medtronic), Johnson & Johnson MedTech (a subsidiary of Johnson & Johnson) and ConMed Linvatec, Inc. (a subsidiary of CONMED Corporation)"
+          }
+        }
+      ],
+      "name_en": "CONMED"
+    },
+    {
+      "id": "KARLSTORZ",
+      "ticker": "Karl Storz",
+      "name": "カール・ストルツ",
+      "sub": "内視鏡",
+      "sub_en": "Endoscopy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "内視鏡分野の主要な競合7社の一角である",
+          "text_en": "Karl Storz is one of the leading global competitors in Endoscopy",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of seven leading global competitors in Endoscopy; the other six being Karl Storz GmbH & Co., Olympus Optical Co. Ltd., Smith & Nephew plc (Smith & Nephew), ConMed Linvatec, Arthrex, Inc. and STERIS plc"
+          }
+        }
+      ],
+      "name_en": "Karl Storz"
+    },
+    {
+      "id": "OLYMPUS",
+      "ticker": "Olympus",
+      "name": "オリンパス",
+      "sub": "内視鏡",
+      "sub_en": "Endoscopy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "内視鏡分野で、競合としてオリンパスが挙がる",
+          "text_en": "Olympus is listed among the leading global competitors in Endoscopy",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of seven leading global competitors in Endoscopy; the other six being Karl Storz GmbH & Co., Olympus Optical Co. Ltd., Smith & Nephew plc (Smith & Nephew), ConMed Linvatec, Arthrex, Inc. and STERIS plc"
+          }
+        }
+      ],
+      "name_en": "Olympus"
+    },
+    {
+      "id": "SNN",
+      "ticker": "SNN",
+      "name": "スミス・アンド・ネフュー",
+      "sub": "整形外科・内視鏡",
+      "sub_en": "Orthopaedics & endoscopy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "内視鏡分野の競合として、スミス・アンド・ネフューが名を連ねる",
+          "text_en": "Smith & Nephew is listed among the leading global competitors in Endoscopy",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of seven leading global competitors in Endoscopy; the other six being Karl Storz GmbH & Co., Olympus Optical Co. Ltd., Smith & Nephew plc (Smith & Nephew), ConMed Linvatec, Arthrex, Inc. and STERIS plc"
+          }
+        }
+      ],
+      "name_en": "Smith & Nephew"
+    },
+    {
+      "id": "ARTHREX",
+      "ticker": "Arthrex",
+      "name": "アースレックス",
+      "sub": "内視鏡・関節鏡",
+      "sub_en": "Endoscopy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "内視鏡分野の競合に、アースレックスも含まれる",
+          "text_en": "Arthrex is also among the leading global competitors in Endoscopy",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of seven leading global competitors in Endoscopy; the other six being Karl Storz GmbH & Co., Olympus Optical Co. Ltd., Smith & Nephew plc (Smith & Nephew), ConMed Linvatec, Arthrex, Inc. and STERIS plc"
+          }
+        }
+      ],
+      "name_en": "Arthrex"
+    },
+    {
+      "id": "STE",
+      "ticker": "STE",
+      "name": "ステリス",
+      "sub": "滅菌・内視鏡",
+      "sub_en": "Sterilization",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "内視鏡分野の競合の一社として、ステリスが挙がる",
+          "text_en": "STERIS is among the leading global competitors in Endoscopy",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of seven leading global competitors in Endoscopy; the other six being Karl Storz GmbH & Co., Olympus Optical Co. Ltd., Smith & Nephew plc (Smith & Nephew), ConMed Linvatec, Arthrex, Inc. and STERIS plc"
+          }
+        }
+      ],
+      "name_en": "STERIS"
+    },
+    {
+      "id": "BAX",
+      "ticker": "BAX",
+      "name": "バクスター・インターナショナル",
+      "sub": "病院向け医療",
+      "sub_en": "Hospital care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディカル分野の主要な競合に、バクスターが含まれる",
+          "text_en": "Baxter International is among the leading global competitors in Medical",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of five leading global competitors in Medical; the other four being Baxter International Inc., Zoll Medical Corporation, Medline Industries and Ferno-Washington, Inc."
+          }
+        }
+      ],
+      "name_en": "Baxter International"
+    },
+    {
+      "id": "ZOLL",
+      "ticker": "Zoll Medical",
+      "name": "ゾール・メディカル",
+      "sub": "救急医療機器",
+      "sub_en": "Emergency devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディカル分野では、ゾール・メディカルも競合に挙がる",
+          "text_en": "Zoll Medical is also listed among the leading global competitors in Medical",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of five leading global competitors in Medical; the other four being Baxter International Inc., Zoll Medical Corporation, Medline Industries and Ferno-Washington, Inc."
+          }
+        }
+      ],
+      "name_en": "Zoll Medical"
+    },
+    {
+      "id": "TERUMO",
+      "ticker": "Terumo",
+      "name": "テルモ",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血管・脳神経分野の競合に、テルモが入っている",
+          "text_en": "Terumo is among the leading global competitors in Vascular and Neuro Cranial",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of five leading global competitors in Vascular and Neuro Cranial; the other four being Medtronic, Johnson & Johnson MedTech, Terumo Corporation and Penumbra, Inc."
+          }
+        }
+      ],
+      "name_en": "Terumo"
+    },
+    {
+      "id": "PEN",
+      "ticker": "PEN",
+      "name": "ペナンブラ",
+      "sub": "血栓除去機器",
+      "sub_en": "Thrombectomy devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血管・脳神経分野で、ペナンブラも競合として名前がある",
+          "text_en": "Penumbra is also named as a leading global competitor in Vascular and Neuro Cranial",
+          "source": {
+            "label": "ストライカー 10-K(2025-12-31)",
+            "label_en": "Stryker 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310764/000031076426000010/syk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are one of five leading global competitors in Vascular and Neuro Cranial; the other four being Medtronic, Johnson & Johnson MedTech, Terumo Corporation and Penumbra, Inc."
+          }
+        }
+      ],
+      "name_en": "Penumbra"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
