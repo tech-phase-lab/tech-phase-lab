@@ -1,3 +1,33 @@
+## 2026-10-23 JST — Actual one-attempt AI connection verified
+
+Owner completed the reviewed ai_connection_checks SQL (reported COMMIT), enabled
+RESOLUTE_AI_CHECK_ENABLED=true, and deployed the connected preview branch's latest
+code. Earlier variable-only deployment still returned NOT_FOUND; do not repeat
+SQL, key rotation, variable entry or deployment requests for that resolved issue.
+
+Authenticated browser /resolute/ai-check returned not-started with execute enabled.
+Assistant clicked execute exactly once and observed RESOLUTE_OK. A subsequent
+GET-only status read returned the same success with execute disabled, verifying
+stored-result readback. Exactly one real model request was made in this test;
+no retry. This proves this deployment's configured key/model access and diagnostic
+ledger write/read path, NOT customer plan/notification/protection writes or full
+news-generation acceptance. No Railway connector call was made.
+
+Retain fixed claim owner-key-check-2026-10-23. Never clear it, change the ID, or
+restore an older ledger and repeat. The single-call authorization is now consumed.
+Root password entry worked via the existing Postgres browser Console using an
+explicit password prompt. Earlier environment-based authentication failed; this
+does not establish whether every service's post-rotation credentials are current.
+Never request secrets in chat or repeat the completed password rotation.
+
+Next: archive current source through the established encrypted R2 workflow and
+verify actual readback/isolated Git restore. Live DB/protection acceptance remains
+pending a fresh complete write-fenced inventory and isolated restore. Saving gates
+must not be enabled on the basis of this AI test. No schedule, billing, email,
+approved content or customer-storage gate changes are authorized by this receipt.
+
+---
+
 ## 2026-10-23 JST — One-attempt AI check implementation prepared
 
 Owner confirms RESOLUTE_OPENAI_API_KEY rotated and API redeployed. Do not repeat

@@ -1,10 +1,9 @@
-Request: source snapshot including offline font and dependency recovery preparation
+Request: archive source after actual one-attempt AI verification
 Date: 2026-10-23 JST
-Base commit: bd5141f603f03c1c16791b565c46b0462fa3a313
-Archive the request commit itself after required integrated-tree checks pass.
-Include exact existing Geist font bytes, license, preparation tool and regression tests.
-Retain all previous encrypted objects; one source-only execution.
-Encrypt, upload, complete readback and isolated Git restore; no runtime promotion.
-No live DB access, deployment request, schedule change, notification or payment.
-The private local node_modules tar is NOT included or claimed as offsite custody.
-Record actual successful receipt separately without changing this trigger again.
+Base commit: f9c46edf656210454ac48d992ba49852c44005a2
+Archive this request commit, including preserved coworker changes and AI check code.
+Use existing configured secrets; encrypt before upload, fully download and restore
+Git in isolation with exact commit/tree comparison. Retain older objects.
+Source only: no live DB, dependency tar, runtime promotion or AI call.
+Do not change schedules, storage gates, credentials, billing or approved content.
+Record actual receipt separately without retriggering this request file.

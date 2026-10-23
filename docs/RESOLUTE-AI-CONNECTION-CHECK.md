@@ -1,3 +1,15 @@
+## Live verification update — 2026-10-23 JST
+
+The preparation-only statements below are historical. Owner reports schema COMMIT
+and enabled/deployed the check. Authenticated browser status was not-started;
+exactly one explicit execute returned RESOLUTE_OK. A separate read-status request
+read the saved success back; execute remained disabled. The one-call allowance is
+consumed. No more key test, reset, ledger deletion or replay after an old restore.
+This verifies deployed key/model access plus diagnostic storage only. Customer
+saving, external history and whole-product recovery remain separate acceptance gates.
+
+---
+
 # Owner-only, one-attempt AI connection check
 
 Prepared 2026-10-23. This is implementation preparation, not a live key verification.
