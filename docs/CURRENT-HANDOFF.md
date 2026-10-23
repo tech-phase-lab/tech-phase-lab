@@ -1,3 +1,16 @@
+## 2026-10-23 JST — API dependencies restored from R2 and booted offline
+
+Actual run39959285394 restored source caaff68d and 5,384 API dependency files
+from encrypted R2 objects. Offline API boot, health200, four unauthenticated401s,
+two disabled-payment503s and clean shutdown passed with fixture-only settings.
+See [actual evidence and platform limits](EXTERNAL-API-DEPENDENCY-BACKUP-2026-10-23.md).
+Ubuntu24.04/Node24.22.1/glibc2.39 verified; Bookworm/Render runtime and live DB are NOT verified.
+Keep saving gates OFF, preserve the consumed AI claim; no Railway reconnect/key-entry requests.
+Next: remaining service dependencies and matching runtime custody, then fresh writer-fenced
+DB/history inventory and isolated restore before storage activation or Render cutover.
+
+---
+
 ## 2026-10-23 JST — Encrypted dependency restore and offline build verified
 
 Actual R2 source and npm dependency download/decryption/restore passed, followed

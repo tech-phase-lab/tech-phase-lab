@@ -1,3 +1,6 @@
+> 2026-10-23 22:13 JST: 実際のR2取得・復元・通信遮断下のAPI起動を確認。
+> [確認記録と未検証範囲](EXTERNAL-API-DEPENDENCY-BACKUP-2026-10-23.md)。
+
 # RESOLUTE API専用ライブラリの外部保管と起動検査
 
 フロントエンド用の保管物とは別に、`services/resolute-api/package-lock.json`を
