@@ -22,7 +22,7 @@ export async function GET() {
     }
     url.pathname = `${url.pathname.replace(/\/$/, "")}/live`; url.search = ""; url.hash = "";
     const token = process.env.RESEARCH_MONITOR_TOKEN;
-    const response = await fetch(url, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : undefined, signal: AbortSignal.timeout(10_000) });
+    const response = await fetch(url, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : undefined, signal: AbortSignal.timeout(13_000) });
     if (!response.ok) return Response.json({ ok: true, status: "unreachable" }, { headers });
     return Response.json({ ok: true, ...assessFreshness(await response.json()) }, { headers });
   } catch {
