@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "GILD",
+    "name": "ギリアド・サイエンシズ",
+    "cik": 882095,
+    "name_en": "Gilead Sciences"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "sub": "HIV配合剤の提携",
+      "sub_en": "HIV combination partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "配合剤シムツーザの製造・販売をヤンセンが担っている",
+          "text_en": "Janssen is responsible for manufacturing and commercializing Symtuza",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Janssen is responsible for manufacturing, registration, distribution and commercialization of Symtuza worldwide."
+          }
+        }
+      ],
+      "name_en": "Johnson & Johnson"
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "sub": "HIV長時間作用薬の提携",
+      "sub_en": "Long-acting HIV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HIV向け長時間作用型治療薬をメルクと共同で開発・販売する契約を結んでいる",
+          "text_en": "Gilead has an agreement with Merck to jointly develop and commercialize long-acting HIV treatments",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Merck Sharp & Dohme Corp., a subsidiary of Merck & Co., Inc. (“Merck”) to jointly develop and commercialize long-acting investigational treatments in HIV"
+          }
+        }
+      ],
+      "name_en": "Merck"
+    },
+    {
+      "id": "ACLX",
+      "ticker": "ACLX",
+      "name": "アーセルクス",
+      "sub": "CAR-T療法の提携",
+      "sub_en": "CAR-T partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CAR-T細胞療法のanito-celでアーセルクスと協力している",
+          "text_en": "Gilead collaborates with Arcellx on a CAR T-cell therapy",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In collaboration with Arcellx, Inc. (“Arcellx”)"
+          }
+        }
+      ],
+      "name_en": "Arcellx"
+    },
+    {
+      "id": "RCUS",
+      "ticker": "RCUS",
+      "name": "アーカス・バイオサイエンシズ",
+      "sub": "抗TIGIT抗体の提携",
+      "sub_en": "Anti-TIGIT partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗TIGIT抗体の第3相試験をアーカスと共同で進めていた",
+          "text_en": "Gilead ran a late-stage anti-TIGIT study in partnership with Arcus",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "in partnership with Arcus Biosciences, Inc. (“Arcus”)"
+          }
+        }
+      ],
+      "name_en": "Arcus Biosciences"
+    },
+    {
+      "id": "JT",
+      "ticker": "Japan Tobacco",
+      "name": "日本たばこ産業",
+      "sub": "HIV薬の導出元",
+      "sub_en": "HIV drug licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "エルビテグラビルの開発・販売権を日本たばこ産業から得ている",
+          "text_en": "Japan Tobacco granted Gilead exclusive rights to elvitegravir",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2005, Japan Tobacco, Inc. (“Japan Tobacco”) granted us exclusive rights to develop and commercialize elvitegravir, a novel HIV integrase inhibitor, in all countries of the world, excluding Japan, where Japan Tobacco retained such rights."
+          }
+        }
+      ],
+      "name_en": "Japan Tobacco"
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国で製品を販売する三大卸の一社である",
+          "text_en": "One of the three large wholesalers through which Gilead sells its U.S. products",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Cardinal Health, Inc., Cencora, Inc. and McKesson Corporation"
+          }
+        }
+      ],
+      "name_en": "McKesson"
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "センコラ",
+      "sub": "医薬品卸",
+      "sub_en": "Wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国で製品を販売する三大卸の一社である",
+          "text_en": "One of the three large wholesalers through which Gilead sells its U.S. products",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Cardinal Health, Inc., Cencora, Inc. and McKesson Corporation"
+          }
+        }
+      ],
+      "name_en": "Cencora"
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸",
+      "sub_en": "Wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国で製品を販売する三大卸の一社である",
+          "text_en": "One of the three large wholesalers through which Gilead sells its U.S. products",
+          "source": {
+            "label": "Gilead Sciences 10-K(2025年12月期)",
+            "label_en": "Gilead Sciences 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882095/000088209526000006/gild-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Cardinal Health, Inc., Cencora, Inc. and McKesson Corporation"
+          }
+        }
+      ],
+      "name_en": "Cardinal Health"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

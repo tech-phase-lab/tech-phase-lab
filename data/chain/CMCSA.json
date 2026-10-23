@@ -1,0 +1,286 @@
+{
+  "root": {
+    "ticker": "CMCSA",
+    "name": "コムキャスト",
+    "cik": 1166691,
+    "name_en": "Comcast"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "T",
+    "TMUS",
+    "VZ",
+    "DIS",
+    "NFLX"
+  ],
+  "companies": [
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・コミュニケーションズ",
+      "sub": "無線網の提供元",
+      "sub_en": "Wireless network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社の無線サービスはベライゾンの無線ネットワークで提供している",
+          "text_en": "Comcast's domestic wireless services run over Verizon's wireless network",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Our domestic wireless services are offered over Verizon’s wireless network and our existing network of secure residential, outdoor and business Wi-Fi hotspots, and are offered initially only as part of our bundled service offerings to customers that subscribe to our qualifying broadband services."
+          }
+        }
+      ],
+      "name_en": "Verizon Communications"
+    },
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル・US",
+      "sub": "無線網・周波数",
+      "sub_en": "Wireless network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "法人向けの無線サービスで、2026年からTモバイルの網も使う予定だ",
+          "text_en": "Comcast plans to also use T-Mobile's wireless network for business customers beginning in 2026",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Our domestic wireless services are offered to business customers over Verizon’s wireless network and beginning in 2026, we will also use T-Mobile’s wireless network."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2023年に一部の周波数免許をTモバイルへ売却する契約を結んだ",
+          "text_en": "Comcast agreed in 2023 to sell certain spectrum licenses to T-Mobile",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "In 2023, we entered into an agreement with T-Mobile to sell certain of our spectrum licenses."
+          }
+        }
+      ],
+      "name_en": "T-Mobile US"
+    },
+    {
+      "id": "PSKY",
+      "ticker": "PSKY",
+      "name": "パラマウント・スカイダンス",
+      "sub": "番組の提供元",
+      "sub_en": "Content licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "映画・テレビ番組の主要なライセンス契約の相手先に含まれる",
+          "text_en": "Paramount is among the parties to the most significant content licensing agreements",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "the most significant agreements for the licensing of film and television entertainment content include rights with Paramount, Warner Bros. and our Studios segment, certain of which are exclusive rights."
+          }
+        }
+      ],
+      "name_en": "Paramount Skydance"
+    },
+    {
+      "id": "WBD",
+      "ticker": "WBD",
+      "name": "ワーナー・ブラザース・ディスカバリー",
+      "sub": "番組の提供元",
+      "sub_en": "Content licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "映画・テレビ番組の主要なライセンス契約の相手先に含まれる",
+          "text_en": "Warner Bros. is among the parties to the most significant content licensing agreements",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "the most significant agreements for the licensing of film and television entertainment content include rights with Paramount, Warner Bros. and our Studios segment, certain of which are exclusive rights."
+          }
+        }
+      ],
+      "name_en": "Warner Bros. Discovery"
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "合弁パートナー",
+      "sub_en": "JV partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ストリーミング基盤Xumoの合弁会社をチャーターと運営している",
+          "text_en": "Comcast runs the Xumo streaming platform joint venture with Charter",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Xumo, our consolidated streaming platform joint venture with Charter Communications."
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "RTL",
+      "ticker": "RTL Group",
+      "name": "RTLグループ",
+      "sub": "Sky独事業の売却先",
+      "sub_en": "Sky Germany buyer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ドイツのSky事業をRTLグループへ売却する契約を結んだ",
+          "text_en": "Comcast agreed to sell its Sky operations in Germany to RTL Group",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "In 2025, we entered into an agreement with RTL Group to sell our Sky operations in Germany, subject to various conditions and approvals, and we expect the sale to be completed in 2026."
+          }
+        }
+      ],
+      "name_en": "RTL Group"
+    },
+    {
+      "id": "ATAIROS",
+      "ticker": "Atairos",
+      "name": "アタイロス",
+      "sub": "投資の提携先",
+      "sub_en": "Investment partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アタイロスの唯一の外部投資家である",
+          "text_en": "Comcast is the only third-party investor in Atairos",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "We are the only third-party investor in Atairos."
+          }
+        }
+      ],
+      "name_en": "Atairos"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "エーティーアンドティー",
+      "sub": "通信大手",
+      "sub_en": "Wireless carrier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "固定無線などでブロードバンドを提供する無線事業者に含まれる",
+          "text_en": "AT&T is among wireless companies offering internet services that compete with Comcast broadband",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Various wireless companies, such as AT&T, T-Mobile and Verizon, offer internet services using a variety of wireless technologies, including 5G fixed wireless networks and 4G and 5G wireless broadband services."
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ウォルト・ディズニー",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "動画サービスでの競合先にディズニー+が含まれる",
+          "text_en": "Disney+ is among the video services Comcast competes with",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "subscription-based services, such as Disney+ and Netflix, that offer online services that enable internet streaming and downloading of movies, television shows and other video programming"
+          }
+        }
+      ],
+      "name_en": "Walt Disney"
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "動画サービスでの競合先にネットフリックスが含まれる",
+          "text_en": "Netflix is among the video services Comcast competes with",
+          "source": {
+            "label": "コムキャスト 10-K(2025年12月期)",
+            "label_en": "Comcast 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "subscription-based services, such as Disney+ and Netflix, that offer online services that enable internet streaming and downloading of movies, television shows and other video programming"
+          }
+        }
+      ],
+      "name_en": "Netflix"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "EBAY",
+    "name": "イーベイ",
+    "cik": 1065088,
+    "name_en": "eBay"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "SHOP",
+    "META",
+    "GOOGL"
+  ],
+  "companies": [
+    {
+      "id": "PSA",
+      "ticker": "PSA",
+      "name": "PSA(カード鑑定会社)",
+      "sub": "トレーディングカードの鑑定",
+      "sub_en": "Card grading",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "トレーディングカードのワンクリック鑑定と再販売でPSAと提携している",
+          "text_en": "eBay partners with PSA for one-click card grading and resale",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "one-click card grading and resale for trading cards through our partnership with PSA"
+          }
+        }
+      ],
+      "name_en": "PSA"
+    },
+    {
+      "id": "PYPL",
+      "ticker": "PYPL",
+      "name": "ペイパル",
+      "sub": "分離した決済会社",
+      "sub_en": "Separated payments firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離・分配契約などでPayPalとの関係を定めている",
+          "text_en": "eBay has a separation and distribution agreement and other agreements with PayPal",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We entered into a separation and distribution agreement and various other agreements with PayPal to govern the Distribution and the relationship of the two companies."
+          }
+        }
+      ],
+      "name_en": "PayPal"
+    },
+    {
+      "id": "ADYEN",
+      "ticker": "Adyen",
+      "name": "アディエン",
+      "sub": "決済処理",
+      "sub_en": "Payment processing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Adyenと商業契約を結び、同社株の取得権(ワラント)を得ていた",
+          "text_en": "eBay had a commercial agreement and a warrant to acquire Adyen shares",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also entered into a warrant agreement in addition to a commercial agreement with Adyen N.V. (“Adyen”)"
+          }
+        }
+      ],
+      "name_en": "Adyen"
+    },
+    {
+      "id": "KLARNA",
+      "ticker": "Klarna",
+      "name": "クラーナ",
+      "sub": "後払い決済",
+      "sub_en": "Buy now pay later",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "購入者向け決済手段としてKlarnaの導入を広げた",
+          "text_en": "eBay expanded the Klarna buyer payment option",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the expansion of the Klarna buyer payment option"
+          }
+        }
+      ],
+      "name_en": "Klarna"
+    },
+    {
+      "id": "DEPOP",
+      "ticker": "Depop",
+      "name": "デポップ",
+      "sub": "C2Cファッション",
+      "sub_en": "C2C fashion marketplace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Depopを買収する最終契約を結んだ",
+          "text_en": "eBay entered into a definitive agreement to acquire Depop",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In February 2026, we entered into a definitive agreement to acquire Depop, Inc., a leading C2C fashion marketplace focused on recommerce"
+          }
+        }
+      ],
+      "name_en": "Depop, Inc."
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(Google)",
+      "sub": "検索・集客",
+      "sub_en": "Search traffic",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "集客の多くをGoogle検索に頼っている",
+          "text_en": "eBay relies on Google search to direct a significant amount of traffic",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In addition, we rely on Google search to direct a significant amount of traffic to our platforms."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "総合ECの競合",
+      "sub_en": "General e-commerce rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "売り手の代替手段として、AmazonやAlibabaなどの総合ECがある",
+          "text_en": "Sellers can turn to general ecommerce marketplaces such as Amazon and Alibaba",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "including general ecommerce marketplaces, such as Amazon and Alibaba, and more specialized marketplaces that focus on discrete categories of products"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "SNSの競合",
+      "sub_en": "Social platform rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Facebook Marketplaceでも商品の売買ができる",
+          "text_en": "Consumers can buy and sell goods on Facebook Marketplace",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "consumers can buy and sell goods using social media, online aggregation and classifieds 14 Table of Contents platforms, such as Facebook Marketplace"
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    },
+    {
+      "id": "SHOP",
+      "ticker": "SHOP",
+      "name": "ショッピファイ",
+      "sub": "マルチチャネル販売",
+      "sub_en": "Multi-channel selling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "売り手はShopifyなどのマルチチャネルサービスでも販売できる",
+          "text_en": "Sellers may sell through multi-channel services like Shopify",
+          "source": {
+            "label": "eBay 10-K(2025年12月31日期)",
+            "label_en": "eBay 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Sellers may also choose to sell their goods through alternative channels, such as multi-channel services like Shopify or social media platforms."
+          }
+        }
+      ],
+      "name_en": "Shopify"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

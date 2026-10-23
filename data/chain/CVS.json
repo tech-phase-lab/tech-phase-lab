@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "CVS",
+    "name": "CVSヘルス",
+    "cik": 64803,
+    "name_en": "CVS Health"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "WMT",
+    "AMZN",
+    "CI",
+    "UNH"
+  ],
+  "companies": [
+    {
+      "id": "WBA",
+      "ticker": "Walgreens",
+      "name": "ウォルグリーン",
+      "sub": "ドラッグストア",
+      "sub_en": "Drugstore chain",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ドラッグストア分野の競合として挙げられている",
+          "text_en": "Named as a drugstore chain competitor",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "the Company competes with other drugstore chains (e.g., Walgreens), supermarkets, discount retailers (e.g., Walmart), independent pharmacies, restrictive pharmacy networks, online retailers (e.g., Amazon)"
+          }
+        }
+      ],
+      "name_en": "Walgreens"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売・薬局",
+      "sub_en": "Discount retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディスカウント小売の競合として挙げられている",
+          "text_en": "Named as a discount retailer competitor",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "the Company competes with other drugstore chains (e.g., Walgreens), supermarkets, discount retailers (e.g., Walmart), independent pharmacies, restrictive pharmacy networks, online retailers (e.g., Amazon)"
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "オンライン小売",
+      "sub_en": "Online retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "オンライン小売の競合として挙げられている",
+          "text_en": "Named as an online retailer competitor",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "the Company competes with other drugstore chains (e.g., Walgreens), supermarkets, discount retailers (e.g., Walmart), independent pharmacies, restrictive pharmacy networks, online retailers (e.g., Amazon)"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "CI",
+      "ticker": "CI",
+      "name": "シグナ",
+      "sub": "PBM（エクスプレス・スクリプツ）",
+      "sub_en": "PBM (Express Scripts)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のエクスプレス・スクリプツがPBM事業の競合である",
+          "text_en": "Its Express Scripts business competes in PBM services",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "large, national PBM companies (e.g., Prime Therapeutics and MedImpact), PBMs owned by large national health plans (e.g., the Express Scripts business of Cigna Corporation and the Optum Rx business of UnitedHealth Group)"
+          }
+        }
+      ],
+      "name_en": "Cigna"
+    },
+    {
+      "id": "UNH",
+      "ticker": "UNH",
+      "name": "ユナイテッドヘルス・グループ",
+      "sub": "PBM（オプタムRx）",
+      "sub_en": "PBM (Optum Rx)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のオプタムRxがPBM事業の競合である",
+          "text_en": "Its Optum Rx business competes in PBM services",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "large, national PBM companies (e.g., Prime Therapeutics and MedImpact), PBMs owned by large national health plans (e.g., the Express Scripts business of Cigna Corporation and the Optum Rx business of UnitedHealth Group)"
+          }
+        }
+      ],
+      "name_en": "UnitedHealth Group"
+    },
+    {
+      "id": "PRIME",
+      "ticker": "Prime",
+      "name": "プライム・セラピューティクス",
+      "sub": "PBM",
+      "sub_en": "PBM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手PBMとして競合に挙げられている",
+          "text_en": "Named as a large national PBM competitor",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "large, national PBM companies (e.g., Prime Therapeutics and MedImpact), PBMs owned by large national health plans (e.g., the Express Scripts business of Cigna Corporation and the Optum Rx business of UnitedHealth Group)"
+          }
+        }
+      ],
+      "name_en": "Prime Therapeutics"
+    },
+    {
+      "id": "MEDI",
+      "ticker": "MedImpact",
+      "name": "メドインパクト",
+      "sub": "PBM",
+      "sub_en": "PBM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手PBMとして競合に挙げられている",
+          "text_en": "Named as a large national PBM competitor",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "large, national PBM companies (e.g., Prime Therapeutics and MedImpact), PBMs owned by large national health plans (e.g., the Express Scripts business of Cigna Corporation and the Optum Rx business of UnitedHealth Group)"
+          }
+        }
+      ],
+      "name_en": "MedImpact"
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "sub": "店舗内薬局",
+      "sub_en": "In-store pharmacies",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ターゲット店舗内の薬局の売上を、薬局売上に計上している",
+          "text_en": "Sales from pharmacies within Target stores are included in Pharmacy revenues",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Pharmacy (1) 82.9 % 80.9 % 78.9 % Front store and other (2) 17.1 % 19.1 % 21.1 % 100.0 % 100.0 % 100.0 % _____________________________________________ (1) Pharmacy includes sales in pharmacies within Target Corporation (“Target”) and other retail stores."
+          }
+        }
+      ],
+      "name_en": "Target"
+    },
+    {
+      "id": "RAID",
+      "ticker": "Rite Aid",
+      "name": "ライト・エイド",
+      "sub": "処方箋ファイル買収",
+      "sub_en": "Prescription file acquisition",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ライト・エイド一部店舗の処方箋ファイルを買収し、一部店舗も取得した",
+          "text_en": "CVS acquired prescription files and certain stores from Rite Aid",
+          "source": {
+            "label": "CVS Health 10-K(2025年12月期)",
+            "label_en": "CVS Health 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In May 2025, the Company reached an agreement to acquire the prescription files of certain Rite Aid pharmacies, as well as acquire and operate certain Rite Aid stores in Idaho, Oregon and Washington for total consideration of $ 465 million."
+          }
+        }
+      ],
+      "name_en": "Rite Aid"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

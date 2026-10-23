@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "CVX",
+    "name": "シェブロン",
+    "cik": 93410,
+    "name_en": "Chevron"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CPCHEM",
+      "ticker": "CP Chem",
+      "name": "シェブロン・フィリップス・ケミカル",
+      "sub": "石油化学合弁",
+      "sub_en": "Petrochemical JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シェブロン・フィリップス・ケミカルの50%の持分を保有している",
+          "text_en": "Chevron owns a 50 percent interest in Chevron Phillips Chemical Company LLC",
+          "source": {
+            "label": "Chevron 10-K(2025年12月31日期)",
+            "label_en": "Chevron 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Chevron owns a 50 percent interest in Chevron Phillips Chemical Company LLC (CPChem)"
+          }
+        }
+      ],
+      "name_en": "Chevron Phillips Chemical Company LLC"
+    },
+    {
+      "id": "GSE",
+      "ticker": "GS Energy",
+      "name": "GSエナジー",
+      "sub": "韓国の精製合弁相手",
+      "sub_en": "Korea refining JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GSエナジーとは、韓国のGSカルテックスを50%ずつ持つ合弁を組んでいる",
+          "text_en": "GS Caltex Corporation is a 50 percent-owned joint venture with GS Energy in South Korea",
+          "source": {
+            "label": "Chevron 10-K(2025年12月31日期)",
+            "label_en": "Chevron 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "GS Caltex Corporation Chevron owns 50 percent of GS Caltex Corporation, a joint venture with GS Energy in South Korea"
+          }
+        }
+      ],
+      "name_en": "GS Energy"
+    },
+    {
+      "id": "TCO",
+      "ticker": "Tengizchevroil",
+      "name": "テンギズシェブロイル",
+      "sub": "カザフスタン油田",
+      "sub_en": "Kazakhstan oil fields",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テンギズシェブロイルの株式の50%を持ち、カザフスタンの油田を運営させている",
+          "text_en": "Chevron has a 50 percent equity ownership interest in TCO, which operates the Tengiz and Korolev crude oil fields in Kazakhstan",
+          "source": {
+            "label": "Chevron 10-K(2025年12月31日期)",
+            "label_en": "Chevron 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Chevron has a 50 percent equity ownership interest in TCO, which operates the Tengiz and Korolev crude oil fields in Kazakhstan"
+          }
+        }
+      ],
+      "name_en": "Tengizchevroil LLP"
+    },
+    {
+      "id": "CPC",
+      "ticker": "CPC",
+      "name": "カスピ海パイプライン・コンソーシアム",
+      "sub": "輸送パイプライン",
+      "sub_en": "Export pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カスピ海パイプライン・コンソーシアムに出資し、テンギズ油田の主な輸出ルートとなっている",
+          "text_en": "Chevron maintains an equity interest in the Caspian Pipeline Consortium, a primary export route for Tengiz field production",
+          "source": {
+            "label": "Chevron 10-K(2025年12月31日期)",
+            "label_en": "Chevron 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Chevron maintains an equity interest in the Caspian Pipeline Consortium (CPC) which provides a primary export route for Tengiz field production in Kazakhstan"
+          }
+        }
+      ],
+      "name_en": "Caspian Pipeline Consortium"
+    },
+    {
+      "id": "SRC",
+      "ticker": "Singapore Refining",
+      "name": "シンガポール・リファイニング",
+      "sub": "精製合弁",
+      "sub_en": "Refining JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シンガポール・リファイニングは、50%出資の合弁会社である",
+          "text_en": "Singapore Refining Company is a 50 percent-owned joint venture",
+          "source": {
+            "label": "Chevron 10-K(2025年12月31日期)",
+            "label_en": "Chevron 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Singapore Refining Company (SRC), a 50 percent-owned joint venture"
+          }
+        }
+      ],
+      "name_en": "Singapore Refining Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

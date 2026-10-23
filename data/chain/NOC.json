@@ -1,0 +1,148 @@
+{
+  "root": {
+    "ticker": "NOC",
+    "name": "ノースロップ・グラマン",
+    "cik": 1133421,
+    "name_en": "Northrop Grumman"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "BA",
+    "GD",
+    "LHX",
+    "LMT",
+    "RTX"
+  ],
+  "companies": [
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "航空宇宙・防衛",
+      "sub_en": "Aerospace & defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・情報・連邦民生市場で競合する企業として名前が挙がっている",
+          "text_en": "Named as a company Northrop competes with in defense, intelligence and federal civil markets",
+          "source": {
+            "label": "Northrop Grumman 10-K(2025年12月31日)",
+            "label_en": "Northrop Grumman 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1133421/000113342126000003/noc-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete with many companies in the defense, intelligence and federal civil markets, including The Boeing Company, General Dynamics Corporation, L3Harris Technologies, Inc., Lockheed Martin Corporation, and RTX Corporation, as well as, increasingly, new entrants and startups."
+          }
+        }
+      ],
+      "name_en": "The Boeing Company"
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "sub": "防衛・航空機",
+      "sub_en": "Defense & aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・情報・連邦民生市場での競合先の一社である",
+          "text_en": "One of the companies Northrop competes with in defense, intelligence and federal civil markets",
+          "source": {
+            "label": "Northrop Grumman 10-K(2025年12月31日)",
+            "label_en": "Northrop Grumman 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1133421/000113342126000003/noc-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete with many companies in the defense, intelligence and federal civil markets, including The Boeing Company, General Dynamics Corporation, L3Harris Technologies, Inc., Lockheed Martin Corporation, and RTX Corporation, as well as, increasingly, new entrants and startups."
+          }
+        }
+      ],
+      "name_en": "General Dynamics"
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "sub": "防衛エレクトロニクス",
+      "sub_en": "Defense electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・情報・連邦民生市場の競合企業として挙げられている",
+          "text_en": "Listed among competitors in defense, intelligence and federal civil markets",
+          "source": {
+            "label": "Northrop Grumman 10-K(2025年12月31日)",
+            "label_en": "Northrop Grumman 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1133421/000113342126000003/noc-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete with many companies in the defense, intelligence and federal civil markets, including The Boeing Company, General Dynamics Corporation, L3Harris Technologies, Inc., Lockheed Martin Corporation, and RTX Corporation, as well as, increasingly, new entrants and startups."
+          }
+        }
+      ],
+      "name_en": "L3Harris Technologies"
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・情報・連邦民生市場で競う相手の一社である",
+          "text_en": "A competitor in defense, intelligence and federal civil markets",
+          "source": {
+            "label": "Northrop Grumman 10-K(2025年12月31日)",
+            "label_en": "Northrop Grumman 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1133421/000113342126000003/noc-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete with many companies in the defense, intelligence and federal civil markets, including The Boeing Company, General Dynamics Corporation, L3Harris Technologies, Inc., Lockheed Martin Corporation, and RTX Corporation, as well as, increasingly, new entrants and startups."
+          }
+        }
+      ],
+      "name_en": "Lockheed Martin"
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTXコーポレーション",
+      "sub": "航空宇宙・防衛",
+      "sub_en": "Aerospace & defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・情報・連邦民生市場での競合先として名前が出ている",
+          "text_en": "Named as a competitor in defense, intelligence and federal civil markets",
+          "source": {
+            "label": "Northrop Grumman 10-K(2025年12月31日)",
+            "label_en": "Northrop Grumman 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1133421/000113342126000003/noc-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete with many companies in the defense, intelligence and federal civil markets, including The Boeing Company, General Dynamics Corporation, L3Harris Technologies, Inc., Lockheed Martin Corporation, and RTX Corporation, as well as, increasingly, new entrants and startups."
+          }
+        }
+      ],
+      "name_en": "RTX Corporation"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

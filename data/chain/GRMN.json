@@ -1,0 +1,268 @@
+{
+  "root": {
+    "ticker": "GRMN",
+    "name": "ガーミン",
+    "cik": 1121788,
+    "name_en": "Garmin"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AAPL",
+    "GOOGL",
+    "HON",
+    "RTX",
+    "APTV"
+  ],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "フィットネス等の競合",
+      "sub_en": "Fitness & outdoor rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フィットネスとアウトドア製品の主な競合としてAppleを挙げた",
+          "text_en": "Apple is a principal competitor in fitness and outdoor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Garmin believes that its principal competitors for fitness products are Apple, Bryton, Coros, Elite, Google, Huawei, Oura, Polar, Samsung, SRAM, Suunto, Wahoo Fitness, Whoop, Xiaomi, Zepp Health, and Zwift."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(Google)",
+      "sub": "フィットネスの競合",
+      "sub_en": "Fitness rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フィットネス製品の主な競合にGoogleが入る",
+          "text_en": "Google is a principal fitness competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Garmin believes that its principal competitors for fitness products are Apple, Bryton, Coros, Elite, Google, Huawei, Oura, Polar, Samsung, SRAM, Suunto, Wahoo Fitness, Whoop, Xiaomi, Zepp Health, and Zwift."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "sub": "航空電子の競合",
+      "sub_en": "Avionics rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空分野の主な競合にHoneywell Aerospace & Defenseが入る",
+          "text_en": "Honeywell Aerospace & Defense is a principal aviation competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Garmin considers its principal aviation competitors to be Aspen Avionics, Avidyne, Dynon Avionics, Jeppesen ForeFlight, Genesys Aerosystems, Honeywell Aerospace & Defense, Innovative Aerosystems, Collins Aerospace (RTX), Safran, Thales, and Universal Avionics Systems Corporation."
+          }
+        }
+      ],
+      "name_en": "Honeywell"
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTXコーポレーション",
+      "sub": "航空電子の競合",
+      "sub_en": "Avionics rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空分野の主な競合にCollins Aerospace(RTX)が入る",
+          "text_en": "Collins Aerospace (RTX) is a principal aviation competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Garmin considers its principal aviation competitors to be Aspen Avionics, Avidyne, Dynon Avionics, Jeppesen ForeFlight, Genesys Aerosystems, Honeywell Aerospace & Defense, Innovative Aerosystems, Collins Aerospace (RTX), Safran, Thales, and Universal Avionics Systems Corporation."
+          }
+        }
+      ],
+      "name_en": "RTX (Collins Aerospace)"
+    },
+    {
+      "id": "BC",
+      "ticker": "BC",
+      "name": "ブランズウィック",
+      "sub": "マリン機器の競合",
+      "sub_en": "Marine rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マリン製品の主な競合にNavico(Brunswick)が入る",
+          "text_en": "Navico (Brunswick) is a principal marine competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "For marine products, Garmin believes that its principal competitors are Furuno, Johnson Outdoors, Navico 10 (Brunswick), and Raymarine (Teledyne)."
+          }
+        }
+      ],
+      "name_en": "Brunswick (Navico)"
+    },
+    {
+      "id": "TDY",
+      "ticker": "TDY",
+      "name": "テレダイン",
+      "sub": "マリン機器の競合",
+      "sub_en": "Marine rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マリン製品の主な競合にRaymarine(Teledyne)が入る",
+          "text_en": "Raymarine (Teledyne) is a principal marine competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "For marine products, Garmin believes that its principal competitors are Furuno, Johnson Outdoors, Navico 10 (Brunswick), and Raymarine (Teledyne)."
+          }
+        }
+      ],
+      "name_en": "Teledyne (Raymarine)"
+    },
+    {
+      "id": "JOUT",
+      "ticker": "JOUT",
+      "name": "ジョンソン・アウトドアーズ",
+      "sub": "マリン機器の競合",
+      "sub_en": "Marine rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マリン製品の主な競合にJohnson Outdoorsが入る",
+          "text_en": "Johnson Outdoors is a principal marine competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "For marine products, Garmin believes that its principal competitors are Furuno, Johnson Outdoors, Navico 10 (Brunswick), and Raymarine (Teledyne)."
+          }
+        }
+      ],
+      "name_en": "Johnson Outdoors"
+    },
+    {
+      "id": "APTV",
+      "ticker": "APTV",
+      "name": "アプティブ",
+      "sub": "車載の競合",
+      "sub_en": "Auto OEM rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "車載向け製品の主な競合にAptivが入る",
+          "text_en": "Aptiv is a principal auto OEM competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Garmin believes that its principal competitors for auto OEM products are Alpine Electronics, Aptiv, Bosch, Continental, Harman (Samsung), LG, Panasonic, and Visteon."
+          }
+        }
+      ],
+      "name_en": "Aptiv"
+    },
+    {
+      "id": "VC",
+      "ticker": "VC",
+      "name": "ビステオン",
+      "sub": "車載の競合",
+      "sub_en": "Auto OEM rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "車載向け製品の主な競合にVisteonが入る",
+          "text_en": "Visteon is a principal auto OEM competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Garmin believes that its principal competitors for auto OEM products are Alpine Electronics, Aptiv, Bosch, Continental, Harman (Samsung), LG, Panasonic, and Visteon."
+          }
+        }
+      ],
+      "name_en": "Visteon"
+    },
+    {
+      "id": "ZEPP",
+      "ticker": "ZEPP",
+      "name": "ジェップ・ヘルス",
+      "sub": "フィットネスの競合",
+      "sub_en": "Fitness rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フィットネス製品の主な競合にZepp Healthが入る",
+          "text_en": "Zepp Health is a principal fitness competitor",
+          "source": {
+            "label": "Garmin 10-K(2025年12月27日期)",
+            "label_en": "Garmin 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526056028/grmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Garmin believes that its principal competitors for fitness products are Apple, Bryton, Coros, Elite, Google, Huawei, Oura, Polar, Samsung, SRAM, Suunto, Wahoo Fitness, Whoop, Xiaomi, Zepp Health, and Zwift."
+          }
+        }
+      ],
+      "name_en": "Zepp Health"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
