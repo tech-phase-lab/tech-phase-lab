@@ -52,7 +52,7 @@ export function socialChatter(item: OfficialUpdate) {
 
 /** Posts that are not news for readers (owner, Oct 23): a conference session blog ("GTC: How ... ") and an
  * earnings "highlights" page, which repeats the earnings release already listed with the results. */
-const NOT_NEWS = /^\s*(?:GTC|Computex|OCP)(?:\s+\w+)?\s*[:：]|\b(?:Q[1-4]|first|second|third|fourth)\b.{0,30}\bhighlights?\b|\bhighlights?\b.{0,40}\b(?:Q[1-4]|quarter)\b/i;
+const NOT_NEWS = /^\s*(?:GTC|Computex|OCP)(?:\s+\w+)?\s*[:：]|\b(?:Q[1-4]|first|second|third|fourth)\b.{0,30}\bhighlights?\b|\bhighlights?\b.{0,40}\b(?:Q[1-4]|quarter)\b|\bfuture workforce\b|\b(?:community college|apprenticeship|scholarship)\b|労働力が育つ|人材育成/i;
 export const isNotNews = (item: OfficialUpdate) => NOT_NEWS.test(item.title);
 
 export function informativeOfficial(item: OfficialUpdate) {
