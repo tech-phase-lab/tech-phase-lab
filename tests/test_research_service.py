@@ -325,7 +325,7 @@ class ResearchServiceTests(unittest.TestCase):
         legacy = ",".join(service.LEGACY_FULL_TICKERS)
         with patch.dict(os.environ, {"RESEARCH_TICKERS": legacy}, clear=False):
             app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
-        self.assertEqual(len(app.tickers), 38)
+        self.assertEqual(len(app.tickers), 39)
         self.assertIn("BE", app.tickers)
         self.assertEqual(set(app.tickers), set(monitor.PROVIDERS))
         # Oct 11: the 22-company list written before the additions also means all.
