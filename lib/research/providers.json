@@ -1719,5 +1719,160 @@
         "pattern": "^/Archives/edgar/data/707549/.+"
       }
     ]
+  },
+  {
+    "ticker": "NOW",
+    "name": "ServiceNow",
+    "sector": "software",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001373715&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001373715.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001373715",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1373715/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "KLAC",
+    "name": "KLA",
+    "sector": "semiconductors",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000319201&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000319201.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000319201",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/319201/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "INTC",
+    "name": "Intel",
+    "sector": "semiconductors",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000050863.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000050863",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/50863/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "NFLX",
+    "name": "Netflix",
+    "sector": "platforms",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001065280.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001065280",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1065280/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ADBE",
+    "name": "Adobe",
+    "sector": "software",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000796343&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000796343.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000796343",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/796343/.+"
+      }
+    ]
   }
 ]

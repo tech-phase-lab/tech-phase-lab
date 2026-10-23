@@ -24,7 +24,7 @@ const parse = item => publicNewsPayload(payload([item])).officialUpdates[0];
 
 test('public reported-news ticker registry exactly matches both existing approved X source scopes', async () => {
   const sources = JSON.parse(await readFile(new URL('../scripts/research/signal_sources.json', import.meta.url), 'utf8'));
-  assert.equal(reportedNewsTickers.length, 42);
+  assert.equal(reportedNewsTickers.length, 46);
   assert.equal(new Set(reportedNewsTickers).size, reportedNewsTickers.length);
   for (const id of ['x-tipranks', 'x-wallstengine']) {
     const source = sources.find(source => source.id === id);
@@ -41,7 +41,7 @@ test('company briefs accept approved ALAB and LITE reports without admitting una
     assert.deepEqual(parse(parse(item)), item);
     assert.equal(officialNewsDisplay(parse(item), 'en').label, `Company brief · ${ticker} · Details awaiting review`);
   }
-  for (const ticker of ['NFLX', 'UNTRACKED', 'ECON']) {
+  for (const ticker of ['ZZZZ', 'UNTRACKED', 'ECON']) {
     assert.throws(() => parse({ ...company, tickers: [ticker] }), /Invalid news brief/);
   }
 });
