@@ -1,3 +1,21 @@
+## 2026-10-23 JST — One-attempt AI check implementation prepared
+
+Owner confirms RESOLUTE_OPENAI_API_KEY rotated and API redeployed. Do not repeat
+key setup or Railway connector/reconnection prompts: explicitly prohibited.
+Browser owner review API returned six pending reviews, but this is not a new
+AI request. Actual model calls in this work: zero; key validity remains unknown.
+
+Prepared owner-only /resolute/ai-check and authenticated proxy/backend with a
+fixed durable DB claim before model I/O; no automatic retries or arbitrary input.
+Local gates passed: Node1335, Python2588, focused7, lint, production build,
+compileall and diff checks. Default OFF, separate minimal ledger SQL, existing
+shared budget. No live schema,
+settings, publishing or deployment changes made. Runtime prerequisites and exact
+scope are in [RESOLUTE-AI-CONNECTION-CHECK.md](RESOLUTE-AI-CONNECTION-CHECK.md).
+Existing main, schedules, approved copy and customer storage gates untouched.
+
+---
+
 ## 2026-10-23 JST — Independent retrieval of EXISTING R2 backup restored successfully
 
 Owner explicitly requested a separate real retrieval/open/restore drill.
