@@ -1,0 +1,195 @@
+{
+  "root": {
+    "ticker": "PEP",
+    "name": "ペプシコ",
+    "cik": 77476,
+    "name_en": "PepsiCo"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "KDP",
+    "KHC",
+    "MDLZ",
+    "MNST"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "大手小売",
+      "sub_en": "Major retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウォルマートとサムズクラブ向けの売上が連結純収益の約14%を占める",
+          "text_en": "Sales to Walmart and its affiliates represented approximately 14% of consolidated net revenue",
+          "source": {
+            "label": "PepsiCo 10-K(2025年12月27日)",
+            "label_en": "PepsiCo 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "In 2025, sales to Walmart and its affiliates (including Sam’s) represented approximately 14 % of our consolidated net revenue, including concentrate sales to our independent bottlers, which were used in finished goods sold by them to Walmart."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "ULVR",
+      "ticker": "Unilever",
+      "name": "ユニリーバ",
+      "sub": "日用品・食品",
+      "sub_en": "Consumer goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユニリーバとの合弁で、リプトンブランドのRTD茶を展開している",
+          "text_en": "Ready-to-drink tea is sold under the Lipton brand through a joint venture with Unilever",
+          "source": {
+            "label": "PepsiCo 10-K(2025年12月27日)",
+            "label_en": "PepsiCo 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "PBNA also, either independently or in conjunction with third parties, makes, markets, distributes and sells ready-to-drink tea and coffee products through joint ventures with Unilever (under the Lipton brand name) and Starbucks, respectively."
+          }
+        }
+      ],
+      "name_en": "Unilever"
+    },
+    {
+      "id": "SBUX",
+      "ticker": "SBUX",
+      "name": "スターバックス",
+      "sub": "コーヒーチェーン",
+      "sub_en": "Coffee retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "スターバックスとの合弁で、RTDコーヒー商品を展開している",
+          "text_en": "Ready-to-drink coffee is sold through a joint venture with Starbucks",
+          "source": {
+            "label": "PepsiCo 10-K(2025年12月27日)",
+            "label_en": "PepsiCo 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "PBNA also, either independently or in conjunction with third parties, makes, markets, distributes and sells ready-to-drink tea and coffee products through joint ventures with Unilever (under the Lipton brand name) and Starbucks, respectively."
+          }
+        }
+      ],
+      "name_en": "Starbucks"
+    },
+    {
+      "id": "KDP",
+      "ticker": "KDP",
+      "name": "キューリグ・ドクターペッパー",
+      "sub": "飲料メーカー",
+      "sub_en": "Beverage maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "飲料・簡便食品の競合として名指しされている",
+          "text_en": "Named among other beverage and convenient food competitors",
+          "source": {
+            "label": "PepsiCo 10-K(2025年12月27日)",
+            "label_en": "PepsiCo 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
+          }
+        }
+      ],
+      "name_en": "Keurig Dr Pepper"
+    },
+    {
+      "id": "MDLZ",
+      "ticker": "MDLZ",
+      "name": "モンデリーズ・インターナショナル",
+      "sub": "菓子・スナック",
+      "sub_en": "Snacks & confectionery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "飲料・簡便食品の競合として名指しされている",
+          "text_en": "Named among other beverage and convenient food competitors",
+          "source": {
+            "label": "PepsiCo 10-K(2025年12月27日)",
+            "label_en": "PepsiCo 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
+          }
+        }
+      ],
+      "name_en": "Mondelez International"
+    },
+    {
+      "id": "MNST",
+      "ticker": "MNST",
+      "name": "モンスター・ビバレッジ",
+      "sub": "エナジードリンク",
+      "sub_en": "Energy drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "飲料・簡便食品の競合として名指しされている",
+          "text_en": "Named among other beverage and convenient food competitors",
+          "source": {
+            "label": "PepsiCo 10-K(2025年12月27日)",
+            "label_en": "PepsiCo 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
+          }
+        }
+      ],
+      "name_en": "Monster Beverage"
+    },
+    {
+      "id": "KHC",
+      "ticker": "KHC",
+      "name": "クラフト・ハインツ",
+      "sub": "加工食品",
+      "sub_en": "Packaged foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "飲料・簡便食品の競合として名指しされている",
+          "text_en": "Named among other beverage and convenient food competitors",
+          "source": {
+            "label": "PepsiCo 10-K(2025年12月27日)",
+            "label_en": "PepsiCo 10-K (fiscal year ended December 27, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
+          }
+        }
+      ],
+      "name_en": "Kraft Heinz"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

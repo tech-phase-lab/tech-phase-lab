@@ -1,0 +1,281 @@
+{
+  "root": {
+    "ticker": "TMUS",
+    "name": "Tモバイル・US",
+    "cik": 1283699,
+    "name_en": "T-Mobile US"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "T",
+    "VZ",
+    "CHTR",
+    "CMCSA",
+    "SATS"
+  ],
+  "companies": [
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "エーティーアンドティー",
+      "sub": "通信大手",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "無線通信サービスの競合として名前が挙がっている",
+          "text_en": "AT&T is named as a wireless services competitor",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our wireless communications services competitors include other carriers, such as AT&T Inc. (“AT&T”) and Verizon Communications, Inc. (“Verizon”)."
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・コミュニケーションズ",
+      "sub": "通信大手",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "無線通信サービスの競合として名前が挙がっている",
+          "text_en": "Verizon is named as a wireless services competitor",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our wireless communications services competitors include other carriers, such as AT&T Inc. (“AT&T”) and Verizon Communications, Inc. (“Verizon”)."
+          }
+        }
+      ],
+      "name_en": "Verizon Communications"
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "ケーブル大手",
+      "sub_en": "Cable operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地域の無線事業者のひとつとして競合に含まれる",
+          "text_en": "Charter is included among smaller and regional wireless competitors",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In addition, our wireless communications services competitors include numerous smaller and regional providers, including Charter Communications, Inc., Comcast Corporation, EchoStar Corporation (“EchoStar”), Cox Communications, Inc., and Altice USA, Inc., many of which offer no-contract, postpaid and prepaid service plans."
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "ケーブル大手",
+      "sub_en": "Cable operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "600MHz帯の周波数を買い取る契約を2023年に結んだ",
+          "text_en": "T-Mobile signed a license purchase agreement with Comcast in 2023 to acquire 600 MHz spectrum",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On September 12, 2023, we entered into a license purchase agreement with Comcast (the “Comcast License Purchase Agreement”), pursuant to which we will acquire spectrum in the 600 MHz band from Comcast in exchange for total cash consideration of between $1.2 billion and $3.3 billion, subject to an application for FCC approval."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "地域の無線事業者のひとつとして競合に含まれる",
+          "text_en": "Comcast is included among smaller and regional wireless competitors",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In addition, our wireless communications services competitors include numerous smaller and regional providers, including Charter Communications, Inc., Comcast Corporation, EchoStar Corporation (“EchoStar”), Cox Communications, Inc., and Altice USA, Inc., many of which offer no-contract, postpaid and prepaid service plans."
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "SATS",
+      "ticker": "SATS",
+      "name": "エコースター",
+      "sub": "衛星・無線",
+      "sub_en": "Satellite & wireless",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地域の無線事業者のひとつとして競合に含まれる",
+          "text_en": "EchoStar is included among smaller and regional wireless competitors",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In addition, our wireless communications services competitors include numerous smaller and regional providers, including Charter Communications, Inc., Comcast Corporation, EchoStar Corporation (“EchoStar”), Cox Communications, Inc., and Altice USA, Inc., many of which offer no-contract, postpaid and prepaid service plans."
+          }
+        }
+      ],
+      "name_en": "EchoStar"
+    },
+    {
+      "id": "COX",
+      "ticker": "Cox",
+      "name": "コックス・コミュニケーションズ",
+      "sub": "ケーブル大手",
+      "sub_en": "Cable operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地域の無線事業者のひとつとして競合に含まれる",
+          "text_en": "Cox is included among smaller and regional wireless competitors",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In addition, our wireless communications services competitors include numerous smaller and regional providers, including Charter Communications, Inc., Comcast Corporation, EchoStar Corporation (“EchoStar”), Cox Communications, Inc., and Altice USA, Inc., many of which offer no-contract, postpaid and prepaid service plans."
+          }
+        }
+      ],
+      "name_en": "Cox Communications"
+    },
+    {
+      "id": "EQT",
+      "ticker": "EQT",
+      "name": "イーキューティー",
+      "sub": "光ファイバー合弁",
+      "sub_en": "Fiber JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EQTのファンドとLumosを共同で取得する合弁会社を設立する契約を結んだ",
+          "text_en": "T-Mobile agreed with an EQT fund to form a joint venture to acquire Lumos",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On April 24, 2024, we entered into a definitive agreement with a fund operated by EQT, EQT Infrastructure VI (“Fund VI”), to establish a joint venture between us and Fund VI to acquire Lumos (“Lumos”), a fiber-to-the-home platform, from EQT’s predecessor fund, EQT Infrastructure III."
+          }
+        }
+      ],
+      "name_en": "EQT"
+    },
+    {
+      "id": "KKR",
+      "ticker": "KKR",
+      "name": "ケーケーアール",
+      "sub": "光ファイバー合弁",
+      "sub_en": "Fiber JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Metronetを取得する合弁会社を設立する契約を結んだ",
+          "text_en": "T-Mobile agreed with KKR to form a joint venture to acquire Metronet",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On July 18, 2024, we entered into a definitive agreement with KKR & Co. Inc. to establish a joint venture to acquire Metronet Holdings, LLC and certain of its affiliates (collectively, “Metronet”), a fiber-to-the-home platform."
+          }
+        }
+      ],
+      "name_en": "KKR & Co."
+    },
+    {
+      "id": "CCI",
+      "ticker": "CCI",
+      "name": "クラウン・キャッスル",
+      "sub": "通信タワー",
+      "sub_en": "Cell towers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2012年にタワーの運営権を譲る契約を結んだ",
+          "text_en": "T-Mobile conveyed the right to manage and operate tower sites to Crown Castle in 2012",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In 2012, we conveyed to Crown Castle International Corp. (“CCI”) the exclusive right to manage and operate approximately 6,200 tower sites (“CCI Lease Sites”) via a master prepaid lease with site lease terms ranging from 23 to 37 years."
+          }
+        }
+      ],
+      "name_en": "Crown Castle"
+    },
+    {
+      "id": "DT",
+      "ticker": "Deutsche Telekom",
+      "name": "ドイツテレコム",
+      "sub": "支配株主",
+      "sub_en": "Controlling stockholder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "支配株主であり、利害が他の株主と異なる場合がある",
+          "text_en": "Deutsche Telekom is the controlling stockholder and its interests may differ from those of other stockholders",
+          "source": {
+            "label": "Tモバイル 10-K(2025年12月期)",
+            "label_en": "T-Mobile US 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "interests of Deutsche Telekom AG (“DT”), our controlling stockholder, which may differ from the interests of other stockholders"
+          }
+        }
+      ],
+      "name_en": "Deutsche Telekom"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

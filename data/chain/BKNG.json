@@ -1,0 +1,134 @@
+{
+  "root": {
+    "ticker": "BKNG",
+    "name": "ブッキング・ホールディングス",
+    "cik": 1075531,
+    "name_en": "Booking Holdings"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ABNB",
+    "EXPE"
+  ],
+  "companies": [
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル(アルファベット)",
+      "sub": "検索・地図",
+      "sub_en": "Search & maps",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "利用者の流入の多くを検索エンジンなどの第三者プラットフォーム経由で得ている",
+          "text_en": "Much of its consumer traffic comes via third-party platforms such as Google",
+          "source": {
+            "label": "Booking Holdings 10-K(2025年12月31日)",
+            "label_en": "Booking Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000009/bkng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "A significant portion of consumer traffic to our services is derived from third-party platforms, including Google and other search engines, mobile operating systems, app marketplaces, mapping services, and other digital distribution channels"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Googleは検索や地図、Geminiに旅行商品を組み込んでいる",
+          "text_en": "Google has integrated travel products into its maps and Gemini offering",
+          "source": {
+            "label": "Booking Holdings 10-K(2025年12月31日)",
+            "label_en": "Booking Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000009/bkng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "For example, Google links travel search to its dominant search engine and has integrated travel products into Google Maps and its Gemini generative AI (\"Gen AI\") offering"
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "ABNB",
+      "ticker": "ABNB",
+      "name": "エアビーアンドビー",
+      "sub": "民泊プラットフォーム",
+      "sub_en": "Alternative accommodations",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "宿泊事業と直接競合する会社の例に挙げられている",
+          "text_en": "Cited as a company that competes directly with its accommodations businesses",
+          "source": {
+            "label": "Booking Holdings 10-K(2025年12月31日)",
+            "label_en": "Booking Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000009/bkng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The market for accommodations covers a wide range of property types including alternative accommodations and companies like Airbnb and Vrbo (owned by Expedia) compete directly with our accommodations businesses"
+          }
+        }
+      ],
+      "name_en": "Airbnb"
+    },
+    {
+      "id": "EXPE",
+      "ticker": "EXPE",
+      "name": "エクスペディア",
+      "sub": "オンライン旅行会社",
+      "sub_en": "Online travel company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のVrboが宿泊事業と直接競合している",
+          "text_en": "Its Vrbo unit competes directly with its accommodations businesses",
+          "source": {
+            "label": "Booking Holdings 10-K(2025年12月31日)",
+            "label_en": "Booking Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000009/bkng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The market for accommodations covers a wide range of property types including alternative accommodations and companies like Airbnb and Vrbo (owned by Expedia) compete directly with our accommodations businesses"
+          }
+        }
+      ],
+      "name_en": "Expedia"
+    },
+    {
+      "id": "YANOLJA",
+      "ticker": "Yanolja",
+      "name": "ヤノルジャ",
+      "sub": "宿泊テック(出資先)",
+      "sub_en": "Lodging tech (investee)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "非上場企業への株式投資にヤノルジャへの出資が含まれる",
+          "text_en": "Its equity investments in private entities include its investment in Yanolja",
+          "source": {
+            "label": "Booking Holdings 10-K(2025年12月31日)",
+            "label_en": "Booking Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000009/bkng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company's investments in equity securities of private entities at December 31, 2025 and 2024, includes its investment in Yanolja Co., Ltd. (\"Yanolja\")"
+          }
+        }
+      ],
+      "name_en": "Yanolja"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

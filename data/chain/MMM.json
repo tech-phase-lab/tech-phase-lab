@@ -1,0 +1,131 @@
+{
+  "root": {
+    "ticker": "MMM",
+    "name": "スリーエム",
+    "cik": 66740,
+    "name_en": "3M"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SOLV",
+      "ticker": "SOLV",
+      "name": "ソルベンタム",
+      "sub": "元ヘルスケア部門",
+      "sub_en": "Former health care unit",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離にあわせ、互いにサービスや物品を提供し合う各種契約を結んだ",
+          "text_en": "In connection with the separation, 3M and Solventum entered into agreements to provide services or goods to each other",
+          "source": {
+            "label": "3M 10-K(2025年12月31日期)",
+            "label_en": "3M 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66740/000006674026000014/mmm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "in connection with the separation of Solventum, the Company and Solventum entered into various agreements that provide for the performance of certain services or provision of goods by each company for the benefit of the other"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "スピンオフに際して、ソルベンタムの株式持分を保有し続けた",
+          "text_en": "3M retained an equity interest in Solventum in the spin-off",
+          "source": {
+            "label": "3M 10-K(2025年12月31日期)",
+            "label_en": "3M 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66740/000006674026000014/mmm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "The Company retained an equity interest in Solventum in connection with the spin-off."
+          }
+        }
+      ],
+      "name_en": "Solventum"
+    },
+    {
+      "id": "CBT",
+      "ticker": "CBT",
+      "name": "キャボット",
+      "sub": "旧呼吸器事業の所有者",
+      "sub_en": "Former respirator owner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アイアロの粉じん関連訴訟の費用を、非公式の取り決めで分担している",
+          "text_en": "It shares legal costs of Aearo-related claims with Aearo under an informal arrangement",
+          "source": {
+            "label": "3M 10-K(2025年12月31日期)",
+            "label_en": "3M 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66740/000006674026000014/mmm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Responsibility for legal costs, as well as for settlements and judgments, is shared in an informal arrangement among Aearo, Cabot, American Optical Corporation and a subsidiary of Warner Lambert and their respective insurers (the “Payor Group”)."
+          }
+        }
+      ],
+      "name_en": "Cabot Corporation"
+    },
+    {
+      "id": "AOC",
+      "ticker": "American Optical",
+      "name": "アメリカン・オプティカル",
+      "sub": "旧呼吸器事業の所有者",
+      "sub_en": "Former respirator owner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アイアロ関連の訴訟費用や和解金を、非公式の取り決めで分担している",
+          "text_en": "It shares legal costs and settlements for Aearo-related claims under an informal arrangement",
+          "source": {
+            "label": "3M 10-K(2025年12月31日期)",
+            "label_en": "3M 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66740/000006674026000014/mmm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Responsibility for legal costs, as well as for settlements and judgments, is shared in an informal arrangement among Aearo, Cabot, American Optical Corporation and a subsidiary of Warner Lambert and their respective insurers (the “Payor Group”)."
+          }
+        }
+      ],
+      "name_en": "American Optical Corporation"
+    },
+    {
+      "id": "WL",
+      "ticker": "Warner-Lambert",
+      "name": "ワーナー・ランバート",
+      "sub": "旧呼吸器事業の所有者",
+      "sub_en": "Former respirator owner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アイアロの呼吸器事業を過去に所有・運営した企業の一つとして挙がる",
+          "text_en": "It is named among companies that previously owned and operated Aearo's respirator business",
+          "source": {
+            "label": "3M 10-K(2025年12月31日期)",
+            "label_en": "3M 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66740/000006674026000014/mmm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "previously owned and operated Aearo’s respirator business (American Optical Corporation, Warner-Lambert LLC, AO Corp. and Cabot Corporation"
+          }
+        }
+      ],
+      "name_en": "Warner-Lambert"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

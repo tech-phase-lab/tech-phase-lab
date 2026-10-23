@@ -1,0 +1,334 @@
+{
+  "root": {
+    "ticker": "MRK",
+    "name": "メルク",
+    "cik": 310158,
+    "name_en": "Merck & Co., Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MRNA",
+      "ticker": "MRNA",
+      "name": "モデルナ",
+      "sub": "mRNA医薬",
+      "sub_en": "mRNA medicines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "個別化ネオアンチゲン療法の共同開発・商業化で提携契約を結んでいる",
+          "text_en": "Merck has a collaboration and license agreement with Moderna on an individualized neoantigen therapy",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2022, Merck exercised its option to jointly develop and commercialize intismeran autogene (V940/mRNA-4157), an investigational individualized neoantigen therapy, pursuant to the terms of an existing collaboration and license agreement with Moderna, Inc. (Moderna)."
+          }
+        }
+      ],
+      "name_en": "Moderna"
+    },
+    {
+      "id": "AZN",
+      "ticker": "AZN",
+      "name": "アストラゼネカ",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "リンパーザを共同で開発する提携先である",
+          "text_en": "AstraZeneca is the collaboration partner for developing Lynparza",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Lynparza is being developed as part of a collaboration with AstraZeneca PLC."
+          }
+        }
+      ],
+      "name_en": "AstraZeneca PLC"
+    },
+    {
+      "id": "EISAI",
+      "ticker": "Eisai",
+      "name": "エーザイ",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レンビマを共同で開発する提携先となっている",
+          "text_en": "Eisai is the collaboration partner for developing Lenvima",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Lenvima is being developed as part of a collaboration with Eisai Co., Ltd."
+          }
+        }
+      ],
+      "name_en": "Eisai Co., Ltd."
+    },
+    {
+      "id": "BAYER",
+      "ticker": "Bayer",
+      "name": "バイエル",
+      "sub": "製薬・化学",
+      "sub_en": "Pharma & chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "sGC調節薬の販売と開発で世界的な共同開発を行う",
+          "text_en": "Merck runs a worldwide clinical development collaboration with Bayer on sGC modulators",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2014, the Company entered into a worldwide clinical development collaboration with Bayer AG (Bayer) to market and develop soluble guanylate cyclase (sGC) modulators including Bayer’s Adempas (riociguat) and Verquvo (vericiguat)."
+          }
+        }
+      ],
+      "name_en": "Bayer AG"
+    },
+    {
+      "id": "DSNKY",
+      "ticker": "Daiichi Sankyo",
+      "name": "第一三共",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラルドタトグ デルクステカンを共同で開発している",
+          "text_en": "Raludotatug deruxtecan is being developed together with Daiichi Sankyo",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Raludotatug deruxtecan is being developed as part of a collaboration with Daiichi Sankyo."
+          }
+        }
+      ],
+      "name_en": "Daiichi Sankyo"
+    },
+    {
+      "id": "KELUN",
+      "ticker": "Kelun-Biotech",
+      "name": "クルン・バイオテック",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サシツズマブ チルモテカンを共同で開発する提携先である",
+          "text_en": "Kelun-Biotech is the collaboration partner for sacituzumab tirumotecan",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Sacituzumab tirumotecan is being developed as part of a collaboration with Kelun-Biotech."
+          }
+        }
+      ],
+      "name_en": "Kelun-Biotech"
+    },
+    {
+      "id": "RIDGE",
+      "ticker": "Ridgeback",
+      "name": "リッジバック・バイオセラピューティクス",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラゲブリオの開発で協力関係にある",
+          "text_en": "Merck develops Lagevrio in collaboration with Ridgeback",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Merck is developing Lagevrio in collaboration with Ridgeback Biotherapeutics LP."
+          }
+        }
+      ],
+      "name_en": "Ridgeback Biotherapeutics LP"
+    },
+    {
+      "id": "BMY",
+      "ticker": "BMY",
+      "name": "ブリストル・マイヤーズ スクイブ",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レブロジルを世界的な提携で商業化している",
+          "text_en": "Reblozyl is commercialized through a global collaboration with BMS",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "that is being commercialized through a global collaboration with Bristol Myers Squibb Company (BMS)"
+          }
+        }
+      ],
+      "name_en": "Bristol-Myers Squibb"
+    },
+    {
+      "id": "HENGRUI",
+      "ticker": "Hengrui",
+      "name": "江蘇恒瑞医薬",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MK-7262の独占的な開発・製造・商業化の権利をメルクに与えた",
+          "text_en": "Hengrui Pharma granted Merck exclusive rights to MK-7262",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Under the agreement, Hengrui Pharma granted Merck exclusive rights to develop, manufacture and commercialize MK-7262 (HRS-5346) worldwide, excluding the Greater China region."
+          }
+        }
+      ],
+      "name_en": "Jiangsu Hengrui Pharmaceuticals"
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "キイトルーダとパドセブ併用の試験を共同で実施した",
+          "text_en": "A trial of Keytruda with Padcev was conducted in collaboration with Pfizer",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "based on the KEYNOTE-905 trial conducted in collaboration with Pfizer and Astellas."
+          }
+        }
+      ],
+      "name_en": "Pfizer Inc."
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売掛金残高が最も大きい顧客の一社である",
+          "text_en": "It is one of the customers with the largest accounts receivable balances",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company’s customers with the largest accounts receivable balances are: McKesson Corporation, Cencora, Inc. and Cardinal Health, Inc., which represented approximately 22 %, 21 % and 13 %, respectively, of total accounts receivable at December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "McKesson Corporation"
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "シンコラ",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売掛金残高が最も大きい顧客の一社である",
+          "text_en": "It is one of the customers with the largest accounts receivable balances",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company’s customers with the largest accounts receivable balances are: McKesson Corporation, Cencora, Inc. and Cardinal Health, Inc., which represented approximately 22 %, 21 % and 13 %, respectively, of total accounts receivable at December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Cencora, Inc."
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売掛金残高が最も大きい顧客の一社である",
+          "text_en": "It is one of the customers with the largest accounts receivable balances",
+          "source": {
+            "label": "Merck & Co., Inc. 10-K(2025-12-31)",
+            "label_en": "Merck & Co., Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company’s customers with the largest accounts receivable balances are: McKesson Corporation, Cencora, Inc. and Cardinal Health, Inc., which represented approximately 22 %, 21 % and 13 %, respectively, of total accounts receivable at December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Cardinal Health, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

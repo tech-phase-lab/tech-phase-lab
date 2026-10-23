@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "PFE",
+    "name": "ファイザー",
+    "cik": 78003,
+    "name_en": "Pfizer Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BNTX",
+      "ticker": "BNTX",
+      "name": "ビオンテック",
+      "sub": "ワクチン共同開発",
+      "sub_en": "Vaccine co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コミナティはビオンテックと共同で開発・販売している",
+          "text_en": "Comirnaty is jointly developed and commercialized with BioNTech",
+          "source": {
+            "label": "Pfizer Inc. 10-K(2025年12月31日期)",
+            "label_en": "Pfizer Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Comirnaty is an mRNA-based coronavirus vaccine to help prevent COVID-19, which is jointly developed and commercialized with BioNTech."
+          }
+        }
+      ],
+      "name_en": "BioNTech"
+    },
+    {
+      "id": "VALN",
+      "ticker": "VALN",
+      "name": "バルネバ",
+      "sub": "ワクチン共同開発",
+      "sub_en": "Vaccine co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VLA15をバルネバと共同で開発中だ",
+          "text_en": "VLA15 is being developed in collaboration with Valneva",
+          "source": {
+            "label": "Pfizer Inc. 10-K(2025年12月31日期)",
+            "label_en": "Pfizer Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(c) VLA15 is being developed in collaboration with Valneva SE."
+          }
+        }
+      ],
+      "name_en": "Valneva"
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "sub": "がん薬の提携",
+      "sub_en": "Oncology partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アドセトリスは武田薬品と協力して開発・販売される",
+          "text_en": "Adcetris is being developed and commercialized in collaboration with Takeda",
+          "source": {
+            "label": "Pfizer Inc. 10-K(2025年12月31日期)",
+            "label_en": "Pfizer Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Adcetris (bren tuximab vedotin) is being developed and commercialized in collaboration with Takeda."
+          }
+        }
+      ],
+      "name_en": "Takeda"
+    },
+    {
+      "id": "GMAB",
+      "ticker": "GMAB",
+      "name": "ゲンマブ",
+      "sub": "がん薬の共同販売",
+      "sub_en": "Oncology co-marketing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ティブダクはゲンマブと協力して販売している",
+          "text_en": "Tivdak is commercialized in collaboration with Genmab",
+          "source": {
+            "label": "Pfizer Inc. 10-K(2025年12月31日期)",
+            "label_en": "Pfizer Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Tivdak (tisotumab vedotin-tftv) is commercialized in collaboration with Genmab."
+          }
+        }
+      ],
+      "name_en": "Genmab"
+    },
+    {
+      "id": "ARVN",
+      "ticker": "ARVN",
+      "name": "アービナス",
+      "sub": "がん薬の共同開発",
+      "sub_en": "Oncology co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ベペデグストラントはアービナスと共同で開発中だ",
+          "text_en": "Vepdegestrant is being developed in collaboration with Arvinas",
+          "source": {
+            "label": "Pfizer Inc. 10-K(2025年12月31日期)",
+            "label_en": "Pfizer Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Vepdegestrant is being developed in collaboration with Arvinas."
+          }
+        }
+      ],
+      "name_en": "Arvinas"
+    },
+    {
+      "id": "VTRS",
+      "ticker": "VTRS",
+      "name": "ビアトリス",
+      "sub": "分離後の製造委託",
+      "sub_en": "Post-spin-off supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離後もビアトリスと互いの製品を製造・包装し合う契約がある",
+          "text_en": "Under the MSAs, each company manufactures, labels and packages products for the other",
+          "source": {
+            "label": "Pfizer Inc. 10-K(2025年12月31日期)",
+            "label_en": "Pfizer Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Under the MSAs, Pfizer or Viatris, as the case may be, manufactures, labels and packages products for the other party."
+          }
+        }
+      ],
+      "name_en": "Viatris"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

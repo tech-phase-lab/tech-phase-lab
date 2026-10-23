@@ -1,0 +1,292 @@
+{
+  "root": {
+    "ticker": "NKE",
+    "name": "ナイキ",
+    "cik": 320187,
+    "name_en": "NIKE, Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "DECK",
+    "LULU",
+    "ONON",
+    "UAA",
+    "VFC"
+  ],
+  "companies": [
+    {
+      "id": "ADS",
+      "ticker": "adidas",
+      "name": "アディダス",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アディダスは競合先の一社である",
+          "text_en": "adidas is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "adidas"
+    },
+    {
+      "id": "ANTA",
+      "ticker": "Anta",
+      "name": "安踏体育用品",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "安踏体育用品は競合先の一社である",
+          "text_en": "Anta is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "Anta"
+    },
+    {
+      "id": "ASICS",
+      "ticker": "ASICS",
+      "name": "アシックス",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アシックスは競合先の一社である",
+          "text_en": "ASICS is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "ASICS"
+    },
+    {
+      "id": "DECK",
+      "ticker": "DECK",
+      "name": "デッカーズ・ブランズ",
+      "sub": "靴・アパレル",
+      "sub_en": "Footwear & apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デッカーズ・ブランズは競合先の一社である",
+          "text_en": "Deckers is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "Deckers"
+    },
+    {
+      "id": "LINING",
+      "ticker": "Li Ning",
+      "name": "李寧",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "李寧は競合先の一社である",
+          "text_en": "Li Ning is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "Li Ning"
+    },
+    {
+      "id": "LULU",
+      "ticker": "LULU",
+      "name": "ルルレモン・アスレティカ",
+      "sub": "アパレル",
+      "sub_en": "Athletic apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ルルレモン・アスレティカは競合先の一社である",
+          "text_en": "lululemon athletica is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "lululemon athletica"
+    },
+    {
+      "id": "NB",
+      "ticker": "New Balance",
+      "name": "ニューバランス",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ニューバランスは競合先の一社である",
+          "text_en": "New Balance is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "New Balance"
+    },
+    {
+      "id": "ONON",
+      "ticker": "ONON",
+      "name": "オン・ホールディング",
+      "sub": "スポーツシューズ",
+      "sub_en": "Running footwear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "オン・ホールディングは競合先の一社である",
+          "text_en": "On is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "On"
+    },
+    {
+      "id": "PUMA",
+      "ticker": "Puma",
+      "name": "プーマ",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プーマは競合先の一社である",
+          "text_en": "Puma is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "Puma"
+    },
+    {
+      "id": "UAA",
+      "ticker": "UAA",
+      "name": "アンダーアーマー",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アンダーアーマーは競合先の一社である",
+          "text_en": "Under Armour is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "Under Armour"
+    },
+    {
+      "id": "VFC",
+      "ticker": "VFC",
+      "name": "VFコーポレーション",
+      "sub": "アパレル・靴",
+      "sub_en": "Apparel & footwear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "VFコーポレーションは競合先の一社である",
+          "text_en": "V.F. is one of the competitors Nike names",
+          "source": {
+            "label": "NIKE, Inc. 10-K(2026年5月31日期)",
+            "label_en": "NIKE, Inc. 10-K (fiscal year ended May 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "We compete internationally with a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F."
+          }
+        }
+      ],
+      "name_en": "V.F."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

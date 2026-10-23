@@ -1,0 +1,317 @@
+{
+  "root": {
+    "ticker": "CAT",
+    "name": "キャタピラー",
+    "cik": 18230,
+    "name_en": "Caterpillar"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "BKR",
+    "CMI",
+    "CNH",
+    "DE",
+    "GBX",
+    "GEV"
+  ],
+  "companies": [
+    {
+      "id": "DE",
+      "ticker": "DE",
+      "name": "ディア",
+      "sub": "建機・農機",
+      "sub_en": "Construction & farm equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "建設機械の分野で競合している",
+          "text_en": "Competes with Caterpillar in surface construction equipment",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our global surface competitors include Deere Construction & Forestry (part of Deere & Company), Epiroc AB, Hitachi Construction Machinery Co., Ltd., Komatsu Ltd., Liebherr-International AG, Sandvik AB, and Volvo Construction Equipment."
+          }
+        }
+      ],
+      "name_en": "Deere & Company"
+    },
+    {
+      "id": "CNH",
+      "ticker": "CNH",
+      "name": "CNHインダストリアル",
+      "sub": "建機・農機",
+      "sub_en": "Construction & farm equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CASEを傘下に持ち、建設機械で競合している",
+          "text_en": "Competes through its CASE brand in construction machinery",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Examples of global competitors include CASE (part of CNH Industrial N.V.), Deere Construction & Forestry (part of Deere & Company), Doosan Bobcat (Part of Doosan Group), Hitachi Construction Machinery Co., Ltd."
+          }
+        }
+      ],
+      "name_en": "CNH Industrial"
+    },
+    {
+      "id": "KMT",
+      "ticker": "Komatsu",
+      "name": "コマツ",
+      "sub": "建設・鉱山機械",
+      "sub_en": "Construction & mining machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地上用と地下用の両方で競合している",
+          "text_en": "Competes in both surface and underground equipment",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our global surface competitors include Deere Construction & Forestry (part of Deere & Company), Epiroc AB, Hitachi Construction Machinery Co., Ltd., Komatsu Ltd., Liebherr-International AG, Sandvik AB, and Volvo Construction Equipment."
+          }
+        }
+      ],
+      "name_en": "Komatsu"
+    },
+    {
+      "id": "HCM",
+      "ticker": "Hitachi CM",
+      "name": "日立建機",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地上用の建設機械で競合している",
+          "text_en": "Competes in surface construction equipment",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our global surface competitors include Deere Construction & Forestry (part of Deere & Company), Epiroc AB, Hitachi Construction Machinery Co., Ltd., Komatsu Ltd., Liebherr-International AG, Sandvik AB, and Volvo Construction Equipment."
+          }
+        }
+      ],
+      "name_en": "Hitachi Construction Machinery"
+    },
+    {
+      "id": "VCE",
+      "ticker": "Volvo CE",
+      "name": "ボルボ建設機械",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地上用の建設機械で競合している",
+          "text_en": "Competes in surface construction equipment",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our global surface competitors include Deere Construction & Forestry (part of Deere & Company), Epiroc AB, Hitachi Construction Machinery Co., Ltd., Komatsu Ltd., Liebherr-International AG, Sandvik AB, and Volvo Construction Equipment."
+          }
+        }
+      ],
+      "name_en": "Volvo Construction Equipment"
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "sub": "エンジン・発電",
+      "sub_en": "Engines & power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンジン分野の主な競合の一社である",
+          "text_en": "One of the principal global competitors in engines",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Principal global competitors include Cummins Inc., Deutz AG, Rolls-Royce Power Systems AG and Siemens Energy AG."
+          }
+        }
+      ],
+      "name_en": "Cummins"
+    },
+    {
+      "id": "GEV",
+      "ticker": "GEV",
+      "name": "GEベルノバ",
+      "sub": "発電設備",
+      "sub_en": "Power equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンジン関連の一部市場で競合している",
+          "text_en": "Competes in certain engine-related markets",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Other competitors, such as Volvo Penta AB, FPT Industrial SpA (Iveco Group), INNIO Group, GE Vernova Inc., Kawasaki Heavy Industries Ltd., Everllence SE (formerly MAN Energy Solutions SE), Weichai Power Co., Ltd., and other emerging market competitors compete in certain markets in which Caterpillar competes."
+          }
+        }
+      ],
+      "name_en": "GE Vernova"
+    },
+    {
+      "id": "GNRC",
+      "ticker": "GNRC",
+      "name": "ジェネラック・ホールディングス",
+      "sub": "発電機",
+      "sub_en": "Generators",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンジンなどを調達して製品化する競合の一社である",
+          "text_en": "Is among the competitors that package engines and components into products",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "An additional set of competitors, including Aggreko plc, Generac Holdings Inc., Discovery Energy, LLC (Rehlko, formerly Kohler Energy), Baker Hughes Co., and others, are primarily packagers who source engines and/or other components from domestic and international suppliers"
+          }
+        }
+      ],
+      "name_en": "Generac Holdings"
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベイカー・ヒューズ",
+      "sub": "エネルギー機器",
+      "sub_en": "Energy equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンジンなどを調達して製品化する競合の一社である",
+          "text_en": "Is among the competitors that package engines and components into products",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "An additional set of competitors, including Aggreko plc, Generac Holdings Inc., Discovery Energy, LLC (Rehlko, formerly Kohler Energy), Baker Hughes Co., and others, are primarily packagers who source engines and/or other components from domestic and international suppliers"
+          }
+        }
+      ],
+      "name_en": "Baker Hughes"
+    },
+    {
+      "id": "WAB",
+      "ticker": "WAB",
+      "name": "ワブテック",
+      "sub": "鉄道機器",
+      "sub_en": "Rail equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "鉄道関連事業で競合している",
+          "text_en": "Competes in rail-related businesses",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In rail-related businesses, our global competitors include Wabtec Corp, Greenbrier Companies, Inc., Voestalpine AG, Vossloh AG, Alstom SA, and Siemens Mobility A/S."
+          }
+        }
+      ],
+      "name_en": "Wabtec"
+    },
+    {
+      "id": "GBX",
+      "ticker": "GBX",
+      "name": "グリーンブライヤー",
+      "sub": "鉄道車両",
+      "sub_en": "Rail cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "鉄道関連事業で競合している",
+          "text_en": "Competes in rail-related businesses",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In rail-related businesses, our global competitors include Wabtec Corp, Greenbrier Companies, Inc., Voestalpine AG, Vossloh AG, Alstom SA, and Siemens Mobility A/S."
+          }
+        }
+      ],
+      "name_en": "Greenbrier Companies"
+    },
+    {
+      "id": "EPI",
+      "ticker": "Epiroc",
+      "name": "エピロック",
+      "sub": "鉱山機械",
+      "sub_en": "Mining machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地上用と地下用の両方で競合している",
+          "text_en": "Competes in both surface and underground equipment",
+          "source": {
+            "label": "Caterpillar 10-K(2025-12-31)",
+            "label_en": "Caterpillar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our global surface competitors include Deere Construction & Forestry (part of Deere & Company), Epiroc AB, Hitachi Construction Machinery Co., Ltd., Komatsu Ltd., Liebherr-International AG, Sandvik AB, and Volvo Construction Equipment."
+          }
+        }
+      ],
+      "name_en": "Epiroc"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

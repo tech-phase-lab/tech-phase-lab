@@ -1,0 +1,262 @@
+{
+  "root": {
+    "ticker": "ABBV",
+    "name": "アッヴィ",
+    "cik": 1551152,
+    "name_en": "AbbVie Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JANSSEN",
+      "ticker": "Janssen",
+      "name": "ヤンセン・バイオテック",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "イムブルビカの米国外での独占販売権を得ている",
+          "text_en": "Janssen holds the exclusive license to commercialize Imbruvica outside the United States",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The collaboration provides Janssen with an exclusive license to commercialize Imbruvica outside of the United States and co-exclusively with AbbVie in the United States."
+          }
+        }
+      ],
+      "name_en": "Janssen Biotech, Inc."
+    },
+    {
+      "id": "GENENTECH",
+      "ticker": "Genentech",
+      "name": "ジェネンテック",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ベネクレクスタを含むBCL-2阻害薬を共同で開発・商業化する",
+          "text_en": "AbbVie and Genentech jointly develop and commercialize BCL-2 inhibitors including Venclexta",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "AbbVie and Genentech, a member of the Roche Group, are parties to a collaboration and license agreement executed in 2007 to jointly research, develop and commercialize human therapeutic products containing BCL-2 inhibitors and certain other compound inhibitors which included Venclexta, a BCL-2 inhibitor used to treat certain hematological malignancies."
+          }
+        }
+      ],
+      "name_en": "Genentech, Inc."
+    },
+    {
+      "id": "GUBRA",
+      "ticker": "Gubra A/S",
+      "name": "グブラ",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月にライセンス契約を結んだ",
+          "text_en": "AbbVie entered into a licensing agreement with Gubra in April 2025",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Gubra A/S In April 2025, AbbVie entered into a licensing agreement with Gubra A/S."
+          }
+        }
+      ],
+      "name_en": "Gubra A/S"
+    },
+    {
+      "id": "REMEGEN",
+      "ticker": "RemeGen",
+      "name": "レメゲン",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月期の末日より後にライセンス契約を結んだ",
+          "text_en": "AbbVie entered into a license agreement with RemeGen after December 31, 2025",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Subsequent to December 31, 2025, AbbVie announced that it entered into a license agreement with RemeGen Co., Ltd. (RemeGen)."
+          }
+        }
+      ],
+      "name_en": "RemeGen Co., Ltd."
+    },
+    {
+      "id": "IGI",
+      "ticker": "Ichnos Glenmark",
+      "name": "イクノス・グレンマーク・イノベーション",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年9月にライセンス契約を結んだ",
+          "text_en": "AbbVie entered into a license agreement with IGI in September 2025",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In September 2025, AbbVie entered into a license agreement with Ichnos Glenmark Innovation, Inc. (IGI)."
+          }
+        }
+      ],
+      "name_en": "Ichnos Glenmark Innovation, Inc."
+    },
+    {
+      "id": "ADARX",
+      "ticker": "ADARx",
+      "name": "ADARxファーマシューティカルズ",
+      "sub": "RNA医薬",
+      "sub_en": "RNA medicines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月にライセンスオプション契約を結んだ",
+          "text_en": "AbbVie entered into a license option agreement with ADARx in May 2025",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In May 2025, AbbVie entered into a license option agreement with ADARx Pharmaceuticals, Inc. (ADARx)."
+          }
+        }
+      ],
+      "name_en": "ADARx Pharmaceuticals, Inc."
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収したセレベルが結んだ特許ライセンス契約を引き継いだ",
+          "text_en": "AbbVie assumed Cerevel's licensing agreement with Pfizer",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "AbbVie also assumed a licensing agreement entered into by Cerevel Therapeutics with Pfizer Inc. (Pfizer) prior to the acquisition."
+          }
+        }
+      ],
+      "name_en": "Pfizer Inc."
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の医薬品売上のほぼ全てを占める卸売業者三社の一つである",
+          "text_en": "It is one of three wholesalers that accounted for substantially all U.S. pharmaceutical product sales",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In 2025, three wholesale distributors (McKesson Corporation, Cardinal Health, Inc. and Cencora, Inc.) accounted for substantially all of AbbVie's pharmaceutical product sales in the United States."
+          }
+        }
+      ],
+      "name_en": "McKesson Corporation"
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の医薬品売上のほぼ全てを占める卸売業者三社の一つである",
+          "text_en": "It is one of three wholesalers that accounted for substantially all U.S. pharmaceutical product sales",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In 2025, three wholesale distributors (McKesson Corporation, Cardinal Health, Inc. and Cencora, Inc.) accounted for substantially all of AbbVie's pharmaceutical product sales in the United States."
+          }
+        }
+      ],
+      "name_en": "Cardinal Health, Inc."
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "シンコラ",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の医薬品売上のほぼ全てを占める卸売業者三社の一つである",
+          "text_en": "It is one of three wholesalers that accounted for substantially all U.S. pharmaceutical product sales",
+          "source": {
+            "label": "AbbVie Inc. 10-K(2025-12-31)",
+            "label_en": "AbbVie Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In 2025, three wholesale distributors (McKesson Corporation, Cardinal Health, Inc. and Cencora, Inc.) accounted for substantially all of AbbVie's pharmaceutical product sales in the United States."
+          }
+        }
+      ],
+      "name_en": "Cencora, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

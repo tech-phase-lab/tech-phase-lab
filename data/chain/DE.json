@@ -1,0 +1,262 @@
+{
+  "root": {
+    "ticker": "DE",
+    "name": "ディア",
+    "cik": 315189,
+    "name_en": "Deere & Company"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AGCO",
+    "CAT",
+    "CNH",
+    "TEX",
+    "TTC"
+  ],
+  "companies": [
+    {
+      "id": "HIT",
+      "ticker": "Hitachi CM",
+      "name": "日立建機",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ディア銘柄の掘削機や部品などを日立から購入する契約がある",
+          "text_en": "Deere buys Deere-branded excavators, components and service parts from Hitachi under an agreement lasting 5 to 30 years",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "This deferred consideration will be paid as we purchase Deere-branded excavators, components, and service parts from Hitachi under the agreement with a duration that ranges from 5 to 30 years after the acquisition date."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "建設・林業部門の世界的な競合の一社である",
+          "text_en": "A global competitor of the construction and forestry segment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Hitachi Construction Machinery, Komatsu Ltd., Kubota Tractor Corporation, LGMG, Liugong, Ponsse Plc, SANY Group Co., Ltd., SDLG, Terex, Tigercat Industries Inc., Volvo Construction Equipment (part of Volvo Group AB), and XCMG."
+          }
+        }
+      ],
+      "name_en": "Hitachi Construction Machinery"
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "sub": "建機・エンジン",
+      "sub_en": "Construction machinery & engines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "建設・林業部門の世界的な競合の一社である",
+          "text_en": "A global competitor of the construction and forestry segment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Global competitors of the CF segment include Caterpillar Inc., CNH Industrial N.V., Doosan Infracore Co., Ltd."
+          }
+        }
+      ],
+      "name_en": "Caterpillar"
+    },
+    {
+      "id": "CNH",
+      "ticker": "CNH",
+      "name": "CNHインダストリアル",
+      "sub": "建機・農機",
+      "sub_en": "Construction & farm equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "農機と建設機械の両方で競合している",
+          "text_en": "Competes in both agriculture and construction equipment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "The competitive environment for the agriculture and turf operations includes some global competitors, such as AGCO Corporation, CLAAS KGaA mbH, CNH Industrial N.V., Kubota Tractor Corporation, and The Toro Company."
+          }
+        }
+      ],
+      "name_en": "CNH Industrial"
+    },
+    {
+      "id": "AGCO",
+      "ticker": "AGCO",
+      "name": "アゴ",
+      "sub": "農業機械",
+      "sub_en": "Agricultural machinery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "農業・芝生機械で競合している",
+          "text_en": "Competes in agriculture and turf equipment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "The competitive environment for the agriculture and turf operations includes some global competitors, such as AGCO Corporation, CLAAS KGaA mbH, CNH Industrial N.V., Kubota Tractor Corporation, and The Toro Company."
+          }
+        }
+      ],
+      "name_en": "AGCO"
+    },
+    {
+      "id": "TTC",
+      "ticker": "TTC",
+      "name": "トロ",
+      "sub": "芝生・景観機器",
+      "sub_en": "Turf & landscape equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "農業・芝生機械で競合している",
+          "text_en": "Competes in agriculture and turf equipment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "The competitive environment for the agriculture and turf operations includes some global competitors, such as AGCO Corporation, CLAAS KGaA mbH, CNH Industrial N.V., Kubota Tractor Corporation, and The Toro Company."
+          }
+        }
+      ],
+      "name_en": "The Toro Company"
+    },
+    {
+      "id": "KUB",
+      "ticker": "Kubota",
+      "name": "クボタ",
+      "sub": "農機・建機",
+      "sub_en": "Farm & construction equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "農業・芝生機械と建設機械の両方で競合している",
+          "text_en": "Competes in both agriculture and construction equipment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "The competitive environment for the agriculture and turf operations includes some global competitors, such as AGCO Corporation, CLAAS KGaA mbH, CNH Industrial N.V., Kubota Tractor Corporation, and The Toro Company."
+          }
+        }
+      ],
+      "name_en": "Kubota"
+    },
+    {
+      "id": "KMT",
+      "ticker": "Komatsu",
+      "name": "コマツ",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "建設・林業部門の世界的な競合の一社である",
+          "text_en": "A global competitor of the construction and forestry segment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Hitachi Construction Machinery, Komatsu Ltd., Kubota Tractor Corporation, LGMG, Liugong, Ponsse Plc, SANY Group Co., Ltd., SDLG, Terex, Tigercat Industries Inc., Volvo Construction Equipment (part of Volvo Group AB), and XCMG."
+          }
+        }
+      ],
+      "name_en": "Komatsu"
+    },
+    {
+      "id": "VCE",
+      "ticker": "Volvo CE",
+      "name": "ボルボ建設機械",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "建設・林業部門の世界的な競合の一社である",
+          "text_en": "A global competitor of the construction and forestry segment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Hitachi Construction Machinery, Komatsu Ltd., Kubota Tractor Corporation, LGMG, Liugong, Ponsse Plc, SANY Group Co., Ltd., SDLG, Terex, Tigercat Industries Inc., Volvo Construction Equipment (part of Volvo Group AB), and XCMG."
+          }
+        }
+      ],
+      "name_en": "Volvo Construction Equipment"
+    },
+    {
+      "id": "TEX",
+      "ticker": "TEX",
+      "name": "テレックス",
+      "sub": "建設・荷役機械",
+      "sub_en": "Construction & handling machinery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "建設・林業部門の世界的な競合の一社である",
+          "text_en": "A global competitor of the construction and forestry segment",
+          "source": {
+            "label": "Deere & Company 10-K(2025-11-02)",
+            "label_en": "Deere & Company 10-K (fiscal year ended November 2, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Hitachi Construction Machinery, Komatsu Ltd., Kubota Tractor Corporation, LGMG, Liugong, Ponsse Plc, SANY Group Co., Ltd., SDLG, Terex, Tigercat Industries Inc., Volvo Construction Equipment (part of Volvo Group AB), and XCMG."
+          }
+        }
+      ],
+      "name_en": "Terex"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
