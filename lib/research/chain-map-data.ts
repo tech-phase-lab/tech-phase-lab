@@ -149,6 +149,7 @@ import c_lhx from "../../data/chain/LHX.json" with { type: "json" };
 import c_lite from "../../data/chain/LITE.json" with { type: "json" };
 import c_lly from "../../data/chain/LLY.json" with { type: "json" };
 import c_lmt from "../../data/chain/LMT.json" with { type: "json" };
+import c_low from "../../data/chain/LOW.json" with { type: "json" };
 import c_lrcx from "../../data/chain/LRCX.json" with { type: "json" };
 import c_lscc from "../../data/chain/LSCC.json" with { type: "json" };
 import c_lvs from "../../data/chain/LVS.json" with { type: "json" };
@@ -205,6 +206,7 @@ import c_pcty from "../../data/chain/PCTY.json" with { type: "json" };
 import c_pega from "../../data/chain/PEGA.json" with { type: "json" };
 import c_pep from "../../data/chain/PEP.json" with { type: "json" };
 import c_pfe from "../../data/chain/PFE.json" with { type: "json" };
+import c_pg from "../../data/chain/PG.json" with { type: "json" };
 import c_pi from "../../data/chain/PI.json" with { type: "json" };
 import c_pins from "../../data/chain/PINS.json" with { type: "json" };
 import c_pl from "../../data/chain/PL.json" with { type: "json" };
@@ -468,6 +470,7 @@ const available: Record<string, ChainMapData> = {
   LITE: c_lite as ChainMapData,
   LLY: c_lly as ChainMapData,
   LMT: c_lmt as ChainMapData,
+  LOW: c_low as ChainMapData,
   LRCX: c_lrcx as ChainMapData,
   LSCC: c_lscc as ChainMapData,
   LVS: c_lvs as ChainMapData,
@@ -524,6 +527,7 @@ const available: Record<string, ChainMapData> = {
   PEGA: c_pega as ChainMapData,
   PEP: c_pep as ChainMapData,
   PFE: c_pfe as ChainMapData,
+  PG: c_pg as ChainMapData,
   PI: c_pi as ChainMapData,
   PINS: c_pins as ChainMapData,
   PL: c_pl as ChainMapData,
