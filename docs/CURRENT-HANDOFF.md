@@ -1,3 +1,14 @@
+## 2026-10-23 JST — Encrypted dependency restore and offline build verified
+
+Actual R2 source and npm dependency download/decryption/restore passed, followed
+by a clean build with networking disabled and no new npm install (run39936499622).
+See [evidence and remaining scope](EXTERNAL-DEPENDENCY-BACKUP-2026-10-23.md).
+[Render standby](RENDER-STANDBY-PLAN.md) remains planned; no paid provisioning.
+Latest live DB/history acceptance is still pending. Keep saving gates OFF and
+retain the consumed one-attempt AI claim. No Railway reconnect or repeated key entry.
+
+---
+
 ## 2026-10-23 JST — Actual one-attempt AI connection verified
 
 Owner completed the reviewed ai_connection_checks SQL (reported COMMIT), enabled

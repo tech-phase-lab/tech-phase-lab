@@ -1,3 +1,6 @@
+> 2026-10-23: R2からの実取り出し・復元と通信遮断下のビルドに成功。
+> [確認記録と対象範囲](EXTERNAL-DEPENDENCY-BACKUP-2026-10-23.md)。本番DBと全サービスの復旧完了ではない。
+
 # Offline rebuild preparation
 
 The root layout now uses locally committed Geist/Geist Mono font files. All11
