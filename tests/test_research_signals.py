@@ -41,6 +41,31 @@ class SignalTests(unittest.TestCase):
         self.db.close()
         self.temp.cleanup()
 
+    def test_replaced_x_token_releases_the_back_off_earned_by_the_old_one(self):
+        signals.schema(self.db)
+        source = next(s for s in signals.SOURCES if s.get("format") == "x-api")
+        other = next(s for s in signals.SOURCES if s.get("format") != "x-api")
+        far = "2026-10-29T20:20:38+00:00"
+        def deny(route_id):
+            self.db.execute("""INSERT INTO signal_routes(id, checked_at, next_check_at, failures, error)
+                VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET next_check_at=excluded.next_check_at, failures=excluded.failures, error=excluded.error""",
+                (route_id, "2026-10-22T20:20:38+00:00", far, 20, "http-401"))
+        def state(route_id):
+            return tuple(self.db.execute("SELECT next_check_at, failures, error FROM signal_routes WHERE id=?", (route_id,)).fetchone())
+        with patch.dict(os.environ, {"X_BEARER_TOKEN": "old-token-value"}):
+            signals.release_x_routes_for_new_token(self.db)
+            deny(source["id"]); deny(other["id"])
+            signals.release_x_routes_for_new_token(self.db)   # same token: the back-off stays
+            self.assertEqual(state(source["id"]), (far, 20, "http-401"))
+        with patch.dict(os.environ, {"X_BEARER_TOKEN": "new-token-value"}):
+            signals.release_x_routes_for_new_token(self.db)
+            released = state(source["id"])
+            self.assertNotEqual(released[0], far)
+            self.assertEqual(released[1:], (0, None))
+            self.assertEqual(state(other["id"]), (far, 20, "http-401"))   # only X routes are released
+            fingerprints = " ".join(str(row[0]) for row in self.db.execute("SELECT fingerprint FROM signal_credential_state"))
+            self.assertNotIn("token-value", fingerprints)
+
     def test_public_x_diagnostics_exclude_secrets_and_content(self):
         signals.schema(self.db)
         source = next(s for s in signals.SOURCES if s.get("format") == "x-api")

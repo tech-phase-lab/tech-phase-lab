@@ -417,6 +417,29 @@ def schema(db):
         db.execute("ALTER TABLE signal_routes ADD COLUMN failure_attempts INTEGER NOT NULL DEFAULT 0")
 
 
+def release_x_routes_for_new_token(db):
+    """A replaced X bearer token must not wait out the week-long back-off earned by the old one.
+
+    Only a one-way fingerprint of the token is stored; the token itself is never written or logged.
+    Called once when the service starts, after the schema exists.
+    """
+    schema(db)
+    token = os.environ.get("X_BEARER_TOKEN", "").strip()
+    if not token:
+        return
+    db.execute("CREATE TABLE IF NOT EXISTS signal_credential_state (name TEXT PRIMARY KEY, fingerprint TEXT NOT NULL)")
+    fingerprint = hashlib.sha256(token.encode()).hexdigest()
+    row = db.execute("SELECT fingerprint FROM signal_credential_state WHERE name='x-bearer'").fetchone()
+    if row and row[0] == fingerprint:
+        return
+    ids = [source["id"] for source in SOURCES if source.get("format") == "x-api"]
+    if ids:
+        marks = ",".join("?" * len(ids))
+        db.execute(f"""UPDATE signal_routes SET next_check_at=?, failures=0, error=NULL, failure_started_at=NULL, failure_attempts=0
+                       WHERE id IN ({marks}) AND error IN ('http-401','http-403')""", (stamp(), *ids))
+    db.execute("INSERT INTO signal_credential_state(name,fingerprint) VALUES('x-bearer',?) ON CONFLICT(name) DO UPDATE SET fingerprint=excluded.fingerprint", (fingerprint,))
+
+
 class XApiDailyLimit(ValueError):
     def __init__(self, retry_at):
         super().__init__("x-api-daily-limit")
