@@ -1,5 +1,7 @@
 # 外部バックアップの読み取り専用点検
 
+[2026-10-24 07:17 JSTの実点検結果](EXTERNAL-DATA-INVENTORY-2026-10-24.md)：コード等50objectを観測。DB・履歴の4分類は確認prefixで0件。
+
 `external-data-inventory.yml` は既存R2バケットの既知の7つのprefixを読み、
 ソース・依存・実行環境と、本番研究DB・RESOLUTE DB・Sandbox決済DB・保護履歴を区別する。
 実行ログを確認するまで、実一覧を取得できたとは扱わない。

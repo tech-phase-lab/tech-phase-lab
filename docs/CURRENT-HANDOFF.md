@@ -1,3 +1,21 @@
+## 2026-10-24 07:17 JST — External live-data backup gap actually observed
+
+Read-only R2 run40032566590 (implementation61cfc1f2) listed the seven known prefixes
+twice with identical results: source18, dependencies6, runtime26 objects; research DB,
+RESOLUTE DB, billing Sandbox DB and protection history each0 in their listed prefixes.
+Implementation CI40032566501 passed Node1336/Python2623, build and Sandbox PG concurrency.
+See [exact observation and next access requirements](EXTERNAL-DATA-INVENTORY-2026-10-24.md).
+This is not a whole-bucket inventory, DB freshness check or restore proof. Runtime26
+includes unsuccessful initial-run objects; use the verified seven-image receipt, not counts.
+No object body/key decryption, upload, deletion, Railway connection or production mutation.
+Next live-data transfer requires the source research volume/DB or existing encrypted dumps
+and the protection source inventory. Those source connections are not available to this
+GitHub read-only job. Do not retry Railway auth or repeat completed owner key/SQL/deploy work.
+Keep saving gates OFF; fresh actual writer fence/queue/inventory and isolated restore remain
+required. The observation SHA is NOT a protection manifest pin. Preserve consumed AI claim.
+
+---
+
 ## 2026-10-24 JST — All seven runtime images restored from R2 and probed offline
 
 Source/runtime commit81b4e775 (tree172ec963) passed actual run39998902799.

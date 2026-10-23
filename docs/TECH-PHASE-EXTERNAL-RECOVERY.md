@@ -1,3 +1,8 @@
+2026-10-24 07:17 JST: [R2実一覧](EXTERNAL-DATA-INVENTORY-2026-10-24.md)で、
+研究DB・RESOLUTE DB・決済Sandbox DB・保護履歴の既知外部保存先が各0件と確認。
+7対象の実行環境保管は成功済みだが、本番データの外部保管完了ではない。
+元volume/DB/暗号化dump・履歴を読み出せる経路が必要。Railway再認証は試さない。
+
 # Tech Phase + RESOLUTE 外部保管の対象と実行手順
 
 2026-10-23 継続方針: [RenderをRailway障害時の予備環境にする計画](RENDER-STANDBY-PLAN.md)
