@@ -95,10 +95,10 @@ test('durable queue commits state once, duplicate leaves new lines pending, and 
   feed.closes[0].close=79;assert.deepEqual(await job('user_buyer'),[{kind:'alerts',status:'duplicate'}]);
   assert.deepEqual((await db.query('SELECT notified FROM resolute.notification_state')).rows[0].notified.AAA.lines,[10]);
   assert.equal((await db.query('SELECT * FROM resolute.notification_outbox')).rows.length,1);
-  clock=new Date('2027-02-04T22:00:00Z');
-  assert.deepEqual(await job('user_buyer'),[{kind:'alerts',status:'queued'}]); // Unconfirmed queue does not produce morning mail.
+  assert.equal((await db.query("SELECT * FROM resolute.notification_outbox WHERE kind='morning'")).rows.length,0);
   await db.query("UPDATE resolute.notification_outbox SET accepted_at='2027-02-03T22:01:00Z' WHERE delivery_date_jst='2027-02-04'");
-  assert.deepEqual(await job('user_buyer'),[{kind:'morning',status:'queued'}]);
+  clock=new Date('2027-02-04T22:00:00Z');
+  assert.deepEqual(await job('user_buyer'),[{kind:'morning',status:'queued'},{kind:'alerts',status:'queued'}]);
   assert.deepEqual(await job('user_buyer'),[{kind:'morning',status:'duplicate'}]);
   const payloads=(await db.query('SELECT payload FROM resolute.notification_outbox')).rows;assert.ok(!JSON.stringify(payloads).includes('monthlyLivingCost'));
   await db.exec('ALTER TABLE resolute.notification_state RENAME TO unavailable_state');
@@ -131,7 +131,7 @@ test('dispatch rechecks time, revision, purchase, expiry and opt-out; disabled/d
  const task={key:'user_buyer:2027-02-04:alerts',kind:'alerts',deliveryDateJst:'2027-02-04',settingsRevision:1,ruleKey:'rule',acceptedAt:null};
  const current={settings,revision:1,ruleKey:'rule',entitlements:rights,recipientVerified:true,preferencesConfigured:true,unsubscribed:false,planExists:true};
  let sends=0,acks=0;
- const deps={deliveryEnabled:true,now:()=>now,read:async()=>current,send:async()=>{sends++;return 'accepted';},acknowledge:async()=>{acks++;}};
+ const deps={deliveryEnabled:true,now:()=>now,read:async()=>current,claimAlert:async()=>true,send:async()=>{sends++;return 'accepted';},acknowledge:async()=>{acks++;}};
  assert.equal(await dispatchNotification(task,{...deps,deliveryEnabled:false}),'disabled');
  for(const patch of [{revision:2},{ruleKey:'changed'},{recipientVerified:false},{unsubscribed:true},{planExists:false},{settings:{...settings,deliveryHourJst:8}},
  {entitlements:[rights[0],{...rights[1],expiresAt:now.toISOString()}]}])assert.equal(await dispatchNotification(task,{...deps,read:async()=>({...current,...patch})}),'suppressed');
@@ -139,4 +139,109 @@ test('dispatch rechecks time, revision, purchase, expiry and opt-out; disabled/d
  assert.equal(await dispatchNotification(task,{...deps,send:async()=>'duplicate'}),'duplicate');assert.equal(acks,0);
  assert.equal(await dispatchNotification(task,deps),'accepted');assert.equal(sends,1);assert.equal(acks,1);
  assert.equal(await dispatchNotification({...task,acceptedAt:now.toISOString()},deps),'already-accepted');assert.equal(sends,1);
+});
+
+// Exercise queue, settings and dispatch together; no provider/network calls.
+for(const scenario of ['settings','next-day','accepted','attempt-failed','ack-failed','legacy','rollback','new-rule','simultaneous']) {
+ test(`alert reservation lifecycle: ${scenario}`,async()=>{
+  const {db,pool}=await database();let clock=now;let feed=structuredClone(inputs);
+  const {dispatchNotification}=await import('../lib/resolute/notification-dispatch.ts');
+  const {claimAlertReservation}=await import('../lib/resolute/notification-reservation.ts');
+  const client={query:async(sql,args)=>{const r=await db.query(sql,args);return {...r,rowCount:r.rows.length||r.affectedRows||0};}};
+  const store=createNotificationStore(pool());let snapshot;let sends=0;
+  const job=createNotificationOutboxJob(pool(),async()=>feed,()=>clock);
+  const pending=async()=>(await db.query("SELECT *,delivery_date_jst::text AS date FROM resolute.notification_outbox WHERE accepted_at IS NULL AND COALESCE(payload->'reservation'->>'status','')<>'cancelled' ORDER BY created_at")).rows;
+  const queued=async()=>{const row=(await pending())[0];return {key:row.idempotency_key,kind:row.kind,deliveryDateJst:row.date,settingsRevision:row.payload.settingsRevision,ruleKey:row.payload.ruleKey,acceptedAt:null};};
+  try{
+   snapshot=await store('user_buyer','PUT',{settings,baseRevision:0});
+   await db.query("INSERT INTO resolute.plans(clerk_user_id,revision,plan,created_at,updated_at) VALUES('user_buyer',1,$1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)",[JSON.stringify(plan)]);
+   feed.closes[0].close=89;
+   assert.deepEqual(await job('user_buyer'),[{kind:'alerts',status:'queued'}]);
+   const first=await queued();
+   const deps={deliveryEnabled:true,now:()=>clock,
+    read:async()=>({settings:snapshot.settings,revision:snapshot.revision,ruleKey:first.ruleKey,entitlements:rights,recipientVerified:true,preferencesConfigured:true,unsubscribed:false,planExists:true}),
+    claimAlert:()=>claimAlertReservation(client,'user_buyer',first),
+    send:async()=>{sends++;return 'accepted';},
+    acknowledge:async(at)=>{await db.query('UPDATE resolute.notification_outbox SET accepted_at=$2 WHERE idempotency_key=$1',[first.key,at]);}};
+   if(scenario==='accepted'){
+    assert.equal(await dispatchNotification(first,deps),'accepted');
+    snapshot=await store('user_buyer','PUT',{settings:{...settings,morningEnabled:true},baseRevision:1});
+    assert.deepEqual(await job('user_buyer'),[]);
+    clock=new Date('2027-02-04T22:00:00Z');
+    assert.deepEqual(await job('user_buyer'),[{kind:'morning',status:'queued'}]);
+    assert.equal(sends,1);return;
+   }
+   if(scenario==='attempt-failed'||scenario==='ack-failed'){
+    await assert.rejects(()=>dispatchNotification(first,{...deps,
+     ...(scenario==='attempt-failed'?{send:async()=>{sends++;throw Error('Provider response unknown');}}:{acknowledge:async()=>{throw Error('DB acknowledgement failed');}})}));
+    snapshot=await store('user_buyer','PUT',{settings:{...settings,morningEnabled:true},baseRevision:1});
+    clock=new Date('2027-02-04T22:00:00Z');feed.closes[0].close=79;
+    assert.deepEqual(await job('user_buyer'),[{kind:'alerts',status:'duplicate'}]);
+    assert.equal((await pending()).length,1);
+    assert.equal((await pending())[0].payload.reservation.status,'attempting');
+    assert.equal(await claimAlertReservation(client,'user_buyer',first),false);
+    assert.equal(sends,1);return;
+   }
+   if(scenario==='legacy'){
+    await db.query("UPDATE resolute.notification_outbox SET payload=payload-'reservation'");
+    clock=new Date('2027-02-04T22:00:00Z');feed.closes[0].close=79;
+    assert.deepEqual(await job('user_buyer'),[{kind:'alerts',status:'duplicate'}]);
+    assert.equal((await pending()).length,1);
+    assert.equal(await claimAlertReservation(client,'user_buyer',first),false);return;
+   }
+   if(scenario==='next-day')clock=new Date('2027-02-04T22:00:00Z');
+   else snapshot=await store('user_buyer','PUT',{settings:{...settings,morningEnabled:true,...(scenario==='new-rule'?{watchItems:[{symbol:'AAA',referencePrice:110}]}:{})},baseRevision:1});
+   assert.equal(await dispatchNotification(first,deps),'suppressed');assert.equal(sends,0);
+   if(scenario==='rollback'){
+    // A later failure rolls back BOTH the reservation release and row cancellation.
+    feed={...inputs,closes:[...inputs.closes,...inputs.closes]};
+    await assert.rejects(()=>job('user_buyer'),/Ambiguous/);
+    assert.equal((await pending())[0].payload.reservation.status,'queued');
+    assert.deepEqual((await db.query('SELECT notified FROM resolute.notification_state')).rows[0].notified.AAA.lines,[10]);
+    feed=structuredClone(inputs);
+   }
+   if(scenario==='simultaneous'){
+    const outcomes=await Promise.all([job('user_buyer'),job('user_buyer')]);
+    assert.equal(outcomes.flat().filter(x=>x.status==='queued').length,1);
+   }else assert.deepEqual(await job('user_buyer'),[{kind:'alerts',status:'queued'}]);
+   const row=(await pending())[0];
+   assert.equal((await pending()).length,1);
+   assert.equal(row.payload.settingsRevision,snapshot.revision);
+   assert.deepEqual(row.payload.digest.payload.items[0].newLines,scenario==='rollback'?[10,20]:[10]);
+   assert.equal(await claimAlertReservation(client,'user_buyer',first),false,'stale in-memory task must not send a replacement');
+   const replacement=await queued();
+   assert.equal(await claimAlertReservation(client,'user_other',replacement),false);
+   assert.equal(await claimAlertReservation(client,'user_buyer',replacement),true);
+   assert.equal(await claimAlertReservation(client,'user_buyer',replacement),false,'only one send attempt');
+  }finally{await db.close();}
+ });
+}
+
+test('alerts without a durable attempt claim never contact the provider',async()=>{
+ const {dispatchNotification}=await import('../lib/resolute/notification-dispatch.ts');
+ const task={key:'user_buyer:2027-02-04:alerts',kind:'alerts',deliveryDateJst:'2027-02-04',settingsRevision:1,ruleKey:'rule',acceptedAt:null};
+ const deps={deliveryEnabled:true,now:()=>now,read:async()=>({settings,revision:1,ruleKey:'rule',entitlements:rights,recipientVerified:true,preferencesConfigured:true,unsubscribed:false,planExists:true}),send:async()=>{throw Error('Must not send');},acknowledge:async()=>{throw Error('Must not acknowledge');}};
+ assert.equal(await dispatchNotification(task,deps),'unclaimed');
+ assert.equal(await dispatchNotification(task,{...deps,claimAlert:async()=>false}),'unclaimed');
+});
+
+test('releasing an unsent deeper alert preserves previously accepted thresholds',async()=>{
+ const {db,pool}=await database();let clock=now;const feed=structuredClone(inputs);
+ try{
+  const store=createNotificationStore(pool());await store('user_buyer','PUT',{settings,baseRevision:0});
+  await db.query("INSERT INTO resolute.plans(clerk_user_id,revision,plan,created_at,updated_at) VALUES('user_buyer',1,$1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)",[JSON.stringify(plan)]);
+  const job=createNotificationOutboxJob(pool(),async()=>feed,()=>clock);
+  feed.closes[0].close=89;await job('user_buyer');
+  await db.query('UPDATE resolute.notification_outbox SET accepted_at=$1',[now.toISOString()]);
+  clock=new Date('2027-02-04T22:00:00Z');feed.closes[0].close=79;
+  await job('user_buyer');
+  await store('user_buyer','PUT',{settings:{...settings,deliveryHourJst:8},baseRevision:1});
+  clock=new Date('2027-02-04T23:00:00Z');
+  assert.deepEqual(await job('user_buyer'),[{kind:'alerts',status:'queued'}]);
+  const rows=(await db.query('SELECT * FROM resolute.notification_outbox ORDER BY delivery_date_jst')).rows;
+  assert.equal(rows.length,2);assert.ok(rows[0].accepted_at);
+  assert.deepEqual(rows[1].payload.digest.payload.items[0].newLines,[20]);
+  assert.deepEqual(rows[1].payload.reservation.baseState.AAA.lines,[10]);
+  assert.deepEqual((await db.query('SELECT notified FROM resolute.notification_state')).rows[0].notified.AAA.lines,[10,20]);
+ }finally{await db.close();}
 });
