@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "PCAR",
+    "name": "パッカー",
+    "cik": 75362,
+    "name_en": "PACCAR"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社製でないエンジンを購入している",
+          "text_en": "PACCAR buys the engines it does not make itself from Cummins",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Engines not manufactured by the Company are purchased from Cummins Inc. (Cummins)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "EVEエナジー等と商用車用電池を共同生産する",
+          "text_en": "PACCAR and Cummins have partnered with others to produce commercial vehicle batteries in a 21-gigawatt hour factory",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "PACCAR, Cummins, Daimler Trucks and EVE Energy have partnered to produce state-of-the-art commercial vehicle batteries in a 21-gigawatt hour (GWh) factory in Marshall County, Mississippi."
+          }
+        }
+      ],
+      "name_en": "Cummins"
+    },
+    {
+      "id": "ETN",
+      "ticker": "ETN",
+      "name": "イートン",
+      "sub": "トランスミッション",
+      "sub_en": "Transmissions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トランスミッションの相当部分を購入している",
+          "text_en": "PACCAR buys a significant portion of its transmissions from Eaton",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company purchased a significant portion of its transmissions from Eaton Corporation Plc. (Eaton) and ZF Friedrichshafen AG (ZF)."
+          }
+        }
+      ],
+      "name_en": "Eaton"
+    },
+    {
+      "id": "ZF",
+      "ticker": "ZF Friedrichshafen",
+      "name": "ZFフリードリヒスハーフェン",
+      "sub": "トランスミッション",
+      "sub_en": "Transmissions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トランスミッションの相当部分を購入している",
+          "text_en": "PACCAR buys a significant portion of its transmissions from ZF",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company purchased a significant portion of its transmissions from Eaton Corporation Plc. (Eaton) and ZF Friedrichshafen AG (ZF)."
+          }
+        }
+      ],
+      "name_en": "ZF Friedrichshafen"
+    },
+    {
+      "id": "MGA",
+      "ticker": "MGA",
+      "name": "マグナ・インターナショナル",
+      "sub": "キャブ用プレス部品",
+      "sub_en": "Cab stampings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "北米でキャブに使うプレス部品の相当部分を購入している",
+          "text_en": "PACCAR buys a significant portion of its North American cab stampings from Magna",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company also purchased a significant portion of North America stampings used for cabs from Magna International Inc. (Magna)."
+          }
+        }
+      ],
+      "name_en": "Magna International"
+    },
+    {
+      "id": "RenaultVI",
+      "ticker": "Renault V.I.",
+      "name": "ルノー・トラック",
+      "sub": "トラック・キャブ",
+      "sub_en": "Truck cabs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "競合でもある同社から、欧州の小中型向けキャブを購入している",
+          "text_en": "DAF buys fully assembled cabs for its European light- and medium-duty line from Renault V.I., a competitor",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company’s DAF subsidiary purchases fully assembled cabs from a competitor, Renault V.I., for its European light-, medium-duty product line pursuant to a joint product development and long-term supply contract."
+          }
+        }
+      ],
+      "name_en": "Renault V.I."
+    },
+    {
+      "id": "DTG",
+      "ticker": "Daimler Trucks",
+      "name": "ダイムラー・トラック",
+      "sub": "商用車",
+      "sub_en": "Commercial vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "商用車用電池を共同で生産する",
+          "text_en": "PACCAR, Cummins, Daimler Trucks and EVE Energy partnered on a 21-gigawatt hour battery factory",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "PACCAR, Cummins, Daimler Trucks and EVE Energy have partnered to produce state-of-the-art commercial vehicle batteries in a 21-gigawatt hour (GWh) factory in Marshall County, Mississippi."
+          }
+        }
+      ],
+      "name_en": "Daimler Trucks"
+    },
+    {
+      "id": "EVE",
+      "ticker": "EVE Energy",
+      "name": "EVEエナジー",
+      "sub": "電池",
+      "sub_en": "Batteries",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "商用車用電池を共同で生産する",
+          "text_en": "PACCAR, Cummins, Daimler Trucks and EVE Energy partnered on a 21-gigawatt hour battery factory",
+          "source": {
+            "label": "PACCAR 10-K(December 31, 2025)",
+            "label_en": "PACCAR 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "PACCAR, Cummins, Daimler Trucks and EVE Energy have partnered to produce state-of-the-art commercial vehicle batteries in a 21-gigawatt hour (GWh) factory in Marshall County, Mississippi."
+          }
+        }
+      ],
+      "name_en": "EVE Energy"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

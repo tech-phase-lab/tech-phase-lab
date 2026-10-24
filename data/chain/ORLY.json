@@ -1,0 +1,123 @@
+{
+  "root": {
+    "ticker": "ORLY",
+    "name": "オライリー・オートモーティブ",
+    "cik": 898173,
+    "name_en": "O'Reilly Automotive"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AZO",
+    "AAP",
+    "WMT",
+    "AMZN"
+  ],
+  "companies": [
+    {
+      "id": "AZO",
+      "ticker": "AZO",
+      "name": "オートゾーン",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国展開の自動車部品チェーンとして、DIYとプロ向けの両市場で競合する",
+          "text_en": "AutoZone is named as a national automotive parts chain that O'Reilly competes with",
+          "source": {
+            "label": "O'Reilly Automotive 10-K(December 31, 2025)",
+            "label_en": "O'Reilly Automotive 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/898173/000089817326000009/orly-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete primarily with: ● National retail and wholesale automotive parts chains (such as AutoZone, Inc., Advance Auto Parts, CARQUEST, and NAPA)."
+          }
+        }
+      ],
+      "name_en": "AutoZone"
+    },
+    {
+      "id": "AAP",
+      "ticker": "AAP",
+      "name": "アドバンス・オート・パーツ",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国展開の自動車部品チェーンとして競合する",
+          "text_en": "Advance Auto Parts is named as a national automotive parts chain that O'Reilly competes with",
+          "source": {
+            "label": "O'Reilly Automotive 10-K(December 31, 2025)",
+            "label_en": "O'Reilly Automotive 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/898173/000089817326000009/orly-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete primarily with: ● National retail and wholesale automotive parts chains (such as AutoZone, Inc., Advance Auto Parts, CARQUEST, and NAPA)."
+          }
+        }
+      ],
+      "name_en": "Advance Auto Parts"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "量販店",
+      "sub_en": "Mass merchandiser",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自動車交換部品を扱う量販店として競合する",
+          "text_en": "Walmart is named among mass merchandisers carrying automotive replacement parts that compete with O'Reilly",
+          "source": {
+            "label": "O'Reilly Automotive 10-K(December 31, 2025)",
+            "label_en": "O'Reilly Automotive 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/898173/000089817326000009/orly-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "● Mass merchandisers and online retailers that carry automotive replacement parts, maintenance items, and accessories (such as Wal-Mart Stores, Inc. and Amazon.com, Inc.)."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ドットコム",
+      "sub": "ネット通販",
+      "sub_en": "Online retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自動車交換部品を扱うオンライン小売として競合する",
+          "text_en": "Amazon.com is named among online retailers carrying automotive replacement parts that compete with O'Reilly",
+          "source": {
+            "label": "O'Reilly Automotive 10-K(December 31, 2025)",
+            "label_en": "O'Reilly Automotive 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/898173/000089817326000009/orly-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "● Mass merchandisers and online retailers that carry automotive replacement parts, maintenance items, and accessories (such as Wal-Mart Stores, Inc. and Amazon.com, Inc.)."
+          }
+        }
+      ],
+      "name_en": "Amazon.com"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "root": {
+    "ticker": "OKE",
+    "name": "ワンオーク",
+    "cik": 1039684,
+    "name_en": "ONEOK"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MPLX",
+      "ticker": "MPLX",
+      "name": "MPLXエルピー",
+      "sub": "パイプライン・ターミナル",
+      "sub_en": "Midstream",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサス・シティの輸出ターミナル合弁を、ONEOKと折半で所有する",
+          "text_en": "Texas City Logistics is owned 50% by ONEOK and 50% by MPLX LP",
+          "source": {
+            "label": "ONEOK 10-K(December 31, 2025)",
+            "label_en": "ONEOK 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039684/000103968426000006/oke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Texas City Logistics, the export terminal joint venture, is owned 50% by us and 50% by MPLX LP, with MPLX LP constructing and operating the facility."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ホワイトウォーター等とEiger Expressパイプラインを発表した",
+          "text_en": "ONEOK, WhiteWater, MPLX LP and Enbridge announced the 450-mile Eiger Express Pipeline",
+          "source": {
+            "label": "ONEOK 10-K(December 31, 2025)",
+            "label_en": "ONEOK 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039684/000103968426000006/oke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, we, WhiteWater, MPLX LP and Enbridge Inc., through the existing Matterhorn joint venture, announced the new approximately 450-mile, 48-inch Eiger Express Pipeline, designed to transport up to approximately 3.7 Bcf/d of natural gas from the Permian Basin to Katy, Texas."
+          }
+        }
+      ],
+      "name_en": "MPLX LP"
+    },
+    {
+      "id": "ENB",
+      "ticker": "ENB",
+      "name": "エンブリッジ",
+      "sub": "パイプライン",
+      "sub_en": "Pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Matterhorn合弁を通じ、Eiger Expressパイプラインを共同で発表した",
+          "text_en": "Enbridge joined ONEOK in announcing the 450-mile Eiger Express Pipeline through the Matterhorn joint venture",
+          "source": {
+            "label": "ONEOK 10-K(December 31, 2025)",
+            "label_en": "ONEOK 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039684/000103968426000006/oke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, we, WhiteWater, MPLX LP and Enbridge Inc., through the existing Matterhorn joint venture, announced the new approximately 450-mile, 48-inch Eiger Express Pipeline, designed to transport up to approximately 3.7 Bcf/d of natural gas from the Permian Basin to Katy, Texas."
+          }
+        }
+      ],
+      "name_en": "Enbridge"
+    },
+    {
+      "id": "WhiteWater",
+      "ticker": "WhiteWater",
+      "name": "ホワイトウォーター・ミッドストリーム",
+      "sub": "パイプライン運営",
+      "sub_en": "Pipeline operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MatterhornとEigerのパイプラインを運営している",
+          "text_en": "WhiteWater Midstream operates the Matterhorn and Eiger pipelines",
+          "source": {
+            "label": "ONEOK 10-K(December 31, 2025)",
+            "label_en": "ONEOK 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039684/000103968426000006/oke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "WhiteWater WhiteWater Midstream, LLC, the operator of Matterhorn and Eiger pipelines"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MPLXらとEiger Expressパイプラインを発表した",
+          "text_en": "ONEOK, WhiteWater, MPLX LP and Enbridge announced the 450-mile Eiger Express Pipeline",
+          "source": {
+            "label": "ONEOK 10-K(December 31, 2025)",
+            "label_en": "ONEOK 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039684/000103968426000006/oke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, we, WhiteWater, MPLX LP and Enbridge Inc., through the existing Matterhorn joint venture, announced the new approximately 450-mile, 48-inch Eiger Express Pipeline, designed to transport up to approximately 3.7 Bcf/d of natural gas from the Permian Basin to Katy, Texas."
+          }
+        }
+      ],
+      "name_en": "WhiteWater Midstream"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

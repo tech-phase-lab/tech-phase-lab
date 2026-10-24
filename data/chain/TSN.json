@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "TSN",
+    "name": "タイソン・フーズ",
+    "cik": 100493,
+    "name_en": "Tyson Foods"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "大手小売り",
+      "sub_en": "Retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、2025年度の連結売上高の18.7%を占めた",
+          "text_en": "Walmart is the largest customer and accounted for 18.7% of consolidated sales in fiscal 2025",
+          "source": {
+            "label": "Tyson Foods 10-K(2025-09-27)",
+            "label_en": "Tyson Foods 10-K (fiscal year ended 2025-09-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100493/000010049325000095/tsn-20250927.htm",
+            "level": "official",
+            "date": "2025-11-10",
+            "quote": "Our largest customer, Walmart Inc., accounted for 18.7 %, 18.4 % and 18.6 % of consolidated sales in fiscal 2025, 2024 and 2023, respectively."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "VIBRA",
+      "ticker": "Vibra",
+      "name": "ビブラ・アグロインダストリアル",
+      "sub": "ブラジル鶏肉合弁",
+      "sub_en": "Brazil chicken JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラジルで一貫生産の鶏肉加工を行う合弁会社で、少数持分を保有する",
+          "text_en": "Vibra is a joint venture in Brazil, a vertically-integrated chicken processor, in which Tyson holds a minority interest",
+          "source": {
+            "label": "Tyson Foods 10-K(2025-09-27)",
+            "label_en": "Tyson Foods 10-K (fiscal year ended 2025-09-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100493/000010049325000095/tsn-20250927.htm",
+            "level": "official",
+            "date": "2025-11-10",
+            "quote": "Vibra Agroindustrial S.A., a joint venture in Brazil in which we have a minority interest, is a vertically-integrated chicken processing business."
+          }
+        }
+      ],
+      "name_en": "Vibra Agroindustrial"
+    },
+    {
+      "id": "HOLDINGAGRO",
+      "ticker": "Holding Agro",
+      "name": "ホールディング・アグロ・インダストリアル",
+      "sub": "南米鶏肉合弁",
+      "sub_en": "South America chicken JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルゼンチンとウルグアイで鶏肉加工を行う合弁会社で、少数持分を保有する",
+          "text_en": "Holding Agro Industrial is a joint venture in Argentina and Uruguay, a vertically-integrated chicken processor, in which Tyson holds a minority interest",
+          "source": {
+            "label": "Tyson Foods 10-K(2025-09-27)",
+            "label_en": "Tyson Foods 10-K (fiscal year ended 2025-09-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100493/000010049325000095/tsn-20250927.htm",
+            "level": "official",
+            "date": "2025-11-10",
+            "quote": "Holding Agro Industrial S.A., a joint venture in Argentina and Uruguay in which we have a minority interest, is a vertically-integrated chicken processing business."
+          }
+        }
+      ],
+      "name_en": "Holding Agro Industrial"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

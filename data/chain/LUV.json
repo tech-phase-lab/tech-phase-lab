@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "LUV",
+    "name": "サウスウエスト航空",
+    "cik": 92380,
+    "name_en": "Southwest Airlines"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AAL",
+    "DAL",
+    "UAL"
+  ],
+  "companies": [
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "航空機製造",
+      "sub_en": "Aircraft manufacturer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "航空機の唯一の製造元として依存している",
+          "text_en": "Southwest depends on Boeing as the sole manufacturer of its aircraft",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Company is currently dependent on Boeing as the sole manufacturer of the Company’s aircraft"
+          }
+        }
+      ],
+      "name_en": "Boeing"
+    },
+    {
+      "id": "AAL",
+      "ticker": "AAL",
+      "name": "アメリカン航空",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内線で競合する大手航空会社である",
+          "text_en": "American Airlines is among the largest major U.S. airlines Southwest competes with",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "including American Airlines, Delta Air Lines, and United Airlines"
+          }
+        }
+      ],
+      "name_en": "American Airlines"
+    },
+    {
+      "id": "DAL",
+      "ticker": "DAL",
+      "name": "デルタ航空",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内線で競合する大手航空会社である",
+          "text_en": "Delta Air Lines is among the largest major U.S. airlines Southwest competes with",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "including American Airlines, Delta Air Lines, and United Airlines"
+          }
+        }
+      ],
+      "name_en": "Delta Air Lines"
+    },
+    {
+      "id": "UAL",
+      "ticker": "UAL",
+      "name": "ユナイテッド航空",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内線で競合する大手航空会社である",
+          "text_en": "United Airlines is among the largest major U.S. airlines Southwest competes with",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "including American Airlines, Delta Air Lines, and United Airlines"
+          }
+        }
+      ],
+      "name_en": "United Airlines"
+    },
+    {
+      "id": "EXPE",
+      "ticker": "EXPE",
+      "name": "エクスペディア",
+      "sub": "オンライン旅行",
+      "sub_en": "Online travel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オンライン旅行会社として新たに販売提携を結んだ",
+          "text_en": "Southwest formed a new distribution partnership with Expedia",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "new partnerships with online travel agencies, Expedia and Priceline"
+          }
+        }
+      ],
+      "name_en": "Expedia"
+    },
+    {
+      "id": "BKNG",
+      "ticker": "BKNG",
+      "name": "プライスライン",
+      "sub": "オンライン旅行",
+      "sub_en": "Online travel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オンライン旅行会社として新たに販売提携を結んだ",
+          "text_en": "Southwest formed a new distribution partnership with Priceline",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "new partnerships with online travel agencies, Expedia and Priceline"
+          }
+        }
+      ],
+      "name_en": "Priceline"
+    },
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル",
+      "sub": "無線通信",
+      "sub_en": "Wireless carrier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラピッドリワーズ会員向けの無料Wi-Fiを提供する",
+          "text_en": "T-Mobile sponsors free Wi-Fi for Rapid Rewards Members",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Announced free Wi-Fi sponsored by T-Mobile for all Rapid Rewards Members"
+          }
+        }
+      ],
+      "name_en": "T-Mobile"
+    },
+    {
+      "id": "SABR",
+      "ticker": "SABR",
+      "name": "セイバー",
+      "sub": "旅行システム",
+      "sub_en": "Travel systems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "法人向け運賃の予約流通経路の一つである",
+          "text_en": "Sabre is one of the channels for booking Southwest corporate fares",
+          "source": {
+            "label": "Southwest Airlines 10-K(2025年12月31日期)",
+            "label_en": "Southwest Airlines 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "via Amadeus, Travelport, and Sabre channels"
+          }
+        }
+      ],
+      "name_en": "Sabre"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

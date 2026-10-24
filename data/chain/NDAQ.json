@@ -1,0 +1,159 @@
+{
+  "root": {
+    "ticker": "NDAQ",
+    "name": "ナスダック",
+    "cik": 1120193,
+    "name_en": "Nasdaq, Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CBOE",
+    "ICE",
+    "MIAX"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ドット・コム(AWS)",
+      "sub": "クラウド提携先",
+      "sub_en": "Cloud partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "取引所などのシステムをAWSのクラウドへ移行する提携を進めている",
+          "text_en": "Nasdaq is migrating its exchanges and non-exchange workloads to the cloud through its partnership with AWS",
+          "source": {
+            "label": "ナスダック 10-K(2025年12月期)",
+            "label_en": "Nasdaq, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120193/000162828026007703/ndaq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We believe that migrating our exchanges and non-exchange workloads to the cloud, through our partnership with AWS, will result in improved performance and increased flexibility for our customers."
+          }
+        },
+        {
+          "type": "up",
+          "text": "取引所サービスの提供にAWSの基盤を使っている",
+          "text_en": "Nasdaq uses an AWS platform to provide exchange and other services to its clients",
+          "source": {
+            "label": "ナスダック 10-K(2025年12月期)",
+            "label_en": "Nasdaq, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120193/000162828026007703/ndaq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "AWS operates a plat form that we use to provide exchange and other services to our clients, and therefore we are vulnerable to service outages on the AWS platform that affect Nasdaq workloads running or stored in the AWS environment."
+          }
+        }
+      ],
+      "name_en": "Amazon (AWS)"
+    },
+    {
+      "id": "CBOE",
+      "ticker": "CBOE",
+      "name": "Cboeグローバル・マーケッツ",
+      "sub": "取引所運営",
+      "sub_en": "Exchange operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国のオプション市場でCboeの取引所と競合している",
+          "text_en": "Nasdaq's U.S. options markets compete with exchanges operated by Cboe",
+          "source": {
+            "label": "ナスダック 10-K(2025年12月期)",
+            "label_en": "Nasdaq, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120193/000162828026007703/ndaq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In the U.S., our options markets compete with exchanges operated by Cboe Global Markets, Inc., or CBOE , Miami International Holdings, Inc., or MIAX, Intercontinental Exchange , Inc., or ICE, Members Exchange, or MEMX, and BOX Options Market."
+          }
+        }
+      ],
+      "name_en": "Cboe Global Markets"
+    },
+    {
+      "id": "ICE",
+      "ticker": "ICE",
+      "name": "インターコンチネンタル取引所",
+      "sub": "取引所運営",
+      "sub_en": "Exchange operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の現物株式市場でICEの取引所と競合している",
+          "text_en": "Nasdaq's U.S. cash equities markets compete with exchanges operated by ICE",
+          "source": {
+            "label": "ナスダック 10-K(2025年12月期)",
+            "label_en": "Nasdaq, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120193/000162828026007703/ndaq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In the U.S., our cash equities markets 9 compete with exchanges operated by Cboe, ICE, MIAX, the TXSE Group , The Investors Exchange, MEMX and Long Term Stock Exchange."
+          }
+        }
+      ],
+      "name_en": "Intercontinental Exchange"
+    },
+    {
+      "id": "MIAX",
+      "ticker": "MIAX",
+      "name": "マイアミ・インターナショナル・ホールディングス",
+      "sub": "オプション取引所",
+      "sub_en": "Options exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国のオプション市場でMIAXの取引所と競合している",
+          "text_en": "Nasdaq's U.S. options markets compete with exchanges operated by MIAX",
+          "source": {
+            "label": "ナスダック 10-K(2025年12月期)",
+            "label_en": "Nasdaq, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120193/000162828026007703/ndaq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In the U.S., our options markets compete with exchanges operated by Cboe Global Markets, Inc., or CBOE , Miami International Holdings, Inc., or MIAX, Intercontinental Exchange , Inc., or ICE, Members Exchange, or MEMX, and BOX Options Market."
+          }
+        }
+      ],
+      "name_en": "Miami International Holdings"
+    },
+    {
+      "id": "DB1",
+      "ticker": "Deutsche Börse",
+      "name": "ドイツ取引所",
+      "sub": "欧州の取引所",
+      "sub_en": "European exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州の上場誘致で、ドイツ取引所などの取引所と競合している",
+          "text_en": "Competing European exchanges for listings include Deutsche Börse AG",
+          "source": {
+            "label": "ナスダック 10-K(2025年12月期)",
+            "label_en": "Nasdaq, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120193/000162828026007703/ndaq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "For those considering an alternative, competing European exchanges that frequently attract many listings from outside their respective home countries include LSE, Euronext N.V. and Deutsche Börse AG."
+          }
+        }
+      ],
+      "name_en": "Deutsche Börse AG"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

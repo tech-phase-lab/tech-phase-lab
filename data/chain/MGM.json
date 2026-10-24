@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "MGM",
+    "name": "MGMリゾーツ・インターナショナル",
+    "cik": 789570,
+    "name_en": "MGM Resorts International"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ENTAIN",
+      "ticker": "Entain",
+      "name": "エンテイン",
+      "sub": "ゲーム・ブックメーカー",
+      "sub_en": "Gaming & betting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BetMGM北米合弁の提携先で、主要な意思決定は双方の同意が必要である",
+          "text_en": "Venture partner in BetMGM North America Venture, with major activities requiring consent of both members",
+          "source": {
+            "label": "MGM Resorts 10-K(2025年12月31日期)",
+            "label_en": "MGM Resorts International 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/789570/000078957026000018/mgm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "For example, we share control of BetMGM North America Venture with our venture partner, Entain plc (“Entain”), with all major operating, investing and financial activities requiring the consent of both members."
+          }
+        }
+      ],
+      "name_en": "Entain plc"
+    },
+    {
+      "id": "VICI",
+      "ticker": "VICI",
+      "name": "VICIプロパティーズ",
+      "sub": "ゲーミングREIT",
+      "sub_en": "Gaming REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "VICIとの間で改訂版のマスターリース契約を結んでいる",
+          "text_en": "MGM entered into an amended and restated master lease with VICI",
+          "source": {
+            "label": "MGM Resorts 10-K(2025年12月31日期)",
+            "label_en": "MGM Resorts International 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/789570/000078957026000018/mgm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We entered into an amended and restated master lease with VICI. See Note 11 for discussion of the lease."
+          }
+        }
+      ],
+      "name_en": "VICI Properties"
+    },
+    {
+      "id": "ORIX",
+      "ticker": "IX",
+      "name": "オリックス",
+      "sub": "総合金融",
+      "sub_en": "Diversified financial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年12月にオリックスとMGM大阪を設立し、統合型リゾートの開発を計画している",
+          "text_en": "In December 2021, MGM and ORIX formed the MGM Osaka venture to develop the integrated resort",
+          "source": {
+            "label": "MGM Resorts 10-K(2025年12月31日期)",
+            "label_en": "MGM Resorts International 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/789570/000078957026000018/mgm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In December 2021, we and ORIX formed a venture, MGM Osaka, through which we plan to develop the integrated resort."
+          }
+        }
+      ],
+      "name_en": "ORIX"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

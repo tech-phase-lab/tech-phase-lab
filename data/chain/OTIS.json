@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "OTIS",
+    "name": "オーチス・ワールドワイド",
+    "cik": 1781335,
+    "name_en": "Otis Worldwide"
+  },
+  "rows": [
+    {
+      "ja": "競合・提携",
+      "en": "Competitors & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KONE",
+      "ticker": "KONE",
+      "name": "コネ",
+      "sub": "エレベーター",
+      "sub_en": "Elevators",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "新設と保守の両事業で、世界的な主要競合として挙げられている",
+          "text_en": "KONE is listed as a major global competitor in both New Equipment and Service",
+          "source": {
+            "label": "Otis Worldwide 10-K(December 31, 2025)",
+            "label_en": "Otis Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781335/000178133526000011/otis-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In both the Ne w Equipment and Service segments, major competitors globally include KONE Oyj, Schindler Group and TK Elevator, while there are a number of additional competitors in the Asia Pacific region."
+          }
+        }
+      ],
+      "name_en": "KONE"
+    },
+    {
+      "id": "Schindler",
+      "ticker": "Schindler Group",
+      "name": "シンドラーグループ",
+      "sub": "エレベーター",
+      "sub_en": "Elevators",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "新設と保守の両事業で、世界的な主要競合として挙げられている",
+          "text_en": "Schindler Group is listed as a major global competitor in both New Equipment and Service",
+          "source": {
+            "label": "Otis Worldwide 10-K(December 31, 2025)",
+            "label_en": "Otis Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781335/000178133526000011/otis-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In both the Ne w Equipment and Service segments, major competitors globally include KONE Oyj, Schindler Group and TK Elevator, while there are a number of additional competitors in the Asia Pacific region."
+          }
+        }
+      ],
+      "name_en": "Schindler Group"
+    },
+    {
+      "id": "TKE",
+      "ticker": "TK Elevator",
+      "name": "TKエレベーター",
+      "sub": "エレベーター",
+      "sub_en": "Elevators",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "新設と保守の両事業で、世界的な主要競合として挙げられている",
+          "text_en": "TK Elevator is listed as a major global competitor in both New Equipment and Service",
+          "source": {
+            "label": "Otis Worldwide 10-K(December 31, 2025)",
+            "label_en": "Otis Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781335/000178133526000011/otis-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In both the Ne w Equipment and Service segments, major competitors globally include KONE Oyj, Schindler Group and TK Elevator, while there are a number of additional competitors in the Asia Pacific region."
+          }
+        }
+      ],
+      "name_en": "TK Elevator"
+    },
+    {
+      "id": "Xizi",
+      "ticker": "Xizi Elevator",
+      "name": "西子電梯集団",
+      "sub": "エレベーター合弁",
+      "sub_en": "Elevator JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁Otis Electricで、かつて提携先だった",
+          "text_en": "Xizi Elevator Group was Otis China's partner in the Otis Electric joint venture",
+          "source": {
+            "label": "Otis Worldwide 10-K(December 31, 2025)",
+            "label_en": "Otis Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781335/000178133526000011/otis-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Otis China’s partner in Otis Electric was Xizi Elevator Group Co."
+          }
+        }
+      ],
+      "name_en": "Xizi Elevator Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "PLD",
+    "name": "プロロジス",
+    "cik": 1045609,
+    "name_en": "Prologis"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・物流",
+      "sub_en": "E-commerce & logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位顧客の一社で、連結不動産の賃料に占める割合は6.3%である",
+          "text_en": "Amazon is one of the top customers, at 6.3 % of net effective rent in consolidated properties",
+          "source": {
+            "label": "プロロジス 10-K(2025年12月31日期)",
+            "label_en": "Prologis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Top Customers % of NER Total Occupied Square Feet Top Customers % of NER Total Occupied Square Feet 1. Amazon 6.3 35 1. Amazon 5.3 48"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "sub": "住宅資材小売",
+      "sub_en": "Home improvement retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位顧客の一社で、連結不動産の賃料に占める割合は2.8%である",
+          "text_en": "Home Depot is one of the top customers, at 2.8 % of net effective rent in consolidated properties",
+          "source": {
+            "label": "プロロジス 10-K(2025年12月31日期)",
+            "label_en": "Prologis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "1. Amazon 6.3 35 1. Amazon 5.3 48 2. Home Depot 2.8 17 2. Home Depot 1.8 19"
+          }
+        }
+      ],
+      "name_en": "Home Depot"
+    },
+    {
+      "id": "FDX",
+      "ticker": "FDX",
+      "name": "フェデックス",
+      "sub": "運送・物流",
+      "sub_en": "Parcel & logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位顧客の一社で、連結不動産の賃料に占める割合は1.8%である",
+          "text_en": "FedEx is one of the top customers, at 1.8 % of net effective rent in consolidated properties",
+          "source": {
+            "label": "プロロジス 10-K(2025年12月31日期)",
+            "label_en": "Prologis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "2. Home Depot 2.8 17 2. Home Depot 1.8 19 3. FedEx 1.8 7 3. FedEx 1.4 11"
+          }
+        }
+      ],
+      "name_en": "FedEx"
+    },
+    {
+      "id": "UPS",
+      "ticker": "UPS",
+      "name": "ユナイテッド・パーセル・サービス",
+      "sub": "運送・物流",
+      "sub_en": "Parcel & logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位顧客の一社で、連結不動産の賃料に占める割合は1.0%である",
+          "text_en": "UPS is one of the top customers, at 1.0 % of net effective rent in consolidated properties",
+          "source": {
+            "label": "プロロジス 10-K(2025年12月31日期)",
+            "label_en": "Prologis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "3. FedEx 1.8 7 3. FedEx 1.4 11 4. UPS 1.0 7 4. DHL 1.2 14"
+          }
+        }
+      ],
+      "name_en": "UPS"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "総合小売",
+      "sub_en": "General retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位顧客の一社で、連結不動産の賃料に占める割合は0.8%である",
+          "text_en": "Walmart is one of the top customers, at 0.8 % of net effective rent in consolidated properties",
+          "source": {
+            "label": "プロロジス 10-K(2025年12月31日期)",
+            "label_en": "Prologis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "4. UPS 1.0 7 4. DHL 1.2 14 5. Walmart 0.8 5 5. DSV 1.2 14"
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "GXO",
+      "ticker": "GXO",
+      "name": "GXOロジスティクス",
+      "sub": "契約物流",
+      "sub_en": "Contract logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位顧客の一社で、連結不動産の賃料に占める割合は0.8%である",
+          "text_en": "GXO Logistics is one of the top customers, at 0.8 % of net effective rent in consolidated properties",
+          "source": {
+            "label": "プロロジス 10-K(2025年12月31日期)",
+            "label_en": "Prologis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "5. Walmart 0.8 5 5. DSV 1.2 14 6. GXO 0.8 5 6. Geodis 1.0 14"
+          }
+        }
+      ],
+      "name_en": "GXO Logistics"
+    },
+    {
+      "id": "NPR",
+      "ticker": "Nippon Prologis",
+      "name": "日本プロロジスリート投資法人",
+      "sub": "上場共同投資ビークル",
+      "sub_en": "Listed co-investment vehicle",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本で上場する共同投資ビークルの一つである",
+          "text_en": "It is one of three publicly traded co-investment vehicles, listed in Japan",
+          "source": {
+            "label": "プロロジス 10-K(2025年12月31日期)",
+            "label_en": "Prologis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The business is capitalized through private and public equity, and is comprised of 94% open-ended ventures, long-term ventures and three publicly traded vehicles: (i) Nippon Prologis REIT, Inc. in Japan;"
+          }
+        }
+      ],
+      "name_en": "Nippon Prologis REIT"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

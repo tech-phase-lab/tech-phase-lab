@@ -54099,7 +54099,7 @@
       "strength": "Moody's Analyticsは意思決定支援、調査、データの3事業を持つ。収入は購読型が中心。",
       "risks": "金融業界向けの厳しい規制を受ける。格付け会社間の競争が強まりうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "中国の格付会社CCXIに30%を出資している。 サイバーリスク格付のビットサイトに少数持分を保有している。"
     },
     "en": {
       "business": "A company that provides credit ratings and financial data analytics.",
@@ -54107,11 +54107,36 @@
       "strength": "Moody's Analytics runs three lines: decision solutions, research and data, with mostly subscription revenue.",
       "risks": "It faces extensive regulation of the financial industry, and competition among rating agencies may grow.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Moody's holds a 30% investment in CCXI, a domestic credit rating agency in China. Moody's holds a minority interest in BitSight."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "CCXI",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Equity investment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "BitSight",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Minority interest"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -54382,7 +54407,7 @@
       "strength": "天然ガスを好む顧客が多く、市場で優位に立つ。NIPSCOの電気は営業区域が原則独占。",
       "risks": "売上は暖房期など季節で振れる。自家発電や他の電力源、データセンター誘致の競争もある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "子会社NIPSCOが、アマゾン子会社のデータセンターへ電力を供給する契約を結んだ。 ブラックストーン系列が、NIPSCOの持株会社の19.9%の持分を取得した。"
     },
     "en": {
       "business": "A utility that delivers gas and electricity to customers in Indiana and elsewhere.",
@@ -54390,11 +54415,38 @@
       "strength": "Customer preference for natural gas keeps it well positioned, and NIPSCO Electric has largely exclusive service areas.",
       "risks": "Sales swing with the seasons, and it faces self-generation, other energy sources and competition for data centers.",
       "competition": "",
-      "relationships": ""
+      "relationships": "NIPSCO agreed in September 2025 to provide electricity to data centers of an Amazon subsidiary. A Blackstone affiliate received a 19.9% equity interest in NIPSCO Holdings II in December 2023."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon.com, Inc.",
+          "role": "customer",
+          "label": {
+            "ja": "データセンター電力の顧客",
+            "en": "Data center power customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Blackstone",
+          "role": "partner",
+          "label": {
+            "ja": "少数株主の出資先",
+            "en": "Minority equity investor"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "BX"
+        }
+      ]
     }
   },
   {
@@ -54679,7 +54731,7 @@
       "strength": "テキサスで競争市場の家庭向け電力顧客のシェアが最大。法人向けにも電力とガスを供給する。",
       "risks": "小売市場は競合が多く、顧客獲得の競争が激しい。卸の天然ガス取引も競争が厳しい。",
       "competition": "",
-      "relationships": ""
+      "relationships": "7HAガスタービン3.6GWの調達に向け、GEヴェルノバと枠の予約契約を結んだ。 キーウィット子会社のTICと、最大5.4GWのガス火力の開発・建設で合意した。"
     },
     "en": {
       "business": "A major U.S. energy company that sells electricity and natural gas to homes and businesses.",
@@ -54687,11 +54739,37 @@
       "strength": "Its retail brands hold the largest share of competitively served residential electric customers in Texas.",
       "risks": "Retail markets have many rivals and fierce competition for customers, and wholesale gas is also highly competitive.",
       "competition": "",
-      "relationships": ""
+      "relationships": "NRG entered into slot reservation agreements with GEV for the procurement of 3.6 GW of 7HA gas turbines. NRG signed a Project Development Agreement with GE Vernova and Kiewit's subsidiary TIC to build up to 5.4 GW of gas-fired generation."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "GE Vernova",
+          "role": "supplier",
+          "label": {
+            "ja": "ガスタービンの調達先",
+            "en": "Gas turbine supplier"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GEV"
+        },
+        {
+          "kind": "company",
+          "name": "Kiewit",
+          "role": "partner",
+          "label": {
+            "ja": "発電所の建設パートナー",
+            "en": "Construction partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -55456,7 +55534,7 @@
       "strength": "送配電網の信頼性と強靭性の向上が戦略。データセンター向け発電の合弁事業にも51%出資する。",
       "risks": "州ごとに規制の枠組みが異なる。悪天候に備える投資が要り、データセンター向けの契約は未締結。",
       "competition": "",
-      "relationships": ""
+      "relationships": "データセンター向け発電所を建設・運営する合弁を設立した。"
     },
     "en": {
       "business": "A utility that delivers electricity and gas across Pennsylvania, Kentucky and Rhode Island.",
@@ -55464,11 +55542,25 @@
       "strength": "Its strategy centers on more reliable, resilient networks, and it holds 51% of a joint venture to build power plants for data centers.",
       "risks": "Each jurisdiction has its own regulatory rules, storm-proofing needs investment, and no data center contracts have been signed yet.",
       "competition": "",
-      "relationships": ""
+      "relationships": "PPL and Blackstone Infrastructure created a joint venture to build, own and operate new generation stations to power data centers in Pennsylvania."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Blackstone Infrastructure",
+          "role": "partner",
+          "label": {
+            "ja": "発電所建設の合弁パートナー",
+            "en": "Joint venture partner for new generation"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "BX"
+        }
+      ]
     }
   },
   {
@@ -55626,7 +55718,7 @@
       "strength": "規制事業への投資に加え、2032年まで生産税額控除で価格下落から守られる原子力発電を持つ。",
       "risks": "規制や政策の不確実性、サイバー攻撃が課題。夏季の停止禁止などで売掛金と貸倒費用が増えた。",
       "competition": "",
-      "relationships": ""
+      "relationships": "SalemとPeach Bottom原子力発電所を共同保有する。"
     },
     "en": {
       "business": "A holding company running electric and gas utilities and nuclear generation in New Jersey.",
@@ -55634,11 +55726,24 @@
       "strength": "Besides regulated investment, it runs nuclear units that have price downside protection from a production tax credit through 2032.",
       "risks": "Regulatory and policy uncertainty and cyberattacks are challenges. A summer shutoff ban has raised receivables and bad debt expense.",
       "competition": "",
-      "relationships": ""
+      "relationships": "PSEG Power co-owns the Salem and Peach Bottom nuclear plants with Constellation Energy Generation."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Constellation Energy Generation, LLC",
+          "role": "partner",
+          "label": {
+            "ja": "原発の共同保有者",
+            "en": "Nuclear plant co-owner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -55660,7 +55765,7 @@
       "strength": "新設した施設は積極的な価格で埋め、市場シェアを広げる。",
       "risks": "同業との競争が激しい。自然災害や固定資産税などの費用増、金利高も重荷になる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "欧州の上場セルフストレージ会社で、当社が35%を保有する。"
     },
     "en": {
       "business": "A company that owns and operates self-storage facilities.",
@@ -55668,11 +55773,24 @@
       "strength": "It fills new facilities with aggressive pricing to build market share.",
       "risks": "Competition among operators is intense. Disasters, rising costs such as property taxes, and high interest rates weigh on it.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Public Storage holds a 35% interest in Shurgard, a European self-storage operator."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Shurgard Self Storage Limited",
+          "role": "partner",
+          "label": {
+            "ja": "出資先(欧州)",
+            "en": "35% investee in Europe"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -56006,7 +56124,7 @@
       "strength": "法人、個人、富裕層向けの部門に加え、設備金融など専門業務も手がけるのが特徴。",
       "risks": "景気や金融市場の悪化、金利の変動で業績が落ちうる。フィンテックなど非銀行勢との競争も激しい。",
       "competition": "",
-      "relationships": ""
+      "relationships": "従業員向けの授業料補助プログラムをGuildと提携して運営している。"
     },
     "en": {
       "business": "A financial holding company based in Alabama, with banking operations across the South, Midwest and Texas.",
@@ -56014,11 +56132,24 @@
       "strength": "Its corporate, consumer and wealth units are joined by specialty services such as equipment financing.",
       "risks": "Weak economies, weak financial markets and shifting interest rates can hurt results. Fintechs and other non-banks add to intense competition.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Regions runs its employee tuition assistance program in partnership with Guild."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Guild",
+          "role": "partner",
+          "label": {
+            "ja": "人材育成の提携先",
+            "en": "Tuition program partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -56040,7 +56171,7 @@
       "strength": "収集から埋立までを自社でつなぐ垂直統合の事業網が特徴。稼働中の埋立地は207。",
       "risks": "競争の激しい業界で、大手のほか地域企業や多数の小規模業者と争う。新規の許可取得に何年もかかりうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "再生プラスチックを扱う合弁会社Blue Polymersを共同で設立した。"
     },
     "en": {
       "business": "An environmental services company in North America that handles waste collection, recycling and landfill.",
@@ -56048,11 +56179,24 @@
       "strength": "Its vertically integrated network links collection to disposal. It runs 207 active landfills.",
       "risks": "It faces intense competition from large national firms, regional firms and many small operators. New permits can take years.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Republic Services created the Blue Polymers joint venture with Ravago."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Ravago",
+          "role": "partner",
+          "label": {
+            "ja": "合弁パートナー",
+            "en": "Joint venture partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -56353,7 +56497,7 @@
       "strength": "150年以上続く格付け事業と、Capital IQなどのデータ基盤が特徴。",
       "risks": "サイバー攻撃にさらされやすい。機密情報が漏れれば顧客の信頼を失いうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "指数事業の合弁会社S&P Dow Jones Indices LLCを共同で保有している。"
     },
     "en": {
       "business": "A company that provides ratings, data and analytics to financial and energy markets.",
@@ -56361,11 +56505,25 @@
       "strength": "Its features are a ratings business active for over 150 years and data platforms such as Capital IQ.",
       "risks": "Its size makes it a target for cyber attacks, and leaked confidential data could cost it customers' trust.",
       "competition": "",
-      "relationships": ""
+      "relationships": "CME Group is a partner in the S&P Dow Jones Indices LLC partnership."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "CME Group",
+          "role": "partner",
+          "label": {
+            "ja": "指数合弁の相手先",
+            "en": "Indices JV partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CME"
+        }
+      ]
     }
   },
   {
@@ -56835,7 +56993,7 @@
       "strength": "革新性と品質への評判、知名度の高いブランド、幅広い製品群が特徴。",
       "risks": "大小の競合と競い合う。大手顧客のプライベートブランドも製品と競合する。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年の連結純売上高の約15%を占める最大級の顧客。 2025年の連結純売上高の約12%を占める主要顧客。"
     },
     "en": {
       "business": "A maker of tools such as DEWALT, outdoor products and engineered fasteners.",
@@ -56843,11 +57001,38 @@
       "strength": "Its reputation for innovation and quality, well-known brands and broad product lines set it apart.",
       "risks": "It faces both larger and smaller rivals. Private label brands from large customers also compete with its products.",
       "competition": "",
-      "relationships": ""
+      "relationships": "The Home Depot accounted for approximately 15% of consolidated net sales in 2025. Lowe's accounted for approximately 12% of consolidated net sales in 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "The Home Depot",
+          "role": "customer",
+          "label": {
+            "ja": "主要顧客",
+            "en": "Major customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "HD"
+        },
+        {
+          "kind": "company",
+          "name": "Lowe's",
+          "role": "customer",
+          "label": {
+            "ja": "主要顧客",
+            "en": "Major customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "LOW"
+        }
+      ]
     }
   },
   {
@@ -57435,7 +57620,7 @@
       "strength": "北米中心の製造体制が特徴。カナダやメキシコ製の航空機部品は、USMCAで関税の優遇を受けやすい。",
       "risks": "米国の関税の影響を受け続ける。米政府向け契約への依存や、インフレによる原価上昇も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "次世代の軽ジェット機に、ガーミンの緊急自動着陸技術を搭載する予定。"
     },
     "en": {
       "business": "A maker of business jets, helicopters, defense systems and industrial vehicles.",
@@ -57443,11 +57628,25 @@
       "strength": "It is mainly a North American manufacturer. Aircraft parts made in Canada and Mexico largely qualify for tariff preference under the USMCA.",
       "risks": "U.S. tariffs keep weighing on its businesses. It also relies on U.S. Government contracts and faces cost inflation.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Garmin's Emergency Autoland technology will be included in Textron Aviation's next generation light jets."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Garmin",
+          "role": "supplier",
+          "label": {
+            "ja": "搭載技術の提供元",
+            "en": "Technology provider"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GRMN"
+        }
+      ]
     }
   },
   {
@@ -57528,7 +57727,7 @@
       "strength": "ブランド品を定価より20%から60%安く売る。機会を捉えた仕入れと柔軟な事業モデルが特徴。",
       "risks": "仕入れや在庫管理に失敗すると業績が悪化しうる。消費者の好みを読み違えるリスクも抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "メキシコのオフプライス事業で、アクソと合弁を組み49%を出資した。 中東のオフプライス小売ブランズ・フォー・レスに35%出資した。"
     },
     "en": {
       "business": "An off-price retailer of apparel and home fashions.",
@@ -57536,11 +57735,36 @@
       "strength": "It sells brand name goods at prices 20% to 60% below full-price retailers. Opportunistic buying and a flexible business model set it apart.",
       "risks": "Poor execution of buying or inventory management can hurt results. Misreading consumer trends is another risk.",
       "competition": "",
-      "relationships": ""
+      "relationships": "TJX holds a 49% stake in Multibrand Outlet Stores through a joint venture with Grupo Axo. TJX holds a 35% minority stake in Brands for Less, an off-price retailer in the Middle East."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Grupo Axo",
+          "role": "partner",
+          "label": {
+            "ja": "メキシコの合弁相手",
+            "en": "Mexico JV partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Brands for Less",
+          "role": "partner",
+          "label": {
+            "ja": "中東の出資先",
+            "en": "Middle East investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -57630,7 +57854,7 @@
       "strength": "ニッチ市場向けの高度な独自部品が特徴。コスト構造の引き締めと、選択的な買収が柱。",
       "risks": "航空宇宙・防衛にほぼ集中している。上位10顧客が純売上の約40%を占める。",
       "competition": "",
-      "relationships": ""
+      "relationships": "大型民間航空機メーカーとして、同社の部品の販売先である。 大型民間航空機メーカーとして、同社の部品の販売先である。"
     },
     "en": {
       "business": "A designer and maker of highly engineered aircraft components for commercial and military planes.",
@@ -57638,11 +57862,37 @@
       "strength": "Highly engineered proprietary parts for niche markets are its feature. A lean cost structure and selective acquisitions are its pillars.",
       "risks": "Its business is almost entirely focused on aerospace and defense. Its top ten customers account for about 40% of net sales.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Boeing is named as a manufacturer of large commercial aircraft to which TransDigm sells. Airbus is named as a manufacturer of large commercial aircraft to which TransDigm sells."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Boeing",
+          "role": "customer",
+          "label": {
+            "ja": "販売先の航空機メーカー",
+            "en": "Aircraft maker customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "BA"
+        },
+        {
+          "kind": "company",
+          "name": "Airbus",
+          "role": "customer",
+          "label": {
+            "ja": "販売先の航空機メーカー",
+            "en": "Aircraft maker customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -57826,7 +58076,7 @@
       "strength": "選んだ市場に集中して展開する。従業員の離職率は19.4%で、業界水準の34%より低い。",
       "risks": "NOIの74.5%が一部の市場に集中し、地域の景気悪化に弱い。入居者獲得の競争も激しい。",
       "competition": "",
-      "relationships": ""
+      "relationships": "運営中の賃貸住宅4物件を、ラサールとの既存の合弁事業に拠出した。"
     },
     "en": {
       "business": "A REIT that owns apartment communities in targeted U.S. markets.",
@@ -57834,11 +58084,24 @@
       "strength": "It concentrates on selected markets. Employee turnover is 19.4%, below the industry benchmark of 34%.",
       "risks": "74.5% of its NOI comes from a few markets, so local downturns hit it hard. Competition for residents is also intense.",
       "competition": "",
-      "relationships": ""
+      "relationships": "UDR contributed four wholly-owned operating communities to its existing joint venture with LaSalle."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "LaSalle",
+          "role": "partner",
+          "label": {
+            "ja": "合弁事業のパートナー",
+            "en": "Joint venture partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -58098,7 +58361,7 @@
       "strength": "独自のデータ資産と保険業界の深い知見が特徴。長年の業界との関係も土台になる。",
       "risks": "競合が多く、資源力で勝る大手とも戦う。外部のデータ提供元を失えば、サービスを出せなくなりうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "同社の顧客で、連結売上高の約2%を占めた。 同社の顧客で、2024年の連結売上高の約1%を占めた。"
     },
     "en": {
       "business": "A company that provides data, analytics and technology to the insurance industry.",
@@ -58106,11 +58369,37 @@
       "strength": "Its features are proprietary data assets and deep insurance expertise, backed by long-standing industry relationships.",
       "risks": "It faces many competitors, some with greater resources. Losing access to outside data sources could stop it from delivering its solutions.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Liberty Mutual Insurance is a Verisk customer and accounted for approximately 2% of consolidated revenue. AIG is a Verisk customer and accounted for approximately 1% of consolidated revenue in 2024."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Liberty Mutual Insurance",
+          "role": "customer",
+          "label": {
+            "ja": "保険会社の顧客",
+            "en": "Insurer customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "American International Group",
+          "role": "customer",
+          "label": {
+            "ja": "保険会社の顧客",
+            "en": "Insurer customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AIG"
+        }
+      ]
     }
   },
   {

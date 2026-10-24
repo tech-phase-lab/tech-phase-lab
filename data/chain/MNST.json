@@ -1,0 +1,232 @@
+{
+  "root": {
+    "ticker": "MNST",
+    "name": "モンスター・ビバレッジ",
+    "cik": 865752,
+    "name_en": "Monster Beverage"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "KO",
+    "PEP",
+    "KDP",
+    "CELH"
+  ],
+  "companies": [
+    {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "コカ・コーラ",
+      "sub": "飲料大手",
+      "sub_en": "Beverages",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社を通じた販売が、2025年の純売上高の約3%を占めた",
+          "text_en": "Sales through TCCC subsidiaries accounted for approximately 3% of net sales in 2025",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Coca-Cola Company (“TCCC”), through certain wholly-owned subsidiaries (the “TCCC Subsidiaries”), accounted for approximately 3 %, 3 % and 2 % of the Company’s net sales for the years ended December 31, 2025, 2024 and 2023, respectively."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "すべての液体飲料で競合する企業として名前が挙がる",
+          "text_en": "Named among competitors across all liquid refreshments",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our products compete with all liquid refreshments, including TCCC, PepsiCo, Inc. (“PepsiCo”), Keurig Dr. Pepper Inc. (“KDP”) and Red Bull GmbH."
+          }
+        }
+      ],
+      "name_en": "The Coca-Cola Company"
+    },
+    {
+      "id": "CCEP",
+      "ticker": "CCEP",
+      "name": "コカ・コーラ・ヨーロピアン・パートナーズ",
+      "sub": "ボトラー・販売",
+      "sub_en": "Bottler & distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の純売上高の約15%を占める販売先である",
+          "text_en": "Accounted for approximately 15% of net sales in 2025",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Coca-Cola Europacific Partners accounted for approximately 15%, 14% and 13% of our net sales for the years ended December 31, 2025, 2024 and 2023, respectively."
+          }
+        }
+      ],
+      "name_en": "Coca-Cola Europacific Partners"
+    },
+    {
+      "id": "COKE",
+      "ticker": "COKE",
+      "name": "コカ・コーラ・コンソリデーテッド",
+      "sub": "米国のボトラー",
+      "sub_en": "U.S. bottler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の純売上高の約10%を占める販売先である",
+          "text_en": "Accounted for approximately 10% of net sales in 2025",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Coca-Cola Consolidated, Inc. accounted for approximately 10% of our net sales for each of the years ended December 31, 2025, 2024 and 2023."
+          }
+        }
+      ],
+      "name_en": "Coca-Cola Consolidated"
+    },
+    {
+      "id": "REYES",
+      "ticker": "Reyes Beverage",
+      "name": "レイエス・ビバレッジ・グループ",
+      "sub": "酒類卸",
+      "sub_en": "Beverage distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アルコール飲料の販売先の一社である",
+          "text_en": "One of Monster's alcohol customers",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our alcohol customers include Reyes Beverage Group, Ben E. Keith Company, J.J. Taylor Distributing and Admiral Beverage Corporation."
+          }
+        }
+      ],
+      "name_en": "Reyes Beverage Group"
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "sub": "飲料・食品",
+      "sub_en": "Beverages & foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "すべての液体飲料で競合する企業として名前が挙がる",
+          "text_en": "Named among competitors across all liquid refreshments",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our products compete with all liquid refreshments, including TCCC, PepsiCo, Inc. (“PepsiCo”), Keurig Dr. Pepper Inc. (“KDP”) and Red Bull GmbH."
+          }
+        }
+      ],
+      "name_en": "PepsiCo, Inc."
+    },
+    {
+      "id": "KDP",
+      "ticker": "KDP",
+      "name": "キューリグ・ドクターペッパー",
+      "sub": "飲料大手",
+      "sub_en": "Beverages",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "すべての液体飲料で競合する企業として名前が挙がる",
+          "text_en": "Named among competitors across all liquid refreshments",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our products compete with all liquid refreshments, including TCCC, PepsiCo, Inc. (“PepsiCo”), Keurig Dr. Pepper Inc. (“KDP”) and Red Bull GmbH."
+          }
+        }
+      ],
+      "name_en": "Keurig Dr Pepper"
+    },
+    {
+      "id": "REDBULL",
+      "ticker": "Red Bull GmbH",
+      "name": "レッドブル",
+      "sub": "エナジードリンク",
+      "sub_en": "Energy drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エナジードリンクで競合する企業として名前が挙がる",
+          "text_en": "Named among competitors in energy drinks",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our products compete with all liquid refreshments, including TCCC, PepsiCo, Inc. (“PepsiCo”), Keurig Dr. Pepper Inc. (“KDP”) and Red Bull GmbH."
+          }
+        }
+      ],
+      "name_en": "Red Bull GmbH"
+    },
+    {
+      "id": "CELH",
+      "ticker": "CELH",
+      "name": "セルシウス・ホールディングス",
+      "sub": "エナジードリンク",
+      "sub_en": "Energy drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国のエナジードリンクで直接競合する",
+          "text_en": "Competes directly in the domestic energy drink market",
+          "source": {
+            "label": "Monster Beverage 10-K(2025年12月31日期)",
+            "label_en": "Monster Beverage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/865752/000110465926020831/mnst-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Domestically, our energy drinks compete directly with Red Bull, CELSIUS, Alani Nu, C4, Ghost, 5-Hour Energy, Rockstar, Bloom, V8 + Energy, Venom, and many other brands."
+          }
+        }
+      ],
+      "name_en": "Celsius Holdings"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
