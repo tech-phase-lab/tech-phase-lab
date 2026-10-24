@@ -14,7 +14,6 @@ import re
 import sqlite3
 import tempfile
 import time
-from urllib.parse import urlsplit
 
 MAX_BYTES = 1024 ** 3
 PREFIX = 'tech-phase/research/v1/'
@@ -118,10 +117,14 @@ def configuration(env):
         raise ValueError('external backup disabled')
     values = {k: env.get('MIRROR_DESTINATION_' + k, '') for k in
               ('ENDPOINT', 'BUCKET', 'REGION', 'ACCESS_KEY_ID', 'SECRET_ACCESS_KEY')}
-    url = urlsplit(values['ENDPOINT'])
-    if (not all(values.values()) or url.scheme != 'https' or not url.hostname
-            or url.username or url.password or url.query or url.fragment or url.path not in ('', '/')):
-        raise ValueError('invalid destination')
+    # This job is for the existing external R2 bucket, not an arbitrary S3 host.
+    # Validate before creating a client so typos cannot receive signed requests.
+    if (not all(values.values()) or not re.fullmatch(
+            r'https://[a-f0-9]{32}(?:\.(?:eu|fedramp))?\.r2\.cloudflarestorage\.com(?::443)?/?',
+            values['ENDPOINT'])
+            or values['BUCKET'] != 'resolute-backup-external'
+            or values['REGION'] != 'auto'):
+        raise ValueError('explicit existing R2 destination required')
     key = env.get('TECH_PHASE_EXTERNAL_KEY_HEX', '')
     if not re.fullmatch('[a-f0-9]{64}', key):
         raise ValueError('independently retained encryption key required')

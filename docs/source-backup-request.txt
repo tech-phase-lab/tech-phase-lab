@@ -1,9 +1,10 @@
-Request: archive source after actual one-attempt AI verification
-Date: 2026-10-23 JST
-Base commit: f9c46edf656210454ac48d992ba49852c44005a2
-Archive this request commit, including preserved coworker changes and AI check code.
+Request: archive source including isolated research backup runtime
+Date: 2026-10-24 JST
+Base commit: 9142da133bdcf7b21466e21eee813eb6aa596a58
+Archive this request commit, including the dedicated research backup Dockerfile,
+restricted build context, offline container CI and actual verification receipt.
 Use existing configured secrets; encrypt before upload, fully download and restore
 Git in isolation with exact commit/tree comparison. Retain older objects.
-Source only: no live DB, dependency tar, runtime promotion or AI call.
+Source only: no live DB, dependency tar, runtime image custody or AI call.
 Do not change schedules, storage gates, credentials, billing or approved content.
 Record actual receipt separately without retriggering this request file.
