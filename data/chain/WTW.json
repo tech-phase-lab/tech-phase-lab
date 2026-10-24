@@ -1,0 +1,196 @@
+{
+  "root": {
+    "ticker": "WTW",
+    "name": "ウィリス・タワーズワトソン",
+    "cik": 1140536,
+    "name_en": "Willis Towers Watson"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AON",
+    "AJG",
+    "BRO",
+    "CTSH",
+    "RHI"
+  ],
+  "companies": [
+    {
+      "id": "AON",
+      "ticker": "AON",
+      "name": "エーオン",
+      "sub": "保険仲介・コンサル",
+      "sub_en": "Broking & consulting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リスク・人事コンサルティングや保険仲介の分野で競合する",
+          "text_en": "Competes with WTW in insurance broking and consulting",
+          "source": {
+            "label": "Willis Towers Watson 10-K(2025-12-31)",
+            "label_en": "Willis Towers Watson 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We compete with companies such as Aon plc, Arthur J. Gallagher & Co., Brown & Brown Inc., Cognizant Technology Solutions Corporation, Marsh & McLennan Companies, Inc. (‘Marsh & McLennan’) and Robert Half International Inc., as well as with numerous specialty, regional and local firms."
+          }
+        }
+      ],
+      "name_en": "Aon plc"
+    },
+    {
+      "id": "AJG",
+      "ticker": "AJG",
+      "name": "アーサー・J・ギャラガー",
+      "sub": "保険仲介",
+      "sub_en": "Insurance broking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リスク・人事コンサルティングや保険仲介の分野で競合する",
+          "text_en": "Competes with WTW in insurance broking and consulting",
+          "source": {
+            "label": "Willis Towers Watson 10-K(2025-12-31)",
+            "label_en": "Willis Towers Watson 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We compete with companies such as Aon plc, Arthur J. Gallagher & Co., Brown & Brown Inc., Cognizant Technology Solutions Corporation, Marsh & McLennan Companies, Inc. (‘Marsh & McLennan’) and Robert Half International Inc., as well as with numerous specialty, regional and local firms."
+          }
+        }
+      ],
+      "name_en": "Arthur J. Gallagher & Co."
+    },
+    {
+      "id": "BRO",
+      "ticker": "BRO",
+      "name": "ブラウン・アンド・ブラウン",
+      "sub": "保険仲介",
+      "sub_en": "Insurance broking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リスク・人事コンサルティングや保険仲介の分野で競合する",
+          "text_en": "Competes with WTW in insurance broking and consulting",
+          "source": {
+            "label": "Willis Towers Watson 10-K(2025-12-31)",
+            "label_en": "Willis Towers Watson 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We compete with companies such as Aon plc, Arthur J. Gallagher & Co., Brown & Brown Inc., Cognizant Technology Solutions Corporation, Marsh & McLennan Companies, Inc. (‘Marsh & McLennan’) and Robert Half International Inc., as well as with numerous specialty, regional and local firms."
+          }
+        }
+      ],
+      "name_en": "Brown & Brown Inc."
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント・テクノロジー・ソリューションズ",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リスク・人事コンサルティングや保険仲介の分野で競合する",
+          "text_en": "Competes with WTW in insurance broking and consulting",
+          "source": {
+            "label": "Willis Towers Watson 10-K(2025-12-31)",
+            "label_en": "Willis Towers Watson 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We compete with companies such as Aon plc, Arthur J. Gallagher & Co., Brown & Brown Inc., Cognizant Technology Solutions Corporation, Marsh & McLennan Companies, Inc. (‘Marsh & McLennan’) and Robert Half International Inc., as well as with numerous specialty, regional and local firms."
+          }
+        }
+      ],
+      "name_en": "Cognizant Technology Solutions Corporation"
+    },
+    {
+      "id": "MMC",
+      "ticker": "MRSH",
+      "name": "マーシュ・マクレナン",
+      "sub": "保険仲介・コンサル",
+      "sub_en": "Broking & consulting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リスク・人事コンサルティングや保険仲介の分野で競合する",
+          "text_en": "Competes with WTW in insurance broking and consulting",
+          "source": {
+            "label": "Willis Towers Watson 10-K(2025-12-31)",
+            "label_en": "Willis Towers Watson 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We compete with companies such as Aon plc, Arthur J. Gallagher & Co., Brown & Brown Inc., Cognizant Technology Solutions Corporation, Marsh & McLennan Companies, Inc. (‘Marsh & McLennan’) and Robert Half International Inc., as well as with numerous specialty, regional and local firms."
+          }
+        }
+      ],
+      "name_en": "Marsh & McLennan Companies, Inc."
+    },
+    {
+      "id": "RHI",
+      "ticker": "RHI",
+      "name": "ロバート・ハーフ",
+      "sub": "人材・コンサル",
+      "sub_en": "Staffing & consulting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リスク・人事コンサルティングや保険仲介の分野で競合する",
+          "text_en": "Competes with WTW in insurance broking and consulting",
+          "source": {
+            "label": "Willis Towers Watson 10-K(2025-12-31)",
+            "label_en": "Willis Towers Watson 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We compete with companies such as Aon plc, Arthur J. Gallagher & Co., Brown & Brown Inc., Cognizant Technology Solutions Corporation, Marsh & McLennan Companies, Inc. (‘Marsh & McLennan’) and Robert Half International Inc., as well as with numerous specialty, regional and local firms."
+          }
+        }
+      ],
+      "name_en": "Robert Half International Inc."
+    },
+    {
+      "id": "HQY",
+      "ticker": "HQY",
+      "name": "ヘルスエクイティ",
+      "sub": "医療費口座",
+      "sub_en": "Health spending accounts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "消費者主導型給付の提供者として競合する",
+          "text_en": "Competes as a provider of account-based health plans and consumer-directed benefits",
+          "source": {
+            "label": "Willis Towers Watson 10-K(2025-12-31)",
+            "label_en": "Willis Towers Watson 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also compete with the public health insurance exchanges currently run by the U.S. federal and state governments, as well as providers of account-based health plans and consumer-directed benefits such as WageWorks and HealthEquity"
+          }
+        }
+      ],
+      "name_en": "HealthEquity"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

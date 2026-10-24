@@ -1,0 +1,168 @@
+{
+  "root": {
+    "ticker": "WAB",
+    "name": "ウエスチングハウス・エア・ブレーキ・テクノロジーズ",
+    "cik": 943452,
+    "name_en": "Westinghouse Air Brake Technologies (Wabtec)"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CAT"
+  ],
+  "companies": [
+    {
+      "id": "KTZ",
+      "ticker": "National Company",
+      "name": "カザフスタン国鉄(KTZ)",
+      "sub": "鉄道事業者",
+      "sub_en": "Railway operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エボリューション・シリーズ機関車の納入と長期保守で合意した",
+          "text_en": "Agreed to deliver Evolution Series locomotives and provide long-term service support",
+          "source": {
+            "label": "Wabtec 10-K(2025-12-31)",
+            "label_en": "Wabtec 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/943452/000162828026008067/wab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In the third quarter of 2025, Wabtec announced an agreement with National Company Kazakhstan Temir Zholy (\"KTZ\"), the national railway of Kazakhstan, to deliver Evolution Series locomotives and provide long-term service support."
+          }
+        }
+      ],
+      "name_en": "National Company Kazakhstan Temir Zholy"
+    },
+    {
+      "id": "CRRC",
+      "ticker": "CRRC Corporation",
+      "name": "中国中車(CRRC)",
+      "sub": "鉄道車両メーカー",
+      "sub_en": "Rolling stock maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "製品や地域によっては、顧客である中国中車とも競合する",
+          "text_en": "In some product lines and regions Wabtec also competes with its customer CRRC",
+          "source": {
+            "label": "Wabtec 10-K(2025-12-31)",
+            "label_en": "Wabtec 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/943452/000162828026008067/wab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Depending on the product line and geography, we can also compete with our customers, such as CRRC Corporation Limited, a China-based manufacturer of rolling stock."
+          }
+        }
+      ],
+      "name_en": "CRRC Corporation Limited"
+    },
+    {
+      "id": "NSC",
+      "ticker": "NSC",
+      "name": "ノーフォーク・サザン",
+      "sub": "貨物鉄道",
+      "sub_en": "Freight railroad",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノーフォーク・サザンから3年連続でサステナビリティ・パートナー賞を受けた",
+          "text_en": "Received the Thoroughbred Sustainability Partner Award from Norfolk Southern three years in a row",
+          "source": {
+            "label": "Wabtec 10-K(2025-12-31)",
+            "label_en": "Wabtec 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/943452/000162828026008067/wab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "This was Wabtec’s third year in a row receiving the Thoroughbred Sustainability Partner Award from Norfolk Southern."
+          }
+        }
+      ],
+      "name_en": "Norfolk Southern"
+    },
+    {
+      "id": "KNORR",
+      "ticker": "Knorr-Bremse",
+      "name": "クノールブレムゼ",
+      "sub": "ブレーキ・鉄道機器",
+      "sub_en": "Brakes & rail equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "子会社を通じ北米の主要な競合先であり、北米以外では最大の競合先である",
+          "text_en": "Its subsidiary is a principal North American OEM competitor, and Knorr is the main competitor elsewhere",
+          "source": {
+            "label": "Wabtec 10-K(2025-12-31)",
+            "label_en": "Wabtec 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/943452/000162828026008067/wab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Within North America, New York Air Brake Company, a subsidiary of the German air brake producer Knorr-Bremse AG (“Knorr”) and Amsted Rail Company, Inc., a subsidiary of Amsted Industries Corporation, are our principal overall OEM competitors."
+          }
+        }
+      ],
+      "name_en": "Knorr-Bremse AG"
+    },
+    {
+      "id": "AMSTED",
+      "ticker": "Amsted Industries",
+      "name": "アムステッド・インダストリーズ",
+      "sub": "鉄道機器",
+      "sub_en": "Rail equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "子会社のアムステッド・レールを通じ北米の主要な競合先である",
+          "text_en": "Its subsidiary Amsted Rail is a principal overall OEM competitor in North America",
+          "source": {
+            "label": "Wabtec 10-K(2025-12-31)",
+            "label_en": "Wabtec 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/943452/000162828026008067/wab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Within North America, New York Air Brake Company, a subsidiary of the German air brake producer Knorr-Bremse AG (“Knorr”) and Amsted Rail Company, Inc., a subsidiary of Amsted Industries Corporation, are our principal overall OEM competitors."
+          }
+        }
+      ],
+      "name_en": "Amsted Industries Corporation"
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "sub": "建設・鉄道機械",
+      "sub_en": "Machinery & rail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のプログレス・レールが機関車の主な競合先である",
+          "text_en": "Its unit Progress Rail is the primary competitor for locomotives",
+          "source": {
+            "label": "Wabtec 10-K(2025-12-31)",
+            "label_en": "Wabtec 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/943452/000162828026008067/wab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our primary competition for locomotives is Progress Rail, owned by a subsidiary of Caterpillar."
+          }
+        }
+      ],
+      "name_en": "Caterpillar Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

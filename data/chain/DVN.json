@@ -1,0 +1,131 @@
+{
+  "root": {
+    "ticker": "DVN",
+    "name": "デボン・エナジー",
+    "cik": 1090012,
+    "name_en": "Devon Energy"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WATERBRIDGE",
+      "ticker": "WaterBridge",
+      "name": "ウォーターブリッジ",
+      "sub": "随伴水の処理",
+      "sub_en": "Produced water",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "水処理の合弁会社を統合してできたウォーターブリッジの株式を、約14%持っている",
+          "text_en": "Devon holds about 14% of the equity of WaterBridge, formed by combining the produced water joint venture with other companies",
+          "source": {
+            "label": "Devon Energy 10-K(2025-12-31)",
+            "label_en": "Devon Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090012/000119312526056485/dvn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Devon received approximately 14 % of the equity interests in WaterBridge in connection with these transactions."
+          }
+        }
+      ],
+      "name_en": "WaterBridge Infrastructure LLC"
+    },
+    {
+      "id": "CATALYST",
+      "ticker": "Catalyst",
+      "name": "カタリスト・ミッドストリーム・パートナーズ",
+      "sub": "ガス集積・処理",
+      "sub_en": "Midstream gathering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デラウェア盆地のステートライン地区で集積と処理の設備を整える合弁会社を、共同で持っている",
+          "text_en": "Devon has an interest in Catalyst, a joint venture to develop oil gathering and natural gas processing infrastructure in the Stateline area of the Delaware Basin",
+          "source": {
+            "label": "Devon Energy 10-K(2025-12-31)",
+            "label_en": "Devon Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090012/000119312526056485/dvn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Devon has an interest in Catalyst, which is a joint venture with an affiliate of Howard Energy Partners, LLC (“HEP”), to develop oil gathering and natural gas processing infrastructure in the Stateline area of the Delaware Basin."
+          }
+        },
+        {
+          "type": "up",
+          "text": "ステートライン地区の産出分を、固定料金の集積・処理契約でカタリストに委ねている",
+          "text_en": "Devon production from 50,000 net acres in the Stateline area is dedicated to Catalyst under fixed-fee gathering and processing agreements",
+          "source": {
+            "label": "Devon Energy 10-K(2025-12-31)",
+            "label_en": "Devon Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090012/000119312526056485/dvn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Through 2038, Devon’s production from 50,000 net acres in the Stateline area of the Delaware Basin has been dedicated to Catalyst subject to fixed-fee oil gathering and natural gas processing agreements."
+          }
+        }
+      ],
+      "name_en": "Catalyst Midstream Partners, LLC"
+    },
+    {
+      "id": "HEP",
+      "ticker": "Howard Energy",
+      "name": "ハワード・エナジー・パートナーズ",
+      "sub": "ガス集積・処理",
+      "sub_en": "Midstream partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カタリストの合弁相手は、ハワード・エナジー・パートナーズの関連会社である",
+          "text_en": "The Catalyst joint venture partner is an affiliate of Howard Energy Partners",
+          "source": {
+            "label": "Devon Energy 10-K(2025-12-31)",
+            "label_en": "Devon Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090012/000119312526056485/dvn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Devon has an interest in Catalyst, which is a joint venture with an affiliate of Howard Energy Partners, LLC (“HEP”), to develop oil gathering and natural gas processing infrastructure in the Stateline area of the Delaware Basin."
+          }
+        }
+      ],
+      "name_en": "Howard Energy Partners, LLC"
+    },
+    {
+      "id": "FERVO",
+      "ticker": "Fervo Energy",
+      "name": "ファーボ・エナジー",
+      "sub": "地熱発電",
+      "sub_en": "Geothermal power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "地熱井でエネルギーをつくるファーボに、2024年に約1億1,700万ドルを出資している",
+          "text_en": "Devon invested approximately $117 million in Fervo, a geothermal energy company, in 2024",
+          "source": {
+            "label": "Devon Energy 10-K(2025-12-31)",
+            "label_en": "Devon Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090012/000119312526056485/dvn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In 2024, Devon invested approximately $ 117 million in Fervo, a company that generates energy from geothermal wells."
+          }
+        }
+      ],
+      "name_en": "Fervo Energy Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -61031,7 +61031,7 @@
       "strength": "光ファイバー網が強み。約163,000棟のビルに直結し、路線は340,000マイル超に及ぶ。",
       "risks": "古いシステムの刷新が遅れたり、費用がかさんだりしうる。AI需要が想定を下回る可能性も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "AT&Tと、互いにネットワークなどの商業サービスを提供し合う長期契約を結んだ。"
     },
     "en": {
       "business": "A company that provides network and communications services to businesses.",
@@ -61039,11 +61039,25 @@
       "strength": "Its fiber network is its feature, with about 163,000 fiber on-net buildings and over 340,000 route miles of fiber.",
       "risks": "Modernizing legacy systems may run late or over budget, and AI demand may fall short of its assumptions.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Lumen entered long-term agreements with AT&T to provide each other network and other commercial services."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "AT&T Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "AT&Tとの長期商業契約",
+            "en": "Long-term commercial agreements with AT&T"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "T"
+        }
+      ]
     }
   },
   {
@@ -61065,7 +61079,7 @@
       "strength": "自社保有の拠点が約70%に広がり、運営の主導権を握れるのが特徴。",
       "risks": "ビットコイン価格の変動と資金調達の難しさを抱える。AI分野では資金力のある企業と競う。",
       "competition": "",
-      "relationships": ""
+      "relationships": "スターウッドと、AI・HPCインフラを共同で開発・運営する戦略契約を結んだ。 MPLXと、天然ガスと発電容量の確保に向けた基本合意書を発表した。"
     },
     "en": {
       "business": "An energy and digital infrastructure company that mines Bitcoin.",
@@ -61073,11 +61087,37 @@
       "strength": "Owning about 70% of its capacity gives it more control over operations.",
       "risks": "It faces Bitcoin price swings and funding needs, and competes with better-funded firms in AI.",
       "competition": "",
-      "relationships": ""
+      "relationships": "MARA and Starwood will jointly develop, finance and operate AI and HPC infrastructure on select sites. MARA announced a letter of intent with MPLX LP to expand access to lower-cost natural gas and power capacity."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Starwood Digital Ventures",
+          "role": "partner",
+          "label": {
+            "ja": "スターウッドとの戦略契約",
+            "en": "Strategic Agreement with Starwood"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "MPLX LP",
+          "role": "partner",
+          "label": {
+            "ja": "MPLXとの基本合意",
+            "en": "Letter of intent with MPLX"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MPLX"
+        }
+      ]
     }
   },
   {

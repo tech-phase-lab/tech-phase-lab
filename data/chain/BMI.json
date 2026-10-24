@@ -1,0 +1,248 @@
+{
+  "root": {
+    "ticker": "BMI",
+    "name": "バジャー・メーター",
+    "cik": 9092,
+    "name_en": "BADGER METER INC"
+  },
+  "rows": [
+    {
+      "ja": "通信事業者",
+      "en": "Telecom carriers"
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "XYL",
+    "ROP",
+    "VLTO",
+    "ITRI",
+    "HUBB"
+  ],
+  "companies": [
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T社",
+      "sub": "通信事業者",
+      "sub_en": "Telecom carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "携帯通信の技術変化に対応するため、強い関係を築いている",
+          "text_en": "Keeps strong relationships to track cellular technology changes",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our strong relationships with telecommunication providers such as AT&T and Verizon (among others) allows us to stay abreast of emerging cellular technology changes to provide the premier infrastructure-free AMI solution."
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・コミュニケーションズ",
+      "sub": "通信事業者",
+      "sub_en": "Telecom carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "携帯通信の技術変化に対応するため、強い関係を築いている",
+          "text_en": "Keeps strong relationships to track cellular technology changes",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our strong relationships with telecommunication providers such as AT&T and Verizon (among others) allows us to stay abreast of emerging cellular technology changes to provide the premier infrastructure-free AMI solution."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "XYL",
+      "ticker": "XYL",
+      "name": "ザイレム",
+      "sub": "水道計測・水処理",
+      "sub_en": "Water metering & treatment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道向け製品のハードウェア・通信・ソフトの一部で競合する",
+          "text_en": "Competes in parts of the utility water hardware, communication and software offering",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "organizations such as Sensus (Xylem Inc.), Neptune (Roper Technologies, Inc.), Hach (Veralto Corp.), Itron Inc., Aclara (Hubbell Inc.), Mueller Water Products Inc., Kamstrup and others have select elements of competitive hardware, communication and/or software solutions"
+          }
+        }
+      ],
+      "name_en": "Xylem"
+    },
+    {
+      "id": "ROP",
+      "ticker": "ROP",
+      "name": "ローパー・テクノロジーズ",
+      "sub": "水道メーター(Neptune)",
+      "sub_en": "Water meters (Neptune)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道向け製品のハードウェア・通信・ソフトの一部で競合する",
+          "text_en": "Competes in parts of the utility water hardware, communication and software offering",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "organizations such as Sensus (Xylem Inc.), Neptune (Roper Technologies, Inc.), Hach (Veralto Corp.), Itron Inc., Aclara (Hubbell Inc.), Mueller Water Products Inc., Kamstrup and others have select elements of competitive hardware, communication and/or software solutions"
+          }
+        }
+      ],
+      "name_en": "Roper Technologies"
+    },
+    {
+      "id": "VLTO",
+      "ticker": "VLTO",
+      "name": "ベラルト",
+      "sub": "水質分析(Hach)",
+      "sub_en": "Water analytics (Hach)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道向け製品のハードウェア・通信・ソフトの一部で競合する",
+          "text_en": "Competes in parts of the utility water hardware, communication and software offering",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "organizations such as Sensus (Xylem Inc.), Neptune (Roper Technologies, Inc.), Hach (Veralto Corp.), Itron Inc., Aclara (Hubbell Inc.), Mueller Water Products Inc., Kamstrup and others have select elements of competitive hardware, communication and/or software solutions"
+          }
+        }
+      ],
+      "name_en": "Veralto"
+    },
+    {
+      "id": "ITRI",
+      "ticker": "ITRI",
+      "name": "イトロン",
+      "sub": "スマートメーター",
+      "sub_en": "Smart metering",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道向け製品のハードウェア・通信・ソフトの一部で競合する",
+          "text_en": "Competes in parts of the utility water hardware, communication and software offering",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "organizations such as Sensus (Xylem Inc.), Neptune (Roper Technologies, Inc.), Hach (Veralto Corp.), Itron Inc., Aclara (Hubbell Inc.), Mueller Water Products Inc., Kamstrup and others have select elements of competitive hardware, communication and/or software solutions"
+          }
+        }
+      ],
+      "name_en": "Itron"
+    },
+    {
+      "id": "HUBB",
+      "ticker": "HUBB",
+      "name": "ハベル",
+      "sub": "通信・計測(Aclara)",
+      "sub_en": "Metering comms (Aclara)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道向け製品のハードウェア・通信・ソフトの一部で競合する",
+          "text_en": "Competes in parts of the utility water hardware, communication and software offering",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "organizations such as Sensus (Xylem Inc.), Neptune (Roper Technologies, Inc.), Hach (Veralto Corp.), Itron Inc., Aclara (Hubbell Inc.), Mueller Water Products Inc., Kamstrup and others have select elements of competitive hardware, communication and/or software solutions"
+          }
+        }
+      ],
+      "name_en": "Hubbell"
+    },
+    {
+      "id": "MWA",
+      "ticker": "MWA",
+      "name": "ミューラー・ウォーター・プロダクツ",
+      "sub": "水道インフラ",
+      "sub_en": "Water infrastructure",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道向け製品のハードウェア・通信・ソフトの一部で競合する",
+          "text_en": "Competes in parts of the utility water hardware, communication and software offering",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "organizations such as Sensus (Xylem Inc.), Neptune (Roper Technologies, Inc.), Hach (Veralto Corp.), Itron Inc., Aclara (Hubbell Inc.), Mueller Water Products Inc., Kamstrup and others have select elements of competitive hardware, communication and/or software solutions"
+          }
+        }
+      ],
+      "name_en": "Mueller Water Products"
+    },
+    {
+      "id": "EMR",
+      "ticker": "EMR",
+      "name": "エマソン・エレクトリック",
+      "sub": "流量計測機器",
+      "sub_en": "Flow instrumentation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "流量計測の分野で競合する",
+          "text_en": "Competes in the flow instrumentation markets",
+          "source": {
+            "label": "BADGER METER INC 10-K(2025年12月期)",
+            "label_en": "BADGER METER INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000119312526054739/bmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "They include, among others, Emerson Electric Company, Krohne Messtechnik GmbH, Endress+Hauser AG, Yokogawa Electric Corporation and Cameron International."
+          }
+        }
+      ],
+      "name_en": "Emerson Electric"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

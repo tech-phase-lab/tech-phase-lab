@@ -1,0 +1,149 @@
+{
+  "root": {
+    "ticker": "WST",
+    "name": "ウエスト・ファーマシューティカル・サービシズ",
+    "cik": 105770,
+    "name_en": "West Pharmaceutical Services"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "ATR"
+  ],
+  "companies": [
+    {
+      "id": "DAIKYO",
+      "ticker": "Daikyo Seiko",
+      "name": "大協精工",
+      "sub": "ゴム栓・樹脂容器",
+      "sub_en": "Elastomer & resin components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クリスタル・ゼニスなど主要な付加価値製品と技術のライセンスを受けている",
+          "text_en": "Key products and technologies such as Crystal Zenith, FluroTec and B2-coating are licensed from Daikyo",
+          "source": {
+            "label": "West Pharmaceutical Services 10-K(2025-12-31)",
+            "label_en": "West Pharmaceutical Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000010/wst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Key value-added and proprietary products and processes are licensed from our affiliate, Daikyo, including but not limited to, Crystal Zenith, FluroTec ® and B2-coating technologies."
+          }
+        }
+      ],
+      "name_en": "Daikyo Seiko, Ltd."
+    },
+    {
+      "id": "DATW",
+      "ticker": "Datwyler",
+      "name": "ダトウィラー",
+      "sub": "エラストマー部品",
+      "sub_en": "Elastomer components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "独自製品の分野で競合する",
+          "text_en": "Competes with West across its Proprietary Products lines",
+          "source": {
+            "label": "West Pharmaceutical Services 10-K(2025-12-31)",
+            "label_en": "West Pharmaceutical Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000010/wst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "With our range of proprietary technologies, we compete with several companies, such as Datwyler and Aptar, across our Proprietary Products product lines."
+          }
+        }
+      ],
+      "name_en": "Datwyler"
+    },
+    {
+      "id": "ATR",
+      "ticker": "ATR",
+      "name": "アプターグループ",
+      "sub": "薬剤送達システム",
+      "sub_en": "Drug delivery systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "独自製品の分野で競合する",
+          "text_en": "Competes with West across its Proprietary Products lines",
+          "source": {
+            "label": "West Pharmaceutical Services 10-K(2025-12-31)",
+            "label_en": "West Pharmaceutical Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000010/wst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "With our range of proprietary technologies, we compete with several companies, such as Datwyler and Aptar, across our Proprietary Products product lines."
+          }
+        }
+      ],
+      "name_en": "Aptar"
+    },
+    {
+      "id": "SMC",
+      "ticker": "SMC",
+      "name": "SMC社",
+      "sub": "医療機器受託製造",
+      "sub_en": "Device contract manufacturer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デバイス製造の分野で競合する地域の小規模メーカーである",
+          "text_en": "A smaller regional competitor in device manufacturing",
+          "source": {
+            "label": "West Pharmaceutical Services 10-K(2025-12-31)",
+            "label_en": "West Pharmaceutical Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000010/wst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The competition for device manufacturing varies from smaller regional companies such as SMC Ltd. to large global assembly manufacturers such as Phillips Medisize."
+          }
+        }
+      ],
+      "name_en": "SMC Ltd."
+    },
+    {
+      "id": "PHIL",
+      "ticker": "Phillips Medisize",
+      "name": "フィリップス・メディシゼ",
+      "sub": "医療機器受託製造",
+      "sub_en": "Device contract manufacturer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デバイス製造の分野で競合する大手の受託組立メーカーである",
+          "text_en": "A large global assembly manufacturer competing in device manufacturing",
+          "source": {
+            "label": "West Pharmaceutical Services 10-K(2025-12-31)",
+            "label_en": "West Pharmaceutical Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000010/wst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The competition for device manufacturing varies from smaller regional companies such as SMC Ltd. to large global assembly manufacturers such as Phillips Medisize."
+          }
+        }
+      ],
+      "name_en": "Phillips Medisize"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

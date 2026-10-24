@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "MSTR",
+    "name": "ストラテジー",
+    "cik": 1050446,
+    "name_en": "Strategy Inc"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "IBM",
+    "MSFT",
+    "ORCL",
+    "CRM"
+  ],
+  "companies": [
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイ・ビー・エム",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向け分析ソフトの分野で競合している",
+          "text_en": "Competes with Strategy in enterprise analytics",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For enterprise analytics, Strategy competes with global ISVs, such as IBM, Microsoft, Oracle, Salesforce, and SAP."
+          }
+        }
+      ],
+      "name_en": "IBM"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフトウェア・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向け分析ソフトの分野で競合している",
+          "text_en": "Competes with Strategy in enterprise analytics",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For enterprise analytics, Strategy competes with global ISVs, such as IBM, Microsoft, Oracle, Salesforce, and SAP."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "クラウドホスティングの提携先のひとつである",
+          "text_en": "One of Strategy's cloud hosting partners",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Strategy has established strategic partnerships with a wide variety of third-party vendors, including cloud hosting providers (AWS, Microsoft, STACKIT, and Google), system integrators, consulting firms, value added resellers"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向け分析ソフトの分野で競合している",
+          "text_en": "Competes with Strategy in enterprise analytics",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For enterprise analytics, Strategy competes with global ISVs, such as IBM, Microsoft, Oracle, Salesforce, and SAP."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向け分析ソフトの分野で競合している",
+          "text_en": "Competes with Strategy in enterprise analytics",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For enterprise analytics, Strategy competes with global ISVs, such as IBM, Microsoft, Oracle, Salesforce, and SAP."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "エスエーピー",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向け分析ソフトの分野で競合している",
+          "text_en": "Competes with Strategy in enterprise analytics",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For enterprise analytics, Strategy competes with global ISVs, such as IBM, Microsoft, Oracle, Salesforce, and SAP."
+          }
+        }
+      ],
+      "name_en": "SAP"
+    },
+    {
+      "id": "AWS",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド",
+      "sub_en": "Cloud hosting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "クラウドホスティングの提携先のひとつである",
+          "text_en": "One of Strategy's cloud hosting partners",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Strategy has established strategic partnerships with a wide variety of third-party vendors, including cloud hosting providers (AWS, Microsoft, STACKIT, and Google), system integrators, consulting firms, value added resellers"
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "クラウド",
+      "sub_en": "Cloud hosting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "クラウドホスティングの提携先のひとつである",
+          "text_en": "One of Strategy's cloud hosting partners",
+          "source": {
+            "label": "Strategy Inc 10-K(December 31, 2025)",
+            "label_en": "Strategy Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Strategy has established strategic partnerships with a wide variety of third-party vendors, including cloud hosting providers (AWS, Microsoft, STACKIT, and Google), system integrators, consulting firms, value added resellers"
+          }
+        }
+      ],
+      "name_en": "Google"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

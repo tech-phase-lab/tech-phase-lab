@@ -1,0 +1,97 @@
+{
+  "root": {
+    "ticker": "DG",
+    "name": "ダラー・ゼネラル",
+    "cik": 29534,
+    "name_en": "Dollar General"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "WMT",
+    "DLTR"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "総合小売",
+      "sub_en": "General retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な直接の競合相手の一社である",
+          "text_en": "One of its primary direct competitors",
+          "source": {
+            "label": "Dollar General 10-K(2026-01-30)",
+            "label_en": "Dollar General 10-K (fiscal year ended 2026-01-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29534/000110465926032325/dg-20260130x10k.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "Our primary direct competitors are Walmart, Family Dollar and Dollar Tree."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "FAMILYDOLLAR",
+      "ticker": "Family Dollar",
+      "name": "ファミリー・ダラー",
+      "sub": "均一価格小売",
+      "sub_en": "Discount retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な直接の競合相手の一社である",
+          "text_en": "One of its primary direct competitors",
+          "source": {
+            "label": "Dollar General 10-K(2026-01-30)",
+            "label_en": "Dollar General 10-K (fiscal year ended 2026-01-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29534/000110465926032325/dg-20260130x10k.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "Our primary direct competitors are Walmart, Family Dollar and Dollar Tree."
+          }
+        }
+      ],
+      "name_en": "Family Dollar"
+    },
+    {
+      "id": "DLTR",
+      "ticker": "DLTR",
+      "name": "ダラー・ツリー",
+      "sub": "均一価格小売",
+      "sub_en": "Discount retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な直接の競合相手の一社である",
+          "text_en": "One of its primary direct competitors",
+          "source": {
+            "label": "Dollar General 10-K(2026-01-30)",
+            "label_en": "Dollar General 10-K (fiscal year ended 2026-01-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29534/000110465926032325/dg-20260130x10k.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "Our primary direct competitors are Walmart, Family Dollar and Dollar Tree."
+          }
+        }
+      ],
+      "name_en": "Dollar Tree"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

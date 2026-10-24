@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "WELL",
+    "name": "ウェルタワー",
+    "cik": 766704,
+    "name_en": "Welltower"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CAREUK",
+      "ticker": "Care UK",
+      "name": "ケア・ユーケー",
+      "sub": "高齢者住宅運営",
+      "sub_en": "Seniors housing operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高齢者住宅運営セグメント収益の14%を占める運営事業者である",
+          "text_en": "Operator accounting for 14% of Seniors Housing Operating Segment revenues",
+          "source": {
+            "label": "Welltower 10-K(2025-12-31)",
+            "label_en": "Welltower 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/well-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "For the year ended December 31, 2025, Care UK, Cogir Management Company and Sunrise Senior Living accounted for 14%, 12% and 10% of Seniors Housing Operating Segment revenues, respectively."
+          }
+        }
+      ],
+      "name_en": "Care UK"
+    },
+    {
+      "id": "COGIR",
+      "ticker": "Cogir Management",
+      "name": "コジール・マネジメント",
+      "sub": "高齢者住宅運営",
+      "sub_en": "Seniors housing operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高齢者住宅運営セグメント収益の12%を占める運営事業者である",
+          "text_en": "Operator accounting for 12% of Seniors Housing Operating Segment revenues",
+          "source": {
+            "label": "Welltower 10-K(2025-12-31)",
+            "label_en": "Welltower 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/well-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "For the year ended December 31, 2025, Care UK, Cogir Management Company and Sunrise Senior Living accounted for 14%, 12% and 10% of Seniors Housing Operating Segment revenues, respectively."
+          }
+        }
+      ],
+      "name_en": "Cogir Management Company"
+    },
+    {
+      "id": "SUNRISE",
+      "ticker": "Sunrise Senior",
+      "name": "サンライズ・シニア・リビング",
+      "sub": "高齢者住宅運営",
+      "sub_en": "Seniors housing operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高齢者住宅運営セグメント収益の10%を占める運営事業者である",
+          "text_en": "Operator accounting for 10% of Seniors Housing Operating Segment revenues",
+          "source": {
+            "label": "Welltower 10-K(2025-12-31)",
+            "label_en": "Welltower 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/well-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "For the year ended December 31, 2025, Care UK, Cogir Management Company and Sunrise Senior Living accounted for 14%, 12% and 10% of Seniors Housing Operating Segment revenues, respectively."
+          }
+        }
+      ],
+      "name_en": "Sunrise Senior Living"
+    },
+    {
+      "id": "INTEGRA",
+      "ticker": "Integra",
+      "name": "インテグラ・ヘルスケア・プロパティーズ",
+      "sub": "高齢者施設の賃借人",
+      "sub_en": "Triple-net tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ネットリース部門収益の約16%、総収益の2%を占める関係である",
+          "text_en": "Relationship accounted for about 16% of Triple-net segment revenues and 2% of total revenues",
+          "source": {
+            "label": "Welltower 10-K(2025-12-31)",
+            "label_en": "Welltower 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/well-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "For the year ended December 31, 2025, our revenues related to our relationship with Integra Healthcare Properties (“Integra”) accounted for approximately 16% of our Triple-net segment revenues and 2% of total revenues."
+          }
+        }
+      ],
+      "name_en": "Integra Healthcare Properties"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

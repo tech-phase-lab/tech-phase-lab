@@ -1,0 +1,112 @@
+{
+  "root": {
+    "ticker": "XEL",
+    "name": "エクセル・エナジー",
+    "cik": 72903,
+    "name_en": "Xcel Energy"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TUCO",
+      "ticker": "TUCO",
+      "name": "TUCO社",
+      "sub": "石炭の調達",
+      "sub_en": "Coal supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SPSはTolk発電所で使う石炭のすべてを、TUCOから買っている",
+          "text_en": "SPS buys all of the coal for its Tolk plant from TUCO",
+          "source": {
+            "label": "Xcel Energy 10-K(2025-12-31)",
+            "label_en": "Xcel Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72903/000007290326000009/xel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "SPS purchases all of its coal requirements for its Tolk plant from TUCO Inc. under contracts that will expire in December 2027."
+          }
+        }
+      ],
+      "name_en": "TUCO Inc."
+    },
+    {
+      "id": "CIG",
+      "ticker": "Colorado",
+      "name": "コロラド・インターステート・ガス",
+      "sub": "ガスパイプライン",
+      "sub_en": "Gas pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガスのパイプラインと貯蔵施設を開発して貸す合弁会社WYCOを、CIGと共同で持っている",
+          "text_en": "Xcel owns WYCO with CIG, a joint venture that develops and leases natural gas pipelines and storage facilities",
+          "source": {
+            "label": "Xcel Energy 10-K(2025-12-31)",
+            "label_en": "Xcel Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72903/000007290326000009/xel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "WYCO, a joint venture with CIG, to develop and lease natural gas pipeline and storage facilities."
+          }
+        },
+        {
+          "type": "up",
+          "text": "CIGが施設を運営し、PSCoにガスの貯蔵と輸送のサービスを提供している",
+          "text_en": "CIG operates the WYCO facilities and provides natural gas storage and transportation services to PSCo",
+          "source": {
+            "label": "Xcel Energy 10-K(2025-12-31)",
+            "label_en": "Xcel Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72903/000007290326000009/xel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "WYCO leases its facilities to CIG and CIG operates the facilities, providing natural gas storage and transportation services to PSCo under separate service agreements."
+          }
+        }
+      ],
+      "name_en": "Colorado Interstate Gas Company, LLC"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "データセンター",
+      "sub_en": "Data center customer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NSP-ミネソタが、ミネソタ州の新しいグーグルのデータセンターに電力を供給する契約を結んだ",
+          "text_en": "NSP-Minnesota entered into an electric service agreement to power a new Google data center in Minnesota",
+          "source": {
+            "label": "Xcel Energy 10-K(2025-12-31)",
+            "label_en": "Xcel Energy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72903/000007290326000009/xel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Large Load Agreement — In the first quarter of 2026, NSP-Minnesota entered into an electric service agreement to power a new Google data center in Minnesota."
+          }
+        }
+      ],
+      "name_en": "Google"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

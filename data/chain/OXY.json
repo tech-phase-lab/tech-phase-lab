@@ -1,0 +1,149 @@
+{
+  "root": {
+    "ticker": "OXY",
+    "name": "オクシデンタル・ペトロリアム",
+    "cik": 797468,
+    "name_en": "Occidental Petroleum"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WES",
+      "ticker": "WES",
+      "name": "ウエスタン・ミッドストリーム・パートナーズ",
+      "sub": "ガス集積・処理",
+      "sub_en": "Midstream",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年、2024年、2023年の関連当事者向け売上のうち、WES向けの原油とNGLの販売が53%、58%、63%を占めた",
+          "text_en": "Sales of Occidental-produced oil and NGL to WES made up 53%, 58% and 63% of related party sales in 2025, 2024 and 2023",
+          "source": {
+            "label": "Occidental Petroleum 10-K(2025-12-31)",
+            "label_en": "Occidental Petroleum 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026009059/oxy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In 2025, 2024 and 2023, sales of Company-produced oil and NGL to WES accounted for 53 %, 58 % and 63 % of related party sales, respectively."
+          }
+        },
+        {
+          "type": "up",
+          "text": "2025年、2024年、2023年に、自社産の原油・NGL・天然ガスの集積、処理、精製の料金をWESに払った",
+          "text_en": "In 2025, 2024 and 2023 Occidental paid WES fees to gather, process and treat its produced oil, NGL and natural gas",
+          "source": {
+            "label": "Occidental Petroleum 10-K(2025-12-31)",
+            "label_en": "Occidental Petroleum 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026009059/oxy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In 2025, 2024 and 2023, services primarily related to fees charged by WES to gather, process and treat the Company produced oil, NGL and natural gas."
+          }
+        }
+      ],
+      "name_en": "Western Midstream Partners, LP"
+    },
+    {
+      "id": "BRK",
+      "ticker": "BRK-B",
+      "name": "バークシャー・ハサウェイ",
+      "sub": "投資・保険",
+      "sub_en": "Conglomerate",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OxyChem事業の全持ち分を97億ドルの現金でバークシャー・ハサウェイに売る契約を、2025年10月に結んだ",
+          "text_en": "In October 2025 Occidental agreed to sell all equity interests in OxyChem to Berkshire Hathaway for $9.7 billion in cash",
+          "source": {
+            "label": "Occidental Petroleum 10-K(2025-12-31)",
+            "label_en": "Occidental Petroleum 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026009059/oxy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In October 2025, the Company announced entry into a purchase and sale agreement with Berkshire Hathaway to sell all of the issued and outstanding equity interests in OxyChem in an all-cash transaction for $9.7 billion"
+          }
+        }
+      ],
+      "name_en": "Berkshire Hathaway Inc."
+    },
+    {
+      "id": "BLK",
+      "ticker": "BLK",
+      "name": "ブラックロック",
+      "sub": "資産運用",
+      "sub_en": "Asset manager",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "初の商業規模の大気直接回収施設を、ブラックロックと合弁会社で開発している",
+          "text_en": "Occidental and BlackRock formed a joint venture to develop the first commercial scale direct air capture facility",
+          "source": {
+            "label": "Occidental Petroleum 10-K(2025-12-31)",
+            "label_en": "Occidental Petroleum 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026009059/oxy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company and BlackRock formed a joint venture for the continued development of the first commercial scale direct air capture facility."
+          }
+        }
+      ],
+      "name_en": "BlackRock"
+    },
+    {
+      "id": "DEL",
+      "ticker": "Dolphin Energy",
+      "name": "ドルフィン・エナジー",
+      "sub": "中東のガス事業",
+      "sub_en": "Middle East gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カタールのドルフィン・エナジー事業に、上流で24.5%の権益を持って参加している",
+          "text_en": "Occidental partners in the Dolphin Energy Project in Qatar with a 24.5% interest in the upstream operations",
+          "source": {
+            "label": "Occidental Petroleum 10-K(2025-12-31)",
+            "label_en": "Occidental Petroleum 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026009059/oxy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In Qatar, the Company partners in the Dolphin Energy Project, an investment that is comprised of two separate economic interests. The Company has a 24.5% interest in the upstream operations to develop and produce NGL, natural gas and condensate from Qatar’s North Field through mid-2032."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "中東では、ドルフィン・エナジー・リミテッド(DEL)に持分法で投資している",
+          "text_en": "Occidental invests in DEL in the Middle East under the equity method",
+          "source": {
+            "label": "Occidental Petroleum 10-K(2025-12-31)",
+            "label_en": "Occidental Petroleum 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026009059/oxy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "invests in entities that conduct similar activities, such as WES in the United States and DEL in the Middle East, which are accounted for as equity method investments."
+          }
+        }
+      ],
+      "name_en": "Dolphin Energy Limited"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
