@@ -1,0 +1,239 @@
+{
+  "root": {
+    "ticker": "BAND",
+    "name": "Bandwidth",
+    "cik": 1514416
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FIVN",
+      "ticker": "FIVN",
+      "name": "ファイブナイン",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Five9はBandwidthと提携し、多くの製品で顧客との通信を世界規模で支えている",
+          "text_en": "Five9 partners with Bandwidth to drive customer communication at a global scale for many of its products",
+          "source": {
+            "label": "September 2026 investor presentation · Salesforce rollout and customer examples",
+            "label_en": "September 2026 investor presentation · Salesforce rollout and customer examples",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000069/a2026bandwidthinvestorpr.htm",
+            "level": "official",
+            "quote": "14 Genesys Genesys fuels global CX growth through AI-driven orchestration and its partnership with Bandwidth Five9 Five9 partners with Bandwidth to drive customer communication at a global scale for many of their products Bookline Bookline’s platform helps hospitality venues adopt"
+          }
+        }
+      ],
+      "name_en": "Five9"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bandwidthは、Webex Calling by CiscoなどのUCaaSプラットフォームとBYOC提携を結んでいる",
+          "text_en": "Bandwidth has BYOC partnerships with UCaaS platforms including Webex Calling by Cisco",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have BYOC partnerships with leading UCaaS platforms, including Microsoft Teams Direct Routing and Operator Connect, Zoom Phone Provider Exchange, Webex Calling by Cisco, and Google Voice for Google Workspace."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Bandwidthは、Webex Contact Center by CiscoなどのCCaaSプラットフォームとBYOC提携を結んでいる",
+          "text_en": "Bandwidth has BYOC partnerships with CCaaS platforms including Webex Contact Center by Cisco",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have BYOC partnerships with leading CCaaS platforms, including Five9, Genesys, Webex Contact Center by Cisco, and Zoom Contact Center."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BandwidthはAWSの音声認識・音声合成と提携し、Bandwidth Maestroの仮想エージェントに利用している",
+          "text_en": "Bandwidth's partnership with Amazon Web Services STT/TTS gives access to AWS speech-to-text and text-to-speech for virtual agents with Bandwidth Maestro",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our partnership with Amazon Web Services STT/TTS provides access to AWS’s speech-to-text and text-to-speech solutions to enable virtual agents with Bandwidth Maestro."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "CRM",
+      "sub_en": "CRM software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BandwidthとSalesforceが協業を拡大し、Maestro BYOC連携を加えた",
+          "text_en": "Bandwidth and Salesforce expand collaboration, adding the Maestro BYOC integration",
+          "source": {
+            "label": "September 2026 investor presentation · Salesforce rollout and customer examples",
+            "label_en": "September 2026 investor presentation · Salesforce rollout and customer examples",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000069/a2026bandwidthinvestorpr.htm",
+            "level": "official",
+            "quote": "7 Bandwidth and Salesforce expand collaboration First certified carrier for global rollout 25+ countries in SF’s initial expansion NEW Maestro™ BYOC integration Extends our growth opportunity • Usage-based model • More interactions → revenue and margin Expands our reach • North America → International • Initial markets:"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Maestroは、Salesforce Native Contact Centerを支える基盤に選ばれた",
+          "text_en": "Maestro was chosen to power Salesforce Native Contact Center",
+          "source": {
+            "label": "September 2026 investor presentation · Salesforce rollout and customer examples",
+            "label_en": "September 2026 investor presentation · Salesforce rollout and customer examples",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000069/a2026bandwidthinvestorpr.htm",
+            "level": "official",
+            "quote": "Maestro orchestration software 99% customer name retention · 113% net retention rate Mission-critical infrastructure embedded in governed AI workflows — chosen to power Salesforce Native Contact Center Usage expands as AI agents drive more, higher-value interactions Guided to 20% revenue growth and 33% Adjusted EBITDA growth for 2026, with net"
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bandwidthは、OpenAIのRealtime interfaceなどの公開APIを通じて会話型AIをクラウド通信に連携できる",
+          "text_en": "Bandwidth integrates conversational AI into cloud communications through public APIs such as OpenAI's Realtime interface.",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We believe it is the most open and flexible solution for enterprises to integrate conversational AI into cloud communications, through Native AI within CCaaS platforms, pre-built partner integrations, Bring Your Own AI with third-party apps, and Public APIs like OpenAI’s Realtime interface.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Bandwidthは、OpenAIのRealtime interfaceなどの公開APIによる会話型AI連携を可能にしている",
+          "text_en": "Bandwidth enables conversational AI integrations through public APIs like OpenAI's Realtime interface",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also enable conversational AI integrations with third-party apps, native AI within CCaaS platforms, and public APIs like OpenAI’s Realtime interface.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RNG",
+      "ticker": "RNG",
+      "name": "リングセントラル",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "RingCentralは、コンタクトセンターやSMSの提供にBandwidth.comの技術・連携を利用または提供する",
+          "text_en": "RingCentral uses and/or provides Bandwidth.com technology and integrations for contact center and SMS solutions",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We currently use and/or provide third-party technology and integrations from NICE, Bandwidth.com, Inc., Microsoft Corporation and other companies to provide some of our solutions to our customers, including contact center and SMS solutions."
+          }
+        }
+      ],
+      "name_en": "RingCentral"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bandwidthは、Bank of America, N.A.を管理代理人とする1億5,000万ドルのリボルビング融資枠のクレジット契約を結んでいる",
+          "text_en": "Bandwidth has a credit agreement with Bank of America, N.A. as administrative agent providing a $150 million revolving credit facility",
+          "source": {
+            "label": "Bandwidth 10-K",
+            "label_en": "Bandwidth 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In August 2023, we entered into a credit agreement (as amended to date, the “Credit Agreement”), among the Company, as borrower, the lenders from time to time party thereto, and Bank of America, N.A., as administrative agent, swingline lender and letters of credit issuer, which provides for a $150 million revolving credit facility (the “Credit Facility”).",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

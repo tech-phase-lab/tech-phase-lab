@@ -1,0 +1,130 @@
+{
+  "root": {
+    "ticker": "ETN",
+    "name": "イートン",
+    "cik": 1551182,
+    "name_en": "Eaton"
+  },
+  "rows": [
+    {
+      "ja": "提携・取引",
+      "en": "Partnerships & deals",
+      "above": true
+    },
+    {
+      "ja": "販売チャネル",
+      "en": "Channel"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "VRT"
+  ],
+  "companies": [
+    {
+      "id": "DAN",
+      "ticker": "DAN",
+      "name": "ダナ",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "イートンがダナと、モビリティ部門の分離・統合に関する最終契約を結んだ",
+          "text_en": "Eaton entered into a definitive agreement with Dana to separate and combine its Mobility Group with Dana in a Reverse Morris Trust transaction",
+          "source": {
+            "label": "Eaton の発表",
+            "label_en": "Eaton press release (8-K Exhibit 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551182/000095014226001733/eh260792115_ex9901.htm",
+            "level": "official",
+            "date": "2026-06-11",
+            "quote": "Eaton entered into a definitive agreement with Dana Incorporated (NYSE: DAN) under which Eaton will separate and combine its Mobility Group with Dana in a Reverse Morris Trust (RMT) transaction creating a combined company valued at over $10 billion."
+          }
+        }
+      ],
+      "name_en": "Dana"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "イートンは、AIファクトリー向け800 VDC給電インフラでNVIDIAと協業している",
+          "text_en": "Eaton collaborates with NVIDIA to accelerate 800 VDC power infrastructure in AI factories",
+          "source": {
+            "label": "Eaton の発表",
+            "label_en": "Eaton press release (Nasdaq copy)",
+            "url": "https://www.nasdaq.com/press-release/eaton-unveils-next-generation-architecture-advance-800-vdc-power-infrastructure-ai",
+            "level": "official",
+            "date": "2025-10-10",
+            "quote": "Eaton’s new reference architecture is a key milestone in its collaboration with NVIDIA to accelerate 800 VDC power infrastructure in AI factories."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシネックス",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "イートンが、日本での単相UPSの新しい販売代理店としてTD SYNNEXを任命した",
+          "text_en": "Eaton appointed TD SYNNEX as its new distributor for single-phase UPS solutions in Japan",
+          "source": {
+            "label": "Eaton の発表",
+            "label_en": "Eaton press release (PR Newswire)",
+            "url": "https://www.prnewswire.com/apac/news-releases/eaton-partners-td-synnex-to-safeguard-japans-ai-and-edge-computing-infrastructure-302544575.html",
+            "level": "official",
+            "date": "2025-09-09",
+            "quote": "Intelligent power management company Eaton has appointed TD SYNNEX as its new distributor for its single-phase Uninterruptible Power Supply (UPS) solutions in Japan",
+            "note": "販売代理店としての関係です。日本向けの発表です。",
+            "note_en": "Distributor relationship; announced for Japan."
+          }
+        }
+      ],
+      "name_en": "TD Synnex"
+    },
+    {
+      "id": "VRT",
+      "ticker": "VRT",
+      "name": "バーティブ",
+      "sub": "データセンター電源・冷却",
+      "sub_en": "Data center power & cooling",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "イートンと競合する",
+          "text_en": "Competes with Eaton",
+          "source": {
+            "label": "Vertiv 10-K",
+            "label_en": "Vertiv 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "These competitors may have comparatively greater financial, technical and marketing resources available to them and would include Schneider Electric, S.E., Eaton Corporation Plc, Legrand SA, and Huawei Investment & Holding Co., Ltd, each of which has a large, global presence and compete directly in the markets in which we operate."
+          }
+        }
+      ],
+      "name_en": "Vertiv"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

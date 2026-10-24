@@ -1,0 +1,95 @@
+{
+  "root": {
+    "ticker": "CCOI",
+    "name": "コージェント・コミュニケーションズ",
+    "cik": 1158324,
+    "name_en": "COGENT COMMUNICATIONS HOLDINGS, INC."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ルーター・伝送機器",
+      "sub_en": "Routers & transmission",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IPネットワーク用ルーターの主要な仕入先である",
+          "text_en": "Remains the primary vendor for routers in its IP network",
+          "source": {
+            "label": "COGENT COMMUNICATIONS HOLDINGS, INC. 10-K(2025年12月期)",
+            "label_en": "COGENT COMMUNICATIONS HOLDINGS, INC. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158324/000110465926017968/ccoi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Cisco remains our primary vendor for routers"
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ルーター",
+      "sub_en": "Routers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "一部のルーターの調達先として追加した",
+          "text_en": "Added as a provider for certain types of routers",
+          "source": {
+            "label": "COGENT COMMUNICATIONS HOLDINGS, INC. 10-K(2025年12月期)",
+            "label_en": "COGENT COMMUNICATIONS HOLDINGS, INC. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158324/000110465926017968/ccoi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have expanded our suppliers of routers, adding Arista Networks, Inc. (“Arista”) as a provider for certain types of routers"
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "シエナ",
+      "sub": "光波長機器",
+      "sub_en": "Optical equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "光波長ネットワーク向けの機器を購入している",
+          "text_en": "Buys equipment for its Optical Wave Network from Ciena",
+          "source": {
+            "label": "COGENT COMMUNICATIONS HOLDINGS, INC. 10-K(2025年12月期)",
+            "label_en": "COGENT COMMUNICATIONS HOLDINGS, INC. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158324/000110465926017968/ccoi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We purchase equipment for our Optical Wave Network and optical wave services from Ciena Corporation (“Ciena”)"
+          }
+        }
+      ],
+      "name_en": "Ciena"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

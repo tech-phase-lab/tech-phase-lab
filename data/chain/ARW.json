@@ -1,0 +1,266 @@
+{
+  "root": {
+    "ticker": "ARW",
+    "name": "Arrow Electronics",
+    "cik": 7536
+  },
+  "rows": [
+    {
+      "ja": "仕入先(半導体・ITメーカー)",
+      "en": "Suppliers (chip & IT makers)",
+      "above": true
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "過去の買収",
+      "en": "Past acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MCHP",
+      "ticker": "MCHP",
+      "name": "マイクロチップ・テクノロジー",
+      "sub": "マイコン・アナログ半導体",
+      "sub_en": "Microcontrollers & analog",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Microchipの最大の販売代理店はArrow Electronicsで、純売上高の12%(2026年度)、10%(2025年度)を占める",
+          "text_en": "Arrow Electronics is Microchip's largest distributor, accounting for 12% of net sales in fiscal 2026 and 10% in fiscal 2025",
+          "source": {
+            "label": "Microchip Technology 10-K",
+            "label_en": "Microchip Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000016/mchp-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "With the exception of Arrow Electronics, our largest distributor, which made up 12% and 10% of our net sales, in fiscal 2026 and in fiscal 2025, respectively, no distributor or direct customer accounted for more than 10% of our net sales."
+          }
+        }
+      ],
+      "name_en": "Microchip Technology"
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "シリコン・ラボラトリーズ",
+      "sub": "無線通信半導体",
+      "sub_en": "Wireless semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Silicon LabsのディストリビューターであるArrow Electronicsが、2025年度の売上高の28%を占める",
+          "text_en": "Arrow Electronics, a distributor of Silicon Labs, represented 28% of its revenues in fiscal 2025",
+          "source": {
+            "label": "Silicon Laboratories 10-K",
+            "label_en": "Silicon Laboratories 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Two of our distributors who sell to our customers, Arrow Electronics and Edom Technology, represented 28% and 21% of our revenues during fiscal 2025, respectively."
+          }
+        },
+        {
+          "type": "up",
+          "text": "同比率は2024年度が27%、2023年度が34%だった",
+          "text_en": "The share was 27% in fiscal 2024 and 34% in fiscal 2023",
+          "source": {
+            "label": "Silicon Laboratories 10-K",
+            "label_en": "Silicon Laboratories 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Two of our distributors who sell to our customers, Arrow Electronics and Edom Technology, represented 28% and 21% of our revenues during fiscal 2025, 27% and 16% during fiscal 2024, and 34% and 15% during fiscal 2023, respectively."
+          }
+        }
+      ],
+      "name_en": "Silicon Laboratories"
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "サイバーセキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Fortinetは、Arrow Electronicsを含む複数の技術ディストリビューターと取引している",
+          "text_en": "Fortinet works with technology distributors including Arrow Electronics",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We work with many technology distributors, including Arrow Electronics, Inc., Exclusive, Ingram Micro, and TD Synnex.",
+            "note": "ディストリビューター経由の取引としての記載です。",
+            "note_en": "Distributor-channel mention."
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arrow Electronicsが発行体となる1999年11月9日付のコマーシャルペーパー私募契約の当事者に、Morgan Stanley & Co.が含まれる",
+          "text_en": "Morgan Stanley & Co. is a party to the Commercial Paper Private Placement Agreement dated November 9, 1999 with Arrow Electronics as issuer",
+          "source": {
+            "label": "Arrow Electronics 10-K",
+            "label_en": "Arrow Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/7536/000110465926012765/arw-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Commercial Paper Private Placement Agreement, dated as of November 9, 1999, among Arrow Electronics, Inc., as issuer, and Chase Securities Inc., Bank of America Securities LLC, Goldman, Sachs & Co., and Morgan Stanley & Co.",
+            "note": "資金調達のみの関係で、時期は古いです。",
+            "note_en": "Financing only; dated 1999."
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "AGYS",
+      "ticker": "AGYS",
+      "name": "Agilysys",
+      "sub": "ホスピタリティ向けソフト",
+      "sub_en": "Hospitality software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arrow Electronicsは、AgilysysのKeyLink Systems Group流通事業の資産と事業の大半を取得する確定契約を結んだ",
+          "text_en": "Arrow Electronics signed a definitive agreement to acquire substantially all of the assets and operations of Agilysys's KeyLink Systems Group distribution business",
+          "source": {
+            "label": "Arrow Electronics Form 8-K",
+            "label_en": "Arrow Electronics Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/0000007536/000115752307000065/a5303626.txt",
+            "level": "official",
+            "quote": "the Company signed a definitive agreement pursuant to which the Company will acquire substantially all of the assets and operations of the KeyLink Systems Group distribution business of Agilysys, Inc.",
+            "note": "2007年の古い取引です。",
+            "note_en": "Dated 2007."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "クラウドストライク",
+      "sub": "サイバーセキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CrowdStrikeは、米国とカナダのArrowのチャネルパートナー向けにFalconプラットフォームを提供する流通契約をArrow Electronicsと結んだ",
+          "text_en": "CrowdStrike signed a distribution agreement with Arrow Electronics to bring its Falcon platform to Arrow channel partners across the U.S. and Canada",
+          "source": {
+            "label": "CrowdStrike の発表",
+            "label_en": "CrowdStrike press release",
+            "url": "https://www.crowdstrike.com/en-us/press-releases/arrow-electronics-distribution-agreement-to-accelerate-north-america-transformation/",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "CrowdStrike (NASDAQ: CRWD) today announced a distribution agreement with Arrow Electronics, bringing the industry-leading CrowdStrike Falcon® cybersecurity platform to Arrow channel partners and customers across the U.S. and Canada."
+          }
+        }
+      ],
+      "name_en": "CrowdStrike"
+    },
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ・テクノロジーズ",
+      "sub": "CDN・セキュリティ",
+      "sub_en": "CDN & security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Akamaiは、Arrow Electronicsのエンタープライズ・コンピューティング事業との新たな関係を発表し、クラウドやセキュリティ製品の提供先を広げる",
+          "text_en": "Akamai announced a new relationship with Arrow Electronics' enterprise computing solutions business to expand access to its cloud, security and application delivery solutions",
+          "source": {
+            "label": "Akamai の発表",
+            "label_en": "Akamai press release (GlobeNewswire copy)",
+            "url": "https://mfn.se/all/a/akamai-technologies/akamai-teams-with-arrow-electronics-to-power-and-protect-digital-experiences-at-scale-ac9f9aa3",
+            "level": "official",
+            "date": "2026-04-07",
+            "quote": "Akamai (NASDAQ: AKAM) today announced a new relationship with Arrow Electronics’ enterprise computing solutions (ECS) business that expands access to Akamai’s cloud, security, and application delivery solutions across Arrow’s growing ecosystem."
+          }
+        }
+      ],
+      "name_en": "Akamai Technologies"
+    },
+    {
+      "id": "LFUS",
+      "ticker": "LFUS",
+      "name": "Littelfuse",
+      "sub": "回路保護部品",
+      "sub_en": "Circuit protection",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Littelfuseは、欧州・中東・アフリカ向けの新しい流通契約をArrow Electronicsと結んだ",
+          "text_en": "Littelfuse signed a new distribution agreement for Europe, the Middle East and Africa with Arrow Electronics",
+          "source": {
+            "label": "Littelfuse の発表",
+            "label_en": "Littelfuse press release",
+            "url": "https://investor.littelfuse.com/news/news-details/2013/Littelfuse-And-Arrow-Electronics-Sign-New-EMEA-Distribution-Agreement-03-19-2013/default.aspx",
+            "level": "official",
+            "date": "2013-03-19",
+            "quote": "Littelfuse, Inc ., the global leader in circuit protection, today announced it has signed a new distribution agreement for Europe, the Middle East and Africa (EMEA) with Arrow Electronics Inc ., a global provider of electronic components and enterprise computing solutions.",
+            "note": "2013年の古い発表です。",
+            "note_en": "Announced in 2013; older."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSCC",
+      "ticker": "LSCC",
+      "name": "ラティス・セミコンダクター",
+      "sub": "プログラマブル半導体",
+      "sub_en": "Programmable chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Arrowの再販による売上は、Latticeの売上高の2009年度で約9%、2008年度で約11%を占めた",
+          "text_en": "Resales by Arrow accounted for approximately 9% of Lattice's revenue in fiscal 2009 and 11% in fiscal 2008",
+          "source": {
+            "label": "Lattice Semiconductor Form 8-K",
+            "label_en": "Lattice Semiconductor Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/0000855658/000119312510078941/d8k.htm",
+            "level": "official",
+            "date": "2010-04-01",
+            "quote": "Revenues attributable to resales of products by Arrow accounted for approximately 9% and 11% of Lattice’s revenue in each of fiscal 2009 and 2008, respectively.",
+            "note": "2010年の古い記載で、Latticeはその後Arrowとの流通契約の終了を通知しています。",
+            "note_en": "Dated 2010; Lattice gave notice to end its distribution agreements with Arrow."
+          }
+        }
+      ],
+      "name_en": "Lattice Semiconductor"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

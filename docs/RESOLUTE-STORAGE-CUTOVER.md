@@ -1,0 +1,864 @@
+## RESOLUTE runtime update — 2026-10-21 16:00 JST
+
+Supersedes older NOLOGIN/pending runtime statements below. All three existing
+scoped roles now LOGIN with unchanged minimum grants. Actual API password
+connections and full ACL checks passed for all three, including a repeat using
+the deployed DB_URL references. Deployment46d3e773 reached SUCCESS and actual
+API_READY; final checks06:58:25–33Z. Storage/protection/retry remain OFF.
+Post-check06:59:11Z: scoped connections0, deletion history0, notification rows0,
+outbox0. Health200 and unauthenticated plan/notification401 verified.
+See [runtime evidence and remaining gates](RESOLUTE-RUNTIME-CONNECTION-CHECK.md).
+Owner password entry, variable entry and deployment are complete: do not request
+these again. Next: authenticated route acceptance and fresh write-fenced complete
+inventory before activation. Prior restore evidence is not a new inventory.
+
+---
+
+## RESOLUTE update — 2026-10-21 00:12 JST
+
+This dated update supersedes older pending claims for the checks below.
+Actual public HTTPS publication/readback of exactly3 synthetic protection events
+passed at2026-10-20T14:51:45Z; independent complete manifest pin
+72f819a298d8f5365f0fcb404c80ea3fd48e1b5139ffebbd9830cdad92bace75.
+Fresh baseline and final seal were produced while backend45509 held5 DB write
+fence locks. Production histories/outbox remained0; locks released14:55:10Z.
+Writer restored to disabled; temporary listener removed. Isolated actual-backup
+restore passed14:56:55Z with deletion1/both notification stops, pending0 and two
+idempotent replays. No source DB credentials exported. Disposable restore service
+deletion is pending: the tool confirmation expired/cancelled; service still exists.
+It was safely retired at15:14:19Z (actual RETIRED log, six credential/key references
+neutralized, inert start, no cron/domain/volume).
+See [complete evidence](RESOLUTE-NONEMPTY-CUTOVER-CHECK.md) and its retained manifest.
+
+Customer saving remains OFF; all3 storage roles NOLOGIN. Next: scoped runtime
+connections and normal authenticated route acceptance before any activation; obtain
+a fresh complete write-fenced manifest at that time. No owner key entry, login or
+Run now needed. Daily/weekly new-pin deployments ready; schedules unchanged and
+no new scheduled-run success claimed. Morning/news/earnings/UI/Vercel/billing/mail/AI
+untouched. Integrated2c056205 gates: Node1294,Python2549,lint0errors/5existingwarnings,
+build,compileall,diff check passed. GitHub/CI result must be verified separately.
+
+---
+
+## Current RESOLUTE status — 2026-10-20 evening JST
+
+This summary supersedes older pending/completed statements below for RESOLUTE
+storage only. Earlier dated entries remain historical evidence, not instructions
+to repeat completed operations. Other product work is unchanged.
+
+- Completed: owner recovery-key custody and retrieval; production storage schemas
+  and minimum-permission audit; three storage roles remain NOLOGIN. Do not request
+  key regeneration, re-entry or another owner Run now for those completed checks.
+- API is deployed at 7875e998 (actual READY plus reader-only DB/HTTP checks).
+  Customer saving and protection publishing remain disabled. Token/reference
+  equality does not establish an operational writer or successful storage.
+- Actual post-schema production-backup restore passed with an empty history.
+  Synthetic loopback HTTP plus real S3 persisted three events and verified
+  readback after an in-process server restart. Neither proves production
+  nonempty-history recovery, public HTTPS acceptance or container-restart durability.
+- Production rollback-only check PASSED at2026-10-20T13:59:48Z through the
+  existing Postgres browser Console/local socket. Exact reviewed SQL SHA256
+  14abb5cb35417c878cd666a8393d3e696b862f70d8e650a9a7d26bb7cdcf9f81;
+  RESOLUTE_SCOPED_ROLLBACK_OK, committed_rows0, activation=false, psql exit0.
+  No admin credentials were exported and no persistent probe rows remain.
+- Independent read-only postcheck at14:00:29Z found production deletion and
+  suppression histories0, unpublished outbox0, LOGIN roles0 and writer sessions0.
+  Full effective catalog ACL audit passed at14:01:56Z for all3 dormant roles.
+- Remaining: fresh complete write-fenced inventory, actual public HTTPS gateway
+  receipts/durable objects, then isolated nonempty-history restore/replay before
+  reviewing customer-save activation. The rollback receipt was synthetic and
+  rolled back; it is not proof of external durability or authenticated saving.
+  Never reuse the initial empty manifest after writes. See
+  [cutover evidence](RESOLUTE-STORAGE-CUTOVER.md) and
+  [scoped check](RESOLUTE-SCOPED-WRITE-CHECK.md).
+- Browser access is now verified: correct radiant-magic production project and
+  existing Postgres Console. CLI policy denial remains; no retry or workaround.
+  No owner login, key re-entry or Run now is needed.
+- No live payment, charge, email, additional AI call or billing change. Preserve
+  morning/backup/restore schedules and reservations. October20 morning news is
+  not a successful acquisition. Keep RIZEL90 hidden and approved copy/UI intact.
+
+---
+
+# RESOLUTE storage cutover — prepared, not activated
+
+## Evidence as of 2026-10-20
+
+Owner production custody/readback passed at13:13 JST; see KEY-ESCROW record.
+Live Clerk -> isolated real PostgreSQL/API/encrypted store -> stale restore and
+both replays passed with synthetic data earlier. Neither installs production keys.
+
+A subsequent read-only Railway inspection found no staged changes on the API,
+backup or restore service. API remains pinned bb45d9d0, deployment
+5e22dac8-cf4c-42d4-a545-20a1e374a169 SLEEPING, without plan/settings/protection
+configuration names. Backup04440b43 uses the older single-module job variable;
+restorec0eec3c0 uses RESOLUTE_PROTECTED_JOB_B64 with the three-module launcher.
+Backup deploymenta36d180a and restore deployment1c8654a4 report SUCCESS; this is
+configuration evidence, not a new successful backup/restore execution.
+Existing schedules remain daily0 0 * * * and weekly0 0 * * 1 (UTC).
+
+## Correct the independent-store read path before schema installation
+
+Previously backup.py loaded online protection manifests using the DB dump S3
+client and bucket. The isolated writer uses a separate bucket, so that would not
+read the intended independent history. The revised online restore path requires
+its own configuration and never falls back to dump credentials on missing
+configuration, missing objects, checksum failure or authentication failure.
+
+Restore-service-only configuration:
+
+| Name | Source/purpose |
+| --- | --- |
+| RESOLUTE_RESTORE_PROTECTION_ENDPOINT | HTTPS endpoint of the independent history bucket |
+| RESOLUTE_RESTORE_PROTECTION_BUCKET | Independent history bucket, not the dump bucket |
+| RESOLUTE_RESTORE_PROTECTION_REGION | Region for that bucket |
+| RESOLUTE_RESTORE_PROTECTION_ACCESS_KEY_ID | Dedicated recovery access; do not put in the application |
+| RESOLUTE_RESTORE_PROTECTION_SECRET_ACCESS_KEY | Matching recovery credential; never log |
+| RESOLUTE_PROTECTION_KEY_HEX | Online protection key recovered on the owner's device, not the private age identity |
+| RESOLUTE_PROTECTION_EVENTS_MANIFEST_SHA256 | Independently retained pin of a complete write-fenced inventory |
+
+The live-store restore path now requires GET plus LIST of the protection-event
+prefix. It compares the pinned manifest with the complete inventory and checks
+the inventory again after authenticated reads; missing LIST permission fails
+closed. This supersedes the original GET-only runtime behavior. These read
+operations do not prove provider-enforced read-only credentials; inspect the
+actual provider permission boundary separately. The
+existing BACKUP_* settings still read/decrypt the DB dump and the legacy offline
+checkpoint. Google recovery identity must never be installed into application
+services. The previously verified owner key must not be regenerated for convenience.
+
+## Ordered cutover work
+
+1. Keep plan/settings writes, retry worker and mail delivery disabled. Obtain
+   a current DB catalog audit: required migrations, NOLOGIN role attributes,
+   effective table/column rights and absence of active writer sessions. A previous
+   config snapshot or NOLOGIN alone is not an effective write fence.
+2. Prepare the intended production history namespace and recovery credentials.
+   Install the online key through a private owner-controlled channel only after
+   the concrete destination is ready. No chat upload of the Google identity/key.
+3. Package backup.py, protection.py and protection_events.py together, check the
+   module bundle digest/compilation, and prepare restore-only independent settings.
+   Do not replace the daily single-file payload with backup.py alone: imports
+   require its siblings. Preserve both existing cron schedules.
+4. Establish a complete fenced manifest using protection_events.seal_manifest;
+   retain its checksum outside the DB dump and read back/authenticate its objects.
+   Confirm the source outbox has no unacknowledged protection events. An empty
+   initial manifest is valid only with independent evidence that no history exists.
+   Do not substitute a timestamp, latest pointer or old test namespace for this.
+5. Only with that recovery path ready, apply the reviewed schema sequence and run
+   the transactional provision-storage-permissions.mjs audit (019 must not run
+   standalone). Keep all three roles NOLOGIN. Include002–005/016–018 dependencies;
+   inspect migration history rather than blindly rerunning production SQL.
+6. Run an actual backup and isolated restore with the intended recovery path;
+   inspect runtime logs AND restored assertions. Confirm plan deletion, both
+   notification stops, empty pending queue, and repeated replay. Previously
+   completed synthetic acceptance is evidence for the mechanism, not this cutover.
+7. Review final activation separately. Do not enable customer saves on deployment
+   SUCCESS alone. On failure retain disabled writers and original recovery inputs;
+   do not drop tables, reset credentials or regenerate keys as a rollback shortcut.
+
+No production mutation or deployment was performed for this repair. The new
+connection path has local synthetic cryptographic coverage; actual provider reads
+with production credentials and the production migration remain unverified.
+
+Local three-module packaging was also exercised without secrets or deployment:
+canonical JSON SHA256
+0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d,
+gzip/base6412980 bytes, all three modules compiled, decompressed mapping exactly
+matched source. This checks the payload, not the currently deployed launcher or
+an actual Railway execution. Regenerate from the final reviewed source if changed.
+
+Final integrated local validation on base86a329d4: Node1207/1207, Python2520/2520 (278.110s), lint0 errors/5 existing warnings, Next build, compileall and diff check passed. No production deployment or new live recovery pass is claimed.
+
+
+## 2026-10-20 13:26–13:29 JST — Restore V2 deployed, execution still unverified
+
+Installed the c792d51d three-module bundle in restore-check service
+c0eec3c0-cdd2-47da-bd48-fef21e30934b as new
+RESOLUTE_PROTECTED_JOB_V2_B64; retained both older job variables. Changed only
+startCommand to select V2, then redeployed3aaa54dc-91e4-40db-8547-7f19fc77a99a.
+The launcher requires restore mode, verifies bundle digest and exact module set,
+compiles/extracts the three files, runs backup.py and removes the temporary files.
+Local extraction/source equality/cleanup checks passed. Bundle SHA256 remains
+0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d;
+launcher SHA256 df78d35f2309dab2161f82c8145ae9c0a59f16e99c41957825d876f24e8f382f.
+
+Readback: deployment SUCCESS, state cronReady, no staged changes, domains or
+volumes; weekly cron remains0 0 * * 1. No runtime result was returned by bounded
+log reads, including an explicit time window. One restart also left cronReady
+with no execution result. Therefore neither an actual restore nor online-history
+provider reads are claimed successful. Do not repeat deploy/restart to substitute
+for a cron run. Official Railway docs distinguish railway cron run from redeploy;
+the installed remote connector does not expose cron run, and this workspace has
+no Railway CLI or token authentication. A dashboard manual Run or an authorized
+browser fallback is still needed; never alter the schedule to force a run.
+
+Morning service006aea7e was read back unchanged: pin20a3069e, deploymentb43e335e,
+cron0 22 * * 0-4, no staged changes. No customer-save flag, production key,
+DB schema/privilege, mail, payment, AI invocation or reservation changed.
+GitHub CI39369328863: payment concurrency passed; main validation still running
+at this observation. Do not report overall CI success yet.
+
+
+## 2026-10-20 13:47–13:49 JST — Actual old-version restore passed; V2 redeployed
+
+Owner clicked Run now. Deployment3aaa54dc's actual04:47:38Z structured logs
+show RESOLUTE_RESTORE_OK:69247 encrypted bytes, probe_rows2, Sandbox
+orders11/grants7/events8/audit32/alert_outbox7, live ledger verified with all
+five counts0. Download/decryption/checksums/pg_restore/probe/PK/both payment
+integrity checks passed in2.355s; monitor_ping_sent=true. Cron execution status
+succeeded, no running replica afterward. data_protection=not_installed is
+expected while application storage schemas are absent, not a protection pass.
+
+Crucially, the same execution logged bundle commitdb418e7 and digest
+aab5c9ca86efbf2bc1af5ca7cd6d25c783aee9a9cbc0499b41c4ae555bc3c151.
+Thus the earlier c792 V2 deployment claim established configuration only:
+redeploy reused the old execution configuration despite describe-service showing
+the V2 start command. The actual run is NOT evidence of executing c792d51d.
+
+Corrective operation: added a fixed c792d51d/bundle-digest marker to the V2
+launcher, then set RESOLUTE_PROTECTED_JOB_V2_B64 with skipDeploys=false so a
+fresh deployment is generated from current settings. New deployment
+c6ef3efc-604c-4133-8a4d-91c319f5b0f0 reached SUCCESS at13:49 JST with V2 start
+command and unchanged weekly cron; no staged changes. New launcher digest
+259c9cadbb0811358ac9bee290bf32bf48a9c76cdf9af65e887cc0eb64224672.
+Old variables retained. A fresh manual Run now is still required; verify the
+c792d51d marker AND RESOLUTE_RESTORE_OK before accepting this deployment.
+No runtime success for c6ef3efc is claimed yet. No production storage/key/DB
+activation, schedule modification, mail, payment or AI call occurred.
+
+GitHub CI39369328863 for c792d51d is now completed/success. Local3727 tests,
+lint/build/compileall passed as previously recorded. Owner custody stays complete;
+no need to repeat Google/Evernote setup or regenerate keys.
+
+
+## 2026-10-20 13:54 JST observation — V2 actual restore verified
+
+Owner reported pressing Run now; subsequent inspection found the completed V2
+execution at13:51:43 JST (log time, not inferred from the report time).
+Deploymentc6ef3efc-604c-4133-8a4d-91c319f5b0f0 logged both:
+- RESOLUTE_PROTECTED_BUNDLE_READY: commitc792d51d06437a27748f03ee2714a8c23ce7409e,
+  digest0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d,
+  modules3, timestamp2026-10-20T04:51:43.084940930Z.
+- RESOLUTE_RESTORE_OK at04:51:43.084946050Z:69247 encrypted bytes, probe_rows2,
+  Sandbox orders11/grants7/events8/audit32/alert_outbox7; live ledger verified
+  with all five counts0; download/decrypt/checksums/pg_restore/probe/primary-key/
+  both payment-integrity assertions passed,2.67s, monitor_ping_sent=true.
+
+Environment status confirms cronSucceeded, lastExecutionStatus=succeeded,
+lastExecutionAt04:51:41.853Z, running replicas0, no pending work or recent
+failures. This closes the pending V2 execution gate and the stale-build confusion.
+Do not ask for another Run now or repeat owner key custody verification.
+
+The result data_protection.state=not_installed correctly reflects the existing
+backup without application storage schemas. This is NOT an actual production
+online-history replay acceptance. Production protection key and independent
+store connection provisioning, fenced complete manifest and schema/ACL cutover
+remain pending; customer saving stays off. The successful synthetic live-Clerk
+replay remains separate evidence. Existing daily/weekly/morning schedules and
+reservations were not modified. The apt-utils debconf notice did not prevent
+the verified execution. Main, billing, live payments, email and AI were untouched.
+
+## 2026-10-20 14:03 JST — Production store preparation and read-only preflight
+
+Created a separate production-history bucket resolute-protection-live
+(ae4437b5-24f9-43dd-9fe0-475676821f1b, sjc;
+S3 name resolute-protection-live-vpdsti). Existing synthetic protection objects
+remain in resolute-protection, unchanged. Backup bucket remains separate.
+No provider object lock/versioning/non-delete credential guarantee is claimed.
+
+Prepared five bucket-variable references on the disabled protection writer
+(RESOLUTE_WRITER_*), and five RESOLUTE_RESTORE_PROTECTION_* references on
+restore-check. Both used skipDeploys=true: stored configuration is ready, but
+these connections are NOT claimed loaded by the existing runtime. Writer
+ENABLED=false; no production key/token installed and no customer-save activation.
+
+Reused the retired protection-acceptance one-shot function for a bounded
+read-only preflight, with the existing API reader URL and temporary new-bucket
+references. No admin DB credentials used. Deployment
+53810a91-3d09-41f8-ba79-e1b243e47dc5 actually logged
+RESOLUTE_STORAGE_PREFLIGHT_OK at2026-10-20T05:02:14.561884781Z:
+current database/role/transaction checked as resolute/resolute_api_reader/read-only;
+plans, notification_settings and protection_outbox absent; both pre-existing
+plan/notification roles NOLOGIN and without elevated role attributes;
+all three writer identities had0 pg_stat_activity sessions; whole bucket
+ListObjectsV2(MaxKeys=1) returned no objects and no truncation. Writes0.
+This is a point-in-time observation, NOT a durable write fence, ACL audit,
+complete recovery manifest, production-key replay, or customer-saving acceptance.
+
+After inspection, replaced the function with an idle no-I/O body and blanked
+all six temporary DB/storage references. Final deployment
+94c52848-29b6-452d-b7af-80a5df086f9c actually logged
+RESOLUTE_STORAGE_PREFLIGHT_IDLE, reads0/writes0 at05:02:50.103278093Z.
+No cron or public domain added. Previous synthetic acceptance remains historical.
+
+Remaining owner-only prerequisite: install the ALREADY GENERATED 32-byte online
+protection key into the disabled writer's RESOLUTE_WRITER_KEY_HEX using the
+owner's PC and Railway's private Variables UI. Do not install the AGE-SECRET-KEY
+recovery identity, regenerate custody material, upload any secret to chat, or
+repeat Google/Evernote verification. The assistant cannot retrieve the PC-only
+key. Keep ENABLED=false. Downstream key references, token provisioning, manifest
+fencing and migrations/ACLs must be completed before explicit save activation.
+Morning/daily/weekly schedules, main, live payments, mail and AI untouched.
+
+## 2026-10-20 14:11–14:18 JST — Owner key installed; runtime checks and migration rehearsal
+
+Owner reported completing the private WSL-to-Railway copy into the disabled
+writer's RESOLUTE_WRITER_KEY_HEX. No key/age identity was read into chat.
+Actual deployment87a06fc6-695f-41b9-aafb-f03e5dd943f8 logged
+RESOLUTE_PRODUCTION_KEY_RUNTIME_OK at05:12:11.000843832Z:64-hex key loaded,
+AES-GCM memory round trip passed, writerDisabled=true, DB/storage writes0.
+Non-secret fingerprint697d2470b736420ac32ff258e9c17f7939b82da4cfa0a44f75856ee72e395de6.
+This runtime fingerprint was not independently compared by the assistant with
+Google's notes; owner-side copy command checked the previously verified pins.
+Writer deploymentef0a1382-2304-409c-807f-d1399b376136 actually logged
+RESOLUTE_WRITER_DISABLED at05:12:24.998591597Z. Module-type warning is nonfatal.
+
+Initialized the empty production manifest only while the writer was disabled,
+application storage tables absent, both existing writer roles NOLOGIN and with
+no elevated attributes, and writer sessions0. These catalog checks ran before
+and after the bounded S3 operation. Whole bucket inventory allowed only the
+expected manifest on retry, no event/other objects. Conditional PUT prevented
+replacement; exact GET readback and post-inventory passed. This operational
+bootstrap fence relies on absent application schemas and stopped known writers;
+it is not provider object lock or a reusable concurrent-live-write fence.
+Canonical bytes match protection_events.seal_manifest empty serialization:
+{"objects":[],"version":1}
+SHA2563ccbe11b60a4fa4f0d024f7c22cba06b70ca3ff7d9eead4c8a3a5aa4ca8d2b73.
+Deployment6b51220a-25e4-4d12-a307-63ba7bdf61ea logged
+RESOLUTE_INITIAL_MANIFEST_OK at05:13:36.817215270Z, events0, bootstrapOnly=true.
+The pin is retained here outside the DB dump.
+
+Restore key now references the writer's online key; restore manifest pin is set.
+A GET-only probe using references THROUGH restore-check configuration matched
+the writer fingerprint and authenticated the pinned manifest bytes:
+deploymentd0d59a1a-b313-4144-9b75-6110f52e6f3f logged
+RESOLUTE_RESTORE_CONNECTION_OK at05:15:17.208177859Z; writes0/events0.
+This checks rendered restore credentials, key equality and manifest readback.
+It is NOT a new Python pg_restore run or a non-empty production-event replay.
+Existing successful V2 full restore remains the earlier13:51 execution.
+Forced a fresh restore configuration deployment using
+RESOLUTE_STORAGE_CONFIG_REV=20261020-production-bootstrap-v1; cron unchanged.
+Check the latest deployment/runtime before claiming this configuration executed.
+
+Rehearsed002–005/017–019 plus the existing verifyStoragePermissions catalog audit
+in one real production DB transaction, with advisory lock, bounded statement/
+lock/idle timeouts and mandatory ROLLBACK (no COMMIT). Existing016 prerequisites
+were retained. Initial attempt764675f7 stopped before DB connection because the
+retired SETUP URL was blank; no SQL ran. Corrected using a temporary Postgres URL
+reference constrained to the internal host and /resolute, with redacted errors.
+Deploymentb83651af-7455-4eba-8575-81f443b10fed logged
+RESOLUTE_STORAGE_MIGRATION_REHEARSAL_OK at05:16:05.054196096Z:
+migrations7, rolesVerified3, loginsEnabled=false, rawPaymentAccess=false,
+deliveryAccess=false, rolledBack=true, persistedChanges0, activation=false.
+Post-rollback checks confirmed new storage tables and third writer role absent.
+This validates the migration sequence against the actual existing catalog;
+production schemas/ACLs are NOT installed.
+
+Cleanup verified by real idle logs:
+- probe c9c6a6e0-9617-49b4-8b1c-d1b54360c966 at05:16:11.933550092Z;
+  all nine temporary DB/key/storage/pin/flag references blanked.
+- provision6ad4a6c6-4a49-4cd8-8e2a-33b90289d47f at05:16:58.784232949Z;
+  temporary admin URL blanked. Both read/write counts0, no scheduled work.
+
+Next: package daily backup dependencies, finish controlled schema/ACL cutover and
+actual post-cutover backup/restore acceptance. BEFORE any customer-save/writer
+activation, replace or invalidate this EMPTY BOOTSTRAP pin and establish the
+fresh, complete write-fenced manifest procedure; never retain an empty pin as
+evidence of complete history after writes begin. Customer saving, retry/delivery,
+live payments and AI remain off. No morning/daily/weekly cron or reservations
+changed. No further owner key/custody step needed for this milestone.
+
+Restore configuration deployment2322edf1-fc79-498b-b1f2-69a1f570d349 reached SUCCESS at14:18 JST observation, cron0 0 * * 1 unchanged, no staged changes. No new cron execution claimed.
+
+## 2026-10-20 14:20–14:29 JST — Storage schema committed and real post-cutover restore passed
+
+Updated daily backup04440b43 to the same checked c792d51d three-module bundle;
+backup-only launcher SHA256ad00b01f3c3d4726d37f01a9b3fdefb94f0691db75820e8f9316a76bf41b3640.
+All three embedded modules exactly matched checked repository sources and compiled.
+New variable RESOLUTE_PROTECTED_JOB_V2_B64; old job retained. Added cryptography
+package to startup dependencies. Daily cron0 0 * * * unchanged.
+Configuration deployment93fa80cb-a1c2-4e26-8e14-38f90b6a9f7c SUCCESS.
+Actual one-shot execution of the SAME daily payload used temporary service
+db300300-b491-44d5-b34a-a0f770626096 (no cron/domain/volume,0.5CPU/0.5GB,NEVER):
+pre-cutover deployment7bea8912-9b95-48d7-ae4d-57951b564d9a logged
+RESOLUTE_BACKUP_OK at05:22:22.983922558Z,69247 encrypted bytes/69031 dump bytes,
+retained8,1.635s. Monitor ping deliberately disabled in test jobs.
+
+Retained a checksum-verified pre-schema dump outside normal daily retention:
+resolute/cutover/20261020-pre-storage/20261020T052217058456Z.dump.age
+(and .json metadata), SHA256035439b63a197690678885c9eae774df231cc0516c67805ecda31c5e80ee77d0.
+Same-day regular backup retention keeps the latest daily dump, so this separate
+copy is intentional. Deployment1807047f-c783-4dad-b1e0-9370eaf054e8 logged
+RESOLUTE_PRE_CUTOVER_BACKUP_RETAINED at05:23:13.832065823Z after exact readback.
+
+Applied the previously rehearsed002–005/017–019 sequence atomically, with the
+same catalog audit before COMMIT, then a second audit after COMMIT. Existing016
+was NOT rerun. Scope internal Postgres/resolute only; guarded by absent storage
+tables, dormant existing roles, no writer sessions, disabled writer flag and
+expected bootstrap pin; bounded lock/statement/idle timeouts and advisory lock.
+Deployment726fe709-5fbd-4d19-a760-a7e26c3cd1b7 logged
+RESOLUTE_STORAGE_SCHEMA_PREPARED at05:23:55.607325433Z:
+migrations7,rolesVerified3,loginsEnabled=false,rawPaymentAccess=false,
+deliveryAccess=false,committed=true,activation=false;
+plans/settings/protection/delivery counts all0.
+This supersedes earlier statements that the schemas and permissions were absent.
+No writer login, API save capability, retry worker or notification delivery enabled.
+
+Post-schema actual backup63acb54a-bd7e-462f-a087-20fc0e1a24ea passed
+at05:24:52.991172122Z:84933 encrypted bytes/84717 dump bytes,retained8,1.338s.
+Both actual backup runs logged the expected c792d51d bundle marker and SHA256
+0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d.
+
+Two attempts to reuse that source-backup service for restore stopped SAFELY
+before restore at backup.py:229: production connection variables remained nonempty.
+Deployment591e01ad failed; diagnostic8ff18ffb identified the guard without exposing
+values, arguments, stderr or row data. A no-I/O shell check36ee6dfd confirmed
+PGHOST and PGPASSWORD were nonempty despite the prior empty-string updates.
+Do NOT infer that set_variables(value="") removes/neutralizes a reference.
+Earlier "blanked" claims mean an update was requested, not verified credential
+retirement. Never bypass the restore guard or silently pop production variables.
+
+Created a separate restore-only temporary service
+be5c0abe-3fe8-4991-ac27-bcbc1426a953, which NEVER received production DB credentials;
+no cron/domain/volume, same limits/restart policy. Uses the unmodified verified
+restore launcher and references restore-check's backup key/storage/online key/pin.
+RESOLUTE_REQUIRE_PROTECTION=true and RESOLUTE_REQUIRE_LIVE_LEDGER=true.
+Deploymentc9a74bcd-6f47-4fb1-be76-36ab483a93da actually logged RESOLUTE_RESTORE_OK
+at05:28:53.932496508Z:84933 bytes,probe_rows2, Sandbox orders11/grants7/events8/
+audit32/alert_outbox7, live ledger verified with all five counts0;
+data_protection={state:verified,source:independent_online_manifest,deletions:0,
+suppressions:0}; download/decrypt/checksums/pg_restore/probe/PK/both payment
+integrities passed,5.727s,monitor_ping_sent=false.
+This is a REAL post-schema restore and independent-manifest replay of the empty
+production baseline. It is not a non-empty customer-deletion event acceptance.
+Earlier non-empty isolated replay acceptance remains separate evidence.
+Weekly restore also now explicitly requires protection; schedule unchanged.
+
+Cleanup correction: temporary function references are replaced with literal
+DISABLED (not empty), followed by runtime checks allowing only absent/DISABLED.
+Provisionc988eb2e-16de-4e36-a13c-2f181b05f7e3 logged temporaryReferencesNeutralized
+true,checked3,reads0/writes0 at05:28:54.264126221Z.
+The storage probe checks14 temporary backup/DB/key/pin/flag references similarly.
+Temporary backup/restore-only service retirement is recorded below after completion.
+
+Remaining activation gates: latest complete manifest must be rebuilt under a
+real write fence after any writes; the empty BOOTSTRAP pin must never be reused
+as evidence for future history. Configure/verify isolated writer token, receipt
+retry and final API/save activation separately. No user action needed for this
+cutover milestone. No morning schedule/reservation, UI/RIZEL visibility, main,
+live payment, email, billing setting or additional AI call changed.
+
+Final cleanup/readback14:33 JST: both temporary services db300300 and be5c0abe
+were deleted from this environment; no attached volumes. Environment inventory
+confirms they are absent and has no staged patch. Exact pre/post/restore results
+above were recorded before deletion. Existing helper functions remain idle.
+Storage probe730b8062-4fad-4a43-a33d-b74f03c55a0b actually logged
+RESOLUTE_STORAGE_PREFLIGHT_IDLE at05:32:38.761696263Z with
+ temporaryReferencesNeutralized=true,checked14,reads0,writes0.
+An earlier cleanup deployment4e623bb3 exposed only Starting Container; it was
+not counted as verification. A new non-secret revision variable forced a fresh
+execution, and its explicit runtime check supplied the evidence.
+Weekly restore configea3e6818-0d75-47bf-a570-b13ff8d1af62 SUCCESS, protection
+required, weekly cron unchanged; its scheduled execution is not claimed.
+Morning b43e335e/cron0 22 * * 0-4, API5e22dac8 sleeping, writer ef0a1382
+unchanged. Daily cron0 0 * * * and weekly0 0 * * 1 both unchanged.
+This turn changed infrastructure and operation records only; no application code
+or dependencies changed. Prior checked code reused; diff check passed. Coworker
+commit2a78993d fast-forwarded and preserved without editing its PRO/UI work.
+
+## 2026-10-20 — Restore freshness and retry queue hardening
+
+The production restore entry point now requires a complete event-prefix LIST
+before reading the pinned manifest's events and another LIST after authenticated
+reads. The manifest's event names must exactly equal the inventory and the
+inventory (including size/ETag) must stay unchanged. An authentic old empty
+bootstrap manifest therefore fails once any event appears. Missing LIST access
+also fails closed; the application/writer permissions are not broadened.
+GET-only load_manifest remains available for already-isolated pinned inputs,
+but backup.load_online_protection always requests the complete inventory check.
+This does NOT replace fencing all writers before real recovery or sealing a new
+manifest. An event can arrive after the final observation unless writes are stopped.
+No user-save activation is authorized by these checks alone.
+
+Retry batches now report whole-queue pending and dueRemaining event counts,
+including users outside the per-batch limit and delayed backoff entries. CLI
+completion exits nonzero while pending remains, even if every selected user
+succeeded. Counts are not user identifiers. No scheduler/login/retry service was
+activated. A real SQL fixture covers a successful limited batch followed by a
+delayed-only queue. Cryptographic tests cover stale empty manifests, inventory
+changes during reading, complete replay and unavailable LIST permission.
+
+Validation and deployment evidence follow below when completed.
+
+Full gates: Node1236/Python2523 passed (3759 total), lint0 errors/5 existing warnings, build/compileall/diff check passed. Stale generated build cache was preserved outside the repository and build repeated successfully. Runtime verification follows separately.
+
+
+## 2026-10-20 14:53 JST — complete inventory runtime accepted
+
+Code commit fafde179fec86ae861469591e0c2839b64b92e4e rejects incomplete or
+changing live protection inventories and reports whole retry queue backlog.
+Three-module bundle SHA256:
+730cf53f6408a171539a4a899d1dc092941acb5fa44f018ce9e338550af032de.
+
+Fresh restore-only service4e993fbe-e5d6-49a8-93ab-e805282f740c was never given
+production DB connection variables. Deploymentf70b1204-0a1e-40ac-a61a-e8925fd8092f
+logged the matching RESOLUTE_PROTECTED_BUNDLE_READY and RESOLUTE_RESTORE_OK at
+2026-10-20T05:51:24.351987561Z. Encrypted bytes84933, probe_rows2; Sandbox
+orders11/grants7/events8/audit32/alert_outbox7; live ledger verified with all five
+counts0; data_protection verified, source independent_online_manifest,
+deletions0/suppressions0; download/decrypt/checksums/pg_restore/probe/primary-key/
+Sandbox/live payment integrity passed,2.591s,monitor_ping_sent=false.
+This proves the stricter GET+LIST runtime works against the actual empty baseline;
+it does not claim nonempty production deletion acceptance. Writers still must
+be fenced and the complete manifest resealed before recovery after writes begin.
+
+Daily backup deployment89161667-8504-498e-b417-b00f8af18a7c and weekly restore
+f0f20b52-cc18-4367-b127-b910bf280533 now select RESOLUTE_PROTECTED_JOB_V3_B64.
+Previous V2 payloads retained for rollback. Both config deployments SUCCESS;
+this is not evidence of a scheduled V3 execution. Daily0 0 * * *,weekly0 0 * * 1,
+morning0 22 * * 0-4 unchanged. Morning service not modified.
+The fresh verification service was deleted after evidence capture; no volumes.
+Customer saving, role logins, writer and retry scheduling remain disabled.
+No payments, email, AI calls, key regeneration or owner Run now required.
+
+Local code gates passed3759 tests (Node1236/Python2523),lint/build/compileall.
+CI39376987144 was cancelled by the next branch push, not reported as passed.
+Coworker af8af671/d10c04f8 changes fast-forward integrated; final combined gates
+and successor CI are being verified separately.
+
+Final combined d10c04f8 gates: Node1237/Python2523 (3760 total) passed;
+lint0 errors/5 existing warnings, build, compileall and diff check passed.
+Deployed three-module payload verified byte-for-byte against integrated source.
+
+
+## Dormant storage readiness command — 2026-10-20
+
+`scripts/resolute/check-storage-readiness.mjs` performs no I/O by default.
+Explicit RESOLUTE_CHECK_STORAGE_READINESS=true and a reviewed
+RESOLUTE_SETUP_DB_URL scoped to postgres.railway.internal/resolute are required.
+Use an operator connection with catalog visibility; never install this credential
+into the application or retry service. Do not put a connection URL on a command line.
+The command opens BEGIN READ ONLY, audits the three dormant role ACLs, counts
+existing scoped-role sessions and all unpublished protection records (including
+future retry backoff), then ROLLBACKs. It returns only counts/booleans. Nonzero
+sessions or pending records make the CLI fail; query/ACL errors are redacted.
+NOLOGIN alone does not end old sessions. This command neither terminates them nor
+publishes queued events, changes grants, enables saving or sends notifications.
+
+`dormantChecksPassed` is only a point-in-time preflight. It does not fence
+privileged writers, infrastructure or object storage and deliberately always
+reports recoveryFenceVerified=false and activation=false. Continue to require
+an actual maintained write fence and complete independently pinned manifest.
+PGlite regression verifies a delayed pending receipt remains unchanged, a
+simulated pre-existing role session prevents readiness, and ACL failure closes
+the read-only transaction. Real production execution is recorded separately.
+
+Previous integrated CI39377657564 (d10c04f8, including fafde179 recovery fix)
+completed successfully; the documentation-only fb27c783 did not replace that
+code validation with a new code tree.
+
+
+2026-10-20 15:11 JST actual read-only production readiness passed:
+deployment445bb4fa-51ce-44c5-9185-2e431986d0f3 logged
+RESOLUTE_STORAGE_READINESS at2026-10-20T06:11:34.131154785Z.
+rolesVerified3,loginsEnabled=false,rawPaymentAccess=false,deliveryAccess=false,
+activeScopedSessions0,pendingProtection0,dueProtection0,dormantChecksPassed=true.
+recoveryFenceVerified=false and activation=false intentionally remain explicit.
+The dedicated one-shot service8ab66cf5-afab-4c09-bf65-61c16d707f85 used the
+reviewed read-only transaction and the source ACL audit, with no public domain,
+cron or volume. It was deleted after the evidence was captured. No application
+credentials, role attributes, stored customer data or existing schedules changed.
+
+Deployed one-file Bun source SHA256:
+b0ef14068bc866a92912f9207cb3708616f43d3f8a5f032890066d383fd33bcd.
+It concatenates the unchanged ACL auditor and new readiness command, pins
+pg8.23.1 and substitutes only the script entry point/imports.
+
+Validation note: overlapping local gates exhausted container memory. Two lint
+attempts exited137 and an initial Node run lost two test-file processes while
+the cgroup OOM-kill counter increased. They are not passing evidence. Build
+passed; standalone lint subsequently passed with0 errors/5 existing warnings.
+Complete Node rerun and the original Python suite results follow.
+
+Final readiness gates: Node1239/1239 (89.614s), Python2523/2523
+(376.676s), total3762 passed. Lint0 errors/5 existing warnings; build,
+compileall and diff check passed. Node rerun completed with no additional
+OOM kills (counter stayed9). No test skipped or removed.
+
+Coworker accf4368 arrived during publication; ref update did not overwrite it.
+Integrated PRO checkout changes and repeated all gates: Node1245/Python2523
+(total3768) passed, lint0 errors/5 existing warnings, build/compileall/diff check
+passed. Sequential heavy gates avoided further OOM kills.
+
+
+## 2026-10-20 15:34 JST — dormant gateway configuration prepared
+
+CI39379931568 for163a2e5c completed SUCCESS. No application source changed in
+this operation; the previous integrated3768 tests/build remain its code gates.
+
+The existing writer token failed the production format check (not sealed);
+provisioned a fresh48-random-byte base64url service-authentication token on
+resolute-protection-writer, skipDeploys=true. It is NOT a recovery/encryption key.
+The owner-installed encryption key and Google/Evernote custody were unchanged.
+Initial probe used raw SHA256 for the key comparison by mistake; corrected it
+to the existing protection_keys.fingerprint formula with
+resolute-online-protection-key-v1 + NUL + key bytes. Corrected runtime confirmed
+the previous installed-key fingerprint. This is continuity with earlier runtime
+evidence, not a new independent read of the owner's offline custody files.
+
+Writer-only confirmationd490af66-2f9b-41a9-83ce-6a341eefa95e at06:33:23Z passed.
+API now has RESOLUTE_PROTECTION_ENABLED=false, fixed writer HTTPS URL, and token/
+key references to the writer service. API receives NO bucket credentials and NO
+plan/settings/protection DB login. All four variables were set skipDeploys=true;
+API deployment5e22dac8 and source pinbb45d9d0 remained unchanged. Writer remains
+ENABLED=false, deploymentef0a1382/source4b3bdd8e unchanged. No API/writer restart.
+
+One-shot verificationea42bc94-8f01-4f7a-b010-521acbe64d8a logged
+RESOLUTE_CONNECTION_CONFIG_VERIFIED at2026-10-20T06:33:55.282118957Z:
+tokenValid=true,ownerKeyMatches=true,writerDisabled=true,
+applicationReferencesChecked=true,networkCalls0,writes0,activation=false.
+This checks Railway's rendered reference equality, format, fixed URL, disabled
+flags and installed-key continuity. It does NOT prove API runtime adoption,
+HTTPS reachability, a writer receipt, customer saving or recovery fencing.
+The legacy SYNTHETIC_ONLY variable is not used by the pinned writer code; do not
+rely on it as an isolation boundary. Actual safety here is disabled writer/API,
+NOLOGIN storage roles, no storage DB credentials and no data writes.
+
+Temporary verification servicec2190fbd-8371-45e0-beaf-6ece8e423b8f was deleted
+with no volumes after evidence capture. Its token/key references are removed
+with the service, not blanked. No secrets were printed to logs or committed.
+Schedules/reservations, UI/RIZEL visibility, production payments, mail and AI
+were untouched. Next: reviewed API/runtime and scoped storage connections,
+controlled receipt/recovery verification before customer-save activation.
+No repeat owner key-custody, token paste or Run now is needed for this milestone.
+
+
+## 2026-10-20 15:51 JST — API updated; actual reader/HTTP checks passed, writes blocked
+
+API7108edd6 was explicitly pinned to reviewed commit
+7875e998cf6936d6c8c8b3628a4ca667a1ef89c2. Deploymenteaa96549-6fdc-4a06-9ce0-a7431213ba2f
+logged RESOLUTE_API_READY at06:45:47.209246325Z. Existing protection references
+are now included in a new API deployment; protection and customer-save gates
+remain disabled. No plan/settings writer credentials or logins were installed.
+
+Actual Railway checkc0155713-31a1-44fb-8942-6f68e4d99ed5 logged
+RESOLUTE_READER_HTTP_VERIFIED at06:50:21.629314999Z:
+- Connected as resolute_api_reader to internal Postgres database resolute in
+  BEGIN READ ONLY; entitlement SELECT permission exercised without reading rows.
+- All three storage roles remain NOLOGIN without elevated role attributes;
+  pg_stat_activity shows0 sessions for these identities.
+- Updated public API /healthz returned200 with status ok; unauthenticated GET
+  /internal/v1/plan and /internal/v1/notification-settings returned401 AUTH_REQUIRED.
+- DB writes0, activation=false. These checks are NOT authenticated customer saves,
+  a new full ACL audit, source-outbox/inventory completeness or a writer receipt.
+
+The planned rollback-only scoped write test did NOT run. Initial helper
+f1eb60ef-cc4f-41cd-9666-553b60f6c5c8 failed at DB URL parsing before connection:
+the old provision service's RESOLUTE_SETUP_DB_URL reference was unusable.
+A proposed Postgres-admin reference for this temporary helper was rejected by
+automatic approval review: copying superuser credentials into a temporary
+verification service exceeded the narrow dedicated-role test and unnecessarily
+exposed privileged credentials. No admin reference was applied. Do not route the
+same rejected operation through a different API or existing helper without
+resolving the approval boundary. A separately scoped reader-only connection was
+the materially safer alternative used above.
+
+Deletion of the first temporary helper was also not approved (tool returned
+Cancelled / no changes). Do not claim it was deleted. Both helpers now retain
+only literal disabled references and inert code, no network/DB operations:
+- f1eb60ef:6e1aaa0e-9aae-4cd1-81ff-082be2cd4c29 at06:50:39Z,
+  RESOLUTE_SCOPED_CHECK_RETIRED referencesNeutralized=true (all11 refs).
+- ecc14154-6d4d-4951-941d-67ecaecd5b55:
+  ac1c3fa6-d21d-4f07-b1a8-60dd8a5373c4 at06:51:32Z,
+  RESOLUTE_READER_CHECK_RETIRED referencesNeutralized=true (DB ref/enable flag).
+Both have NEVER restart policy and no cron, domain or volume. Their removal is
+pending; do not re-enable them. No encryption key was regenerated or logged.
+
+Next: resolve a narrowly scoped storage-write verification connection without
+copying superuser credentials to a new service. Then fresh write-fenced complete
+inventory, actual gateway receipt/store and isolated restore with nonempty
+history. Do not reuse the bootstrap empty inventory after writes. No new saved
+history, new recovery success or customer-save activation is claimed in this turn.
+The existing writer remains disabled and unchanged. Morning job/reservations,
+RIZEL visibility/approved UI/copy, main, billing, mail and AI were untouched.
+Owner key custody and Run now must NOT be repeated.
+
+Application source unchanged; prior3768-test/CI39379931568 evidence applies to
+the deployed source. This documentation update requires git diff --check only.
+
+
+## 2026-10-20 16:19 JST — Isolated real-object gateway durability
+
+Continued through the connected Railway app without retrying the blocked CLI
+endpoint or copying any database administrator credentials. Reused existing
+resolute-protection-acceptance (310e0e6e-1a55-4a20-88fb-412a86d1d860), with
+references only to the existing synthetic resolute-protection bucket
+(978cea1c-440a-42c2-b98c-0c8fe6a22626). No service, domain, volume or cron added.
+Production API/writer activation and source database were untouched.
+
+Deployment10279dd3-1fd1-4efa-9e5e-0323b8996a93 SUCCESS actually logged
+RESOLUTE_SYNTHETIC_GATEWAY_DURABILITY_OK at07:18:26.156567945Z:
+- Three synthetic delete/alerts_off/morning_off events persisted through the
+  current publisher, real loopback HTTP writer and real HTTPS S3 adapter.
+- Six conditional overwrite conflicts returned412; idempotent receipts matched,
+  while changed event timestamps were rejected without overwriting originals.
+- Closed and recreated the writer server; all three records decrypted and their
+  SHA256 receipts matched after readback from S3. This is a server restart inside
+  one process, not a new container or an independent disaster-recovery run.
+- Four HTTP negatives passed: DELETE405, listing404, wrong token401, query404.
+- Complete isolated namespace listing contained exactly three objects, untruncated.
+
+The production modules were bundled unchanged from017293dc with pinned AWS SDK
+3.1152.0. Only the physical S3 key received a synthetic namespace prefix:
+resolute/protection/acceptance/gateway-9cfca233-9609-4c9d-9398-5bb231532d8f/.
+The three encrypted synthetic objects remain there. An ephemeral test-only key
+and token existed in process memory; no production recovery key was generated,
+read or replaced. The production history bucket was not accessed. This listing
+is NOT a production recovery manifest, and no bootstrap pin was reused.
+
+Afterward five temporary bucket references were replaced with literal DISABLED,
+SYNTHETIC_GATEWAY_CHECK=false, and the function replaced with no-I/O retirement
+code. Deployment981857b9-87c2-4cfd-a2f2-0138d727f3f3 SUCCESS actually logged
+RESOLUTE_SYNTHETIC_GATEWAY_CHECK_RETIRED at07:18:58.592184164Z:
+referencesNeutralized=true, reads0, writes0. The existing service remains inert;
+it was not deleted. No production credentials remain newly attached to it.
+
+Remaining boundaries: deployed public HTTPS gateway authentication, production
+scoped DB writes, and production-history isolated restore are NOT verified by
+this test. Saving stays OFF. The allowed in-container DB execution path is still
+unavailable; see RESOLUTE-SCOPED-WRITE-CHECK.md. Owner authorization persists and
+no repeated login, key custody or Run now is needed. All morning/daily/weekly
+schedules, billing, live payments, mail, AI and approved UI remain unchanged.
+
+Node suite on017293dc: npm test -- --test-concurrency=2 passed1247/1247,
+0 failed/skipped/cancelled,76.941s. No application source changed in this step;
+only the operational record changes. Documentation diff check passed. Earlier
+Python/build gates are historical evidence, not rerun results for this step.
+
+Coworker d3d723c1 landed during publication; its recovery watchdog changes were
+preserved by rebase. The final change here remains documentation-only and passed
+diff check; the1247-test result above predates d3d723c1 and is not a new test claim
+for that coworker code. No remote ref was forced or unrelated file replaced.
+
+
+## 2026-10-20 evening — Close independent-history responses on every read
+
+Code inspection found four bounded S3 response reads in protection_events.py
+without explicit response cleanup: event reads during sealing/loading, manifest
+readback, and manifest loading. A bounded oversized read or streaming exception
+can leave unread response data. All four now use a try/finally helper that closes
+the response before validation or the next request. Size limits, checksums,
+authentication and complete-inventory comparisons are unchanged.
+
+The storage test double refuses a second GET while any previous response is
+open. Regression cases exercise successful seal/load, checksum/authentication
+failure, interrupted streams and the bounded oversized-manifest rejection.
+All three new cases reject the original implementation; all nine related tests
+pass with the fix. This is local regression evidence, not provider acceptance.
+
+The code has not been deployed to Railway. Backup/restore services use bundled
+module payloads, so a GitHub commit alone does not update their runtime. A future
+rollout must rebuild and verify the three-module bundle, retain existing
+schedules and disabled-save gates, and inspect actual runtime results. No owner
+key custody, login, Run now or production write was requested for this fix.
+
+Final local gates on the integrated 30eda76f base: lint passed (five existing
+warnings), Node 1,257/1,257, Python 2,545/2,545, production build, compileall and
+diff check passed. The three added Python cases are included in that total.
+These results do not establish deployment or production storage acceptance.
+
+## 2026-10-20 21:27 JST — stream cleanup bundle deployed; execution pending
+
+Owner reported Vercel paused at100% usage. No Vercel resume, plan/budget change
+or Vercel deployment was requested. The following work used existing Railway
+backup/restore services and did not create resources or change reservations.
+
+Rebuilt the existing three-module launcher from verified commit
+8daeaf3cd68753fb5e8f50de38bf542a9b3f3052 (CI39417464527 SUCCESS).
+Decoded previous V3 modules and matched each byte-for-byte to fafde179 source
+before replacing the embedded modules, digest and commit marker. New modules
+matched the checked source exactly and compiled. Ten local launcher checks
+verified extraction/source equality, valid mode, rejection of three invalid modes
+per launcher, and checksum rejection. runpy was intercepted: these checks did
+not execute backup/restore or connect to storage/DB.
+
+- Module JSON SHA256:480e4935f5d79d590447dcb852fd52778a95f215cd0f5b5ed0daa8d5ff22c9cf.
+- Backup launcher SHA256:328ae6b55b7517c475e27702f85126bcb6e4bec12ee2aff51eefb3670b0a4b1c.
+- Restore launcher SHA256:651d121fc63cc6913f7e1db86e59a82613be263f048d9cc70daf86d2e03fe5b9.
+
+Updated only RESOLUTE_PROTECTED_JOB_V3_B64 and retained the previous V3 source
+in RESOLUTE_PROTECTED_JOB_V3_ROLLBACK_B64, with skipDeploys=false on each service.
+Backup deployment80f739cf-3eed-4644-963d-b31ddbcd4295 and restore deployment
+7103f667-3049-431c-b892-44ac999b8b30 both reached SUCCESS. Readback confirmed
+daily0 0 * * *, weekly0 0 * * 1, rollback variable present, no staged changes.
+Start commands remain unchanged and continue selecting V3_B64. No credentials,
+keys, manifest pins, customer-saving flags or role permissions were modified.
+
+Both specific new deployment runtime-log reads returned zero entries. Therefore
+this is deployment evidence only: the new bundle has NOT yet been observed
+performing backup or restore. Do not substitute older logs or an initial empty
+manifest for fresh complete write-fenced inventory acceptance. Next runtime
+evidence must identify8daeaf3c and the module digest above, then show actual
+backup/restore checks. No owner Run now or login was requested.
+
+## 2026-10-20 21:31 JST — actual isolated restore of stream-cleanup bundle
+
+Created one bounded restore-only service c7399bea-6c38-4adf-b42c-5577d960f798,
+using the same verified launcher through the existing restore-service reference.
+No production PGHOST/PGPASSWORD/DATABASE_URL/ENTITLEMENT_DB_URL, monitor URL,
+cron, public domain or volume was supplied. Readback checked the missing DB and
+monitor variable names, absent cron and zero volumes before connecting the image.
+The restore code's production-connection guard remained intact. Limits0.5CPU /
+0.5GB, restart NEVER, timeout900s; required protection and live-ledger checks true.
+
+Deployment b5ac796f-20d5-4738-8dc5-a2bd0ee4ed6e reached SUCCESS and emitted:
+- RESOLUTE_PROTECTED_BUNDLE_READY at2026-10-20T12:31:47.151516893Z with
+  commit8daeaf3cd68753fb5e8f50de38bf542a9b3f3052 and module SHA256
+  480e4935f5d79d590447dcb852fd52778a95f215cd0f5b5ed0daa8d5ff22c9cf.
+- RESOLUTE_RESTORE_OK at2026-10-20T12:31:47.151529133Z: encrypted bytes84933,
+  probe_rows2; Sandbox orders11/grants7/events8/audit32/alert_outbox7; live ledger
+  verified with all five counts0; protection verified from independent_online_manifest,
+  deletions0/suppressions0; download/decrypt/checksums/pg_restore/probe/primary-key/
+  both payment-integrity checks passed;3.354s,monitor_ping_sent=false.
+
+This verifies actual provider reads and isolated DB restore with the new stream
+cleanup code. It does NOT establish a new backup write, a scheduled V4-code run,
+nonempty production deletion replay or customer-save readiness. Fresh complete
+write-fenced inventory remains mandatory before save activation; no old empty
+manifest may be reused after subsequent events. Production DB was not connected.
+
+Deleted the temporary service after capturing runtime evidence; provider returned
+deletion success and no detached volumes. Existing morning/daily/weekly schedules
+and all customer-saving gates were untouched. No owner action was requested.
+
+
+## 2026-10-20 23:05 JST — production rollback passed; dormant writer refreshed
+
+The existing Postgres browser Console is now usable with the owner's existing
+login. Actual reviewed rollback-only SQL passed at13:59:48Z: scoped writes,
+readbacks, protection triggers and denied excess privileges, then ROLLBACK and
+five-table absence checks; committed_rows0, activation=false, exit0. Independent
+postcheck14:00:29Z found production deletions/suppressions/unpublished events0,
+LOGIN writer roles0 and writer sessions0. Full read-only effective ACL translation
+passed at14:01:56Z. See RESOLUTE-SCOPED-WRITE-CHECK.md for exact evidence and the
+corrected read-only audit alias error. No DB credential export or role change.
+
+Refreshed the existing dormant writer by explicitly retaining ENABLED=false and
+redeploying its existing build. Deployment1bfaefad-07bc-4660-ae62-eb28b22c55c9
+reached SUCCESS; actual structured log at14:04:51.634215819Z emitted
+RESOLUTE_WRITER_DISABLED. The source pin4b3bdd8e and start command are unchanged;
+writer Dockerfile/server/ledger are identical to testedfb7c4eda. Node emitted its
+existing typeless-package warning, not a failed deployment. This updates the
+runtime deployment after the earlier skipDeploys configuration; the disabled
+branch does not parse credentials, so no token authentication/HTTPS receipt or
+bucket durability is claimed. API and all customer-saving gates remain disabled.
+
+Remaining: establish a maintained fence across DB writers and object publishers,
+produce and independently retain a fresh complete inventory, verify real public
+HTTPS receipts/durable readback, then isolated nonempty deletion/both-stop replay
+and idempotence. The zero histories are point-in-time observations, not a reusable
+empty activation pin. No owner key entry, login or Run now is needed. Morning,
+daily/weekly schedules, reservations, UI, live payments, billing, mail and AI
+were untouched. Documentation-only update: git diff --check; no new combined-tree
+test claim. Previous3804 tests/CI39429622017 remain scoped tofb7c4eda.

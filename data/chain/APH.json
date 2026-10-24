@@ -1,0 +1,313 @@
+{
+  "root": {
+    "ticker": "APH",
+    "name": "Amphenol",
+    "cik": 820313
+  },
+  "rows": [
+    {
+      "ja": "買収した事業の売り手",
+      "en": "Sellers of acquired businesses",
+      "above": true
+    },
+    {
+      "ja": "競合(Amphenolの年次報告に記載)",
+      "en": "Competitors (named in Amphenol’s annual report)"
+    }
+  ],
+  "rivals": [
+    "TEL",
+    "APTV",
+    "GLW",
+    "ST"
+  ],
+  "companies": [
+    {
+      "id": "COMM",
+      "ticker": "COMM",
+      "name": "Vistance Networks(旧CommScope)",
+      "sub": "通信ケーブル・接続",
+      "sub_en": "Network cabling & connectivity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年8月4日、CommScopeの接続・ケーブル事業(CCS)を105億ドルの現金で買収することで合意",
+          "text_en": "On August 4, 2025, Amphenol agreed to acquire CommScope’s Connectivity and Cable Solutions (CCS) business for $10.5B in cash",
+          "source": {
+            "label": "Amphenol 8-K Ex.99.1(2025年8月4日)",
+            "label_en": "Amphenol 8-K Ex.99.1 (Aug 4, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465925073344/tm2522435d1_ex99-1.htm",
+            "level": "official",
+            "date": "2025-08-04",
+            "quote": "Amphenol Corporation (NYSE: APH) today announced a definitive agreement to acquire CommScope’s (NASDAQ: COMM) Connectivity and Cable Solutions (CCS) business for $10.5 billion in cash",
+            "note": "事業の買収で、CommScope社は社名がVistance Networksに変わっています。",
+            "note_en": "A business-unit acquisition; CommScope Holding was renamed Vistance Networks."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年1月9日にCCS事業の買収を完了",
+          "text_en": "Completed the acquisition of CommScope’s CCS business on January 9, 2026",
+          "source": {
+            "label": "Amphenol 8-K Ex.99.1(2026年1月12日)",
+            "label_en": "Amphenol 8-K Ex.99.1 (Jan 12, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926002737/tm262701d1_ex99-1.htm",
+            "level": "official",
+            "date": "2026-01-12",
+            "quote": "Amphenol Corporation (NYSE: APH) today announced that it has completed its previously announced acquisition of CommScope’s (NASDAQ: COMM) Connectivity and Cable Solutions (CCS) business."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年7月にCommScopeの移動体ネットワーク事業(旧Andrew)を21億ドルの現金で買収することで合意。2025年1月31日に完了",
+          "text_en": "Agreed in July 2024 to acquire CommScope’s mobile networks businesses (OWN and DAS, the former Andrew portfolio) for $2.1B in cash; completed January 31, 2025",
+          "source": {
+            "label": "Amphenol 8-K Ex.99.1(2024年7月18日)",
+            "label_en": "Amphenol 8-K Ex.99.1 (Jul 18, 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465924080713/tm2419686d1_ex99-1.htm",
+            "level": "official",
+            "date": "2024-07-18",
+            "quote": "Amphenol Corporation (NYSE: APH) today announced a definitive agreement to acquire CommScope’s (NASDAQ: COMM) mobile networks businesses for $2.1 billion in cash"
+          }
+        }
+      ],
+      "name_en": "Vistance Networks (formerly CommScope)"
+    },
+    {
+      "id": "CSL",
+      "ticker": "CSL",
+      "name": "Carlisle Companies",
+      "sub": "建材・産業機器",
+      "sub_en": "Building products & industrial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年5月、CarlisleからCarlisle Interconnect Technologies(CIT)事業の買収を完了",
+          "text_en": "Completed the acquisition of the Carlisle Interconnect Technologies (CIT) business from Carlisle Companies in May 2024",
+          "source": {
+            "label": "Amphenol 8-K Ex.99.1(2024年5月21日)",
+            "label_en": "Amphenol 8-K Ex.99.1 (May 21, 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465924063860/tm2414931d2_ex99-1.htm",
+            "level": "official",
+            "date": "2024-05-21",
+            "quote": "today announced it had completed the acquisition of the Carlisle Interconnect Technologies (CIT) business from Carlisle Companies Incorporated (NYSE: CSL)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEL",
+      "ticker": "TEL",
+      "name": "TE Connectivity",
+      "sub": "コネクター",
+      "sub_en": "Connectors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TE Connectivityは、Amphenolと競合する主な競合の1社だ",
+          "text_en": "Amphenol competes with TE Connectivity as one of its primary competitors",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APTV",
+      "ticker": "APTV",
+      "name": "Aptiv",
+      "sub": "車載部品",
+      "sub_en": "Auto components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Aptivは、Amphenolの主な競合の1社である",
+          "text_en": "Aptiv is one of Amphenol's primary competitors",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLW",
+      "ticker": "GLW",
+      "name": "Corning",
+      "sub": "光ファイバー・ガラス",
+      "sub_en": "Optical fiber & glass",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Corningも、Amphenolの主な競合の1社に含まれる",
+          "text_en": "Corning is also one of Amphenol's primary competitors",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ST",
+      "ticker": "ST",
+      "name": "Sensata Technologies",
+      "sub": "センサー",
+      "sub_en": "Sensors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sensata Technologiesは、Amphenolの主な競合の1社として競い合う",
+          "text_en": "Sensata Technologies competes with Amphenol as one of its primary competitors",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BDC",
+      "ticker": "BDC",
+      "name": "Belden",
+      "sub": "ケーブル",
+      "sub_en": "Cable",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BeldenはAmphenolの主な競合の1社だ",
+          "text_en": "Belden is one of Amphenol's primary competitors.",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6088",
+      "ticker": "FIT",
+      "name": "Foxconn Interconnect Technology",
+      "sub": "コネクター",
+      "sub_en": "Connectors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Foxconn Interconnect TechnologyはAmphenolの主な競合の1社として競い合う",
+          "text_en": "Foxconn Interconnect Technology competes with Amphenol as one of its primary competitors.",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUBN",
+      "ticker": "HUBER+SUHNER",
+      "name": "HUBER+SUHNER",
+      "sub": "ケーブル・コネクター",
+      "sub_en": "Cables & connectors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HUBER+SUHNERはAmphenolの主な競合の1社に名を連ねる",
+          "text_en": "HUBER+SUHNER is among Amphenol's primary competitors.",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "002475",
+      "ticker": "Luxshare",
+      "name": "Luxshare Precision Industry",
+      "sub": "コネクター・組立",
+      "sub_en": "Connectors & assembly",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Luxshare Precision IndustryはAmphenolの主な競合の1社に当たる",
+          "text_en": "Luxshare Precision Industry is one of Amphenol's primary competitors.",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "002179",
+      "ticker": "Jonhon",
+      "name": "AVIC Jonhon Optronic Technology",
+      "sub": "コネクター",
+      "sub_en": "Connectors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AVIC Jonhon Optronic TechnologyもAmphenolの主な競合の1社を成す",
+          "text_en": "AVIC Jonhon Optronic Technology is one of Amphenol's primary competitors.",
+          "source": {
+            "label": "Amphenol 10-K(2025年度)",
+            "label_en": "Amphenol 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Primary competitors include Aptiv, Belden, Corning, Foxconn Interconnect Technology, Glenair, HUBER+SUHNER, ICT Luxshare, Jonhon, Molex, Rosenberger, Sensata, TE Connectivity and Yazaki, among others."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

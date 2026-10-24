@@ -1,0 +1,221 @@
+{
+  "root": {
+    "ticker": "BIIB",
+    "name": "バイオジェン",
+    "cik": 875045,
+    "name_en": "Biogen"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "LLY"
+  ],
+  "companies": [
+    {
+      "id": "EISAI",
+      "ticker": "Eisai",
+      "name": "エーザイ",
+      "sub": "医薬品メーカー",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルツハイマー病薬LEQEMBIを共同で販売している",
+          "text_en": "Biogen and Eisai co-commercialize LEQEMBI, an anti-amyloid antibody for Alzheimer's disease",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We and our collaboration partner Eisai co-commercialize LEQEMBI, an anti-amyloid antibody for the treatment of Alzheimer's disease."
+          }
+        }
+      ],
+      "name_en": "Eisai"
+    },
+    {
+      "id": "GENENTECH",
+      "ticker": "Genentech",
+      "name": "ジェネンテック",
+      "sub": "ロシュ傘下の製薬",
+      "sub_en": "Roche Group pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "RITUXANやOCREVUSなどに関する事業上・財務上の権利を得る契約がある",
+          "text_en": "Biogen has agreements with Genentech giving certain business and financial rights for RITUXAN, OCREVUS and other products",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We have agreements with Genentech that entitle us to certain business and financial rights with respect to RITUXAN, RITUXAN HYCELA, GAZYVA, OCREVUS, LUNSUMIO and COLUMVI, as well as the option to add other potential anti-CD20 therapies."
+          }
+        }
+      ],
+      "name_en": "Genentech"
+    },
+    {
+      "id": "SAMSUNGBIOEPIS",
+      "ticker": "Samsung Bioepis",
+      "name": "サムスン・バイオエピス",
+      "sub": "バイオシミラー",
+      "sub_en": "Biosimilars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BENEPALI、IMRALDI、FLIXABIを同社との契約に基づき一部の海外市場で販売している",
+          "text_en": "Biogen commercializes BENEPALI, IMRALDI and FLIXABI in certain international markets under its agreement with Samsung Bioepis",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We commercialize BENEPALI, IMRALDI and FLIXABI pursuant to our agreement with Samsung Bioepis in certain international markets."
+          }
+        }
+      ],
+      "name_en": "Samsung Bioepis"
+    },
+    {
+      "id": "SUPN",
+      "ticker": "SUPN",
+      "name": "スーパーナス・ファーマシューティカルズ",
+      "sub": "神経系医薬品",
+      "sub_en": "Neurology drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZURZUVAEの商業化で協業している",
+          "text_en": "Biogen collaborates with Supernus on the commercialization of ZURZUVAE for PPD",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We also have collaborations with Eisai on the commercialization of LEQEMBI for the treatment of Alzheimer's disease and Supernus on the commercialization of ZURZUVAE for the treatment of PPD."
+          }
+        }
+      ],
+      "name_en": "Supernus Pharmaceuticals"
+    },
+    {
+      "id": "IONS",
+      "ticker": "IONS",
+      "name": "アイオニス・ファーマシューティカルズ",
+      "sub": "RNA医薬",
+      "sub_en": "RNA therapeutics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SPINRAZAの世界純売上高に応じてロイヤルティを支払っている",
+          "text_en": "Biogen pays Ionis royalties on annual worldwide net sales of SPINRAZA",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We make royalty payments to Ionis on annual worldwide net sales of SPINRAZA"
+          }
+        }
+      ],
+      "name_en": "Ionis Pharmaceuticals"
+    },
+    {
+      "id": "ALKS",
+      "ticker": "ALKS",
+      "name": "アルカーミス",
+      "sub": "神経系医薬品",
+      "sub_en": "Neurology drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "VUMERITYの世界純売上高に応じてロイヤルティを支払っている",
+          "text_en": "Biogen pays Alkermes royalties on worldwide net sales of VUMERITY",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We make royalty payments to Alkermes on worldwide net sales of VUMERITY"
+          }
+        }
+      ],
+      "name_en": "Alkermes"
+    },
+    {
+      "id": "DNLI",
+      "ticker": "DNLI",
+      "name": "デナリ・セラピューティクス",
+      "sub": "神経変性疾患薬",
+      "sub_en": "Neurodegeneration drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同開発者の立場にあるデナリの普通株を保有している",
+          "text_en": "Biogen holds Denali common stock and is a collaborator of Denali",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our ability to liquidate our investments in Denali may be limited by the size of our interest, the volume of market-related activity, our concentrated level of ownership and potential restrictions resulting from our status as a collaborator."
+          }
+        }
+      ],
+      "name_en": "Denali Therapeutics"
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するアルツハイマー病薬KISUNLAを開発している",
+          "text_en": "Eli Lilly developed KISUNLA, a competing treatment for early symptomatic Alzheimer's disease",
+          "source": {
+            "label": "Biogen 10-K(2025年12月31日期)",
+            "label_en": "Biogen 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "A competing product, KISUNLA, a treatment for early symptomatic Alzheimer's disease that was developed by Eli Lilly and Company"
+          }
+        }
+      ],
+      "name_en": "Eli Lilly"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

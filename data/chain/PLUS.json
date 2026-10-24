@@ -1,0 +1,195 @@
+{
+  "root": {
+    "ticker": "PLUS",
+    "name": "イープラス(ePlus)",
+    "cik": 1022408,
+    "name_en": "ePlus inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "シスコ製品が、2026年3月期の売上高の約29%を占めた",
+          "text_en": "Cisco products were approximately 29% of net sales in the year ended March 31, 2026",
+          "source": {
+            "label": "イープラス(ePlus) 10-K(March 31, 2026)",
+            "label_en": "ePlus inc. 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "Products manufactured by Cisco Systems represented approximately 29%, 32%, and 44% of net sales for the years ended March 31, 2026, 2025, and 2024, respectively."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "NTAP",
+      "ticker": "NTAP",
+      "name": "ネットアップ",
+      "sub": "ストレージ",
+      "sub_en": "Data storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NetApp、HPE、Juniper、Dell、Arista各社の製品が、合わせて売上高の約23%から28%を占めた",
+          "text_en": "Products from this vendor and four other vendors together were approximately 23% to 28% of net sales",
+          "source": {
+            "label": "イープラス(ePlus) 10-K(March 31, 2026)",
+            "label_en": "ePlus inc. 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "Products manufactured by NetApp, Hewlett Packard Enterprise, Juniper Networks, Dell, and Arista Networks, collectively represented approximately 23% to 28% of net sales for the last three years."
+          }
+        }
+      ],
+      "name_en": "NetApp"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "サーバー・ネットワーク",
+      "sub_en": "Servers & networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NetApp、HPE、Juniper、Dell、Arista各社の製品が、合わせて売上高の約23%から28%を占めた",
+          "text_en": "Products from this vendor and four other vendors together were approximately 23% to 28% of net sales",
+          "source": {
+            "label": "イープラス(ePlus) 10-K(March 31, 2026)",
+            "label_en": "ePlus inc. 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "Products manufactured by NetApp, Hewlett Packard Enterprise, Juniper Networks, Dell, and Arista Networks, collectively represented approximately 23% to 28% of net sales for the last three years."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "JNPR",
+      "ticker": "Juniper Networks",
+      "name": "ジュニパーネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NetApp、HPE、Juniper、Dell、Arista各社の製品が、合わせて売上高の約23%から28%を占めた",
+          "text_en": "Products from this vendor and four other vendors together were approximately 23% to 28% of net sales",
+          "source": {
+            "label": "イープラス(ePlus) 10-K(March 31, 2026)",
+            "label_en": "ePlus inc. 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "Products manufactured by NetApp, Hewlett Packard Enterprise, Juniper Networks, Dell, and Arista Networks, collectively represented approximately 23% to 28% of net sales for the last three years."
+          }
+        }
+      ],
+      "name_en": "Juniper Networks"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NetApp、HPE、Juniper、Dell、Arista各社の製品が、合わせて売上高の約23%から28%を占めた",
+          "text_en": "Products from this vendor and four other vendors together were approximately 23% to 28% of net sales",
+          "source": {
+            "label": "イープラス(ePlus) 10-K(March 31, 2026)",
+            "label_en": "ePlus inc. 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "Products manufactured by NetApp, Hewlett Packard Enterprise, Juniper Networks, Dell, and Arista Networks, collectively represented approximately 23% to 28% of net sales for the last three years."
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NetApp、HPE、Juniper、Dell、Arista各社の製品が、合わせて売上高の約23%から28%を占めた",
+          "text_en": "Products from this vendor and four other vendors together were approximately 23% to 28% of net sales",
+          "source": {
+            "label": "イープラス(ePlus) 10-K(March 31, 2026)",
+            "label_en": "ePlus inc. 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "Products manufactured by NetApp, Hewlett Packard Enterprise, Juniper Networks, Dell, and Arista Networks, collectively represented approximately 23% to 28% of net sales for the last three years."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・コミュニケーションズ",
+      "sub": "通信事業者",
+      "sub_en": "Telecom carrier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ベライゾン向けの販売が、2026年3月期の純売上高の24%を占めた",
+          "text_en": "Sales to Verizon were 24% of net sales in the year ended March 31, 2026",
+          "source": {
+            "label": "イープラス(ePlus) 10-K(March 31, 2026)",
+            "label_en": "ePlus inc. 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022408/000114036126023171/ef20070470_10k.htm",
+            "level": "official",
+            "date": "2026-05-28",
+            "quote": "Sales to Verizon Communications Inc. represented 24%, 17%, and 19% of our net sales and 17%, 12%, and 13% of gross billings for the years ended March 31, 2026, 2025, and 2024, respectively."
+          }
+        }
+      ],
+      "name_en": "Verizon Communications"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

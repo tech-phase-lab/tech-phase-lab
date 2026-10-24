@@ -1,0 +1,96 @@
+{
+  "root": {
+    "ticker": "ROL",
+    "name": "ロリンズ",
+    "cik": 84839,
+    "name_en": "Rollins, Inc."
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ECL"
+  ],
+  "companies": [
+    {
+      "id": "RENTOKIL",
+      "ticker": "Rentokil",
+      "name": "レントキル",
+      "sub": "害虫防除",
+      "sub_en": "Pest control",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Rentokil is named as a major competitor",
+          "source": {
+            "label": "Rollins 10-K(December 31, 2025)",
+            "label_en": "Rollins, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84839/000008483926000008/rol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors include Rentokil, Ecolab, Anticimex, and numerous other regional and local companies."
+          }
+        }
+      ],
+      "name_en": "Rentokil"
+    },
+    {
+      "id": "ECL",
+      "ticker": "ECL",
+      "name": "エコラボ",
+      "sub": "衛生・水処理",
+      "sub_en": "Hygiene & water",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Ecolab is named as a major competitor",
+          "source": {
+            "label": "Rollins 10-K(December 31, 2025)",
+            "label_en": "Rollins, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84839/000008483926000008/rol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors include Rentokil, Ecolab, Anticimex, and numerous other regional and local companies."
+          }
+        }
+      ],
+      "name_en": "Ecolab"
+    },
+    {
+      "id": "ANTICIMEX",
+      "ticker": "Anticimex",
+      "name": "アンチシメックス",
+      "sub": "害虫防除",
+      "sub_en": "Pest control",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Anticimex is named as a major competitor",
+          "source": {
+            "label": "Rollins 10-K(December 31, 2025)",
+            "label_en": "Rollins, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84839/000008483926000008/rol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors include Rentokil, Ecolab, Anticimex, and numerous other regional and local companies."
+          }
+        }
+      ],
+      "name_en": "Anticimex"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

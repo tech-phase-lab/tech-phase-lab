@@ -1,0 +1,300 @@
+{
+  "root": {
+    "ticker": "TWLO",
+    "name": "トゥイリオ",
+    "cik": 1447669,
+    "name_en": "Twilio"
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤",
+      "en": "Cloud infrastructure",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    },
+    {
+      "ja": "通信キャリア",
+      "en": "Carriers",
+      "above": true
+    },
+    {
+      "ja": "提携先",
+      "en": "Partners"
+    }
+  ],
+  "rivals": [
+    "RNG",
+    "EGHT"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Twilioは、クラウド基盤の大部分をAmazon Web Servicesに委託している",
+          "text_en": "Twilio outsources a substantial majority of its cloud infrastructure to Amazon Web Services",
+          "source": {
+            "label": "Twilio 10-K",
+            "label_en": "Twilio 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1447669/000144766926000021/twlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "For example, we outsource a substantial majority of our cloud infrastructure to Amazon Web Services (“AWS”), which hosts our products and platform."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "RNG",
+      "ticker": "RNG",
+      "name": "リングセントラル",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トゥイリオと競合する",
+          "text_en": "Competes with Twilio",
+          "source": {
+            "label": "RingCentral 10-K",
+            "label_en": "RingCentral 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include but are not limited to: 8x8, Inc., Dialpad, Inc., LogMeIn, Inc., Microsoft Corporation, Nextiva, Inc., Twilio Inc., Ericsson, Zoom, Amazon.com, Inc., AT&T Inc., BT Group plc, TELUS Corporation, Vodafone Group Plc, Deutsche Telekom, Avaya LLC, Mitel Networks Corporation, Cisco"
+          }
+        }
+      ],
+      "name_en": "RingCentral"
+    },
+    {
+      "id": "EGHT",
+      "ticker": "EGHT",
+      "name": "8x8",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トゥイリオと競合する",
+          "text_en": "Competes with Twilio",
+          "source": {
+            "label": "8x8 2026年度 Form 10-K · Communications competition",
+            "label_en": "8x8 FY2026 Form 10-K · Communications competition",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "quote": "face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc., among others, as well as from legacy on-premises communications equipment providers, such as Avaya, Inc.,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TwilioとMicrosoftが、Azure AI Foundryを基盤に会話型AIの顧客対応ソリューションを共同開発する",
+          "text_en": "Twilio and Microsoft will collaborate on conversational AI customer engagement solutions built on Microsoft Azure AI Foundry",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/twilio-microsoft-signal2025",
+            "level": "official",
+            "date": "2025-05-14",
+            "quote": "The two companies will collaborate on developing conversational AI customer engagement solutions built on Microsoft Azure AI Foundry and Twilio’s comprehensive customer engagement platform that combines communications, contextual data, and AI."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TwilioとGoogle Cloudが、長年の提携を拡大し、生成AIをTwilioの製品に取り入れると発表した",
+          "text_en": "Twilio and Google Cloud announced an expansion of their long-standing partnership to bring generative AI to Twilio's customer engagement products",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/twilio-and-google-cloud-expand-partnership-to-improve-customer-experience-with-ai",
+            "level": "official",
+            "date": "2023-06-07",
+            "quote": "and Google Cloud today announced an expansion of their long-standing partnership to bring Google Cloud generative artificial intelligence (AI) to Twilio’s customer engagement products to improve experiences for millions of end users.",
+            "note": "2023年の発表です。",
+            "note_en": "From a 2023 announcement."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TwilioがオランダのKPNと、TwilioとGoogleの技術を使ったRCSビジネスメッセージの提供で提携した",
+          "text_en": "Twilio announced a partnership with KPN Netherlands for RCS Business Messaging powered by Twilio and Google",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/twilio-and-kpn-partnership-unlocks-the-next-generation-of-secure",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "today announced at Mobile World Congress a partnership with KPN Netherlands (KPN) to enable nationwide Rich Communication Services (RCS) Business Messaging across all major mobile operators in the Netherlands, powered by Twilio and Google.",
+            "note": "提携の主体はKPNで、Googleは技術提供側として記載されています。",
+            "note_en": "The partnership is with KPN; Google is named as the technology provider."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TwilioがOpenAIと協力し、同社のRealtime APIをTwilioのプラットフォームに統合した",
+          "text_en": "Twilio announced an integration in collaboration with OpenAI to bring OpenAI's Realtime API to the Twilio platform",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/openai-integration",
+            "level": "official",
+            "date": "2024-10-01",
+            "quote": "announced an integration in collaboration with OpenAI to bring the company’s new Realtime API to the Twilio platform.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sub": "データクラウド",
+      "sub_en": "Data cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Twilioの新機能は、Databricksおよびスノーフレークとの提携により、データ基盤側で直接クエリ処理を行える",
+          "text_en": "In partnership with Databricks and Snowflake, Twilio's new capabilities let customers push query processing down to the data warehouse or data platform",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/twilio-customerai-fuels-next-generation-customer-relationships-a",
+            "level": "official",
+            "date": "2023-08-23",
+            "quote": "In partnership with Databricks, the Data and AI company, and Snowflake, the Data Cloud company, the new capabilities will allow customers to push down query processing to the data warehouse or data platform directly",
+            "note": "同発表では未上場のDatabricksも併記されています。",
+            "note_en": "The release also names Databricks, which is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "sub": "携帯通信",
+      "sub_en": "Wireless carrier",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Twilioは、AT&T、T-Mobile、Verizonと米国で直接の10DLC接続を追加した",
+          "text_en": "Twilio added direct 10DLC connections across AT&T, T-Mobile, and Verizon in the United States",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/twilio-becomes-the-only-cloud-communications-provider-with-direc",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Twilio has added direct 10DLC (10-Digit Long Code) connections across AT&T, T-Mobile, and Verizon in the United States",
+            "note": "3社まとめての記載です。",
+            "note_en": "Named together with other carriers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "T-Mobile US",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Twilioは、AT&T、T-Mobile、Verizonと米国で直接の10DLC接続を追加した",
+          "text_en": "Twilio added direct 10DLC connections across AT&T, T-Mobile, and Verizon in the United States",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/twilio-becomes-the-only-cloud-communications-provider-with-direc",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Twilio has added direct 10DLC (10-Digit Long Code) connections across AT&T, T-Mobile, and Verizon in the United States",
+            "note": "3社まとめての記載です。",
+            "note_en": "Named together with other carriers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "携帯通信",
+      "sub_en": "Wireless carrier",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Twilioは、AT&T、T-Mobile、Verizonと米国で直接の10DLC接続を追加した",
+          "text_en": "Twilio added direct 10DLC connections across AT&T, T-Mobile, and Verizon in the United States",
+          "source": {
+            "label": "Twilio の発表",
+            "label_en": "Twilio press release",
+            "url": "https://www.twilio.com/en-us/press/releases/twilio-becomes-the-only-cloud-communications-provider-with-direc",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Twilio has added direct 10DLC (10-Digit Long Code) connections across AT&T, T-Mobile, and Verizon in the United States",
+            "note": "3社まとめての記載です。",
+            "note_en": "Named together with other carriers."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

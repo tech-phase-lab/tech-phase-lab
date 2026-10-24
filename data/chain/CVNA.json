@@ -1,0 +1,120 @@
+{
+  "root": {
+    "ticker": "CVNA",
+    "name": "カーバナ",
+    "cik": 1690820,
+    "name_en": "Carvana Co."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DRIVETIME",
+      "ticker": "DriveTime",
+      "name": "ドライブタイム・オートモーティブ・グループ",
+      "sub": "中古車販売・金融",
+      "sub_en": "Used cars & finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "創業者一族が支配する関連当事者で、サービスや知的財産のクロスライセンスで関係がある",
+          "text_en": "A related party controlled by the Garcia Parties, with a cross-license agreement and service arrangements",
+          "source": {
+            "label": "カーバナ 10-K(2025-12-31)",
+            "label_en": "Carvana Co. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000009/cvna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have a cross-license agreement with DriveTime Automotive Group, Inc. (together with its subsidiaries and affiliates, other than us, \"DriveTime\"), a related party of the Company, pursuant to which DriveTime has obtained limited licenses to some of our intellectual property"
+          }
+        },
+        {
+          "type": "down",
+          "text": "DriveTimeへ車両を卸売りした売上がある",
+          "text_en": "Carvana records wholesale revenue on vehicles sold to DriveTime",
+          "source": {
+            "label": "カーバナ 10-K(2025-12-31)",
+            "label_en": "Carvana Co. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000009/cvna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Wholesale sales and revenues includes aggregate proceeds we receive on vehicles sold to DriveTime through competitive online auctions that are managed by an unrelated third party"
+          }
+        }
+      ],
+      "name_en": "DriveTime Automotive Group"
+    },
+    {
+      "id": "ALLY",
+      "ticker": "ALLY",
+      "name": "アライ・ファイナンシャル",
+      "sub": "自動車金融",
+      "sub_en": "Auto finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金融債権を継続的に買い取る契約があり、2025年10月に最大60億ドルへ増額された",
+          "text_en": "Ally has a forward flow agreement to buy finance receivables, with its commitment raised to up to $6.0 billion in October 2025",
+          "source": {
+            "label": "カーバナ 10-K(2025-12-31)",
+            "label_en": "Carvana Co. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000009/cvna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On October 28, 2025, the Ally MPSA was amended to, among other things, increase the commitment by Ally to purchase up to $6.0 billion of principal balance of finance receivables between October 28, 2025, and October 27, 2026"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "在庫購入資金のフロアプラン融資をアライと結んでいた",
+          "text_en": "Carvana had a floor plan facility with Ally to finance its vehicle inventory",
+          "source": {
+            "label": "カーバナ 10-K(2025-12-31)",
+            "label_en": "Carvana Co. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000009/cvna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company previously entered into a floor plan facility with Ally to finance its vehicle inventory"
+          }
+        }
+      ],
+      "name_en": "Ally Financial"
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・バンク",
+      "sub": "銀行・融資",
+      "sub_en": "Bank lender",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "輸送車両の購入資金として最大2億5000万ドルの融資契約を結んだ",
+          "text_en": "Carvana signed a loan agreement for up to $250 million to finance its transportation fleet equipment",
+          "source": {
+            "label": "カーバナ 10-K(2025-12-31)",
+            "label_en": "Carvana Co. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000009/cvna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "the Company entered into a loan and security agreement (the \"Loan Agreement\") with Citizens Bank, N.A. (\"Citizens Bank\"), which provides for up to $250 million in aggregate principal amount of loans to finance certain equipment for its transportation fleet"
+          }
+        }
+      ],
+      "name_en": "Citizens Bank, N.A."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

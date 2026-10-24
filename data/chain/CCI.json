@@ -1,0 +1,169 @@
+{
+  "root": {
+    "ticker": "CCI",
+    "name": "クラウン・キャッスル",
+    "cik": 1051470,
+    "name_en": "Crown Castle"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AMT",
+    "SBAC"
+  ],
+  "companies": [
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル・US",
+      "sub": "携帯通信会社",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大手の借り手3社の1つで、3社合計で2025年のサイト賃貸収益の約90%を占めた",
+          "text_en": "T-Mobile is one of the three largest tenants, which together accounted for approximately 90% of 2025 site rental revenues",
+          "source": {
+            "label": "クラウン・キャッスル 10-K(2025年12月期)",
+            "label_en": "Crown Castle 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our three largest tenants are T-Mobile, AT&T and Verizon Wireless. Collectively, these three tenants accounted for approximately 90% of our 2025 site rental revenues."
+          }
+        }
+      ],
+      "name_en": "T-Mobile US"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "エーティーアンドティー",
+      "sub": "携帯通信会社",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大手の借り手3社の1つで、3社合計で2025年のサイト賃貸収益の約90%を占めた",
+          "text_en": "AT&T is one of the three largest tenants, which together accounted for approximately 90% of 2025 site rental revenues",
+          "source": {
+            "label": "クラウン・キャッスル 10-K(2025年12月期)",
+            "label_en": "Crown Castle 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our three largest tenants are T-Mobile, AT&T and Verizon Wireless. Collectively, these three tenants accounted for approximately 90% of our 2025 site rental revenues."
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・ワイヤレス",
+      "sub": "携帯通信会社",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大手の借り手3社の1つで、3社合計で2025年のサイト賃貸収益の約90%を占めた",
+          "text_en": "Verizon Wireless is one of the three largest tenants, which together accounted for approximately 90% of 2025 site rental revenues",
+          "source": {
+            "label": "クラウン・キャッスル 10-K(2025年12月期)",
+            "label_en": "Crown Castle 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our three largest tenants are T-Mobile, AT&T and Verizon Wireless. Collectively, these three tenants accounted for approximately 90% of our 2025 site rental revenues."
+          }
+        }
+      ],
+      "name_en": "Verizon Wireless"
+    },
+    {
+      "id": "DISH",
+      "ticker": "DISH Wireless",
+      "name": "ディッシュ・ワイヤレス",
+      "sub": "元の借り手",
+      "sub_en": "Former tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年1月12日、支払い不履行を理由にDISHへ債務不履行と契約解除の通知を出した",
+          "text_en": "On January 12, 2026, Crown Castle delivered a notice of default and termination to DISH over missed payments",
+          "source": {
+            "label": "クラウン・キャッスル 10-K(2025年12月期)",
+            "label_en": "Crown Castle 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On January 12, 2026, we delivered a notice of default and termination to DISH relating to our Master Lease Agreement and underlying agreements with DISH as a result of DISH failing to make required payments and defaulting on its obligations under the agreements."
+          }
+        }
+      ],
+      "name_en": "DISH Wireless"
+    },
+    {
+      "id": "AMT",
+      "ticker": "AMT",
+      "name": "アメリカン・タワー",
+      "sub": "通信タワー",
+      "sub_en": "Tower operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大級の競合の1社である",
+          "text_en": "Named as one of its largest competitors",
+          "source": {
+            "label": "クラウン・キャッスル 10-K(2025年12月期)",
+            "label_en": "Crown Castle 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Some of our largest competitors are American Tower Corporation and SBA Communications Corporation."
+          }
+        }
+      ],
+      "name_en": "American Tower"
+    },
+    {
+      "id": "SBAC",
+      "ticker": "SBAC",
+      "name": "SBAコミュニケーションズ",
+      "sub": "通信タワー",
+      "sub_en": "Tower operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大級の競合の1社である",
+          "text_en": "Named as one of its largest competitors",
+          "source": {
+            "label": "クラウン・キャッスル 10-K(2025年12月期)",
+            "label_en": "Crown Castle 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Some of our largest competitors are American Tower Corporation and SBA Communications Corporation."
+          }
+        }
+      ],
+      "name_en": "SBA Communications"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

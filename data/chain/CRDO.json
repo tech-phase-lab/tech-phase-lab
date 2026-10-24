@@ -1,0 +1,450 @@
+{
+  "root": {
+    "ticker": "CRDO",
+    "name": "Credo Technology Group",
+    "cik": 1807794
+  },
+  "rows": [
+    {
+      "ja": "供給元(製造・後工程・ケーブル)",
+      "en": "Suppliers (foundry, packaging, test & cable)",
+      "above": true
+    },
+    {
+      "ja": "顧客(クラウド大手)",
+      "en": "Customers (hyperscalers)"
+    },
+    {
+      "ja": "提携・共同開発",
+      "en": "Partners & co-development"
+    },
+    {
+      "ja": "競合(相互に記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "AVGO",
+    "MRVL",
+    "ALAB",
+    "MTSI"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CredoはIC製造をすべてTSMCに委託し、2026年度はTSMCだけをウエハー製造に使った",
+          "text_en": "Credo outsources all IC manufacturing to TSMC, its exclusive wafer foundry in fiscal 2026",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "In fiscal year 2026, we exclusively used Taiwan Semiconductor Manufacturing Company Limited (TSMC) for semiconductor wafer production."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "Amkor Technology",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AmkorがCredoのIC製品のパッケージングを担当",
+          "text_en": "Amkor packages Credo’s IC products",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for packaging our IC products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASX",
+      "ticker": "ASX",
+      "name": "日月光(ASE)",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ASEがCredoのIC製品のパッケージングを担当",
+          "text_en": "ASE packages Credo’s IC products",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for packaging our IC products",
+            "note": "10-Kの記載は事業会社Advanced Semiconductor Engineering, Inc.で、上場親会社はASE Technology Holdingです。",
+            "note_en": "The filing names the operating company Advanced Semiconductor Engineering, Inc.; the listed parent is ASE Technology Holding."
+          }
+        }
+      ],
+      "name_en": "ASE Technology (ASE)"
+    },
+    {
+      "id": "2449",
+      "ticker": "KYEC",
+      "name": "京元電子(KYEC)",
+      "sub": "半導体テスト",
+      "sub_en": "Chip testing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "KYECがCredoのIC製品のテストを担当",
+          "text_en": "KYEC tests Credo’s IC products",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd) for testing our IC products"
+          }
+        }
+      ],
+      "name_en": "King Yuan Electronics (KYEC)"
+    },
+    {
+      "id": "6257",
+      "ticker": "Sigurd",
+      "name": "Sigurd Microelectronics",
+      "sub": "半導体テスト",
+      "sub_en": "Chip testing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SigurdがCredoのIC製品のテストを担当",
+          "text_en": "Sigurd tests Credo’s IC products",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd) for testing our IC products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "3665",
+      "ticker": "BizLink",
+      "name": "BizLink Technology",
+      "sub": "ケーブル・接続部品",
+      "sub_en": "Cables & connectivity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BizLinkが長期供給契約のもとでCredoのAEC製品を製造",
+          "text_en": "BizLink manufactures Credo’s AEC products under a long-term supply agreement",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "BizLink Technology, Inc. (BizLink) for manufacturing our AEC products"
+          }
+        },
+        {
+          "type": "up",
+          "text": "製造会社との長期供給契約は、一部のAEC製品に関するBizLinkとの契約だけ",
+          "text_en": "Credo’s only long-term supply contract with a manufacturer is its agreement with BizLink for certain AEC products",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Except for our agreement with BizLink for the manufacture of certain AEC products, we do not maintain long-term supply contracts with TSMC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Amazon系の会社にワラントを発行。Amazonによる購入(最大2.01億ドル)に連動し、ワラントの株式はすべて行使済み",
+          "text_en": "Issued a warrant to an Amazon entity tied to Amazon’s purchases from Credo (up to $201.0 million); all warrant shares have been exercised",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "the Company issued a warrant to Amazon.com NV Investment Holdings LLC (Holder) to purchase an aggregate of up to 4.1 million of our ordinary shares",
+            "note": "相手はAmazonの投資子会社で、権利確定はその子会社と関係会社の支払いに左右されます。",
+            "note_en": "Amazon is identified via its investment-holdings subsidiary; warrant vesting depends on payments by the holder and affiliates."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Microsoftと、信頼性の高いデュアルToR構成向けのスイッチケーブルを開発し、実装をオープンソース化",
+          "text_en": "Co-developed a switch cable and open-sourced the implementation with Microsoft for a dual-ToR network architecture",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Created switch cable and open-sourced implementation with Microsoft to realize their vision for a highly reliable network-managed dual-ToR architecture"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "HiWire Switch AECとそのオープンソース実装でMicrosoftと提携",
+          "text_en": "Partners with Microsoft on the HiWire Switch AEC and open-source implementation",
+          "source": {
+            "label": "Credo 10-K(2025年度)",
+            "label_en": "Credo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828025033813/crdo-20250503.htm",
+            "level": "official",
+            "date": "2025-07-02",
+            "quote": "We partner with Microsoft on our HiWire Switch AEC and open-source implementation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZeroFlap Opticsの開発でOracleと提携",
+          "text_en": "Partnered with Oracle to develop ZeroFlap Optics",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "We partnered with Oracle to develop our ZeroFlap Optics"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CredoはBroadcomを主な競合の1社に抱える",
+          "text_en": "Broadcom is one of Credo's principal competitors.",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Our principal competitors with respect to our products include Broadcom Ltd. (Broadcom)",
+            "note": "10-K本文のページ番号の混入を避け、確認できる部分だけを引用しています。",
+            "note_en": "The filing text has a page-number artifact after “(Broadcom)”; the quote is shortened to the verifiable part."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell Technology",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvellは製品面でCredoの主な競合の1社となる",
+          "text_en": "Marvell is one of Credo's principal competitors.",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Our principal competitors with respect to our products include Broadcom Ltd., Marvell Technology, Inc. (Marvell) and Astera Labs, Inc. (Astera)"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Credoは、Marvellと直接競合する企業の1社だ",
+          "text_en": "Credo is one of Marvell's direct competitors.",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Cisco Systems, Inc. (“Cisco”), Credo Technology Group Holding Ltd, Intel Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALAB",
+      "ticker": "ALAB",
+      "name": "Astera Labs",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Astera Labsは、Credoの主な競合の1社を成す",
+          "text_en": "Astera Labs is one of Credo's principal competitors.",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Our principal competitors with respect to our products include Broadcom Ltd., Marvell Technology, Inc. (Marvell) and Astera Labs, Inc. (Astera)"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Credoは、Astera Labsの主な競合の1社として一部の製品・ソリューションで競り合う",
+          "text_en": "Credo is one of Astera Labs' principal competitors for some of its products and solutions.",
+          "source": {
+            "label": "Astera Labs 10-K(2025年度)",
+            "label_en": "Astera Labs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our principal competitors include Broadcom, Inc., Credo Technology Group Holding Ltd., Marvell Technology, Inc.",
+            "note": "一部の製品・ソリューションで競合する、という記載です。",
+            "note_en": "Competes in some but not all solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "MACOM Technology Solutions",
+      "sub": "高速通信半導体",
+      "sub_en": "High-speed analog chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Credoは、MACOMにとって重要な競合の1社となる",
+          "text_en": "Credo is one of MACOM's significant competitors.",
+          "source": {
+            "label": "MACOM 10-K(2025年度)",
+            "label_en": "MACOM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "our significant competitors include, among others , ADI, Broadcom, Credo, Marvell"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "Ciena",
+      "sub": "光ネットワーク機器",
+      "sub_en": "Optical networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cienaは、データセンター間接続で今後Credoを追加の競合の1社に迎える見込み",
+          "text_en": "Ciena expects to begin competing with Credo in data-center interconnects.",
+          "source": {
+            "label": "Ciena 10-K(2025年度)",
+            "label_en": "Ciena 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "we will begin to compete with additional competitors, including Marvell Technology Group, Credo Technology Group, and Broadcom",
+            "note": "今後の競合に関する記載(予定段階)です。",
+            "note_en": "Planned/forward-looking competition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "MaxLinear",
+      "sub": "通信半導体",
+      "sub_en": "Communications chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Credoの子会社Credo Semiconductorは、MaxLinearの主な汎用半導体の競合の1社に当たる",
+          "text_en": "Credo Semiconductor, a Credo subsidiary, is one of MaxLinear's primary merchant semiconductor competitors.",
+          "source": {
+            "label": "MaxLinear 10-K(2025年度)",
+            "label_en": "MaxLinear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc.",
+            "note": "子会社のCredo Semiconductor Inc.の名前で挙げられています。",
+            "note_en": "Names the subsidiary Credo Semiconductor Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

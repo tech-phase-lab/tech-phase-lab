@@ -1,0 +1,677 @@
+{
+  "root": {
+    "ticker": "TSM",
+    "name": "TSMC",
+    "cik": 1046179
+  },
+  "rows": [
+    {
+      "ja": "供給元(装置・材料・後工程)",
+      "en": "Suppliers (equipment, materials & packaging)",
+      "above": true
+    },
+    {
+      "ja": "顧客(半導体設計会社)",
+      "en": "Customers (chip designers)"
+    },
+    {
+      "ja": "合弁・出資・関連会社",
+      "en": "Joint ventures & affiliates"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "INTC",
+    "GFS",
+    "TSEM"
+  ],
+  "companies": [
+    {
+      "id": "ASX",
+      "ticker": "ASX",
+      "name": "ASE Technology",
+      "sub": "後工程",
+      "sub_en": "Packaging & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "1997年から戦略的提携。TSMCがASEを非独占の優先提供先に指定",
+          "text_en": "Strategic alliance since 1997; TSMC designates ASE as a non-exclusive preferred provider",
+          "source": {
+            "label": "ASE Technology Holding Form 20-F(2025年度)",
+            "label_en": "ASE Technology Holding Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "quote": "TSMC designates us as its non-exclusive preferred provider of packaging and testing services for semiconductors manufactured by TSMC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENTG",
+      "ticker": "ENTG",
+      "name": "Entegris",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Entegrisの売上の16%をTSMCが占める",
+          "text_en": "TSMC accounted for 16% of Entegris’ net sales in 2025",
+          "source": {
+            "label": "Entegris Form 10-K(2025年度)",
+            "label_en": "Entegris Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+            "level": "official",
+            "quote": "Percentage of net sales to top customers: Taiwan Semiconductor Manufacturing Company (TSMC) 16% 16% 11%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLAC",
+      "ticker": "KLAC",
+      "name": "KLA",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "KLAの売上の10%超をTSMCが占める",
+          "text_en": "TSMC accounted for over 10% of KLA’s revenues in fiscal 2024-2026",
+          "source": {
+            "label": "KLA Form 10-K(2026年度)",
+            "label_en": "KLA Form 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "the following customers each accounted for more than 10% of total revenues, primarily in the Semiconductor Process Control segment: Year Ended June 30, 2026 2025 2024 Taiwan Semiconductor Manufacturing Company Limited"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "TSMCはLamの最も重要な顧客の1社に数えられる",
+          "text_en": "TSMC is one of Lam's most significant customers.",
+          "source": {
+            "label": "Lam Research Form 10-K(2026年度)",
+            "label_en": "Lam Research Form 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONTO",
+      "ticker": "ONTO",
+      "name": "Onto Innovation",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ontoは売上の大きな部分を、TSMCなど台湾のファウンドリへの販売で得ている",
+          "text_en": "Onto derives substantial revenue from sales to foundries in Taiwan such as TSMC",
+          "source": {
+            "label": "Onto Innovation Form 10-K(2025年度)",
+            "label_en": "Onto Innovation Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "quote": "we derive substantial revenue from sales to semiconductor device foundries in Taiwan such as Taiwan Semiconductor Manufacturing Company Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NVIDIAのウエハーはTSMCなどのファウンドリが製造を担う",
+          "text_en": "NVIDIA uses foundries such as TSMC to produce its wafers",
+          "source": {
+            "label": "NVIDIA Form 10-K(2026年度)",
+            "label_en": "NVIDIA Form 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "quote": "We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung, to produce our semiconductor wafers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AMDは7nm以下のウエハーの全てをTSMCに依存する",
+          "text_en": "AMD relies on TSMC for all wafers at 7nm or smaller nodes",
+          "source": {
+            "label": "AMD Form 10-K(2025年度)",
+            "label_en": "AMD Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "quote": "We rely on Taiwan Semiconductor Manufacturing Company Limited (TSMC) for the production of all wafers for microprocessor and GPU products at 7 nanometer (nm) or smaller nodes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Broadcomは前工程の製造の大半をTSMCなどに委託している",
+          "text_en": "Broadcom outsources most front-end wafer manufacturing to foundries including TSMC",
+          "source": {
+            "label": "Broadcom Form 10-K(2025年度)",
+            "label_en": "Broadcom Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+            "level": "official",
+            "quote": "During fiscal year 2025, approximately 95% of the wafers manufactured by our CMs were produced by TSMC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "TSMCは、Qualcommの主なファウンドリ供給元に含まれる",
+          "text_en": "TSMC is one of Qualcomm's primary foundry suppliers.",
+          "source": {
+            "label": "Qualcomm Form 10-K(2025年度)",
+            "label_en": "Qualcomm Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm",
+            "level": "official",
+            "quote": "The primary foundry suppliers for our various digital, analog/mixed-signal, RF and PM integrated circuits include Taiwan Semiconductor Manufacturing Company (TSMC), Samsung Electronics and Global Foundries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALAB",
+      "ticker": "ALAB",
+      "name": "Astera Labs",
+      "sub": "接続用半導体",
+      "sub_en": "Connectivity chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Astera Labsは全てのICの製造をTSMCだけに任せる",
+          "text_en": "Astera Labs partners with TSMC to fabricate all of its ICs, making TSMC its sole manufacturing partner",
+          "source": {
+            "label": "Astera Labs Form 10-K(2025年度)",
+            "label_en": "Astera Labs Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+            "level": "official",
+            "quote": "We use a fabless manufacturing model and partner with TSMC to fabricate all of our ICs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRDO",
+      "ticker": "CRDO",
+      "name": "Credo Technology",
+      "sub": "接続用半導体",
+      "sub_en": "Connectivity chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Credoは2026年度、ウエハー製造にTSMCだけを使った",
+          "text_en": "Credo used only TSMC for wafer production in fiscal 2026",
+          "source": {
+            "label": "Credo Technology Form 10-K(2026年度)",
+            "label_en": "Credo Technology Form 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "quote": "In fiscal year 2026, we exclusively used Taiwan Semiconductor Manufacturing Company Limited (TSMC) for semiconductor wafer production."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "IntelはTSMCの生産能力を一部の製品に使っており、今後も使い続ける見込み",
+          "text_en": "Intel uses TSMC foundry capacity for some tiles and products and expects to continue doing so",
+          "source": {
+            "label": "Intel Form 10-K(2025年度)",
+            "label_en": "Intel Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "quote": "We expect to continue to use TSMC and other third-party foundry suppliers for various key tiles in a number of current and future products."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "先端プロセス技術でIntelが主な競合に置くのは、TSMC",
+          "text_en": "TSMC is Intel's primary competitor in leading-edge process technology.",
+          "source": {
+            "label": "Intel Form 10-K(2025年度)",
+            "label_en": "Intel Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "quote": "Our primary competitor in leading-edge semiconductor process technology is TSMC, which holds a leading position in manufacturing at scale for the most advanced nodes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sony",
+      "ticker": "SONY",
+      "name": "Sony Group",
+      "sub": "半導体・電機",
+      "sub_en": "Chips & electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "熊本のJASMにソニーセミコンダクタソリューションズが20%未満を出資",
+          "text_en": "Sony Semiconductor Solutions took a less than 20% stake in JASM (Kumamoto) in January 2022",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2022-01",
+            "quote": "In January 2022, Sony Semiconductor Solution Corporation (\"Sony\") acquired a less than 20% equity interest in JASM."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ソニーセミコンダクタソリューションズとTSMCが戦略的提携を探る拘束力のない覚書(MOU)を締結",
+          "text_en": "Sony Semiconductor Solutions and TSMC signed a non-binding MOU to pursue a strategic partnership",
+          "source": {
+            "label": "Sony Group 20-F(2026年3月期)",
+            "label_en": "Sony Group Form 20-F (FY2025, year ended 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-05",
+            "quote": "entered into a non-binding memorandum of understanding to pursue a strategic partnership for the development and manufacturing of next-generation image sensors",
+            "note": "拘束力のない覚書の段階です。",
+            "note_en": "A non-binding MOU only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DENSO",
+      "ticker": "DENSO",
+      "name": "DENSO",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "熊本のJASMにDENSOが10%超を出資",
+          "text_en": "DENSO took a more than 10% stake in JASM",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2022-04",
+            "quote": "In April 2022, DENSO Corporation (\"DENSO\") acquired a more than 10% minority equity interest in JASM."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Toyota",
+      "ticker": "Toyota",
+      "name": "Toyota Motor",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JASMの第2工場への追加投資が発表され、Toyotaも少数株主として出資",
+          "text_en": "Further investment in JASM’s second fab announced; Toyota also took a minority stake",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2024-02",
+            "quote": "also took a minority stake in JASM."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IFX",
+      "ticker": "Infineon",
+      "name": "Infineon Technologies",
+      "sub": "車載半導体",
+      "sub_en": "Automotive chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ドイツ・ドレスデンのESMCに10%を出資",
+          "text_en": "Took a 10% stake in ESMC in Dresden, Germany",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2024-01",
+            "quote": "In January 2024, Robert Bosch GmbH, Infineon Technologies AG, and NXP Semiconductors Germany GmbH, a wholly-owned subsidiary of NXP Semiconductors N.V. (\"NXP\"), each acquired 10% equity interest"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXP Semiconductors",
+      "sub": "車載半導体",
+      "sub_en": "Automotive chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ESMCに10%を出資し、工場の生産能力の10%を使う権利",
+          "text_en": "Holds 10% of ESMC and is entitled to 10% of the fab capacity",
+          "source": {
+            "label": "NXP Semiconductors Form 10-K(2025年度)",
+            "label_en": "NXP Semiconductors Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "quote": "NXP is entitled to 10% of the fab facility capacity.",
+            "note": "工場は建設中で、初期生産は2028年を目標としています。",
+            "note_en": "The fab is under construction; initial production is targeted for 2028."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "シンガポールのSSMC工場を、合弁パートナーのTSMCとともに運営",
+          "text_en": "Operates the SSMC fab in Singapore together with its joint venture partner TSMC",
+          "source": {
+            "label": "NXP Semiconductors Form 10-K(2025年度)",
+            "label_en": "NXP Semiconductors Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "quote": "in Singapore (SSMC) together with our joint venture partner TSMC"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NXPはESMC(TSMCが70%保有)の10%を保有し、工場の生産能力の10%を受ける権利がある",
+          "text_en": "NXP holds 10% of ESMC (70% owned by TSMC) and is entitled to 10% of the fab capacity",
+          "source": {
+            "label": "NXP Semiconductors Form 10-K(2025年度)",
+            "label_en": "NXP Semiconductors Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "quote": "ESMC is 70% owned by TSMC, with 8 Bosch, Infineon, and NXP each owning 10%. NXP is entitled to 10% of the fab facility capacity.",
+            "note": "工場は建設中で、最初の生産は2028年を目標としています。",
+            "note_en": "The fab is under construction; initial production is targeted for 2028."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIS",
+      "ticker": "VIS",
+      "name": "Vanguard International Semiconductor",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "1994年にTSMCが共同設立。2026年2月28日時点で約27.6%を保有",
+          "text_en": "Co-founded by TSMC in 1994; TSMC owned about 27.6% as of February 28, 2026",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "As of February 28, 2026 , we owned approximately 27.6 % of the equity interest in VIS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesの主な競合は、TSMC、UMC、SMICである",
+          "text_en": "TSMC, UMC and SMIC are key competitors of GlobalFoundries.",
+          "source": {
+            "label": "GlobalFoundries Form 20-F(2025年度)",
+            "label_en": "GlobalFoundries Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "quote": "Key competitors include Taiwan Semiconductor Manufacturing Company, Limited (\"TSMC\"), United Microelectronics Corporation (\"UMC\") and Semiconductor Manufacturing International Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSEM",
+      "ticker": "TSEM",
+      "name": "Tower Semiconductor",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TowerはTSMC・UMC・SMICなどのファウンドリと一部の分野で競合する",
+          "text_en": "Tower competes in some areas with foundries including TSMC, UMC and SMIC",
+          "source": {
+            "label": "Tower Semiconductor Form 20-F(2025年度)",
+            "label_en": "Tower Semiconductor Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "quote": "We also compete in certain areas with pure-play, advanced technology node-driven foundry service providers that also provide specialty technologies, such as Taiwan Semiconductor Manufacturing Corporation (TSMC)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "7203",
+      "ticker": "Toyota",
+      "name": "Toyota Motor",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年2月、TSMC・Sony・DENSO・Toyotaが第2工場に向けJASMへの追加投資を発表。Toyotaは少数株主になった",
+          "text_en": "In February 2024 TSMC, Sony, DENSO and Toyota announced further investment into JASM for a second fab; Toyota took a minority stake",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2024-02",
+            "quote": "announced further investment into JASM to build and operate a second semiconductor manufacturing facility. Construction on the second site commenced in October 2025. By way of such investment, Toyota 26 also took a minority stake in JASM."
+          }
+        }
+      ]
+    },
+    {
+      "id": "3443",
+      "ticker": "GUC",
+      "name": "Global Unichip(GUC)",
+      "sub": "チップ設計サービス",
+      "sub_en": "Chip design services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TSMCは2003年1月にGUCの52.0%を取得し、2026年2月28日時点で約34.8%を保有",
+          "text_en": "TSMC acquired 52.0% of GUC (SoC design service company) in January 2003 and owned approximately 34.8% as of February 28, 2026",
+          "source": {
+            "label": "TSMC Form 20-F(2025年度)",
+            "label_en": "TSMC Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "As of February 28, 2026 , we owned approximatel y 34.8 % o f the equity interest in GUC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSCC",
+      "ticker": "LSCC",
+      "name": "Lattice Semiconductor",
+      "sub": "FPGA",
+      "sub_en": "FPGAs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Latticeは、16nmのFPGA(AvantとNexus 2)の開発・製造や、350nm〜40nm製品の製造でTSMCと提携",
+          "text_en": "Lattice partners with TSMC to develop and manufacture 16nm FPGAs (Avant and Nexus 2) and to manufacture 350nm, 130nm, 55nm and 40nm products",
+          "source": {
+            "label": "Lattice Semiconductor Form 10-K(2025年度)",
+            "label_en": "Lattice Semiconductor Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "quote": "We partner with Taiwan Semiconductor Manufacturing Company (\"TSMC\") to develop and manufacture on 16nm technology, which is used in our Avant and Nexus 2 platforms of FPGA products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "Silicon Laboratories",
+      "sub": "IoT半導体",
+      "sub_en": "IoT chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Silicon Labsは、ウエハーの大半をTSMCとSMICを主な提携先として製造",
+          "text_en": "Silicon Labs partners primarily with TSMC and SMIC to manufacture the majority of its wafers",
+          "source": {
+            "label": "Silicon Laboratories Form 10-K(2025年度)",
+            "label_en": "Silicon Laboratories Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "quote": "We currently partner primarily with Taiwan Semiconductor Manufacturing Co. (\"TSMC\") and Semiconductor Manufacturing International Corporation (\"SMIC\") to manufacture the majority of our semiconductor wafers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVTS",
+      "ticker": "NVTS",
+      "name": "Navitas Semiconductor",
+      "sub": "パワー半導体",
+      "sub_en": "Power chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NavitasはGaNウエハーの唯一の供給元としてTSMCに依存してきた。TSMCは2025年7月1日に、2027年7月にGaN生産を終了する意向を発表",
+          "text_en": "Navitas has historically relied on TSMC as its sole GaN wafer supplier; TSMC announced on July 1, 2025 it intends to cease GaN production in July 2027",
+          "source": {
+            "label": "Navitas Semiconductor Form 10-K(2025年度)",
+            "label_en": "Navitas Semiconductor Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2025-07",
+            "quote": "historically, we have relied on TSMC as our sole supplier of GaN wafers, a key component in our product offerings. On July 1, 2025, TSMC announced its intention to cease GaN production in July 2027.",
+            "note": "TSMCは2027年7月にGaNの生産を終了する意向です。",
+            "note_en": "TSMC intends to cease GaN production in July 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIMX",
+      "ticker": "HIMX",
+      "name": "Himax Technologies",
+      "sub": "ディスプレイ用半導体",
+      "sub_en": "Display driver chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Himaxは過去数年、TSMC・UMC・Vanguardなどからファウンドリーサービスを受けてきた",
+          "text_en": "Himax has obtained foundry services from TSMC, UMC, Vanguard and others in the past few years",
+          "source": {
+            "label": "Himax Technologies Form 20-F(2025年度)",
+            "label_en": "Himax Technologies Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "quote": "We have obtained our foundry services from TSMC, UMC, Vanguard, Macronix, Globalfoundries Singapore, PSMC, Nexchip and SKHYSI in the past few years."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,43 @@
+name: Existing source restore drill
+on:
+  push:
+    branches: [codex/research-preview]
+    paths:
+      - .github/workflows/source-external-restore.yml
+      - docs/source-restore-request.txt
+permissions:
+  contents: read
+concurrency:
+  group: existing-source-restore
+  cancel-in-progress: false
+jobs:
+  restore:
+    if: github.repository == 'tech-phase-lab/tech-phase-lab' && github.ref == 'refs/heads/codex/research-preview'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r services/tech-phase-backup/requirements.txt
+      - name: Retrieve existing R2 object and verify isolated decrypted recovery
+        env:
+          TECH_PHASE_SOURCE_RESTORE_ENABLED: 'true'
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_BUCKET: resolute-backup-external
+          MIRROR_DESTINATION_REGION: auto
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+          TECH_PHASE_EXTERNAL_KEY_HEX: ${{ secrets.TECH_PHASE_EXTERNAL_KEY_HEX }}
+        run: |
+          set -euo pipefail
+          # Pins are from the successful previous upload receipt, not mutable latest.json.
+          python scripts/tech-phase/restore_external_source.py \
+            --commit 719ec8cd462a82cf8d3a756c4ed69aae5bf2555d \
+            --tree 483815e71d316d86f18616cd254fb7fdf0a303fb \
+            --sha256 272f094bb33e9f6c1567dbf3160e110b256edeb612d894e41b6162e7302bcbc9 \
+            --bytes 18155548

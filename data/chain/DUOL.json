@@ -1,0 +1,138 @@
+{
+  "root": {
+    "ticker": "DUOL",
+    "name": "Duolingo",
+    "cik": 1562088
+  },
+  "rows": [
+    {
+      "ja": "配信プラットフォーム",
+      "en": "Distribution platforms",
+      "above": true
+    },
+    {
+      "ja": "クラウド基盤",
+      "en": "Cloud infrastructure",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマホ・IT機器",
+      "sub_en": "Devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年12月期の収益の62%、総予約額の61%がApple App Store経由である",
+          "text_en": "Duolingo derived 62% of its revenue and 61% of its total bookings from the Apple App Store in 2025",
+          "source": {
+            "label": "Duolingo 10-K",
+            "label_en": "Duolingo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In the twelve months ended December 31, 2025, we derived 62% of our revenue and 61% of our total bookings from the Apple App Store, and 20% of our revenue and 21% of our total bookings from the Google Play Store."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Appleとの配信契約は、Appleが30日前の書面通知で解約できる",
+          "text_en": "The distribution agreement with Apple is generally terminable by Apple with 30 days prior written notice",
+          "source": {
+            "label": "Duolingo 10-K",
+            "label_en": "Duolingo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In addition, our distribution agreements with Apple and Google are generally terminable by Apple or Google without cause with 30 days prior written notice (to the extent allowed by applicable local law)."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年12月期の収益の20%、総予約額の21%がGoogle Play経由である",
+          "text_en": "Duolingo derived 20% of its revenue and 21% of its total bookings from the Google Play Store in 2025",
+          "source": {
+            "label": "Duolingo 10-K",
+            "label_en": "Duolingo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In the twelve months ended December 31, 2025, we derived 62% of our revenue and 61% of our total bookings from the Apple App Store, and 20% of our revenue and 21% of our total bookings from the Google Play Store."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Googleとの配信契約は、Googleが30日前の書面通知で解約できる",
+          "text_en": "The distribution agreement with Google is generally terminable by Google with 30 days prior written notice",
+          "source": {
+            "label": "Duolingo 10-K",
+            "label_en": "Duolingo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In addition, our distribution agreements with Apple and Google are generally terminable by Apple or Google without cause with 30 days prior written notice (to the extent allowed by applicable local law)."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Duolingoは、Google Cloudから計算・保管の容量の提供を受けており、契約はいずれかの当事者が解約するまで継続する",
+          "text_en": "Google Cloud provides Duolingo with computing and storage capacity under an agreement that continues until terminated by either party",
+          "source": {
+            "label": "Duolingo annual report",
+            "label_en": "Duolingo annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "AWS and Google Cloud provide us with computing and storage capacity pursuant to agreements that continue until terminated by either party."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Duolingoは、AWSなどから計算・保管の容量の提供を受けており、契約はいずれかの当事者が解約するまで継続する",
+          "text_en": "AWS provides Duolingo with computing and storage capacity under an agreement that continues until terminated by either party",
+          "source": {
+            "label": "Duolingo annual report",
+            "label_en": "Duolingo annual report (10-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "AWS and Google Cloud provide us with computing and storage capacity pursuant to agreements that continue until terminated by either party."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

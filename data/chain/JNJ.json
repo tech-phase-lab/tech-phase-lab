@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "JNJ",
+    "name": "ジョンソン・エンド・ジョンソン",
+    "cik": 200406,
+    "name_en": "Johnson & Johnson"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BAYER",
+      "ticker": "Bayer HealthCare",
+      "name": "バイエル",
+      "sub": "医薬品の共同開発",
+      "sub_en": "Pharma co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "XARELTOをバイエルヘルスケアと共同で開発している",
+          "text_en": "XARELTO is co-developed with Bayer HealthCare AG",
+          "source": {
+            "label": "Johnson & Johnson 10-K(2025年12月28日期)",
+            "label_en": "Johnson & Johnson 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The Company has a number of products and compounds developed in collaboration with strategic partners including XARELTO, co-developed with Bayer HealthCare AG"
+          }
+        }
+      ],
+      "name_en": "Bayer HealthCare AG"
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ(ファーマサイクリクス)",
+      "sub": "がん薬の共同販売",
+      "sub_en": "Oncology co-marketing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IMBRUVICAはアッヴィ傘下のファーマサイクリクスと共同開発・共同販売の関係にある",
+          "text_en": "IMBRUVICA is developed and co-marketed with Pharmacyclics LLC, an AbbVie company",
+          "source": {
+            "label": "Johnson & Johnson 10-K(2025年12月28日期)",
+            "label_en": "Johnson & Johnson 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "IMBRUVICA, developed in collaboration and co-marketed with Pharmacyclics LLC, an AbbVie company"
+          }
+        }
+      ],
+      "name_en": "AbbVie (Pharmacyclics)"
+    },
+    {
+      "id": "LEGN",
+      "ticker": "LEGN",
+      "name": "レジェンド・バイオテック",
+      "sub": "細胞治療の提携",
+      "sub_en": "Cell therapy partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CARVYKTIはレジェンド・バイオテックから導入し、共同で開発を進めている",
+          "text_en": "CARVYKTI is licensed and developed in collaboration with Legend Biotech",
+          "source": {
+            "label": "Johnson & Johnson 10-K(2025年12月28日期)",
+            "label_en": "Johnson & Johnson 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "CARVYKTI, licensed and developed in collaboration with Legend Biotech USA Inc. and Legend Biotech Ireland Limited."
+          }
+        }
+      ],
+      "name_en": "Legend Biotech"
+    },
+    {
+      "id": "GMAB",
+      "ticker": "GMAB",
+      "name": "ゲンマブ",
+      "sub": "特許・ロイヤルティ",
+      "sub_en": "Patents & royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DARZALEXの特許を持つゲンマブにロイヤルティを支払う関係がある",
+          "text_en": "Royalties are paid to Genmab, which owns patent families related to DARZALEX",
+          "source": {
+            "label": "Johnson & Johnson 10-K(2025年12月28日期)",
+            "label_en": "Johnson & Johnson 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Genmab A/S owns two patent families related to DARZALEX"
+          }
+        }
+      ],
+      "name_en": "Genmab"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "MET",
+    "name": "メットライフ",
+    "cik": 1099219,
+    "name_en": "MetLife"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PINEBRIDGE",
+      "ticker": "PineBridge",
+      "name": "パインブリッジ・インベストメンツ",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月30日に買収を完了した資産運用会社である",
+          "text_en": "A global asset manager whose acquisition MIM completed on December 30, 2025",
+          "source": {
+            "label": "MetLife 10-K(2025)",
+            "label_en": "MetLife 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099219/000109921926000013/met-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On December 30, 2025, MIM completed the acquisition of PineBridge Investments (“PineBridge”), a global asset manager."
+          }
+        }
+      ],
+      "name_en": "PineBridge Investments"
+    },
+    {
+      "id": "BHF",
+      "ticker": "BHF",
+      "name": "ブライトハウス・ファイナンシャル",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "元子会社で、25億ドルの信用状の受益者になっている",
+          "text_en": "A former subsidiary and a beneficiary of $2.5 billion of letters of credit",
+          "source": {
+            "label": "MetLife 10-K(2025)",
+            "label_en": "MetLife 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099219/000109921926000013/met-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "At December 31, 2025, Brighthouse Financial, Inc. and its subsidiaries (“Brighthouse”), a former subsidiary of MetLife, Inc., is a beneficiary of $ 2.5 billion of letters of credit issued under this facility"
+          }
+        }
+      ],
+      "name_en": "Brighthouse Financial"
+    },
+    {
+      "id": "TALCOTT",
+      "ticker": "Talcott",
+      "name": "タルコット・レゾリューション・ライフ保険",
+      "sub": "保険・再保険",
+      "sub_en": "Insurance & reinsurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "変額年金契約などを出再する再保険契約を結んだ",
+          "text_en": "Entered into a reinsurance agreement to cede certain variable annuity contracts and rider reserves",
+          "source": {
+            "label": "MetLife 10-K(2025)",
+            "label_en": "MetLife 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099219/000109921926000013/met-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In December 2025, the Company entered into a reinsurance agreement with Talcott Resolution Life Insurance Company to cede certain variable annuity contracts and rider reserves on a funds withheld basis."
+          }
+        }
+      ],
+      "name_en": "Talcott Resolution Life Insurance"
+    },
+    {
+      "id": "CHARIOT",
+      "ticker": "Chariot",
+      "name": "シャリオット・リインシュアランス",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に再保険契約を2件結んだ",
+          "text_en": "Entered into two reinsurance agreements in 2025",
+          "source": {
+            "label": "MetLife 10-K(2025)",
+            "label_en": "MetLife 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099219/000109921926000013/met-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Also in 2025, the Company entered into two reinsurance agreements with Chariot Reinsurance, Ltd."
+          }
+        }
+      ],
+      "name_en": "Chariot Reinsurance"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

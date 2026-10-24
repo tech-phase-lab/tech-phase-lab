@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "MKC",
+    "name": "マコーミック",
+    "cik": 63754,
+    "name_en": "McCormick & Company"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売大手",
+      "sub_en": "Retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "消費者向け事業の顧客で、2025年の連結売上高の約12%を占めた",
+          "text_en": "A Consumer segment customer accounting for approximately 12% of consolidated sales in 2025",
+          "source": {
+            "label": "McCormick 10-K(2025年11月30日期)",
+            "label_en": "McCormick & Company 10-K (fiscal year ended 2025-11-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63754/000006375426000037/mkc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "Sales to one of our Consumer segment customers, Wal-Mart Stores, Inc., accounted for consolidated sales of approximately 12% in 2025, 2024, and 2023."
+          }
+        }
+      ],
+      "name_en": "Wal-Mart Stores, Inc."
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "sub": "飲料・食品",
+      "sub_en": "Beverages & foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "フレーバー・ソリューションズ事業の顧客で、2025年の連結売上高の約12%を占めた",
+          "text_en": "A Flavor Solutions segment customer accounting for approximately 12% of consolidated sales in 2025",
+          "source": {
+            "label": "McCormick 10-K(2025年11月30日期)",
+            "label_en": "McCormick & Company 10-K (fiscal year ended 2025-11-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63754/000006375426000037/mkc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "Sales to one of our Flavor Solutions segment customers, PepsiCo, Inc., accounted for consolidated sales of approximately 12% in 2025, and 13% in both 2024 and 2023."
+          }
+        }
+      ],
+      "name_en": "PepsiCo, Inc."
+    },
+    {
+      "id": "HERDEZ",
+      "ticker": "Grupo Herdez",
+      "name": "グルポ・エルデス",
+      "sub": "メキシコの食品",
+      "sub_en": "Mexican foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁のマコーミック・デ・メヒコの持分25%を7億5,000万ドルで追加取得し、出資比率は75%になった",
+          "text_en": "McCormick acquired an additional 25% interest in McCormick de Mexico from Grupo Herdez for $750 million, raising its stake to 75%",
+          "source": {
+            "label": "McCormick 10-K(2025年11月30日期)",
+            "label_en": "McCormick & Company 10-K (fiscal year ended 2025-11-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63754/000006375426000037/mkc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "On January 2, 2026, we acquired an additional 25% ownership interest in McCormick de Mexico from Grupo Herdez, for $750 million which increased our ownership interest to a 75% controlling interest."
+          }
+        }
+      ],
+      "name_en": "Grupo Herdez"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

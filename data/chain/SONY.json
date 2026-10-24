@@ -1,0 +1,338 @@
+{
+  "root": {
+    "ticker": "SONY",
+    "name": "Sony Group",
+    "cik": 313838
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客・販売チャネル",
+      "en": "Customers & channels"
+    },
+    {
+      "ja": "提携・出資・合弁",
+      "en": "Partnerships, investments & JVs"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "HIMX"
+  ],
+  "companies": [
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AMDのゲーム機向けセミカスタムSoC事業は、Sony向けを含むゲーム機の成否に左右される",
+          "text_en": "AMD's semi-custom SoC business depends on the success of game consoles, including those for Sony and Microsoft.",
+          "source": {
+            "label": "AMD 10-K",
+            "label_en": "AMD 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "The success of our semi-custom SoC products in our Client and Gaming segment is dependent on securing customers for our semi-custom design pipeline and consumer market conditions, including the success of game console systems and next generation consoles for Sony and Microsoft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTWO",
+      "ticker": "TTWO",
+      "name": "Take-Two Interactive",
+      "sub": "ゲーム",
+      "sub_en": "Video games",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Take-TwoがSony Computer Entertainmentと、PlayStation向けの開発・販売を認める契約(2017年3月23日付)を結んでいる",
+          "text_en": "Take-Two entered into a PlayStation Global Developer and Publisher Agreement with Sony Computer Entertainment effective March 23, 2017",
+          "source": {
+            "label": "Take-Two Interactive 10-K",
+            "label_en": "Take-Two Interactive 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/946581/000162828026037434/ttwo-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "Effective March 23, 2017, we entered into a PlayStation Global Developer and Publisher Agreement with Sony Computer Entertainment, Inc. and certain of its affiliates, pursuant to which Sony granted us the right and license to develop, publish, have manufactured, market,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBLX",
+      "ticker": "RBLX",
+      "name": "Roblox",
+      "sub": "ゲームプラットフォーム",
+      "sub_en": "Game platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Robloxは、SonyのPlayStation Networkなどの経路でRobuxの購入代金を受け取る",
+          "text_en": "Roblox receives cash proceeds from Robux purchases through channels including Sony's PlayStation Network.",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We utilize these distribution channels, such as Amazon, Apple, Blackhawk, ePay, Google, Incomm, PayPal, Stripe, Microsoft, Sony’s PlayStation Network, and Xsolla, to receive cash proceeds from purchases of Robux."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体受託製造",
+      "sub_en": "Chip foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sony Semiconductor SolutionsがTSMCと、次世代イメージセンサーの開発・製造に関する戦略提携の覚書を2026年5月に結んだ",
+          "text_en": "In May 2026, SSS and TSMC entered into a memorandum of understanding on a strategic partnership for next-generation image sensors",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "Additionally, in May 2026, SSS and Taiwan Semiconductor Manufacturing Company Limited (“TSMC”) entered into a non-binding memorandum of understanding to pursue a strategic partnership for the development and manufacturing of next-generation image sensors.",
+            "note": "拘束力のない覚書で、子会社単位の話です。",
+            "note_en": "Non-binding MOU, at subsidiary level."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TSMCのJASMでは、Sony子会社が20%未満の株式を取得した",
+          "text_en": "A Sony subsidiary acquired a less than 20% equity interest in TSMC's JASM.",
+          "source": {
+            "label": "TSMC 20-F",
+            "label_en": "TSMC 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "Semiconductor Solution Corporation (“Sony”) acquired a less than 20% equity interest in JASM."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "Honda",
+      "name": "Honda Motor",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sony Honda Mobilityは持分法適用の投資先である",
+          "text_en": "Sony Honda Mobility is an investment accounted for using the equity method",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "loss for the share of profit (loss) of investments accounted for using the equity method, which was recognized in excess of the carrying amount of the investment in Sony Honda Mobility, is not included in the carrying amount of investments in joint ventures as of March 31, 2026, and is included in other current liabilities in the consolidated"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Sony Honda Mobilityの電気自動車モデルの発売中止に伴う持分法損失449億円を計上した",
+          "text_en": "Sony recorded an additional equity-method loss of 44.9 billion yen from the discontinued launch of Sony Honda Mobility's electric vehicle models",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "Recording of an additional share of loss of investments accounted for using the equity method in All Other, resulting from the discontinuation of the launch of Sony Honda Mobility’s electric vehicle models: 44.9 billion yen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "Disney",
+      "sub": "メディア・エンターテインメント",
+      "sub_en": "Media & entertainment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Disneyによるマーベル買収前から、Sony Picturesはライセンスに基づきSpider-Man映画の制作・配給権を持つ",
+          "text_en": "Sony Pictures holds the rights to produce and distribute Spider-Man films under a license from Marvel obtained before Disney acquired Marvel.",
+          "source": {
+            "label": "Disney 10-K",
+            "label_en": "Disney 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "However, Sony Pictures Entertainment has the rights to produce and distribute Spider-Man films as a result of licensing these rights from Marvel prior to the Company’s acquisition of Marvel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Spotifyで配信される楽曲の大半は、Sony Music Entertainmentなどとの契約に基づく",
+          "text_en": "Most of the music consumed on Spotify is licensed under agreements with Sony Music Entertainment and others.",
+          "source": {
+            "label": "Spotify Technology 20-F",
+            "label_en": "Spotify Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "For example, with respect to sound recordings, the music licensed to us under our agreements with Universal Music Group, Sony Music Entertainment, Warner Music Group, and Music and Entertainment Rights Licensing Independent Network (“Merlin”), makes up the majority of music consumed on our Service.",
+            "note": "Sony Music(子会社)単位の関係です。",
+            "note_en": "Relationship is at the Sony Music subsidiary level."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SonyはSpotify株を保有しており、その再評価による評価益を計上した",
+          "text_en": "Sony owned Spotify shares and recorded an unrealized gain on their revaluation",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "The revaluation of the Spotify shares, which reflects costs to be paid to Sony’s artists and distributed labels as well as the changes in the fair value of derivatives utilized to hedge exposure to market fluctuation risk, owned as of March 31, 2024, 2025 and 2026 resulted in an unrealized gain"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "電機・半導体",
+      "sub_en": "Electronics & semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2004年4月、SonyとSamsung Electronicsが、液晶パネル製造の合弁会社S-LCDを韓国に設立した",
+          "text_en": "In April 2004, Sony and Samsung Electronics established S-LCD, a joint venture for LCD panel manufacturing, in Korea",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "In April 2004, S-LCD Corporation (“S-LCD”), a joint venture between Sony Group Corporation and Samsung Electronics Co., Ltd. of Korea for the manufacture of amorphous thin film transistor LCD panels, was established in Korea.",
+            "note": "2004年の古い合弁の記載です。",
+            "note_en": "Older joint venture from 2004."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ERIC",
+      "ticker": "ERIC",
+      "name": "Ericsson",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2001年10月、SonyとEricssonが折半出資の合弁会社Sony Ericssonを設立した",
+          "text_en": "In October 2001, Sony and Ericsson established Sony Ericsson Mobile Communications, a 50-50 joint venture",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "In October 2001, Sony Ericsson Mobile Communications AB (“Sony Ericsson”), a 50-50 joint venture company between Sony Group Corporation and Telefonaktiebolaget LM Ericsson (“Ericsson”) of Sweden, was established.",
+            "note": "2012年にSonyが持分を取得済みの古い案件です。",
+            "note_en": "Older; Sony acquired Ericsson's 50% stake in 2012."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Murata",
+      "ticker": "Murata",
+      "name": "Murata Manufacturing",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年9月、Sonyが電池事業をMurata Manufacturingに譲渡した",
+          "text_en": "In September 2017, Sony transferred its battery businesses to Murata Manufacturing",
+          "source": {
+            "label": "Sony Group 20-F",
+            "label_en": "Sony Group 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "In September 2017, Sony transferred its battery businesses to the Murata Manufacturing Co., Ltd.",
+            "note": "2017年の事業譲渡で古い案件です。",
+            "note_en": "Older divestiture from 2017."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIMX",
+      "ticker": "HIMX",
+      "name": "Himax Technologies",
+      "sub": "マイクロディスプレイ",
+      "sub_en": "Microdisplays",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sony Groupと競合する",
+          "text_en": "Competes with Sony Group",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We also compete with alternative microdisplay technology providers such as Texas Instruments with DLP, Sony with micro OLED and JBD with micro LED."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

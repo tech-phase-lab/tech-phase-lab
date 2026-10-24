@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "SLB",
+    "name": "SLB",
+    "cik": 87347,
+    "name_en": "SLB"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AKER",
+      "ticker": "Aker Solutions",
+      "name": "アーケル・ソリューションズ",
+      "sub": "海底設備・エンジニアリング",
+      "sub_en": "Subsea & engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "海底事業の合弁会社SLB OneSubseaに、アーケル・ソリューションズが20%出資している",
+          "text_en": "Aker Solutions ASA owns 20% of the SLB OneSubsea joint venture",
+          "source": {
+            "label": "SLB 10-K(2025年12月期)",
+            "label_en": "SLB 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/87347/000119312526021017/slb-20251231.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "SLB owns 70% of the joint venture, while Aker Solutions ASA owns 20% and Subsea7 S.A. owns 10%."
+          }
+        }
+      ],
+      "name_en": "Aker Solutions"
+    },
+    {
+      "id": "SUBSEA7",
+      "ticker": "Subsea7",
+      "name": "サブシー7",
+      "sub": "海洋工事",
+      "sub_en": "Offshore contracting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SLB OneSubseaの株式の10%をサブシー7が持っている",
+          "text_en": "Subsea7 S.A. owns 10% of the SLB OneSubsea joint venture",
+          "source": {
+            "label": "SLB 10-K(2025年12月期)",
+            "label_en": "SLB 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/87347/000119312526021017/slb-20251231.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "SLB owns 70% of the joint venture, while Aker Solutions ASA owns 20% and Subsea7 S.A. owns 10%."
+          }
+        }
+      ],
+      "name_en": "Subsea7"
+    },
+    {
+      "id": "ACC",
+      "ticker": "Aker Carbon",
+      "name": "アーケル・カーボン・キャプチャー",
+      "sub": "炭素回収",
+      "sub_en": "Carbon capture",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "炭素回収会社SLB Capturiは、SLBとアーケル・カーボン・キャプチャーの合弁事業である",
+          "text_en": "SLB Capturi is a joint venture between SLB and Aker Carbon Capture",
+          "source": {
+            "label": "SLB 10-K(2025年12月期)",
+            "label_en": "SLB 10-K (fiscal year ended Dec 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/87347/000119312526021017/slb-20251231.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "SLB Capturi: A joint venture between SLB and Aker Carbon Capture that combines the strengths and capabilities of both companies to accelerate industrial decarbonization at a global scale."
+          }
+        }
+      ],
+      "name_en": "Aker Carbon Capture"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

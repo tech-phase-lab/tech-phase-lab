@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "DXCM",
+    "name": "デクスコム",
+    "cik": 1093557,
+    "name_en": "Dexcom"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ABT",
+    "MDT"
+  ],
+  "companies": [
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット・ラボラトリーズ",
+      "sub": "CGMの競合",
+      "sub_en": "CGM competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フリースタイル・リブレ系のCGM製品で長年競合している",
+          "text_en": "Dexcom has competed with Abbott and its Libre family of CGM products for many years",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We have competed with Abbott and their Libre family of CGM products for many years."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年にアボットと特許訴訟を解決する和解・ライセンス契約を結んだ",
+          "text_en": "In 2024 Dexcom entered into a settlement and license agreement with Abbott to settle all pending patent infringement proceedings",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We have been involved in various patent infringement actions in the past and in 2024, we entered into a settlement and license agreement with Abbott to settle all pending patent infringement legal proceedings brought by Abbott against us."
+          }
+        }
+      ],
+      "name_en": "Abbott Laboratories"
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "sub": "CGMの競合",
+      "sub_en": "CGM competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ミニメド部門がガーディアン・コネクトなどの血糖測定製品を販売している",
+          "text_en": "Medtronic (MiniMed) markets and sells a standalone glucose monitoring product called Guardian Connect",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Medtronic (MiniMed) markets and sells a standalone glucose monitoring product called Guardian Connect, both internationally and in the United States, and a disposable CGM system called Simplera in the U.S."
+          }
+        }
+      ],
+      "name_en": "Medtronic"
+    },
+    {
+      "id": "ROCHE",
+      "ticker": "Roche Diagnostics",
+      "name": "ロシュ",
+      "sub": "血糖測定の競合",
+      "sub_en": "Glucose monitoring competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロシュ・ダイアベティス・ケアが血糖測定製品で直接競合している",
+          "text_en": "Roche Diabetes Care, a division of Roche Diagnostics, competes directly with Dexcom",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Roche Diabetes Care, a division of Roche Diagnostics; privately-held LifeScan, Inc.; Ascensia Diabetes Care"
+          }
+        }
+      ],
+      "name_en": "Roche Diagnostics"
+    },
+    {
+      "id": "LIFESCAN",
+      "ticker": "LifeScan",
+      "name": "ライフスキャン",
+      "sub": "血糖測定の競合",
+      "sub_en": "Glucose monitoring competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "非上場のライフスキャンが直接競合している",
+          "text_en": "Privately-held LifeScan competes directly with Dexcom",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Roche Diabetes Care, a division of Roche Diagnostics; privately-held LifeScan, Inc.; Ascensia Diabetes Care"
+          }
+        }
+      ],
+      "name_en": "LifeScan"
+    },
+    {
+      "id": "ASCENSIA",
+      "ticker": "Ascensia Diabetes",
+      "name": "アセンシア・ダイアベティス・ケア",
+      "sub": "血糖測定の競合",
+      "sub_en": "Glucose monitoring competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アセンシア・ダイアベティス・ケアが直接競合している",
+          "text_en": "Ascensia Diabetes Care competes directly with Dexcom",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Roche Diabetes Care, a division of Roche Diagnostics; privately-held LifeScan, Inc.; Ascensia Diabetes Care"
+          }
+        }
+      ],
+      "name_en": "Ascensia Diabetes Care"
+    },
+    {
+      "id": "VERILY",
+      "ticker": "Verily Life",
+      "name": "ベリリー・ライフサイエンシズ",
+      "sub": "共同開発の相手",
+      "sub_en": "Collaboration partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年11月20日付で共同開発・ライセンス契約を結んでいる",
+          "text_en": "Dexcom has an Amended and Restated Collaboration and License Agreement with Verily Life Sciences dated November 20, 2018",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Amended and Restated Collaboration and License Agreement, dated November 20, 2018, by and between DexCom, Inc. and Verily Life Sciences LLC"
+          }
+        }
+      ],
+      "name_en": "Verily Life Sciences"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "端末連携先",
+      "sub_en": "Device integration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アップルウォッチで血糖値を表示できるよう連携している",
+          "text_en": "Glucose data can be displayed on Apple Watch devices used with a compatible iPhone",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "A patient’s glucose data can also be displayed on a patient’s or follower’s wearable device, such as the Apple Watch and Wear OS by Google devices, when used in conjunction with the patient’s or follower’s compatible iPhone or Android mobile device."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "GRMN",
+      "ticker": "GRMN",
+      "name": "ガーミン",
+      "sub": "端末連携先",
+      "sub_en": "Device integration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガーミンなどのデジタルヘルスアプリとも連携する設計である",
+          "text_en": "Designed to integrate with the connected CGM ecosystem including Garmin",
+          "source": {
+            "label": "デクスコム 10-K(2025年12月期)",
+            "label_en": "Dexcom 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "• Designed to integrate with the world’s largest connected CGM ecosystem (including insulin pumps and smart insulin pens, Apple Watch, Garmin and other digital health apps)."
+          }
+        }
+      ],
+      "name_en": "Garmin"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

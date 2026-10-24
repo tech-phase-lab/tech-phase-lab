@@ -1,0 +1,262 @@
+{
+  "root": {
+    "ticker": "KVYO",
+    "name": "Klaviyo",
+    "cik": 1835830
+  },
+  "rows": [
+    {
+      "ja": "出資・提携",
+      "en": "Investment & partnership",
+      "above": true
+    },
+    {
+      "ja": "連携先(Klaviyoの年次報告に記載)",
+      "en": "Integrations (named in Klaviyo's annual report)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ADBE",
+    "CRM",
+    "BRZE"
+  ],
+  "companies": [
+    {
+      "id": "SHOP",
+      "ticker": "SHOP",
+      "name": "Shopify",
+      "sub": "EC基盤",
+      "sub_en": "Commerce platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Shopifyとの連携が終了または低下すると、Klaviyoは顧客を失う可能性がある",
+          "text_en": "If its Shopify integration ends or degrades, Klaviyo could lose customers.",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "However, the termination or degradation of our integration with Shopify could cause us to lose customers if these customers do not transition to a new eCommerce platform, or if they transition to a platform that does not integrate with our platform."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "KlaviyoはShopifyに普通株を発行・売却し、2030年7月28日まで固定価格で追加株を買える選択権を与えた",
+          "text_en": "Klaviyo sold common stock to Shopify and gave it an option to buy more shares at a fixed price, exercisable until July 28, 2030",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Under the stock purchase agreement, we issued and sold shares of common stock to Shopify and provided an investment option which allows Shopify to purchase additional shares of common stock at a fixed price, exercisable at any time at Shopify’s option until July 28, 2030."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Shopifyが持つKlaviyo株の購入選択権は、2025年12月31日時点で7,500万ドルの投資に当たる",
+          "text_en": "Shopify's option to buy Klaviyo Series B common shares represents $75 million of its investments as of December 31, 2025",
+          "source": {
+            "label": "Shopify 10-K",
+            "label_en": "Shopify 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our investment option derivative to purchase Series B common shares in Klaviyo, representing $75 million of our investments as of December 31, 2025, is impacted by market price volatility and interest rates."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Klaviyoの連携先には、Googleなどの技術プラットフォームが含まれる",
+          "text_en": "Klaviyo integrates with technology platforms including Google.",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We enhance our platform through our large technology partner ecosystem and robust library of integrations with other technology platforms, including Google, Meta, Zendesk, Gorgias, LoyaltyLion, Pinterest, and Canva."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KlaviyoはAmazon Buy with Primeと連携している",
+          "text_en": "Klaviyo has integrated with Amazon Buy with Prime",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We have additionally integrated with Amazon Buy with Prime."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に、ChatGPT内でKlaviyoのデータを使えるKlaviyo for OpenAIアプリを公開した",
+          "text_en": "In January 2026 Klaviyo launched an application with OpenAI that lets customers access their Klaviyo data inside ChatGPT",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In January 2026, we also launched the Klaviyo application with OpenAI, allowing our customers to access their Klaviyo data right inside ChatGPT.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "Adobe",
+      "sub": "クリエイティブソフト",
+      "sub_en": "Creative software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Klaviyoと競合する",
+          "text_en": "Competes with Klaviyo",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We face competition from a number of companies, including Adobe, Salesforce, Mailchimp, and Braze."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Magento(Adobe)を含む主要コマース基盤が、Klaviyoの提携先に並ぶ",
+          "text_en": "Klaviyo partners with major commerce platforms including Magento (Adobe).",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We also partner with most other major commerce platforms, including WooCommerce, Magento (Adobe), BigCommerce, Salesforce Commerce Cloud, PrestaShop, and Shopware."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "CRM・クラウド",
+      "sub_en": "CRM & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Klaviyoと競合する",
+          "text_en": "Competes with Klaviyo",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We face competition from a number of companies, including Adobe, Salesforce, Mailchimp, and Braze."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Salesforce Commerce Cloudなどのデータ元と連携している",
+          "text_en": "Klaviyo integrates with data sources including Salesforce Commerce Cloud",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We integrate with a wide range of data sources such as retail and eCommerce platforms, including Shopify, WooCommerce, and Salesforce Commerce Cloud, to comprehensively replicate all historical profile and event data in Klaviyo and synchronize data going forward."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRZE",
+      "ticker": "BRZE",
+      "name": "Braze",
+      "sub": "マーケティングソフト",
+      "sub_en": "Marketing software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Klaviyoと競合する",
+          "text_en": "Competes with Klaviyo",
+          "source": {
+            "label": "Braze 10-K",
+            "label_en": "Braze 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1676238/000167623826000013/brze-20260131.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "We face competition from software companies that offer marketing solutions, such as Adobe, Salesforce, Iterable, and Klaviyo."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Brazeも、Klaviyoの競合相手に入る",
+          "text_en": "Braze is also a Klaviyo competitor.",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We face competition from a number of companies, including Adobe, Salesforce, Mailchimp, and Braze."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

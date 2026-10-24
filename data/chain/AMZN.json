@@ -1,0 +1,589 @@
+{
+  "root": {
+    "ticker": "AMZN",
+    "name": "Amazon",
+    "cik": 1018724
+  },
+  "rows": [
+    {
+      "ja": "供給元(半導体・電力)",
+      "en": "Suppliers (chips & power)",
+      "above": true
+    },
+    {
+      "ja": "AIクラウドの顧客",
+      "en": "AI & cloud customers"
+    },
+    {
+      "ja": "提携",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ORCL",
+    "SNOW",
+    "MDB",
+    "EBAY",
+    "COST"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2027〜2028年に、AWSの世界のインフラへNVIDIAのGPUを追加で200万基導入する計画",
+          "text_en": "AWS and NVIDIA plan to deploy 2 million additional NVIDIA GPUs across AWS global infrastructure in 2027-2028",
+          "source": {
+            "label": "Amazon ニュース",
+            "label_en": "Amazon News (aboutamazon.com)",
+            "url": "https://www.aboutamazon.com/news/aws/aws-nvidia-2-million-gpus-ai",
+            "level": "official",
+            "date": "2026-08",
+            "quote": "the companies plan to deploy 2 million additional NVIDIA GPUs across AWS’s global infrastructure"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NVIDIAにとってAmazonは、AI計算機能を自社基盤に組み込む競合企業の1社だ",
+          "text_en": "Amazon is one of the companies that incorporate AI computing hardware in their own platforms and compete with NVIDIA",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "such as Alibaba Group, Alphabet Inc., Amazon, Inc., or Amazon, Baidu, Inc., Huawei, and Microsoft Corporation, or Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AWSとの戦略的関係を、5年・複数世代の契約で拡大",
+          "text_en": "Expanded the strategic relationship with AWS through a five-year, multi-generational agreement",
+          "source": {
+            "label": "Marvell 8-K(2024年12月)",
+            "label_en": "Marvell 8-K (Dec 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000193/final2024_12x02xmarvell-.htm",
+            "level": "official",
+            "date": "2024-12",
+            "quote": "the expansion of their strategic relationship with Amazon Web Services (AWS) through a five-year, multi-generational agreement that includes collaboration across multiple AWS products and the use of AWS cloud infrastructure",
+            "note": "記載にTrainiumの名前は出てきません。",
+            "note_en": "The source does not mention Trainium by name."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AWS向けにIntel 18Aでカスタム AIファブリックチップ、Intel 3でカスタムXeon 6を製造する複数年契約",
+          "text_en": "Will make a custom AI fabric chip on Intel 18A and a custom Xeon 6 on Intel 3 for AWS",
+          "source": {
+            "label": "Intel の発表",
+            "label_en": "Intel press release",
+            "url": "https://www.intc.com/news-events/press-releases/detail/1709/intel-and-aws-expand-strategic-collaboration-helping",
+            "level": "official",
+            "date": "2024-09",
+            "quote": "Intel will produce an AI fabric chip for AWS on Intel 18A, the company’s most advanced process node. Intel will also produce a custom Xeon 6 chip on Intel 3, building on the existing partnership under which Intel produces Xeon Scalable processors for AWS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2018年からAWSと協業し、AMD EPYCベースのEC2インスタンスを100種類以上提供",
+          "text_en": "Has worked with AWS since 2018 and provides more than 100 EPYC-based EC2 instances",
+          "source": {
+            "label": "AMD の発表",
+            "label_en": "AMD press release",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1137/amd-reimagines-cloud-performance-with-4th-gen-amd-epyc",
+            "level": "official",
+            "date": "2023-06",
+            "quote": "AMD began working with AWS in 2018 and now provides more than 100 EPYC processor-based instances for general purpose, compute optimized, memory optimized and high performance computing workloads.",
+            "note": "2023年6月時点の数字です。",
+            "note_en": "Count as of June 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIVN",
+      "ticker": "RIVN",
+      "name": "Rivian",
+      "sub": "EV",
+      "sub_en": "EVs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Amazonと共同で設計・開発した商用バン",
+          "text_en": "Designed and engineered the Rivian Commercial Van in collaboration with Amazon",
+          "source": {
+            "label": "Rivian 10-K(2025年度)",
+            "label_en": "Rivian 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1874178/000187417826000008/rivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "designed and engineered by Rivian in collaboration with Amazon.com, Inc. and its affiliates (collectively, “Amazon”), our first commercial customer"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Amazonが新株予約権と株式でRivianの議決権の12.7%を保有",
+          "text_en": "Amazon holds Rivian equity via a warrant and shares, 12.7% of voting power at December 31, 2025",
+          "source": {
+            "label": "Rivian 10-K(2025年度)",
+            "label_en": "Rivian 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1874178/000187417826000008/rivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Amazon.com NV Investment Holdings LLC, which beneficially owns shares of our capital stock (including s hares issuable upon the exercise of a warrant to purchase 3,723,050 shares of Class A common stock, as amended) representing 12.7% of our voting power as of December 31, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TLN",
+      "ticker": "TLN",
+      "name": "Talen Energy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2042年まで、1,920MWの原子力電力をAmazonへ供給する拡大版の電力購入契約",
+          "text_en": "Talen agreed to supply Amazon with 1,920MW of carbon-free nuclear power through 2042 under an expanded PPA",
+          "source": {
+            "label": "Talen Energy 8-K Ex. 99.1",
+            "label_en": "Talen Energy 8-K Ex. 99.1",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm",
+            "level": "official",
+            "date": "2025-06",
+            "quote": "Talen will provide Amazon with 1,920 megawatts of carbon-free nuclear power through 2042, with options to further extend its duration.",
+            "note": "全量の供給は2032年までの見込みです。",
+            "note_en": "Full volume expected no later than 2032."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VST",
+      "ticker": "VST",
+      "name": "Vistra",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Comanche Peak原子力発電所から1,200MWを供給する20年の電力購入契約",
+          "text_en": "20-year PPA with AWS to supply 1,200MW from the Comanche Peak nuclear plant",
+          "source": {
+            "label": "Vistra 10-K(2025年度)",
+            "label_en": "Vistra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000006/vistra-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "pursuant to which we have agreed to supply to AWS 1,200 MW of carbon-free power from the Comanche Peak Nuclear Power Plant.",
+            "note": "供給開始は2027年第4四半期の見込みです。",
+            "note_en": "Delivery expected to begin in Q4 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ETR",
+      "ticker": "ETR",
+      "name": "Entergy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Entergy Mississippiが、データセンター向けの大口の電力供給契約を締結",
+          "text_en": "Entergy Mississippi executed large customer supply and service agreements to serve data center campuses",
+          "source": {
+            "label": "Entergy 10-K(2025年度)",
+            "label_en": "Entergy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/65984/000006598426000174/etr-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Entergy Mississippi executed a large customer supply and service agreement to serve two data center campuses located in Madison County, Mississippi in which Amazon Web Services is investing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AWSの技術(TrainiumやGravitonなど)に10年で1,000億ドル超を支出すると約束",
+          "text_en": "Committed to spend more than $100B over ten years on AWS technologies including Trainium and Graviton",
+          "source": {
+            "label": "Anthropic の発表",
+            "label_en": "Anthropic announcement",
+            "url": "https://www.anthropic.com/news/anthropic-amazon-compute",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "We are committing more than $100 billion over the next ten years to AWS technologies, securing up to 5GW of new capacity to train and run Claude."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Amazonが今回50億ドル、事業の節目に応じてさらに最大200億ドルをAnthropicに出資",
+          "text_en": "Amazon agreed to invest $5B in Anthropic now and up to $20B more tied to commercial milestones",
+          "source": {
+            "label": "Amazon ニュース",
+            "label_en": "Amazon News (aboutamazon.com)",
+            "url": "https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Amazon will invest $5 billion in Anthropic today and up to an additional $20 billion in the future tied to certain commercial milestones. This is in addition to the $8 billion Amazon previously invested in Anthropic.",
+            "note": "追加の200億ドルは事業上の節目の達成が条件です。",
+            "note_en": "The further $20B is contingent on commercial milestones."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Trainium2を使う計算クラスター「Project Rainier」を共同で構築",
+          "text_en": "Built Project Rainier, a Trainium2 compute cluster with nearly half a million chips, in collaboration with Anthropic",
+          "source": {
+            "label": "Amazon ニュース",
+            "label_en": "Amazon News (aboutamazon.com)",
+            "url": "https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster",
+            "level": "official",
+            "date": "2025-10",
+            "quote": "AWS collaborated with AI safety and research leader, Anthropic , on Project Rainier, which features nearly half a million Trainium2 chips"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NVIDIA製チップを使うAWSの計算基盤を、OpenAIが利用できる380億ドルの複数年契約",
+          "text_en": "$38B multi-year agreement giving OpenAI access to AWS compute built on NVIDIA chips",
+          "source": {
+            "label": "Amazon ニュース",
+            "label_en": "Amazon News (aboutamazon.com)",
+            "url": "https://www.aboutamazon.com/news/aws/aws-open-ai-workloads-compute-infrastructure",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "Under this new $38 billion agreement, which will have continued growth over the next seven years, OpenAI is accessing AWS compute comprising hundreds of thousands of state-of-the-art NVIDIA GPUs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AWS Gravitonプロセッサーを大規模に導入する契約",
+          "text_en": "Agreement to deploy AWS Graviton processors at scale, starting with tens of millions of cores",
+          "source": {
+            "label": "Amazon プレスセンター",
+            "label_en": "Amazon Press Center",
+            "url": "https://press.aboutamazon.com/aws/2026/4/meta-signs-agreement-with-aws-to-power-agentic-ai-on-amazons-graviton-chips",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Meta has signed an agreement to deploy AWS Graviton processors at scale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "Netflix",
+      "sub": "動画配信",
+      "sub_en": "Streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Netflixは計算処理の大半をAWSで動かしている",
+          "text_en": "Netflix runs the vast majority of its computing on AWS",
+          "source": {
+            "label": "Netflix 10-K(2025年度)",
+            "label_en": "Netflix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Currently, we run the vast majority of our computing on AWS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Palantirは顧客向けの一部の処理を、AWSなどの計算基盤に頼る",
+          "text_en": "Palantir depends on computing infrastructure operated by AWS and others for some customers",
+          "source": {
+            "label": "Palantir 10-K(2025年度)",
+            "label_en": "Palantir 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We depend on computing infrastructure operated by Amazon Web Services (“AWS”), Microsoft, and other third parties"
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "ticker": "Dominion",
+      "name": "Dominion Energy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノースアナ原子力発電所の近くで、小型モジュール炉(SMR)の計画を検討する契約",
+          "text_en": "Agreement to explore an SMR project near the North Anna nuclear station",
+          "source": {
+            "label": "Amazon ニュース",
+            "label_en": "Amazon News (aboutamazon.com)",
+            "url": "https://www.aboutamazon.com/news/sustainability/amazon-nuclear-small-modular-reactor-net-carbon-zero",
+            "level": "official",
+            "date": "2024-10",
+            "quote": "we’ve signed an agreement with utility company Dominion Energy to explore the development of an SMR project near Dominion’s existing North Anna nuclear power station",
+            "note": "検討の段階で、建設の約束はありません。",
+            "note_en": "Exploratory; no construction commitment is stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AIアプリ・データ・AWS Marketplaceでの提供で、AWSとの提携を拡大",
+          "text_en": "Salesforce and AWS expanded their partnership on AI apps, data and AWS Marketplace availability",
+          "source": {
+            "label": "Salesforce の発表",
+            "label_en": "Salesforce press release",
+            "url": "https://www.salesforce.com/news/press-releases/2023/11/27/aws-data-ai-strategic-partnership-expansion/",
+            "level": "official",
+            "date": "2023-11",
+            "quote": "Salesforce and AWS Expand Partnership for Customers to More Easily Build Trusted AI Apps"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oracleの一部の製品は、競合企業の1社であるAmazonと直接競合する",
+          "text_en": "Some of Oracle's offerings compete directly with Amazon",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AWSは大手クラウドの1社として、Snowflakeと競合する",
+          "text_en": "AWS, as a large public cloud provider, competes with Snowflake",
+          "source": {
+            "label": "Snowflake 10-K(2026年度)",
+            "label_en": "Snowflake 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "Currently, a substantial majority of our business is run on the AWS public cloud."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AWSは、データベース機能を提供するクラウドの1社としてMongoDBと競合している",
+          "text_en": "AWS competes with MongoDB as a public cloud provider offering database functionality",
+          "source": {
+            "label": "MongoDB 10-K(2026年度)",
+            "label_en": "MongoDB 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "We also compete with public cloud providers such as Amazon Web Services (“AWS”), Google Cloud Platform (“GCP”) and Microsoft Azure that offer database functionality"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EBAY",
+      "ticker": "EBAY",
+      "name": "eBay",
+      "sub": "ネット通販",
+      "sub_en": "E-commerce",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amazonは、eBayより規模の大きい競合のひとつだ",
+          "text_en": "Amazon is one of eBay's competitors that are larger than eBay",
+          "source": {
+            "label": "eBay 10-K(2025年度)",
+            "label_en": "eBay 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065088/000106508826000027/ebay-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Some of our competitors, such as Alibaba, Alphabet (Google), Amazon, Apple and Meta (Facebook and Instagram), are larger than we are"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "Costco",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amazonは、Costcoの米国での主要な総合小売の競合に含まれる",
+          "text_en": "Amazon is one of Costco's significant general merchandise retail competitors in the U.S.",
+          "source": {
+            "label": "Costco 10-K(2026年度)",
+            "label_en": "Costco 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "Walmart, Target, Kroger, and Amazon are among our significant general merchandise retail competitors in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "ストリーミング端末",
+      "sub_en": "Streaming devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Amazon・Best Buy・Walmart・Targetの4社でRokuの端末売上の81%を占め、AmazonはRokuのストリーミング端末の競合でもある",
+          "text_en": "Amazon, Best Buy, Walmart and Target together account for 81% of Roku's Devices revenue; Amazon is also a streaming-device competitor of Roku",
+          "source": {
+            "label": "Roku 10-K(2025年度)",
+            "label_en": "Roku 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Amazon, Best Buy, Target, and Walmart in total accounted for 81% of our Devices revenue for each of the years ended December 31, 2025 and 2024.",
+            "note": "4社の合計で、Amazon単独の割合は書かれていません。",
+            "note_en": "Combined figure for four retailers; Amazon alone is not stated."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

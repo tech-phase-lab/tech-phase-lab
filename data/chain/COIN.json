@@ -1,0 +1,107 @@
+{
+  "root": {
+    "ticker": "COIN",
+    "name": "コインベース・グローバル",
+    "cik": 1679788,
+    "name_en": "Coinbase Global"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CIRCLE",
+      "ticker": "Circle Internet",
+      "name": "サークル・インターネット・ファイナンシャル",
+      "sub": "ステーブルコイン",
+      "sub_en": "Stablecoin issuer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に提携してUSDCを立ち上げ、発行はサークルが担っている",
+          "text_en": "They partnered in 2018 to launch USDC, which Circle issues",
+          "source": {
+            "label": "コインベース・グローバル 10-K(2025-12-31)",
+            "label_en": "Coinbase Global 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2018, we partnered with Circle Internet Financial, LLC (“Circle”) to launch USDC, with the goal of driving global, mainstream adoption of stablecoins"
+          }
+        },
+        {
+          "type": "down",
+          "text": "サークル合意に基づき、USDCの流通に応じてサークルから支払いを受ける",
+          "text_en": "Under the Circle Agreement, Circle pays Coinbase based on USDC in circulation",
+          "source": {
+            "label": "コインベース・グローバル 10-K(2025-12-31)",
+            "label_en": "Coinbase Global 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Pursuant to the Circle Agreement, Circle is the issuer of USDC, holds the relevant trademarks which we can use, and pays us for our role in the growth of USDC"
+          }
+        }
+      ],
+      "name_en": "Circle Internet Financial"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "アプリ配信",
+      "sub_en": "App distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Google Playストアは、アプリの主な配信経路のひとつである",
+          "text_en": "Google Play is one of the main distribution channels for its apps",
+          "source": {
+            "label": "コインベース・グローバル 10-K(2025-12-31)",
+            "label_en": "Coinbase Global 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Google Play Store and Apple App Store are global application distribution platforms and the main distribution channels for our apps"
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "アプリ配信",
+      "sub_en": "App distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Apple App Storeは、アプリの主な配信経路のひとつである",
+          "text_en": "The Apple App Store is one of the main distribution channels for its apps",
+          "source": {
+            "label": "コインベース・グローバル 10-K(2025-12-31)",
+            "label_en": "Coinbase Global 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Google Play Store and Apple App Store are global application distribution platforms and the main distribution channels for our apps"
+          }
+        }
+      ],
+      "name_en": "Apple"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,505 @@
+{
+  "root": {
+    "ticker": "GEV",
+    "name": "GE Vernova",
+    "cik": 1996810
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "電力・AIデータセンターの顧客",
+      "en": "Power & AI data-center customers"
+    },
+    {
+      "ja": "提携・事業のつながり",
+      "en": "Partners & corporate ties"
+    },
+    {
+      "ja": "競合:電力(ガスタービン等)",
+      "en": "Competitors: Power"
+    },
+    {
+      "ja": "競合:風力",
+      "en": "Competitors: Wind"
+    },
+    {
+      "ja": "競合:送配電・電化",
+      "en": "Competitors: Electrification"
+    }
+  ],
+  "rivals": [
+    "ENR",
+    "VWS",
+    "ABBN"
+  ],
+  "companies": [
+    {
+      "id": "NRG",
+      "ticker": "NRG",
+      "name": "NRG Energy",
+      "sub": "電力会社",
+      "sub_en": "Power producer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "GE Vernova・KiewitのTICと、最大5.4GWのガス火力複合発電を開発する契約",
+          "text_en": "Project development agreement with GE Vernova and Kiewit’s TIC for up to 5.4GW of gas-fired combined-cycle projects",
+          "source": {
+            "label": "NRG Energy 10-K(2025年度)",
+            "label_en": "NRG Energy 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "NRG has entered into slot reservation agreements with GEV for the procurement of 3.6 GW of 7HA gas turbines.",
+            "note": "最大5.4GWの契約で、枠の予約を含みます。最初の案件は2029年末までの見込みです。",
+            "note_en": "Up to 5.4GW including slot reservations; first projects expected by end of 2029."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PPL",
+      "ticker": "PPL",
+      "name": "LG&E and KU(PPL)",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Mill Creek 5号機向けに7HA.03複合発電設備を受注",
+          "text_en": "Order for 7HA.03 combined-cycle equipment for the Mill Creek Unit 5 project",
+          "source": {
+            "label": "GE Vernova の発表(2024年4月)",
+            "label_en": "GE Vernova press release (Apr 2024)",
+            "url": "https://www.gevernova.com/news/press-releases/ge-vernova-advanced-technology-help-lge-and-ku-diversify-utilities-portfolio",
+            "level": "official",
+            "date": "2024-04-11",
+            "quote": "today announced it has secured an order for its 7HA.03 combined-cycle plant equipment from Louisville Gas and Electric Company and Kentucky Utilities Company (LG&E and KU)",
+            "note": "完成は2027年の見込みです。",
+            "note_en": "Completion expected in 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AWS",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AWSのデータセンター拡大を支える戦略的な枠組み契約",
+          "text_en": "Strategic framework agreement to support AWS data center scaling",
+          "source": {
+            "label": "GE Vernova の発表(2025年3月)",
+            "label_en": "GE Vernova press release (Mar 2025)",
+            "url": "https://www.gevernova.com/news/press-releases/ge-vernova-aws-accelerate-global-energy-demand",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "GE Vernova will continue to provide AWS with turnkey substation solutions to enable connectivity of AWS data centers to the grid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "Chevron / Engine No. 1",
+      "sub": "石油・投資",
+      "sub_en": "Energy & investment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米データセンター向けの電力開発で提携し、最初の案件にGE Vernovaの7HAタービン7基を使う見込み",
+          "text_en": "Partnership to power U.S. data centers; first projects expected to use seven GE Vernova 7HA turbines",
+          "source": {
+            "label": "Chevron の発表(2025年1月、GE Vernovaサイトに掲載)",
+            "label_en": "Chevron newsroom page fetched at gevernova.com URL (Jan 2025)",
+            "url": "https://www.gevernova.com/news/press-releases/engine-no-1-chevron-ge-vernova-power-us-data-centers",
+            "level": "official",
+            "date": "2025-01-28",
+            "quote": "The first projects, which the companies refer to as “power foundries”, are expected to leverage seven U.S. made GE Vernova 7HA natural gas turbines, secured under a slot reservation agreement",
+            "note": "計画・枠の予約の段階で、確定注文ではありません。",
+            "note_en": "Expected/planned; slot reservations, not final orders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6501",
+      "ticker": "Hitachi",
+      "name": "日立製作所",
+      "sub": "原子力・電機",
+      "sub_en": "Nuclear & electric",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "小型モジュール炉(SMR)の設計・開発を日立との合弁で手がける",
+          "text_en": "Small modular reactors are designed and developed through joint ventures with Hitachi",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "through joint ventures with Hitachi, Ltd."
+          }
+        }
+      ],
+      "name_en": "Hitachi"
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "Baker Hughes",
+      "sub": "エネルギー機器",
+      "sub_en": "Energy equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "航空転用エンジンの保守を支える折半出資の合弁「Aero Alliance」",
+          "text_en": "Aero Alliance: 50-50 joint venture for aeroderivative engine support",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Aero Alliance is our 50 - 50 joint venture with Baker Hughes Company that supports our customers through the fulfillment of aeroderivative engines, spare parts, repairs, and maintenance services."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Baker Hughesは、GE Vernovaの知的財産を使うガスタービンの販売・供給契約を結ぶ",
+          "text_en": "Baker Hughes has a gas turbine distribution and supply agreement licensing GE Vernova IP",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年度)",
+            "label_en": "Baker Hughes 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "a heavy duty gas turbine distribution and supply agreement that licenses certain intellectual property of GE Vernova to Baker Hughes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GE Aerospace",
+      "sub": "航空エンジン",
+      "sub_en": "Aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年4月2日にGeneral Electricから分離独立。「GE」の名称はライセンスで使用",
+          "text_en": "Spun off from General Electric on April 2, 2024; uses the GE name under license",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2024-04-02",
+            "quote": "we have a license to use certain IP from GE , including the GE name and the GE Monogram."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENR",
+      "ticker": "Siemens Energy",
+      "name": "Siemens Energy",
+      "sub": "発電機器",
+      "sub_en": "Power equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電力事業と電化事業では、Siemens Energyが主要な競合となる",
+          "text_en": "Siemens Energy is a key competitor in Power and Electrification",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Power segment competitors include Siemens Energy, Mitsubishi Power, Westinghouse , Framatome, and Rolls-Royce."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RR",
+      "ticker": "Rolls-Royce",
+      "name": "Rolls-Royce",
+      "sub": "発電機器",
+      "sub_en": "Power equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rolls-Royceは電力事業の主要な競合の一社だ",
+          "text_en": "Rolls-Royce is a key competitor in the Power segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Power segment competitors include Siemens Energy, Mitsubishi Power, Westinghouse , Framatome, and Rolls-Royce."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VWS",
+      "ticker": "Vestas",
+      "name": "Vestas",
+      "sub": "風力発電",
+      "sub_en": "Wind power",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vestasは風力事業で主要な競合の位置を占める",
+          "text_en": "Vestas is a key competitor in the Wind segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Wind segment competitors include Vestas, Siemens-Gamesa, Nordex, Envision, and Goldwind."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NDX1",
+      "ticker": "Nordex",
+      "name": "Nordex",
+      "sub": "風力発電",
+      "sub_en": "Wind power",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nordexは風力事業の主要な競合である",
+          "text_en": "Nordex is a key competitor in the Wind segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Wind segment competitors include Vestas, Siemens-Gamesa, Nordex, Envision, and Goldwind."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOLDWIND",
+      "ticker": "Goldwind",
+      "name": "Goldwind",
+      "sub": "風力発電",
+      "sub_en": "Wind power",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Goldwindは風力事業の主要な競合に入る",
+          "text_en": "Goldwind is a key competitor in the Wind segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Wind segment competitors include Vestas, Siemens-Gamesa, Nordex, Envision, and Goldwind."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SU",
+      "ticker": "Schneider",
+      "name": "Schneider Electric",
+      "sub": "電機・電力管理",
+      "sub_en": "Electrical equipment",
+      "row": 5,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Schneider Electricは電化事業の主要競合",
+          "text_en": "Schneider Electric is a key competitor in the Electrification segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Electrification segment competitors include Hitachi Energy, Siemens Energy, Siemens, Schneider Electric, Mitsubishi Electric, and ABB."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABBN",
+      "ticker": "ABB",
+      "name": "ABB",
+      "sub": "電機・ロボット",
+      "sub_en": "Electrical equipment",
+      "row": 5,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ABBは電化事業の主要な競合の一社だ",
+          "text_en": "ABB is a key competitor of GE Vernova's Electrification segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Electrification segment competitors include Hitachi Energy, Siemens Energy, Siemens, Schneider Electric, Mitsubishi Electric, and ABB."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIE",
+      "ticker": "Siemens",
+      "name": "Siemens",
+      "sub": "電機・産業",
+      "sub_en": "Electrical equipment",
+      "row": 5,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Siemensは電化事業で競合する主要企業だ",
+          "text_en": "Siemens is a key competitor of GE Vernova's Electrification segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Electrification segment competitors include Hitachi Energy, Siemens Energy, Siemens, Schneider Electric, Mitsubishi Electric, and ABB."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6503",
+      "ticker": "Mitsubishi Electric",
+      "name": "三菱電機",
+      "sub": "電機",
+      "sub_en": "Electrical equipment",
+      "row": 5,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "三菱電機は電化事業で主要な競合に当たる",
+          "text_en": "Mitsubishi Electric is a key competitor of GE Vernova's Electrification segment",
+          "source": {
+            "label": "GE Vernova 10-K(2025年度)",
+            "label_en": "GE Vernova 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Key Electrification segment competitors include Hitachi Energy, Siemens Energy, Siemens, Schneider Electric, Mitsubishi Electric, and ABB."
+          }
+        }
+      ],
+      "name_en": "Mitsubishi Electric"
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "Caterpillar",
+      "sub": "建機・発電機",
+      "sub_en": "Machinery & generators",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GE Vernovaは、特定の市場でCaterpillarの競合相手だ",
+          "text_en": "GE Vernova is a competitor of Caterpillar in certain markets.",
+          "source": {
+            "label": "Caterpillar 10-K(2025年度)",
+            "label_en": "Caterpillar 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Other competitors, such as Volvo Penta AB, FPT Industrial SpA (Iveco Group), INNIO Group, GE Vernova Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BW",
+      "ticker": "BW",
+      "name": "Babcock & Wilcox",
+      "sub": "発電・環境機器",
+      "sub_en": "Power & environmental equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Babcock & WilcoxとGE Vernovaは競合関係にある",
+          "text_en": "GE Vernova is a competitor of Babcock & Wilcox.",
+          "source": {
+            "label": "Babcock & Wilcox 10-K(2025年度)",
+            "label_en": "Babcock & Wilcox 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1630805/000163080526000018/bw-20251231.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "Competitors include: Aker Carbon Capture ASA GE Vernova, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DUK",
+      "ticker": "DUK",
+      "name": "Duke Energy",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Duke Energyが、GE Vernovaの7HAガスタービン20基を数年かけて受け取る契約に署名(GE Vernovaの記事)",
+          "text_en": "Duke Energy has signed an agreement for 20 new GE Vernova 7HA gas-power turbines, to be delivered over several years (GE Vernova article)",
+          "source": {
+            "label": "GE Vernova の記事",
+            "label_en": "GE Vernova article",
+            "url": "https://www.gevernova.com/news/articles/two-years-ge-vernova-reshaping-energy-future",
+            "level": "official",
+            "quote": "has signed an agreement for 20 new 7HA gas-power turbines aimed to be delivered over the next several years",
+            "note": "納入は数年にわたります。記事に日付の記載はありません。",
+            "note_en": "Delivery is over several years; the article carries no date."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

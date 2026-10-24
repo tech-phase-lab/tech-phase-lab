@@ -1,0 +1,283 @@
+{
+  "root": {
+    "ticker": "NWSA",
+    "name": "ニューズ・コーポレーション",
+    "cik": 1564708,
+    "name_en": "NEWS CORP"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "SPGI",
+    "RELX"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・書籍販売先",
+      "sub_en": "Cloud supplier & book customer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クラウドサービスをアマゾン・ウェブ・サービスに依存している",
+          "text_en": "The Company relies on Amazon Web Services for cloud-based services",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "The Company relies on Amazon Web Services to supply cloud-based services used in many of the Company’s business activities and Google to provide workspace and other enterprise services"
+          }
+        },
+        {
+          "type": "down",
+          "text": "HarperCollinsの書籍の販売先である",
+          "text_en": "Amazon is among HarperCollins' customers",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "a customer base that includes global technology companies, traditional brick and mortar booksellers, wholesale clubs and discount stores, including Amazon, Apple, Barnes & Noble and Tesco"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "業務基盤の供給元",
+      "sub_en": "Workspace provider",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ワークスペースなどの企業向けサービスをグーグルから受けている",
+          "text_en": "Google provides workspace and other enterprise services",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "The Company relies on Amazon Web Services to supply cloud-based services used in many of the Company’s business activities and Google to provide workspace and other enterprise services"
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "書籍の販売先",
+      "sub_en": "Book customer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "HarperCollinsの書籍の販売先である",
+          "text_en": "Apple is among HarperCollins' customers",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "a customer base that includes global technology companies, traditional brick and mortar booksellers, wholesale clubs and discount stores, including Amazon, Apple, Barnes & Noble and Tesco"
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "BN",
+      "ticker": "Barnes & Noble",
+      "name": "バーンズ・アンド・ノーブル",
+      "sub": "書籍の販売先",
+      "sub_en": "Book customer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "HarperCollinsの書籍の販売先である",
+          "text_en": "Barnes & Noble is among HarperCollins' customers",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "a customer base that includes global technology companies, traditional brick and mortar booksellers, wholesale clubs and discount stores, including Amazon, Apple, Barnes & Noble and Tesco"
+          }
+        }
+      ],
+      "name_en": "Barnes & Noble"
+    },
+    {
+      "id": "TESCO",
+      "ticker": "Tesco",
+      "name": "テスコ",
+      "sub": "書籍の販売先",
+      "sub_en": "Book customer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "HarperCollinsの書籍の販売先である",
+          "text_en": "Tesco is among HarperCollins' customers",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "a customer base that includes global technology companies, traditional brick and mortar booksellers, wholesale clubs and discount stores, including Amazon, Apple, Barnes & Noble and Tesco"
+          }
+        }
+      ],
+      "name_en": "Tesco"
+    },
+    {
+      "id": "DMG",
+      "ticker": "DMG Media",
+      "name": "DMGメディア",
+      "sub": "印刷の合弁相手",
+      "sub_en": "Printing JV partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英国紙の印刷はDMGメディアとの合弁会社の工場で行われる",
+          "text_en": "News UK's print products are printed at facilities operated by its joint venture with DMG Media",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "News UK’s print products are printed at facilities in England and Scotland operated by its joint venture with DMG Media"
+          }
+        }
+      ],
+      "name_en": "DMG Media"
+    },
+    {
+      "id": "SPGI",
+      "ticker": "SPGI",
+      "name": "S&Pグローバル",
+      "sub": "情報サービスの競合",
+      "sub_en": "Information competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向け情報サービスで競合する",
+          "text_en": "Competes in enterprise information products",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "The Dow Jones segment’s professional information products that target enterprise customers compete with various information service providers, compliance data providers, global financial newswires and energy and commodities pricing and data providers, including Reuters News, RELX (including LexisNexis and ICIS), LSEG Risk Intelligence, S&P Global, DTN and Argus Media"
+          }
+        }
+      ],
+      "name_en": "S&P Global"
+    },
+    {
+      "id": "RELX",
+      "ticker": "RELX",
+      "name": "レレックス",
+      "sub": "情報サービスの競合",
+      "sub_en": "Information competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向け情報サービスで競合する",
+          "text_en": "Competes in enterprise information products",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "The Dow Jones segment’s professional information products that target enterprise customers compete with various information service providers, compliance data providers, global financial newswires and energy and commodities pricing and data providers, including Reuters News, RELX (including LexisNexis and ICIS), LSEG Risk Intelligence, S&P Global, DTN and Argus Media"
+          }
+        }
+      ],
+      "name_en": "RELX"
+    },
+    {
+      "id": "PRH",
+      "ticker": "Penguin Random",
+      "name": "ペンギン・ランダムハウス",
+      "sub": "出版の競合",
+      "sub_en": "Publishing competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "書籍出版で競合する",
+          "text_en": "Competes in book publishing",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "HarperCollins competes with other large publishers, such as Penguin Random House, Simon & Schuster, Hachette Livre and Macmillan"
+          }
+        }
+      ],
+      "name_en": "Penguin Random House"
+    },
+    {
+      "id": "SIMON",
+      "ticker": "Simon & Schuster",
+      "name": "サイモン&シュスター",
+      "sub": "出版の競合",
+      "sub_en": "Publishing competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "書籍出版で競合する",
+          "text_en": "Competes in book publishing",
+          "source": {
+            "label": "News Corp 10-K(2026-06-30)",
+            "label_en": "News Corp 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000175/nws-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "HarperCollins competes with other large publishers, such as Penguin Random House, Simon & Schuster, Hachette Livre and Macmillan"
+          }
+        }
+      ],
+      "name_en": "Simon & Schuster"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

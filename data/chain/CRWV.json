@@ -1,0 +1,991 @@
+{
+  "root": {
+    "ticker": "CRWV",
+    "name": "CoreWeave",
+    "cik": 1769628
+  },
+  "rows": [
+    {
+      "ja": "供給元(GPU・データセンター・ストレージ)",
+      "en": "Suppliers (GPUs, data centers & storage)",
+      "above": true
+    },
+    {
+      "ja": "顧客(AI計算契約)",
+      "en": "Customers (AI compute contracts)"
+    },
+    {
+      "ja": "提携・出資・融資",
+      "en": "Partnerships, investment & financing"
+    },
+    {
+      "ja": "競合(CoreWeaveの書類に記載)",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "GOOGL",
+    "MSFT",
+    "ORCL"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CoreWeaveのインフラで使うGPUはすべてNVIDIA製",
+          "text_en": "All GPUs used in CoreWeave’s infrastructure are NVIDIA GPUs, as required by customer contracts",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度)",
+            "label_en": "CoreWeave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "all of the GPUs used in our infrastructure today are NVIDIA GPUs"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAが協業拡大とあわせ、CoreWeaveのクラスA普通株に1株87.20ドルで20億ドルを出資",
+          "text_en": "NVIDIA invested $2B in CoreWeave Class A common stock at $87.20 per share alongside an expanded collaboration",
+          "source": {
+            "label": "CoreWeave/NVIDIA joint の発表",
+            "label_en": "CoreWeave/NVIDIA joint press release",
+            "url": "https://www.coreweave.com/news/nvidia-and-coreweave-strengthen-collaboration-to-accelerate-buildout-of-ai-factories",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "NVIDIA has invested $2 billion in CoreWeave Class A common stock at a purchase price of $87.20 per share"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAが、Vera Rubinプラットフォームの立ち上がりで、CoreWeaveなどの提携先でラックが稼働していると報告",
+          "text_en": "NVIDIA reported the Vera Rubin platform ramping with racks running at partners including CoreWeave",
+          "source": {
+            "label": "NVIDIA 8-K(2027年度第2四半期決算発表)",
+            "label_en": "NVIDIA 8-K Q2 FY2027 results release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+            "level": "official",
+            "date": "2026-08-26",
+            "quote": "racks running at partners including CoreWeave, Google Cloud, Microsoft Azure, Oracle Cloud Infrastructure and Nebius"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CoreWeaveのGPU供給元NVIDIAは、半導体の製造をTSMCに頼っている",
+          "text_en": "NVIDIA relies on TSMC for semiconductor fabrication, an upstream dependency of CoreWeave's GPU supply",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度)",
+            "label_en": "CoreWeave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "NVIDIA relies on suppliers such as Taiwan Semiconductor Manufacturing Company for semiconductor fabrication",
+            "note": "間接的な関係です。TSMCが直接供給するのはNVIDIAです。",
+            "note_en": "Indirect: TSMC supplies NVIDIA, not CoreWeave directly."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CoreWeaveのクラスターは、GPUとあわせてAMD(とIntel)のCPUを使う",
+          "text_en": "CoreWeave clusters use AMD (and Intel) CPUs alongside GPUs",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度)",
+            "label_en": "CoreWeave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "CoreWeave clusters also use cutting edge CPUs, including AMD and Intel chips",
+            "note": "一般的な製品利用の記載で、契約や数量は書かれていません。",
+            "note_en": "A generic product-use statement; no named contract or volume."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CoreWeaveのクラスターは、GPUとあわせてIntel(とAMD)のCPUを使う",
+          "text_en": "CoreWeave clusters use Intel (and AMD) CPUs alongside GPUs",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度)",
+            "label_en": "CoreWeave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "CoreWeave clusters also use cutting edge CPUs, including AMD and Intel chips",
+            "note": "一般的な製品利用の記載で、契約や数量は書かれていません。",
+            "note_en": "A generic product-use statement; no named contract or volume."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CORZ",
+      "ticker": "CORZ",
+      "name": "Core Scientific",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CoreWeaveはCore Scientificのコロケーション事業の唯一の顧客で、CoreWeaveのインフラを約590MW分ホスティング",
+          "text_en": "CoreWeave is the sole customer of Core Scientific’s Colocation segment, which hosts CoreWeave’s infrastructure (about 590 MW leased)",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "One customer, CoreWeave, currently accounts for 100% of our Colocation segment revenue."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Core Scientificは、株主が2025年10月30日に否決したためCoreWeaveとの全株式交換型の合併契約を解除",
+          "text_en": "Core Scientific terminated the all-stock merger agreement with CoreWeave after its stockholders rejected it on October 30, 2025",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K (Items 1.02, 7.01)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000095010325014006/dp236631_8k.htm",
+            "level": "official",
+            "date": "2025-10-31",
+            "quote": "Core Scientific terminated the Merger Agreement, effective immediately",
+            "note": "買収は解除され、成立していません。",
+            "note_en": "The proposed acquisition was terminated and is no longer pending."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APLD",
+      "ticker": "APLD",
+      "name": "Applied Digital",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Applied DigitalがPolaris Forge 1のデータセンター容量をCoreWeaveに貸し出し、契約分は合計400MW",
+          "text_en": "Applied Digital leases data center capacity at Polaris Forge 1 to CoreWeave, totalling 400 MW contracted",
+          "source": {
+            "label": "Applied Digital 10-K",
+            "label_en": "Applied Digital 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144879/000114487926000048/apld-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "bringing the total contracted capacity at Polaris Forge 1 under our CoreWeave leases to 400 MW"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Polaris Forgeのデータセンター賃貸に関連して、Applied DigitalがCoreWeaveにワラントを発行",
+          "text_en": "Applied Digital issued warrants to CoreWeave in connection with the Polaris Forge data center leases",
+          "source": {
+            "label": "Applied Digital 10-K",
+            "label_en": "Applied Digital 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144879/000114487926000048/apld-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "the Company issued to CoreWeave a warrant",
+            "note": "CoreWeaveはその後、ワラントの一部を第三者に譲渡しています。",
+            "note_en": "CoreWeave later assigned portions of the warrants to third parties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLXY",
+      "ticker": "GLXY",
+      "name": "Galaxy Digital",
+      "sub": "暗号資産・データセンター",
+      "sub_en": "Crypto & data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GalaxyがHelios キャンパスのデータセンター容量をCoreWeaveに貸し出している",
+          "text_en": "Galaxy leases data center capacity at its Helios campus to CoreWeave",
+          "source": {
+            "label": "Galaxy Digital 10-K(2025年度)",
+            "label_en": "Galaxy Digital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1859392/000185939226000016/glxy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have entered into lease agreements with CoreWeave for data center capacity at our Helios campus."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLZE",
+      "ticker": "BLZE",
+      "name": "Backblaze",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BackblazeがCoreWeaveのマネージドストレージ向けに、数エクサバイトの容量(約3.35億ドル・5年間)を供給することで合意",
+          "text_en": "Backblaze agreed to supply multi-exabyte storage capacity (about $335M, five years) for CoreWeave’s managed storage",
+          "source": {
+            "label": "Backblaze 8-K Exhibit 99.1 の発表",
+            "label_en": "Backblaze 8-K Exhibit 99.1 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1462056/000162828026044804/ex991backblazecoreweavepre.htm",
+            "level": "official",
+            "date": "2026-06-23",
+            "quote": "Under the multi-exabyte, $335 million agreement, Backblaze will provide cost-efficient storage capacity that supports portions of CoreWeave"
+          }
+        }
+      ]
+    },
+    {
+      "id": "000660",
+      "ticker": "SK hynix",
+      "name": "SK hynix(Solidigm)",
+      "sub": "メモリー・SSD",
+      "sub_en": "Memory & SSDs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CoreWeaveが、企業向けSSDの優先確保でSolidigmと複数年契約を締結",
+          "text_en": "CoreWeave signed a multi-year agreement with Solidigm for priority access to enterprise SSD capacity",
+          "source": {
+            "label": "CoreWeave の発表",
+            "label_en": "CoreWeave press release",
+            "url": "https://www.coreweave.com/news/coreweave-signs-multi-year-agreement-with-solidigm-to-strengthen-its-integrated-ai-cloud-platform",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "a multi-year strategic agreement with Solidigm , a pioneer in enterprise data storage",
+            "note": "相手はSK hynix傘下のSolidigmで、発表にはSK hynixの名前は出ていません。",
+            "note_en": "The counterparty is Solidigm, a subsidiary of SK hynix; the release does not name the parent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPT",
+      "ticker": "SPT",
+      "name": "Sprout Social",
+      "sub": "SNS管理ソフト",
+      "sub_en": "Social media software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CoreWeaveはSprout Socialの顧客の1社で、2026年第2四半期に取引を伸ばした。",
+          "text_en": "CoreWeave is a Sprout Social customer, and Sprout grew its business with CoreWeave in Q2 2026.",
+          "source": {
+            "label": "Sprout Social 2026年第2四半期の決算発表",
+            "label_en": "Sprout Social Q2 2026 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000056/a2q26earningsrelease.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "During the second quarter, we had the opportunity to grow with new and existing customers, including Salesforce, Cintas, MillerKnoll, Church & Dwight, Regal Cinemas, Wiley, and CoreWeave.",
+            "note": "CoreWeaveがSprout Socialのソフトを購入する側です。",
+            "note_en": "CoreWeave buys Sprout Social’s software."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Microsoftは2025年の売上の約67%を占めるCoreWeave最大の顧客",
+          "text_en": "Microsoft was CoreWeave’s top customer, accounting for about 67% of 2025 revenue",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度)",
+            "label_en": "CoreWeave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We recognized an aggregate of approximately 67% of our revenue from our top customer, Microsoft, for the year ended December 31, 2025."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Microsoft(Azure)は汎用クラウドの主な競合の1社で、競合の一部はCoreWeaveの顧客でもある。",
+          "text_en": "Microsoft (Azure) is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
+          "source": {
+            "label": "CoreWeave 10-Q(2026年第2四半期)",
+            "label_en": "CoreWeave 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Key competitors that offer general purpose cloud computing services as part of a broader, diversified product portfolio include Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle, a number of which are also our current customers.",
+            "note": "一部の企業は顧客でもある、と同じ書類に記載があります。",
+            "note_en": "The filing notes that some of these companies are also customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Metaが新たな発注書で、2032年までのクラウド容量に約210億ドルを支払うことを当初コミット",
+          "text_en": "Meta initially committed to pay CoreWeave about $21B under a new order form for cloud capacity through 2032",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K (filed 2026-04-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000154/crwv-20260331.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "Meta has initially committed to pay the Company approximately $21 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "OpenAIが、基本サービス契約に基づく発注書で、2031年5月までに最大約65億ドルを支払うことをコミット",
+          "text_en": "OpenAI committed to pay CoreWeave up to about $6.5B through May 2031 under an order form to a master services agreement",
+          "source": {
+            "label": "CoreWeave 10-Q(2026年第2四半期)",
+            "label_en": "CoreWeave 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "OpenAI committed to pay us up to approximately $6.5 billion through May 31, 2031",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CoreWeaveとOpenAI OpCoは、2025年3月7日付のStock Issuance Agreement(株式発行契約)の当事者となる",
+          "text_en": "CoreWeave and OpenAI OpCo are party to a Stock Issuance Agreement dated March 7, 2025",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度) exhibit index",
+            "label_en": "CoreWeave 10-K (FY2025) exhibit index",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Stock Issuance Agreement between CoreWeave, Inc. and OpenAI OpCo, LLC, dated March 7, 2025",
+            "note": "添付書類の一覧での言及で、契約内容はこの引用には書かれていません。",
+            "note_en": "An exhibit-index reference only; the agreement terms are not described in the quote."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Anthropicが、CoreWeaveのクラウド基盤でClaudeのワークロードを動かす複数年契約を発表",
+          "text_en": "CoreWeave announced a multi-year agreement under which Anthropic will run Claude workloads on CoreWeave’s cloud platform",
+          "source": {
+            "label": "CoreWeave の発表",
+            "label_en": "CoreWeave press release",
+            "url": "https://www.coreweave.com/news/coreweave-announces-multi-year-agreement-with-anthropic",
+            "level": "official",
+            "date": "2026-04-10",
+            "quote": "Under the agreement, Anthropic will use CoreWeave",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLOW",
+      "ticker": "Flow Traders",
+      "name": "Flow Traders",
+      "sub": "高頻度取引",
+      "sub_en": "Market making",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Flow Tradersが、AI・ディープラーニング部門の主なAIクラウド基盤としてCoreWeaveを選んだ",
+          "text_en": "Flow Traders selected CoreWeave as primary AI cloud platform provider for its AI and deep learning division",
+          "source": {
+            "label": "CoreWeave の発表",
+            "label_en": "CoreWeave press release",
+            "url": "https://www.coreweave.com/news/flow-traders-selects-coreweave-to-power-foundation-model-training-for-ai-driven-quantitative-trading",
+            "level": "official",
+            "date": "2026-07-28",
+            "quote": "Flow Traders, a leading global liquidity provider, selected CoreWeave as the primary AI cloud platform provider for its AI and deep learning division"
+          }
+        }
+      ]
+    },
+    {
+      "id": "7201",
+      "ticker": "Nissan",
+      "name": "Nissan Motor",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Nissanが、AIで実車テストを減らすMonolith(現在はCoreWeaveの一部)との戦略的提携を延長",
+          "text_en": "Nissan extended its strategic partnership with Monolith (now part of CoreWeave) using AI to reduce physical vehicle tests",
+          "source": {
+            "label": "CoreWeave ニュースルーム",
+            "label_en": "CoreWeave newsroom (Monolith release)",
+            "url": "https://www.coreweave.com/news/nissan-harnesses-power-of-ai-to-speed-up-physical-vehicle-tests-monolith",
+            "level": "official",
+            "date": "2025-11-03",
+            "quote": "Nissan and Monolith (now a part of CoreWeave) have announced a three-year extension to their strategic partnership",
+            "note": "関係はCoreWeaveが2025年11月に買収したMonolithとのものです。",
+            "note_en": "The relationship is with Monolith, acquired by CoreWeave in November 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "CrowdStrike",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CrowdStrikeが、安全なAIクラウド基盤に向けたCoreWeaveとの世界的な提携を発表",
+          "text_en": "CrowdStrike unveiled a global partnership with CoreWeave for a secure AI cloud foundation",
+          "source": {
+            "label": "CrowdStrike 8-K Exhibit 99.1",
+            "label_en": "CrowdStrike 8-K Exhibit 99.1",
+            "url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552725000030/crwd-20251202xex991.htm",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "Unveiled a global partnership with CoreWeave to power the secure AI cloud foundation for the agentic era"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "Leidos",
+      "sub": "防衛・IT",
+      "sub_en": "Defense & IT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "LeidosとCoreWeaveが、米国の国家安全保障向けの安全なソブリンAIクラウドサービスを共同で提供する",
+          "text_en": "Leidos and CoreWeave are teaming up to provide secure, sovereign AI cloud services for U.S. national security missions",
+          "source": {
+            "label": "CoreWeave/Leidos の発表",
+            "label_en": "CoreWeave/Leidos press release",
+            "url": "https://www.coreweave.com/news/leidos-and-coreweave-collaborate-to-accelerate-delivery-of-ai-capabilities-for-defense-national-security-and-intelligence-missions",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "Leidos (NYSE: LDOS), a leader in national security mission solutions, and CoreWeave (Nasdaq: CRWV), The Essential Cloud for AI TM , are teaming up to provide secure, sovereign AI cloud services",
+            "note": "協業は予定の段階として書かれています。",
+            "note_en": "The collaboration is described as intended or planned."
+          }
+        }
+      ]
+    },
+    {
+      "id": "8306",
+      "ticker": "MUFG",
+      "name": "三菱UFJフィナンシャル・グループ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "三菱UFJ銀行が、CoreWeaveの85億ドルのつなぎ型タームローン(DDTL 4.0)の管理代理人・幹事",
+          "text_en": "MUFG Bank is administrative agent and lead arranger of CoreWeave’s $8.5B DDTL 4.0 delayed draw term loan facility",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K (Item 1.01)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000129/crwv-20260330.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "with MUFG Bank, Ltd., as administrative agent, U.S. Bank Trust Company, National Association as collateral agent",
+            "note": "CoreWeave子会社への融資で、融資関係のみです。",
+            "note_en": "A lender to a CoreWeave subsidiary borrower; a financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Mitsubishi UFJ Financial Group (MUFG)"
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "Morgan Stanley",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Morgan Stanley Senior Fundingが、CoreWeaveの31億ドルのDDTL 5.0の管理代理人",
+          "text_en": "Morgan Stanley Senior Funding is administrative agent of CoreWeave’s $3.1B DDTL 5.0 facility",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K (Item 1.01)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000236/crwv-20260515.htm",
+            "level": "official",
+            "date": "2026-05-15",
+            "quote": "with Morgan Stanley Senior Funding, Inc., as administrative agent",
+            "note": "CoreWeave子会社への融資で、融資関係のみです。",
+            "note_en": "A lender to a CoreWeave subsidiary borrower; a financing relationship only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bankが、CoreWeaveの26億ドルのDDTL 5.5の管理代理人",
+          "text_en": "JPMorgan Chase Bank is administrative agent of CoreWeave’s $2.6B DDTL 5.5 facility",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K (Item 1.01)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000357/crwv-20260807.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "JPMorgan Chase Bank, N.A., as administrative agent",
+            "note": "CoreWeave子会社への融資で、融資関係のみです。",
+            "note_en": "A lender to a CoreWeave subsidiary borrower; a financing relationship only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Goldman Sachs Bank USAが、2025年7月28日付のCoreWeaveのつなぎ型タームローンの共同主幹事",
+          "text_en": "Goldman Sachs Bank USA is joint lead arranger on a CoreWeave delayed draw term loan facility dated July 28, 2025",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度) exhibit index",
+            "label_en": "CoreWeave 10-K (FY2025) exhibit index",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "MUFG Bank, Ltd. and Goldman Sachs Bank USA, as joint lead arrangers",
+            "note": "添付書類の一覧にある2025年7月のDDTL 3.0への言及です。",
+            "note_en": "An exhibit-index reference to the July 2025 DDTL 3.0 credit agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "8411",
+      "ticker": "Mizuho",
+      "name": "みずほフィナンシャルグループ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Mizuho Markets Americasが、CoreWeaveの2026年4月のキャップド・コール取引の相手方",
+          "text_en": "Mizuho Markets Americas is a counterparty to CoreWeave’s April 2026 capped call transactions",
+          "source": {
+            "label": "CoreWeave 8-K",
+            "label_en": "CoreWeave 8-K (Items 1.01, 3.02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000164/crwv-20260409.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "Mizuho Markets Americas LLC (with Mizuho Securities USA LLC acting as agent)",
+            "note": "転換社債のヘッジ取引で、相手は子会社のMizuho Markets Americas LLCです。",
+            "note_en": "A convertible-note hedge; the counterparty is the subsidiary Mizuho Markets Americas LLC."
+          }
+        }
+      ],
+      "name_en": "Mizuho Financial Group"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amazon(AWS)は、汎用クラウドでCoreWeaveと競う主要企業の1社。",
+          "text_en": "Amazon (AWS) is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
+          "source": {
+            "label": "CoreWeave 10-Q(2026年第2四半期)",
+            "label_en": "CoreWeave 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Key competitors that offer general purpose cloud computing services as part of a broader, diversified product portfolio include Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle, a number of which are also our current customers.",
+            "note": "一部の企業は顧客でもある、と同じ書類に記載があります。",
+            "note_en": "The filing notes that some of these companies are also customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "汎用クラウドでは、Alphabet(Google Cloud)もCoreWeaveの主な競合の1社に入る。",
+          "text_en": "Google (Google Cloud Platform) is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
+          "source": {
+            "label": "CoreWeave 10-Q(2026年第2四半期)",
+            "label_en": "CoreWeave 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Key competitors that offer general purpose cloud computing services as part of a broader, diversified product portfolio include Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle, a number of which are also our current customers.",
+            "note": "一部の企業は顧客でもある、と同じ書類に記載があります。",
+            "note_en": "The filing notes that some of these companies are also customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CoreWeaveの汎用クラウド分野の主な競合の1社に、Oracleがいる。",
+          "text_en": "Oracle is a key competitor of CoreWeave in general-purpose cloud computing, and some of these competitors are also CoreWeave customers.",
+          "source": {
+            "label": "CoreWeave 10-Q(2026年第2四半期)",
+            "label_en": "CoreWeave 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Key competitors that offer general purpose cloud computing services as part of a broader, diversified product portfolio include Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle, a number of which are also our current customers.",
+            "note": "一部の企業は顧客でもある、と同じ書類に記載があります。",
+            "note_en": "The filing notes that some of these companies are also customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius Group",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nebius Group(2025年度の20-F)にとって、CoreWeaveは競合の1社を成す。",
+          "text_en": "CoreWeave is one of Nebius Group's key competitors (FY2025 20-F).",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "our key competitors are specialized cloud service providers focused on AI, including CoreWeave, Crusoe and Lambda"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "IREN",
+      "sub": "AIクラウド・マイニング",
+      "sub_en": "AI cloud & mining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENは、AI特化クラウド事業者の1社であるCoreWeaveと競合する(2026年6月期、10-K)。",
+          "text_en": "IREN competes with CoreWeave among specialized AI cloud providers (FY ended June 2026).",
+          "source": {
+            "label": "IREN 10-K",
+            "label_en": "IREN 10-K (FY ended June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "as well as specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CBRS",
+      "ticker": "CBRS",
+      "name": "Cerebras Systems",
+      "sub": "AI半導体・クラウド",
+      "sub_en": "AI chips & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cerebras Systemsは、競合の1社であるCoreWeaveを抱える(2026年第2四半期、10-Q)。",
+          "text_en": "Cerebras Systems competes with AI-optimized specialized clouds such as CoreWeave (Q2 2026).",
+          "source": {
+            "label": "Cerebras 10-Q(2026年第2四半期)",
+            "label_en": "Cerebras 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2021728/000162828026056357/cbrs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "as well as AI-optimized specialized clouds such as CoreWeave, Inc. and other neo-clouds"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WYFI",
+      "ticker": "WYFI",
+      "name": "WhiteFiber",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "WhiteFiberのクラウド事業(2025年度、10-K)では、CoreWeaveが競合の1社だ。",
+          "text_en": "CoreWeave is one of WhiteFiber's primary competitors in cloud services (FY2025).",
+          "source": {
+            "label": "WhiteFiber 10-K(2025年度)",
+            "label_en": "WhiteFiber 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2042022/000121390026034341/ea0278305-10k_white.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Our primary competitors in the cloud service business are CoreWeave, Crusoe Energy, Nebius, and Lambda Labs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIFR",
+      "ticker": "CIFR",
+      "name": "Cipher Digital",
+      "sub": "データセンター・マイニング",
+      "sub_en": "Data centers & mining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cipher Digitalの属する業界(2025年度、10-K)では、CoreWeaveが競合の1社を占める。",
+          "text_en": "CoreWeave is one of Cipher Digital's competitors (FY2025).",
+          "source": {
+            "label": "Cipher Digital 10-K(2025年度)",
+            "label_en": "Cipher Digital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000009/cifr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Several companies compete in this industry, including: CoreWeave, Digital Realty, Equinix, Vantage Data Centers and Aligned Data Centers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIVE",
+      "ticker": "HIVE",
+      "name": "HIVE Digital Technologies",
+      "sub": "データセンター・マイニング",
+      "sub_en": "Data centers & mining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HIVE Digital Technologies(2026年3月期、10-K)は、競合の1社としてCoreWeaveとも競い合う。",
+          "text_en": "HIVE Digital Technologies also competes with CoreWeave (FY ended March 2026).",
+          "source": {
+            "label": "HIVE 10-K",
+            "label_en": "HIVE 10-K (FY ended March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720424/000106299326002973/form10k.htm",
+            "level": "official",
+            "date": "2026-06-02",
+            "quote": "such as Equinix, Crusoe Cloud, Applied Digital and CoreWeave"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLNH",
+      "ticker": "SLNH",
+      "name": "Soluna Holdings",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Soluna Holdings(2025年度、10-K)は、競合の1社のCoreWeaveとネオクラウド分野で競合関係にある。",
+          "text_en": "Soluna Holdings competes with neocloud companies such as CoreWeave (FY2025).",
+          "source": {
+            "label": "Soluna 10-K(2025年度)",
+            "label_en": "Soluna 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64463/000162828026021847/slnh-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "NeoCloud companies such as Crusoe, CoreWeave, Lambda, FluidStack and Nebius"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLSK",
+      "ticker": "CLSK",
+      "name": "CleanSpark",
+      "sub": "マイニング・AI基盤",
+      "sub_en": "Mining & AI infrastructure",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CoreWeaveは、CleanSpark(2025年9月期、10-K)の競合の1社に含まれる。",
+          "text_en": "CoreWeave is among CleanSpark's competitors (FY ended September 2025).",
+          "source": {
+            "label": "CleanSpark 10-K",
+            "label_en": "CleanSpark 10-K (FY ended Sept 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "These competitors include Equinix, Inc., Digital Realty Trust, Inc., and CoreWeave, Inc., among others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DGXX",
+      "ticker": "DGXX",
+      "name": "Digi Power X",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Digi Power X(2025年度、10-K)の競合の1社にも、CoreWeaveが入る。",
+          "text_en": "CoreWeave is also among Digi Power X's competitors (FY2025).",
+          "source": {
+            "label": "Digi Power X 10-K(2025年度)",
+            "label_en": "Digi Power X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1854368/000121390026037677/ea0283764-10k_digipower.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "These competitors include Equinix, Inc., Digital Realty Trust, Inc., and CoreWeave, Inc., among others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "SpaceX",
+      "sub": "宇宙・AI",
+      "sub_en": "Space & AI",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SpaceXは、CoreWeaveなどのAIクラウド事業者の競合になる可能性がある",
+          "text_en": "SpaceX may emerge as a competitor to AI cloud providers such as CoreWeave",
+          "source": {
+            "label": "SpaceX 424B4 目論見書",
+            "label_en": "SpaceX 424B4 prospectus",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm",
+            "level": "official",
+            "date": "2026-06-12",
+            "quote": "potentially positioning us to emerge as a competitor to AI cloud providers such as Coreweave and Nebius",
+            "note": "将来の競合の可能性で、目論見書によるとNasdaqに上場しています。",
+            "note_en": "A prospective competitor only; listed on Nasdaq per the prospectus."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "root": {
+    "ticker": "RGTI",
+    "name": "リゲッティ・コンピューティング",
+    "name_en": "Rigetti Computing",
+    "cik": 1838359
+  },
+  "rows": [
+    {
+      "ja": "顧客・販売先",
+      "en": "Customers & distribution"
+    },
+    {
+      "ja": "提携・出資",
+      "en": "Partnerships & investment"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GOOG",
+    "IBM",
+    "QUBT"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Amazon Web Servicesはリゲッティ・コンピューティングの提携先であり顧客でもある",
+          "text_en": "Amazon Web Services is one of Rigetti's partners and customers",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Our partners and customers include commercial enterprises such as Amazon Web Services (“AWS”) Standard Chartered Bank and Moody’s, along with U.S. government organizations such as Defense Advanced Research Projects Agency (“DARPA”),"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AmazonのBraketサービスを通じて、AWSの顧客が量子コンピュータを利用できる販売契約がある",
+          "text_en": "A distribution agreement with Amazon's Braket service gives AWS customers access to Rigetti's quantum computing systems",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We have distribution agreements with Amazon’s Braket service and Microsoft’s Azure Quantum Service, providing access to our quantum computing systems to AWS and Azure customers."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Microsoft Azureは、同社の販売経路となる顧客の一つだ",
+          "text_en": "Microsoft Azure is a customer and distribution channel for Rigetti",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We also have distribution relationships with customers like Amazon Web Services, Microsoft Azure and Strangeworks."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MicrosoftのAzure Quantum Serviceを通じて、Azureの顧客が量子コンピュータを利用できる販売契約がある",
+          "text_en": "A distribution agreement with Microsoft's Azure Quantum Service gives Azure customers access to Rigetti's quantum computing systems",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We have distribution agreements with Amazon’s Braket service and Microsoft’s Azure Quantum Service, providing access to our quantum computing systems to AWS and Azure customers."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "MCO",
+      "ticker": "MCO",
+      "name": "ムーディーズ",
+      "sub": "格付け・金融情報",
+      "sub_en": "Ratings & financial data",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Moody’sは提携先かつ顧客の関係にある",
+          "text_en": "Moody’s is one of Rigetti's partners and customers",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Our partners and customers include commercial enterprises such as Amazon Web Services (“AWS”) Standard Chartered Bank and Moody’s, along with U.S. government organizations such as Defense Advanced Research Projects Agency (“DARPA”), Department of Energy (“DOE”), and Air Force Research Laboratory"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "金融分野でMoody’sと協業している",
+          "text_en": "Rigetti is collaborating with Moody’s in finance",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We are pursuing similar arrangements with customers in other important vertical market segments, like finance, where we are developing specific expertise in several application areas and are collaborating with Moody’s, HSBC and Standard Chartered Bank."
+          }
+        }
+      ],
+      "name_en": "Moody’s"
+    },
+    {
+      "id": "STAN",
+      "ticker": "Standard Chartered",
+      "name": "スタンダードチャータード",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Standard Chartered Bankは提携先と顧客を兼ねる",
+          "text_en": "Standard Chartered Bank is one of Rigetti's partners and customers",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Our partners and customers include commercial enterprises such as Amazon Web Services (“AWS”) Standard Chartered Bank and Moody’s, along with U.S. government organizations such as Defense Advanced Research Projects Agency (“DARPA”),"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "金融分野でStandard Chartered Bankと協業している",
+          "text_en": "Rigetti is collaborating with Standard Chartered Bank in finance",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We are pursuing similar arrangements with customers in other important vertical market segments, like finance, where we are developing specific expertise in several application areas and are collaborating with Moody’s, HSBC and Standard Chartered Bank."
+          }
+        }
+      ],
+      "name_en": "Standard Chartered"
+    },
+    {
+      "id": "HSBC",
+      "ticker": "HSBC",
+      "name": "HSBC",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "金融分野でHSBCと協業している",
+          "text_en": "Rigetti is collaborating with HSBC in finance",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We are pursuing similar arrangements with customers in other important vertical market segments, like finance, where we are developing specific expertise in several application areas and are collaborating with Moody’s, HSBC and Standard Chartered Bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QUANTA",
+      "ticker": "Quanta",
+      "name": "クアンタ・コンピュータ",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Collaboration Agreementに関連して、Quantaが2025年4月に約3,500万ドル分の普通株を1株約11.59ドルで購入した",
+          "text_en": "In connection with the Collaboration Agreement, Quanta purchased approximately $35 million of common stock in April 2025 at approximately $11.59 per share",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Further, in connection with the Collaboration Agreement, in April 2025 Quanta purchased approximately $35 million of shares of Common Stock at approximately $11.59 per share, pursuant to a securities purchase agreement."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "購入した株式には、終了後3年間の売却禁止条項が付いている",
+          "text_en": "The shares are subject to a lock-up prohibiting sale for three years following the closing",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "The securities purchase agreement also contains a lock-up provision prohibiting Quanta from selling any of the shares of the Company’s Common Stock acquired in the securities purchase agreement for a three year period following the closing of the private placement transaction."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Quanta Computerはパートナーの1社として、Rigettiのエコシステムを支える",
+          "text_en": "Quanta Computer is one of Rigetti's ecosystem partners",
+          "source": {
+            "label": "Rigetti Computing 8-K Ex.99 の発表",
+            "label_en": "Rigetti Computing 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023446/rgti-20260304xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "“Our chiplet-based approach provides a practical and scalable path toward large-scale quantum systems, while our ecosystem of partners, including Riverlane, NVIDIA, Quanta Computer, and QphoX, allows us to innovate across the stack."
+          }
+        }
+      ],
+      "name_en": "Quanta Computer"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "ITインフラ",
+      "sub_en": "IT infrastructure",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "量子対応の高性能計算システムの商用化に向け、HPEと戦略的に協業している",
+          "text_en": "Rigetti has a strategic collaboration with HPE to advance commercialization of quantum-enabled high-performance computing systems",
+          "source": {
+            "label": "Rigetti Computing 8-K Ex.99 の発表",
+            "label_en": "Rigetti Computing 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926091979/rgti-20260806xex99d1.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "The deployment builds on Rigetti’s strategic collaboration with HPE to advance the commercialization of quantum-enabled high-performance computing systems."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "HPEおよびPittsburgh Supercomputing Centerとの協業を拡大し、量子と従来型のハイブリッドスーパーコンピュータを開発する",
+          "text_en": "Rigetti expanded its collaboration with HPE and the Pittsburgh Supercomputing Center to develop a hybrid quantum-classical supercomputer",
+          "source": {
+            "label": "Rigetti Computing 8-K Ex.99 の発表",
+            "label_en": "Rigetti Computing 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926091979/rgti-20260806xex99d1.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "“Our recently announced expanded collaboration with Hewlett Packard Enterprise Company (HPE) and the Pittsburgh Supercomputing Center to develop a hybrid quantum-classical supercomputer reflects growing demand for our approach and positions Rigetti to deliver differentiated quantum-enhanced high-performance computing (HPC) solutions.”"
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIAはパートナー1社として同社のエコシステムに加わる",
+          "text_en": "NVIDIA is one of Rigetti's ecosystem partners",
+          "source": {
+            "label": "Rigetti Computing 8-K Ex.99 の発表",
+            "label_en": "Rigetti Computing 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023446/rgti-20260304xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "“Our chiplet-based approach provides a practical and scalable path toward large-scale quantum systems, while our ecosystem of partners, including Riverlane, NVIDIA, Quanta Computer, and QphoX, allows us to innovate across the stack."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QUBT",
+      "ticker": "QUBT",
+      "name": "クアンタム・コンピューティング",
+      "sub": "量子コンピュータ",
+      "sub_en": "Quantum computing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リゲッティ・コンピューティングと競合する",
+          "text_en": "Competes with Rigetti Computing",
+          "source": {
+            "label": "Quantum Computing Inc. 10-K",
+            "label_en": "Quantum Computing Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "public and private companies with competing technology, including IonQ, Rigetti Computing, PsiQuantum, Infleqtion, Xanadu and D-Wave"
+          }
+        }
+      ],
+      "name_en": "Quantum Computing Inc."
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(Google)",
+      "sub": "ネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リゲッティ・コンピューティングと競合する",
+          "text_en": "Competes with Rigetti Computing",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "● large, well-established tech companies that generally compete across our products, including Google, Microsoft, Amazon and IBM;"
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・量子",
+      "sub_en": "IT services & quantum",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リゲッティ・コンピューティングと競合する",
+          "text_en": "Competes with Rigetti Computing",
+          "source": {
+            "label": "Rigetti Computing 10-K",
+            "label_en": "Rigetti Computing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "● large, well-established tech companies that generally compete across our products, including Google, Microsoft, Amazon and IBM;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

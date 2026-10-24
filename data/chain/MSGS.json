@@ -1,0 +1,179 @@
+{
+  "root": {
+    "ticker": "MSGS",
+    "name": "マディソン・スクエア・ガーデン・スポーツ",
+    "cik": 1636519,
+    "name_en": "Madison Square Garden Sports"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MSGE",
+      "ticker": "MSGE",
+      "name": "MSGエンターテインメント",
+      "sub": "ライブ興行・会場",
+      "sub_en": "Live venues",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニックスとレンジャーズの本拠地アリーナを、アリーナ使用契約に基づき利用している",
+          "text_en": "The Knicks and the Rangers play at Madison Square Garden under Arena License Agreements with MSG Entertainment",
+          "source": {
+            "label": "マディソン・スクエア・ガーデン・スポーツ 10-K(June 30, 2026)",
+            "label_en": "Madison Square Garden Sports 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Madison Square Garden, The World’s Most Famous Arena, is the home for the Knicks and the Rangers pursuant to Arena License Agreements with MSG Entertainment."
+          }
+        }
+      ],
+      "name_en": "Madison Square Garden Entertainment"
+    },
+    {
+      "id": "SPHR",
+      "ticker": "SPHR",
+      "name": "スフィア・エンターテインメント",
+      "sub": "メディア・会場",
+      "sub_en": "Media & venues",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社MSGネットワークスに、ニックスとレンジャーズの地元放送権を与えている",
+          "text_en": "Licenses local telecast rights for the Knicks and the Rangers to MSG Networks, a Sphere Entertainment subsidiary",
+          "source": {
+            "label": "マディソン・スクエア・ガーデン・スポーツ 10-K(June 30, 2026)",
+            "label_en": "Madison Square Garden Sports 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "We have various agreements with Sphere Entertainment, including local telecast rights agreements with MSG Networks (a wholly-owned subsidiary of Sphere Entertainment) which provide MSG Networks with exclusive local linear and digital rights to home and away games of the Knicks and the Rangers, as well as other team-related programming."
+          }
+        }
+      ],
+      "name_en": "Sphere Entertainment"
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ウォルト・ディズニー",
+      "sub": "メディア・放映権",
+      "sub_en": "Media & broadcast rights",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NBAの放映権契約の相手先で、同社はリーグを通じた分配金を受け取る",
+          "text_en": "Party to the NBA media rights agreements, from which the Company receives a pro-rata share of fees",
+          "source": {
+            "label": "マディソン・スクエア・ガーデン・スポーツ 10-K(June 30, 2026)",
+            "label_en": "Madison Square Garden Sports 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "The Company receives a pro-rata share of fees related to the NBA’s and NHL’s national and international media rights agreements, which provide a significant recurring revenue stream for the Company. The NBA’s agreements with The Walt Disney Company, NBCUniversal and Amazon, which took effect starting with the 2025-26 season, will expire following the 2035-36 season."
+          }
+        },
+        {
+          "type": "down",
+          "text": "NHLの米国向け全国放映権契約の相手先でもある",
+          "text_en": "Also party to the NHL's U.S. national media rights agreements",
+          "source": {
+            "label": "マディソン・スクエア・ガーデン・スポーツ 10-K(June 30, 2026)",
+            "label_en": "Madison Square Garden Sports 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "The NHL’s U.S. national media rights agreements with The Walt Disney Company and WarnerMedia, LLC will expire following the 2027-28 season."
+          }
+        }
+      ],
+      "name_en": "The Walt Disney Company"
+    },
+    {
+      "id": "NBCU",
+      "ticker": "NBCUniversal",
+      "name": "NBCユニバーサル",
+      "sub": "メディア・放映権",
+      "sub_en": "Media & broadcast rights",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NBAの放映権契約の相手先で、同社はリーグを通じた分配金を受け取る",
+          "text_en": "Party to the NBA media rights agreements, from which the Company receives a pro-rata share of fees",
+          "source": {
+            "label": "マディソン・スクエア・ガーデン・スポーツ 10-K(June 30, 2026)",
+            "label_en": "Madison Square Garden Sports 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "The Company receives a pro-rata share of fees related to the NBA’s and NHL’s national and international media rights agreements, which provide a significant recurring revenue stream for the Company. The NBA’s agreements with The Walt Disney Company, NBCUniversal and Amazon, which took effect starting with the 2025-26 season, will expire following the 2035-36 season."
+          }
+        }
+      ],
+      "name_en": "NBCUniversal"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "配信・放映権",
+      "sub_en": "Streaming & broadcast rights",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NBAの放映権契約の相手先で、同社はリーグを通じた分配金を受け取る",
+          "text_en": "Party to the NBA media rights agreements, from which the Company receives a pro-rata share of fees",
+          "source": {
+            "label": "マディソン・スクエア・ガーデン・スポーツ 10-K(June 30, 2026)",
+            "label_en": "Madison Square Garden Sports 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "The Company receives a pro-rata share of fees related to the NBA’s and NHL’s national and international media rights agreements, which provide a significant recurring revenue stream for the Company. The NBA’s agreements with The Walt Disney Company, NBCUniversal and Amazon, which took effect starting with the 2025-26 season, will expire following the 2035-36 season."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "WARNER",
+      "ticker": "WarnerMedia",
+      "name": "ワーナーメディア",
+      "sub": "メディア・放映権",
+      "sub_en": "Media & broadcast rights",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NHLの米国向け全国放映権契約の相手先である",
+          "text_en": "Party to the NHL's U.S. national media rights agreements",
+          "source": {
+            "label": "マディソン・スクエア・ガーデン・スポーツ 10-K(June 30, 2026)",
+            "label_en": "Madison Square Garden Sports 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "The NHL’s U.S. national media rights agreements with The Walt Disney Company and WarnerMedia, LLC will expire following the 2027-28 season."
+          }
+        }
+      ],
+      "name_en": "WarnerMedia"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

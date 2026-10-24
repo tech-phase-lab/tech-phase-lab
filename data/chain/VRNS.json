@@ -1,0 +1,352 @@
+{
+  "root": {
+    "ticker": "VRNS",
+    "name": "Varonis",
+    "cik": 1361113
+  },
+  "rows": [
+    {
+      "ja": "連携先",
+      "en": "Integrations & partners"
+    },
+    {
+      "ja": "買収の合意",
+      "en": "Pending acquisition"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MicrosoftのPurviewのData Security Posture Managementは、Varonisなどのパートナーソリューションと連携する",
+          "text_en": "Microsoft's Purview Data Security Posture Management integrates with partner solutions such as Varonis.",
+          "source": {
+            "label": "Microsoft · Purview Data Security Posture Management",
+            "label_en": "Microsoft · Purview Data Security Posture Management",
+            "url": "https://learn.microsoft.com/en-us/purview/data-security-posture-management-learn-about",
+            "level": "official",
+            "quote": "This version of Data Security Posture Management extends coverage to third-party SaaS and IaaS platforms, such as Google Cloud Platform, Snowflake, and Databricks, and integrates with partner solutions such as Varonis, Cyera, BigID, and OneTrust for comprehensive risk insights."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Varonisの顧客は、Exchange OnlineとMicrosoft 365 Copilot向けの追加サポートを購入できる",
+          "text_en": "Varonis customers can purchase add-on support for Exchange Online and Microsoft 365 Copilot",
+          "source": {
+            "label": "Varonis Systems 10-K",
+            "label_en": "Varonis Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000162828026005450/vrns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Customers can purchase add-on support for Exchange Online, Microsoft 365 Copilot and ChatGPT Enterprise."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Microsoftとの戦略的パートナーシップを発表し、次世代の職場向けAIの保護に向けてエンジニアリング面の統合を深めた",
+          "text_en": "It announced a strategic partnership with Microsoft, deepening the engineering integration between the Varonis Data Security Platform and Microsoft's security portfolio",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184325004781/exh_991.htm",
+            "level": "official",
+            "date": "2025-07-29",
+            "quote": "Announced a strategic partnership with Microsoft to help secure the next generation of workplace AI by deepening the engineering integration between the Varonis Data Security Platform and Microsoft’s security portfolio."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Microsoft PurviewのDSPMとの連携を開始した",
+          "text_en": "It launched a Microsoft Purview DSPM integration",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184326000602/exh_991.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Launched Microsoft Purview DSPM integration to help organizations see and understand their critical data across third-party platforms alongside their Microsoft data."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Microsoft 365 Copilotを安全に活用するため、Microsoftとの戦略的協業を発表した",
+          "text_en": "It announced a strategic collaboration with Microsoft for Microsoft Copilot for Microsoft 365",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184324000594/exh_991.htm",
+            "level": "official",
+            "date": "2024-02-05",
+            "quote": "Announced a strategic collaboration with Microsoft to help companies safely harness the power of AI with Microsoft Copilot for Microsoft 365.",
+            "note": "2024年の発表で、古い情報です。",
+            "note_en": "Announced in 2024 (older)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "VaronisのプラットフォームをMicrosoft Defender for Endpointと統合した",
+          "text_en": "It integrated the Varonis platform with Microsoft Defender for Endpoint",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184324005856/exh_991.htm",
+            "level": "official",
+            "date": "2024-10-29",
+            "quote": "Integrated the Varonis platform with SentinelOne and Microsoft Defender for Endpoint, expanding visibility to customers' endpoints and enabling end-to-end threat detection and response.",
+            "note": "2024年の発表で、古い情報です。",
+            "note_en": "Announced in 2024 (older)."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "ビジネスソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Varonisの保護対象リソースにSalesforceが含まれている",
+          "text_en": "Salesforce is among the resources protected by Varonis",
+          "source": {
+            "label": "Varonis Systems 10-K",
+            "label_en": "Varonis Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000162828026005450/vrns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "The protected resources currently include Salesforce, AWS, Azure, Google Cloud, Google Workspace, Databricks, ServiceNow, Snowflake, Confluence, Slack, GitHub, Okta, Box, Jira, Zoom and databases.",
+            "note": "保護対象の列挙に含まれるものです。",
+            "note_en": "Listed among protected resources."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Salesforce Agentforce向けのAIアイデンティティ保護を発表した",
+          "text_en": "It announced AI identity protection for Salesforce Agentforce",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184325006721/exh_991.htm",
+            "level": "official",
+            "date": "2025-10-28",
+            "quote": "Announced AI identity protection for Salesforce Agentforce, providing IT and security teams with visibility and control over the data that AI agents create and access with Agentforce."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VaronisはAnthropicのClaude Enterprise、Claude Platform、Claude Code、Claude Coworkとの連携を深めた",
+          "text_en": "Varonis deepened its integration with Anthropic's Claude Enterprise, Claude Platform, Claude Code and Claude Cowork",
+          "source": {
+            "label": "July 28, 2026 · SaaS transition and quarterly results",
+            "label_en": "July 28, 2026 · SaaS transition and quarterly results",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184326004948/exh_991.htm",
+            "level": "official",
+            "quote": "Deepened integration with Anthropic’s Claude Enterprise and Claude Platform as well as Claude Code and Claude Cowork, enabling security teams to secure and govern the entire Claude enterprise suite with the Varonis Atlas AI Security Platform.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AWS Security Hubとの連携を発表した",
+          "text_en": "It announced an integration with AWS Security Hub",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184326000602/exh_991.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Announced integration with AWS Security Hub to provide security teams with advanced visibility, automated fixes, and proactive threat detection."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Google Cloudのストレージとデータウェアハウスへ、IaaS向けセキュリティの対応範囲を広げた",
+          "text_en": "It expanded IaaS security coverage to Google Cloud storage and data warehouses",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184325000613/exh_991.htm",
+            "level": "official",
+            "date": "2025-02-04",
+            "quote": "Announced expansion of IaaS security coverage to Google Cloud, bringing the company's proven data-centric approach to Google Cloud storage and data warehouses."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ServiceNow内のデータの分類とリスク対応に、対応範囲を広げた",
+          "text_en": "It broadened coverage to classify data and resolve data risk and overexposure within ServiceNow",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184325000613/exh_991.htm",
+            "level": "official",
+            "date": "2025-02-04",
+            "quote": "Broadened coverage to continuously discover and classify data and resolve issues related to data risk and overexposure within ServiceNow."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "スノーフレイク",
+      "sub": "データ基盤",
+      "sub_en": "Data cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Snowflakeのデータウェアハウスとデータベース向けに、対応範囲を広げた",
+          "text_en": "It expanded its SaaS offering with coverage for Snowflake data warehouses and databases",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184324000594/exh_991.htm",
+            "level": "official",
+            "date": "2024-02-05",
+            "quote": "Expanded our SaaS offering with coverage for Snowflake, which allows customers to continuously discover and classify critical data, remove exposures, and detect threats to Snowflake data warehouses and databases.",
+            "note": "2024年の発表で、古い情報です。",
+            "note_en": "Announced in 2024 (older)."
+          }
+        }
+      ],
+      "name_en": "Snowflake"
+    },
+    {
+      "id": "S",
+      "ticker": "S",
+      "name": "センチネルワン",
+      "sub": "サイバーセキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VaronisのプラットフォームをSentinelOneと統合した",
+          "text_en": "It integrated the Varonis platform with SentinelOne",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184324005856/exh_991.htm",
+            "level": "official",
+            "date": "2024-10-29",
+            "quote": "Integrated the Varonis platform with SentinelOne and Microsoft Defender for Endpoint, expanding visibility to customers' endpoints and enabling end-to-end threat detection and response.",
+            "note": "2024年の発表で、古い情報です。",
+            "note_en": "Announced in 2024 (older)."
+          }
+        }
+      ],
+      "name_en": "SentinelOne"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenAIのChatGPT Enterprise向けの保護機能を発表した",
+          "text_en": "It announced protection for OpenAI's ChatGPT Enterprise",
+          "source": {
+            "label": "Varonis quarterly results の発表",
+            "label_en": "Varonis quarterly results press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000117184325004781/exh_991.htm",
+            "level": "official",
+            "date": "2025-07-29",
+            "quote": "Announced protection for OpenAI’s ChatGPT Enterprise to help customers automatically identify sensitive data uploads, monitor prompts and responses, and prevent breaches and compliance violations.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Proofpoint",
+      "ticker": "Proofpoint",
+      "name": "Proofpoint",
+      "sub": "セキュリティ",
+      "sub_en": "Security software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Varonisは2026年10月15日、Proofpointとの合併契約に署名した（買収の合意）",
+          "text_en": "Varonis signed a merger agreement with Proofpoint on October 15, 2026 (an agreement to be acquired)",
+          "source": {
+            "label": "Varonis Form 8-K",
+            "label_en": "Varonis Form 8-K (merger agreement)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361113/000121390026109901/ea0308610-8k_varonis.htm",
+            "level": "official",
+            "date": "2026-10-15",
+            "quote": "Varonis Systems, Inc., a Delaware corporation (the “Company”), entered into an Agreement and Plan of Merger (the “Merger Agreement”) with Proofpoint, Inc., a Delaware corporation (“Parent”)",
+            "note": "Proofpointは未上場です。買収は完了前です。",
+            "note_en": "Proofpoint is not listed. The deal has not closed."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

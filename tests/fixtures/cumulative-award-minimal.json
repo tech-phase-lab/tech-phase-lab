@@ -1,0 +1,113 @@
+{
+  "kind": "synthetic-minimal-reproducer",
+  "description": "Fictional issuer, source, amounts and copy. Exercises the same cumulative-total grammar and rejection boundary; not an export or hash of any retained article. Actual source/UI proof stays outside the repository.",
+  "title": "Acme scholarship programme update",
+  "body": "Acme and Community Foundation celebrated the graduation of 12 students in the programme’s third graduating class.\nVolunteers have contributed over 800 hours to the scholarship programme.\nThe programme has awarded over $90,000 in scholarships to qualifying graduates.\nThrough its Scholarship Programme, the company has provided comprehensive bursaries totaling $4.2 million to more than 120 beneficiaries pursuing Bachelor's degrees in Science and Arts since 2022 to date. These bursaries cover tuition, accommodation and monthly stipends.\nAcme aims to support local engineering education and career readiness.",
+  "bodySha": "758fcd3139fb0839612d9007fd6917936aee6928111bcb3092fd0e1797fef8d8",
+  "notes": {
+    "saved": {
+      "title": {
+        "ja": "Acmeが奨学金プログラムの卒業を報告",
+        "en": "Acme reports scholarship programme graduation",
+        "evidenceRange": [
+          0,
+          113
+        ]
+      },
+      "summary": {
+        "ja": "AcmeとCommunity Foundationは12名の卒業を祝った。",
+        "en": "Acme and Community Foundation celebrated the graduation of 12 students.",
+        "evidenceRange": [
+          0,
+          113
+        ]
+      },
+      "facts": [
+        {
+          "ja": "プログラムは卒業生に9万ドル超の奨学金を授与した。",
+          "en": "The programme awarded over $90,000 in scholarships to qualifying graduates.",
+          "evidenceRange": [
+            187,
+            266
+          ]
+        },
+        {
+          "ja": "ボランティアは800時間超を貢献した。",
+          "en": "Volunteers contributed over 800 hours.",
+          "evidenceRange": [
+            114,
+            186
+          ]
+        },
+        {
+          "ja": "Acmeは2022年以降、サイエンスや芸術の学士課程学生120名超に合計420万ドルの奨学金を提供し、学費や生活費の負担軽減を支援している。",
+          "en": "Since 2022, Acme has provided $4.2 million in bursaries to over 120 students pursuing bachelor's degrees in Science and Arts, covering tuition and living expenses.",
+          "evidenceRange": [
+            267,
+            538
+          ]
+        }
+      ],
+      "purpose": {
+        "ja": "Acmeは地元の工学教育とキャリア準備を支援することを目指している。",
+        "en": "Acme aims to support local engineering education and career readiness.",
+        "evidenceRange": [
+          539,
+          609
+        ]
+      }
+    },
+    "failed": {
+      "title": {
+        "ja": "Acmeが第3回卒業式を開催",
+        "en": "Acme celebrates its third graduation",
+        "evidenceRange": [
+          0,
+          113
+        ]
+      },
+      "summary": {
+        "ja": "AcmeとCommunity Foundationは12名の卒業を祝った。",
+        "en": "Acme and Community Foundation celebrated the graduation of 12 students.",
+        "evidenceRange": [
+          0,
+          113
+        ]
+      },
+      "facts": [
+        {
+          "ja": "プログラムは卒業生に9万ドル超の奨学金を授与した。",
+          "en": "The programme awarded over $90,000 in scholarships to qualifying graduates.",
+          "evidenceRange": [
+            187,
+            266
+          ]
+        },
+        {
+          "ja": "ボランティアは800時間以上を貢献した。",
+          "en": "Volunteers contributed over 800 hours.",
+          "evidenceRange": [
+            114,
+            186
+          ]
+        },
+        {
+          "ja": "Acmeは2022年以降、サイエンスや芸術の学士課程学生120名超に合計420万ドルの奨学金を提供し、学費や生活費の負担軽減を支援している。",
+          "en": "Since 2022, Acme has provided $4.2 million in bursaries to over 120 students pursuing bachelor's degrees in Science and Arts, covering tuition and living expenses.",
+          "evidenceRange": [
+            267,
+            538
+          ]
+        }
+      ],
+      "purpose": {
+        "ja": "Acmeは地元の工学教育とキャリア準備を支援することを目指している。",
+        "en": "Acme aims to support local engineering education and career readiness.",
+        "evidenceRange": [
+          539,
+          609
+        ]
+      }
+    }
+  }
+}

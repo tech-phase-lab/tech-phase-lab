@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "PRU",
+    "name": "プルデンシャル・ファイナンシャル",
+    "cik": 1137774,
+    "name_en": "Prudential Financial"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PRISMIC",
+      "ticker": "Prismic Life",
+      "name": "プリズミック・ライフ・リインシュアランス",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウォーバーグ・ピンカスなどと2023年9月に立ち上げた再保険会社である",
+          "text_en": "A reinsurer launched in September 2023 together with Warburg Pincus and a group of institutional investors",
+          "source": {
+            "label": "Prudential Financial 10-K(2025)",
+            "label_en": "Prudential Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137774/000113777426000048/pru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In September 2023, we, together with Warburg Pincus and a group of institutional investors, launched Prismic Life Reinsurance, Ltd."
+          }
+        }
+      ],
+      "name_en": "Prismic Life Reinsurance"
+    },
+    {
+      "id": "WILTON",
+      "ticker": "Wilton Reassurance",
+      "name": "ウィルトン・リアシュアランス",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月に保証付き ユニバーサル生命保険の再保険契約を結んだ",
+          "text_en": "Entered into an agreement in August 2024 to reinsure certain guaranteed universal life policies",
+          "source": {
+            "label": "Prudential Financial 10-K(2025)",
+            "label_en": "Prudential Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137774/000113777426000048/pru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In August 2024, the Company entered into an agreement with Wilton Reassurance Company and Wilton Reinsurance Bermuda Limited (collectively, “Wilton Re”) to reinsure certain guaranteed universal life policies"
+          }
+        }
+      ],
+      "name_en": "Wilton Reassurance"
+    },
+    {
+      "id": "SOMERSET",
+      "ticker": "Somerset",
+      "name": "サマセット・リインシュアランス",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年第1四半期に再保険取引を完了した",
+          "text_en": "Closed a reinsurance transaction in the first quarter of 2024",
+          "source": {
+            "label": "Prudential Financial 10-K(2025)",
+            "label_en": "Prudential Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137774/000113777426000048/pru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "following the close of the reinsurance transaction with Somerset Reinsurance Ltd. (“Somerset Re”) in the first quarter of 2024."
+          }
+        }
+      ],
+      "name_en": "Somerset Reinsurance"
+    },
+    {
+      "id": "HIG",
+      "ticker": "HIG",
+      "name": "ハートフォード",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年に個人生命保険事業を買収した相手である",
+          "text_en": "Prudential acquired its individual life insurance business in 2013",
+          "source": {
+            "label": "Prudential Financial 10-K(2025)",
+            "label_en": "Prudential Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137774/000113777426000048/pru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also use assumed reinsurance in connection with our 2013 acquisition of The Hartford’s individual life insurance business."
+          }
+        }
+      ],
+      "name_en": "The Hartford"
+    },
+    {
+      "id": "ALL",
+      "ticker": "ALL",
+      "name": "オールステート",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2006年に変額年金事業を買収した相手である",
+          "text_en": "Prudential acquired its variable annuity business in 2006",
+          "source": {
+            "label": "Prudential Financial 10-K(2025)",
+            "label_en": "Prudential Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137774/000113777426000048/pru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also use assumed reinsurance in connection with our 2006 acquisition of The Allstate Corporation (“Allstate”) variable annuity business"
+          }
+        }
+      ],
+      "name_en": "The Allstate Corporation"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

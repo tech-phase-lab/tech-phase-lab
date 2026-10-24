@@ -1,0 +1,324 @@
+{
+  "root": {
+    "ticker": "RKLB",
+    "name": "ロケット・ラボ",
+    "name_en": "Rocket Lab",
+    "cik": 1819994
+  },
+  "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・買収・資金調達",
+      "en": "Partnerships, acquisition & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SPCX",
+    "NOC",
+    "RDW",
+    "HON"
+  ],
+  "companies": [
+    {
+      "id": "PL",
+      "ticker": "PL",
+      "name": "Planet Labs",
+      "sub": "地球観測衛星",
+      "sub_en": "Earth observation satellites",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Rocket Labは、Planet Labsの衛星を打ち上げられる限られた事業者の1社",
+          "text_en": "Rocket Lab is one of a limited number of suppliers able to launch Planet Labs' satellites.",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "There are also a limited number of suppliers able to launch our satellites, including ArianeSpace SA, Blue Origin, LLC, Firefly Aerospace Inc., ISAR Aerospace Technologies Inc., Mitsubishi Heavy Industries, Ltd., NewSpace India Limited (Indian Space Research Organization), Rocket Lab USA Inc., Space Exploration Technologies Corp.",
+            "note": "打ち上げ事業者の一覧への記載です。",
+            "note_en": "Listed among launch providers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IRDM",
+      "ticker": "IRDM",
+      "name": "イリジウム・コミュニケーションズ",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rocket Labが会計上の取得会社、Iridiumが被取得会社とされている",
+          "text_en": "Rocket Lab is the accounting acquirer and Iridium is the accounting acquiree",
+          "source": {
+            "label": "Rocket Lab 8-K Ex.99 の発表",
+            "label_en": "Rocket Lab 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000175392626001454/g085841_ex99-3.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Company is the “accounting acquirer” and Iridium is the “accounting acquiree”.",
+            "note": "会計上の位置づけを示す記載です。",
+            "note_en": "Describes the accounting treatment."
+          }
+        }
+      ],
+      "name_en": "Iridium Communications"
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTX(レイセオン)",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Golden Dome for Americaの宇宙配備型迎撃機計画で、Raytheonと組んで選定された",
+          "text_en": "Selected to support the Space Based Interceptor program under Golden Dome for America in partnership with Raytheon",
+          "source": {
+            "label": "Rocket Lab 8-K Ex.99 の発表",
+            "label_en": "Rocket Lab 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000027/rklb-05072026ex991.htm",
+            "level": "official",
+            "date": "2026-05-07",
+            "quote": "electric propulsion system, have been selected to support the Department of War’s Space Based Interceptor program under Golden Dome for America in partnership with Raytheon, and expanded our leading role in hypersonic test launch with a record contract under the MACH-TB program.",
+            "note": "Raytheonは子会社レベルでの記載です。",
+            "note_en": "Named at the Raytheon subsidiary level."
+          }
+        }
+      ],
+      "name_en": "RTX (Raytheon)"
+    },
+    {
+      "id": "BKSY",
+      "ticker": "BKSY",
+      "name": "BlackSky Technology",
+      "sub": "地球観測衛星",
+      "sub_en": "Earth observation satellites",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackSkyとRocket Labの間に、2023年11月3日付の劣後ローン契約がある",
+          "text_en": "A Subordinated Loan and Security Agreement dated November 3, 2023 is between BlackSky and Rocket Lab USA",
+          "source": {
+            "label": "BlackSky Technology 10-K",
+            "label_en": "BlackSky Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Subordinated Loan and Security Agreement, dated November 3, 2023, by and between BlackSky Technology Inc. and the subsidiaries named therein and Rocket Lab USA, Inc.",
+            "note": "2023年の契約です。",
+            "note_en": "Agreement dated 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Deutsche Bank SecuritiesとWells Fargo Securitiesとの間でエクイティ・ディストリビューション契約を結んでいる",
+          "text_en": "Rocket Lab has an equity distribution agreement with Deutsche Bank Securities and Wells Fargo Securities",
+          "source": {
+            "label": "Rocket Lab 8-K Ex.99 の発表",
+            "label_en": "Rocket Lab 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000175392626001463/g085846_ex99-1.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "agreement with Deutsche Bank Securities Inc. and Wells Fargo Securities, LLC (the “equity distribution agreement”)",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Deutsche Bank AG New York Branchなどとの間でコミットメントレターを結んでいる",
+          "text_en": "Rocket Lab entered into a commitment letter with Deutsche Bank AG New York Branch and others",
+          "source": {
+            "label": "Rocket Lab 8-K Ex.99 の発表",
+            "label_en": "Rocket Lab 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000175392626001454/g085841_ex99-3.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Agreement, Rocket Lab entered into a commitment letter with Deutsche Bank AG New York Branch, Deutsche Bank Securities Inc., Wells Fargo"
+          }
+        }
+      ],
+      "name_en": "Wells Fargo"
+    },
+    {
+      "id": "DB",
+      "ticker": "DB",
+      "name": "ドイツ銀行",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Deutsche Bank SecuritiesとWells Fargo Securitiesとの間でエクイティ・ディストリビューション契約を結んでいる",
+          "text_en": "Rocket Lab has an equity distribution agreement with Deutsche Bank Securities and Wells Fargo Securities",
+          "source": {
+            "label": "Rocket Lab 8-K Ex.99 の発表",
+            "label_en": "Rocket Lab 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000175392626001463/g085846_ex99-1.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "agreement with Deutsche Bank Securities Inc. and Wells Fargo Securities, LLC (the “equity distribution agreement”)",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Deutsche Bank AG New York Branchなどとの間でコミットメントレターを結んでいる",
+          "text_en": "Rocket Lab entered into a commitment letter with Deutsche Bank AG New York Branch and others",
+          "source": {
+            "label": "Rocket Lab 8-K Ex.99 の発表",
+            "label_en": "Rocket Lab 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000175392626001454/g085841_ex99-3.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Agreement, Rocket Lab entered into a commitment letter with Deutsche Bank AG New York Branch, Deutsche Bank Securities Inc., Wells Fargo"
+          }
+        }
+      ],
+      "name_en": "Deutsche Bank"
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "スペースX",
+      "sub": "打ち上げ",
+      "sub_en": "Launch",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
+          "source": {
+            "label": "Rocket Lab 10-K",
+            "label_en": "Rocket Lab 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "providing dedicated and rideshare launch vehicles to deliver payloads to generic and custom planes/inclinations and altitude trajectories, such as Northrop Grumman, SpaceX, United Launch Alliance (a joint venture between Lockheed Martin Corporation and The Boeing Company), Firefly, Blue Origin, and established Russian, Indian, Chinese,"
+          }
+        }
+      ],
+      "name_en": "SpaceX"
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
+          "source": {
+            "label": "Rocket Lab 10-K",
+            "label_en": "Rocket Lab 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "providing dedicated and rideshare launch vehicles to deliver payloads to generic and custom planes/inclinations and altitude trajectories, such as Northrop Grumman, SpaceX, United Launch Alliance (a joint venture between Lockheed Martin Corporation and The Boeing Company), Firefly, Blue Origin, and established Russian, Indian, Chinese,"
+          }
+        }
+      ],
+      "name_en": "Northrop Grumman"
+    },
+    {
+      "id": "RDW",
+      "ticker": "RDW",
+      "name": "レッドワイヤー",
+      "sub": "宇宙インフラ",
+      "sub_en": "Space infrastructure",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
+          "source": {
+            "label": "Rocket Lab 10-K",
+            "label_en": "Rocket Lab 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• companies providing spacecraft components in the commercial marketplace, such as Ball Aerospace, Raytheon, Collins Aerospace, Bradford Space, Honeywell Aerospace, GOMSpace, Redwire and Beyond Gravity."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
+          "source": {
+            "label": "Redwire 10-K",
+            "label_en": "Redwire 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete domestically and internationally against space systems components providers, including Airbus, Sodern, Rocket Lab USA, Inc."
+          }
+        }
+      ],
+      "name_en": "Redwire"
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "sub": "複合産業",
+      "sub_en": "Industrial conglomerate",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロケット・ラボと競合する",
+          "text_en": "Competes with Rocket Lab",
+          "source": {
+            "label": "Rocket Lab 10-K",
+            "label_en": "Rocket Lab 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• companies providing spacecraft components in the commercial marketplace, such as Ball Aerospace, Raytheon, Collins Aerospace, Bradford Space, Honeywell Aerospace, GOMSpace, Redwire and Beyond Gravity."
+          }
+        }
+      ],
+      "name_en": "Honeywell"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

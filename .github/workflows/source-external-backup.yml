@@ -1,0 +1,75 @@
+name: Source external backup
+
+# A dedicated request-file change or this workflow change starts one attempt.
+# No schedule and no normal application push trigger. Missing secrets fail closed.
+on:
+  push:
+    branches: [codex/research-preview]
+    paths:
+      - .github/workflows/source-external-backup.yml
+      - docs/source-backup-request.txt
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-external-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    if: github.repository == 'tech-phase-lab/tech-phase-lab' && github.ref == 'refs/heads/codex/research-preview'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Require configured backup secrets
+        env:
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+          TECH_PHASE_EXTERNAL_KEY_HEX: ${{ secrets.TECH_PHASE_EXTERNAL_KEY_HEX }}
+        run: |
+          python3 - <<'PY'
+          import os, sys
+          names = ('MIRROR_DESTINATION_ENDPOINT', 'MIRROR_DESTINATION_ACCESS_KEY_ID',
+                   'MIRROR_DESTINATION_SECRET_ACCESS_KEY', 'TECH_PHASE_EXTERNAL_KEY_HEX')
+          missing = [name for name in names if not os.environ.get(name)]
+          if missing:
+              print('BACKUP_NOT_STARTED: configure GitHub Secrets: ' + ', '.join(missing))
+              sys.exit(1)
+          print('Secret presence checked; upload and restore are NOT yet verified.')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install backup dependencies
+        run: python -m pip install -r services/tech-phase-backup/requirements.txt
+      - name: Seal, upload, download and restore source
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+          TECH_PHASE_SOURCE_UPLOAD_ENABLED: 'true'
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_BUCKET: resolute-backup-external
+          MIRROR_DESTINATION_REGION: auto
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+          TECH_PHASE_EXTERNAL_KEY_HEX: ${{ secrets.TECH_PHASE_EXTERNAL_KEY_HEX }}
+        run: |
+          set -euo pipefail
+          backup_work=$(mktemp -d)
+          trap 'rm -rf -- "$backup_work"' EXIT
+          python scripts/tech-phase/prepare_source_recovery.py --repo "$GITHUB_WORKSPACE" --commit "$EXPECTED_COMMIT" --output "$backup_work/package"
+          python scripts/tech-phase/upload_source_recovery.py --package "$backup_work/package" --expected-commit "$EXPECTED_COMMIT" > "$backup_work/report.json"
+          cat "$backup_work/report.json"
+          {
+            echo '### Source backup: downloaded-byte restore verified'
+            echo 'Source only. Live DB, provider settings and whole-site recovery are NOT verified.'
+            echo '```json'
+            cat "$backup_work/report.json"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

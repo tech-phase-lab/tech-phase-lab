@@ -1,0 +1,112 @@
+{
+  "root": {
+    "ticker": "STZ",
+    "name": "コンステレーション・ブランズ",
+    "cik": 16918,
+    "name_en": "Constellation Brands"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OI",
+      "ticker": "OI",
+      "name": "オーウェンズ・イリノイ",
+      "sub": "ガラス容器",
+      "sub_en": "Glass containers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガラス瓶の調達戦略の一環として、折半出資の合弁を組んでいる",
+          "text_en": "The two companies run an equally-owned joint venture as part of Constellation's glass sourcing strategy",
+          "source": {
+            "label": "コンステレーション・ブランズ 10-K(2026-02-28)",
+            "label_en": "Constellation Brands 10-K (fiscal year ended February 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16918/000001691826000011/stz-20260228.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "As part of our long-term beer glass sourcing strategy, we are a partner in an equally-owned joint venture with Owens-Illinois, one of the leading manufacturers of glass containers in the world"
+          }
+        },
+        {
+          "type": "up",
+          "text": "合弁のガラス工場が、ビール銘柄向けガラス瓶の年間供給の大半を担っている",
+          "text_en": "The joint venture's Glass Plant produces a majority of the annual glass bottle supply for its beer brands",
+          "source": {
+            "label": "コンステレーション・ブランズ 10-K(2026-02-28)",
+            "label_en": "Constellation Brands 10-K (fiscal year ended February 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16918/000001691826000011/stz-20260228.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "The Glass Plant produces a majority of the total annual glass bottle supply for our beer brands"
+          }
+        }
+      ],
+      "name_en": "Owens-Illinois"
+    },
+    {
+      "id": "SGWS",
+      "ticker": "Southern Glazer's",
+      "name": "サザン・グレイザーズ・ワイン・アンド・スピリッツ",
+      "sub": "酒類卸売",
+      "sub_en": "Alcohol distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国のワインとスピリッツの流通を担い、同分野の数量の約7割を占める契約がある",
+          "text_en": "It handles U.S. wine and spirits distribution under a contract covering nearly 70% of that volume",
+          "source": {
+            "label": "コンステレーション・ブランズ 10-K(2026-02-28)",
+            "label_en": "Constellation Brands 10-K (fiscal year ended February 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16918/000001691826000011/stz-20260228.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "We have a contractual arrangement with Southern Glazer’s Wine and Spirits which consolidated our U.S. distribution and currently represents nearly 70% of our U.S. branded wine and spirits volume"
+          }
+        }
+      ],
+      "name_en": "Southern Glazer's Wine and Spirits"
+    },
+    {
+      "id": "CGC",
+      "ticker": "CGC",
+      "name": "キャノピー・グロース",
+      "sub": "大麻関連",
+      "sub_en": "Cannabis",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "持分を保有しているが、支配はしていない出資先である",
+          "text_en": "Constellation holds an interest in Canopy but does not control it",
+          "source": {
+            "label": "コンステレーション・ブランズ 10-K(2026-02-28)",
+            "label_en": "Constellation Brands 10-K (fiscal year ended February 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16918/000001691826000011/stz-20260228.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "We have acquired or retained ownership interests in companies which we do not control, such as our joint venture to operate the Glass Plant, our interest in Canopy, and investments made through our corporate venture capital function"
+          }
+        }
+      ],
+      "name_en": "Canopy Growth"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

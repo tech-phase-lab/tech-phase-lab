@@ -1,0 +1,330 @@
+{
+  "root": {
+    "ticker": "ADSK",
+    "name": "Autodesk",
+    "cik": 769397
+  },
+  "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers",
+      "above": true
+    },
+    {
+      "ja": "提携・連携",
+      "en": "Partnerships & integrations"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BSY",
+    "PTC",
+    "ADBE"
+  ],
+  "companies": [
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ・テクノロジーズ",
+      "sub": "CDN・セキュリティ",
+      "sub_en": "CDN & security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Autodeskは、Akamaiの顧客のひとつだ",
+          "text_en": "Autodesk is one of Akamai's customers",
+          "source": {
+            "label": "Akamai Technologies 10-K",
+            "label_en": "Akamai Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our customers include many of the world's leading corporations, such as adidas, Adobe, Aflac, Airbnb, Asus, Autodesk, Bank of Montreal, Carnival Corporation, Comcast, Commerzbank, Daiwa Institute of Research, eBay, Electronic Arts, Epic Games, Fidelity Investments, Honda, Japan",
+            "note": "Akamaiが提供する側の記載です。",
+            "note_en": "Akamai is the provider in this listing."
+          }
+        }
+      ],
+      "name_en": "Akamai Technologies"
+    },
+    {
+      "id": "BSY",
+      "ticker": "BSY",
+      "name": "ベントレー・システムズ",
+      "sub": "インフラ設計ソフト",
+      "sub_en": "Infrastructure software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in Public Works/Utilities applications include Autodesk, Inc., Trimble Inc., and Hexagon AB;"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
+          "source": {
+            "label": "Bentley Systems 10-K",
+            "label_en": "Bentley Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• our key competitors in Commercial/Facilities applications include Autodesk, Inc., Nemetschek SE, and Trimble Inc.;"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
+          "source": {
+            "label": "Autodesk 10-K",
+            "label_en": "Autodesk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Our primary global competitors include Adobe Systems Incorporated, Bentley Systems, Inc., Dassault Systèmes S.A. and its subsidiary Dassault Systèmes SolidWorks Corp., Intergraph Corporation, a wholly owned subsidiary of Hexagon AB, MSC Software"
+          }
+        }
+      ],
+      "name_en": "Bentley Systems"
+    },
+    {
+      "id": "PTC",
+      "ticker": "PTC",
+      "name": "PTC",
+      "sub": "CAD・PLM",
+      "sub_en": "CAD & PLM",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "For enterprise CAD and PLM solutions, we compete with large established companies including Autodesk, Dassault Systèmes SA, and Siemens AG."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "sub": "クリエイティブソフト",
+      "sub_en": "Creative software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Autodeskと競合する",
+          "text_en": "Competes with Autodesk",
+          "source": {
+            "label": "Autodesk 10-K",
+            "label_en": "Autodesk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Our primary global competitors include Adobe Systems Incorporated, Bentley Systems, Inc., Dassault Systèmes S.A. and its subsidiary Dassault Systèmes SolidWorks Corp., Intergraph Corporation, a wholly owned"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AutodeskとAdobeは、NVIDIA、Pixar、Appleとともに、OpenUSDのためのアライアンスを発足させた",
+          "text_en": "Autodesk and Adobe, with NVIDIA, Pixar and Apple, announced the Alliance for OpenUSD",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/aousd-to-drive-open-standards-for-3d-content",
+            "level": "official",
+            "date": "2023-08-01",
+            "quote": "Pixar, Adobe, Apple, Autodesk, and NVIDIA Form Alliance for OpenUSD to Drive Open Standards for 3D Content",
+            "note": "競合でもあります。2023年の発表で、時期は古いです。",
+            "note_en": "Also a competitor. Announced in 2023; older."
+          }
+        }
+      ],
+      "name_en": "Adobe"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年6月、AutodeskはAmazon Web Servicesと戦略的協業契約を結んだ",
+          "text_en": "In June 2026, Autodesk signed a strategic collaboration agreement with Amazon Web Services",
+          "source": {
+            "label": "Autodesk の発表",
+            "label_en": "Autodesk press release",
+            "url": "https://adsknews.autodesk.com/en/pressrelease/autodesk-signs-strategic-collaboration-agreement-with-amazon-web-services/",
+            "level": "official",
+            "date": "2026-06-03",
+            "quote": "Autodesk, Inc. (NASDAQ: ADSK), a global leader in design and make technology, today announced it has signed a strategic collaboration agreement (SCA) with Amazon Web Services, Inc. (AWS)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AutodeskとNVIDIAは、Pixar、Adobe、Appleとともに、OpenUSDのためのアライアンスを発足させた",
+          "text_en": "Autodesk and NVIDIA, with Pixar, Adobe and Apple, announced the Alliance for OpenUSD",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/aousd-to-drive-open-standards-for-3d-content",
+            "level": "official",
+            "date": "2023-08-01",
+            "quote": "Pixar, Adobe, Apple, Autodesk, and NVIDIA Form Alliance for OpenUSD to Drive Open Standards for 3D Content",
+            "note": "2023年の発表で、時期は古いです。",
+            "note_en": "Announced in 2023; older."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIA Omniverseにより、Autodeskの顧客は自社の技術を他社ツールと併用できる",
+          "text_en": "NVIDIA Omniverse lets Autodesk's customers use Autodesk technology alongside partners' and non-Autodesk tools",
+          "source": {
+            "label": "Autodesk ニュースルーム",
+            "label_en": "Autodesk newsroom",
+            "url": "https://adsknews.autodesk.com/en/news/nvidia-omniverse/",
+            "level": "official",
+            "date": "2020-11-12",
+            "quote": "Continuing Autodesk’s emphasis on openness, NVIDIA Omniverse enables our customers to use our technology alongside our partners’ and non-Autodesk tools as needed to customize their workflows.",
+            "note": "2020年の発表で、時期は古いです。",
+            "note_en": "Announced in 2020; older."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Autodeskなどのソフト提供各社は、NVIDIAのCloudXR連携を使ってApple Vision Pro向けのアプリを提供している",
+          "text_en": "Software providers including Autodesk use NVIDIA's CloudXR integration to deliver applications to Apple Vision Pro",
+          "source": {
+            "label": "NVIDIA ブログ",
+            "label_en": "NVIDIA blog",
+            "url": "https://blogs.nvidia.com/blog/nvidia-cloudxr-apple-vision-pro/",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Leading software providers — including Autodesk , Innoactive , Synopsys , Trifork , X-Plane and iRacing — are using the integration to deliver high-fidelity applications natively to Apple Vision Pro."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Autodeskは、アプリがNVIDIA Omniverseに接続する業界有力ソフト企業のひとつだ",
+          "text_en": "Autodesk is one of the software companies whose applications connect to the NVIDIA Omniverse ecosystem",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-launches-omniverse-design-collaboration-and-simulation-platform-for-enterprises",
+            "level": "official",
+            "date": "2021-04-12",
+            "quote": "The NVIDIA Omniverse ecosystem continues to grow, connecting industry-leading applications from software companies such as Bentley Systems, Adobe, Autodesk, Epic Games, ESRI, Graphisoft, Trimble, McNeel & Associates, Blender, Marvelous Designer, Reallusion and wrnch Inc.",
+            "note": "2021年の発表で、時期は古いです。",
+            "note_en": "Announced in 2021; older."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAは、Pixar、Adobe、Autodesk、Siemensなどと協力し、USDの機能を拡張する複数年のロードマップを進める",
+          "text_en": "NVIDIA will pursue a multi-year roadmap to expand USD capabilities together with Pixar, Adobe, Autodesk, Siemens and others",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-and-partners-build-out-universal-scene-description-to-accelerate-industrial-metaverse-and-next-wave-of-ai",
+            "level": "official",
+            "date": "2022-08-09",
+            "quote": "Working together with USD’s inventor, Pixar, as well as Adobe, Autodesk, Siemens and a host of other leading companies, NVIDIA will pursue a multi-year roadmap to expand USD’s capabilities beyond visual effects",
+            "note": "2022年の発表で、時期は古いです。",
+            "note_en": "Announced in 2022; older."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマホ・IT機器",
+      "sub_en": "Devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AutodeskとAppleは、NVIDIA、Pixar、Adobeとともに、OpenUSDのためのアライアンスを発足させた",
+          "text_en": "Autodesk and Apple, with NVIDIA, Pixar and Adobe, announced the Alliance for OpenUSD",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/aousd-to-drive-open-standards-for-3d-content",
+            "level": "official",
+            "date": "2023-08-01",
+            "quote": "Pixar, Adobe, Apple, Autodesk, and NVIDIA Form Alliance for OpenUSD to Drive Open Standards for 3D Content",
+            "note": "2023年の発表で、時期は古いです。",
+            "note_en": "Announced in 2023; older."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "SIE",
+      "ticker": "Siemens",
+      "name": "シーメンス",
+      "sub": "産業・PLMソフト",
+      "sub_en": "Industrial & PLM software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AutodeskとSiemensは、製品開発ソフトの非互換によるコストを減らすため、相互運用性に関する合意を発表した",
+          "text_en": "Autodesk and Siemens announced an interoperability agreement to help manufacturers decrease the costs of incompatibility among product development software",
+          "source": {
+            "label": "Autodesk の発表",
+            "label_en": "Autodesk press release",
+            "url": "https://adsknews.autodesk.com/en/pressrelease/autodesk-and-siemens-sign-agreement-to-increase-software-interoperability/",
+            "level": "official",
+            "date": "2016-03-01",
+            "quote": "Autodesk, Inc. (NASDAQ:ADSK) and Siemens today announced an interoperability agreement aimed at helping manufacturers decrease the costs associated with incompatibility among product development software applications and avoid potential data integrity problems.",
+            "note": "2016年の発表で、時期は古いです。",
+            "note_en": "Announced in 2016; older."
+          }
+        }
+      ],
+      "name_en": "Siemens"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

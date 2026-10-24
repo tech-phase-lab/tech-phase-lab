@@ -1,0 +1,20 @@
+{
+  "level": "info",
+  "event": "RESOLUTE_NONEMPTY_MANIFEST_SEALED",
+  "pin": "72f819a298d8f5365f0fcb404c80ea3fd48e1b5139ffebbd9830cdad92bace75",
+  "objects": [
+    {
+      "key": "resolute/protection/events-v1/5dacf889114aa84543e1f3ca4231b2d8d95bf5929f0e090fe83848b22931e109.bin",
+      "sha256": "81dd06c39e25d17b1206f4cff0876f0b937ace5f27312198e619ab0e0817c7ef"
+    },
+    {
+      "key": "resolute/protection/events-v1/89d9646bdeee9c78449d32e76aac3a13ce3dcf196f6983358a379cf851c527ae.bin",
+      "sha256": "c39b325ecaa2014e5543521413215d13b060faefdcfe09e0ac7c7181e4f3901c"
+    },
+    {
+      "key": "resolute/protection/events-v1/e95983904687886700586c3ef86f4fc954dda571ae23484be3e84dbda571c45b.bin",
+      "sha256": "3bf62ec464b7b6124ff618e574e3fe5d0d53b306d4671a451c9f17fe855446c4"
+    }
+  ],
+  "at": "2026-10-20T14:51:44.997Z"
+}

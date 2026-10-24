@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "MRNA",
+    "name": "モデルナ",
+    "cik": 1682852,
+    "name_en": "Moderna"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "PFE",
+    "BNTX",
+    "SNY",
+    "GSK"
+  ],
+  "companies": [
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "sub": "製薬大手",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "個別化mRNAがんワクチンmRNA-4157を共同開発し、費用と損益を世界で等分する",
+          "text_en": "Collaborates with Merck on mRNA-4157 and shares costs and any profits and losses worldwide equally",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Pursuant to the PCV Agreement, we and Merck will collaborate on further development and commercialization of mRNA-4157, and we will share costs and any profits and losses worldwide related to mRNA-4157 equally."
+          }
+        }
+      ],
+      "name_en": "Merck"
+    },
+    {
+      "id": "VRTX",
+      "ticker": "VRTX",
+      "name": "バーテックス・ファーマシューティカルズ",
+      "sub": "嚢胞性線維症薬",
+      "sub_en": "Cystic fibrosis drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "嚢胞性線維症向けmRNA-3692(VX-522)でバーテックスと協業している",
+          "text_en": "Collaborates with Vertex on the cystic fibrosis candidate mRNA-3692/VX-522",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We are collaborating with Vertex on our CF candidate, mRNA-3692/VX-522, which is designed to treat the underlying cause of CF by enabling cells in the lungs to produce functional CFTR protein for the treatment of the over 5,000 patients who do not produce any modulator-responsive CFTR protein."
+          }
+        }
+      ],
+      "name_en": "Vertex Pharmaceuticals"
+    },
+    {
+      "id": "RECORDATI",
+      "ticker": "Recordati",
+      "name": "レコルダティ",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月にmRNA-3927の最終段階の開発と商業化に向けた提携を結んだ",
+          "text_en": "In January 2026, entered into a strategic collaboration with Recordati to advance mRNA-3927",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In January 2026, we entered into a strategic collaboration with Recordati, an international pharmaceutical group, to advance mRNA-3927 through the final stages of clinical development and, if approved, global commercialization."
+          }
+        }
+      ],
+      "name_en": "Recordati"
+    },
+    {
+      "id": "IMTX",
+      "ticker": "IMTX",
+      "name": "イマティクス",
+      "sub": "細胞療法",
+      "sub_en": "Cell therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "mRNA-4203をイマティクスと共同で開発している",
+          "text_en": "Develops mRNA-4203 in collaboration with Immatics",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "mRNA-4203 is being developed in collaboration with Immatics. 18 Table of Contents Intismeran autogene (mRNA-4157) As tumors grow, they acquire mutations which may lead to the creation of new protein segments (neoantigens) that can be presented on human leukocyte antigen (HLA) molecules in the tumor and recognized as non-self by T cells."
+          }
+        }
+      ],
+      "name_en": "Immatics"
+    },
+    {
+      "id": "OPENAI",
+      "ticker": "OpenAI",
+      "name": "オープンAI",
+      "sub": "AI開発",
+      "sub_en": "AI developer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年初めからAIの活用を共同で進める取り組みを始めた",
+          "text_en": "Began a collaboration with OpenAI in early 2023 to co-innovate on AI",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In early 2023, we began a collaboration with OpenAI to co-innovate with a shared vision of AI’s transformative potential in the future of business and healthcare."
+          }
+        }
+      ],
+      "name_en": "OpenAI"
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "sub": "製薬大手",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "新型コロナワクチンの販売で主に競合する",
+          "text_en": "Main competitor, with BioNTech, for COVID vaccine sales",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We largely compete against Pfizer and BioNTech for sales of our COVID vaccines, whose vaccine is also based on mRNA technology."
+          }
+        }
+      ],
+      "name_en": "Pfizer"
+    },
+    {
+      "id": "BNTX",
+      "ticker": "BNTX",
+      "name": "ビオンテック",
+      "sub": "mRNA医薬",
+      "sub_en": "mRNA medicines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "新型コロナワクチンの販売で主に競合する",
+          "text_en": "Main competitor, with Pfizer, for COVID vaccine sales",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We largely compete against Pfizer and BioNTech for sales of our COVID vaccines, whose vaccine is also based on mRNA technology."
+          }
+        }
+      ],
+      "name_en": "BioNTech"
+    },
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "sub": "製薬大手",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "新型コロナワクチンの販売で競合する",
+          "text_en": "Competes for COVID vaccine sales",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including against Pfizer and Sanofi for sales of our COVID vaccines and Pfizer and GSK for our RSV vaccine."
+          }
+        }
+      ],
+      "name_en": "Sanofi"
+    },
+    {
+      "id": "GSK",
+      "ticker": "GSK",
+      "name": "グラクソ・スミスクライン",
+      "sub": "製薬大手",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RSVワクチンの販売で競合する",
+          "text_en": "Competes for RSV vaccine sales",
+          "source": {
+            "label": "Moderna 10-K(2025年12月31日期)",
+            "label_en": "Moderna 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including against Pfizer and Sanofi for sales of our COVID vaccines and Pfizer and GSK for our RSV vaccine."
+          }
+        }
+      ],
+      "name_en": "GSK"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

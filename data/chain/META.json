@@ -1,0 +1,883 @@
+{
+  "root": {
+    "ticker": "META",
+    "name": "Meta Platforms",
+    "cik": 1326801
+  },
+  "rows": [
+    {
+      "ja": "半導体・ネットワーク・光部品",
+      "en": "Chips, networking & optics",
+      "above": true
+    },
+    {
+      "ja": "計算基盤・データセンター",
+      "en": "Compute & data centers",
+      "above": true
+    },
+    {
+      "ja": "電力",
+      "en": "Power",
+      "above": true
+    },
+    {
+      "ja": "グラス・SNS・広告",
+      "en": "Glasses, social & ads"
+    },
+    {
+      "ja": "AI・デバイスの提携先",
+      "en": "AI & device partners",
+      "above": true
+    },
+    {
+      "ja": "競合(半導体)",
+      "en": "Competitors (chips)"
+    }
+  ],
+  "rivals": [
+    "GOOGL",
+    "AAPL",
+    "SNAP",
+    "PINS",
+    "RDDT"
+  ],
+  "companies": [
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MTIAとEthernet技術をBroadcomから調達",
+          "text_en": "Sources MTIA and Ethernet technology from Broadcom",
+          "source": {
+            "label": "Meta の発表(2026年4月)",
+            "label_en": "Meta announcement (April 2026)",
+            "url": "https://about.fb.com/news/2026/04/meta-partners-with-broadcom-to-co-develop-custom-ai-silicon/amp/",
+            "level": "official",
+            "date": "2026-04",
+            "note": "初期1GW超のコミットメントは、全てが稼働済みという意味ではありません。",
+            "note_en": "The initial commitment of over 1GW does not mean it is all operating.",
+            "quote": "Broadcom's advanced Ethernet technologies will also enable seamless, high-bandwidth networking across Meta's rapidly expanding AI compute clusters."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "複数世代のMTIA(自社設計AI半導体)を共同開発",
+          "text_en": "Co-develops multiple generations of MTIA custom AI silicon",
+          "source": {
+            "label": "Meta の発表(2026年4月)",
+            "label_en": "Meta announcement (April 2026)",
+            "url": "https://about.fb.com/news/2026/04/meta-partners-with-broadcom-to-co-develop-custom-ai-silicon/amp/",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "partnering with Broadcom to co-develop multiple generations of custom silicon"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "GPU",
+      "sub_en": "GPUs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大6GWのInstinct GPUを導入する契約",
+          "text_en": "Agreement to deploy up to 6GW of Instinct GPUs",
+          "source": {
+            "label": "AMD の発表(2026年2月)",
+            "label_en": "AMD announcement (February 2026)",
+            "url": "https://newsroom.amd.com/news/amd-and-meta-announce-expanded-strategic-partnersh/",
+            "level": "official",
+            "date": "2026-02",
+            "note": "最初の1GW分の出荷は2026年後半の予定で、全導入が完了したわけではありません。",
+            "note_en": "The first 1GW is due to ship in the second half of 2026; deployment is not complete."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Heliosの開発ロードマップをAMDと共同で調整",
+          "text_en": "Coordinates the Helios development roadmap with AMD",
+          "source": {
+            "label": "AMD の発表(2026年2月)",
+            "label_en": "AMD announcement (February 2026)",
+            "url": "https://newsroom.amd.com/news/amd-and-meta-announce-expanded-strategic-partnersh/",
+            "level": "official",
+            "date": "2026-02"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NVIDIAのAI基盤技術を調達し、Spectrum-Xなどを採用",
+          "text_en": "Sources NVIDIA AI infrastructure technology, including Spectrum-X",
+          "source": {
+            "label": "Meta の発表(2026年2月)",
+            "label_en": "Meta announcement (February 2026)",
+            "url": "https://about.fb.com/news/2026/02/meta-nvidia-announce-long-term-infrastructure-partnership/",
+            "level": "official",
+            "date": "2026-02",
+            "note": "将来の展開量は確定していません。",
+            "note_en": "Future deployment volume is not fixed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CPU・GPU・ネットワークの複数年にわたる協業",
+          "text_en": "Multiyear collaboration on CPUs, GPUs and networking",
+          "source": {
+            "label": "NVIDIA の発表(2026年2月)",
+            "label_en": "NVIDIA announcement (February 2026)",
+            "url": "https://nvidianews.nvidia.com/news/meta-builds-ai-infrastructure-with-nvidia",
+            "level": "official",
+            "date": "2026-02"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARM",
+      "ticker": "ARM",
+      "name": "Arm",
+      "sub": "CPU",
+      "sub_en": "CPUs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arm AGI CPUの主導パートナーとして共同開発",
+          "text_en": "Lead partner and co-developer of the Arm AGI CPU",
+          "source": {
+            "label": "Arm の発表(2026年3月)",
+            "label_en": "Arm announcement (March 2026)",
+            "url": "https://newsroom.arm.com/news/arm-agi-cpu-launch",
+            "level": "official",
+            "date": "2026-03-24",
+            "note": "複数世代の計画で、全世代の導入完了や容量購入を示すものではありません。",
+            "note_en": "A multi-generation plan; it does not show completed deployment or capacity purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "Arista Networks",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Metaの102.4T scale-out基盤向けラックネットワークを共同開発",
+          "text_en": "Rack-scale networking co-developed for Meta’s 102.4T scale-out fabric",
+          "source": {
+            "label": "Arista のソリューションページ(Metaのコメント)",
+            "label_en": "Arista solutions page (Meta’s comment)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10-07",
+            "note": "技術協業であり、購入数量などは示されていません。",
+            "note_en": "A technical collaboration; purchase volumes are not disclosed.",
+            "quote": "Meta is pleased to collaborate with Arista on rack-scale networking solutions for our 102.4T scale-out platforms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLW",
+      "ticker": "GLW",
+      "name": "Corning",
+      "sub": "光ファイバー",
+      "sub_en": "Optical fiber",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "光ファイバーの複数年調達契約",
+          "text_en": "Multiyear optical-fiber supply agreement worth up to $6B",
+          "source": {
+            "label": "Meta の発表(2026年1月27日)",
+            "label_en": "Meta announcement (January 27, 2026)",
+            "url": "https://about.fb.com/news/2026/01/meta-6-billion-agreement-corning-support-us-manufacturing/",
+            "level": "official",
+            "date": "2026-01-27",
+            "note": "最大額であり、売上の実績ではありません。",
+            "note_en": "A ceiling, not realized revenue."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "XR向け半導体",
+      "sub_en": "XR chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Quest 3にSnapdragon XR2 Gen 2を採用",
+          "text_en": "Quest 3 uses the Snapdragon XR2 Gen 2",
+          "source": {
+            "label": "Meta の発表(2023年9月)",
+            "label_en": "Meta announcement (September 2023)",
+            "url": "https://about.fb.com/news/2023/09/meet-meta-quest-3-mixed-reality-headset/",
+            "level": "official",
+            "date": "2023-09",
+            "note": "全ての現行機種に当てはまるわけではありません。",
+            "note_en": "Does not apply to every current model."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MetaはQualcomm Technologiesと共同開発した",
+          "text_en": "Meta co-developed the chip with Qualcomm Technologies",
+          "source": {
+            "label": "Meta の発表(2023年9月)",
+            "label_en": "Meta announcement (September 2023)",
+            "url": "https://about.fb.com/news/2023/09/meet-meta-quest-3-mixed-reality-headset/",
+            "level": "official",
+            "date": "2023-09"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド(AWS)",
+      "sub_en": "Cloud (AWS)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AWSのGraviton計算基盤をAI向けに大規模利用する契約",
+          "text_en": "Agreement to use AWS Graviton compute at scale for agentic AI",
+          "source": {
+            "label": "Amazon の発表(2026年4月24日)",
+            "label_en": "Amazon announcement (April 24, 2026)",
+            "url": "https://press.aboutamazon.com/aws/2026/4/meta-signs-agreement-with-aws-to-power-agentic-ai-on-amazons-graviton-chips",
+            "level": "official",
+            "date": "2026-04-24",
+            "note": "数千万コアは展開計画であり、全導入が完了したわけではありません。",
+            "note_en": "Tens of millions of cores is a deployment plan, not completed rollout."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius",
+      "sub": "AI計算容量",
+      "sub_en": "AI compute",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AI計算容量の供給契約",
+          "text_en": "AI compute-capacity agreement",
+          "source": {
+            "label": "Nebius の発表(2026年3月)",
+            "label_en": "Nebius announcement (March 2026)",
+            "url": "https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta",
+            "level": "official",
+            "date": "2026-03"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "AI計算容量",
+      "sub_en": "AI compute",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大210億ドルの計算容量購入を約束",
+          "text_en": "Committed to buy up to $21B of compute capacity",
+          "source": {
+            "label": "CoreWeave 10-Q(2026年6月30日終了の四半期)",
+            "label_en": "CoreWeave 10-Q (quarter ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+            "level": "official",
+            "note": "2032年までの将来の容量を含み、全額が売上・稼働済みという意味ではありません。",
+            "note_en": "Includes capacity through 2032; not all of it is revenue or operating yet."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RELIANCE",
+      "ticker": "RELIANCE",
+      "name": "Reliance Industries",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "インドJamnagarのAIデータセンターを賃借する契約",
+          "text_en": "Lease of an AI data center in Jamnagar, India",
+          "source": {
+            "label": "Meta の発表(2026年6月)",
+            "label_en": "Meta announcement (June 2026)",
+            "url": "https://about.fb.com/news/2026/06/meta-partners-with-reliance-on-ai-enabled-data-center-in-india/",
+            "level": "official",
+            "date": "2026-06",
+            "note": "初期168MWは計画で、全稼働が完了したわけではありません。",
+            "note_en": "The initial 168MW is planned, not fully operating."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VST",
+      "ticker": "VST",
+      "name": "Vistra",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "原子力電力の20年購入契約",
+          "text_en": "20-year nuclear power purchase agreements",
+          "source": {
+            "label": "Vistra の発表(2026年1月9日)",
+            "label_en": "Vistra announcement (January 9, 2026)",
+            "url": "https://investor.vistracorp.com/2026-01-09-Vistra-and-Meta-Announce-Agreements-to-Support-Nuclear-Plants-in-PJM-and-Add-New-Nuclear-Generation-to-the-Grid",
+            "level": "official",
+            "date": "2026-01-09",
+            "note": "購入開始は2026年末の予定で、全量の供給が始まったわけではありません。",
+            "note_en": "Purchases are due to begin at the end of 2026; full supply has not started."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEG",
+      "ticker": "CEG",
+      "name": "Constellation Energy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Clinton原子力発電所の20年電力購入契約",
+          "text_en": "20-year power purchase from the Clinton nuclear plant",
+          "source": {
+            "label": "Constellation の発表(2025年6月)",
+            "label_en": "Constellation announcement (June 2025)",
+            "url": "https://www.constellationenergy.com/news/2025/constellation-meta-sign-20-year-deal-for-clean-reliable-nuclear-energy-in-illinois.html.html",
+            "level": "official",
+            "note": "電力は送電網に供給され、専用送電ではありません。",
+            "note_en": "Power goes to the grid, not over a dedicated line.",
+            "quote": "have signed a 20-year power purchase agreement (PPA) for the output of the Clinton Clean Energy Center",
+            "date": "2025-06"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKLO",
+      "ticker": "OKLO",
+      "name": "Oklo",
+      "sub": "原子力開発",
+      "sub_en": "Nuclear development",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Ohio州の原子力キャンパス開発を前払いなどで支援",
+          "text_en": "Supports development of an Ohio nuclear campus through prepayments and early funding",
+          "source": {
+            "label": "Meta の発表(2026年1月)",
+            "label_en": "Meta announcement (January 2026)",
+            "url": "https://about.fb.com/news/2026/01/meta-nuclear-energy-projects-power-american-ai-leadership/",
+            "level": "official",
+            "date": "2026-01",
+            "note": "2030年の初期稼働・最大1.2GWは将来の目標で、株式の取得ではありません。",
+            "note_en": "Initial operation in 2030 and up to 1.2GW are future targets; it is not an equity stake."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EL",
+      "ticker": "EssilorLuxottica",
+      "name": "EssilorLuxottica",
+      "sub": "AIグラス",
+      "sub_en": "AI glasses",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Meta Glassesを共同で展開",
+          "text_en": "Jointly launches Meta Glasses",
+          "source": {
+            "label": "Meta の発表(2026年6月)",
+            "label_en": "Meta announcement (June 2026)",
+            "url": "https://about.fb.com/news/2026/06/meta-essilorluxottica-partner-launch-meta-glasses/",
+            "level": "official",
+            "date": "2026-06",
+            "note": "出資額は示されていません。",
+            "note_en": "Any investment amount is not stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNAP",
+      "ticker": "SNAP",
+      "name": "Snap",
+      "sub": "SNS",
+      "sub_en": "Social",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SnapはMetaと競合関係にある",
+          "text_en": "Snap competes with Meta.",
+          "source": {
+            "label": "Snap 10-K(2025年12月期)",
+            "label_en": "Snap 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm",
+            "level": "official",
+            "quote": "Meta (including Facebook, Instagram, Threads, and WhatsApp)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "APP",
+      "ticker": "APP",
+      "name": "AppLovin",
+      "sub": "広告配信",
+      "sub_en": "Ad tech",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AppLovinは広告市場でMetaと競う",
+          "text_en": "AppLovin competes with Meta in advertising.",
+          "source": {
+            "label": "AppLovin 10-K(2025年12月期)",
+            "label_en": "AppLovin 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm",
+            "level": "official",
+            "quote": "Such advertising companies vary in size and include Meta, Google, Amazon, and Unity Software"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OWL",
+      "ticker": "OWL",
+      "name": "Blue Owl Capital",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Hyperion(米ルイジアナ州)データセンターを共同で開発・保有する合弁会社を設立",
+          "text_en": "Joint venture to develop and own the Hyperion data center",
+          "source": {
+            "label": "Meta ニュースルーム(2025年10月)",
+            "label_en": "Meta newsroom (Oct 2025)",
+            "url": "https://about.fb.com/news/2025/10/meta-blue-owl-capital-develop-hyperion-data-center/",
+            "level": "official",
+            "date": "2025-10-21",
+            "quote": "Funds managed by Blue Owl Capital will own an 80% interest in the joint venture, while Meta will retain the remaining 20% ownership.",
+            "note": "Metaは施設を賃借します(初期は4年間で、延長の選択肢あり)。",
+            "note_en": "Meta leases the facilities (four-year initial term with extension options)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLK",
+      "ticker": "BLK",
+      "name": "BlackRock",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサス州エルパソのデータセンターキャンパスを共同で開発・保有する事業",
+          "text_en": "Venture to develop and own a data center campus in El Paso, Texas",
+          "source": {
+            "label": "Meta ニュースルーム(2026年7月)",
+            "label_en": "Meta newsroom (Jul 2026)",
+            "url": "https://about.fb.com/news/2026/07/meta-announces-new-venture-with-blackrock-to-develop-data-center-in-el-paso/",
+            "level": "official",
+            "date": "2026-07-27",
+            "quote": "Meta and BlackRock today announced a venture to develop and own a data center campus in El Paso, Texas.",
+            "note": "発表時点では取引の完了前でした。",
+            "note_en": "The transaction had not yet closed at announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ETR",
+      "ticker": "ETR",
+      "name": "Entergy",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Metaの北部ルイジアナのデータセンターに電力を供給する設備の承認をEntergy Louisianaが申請",
+          "text_en": "Entergy Louisiana sought approval of resources to serve Meta’s new north Louisiana data center",
+          "source": {
+            "label": "Entergy 10-K(2025年度)",
+            "label_en": "Entergy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/65984/000006598426000174/etr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "establishing service to a new data center to be developed by a subsidiary of Meta Platforms, Inc. in north Louisiana, for which an electric service agreement has been executed",
+            "note": "規制当局の承認手続き中の内容です。",
+            "note_en": "Describes a regulatory approval process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEE",
+      "ticker": "NEE",
+      "name": "NextEra Energy",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "PNMとNextEra Energy Resourcesとの、蓄電池併設の190MW太陽光発電の提携(Metaの持続可能性ページ)",
+          "text_en": "190MW solar-plus-storage partnership with PNM and NextEra Energy Resources (Meta sustainability page)",
+          "source": {
+            "label": "Meta サステナビリティ",
+            "label_en": "Meta Sustainability (energy page)",
+            "url": "https://sustainability.atmeta.com/energy/",
+            "level": "official",
+            "quote": "PNM and NextEra Energy Resources on a 190 MW solar facility paired with a 50 MW 4-hour battery energy storage system in New Mexico",
+            "note": "取引日は示されておらず、2024年末時点の状況を示すページです。",
+            "note_en": "No deal date is given; the page states status as of end of 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRMN",
+      "ticker": "GRMN",
+      "name": "Garmin",
+      "sub": "スポーツ機器",
+      "sub_en": "Sports devices",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oakley Meta Vanguard(AIグラス)でトレーニング情報を使える戦略的協業",
+          "text_en": "Strategic collaboration to bring training insights to Oakley Meta Vanguard AI glasses",
+          "source": {
+            "label": "Garmin の発表(2025年9月)",
+            "label_en": "Garmin press release (Sep 2025)",
+            "url": "https://www.garmin.com/en-US/newsroom/press-release/corporate/garmin-powers-live-data-for-oakley-meta-vanguard-ai-glasses/",
+            "level": "official",
+            "date": "2025-09-17",
+            "quote": "has announced a strategic collaboration with Meta to provide personalized training insights and alerts",
+            "note": "一部のGarmin機器との連携機能です。",
+            "note_en": "Features pair with select Garmin devices."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・OS",
+      "sub_en": "Phones & OS",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Appleは、iOSにMetaと競合する製品を組み込んだ",
+          "text_en": "Apple has integrated products that compete with Meta's into iOS.",
+          "source": {
+            "label": "Meta 10-K(2025年度)",
+            "label_en": "Meta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "each of Apple and Google have integrated competitive products with iOS and Android, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "検索・OS",
+      "sub_en": "Search & OS",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Googleは、Metaと競合する製品をAndroidに組み込み済みだ",
+          "text_en": "Google has integrated products that compete with Meta's into Android.",
+          "source": {
+            "label": "Meta 10-K(2025年度)",
+            "label_en": "Meta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "each of Apple and Google have integrated competitive products with iOS and Android, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PINS",
+      "ticker": "PINS",
+      "name": "Pinterest",
+      "sub": "SNS",
+      "sub_en": "Social",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Meta(Facebook・Instagram・Threads・Meta AI)はPinterestの競合企業だ",
+          "text_en": "Meta competes with Pinterest.",
+          "source": {
+            "label": "Pinterest 10-K(2025年度)",
+            "label_en": "Pinterest 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors such as Amazon, Meta (including Facebook, Instagram, Threads and MetaAI), Google"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDDT",
+      "ticker": "RDDT",
+      "name": "Reddit",
+      "sub": "SNS",
+      "sub_en": "Social",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RedditはMetaとユーザーを奪い合う",
+          "text_en": "Reddit competes against Meta for users.",
+          "source": {
+            "label": "Reddit 10-K(2025年度)",
+            "label_en": "Reddit 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1713445/000171344526000022/rddt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We compete against many companies that provide content and communications services to online users, including Google (including YouTube, Search, Maps, and Shopping), Meta (including Facebook, Instagram, Threads, and WhatsApp)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBLX",
+      "ticker": "RBLX",
+      "name": "Roblox",
+      "sub": "ゲーム",
+      "sub_en": "Games",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Meta Platformsは、ユーザーと利用時間を巡るRobloxのライバルだ",
+          "text_en": "Roblox competes with Meta Platforms for users and engagement hours.",
+          "source": {
+            "label": "Roblox 10-K(2025年度)",
+            "label_en": "Roblox 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We compete for users and their engagement hours with global technology leaders such as Amazon, Apple, Meta Platforms, Google, Microsoft, and Tencent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTCH",
+      "ticker": "MTCH",
+      "name": "Match Group",
+      "sub": "出会い系",
+      "sub_en": "Dating",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FacebookとInstagramは、Match Groupが競合するSNSだ",
+          "text_en": "Facebook and Instagram are social platforms that compete with Match Group.",
+          "source": {
+            "label": "Match Group 10-K(2025年度)",
+            "label_en": "Match Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/891103/000089110326000025/mtch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "social media platforms and social-discovery apps, such as Facebook and Instagram (both owned by Meta), Snap, TikTok, X"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMBL",
+      "ticker": "BMBL",
+      "name": "Bumble",
+      "sub": "出会い系",
+      "sub_en": "Dating",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BumbleにとってFacebookの出会い機能は、競合になりうる例だ",
+          "text_en": "Facebook's dating feature is an example of competition for Bumble.",
+          "source": {
+            "label": "Bumble 10-K(2025年度)",
+            "label_en": "Bumble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1830043/000183004326000027/bmbl-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "For example, Facebook has maintained a dating feature on its platform in various markets around the globe."
+          }
+        }
+      ]
+    },
+    {
+      "id": "U",
+      "ticker": "U",
+      "name": "Unity Software",
+      "sub": "ゲーム開発・広告",
+      "sub_en": "Game dev & ads",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Metaは、Unityが競合する大手企業の1社である",
+          "text_en": "Meta is one of the large companies Unity competes with.",
+          "source": {
+            "label": "Unity 10-K(2025年度)",
+            "label_en": "Unity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1810806/000181080626000011/unity-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Examples of these large companies are Amazon, Meta, Google, Microsoft, and Tencent. Most of these companies are also our partners and customers.",
+            "note": "Unityは、これらの企業の多くが提携先・顧客でもあると記載しています。",
+            "note_en": "Unity says most of these companies are also its partners and customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "YELP",
+      "ticker": "YELP",
+      "name": "Yelp",
+      "sub": "口コミ・広告",
+      "sub_en": "Reviews & ads",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GoogleとMetaは、地域広告でYelpと競合しうる大手だ",
+          "text_en": "Google and Meta may compete with Yelp for local advertising.",
+          "source": {
+            "label": "Yelp 10-K(2025年度)",
+            "label_en": "Yelp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "major Internet companies, such as Google and Meta, may be more successful than us in developing and marketing online advertising and other services directly to local businesses"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音楽・ポッドキャスト",
+      "sub_en": "Audio streaming",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Metaは、Spotifyが競合する企業の1社となる",
+          "text_en": "Meta is one of the companies Spotify competes with.",
+          "source": {
+            "label": "Spotify 20-F(2025年度)",
+            "label_en": "Spotify 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "such as Apple, Alphabet, Amazon, Meta, and ByteDance"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 5,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Intelが年次報告で、自社設計の半導体を開発する大手クラウド企業の1社としてMetaを挙げ、競合として扱っている",
+          "text_en": "Intel’s annual report names Meta among hyperscalers developing their own custom silicon, which it lists as competition",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "companies developing their own custom silicon, including many hyperscalers such as Amazon, Google, Meta and Microsoft"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "policy": "reviewed-broker-metric-correction-v1",
+  "eventId": 1244,
+  "sourceId": "x-wallstengine",
+  "url": "https://x.com/wallstengine/status/2106377353018626530",
+  "sourceSha": "3ad5a464caa5848b6fb0e4c0211b3218795275b1ed871ba6f8089ea7b0d3a8b3",
+  "bodySha": "c97c55946afbdaa2122b526c779c77bb621f03669bfa2930fc4e5b3af2677149",
+  "publishedAt": "2026-10-03T13:34:30.000Z",
+  "observedAt": "2026-10-03T13:34:43.668+00:00",
+  "failedAt": "2026-10-03T15:32:38.937042+00:00",
+  "category": "broker-commentary",
+  "originalFacts": [
+    {
+      "ja": "JPMorganは2028年までメモリ供給が引き続き逼迫すると見ている。",
+      "en": "JPMorgan expects memory supply to remain tight through 2028.",
+      "evidenceId": "0"
+    },
+    {
+      "ja": "顧客との注文協議はすでに2031年まで延びている。",
+      "en": "Customer order discussions are already extending into 2031.",
+      "evidenceId": "1"
+    },
+    {
+      "ja": "HBMのビット需要は63%増加すると予測している。",
+      "en": "HBM bit demand is estimated to grow by 63%.",
+      "evidenceId": "2"
+    },
+    {
+      "ja": "Non-HBMサーバDRAMの需要は37%増加すると予測している。",
+      "en": "Non-HBM server DRAM demand is forecast to increase by 37%.",
+      "evidenceId": "3"
+    },
+    {
+      "ja": "2027年のHBMの加重平均売価は前年同期比54%増加すると予想されている。",
+      "en": "The CY27 HBM blended average selling price is projected to rise 54% year-over-year.",
+      "evidenceId": "4"
+    },
+    {
+      "ja": "Micronは2030年までに35%以上の売上高を長期供給契約でカバーしているが、保守的な見方かもしれない。",
+      "en": "Micron has over 35% of its revenue covered under long-term supply agreements through 2030, which may be a conservative estimate.",
+      "evidenceId": "5"
+    },
+    {
+      "ja": "アジアのメモリ競合他社は能力の50%以上を長期契約でカバーしている。",
+      "en": "Asian memory peers have long-term agreements covering more than 50% of their capacity.",
+      "evidenceId": "6"
+    }
+  ],
+  "facts": [
+    {
+      "ja": "メモリー供給は2028年まで逼迫が続くと見込む。",
+      "en": "Memory supply is expected to stay constrained through 2028.",
+      "evidenceId": "0"
+    },
+    {
+      "ja": "顧客との受注協議はすでに2031年分にまで及んでいる。",
+      "en": "Customer order talks already reach into 2031.",
+      "evidenceId": "1"
+    },
+    {
+      "ja": "HBMのビット需要は+63%の伸びを見込む。",
+      "en": "HBM bit demand is forecast to expand by +63%.",
+      "evidenceId": "2"
+    },
+    {
+      "ja": "非HBMサーバーDRAMについては+37%と推計している。",
+      "en": "Non-HBM server DRAM is estimated at +37%.",
+      "evidenceId": "3"
+    },
+    {
+      "ja": "CY27のHBM混合平均販売単価（ASP）は前年比+54%と見込む。",
+      "en": "The blended HBM ASP for CY27 is forecast at +54% YoY.",
+      "evidenceId": "4"
+    },
+    {
+      "ja": "Micronの長期供給契約による売上高カバー率>35%（2030年まで）は保守的な可能性があるとみる。",
+      "en": "Micron’s long-term supply agreements cover >35% of revenue through 2030, a level that may be conservative.",
+      "evidenceId": "5"
+    },
+    {
+      "ja": "アジアのメモリー同業他社は長期契約で生産能力の50%+をカバーしている。",
+      "en": "Asian memory peers have long-term agreements covering 50%+ of capacity.",
+      "evidenceId": "6"
+    }
+  ]
+}

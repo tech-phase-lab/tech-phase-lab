@@ -1,0 +1,316 @@
+{
+  "root": {
+    "ticker": "DOV",
+    "name": "ドーバー",
+    "cik": 29905,
+    "name_en": "Dover Corporation"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SNA",
+    "NDSN",
+    "TDY",
+    "VNT",
+    "FELE"
+  ],
+  "companies": [
+    {
+      "id": "SNA",
+      "ticker": "SNA",
+      "name": "スナップオン",
+      "sub": "工具・整備機器",
+      "sub_en": "Tools & equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンジニアド・プロダクツ部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Engineered Products segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Segment Key Competitors Engineered Products Snap-On Inc. (Challenger Lifts, Car-O-Liner), The COATS Company, Arrowhead Winch, Teledyne, Nordson Corporation"
+          }
+        }
+      ],
+      "name_en": "Snap-on"
+    },
+    {
+      "id": "NDSN",
+      "ticker": "NDSN",
+      "name": "ノードソン",
+      "sub": "精密塗布装置",
+      "sub_en": "Dispensing equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンジニアド・プロダクツ部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Engineered Products segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Segment Key Competitors Engineered Products Snap-On Inc. (Challenger Lifts, Car-O-Liner), The COATS Company, Arrowhead Winch, Teledyne, Nordson Corporation"
+          }
+        }
+      ],
+      "name_en": "Nordson"
+    },
+    {
+      "id": "TDY",
+      "ticker": "TDY",
+      "name": "テレダイン・テクノロジーズ",
+      "sub": "計測・電子機器",
+      "sub_en": "Instrumentation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンジニアド・プロダクツ部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Engineered Products segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Segment Key Competitors Engineered Products Snap-On Inc. (Challenger Lifts, Car-O-Liner), The COATS Company, Arrowhead Winch, Teledyne, Nordson Corporation"
+          }
+        }
+      ],
+      "name_en": "Teledyne Technologies"
+    },
+    {
+      "id": "VNT",
+      "ticker": "VNT",
+      "name": "ボンティア",
+      "sub": "燃料給油機器",
+      "sub_en": "Fueling equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クリーンエナジー&フューリング部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Clean Energy & Fueling segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Clean Energy & Fueling Vontier (Gilbarco Veeder-Root, DRB), Tatsuno, Franklin Electric, Verifone"
+          }
+        }
+      ],
+      "name_en": "Vontier"
+    },
+    {
+      "id": "FELE",
+      "ticker": "FELE",
+      "name": "フランクリン・エレクトリック",
+      "sub": "ポンプ・給油",
+      "sub_en": "Pumps & fueling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クリーンエナジー&フューリング部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Clean Energy & Fueling segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Clean Energy & Fueling Vontier (Gilbarco Veeder-Root, DRB), Tatsuno, Franklin Electric, Verifone"
+          }
+        }
+      ],
+      "name_en": "Franklin Electric"
+    },
+    {
+      "id": "VLTO",
+      "ticker": "VLTO",
+      "name": "ベラルト",
+      "sub": "産業用マーキング",
+      "sub_en": "Industrial marking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "イメージング&識別部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Imaging & Identification segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Imaging & Identification Veralto Corporation (Videojet), Brother Industries, Ltd. (Domino Printing)"
+          }
+        }
+      ],
+      "name_en": "Veralto"
+    },
+    {
+      "id": "IEX",
+      "ticker": "IEX",
+      "name": "アイデックス",
+      "sub": "ポンプ・流体機器",
+      "sub_en": "Pumps & fluidics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ポンプ&プロセス部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Pumps & Process Solutions segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Pumps & Process Solutions IDEX Corporation, Ingersoll Rand, ITT, SPX Flow Inc. (Waukesha), Danaher Corporation (Pall)"
+          }
+        }
+      ],
+      "name_en": "IDEX Corporation"
+    },
+    {
+      "id": "IR",
+      "ticker": "IR",
+      "name": "インガソール・ランド",
+      "sub": "圧縮機・ポンプ",
+      "sub_en": "Compressors & pumps",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ポンプ&プロセス部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Pumps & Process Solutions segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Pumps & Process Solutions IDEX Corporation, Ingersoll Rand, ITT, SPX Flow Inc. (Waukesha), Danaher Corporation (Pall)"
+          }
+        }
+      ],
+      "name_en": "Ingersoll Rand"
+    },
+    {
+      "id": "ITT",
+      "ticker": "ITT",
+      "name": "ITTインク",
+      "sub": "ポンプ・産業機器",
+      "sub_en": "Pumps & industrial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ポンプ&プロセス部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Pumps & Process Solutions segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Pumps & Process Solutions IDEX Corporation, Ingersoll Rand, ITT, SPX Flow Inc. (Waukesha), Danaher Corporation (Pall)"
+          }
+        }
+      ],
+      "name_en": "ITT Inc."
+    },
+    {
+      "id": "DHR",
+      "ticker": "DHR",
+      "name": "ダナハー",
+      "sub": "ライフサイエンス",
+      "sub_en": "Life sciences",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ポンプ&プロセス部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Pumps & Process Solutions segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Pumps & Process Solutions IDEX Corporation, Ingersoll Rand, ITT, SPX Flow Inc. (Waukesha), Danaher Corporation (Pall)"
+          }
+        }
+      ],
+      "name_en": "Danaher"
+    },
+    {
+      "id": "ECL",
+      "ticker": "ECL",
+      "name": "エコラボ",
+      "sub": "水処理・衛生",
+      "sub_en": "Water & hygiene",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ポンプ&プロセス部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Pumps & Process Solutions segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Spirax Sarco (Watson Marlow), Kingsbury, Ecolab"
+          }
+        }
+      ],
+      "name_en": "Ecolab"
+    },
+    {
+      "id": "CCK",
+      "ticker": "CCK",
+      "name": "クラウン・ホールディングス",
+      "sub": "金属包装",
+      "sub_en": "Metal packaging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クライメート&サステナビリティ部門の主な競合に名を連ねている",
+          "text_en": "Named as a key competitor of Dover's Climate & Sustainability Technologies segment",
+          "source": {
+            "label": "ドーバー 10-K(2025-12-31)",
+            "label_en": "Dover Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Climate & Sustainability Technologies Panasonic (Hussman Corp.), Alfa Laval, Danfoss, Stolle Machinery, Crown Holdings"
+          }
+        }
+      ],
+      "name_en": "Crown Holdings"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

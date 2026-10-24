@@ -1,0 +1,355 @@
+{
+  "root": {
+    "ticker": "ZM",
+    "name": "Zoom",
+    "cik": 1585521
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤の供給元",
+      "en": "Cloud hosting suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客・利用企業",
+      "en": "Customers & users"
+    },
+    {
+      "ja": "提携・連携",
+      "en": "Partnerships & integrations"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "EGHT",
+    "CSCO",
+    "MSFT",
+    "GOOG"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ドット・コム",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Zoomは事業の重要部分のホスティングにAmazon Web Servicesを利用している",
+          "text_en": "Zoom uses Amazon Web Services to host certain critical aspects of its business",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We also utilize cloud hosting services such as Amazon Web Services and Oracle Cloud for the hosting of certain critical aspects of our business and Microsoft Azure for limited customer-specified managed services."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "クラウド・DB",
+      "sub_en": "Cloud & database",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Zoomは事業の重要部分のホスティングにOracle Cloudを利用している",
+          "text_en": "Zoom uses Oracle Cloud to host certain critical aspects of its business",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We also utilize cloud hosting services such as Amazon Web Services and Oracle Cloud for the hosting of certain critical aspects of our business and Microsoft Azure for limited customer-specified managed services."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "VEEV",
+      "ticker": "VEEV",
+      "name": "ヴィーヴァ システムズ",
+      "sub": "ライフサイエンス向けソフト",
+      "sub_en": "Life sciences software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "VeevaのCRM Engage Meetingは、Zoom製のパートナー向けツールを使っており、機能上不可欠としている",
+          "text_en": "Veeva's CRM Engage Meeting application uses a purpose-built partner tool from Zoom that is critical to its functionality",
+          "source": {
+            "label": "Veeva Systems 10-K",
+            "label_en": "Veeva Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "For example, our Veeva CRM Engage Meeting application uses a purpose-built partner tool from Zoom Video Communications, Inc., which is critical to the application’s functionality."
+          }
+        }
+      ],
+      "name_en": "Veeva Systems"
+    },
+    {
+      "id": "FIVN",
+      "ticker": "FIVN",
+      "name": "ファイブナイン",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Five9は、Zoomを含むUCパートナーとの連携を提供している",
+          "text_en": "Five9 offers integrations into UC partners including Zoom",
+          "source": {
+            "label": "Five9 10-K",
+            "label_en": "Five9 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also offer integrations into UC partners such as Microsoft Teams, Nextiva, RingCentral, Zoom Video Communications, or Zoom, and others."
+          }
+        }
+      ],
+      "name_en": "Five9"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zoomは、Palo Alto Networksなどのソフトウェア提供企業と提携を続けている",
+          "text_en": "Zoom continues to partner with software providers such as Palo Alto Networks",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We continue to partner with video conferencing hardware and peripheral providers, as well as with software providers such as Palo Alto Networks, Zendesk, and Box."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "ビジネスソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zoom Meetingsは、Salesforceなどの企業が作ったツールと連携する",
+          "text_en": "Zoom Meetings integrates with tools created by companies such as Salesforce",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Zoom Meetings integrates with tools created by companies such as Atlassian, Box, Dropbox, Google, LinkedIn, Microsoft, Salesforce, ServiceNow, and Slack."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zoomの連合型AIは、OpenAIなどのパートナーのモデルを活用している",
+          "text_en": "Zoom's federated AI approach leverages models from partners like OpenAI",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our federated AI approach leverages the best of both our proprietary AI and industry-leading models from partners like OpenAI and Anthropic.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zoomの連合型AIは、Anthropicなどのパートナーのモデルを活用している",
+          "text_en": "Zoom's federated AI approach leverages models from partners like Anthropic",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our federated AI approach leverages the best of both our proprietary AI and industry-leading models from partners like OpenAI and Anthropic.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zoomは、MicrosoftやGoogleなど主要ソフトウェア提供企業との連携を持つ",
+          "text_en": "Zoom has integrations with key software vendors such as Microsoft",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Zoom offers more than 3,100 apps on the Zoom App Marketplace and integrations with key software vendors, such as Microsoft and Google."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Microsoft 365(Teams)は、Zoomの競合に当たる",
+          "text_en": "Microsoft 365 (with Teams) competes with Zoom.",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We face competition from legacy web-based meeting services providers, including Cisco Webex and GoTo, bundled productivity suite providers with communications offerings, including Microsoft 365 (with Teams) and Google Workspace (with Meet), and UCaaS and"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "ネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zoomは、MicrosoftやGoogleなど主要ソフトウェア提供企業との連携を持つ",
+          "text_en": "Zoom has integrations with key software vendors such as Google",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Zoom offers more than 3,100 apps on the Zoom App Marketplace and integrations with key software vendors, such as Microsoft and Google."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ZoomはGoogle Workspace(Meet)と競合する",
+          "text_en": "Google Workspace (with Meet) competes with Zoom.",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We face competition from legacy web-based meeting services providers, including Cisco Webex and GoTo, bundled productivity suite providers with communications offerings, including Microsoft 365 (with Teams) and Google Workspace (with Meet), and UCaaS and"
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "通信機器",
+      "sub_en": "Networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Zoomと競合する",
+          "text_en": "Competes with Zoom",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We face competition from legacy web-based meeting services providers, including Cisco Webex and GoTo, bundled productivity suite providers with communications offerings, including Microsoft 365 (with Teams) and Google Workspace (with Meet), and UCaaS and"
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "EGHT",
+      "ticker": "EGHT",
+      "name": "エイトバイエイト",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Zoomと競合する",
+          "text_en": "Competes with Zoom",
+          "source": {
+            "label": "8x8 10-K",
+            "label_en": "8x8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "application program interface solutions, we face competition from other cloud service providers such as RingCentral, Inc., Genesys Telecommunications Laboratories, Inc., Zoom Video Communications, Inc., Ericsson, Five9, Inc., NICE inContact, Inc., Talkdesk, Inc., and Twilio Inc., among others, as well as from legacy on-premises communications"
+          }
+        }
+      ],
+      "name_en": "8x8"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

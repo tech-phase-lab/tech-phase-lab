@@ -1,0 +1,123 @@
+{
+  "root": {
+    "ticker": "YUM",
+    "name": "ヤム・ブランズ",
+    "cik": 1041061,
+    "name_en": "Yum! Brands"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "YUMC",
+      "ticker": "YUMC",
+      "name": "ヤム・チャイナ・ホールディングス",
+      "sub": "中国の最大フランチャイジー",
+      "sub_en": "Largest master franchisee",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "中国本土で最大のマスターフランチャイジーであり、系列店売上高の3%を継続的な手数料として支払う",
+          "text_en": "Yum China is the largest master franchisee and pays a continuing fee of 3% on system sales in mainland China",
+          "source": {
+            "label": "Yum! Brands 10-K(2025年12月31日期)",
+            "label_en": "Yum! Brands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1041061/000104106126000084/yum-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "As our largest master franchisee, Yum China, pays the Company a continuing fee of 3% on system sales of our Concepts in mainland China."
+          }
+        }
+      ],
+      "name_en": "Yum China Holdings"
+    },
+    {
+      "id": "MCLANE",
+      "ticker": "McLane",
+      "name": "マクレーン・フードサービス",
+      "sub": "米国の食材流通",
+      "sub_en": "U.S. food distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国でKFC、タコベル、ピザハットの最大の流通業者を務める",
+          "text_en": "McLane serves as the largest distributor for KFC, Taco Bell and Pizza Hut in the U.S.",
+          "source": {
+            "label": "Yum! Brands 10-K(2025年12月31日期)",
+            "label_en": "Yum! Brands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1041061/000104106126000084/yum-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "RSCS manages our relationship with McLane Foodservice, Inc. (“McLane”) which serves as the largest distributor for the Company’s KFC, Taco Bell and Pizza Hut Concepts in the U.S."
+          }
+        }
+      ],
+      "name_en": "McLane Foodservice"
+    },
+    {
+      "id": "RSCS",
+      "ticker": "RSCS",
+      "name": "レストラン・サプライチェーン・ソリューションズ",
+      "sub": "購買の共同組織",
+      "sub_en": "Purchasing cooperative",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国で一部の店舗用食材と設備の購買を担う第三者組織で、同社と各フランチャイズ団体が構成員である",
+          "text_en": "RSCS is a third party that purchases certain restaurant products and equipment, and the Company and its franchisee groups are members",
+          "source": {
+            "label": "Yum! Brands 10-K(2025年12月31日期)",
+            "label_en": "Yum! Brands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1041061/000104106126000084/yum-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In the U.S., the Company, along with the representatives of the Company’s KFC, Taco Bell and Pizza Hut franchisee groups, are members of Restaurant Supply Chain Solutions, LLC (“RSCS”), a third party which is responsible for purchasing certain restaurant products and equipment."
+          }
+        }
+      ],
+      "name_en": "Restaurant Supply Chain Solutions"
+    },
+    {
+      "id": "DEVYANI",
+      "ticker": "Devyani",
+      "name": "デヴヤニ・インターナショナル",
+      "sub": "インドの加盟店運営",
+      "sub_en": "India franchisee",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "インドでKFCとピザハットを運営する加盟企業で、同社は保有していた約5%の少数株を2024年第1四半期に売却した",
+          "text_en": "Devyani is a franchise entity operating KFC and Pizza Hut in India, in which the Company sold its approximate 5% minority investment",
+          "source": {
+            "label": "Yum! Brands 10-K(2025年12月31日期)",
+            "label_en": "Yum! Brands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1041061/000104106126000084/yum-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Investment in Devyani During the quarter ended March 31, 2024, we sold our approximate 5% minority investment in Devyani International Limited (“Devyani”), a franchise entity that operates KFC and Pizza Hut restaurants in India, for pre-tax proceeds of $ 104 million."
+          }
+        }
+      ],
+      "name_en": "Devyani International"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "root": {
+    "ticker": "COHU",
+    "name": "Cohu",
+    "cik": 21535
+  },
+  "rows": [
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing partner",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TER",
+    "KLAC",
+    "Advantest"
+  ],
+  "companies": [
+    {
+      "id": "JBL",
+      "ticker": "JBL",
+      "name": "ジェイビル",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CohuはJabilと長年の戦略的パートナー関係にあり、同社施設内に専用の半導体ATE製造拠点を持つ",
+          "text_en": "Cohu has a long-standing strategic partnership with Jabil, including dedicated semiconductor ATE manufacturing operations at a Jabil facility.",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s supply chain is further strengthened by long-standing relationships with strategic partners, including dedicated semiconductor ATE manufacturing operations at a facility of Jabil, Inc."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Cohuはマレーシアにあるジェイビルの施設で、半導体テストシステムの大半を製造してもらっている",
+          "text_en": "Cohu depends on Jabil to manufacture most of its semiconductor test systems at its facility in Malaysia",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "For example, we depend upon Jabil to manufacture most of our semiconductor test systems from its facility located in Malaysia."
+          }
+        }
+      ],
+      "name_en": "Jabil"
+    },
+    {
+      "id": "TER",
+      "ticker": "TER",
+      "name": "テラダイン",
+      "sub": "半導体テスト装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
+          "source": {
+            "label": "Teradyne 10-K",
+            "label_en": "Teradyne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Competitors in the Semiconductor Test segment include, among others, Advantest Corporation, SPEA S.p.A., and Cohu, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        }
+      ],
+      "name_en": "Teradyne"
+    },
+    {
+      "id": "KLAC",
+      "ticker": "KLAC",
+      "name": "KLA",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Advantest",
+      "ticker": "Advantest",
+      "name": "アドバンテスト",
+      "sub": "半導体テスト装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cohuと競合する",
+          "text_en": "Competes with Cohu",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s primary competitors include established global players in semiconductor test and inspection, such as Advantest, Teradyne, Hon Precision, KLA, and other Asia-based manufacturers."
+          }
+        }
+      ],
+      "name_en": "Advantest"
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体メーカー",
+      "sub_en": "Semiconductor maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "STMicroelectronicsは、Cohuの連結売上高の10%以上を占めた顧客となった",
+          "text_en": "STMicroelectronics was a customer comprising 12.0% of Cohu's consolidated net sales in 2023.",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "During the last three years, the following customers comprised 10% or greater of our consolidated net sales: 2025 2024 2023 STMicroelectronics * * 12.0 %",
+            "note": "2023年に12.0%",
+            "note_en": "12.0% in 2023"
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "アナログ・デバイセズ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Analog Devicesは、Cohuの連結売上高の10%以上を占めた大口顧客だった",
+          "text_en": "Analog Devices was a customer comprising 14.1% of Cohu's consolidated net sales in 2021.",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774924004596/cohu20231230_10k.htm",
+            "level": "official",
+            "date": "2024-02-16",
+            "quote": "10% or greater of our consolidated net sales were as follows: 2023 2022 2021 STMicroelectronics 12.0 % * * Analog Devices * * 14.1 %",
+            "note": "2021年に14.1%で、やや古い情報",
+            "note_en": "14.1% in 2021; older information"
+          }
+        }
+      ],
+      "name_en": "Analog Devices"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

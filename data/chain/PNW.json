@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "PNW",
+    "name": "ピナクル・ウエスト・キャピタル",
+    "cik": 764622,
+    "name_en": "Pinnacle West Capital"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SWX",
+      "ticker": "SWX",
+      "name": "サウスウエスト・ガス",
+      "sub": "ガス事業者",
+      "sub_en": "Gas utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アリゾナの他の投資家所有ガス・電力事業者として競合する",
+          "text_en": "Southwest Gas is named as a competing utility in Arizona",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "APS is subject to varying degrees of competition from other investor-owned electric and gas utilities in Arizona (such as Southwest Gas Corporation)"
+          }
+        }
+      ],
+      "name_en": "Southwest Gas"
+    },
+    {
+      "id": "BHE",
+      "ticker": "BHE U.S.",
+      "name": "BHE米国送電(バークシャー・ハサウェイ・エナジー子会社)",
+      "sub": "送電合弁",
+      "sub_en": "Transmission JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "送電会社TransCanyonを50対50で共同保有する",
+          "text_en": "BHE U.S. Transmission is the 50/50 partner in the TransCanyon joint venture",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "PNW Power’s investments include TransCanyon, a 50/50 joint venture that was formed in 2014 with BHE U.S. Transmission LLC, a subsidiary of Berkshire Hathaway Energy Company."
+          }
+        }
+      ],
+      "name_en": "BHE U.S. Transmission"
+    },
+    {
+      "id": "SRP",
+      "ticker": "Salt River Project",
+      "name": "ソルト・リバー・プロジェクト",
+      "sub": "電力事業者",
+      "sub_en": "Power utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パロベルデ原発の共同参加者である",
+          "text_en": "Salt River Project is another participant in Palo Verde",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The other participants are Salt River Project, SCE, El Paso Electric Company, Public Service Company of New Mexico, Southern California Public Power Authority, and Los Angeles Department of Water and Power."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "もう一つの発電所の共同所有者で、持分は10%である",
+          "text_en": "Salt River Project holds a 10% share in a plant operated by APS",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The other participants are Salt River Project (10%), Public Service Company of New Mexico (13%), Tucson Electric Power Company (7%) and NTEC (7%)."
+          }
+        }
+      ],
+      "name_en": "Salt River Project"
+    },
+    {
+      "id": "SCE",
+      "ticker": "Southern",
+      "name": "サザン・カリフォルニア・エジソン",
+      "sub": "電力事業者",
+      "sub_en": "Power utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パロベルデ原発の共同参加者である",
+          "text_en": "SCE is another participant in Palo Verde",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The other participants are Salt River Project, SCE, El Paso Electric Company, Public Service Company of New Mexico, Southern California Public Power Authority, and Los Angeles Department of Water and Power."
+          }
+        }
+      ],
+      "name_en": "Southern California Edison"
+    },
+    {
+      "id": "EPE",
+      "ticker": "El Paso Electric",
+      "name": "エルパソ・エレクトリック",
+      "sub": "電力事業者",
+      "sub_en": "Power utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パロベルデ原発の共同参加者である",
+          "text_en": "El Paso Electric is another participant in Palo Verde",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The other participants are Salt River Project, SCE, El Paso Electric Company, Public Service Company of New Mexico, Southern California Public Power Authority, and Los Angeles Department of Water and Power."
+          }
+        }
+      ],
+      "name_en": "El Paso Electric"
+    },
+    {
+      "id": "PNM",
+      "ticker": "Public Service",
+      "name": "ニューメキシコ公益事業",
+      "sub": "電力事業者",
+      "sub_en": "Power utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パロベルデ原発の共同参加者である",
+          "text_en": "Public Service Company of New Mexico is another participant in Palo Verde",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The other participants are Salt River Project, SCE, El Paso Electric Company, Public Service Company of New Mexico, Southern California Public Power Authority, and Los Angeles Department of Water and Power."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "もう一つの発電所の共同所有者で、持分は13%である",
+          "text_en": "Public Service Company of New Mexico holds a 13% share in a plant operated by APS",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The other participants are Salt River Project (10%), Public Service Company of New Mexico (13%), Tucson Electric Power Company (7%) and NTEC (7%)."
+          }
+        }
+      ],
+      "name_en": "Public Service Company of New Mexico"
+    },
+    {
+      "id": "TEP",
+      "ticker": "Tucson Electric",
+      "name": "ツーソン・エレクトリック・パワー",
+      "sub": "電力事業者",
+      "sub_en": "Power utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "APSが運営する発電所の共同所有者で、持分は7%である",
+          "text_en": "Tucson Electric Power holds a 7% share in a plant operated by APS",
+          "source": {
+            "label": "Pinnacle West Capital 10-K(December 31, 2025)",
+            "label_en": "Pinnacle West Capital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The other participants are Salt River Project (10%), Public Service Company of New Mexico (13%), Tucson Electric Power Company (7%) and NTEC (7%)."
+          }
+        }
+      ],
+      "name_en": "Tucson Electric Power"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

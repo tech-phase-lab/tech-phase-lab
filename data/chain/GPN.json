@@ -1,0 +1,146 @@
+{
+  "root": {
+    "ticker": "GPN",
+    "name": "グローバル・ペイメンツ",
+    "cik": 1123360,
+    "name_en": "Global Payments"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "FISV",
+    "TOST",
+    "SHOP"
+  ],
+  "companies": [
+    {
+      "id": "FISV",
+      "ticker": "FISV",
+      "name": "フィサーブ",
+      "sub": "決済処理",
+      "sub_en": "Payment processing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の加盟店向け決済で競合する",
+          "text_en": "Fiserv is a competitor in US merchant acquiring",
+          "source": {
+            "label": "グローバル・ペイメンツ 10-K(2025-12-31)",
+            "label_en": "Global Payments 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123360/000112336026000008/gpn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In the United States, we compete with a large number of providers, including but not limited to Fiserv, Inc. (\"Fiserv\")"
+          }
+        }
+      ],
+      "name_en": "Fiserv"
+    },
+    {
+      "id": "TOST",
+      "ticker": "TOST",
+      "name": "トースト",
+      "sub": "飲食店向け決済",
+      "sub_en": "Restaurant payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の加盟店向け決済で競合する",
+          "text_en": "Toast is a competitor in US merchant acquiring",
+          "source": {
+            "label": "グローバル・ペイメンツ 10-K(2025-12-31)",
+            "label_en": "Global Payments 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123360/000112336026000008/gpn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Toast, Inc., Stripe, Inc. (\"Stripe\"), Shopify Inc. and Block Inc. (\"Block\")"
+          }
+        }
+      ],
+      "name_en": "Toast"
+    },
+    {
+      "id": "STRIPE",
+      "ticker": "Stripe",
+      "name": "ストライプ",
+      "sub": "オンライン決済",
+      "sub_en": "Online payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の加盟店向け決済で競合する",
+          "text_en": "Stripe is a competitor in US merchant acquiring",
+          "source": {
+            "label": "グローバル・ペイメンツ 10-K(2025-12-31)",
+            "label_en": "Global Payments 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123360/000112336026000008/gpn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Toast, Inc., Stripe, Inc. (\"Stripe\"), Shopify Inc. and Block Inc. (\"Block\")"
+          }
+        }
+      ],
+      "name_en": "Stripe"
+    },
+    {
+      "id": "SHOP",
+      "ticker": "SHOP",
+      "name": "ショッピファイ",
+      "sub": "ECプラットフォーム",
+      "sub_en": "E-commerce platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の加盟店向け決済で競合する",
+          "text_en": "Shopify is a competitor in US merchant acquiring",
+          "source": {
+            "label": "グローバル・ペイメンツ 10-K(2025-12-31)",
+            "label_en": "Global Payments 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123360/000112336026000008/gpn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Toast, Inc., Stripe, Inc. (\"Stripe\"), Shopify Inc. and Block Inc. (\"Block\")"
+          }
+        }
+      ],
+      "name_en": "Shopify"
+    },
+    {
+      "id": "BLOCK",
+      "ticker": "Block",
+      "name": "ブロック",
+      "sub": "決済・POS",
+      "sub_en": "Payments & POS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の加盟店向け決済で競合する",
+          "text_en": "Block is a competitor in US merchant acquiring",
+          "source": {
+            "label": "グローバル・ペイメンツ 10-K(2025-12-31)",
+            "label_en": "Global Payments 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123360/000112336026000008/gpn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Toast, Inc., Stripe, Inc. (\"Stripe\"), Shopify Inc. and Block Inc. (\"Block\")"
+          }
+        }
+      ],
+      "name_en": "Block"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

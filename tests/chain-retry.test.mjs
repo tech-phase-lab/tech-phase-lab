@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {retry429,validContact} from '../scripts/chain/retry.mjs';
+test('SEC retries five times with capped exponential backoff',async()=>{let calls=0,total=0;const retries=[];const r=await retry429(async()=>{calls++;return {status:429}},{wait:async n=>{total+=n},onRetry:r=>retries.push(r.delayMs),globalCooldown:false});assert.equal(r.status,429);assert.equal(calls,6);assert.deepEqual(retries,[60000,120000,240000,480000,600000]);assert.equal(total,1500000)});
+test('403 is never retried or bypassed',async()=>{let calls=0;await retry429(async()=>{calls++;return {status:403}},{wait:async()=>assert.fail(),globalCooldown:false});assert.equal(calls,1)});
+test('successful retry ends backoff',async()=>{let calls=0;const result=await retry429(async()=>({status:++calls===1?429:200}),{wait:async()=>{},globalCooldown:false});assert.equal(result.status,200);assert.equal(calls,2)});
+test('requires real configured contact rather than invented placeholder',()=>{assert.equal(validContact('TechPhase contact@example.com'),false);assert.equal(validContact('TechPhase'),false);assert.equal(validContact('TechPhase operations@company.test'),true)});

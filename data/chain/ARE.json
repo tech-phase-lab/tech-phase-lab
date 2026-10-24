@@ -1,0 +1,310 @@
+{
+  "root": {
+    "ticker": "ARE",
+    "name": "アレクサンドリア・リアル・エステート・エクイティーズ",
+    "cik": 1035443,
+    "name_en": "Alexandria Real Estate Equities"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BMS",
+      "ticker": "BMY",
+      "name": "ブリストル・マイヤーズ スクイブ",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の6.1%を占める",
+          "text_en": "One of its largest tenants, accounting for 6.1% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "1 Bristol-Myers Squibb Company 5.6 1,344,987 $ 116,140 6.1%"
+          }
+        }
+      ],
+      "name_en": "Bristol-Myers Squibb Company"
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の4.5%を占める",
+          "text_en": "One of its largest tenants, accounting for 4.5% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "2 Eli Lilly and Company 9.3 1,000,591 84,928 4.5"
+          }
+        }
+      ],
+      "name_en": "Eli Lilly and Company"
+    },
+    {
+      "id": "MRNA",
+      "ticker": "MRNA",
+      "name": "モデルナ",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の3.8%を占める",
+          "text_en": "One of its largest tenants, accounting for 3.8% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "3 Moderna, Inc. 12.9 462,100 71,571 3.8"
+          }
+        }
+      ],
+      "name_en": "Moderna, Inc."
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の2.5%を占める",
+          "text_en": "One of its largest tenants, accounting for 2.5% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "4 Takeda Pharmaceutical Company Limited 9.4 549,759 47,899 2.5"
+          }
+        }
+      ],
+      "name_en": "Takeda Pharmaceutical Company Limited"
+    },
+    {
+      "id": "AZN",
+      "ticker": "AZN",
+      "name": "アストラゼネカ",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の2.1%を占める",
+          "text_en": "One of its largest tenants, accounting for 2.1% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "6 AstraZeneca PLC 6.1 440,087 39,413 2.1"
+          }
+        }
+      ],
+      "name_en": "AstraZeneca PLC"
+    },
+    {
+      "id": "ILMN",
+      "ticker": "ILMN",
+      "name": "イルミナ",
+      "sub": "ゲノム解析機器",
+      "sub_en": "Genomics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の1.6%を占める",
+          "text_en": "One of its largest tenants, accounting for 1.6% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "7 Illumina, Inc. 5.8 792,687 29,977 1.6"
+          }
+        }
+      ],
+      "name_en": "Illumina, Inc."
+    },
+    {
+      "id": "NVS",
+      "ticker": "NVS",
+      "name": "ノバルティス",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の1.6%を占める",
+          "text_en": "One of its largest tenants, accounting for 1.6% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "8 Novartis AG 2.1 377,095 29,463 1.6"
+          }
+        }
+      ],
+      "name_en": "Novartis AG"
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー・テクノロジーズ",
+      "sub": "配車・配送",
+      "sub_en": "Mobility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の1.5%を占める",
+          "text_en": "One of its largest tenants, accounting for 1.5% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "10 Uber Technologies, Inc. 56.8 (4) 1,009,188 27,831 1.5"
+          }
+        }
+      ],
+      "name_en": "Uber Technologies, Inc."
+    },
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の1.2%を占める",
+          "text_en": "One of its largest tenants, accounting for 1.2% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "12 Sanofi 5.0 267,278 21,851 1.2"
+          }
+        }
+      ],
+      "name_en": "Sanofi"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "インターネット",
+      "sub_en": "Internet",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の1.1%を占める",
+          "text_en": "One of its largest tenants, accounting for 1.1% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "13 Alphabet Inc. 2.4 418,600 21,837 1.1"
+          }
+        }
+      ],
+      "name_en": "Alphabet Inc."
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の1.0%を占める",
+          "text_en": "One of its largest tenants, accounting for 1.0% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "18 Merck & Co., Inc. 8.0 (5) 308,356 19,610 1.0"
+          }
+        }
+      ],
+      "name_en": "Merck & Co., Inc."
+    },
+    {
+      "id": "CRL",
+      "ticker": "CRL",
+      "name": "チャールズ・リバー・ラボラトリーズ",
+      "sub": "創薬支援",
+      "sub_en": "Drug R&D services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大口の賃借人の一社で、年間賃料収入の1.1%を占める",
+          "text_en": "One of its largest tenants, accounting for 1.1% of annual rental revenue",
+          "source": {
+            "label": "Alexandria Real Estate Equities 10-K(2025-12-31)",
+            "label_en": "Alexandria Real Estate Equities 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+            "level": "official",
+            "date": "2026-01-26",
+            "quote": "17 Charles River Laboratories, Inc. 9.7 242,693 20,207 1.1"
+          }
+        }
+      ],
+      "name_en": "Charles River Laboratories, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

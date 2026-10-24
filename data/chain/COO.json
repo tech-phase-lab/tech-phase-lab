@@ -1,0 +1,233 @@
+{
+  "root": {
+    "ticker": "COO",
+    "name": "クーパー・カンパニーズ",
+    "cik": 711404,
+    "name_en": "The Cooper Companies"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "JNJ",
+    "ALC",
+    "BLCO",
+    "BAX",
+    "MDT"
+  ],
+  "companies": [
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "sub": "医療・コンタクト",
+      "sub_en": "Healthcare & lenses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コンタクトレンズ市場でクーパービジョンと競合する",
+          "text_en": "It competes with CooperVision in the contact lens market",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "CooperVision competes in the spherical, toric and multifocal lens categories of the contact lens worldwide market against Johnson & Johnson Vision Care, Inc., Alcon Inc., Bausch + Lomb"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "医療機器分野で競合する大手企業として名前が出ている",
+          "text_en": "It is named among larger companies with competing medical device offerings",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "Larger companies such as Johnson & Johnson, Baxter International, Medtronic and Hologic have offerings that compete with our medical device products"
+          }
+        }
+      ],
+      "name_en": "Johnson & Johnson"
+    },
+    {
+      "id": "ALC",
+      "ticker": "ALC",
+      "name": "アルコン",
+      "sub": "眼科ヘルスケア",
+      "sub_en": "Eye care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コンタクトレンズ市場でクーパービジョンと競合する",
+          "text_en": "It competes with CooperVision in the contact lens market",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "CooperVision competes in the spherical, toric and multifocal lens categories of the contact lens worldwide market against Johnson & Johnson Vision Care, Inc., Alcon Inc., Bausch + Lomb"
+          }
+        }
+      ],
+      "name_en": "Alcon Inc."
+    },
+    {
+      "id": "BLCO",
+      "ticker": "BLCO",
+      "name": "ボシュロム",
+      "sub": "眼科ヘルスケア",
+      "sub_en": "Eye care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コンタクトレンズ市場でクーパービジョンと競合する",
+          "text_en": "It competes with CooperVision in the contact lens market",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "CooperVision competes in the spherical, toric and multifocal lens categories of the contact lens worldwide market against Johnson & Johnson Vision Care, Inc., Alcon Inc., Bausch + Lomb"
+          }
+        }
+      ],
+      "name_en": "Bausch + Lomb"
+    },
+    {
+      "id": "BAX",
+      "ticker": "BAX",
+      "name": "バクスター・インターナショナル",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療機器分野で競合する大手企業として名前が出ている",
+          "text_en": "It is named among larger companies with competing medical device offerings",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "Larger companies such as Johnson & Johnson, Baxter International, Medtronic and Hologic have offerings that compete with our medical device products"
+          }
+        }
+      ],
+      "name_en": "Baxter International"
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療機器分野で競合する大手企業として名前が出ている",
+          "text_en": "It is named among larger companies with competing medical device offerings",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "Larger companies such as Johnson & Johnson, Baxter International, Medtronic and Hologic have offerings that compete with our medical device products"
+          }
+        }
+      ],
+      "name_en": "Medtronic"
+    },
+    {
+      "id": "RVTY",
+      "ticker": "RVTY",
+      "name": "レビティ",
+      "sub": "診断・ライフサイエンス",
+      "sub_en": "Diagnostics & life science",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "幹細胞保管分野でViaCord事業が競合する",
+          "text_en": "Its ViaCord division competes in stem cell storage",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "In the stem cell storage field, we compete primarily with ViaCord, a division of Revvity, in the United States"
+          }
+        }
+      ],
+      "name_en": "Revvity"
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paragardと競合するホルモン性IUDのメーカーとして挙げられている",
+          "text_en": "It is named among makers of hormonal IUDs that compete with Paragard",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "With Paragard, we compete with manufacturers of hormonal IUDs including Bayer and AbbVie, Long Acting Reversible Contraceptives including Organon"
+          }
+        }
+      ],
+      "name_en": "AbbVie"
+    },
+    {
+      "id": "OGN",
+      "ticker": "OGN",
+      "name": "オルガノン",
+      "sub": "女性の健康",
+      "sub_en": "Women's health",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paragardと競合する長期作用型避妊法の企業として挙げられている",
+          "text_en": "It is named among long-acting contraceptive makers that compete with Paragard",
+          "source": {
+            "label": "クーパー・カンパニーズ 10-K(2025-10-31)",
+            "label_en": "The Cooper Companies 10-K (fiscal year ended October 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "With Paragard, we compete with manufacturers of hormonal IUDs including Bayer and AbbVie, Long Acting Reversible Contraceptives including Organon"
+          }
+        }
+      ],
+      "name_en": "Organon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

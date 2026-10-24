@@ -1,0 +1,169 @@
+{
+  "root": {
+    "ticker": "LCID",
+    "name": "ルーシッド・グループ",
+    "cik": 1811210,
+    "name_en": "Lucid Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "TSLA",
+    "RIVN"
+  ],
+  "companies": [
+    {
+      "id": "AML",
+      "ticker": "Aston Martin",
+      "name": "アストンマーティン・ラゴンダ",
+      "sub": "高級車メーカー",
+      "sub_en": "Luxury automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "パワートレインとバッテリー部品を供給する長期の技術契約を結んでいる",
+          "text_en": "Has a long-term technology arrangement to supply powertrain and battery components to Aston Martin",
+          "source": {
+            "label": "Lucid Group 10-K(December 31, 2025)",
+            "label_en": "Lucid Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "under which we will provide Aston Martin access to our powertrain, battery system, and software technologies, work with Aston Martin to integrate our powertrain and battery components with Aston Martin’s BEV chassis, and supply powertrain and battery components to Aston Martin"
+          }
+        }
+      ],
+      "name_en": "Aston Martin Lagonda"
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー・テクノロジーズ",
+      "sub": "配車・移動サービス",
+      "sub_en": "Ride-hailing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自動運転ロボタクシーを共同で立ち上げる提携先である",
+          "text_en": "Partner in launching an autonomous robotaxi program",
+          "source": {
+            "label": "Lucid Group 10-K(December 31, 2025)",
+            "label_en": "Lucid Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, Lucid formed a partnership with Uber Technologies, Inc. (“Uber”) and Nuro, Inc. (“Nuro”) to launch a next-generation autonomous robotaxi leveraging Lucid Gravity’s advanced technology platform"
+          }
+        }
+      ],
+      "name_en": "Uber Technologies"
+    },
+    {
+      "id": "NURO",
+      "ticker": "Nuro",
+      "name": "ニューロ",
+      "sub": "自動運転技術",
+      "sub_en": "Autonomous driving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自動運転ロボタクシーを共同で立ち上げる提携先である",
+          "text_en": "Partner in launching an autonomous robotaxi program",
+          "source": {
+            "label": "Lucid Group 10-K(December 31, 2025)",
+            "label_en": "Lucid Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, Lucid formed a partnership with Uber Technologies, Inc. (“Uber”) and Nuro, Inc. (“Nuro”) to launch a next-generation autonomous robotaxi leveraging Lucid Gravity’s advanced technology platform"
+          }
+        }
+      ],
+      "name_en": "Nuro"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "半導体・AI基盤",
+      "sub_en": "Semiconductors & AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自動運転の新ロードマップにDRIVE AVプラットフォームを使う",
+          "text_en": "Its DRIVE AV platform underpins Lucid's new ADAS and autonomous driving roadmap",
+          "source": {
+            "label": "Lucid Group 10-K(December 31, 2025)",
+            "label_en": "Lucid Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In October 2025, we announced a new roadmap for ADAS and autonomous driving, turbocharged by NVIDIA Corporation (“NVIDIA”) DRIVE AV platform."
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "テスラ",
+      "sub": "電気自動車",
+      "sub_en": "Electric vehicles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気自動車の分野で競合している",
+          "text_en": "Competes with Lucid in electric vehicles",
+          "source": {
+            "label": "Lucid Group 10-K(December 31, 2025)",
+            "label_en": "Lucid Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "EV manufacturers with which we compete include Tesla, Rivian, an increasing number of U.S.-based and international entrants and traditional automotive manufacturers"
+          }
+        }
+      ],
+      "name_en": "Tesla"
+    },
+    {
+      "id": "RIVN",
+      "ticker": "RIVN",
+      "name": "リヴィアン",
+      "sub": "電気自動車",
+      "sub_en": "Electric vehicles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気自動車の分野で競合している",
+          "text_en": "Competes with Lucid in electric vehicles",
+          "source": {
+            "label": "Lucid Group 10-K(December 31, 2025)",
+            "label_en": "Lucid Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "EV manufacturers with which we compete include Tesla, Rivian, an increasing number of U.S.-based and international entrants and traditional automotive manufacturers"
+          }
+        }
+      ],
+      "name_en": "Rivian"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "root": {
+    "ticker": "CNXN",
+    "name": "PCコネクション",
+    "cik": 1050377,
+    "name_en": "PC CONNECTION INC"
+  },
+  "rows": [
+    {
+      "ja": "仕入先",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "CDW",
+    "NSIT",
+    "AAPL"
+  ],
+  "companies": [
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシネックス",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品仕入れの約25%を占める最大の仕入先",
+          "text_en": "Largest source of product purchases at approximately 25%",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Product purchases from TD Synnex Corporation, Ingram Micro, Inc., and Microsoft Corporation accounted for approximately 25%, 21%, and 13%, respectively, of our total product purchases in 2025."
+          }
+        }
+      ],
+      "name_en": "TD Synnex"
+    },
+    {
+      "id": "INGM",
+      "ticker": "INGM",
+      "name": "イングラム・マイクロ",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品仕入れの約21%を占める仕入先",
+          "text_en": "Source of approximately 21% of total product purchases",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Product purchases from TD Synnex Corporation, Ingram Micro, Inc., and Microsoft Corporation accounted for approximately 25%, 21%, and 13%, respectively, of our total product purchases in 2025."
+          }
+        }
+      ],
+      "name_en": "Ingram Micro"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品仕入れの約13%を占める仕入先",
+          "text_en": "Source of approximately 13% of total product purchases",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Product purchases from TD Synnex Corporation, Ingram Micro, Inc., and Microsoft Corporation accounted for approximately 25%, 21%, and 13%, respectively, of our total product purchases in 2025."
+          }
+        },
+        {
+          "type": "up",
+          "text": "同社製品が製品仕入れの約16%を占める",
+          "text_en": "Its products were approximately 16% of total product purchases",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Products manufactured by Microsoft Corporation, HP Inc., and Dell Inc. represented approximately 16%, 13%, and 12%, respectively, of our total product purchases in 2025."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HPインク",
+      "sub": "PC・周辺機器",
+      "sub_en": "PCs & peripherals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同社製品が製品仕入れの約13%を占める",
+          "text_en": "Its products were approximately 13% of total product purchases",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Products manufactured by Microsoft Corporation, HP Inc., and Dell Inc. represented approximately 16%, 13%, and 12%, respectively, of our total product purchases in 2025."
+          }
+        }
+      ],
+      "name_en": "HP Inc."
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同社製品が製品仕入れの約12%を占める",
+          "text_en": "Its products were approximately 12% of total product purchases",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Products manufactured by Microsoft Corporation, HP Inc., and Dell Inc. represented approximately 16%, 13%, and 12%, respectively, of our total product purchases in 2025."
+          }
+        }
+      ],
+      "name_en": "Dell"
+    },
+    {
+      "id": "CDW",
+      "ticker": "CDW",
+      "name": "CDW社",
+      "sub": "ITソリューション",
+      "sub_en": "IT solutions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ITソリューション分野の現在の主導企業として競合する",
+          "text_en": "Competes as a current leader among national IT solutions providers",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with other national solutions providers of IT products, including CDW Corporation, SHI, and Insight Enterprises, Inc., who are the current leaders in the space."
+          }
+        }
+      ],
+      "name_en": "CDW"
+    },
+    {
+      "id": "NSIT",
+      "ticker": "NSIT",
+      "name": "インサイト・エンタープライゼス",
+      "sub": "ITソリューション",
+      "sub_en": "IT solutions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ITソリューション分野の現在の主導企業として競合する",
+          "text_en": "Competes as a current leader among national IT solutions providers",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with other national solutions providers of IT products, including CDW Corporation, SHI, and Insight Enterprises, Inc., who are the current leaders in the space."
+          }
+        }
+      ],
+      "name_en": "Insight Enterprises"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "PC・端末",
+      "sub_en": "PCs & devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自社の仕入先でありながら直販でも競合する",
+          "text_en": "Is both a supplier and a direct-sales competitor",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "certain product manufacturers that sell directly to customers as well as some of our own suppliers, such as Apple, Dell Inc., HP Inc., and Lenovo"
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "LNVGY",
+      "ticker": "Lenovo",
+      "name": "レノボ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自社の仕入先でありながら直販でも競合する",
+          "text_en": "Is both a supplier and a direct-sales competitor",
+          "source": {
+            "label": "PC CONNECTION INC 10-K(2025年12月期)",
+            "label_en": "PC CONNECTION INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "certain product manufacturers that sell directly to customers as well as some of our own suppliers, such as Apple, Dell Inc., HP Inc., and Lenovo"
+          }
+        }
+      ],
+      "name_en": "Lenovo"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

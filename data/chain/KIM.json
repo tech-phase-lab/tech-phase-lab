@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "KIM",
+    "name": "キムコ・リアルティ",
+    "cik": 879101,
+    "name_en": "Kimco Realty"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "sub": "ディスカウント小売",
+      "sub_en": "Off-price retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位5テナントの一つで、年間基本賃料収入の3.8%を占める",
+          "text_en": "It is one of the five largest tenants, representing 3.8% of annualized base rental revenues",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "the Company’s five largest tenants were The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, and Albertsons Companies, Inc., which represented 3.8%, 1.9%, 1.8%, 1.8% and 1.7%, respectively, of the Company’s annualized base rental revenues"
+          }
+        }
+      ],
+      "name_en": "The TJX Companies"
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "sub": "ディスカウント小売",
+      "sub_en": "Off-price retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位5テナントの一つで、年間基本賃料収入の1.9%を占める",
+          "text_en": "It is one of the five largest tenants, representing 1.9% of annualized base rental revenues",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "the Company’s five largest tenants were The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, and Albertsons Companies, Inc., which represented 3.8%, 1.9%, 1.8%, 1.8% and 1.7%, respectively, of the Company’s annualized base rental revenues"
+          }
+        }
+      ],
+      "name_en": "Ross Stores"
+    },
+    {
+      "id": "BURL",
+      "ticker": "BURL",
+      "name": "バーリントン・ストアーズ",
+      "sub": "ディスカウント小売",
+      "sub_en": "Off-price retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位5テナントの一つで、年間基本賃料収入の1.8%を占める",
+          "text_en": "It is one of the five largest tenants, representing 1.8% of annualized base rental revenues",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "the Company’s five largest tenants were The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, and Albertsons Companies, Inc., which represented 3.8%, 1.9%, 1.8%, 1.8% and 1.7%, respectively, of the Company’s annualized base rental revenues"
+          }
+        }
+      ],
+      "name_en": "Burlington Stores"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン/ホールフーズ",
+      "sub": "食品・ネット小売",
+      "sub_en": "Grocery & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位5テナントの一つで、年間基本賃料収入の1.8%を占める",
+          "text_en": "It is one of the five largest tenants, representing 1.8% of annualized base rental revenues",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "the Company’s five largest tenants were The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, and Albertsons Companies, Inc., which represented 3.8%, 1.9%, 1.8%, 1.8% and 1.7%, respectively, of the Company’s annualized base rental revenues"
+          }
+        }
+      ],
+      "name_en": "Amazon/Whole Foods Market"
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位5テナントの一つで、年間基本賃料収入の1.7%を占める",
+          "text_en": "It is one of the five largest tenants, representing 1.7% of annualized base rental revenues",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "the Company’s five largest tenants were The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, and Albertsons Companies, Inc., which represented 3.8%, 1.9%, 1.8%, 1.8% and 1.7%, respectively, of the Company’s annualized base rental revenues"
+          }
+        }
+      ],
+      "name_en": "Albertsons Companies"
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要なテナントの一つ",
+          "text_en": "It is named among the major tenants in its shopping centers",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Some of the major national and regional companies that are tenants in the Company's shopping center properties include The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, Albertsons Companies, Inc., PetSmart, The Home Depot, Ahold Delhaize, Dick's Sporting Goods, and Kroger."
+          }
+        }
+      ],
+      "name_en": "The Home Depot"
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要なテナントの一つ",
+          "text_en": "It is named among the major tenants in its shopping centers",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Some of the major national and regional companies that are tenants in the Company's shopping center properties include The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, Albertsons Companies, Inc., PetSmart, The Home Depot, Ahold Delhaize, Dick's Sporting Goods, and Kroger."
+          }
+        }
+      ],
+      "name_en": "Kroger"
+    },
+    {
+      "id": "DKS",
+      "ticker": "DKS",
+      "name": "ディックス・スポーティング・グッズ",
+      "sub": "スポーツ用品小売",
+      "sub_en": "Sporting goods retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要なテナントの一つ",
+          "text_en": "It is named among the major tenants in its shopping centers",
+          "source": {
+            "label": "キムコ・リアルティ 10-K(2025年12月31日)",
+            "label_en": "Kimco Realty 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Some of the major national and regional companies that are tenants in the Company's shopping center properties include The TJX Companies, Ross Stores, Burlington Stores, Inc., Amazon/Whole Foods Market, Albertsons Companies, Inc., PetSmart, The Home Depot, Ahold Delhaize, Dick's Sporting Goods, and Kroger."
+          }
+        }
+      ],
+      "name_en": "Dick's Sporting Goods"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

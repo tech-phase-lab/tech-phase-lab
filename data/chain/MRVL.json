@@ -1,0 +1,1136 @@
+{
+  "root": {
+    "ticker": "MRVL",
+    "name": "Marvell Technology",
+    "cik": 1835632
+  },
+  "rows": [
+    {
+      "ja": "供給元(製造・生産能力)",
+      "en": "Suppliers (manufacturing capacity)",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・協業・共同開発",
+      "en": "Partners & collaborations"
+    },
+    {
+      "ja": "事業売却・ライセンス・エコシステム",
+      "en": "Divestiture, licensing & ecosystem"
+    },
+    {
+      "ja": "競合(双方の資料に記載)",
+      "en": "Competitors (named in filings)"
+    }
+  ],
+  "rivals": [
+    "AVGO",
+    "NVDA",
+    "AMD",
+    "CRDO",
+    "ALAB"
+  ],
+  "companies": [
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GlobalFoundriesがMarvellの光製品向けに、Burlington工場のSiGe生産能力を増やす複数年契約を拡大",
+          "text_en": "GlobalFoundries expanded a multi-year agreement to increase SiGe capacity at GF Burlington for Marvell optical products",
+          "source": {
+            "label": "GlobalFoundries の発表",
+            "label_en": "GlobalFoundries press release",
+            "url": "https://gf.com/news-and-events/news/globalfoundries-and-marvell-expand-collaboration-fornext-generation-optical-connectivity/",
+            "level": "official",
+            "date": "2026-09-17",
+            "quote": "today announced an expanded multi-year agreement to increase capacity for GF’s silicon germanium (SiGe) technology at its Burlington, Vermont, facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSEM",
+      "ticker": "TSEM",
+      "name": "Tower Semiconductor",
+      "sub": "半導体製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Towerが、Marvellとの提携で、500万個を超えるコヒーレント光フォトニックICをMarvellのグローバル顧客向けに出荷",
+          "text_en": "Tower, in partnership with Marvell, shipped over five million coherent photonic ICs to Marvell’s global customers",
+          "source": {
+            "label": "Tower Semiconductor 6-K(の発表)",
+            "label_en": "Tower Semiconductor 6-K (press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326003242/zk2635572.htm",
+            "level": "official",
+            "date": "2026-06-18",
+            "quote": "The company, in partnership with Marvell Technology, has shipped over five million coherent photonic integrated circuits (PICs) to Marvell global customers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MicrosoftがAzure Cloud HSM向けにMarvellのLiquidSecurity HSMを採用",
+          "text_en": "Microsoft selected Marvell LiquidSecurity HSMs for Azure Cloud HSM",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/87/marvell-liquidsecurity-selected-for-microsoft-azure-cloud-hsm",
+            "level": "official",
+            "date": "2025-08-18",
+            "quote": "Microsoft has selected the Marvell ® LiquidSecurity ® family of hardware security modules (HSMs) for Microsoft Azure Cloud HSM."
+          }
+        },
+        {
+          "type": "down",
+          "text": "MicrosoftがAzure内でMarvellのLiquidSecurity HSMを幅広く利用",
+          "text_en": "Microsoft extensively uses Marvell LiquidSecurity HSMs within Azure",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/131/microsoft-integrates-marvell-nist-fips-140-3-level-3-compliant-liquidsecurity-hsms-into-azure-key-vault-and-managed-hsm-services",
+            "level": "official",
+            "date": "2024-08-06",
+            "quote": "Microsoft—which extensively uses the Marvell ® LiquidSecurity ® family of HSMs to perform encryption, key management, and other security functions within Azure"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Marvell、Microsoft、UtimacoがMarvell LiquidSecurity技術を組み合わせたAzure Payment HSM v2を提供",
+          "text_en": "Marvell, Microsoft and Utimaco delivered Azure Payment HSM v2 combining Marvell LiquidSecurity technology",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/1033/microsoft-marvell-and-utimaco-to-deliver-industry-first-secure-cloud-scale-payments-solution",
+            "level": "official",
+            "date": "2026-09-17",
+            "quote": "The offering combines Marvell LiquidSecurity hardware security module (HSM) technology, Utimaco Atalla Payments Module and Microsoft Azure."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "Fortinet",
+      "sub": "セキュリティ機器",
+      "sub_en": "Security appliances",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Fortinetが事業に重要な部品として、Marvellのネットワーク・無線チップに依存している",
+          "text_en": "Fortinet relies on Marvell network and wireless chips for components important to its business",
+          "source": {
+            "label": "Fortinet 10-K(2025年度)",
+            "label_en": "Fortinet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "network and wireless chips from Broadcom Inc. (“Broadcom”), Marvell Technology Group Ltd. (“Marvell”), Qualcomm Incorporated"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LTRX",
+      "ticker": "LTRX",
+      "name": "Lantronix",
+      "sub": "IoT機器",
+      "sub_en": "IoT hardware",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "LantronixがMarvellを利用し、台湾での大規模集積チップの製造を管理している",
+          "text_en": "Lantronix uses Marvell to manage manufacture of its large-scale integration chips in Taiwan",
+          "source": {
+            "label": "Lantronix 10-K(2026年度)",
+            "label_en": "Lantronix 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114925/000168316826006754/lantronix_i10k-063026.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we use Marvell Technology Inc. to manage the manufacture of our large-scale integration chips in Taiwan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIAとMarvellがNVLink Fusionによる戦略的提携を発表し、NVIDIAがMarvellに20億ドルを出資",
+          "text_en": "NVIDIA and Marvell announced a strategic partnership via NVLink Fusion, and NVIDIA invested $2 billion in Marvell",
+          "source": {
+            "label": "NVIDIA/Marvell joint の発表",
+            "label_en": "NVIDIA/Marvell joint press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000119312526134462/d113606dex991.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "NVIDIA has invested $2 billion in Marvell."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MarvellはNVIDIAのエコシステム内でカスタムXPUとNVLink Fusion対応のスケールアップ・ネットワーキングを提供",
+          "text_en": "Marvell will provide custom XPUs and NVLink Fusion-compatible scale-up networking within the NVIDIA ecosystem",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/1019/nvidia-ai-ecosystem-expands-as-marvell-joins-forces-through-nvlink-fusion",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Marvell will provide custom XPUs and NVLink Fusion-compatible scale-up networking, while NVIDIA will provide the supporting technologies"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MarvellがNVIDIAと組み、Marvellのカスタム・クラウド向けシリコンを使う顧客にNVLink Fusionを提供",
+          "text_en": "Marvell teamed with NVIDIA to offer NVLink Fusion to customers using Marvell custom cloud platform silicon",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/97/marvell-and-nvidia-to-provide-custom-solutions-for-advanced-ai-infrastructure",
+            "level": "official",
+            "date": "2025-05-19",
+            "quote": "it is teaming with NVIDIA to offer NVIDIA NVLink Fusion technology to customers employing Marvell custom cloud platform silicon."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Hewlett Packard Enterprise Company, Huawei, Intel, Lumentum Holdings Inc., and Marvell Technology, Inc"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Microchip Technology Inc., Montage Technology, Nvidia Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon (AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellとAWSが5年間の契約で戦略的関係を拡大し、EDAでのAWSクラウド利用を含む",
+          "text_en": "Marvell and AWS expanded their strategic relationship via a five-year agreement, including use of AWS cloud for EDA",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/121/marvell-expands-strategic-collaboration-with-aws-to-enable-accelerated-infrastructure-for-ai-in-the-cloud",
+            "level": "official",
+            "date": "2024-12-02",
+            "quote": "the expansion of their strategic relationship with Amazon Web Services (AWS) through a five-year, multi-generational agreement that includes collaboration across multiple AWS products and the use of AWS cloud infrastructure",
+            "note": "AWSはMarvellのクラウド顧客でもあります。対象は協業とクラウドEDAの利用です。",
+            "note_en": "AWS is also a Marvell cloud customer; the agreement concerns collaboration and cloud EDA usage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Marvell、Microsoft、Oracleが統合HSMの標準化に向けたOCPワーキンググループを設立",
+          "text_en": "Marvell, Microsoft and Oracle formed an OCP working group to standardize an integrated HSM",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/1038/marvell-microsoft-and-oracle-establish-ocp-working-group-to-standardize-data-center-hardware-security",
+            "level": "official",
+            "date": "2026-10-13",
+            "quote": "As founding members of the new OCP working group, Marvell, Microsoft and Oracle will collaborate with the broader OCP community"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LITE",
+      "ticker": "LITE",
+      "name": "Lumentum",
+      "sub": "光部品",
+      "sub_en": "Optical components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellとLumentumが、Marvellの光DSPとLumentumの光回路スイッチの相互運用をデモ",
+          "text_en": "Marvell and Lumentum demonstrated Marvell optical DSPs interoperating with Lumentum optical circuit switching",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/1015/marvell-and-lumentum-to-demonstrate-optical-circuit-switching-for-next-generation-ai-scale-up-infrastructure",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "a live demonstration of Marvell ® optical connectivity solutions interoperating with Lumentum’s optical circuit switching (OCS) platform",
+            "note": "相互運用のデモであり、供給契約ではありません。",
+            "note_en": "Interoperability demonstration, not a supply contract."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COHR",
+      "ticker": "COHR",
+      "name": "Coherent",
+      "sub": "光部品",
+      "sub_en": "Optical components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Marvell、Lumentum、CoherentがMarvell Orion DSPを使った相互運用可能な800G ZR/ZR+プラガブルモジュールをデモ",
+          "text_en": "Marvell, Lumentum and Coherent demonstrated interoperable 800G ZR/ZR+ pluggable modules using the Marvell Orion DSP",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/128/marvell-lumentum-and-coherent-demonstrate-industrys-first-800g-zrzr-pluggable-modules-for-500km-data-center-interconnects",
+            "level": "official",
+            "date": "2024-09-05",
+            "quote": "Marvell, Lumentum and Coherent were able to develop modules, each with their own optics and module technology",
+            "note": "2024年のデモです。",
+            "note_en": "Dated 2024; demonstration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellがMicronとカスタムXPU向けのカスタムHBMで協業",
+          "text_en": "Marvell collaborates with Micron on custom HBM solutions for custom XPUs",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/117/marvell-announces-breakthrough-custom-hbm-compute-architecture-to-optimize-cloud-ai-accelerators",
+            "level": "official",
+            "date": "2024-12-10",
+            "quote": "Marvell is collaborating with its cloud customers and leading HBM manufacturers, Micron, Samsung Electronics, and SK hynix to define and develop custom HBM solutions",
+            "note": "2024年の協業発表です。",
+            "note_en": "Collaboration announcement from 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAMSUNG",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Marvellがサムスン電子とカスタムXPU向けのカスタムHBMで協業",
+          "text_en": "Marvell collaborates with Samsung Electronics on custom HBM solutions for custom XPUs",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/117/marvell-announces-breakthrough-custom-hbm-compute-architecture-to-optimize-cloud-ai-accelerators",
+            "level": "official",
+            "date": "2024-12-10",
+            "quote": "Marvell is collaborating with its cloud customers and leading HBM manufacturers, Micron, Samsung Electronics, and SK hynix to define and develop custom HBM solutions",
+            "note": "2024年の協業発表です。",
+            "note_en": "Collaboration announcement from 2024."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "HYNIX",
+      "ticker": "SK hynix",
+      "name": "SKハイニックス",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellがSKハイニックスとカスタムXPU向けのカスタムHBMで協業",
+          "text_en": "Marvell collaborates with SK hynix on custom HBM solutions for custom XPUs",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/117/marvell-announces-breakthrough-custom-hbm-compute-architecture-to-optimize-cloud-ai-accelerators",
+            "level": "official",
+            "date": "2024-12-10",
+            "quote": "Marvell is collaborating with its cloud customers and leading HBM manufacturers, Micron, Samsung Electronics, and SK hynix to define and develop custom HBM solutions",
+            "note": "2024年の協業発表です。",
+            "note_en": "Collaboration announcement from 2024."
+          }
+        }
+      ],
+      "name_en": "SK hynix"
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellがAMDと協業し、Structera CXL製品をAMD EPYC CPUでテスト",
+          "text_en": "Marvell collaborated with AMD to test Structera CXL products with AMD EPYC CPUs",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/100/marvell-announces-successful-interoperability-of-structera-cxl-portfolio-with-amd-epyc-cpu-and-5th-gen-intel-xeon-scalable-platforms",
+            "level": "official",
+            "date": "2025-04-23",
+            "quote": "Marvell collaborated with AMD and Intel to extensively test Structera CXL products with AMD EPYC and 5 th Gen Intel Xeon Scalable platforms",
+            "note": "相互運用テストです。AMDは競合でもあります。",
+            "note_en": "Interoperability testing; AMD is also a competitor."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Companies that compete directly with our businesses include, but are not limited to, Advanced Micro Devices, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "AMD 10-K(2025年度)",
+            "label_en": "AMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "from ASSP vendors such as Broadcom Corporation, Marvell Technology Group, Ltd., Analog Devices, Texas Instruments Incorporated, NXP Semiconductors N.V., Qualcomm Incorporated and NVIDIA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellがIntelと協業し、Structera CXL製品をIntel Xeonプラットフォームでテスト",
+          "text_en": "Marvell collaborated with Intel to test Structera CXL products with Intel Xeon platforms",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/100/marvell-announces-successful-interoperability-of-structera-cxl-portfolio-with-amd-epyc-cpu-and-5th-gen-intel-xeon-scalable-platforms",
+            "level": "official",
+            "date": "2025-04-23",
+            "quote": "Marvell collaborated with AMD and Intel to extensively test Structera CXL products with AMD EPYC and 5 th Gen Intel Xeon Scalable platforms",
+            "note": "相互運用テストです。Intelは競合でもあります。",
+            "note_en": "Interoperability testing; Intel is also a competitor."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Inc. (“Cisco”), Credo Technology Group Holding Ltd, Intel Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IFX",
+      "ticker": "Infineon",
+      "name": "インフィニオン",
+      "sub": "車載・電力半導体",
+      "sub_en": "Auto & power chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MarvellがAutomotive Ethernet事業をインフィニオンに25億ドルの現金で売却",
+          "text_en": "Marvell sold its Automotive Ethernet business to Infineon for $2.5 billion in cash",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/88/marvell-completes-divestiture-of-automotive-ethernet-business-to-infineon-for-2-5-billion-in-all-cash-transaction",
+            "level": "official",
+            "date": "2025-08-14",
+            "quote": "it has completed the sale of its Automotive Ethernet business to Infineon Technologies AG (\"Infineon\") for $2.5 billion in an all-cash transaction.",
+            "note": "売却は完了済みです。",
+            "note_en": "Completed divestiture."
+          }
+        }
+      ],
+      "name_en": "Infineon Technologies"
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "Rambus",
+      "sub": "メモリーIP",
+      "sub_en": "Memory interface IP",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rambusは、特許のライセンス先の1社にMarvellを持つ",
+          "text_en": "Marvell is one of the companies that have licensed Rambus' patents.",
+          "source": {
+            "label": "Rambus 10-Q(2026年第2四半期)",
+            "label_en": "Rambus 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526321000/rmbs-20260630.htm",
+            "level": "official",
+            "date": "2026-07-28",
+            "quote": "Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Phison Electronics Corporation, Qualcomm Incorporated (“Qualcomm”), Rambus, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARM",
+      "ticker": "ARM",
+      "name": "Arm Holdings",
+      "sub": "CPU設計",
+      "sub_en": "CPU architecture",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Marvellは、Armコンピュート・プラットフォームのシリコンへの拡大を支える業界リーダーの1社に名を連ねる",
+          "text_en": "Marvell is one of the industry leaders supporting the expansion of the Arm compute platform into silicon.",
+          "source": {
+            "label": "Arm 6-K",
+            "label_en": "Arm 6-K (Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000050/exhibit991-march24finalarm.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "That momentum includes industry leaders such as AWS, Broadcom, Google, Marvell, Micron, Microsoft, NVIDIA, Samsung, SK Hynix and TSMC",
+            "note": "エコシステムを支持する発言で、契約条件はありません。",
+            "note_en": "Ecosystem support statement; no contract terms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Ayar Labs, Inc. (“Ayar Labs”), Broadcom Inc. (“Broadcom”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALCHIP",
+      "ticker": "Alchip",
+      "name": "アルチップ・テクノロジーズ",
+      "sub": "ASIC設計",
+      "sub_en": "ASIC design services",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Companies that compete directly with our businesses include, but are not limited to, Advanced Micro Devices, Inc. (“AMD”), Alchip Technologies (“Alchip”)"
+          }
+        }
+      ],
+      "name_en": "Alchip Technologies"
+    },
+    {
+      "id": "ALAB",
+      "ticker": "ALAB",
+      "name": "Astera Labs",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Inc. (“AMD”), Alchip Technologies (“Alchip”), Astera Labs, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Astera Labs 10-K(2025年度)",
+            "label_en": "Astera Labs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our principal competitors include Broadcom, Inc., Credo Technology Group Holding Ltd., Marvell Technology, Inc., Microchip Technology Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco Systems",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Inc. (“Ayar Labs”), Broadcom Inc. (“Broadcom”), Cisco Systems, Inc. (“Cisco”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRDO",
+      "ticker": "CRDO",
+      "name": "Credo Technology Group",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Cisco Systems, Inc. (“Cisco”), Credo Technology Group Holding Ltd"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Credo 10-K(2026年度)",
+            "label_en": "Credo 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/0001807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Our principal competitors with respect to our products include Broadcom Ltd., Marvell Technology, Inc. (Marvell) and Astera Labs, Inc. (Astera)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GUC",
+      "ticker": "GUC",
+      "name": "Global Unichip",
+      "sub": "ASIC設計",
+      "sub_en": "ASIC design services",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Credo Technology Group Holding Ltd, Intel Corporation, Global Unichip Corporation (“GUC”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "MACOM Technology Solutions",
+      "sub": "アナログ・光半導体",
+      "sub_en": "Analog & optical chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Lightmatter, Inc. (“Lightmatter”), MACOM Technology Solutions Holdings, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "MACOM 10-K(2025年度)",
+            "label_en": "MACOM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Credo Technology Group Holding Ltd. (“Credo”), Marvell Technology Inc. (“Marvell”), MaxLinear Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDTK",
+      "ticker": "MediaTek",
+      "name": "MediaTek",
+      "sub": "SoC",
+      "sub_en": "SoCs",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "MACOM Technology Solutions Holdings, Inc., MediaTek Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCHP",
+      "ticker": "MCHP",
+      "name": "Microchip Technology",
+      "sub": "マイコン・半導体",
+      "sub_en": "Microcontrollers & chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Inc., MediaTek Inc., Microchip Technology Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MONT",
+      "ticker": "Montage",
+      "name": "Montage Technology",
+      "sub": "メモリーインターフェース",
+      "sub_en": "Memory interface chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "MediaTek Inc., Microchip Technology Inc., Montage Technology"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXP Semiconductors",
+      "sub": "車載半導体",
+      "sub_en": "Auto chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Montage Technology, Nvidia Corporation, NXP Semiconductors N.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHSN",
+      "ticker": "Phison",
+      "name": "群聯電子(Phison)",
+      "sub": "ストレージ制御",
+      "sub_en": "Storage controllers",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Nvidia Corporation, NXP Semiconductors N.V., Phison Electronics Corporation"
+          }
+        }
+      ],
+      "name_en": "Phison Electronics"
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "モバイル半導体",
+      "sub_en": "Mobile chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "NXP Semiconductors N.V., Phison Electronics Corporation, Qualcomm Incorporated (“Qualcomm”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RLTK",
+      "ticker": "Realtek",
+      "name": "Realtek Semiconductor",
+      "sub": "ネットワーク半導体",
+      "sub_en": "Networking chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Inc., Ranovus Inc. (“Ranovus”), Realtek Semiconductor Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMTC",
+      "ticker": "SMTC",
+      "name": "Semtech",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Ranovus Inc. (“Ranovus”), Realtek Semiconductor Corporation, Semtech Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIMO",
+      "ticker": "SIMO",
+      "name": "Silicon Motion Technology",
+      "sub": "ストレージ制御",
+      "sub_en": "Storage controllers",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Realtek Semiconductor Corporation, Semtech Corporation, Silicon Motion Technology Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOCN",
+      "ticker": "Socionext",
+      "name": "ソシオネクスト",
+      "sub": "SoC設計",
+      "sub_en": "SoC design",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Marvell 10-K(2026年度)",
+            "label_en": "Marvell 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Silicon Motion Technology Corporation, and Socionext Inc"
+          }
+        }
+      ],
+      "name_en": "Socionext"
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "MaxLinear",
+      "sub": "接続半導体",
+      "sub_en": "Connectivity chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "MaxLinear 10-K(2025年度)",
+            "label_en": "MaxLinear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "Ciena",
+      "sub": "光ネットワーク",
+      "sub_en": "Optical networking",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Ciena 10-K(2025年度)",
+            "label_en": "Ciena 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "we will begin to compete with additional competitors, including Marvell Technology Group, Credo Technology Group, and Broadcom"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "半導体IP",
+      "sub_en": "Semiconductor IP",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "CEVA 10-K(2025年度)",
+            "label_en": "CEVA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with custom ASIC providers and internal engineering teams at companies such as Marvell, Broadcom, ST, and NXP"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SILC",
+      "ticker": "SILC",
+      "name": "Silicom",
+      "sub": "ネットワークカード",
+      "sub_en": "Network cards",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marvell Technologyと競合する",
+          "text_en": "Competes with Marvell Technology",
+          "source": {
+            "label": "Silicom 20-F(2025年度)",
+            "label_en": "Silicom 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916793/000117891326002258/zk2635063.htm",
+            "level": "official",
+            "date": "2026-04-28",
+            "quote": "In this sector, Marvell, Nvidia, Netronome, Napatech, BittWare, Lanner and Caswell compete with certain of our Smart Cards."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

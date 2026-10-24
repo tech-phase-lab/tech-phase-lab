@@ -1,0 +1,274 @@
+{
+  "root": {
+    "ticker": "PTC",
+    "name": "PTC",
+    "cik": 857005
+  },
+  "rows": [
+    {
+      "ja": "提携・買収",
+      "en": "Partnerships & acquisition",
+      "above": true
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ADSK",
+    "DASS",
+    "SIE",
+    "IBM"
+  ],
+  "companies": [
+    {
+      "id": "SBGS",
+      "ticker": "Schneider",
+      "name": "シュナイダーエレクトリック",
+      "sub": "電気設備",
+      "sub_en": "Electrical equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Schneider ElectricがPTCを買収する正式契約を結んだと発表している",
+          "text_en": "Announced a definitive agreement under which Schneider Electric will acquire PTC",
+          "source": {
+            "label": "PTC October5,2026 acquisition agreement, Q3 2027 closing anticipated, conditional; checked October17,2026",
+            "label_en": "PTC October5,2026 acquisition agreement, Q3 2027 closing anticipated, conditional; checked October17,2026",
+            "url": "https://www.ptc.com/en/news/2026/schneider-electric-to-acquire-ptc",
+            "level": "official",
+            "quote": "PTC), a leader in complex industrial product design, engineering and data management, today announced that they have signed a definitive agreement under which Schneider Electric will acquire PTC (“the transaction”).",
+            "note": "条件付きの買収計画です。完了は2027年第3四半期を見込みます。",
+            "note_en": "Conditional planned acquisition; closing is anticipated in Q3 2027."
+          }
+        }
+      ],
+      "name_en": "Schneider Electric"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIA Omniverseのライブラリを統合している",
+          "text_en": "PTC is integrating NVIDIA Omniverse libraries",
+          "source": {
+            "label": "PTC — NVIDIA Omniverse technology collaboration, checked October 16, 2026",
+            "label_en": "PTC — NVIDIA Omniverse technology collaboration, checked October 16, 2026",
+            "url": "https://www.ptc.com/en/partners/strategic-partnerships/nvidia",
+            "level": "official",
+            "quote": "PTC is integrating NVIDIA Omniverse libraries, transforming how manufacturers design, simulate, and collaborate on complex products in the future."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAとの協力を深め、Alliance for OpenUSDに参加した",
+          "text_en": "PTC is deepening its collaboration with NVIDIA and joining the Alliance for OpenUSD",
+          "source": {
+            "label": "PTC — NVIDIA Omniverse technology collaboration, checked October 16, 2026",
+            "label_en": "PTC — NVIDIA Omniverse technology collaboration, checked October 16, 2026",
+            "url": "https://www.ptc.com/en/partners/strategic-partnerships/nvidia",
+            "level": "official",
+            "quote": "By deepening our collaboration with NVIDIA and joining the Alliance for OpenUSD, we’re giving our customers the ability to incorporate design and configuration data in a real-time, immersive simulation environment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PTCはMicrosoftと戦略的に組み、デジタルトランスフォーメーションとスマート製造を進める",
+          "text_en": "PTC and Microsoft are accelerating digital transformation and smart manufacturing.",
+          "source": {
+            "label": "PTC — named strategic partner directory, checked October 16, 2026",
+            "label_en": "PTC — named strategic partner directory, checked October 16, 2026",
+            "url": "https://www.ptc.com/en/partners/strategic-partnerships",
+            "level": "official",
+            "quote": "PTC and Microsoft are accelerating digital transformation and bringing smart manufacturing to life, thus allowing you to connect your business and enterprise processes into industrial applications.",
+            "note": "パートナー紹介ページの記載です。",
+            "note_en": "Partner directory listing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPMorgan",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bank, N.A.が管理代理人を務める第4次改訂クレジット契約の第2次修正を締結した",
+          "text_en": "PTC entered into Amendment No. 2 to its Fourth Amended and Restated Credit Agreement with JPMorgan Chase Bank, N.A. as Administrative Agent",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "(“PTC”) and PTC (IFSC) Limited, a subsidiary of PTC, entered into Amendment No. 2 (the “Amendment”) to the Fourth Amended and Restated Credit Agreement dated January 3, 2023 (the “Credit Agreement”) with JPMorgan Chase Bank, N.A., as Administrative Agent, and the Lenders named therein.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同クレジット契約は2023年1月3日付である",
+          "text_en": "The credit agreement is dated January 3, 2023",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "Fourth Amended and Restated Credit Agreement dated January 3, 2023 by and among PTC, PTC (IFSC) Limited, JPMorgan Chase Bank, N.A., as administrative agent, and the Lenders named therein"
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "ADSK",
+      "ticker": "ADSK",
+      "name": "Autodesk",
+      "sub": "設計ソフト",
+      "sub_en": "Design software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PTCと競合する",
+          "text_en": "Competes with PTC",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "For enterprise CAD and PLM solutions, we compete with large established companies including Autodesk, Dassault Systèmes SA, and Siemens AG."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DASS",
+      "ticker": "Dassault",
+      "name": "ダッソー・システムズ",
+      "sub": "設計・PLMソフト",
+      "sub_en": "CAD & PLM software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業向けCADとPLMの競合には、Dassault Systèmesが顔を出す",
+          "text_en": "Dassault Systèmes competes with PTC in enterprise CAD and PLM.",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "For enterprise CAD and PLM solutions, we compete with large established companies including Autodesk, Dassault Systèmes SA, and Siemens AG."
+          }
+        }
+      ],
+      "name_en": "Dassault Systèmes"
+    },
+    {
+      "id": "SIE",
+      "ticker": "Siemens",
+      "name": "シーメンス",
+      "sub": "産業機器・ソフト",
+      "sub_en": "Industrial tech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ALM製品の競合は、Siemens AGだ",
+          "text_en": "Siemens AG competes with PTC's ALM products.",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "For our ALM products, we compete with IBM, Jama Software, Inc. and Siemens AG."
+          }
+        }
+      ],
+      "name_en": "Siemens"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・ソフト",
+      "sub_en": "IT services & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ALM製品では、IBMも競合の一角を占める",
+          "text_en": "IBM also competes with PTC's ALM products.",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "For our ALM products, we compete with IBM, Jama Software, Inc. and Siemens AG."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SLM製品の競合には、Salesforceなどが加わる",
+          "text_en": "Salesforce competes with PTC's SLM products.",
+          "source": {
+            "label": "PTC 10-K",
+            "label_en": "PTC 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "For our SLM products, we compete with enterprise software companies such as Oracle, SAP, IFS AB, Microsoft, and Salesforce, and with companies that offer point solutions."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

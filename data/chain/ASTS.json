@@ -1,0 +1,330 @@
+{
+  "root": {
+    "ticker": "ASTS",
+    "name": "AST SpaceMobile",
+    "cik": 1780312
+  },
+  "rows": [
+    {
+      "ja": "携帯事業者(提携・顧客)",
+      "en": "Mobile operators (partners & customers)"
+    },
+    {
+      "ja": "出資・資金調達",
+      "en": "Investors & financing"
+    },
+    {
+      "ja": "競合(SpaceXは打上げ供給元でもある)",
+      "en": "Competitors (SpaceX is also a launch provider)"
+    }
+  ],
+  "rivals": [
+    "SPCX",
+    "IRDM",
+    "GSAT"
+  ],
+  "companies": [
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "sub": "携帯通信",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AST SpaceMobileは、AT&T、Verizon、STC、Vodafoneと最終的な商業契約を結んでいる",
+          "text_en": "AST SpaceMobile has definitive commercial agreements with AT&T, Verizon, STC and Vodafone",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "To date, we have entered into definitive commercial agreements with AT&T, Verizon, STC and Vodafone and approximately 50 preliminary agreements and understandings with other MNOs."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年6月5日付の修正株主間契約に、AT&Tが当事者として含まれる",
+          "text_en": "AT&T is a party to the Amended Stockholders' Agreement dated June 5, 2024",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "• “Amended Stockholders’ Agreement” refers to that Certain Stockholders’ Agreement, dated as of June 5, 2024, by and among the Company, the AST Equityholders, and AT&T."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "携帯通信",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年10月8日、2026年から米国本土とハワイのVerizon顧客向けに直接通信サービスを提供する最終的な商業契約を発表した",
+          "text_en": "On October 8, 2025, AST announced a definitive commercial agreement with Verizon to provide direct-to-cellular service to Verizon customers in the continental US and Hawaii starting in 2026",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "On October 8, 2025, we announced the signing of a definitive commercial agreement with Verizon to provide direct-to-cellular AST SpaceMobile service when needed for Verizon customers within the continental United States (excluding Alaska) and Hawaii starting in 2026."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年5月23日、劣後転換社債を総額3,500万ドルでVerizonに発行した",
+          "text_en": "On May 23, 2024, AST issued $35.0 million of subordinated convertible notes to Verizon",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Pursuant to the Convertible Security Investment Agreement which we entered into with certain investors, we issued subordinated convertible notes (“2034 Convertible Notes”) for an aggregate principal amount of $110.0 million on January 16, 2024 to AT&T, Google, and Vodafone, and for an aggregate principal amount of $35.0 million on May 23, 2024 to Verizon."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "VOD",
+      "ticker": "Vodafone",
+      "name": "ボーダフォン",
+      "sub": "携帯通信",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月18日、Vodafoneと共同保有する欧州の衛星サービス会社(SatCo)が、欧州・英国などのMNOへSpaceMobileサービスを独占的に販売する再販契約を結んだ",
+          "text_en": "On December 18, 2025, AST entered into a reseller agreement with its jointly-owned European satellite service business with Vodafone (SatCo) to exclusively distribute SpaceMobile Service to MNOs in Europe, the UK and certain other markets",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "On December 18, 2025, we entered into a reseller agreement with our jointly-owned European satellite service business with Vodafone (“SatCo”) to exclusively distribute SpaceMobile Service to MNOs in Europe, UK and certain other markets."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2024年1月16日、劣後転換社債(2034年満期)をAT&T、Google、Vodafoneに合計1億1,000万ドル発行した",
+          "text_en": "On January 16, 2024, AST issued $110.0 million of subordinated convertible notes (2034 Convertible Notes) to AT&T, Google and Vodafone",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Pursuant to the Convertible Security Investment Agreement which we entered into with certain investors, we issued subordinated convertible notes (“2034 Convertible Notes”) for an aggregate principal amount of $110.0 million on January 16, 2024 to AT&T, Google, and Vodafone, and for an aggregate principal amount of $35.0 million on May 23, 2024 to Verizon."
+          }
+        }
+      ],
+      "name_en": "Vodafone"
+    },
+    {
+      "id": "DTEGY",
+      "ticker": "Deutsche Telekom",
+      "name": "ドイツテレコム",
+      "sub": "携帯通信",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州各国でVodafoneやDeutsche Telekomなどとネットワーク統合・試験が進行中である",
+          "text_en": "Network integration and testing activities are underway across European countries with Vodafone, Orange, Telefonica and Deutsche Telekom, among others",
+          "source": {
+            "label": "AST SpaceMobile 8-K Ex.99 の発表",
+            "label_en": "AST SpaceMobile 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "o Network integration and testing activities now underway across European countries with Vodafone, Orange, Telefónica, Vodafone Ukraine, and Deutsche Telekom as well as in other key markets including Canada, Japan, and Saudi Arabia, subject to final regulatory approvals",
+            "note": "規制当局の最終承認が前提の計画段階です。",
+            "note_en": "Planned, subject to final regulatory approvals."
+          }
+        }
+      ],
+      "name_en": "Deutsche Telekom"
+    },
+    {
+      "id": "TEF",
+      "ticker": "Telefonica",
+      "name": "テレフォニカ",
+      "sub": "携帯通信",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Orange、Telefonicaなどと世界で商業提携を拡大した",
+          "text_en": "AST expanded commercial partnerships globally with Orange, Telefonica and others",
+          "source": {
+            "label": "AST SpaceMobile 8-K Ex.99 の発表",
+            "label_en": "AST SpaceMobile 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000005/asts-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "o Expanded commercial partnerships globally with Orange, Telefonica, CK Hutchison, Taiwan Mobile, Sunrise, and progressed initiatives with Vodafone"
+          }
+        }
+      ],
+      "name_en": "Telefonica"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年1月16日、劣後転換社債をAT&T、Google、Vodafoneに合計1億1,000万ドル発行した",
+          "text_en": "On January 16, 2024, AST issued $110.0 million of subordinated convertible notes to AT&T, Google and Vodafone",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Pursuant to the Convertible Security Investment Agreement which we entered into with certain investors, we issued subordinated convertible notes (“2034 Convertible Notes”) for an aggregate principal amount of $110.0 million on January 16, 2024 to AT&T, Google, and Vodafone, and for an aggregate principal amount of $35.0 million on May 23, 2024 to Verizon.",
+            "note": "出資の一部としての記載です。",
+            "note_en": "Financing mention."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "Rakuten",
+      "ticker": "Rakuten",
+      "name": "楽天グループ",
+      "sub": "通信・EC",
+      "sub_en": "Telecom & e-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年2月4日付の修正再録Series B優先株購入契約の当事者に、Rakuten Mobile Singaporeが含まれる",
+          "text_en": "Rakuten Mobile Singapore is a party to the Amended and Restated Series B Preferred Shares Purchase Agreement dated February 4, 2020",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Amended and Restated Series B Preferred Shares Purchase Agreement, dated as of February 4, 2020, by and among AST & Science, LLC, Vodafone Ventures Limited, ATC TRS II LLC and Rakuten Mobile Singapore PTE.",
+            "note": "子会社レベルで、時期は古いです。",
+            "note_en": "Subsidiary-level; dated 2020."
+          }
+        }
+      ],
+      "name_en": "Rakuten Group"
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "スペースX",
+      "sub": "宇宙・衛星通信",
+      "sub_en": "Space & satellite",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SpaceXのStarlinkは、直接通信分野でAST SpaceMobileの競合となる",
+          "text_en": "SpaceX's Starlink competes with AST SpaceMobile in the direct-to-device segment.",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We face competition from existing and new companies including SpaceX’s Starlink, which is developing satellite communications technology using LEO constellations to provide competitive services in the direct-to-device segment of the mobile satellite services industry."
+          }
+        },
+        {
+          "type": "up",
+          "text": "SpaceXはBlueBird衛星の打上げ契約先の1社を務める",
+          "text_en": "SpaceX is one of the launch providers under agreement for BlueBird satellites",
+          "source": {
+            "label": "AST SpaceMobile 8-K Ex.99 の発表",
+            "label_en": "AST SpaceMobile 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526216946/asts-ex99_1.htm",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "• Network deployment targeting approximately 45 BlueBird satellites in orbit during 2026, supported by our manufacturing cadence and agreements with multiple launch providers, including Blue Origin, SpaceX, and others"
+          }
+        }
+      ],
+      "name_en": "SpaceX"
+    },
+    {
+      "id": "IRDM",
+      "ticker": "IRDM",
+      "name": "イリジウム・コミュニケーションズ",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Iridium CommunicationsはAST SpaceMobileと競合する既存事業者だ",
+          "text_en": "Iridium Communications is an existing service provider that competes with AST SpaceMobile.",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In addition, we face competition from existing service providers such as Inmarsat Global Limited (“Inmarsat”), Globalstar, Thuraya Telecommunications Co., Iridium Communications and Skylo that offer a range of mobile and fixed communications options."
+          }
+        }
+      ],
+      "name_en": "Iridium Communications"
+    },
+    {
+      "id": "GSAT",
+      "ticker": "GSAT",
+      "name": "グローバルスター",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Globalstarは、AST SpaceMobileの既存の競合事業者だ",
+          "text_en": "Globalstar is an existing service provider that competes with AST SpaceMobile.",
+          "source": {
+            "label": "AST SpaceMobile 10-K",
+            "label_en": "AST SpaceMobile 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In addition, we face competition from existing service providers such as Inmarsat Global Limited (“Inmarsat”), Globalstar, Thuraya Telecommunications Co., Iridium Communications and Skylo that offer a range of mobile and fixed communications options."
+          }
+        }
+      ],
+      "name_en": "Globalstar"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "root": {
+    "ticker": "ENPH",
+    "name": "エンフェーズ・エナジー",
+    "cik": 1463101,
+    "name_en": "Enphase Energy"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "SEDG",
+    "TSLA",
+    "CHPT",
+    "WBX"
+  ],
+  "companies": [
+    {
+      "id": "FLEX",
+      "ticker": "FLEX",
+      "name": "フレックス",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "マイクロインバーターや蓄電システムなどの組立・試験を委託している先の一つである",
+          "text_en": "Flex assembles and tests certain of Enphase's microinverters, battery storage systems, EV chargers and gateway products",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We utilize Flex Ltd. and affiliates (“Flex”), Salcomp Manufacturing India PVT and Sunwoda Electric Co. Ltd. to assemble and test certain of our IQ microinverters, IQ Battery storage systems, EV chargers and IQ Gateway products."
+          }
+        }
+      ],
+      "name_en": "Flex"
+    },
+    {
+      "id": "SALCOMP",
+      "ticker": "Salcomp",
+      "name": "サルコンプ・マニュファクチャリング・インディア",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "マイクロインバーターや蓄電システムなどの組立・試験を委託している先の一つである",
+          "text_en": "Salcomp Manufacturing India assembles and tests certain of Enphase's microinverters, battery storage systems, EV chargers and gateway products",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We utilize Flex Ltd. and affiliates (“Flex”), Salcomp Manufacturing India PVT and Sunwoda Electric Co. Ltd. to assemble and test certain of our IQ microinverters, IQ Battery storage systems, EV chargers and IQ Gateway products."
+          }
+        }
+      ],
+      "name_en": "Salcomp Manufacturing India"
+    },
+    {
+      "id": "SUNWODA",
+      "ticker": "Sunwoda Electric",
+      "name": "サンウォーダ・エレクトロニック",
+      "sub": "受託製造・電池",
+      "sub_en": "Contract manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "マイクロインバーターや蓄電システムなどの組立・試験を委託している先の一つである",
+          "text_en": "Sunwoda Electric assembles and tests certain of Enphase's microinverters, battery storage systems, EV chargers and gateway products",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We utilize Flex Ltd. and affiliates (“Flex”), Salcomp Manufacturing India PVT and Sunwoda Electric Co. Ltd. to assemble and test certain of our IQ microinverters, IQ Battery storage systems, EV chargers and IQ Gateway products."
+          }
+        }
+      ],
+      "name_en": "Sunwoda Electric"
+    },
+    {
+      "id": "SEDG",
+      "ticker": "SEDG",
+      "name": "ソーラーエッジ",
+      "sub": "インバーター",
+      "sub_en": "Inverters",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インバーター市場とストレージ市場の競合先として名が挙がる",
+          "text_en": "SolarEdge is named as a competitor in the inverter market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the inverter market include, among others, SolarEdge Technologies, Inc. (“SolarEdge”), Huawei Technologies Co. Ltd., (“Huawei”), Tesla, Inc. (“Tesla”), Sungrow Power Supply Co., Ltd., Growatt New Energy Co., Ltd and other companies offering microinverters and/or string inverters with and without solar optimizers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ストレージ市場の競合先としても名が挙がる",
+          "text_en": "SolarEdge is also named as a competitor in the storage market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the storage market include Tesla, SolarEdge, Huawei, BYD Company Limited (“BYD”), Franklin Solar Battery and other producers of battery cells and integrated storage systems."
+          }
+        }
+      ],
+      "name_en": "SolarEdge"
+    },
+    {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "テスラ",
+      "sub": "EV・蓄電",
+      "sub_en": "EVs & storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インバーター、ストレージ、EV充電器の各市場で競合先として名が挙がる",
+          "text_en": "Tesla is named as a competitor in the inverter market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the inverter market include, among others, SolarEdge Technologies, Inc. (“SolarEdge”), Huawei Technologies Co. Ltd., (“Huawei”), Tesla, Inc. (“Tesla”), Sungrow Power Supply Co., Ltd., Growatt New Energy Co., Ltd and other companies offering microinverters and/or string inverters with and without solar optimizers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "EV充電器市場の競合先としても名が挙がる",
+          "text_en": "Tesla is also named as a competitor in the EV charger market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the EV charger market include Wallbox N.V., ChargePoint Holdings, Inc., Tesla and EVBox Group, among others."
+          }
+        }
+      ],
+      "name_en": "Tesla"
+    },
+    {
+      "id": "HUAWEI",
+      "ticker": "Huawei",
+      "name": "ファーウェイ",
+      "sub": "通信・インバーター",
+      "sub_en": "Telecom & inverters",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インバーター市場の競合先として名が挙がる",
+          "text_en": "Huawei is named as a competitor in the inverter market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the inverter market include, among others, SolarEdge Technologies, Inc. (“SolarEdge”), Huawei Technologies Co. Ltd., (“Huawei”), Tesla, Inc. (“Tesla”), Sungrow Power Supply Co., Ltd., Growatt New Energy Co., Ltd and other companies offering microinverters and/or string inverters with and without solar optimizers."
+          }
+        }
+      ],
+      "name_en": "Huawei"
+    },
+    {
+      "id": "SUNGROW",
+      "ticker": "Sungrow Power",
+      "name": "サングロウ・パワー・サプライ",
+      "sub": "インバーター",
+      "sub_en": "Inverters",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インバーター市場の競合先として名が挙がる",
+          "text_en": "Sungrow Power Supply is named as a competitor in the inverter market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the inverter market include, among others, SolarEdge Technologies, Inc. (“SolarEdge”), Huawei Technologies Co. Ltd., (“Huawei”), Tesla, Inc. (“Tesla”), Sungrow Power Supply Co., Ltd., Growatt New Energy Co., Ltd and other companies offering microinverters and/or string inverters with and without solar optimizers."
+          }
+        }
+      ],
+      "name_en": "Sungrow Power Supply"
+    },
+    {
+      "id": "CHPT",
+      "ticker": "CHPT",
+      "name": "チャージポイント",
+      "sub": "EV充電器",
+      "sub_en": "EV chargers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EV充電器市場の競合先として名が挙がる",
+          "text_en": "ChargePoint is named as a competitor in the EV charger market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the EV charger market include Wallbox N.V., ChargePoint Holdings, Inc., Tesla and EVBox Group, among others."
+          }
+        }
+      ],
+      "name_en": "ChargePoint"
+    },
+    {
+      "id": "WBX",
+      "ticker": "WBX",
+      "name": "ウォールボックス",
+      "sub": "EV充電器",
+      "sub_en": "EV chargers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EV充電器市場の競合先として名が挙がる",
+          "text_en": "Wallbox is named as a competitor in the EV charger market",
+          "source": {
+            "label": "Enphase Energy 10-K(2025年12月期)",
+            "label_en": "Enphase Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the EV charger market include Wallbox N.V., ChargePoint Holdings, Inc., Tesla and EVBox Group, among others."
+          }
+        }
+      ],
+      "name_en": "Wallbox"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

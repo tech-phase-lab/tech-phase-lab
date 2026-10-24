@@ -1,0 +1,53 @@
+
+/* 濃紺と金。アラートの日に開く1画面。動画→今夜やること→3つの質問。 */
+.root { --bg:#0a1018; --bg2:#101a27; --panel:#131d2b; --ink:#f1ece1; --sub:#9aa8b8; --line:#263447; --gold:#d8b36a; --gold2:#f3dfae; --gold-ink:#1a1306; --soft:rgba(216,179,106,.10);
+  --font:var(--font-resolute-sans),"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif; --serif:var(--font-resolute-serif),"Hiragino Mincho ProN","Yu Mincho",serif; color-scheme:dark; }
+.root * { box-sizing:border-box; }
+
+.root { margin:0; background:radial-gradient(1200px 600px at 50% -200px,#1b2c44 0%,var(--bg) 60%) fixed var(--bg); color:var(--ink); font-family:var(--font); font-size:16px; line-height:1.8; padding-inline:16px; padding-block:20px 40px; }
+.wrap { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
+.brand { text-align:center; font-family:var(--serif); letter-spacing:.32em; font-size:12px; color:var(--gold); }
+.root h1 { font-family:var(--serif); font-size:30px; line-height:1.4; margin:0; text-align:center; color:var(--gold2); }
+.lead { margin:0; text-align:center; color:var(--sub); font-size:15px; text-wrap:balance; }
+.video { position:relative; aspect-ratio:16/9; border-radius:16px; border:1px solid rgba(216,179,106,.45); overflow:hidden; background:radial-gradient(400px 200px at 30% 20%,#25405f,transparent 70%),linear-gradient(135deg,#14233a,#0a1018); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 40px rgba(0,0,0,.35); }
+.play { width:68px; height:68px; border-radius:50%; background:linear-gradient(135deg,var(--gold2),var(--gold)); display:grid; place-items:center; border:0; cursor:pointer; }
+.play i { display:block; width:0; height:0; border-left:20px solid var(--gold-ink); border-top:12px solid transparent; border-bottom:12px solid transparent; margin-left:5px; }
+.video .cap { position:absolute; left:14px; bottom:10px; right:14px; display:flex; justify-content:space-between; font-size:13px; color:var(--gold2); gap:8px; }
+.lang { display:flex; gap:8px; justify-content:center; }
+.chip { border:1px solid var(--line); background:rgba(255,255,255,.02); color:var(--sub); font-family:inherit; font-size:14px; padding:8px 18px; border-radius:999px; cursor:pointer; }
+.chip[aria-pressed="true"] { border-color:var(--gold); color:var(--gold2); background:var(--soft); }
+.card { background:linear-gradient(180deg,var(--panel),var(--bg2)); border:1px solid var(--line); border-radius:16px; padding:24px 20px; display:flex; flex-direction:column; gap:16px; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+.root h2 { font-family:var(--serif); font-size:19px; margin:0; color:var(--gold2); }
+.eyebrow { font-size:12px; color:var(--gold); letter-spacing:.24em; }
+.today { border:1px solid rgba(127,209,160,.45); background:rgba(127,209,160,.10); border-radius:14px; padding:20px; display:flex; flex-direction:column; gap:6px; text-align:center; }
+.today .k { font-size:13px; color:#7fd1a0; letter-spacing:.2em; }
+.today .v { font-family:var(--serif); font-size:26px; line-height:1.5; font-weight:700; color:#7fd1a0; }
+.today .m { margin:0; font-size:15px; text-align:left; }
+.rules { display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none; }
+.rules li { display:flex; justify-content:space-between; gap:12px; border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:rgba(255,255,255,.02); }
+.rules span { color:var(--sub); font-size:14px; } .rules b { font-family:var(--serif); font-size:17px; text-align:right; }
+.sub2 { margin:4px 0 -6px; font-size:14px; color:var(--sub); }
+.no { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+.no li { position:relative; padding-left:22px; }
+.no li::before { content:"×"; position:absolute; left:2px; color:var(--gold); }
+.news { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+.news li { display:flex; flex-direction:column; gap:2px; border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:rgba(255,255,255,.02); }
+.news b { color:var(--gold2); letter-spacing:.12em; font-size:15px; font-weight:500; }
+.more { color:var(--gold); text-decoration:none; text-align:center; font-size:15px; padding:6px 0; }
+.qs { display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none; counter-reset:q; }
+.qs li { counter-increment:q; position:relative; padding:14px 14px 14px 54px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.02); }
+.qs li::before { content:counter(q); position:absolute; left:14px; top:12px; width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--gold2),var(--gold)); color:var(--gold-ink); font-weight:700; display:grid; place-items:center; font-size:14px; }
+.primary { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:var(--gold-ink); border:0; border-radius:999px; padding:16px 30px; font-weight:700; font-family:inherit; font-size:17px; letter-spacing:.06em; cursor:pointer; width:100%; }
+.after { display:none; text-align:center; font-family:var(--serif); font-size:18px; color:var(--gold2); line-height:1.9; }
+.after.on { display:block; }
+.disc { font-size:12px; color:var(--sub); margin:0; text-align:center; line-height:1.8; }
+.notice { font-size:12px; color:var(--sub); text-align:center; }
+.root :focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+
+.root{padding:0;width:100%;background:none}.root button:active{transform:translateY(1px);filter:brightness(.92)}.root button:disabled{opacity:.5;cursor:default}.root a{color:var(--gold)}.root button{touch-action:manipulation}.root p{overflow-wrap:anywhere}.status{text-align:center;color:var(--sub)}
+
+/* Balance the complete question instead of leaving just its final syllables on line two. */
+.qs li>span{display:block;text-wrap:balance;word-break:normal;overflow-wrap:normal;line-break:strict}
+@media(max-width:420px){.qs li{padding:12px 12px 12px 46px;font-size:14px}.qs li::before{left:10px;top:12px;width:25px;height:25px;font-size:13px}}
+
+.phrase{display:inline-block;white-space:nowrap}

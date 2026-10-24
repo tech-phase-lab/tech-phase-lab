@@ -1,0 +1,158 @@
+{
+  "root": {
+    "ticker": "SBAC",
+    "name": "SBAコミュニケーションズ",
+    "cik": 1034054,
+    "name_en": "SBA Communications"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AMT",
+    "CCI"
+  ],
+  "companies": [
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル・US",
+      "sub": "無線通信事業者",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "総収入の31.1%を占める最大の顧客である",
+          "text_en": "T-Mobile represented 31.1% of total revenues",
+          "source": {
+            "label": "SBA Communications 10-K(2025年12月31日期)",
+            "label_en": "SBA Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034054/000103405426000002/sbac-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "T-Mobile 31.1% 30.5% 32.5%"
+          }
+        },
+        {
+          "type": "down",
+          "text": "国内の鉄塔賃貸収入の主な取引先の一つである",
+          "text_en": "T-Mobile is a primary source of domestic site leasing revenue",
+          "source": {
+            "label": "SBA Communications 10-K(2025年12月31日期)",
+            "label_en": "SBA Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034054/000103405426000002/sbac-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We derive domestic site leasing revenues primarily from T-Mobile, AT&T Wireless, and Verizon Wireless."
+          }
+        }
+      ],
+      "name_en": "T-Mobile US"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&Tワイヤレス",
+      "sub": "無線通信事業者",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "総収入の20.3%を占める顧客である",
+          "text_en": "AT&T Wireless represented 20.3% of total revenues",
+          "source": {
+            "label": "SBA Communications 10-K(2025年12月31日期)",
+            "label_en": "SBA Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034054/000103405426000002/sbac-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "AT&T Wireless 20.3% 20.6% 19.5%"
+          }
+        }
+      ],
+      "name_en": "AT&T Wireless"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・ワイヤレス",
+      "sub": "無線通信事業者",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "総収入の15.1%を占める顧客である",
+          "text_en": "Verizon Wireless represented 15.1% of total revenues",
+          "source": {
+            "label": "SBA Communications 10-K(2025年12月31日期)",
+            "label_en": "SBA Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034054/000103405426000002/sbac-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Verizon Wireless 15.1% 15.1% 14.6%"
+          }
+        }
+      ],
+      "name_en": "Verizon Wireless"
+    },
+    {
+      "id": "AMT",
+      "ticker": "AMT",
+      "name": "アメリカン・タワー",
+      "sub": "通信タワー",
+      "sub_en": "Tower company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内の鉄塔賃貸で競合する大手独立系タワー会社である",
+          "text_en": "American Tower is a primary competitor in U.S. site leasing",
+          "source": {
+            "label": "SBA Communications 10-K(2025年12月31日期)",
+            "label_en": "SBA Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034054/000103405426000002/sbac-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our primary competitors for our site leasing activities are (1) large independent tower companies including American Tower Corporation and Crown Castle International"
+          }
+        }
+      ],
+      "name_en": "American Tower"
+    },
+    {
+      "id": "CCI",
+      "ticker": "CCI",
+      "name": "クラウン・キャッスル",
+      "sub": "通信タワー",
+      "sub_en": "Tower company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内の鉄塔賃貸で競合する大手独立系タワー会社である",
+          "text_en": "Crown Castle is a primary competitor in U.S. site leasing",
+          "source": {
+            "label": "SBA Communications 10-K(2025年12月31日期)",
+            "label_en": "SBA Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034054/000103405426000002/sbac-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our primary competitors for our site leasing activities are (1) large independent tower companies including American Tower Corporation and Crown Castle International"
+          }
+        }
+      ],
+      "name_en": "Crown Castle"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

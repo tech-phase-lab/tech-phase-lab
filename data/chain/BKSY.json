@@ -1,0 +1,323 @@
+{
+  "root": {
+    "ticker": "BKSY",
+    "name": "BlackSky",
+    "cik": 1753539
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・出資",
+      "en": "Partnerships & investment"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "PL"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BlackSky SpectraはAmazon Web Servicesの基盤上に構築されている",
+          "text_en": "BlackSky Spectra is built on the Amazon Web Services platform",
+          "source": {
+            "label": "BlackSky Technology 10-K",
+            "label_en": "BlackSky Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Designed with security and scalability in mind, BlackSky Spectra is built on the Amazon Web Services platform and reinforced with advanced cybersecurity protection, enabling safe and secure integration with U.S. government systems."
+          }
+        },
+        {
+          "type": "up",
+          "text": "BlackSkyは一部の顧客を支えるため、AWSなどが運営する計算基盤に依存している",
+          "text_en": "BlackSky depends on computing infrastructure operated by AWS and others to support some of its customers",
+          "source": {
+            "label": "BlackSky Technology 10-K",
+            "label_en": "BlackSky Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We depend on computing infrastructure operated by Amazon Web Services (“AWS”), Microsoft, and other third parties, including other SaaS companies, to support some of our customers, and any errors, disruption, performance"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BlackSkyは一部の顧客を支えるため、Microsoftなどが運営する計算基盤に依存している",
+          "text_en": "BlackSky depends on computing infrastructure operated by Microsoft and others to support some of its customers",
+          "source": {
+            "label": "BlackSky Technology 10-K",
+            "label_en": "BlackSky Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We depend on computing infrastructure operated by Amazon Web Services (“AWS”), Microsoft, and other third parties, including other SaaS companies, to support some of our customers, and any errors, disruption, performance problems, or failure in their or our"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RKLB",
+      "ticker": "RKLB",
+      "name": "Rocket Lab",
+      "sub": "ロケット・宇宙機器",
+      "sub_en": "Launch & space systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackSkyと子会社は、Rocket Labと2023年11月3日付の劣後ローン契約を結んでいる",
+          "text_en": "BlackSky and its subsidiaries are party to a Subordinated Loan and Security Agreement dated November 3, 2023 with Rocket Lab USA, Inc.",
+          "source": {
+            "label": "BlackSky Technology 10-K",
+            "label_en": "BlackSky Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Subordinated Loan and Security Agreement, dated November 3, 2023, by and between BlackSky Technology Inc. and the subsidiaries named therein and Rocket Lab USA, Inc."
+          }
+        },
+        {
+          "type": "up",
+          "text": "BlackSkyは、Rocket Labにとって最初期から取引が続く商業衛星顧客の1社になる",
+          "text_en": "BlackSky is one of Rocket Lab's earliest and longest-standing commercial satellite customers.",
+          "source": {
+            "label": "BKSY / Rocket Lab — official relationship source; checked October 17, 2026",
+            "label_en": "BKSY / Rocket Lab — official relationship source; checked October 17, 2026",
+            "url": "https://blacksky.com/press-releases/blacksky-and-rocket-lab-establish-launch-window-for-first-gen-3-satellite/",
+            "level": "official",
+            "quote": "BlackSky is one of our earliest and longest-standing commercial satellite customers, and it’s great to be heading back to the pad with them once again to continue to advance and expand their constellation,” said Sir Peter Beck, Rocket Lab founder and CEO."
+          }
+        },
+        {
+          "type": "up",
+          "text": "BlackSkyとRocket Labは、5回分の打ち上げをまとめて購入する契約を結んだ",
+          "text_en": "BlackSky and Rocket Lab signed an agreement to buy a block of five launches",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-signs-five-launch-deal-with-rocket-lab-to-launch-next-gen-capabilities-and-meet-growing-demand-for-high-frequency-monitoring/",
+            "level": "official",
+            "date": "2023-08-09",
+            "quote": "BlackSky Technology Inc. (NYSE: BKSY ) and Rocket Lab USA, Inc. (Nasdaq: RKLB) signed an agreement to buy a block of five launches that will increase capacity and introduce new capabilities into BlackSky’s rapid-revisit, high-res constellation.",
+            "note": "2023年の発表です。",
+            "note_en": "Announced in 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "sub": "データ分析ソフト",
+      "sub_en": "Data analytics software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PalantirがBlackSkyに出資し、複数年の戦略提携を結んだ",
+          "text_en": "Palantir invested in BlackSky and entered a multi-year strategic partnership",
+          "source": {
+            "label": "BlackSky Technology 8-K Ex.99 の発表",
+            "label_en": "BlackSky Technology 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1753539/000119312521263364/d213786dex991.htm",
+            "level": "official",
+            "date": "2021-09-01",
+            "quote": "also Secures Investment from Palantir and Enters into Multi-Year Strategic Partnership Delivers real-time actionable intelligence for Defense and Intelligence customers Integrates BlackSky Imagery and analytics directly into Foundry Palantir users",
+            "note": "2021年の発表です。",
+            "note_en": "Announced in 2021."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Palantirは提携の一環として、OspreyのクラスA普通株80万株を1株10.00ドル、計800万ドルで購入する",
+          "text_en": "As part of the partnership, Palantir will invest $8.0 million at $10.00 per share for 800,000 shares of Osprey Class A common stock",
+          "source": {
+            "label": "BlackSky Technology 8-K Ex.99 の発表",
+            "label_en": "BlackSky Technology 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1753539/000119312521273369/d232558dex991.htm",
+            "level": "official",
+            "date": "2021-09-15",
+            "quote": "As part of the strategic partnership Palantir will invest $8.0 million at $10.00 per share for the purchase of 800,000 shares of Osprey Class A common stock pursuant to a Subscription Agreement that closed on September 9,",
+            "note": "2021年の発表です。",
+            "note_en": "Announced in 2021."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "BlackSkyとPalantirは共同の試験事業を完了し、BlackSkyの画像と分析をPalantir Foundryに統合した",
+          "text_en": "BlackSky completed a joint pilot project with Palantir that integrated its imagery and analytics into Palantir Foundry",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-and-palantir-collaboration-aids-government-agencies-in-predicting-events/",
+            "level": "official",
+            "date": "2021-08-16",
+            "quote": "BlackSky Holdings, Inc. (“BlackSky”), a leading global geospatial intelligence company, announced the completion of a joint pilot project with Palantir Technologies Inc. (NYSE: PLTR) that integrated BlackSky’s commercial satellite imagery and analytics into Palantir Foundry, Palantir’s enterprise platform.",
+            "note": "2021年の発表です。",
+            "note_en": "Announced in 2021."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPIR",
+      "ticker": "SPIR",
+      "name": "スパイア・グローバル",
+      "sub": "衛星データ",
+      "sub_en": "Satellite data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackSkyとSpire Globalは、船舶を追跡するリアルタイムの海上監視サービスを共同で作った",
+          "text_en": "BlackSky and Spire Global teamed up to create a real-time commercially available Maritime Custody Service",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-and-spire-team-up-to-create-real-time-commercially-available-ai-driven-maritime-custody-service/",
+            "level": "official",
+            "date": "2023-05-24",
+            "quote": "BlackSky Technology Inc. (NYSE: BKSY ) and Spire Global, Inc. (NYSE: SPIR ) have teamed up to create a real-time, commercially available Maritime Custody Service (MCS) that can automatically detect, identify and track more than 270 thousand vessels worldwide in open water, along rivers and canals, and while docked at port.",
+            "note": "2023年の発表です。",
+            "note_en": "Announced in 2023."
+          }
+        }
+      ],
+      "name_en": "Spire Global"
+    },
+    {
+      "id": "EADSY",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空宇宙",
+      "sub_en": "Aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BlackSkyとAirbusは再販契約を結び、BlackSkyがAirbusの衛星画像を提供できるようにした",
+          "text_en": "BlackSky and Airbus signed a reseller agreement enabling BlackSky to expand its satellite imagery offerings",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-expands-its-dynamic-monitoring-capabilities-with-airbus-reseller-partnership/",
+            "level": "official",
+            "date": "2022-08-03",
+            "quote": "BlackSky Technology Inc. (NYSE: BKSY ) and Airbus (EPA: AIR ) have signed a reseller agreement enabling BlackSky to expand its dynamic monitoring platform’s all-weather, day and night, and very high-resolution satellite imagery offerings for BlackSky customers.",
+            "note": "2022年の発表です。",
+            "note_en": "Announced in 2022."
+          }
+        }
+      ],
+      "name_en": "Airbus"
+    },
+    {
+      "id": "STE",
+      "ticker": "ST Engineering",
+      "name": "STエンジニアリング",
+      "sub": "防衛・エンジニアリング",
+      "sub_en": "Engineering & defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ST Engineering Geo-InsightsがBlackSkyと提携し、東南アジアの顧客向けに画像提供を広げる",
+          "text_en": "ST Engineering Geo-Insights partnered with BlackSky to serve customers in Southeast Asia",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/st-engineering-geo-insights-partners-with-blacksky-to-offer-expanded-satellite-imaging-and-analytics-insights-portfolio-for-customers-in-southeast-asia/",
+            "level": "official",
+            "date": "2021-03-01",
+            "quote": "ST Engineering’s earth observation and geospatial analysis business, ST Engineering Geo-Insights (“Geo-Insights”), today announced that it has partnered with BlackSky , a leading provider of real-time geospatial intelligence and global monitoring services",
+            "note": "子会社による提携で、2021年の発表です。",
+            "note_en": "Partnership by a subsidiary, announced in 2021."
+          }
+        }
+      ],
+      "name_en": "ST Engineering"
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "スペースX",
+      "sub": "打ち上げ",
+      "sub_en": "Launch",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BlackSkyは、SpaceXによる相乗り打ち上げで衛星2基を星座に加える予定だった",
+          "text_en": "BlackSky planned to add two satellites through a rideshare launch with SpaceX",
+          "source": {
+            "label": "BlackSky の発表",
+            "label_en": "BlackSky press release",
+            "url": "https://blacksky.com/press-releases/blacksky-continues-aggressive-business-expansion-adding-two-satellites-with-upcoming-spacex-launch/",
+            "level": "official",
+            "date": "2021-11-30",
+            "quote": "BlackSky (NYSE: BKSY ) will soon add two additional satellites to its constellation through a scheduled Spaceflight Inc.-managed rideshare launch with SpaceX.",
+            "note": "2021年の記載で、古い情報です。",
+            "note_en": "From 2021 (older)."
+          }
+        }
+      ],
+      "name_en": "SpaceX"
+    },
+    {
+      "id": "PL",
+      "ticker": "PL",
+      "name": "Planet Labs",
+      "sub": "衛星画像",
+      "sub_en": "Satellite imagery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BlackSkyと競合する",
+          "text_en": "Competes with BlackSky",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Existing competitors include (without limitation) Airbus Defense and Space, BlackSky Technology, Inc., ImageSat International N.V., Vantor Holdings, Inc., Intuitive Machines, Inc., Satellogic Inc., and CG Satellite, foreign governments including India,"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

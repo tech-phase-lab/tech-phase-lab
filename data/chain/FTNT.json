@@ -1,0 +1,467 @@
+{
+  "root": {
+    "ticker": "FTNT",
+    "name": "Fortinet",
+    "cik": 1262039
+  },
+  "rows": [
+    {
+      "ja": "供給元(製造・部品・クラウド)",
+      "en": "Suppliers (manufacturing, parts, cloud)",
+      "above": true
+    },
+    {
+      "ja": "販売パートナー",
+      "en": "Distributors"
+    },
+    {
+      "ja": "提携・協業",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CHKP",
+    "PANW",
+    "CRWD",
+    "CSCO",
+    "ZS"
+  ],
+  "companies": [
+    {
+      "id": "Wistron",
+      "ticker": "Wistron",
+      "name": "ウィストロン",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Fortinetは、セキュリティ機器の製造をWistronなどの受託製造・設計製造パートナーに委託している",
+          "text_en": "Fortinet outsources manufacturing of its security appliances to contract and original design manufacturing partners including Wistron",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We outsource the manufacturing of our security appliance products to contract manufacturing partners and original design manufacturing partners, including manufacturers with facilities located in Taiwan and other countries outside the United States such as Accton, IBASE, Micro-Star, Senao and Wistron."
+          }
+        },
+        {
+          "type": "up",
+          "text": "WistronはFortinetの製造パートナーの1社だ",
+          "text_en": "Wistron is one of Fortinet's manufacturing partners",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(“Senao”), Wistron Corporation (“Wistron”), and a number of other manufacturers."
+          }
+        }
+      ],
+      "name_en": "Wistron"
+    },
+    {
+      "id": "Toshiba",
+      "ticker": "Toshiba",
+      "name": "東芝",
+      "sub": "電機・半導体",
+      "sub_en": "Electronics & semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Fortinet独自のASICは、Toshiba America Electronic Componentsなどの受託製造会社が製造している",
+          "text_en": "Fortinet’s proprietary ASICs are built by contract manufacturers including Toshiba America Electronic Components, Inc.",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our proprietary ASICs, which are key to the performance of our appliances, are built by contract manufacturers including Toshiba America Electronic Components, Inc.",
+            "note": "子会社名義の記載です。",
+            "note_en": "Named at the subsidiary level."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Toshibaは、機器向けの限定調達部品であるメモリ素子の供給元を担う",
+          "text_en": "Toshiba supplies memory devices that are limited-source components for Fortinet's appliances",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our limited source components for particular appliances and suppliers of those components include specific types of CPUs from Intel and AMD, network and wireless chips from Broadcom, Marvell, Qualcomm and Intel, and memory devices from Intel, Micron, ADATA, Toshiba, Samsung and Western Digital."
+          }
+        }
+      ],
+      "name_en": "Toshiba"
+    },
+    {
+      "id": "WDC",
+      "ticker": "WDC",
+      "name": "ウエスタンデジタル",
+      "sub": "ストレージ",
+      "sub_en": "Data storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Western Digitalは、機器向けの限定調達部品であるメモリ素子を供給する",
+          "text_en": "Western Digital supplies memory devices that are limited-source components for Fortinet's appliances",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our limited source components for particular appliances and suppliers of those components include specific types of CPUs from Intel and AMD, network and wireless chips from Broadcom, Marvell, Qualcomm and Intel, and memory devices from Intel, Micron, ADATA, Toshiba, Samsung and Western Digital."
+          }
+        }
+      ],
+      "name_en": "Western Digital"
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "台湾積体電路製造",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Fortinetの受託製造会社は、TSMCなどが運営する台湾・日本のファウンドリを使っている",
+          "text_en": "Fortinet’s contract manufacturers use foundries in Taiwan and Japan operated by TSMC",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "These contract manufacturers use foundries in Taiwan and Japan operated by either Taiwan Semiconductor Manufacturing Company Limited (“TSMC”) or by the contract manufacturer itself.",
+            "note": "受託製造会社を介した間接的な関係です。",
+            "note_en": "Indirect, via contract manufacturers."
+          }
+        }
+      ],
+      "name_en": "TSMC"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Fortinetは、Amazon Web Servicesなどのパブリッククラウドに依存している",
+          "text_en": "Fortinet relies on public cloud providers such as Amazon Web Services",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We rely on public cloud providers, such as Amazon Web Services, Microsoft Azure and Google Cloud colocation providers, such as Equinix, and our own data centers and PoPs, and any availability interruption in any of these cloud solutions could result in us not meeting our service-level commitments to our customers."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "ARW",
+      "ticker": "ARW",
+      "name": "アロー・エレクトロニクス",
+      "sub": "電子部品・IT流通",
+      "sub_en": "Electronics & IT distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "FortinetはArrow Electronicsなどの技術流通企業と協業している",
+          "text_en": "Fortinet works with technology distributors including Arrow Electronics, Inc.",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We work with many technology distributors, including Arrow Electronics, Inc., Exclusive, Ingram Micro, and TD Synnex."
+          }
+        }
+      ],
+      "name_en": "Arrow Electronics"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FortinetはIntelと、Fortinet Security Processor 6 (SP6)を開発する戦略的協業を発表した",
+          "text_en": "Fortinet announced a strategic collaboration with Intel to develop Fortinet Security Processor 6 (SP6)",
+          "source": {
+            "label": "Fortinet 8-K Ex.99 の発表",
+            "label_en": "Fortinet 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000018/ftntq2-2026ex991.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "• Announced a strategic collaboration with Intel to develop Fortinet Security Processor 6 (SP6), combining Fortinet’s proprietary, purpose-built security processor expertise with Intel’s advanced design, development,"
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FortinetはNVIDIAと、BlueField-3 DPU上でFortiGate VMを動かす統合ソリューションを発表した",
+          "text_en": "Fortinet announced an integrated solution with NVIDIA embedding FortiGate VM on BlueField-3 DPUs",
+          "source": {
+            "label": "Fortinet 8-K Ex.99 の発表",
+            "label_en": "Fortinet 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000003/ftntq4-2025ex991.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "• Announced an integrated solution with NVIDIA that delivers isolated infrastructure acceleration for the AI Factory, embedding FortiGate VM on BlueField-3 DPUs to provide firewalling, segmentation and policy enforcement directly in the infrastructure for higher performance, stronger isolation and simpler operations."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "FortinetはNVIDIAのOpen Secure AI Allianceの創設メンバーである",
+          "text_en": "Fortinet is a founding member of NVIDIA’s Open Secure AI Alliance",
+          "source": {
+            "label": "Fortinet 8-K Ex.99 の発表",
+            "label_en": "Fortinet 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000018/ftntq2-2026ex991.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "• Partnered with Anthropic on Project Glasswing (Mythos), OpenAI on Project Daybreak (GPT 5.5 Cyber), and NVIDIA as a founding member of its recently announced Open Secure AI Alliance for AI Safety and Security."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FortinetはGoogle Unified Security Recommendedの、ネットワーク保護分野の初のパートナーに選ばれた",
+          "text_en": "Fortinet was named the inaugural Google Unified Security Recommended partner for network protection",
+          "source": {
+            "label": "Fortinet 8-K Ex.99 の発表",
+            "label_en": "Fortinet 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000003/ftntq4-2025ex991.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "• Named the inaugural Google Unified Security Recommended partner for network protection, recognizing FortiSASE and FortiGate NGFW for delivering converged networking and security natively on Google Cloud."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FortinetはAnthropicと「Project Glasswing」の一環で協業している",
+          "text_en": "Fortinet is collaborating with Anthropic as part of “Project Glasswing”",
+          "source": {
+            "label": "Fortinet 8-K Ex.99 の発表",
+            "label_en": "Fortinet 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000010/ftntq1-2026ex991.htm",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "• Fortinet is collaborating closely with multiple leading AI companies, including Anthropic as part of “Project Glasswing”, OpenAI and others.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FortinetはOpenAIなどのAI企業と緊密に協業している",
+          "text_en": "Fortinet is collaborating closely with AI companies including OpenAI",
+          "source": {
+            "label": "Fortinet 8-K Ex.99 の発表",
+            "label_en": "Fortinet 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000010/ftntq1-2026ex991.htm",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "• Fortinet is collaborating closely with multiple leading AI companies, including Anthropic as part of “Project Glasswing”, OpenAI and others.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHKP",
+      "ticker": "CHKP",
+      "name": "チェック・ポイント・ソフトウェア・テクノロジーズ",
+      "sub": "ネットワークセキュリティ",
+      "sub_en": "Network security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Among others, our competitors include Check Point Software Technologies Ltd."
+          }
+        }
+      ],
+      "name_en": "Check Point Software Technologies"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "ネットワークセキュリティ",
+      "sub_en": "Network security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors include companies such as Check Point, Cisco, CrowdStrike, F5 Networks, HPE, Huawei, Microsoft, Netskope, Palo Alto Networks, SonicWALL, Sophos, and Zscaler."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "クラウドストライク",
+      "sub": "エンドポイントセキュリティ",
+      "sub_en": "Endpoint security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For example, certain of our competitors are focusing on delivering security services from the cloud which include cloud-based security providers, such as CrowdStrike and Zscaler."
+          }
+        }
+      ],
+      "name_en": "CrowdStrike"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors include companies such as Check Point, Cisco, CrowdStrike, F5 Networks, HPE, Huawei, Microsoft, Netskope, Palo Alto Networks, SonicWALL, Sophos, and Zscaler."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "ZS",
+      "ticker": "ZS",
+      "name": "ゼットスケーラー",
+      "sub": "クラウドセキュリティ",
+      "sub_en": "Cloud security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fortinetと競合する",
+          "text_en": "Competes with Fortinet",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For example, certain of our competitors are focusing on delivering security services from the cloud which include cloud-based security providers, such as CrowdStrike and Zscaler."
+          }
+        }
+      ],
+      "name_en": "Zscaler"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

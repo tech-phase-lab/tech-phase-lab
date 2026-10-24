@@ -1,0 +1,305 @@
+{
+  "root": {
+    "ticker": "CF",
+    "name": "CFインダストリーズ・ホールディングス",
+    "cik": 1324404,
+    "name_en": "CF Industries Holdings"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "NTR",
+    "LXU",
+    "UAN"
+  ],
+  "companies": [
+    {
+      "id": "CHS",
+      "ticker": "CHS",
+      "name": "CHSインク",
+      "sub": "農業協同組合",
+      "sub_en": "Agricultural cooperative",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CHSはCFNの持分を約11%保有する戦略的提携先である",
+          "text_en": "CHS holds about 11% of CFN under a strategic venture with CF",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We have a strategic venture with CHS under which CHS owns an equity interest in CFN, a subsidiary of CF Holdings, which represents approximately 11% of the membership interests of CFN."
+          }
+        },
+        {
+          "type": "down",
+          "text": "CHSは供給契約に基づき、CFNから尿素とUANを購入する権利を持つ",
+          "text_en": "CHS has the right to buy granular urea and UAN from CFN under a supply agreement",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "CHS also receives deliveries pursuant to a supply agreement under which CHS has the right to purchase annually from CFN up to approximately 1.1 million tons of granular urea and 580,000 tons of UAN at market prices"
+          }
+        }
+      ],
+      "name_en": "CHS Inc."
+    },
+    {
+      "id": "JERA",
+      "ticker": "JERA",
+      "name": "ジェラ",
+      "sub": "電力・エネルギー",
+      "sub_en": "Power & energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JERAはブルーポイント合弁の35%を保有する出資者である",
+          "text_en": "JERA holds 35% of the Blue Point joint venture",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We hold 40% ownership, JERA holds 35% ownership, and Mitsui holds 25% ownership in the Blue Point joint venture."
+          }
+        }
+      ],
+      "name_en": "JERA Co., Inc."
+    },
+    {
+      "id": "MITSUI",
+      "ticker": "Mitsui &",
+      "name": "三井物産",
+      "sub": "総合商社",
+      "sub_en": "Trading company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "三井物産はブルーポイント合弁の25%を保有する出資者である",
+          "text_en": "Mitsui holds 25% of the Blue Point joint venture",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We hold 40% ownership, JERA holds 35% ownership, and Mitsui holds 25% ownership in the Blue Point joint venture."
+          }
+        },
+        {
+          "type": "down",
+          "text": "CF、JERA、三井物産は、生産開始後に持分比率に応じて低炭素アンモニアを購入することになっている",
+          "text_en": "CF, JERA and Mitsui are required to buy low-carbon ammonia from the joint venture once production starts",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We, JERA and Mitsui are required to purchase low-carbon ammonia produced by the Blue Point joint venture in accordance with our respective ownership percentages once production commences"
+          }
+        }
+      ],
+      "name_en": "Mitsui & Co., Ltd."
+    },
+    {
+      "id": "LIN",
+      "ticker": "LIN",
+      "name": "リンデ",
+      "sub": "産業ガス",
+      "sub_en": "Industrial gases",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ブルーポイント合弁は、空気分離装置の設計・建設・運営についてリンデの子会社と長期供給契約を結んだ",
+          "text_en": "The Blue Point joint venture signed a long-term supply agreement with a Linde subsidiary for an air separation unit",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In June 2025, the Blue Point joint venture executed agreements, including a long-term supply agreement, with a subsidiary of Linde plc for them to design, construct, own, operate and maintain an air separation unit (ASU) at our Blue Point complex"
+          }
+        }
+      ],
+      "name_en": "Linde plc"
+    },
+    {
+      "id": "OXY",
+      "ticker": "OXY",
+      "name": "オキシデンタル・ペトロリアム",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "長期の引取契約に基づき、同社子会社とエンブリッジの合弁がCO2を輸送し地中に貯留する予定である",
+          "text_en": "Under a long-term offtake agreement, a joint venture of an Occidental subsidiary and Enbridge would transport and sequester the CO2",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Pursuant to a long-term offtake agreement, a joint venture between a subsidiary of Occidental Petroleum Corporation and Enbridge Inc. would then transport the CO 2 and permanently sequester it in a Class VI well at its Pelican Sequestration Hub in Louisiana"
+          }
+        }
+      ],
+      "name_en": "Occidental Petroleum"
+    },
+    {
+      "id": "KOCH",
+      "ticker": "Koch Fertilizer",
+      "name": "コッホ・ファーティライザー",
+      "sub": "肥料",
+      "sub_en": "Fertilizer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "トリニダードのポイント・リサス工場はコッホと50対50で共同所有している",
+          "text_en": "The Point Lisas facility in Trinidad is owned 50/50 with Koch Fertilizer",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The Point Lisas facility in Trinidad is owned jointly through a 50/50 venture with Koch Fertilizer LLC."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "北米で競合する主要企業のひとつである",
+          "text_en": "It is one of the primary competitors with North American operations",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors with North American operations include Nutrien Ltd., Koch Fertilizer LLC, LSB Industries, CVR Partners, LP and Yara International"
+          }
+        }
+      ],
+      "name_en": "Koch Fertilizer LLC"
+    },
+    {
+      "id": "NTR",
+      "ticker": "NTR",
+      "name": "ニュートリエン",
+      "sub": "肥料",
+      "sub_en": "Fertilizer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米で競合する主要企業のひとつである",
+          "text_en": "It is one of the primary competitors with North American operations",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors with North American operations include Nutrien Ltd., Koch Fertilizer LLC, LSB Industries, CVR Partners, LP and Yara International"
+          }
+        }
+      ],
+      "name_en": "Nutrien Ltd."
+    },
+    {
+      "id": "LXU",
+      "ticker": "LXU",
+      "name": "LSBインダストリーズ",
+      "sub": "窒素化学品",
+      "sub_en": "Nitrogen chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米で競合する主要企業のひとつである",
+          "text_en": "It is one of the primary competitors with North American operations",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors with North American operations include Nutrien Ltd., Koch Fertilizer LLC, LSB Industries, CVR Partners, LP and Yara International"
+          }
+        }
+      ],
+      "name_en": "LSB Industries"
+    },
+    {
+      "id": "UAN",
+      "ticker": "UAN",
+      "name": "CVRパートナーズ",
+      "sub": "窒素肥料",
+      "sub_en": "Nitrogen fertilizer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米で競合する主要企業のひとつである",
+          "text_en": "It is one of the primary competitors with North American operations",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors with North American operations include Nutrien Ltd., Koch Fertilizer LLC, LSB Industries, CVR Partners, LP and Yara International"
+          }
+        }
+      ],
+      "name_en": "CVR Partners, LP"
+    },
+    {
+      "id": "YARA",
+      "ticker": "Yara International",
+      "name": "ヤラ・インターナショナル",
+      "sub": "肥料",
+      "sub_en": "Fertilizer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米と英国で競合する企業である",
+          "text_en": "It competes in North America and the United Kingdom",
+          "source": {
+            "label": "CFインダストリーズ・ホールディングス 10-K(2025-12-31)",
+            "label_en": "CF Industries Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors with North American operations include Nutrien Ltd., Koch Fertilizer LLC, LSB Industries, CVR Partners, LP and Yara International"
+          }
+        }
+      ],
+      "name_en": "Yara International"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

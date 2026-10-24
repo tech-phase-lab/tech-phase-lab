@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "WEC",
+    "name": "WECエナジー・グループ",
+    "cik": 783325,
+    "name_en": "WEC Energy Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TILDEN",
+      "ticker": "Tilden Mining",
+      "name": "ティルデン・マイニング",
+      "sub": "鉄鉱石鉱山",
+      "sub_en": "Iron ore mine",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "長期契約に基づき、UMERCから2039年3月まで電力を購入する顧客である",
+          "text_en": "Customer required under a long-term agreement to purchase power from UMERC through March 2039",
+          "source": {
+            "label": "WEC Energy Group 10-K(2025-12-31)",
+            "label_en": "WEC Energy Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/783325/000078332526000018/wec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our iron ore mine customer, Tilden, is exempt from this 10% cap based on current law, but Tilden is required under a long-term agreement to purchase electric power from UMERC through March 2039."
+          }
+        }
+      ],
+      "name_en": "Tilden Mining Company"
+    },
+    {
+      "id": "ATC",
+      "ticker": "American",
+      "name": "アメリカン・トランスミッション",
+      "sub": "送電会社",
+      "sub_en": "Transmission company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約60%の持分を保有する送電会社である",
+          "text_en": "Transmission company in which WEC holds an approximately 60% equity interest",
+          "source": {
+            "label": "WEC Energy Group 10-K(2025-12-31)",
+            "label_en": "WEC Energy Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/783325/000078332526000018/wec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have an approximately 60% equity interest in ATC (an electric transmission company operating in Illinois, Michigan, Minnesota, and Wisconsin)."
+          }
+        }
+      ],
+      "name_en": "American Transmission Company"
+    },
+    {
+      "id": "FPL",
+      "ticker": "FPL Energy Point",
+      "name": "FPLエナジー・ポイント・ビーチ",
+      "sub": "発電事業者",
+      "sub_en": "Power generator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ポイント・ビーチの電力購入契約を結んでいる",
+          "text_en": "Party to the Point Beach power purchase agreement with WE",
+          "source": {
+            "label": "WEC Energy Group 10-K(2025-12-31)",
+            "label_en": "WEC Energy Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/783325/000078332526000018/wec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Point Beach PPA between FPL Energy Point Beach, LLC and WE, dated as of December 19, 2006 (the \"PPA\")."
+          }
+        }
+      ],
+      "name_en": "FPL Energy Point Beach, LLC"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウィスコンシン南部のデータセンターに200億ドル超を投じる計画を発表している",
+          "text_en": "Announced plans to invest over $20 billion in data centers in southern Wisconsin",
+          "source": {
+            "label": "WEC Energy Group 10-K(2025-12-31)",
+            "label_en": "WEC Energy Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/783325/000078332526000018/wec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Microsoft has announced plans to invest over $20 billion in data centers in southern Wisconsin over the next several years, and we expect up to 2.6 GWs of load growth in the Milwaukee-to-Chicago corridor through 2030."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "VANTAGE",
+      "ticker": "Vantage Data",
+      "name": "バンテージ・データセンターズ",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ポートワシントンで大規模データセンターを開発する計画である",
+          "text_en": "Plans to develop a large data center campus in Port Washington",
+          "source": {
+            "label": "WEC Energy Group 10-K(2025-12-31)",
+            "label_en": "WEC Energy Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/783325/000078332526000018/wec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vantage Data Centers plans to develop a large data center campus in Port Washington that is forecasted to add 1.3 GWs of demand through 2030."
+          }
+        }
+      ],
+      "name_en": "Vantage Data Centers"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

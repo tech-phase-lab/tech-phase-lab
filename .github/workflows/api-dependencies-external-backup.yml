@@ -1,0 +1,83 @@
+name: API dependencies external backup and boot
+
+on:
+  push:
+    branches: [codex/research-preview]
+    paths:
+      - .github/workflows/api-dependencies-external-backup.yml
+      - docs/api-dependencies-backup-request.txt
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-dependencies-external-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    if: github.repository == 'tech-phase-lab/tech-phase-lab' && github.ref == 'refs/heads/codex/research-preview'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.22.1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install only API dependencies without backup credentials
+        run: |
+          npm ci --prefix services/resolute-api --omit=dev --ignore-scripts --no-audit --no-fund
+          python -m pip install -r services/tech-phase-backup/requirements.txt
+      - name: Prepare API dependency package and matching source
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir "$RUNNER_TEMP/api-dependency-custody"
+          python scripts/tech-phase/prepare_offline_dependencies.py --repo "$GITHUB_WORKSPACE/services/resolute-api" --output "$RUNNER_TEMP/api-dependency-custody/package"
+          python scripts/tech-phase/prepare_source_recovery.py --repo "$GITHUB_WORKSPACE" --commit "$EXPECTED_COMMIT" --output "$RUNNER_TEMP/api-dependency-custody/source"
+      - name: Encrypt, upload, download and restore source and API dependencies
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+          TECH_PHASE_SOURCE_UPLOAD_ENABLED: 'true'
+          TECH_PHASE_DEPENDENCIES_UPLOAD_ENABLED: 'true'
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_BUCKET: resolute-backup-external
+          MIRROR_DESTINATION_REGION: auto
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+          TECH_PHASE_EXTERNAL_KEY_HEX: ${{ secrets.TECH_PHASE_EXTERNAL_KEY_HEX }}
+        run: |
+          set -euo pipefail
+          umask 077
+          expected_lock=$(sha256sum services/resolute-api/package-lock.json | cut -d ' ' -f1)
+          python scripts/tech-phase/upload_source_recovery.py --package "$RUNNER_TEMP/api-dependency-custody/source" --expected-commit "$EXPECTED_COMMIT" > "$RUNNER_TEMP/api-dependency-custody/source-report.json"
+          python scripts/tech-phase/external_dependencies.py --package "$RUNNER_TEMP/api-dependency-custody/package" --expected-lock "$expected_lock" --output "$RUNNER_TEMP/api-dependency-custody/restored" > "$RUNNER_TEMP/api-dependency-custody/dependency-report.json"
+          cat "$RUNNER_TEMP/api-dependency-custody/source-report.json"
+          cat "$RUNNER_TEMP/api-dependency-custody/dependency-report.json"
+      - name: Boot clean API with restored dependencies and networking disabled
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/api-dependency-custody/boot"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/api-dependency-custody/boot"
+          mv "$RUNNER_TEMP/api-dependency-custody/restored/node_modules" "$RUNNER_TEMP/api-dependency-custody/boot/node_modules"
+          cd "$RUNNER_TEMP/api-dependency-custody/boot"
+          sudo unshare --net -- bash -c 'ip link set lo up; exec "$@"' -- env -i PATH="$PATH" node scripts/tech-phase/verify_api_recovery.mjs
+          echo '{"event":"API_EXTERNAL_OFFLINE_BOOT_OK","network_disabled":true,"new_npm_install":false,"live_database_verified":false}'
+          {
+            echo 'Source and API dependencies restored from R2; isolated boot and auth rejection passed.'
+            echo 'Live DB, authenticated storage, Node binary and full disaster recovery remain separate.'
+            cat "$RUNNER_TEMP/api-dependency-custody/source-report.json"
+            cat "$RUNNER_TEMP/api-dependency-custody/dependency-report.json"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove private staging
+        if: always()
+        run: sudo rm -rf -- "$RUNNER_TEMP/api-dependency-custody"

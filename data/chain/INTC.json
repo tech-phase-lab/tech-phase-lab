@@ -1,0 +1,466 @@
+{
+  "root": {
+    "ticker": "INTC",
+    "name": "Intel",
+    "cik": 50863
+  },
+  "rows": [
+    {
+      "ja": "供給元(装置・製造)",
+      "en": "Suppliers (equipment & foundry)",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partnerships, investments & deals"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMD",
+    "NVDA",
+    "TSM",
+    "QCOM",
+    "005930"
+  ],
+  "companies": [
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "ASML",
+      "sub": "露光装置",
+      "sub_en": "Lithography",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Intel 4・Intel 3・Intel 18AなどのEUV露光装置はASMLが唯一の供給元",
+          "text_en": "ASML is the sole supplier of the EUV lithography tools Intel deploys in Intel 4, Intel 3 and Intel 18A",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "ASML Holding N.V. (ASML) is currently the sole supplier of EUV lithography tools that we are deploying in our Intel 4, Intel 3, Intel 18A"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "一部の製品でTSMCの生産能力を利用",
+          "text_en": "Uses TSMC foundry capacity for various tiles or entire products",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "we have also strategically utilized third-party foundry manufacturing capacity, including at one of our key foundry competitors, TSMC, for various tiles or an entire product",
+            "note": "TSMCとの長期契約はないと記載しています。",
+            "note_en": "Intel states it has no long-term contract with TSMC."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "TSMCは、先端プロセス技術(受託製造)でIntelと競う主な相手だ",
+          "text_en": "TSMC is Intel's primary competitor in leading-edge semiconductor process technology.",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Our primary competitor in leading-edge semiconductor process technology is TSMC, which holds a leading position in manufacturing at scale for the most advanced nodes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複数年の協業を発表。Google CloudはIntel Xeonなどを引き続き導入",
+          "text_en": "Multiyear collaboration; Google Cloud continues to deploy Intel Xeon processors",
+          "source": {
+            "label": "Intel の発表(Intel and Google)",
+            "label_en": "Intel press release (Intel and Google)",
+            "url": "https://www.intc.com/news-events/press-releases/detail/1766",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Intel Corporation (NASDAQ: INTC) and Google today announced a multiyear collaboration to advance the next generation of AI and cloud infrastructure"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AWS向けにIntel 18Aでカスタム AIファブリックチップ、Intel 3でカスタムXeon 6を製造する複数年契約",
+          "text_en": "Multiyear deal to make a custom AI fabric chip on Intel 18A and a custom Xeon 6 on Intel 3 for AWS",
+          "source": {
+            "label": "Intel の発表(Intel and AWS)",
+            "label_en": "Intel press release (Intel and AWS)",
+            "url": "https://www.intc.com/news-events/press-releases/detail/1709",
+            "level": "official",
+            "date": "2024-09",
+            "quote": "Intel will produce an AI fabric chip for AWS on Intel 18A, the company’s most advanced process node. Intel will also produce a custom Xeon 6 chip on Intel 3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Intelは防衛産業向けの18Aプロセスの顧客にMicrosoftを迎えた",
+          "text_en": "Intel has onboarded Microsoft among its defense industrial base customers for the 18A process",
+          "source": {
+            "label": "Intel の発表(Secure Enclave / RAMP-C)",
+            "label_en": "Intel press release (Secure Enclave / RAMP-C)",
+            "url": "https://www.intc.com/news-events/press-releases/detail/1708",
+            "level": "official",
+            "date": "2024-09",
+            "quote": "Intel has successfully onboarded several defense industrial base (DIB) customers, including Boeing, Northrop Grumman, Microsoft, IBM, Nvidia and others",
+            "note": "米国防総省のプログラム(RAMP-C/Secure Enclave)の文脈の記載です。",
+            "note_en": "Context is the DoD RAMP-C / Secure Enclave program."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "Fortinet",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Fortinet Security Processor 6で、Intelの設計・パッケージングなどを使う戦略的協業",
+          "text_en": "Strategic collaboration on Fortinet Security Processor 6 using Intel design and packaging",
+          "source": {
+            "label": "Intel の発表(Intel and Fortinet)",
+            "label_en": "Intel press release (Intel and Fortinet)",
+            "url": "https://www.intc.com/news-events/press-releases/detail/1775",
+            "level": "official",
+            "date": "2026-07",
+            "quote": "Intel Corporation (NASDAQ: INTC) and Fortinet (NASDAQ: FTNT), today announced a strategic collaboration to develop Fortinet Security Processor 6 (SP6)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "x86のカスタム製品(クライアント向け・データセンター向け)を共同開発する戦略的提携",
+          "text_en": "Strategic partnership to co-develop custom client and data center x86 products",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2025-09",
+            "quote": "We also announced a strategic partnership with NVIDIA to co-develop custom client and data center products combining our x86 CPU technologies with NVIDIA's AI and accelerated computing capabilities."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAがIntel株2.15億株を1株23.28ドル・計50億ドルで購入",
+          "text_en": "NVIDIA bought 215 million Intel shares at $23.28 for $5.0B",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2025-09",
+            "quote": "on September 15, 2025, we entered into an agreement with NVIDIA to issue and sell to NVIDIA 215 million shares of our common stock at $23.28 per share for an aggregate cash purchase price of $5.0 billion."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NVIDIAは、データセンター・AI向けGPUシステムでIntelの競合となる",
+          "text_en": "NVIDIA competes with Intel in GPU systems for data center and AI workloads.",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "providers of GPU systems such as NVIDIA, whose GPU systems have experienced the highest demand in the market as AI workloads have become the dominant source of compute demand"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SoftBank",
+      "ticker": "SoftBank",
+      "name": "SoftBank Group",
+      "sub": "投資会社",
+      "sub_en": "Investor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Intel株8,700万株を1株23ドル・計20億ドルで購入",
+          "text_en": "Bought 87 million Intel shares at $23.00 for $2.0B",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2025-08",
+            "quote": "on August 18, 2025, we entered into an agreement with SoftBank Group to issue and sell to SoftBank Group 87 million shares of our common stock at $23.00 per share, representing an aggregate cash purchase price of $2.0 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBLY",
+      "ticker": "MBLY",
+      "name": "Mobileye",
+      "sub": "自動運転",
+      "sub_en": "Autonomous driving",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Intelが普通株の約79.5%・議決権の97.3%を保有",
+          "text_en": "Intel beneficially owns about 79.5% of Mobileye’s common stock and 97.3% of voting power",
+          "source": {
+            "label": "Mobileye 10-K(2025年度)",
+            "label_en": "Mobileye 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1910139/000110465926014300/mbly-20251227x10k.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "As of December 27, 2025, Intel beneficially owns 50,000,000 shares of our Class A common stock and all of the outstanding shares of our Class B common stock, representing approximately 79.5% of our outstanding common stock"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AMDとx86エコシステムの諮問グループを設立",
+          "text_en": "Formed an x86 ecosystem advisory group with AMD",
+          "source": {
+            "label": "Intel の発表(x86 Ecosystem Advisory Group)",
+            "label_en": "Intel press release (x86 Ecosystem Advisory Group)",
+            "url": "https://www.intc.com/news-events/press-releases/detail/1715",
+            "level": "official",
+            "date": "2024-10",
+            "quote": "Intel Corp . (INTC) and AMD (NASDAQ: AMD) today announced the creation of an x86 ecosystem advisory group"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "AMDは、Intelのクライアント向け事業における主な競合だ",
+          "text_en": "AMD is Intel's primary competitor in its client business.",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "CCG's primary competitor is AMD, which like us designs processors based on the x86 architecture."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "UMC(聯電)",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "12nmプロセスの開発で戦略的に協業",
+          "text_en": "Strategic collaboration to develop a 12nm process platform",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "quote": "we announced a strategic collaboration with UMC to develop a 12 nm process platform that expands our mature‑node process portfolio"
+          }
+        }
+      ],
+      "name_en": "UMC"
+    },
+    {
+      "id": "SK hynix",
+      "ticker": "SK hynix",
+      "name": "SK hynix",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NAND事業をSK hynixへ売却",
+          "text_en": "Sold its NAND memory business to SK hynix",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2025-03",
+            "quote": "We sold our NAND memory technology and manufacturing business to SK hynix, which we deconsolidated upon closing the first phase of the transaction on December 29, 2021.",
+            "note": "売却は完了済みです。",
+            "note_en": "The divestiture has been completed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qualcommは、Armベースのチップを含む分野でIntelと競合する",
+          "text_en": "Qualcomm competes with Intel, including in Arm-based chips.",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "Our competitors include companies offering platform products, such as AMD and Qualcomm;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "PC・スマホ",
+      "sub_en": "PCs & phones",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AppleはPC向けCPUをIntel製から自社設計のARMベースに置き換えた",
+          "text_en": "Apple replaced Intel client CPUs in its PCs with its own ARM-based designs",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "in 2020, Apple introduced PC products utilizing its own internally developed ARM-based semiconductor designs in place of our client CPUs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Intelはカスタム ASICの開発市場でBroadcomと競合する",
+          "text_en": "Intel competes with Broadcom in the custom ASIC development market",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "We also compete with Broadcom in the custom ASICs development market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "先端の受託製造ではSamsungと直接競合する間柄だ",
+          "text_en": "Intel competes directly with Samsung in leading-edge foundry manufacturing",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "We also compete directly with Samsung in this market."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

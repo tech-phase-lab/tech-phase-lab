@@ -1,0 +1,136 @@
+{
+  "root": {
+    "ticker": "ETSY",
+    "name": "エッツィー",
+    "cik": 1370637,
+    "name_en": "Etsy"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "EBAY",
+      "ticker": "EBAY",
+      "name": "イーベイ",
+      "sub": "Depopの売却先",
+      "sub_en": "Buyer of Depop",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "DepopをeBayへ売却する契約を結んだ",
+          "text_en": "Etsy agreed to sell Depop to eBay",
+          "source": {
+            "label": "Etsy 10-K(2025年12月31日期)",
+            "label_en": "Etsy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370637/000137063726000019/etsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Etsy and eBay Inc. (“eBay”) entered into a Sale and Purchase Agreement (the “Purchase Agreement”) for eBay to purchase Depop, for $1.2 billion in cash, subject to certain adjustments as set forth in the Purchase Agreement."
+          }
+        }
+      ],
+      "name_en": "eBay"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(Google)",
+      "sub": "クラウド・集客",
+      "sub_en": "Cloud & search traffic",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Etsyマーケットプレイスの計算処理などの多くをGoogle Cloudに頼っている",
+          "text_en": "Etsy relies on Google Cloud for a substantial portion of its computing and storage",
+          "source": {
+            "label": "Etsy 10-K(2025年12月31日期)",
+            "label_en": "Etsy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370637/000137063726000019/etsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We rely on Google Cloud for a substantial portion of the computing, storage, data processing, networking, and other services for the Etsy Marketplace."
+          }
+        },
+        {
+          "type": "up",
+          "text": "検索エンジンのGoogleから多くの訪問を得ている",
+          "text_en": "Etsy gets a significant number of visits via search engines such as Google",
+          "source": {
+            "label": "Etsy 10-K(2025年12月31日期)",
+            "label_en": "Etsy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370637/000137063726000019/etsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We obtain a significant number of visits via search engines such as Google."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド(Depop)",
+      "sub_en": "Cloud (Depop)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "DepopはAmazon Web Servicesを主な本番環境に使っている",
+          "text_en": "Depop relies on Amazon Web Services for its primary production environment",
+          "source": {
+            "label": "Etsy 10-K(2025年12月31日期)",
+            "label_en": "Etsy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370637/000137063726000019/etsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Depop relies on Amazon Web Services for its primary production environment"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "SNS経由の集客",
+      "sub_en": "Social traffic",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "FacebookやInstagramなどのSNSからも多くの訪問を得ている",
+          "text_en": "Etsy gets a significant number of visits from Facebook, Instagram and Pinterest",
+          "source": {
+            "label": "Etsy 10-K(2025年12月31日期)",
+            "label_en": "Etsy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370637/000137063726000019/etsy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also obtain a significant number of visits from social media platforms such as Facebook, Instagram, and Pinterest."
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "root": {
+    "ticker": "PKG",
+    "name": "パッケージング・コーポレーション・オブ・アメリカ",
+    "cik": 75677,
+    "name_en": "Packaging Corporation of America"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "IP",
+    "SW",
+    "SLVM"
+  ],
+  "companies": [
+    {
+      "id": "ODP",
+      "ticker": "ODP",
+      "name": "ODPコーポレーション",
+      "sub": "紙製品の顧客",
+      "sub_en": "Paper customer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "紙事業で最大の顧客である",
+          "text_en": "ODP Corporation is the largest customer in the Paper segment",
+          "source": {
+            "label": "Packaging Corporation of America 10-K(December 31, 2025)",
+            "label_en": "Packaging Corporation of America 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "ODP Corporation (“ODP”), formerly Office Depot, Inc., along with its subsidiaries and affiliates, is our largest customer in the Paper segment"
+          }
+        }
+      ],
+      "name_en": "ODP Corporation"
+    },
+    {
+      "id": "IP",
+      "ticker": "IP",
+      "name": "インターナショナル・ペーパー",
+      "sub": "段ボール",
+      "sub_en": "Corrugated",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "段ボール事業で全国規模の主な競合である",
+          "text_en": "International Paper is a primary national competitor in corrugated products",
+          "source": {
+            "label": "Packaging Corporation of America 10-K(December 31, 2025)",
+            "label_en": "Packaging Corporation of America 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On a national level, our primary competitors are International Paper, Smurfit WestRock, Georgia-Pacific LLC, and Pratt Industries"
+          }
+        }
+      ],
+      "name_en": "International Paper"
+    },
+    {
+      "id": "SW",
+      "ticker": "SW",
+      "name": "スマーフィット・ウエストロック",
+      "sub": "段ボール",
+      "sub_en": "Corrugated",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "段ボール事業で全国規模の主な競合である",
+          "text_en": "Smurfit WestRock is a primary national competitor in corrugated products",
+          "source": {
+            "label": "Packaging Corporation of America 10-K(December 31, 2025)",
+            "label_en": "Packaging Corporation of America 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On a national level, our primary competitors are International Paper, Smurfit WestRock, Georgia-Pacific LLC, and Pratt Industries"
+          }
+        }
+      ],
+      "name_en": "Smurfit WestRock"
+    },
+    {
+      "id": "GP",
+      "ticker": "Georgia-Pacific",
+      "name": "ジョージア・パシフィック",
+      "sub": "段ボール",
+      "sub_en": "Corrugated",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "段ボール事業で全国規模の主な競合である",
+          "text_en": "Georgia-Pacific is a primary national competitor in corrugated products",
+          "source": {
+            "label": "Packaging Corporation of America 10-K(December 31, 2025)",
+            "label_en": "Packaging Corporation of America 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On a national level, our primary competitors are International Paper, Smurfit WestRock, Georgia-Pacific LLC, and Pratt Industries"
+          }
+        }
+      ],
+      "name_en": "Georgia-Pacific"
+    },
+    {
+      "id": "Pratt",
+      "ticker": "Pratt Industries",
+      "name": "プラット・インダストリーズ",
+      "sub": "段ボール",
+      "sub_en": "Corrugated",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "段ボール事業で全国規模の主な競合である",
+          "text_en": "Pratt Industries is a primary national competitor in corrugated products",
+          "source": {
+            "label": "Packaging Corporation of America 10-K(December 31, 2025)",
+            "label_en": "Packaging Corporation of America 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On a national level, our primary competitors are International Paper, Smurfit WestRock, Georgia-Pacific LLC, and Pratt Industries"
+          }
+        }
+      ],
+      "name_en": "Pratt Industries"
+    },
+    {
+      "id": "Domtar",
+      "ticker": "Domtar",
+      "name": "ドムター",
+      "sub": "紙",
+      "sub_en": "Paper",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "紙事業の最大級の競合である",
+          "text_en": "Domtar is among the largest competitors in the Paper segment",
+          "source": {
+            "label": "Packaging Corporation of America 10-K(December 31, 2025)",
+            "label_en": "Packaging Corporation of America 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest competitors include Domtar Corporation, a division of Paper Excellence, and Sylvamo Corporation."
+          }
+        }
+      ],
+      "name_en": "Domtar"
+    },
+    {
+      "id": "SLVM",
+      "ticker": "SLVM",
+      "name": "シルバモ",
+      "sub": "紙",
+      "sub_en": "Paper",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "紙事業の最大級の競合である",
+          "text_en": "Sylvamo is among the largest competitors in the Paper segment",
+          "source": {
+            "label": "Packaging Corporation of America 10-K(December 31, 2025)",
+            "label_en": "Packaging Corporation of America 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest competitors include Domtar Corporation, a division of Paper Excellence, and Sylvamo Corporation."
+          }
+        }
+      ],
+      "name_en": "Sylvamo"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

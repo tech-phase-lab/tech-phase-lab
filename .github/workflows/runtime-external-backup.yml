@@ -1,0 +1,153 @@
+name: Runtime images external backup and offline probes
+
+on:
+  push:
+    branches: [codex/research-preview]
+    paths:
+      - .github/workflows/runtime-external-backup.yml
+      - docs/runtime-backup-request.txt
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runtime-external-backup
+  cancel-in-progress: false
+
+jobs:
+  source:
+    if: github.repository == 'tech-phase-lab/tech-phase-lab' && github.ref == 'refs/heads/codex/research-preview'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install archive tools without backup credentials
+        run: python -m pip install -r services/tech-phase-backup/requirements.txt
+      - name: Check exact source and prepare package
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          umask 077
+          custody="$RUNNER_TEMP/runtime-source"
+          mkdir "$custody"
+          python scripts/tech-phase/prepare_source_recovery.py --repo "$GITHUB_WORKSPACE" --commit "$EXPECTED_COMMIT" --output "$custody/package"
+          mkdir "$custody/context"
+          git -c tar.umask=0022 archive "$EXPECTED_COMMIT" | tar --no-same-owner --same-permissions -x -C "$custody/context"
+          PYTHONPATH=scripts/tech-phase python -c 'import sys; from external_runtime import validate_source_context; print(validate_source_context(sys.argv[1]))' "$custody/context"
+      - name: Encrypt, upload and restore exact source
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+          TECH_PHASE_SOURCE_UPLOAD_ENABLED: 'true'
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_BUCKET: resolute-backup-external
+          MIRROR_DESTINATION_REGION: auto
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+          TECH_PHASE_EXTERNAL_KEY_HEX: ${{ secrets.TECH_PHASE_EXTERNAL_KEY_HEX }}
+        run: |
+          set -euo pipefail
+          python scripts/tech-phase/upload_source_recovery.py --package "$RUNNER_TEMP/runtime-source/package" --expected-commit "$EXPECTED_COMMIT" | tee "$RUNNER_TEMP/runtime-source/report.json"
+          cat "$RUNNER_TEMP/runtime-source/report.json" >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove private source staging
+        if: always()
+        run: rm -rf -- "$RUNNER_TEMP/runtime-source"
+  images:
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - service: frontend
+            dockerfile: services/tech-phase-runtime/Dockerfile.frontend
+            context: .
+          - service: api
+            dockerfile: services/resolute-api/Dockerfile
+            context: .
+          - service: billing
+            dockerfile: services/tech-phase-billing/Dockerfile
+            context: services/tech-phase-billing
+          - service: protection
+            dockerfile: services/resolute-protection/Dockerfile
+            context: .
+          - service: research
+            dockerfile: Dockerfile.research-monitor
+            context: .
+          - service: backup
+            dockerfile: services/tech-phase-backup/Dockerfile
+            context: services/tech-phase-backup
+          - service: recovery
+            dockerfile: services/resolute-recovery/Dockerfile
+            context: .
+    env:
+      EXPECTED_COMMIT: ${{ github.sha }}
+      RUNTIME_SERVICE: ${{ matrix.service }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install archive tools without backup credentials
+        run: python -m pip install -r services/tech-phase-backup/requirements.txt
+      - name: Build and archive exact source without production credentials
+        env:
+          RUNTIME_DOCKERFILE: ${{ matrix.dockerfile }}
+          RUNTIME_CONTEXT: ${{ matrix.context }}
+        run: |
+          set -euo pipefail
+          umask 077
+          custody="$RUNNER_TEMP/runtime-custody"
+          mkdir -p "$custody/source"
+          # Keep the private parent 0700 while preserving Git source modes inside the image.
+          git -c tar.umask=0022 archive "$EXPECTED_COMMIT" | tar --no-same-owner --same-permissions -x -C "$custody/source"
+          PYTHONPATH=scripts/tech-phase python -c 'import sys; from external_runtime import validate_source_context; print(validate_source_context(sys.argv[1]))' "$custody/source"
+          tag="tech-phase-recovery/$RUNTIME_SERVICE:$EXPECTED_COMMIT"
+          docker build --pull --label "org.opencontainers.image.revision=$EXPECTED_COMMIT" -f "$custody/source/$RUNTIME_DOCKERFILE" -t "$tag" "$custody/source/$RUNTIME_CONTEXT"
+          image_id=$(docker image inspect --format '{{.Id}}' "$tag")
+          printf '%s\n' "$image_id" > "$custody/image-id"
+          python scripts/tech-phase/verify_runtime_image.py --service "$RUNTIME_SERVICE" --image-id "$image_id" --expected-commit "$EXPECTED_COMMIT" --inspect-only
+          docker image save "$tag" | gzip -6 > "$custody/image.tar.gz"
+          PYTHONPATH=scripts/tech-phase python -c 'import sys; from external_runtime import archive_file, MAX_ARCHIVE; print(archive_file(sys.argv[1], MAX_ARCHIVE).stat().st_size)' "$custody/image.tar.gz"
+      - name: Encrypt, upload, download and authenticate runtime archive
+        env:
+          TECH_PHASE_RUNTIME_UPLOAD_ENABLED: 'true'
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_BUCKET: resolute-backup-external
+          MIRROR_DESTINATION_REGION: auto
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+          TECH_PHASE_EXTERNAL_KEY_HEX: ${{ secrets.TECH_PHASE_EXTERNAL_KEY_HEX }}
+        run: |
+          set -euo pipefail
+          umask 077
+          custody="$RUNNER_TEMP/runtime-custody"
+          python scripts/tech-phase/external_runtime.py --image-archive "$custody/image.tar.gz" --expected-commit "$EXPECTED_COMMIT" --source-tree "$(git rev-parse HEAD^{tree})" --service "$RUNTIME_SERVICE" --expected-image-id "$(cat "$custody/image-id")" --output "$custody/restored.tar.gz" > "$custody/receipt.json"
+          cat "$custody/receipt.json"
+      - name: Load retrieved image and probe it with networking disabled
+        run: |
+          set -euo pipefail
+          custody="$RUNNER_TEMP/runtime-custody"
+          tag="tech-phase-recovery/$RUNTIME_SERVICE:$EXPECTED_COMMIT"
+          image_id=$(cat "$custody/image-id")
+          docker image rm "$tag"
+          rm "$custody/image.tar.gz"
+          docker image load --input "$custody/restored.tar.gz"
+          test "$(docker image inspect --format '{{.Id}}' "$tag")" = "$image_id"
+          python scripts/tech-phase/verify_runtime_image.py --service "$RUNTIME_SERVICE" --image-id "$image_id" --expected-commit "$EXPECTED_COMMIT" | tee "$custody/probe.json"
+          cat "$custody/receipt.json" "$custody/probe.json" >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove private runtime staging
+        if: always()
+        run: sudo rm -rf -- "$RUNNER_TEMP/runtime-custody"

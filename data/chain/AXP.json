@@ -1,0 +1,269 @@
+{
+  "root": {
+    "ticker": "AXP",
+    "name": "アメリカン・エキスプレス",
+    "cik": 4962,
+    "name_en": "American Express"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "V",
+    "MA",
+    "COF",
+    "PYPL"
+  ],
+  "companies": [
+    {
+      "id": "DAL",
+      "ticker": "DAL",
+      "name": "デルタ航空",
+      "sub": "提携カードの最大パートナー",
+      "sub_en": "Largest strategic partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "最大の戦略パートナーと位置づけている",
+          "text_en": "Delta is described as Amex's largest strategic partner",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Delta is our largest strategic partner."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "提携カードは世界のカード会員向け貸出の約21%を占める",
+          "text_en": "The Delta cobrand portfolio is about 21 percent of worldwide Card Member loans",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We issue cards under cobrand arrangements with Delta and the Delta cobrand portfolio continued to represent approximately 13 percent of worldwide billed business and approximately 21 percent of worldwide Card Member loans as of December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Delta Air Lines"
+    },
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット・インターナショナル",
+      "sub": "ホテル提携カード",
+      "sub_en": "Hotel cobrand partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "個人・小規模事業者向けの提携カードを共同で提供するパートナーの一社",
+          "text_en": "Marriott is one of the partners offering cobranded cards for consumers and small businesses",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "For example, we work with partners such as Delta, Marriott, British Airways and Hilton to offer cobranded cards for consumers and small businesses, and with partners in many industries, including Delta, to offer benefits and rewards to Card Members."
+          }
+        }
+      ],
+      "name_en": "Marriott International"
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン・ワールドワイド",
+      "sub": "ホテル提携カード",
+      "sub_en": "Hotel cobrand partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携カードを発行する相手先の例として挙げられている",
+          "text_en": "Hilton appears among examples of cobrand card partners",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "There are many examples of how we work with partners, including: issuing cards under cobrand arrangements with other corporations and institutions (e.g., Delta Air Lines (Delta), Marriott International, British Airways and Hilton Worldwide Holdings)"
+          }
+        }
+      ],
+      "name_en": "Hilton Worldwide Holdings"
+    },
+    {
+      "id": "BA",
+      "ticker": "British Airways",
+      "name": "ブリティッシュ・エアウェイズ",
+      "sub": "航空提携カード",
+      "sub_en": "Airline cobrand partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携カードを発行する相手先の例になっている",
+          "text_en": "British Airways appears among examples of cobrand card partners",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "There are many examples of how we work with partners, including: issuing cards under cobrand arrangements with other corporations and institutions (e.g., Delta Air Lines (Delta), Marriott International, British Airways and Hilton Worldwide Holdings)"
+          }
+        }
+      ],
+      "name_en": "British Airways"
+    },
+    {
+      "id": "GBTG",
+      "ticker": "GBTG",
+      "name": "グローバル・ビジネス・トラベル・グループ",
+      "sub": "出張管理会社",
+      "sub_en": "Business travel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同社へ株式投資を行い、商取引上の取り決めも結んでいる",
+          "text_en": "Amex holds an equity investment in it and has commercial arrangements with it",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We also have an equity investment in, and commercial arrangements with, Global Business Travel Group, Inc."
+          }
+        }
+      ],
+      "name_en": "Global Business Travel Group"
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "カードネットワーク",
+      "sub_en": "Card network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界の決済ネットワーク市場で競合する相手の一社",
+          "text_en": "Visa is one of the card networks Amex competes with",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our global card network competes in the global payments industry with other card networks, including, among others, Visa, China UnionPay, Mastercard, JCB, Discover and Diners Club International (the last two of which are owned by Capital One)."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "購入額ベースの汎用カードネットワークで、同社より上位に位置する",
+          "text_en": "Visa ranks above Amex among general-purpose card networks by purchase volume",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "We are the fourth largest general-purpose card network globally based on purchase volume, behind Visa, China UnionPay and Mastercard."
+          }
+        }
+      ],
+      "name_en": "Visa"
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "カードネットワーク",
+      "sub_en": "Card network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界の決済ネットワーク市場で競合する相手の一社",
+          "text_en": "Mastercard is one of the card networks Amex competes with",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our global card network competes in the global payments industry with other card networks, including, among others, Visa, China UnionPay, Mastercard, JCB, Discover and Diners Club International (the last two of which are owned by Capital One)."
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "COF",
+      "ticker": "COF",
+      "name": "キャピタル・ワン・ファイナンシャル",
+      "sub": "カード発行・ネットワーク",
+      "sub_en": "Card issuer & network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DiscoverとDiners Clubを保有し、カードネットワーク市場で競合する",
+          "text_en": "Capital One owns Discover and Diners Club, which compete in card networks",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our global card network competes in the global payments industry with other card networks, including, among others, Visa, China UnionPay, Mastercard, JCB, Discover and Diners Club International (the last two of which are owned by Capital One)."
+          }
+        }
+      ],
+      "name_en": "Capital One"
+    },
+    {
+      "id": "PYPL",
+      "ticker": "PYPL",
+      "name": "ペイパル",
+      "sub": "オンライン決済",
+      "sub_en": "Online payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ウェブ・モバイル決済プラットフォームの例として、競合先に挙げられている",
+          "text_en": "PayPal is cited as an example of a web and mobile payment platform competitor",
+          "source": {
+            "label": "American Express 10-K(2025年12月期)",
+            "label_en": "American Express 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "In addition to such networks, we compete against a range of companies globally, including merchant acquirers, processors, payment facilitators and web- and mobile-based payment platforms (e.g., Alipay, PayPal and Shop Pay)"
+          }
+        }
+      ],
+      "name_en": "PayPal"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

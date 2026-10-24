@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateRow,extractQuote,contains} from '../scripts/chain/evidence.mjs';
+import {chainFocus} from '../lib/research/chain-network.ts';
+const universe=new Map([['AAA',{id:'AAA',name:'Alpha Company',aliases:['Alpha'],cik:1}],['BBB',{id:'BBB',name:'Beta Company',aliases:['Beta'],cik:2}]]);
+const quote='Alpha Company and Beta Company announced a partnership to develop memory products together.';
+const row={from:'AAA',to:'BBB',type:'提携・出資・技術対応',text_ja:'メモリーの共同開発で提携',source_url:'https://alpha.example/news/partnership',source_date:'2026-01-01',evidence_quote:quote};
+const context={universe,domains:{AAA:{domains:[{host:'alpha.example'}]}},source:{body:quote,date:'2026-01-01'}};
+test('ordinary words are not ticker evidence',()=>{
+ assert.equal(contains('partners are now delivering a mobile app',{id:'NOW',name:'ServiceNow',aliases:['NOW','ServiceNow']}),false);
+ assert.equal(contains('partners are now delivering a mobile app',{id:'APP',name:'AppLovin',aliases:['APP','AppLovin']}),false);
+ assert.equal(contains('ServiceNow (NYSE: NOW)',{id:'NOW',name:'ServiceNow',aliases:['NOW']}),true);
+ assert.equal(contains('COST OF SALES',{id:'COST',name:'Costco',aliases:['COST']}),false);
+ assert.equal(contains('(NASDAQ: COST)',{id:'COST',name:'Costco',aliases:['COST']}),true);
+});
+test('a real bilateral quote is sufficient without a human review allowlist',()=>assert.deepEqual(validateRow(row,context),[]));
+test('fabricated, missing and unilateral quotes fail closed',()=>{for(const evidence_quote of ['',quote+' fabricated','Alpha Company announced a partnership.'])assert.ok(validateRow({...row,evidence_quote},context).length)});
+test('an official unrelated third party is not an authorized source',()=>assert.ok(validateRow({...row,source_url:'https://third.example/news/a'},context).includes('not_party_official_domain')));
+test('review dates cannot stand in for release dates',()=>assert.ok(validateRow(row,{...context,source:{body:quote}}).includes('publication_date_unverified')));
+test('competition requires the origin issuer 10-K Competition body',()=>{const comp={...row,type:'競合',source_url:'https://www.sec.gov/Archives/edgar/data/1/x/a.htm'};assert.ok(validateRow(comp,{...context,filing:{cik:2,form:'10-Q',date:row.source_date}}).includes('competition_not_from_10k'));assert.ok(validateRow(comp,{...context,filing:{cik:1,form:'10-K',date:row.source_date},source:{...context.source,competition:['Other text']}}).includes('quote_not_in_competition_section'))});
+test('quote extraction rejects social controls and favors real statements',()=>assert.equal(extractQuote('Alpha Company Beta Company sign in to share this partnership. '+quote,universe.get('AAA'),universe.get('BBB'),row.type),quote));
+test('caps apply to unique companies, including dual competitor and customer roles',()=>{const nodes=Array.from({length:40},(_,i)=>({id:String(i)}));const edges=nodes.slice(1).flatMap((n,i)=>[{id:'s'+i,from:'0',to:n.id,kind:'supply'},...(i%2?[{id:'c'+i,from:'0',to:n.id,kind:'competition'}]:[])]);const graph={root:'0',nodes,edges};assert.ok(chainFocus(graph,'direct').nodes.length<=17);assert.ok(chainFocus(graph,'direct').direct.size<=12);assert.ok(chainFocus(graph,'direct').competitors.size<=4);assert.ok(chainFocus(graph,'two').nodes.length<=21);});

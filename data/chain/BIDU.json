@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "BIDU",
+    "name": "Baidu",
+    "cik": 1329099
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BABA",
+    "GOOG",
+    "Tencent"
+  ],
+  "companies": [
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月、Apollo Goは複数年の戦略提携をUberと結び、完全自動運転車数千台をUberのプラットフォームに投入する",
+          "text_en": "In July 2025, Apollo Go entered into a multi-year strategic partnership with Uber to deploy thousands of fully autonomous vehicles on the Uber platform",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "In July 2025, Apollo Go entered into a multi-year strategic partnership with Uber Technologies, Inc. to deploy thousands of Apollo Go’s fully autonomous vehicles on the Uber platform across multiple international markets, with initial deployments planned for Asia and the Middle East."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "英国では、Apollo GoがUberなどとの提携をロンドンでの自動運転車の試験に進めた",
+          "text_en": "In the UK, Apollo Go advanced partnerships with Uber and Lyft to pilot autonomous vehicles in London",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "In the UK, Apollo Go advanced partnerships with Uber and Lyft to pilot autonomous vehicles in London."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年8月、Apollo Goの完全自動運転車がドバイのUberプラットフォームで利用可能になった",
+          "text_en": "In August 2026, Baidu's fully driverless Apollo Go vehicles became available to riders on the Uber platform in Dubai",
+          "source": {
+            "label": "Baidu の発表",
+            "label_en": "Baidu press release",
+            "url": "https://www.nasdaq.com/press-release/baidus-apollo-go-goes-live-uber-dubai-offering-new-way-users-hail-fully-driverless",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Baidu's fully driverless Apollo Go vehicles are now available to riders on the Uber platform in Dubai"
+          }
+        }
+      ],
+      "name_en": "Uber Technologies"
+    },
+    {
+      "id": "BABA",
+      "ticker": "BABA",
+      "name": "アリババ",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Baiduと競合する",
+          "text_en": "Competes with Baidu",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We compete with Alibaba Cloud, Volcano Engine, Huawei and Kingsoft cloud for our cloud offerings."
+          }
+        }
+      ],
+      "name_en": "Alibaba"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "検索・広告",
+      "sub_en": "Search & ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の検索・広告事業者のGoogleなどは、強いブランド力と百度を上回る資金力を持つ",
+          "text_en": "U.S.-based search and marketing platforms such as Google have strong brand names and greater financial resources than Baidu.",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "U.S.-based internet search providers and online marketing platforms, such as Microsoft, Google and Facebook, have a strong global presence, well established brand names, more users and customers and significantly greater financial resources than we do."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "sub": "インターネット",
+      "sub_en": "Internet",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "百度子会社のiQIYIは、動画配信でTencent Videoなどと競合する",
+          "text_en": "Baidu's subsidiary iQIYI competes with Tencent Video and others in video streaming.",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "for content sourcing, user traffic and advertising customers from other providers of online entertainment video services in Chinese mainland, primarily including Tencent Video, Youku, Mango TV and Bilibili. iQIYI also competes with other internet media and entertainment services, such as internet and social platforms and short- or",
+            "note": "子会社iQIYIの記載です。",
+            "note_en": "Subsidiary iQIYI's statement."
+          }
+        }
+      ],
+      "name_en": "Tencent"
+    },
+    {
+      "id": "LYFT",
+      "ticker": "LYFT",
+      "name": "Lyft",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BaiduとLyftが戦略提携を結び、LyftのプラットフォームでApollo Goの自動運転車を欧州の主要市場に展開する",
+          "text_en": "Baidu and Lyft announced a strategic partnership for Lyft to deploy Apollo Go autonomous vehicles across key European markets through the Lyft platform",
+          "source": {
+            "label": "Baidu and Lyft の発表",
+            "label_en": "Baidu and Lyft press release",
+            "url": "https://www.nasdaq.com/press-release/lyft-partners-baidu-deploy-autonomous-rides-across-europe-2025-08-04",
+            "level": "official",
+            "date": "2025-08-04",
+            "quote": "today announced a strategic partnership for Lyft to deploy Baidu's Apollo Go autonomous vehicles (AVs) across key European markets through the Lyft platform."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Lyftが運営と顧客基盤を担い、Baiduが車両、技術検証、技術サポートを提供する",
+          "text_en": "Lyft will own the operational value chain and marketplace while Baidu provides vehicles, technology validation, and technical support",
+          "source": {
+            "label": "Baidu and Lyft の発表",
+            "label_en": "Baidu and Lyft press release",
+            "url": "https://www.nasdaq.com/press-release/lyft-partners-baidu-deploy-autonomous-rides-across-europe-2025-08-04",
+            "level": "official",
+            "date": "2025-08-04",
+            "quote": "Strategic Partnership : Lyft will own the operational value chain and marketplace while Baidu provides vehicles, technology validation, and comprehensive technical support."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTC",
+      "ticker": "DTC",
+      "name": "ドバイ・タクシー",
+      "sub": "タクシー・移動サービス",
+      "sub_en": "Taxi & mobility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Apollo Goがドバイ・タクシーと戦略的に協業し、ドバイでの完全自動運転配車サービスを支える",
+          "text_en": "Apollo Go has a strategic collaboration with Dubai Taxi Company to support its fully driverless ride-hailing service in Dubai",
+          "source": {
+            "label": "Baidu の発表",
+            "label_en": "Baidu press release",
+            "url": "https://www.nasdaq.com/press-release/baidus-apollo-go-commences-fully-driverless-commercial-ride-hailing-dubai-partners",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "This comes alongside Apollo Go's strategic collaboration with Dubai Taxi Company (DTC), the emirate's leading mobility service provider, bringing strong local operational expertise to support the service."
+          }
+        }
+      ],
+      "name_en": "Dubai Taxi Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

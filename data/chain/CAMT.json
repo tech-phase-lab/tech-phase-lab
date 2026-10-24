@@ -1,0 +1,117 @@
+{
+  "root": {
+    "ticker": "CAMT",
+    "name": "Camtek",
+    "cik": 1109138
+  },
+  "rows": [
+    {
+      "ja": "事業の買収",
+      "en": "Business acquisition"
+    },
+    {
+      "ja": "主要株主",
+      "en": "Principal shareholder"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ONTO"
+  ],
+  "companies": [
+    {
+      "id": "FORM",
+      "ticker": "FORM",
+      "name": "フォームファクター",
+      "sub": "半導体テスト装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CamtekはFormFactorのFRT GmbHを買い取る株式譲渡契約(2023年9月17日付)を締結した",
+          "text_en": "Camtek entered into a share purchase agreement dated September 17, 2023 to buy FRT GmbH from FormFactor GmbH",
+          "source": {
+            "label": "FormFactor 10-K",
+            "label_en": "FormFactor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Share Purchase Agreement by and among Camtek, Ltd. as purchaser and FormFactor GmbH as seller and FormFactor, Inc as Parent and FRT GmbH as Company, dated as of September 17, 2023 10-K 000-50307 2/21/2025 10.31"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "FormFactorは2023年9月18日、FRT Metrology事業をCamtekへ売却する正式契約を結んだと発表した",
+          "text_en": "FormFactor announced on September 18, 2023 a definitive agreement to sell its FRT Metrology business to Camtek",
+          "source": {
+            "label": "FormFactor 10-K",
+            "label_en": "FormFactor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On September 18, 2023, the Company announced entry into a definitive agreement to sell its FRT Metrology (“FRT”) business to Camtek Ltd."
+          }
+        }
+      ],
+      "name_en": "FormFactor"
+    },
+    {
+      "id": "ONTO",
+      "ticker": "ONTO",
+      "name": "オントゥ・イノベーション",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Camtekと競合する",
+          "text_en": "Competes with Camtek",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our principal competitors for advanced packaging inspection are KLA and Camtek Ltd."
+          }
+        }
+      ],
+      "name_en": "Onto Innovation"
+    },
+    {
+      "id": "Chroma ATE",
+      "ticker": "Chroma",
+      "name": "致茂電子",
+      "sub": "電子計測・試験装置",
+      "sub_en": "Electronic test & measurement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "年次報告で、致茂電子(Chroma ATE)がPriortechと合計でCamtek普通株の38.24%を保有するとしている",
+          "text_en": "The annual report says Priortech and Chroma ATE together beneficially hold 38.24% of Camtek's issued and outstanding ordinary shares",
+          "source": {
+            "label": "Camtek annual report",
+            "label_en": "Camtek annual report (20-F)",
+            "url": "https://www.camtek.com/wp-content/uploads/20-F.pdf",
+            "level": "official",
+            "quote": "As of March 5, 2025, Priortech Ltd. (“Priortech”) and Chroma ATE Inc. (“Chroma”), beneficially hold in the aggregate 38.24% of our issued and outstanding ordinary shares.",
+            "note": "2025年3月5日時点の記載です。",
+            "note_en": "As of March 5, 2025."
+          }
+        }
+      ],
+      "name_en": "Chroma ATE"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

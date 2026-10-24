@@ -1,0 +1,459 @@
+{
+  "root": {
+    "ticker": "GFS",
+    "name": "GlobalFoundries",
+    "cik": 1709048
+  },
+  "rows": [
+    {
+      "ja": "顧客(顧客側の年次報告に記載)",
+      "en": "Customers (named in their annual reports)",
+      "above": true
+    },
+    {
+      "ja": "提携・ライセンス・資金調達",
+      "en": "Partnerships, licensing & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TSM",
+    "UMC",
+    "TSEM",
+    "INTC",
+    "TXN"
+  ],
+  "companies": [
+    {
+      "id": "NVTS",
+      "ticker": "NVTS",
+      "name": "ナビタス・セミコンダクター",
+      "sub": "GaNパワー半導体",
+      "sub_en": "GaN power chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Navitasは、GaNの米国内ファウンドリ・パートナーであるGlobalFoundriesとの協業を競争上の強みとする",
+          "text_en": "Navitas treats its collaboration with GlobalFoundries on GaN as a competitive advantage.",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "As a result, we consider our collaboration with United States based foundry partners, specifically GlobalFoundries for GaN and X-Fabs for SiC, to be a competitive advantage, as we believe that foreign semiconductor companies and companies that rely on foreign supply chains will be disadvantaged in these critical markets."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年11月に、先進GaNソリューションの開発・提供に向けGlobalFoundriesとの長期の戦略的パートナーシップを発表した",
+          "text_en": "In November 2025 Navitas announced a long-term strategic partnership with GlobalFoundries to develop and deliver advanced GaN solutions",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "with Powerchip Semiconductor Manufacturing Corporation and in November 2025, we announced a long-term strategic partnership with GlobalFoundries to develop and deliver advanced GaN solutions for critical applications in high power markets, including AI datacenters, energy and grid infrastructure, performance computing and industrial electrification."
+          }
+        }
+      ],
+      "name_en": "Navitas Semiconductor"
+    },
+    {
+      "id": "CRUS",
+      "ticker": "CRUS",
+      "name": "シーラス・ロジック",
+      "sub": "オーディオ半導体",
+      "sub_en": "Audio chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cirrus Logicは、2026暦年末まで生産能力を確保しウエハー価格を定める能力予約・ウエハー供給コミットメント契約をGlobalFoundriesと結んでいる",
+          "text_en": "Cirrus Logic has a Capacity Reservation and Wafer Supply Commitment Agreement with GlobalFoundries that reserves capacity and sets wafer pricing through calendar year 2026",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In fiscal year 2022, the Company entered into a Capacity Reservation and Wafer Supply Commitment Agreement with GlobalFoundries to reserve capacity and set wafer pricing for products purchased pursuant to the agreement through calendar year 2026."
+          }
+        },
+        {
+          "type": "down",
+          "text": "同契約は2021年7月28日に結ばれた",
+          "text_en": "The agreement was entered into on July 28, 2021",
+          "source": {
+            "label": "Cirrus Logic 10-K",
+            "label_en": "Cirrus Logic 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In 2021, in an effort to alleviate some of our future expected supply constraints, the Company entered into a Capacity Reservation and Wafer Supply Commitment Agreement with GlobalFoundries on July 28, 2021 to reserve capacity and set wafer pricing for products purchased pursuant to the agreement through 2026."
+          }
+        }
+      ],
+      "name_en": "Cirrus Logic"
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "STMicroelectronicsは、フランスのCrollesにGlobalFoundriesと共同の300mm半導体製造施設を持つ計画で、設備投資などの見込み総額は75億ユーロである",
+          "text_en": "STMicroelectronics describes a joint 300mm semiconductor manufacturing facility with GlobalFoundries in Crolles, France, with projected costs of €7.5 billion",
+          "source": {
+            "label": "STMicroelectronics 20-F",
+            "label_en": "STMicroelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(4) The joint 300mm semiconductor manufacturing facility with GlobalFoundries Inc in Crolles, France, which has received European Commission approval, has a projected cost of €7.5 billion of capital expenditure, maintenance and ancillary costs and",
+            "note": "計画段階の記載です。",
+            "note_en": "Describes a planned facility."
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "ON",
+      "ticker": "ON",
+      "name": "onsemi",
+      "sub": "パワー半導体",
+      "sub_en": "Power chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは、200mm GaN-on-Si基盤と米国内製造をonsemiの製品知見と組み合わせる",
+          "text_en": "GlobalFoundries is combining its 200mm GaN-on-Si platform and U.S.-based manufacturing with onsemi's system and product expertise.",
+          "source": {
+            "label": "Official commercial / product / listing disclosure; checked October17,2026",
+            "label_en": "Official commercial / product / listing disclosure; checked October17,2026",
+            "url": "https://gf.com/news-and-events/news/onsemi-to-develop-next-generation-gan-power-devices-with-globalfoundries/",
+            "level": "official",
+            "quote": "“By combining our 200mm GaN-on-Si platform and U.S.-based manufacturing with onsemi’s deep system and product expertise, we’re accelerating high-efficiency solutions and building resilient supply chains for data centers, automotive, industrial, aerospace and defense, and other critical markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "シノプシス",
+      "sub": "設計ソフト",
+      "sub_en": "Design software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは、2026年1月13日にSynopsys, Inc.と最終契約を結んだ",
+          "text_en": "On January 13, 2026 GlobalFoundries entered into a definitive agreement with Synopsys, Inc.",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Definitive Agreement - On January 13, 2026, the Company entered into a definitive agreement with Synopsys, Inc.",
+            "note": "契約の内容は引用範囲では不明です。",
+            "note_en": "The terms are not stated in the quoted text."
+          }
+        }
+      ],
+      "name_en": "Synopsys"
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "CPU・GPU",
+      "sub_en": "CPUs & GPUs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは、AMD、Samsung、TSMC、IBMなどと特許クロスライセンスを結んでいる",
+          "text_en": "GlobalFoundries has patent cross-licenses with companies including AMD, Samsung, TSMC and IBM",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We have entered into patent cross-licenses with a number of other leading advanced semiconductor companies, including AMD, Samsung, TSMC and IBM."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは2009年に、Mubadala傘下の子会社がAMDのドレスデンの製造事業とニューヨーク州マルタの工場予定地を取得して設立された",
+          "text_en": "GlobalFoundries was established in 2009 when a Mubadala subsidiary acquired AMD's manufacturing operations in Dresden and its fab project site in Malta, New York",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "GF was established in 2009 when a wholly-owned subsidiary of Mubadala, acquired Advanced Micro Devices, Inc.’s (“AMD”) manufacturing operations in Dresden, Germany, as well as their fab project site in Malta, New York.",
+            "note": "2009年の設立経緯の記載です。",
+            "note_en": "Describes the 2009 founding."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPMorgan",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは、Bank of America, N.A.、JPMorgan Chase Bank, N.A.などとのリボルビング及びL/Cファシリティ契約の修正契約(2020年11月11日付)を結んでいる",
+          "text_en": "GlobalFoundries has an amendment (dated November 11, 2020) to its Revolving and L/C Facilities Agreement with lenders including Bank of America, N.A. and JPMorgan Chase Bank, N.A.",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Amendment Agreement to Revolving and L/C Facilities Agreement, dated November 11, 2020, between Registrant and Bank of America, N.A., Citibank, N.A., DBS Bank Ltd. and JPMorgan Chase Bank, N.A, Intesa Sanpaolo S.p.A., London Branch, Morgan Stanley Senior Funding, Inc., Deutsche Bank AG, ING Bank, Commerzbank AG and Credit Suisse AG, Cayman",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは、Bank of America, N.A.、JPMorgan Chase Bank, N.A.などとのリボルビング及びL/Cファシリティ契約の修正契約(2021年10月13日付)を結んでいる",
+          "text_en": "GlobalFoundries has an amendment (dated October 13, 2021) to its Revolving and L/C Facilities Agreement with lenders including Bank of America, N.A. and JPMorgan Chase Bank, N.A.",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "to Revolving and L/C Facilities Agreement, dated October 13, 2021, between Registrant and Bank of America, N.A., DBS Bank Ltd., Intesa Sanpaolo S.p.A., London Branch, JPMorgan Chase Bank, N.A., Morgan Stanley Senior Funding, Inc., Citibank, N.A., Deutsche Bank AG, Credit Suisse AG, Cayman Islands Branch, HSBC Bank USA, National Association and",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "BAC",
+      "ticker": "Bank of America",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは、Bank of America, N.A.、JPMorgan Chase Bank, N.A.などとのリボルビング及びL/Cファシリティ契約の修正契約(2020年11月11日付)を結んでいる",
+          "text_en": "GlobalFoundries has an amendment (dated November 11, 2020) to its Revolving and L/C Facilities Agreement with lenders including Bank of America, N.A. and JPMorgan Chase Bank, N.A.",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "4.15 2020 Amendment Agreement to Revolving and L/C Facilities Agreement, dated November 11, 2020, between Registrant and Bank of America, N.A., Citibank, N.A., DBS Bank Ltd. and JPMorgan Chase Bank, N.A, Intesa Sanpaolo S.p.A., London Branch, Morgan Stanley Senior Funding, Inc., Deutsche Bank AG, ING",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesは、Bank of America, N.A.、JPMorgan Chase Bank, N.A.などとのリボルビング及びL/Cファシリティ契約の修正契約(2021年10月13日付)を結んでいる",
+          "text_en": "GlobalFoundries has an amendment (dated October 13, 2021) to its Revolving and L/C Facilities Agreement with lenders including Bank of America, N.A. and JPMorgan Chase Bank, N.A.",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "4.16 2021 Amendment to Revolving and L/C Facilities Agreement, dated October 13, 2021, between Registrant and Bank of America, N.A., DBS Bank Ltd., Intesa Sanpaolo S.p.A., London Branch, JPMorgan Chase Bank, N.A., Morgan Stanley Senior Funding, Inc., Citibank, N.A., Deutsche Bank AG, Credit",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Key competitors include Taiwan Semiconductor Manufacturing Company, Limited (“TSMC”), United Microelectronics Corporation (“UMC”) and Semiconductor Manufacturing International Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "ユナイテッド・マイクロエレクトロニクス",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Similarly, our competitors are developing or seeking to develop new fabs in Europe and Singapore (including TSMC and UMC in Dresden, Germany, and Singapore, respectively) and substantially increase their manufacturing capacity."
+          }
+        }
+      ],
+      "name_en": "United Microelectronics"
+    },
+    {
+      "id": "TSEM",
+      "ticker": "TSEM",
+      "name": "タワーセミコンダクター",
+      "sub": "特殊ファウンドリ",
+      "sub_en": "Specialty foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Other smaller dedicated foundry competitors include HuaHong Group, X-FAB Silicon Foundries, Tower Semiconductor Ltd., Vanguard International Semiconductor Corporation, and Powerchip Semiconductor Manufacturing Corporation."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
+          "source": {
+            "label": "Tower Semiconductor 20-F",
+            "label_en": "Tower Semiconductor 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We compete most directly in the specialty segment with foundries such as GlobalFoundries (mainly"
+          }
+        }
+      ],
+      "name_en": "Tower Semiconductor"
+    },
+    {
+      "id": "TXN",
+      "ticker": "TXN",
+      "name": "テキサス・インスツルメンツ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We also compete with the foundry operation services of some IDMs, such as Texas Instruments, Inc."
+          }
+        }
+      ],
+      "name_en": "Texas Instruments"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
+          "source": {
+            "label": "Intel 10-K",
+            "label_en": "Intel 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "Other Intel Foundry competitors include GlobalFoundries, UMC and SMIC, which primarily focus on mature process technologies."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "CEVA",
+      "ticker": "CEVA",
+      "name": "CEVA",
+      "sub": "半導体IP",
+      "sub_en": "Semiconductor IP",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GlobalFoundriesと競合する",
+          "text_en": "Competes with GlobalFoundries",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with CPU IP or configurable CPU IP providers (offering DSP configured CPU and/or DSP acceleration and/or connectivity capabilities to their IP), such as Arm, Cadence, GlobalFoundries and the RISC-V open source."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "root": {
+    "ticker": "VTR",
+    "name": "ベンタス",
+    "cik": 740260,
+    "name_en": "Ventas"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BKD",
+      "ticker": "BKD",
+      "name": "ブルックデール・シニア・リビング",
+      "sub": "シニア住宅運営",
+      "sub_en": "Senior living operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "同社が物件を賃貸する主要テナントの一つである",
+          "text_en": "Brookdale is among the tenants leasing properties from Ventas that make up a significant portion of NNN revenues and NOI",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The properties we lease to Brookdale Senior Living, Inc. (together with its subsidiaries, “Brookdale”), Ardent and Kindred Healthcare, LLC (together with its subsidiaries, “Kindred”) accounted for a significant portion of our NNN segment revenues and NOI for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Brookdale Senior Living"
+    },
+    {
+      "id": "KINDRED",
+      "ticker": "Kindred Healthcare",
+      "name": "キンドレッド・ヘルスケア",
+      "sub": "病院・介護運営",
+      "sub_en": "Post-acute care operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "同社が物件を賃貸する主要テナントの一つである",
+          "text_en": "Kindred is among the tenants leasing properties from Ventas that make up a significant portion of NNN revenues and NOI",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The properties we lease to Brookdale Senior Living, Inc. (together with its subsidiaries, “Brookdale”), Ardent and Kindred Healthcare, LLC (together with its subsidiaries, “Kindred”) accounted for a significant portion of our NNN segment revenues and NOI for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Kindred Healthcare"
+    },
+    {
+      "id": "ARDENT",
+      "ticker": "ARDT",
+      "name": "アーデント・ヘルス",
+      "sub": "病院運営",
+      "sub_en": "Health system operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "同社が物件を賃貸する主要テナントで、出資先でもある",
+          "text_en": "Ardent is a major tenant of Ventas and also an unconsolidated investee",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our investments in unconsolidated entities also include investments in operating entities, such as Ardent Health, Inc. (together with its subsidiaries, “Ardent”) and Atria Senior Living, Inc. (together with its subsidiaries, “Atria”)."
+          }
+        },
+        {
+          "type": "down",
+          "text": "同社が物件を賃貸する主要テナントの一つである",
+          "text_en": "Ardent is among the tenants leasing properties from Ventas that make up a significant portion of NNN revenues and NOI",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The properties we lease to Brookdale Senior Living, Inc. (together with its subsidiaries, “Brookdale”), Ardent and Kindred Healthcare, LLC (together with its subsidiaries, “Kindred”) accounted for a significant portion of our NNN segment revenues and NOI for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Ardent Health"
+    },
+    {
+      "id": "ATRIA",
+      "ticker": "Atria Senior",
+      "name": "アトリア・シニア・リビング",
+      "sub": "シニア住宅運営",
+      "sub_en": "Senior living manager",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同社が34%を保有する出資先で、同社の住宅物件を運営している",
+          "text_en": "Atria is a 34%-owned investee that manages Ventas SHOP properties",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "As of December 31, 2025, we held a 34% ownership interest in Atria, which entitles us to customary minority rights and protections, as well as the right to appoint two members to the Atria Board of Directors."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同社のSHOP物件を運営し、収益と営業利益の相当部分を占める",
+          "text_en": "Atria manages SHOP properties that account for a significant portion of segment revenues and NOI",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The properties in our SHOP segment managed by Atria, Sunrise Senior Living, LLC (together with its subsidiaries, “Sunrise”) and Le Groupe Maurice (together with its subsidiaries, “Le Groupe Maurice”) accounted for a significant portion of our SHOP segment revenues and NOI for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Atria Senior Living"
+    },
+    {
+      "id": "SUNRISE",
+      "ticker": "Sunrise Senior",
+      "name": "サンライズ・シニア・リビング",
+      "sub": "シニア住宅運営",
+      "sub_en": "Senior living manager",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同社のSHOP物件を運営し、収益と営業利益の相当部分を占める",
+          "text_en": "Sunrise manages SHOP properties that account for a significant portion of segment revenues and NOI",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The properties in our SHOP segment managed by Atria, Sunrise Senior Living, LLC (together with its subsidiaries, “Sunrise”) and Le Groupe Maurice (together with its subsidiaries, “Le Groupe Maurice”) accounted for a significant portion of our SHOP segment revenues and NOI for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Sunrise Senior Living"
+    },
+    {
+      "id": "MAURICE",
+      "ticker": "Le Groupe Maurice",
+      "name": "ル・グループ・モーリス",
+      "sub": "シニア住宅運営",
+      "sub_en": "Senior living manager",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同社のSHOP物件を運営し、収益と営業利益の相当部分を占める",
+          "text_en": "Le Groupe Maurice manages SHOP properties that account for a significant portion of segment revenues and NOI",
+          "source": {
+            "label": "Ventas 10-K(2025-12-31)",
+            "label_en": "Ventas 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/740260/000074026026000006/vtr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The properties in our SHOP segment managed by Atria, Sunrise Senior Living, LLC (together with its subsidiaries, “Sunrise”) and Le Groupe Maurice (together with its subsidiaries, “Le Groupe Maurice”) accounted for a significant portion of our SHOP segment revenues and NOI for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Le Groupe Maurice"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "root": {
+    "ticker": "AEHR",
+    "name": "エーア・テスト・システムズ",
+    "cik": 1040470,
+    "name_en": "Aehr Test Systems"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ASX",
+      "ticker": "ASE",
+      "name": "ASEテクノロジー・ホールディング",
+      "sub": "半導体の組立・テスト",
+      "sub_en": "Semiconductor assembly & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社のISE Labsと、HPCおよびAI向けのウエハーレベルのテスト・バーンインサービスで戦略的提携を発表した",
+          "text_en": "Aehr announced a strategic partnership with ISE Labs to deliver wafer-level test and burn-in services for HPC and AI applications",
+          "source": {
+            "label": "Aehr の発表",
+            "label_en": "Aehr press release",
+            "url": "https://www.aehr.com/2025/11/aehr-test-systems-and-ise-labs-announce-partnership-on-wafer-level-test-and-burn-in-for-high-performance-computing-and-artificial-intelligence-processors/",
+            "level": "official",
+            "date": "2025-11-03",
+            "quote": "Aehr Test Systems (NASDAQ: AEHR), a worldwide supplier of semiconductor test and burn-in solutions, today announced a strategic partnership with ISE Labs, Inc., a leading provider of semiconductor engineering services, to deliver advanced wafer-level test and burn-in services tailored for high-performance computing (HPC) and artificial intelligence (AI) applications.",
+            "note": "子会社ISE Labsを通じた関係です。",
+            "note_en": "Relationship runs through its subsidiary ISE Labs."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ISE Labsは、ASEの子会社である",
+          "text_en": "ISE Labs is a subsidiary of ASE",
+          "source": {
+            "label": "Aehr の発表",
+            "label_en": "Aehr press release",
+            "url": "https://www.aehr.com/2025/11/aehr-test-systems-and-ise-labs-announce-partnership-on-wafer-level-test-and-burn-in-for-high-performance-computing-and-artificial-intelligence-processors/",
+            "level": "official",
+            "date": "2025-11-03",
+            "quote": "ISE Labs is a subsidiary of ASE, Inc., the world’s leading provider of outsourced semiconductor assembly and test (OSAT) services."
+          }
+        },
+        {
+          "type": "down",
+          "text": "ISE Labsは、シリコンフォトニクス向けウエハーレベルバーンインのFOX-NPシステムを最初に購入した試験所である",
+          "text_en": "ISE Labs was the first lab to purchase Aehr's FOX-NP system for wafer-level burn-in of silicon photonics devices",
+          "source": {
+            "label": "Aehr の発表",
+            "label_en": "Aehr press release",
+            "url": "https://www.aehr.com/2025/11/aehr-test-systems-and-ise-labs-announce-partnership-on-wafer-level-test-and-burn-in-for-high-performance-computing-and-artificial-intelligence-processors/",
+            "level": "official",
+            "date": "2025-11-03",
+            "quote": "ISE Labs was also the first lab to purchase Aehr’s FOX-NP™ system for wafer-level burn-in of silicon photonics devices",
+            "note": "子会社ISE Labsを通じた関係です。",
+            "note_en": "Relationship runs through its subsidiary ISE Labs."
+          }
+        }
+      ],
+      "name_en": "ASE Technology Holding"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "CPRT",
+    "name": "コパート",
+    "cik": 900075,
+    "name_en": "Copart, Inc."
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "RBA",
+    "CVNA",
+    "OPLN",
+    "LKQ"
+  ],
+  "companies": [
+    {
+      "id": "RBA",
+      "ticker": "RBA",
+      "name": "RBグローバル",
+      "sub": "車両オークション",
+      "sub_en": "Vehicle auctions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国最大級の車両オークション事業者のひとつとして競合している",
+          "text_en": "RB Global is among the largest U.S. vehicle auctioneers competing with Copart",
+          "source": {
+            "label": "コパート 10-K(2026-07-31)",
+            "label_en": "Copart, Inc. 10-K (fiscal year ended 2026-07-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "The largest national or regional vehicle auctioneers in the U.S. include RB Global (including its subsidiary Insurance Auto Auctions, Inc.), Carvana, Openlane, Manheim, Inc. and ACV Auctions Inc."
+          }
+        }
+      ],
+      "name_en": "RB Global"
+    },
+    {
+      "id": "CVNA",
+      "ticker": "CVNA",
+      "name": "カーバナ",
+      "sub": "車両販売・競売",
+      "sub_en": "Vehicle retail & auctions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国最大級の車両オークション事業者のひとつとして競合している",
+          "text_en": "Carvana is among the largest U.S. vehicle auctioneers competing with Copart",
+          "source": {
+            "label": "コパート 10-K(2026-07-31)",
+            "label_en": "Copart, Inc. 10-K (fiscal year ended 2026-07-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "The largest national or regional vehicle auctioneers in the U.S. include RB Global (including its subsidiary Insurance Auto Auctions, Inc.), Carvana, Openlane, Manheim, Inc. and ACV Auctions Inc."
+          }
+        }
+      ],
+      "name_en": "Carvana"
+    },
+    {
+      "id": "OPLN",
+      "ticker": "OPLN",
+      "name": "オープンレーン",
+      "sub": "車両オークション",
+      "sub_en": "Vehicle auctions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国最大級の車両オークション事業者のひとつとして競合している",
+          "text_en": "Openlane is among the largest U.S. vehicle auctioneers competing with Copart",
+          "source": {
+            "label": "コパート 10-K(2026-07-31)",
+            "label_en": "Copart, Inc. 10-K (fiscal year ended 2026-07-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "The largest national or regional vehicle auctioneers in the U.S. include RB Global (including its subsidiary Insurance Auto Auctions, Inc.), Carvana, Openlane, Manheim, Inc. and ACV Auctions Inc."
+          }
+        }
+      ],
+      "name_en": "Openlane"
+    },
+    {
+      "id": "MANH",
+      "ticker": "Manheim",
+      "name": "マンハイム",
+      "sub": "車両オークション",
+      "sub_en": "Vehicle auctions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国最大級の車両オークション事業者のひとつとして競合している",
+          "text_en": "Manheim is among the largest U.S. vehicle auctioneers competing with Copart",
+          "source": {
+            "label": "コパート 10-K(2026-07-31)",
+            "label_en": "Copart, Inc. 10-K (fiscal year ended 2026-07-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "The largest national or regional vehicle auctioneers in the U.S. include RB Global (including its subsidiary Insurance Auto Auctions, Inc.), Carvana, Openlane, Manheim, Inc. and ACV Auctions Inc."
+          }
+        }
+      ],
+      "name_en": "Manheim"
+    },
+    {
+      "id": "LKQ",
+      "ticker": "LKQ",
+      "name": "LKQコーポレーション",
+      "sub": "中古部品・解体",
+      "sub_en": "Auto parts dismantling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国最大の解体事業者として競合している",
+          "text_en": "LKQ is the largest national dismantler in the U.S. and a competitor",
+          "source": {
+            "label": "コパート 10-K(2026-07-31)",
+            "label_en": "Copart, Inc. 10-K (fiscal year ended 2026-07-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "The largest national dismantler in the U.S. is LKQ Corporation (“LKQ”)."
+          }
+        }
+      ],
+      "name_en": "LKQ Corporation"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

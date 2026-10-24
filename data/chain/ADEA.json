@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "ADEA",
+    "name": "アデイア",
+    "cik": 1803696,
+    "name_en": "Adeia"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "ネット通販・動画配信",
+      "sub_en": "E-commerce & streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "メディア特許の複数年ライセンス契約を結んだ",
+          "text_en": "Signed a multi-year license agreement for access to Adeia's media portfolio",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In December of 2024 we announced that Amazon signed a multi-year license agreement for access to our media portfolio."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ウォルト・ディズニー",
+      "sub": "メディア・配信",
+      "sub_en": "Media & streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "訴訟を解決し、長期ライセンス契約を結んだ",
+          "text_en": "Resolved litigation and signed a long-term license agreement with Adeia",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "in December of 2025 we resolved all outstanding litigation and signed a long-term license agreement with Disney for access to our media portfolio"
+          }
+        }
+      ],
+      "name_en": "Disney"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "ネット・動画配信",
+      "sub_en": "Internet & video",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "YouTubeなどの動画配信サービスの顧客である",
+          "text_en": "A customer, including YouTube and YouTube TV",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "include some of the leading media companies and services including Amazon (including Amazon Prime), DAZN, Disney+, ESPN+, Google (including YouTube), Hulu, Starz and Peacock"
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "ケーブル・通信",
+      "sub_en": "Cable & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "有料放送事業者としてのライセンス顧客である",
+          "text_en": "A pay-TV operator customer",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers typically pay us a monthly per-subscriber fee and include many of the leading MVPDs and virtual MVPDs such as Charter, Comcast (including Sky), Cox, DISH Network (including Sling TV), Google (including YouTube TV), Hulu + Live TV, Optimum (formerly Altice USA), Verizon and Vodafone."
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "ケーブル・通信",
+      "sub_en": "Cable & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "有料放送事業者としてのライセンス顧客である",
+          "text_en": "A pay-TV operator customer",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers typically pay us a monthly per-subscriber fee and include many of the leading MVPDs and virtual MVPDs such as Charter, Comcast (including Sky), Cox, DISH Network (including Sling TV), Google (including YouTube TV), Hulu + Live TV, Optimum (formerly Altice USA), Verizon and Vodafone."
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "有料放送事業者としてのライセンス顧客である",
+          "text_en": "A pay-TV operator customer",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers typically pay us a monthly per-subscriber fee and include many of the leading MVPDs and virtual MVPDs such as Charter, Comcast (including Sky), Cox, DISH Network (including Sling TV), Google (including YouTube TV), Hulu + Live TV, Optimum (formerly Altice USA), Verizon and Vodafone."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "ロク",
+      "sub": "動画配信機器",
+      "sub_en": "Streaming devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家電メーカーとしてのライセンス顧客である",
+          "text_en": "A consumer electronics customer",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Select customers include LG, Panasonic, Roku, Samsung, Sharp, Canon and TCL."
+          }
+        }
+      ],
+      "name_en": "Roku"
+    },
+    {
+      "id": "SAMSUNG",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "家電・半導体",
+      "sub_en": "Electronics & semis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家電と半導体の両分野でライセンス顧客である",
+          "text_en": "A customer in both consumer electronics and semiconductors",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Select customers include LG, Panasonic, Roku, Samsung, Sharp, Canon and TCL."
+          }
+        },
+        {
+          "type": "down",
+          "text": "半導体分野でもライセンス顧客である",
+          "text_en": "Also a semiconductor customer",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "our customers include Kioxia, Micron, Samsung, SanDisk, SK Hynix, Sony, ST Microelectronics, and UMC"
+          }
+        }
+      ],
+      "name_en": "Samsung"
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "マイクロン・テクノロジー",
+      "sub": "半導体メモリ",
+      "sub_en": "Memory semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "半導体分野のライセンス顧客である",
+          "text_en": "A semiconductor customer",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "our customers include Kioxia, Micron, Samsung, SanDisk, SK Hynix, Sony, ST Microelectronics, and UMC"
+          }
+        }
+      ],
+      "name_en": "Micron Technology"
+    },
+    {
+      "id": "SNDK",
+      "ticker": "SNDK",
+      "name": "サンディスク",
+      "sub": "半導体メモリ",
+      "sub_en": "Memory semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "半導体分野のライセンス顧客である",
+          "text_en": "A semiconductor customer",
+          "source": {
+            "label": "Adeia 10-K(December 31, 2025)",
+            "label_en": "Adeia 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803696/000119312526076549/adea-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "our customers include Kioxia, Micron, Samsung, SanDisk, SK Hynix, Sony, ST Microelectronics, and UMC"
+          }
+        }
+      ],
+      "name_en": "SanDisk"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

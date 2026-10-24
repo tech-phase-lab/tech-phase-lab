@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "BL",
+    "name": "BlackLine",
+    "cik": 1666134
+  },
+  "rows": [
+    {
+      "ja": "基盤提供元",
+      "en": "Platform suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・連携先",
+      "en": "Partners & integrations"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BlackLineのCustomer Data Platformは、Snowflake上に構築されている",
+          "text_en": "BlackLine's Customer Data Platform is built on Snowflake",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our Customer Data Platform is built on Snowflake for Financial Close & Consolidation, Invoice-to-Cash, and Intercompany solutions, allowing customers to access their data, reports, and integrations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAPなどの再販業者が、自社の不利な契約条件をBlackLineに転嫁してくる可能性がある",
+          "text_en": "Resellers such as SAP may impose unfavorable terms on BlackLine that they pass down from their own agreements with end customers.",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Also, resellers, such as SAP, may impose unfavorable terms on us that they pass down from their own agreements with the end customer."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "BlackLineはSAPなどと共同マーケティングを行っている",
+          "text_en": "BlackLine runs co-marketing activities with partners such as SAP",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We execute co-marketing activities with partners such as SAP, Ernst & Young, and Deloitte."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackLineはGoogle Cloudと戦略契約を結び、共同で販売と市場開拓を行っている",
+          "text_en": "BlackLine maintains a strategic agreement with Google Cloud for joint selling and go-to-market activities",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also maintain a strategic agreement with Google Cloud through which we jointly engage in selling and go-to-market activities to bring enhanced automation capabilities to customers."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "BlackLineの製品は、Google Cloud Platformのクラウドマーケットプレイスで購入できる",
+          "text_en": "BlackLine solutions can be purchased through the Google Cloud Platform marketplace",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have established the ability to purchase BlackLine solutions through Cloud Marketplaces on Google Cloud Platform (“GCP”), Microsoft Azure (“Azure”), and Amazon Web Services (“AWS”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackLineの製品は、Microsoft Azureのクラウドマーケットプレイスで購入できる",
+          "text_en": "BlackLine solutions can be purchased through the Microsoft Azure marketplace",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have established the ability to purchase BlackLine solutions through Cloud Marketplaces on Google Cloud Platform (“GCP”), Microsoft Azure (“Azure”), and Amazon Web Services (“AWS”)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "BlackLineの直販部門は、Microsoftなどの技術ベンダーとの関係を活用している",
+          "text_en": "BlackLine's direct sales force leverages relationships with technology vendors such as Microsoft",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our direct sales force leverages relationships with technology vendors, such as Workday, SAP, and Microsoft, professional services firms, such as Accenture, Deloitte, and Ernst & Young, and business process outsourcers, such as CapGemini, GenPact, and RSM to influence and drive customer growth."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackLineの製品は、Amazon Web Servicesのクラウドマーケットプレイスで購入できる",
+          "text_en": "BlackLine solutions can be purchased through the Amazon Web Services marketplace",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have established the ability to purchase BlackLine solutions through Cloud Marketplaces on Google Cloud Platform (“GCP”), Microsoft Azure (“Azure”), and Amazon Web Services (“AWS”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "業務ソフト・DB",
+      "sub_en": "Enterprise software & databases",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackLineの基盤は、Oracleなどの主要ERPシステムと連携する",
+          "text_en": "BlackLine's platform integrates with leading ERP systems offered by Oracle and others",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our platform integrates with the leading ERP systems offered by Workday, Inc., SAP SE (“SAP”), Oracle Corporation, Microsoft Dynamics 365 (“Microsoft Dynamics”), an application offered by Microsoft Corporation (“Microsoft”), Sage Intacct, Inc., and NetSuite, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "BlackLineの基盤は、OracleやSAPなどの既存ERPと連携するよう設計されている",
+          "text_en": "BlackLine's platform is designed to integrate with existing ERP systems such as Oracle and SAP",
+          "source": {
+            "label": "BlackLine 10-K",
+            "label_en": "BlackLine 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our platform is also designed to integrate with existing ERP systems such as Microsoft Dynamics, Oracle, and SAP, and will require modifications and enhancements as these systems change over time."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

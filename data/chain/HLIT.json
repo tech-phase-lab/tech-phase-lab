@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "HLIT",
+    "name": "ハーモニック",
+    "cik": 851310,
+    "name_en": "Harmonic"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "ケーブル事業者",
+      "sub_en": "Cable operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の収益に基づく代表的な主要顧客の一覧に挙がっている",
+          "text_en": "Charter Communications is on its list of significant customers based in part on 2025 revenue",
+          "source": {
+            "label": "ハーモニック 10-K(2025-12-31)",
+            "label_en": "Harmonic 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851310/000119312526067506/hlit-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "a representative list of our significant end user and integrator/reseller customers, listed alphabetically, based, in part, on revenue during 2025. United States International Astound America Movil Cable One, Inc. Cablemas Telecom Charter Communications DNA OYJ Clarity Telcom Interactive Digital Technologies Inc. Comcast"
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "ケーブル事業者",
+      "sub_en": "Cable operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の収益に基づく代表的な主要顧客の一覧に挙がっている",
+          "text_en": "Comcast is on its list of significant customers based in part on 2025 revenue",
+          "source": {
+            "label": "ハーモニック 10-K(2025-12-31)",
+            "label_en": "Harmonic 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851310/000119312526067506/hlit-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "a representative list of our significant end user and integrator/reseller customers, listed alphabetically, based, in part, on revenue during 2025. United States International Astound America Movil Cable One, Inc. Cablemas Telecom Charter Communications DNA OYJ Clarity Telcom Interactive Digital Technologies Inc. Comcast"
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "CABO",
+      "ticker": "CABO",
+      "name": "ケーブル・ワン",
+      "sub": "ケーブル事業者",
+      "sub_en": "Cable operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の収益に基づく代表的な主要顧客の一覧に挙がっている",
+          "text_en": "Cable One is on its list of significant customers based in part on 2025 revenue",
+          "source": {
+            "label": "ハーモニック 10-K(2025-12-31)",
+            "label_en": "Harmonic 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851310/000119312526067506/hlit-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "a representative list of our significant end user and integrator/reseller customers, listed alphabetically, based, in part, on revenue during 2025. United States International Astound America Movil Cable One, Inc. Cablemas Telecom Charter Communications DNA OYJ Clarity Telcom Interactive Digital Technologies Inc. Comcast"
+          }
+        }
+      ],
+      "name_en": "Cable One"
+    },
+    {
+      "id": "AMX",
+      "ticker": "AMX",
+      "name": "アメリカ・モビル",
+      "sub": "通信事業者",
+      "sub_en": "Telecom operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の収益に基づく代表的な主要顧客の一覧に挙がっている",
+          "text_en": "America Movil is on its list of significant customers based in part on 2025 revenue",
+          "source": {
+            "label": "ハーモニック 10-K(2025-12-31)",
+            "label_en": "Harmonic 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851310/000119312526067506/hlit-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "a representative list of our significant end user and integrator/reseller customers, listed alphabetically, based, in part, on revenue during 2025. United States International Astound America Movil Cable One, Inc. Cablemas Telecom Charter Communications DNA OYJ Clarity Telcom Interactive Digital Technologies Inc. Comcast"
+          }
+        }
+      ],
+      "name_en": "America Movil"
+    },
+    {
+      "id": "PLXS",
+      "ticker": "PLXS",
+      "name": "プレクサス",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力の製造委託先として契約している",
+          "text_en": "It has had an agreement with Plexus since 2003 to act as its primary contract manufacturer",
+          "source": {
+            "label": "ハーモニック 10-K(2025-12-31)",
+            "label_en": "Harmonic 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851310/000119312526067506/hlit-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2003, we entered into an agreement with Plexus Services Corp. (“Plexus”) to act as our primary contract manufacturer."
+          }
+        }
+      ],
+      "name_en": "Plexus Services Corp."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

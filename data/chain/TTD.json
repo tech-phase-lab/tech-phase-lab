@@ -1,0 +1,431 @@
+{
+  "root": {
+    "ticker": "TTD",
+    "name": "The Trade Desk",
+    "cik": 1671933
+  },
+  "rows": [
+    {
+      "ja": "広告枠の供給元(Googleは競合でもある)",
+      "en": "Inventory suppliers (Google also competes)",
+      "above": true
+    },
+    {
+      "ja": "資金調達・連携",
+      "en": "Financing & integrations"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GOOG",
+    "AMZN"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "検索・広告",
+      "sub_en": "Search & ads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Googleは、The Trade Deskにとって最大の広告枠供給元の1社であり、競合でもある",
+          "text_en": "Google is one of The Trade Desk's largest advertising inventory suppliers and also one of its competitors.",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "For example, Google is one of our largest advertising inventory suppliers in addition to being one of our competitors."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "同じ年次報告が、Googleを競合の1社でもあるとしている",
+          "text_en": "The same report says Google is also one of its competitors",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "For example, Google is one of our largest advertising inventory suppliers in addition to being one of our competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "The Trade DeskはDSP事業で、GoogleやAmazonといった大手企業の部門と競合する",
+          "text_en": "The Trade Desk competes as a demand-side platform provider with divisions of large companies such as Google and Amazon.",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with other demand-side platform providers, some of which are smaller, privately held companies and others are divisions of large, well-established companies such as Google and Amazon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bank, N.A.が代理人を務める銀行団と、2021年6月15日付で貸付・担保契約を結んでいる",
+          "text_en": "The company and a syndicate of banks led by JPMorgan Chase Bank, N.A. as agent entered into a Loan and Security Agreement on June 15, 2021",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On June 15, 2021, we and a syndicate of banks, led by JPMorgan Chase Bank, N.A., as agent, entered into a Loan and Security Agreement (the “Credit Facility”).",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase主導の銀行団と2021年6月15日付の貸付・担保契約(Credit Facility)を結んだ",
+          "text_en": "The Trade Desk and a bank syndicate led by JPMorgan Chase Bank, N.A. as agent entered into the June 15, 2021 Loan and Security Agreement (the Credit Facility)",
+          "source": {
+            "label": "The Trade Desk 10-K",
+            "label_en": "The Trade Desk 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On June 15, 2021, the Company and a syndicate of banks, led by JPMorgan Chase Bank, N.A., as agent, entered into a Loan and Security Agreement (the “Credit Facility”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Spotify Ad Exchangeは、Sellers and Publishers 500+、オープンエクスチェンジ、プライベートマーケットプレイス取引を通じて広告主が利用できる",
+          "text_en": "Spotify Ad Exchange is accessible to advertisers through Sellers and Publishers 500+, open exchange, and private marketplace deals",
+          "source": {
+            "label": "The Trade Desk — Spotify publisher integration, September 29, 2025",
+            "label_en": "The Trade Desk — Spotify publisher integration, September 29, 2025",
+            "url": "https://www.thetradedesk.com/resources/elevate-omnichannel-strategy-with-spotify-ads",
+            "level": "official",
+            "quote": "This scale is now available through the Spotify Ad Exchange, which advertisers can access through the Sellers and Publishers 500+ , open exchange, and private marketplace deals, making it easier than ever to work toward:"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Spotifyが欧州でEUIDに対応した",
+          "text_en": "Spotify integrated with EUID across Europe",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000009/ttd-20260225x8kexx991.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Spotify integrated with EUID across Europe."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Netflixが「Sellers and Publishers 500+」に加わり、広告主が同社の配信枠に自動でアクセスできるようになった",
+          "text_en": "Netflix joined the Sellers and Publishers 500+, giving advertisers automatic access to its streaming inventory",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000085/ttd-20260806x8kexx991.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Netflix joined The Trade Desk’s Sellers and Publishers 500+, enabling advertiser access to Netflix’s premier streaming environment automatically through the company’s scaled inventory marketplace."
+          }
+        }
+      ],
+      "name_en": "Netflix"
+    },
+    {
+      "id": "PSKY",
+      "ticker": "PSKY",
+      "name": "パラマウント・スカイダンス",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Paramountが、主要スポーツイベントの一部広告枠でライブのプログラマティック購入をThe Trade Desk経由で提供すると発表した",
+          "text_en": "Paramount announced live, in-game programmatic buying for select ad units in marquee sporting events via The Trade Desk",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000053/ttd-20260507x8kexx991.htm",
+            "level": "official",
+            "date": "2026-05-07",
+            "quote": "Paramount announced live, in-game programmatic buying for select commercial ad units within marquee sporting events via The Trade Desk."
+          }
+        }
+      ],
+      "name_en": "Paramount Skydance"
+    },
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "電機・家電",
+      "sub_en": "Consumer electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Samsung Adsがホーム画面の広告枠をプログラマティック購入者に開放し、The Trade Deskが最初に利用できるプラットフォームに含まれた",
+          "text_en": "Samsung Ads opened its home screen inventory to programmatic buyers, with The Trade Desk among the first platforms granted access",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000085/ttd-20260806x8kexx991.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Samsung Ads opened its premium home screen inventory to programmatic buyers, with The Trade Desk named among the first platforms granted access, giving advertisers a unified view of creative and measurement performance.",
+            "note": "広告部門(Samsung Ads)に関する記載です。",
+            "note_en": "Refers to the Samsung Ads unit."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "MGNI",
+      "ticker": "MGNI",
+      "name": "マグナイト",
+      "sub": "広告枠取引(SSP)",
+      "sub_en": "Ad exchange (SSP)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MagniteなどのSSPがEUID(欧州向け統一ID)に対応した",
+          "text_en": "Magnite, among other supply-side platforms, integrated European Unified ID (EUID)",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193325000014/ttd-20250212x8kexx991.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "Leading supply-side platforms, including FreeWheel, Index Exchange, Magnite, and PubMatic have integrated European Unified ID (EUID) to enhance addressability across the open internet."
+          }
+        }
+      ],
+      "name_en": "Magnite"
+    },
+    {
+      "id": "PUBM",
+      "ticker": "PUBM",
+      "name": "パブマティック",
+      "sub": "広告枠取引(SSP)",
+      "sub_en": "Ad exchange (SSP)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "PubMaticなどのSSPがEUID(欧州向け統一ID)に対応した",
+          "text_en": "PubMatic, among other supply-side platforms, integrated European Unified ID (EUID)",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193325000014/ttd-20250212x8kexx991.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "Leading supply-side platforms, including FreeWheel, Index Exchange, Magnite, and PubMatic have integrated European Unified ID (EUID) to enhance addressability across the open internet."
+          }
+        }
+      ],
+      "name_en": "PubMatic"
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "sub": "クリエイティブ・マーケティングソフト",
+      "sub_en": "Creative & marketing software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AdobeとThe Trade Deskが、広告の接触データをAdobe Real-Time CDPの顧客プロファイルにつなぐ新しい連携を発表した",
+          "text_en": "Adobe and The Trade Desk forged a new integration connecting paid media exposure data to first-party profiles in Adobe Real-Time CDP",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000085/ttd-20260806x8kexx991.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Adobe and The Trade Desk forged a new integration connecting paid media exposure data directly to first-party profiles in Adobe Real-Time CDP."
+          }
+        }
+      ],
+      "name_en": "Adobe"
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー・テクノロジーズ",
+      "sub": "配車・配達",
+      "sub_en": "Mobility & delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Uberは、The Trade Deskが連携を広げた旅行・宿泊・移動分野の企業の1社",
+          "text_en": "The Trade Desk expanded its commerce media ecosystem through integrations with travel, hospitality and mobility companies including Uber.",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000085/ttd-20260806x8kexx991.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "The Trade Desk expanded its commerce media ecosystem through integrations with leading travel, hospitality and mobility including Booking.com, Agoda, Kayak, Priceline, Marriott, Uber and United Airlines, helping advertisers activate high-intent commerce and travel signals and unify campaign activation, measurement and optimization across the open internet."
+          }
+        }
+      ],
+      "name_en": "Uber Technologies"
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "スノーフレイク",
+      "sub": "データクラウド",
+      "sub_en": "Data cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SnowflakeがEUIDに対応し、自社データの活用を高めた",
+          "text_en": "Snowflake integrated EUID to enrich first-party data and improve addressability",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193325000123/ttd-2025807x8kexx991.htm",
+            "level": "official",
+            "date": "2025-08-07",
+            "quote": "Snowflake integrated EUID to enrich first-party data and improve addressability on the open internet."
+          }
+        }
+      ],
+      "name_en": "Snowflake"
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Visaが豪州・ニュージーランドで、The Trade Deskとのデータ提携を発表した",
+          "text_en": "Visa announced a data partnership with The Trade Desk in Australia and New Zealand",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193325000123/ttd-2025807x8kexx991.htm",
+            "level": "official",
+            "date": "2025-08-07",
+            "quote": "Visa announced a new data partnership with The Trade Desk in Australia and New Zealand to empower marketers to optimize campaigns with greater precision and relevance through advanced targeting capabilities."
+          }
+        }
+      ],
+      "name_en": "Visa"
+    },
+    {
+      "id": "Dentsu",
+      "ticker": "Dentsu",
+      "name": "電通グループ",
+      "sub": "広告代理店",
+      "sub_en": "Advertising agency",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "電通が、新しい小売データ事業で最初のDSPパートナーにThe Trade Deskを指名した",
+          "text_en": "Dentsu named The Trade Desk as the first DSP partner for its new retail data offering",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000085/ttd-20260806x8kexx991.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Dentsu named The Trade Desk as the first DSP partner for its new end-to-end retail data offering from New Stream Media."
+          }
+        }
+      ],
+      "name_en": "Dentsu Group"
+    },
+    {
+      "id": "CART",
+      "ticker": "CART",
+      "name": "インスタカート",
+      "sub": "食料品配送",
+      "sub_en": "Grocery delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Instacartが食料品の商品情報をThe Trade Deskのプラットフォームと連携させた",
+          "text_en": "Instacart integrated its grocery selection with The Trade Desk platform",
+          "source": {
+            "label": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "label_en": "The Trade Desk 8-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193325000123/ttd-2025807x8kexx991.htm",
+            "level": "official",
+            "date": "2025-08-07",
+            "quote": "Instacart integrated its grocery selection with The Trade Desk platform, enabling advertisers and agencies to build first-party custom audiences based on specific product criteria."
+          }
+        }
+      ],
+      "name_en": "Instacart"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

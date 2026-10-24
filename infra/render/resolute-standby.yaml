@@ -1,0 +1,39 @@
+# REVIEW TEMPLATE ONLY: importing this creates a PAID service.
+# Provision/rehearse a separate restored DB first. Never enter Railway DB URLs.
+# This is the RESOLUTE API, not a complete Tech Phase failover.
+services:
+  - type: web
+    name: resolute-standby
+    runtime: docker
+    plan: 0.5c-512mb
+    region: singapore
+    branch: codex/research-preview
+    dockerfilePath: ./services/resolute-api/Dockerfile
+    dockerContext: .
+    autoDeployTrigger: 'off'
+    healthCheckPath: /healthz
+    envVars:
+      - key: ENTITLEMENT_DB_URL
+        sync: false
+      - key: RESOLUTE_CLERK_ISSUER
+        sync: false
+      - key: RESOLUTE_CLERK_AUTHORIZED_PARTIES
+        sync: false
+      - key: RESOLUTE_CLERK_JWT_PUBLIC_KEY
+        sync: false
+      - key: RESOLUTE_API_SERVICE_TOKEN
+        sync: false
+      - key: RESOLUTE_PLAN_API_ENABLED
+        value: 'false'
+      - key: RESOLUTE_NOTIFICATION_API_ENABLED
+        value: 'false'
+      - key: RESOLUTE_PROTECTION_ENABLED
+        value: 'false'
+      - key: RESOLUTE_PROTECTION_RETRY_ENABLED
+        value: 'false'
+      - key: RESOLUTE_PAYMENTS_ENABLED
+        value: 'false'
+      - key: RESOLUTE_PAYPAL_LIVE_ENABLED
+        value: 'false'
+      - key: RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED
+        value: 'false'

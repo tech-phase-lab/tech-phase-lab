@@ -1,0 +1,245 @@
+{
+  "root": {
+    "ticker": "PPG",
+    "name": "PPGインダストリーズ",
+    "cik": 79879,
+    "name_en": "PPG Industries"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "SHW",
+    "AXTA",
+    "RPM",
+    "MMM"
+  ],
+  "companies": [
+    {
+      "id": "ASIANPAINTS",
+      "ticker": "Asian Paints",
+      "name": "アジアン・ペインツ",
+      "sub": "インドの塗料大手",
+      "sub_en": "Indian paint maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドの自動車OEM・工業用塗料の顧客向けに、アジアン・ペインツと提携している",
+          "text_en": "PPG has an alliance with Asian Paints to serve certain automotive OEM and industrial coatings customers in India",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Asian Paints to serve certain automotive OEM and industrial coatings customers in India"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "インドの自動車補修顧客向けにも、アジアン・ペインツとの提携がある",
+          "text_en": "A separate alliance with Asian Paints covers certain automotive refinish customers in India",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "PPG has an established alliance with Asian Paints Ltd. to serve certain automotive refinish customers in India."
+          }
+        }
+      ],
+      "name_en": "Asian Paints"
+    },
+    {
+      "id": "KANSAI",
+      "ticker": "Kansai Paints",
+      "name": "関西ペイント",
+      "sub": "日本の塗料大手",
+      "sub_en": "Japanese paint maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米と欧州の日系自動車OEM顧客向けに、関西ペイントと提携している",
+          "text_en": "PPG has an alliance with Kansai Paints to serve Japanese-based automotive OEM customers in North America and Europe",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Kansai Paints to serve Japanese-based automotive OEM customers in North America and Europe"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "関西ペイントは、PPGが挙げる世界の競合企業に入っている",
+          "text_en": "Kansai Paints is on PPG's list of global competitors",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Hempel A/S, Kansai Paints, the Jotun Group, Nippon Paint, RPM International Inc., The Sherwin-Williams Company and 3M Company"
+          }
+        }
+      ],
+      "name_en": "Kansai Paints"
+    },
+    {
+      "id": "SHW",
+      "ticker": "SHW",
+      "name": "シャーウィン・ウィリアムズ",
+      "sub": "塗料の競合",
+      "sub_en": "Coatings rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シャーウィン・ウィリアムズは、PPGが挙げる世界の競合企業に入っている",
+          "text_en": "The Sherwin-Williams Company is on PPG's list of global competitors",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Hempel A/S, Kansai Paints, the Jotun Group, Nippon Paint, RPM International Inc., The Sherwin-Williams Company and 3M Company"
+          }
+        }
+      ],
+      "name_en": "The Sherwin-Williams Company"
+    },
+    {
+      "id": "AXTA",
+      "ticker": "AXTA",
+      "name": "アクサルタ・コーティング・システムズ",
+      "sub": "塗料の競合",
+      "sub_en": "Coatings rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクサルタは、PPGが挙げる世界の競合企業に入っている",
+          "text_en": "Axalta Coating Systems Ltd. is on PPG's list of global competitors",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Hempel A/S, Kansai Paints, the Jotun Group, Nippon Paint, RPM International Inc., The Sherwin-Williams Company and 3M Company"
+          }
+        }
+      ],
+      "name_en": "Axalta Coating Systems"
+    },
+    {
+      "id": "RPM",
+      "ticker": "RPM",
+      "name": "RPMインターナショナル",
+      "sub": "塗料・建材の競合",
+      "sub_en": "Coatings rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RPMインターナショナルは、PPGが挙げる世界の競合企業に入っている",
+          "text_en": "RPM International Inc. is on PPG's list of global competitors",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Hempel A/S, Kansai Paints, the Jotun Group, Nippon Paint, RPM International Inc., The Sherwin-Williams Company and 3M Company"
+          }
+        }
+      ],
+      "name_en": "RPM International"
+    },
+    {
+      "id": "MMM",
+      "ticker": "MMM",
+      "name": "スリーエム",
+      "sub": "素材の競合",
+      "sub_en": "Materials rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スリーエムは、PPGが挙げる世界の競合企業に入っている",
+          "text_en": "3M Company is on PPG's list of global competitors",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Hempel A/S, Kansai Paints, the Jotun Group, Nippon Paint, RPM International Inc., The Sherwin-Williams Company and 3M Company"
+          }
+        }
+      ],
+      "name_en": "3M Company"
+    },
+    {
+      "id": "AKZO",
+      "ticker": "Akzo Nobel",
+      "name": "アクゾノーベル",
+      "sub": "塗料の競合",
+      "sub_en": "Coatings rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクゾノーベルは、PPGが挙げる世界の競合企業に入っている",
+          "text_en": "Akzo Nobel N.V. is on PPG's list of global competitors",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Hempel A/S, Kansai Paints, the Jotun Group, Nippon Paint, RPM International Inc., The Sherwin-Williams Company and 3M Company"
+          }
+        }
+      ],
+      "name_en": "Akzo Nobel"
+    },
+    {
+      "id": "NIPPON",
+      "ticker": "Nippon Paint",
+      "name": "日本ペイント",
+      "sub": "塗料の競合",
+      "sub_en": "Coatings rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "日本ペイントは、PPGが挙げる世界の競合企業に入っている",
+          "text_en": "Nippon Paint is on PPG's list of global competitors",
+          "source": {
+            "label": "PPG 10-K(2025年12月31日期)",
+            "label_en": "PPG 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Hempel A/S, Kansai Paints, the Jotun Group, Nippon Paint, RPM International Inc., The Sherwin-Williams Company and 3M Company"
+          }
+        }
+      ],
+      "name_en": "Nippon Paint"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "root": {
+    "ticker": "MLM",
+    "name": "マーティン・マリエッタ・マテリアルズ",
+    "cik": 916076,
+    "name_en": "Martin Marietta Materials"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AMRZ",
+    "ACA",
+    "CX",
+    "CRH",
+    "KNF"
+  ],
+  "companies": [
+    {
+      "id": "AMRZ",
+      "ticker": "AMRZ",
+      "name": "アムライズ",
+      "sub": "セメント・建材",
+      "sub_en": "Cement & building materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "Amrize"
+    },
+    {
+      "id": "ACA",
+      "ticker": "ACA",
+      "name": "アルコサ",
+      "sub": "骨材・建設資材",
+      "sub_en": "Aggregates & construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "Arcosa"
+    },
+    {
+      "id": "CX",
+      "ticker": "CX",
+      "name": "セメックス",
+      "sub": "セメント・骨材",
+      "sub_en": "Cement & aggregates",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "CEMEX"
+    },
+    {
+      "id": "CRH",
+      "ticker": "CRH",
+      "name": "CRH社",
+      "sub": "建設資材",
+      "sub_en": "Building materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "CRH"
+    },
+    {
+      "id": "HEI",
+      "ticker": "Heidelberg",
+      "name": "ハイデルベルク・マテリアルズ",
+      "sub": "セメント・骨材",
+      "sub_en": "Cement & aggregates",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "Heidelberg Materials"
+    },
+    {
+      "id": "HOLN",
+      "ticker": "Holcim",
+      "name": "ホルシム",
+      "sub": "建設資材",
+      "sub_en": "Building materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "Holcim"
+    },
+    {
+      "id": "KNF",
+      "ticker": "KNF",
+      "name": "ナイフ・リバー",
+      "sub": "骨材・舗装",
+      "sub_en": "Aggregates & paving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "Knife River"
+    },
+    {
+      "id": "VMC",
+      "ticker": "VMC",
+      "name": "ヴァルカン・マテリアルズ",
+      "sub": "骨材",
+      "sub_en": "Aggregates",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産大手10社に入る上場企業の一社として名前が挙がる",
+          "text_en": "Named among the publicly traded companies in the ten-largest U.S. aggregates producers",
+          "source": {
+            "label": "Martin Marietta 10-K(2025年12月31日期)",
+            "label_en": "Martin Marietta Materials 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000119312526059193/mlm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
+          }
+        }
+      ],
+      "name_en": "Vulcan Materials"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

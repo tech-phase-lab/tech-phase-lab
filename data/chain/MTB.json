@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "MTB",
+    "name": "M&Tバンク",
+    "cik": 36270,
+    "name_en": "M&T Bank"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BAYVIEW",
+      "ticker": "Bayview Financial",
+      "name": "ベイビュー・ファイナンシャル",
+      "sub": "特化型金融",
+      "sub_en": "Specialty finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ベイビューの住宅ローンの業務受託を行い、2025年末の元本残高は1,569億ドルだった",
+          "text_en": "M&T sub-services residential mortgage loans for Bayview Financial, with $156.9 billion outstanding at December 31, 2025",
+          "source": {
+            "label": "M&T Bank 10-K(2025年12月31日期)",
+            "label_en": "M&T Bank 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36270/000003627026000010/mtb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company sub-services residential mortgage loans for Bayview Financial having outstanding principal balances of $ 156.9 billion and $ 111.5 billion at December 31, 2025 and 2024, respectively."
+          }
+        }
+      ],
+      "name_en": "Bayview Financial"
+    },
+    {
+      "id": "BLG",
+      "ticker": "Bayview Lending",
+      "name": "ベイビュー・レンディング・グループ",
+      "sub": "商業用不動産融資",
+      "sub_en": "Commercial mortgage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ベイビュー・レンディング・グループの20%の少数持分を保有している",
+          "text_en": "M&T holds a 20% minority interest in Bayview Lending Group",
+          "source": {
+            "label": "M&T Bank 10-K(2025年12月31日期)",
+            "label_en": "M&T Bank 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36270/000003627026000010/mtb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "M&T holds a 20 % minority interest in BLG, a privately-held commercial mortgage company."
+          }
+        }
+      ],
+      "name_en": "Bayview Lending Group"
+    },
+    {
+      "id": "FNMA",
+      "ticker": "FNMA",
+      "name": "ファニーメイ",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社のM&Tリアルティ・キャピタルがファニーメイのDUSプログラムに参加している",
+          "text_en": "M&T Realty Capital participates in the DUS program of Fannie Mae",
+          "source": {
+            "label": "M&T Bank 10-K(2025年12月31日期)",
+            "label_en": "M&T Bank 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36270/000003627026000010/mtb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "M&T Realty Capital, a commercial real estate lending subsidiary of M&T Bank, participates in the DUS program of Fannie Mae, pursuant to which commercial real estate loans are originated in accordance with terms and conditions specified by Fannie Mae and sold."
+          }
+        }
+      ],
+      "name_en": "Fannie Mae"
+    },
+    {
+      "id": "FMCC",
+      "ticker": "FMCC",
+      "name": "フレディマック",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フレディマックなどの集合住宅ローンプログラムで融資の実行と販売を行う",
+          "text_en": "Originates, sells and services loans under Freddie Mac's multifamily loan programs",
+          "source": {
+            "label": "M&T Bank 10-K(2025年12月31日期)",
+            "label_en": "M&T Bank 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36270/000003627026000010/mtb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company’s involvement in commercial mortgage banking activities includes the origination, sales and servicing of loans under the multifamily loan programs of Fannie Mae, Freddie Mac"
+          }
+        }
+      ],
+      "name_en": "Freddie Mac"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

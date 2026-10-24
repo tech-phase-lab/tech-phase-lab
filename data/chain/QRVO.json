@@ -1,0 +1,348 @@
+{
+  "root": {
+    "ticker": "QRVO",
+    "name": "Qorvo",
+    "cik": 1604778
+  },
+  "rows": [
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客(Qorvoの年次報告に記載)",
+      "en": "Customers (named in Qorvo's annual report)"
+    },
+    {
+      "ja": "合併・買収・資金調達",
+      "en": "Mergers, acquisitions & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SWKS",
+    "AVGO",
+    "ADI",
+    "MTSI",
+    "NVTS"
+  ],
+  "companies": [
+    {
+      "id": "Luxshare",
+      "ticker": "Luxshare",
+      "name": "ラックスシェア",
+      "sub": "電子部品・組立",
+      "sub_en": "Components & assembly",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Qorvoは、Luxshareとの供給契約に基づき、Luxshareによる組立・テストの実施後に、同社に販売した在庫を買い戻す義務を負っている",
+          "text_en": "Under a supply agreement with Luxshare, Qorvo is obligated to repurchase inventory it sold to Luxshare after Luxshare performs assembly and test services",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "Pursuant to a supply agreement with Luxshare, the Company is obligated to repurchase inventory that it sold to Luxshare subsequent to the performance of assembly and test services by Luxshare."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Luxshareに販売し将来買い戻す義務のある在庫について、現金を受け取っている",
+          "text_en": "Qorvo received cash for inventory sold to Luxshare that it is obligated to repurchase at a future date",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "The cash received for inventory related to inventory that the Company sold to Luxshare and is obligated to repurchase at a future date subsequent to the performance of assembly and test services by Luxshare pursuant to a supply agreement."
+          }
+        }
+      ],
+      "name_en": "Luxshare Precision"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマートフォン・PC",
+      "sub_en": "Smartphones & PCs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Qorvoは最大のエンドカスタマーAppleに、複数の受託製造業者を通じて製品を提供しており、売上高の2026年度約50%、2025年度約47%を占める",
+          "text_en": "Qorvo provides products to its largest end customer, Apple, through multiple contract manufacturers, which accounted for approximately 50% and 47% of total revenue in fiscal years 2026 and 2025",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "We provide products to our largest end customer (Apple) through sales to multiple contract manufacturers, which in the aggregate accounted for approximately 50% and 47% of total revenue in fiscal years 2026 and 2025, respectively."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "SSNLF",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "スマートフォン・家電",
+      "sub_en": "Smartphones & electronics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Samsungは、売上高の2026年度・2025年度とも約10%を占めた",
+          "text_en": "Samsung accounted for approximately 10% of total revenue in both fiscal years 2026 and 2025",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "Samsung accounted for approximately 10% of total revenue in both fiscal years 2026 and 2025."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "スカイワークス",
+      "sub": "RF半導体",
+      "sub_en": "RF chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "QorvoとSkyworksは合併を計画し、その成否は両社の事業統合の円滑さにかかる",
+          "text_en": "The success of the planned merger of Qorvo and Skyworks depends in part on integrating the two companies' operations.",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "The success of the Mergers, including anticipated benefits and cost synergies, will depend, in part, on our and Skyworks’ ability to successfully integrate our respective operations in a manner that results in various benefits and that does not materially disrupt existing business and strategic relationships or result in a loss of customers.",
+            "note": "合併は計画段階の記載です。",
+            "note_en": "Describes a planned merger."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Qorvoとの合併の行方が不確実なことは、Skyworksの取引先との関係に影響し得る",
+          "text_en": "Uncertainty about the outcome of the Qorvo merger could disrupt Skyworks' business relationships.",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Uncertainty regarding the outcome of the Mergers and our future could disrupt our business relationships with our existing and potential customers, distributors, service providers and other business partners, who may attempt to negotiate changes in existing business relationships or consider entering into business relationships with parties other than Qorvo."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Qorvoと競合する",
+          "text_en": "Competes with Qorvo",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ],
+      "name_en": "Skyworks Solutions"
+    },
+    {
+      "id": "ON",
+      "ticker": "ON",
+      "name": "onsemi",
+      "sub": "パワー半導体",
+      "sub_en": "Power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "onsemiは2025年1月14日に、Qorvo US, Inc.などからSiC JFET技術事業の全持分を118.8百万ドルの現金で取得した",
+          "text_en": "On January 14, 2025 onsemi acquired all of the equity of the SiC JFET technology business from Qorvo US, Inc. and certain subsidiaries for $118.8 million in cash",
+          "source": {
+            "label": "onsemi 10-K",
+            "label_en": "onsemi 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1097864/000109786426000006/on-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On January 14, 2025, the Company acquired all of the outstanding equity of the SiC JFET technology business from Qorvo US, Inc., and certain of its subsidiaries, for $ 118.8 million in cash, subject to working capital adjustments."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "onsemiは、2024年12月9日付の株式売買契約をUnited Silicon Carbide, Inc.、Qorvo US, Inc.などと結んだ",
+          "text_en": "onsemi entered into a Stock Purchase Agreement dated December 9, 2024 with United Silicon Carbide, Inc., Qorvo US, Inc. and others",
+          "source": {
+            "label": "onsemi 10-K",
+            "label_en": "onsemi 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1097864/000109786426000006/on-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "2.1 Stock Purchase Agreement, dated as of December 9, 2024, by and between United Silicon Carbide, Inc., Qorvo US, Inc., Semiconductor Components Industries, LLC and solely for the purposes of Article V and Section 6.15 thereto, ON Semiconductor Corporation (incorporated by"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "Bank of America",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Qorvoは2024年4月23日に、Bank of America, N.A.を管理代理人とする5年物の無担保シニア・クレジット・ファシリティ契約を結んだ",
+          "text_en": "On April 23, 2024 Qorvo entered into a five-year unsecured senior credit facility under a credit agreement with Bank of America, N.A. as administrative agent",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "On April 23, 2024, we entered into a five-year unsecured senior credit facility pursuant to a credit agreement with Bank of America, N.A., as administrative agent, swing line lender and letter of credit issuer and a syndicate of lenders (the “Credit Agreement”), which replaced our previous credit agreement.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "アナログ・デバイセズ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Analog Devices, Inc.が、QorvoのHPA部門の主な競合だ",
+          "text_en": "Analog Devices, Inc. is the main competitor of Qorvo's HPA.",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "HPA competes primarily with Analog Devices, Inc.;"
+          }
+        }
+      ],
+      "name_en": "Analog Devices"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "通信・インフラ半導体",
+      "sub_en": "Networking & infrastructure chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Broadcom Inc.は、QorvoのCSG部門が主に競合する相手だ",
+          "text_en": "Broadcom Inc. is the main competitor of Qorvo's CSG.",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "CSG competes primarily with Broadcom Inc.;"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "QorvoのACG部門は、主にBroadcom Inc.を競合相手とする",
+          "text_en": "Broadcom Inc. is the main competitor of Qorvo's ACG.",
+          "source": {
+            "label": "Qorvo 10-K",
+            "label_en": "Qorvo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "ACG competes primarily with Broadcom Inc.;"
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "MTSI",
+      "ticker": "MTSI",
+      "name": "マコム・テクノロジー・ソリューションズ",
+      "sub": "高周波半導体",
+      "sub_en": "RF & microwave chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qorvoと競合する",
+          "text_en": "Competes with Qorvo",
+          "source": {
+            "label": "MACOM Technology Solutions 10-K",
+            "label_en": "MACOM Technology Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "While we compete with a wide variety of companies, our significant competitors include, among others , ADI, Broadcom, Credo, Marvell, MaxLinear, Microchip, NXP, Qorvo, Semtech, Skyworks and Sumitomo as well as increased competition from Chinese companies."
+          }
+        }
+      ],
+      "name_en": "MACOM Technology Solutions"
+    },
+    {
+      "id": "NVTS",
+      "ticker": "NVTS",
+      "name": "ナビタス・セミコンダクター",
+      "sub": "GaNパワー半導体",
+      "sub_en": "GaN power chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qorvoと競合する",
+          "text_en": "Competes with Qorvo",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary SiC competitors include Infineon, Wolfspeed, Inc., ON Semiconductor Corporation, ROHM Co., Ltd., Qorvo, Inc., and STMicroelectronics International N.V."
+          }
+        }
+      ],
+      "name_en": "Navitas Semiconductor"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

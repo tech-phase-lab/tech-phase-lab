@@ -1,0 +1,517 @@
+{
+  "root": {
+    "ticker": "ANET",
+    "name": "Arista Networks",
+    "cik": 1596532
+  },
+  "rows": [
+    {
+      "ja": "供給元(半導体・製造委託)",
+      "en": "Suppliers (chips & contract manufacturing)",
+      "above": true
+    },
+    {
+      "ja": "AIネットワークの提携先(各社のコメント)",
+      "en": "AI networking partners (their comments)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CSCO",
+    "HPE",
+    "EXTR",
+    "NVDA",
+    "DELL"
+  ],
+  "companies": [
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "スイッチ用半導体",
+      "sub_en": "Switch silicon",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "スイッチ用チップを主にBroadcomに依存(主なマーチャントシリコンの供給元)",
+          "text_en": "Primarily reliant on Broadcom, its predominant merchant silicon vendor, for switching chips",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "we are primarily reliant upon our predominant merchant silicon vendor, Broadcom, for our switching chips"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "BroadcomからVeloCloud事業を3億ドルの現金で取得",
+          "text_en": "Acquired the VeloCloud business from Broadcom for $300.0M in cash",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2025-06-30",
+            "quote": "the VeloCloud business (\"VeloCloud\") from Broadcom"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "スケールアップ向けのEthernet標準で協業(ESUN、Broadcomのコメント)",
+          "text_en": "ESUN collaboration on standards-based scale-up Ethernet (Broadcom’s comment)",
+          "source": {
+            "label": "Arista のソリューションページ(各社のコメント、2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "Through our ESUN collaboration with Arista, we are bringing standards-based, low-latency scale-up connectivity to market",
+            "note": "各社のコメントで、取引条件は示されていません。",
+            "note_en": "A partner comment; no commercial terms are stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JBL",
+      "ticker": "JBL",
+      "name": "Jabil",
+      "sub": "製造委託",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Jabilは主な製造委託先だ",
+          "text_en": "Jabil is a primary contract manufacturing partner",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SANM",
+      "ticker": "SANM",
+      "name": "Sanmina",
+      "sub": "製造委託",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Sanminaは、主な製造委託先の一社",
+          "text_en": "Sanmina is a primary contract manufacturing partner",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Foxconn",
+      "ticker": "Foxconn",
+      "name": "Hon Hai(Foxconn)",
+      "sub": "製造委託",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Hon Hai(Foxconn)は主な製造委託先を務める",
+          "text_en": "Hon Hai (Foxconn) is a primary contract manufacturing partner",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARM",
+      "ticker": "ARM",
+      "name": "Arm",
+      "sub": "半導体設計",
+      "sub_en": "Chip design",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ArmとAristaがオープンなAIシステムで協力(Armのコメント)",
+          "text_en": "Arm and Arista are working together on open AI systems (Arm’s comment)",
+          "source": {
+            "label": "Arista のソリューションページ(各社のコメント、2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "Arm and Arista are working to advance this vision, enabling more flexible and efficient systems for demanding AI workloads.",
+            "note": "各社のコメントで、取引条件は示されていません。",
+            "note_en": "A partner comment; no commercial terms are stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Arista製スイッチとAMDのラック型AI基盤を組み合わせる提携を拡大(AMDのコメント)",
+          "text_en": "Extends its partnership with Arista on open rack-scale architectures (AMD’s comment)",
+          "source": {
+            "label": "Arista のソリューションページ(各社のコメント、2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "By extending our deep partnership with Arista to open rack-scale architectures that combine Arista's switching platforms with our AMD Pensando Vulcano 800 AI NICs",
+            "note": "各社のコメントで、取引条件は示されていません。",
+            "note_en": "A partner comment; no commercial terms are stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Metaの102.4Tスケールアウト基盤向けのラックネットワークで協業(Metaのコメント)",
+          "text_en": "Collaborates with Arista on rack-scale networking for its 102.4T scale-out platforms (Meta’s comment)",
+          "source": {
+            "label": "Arista のソリューションページ(各社のコメント、2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "Meta is pleased to collaborate with Arista on rack-scale networking solutions for our 102.4T scale-out platforms.",
+            "note": "各社のコメントで、取引条件は示されていません。",
+            "note_en": "A partner comment; no commercial terms are stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Maia AIアクセラレーター向けのスケールアップ構成の設計で提携を拡大(Microsoftのコメント)",
+          "text_en": "Extends its partnership with Arista to design a scale-up solution for Maia accelerators (Microsoft’s comment)",
+          "source": {
+            "label": "Arista のソリューションページ(各社のコメント、2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "We are extending our partnership with Arista to design a high-performance, high-bandwidth scale-up solution for our Maia AI accelerators.",
+            "note": "各社のコメントで、取引条件は示されていません。",
+            "note_en": "A partner comment; no commercial terms are stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ciscoは、Aristaのデータセンター・キャンパス向けネットワークの競合に当たる",
+          "text_en": "Cisco competes with Arista in data center and campus networking",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "with competition also coming from other large network equipment and system vendors, including Dell/EMC, Extreme Networks, Hewlett Packard Enterprise, Huawei, Juniper Networks, Nvidia"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Ciscoの競合には、Aristaも含まれる",
+          "text_en": "Arista is among Cisco's competitors",
+          "source": {
+            "label": "Cisco 10-K(2026年度)",
+            "label_en": "Cisco 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+            "level": "official",
+            "date": "2026-07",
+            "quote": "Our competitors (in each case relative to only some of our products or services) include: Amazon Web Services LLC; Arista Networks, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "sub": "サーバー・ネットワーク",
+      "sub_en": "Servers & networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Aristaは、データセンター・キャンパス向けネットワークでDellと競い合っている",
+          "text_en": "Arista and Dell compete in data center and campus networking",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "with competition also coming from other large network equipment and system vendors, including Dell/EMC, Extreme Networks, Hewlett Packard Enterprise, Huawei, Juniper Networks, Nvidia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXTR",
+      "ticker": "EXTR",
+      "name": "Extreme Networks",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Extreme Networksも、Aristaのデータセンター・キャンパス向けネットワークの競合だ",
+          "text_en": "Extreme Networks is also a competitor of Arista in data center and campus networking",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "with competition also coming from other large network equipment and system vendors, including Dell/EMC, Extreme Networks, Hewlett Packard Enterprise, Huawei, Juniper Networks, Nvidia"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Extremeは、程度は小さいがAristaとも競合する",
+          "text_en": "Extreme competes with Arista to a lesser extent",
+          "source": {
+            "label": "Extreme Networks 10-K(2026年度)",
+            "label_en": "Extreme Networks 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "To a lesser extent, Extreme competes with products and solutions from Arista Networks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "sub": "サーバー・ネットワーク",
+      "sub_en": "Servers & networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Aristaのデータセンター・キャンパス向けネットワークには、HPEという競合がいる",
+          "text_en": "HPE competes with Arista in data center and campus networking",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "with competition also coming from other large network equipment and system vendors, including Dell/EMC, Extreme Networks, Hewlett Packard Enterprise, Huawei, Juniper Networks, Nvidia"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "HPEの接続分野では、Aristaが主な競合ベンダーのひとつとなる",
+          "text_en": "Arista is one of HPE's primary competitors in connectivity",
+          "source": {
+            "label": "HPE 10-K(2025年度)",
+            "label_en": "HPE 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-10",
+            "quote": "Our primary competitors are technology vendors, such as Cisco Systems, Inc., Arista Networks Inc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体・ネットワーク",
+      "sub_en": "AI chips & networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NVIDIAもまた、Aristaとデータセンター向けネットワークで競合する",
+          "text_en": "NVIDIA also competes with Arista in data center networking",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "with competition also coming from other large network equipment and system vendors, including Dell/EMC, Extreme Networks, Hewlett Packard Enterprise, Huawei, Juniper Networks, Nvidia"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NVIDIAのネットワーク製品市場には、競合のAristaが存在する",
+          "text_en": "Arista is one of NVIDIA's competitors in networking products",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "networking products consisting of switches, network adapters (including DPUs), and cable solutions (including optical modules) include such as AMD, Arista Networks, Broadcom"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "Keysight",
+      "sub": "計測機器",
+      "sub_en": "Test & measurement",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AristaのDANZ Monitoring Fabricは、ネットワークパケットブローカー分野でKeysightと競合する",
+          "text_en": "Arista's DANZ Monitoring Fabric competes with Keysight in network packet brokers",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Arista DANZ Monitoring Fabric (\"DMF\") competes with Cisco, Gigamon, Keysight, Netscout"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTCT",
+      "ticker": "NTCT",
+      "name": "NetScout",
+      "sub": "ネットワーク監視",
+      "sub_en": "Network monitoring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "パケットブローカー分野で、AristaのDANZ Monitoring Fabricの競合にNetScoutがいる",
+          "text_en": "Arista's DANZ Monitoring Fabric competes with NetScout in network packet brokers",
+          "source": {
+            "label": "ANET 10-K(2025年度)",
+            "label_en": "ANET 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Arista DANZ Monitoring Fabric (\"DMF\") competes with Cisco, Gigamon, Keysight, Netscout"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLS",
+      "ticker": "CLS",
+      "name": "Celestica",
+      "sub": "ネットワーク機器",
+      "sub_en": "Network hardware",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Celesticaは、データセンター向けスイッチ分野でOEMのAristaと競合している",
+          "text_en": "Celestica competes with OEMs including Arista in data center switching",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "we also face competition from OEMs (including Arista Networks, Inc., Cisco Systems, Inc. and others)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Qualcomm幹部が、大規模なアクセラレーター導入向けのAristaのネットワーク製品を歓迎するコメント",
+          "text_en": "A Qualcomm Technologies executive welcomed Arista networking solutions for large-scale accelerator deployments",
+          "source": {
+            "label": "Arista ラック規模アーキテクチャの提携先コメント(2026年10月)",
+            "label_en": "Arista Rack-Scale Architectures partner quotes (Oct 2026)",
+            "url": "https://solutions.arista.com/rack-scale-architectures-for-scale-up-and-scale-out-ai-fabrics-quotes",
+            "level": "official",
+            "date": "2026-10",
+            "quote": "We are pleased to see Arista deliver advanced networking solutions that ensure seamless interoperability",
+            "note": "提携先のコメントで、取引条件は書かれていません。",
+            "note_en": "A partner endorsement quote; no commercial terms are stated."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

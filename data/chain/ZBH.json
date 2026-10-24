@@ -1,0 +1,98 @@
+{
+  "root": {
+    "ticker": "ZBH",
+    "name": "ジンマー・バイオメット・ホールディングス",
+    "cik": 1136869,
+    "name_en": "Zimmer Biomet Holdings"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "JNJ",
+    "SYK",
+    "SNN"
+  ],
+  "companies": [
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "膝や股関節の世界市場で、主要な競合とされる",
+          "text_en": "Johnson & Johnson MedTech is a major competitor in the global knee and hip markets",
+          "source": {
+            "label": "ジンマー・バイオメット・ホールディングス 10-K(2025-12-31)",
+            "label_en": "Zimmer Biomet Holdings 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In the global markets for our knees, hips, and S.E.T. products, our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
+          }
+        }
+      ],
+      "name_en": "Johnson & Johnson MedTech"
+    },
+    {
+      "id": "SYK",
+      "ticker": "SYK",
+      "name": "ストライカー",
+      "sub": "整形外科機器",
+      "sub_en": "Orthopaedic devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "膝や股関節の世界市場で、主要な競合の一社である",
+          "text_en": "Stryker is a major competitor in the global knee and hip markets",
+          "source": {
+            "label": "ジンマー・バイオメット・ホールディングス 10-K(2025-12-31)",
+            "label_en": "Zimmer Biomet Holdings 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In the global markets for our knees, hips, and S.E.T. products, our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
+          }
+        }
+      ],
+      "name_en": "Stryker"
+    },
+    {
+      "id": "SNN",
+      "ticker": "SNN",
+      "name": "スミス・アンド・ネフュー",
+      "sub": "整形外科機器",
+      "sub_en": "Orthopaedic devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "膝や股関節の世界市場では、競合に数えられる",
+          "text_en": "Smith & Nephew is counted among the major competitors in knees and hips",
+          "source": {
+            "label": "ジンマー・バイオメット・ホールディングス 10-K(2025-12-31)",
+            "label_en": "Zimmer Biomet Holdings 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In the global markets for our knees, hips, and S.E.T. products, our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
+          }
+        }
+      ],
+      "name_en": "Smith & Nephew"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

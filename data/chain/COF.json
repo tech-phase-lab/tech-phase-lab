@@ -1,0 +1,199 @@
+{
+  "root": {
+    "ticker": "COF",
+    "name": "キャピタル・ワン・ファイナンシャル",
+    "cik": 927628,
+    "name_en": "Capital One Financial"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AXP",
+    "V",
+    "MA"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クラウド基盤の提供元として利用している",
+          "text_en": "AWS provides Capital One's cloud infrastructure",
+          "source": {
+            "label": "Capital One Financial 10-K(2025年12月期)",
+            "label_en": "Capital One Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "These relationships include, but are not limited to: Amazon Web Services, Inc. (“AWS”) for our cloud infrastructure"
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "TSYS",
+      "ticker": "TSYS",
+      "name": "トータル・システム・サービシズ",
+      "sub": "カード処理委託先",
+      "sub_en": "Card processing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "北米・英国のカード処理サービスを委託している",
+          "text_en": "TSYS handles credit card processing for the North American and U.K. portfolios",
+          "source": {
+            "label": "Capital One Financial 10-K(2025年12月期)",
+            "label_en": "Capital One Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Total System Services LLC (“TSYS”) for consumer and commercial credit card processing services for our North American and U.K. portfolios"
+          }
+        }
+      ],
+      "name_en": "Total System Services"
+    },
+    {
+      "id": "FIS",
+      "ticker": "FIS",
+      "name": "フィデリティ・インフォメーション・サービシズ",
+      "sub": "銀行システム委託先",
+      "sub_en": "Banking systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "一部の銀行システムを任せている",
+          "text_en": "FIS supports certain of its banking systems",
+          "source": {
+            "label": "Capital One Financial 10-K(2025年12月期)",
+            "label_en": "Capital One Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Fidelity Information Services (“FIS”) for certain of our banking systems"
+          }
+        }
+      ],
+      "name_en": "Fidelity Information Services"
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "カードネットワーク",
+      "sub_en": "Card network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットワーク事業者との競争が高まれば、既存の提携関係に影響しうる",
+          "text_en": "Rising competition with network operators such as Visa could affect existing partnerships",
+          "source": {
+            "label": "Capital One Financial 10-K(2025年12月期)",
+            "label_en": "Capital One Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In addition, increased competition with certain network operators, such as Visa and Mastercard, could affect our existing partnerships and business relationships with these networks, which have historically played a significant role in facilitating our card-issuing and transaction processing services."
+          }
+        }
+      ],
+      "name_en": "Visa"
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "カードネットワーク",
+      "sub_en": "Card network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットワーク事業者との競争が高まれば、既存の提携関係に影響しうる",
+          "text_en": "Rising competition with network operators such as Mastercard could affect existing partnerships",
+          "source": {
+            "label": "Capital One Financial 10-K(2025年12月期)",
+            "label_en": "Capital One Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In addition, increased competition with certain network operators, such as Visa and Mastercard, could affect our existing partnerships and business relationships with these networks, which have historically played a significant role in facilitating our card-issuing and transaction processing services."
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "カード発行・ネットワーク",
+      "sub_en": "Card issuer & network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "加盟店網や手数料、ブランド力を備えた強い競合である",
+          "text_en": "American Express is a strong competitor with international merchant acceptance and an upscale brand",
+          "source": {
+            "label": "Capital One Financial 10-K(2025年12月期)",
+            "label_en": "Capital One Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Moreover, American Express is also a strong competitor with international merchant acceptance, competitive transaction fees and an upscale brand image."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    },
+    {
+      "id": "BREX",
+      "ticker": "Brex",
+      "name": "ブレックス",
+      "sub": "買収予定の法人カード企業",
+      "sub_en": "Acquisition target",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収契約を結び、総額51.5億ドルで株式を取得する予定である",
+          "text_en": "Capital One agreed to acquire Brex for $5.15 billion in aggregate consideration",
+          "source": {
+            "label": "Capital One Financial 10-K(2025年12月期)",
+            "label_en": "Capital One Financial 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Pursuant to the terms and subject to the conditions set forth in the Brex Merger Agreement, the Company will acquire the outstanding equity of Brex for $5.15 billion in aggregate consideration, subject to certain adjustments described in the Brex Merger Agreement, consisting of approximately $2.58 billion in cash and approximately 10.6 million shares of common stock of Capital One."
+          }
+        }
+      ],
+      "name_en": "Brex"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

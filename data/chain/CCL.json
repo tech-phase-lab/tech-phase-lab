@@ -1,0 +1,150 @@
+{
+  "root": {
+    "ticker": "CCL",
+    "name": "カーニバル",
+    "cik": 815097,
+    "name_en": "Carnival Corporation & plc"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "RCL",
+    "NCLH"
+  ],
+  "companies": [
+    {
+      "id": "FCT",
+      "ticker": "Fincantieri",
+      "name": "フィンカンティエリ",
+      "sub": "造船所",
+      "sub_en": "Shipbuilder",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "船の建造契約の相手先の一つで、イタリアの造船会社である",
+          "text_en": "Fincantieri in Italy is one of Carnival's ship construction counterparties",
+          "source": {
+            "label": "Carnival 10-K(2025年11月30日期)",
+            "label_en": "Carnival 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000007/ccl-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "Our ship construction contracts are with Fincantieri in Italy and Meyer Werft in Germany."
+          }
+        }
+      ],
+      "name_en": "Fincantieri"
+    },
+    {
+      "id": "MW",
+      "ticker": "Meyer Werft",
+      "name": "マイヤー・ヴェルフト",
+      "sub": "造船所",
+      "sub_en": "Shipbuilder",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "船の建造契約の相手先の一つで、ドイツの造船会社である",
+          "text_en": "Meyer Werft in Germany is one of Carnival's ship construction counterparties",
+          "source": {
+            "label": "Carnival 10-K(2025年11月30日期)",
+            "label_en": "Carnival 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000007/ccl-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "Our ship construction contracts are with Fincantieri in Italy and Meyer Werft in Germany."
+          }
+        }
+      ],
+      "name_en": "Meyer Werft"
+    },
+    {
+      "id": "RCL",
+      "ticker": "RCL",
+      "name": "ロイヤル・カリビアン・グループ",
+      "sub": "クルーズ大手の競合",
+      "sub_en": "Major cruise competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合として、カーニバルと合わせて業界の供給能力の約80%を占める",
+          "text_en": "Royal Caribbean is a principal competitor; with Carnival the group is about 80% of industry capacity",
+          "source": {
+            "label": "Carnival 10-K(2025年11月30日期)",
+            "label_en": "Carnival 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000007/ccl-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "we, along with our principal cruise competitors Royal Caribbean Group, Norwegian Cruise Line Holdings, Ltd. and MSC Cruises, represented approximately 80% of the cruise industry capacity."
+          }
+        }
+      ],
+      "name_en": "Royal Caribbean Group"
+    },
+    {
+      "id": "NCLH",
+      "ticker": "NCLH",
+      "name": "ノルウェージャン・クルーズライン",
+      "sub": "クルーズ大手の競合",
+      "sub_en": "Major cruise competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合として、カーニバルと合わせて業界の供給能力の約80%を占める",
+          "text_en": "Norwegian is a principal competitor; with Carnival the group is about 80% of industry capacity",
+          "source": {
+            "label": "Carnival 10-K(2025年11月30日期)",
+            "label_en": "Carnival 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000007/ccl-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "we, along with our principal cruise competitors Royal Caribbean Group, Norwegian Cruise Line Holdings, Ltd. and MSC Cruises, represented approximately 80% of the cruise industry capacity."
+          }
+        }
+      ],
+      "name_en": "Norwegian Cruise Line Holdings"
+    },
+    {
+      "id": "MSC",
+      "ticker": "MSC Cruises",
+      "name": "MSCクルーズ",
+      "sub": "クルーズ大手の競合",
+      "sub_en": "Major cruise competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合として、カーニバルと合わせて業界の供給能力の約80%を占める",
+          "text_en": "MSC Cruises is a principal competitor; with Carnival the group is about 80% of industry capacity",
+          "source": {
+            "label": "Carnival 10-K(2025年11月30日期)",
+            "label_en": "Carnival 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000007/ccl-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "we, along with our principal cruise competitors Royal Caribbean Group, Norwegian Cruise Line Holdings, Ltd. and MSC Cruises, represented approximately 80% of the cruise industry capacity."
+          }
+        }
+      ],
+      "name_en": "MSC Cruises"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

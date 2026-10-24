@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "observedAt": "2026-10-19T14:06:01.212509145Z",
+  "codeCommit": "4b3bdd8ebe94b1afdc779e1f81af1f3fe4ca65fb",
+  "writerDeployment": "4799da00-a807-4094-b82e-4cc07a48b850",
+  "acceptanceDeployment": "10e5e196-03d9-437a-84b7-c89d23dba267",
+  "synthetic": true,
+  "event": "RESOLUTE_WRITER_ACCEPTANCE_OK",
+  "objects": 3,
+  "checks": [
+    "publish",
+    "authenticated_readback",
+    "idempotent_retry",
+    "conflict_rejected",
+    "delete_rejected",
+    "list_rejected",
+    "unauthorized_rejected",
+    "query_rejected",
+    "unconditional_put_rejected"
+  ],
+  "records": [
+    {
+      "name": "resolute/protection/events-v1/91302851cedb1aec5f9a3af03c391baec944519a955201ae0fc85d8a3cb9bdda.bin",
+      "sha256": "a52877380e33215696adf02327558835af4414c9a0f396cbded753c701fbacf4"
+    },
+    {
+      "name": "resolute/protection/events-v1/78d5f926380ba7cea197cb1e3f883c4fa372a0d03bc322c966f6fde8736ab447.bin",
+      "sha256": "743634a49dea629b18c8a024d788b0ce4deb467d80e71e4152e4f70faf32be9f"
+    },
+    {
+      "name": "resolute/protection/events-v1/242d1d160da9fbcd032f00580d4150dd080536293823ca388fd939addae48f09.bin",
+      "sha256": "490f1331a39ea7d7b438cd847c8a611cd6fabfb388c94a1cad2c3f5317c6a56f"
+    }
+  ],
+  "clientBucketCredentials": false,
+  "clientDatabaseCredentials": false,
+  "clientKeySource": "local synthetic age capsule, recovered before remote probe",
+  "productionKeyCustodyVerified": false,
+  "productionRestoreReplayVerified": false
+}

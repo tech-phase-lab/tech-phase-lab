@@ -1,0 +1,9 @@
+.launch{position:fixed;inset:0;z-index:1000;display:none;place-items:center;pointer-events:none;background:radial-gradient(ellipse at 50% 43%,#112923 0%,#091116 48%,#080d13 80%)}
+.launch[data-active=true]{display:grid;animation:reveal 1.1s ease-out forwards}
+.wordmark{text-align:center;color:#edf7f4;font-family:var(--font-geist-sans),Arial,sans-serif}
+.mark{display:block;width:78px;height:78px;margin:0 auto 28px;color:#91dfc4;filter:drop-shadow(0 0 18px #91dfc435)}
+.wordmark strong{display:block;font-size:clamp(29px,7.5vw,48px);font-weight:750;line-height:1.1;letter-spacing:.12em;text-indent:.12em}
+.wordmark span{display:block;margin-top:15px;font-size:11px;font-weight:500;letter-spacing:.48em;text-indent:.48em;color:#a1bcb3}
+.wordmark i{display:block;width:38px;height:1px;margin:25px auto 0;background:#91dfc4;box-shadow:0 0 12px #91dfc480}
+@keyframes reveal{0%,68%{opacity:1}100%{opacity:0;visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.launch[data-active=true]{animation:reveal .3s linear forwards}}

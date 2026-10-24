@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "GEN",
+    "name": "ジェン・デジタル",
+    "cik": 849399,
+    "name_en": "Gen Digital Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AAPL",
+    "GOOGL",
+    "MSFT",
+    "LIF"
+  ],
+  "companies": [
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "エンジン技術の提供元",
+      "sub_en": "Engine services provider",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Norton製品のエンジン関連サービスをブロードコムに依存している",
+          "text_en": "Gen depends on Broadcom for services and technology critical to its business",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "As a result, we are dependent on Broadcom for services and technology that are critical to our business"
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "SOUNDPOINT",
+      "ticker": "Sound Point",
+      "name": "サウンド・ポイント・キャピタル",
+      "sub": "債権の購入先",
+      "sub_en": "Receivables purchaser",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Instacashの前払い債権を同社との基本購入契約に基づいて売却している",
+          "text_en": "Instacash Advances are sold under a purchase agreement with Sound Point",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Instacash Advances are sold pursuant to a Master Receivables Purchase Agreement (the Purchase Agreement) with Sound Point Capital Management LP (Sound Point)"
+          }
+        }
+      ],
+      "name_en": "Sound Point Capital Management"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "プラットフォーム競合",
+      "sub_en": "Platform competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プラットフォーム提供者として競合に挙がる",
+          "text_en": "Named among platform and ecosystem competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "platform and ecosystem providers such as Apple, Google and Microsoft"
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "プラットフォーム競合",
+      "sub_en": "Platform competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プラットフォーム提供者として競合に挙がる",
+          "text_en": "Named among platform and ecosystem competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "platform and ecosystem providers such as Apple, Google and Microsoft"
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "プラットフォーム競合",
+      "sub_en": "Platform competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プラットフォーム提供者として競合に挙がる",
+          "text_en": "Named among platform and ecosystem competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "platform and ecosystem providers such as Apple, Google and Microsoft"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "LIF",
+      "ticker": "LIF",
+      "name": "ライフ360",
+      "sub": "専業の競合",
+      "sub_en": "Pure-play competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専業プロバイダーとして競合に挙がる",
+          "text_en": "Named among pure-play competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "These include ‘pure play’ providers such as 1Password, Bark, Dashlane, LastPass, Life360, and Truecaller"
+          }
+        }
+      ],
+      "name_en": "Life360"
+    },
+    {
+      "id": "1PASSWORD",
+      "ticker": "1Password",
+      "name": "ワンパスワード",
+      "sub": "専業の競合",
+      "sub_en": "Pure-play competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専業プロバイダーとして競合に挙がる",
+          "text_en": "Named among pure-play competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "These include ‘pure play’ providers such as 1Password, Bark, Dashlane, LastPass, Life360, and Truecaller"
+          }
+        }
+      ],
+      "name_en": "1Password"
+    },
+    {
+      "id": "DASHLANE",
+      "ticker": "Dashlane",
+      "name": "ダッシュレーン",
+      "sub": "専業の競合",
+      "sub_en": "Pure-play competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専業プロバイダーとして競合に挙がる",
+          "text_en": "Named among pure-play competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2026-04-03)",
+            "label_en": "Gen Digital 10-K (fiscal year ended 2026-04-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "These include ‘pure play’ providers such as 1Password, Bark, Dashlane, LastPass, Life360, and Truecaller"
+          }
+        }
+      ],
+      "name_en": "Dashlane"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

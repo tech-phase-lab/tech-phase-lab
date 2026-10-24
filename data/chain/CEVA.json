@@ -1,0 +1,393 @@
+{
+  "root": {
+    "ticker": "CEVA",
+    "name": "CEVA",
+    "cik": 1173489
+  },
+  "rows": [
+    {
+      "ja": "ライセンス先・提携先",
+      "en": "Licensees & partners"
+    },
+    {
+      "ja": "M&A",
+      "en": "M&A"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CDNS",
+    "AVGO",
+    "NXPI",
+    "SLAB",
+    "GFS"
+  ],
+  "companies": [
+    {
+      "id": "MCHP",
+      "ticker": "MCHP",
+      "name": "マイクロチップ・テクノロジー",
+      "sub": "マイコン・半導体",
+      "sub_en": "Microcontrollers & chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MicrochipがNeuPro製品群の包括ライセンスを結んだ",
+          "text_en": "Comprehensive NeuPro portfolio license with Microchip",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The decrease in revenues in absolute dollars in the United States from 2024 to 2025 was primarily driven by few key agreements signed with U.S.-based customers in 2024, partially offset by the comprehensive NeuPro portfolio license with Microchip."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Microchipが自社のロードマップ全体でNeuPro NPUファミリー全体を採用する包括ライセンスを結んだ",
+          "text_en": "Comprehensive portfolio license with Microchip to adopt the full NeuPro NPU family across its roadmap",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "54 IP licensing agreements that underscore our momentum across connect, sense and infer: ten NPU licensing agreements, including a comprehensive portfolio license with Microchip to adopt our full NeuPro NPU family across its roadmap and embed AI capabilities across product lines; multiple agreements for our AI DSPs and accelerators across"
+          }
+        }
+      ],
+      "name_en": "Microchip Technology"
+    },
+    {
+      "id": "CRUS",
+      "ticker": "CRUS",
+      "name": "シーラス・ロジック",
+      "sub": "アナログ・音声半導体",
+      "sub_en": "Mixed-signal chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "公表ライセンス先として名前が挙がっている",
+          "text_en": "Named among publicly announced licensees",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our publicly announced licensees include companies such as Actions, Ambiq, ASPEED, ASR Microelectronics, Atmosic, Beken, Bestechnic, boAt, Broadcom, Ceragon, Cirrus Logic, Espressif Systems, ESWIN, Fujifilm, Rockchip, Goodix, Hisense, iCatch Technology, iCOM, InPlay, Intel, Itron, LG Electronics, LifeSignals, ListenAI, MediaTek,",
+            "note": "公表ライセンス先の一覧に載っているものです。",
+            "note_en": "Named in CEVA's list of publicly announced licensees."
+          }
+        }
+      ],
+      "name_en": "Cirrus Logic"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "公表ライセンス先として名前が挙がっている",
+          "text_en": "Named among publicly announced licensees",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our publicly announced licensees include companies such as Actions, Ambiq, ASPEED, ASR Microelectronics, Atmosic, Beken, Bestechnic, boAt, Broadcom, Ceragon, Cirrus Logic, Espressif Systems, ESWIN, Fujifilm, Rockchip, Goodix, Hisense, iCatch Technology, iCOM, InPlay, Intel, Itron, LG Electronics, LifeSignals,",
+            "note": "公表ライセンス先の一覧に載っているものです。",
+            "note_en": "Named in CEVA's list of publicly announced licensees."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "STMicroelectronicsは一部の用途でCEVAの設計をライセンスし、他の用途では独自コアを使っている",
+          "text_en": "STMicroelectronics licenses CEVA designs for some applications and uses its own proprietary cores for others",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Companies such as NXP and STMicroelectronics license our designs for some applications and use their own proprietary cores for other applications."
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "NOK",
+      "ticker": "NOK",
+      "name": "ノキア",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CEVAとNokiaが4.9Gと5G技術で協業する",
+          "text_en": "CEVA and Nokia collaborate for 4.9G and 5G technologies",
+          "source": {
+            "label": "CEVA / Samsung — official relationship source; checked October 17, 2026",
+            "label_en": "CEVA / Samsung — official relationship source; checked October 17, 2026",
+            "url": "https://www.ceva-ip.com/ceva-licensees/",
+            "level": "official",
+            "quote": "CEVA and Nokia Collaborate for 4.9G and 5G Technologies"
+          }
+        }
+      ],
+      "name_en": "Nokia"
+    },
+    {
+      "id": "CDNS",
+      "ticker": "CDNS",
+      "name": "ケイデンス・デザイン・システムズ",
+      "sub": "半導体設計ソフト",
+      "sub_en": "EDA software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CEVAと当時の完全子会社Intrinsixが、2023年9月14日にCadenceと株式譲渡契約を結んだ",
+          "text_en": "On September 14, 2023, CEVA and Intrinsix, then its wholly owned subsidiary, entered into a Share Purchase Agreement with Cadence",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On September 14, 2023, the Company and Intrinsix, then its wholly owned subsidiary, entered into a Share Purchase Agreement (the “Agreement”) with Cadence Design Systems, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "Cadence Design Systems 10-K",
+            "label_en": "Cadence Design Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "U.S.-based competitors include Keysight Technologies, Inc., Schrödinger, Inc., and CEVA, Inc., while international competitors include Altium Limited (acquired by Renesas Electronics Corporation) and Zuken, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete in the edge AI (NPU) processor market with AI processor and accelerator providers, including Arm, Cadence, Cambricon, Digital Media Professionals (DMP), Quadric, Imagination Technologies, Nvidia open source NVDLA and Verisilicon, and with internal engineering teams at companies such as Infineon, Silicon Labs and NXP."
+          }
+        }
+      ],
+      "name_en": "Cadence Design Systems"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with custom ASIC providers and internal engineering teams at companies such as Marvell, Broadcom, ST, and NXP that may design programmable DSP core products and signal processing cores in-house and therefore not license our technologies."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "公表ライセンス先として名前が挙がっている",
+          "text_en": "Named among publicly announced licensees",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our publicly announced licensees include companies such as Actions, Ambiq, ASPEED, ASR Microelectronics, Atmosic, Beken, Bestechnic, boAt, Broadcom, Ceragon, Cirrus Logic, Espressif Systems, ESWIN, Fujifilm, Rockchip, Goodix, Hisense, iCatch Technology, iCOM, InPlay, Intel, Itron, LG Electronics, LifeSignals,",
+            "note": "公表ライセンス先の一覧に載っているものです。",
+            "note_en": "Named in CEVA's list of publicly announced licensees."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "グローバルファウンドリーズ",
+      "sub": "半導体製造",
+      "sub_en": "Chip foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with CPU IP or configurable CPU IP providers (offering DSP configured CPU and/or DSP acceleration and/or connectivity capabilities to their IP), such as Arm, Cadence, GlobalFoundries and the RISC-V open source."
+          }
+        }
+      ],
+      "name_en": "GlobalFoundries"
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXPセミコンダクターズ",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete in the edge AI (NPU) processor market with AI processor and accelerator providers, including Arm, Cadence, Cambricon, Digital Media Professionals (DMP), Quadric, Imagination Technologies, Nvidia open source NVDLA and Verisilicon, and with internal engineering teams at companies such as Infineon, Silicon Labs and NXP."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NXPは一部の用途でCEVAの設計をライセンスし、他の用途では独自コアを使っている",
+          "text_en": "NXP licenses CEVA designs for some applications and uses its own proprietary cores for others",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Companies such as NXP and STMicroelectronics license our designs for some applications and use their own proprietary cores for other applications."
+          }
+        }
+      ],
+      "name_en": "NXP Semiconductors"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "家電・ソフト",
+      "sub_en": "Consumer electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete in the Spatial Audio and Motion Sensing software market with Waves, Dolby, and CyweeMotion and internal engineering teams at companies such as Apple."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "シリコン・ラボラトリーズ",
+      "sub": "無線半導体",
+      "sub_en": "Wireless chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete in the short-range wireless markets with established and emerging wireless IP providers and internal engineering teams at companies such as Infineon, Silicon Labs and NXP."
+          }
+        }
+      ],
+      "name_en": "Silicon Labs"
+    },
+    {
+      "id": "AMBA",
+      "ticker": "AMBA",
+      "name": "アンバレラ",
+      "sub": "画像処理半導体",
+      "sub_en": "Vision chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CEVAと競合する",
+          "text_en": "Competes with CEVA",
+          "source": {
+            "label": "CEVA 10-K",
+            "label_en": "CEVA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "AI accelerator providers, including Arm Ethos, Cadence AI/Vision DSP families, Imagination AI accelerators, Cambricon, Ambarella (CVflow), and open‑source engines such as Nvidia’s NVDLA."
+          }
+        }
+      ],
+      "name_en": "Ambarella"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

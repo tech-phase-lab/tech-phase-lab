@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "KMB",
+    "name": "キンバリークラーク",
+    "cik": 55785,
+    "name_en": "Kimberly-Clark"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売大手",
+      "sub_en": "Retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、純売上高の16%を占めた",
+          "text_en": "Largest customer, accounting for 16% of net sales in 2025",
+          "source": {
+            "label": "Kimberly-Clark 10-K(2025-12-31)",
+            "label_en": "Kimberly-Clark 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55785/000162828026007567/kmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our largest customer, Walmart Inc., represented approximatel y 16% i n 2025 and 2024 and 15% in 2023 of our net sales from continuing operations."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "SUZANO",
+      "ticker": "Suzano",
+      "name": "スザノ",
+      "sub": "紙パルプ大手",
+      "sub_en": "Pulp & paper",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧IFP事業の合弁会社でスザノ側が51%を取得し、当社は49%を保持する予定",
+          "text_en": "Suzano's buyer is to acquire 51% of the joint venture for the former IFP business while K-C retains 49%",
+          "source": {
+            "label": "Kimberly-Clark 10-K(2025-12-31)",
+            "label_en": "Kimberly-Clark 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55785/000162828026007567/kmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Buyer will acquire a 51% interest in the Joint Venture for a purchase price of approximately $1.7 billion, subject to certain closing adjustments set forth in the Purchase Agreement, and we will retain a 49% equity interest"
+          }
+        }
+      ],
+      "name_en": "Suzano"
+    },
+    {
+      "id": "KVUE",
+      "ticker": "KVUE",
+      "name": "ケンビュー",
+      "sub": "コンシューマーヘルス",
+      "sub_en": "Consumer health",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ケンビューの発行済み持分を取得する合併契約を結んだ",
+          "text_en": "K-C entered into a merger agreement to acquire the outstanding equity interests of Kenvue",
+          "source": {
+            "label": "Kimberly-Clark 10-K(2025-12-31)",
+            "label_en": "Kimberly-Clark 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55785/000162828026007567/kmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On November 2, 2025, we entered into an Agreement and Plan of Merger (the \"Merger Agreement\") to acquire the outstanding equity interests of Kenvue, Inc. (\"Kenvue\"), a global consumer health leader, for stock and cash consideration (the \"Kenvue Acquisition\")."
+          }
+        }
+      ],
+      "name_en": "Kenvue"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

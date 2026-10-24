@@ -1,0 +1,193 @@
+{
+  "root": {
+    "ticker": "VRSN",
+    "name": "ベリサイン",
+    "cik": 1014473,
+    "name_en": "VERISIGN INC/CA"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "GDDY",
+    "GOOGL"
+  ],
+  "companies": [
+    {
+      "id": "ICANN",
+      "ticker": "ICANN",
+      "name": "インターネット名称資源管理機関(ICANN)",
+      "sub": "レジストリ契約の相手",
+      "sub_en": "Registry agreement counterparty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": ".com・.net・.nameのレジストリ契約をICANNと結んで運営している",
+          "text_en": "Verisign operates .com, .net and .name under registry agreements with ICANN",
+          "source": {
+            "label": "Verisign 10-K(2025-12-31)",
+            "label_en": "Verisign 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014473/000101447326000006/vrsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We operate the .com, .net, and .name gTLDs and the IDN gTLDs under registry agreements with ICANN and also, with respect to the .com gTLD, a Cooperative Agreement with the U.S. Department of Commerce (“DOC”)"
+          }
+        }
+      ],
+      "name_en": "ICANN"
+    },
+    {
+      "id": "DOC",
+      "ticker": "U.S. Department",
+      "name": "米国商務省",
+      "sub": "協力協定の相手",
+      "sub_en": "Cooperative agreement counterparty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": ".comについては米国商務省との協力協定も結んでいる",
+          "text_en": "For .com, Verisign also has a Cooperative Agreement with the U.S. Department of Commerce",
+          "source": {
+            "label": "Verisign 10-K(2025-12-31)",
+            "label_en": "Verisign 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014473/000101447326000006/vrsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We operate the .com, .net, and .name gTLDs and the IDN gTLDs under registry agreements with ICANN and also, with respect to the .com gTLD, a Cooperative Agreement with the U.S. Department of Commerce (“DOC”)"
+          }
+        }
+      ],
+      "name_en": "U.S. Department of Commerce"
+    },
+    {
+      "id": "GDDY",
+      "ticker": "GDDY",
+      "name": "ゴーダディ",
+      "sub": "レジストリの競合",
+      "sub_en": "Registry competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TLDレジストリの運営で競合する",
+          "text_en": "Competes in operating TLD registries",
+          "source": {
+            "label": "Verisign 10-K(2025-12-31)",
+            "label_en": "Verisign 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014473/000101447326000006/vrsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Among our competitors operating gTLD and ccTLD registries are CentralNic, China Internet Network, DENIC eG, GoDaddy, Google, Identity Digital, Information Center (CNNIC), Nominet, Public Interest Registry (PIR), Radix, and .xyz"
+          }
+        }
+      ],
+      "name_en": "GoDaddy"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "レジストリの競合",
+      "sub_en": "Registry competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TLDレジストリの運営で競合する",
+          "text_en": "Competes in operating TLD registries",
+          "source": {
+            "label": "Verisign 10-K(2025-12-31)",
+            "label_en": "Verisign 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014473/000101447326000006/vrsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Among our competitors operating gTLD and ccTLD registries are CentralNic, China Internet Network, DENIC eG, GoDaddy, Google, Identity Digital, Information Center (CNNIC), Nominet, Public Interest Registry (PIR), Radix, and .xyz"
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "IDENTITY",
+      "ticker": "Identity Digital",
+      "name": "アイデンティティ・デジタル",
+      "sub": "レジストリの競合",
+      "sub_en": "Registry competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TLDレジストリの運営で競合する",
+          "text_en": "Competes in operating TLD registries",
+          "source": {
+            "label": "Verisign 10-K(2025-12-31)",
+            "label_en": "Verisign 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014473/000101447326000006/vrsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Among our competitors operating gTLD and ccTLD registries are CentralNic, China Internet Network, DENIC eG, GoDaddy, Google, Identity Digital, Information Center (CNNIC), Nominet, Public Interest Registry (PIR), Radix, and .xyz"
+          }
+        }
+      ],
+      "name_en": "Identity Digital"
+    },
+    {
+      "id": "PIR",
+      "ticker": "Public Interest",
+      "name": "パブリック・インタレスト・レジストリ",
+      "sub": "レジストリの競合",
+      "sub_en": "Registry competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TLDレジストリの運営で競合する",
+          "text_en": "Competes in operating TLD registries",
+          "source": {
+            "label": "Verisign 10-K(2025-12-31)",
+            "label_en": "Verisign 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014473/000101447326000006/vrsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Among our competitors operating gTLD and ccTLD registries are CentralNic, China Internet Network, DENIC eG, GoDaddy, Google, Identity Digital, Information Center (CNNIC), Nominet, Public Interest Registry (PIR), Radix, and .xyz"
+          }
+        }
+      ],
+      "name_en": "Public Interest Registry"
+    },
+    {
+      "id": "CENTRALNIC",
+      "ticker": "CentralNic",
+      "name": "セントラルニック",
+      "sub": "レジストリの競合",
+      "sub_en": "Registry competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TLDレジストリの運営で競合する",
+          "text_en": "Competes in operating TLD registries",
+          "source": {
+            "label": "Verisign 10-K(2025-12-31)",
+            "label_en": "Verisign 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014473/000101447326000006/vrsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Among our competitors operating gTLD and ccTLD registries are CentralNic, China Internet Network, DENIC eG, GoDaddy, Google, Identity Digital, Information Center (CNNIC), Nominet, Public Interest Registry (PIR), Radix, and .xyz"
+          }
+        }
+      ],
+      "name_en": "CentralNic"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

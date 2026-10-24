@@ -1,0 +1,40 @@
+.introduction { padding: 22px; border-top: 1px solid #263a46; color: #e8f0f4; }
+.introduction > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; margin-bottom: 16px; }
+.introduction h2 { margin: 0; font-size: 19px; letter-spacing: .02em; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; }
+.card, .mapCard { --accent: #8ed7c0; min-width: 0; padding: 15px; border: 1px solid #263a46; border-top: 2px solid var(--accent); border-radius: 10px; background: #101d27; }
+.card[data-topic="revenue"] { --accent: #8abdec; }
+.card[data-topic="strength"] { --accent: #c3a8ed; }
+.card[data-topic="risks"] { --accent: #e5a0ac; }
+.card dt, .mapCard h3 { display: flex; align-items: baseline; gap: 9px; margin: 0; font-size: 15px; font-weight: 700; line-height: 1.5; }
+.card dt > span, .mapCard h3 > span { color: var(--accent); font-size: 12px; font-variant-numeric: tabular-nums; }
+.card dd { margin: 9px 0 0; color: #c7d4dd; font-size: 14px; line-height: 1.8; overflow-wrap: anywhere; }
+.maps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; align-items: start; }
+.mapCard { --accent: #edc18a; padding: 18px 16px 12px; background: linear-gradient(135deg, #201f20, #101923 60%); }
+.mapCard[data-topic="relationships"] { --accent: #82ccda; background: linear-gradient(135deg, #122830, #101923 60%); }
+.introduction summary:focus-visible, .introduction a:focus-visible { outline: 2px solid #8ed7c0; outline-offset: 3px; }
+.sources { color: #a2b5c1; font-size: 12px; line-height: 1.7; }
+.sources summary { cursor: pointer; width: fit-content; min-height: 36px; padding: 7px 0; }
+.mapCard p { color: #c7d4dd; font-size: 14px; line-height: 1.8; }
+.sources { margin-top: 14px; }
+.sources p { margin: 5px 0; }
+.sources ul { margin: 5px 0 0; padding-left: 18px; }
+.sources a { color: #a8cbe5; overflow-wrap: anywhere; }
+@media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .maps { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) {
+  .introduction { padding: 18px 12px 12px; }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .card { padding: 11px 13px; }
+  .card dd { margin-top: 5px; line-height: 1.7; }
+}
+.lite { display: grid; gap: 16px; margin-top: 14px; }
+.liteRivals { display: grid; gap: 8px; }
+.liteRivals h3, .liteMap h3 { display: flex; align-items: baseline; gap: 8px; margin: 0; font-size: 16px; line-height: 1.5; }
+.liteRivals h3 > span { color: #b9a4e6; font-size: 11px; } .liteMap h3 > span { color: #82ccda; font-size: 11px; }
+.liteRivals div { display: flex; flex-wrap: wrap; gap: 8px; }
+.liteRivals div span { font: 600 13px ui-monospace, monospace; padding: 6px 12px; border: 1px dashed #b9a4e6; border-radius: 8px; color: #e4dcf8; background: #1b1628; }
+.liteMap { display: grid; gap: 14px; padding: 18px 16px; border: 1px solid #2a2d33; border-radius: 14px; background: radial-gradient(120% 120% at 50% 0%, #0b0e13 0%, #040507 70%); }
+.liteMap h3 { opacity: .3; }
+.liteRivals > p { margin: 0; color: #93a7ba; font-size: 14px; }
+.liteMap p { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; padding: 22px 0 26px; color: #8d96a3; font-size: 20px; font-weight: 600; letter-spacing: .14em; }
+.liteMap p svg { flex: none; }

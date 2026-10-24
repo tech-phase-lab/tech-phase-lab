@@ -1,0 +1,342 @@
+{
+  "root": {
+    "ticker": "ARLO",
+    "name": "アーロ・テクノロジーズ",
+    "cik": 1736946,
+    "name_en": "Arlo Technologies"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "GOOGL"
+  ],
+  "companies": [
+    {
+      "id": "VERISURE",
+      "ticker": "Verisure",
+      "name": "ベリシュア",
+      "sub": "セキュリティサービス",
+      "sub_en": "Security services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上高の32%を占める取引先である",
+          "text_en": "Accounted for 32% of Arlo's revenue, together with its affiliates",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We sell a substantial portion of our products through traditional and online retailers, including Amazon, Best Buy, Walmart, Sam’s Club, Home Depot, Lowe’s and Costco; and to security solutions providers, including Verisure and its affiliates. For the year ended December 31, 2025, we derived 32% of our revenue from Verisure and its affiliates."
+          }
+        }
+      ],
+      "name_en": "Verisure"
+    },
+    {
+      "id": "BBY",
+      "ticker": "BBY",
+      "name": "ベストバイ",
+      "sub": "家電小売",
+      "sub_en": "Electronics retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "小売チャネルとして製品を販売する取引先である",
+          "text_en": "A retailer through which Arlo sells its products",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We sell a substantial portion of our products through traditional and online retailers, including Amazon, Best Buy, Walmart, Sam’s Club, Home Depot, Lowe’s and Costco; and to security solutions providers, including Verisure and its affiliates. For the year ended December 31, 2025, we derived 32% of our revenue from Verisure and its affiliates."
+          }
+        }
+      ],
+      "name_en": "Best Buy"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "小売チャネルとして製品を販売する取引先である",
+          "text_en": "A retailer through which Arlo sells its products",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We sell a substantial portion of our products through traditional and online retailers, including Amazon, Best Buy, Walmart, Sam’s Club, Home Depot, Lowe’s and Costco; and to security solutions providers, including Verisure and its affiliates. For the year ended December 31, 2025, we derived 32% of our revenue from Verisure and its affiliates."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "小売チャネルとして製品を販売する取引先である",
+          "text_en": "A retailer through which Arlo sells its products",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We sell a substantial portion of our products through traditional and online retailers, including Amazon, Best Buy, Walmart, Sam’s Club, Home Depot, Lowe’s and Costco; and to security solutions providers, including Verisure and its affiliates. For the year ended December 31, 2025, we derived 32% of our revenue from Verisure and its affiliates."
+          }
+        }
+      ],
+      "name_en": "Costco"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品を供給する大手通信事業者のひとつである",
+          "text_en": "A major wireless carrier Arlo supplies products to",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We supply our products to major wireless carriers around the world, including AT&T, T-Mobile, Verizon, Telstra and Vodafone."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "ADT",
+      "ticker": "ADT",
+      "name": "エーディーティー",
+      "sub": "セキュリティサービス",
+      "sub_en": "Security services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年6月に提携契約を結んだ",
+          "text_en": "Entered a partnership agreement in June 2025",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In June 2025, we entered into a partnership agreement with ADT, one of the largest security companies in North America."
+          }
+        }
+      ],
+      "name_en": "ADT"
+    },
+    {
+      "id": "FOXCONN",
+      "ticker": "Foxconn Cloud",
+      "name": "フォックスコン・クラウド・ネットワーク・テクノロジー",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品の製造を委託している先のひとつである",
+          "text_en": "One of the manufacturers Arlo outsources production to",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "we currently outsource manufacturing to Foxconn Cloud Network Technology Singapore Pte. Ltd., Tonly Technology Co., Ltd, Alpha Networks Inc., Pegatron Corporation, and Chicony Electronics Co., Ltd., which are all headquartered in Asia."
+          }
+        }
+      ],
+      "name_en": "Foxconn Cloud Network Technology"
+    },
+    {
+      "id": "PEGATRON",
+      "ticker": "Pegatron",
+      "name": "ペガトロン",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品の製造を委託している先のひとつである",
+          "text_en": "One of the manufacturers Arlo outsources production to",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "we currently outsource manufacturing to Foxconn Cloud Network Technology Singapore Pte. Ltd., Tonly Technology Co., Ltd, Alpha Networks Inc., Pegatron Corporation, and Chicony Electronics Co., Ltd., which are all headquartered in Asia."
+          }
+        }
+      ],
+      "name_en": "Pegatron"
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "クアルコム",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "重要部品の戦略的な供給元のひとつである",
+          "text_en": "One of Arlo's key component suppliers with a strategic partnership",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "deep strategic partnerships with key suppliers, such as Infineon Technologies Americas Corp, OmniVision Technologies Inc., Realtek Semiconductor Corp, and Qualcomm Incorporated"
+          }
+        }
+      ],
+      "name_en": "Qualcomm"
+    },
+    {
+      "id": "INFINEON",
+      "ticker": "Infineon",
+      "name": "インフィニオン・テクノロジーズ",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "重要部品の戦略的な供給元のひとつである",
+          "text_en": "One of Arlo's key component suppliers with a strategic partnership",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "deep strategic partnerships with key suppliers, such as Infineon Technologies Americas Corp, OmniVision Technologies Inc., Realtek Semiconductor Corp, and Qualcomm Incorporated"
+          }
+        }
+      ],
+      "name_en": "Infineon Technologies"
+    },
+    {
+      "id": "REALTEK",
+      "ticker": "Realtek",
+      "name": "リアルテック・セミコンダクター",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "重要部品の戦略的な供給元のひとつである",
+          "text_en": "One of Arlo's key component suppliers with a strategic partnership",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "deep strategic partnerships with key suppliers, such as Infineon Technologies Americas Corp, OmniVision Technologies Inc., Realtek Semiconductor Corp, and Qualcomm Incorporated"
+          }
+        }
+      ],
+      "name_en": "Realtek Semiconductor"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "ネット通販・IT",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BlinkとRingで競合している",
+          "text_en": "Competes with Arlo through Blink and Ring",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our principal competitors include Amazon (Blink and Ring), Google (Nest), Canary, D-Link, Foxconn Corporation (Belkin), Night Owl, Samsung, SimpliSafe, Swann, TP Link, Eufy, and Wyze."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "ネット・IT",
+      "sub_en": "Internet & tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nestで競合している",
+          "text_en": "Competes with Arlo through Nest",
+          "source": {
+            "label": "Arlo Technologies 10-K(December 31, 2025)",
+            "label_en": "Arlo Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our principal competitors include Amazon (Blink and Ring), Google (Nest), Canary, D-Link, Foxconn Corporation (Belkin), Night Owl, Samsung, SimpliSafe, Swann, TP Link, Eufy, and Wyze."
+          }
+        }
+      ],
+      "name_en": "Google"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

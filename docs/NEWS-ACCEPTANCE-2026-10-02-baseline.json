@@ -1,0 +1,903 @@
+{
+  "windowStart": "2026-10-02T02:57:53.058536+00:00",
+  "windowEnd": "2026-10-03T02:57:53.058536+00:00",
+  "windowStatus": "diagnostic-only-known-source-errors",
+  "acceptanceEligible": true,
+  "acceptanceStatus": "observing-in-window-failures-not-passed",
+  "acceptanceWindowStart": "2026-10-02T04:43:12.282254+00:00",
+  "acceptanceWindowEnd": "2026-10-03T04:43:12.282254+00:00",
+  "repairCommit": "198317bac576ceebf887eb6599bc3e1ddace7f7b",
+  "repairedBaselineCapturedAt": "2026-10-02T04:00:13.253461+00:00",
+  "repairedBaseline": {
+    "workerStartedAt": "2026-10-02T03:54:43.999+00:00",
+    "lastCycleAt": "2026-10-02T04:00:07.274+00:00",
+    "routes": {
+      "configured": 24,
+      "fresh": 24,
+      "error": 0,
+      "pending": 0,
+      "retryDue": 0,
+      "retryDeferred": 0
+    },
+    "articleRetrieval": {
+      "error": 0,
+      "retryDue": 0,
+      "retryDeferred": 0
+    },
+    "sandiskNews": {
+      "documents": 15,
+      "succeeded": 15,
+      "errors": 0,
+      "pending": 0,
+      "storedCharacters": 107631
+    },
+    "prNewswirePublic": {
+      "checkedAt": "2026-10-02T03:59:41.390+00:00",
+      "documents": 28,
+      "succeeded": 28,
+      "errors": 0,
+      "pending": 0,
+      "failureTransitionsSinceWorkerStart": 0
+    },
+    "publicationToDetectionLatency24Hours": {
+      "count": 7,
+      "note": "Rolling pre-window events; not an acceptance-window result."
+    },
+    "verificationLimits": [
+      "Aggregate health does not prove source completeness.",
+      "Aggregate health does not prove bilingual factual accuracy.",
+      "Aggregate health does not prove frontend delivery.",
+      "Zero new eligible events remains untested."
+    ]
+  },
+  "interimSnapshots": [
+    {
+      "capturedAt": "2026-10-02T04:05:04.161118+00:00",
+      "health": {
+        "lastCycleAt": "2026-10-02T04:05:06.294+00:00",
+        "routesFresh": 24,
+        "routeErrors": 0,
+        "articleErrors": 0,
+        "sourceFetchErrors": 0,
+        "latestXSucceededAt": "2026-10-02T04:04:55.233+00:00",
+        "currentXErrors": {
+          "x-api-paced": 1
+        }
+      },
+      "newEvidence": {
+        "events": 0,
+        "headlineTranslations": 0,
+        "xMarketPublications": 0,
+        "marketResultPublications": 0,
+        "status": "untested-no-new-eligible-events"
+      },
+      "xPacingTransitions": {
+        "failed": 13,
+        "recovered": 13,
+        "bySource": {
+          "x-barchart": 3,
+          "x-nebius-official": 2,
+          "x-trendspider": 3,
+          "x-wallstengine": 5
+        },
+        "storedKind": "other",
+        "currentExposedError": "x-api-paced",
+        "note": "Intentional local budget-pacing pattern; the transition table does not retain the raw cause for independent per-transition proof."
+      }
+    },
+    {
+      "capturedAt": "2026-10-02T05:50:04.331621+00:00",
+      "health": {
+        "workerStartedAt": "2026-10-02T04:40:09.824+00:00",
+        "lastCycleAt": "2026-10-02T05:50:07.158+00:00",
+        "cycles": 1784,
+        "sourceChecks": 128,
+        "sourceFetchErrors": 0,
+        "routes": {
+          "configured": 24,
+          "suspended": 2,
+          "fresh": 24,
+          "error": 0,
+          "pending": 0
+        },
+        "articleRetrieval": {
+          "error": 0,
+          "retries": 0
+        },
+        "headlineTranslation": {
+          "eligible": 49,
+          "translated": 49,
+          "pending": 0,
+          "running": 0,
+          "retrying": 0,
+          "exhausted": 0
+        },
+        "officialResearch": {
+          "published": 4,
+          "pending": 0
+        },
+        "xMarketNews": {
+          "eligible": 1,
+          "published": 1,
+          "pending": 0
+        },
+        "latestXSucceededAt": "2026-10-02T05:49:43.794+00:00",
+        "sandiskNews": {
+          "documents": 15,
+          "succeeded": 15,
+          "errors": 0
+        },
+        "prNewswirePublic": {
+          "documents": 34,
+          "succeeded": 34,
+          "errors": 0
+        }
+      },
+      "newEvidence": {
+        "storedEventsObservedInWindow": 3,
+        "eligibleSourcePublicationsInWindow": 0,
+        "headlineTranslations": 0,
+        "officialResearchPublications": 0,
+        "xMarketPublications": 0,
+        "marketResultPublications": 0,
+        "status": "untested-no-new-eligible-events",
+        "delayedBackfill": {
+          "sourceId": "skhynix-news",
+          "items": 3,
+          "sourcePublishedAtFirst": "2026-10-02T00:00:20+00:00",
+          "sourcePublishedAtLast": "2026-10-02T00:00:41+00:00",
+          "observedAtFirst": "2026-10-02T05:06:55.153+00:00",
+          "observedAtLast": "2026-10-02T05:08:58.621+00:00",
+          "note": "Three URLs in one AI-ecosystem series; source publication preceded the acceptance window, so these are not new-delivery successes."
+        }
+      },
+      "frontend": {
+        "observationRecordedAt": "2026-10-02T05:55:46.075726+00:00",
+        "dataFetchedAt": "2026-10-02T05:45:24+00:00",
+        "eligibleNewItemVisible": false,
+        "bilingualAccuracyStatus": "untested-no-new-eligible-item"
+      },
+      "inventoryReconciliation": {
+        "checked": [
+          "skhynix-news",
+          "sandisk-news",
+          "prnewswire-public"
+        ],
+        "result": "No source publication after the acceptance-window start was found in the three checked inventories.",
+        "remainingConfiguredSources": "unverified-this-snapshot"
+      },
+      "xPacingTransitions": {
+        "cutoff": "2026-10-02T05:50:04.331621+00:00",
+        "failed": 149,
+        "recovered": 150,
+        "bySource": {
+          "x-barchart": {
+            "failed": 30,
+            "recovered": 30
+          },
+          "x-nebius-official": {
+            "failed": 30,
+            "recovered": 30
+          },
+          "x-trendspider": {
+            "failed": 29,
+            "recovered": 30
+          },
+          "x-wallstengine": {
+            "failed": 60,
+            "recovered": 60
+          }
+        },
+        "storedKind": "other",
+        "currentRouteErrors": 0,
+        "note": "Timing and code paths are consistent with budget pacing, but the transition table does not retain the raw cause. One recovered transition began before the window."
+      }
+    },
+    {
+      "capturedAt": "2026-10-02T06:58:56.431466+00:00",
+      "health": {
+        "observedAt": "2026-10-02T06:51:48.938+00:00",
+        "workerStartedAt": "2026-10-02T06:21:31.882+00:00",
+        "lastCycleAt": "2026-10-02T06:51:48.938+00:00",
+        "cycles": 782,
+        "sourceChecks": 10,
+        "status": "ready",
+        "issues": [],
+        "routes": {
+          "configured": 24,
+          "suspended": 2,
+          "fresh": 24,
+          "stale": 0,
+          "error": 0,
+          "pending": 0
+        },
+        "articleRetrieval": {
+          "error": 0,
+          "retrying": 0
+        },
+        "headlineTranslation": {
+          "eligible": 49,
+          "translated": 49,
+          "pending": 0,
+          "running": 0,
+          "retrying": 0,
+          "exhausted": 0
+        },
+        "officialResearch": {
+          "published": 4,
+          "pending": 0
+        },
+        "xMarketNews": {
+          "eligible": 1,
+          "published": 1,
+          "pending": 0
+        }
+      },
+      "xPacingAfterRepair": {
+        "deferrals": 91,
+        "bySource": {
+          "x-barchart": 15,
+          "x-nebius-official": 15,
+          "x-trendspider": 15,
+          "x-wallstengine": 46
+        },
+        "postRestartTransitions": 0,
+        "preservedEarlierAmbiguousTransitions": 439,
+        "actualSucceededAt": {
+          "x-barchart": "2026-10-02T06:53:50.487+00:00",
+          "x-nebius-official": "2026-10-02T06:54:11.057+00:00",
+          "x-trendspider": "2026-10-02T06:55:22.565+00:00",
+          "x-wallstengine": "2026-10-02T06:55:02.527+00:00"
+        }
+      },
+      "offlineAudit": {
+        "codeCommit": "c5b62e9741787668b45742071629de4b46f15425",
+        "sha256": "eccbdc01deab444c7f169b693bbb97f7e9eda01b41e16987b0d33983f6739143",
+        "asOf": "2026-10-02T06:58:56.431466+00:00",
+        "acceptance": "not-assessed",
+        "eventCounts": {
+          "historical-backfill": 3,
+          "new-source-publication": 1,
+          "revision": 1
+        },
+        "newPublicationEligibilityCounts": {
+          "excluded": 1
+        },
+        "rawIntakeSeconds": {
+          "count": 1,
+          "mean": 73.581,
+          "median": 73.581,
+          "p95": 73.581,
+          "max": 73.581
+        },
+        "eligibleServiceLatencySampleCount": 0,
+        "requiredSources": 51,
+        "sourcesWithoutCompleteInventory": 51,
+        "missingEvidenceTables": [],
+        "timestampedHistory": {
+          "signalRouteTransitions": 439,
+          "incidentEvents": 0,
+          "officialResearchAttemptFailures": 0,
+          "translationCallFailures": 0,
+          "carryInIncidents": 21
+        }
+      },
+      "reviewedCandidates": [
+        {
+          "eventId": 1167,
+          "sourceId": "prnewswire-public",
+          "sourcePublishedAt": "2026-10-02T06:00:00+00:00",
+          "detectedAt": "2026-10-02T06:01:13.581+00:00",
+          "classification": "excluded-unrelated-hotel-release",
+          "rawIntakeSeconds": 73.581,
+          "eligibleDeliverySample": false
+        },
+        {
+          "eventId": 1168,
+          "sourceId": "nebius-blog",
+          "sourcePublishedAt": "2026-09-22T00:00:00+00:00",
+          "detectedAt": "2026-10-02T06:18:47.857+00:00",
+          "classification": "revision-not-new-publication",
+          "eligibleDeliverySample": false
+        }
+      ],
+      "frontend": {
+        "previewLoadedJa": true,
+        "previewLoadedEn": true,
+        "homeMarketNewsIntegrationObserved": true,
+        "eligibleNewItemObserved": false,
+        "bilingualAccuracyStatus": "untested-no-new-eligible-item"
+      },
+      "status": "observing-untested-no-new-eligible-delivery",
+      "acceptanceWindowRestarted": false
+    },
+    {
+      "capturedAt": "2026-10-02T22:49:17+00:00",
+      "codeCommit": "c27406a021161155890abbb58ebee5f10f315d56",
+      "health": {
+        "workerStartedAt": "2026-10-02T20:14:53.690+00:00",
+        "lastCycleAt": "2026-10-02T22:49:13.598+00:00",
+        "cycles": 43631,
+        "sourceChecks": 127,
+        "sourceFetchErrorsSinceWorkerStart": 2,
+        "status": "ready-with-active-partial-route",
+        "routes": {
+          "configured": 24,
+          "suspended": 2,
+          "fresh": 23,
+          "error": 1,
+          "pending": 0,
+          "errorKind": "articlePartial"
+        },
+        "articleRetrieval": {
+          "error": 1,
+          "retryDeferred": 1,
+          "nextRetryAt": "2026-10-02T22:59:53.152+00:00",
+          "rolling24HourRecoveries": 21,
+          "rolling24HourLastRecoveredAt": "2026-10-02T22:47:47.350+00:00"
+        },
+        "headlineTranslation": {
+          "eligible": 47,
+          "translated": 47,
+          "pending": 0,
+          "running": 0,
+          "retrying": 0,
+          "exhausted": 0,
+          "rolling24HourCalls": 153,
+          "rolling24HourFailedCalls": 110
+        },
+        "officialResearch": {
+          "published": 20,
+          "pending": 3,
+          "visibleRetryJobs": {
+            "1226": {
+              "attempts": 3,
+              "failureKind": "unsupported-number"
+            },
+            "1214": {
+              "attempts": 5,
+              "failureKind": "unsupported-number"
+            }
+          }
+        }
+      },
+      "newEligibleDelivery": {
+        "eventId": 1221,
+        "sourceId": "x-barchart",
+        "sourcePublishedAt": "2026-10-02T19:07:25+00:00",
+        "detectedAt": "2026-10-02T19:08:01.778+00:00",
+        "backendPublishedAt": "2026-10-02T19:08:05.017936+00:00",
+        "sourceToDetectionMs": 36778,
+        "detectionToBackendPublicationMs": 3240,
+        "sourceToBackendPublicationMs": 40018,
+        "englishFrontendObservedBy": "2026-10-02T19:09:13+00:00",
+        "japaneseFrontendObservedBy": "2026-10-02T19:10:18+00:00",
+        "sourceToFirstFrontendObservationUpperBoundMs": 108000,
+        "exactFirstRenderKnown": false,
+        "originalPublicPostRetrieval": "unverified",
+        "bilingualFactsReviewed": true,
+        "compactTitlesReviewed": true
+      },
+      "inWindowFailures": [
+        {
+          "sourceId": "coreweave-blog",
+          "failedAt": "2026-10-02T22:31:39.436+00:00",
+          "kind": "articlePartial",
+          "articleError": "http-404",
+          "articleUrl": "https://www.coreweave.com/blog/testing-race-cars-faster-how-jotas-engineers-learned-from-every-run-with-coreweaves-ai-powered-recommendation-tool",
+          "sourcePublishedOn": "2026-09-10",
+          "statusAtSnapshot": "active-retrying",
+          "disabledToPass": false
+        },
+        {
+          "sourceId": "prnewswire-public",
+          "failedAt": "2026-10-02T22:43:34.338+00:00",
+          "kind": "articlePartial",
+          "recoveredAt": "2026-10-02T22:47:47.715+00:00",
+          "statusAtSnapshot": "recovered"
+        }
+      ],
+      "previewApi": {
+        "observedAt": "2026-10-02T22:36:53+00:00",
+        "httpStatus": 200,
+        "marketUpdates": 2,
+        "officialUpdates": 20,
+        "resultBriefs": 1,
+        "event1221CompactJapanese": "米国10年物国債利回り急上昇",
+        "event1221CompactEnglish": "U.S. 10-Year Treasury Yield Rising"
+      },
+      "followUp": {
+        "capturedAt": "2026-10-02T23:00:32+00:00",
+        "coreweaveArticleErrorStillActive": true,
+        "articleErrors": 1,
+        "nextArticleRetryAt": "2026-10-02T23:32:13.003+00:00",
+        "prNewswireRecoveryStillRetained": true,
+        "officialResearchPending": 3
+      },
+      "verificationLimits": [
+        "The rolling 24-hour recovery and translation-call counters are not acceptance-window cumulative counters.",
+        "The current cloud-browser page request was client-blocked, so this snapshot does not add a new exact frontend-render timestamp.",
+        "The protected Vercel API returned HTTP 200, but an API response alone does not prove current reader delivery.",
+        "Complete independent inventories for every required source remain unverified.",
+        "Three official-research jobs remain pending; only two retry jobs are included in the public sanitized job sample.",
+        "The original acceptance start and end are unchanged; in-window failures prevent a clean full-day acceptance claim."
+      ],
+      "status": "observing-in-window-failures-not-passed",
+      "acceptanceWindowRestarted": false
+    }
+  ],
+  "invalidatedAt": "2026-10-02T03:24:00+00:00",
+  "invalidatedReason": "Sandisk investor newsroom timeout and recurring PR Newswire RSS HTTP 404 were active before repair verification.",
+  "capturedAt": "2026-10-02T02:57:53.058536+00:00",
+  "baselineOnly": true,
+  "health": {
+    "ready": true,
+    "startedAt": "2026-10-02T02:21:12.045+00:00",
+    "lastCycleAt": "2026-10-02T02:57:52.344+00:00",
+    "cycles": 935,
+    "sourceChecks": 12,
+    "sourceFetchErrors": 0,
+    "pendingBodies": 0,
+    "signalIntake": {
+      "routes": {
+        "configured": 24,
+        "suspended": 2,
+        "checked": 24,
+        "fresh": 22,
+        "stale": 0,
+        "error": 2,
+        "pending": 0,
+        "errorKinds": {
+          "accessRestricted": 0,
+          "rateLimited": 0,
+          "timeout": 1,
+          "server": 0,
+          "invalidResponse": 0,
+          "articlePartial": 0,
+          "fetchFailure": 0,
+          "noLinks": 0,
+          "other": 1
+        },
+        "retry": {
+          "due": 0,
+          "deferred": 2,
+          "unscheduled": 0,
+          "nextAt": "2026-10-02T02:59:24.594000+00:00",
+          "byErrorKind": {
+            "accessRestricted": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "rateLimited": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "timeout": {
+              "due": 0,
+              "deferred": 1,
+              "unscheduled": 0,
+              "nextAt": "2026-10-02T05:49:01.886000+00:00"
+            },
+            "server": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "invalidResponse": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "articlePartial": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "fetchFailure": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "noLinks": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "other": {
+              "due": 0,
+              "deferred": 1,
+              "unscheduled": 0,
+              "nextAt": "2026-10-02T02:59:24.594000+00:00"
+            }
+          }
+        },
+        "activeOutages": {
+          "measured": 2,
+          "unmeasured": 0,
+          "ageMaxMs": 574202370,
+          "attemptsAverage": 29.5,
+          "attemptsMax": 57,
+          "oldestStartedAt": "2026-09-25T11:27:50.250000+00:00",
+          "byErrorKind": {
+            "timeout": {
+              "measured": 1,
+              "unmeasured": 0,
+              "ageMaxMs": 574202370,
+              "attemptsAverage": 57.0,
+              "attemptsMax": 57,
+              "oldestStartedAt": "2026-09-25T11:27:50.250000+00:00"
+            },
+            "other": {
+              "measured": 1,
+              "unmeasured": 0,
+              "ageMaxMs": 88758,
+              "attemptsAverage": 2.0,
+              "attemptsMax": 2,
+              "oldestStartedAt": "2026-10-02T02:56:23.862000+00:00"
+            }
+          }
+        }
+      },
+      "articleRetrieval": {
+        "error": 0,
+        "errorKinds": {
+          "accessRestricted": 0,
+          "rateLimited": 0,
+          "timeout": 0,
+          "server": 0,
+          "invalidResponse": 0,
+          "articlePartial": 0,
+          "fetchFailure": 0,
+          "noLinks": 0,
+          "other": 0
+        },
+        "retry": {
+          "due": 0,
+          "deferred": 0,
+          "unscheduled": 0,
+          "nextAt": null,
+          "byErrorKind": {
+            "accessRestricted": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "rateLimited": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "timeout": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "server": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "invalidResponse": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "articlePartial": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "fetchFailure": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "noLinks": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "other": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            }
+          }
+        },
+        "recoveries24Hours": {
+          "count": 0,
+          "latencyAverageMs": null,
+          "latencyMaxMs": null,
+          "attemptsAverage": null,
+          "attemptsMax": null,
+          "lastRecoveredAt": null
+        }
+      },
+      "publicationEvidence": {
+        "total": 979,
+        "timestamp": 360,
+        "dateOnly": 11,
+        "missing": 608
+      },
+      "publicationToDetectionLatency24Hours": {
+        "count": 7,
+        "latencyAverageMs": 5853508,
+        "latencyMaxMs": 40711209,
+        "lastObservedAt": "2026-10-01T18:14:02.996000+00:00"
+      },
+      "routeTransitions24Hours": {
+        "recoveries": 358,
+        "failures": 359,
+        "changes": 0,
+        "lastOutcome": "failed",
+        "lastOccurredAt": "2026-10-02T02:56:23.862000+00:00"
+      },
+      "routeRecoveries24Hours": {
+        "count": 358,
+        "latencyAverageMs": 207341,
+        "latencyMaxMs": 14646466,
+        "attemptsAverage": 2.5,
+        "attemptsMax": 8,
+        "lastRecoveredAt": "2026-10-02T02:55:52.428000+00:00"
+      },
+      "routeRetryWait24Hours": {
+        "count": 545,
+        "waitAverageMs": 1677,
+        "waitMaxMs": 26581,
+        "lastAttemptedAt": "2026-10-02T02:57:24.583000+00:00"
+      },
+      "xIntake": {
+        "usage": {
+          "requested": true,
+          "configured": true,
+          "enabled": true,
+          "attemptsLast24Hours": 3514,
+          "dailyLimit": 4400,
+          "limitReached": false,
+          "nextAvailableAt": null,
+          "pacedUntil": "2026-10-02T02:58:00.916852+00:00",
+          "scope": "analyst-price-target-or-earnings",
+          "configuredMaxRequestsPerDay": 5040,
+          "localMaxRequestsPerDay": 4400,
+          "budgetCapped": true,
+          "pacingEnabled": true,
+          "minimumSpacingSeconds": 20,
+          "routeCount": 4,
+          "minimumRouteSpacingSeconds": 80
+        },
+        "routes": {
+          "checked": 5,
+          "error": 0,
+          "errors": {},
+          "latestCheckedAt": "2026-10-02T02:57:41.092+00:00",
+          "oldestSucceededAt": "2026-09-30T22:04:05.923+00:00",
+          "latestSucceededAt": "2026-10-02T02:57:41.092+00:00",
+          "nextCheckAt": "2026-09-30T22:05:05.923000+00:00"
+        },
+        "items24Hours": {
+          "total": 11,
+          "analystRatings": 2,
+          "priceTargets": 5,
+          "earnings": 2,
+          "officialUpdates": 3,
+          "other": 1,
+          "latestObservedAt": "2026-10-02T02:01:40.280000+00:00"
+        }
+      },
+      "xMarketNews": {
+        "accounts": 2,
+        "eligible": 1,
+        "published": 1,
+        "pending": 0,
+        "failureKinds": {}
+      },
+      "headlineTranslation": {
+        "status": "enabled",
+        "dailyLimit": 200,
+        "eligible": 49,
+        "translated": 49,
+        "pending": 0,
+        "running": 0,
+        "retrying": 0,
+        "exhausted": 0,
+        "oldestPendingAt": null,
+        "nextRetryAt": null,
+        "calls24Hours": {
+          "total": 124,
+          "failed": 70,
+          "completed": 51,
+          "stale": 3
+        }
+      },
+      "resultPublication": {
+        "status": "running",
+        "publishedLast24Hours": 0,
+        "latest": [],
+        "unsupportedFormats": "held-private",
+        "numericTranslation": "bilingual-field-labels"
+      },
+      "officialResearch": {
+        "published": 3,
+        "pending": 1,
+        "latest": [
+          {
+            "id": "ir-result-1122",
+            "ticker": "MSFT",
+            "observedAt": "2026-10-01T17:13:30.242+00:00",
+            "bodyReadyAt": "2026-10-01T17:42:37.324+00:00",
+            "generationStartedAt": "2026-10-02T00:30:09.149519+00:00",
+            "publicAt": "2026-10-02T00:30:15.271+00:00",
+            "generationMs": 5521,
+            "detectionToPublicMs": 26205029
+          },
+          {
+            "id": "ir-result-1098",
+            "ticker": "AMD",
+            "observedAt": "2026-09-28T20:05:14.722+00:00",
+            "bodyReadyAt": "2026-09-29T01:53:16.141+00:00",
+            "generationStartedAt": "2026-10-01T23:04:57.625223+00:00",
+            "publicAt": "2026-10-01T23:05:03.603+00:00",
+            "generationMs": 5950,
+            "detectionToPublicMs": 269988881
+          },
+          {
+            "id": "ir-result-1128",
+            "ticker": "MU",
+            "observedAt": "2026-09-30T20:18:32.104+00:00",
+            "bodyReadyAt": "2026-10-01T20:09:26.711+00:00",
+            "generationStartedAt": "2026-10-01T20:09:31.352735+00:00",
+            "publicAt": "2026-10-01T20:09:31.369+00:00",
+            "generationMs": 17,
+            "detectionToPublicMs": 85859265
+          }
+        ],
+        "jobs": [
+          {
+            "event_id": 1122,
+            "state": "done",
+            "attempts": 1,
+            "failure_kind": "classified-attempt"
+          },
+          {
+            "event_id": 1119,
+            "state": "retry",
+            "attempts": 1,
+            "failure_kind": "invalid-copy"
+          },
+          {
+            "event_id": 1106,
+            "state": "done",
+            "attempts": 6,
+            "failure_kind": "classified-attempt"
+          },
+          {
+            "event_id": 1098,
+            "state": "done",
+            "attempts": 8,
+            "failure_kind": "classified-attempt"
+          }
+        ]
+      }
+    },
+    "priceTargetStream": {
+      "healthy": true,
+      "active": true,
+      "checkedSinceStart": true,
+      "clients": 1,
+      "maxClients": 3500,
+      "connectionsAccepted": 5,
+      "connectionsRejected": 0,
+      "disconnects": 4,
+      "readAttempts": 1297,
+      "snapshotReads": 1296,
+      "readFailures": 0,
+      "consecutiveFailures": 0,
+      "recoveries": 0,
+      "changes": 1,
+      "bytesSent": 5265,
+      "lastReadAt": "2026-10-02T02:57:52.669+00:00",
+      "lastSuccessAt": "2026-10-02T02:57:51.666+00:00",
+      "lastFailureAt": null,
+      "startedAt": "2026-10-02T02:21:12.360+00:00",
+      "measuredAt": "2026-10-02T02:57:52.802+00:00"
+    },
+    "health": {
+      "status": "ready",
+      "issues": [],
+      "monitorStaleAfterSeconds": 60
+    }
+  },
+  "supersededAcceptanceWindows": [
+    {
+      "start": "2026-10-02T04:00:13.253461+00:00",
+      "end": "2026-10-03T04:00:13.253461+00:00",
+      "status": "diagnostic-only-known-publication-blocker",
+      "reason": "Official research event 1119 remained unpublished after invalid-copy because the separate 20-call article quota was exhausted despite available shared capacity."
+    }
+  ],
+  "recoveredPublicationBaseline": {
+    "observedAt": "2026-10-02T04:41:10.749617+00:00",
+    "workerStartedAt": "2026-10-02T04:40:09.824+00:00",
+    "lastCycleAt": "2026-10-02T04:41:03.245+00:00",
+    "routes": {
+      "configured": 24,
+      "suspended": 2,
+      "fresh": 24,
+      "error": 0,
+      "pending": 0
+    },
+    "articleRetrieval": {
+      "error": 0,
+      "retryDue": 0,
+      "retryDeferred": 0
+    },
+    "headlineTranslation": {
+      "eligible": 49,
+      "translated": 49,
+      "pending": 0,
+      "running": 0,
+      "retrying": 0
+    },
+    "officialResearch": {
+      "published": 4,
+      "pending": 0
+    },
+    "xMarketNews": {
+      "eligible": 1,
+      "published": 1,
+      "pending": 0
+    },
+    "sandiskNews": {
+      "documents": 15,
+      "succeeded": 15,
+      "error": 0
+    },
+    "prNewswirePublic": {
+      "documents": 34,
+      "succeeded": 34,
+      "error": 0
+    },
+    "health": {
+      "status": "ready",
+      "issues": []
+    },
+    "nbisRecovery": {
+      "eventId": 1119,
+      "publicAt": "2026-10-02T04:33:03.958+00:00",
+      "generationMs": 5649,
+      "attemptsAfterFidelityFix": 3,
+      "bilingualBodyReviewed": true,
+      "frontendJaEnObserved": true,
+      "historicalBackfillNotAcceptanceSuccess": true
+    },
+    "validation": {
+      "nodeTests": 201,
+      "pythonTests": 575,
+      "lintErrors": 0,
+      "build": "passed",
+      "actionsRun": 36965517076,
+      "actionsConclusion": "success",
+      "vercel": "success",
+      "railway": "success"
+    },
+    "scopeNote": "Two previously suspended routes remain excluded; no assertion of universal source coverage. Known historical translation failures and earlier failed windows remain diagnostic evidence."
+  }
+}

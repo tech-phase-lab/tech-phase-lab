@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "TRGP",
+    "name": "ターガ・リソーシズ",
+    "cik": 1389170,
+    "name_en": "Targa Resources"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MPLX",
+      "ticker": "MPLX",
+      "name": "エムピーエルエックス",
+      "sub": "ミッドストリーム",
+      "sub_en": "Midstream",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Centrahomaの合弁で、残りの40%の持分を保有する",
+          "text_en": "MPLX owns the remaining 40% interest in the Centrahoma joint venture",
+          "source": {
+            "label": "Targa Resources 10-K(2025年12月31日期)",
+            "label_en": "Targa Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389170/000119312526059296/trgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have a 60% ownership interest in Centrahoma with the remaining 40% interest owned by MPLX, LP."
+          }
+        }
+      ],
+      "name_en": "MPLX LP"
+    },
+    {
+      "id": "WhiteWater",
+      "ticker": "WhiteWater",
+      "name": "ホワイトウォーター・ミッドストリーム",
+      "sub": "パイプライン運営",
+      "sub_en": "Pipeline operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラックコムとトラバースのパイプラインは、ホワイトウォーターの関連会社が運営する",
+          "text_en": "Blackcomb and Traverse pipelines will be operated by an affiliate of WhiteWater",
+          "source": {
+            "label": "Targa Resources 10-K(2025年12月31日期)",
+            "label_en": "Targa Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389170/000119312526059296/trgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Both the Blackcomb and Traverse pipelines will be operated by an affiliate of WhiteWater."
+          }
+        }
+      ],
+      "name_en": "WhiteWater Midstream"
+    },
+    {
+      "id": "ENB",
+      "ticker": "ENB",
+      "name": "エンブリッジ",
+      "sub": "パイプライン",
+      "sub_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラックコムの親会社WPCの19.0%を保有する出資者",
+          "text_en": "Enbridge owns 19.0% of WPC, the parent of the Blackcomb joint venture",
+          "source": {
+            "label": "Targa Resources 10-K(2025年12月31日期)",
+            "label_en": "Targa Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389170/000119312526059296/trgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "WPC is a joint venture owned 50.6% by WhiteWater Midstream LLC (“WhiteWater”), 30.4% by MPLX LP, and 19.0% by Enbridge Inc."
+          }
+        }
+      ],
+      "name_en": "Enbridge"
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "西テキサスのWestTXジョイントベンチャーで、残りの持分を保有する",
+          "text_en": "ExxonMobil owns the remaining interest in the WestTX joint venture",
+          "source": {
+            "label": "Targa Resources 10-K(2025年12月31日期)",
+            "label_en": "Targa Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389170/000119312526059296/trgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have an approximate 72.8% ownership in WestTX with Exxon Mobil Corporation (“ExxonMobil”) owning the remaining interest."
+          }
+        }
+      ],
+      "name_en": "ExxonMobil"
+    },
+    {
+      "id": "WMB",
+      "ticker": "WMB",
+      "name": "ウィリアムズ",
+      "sub": "ミッドストリーム",
+      "sub_en": "Midstream",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モンベリュー第7分留設備の合弁相手で、ターガが80%を保有する",
+          "text_en": "Train 7 at Mont Belvieu is a joint venture with Williams in which Targa owns 80%",
+          "source": {
+            "label": "Targa Resources 10-K(2025年12月31日期)",
+            "label_en": "Targa Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389170/000119312526059296/trgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Train 7, a 120 MBbl/d fractionation train, which is a joint venture between Targa and The Williams Companies, Inc., where Targa owns an 80% equity interest."
+          }
+        }
+      ],
+      "name_en": "The Williams Companies"
+    },
+    {
+      "id": "CPChem",
+      "ticker": "Chevron Phillips",
+      "name": "シェブロン・フィリップス・ケミカル",
+      "sub": "石油化学",
+      "sub_en": "Petrochemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "同社の非保有の坑井7本を、ターガが代わりに運営している",
+          "text_en": "Targa operates seven non-owned wells on behalf of Chevron Phillips Chemical",
+          "source": {
+            "label": "Targa Resources 10-K(2025年12月31日期)",
+            "label_en": "Targa Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389170/000119312526059296/trgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Excludes seven non-owned wells which we operate on behalf of Chevron Phillips Chemical Company LP."
+          }
+        }
+      ],
+      "name_en": "Chevron Phillips Chemical"
+    },
+    {
+      "id": "Citgo",
+      "ticker": "Citgo Petroleum",
+      "name": "シトゴ・ペトロリアム",
+      "sub": "製油",
+      "sub_en": "Refining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "保有する12坑のうち5坑を、長期リースで貸している",
+          "text_en": "Five of 12 owned wells are leased to Citgo Petroleum under a long-term lease",
+          "source": {
+            "label": "Targa Resources 10-K(2025年12月31日期)",
+            "label_en": "Targa Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389170/000119312526059296/trgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Five of 12 owned wells are leased to Citgo Petroleum Corporation under a long-term lease."
+          }
+        }
+      ],
+      "name_en": "Citgo Petroleum"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

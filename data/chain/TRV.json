@@ -1,0 +1,171 @@
+{
+  "root": {
+    "ticker": "TRV",
+    "name": "トラベラーズ・カンパニーズ",
+    "cik": 86312,
+    "name_en": "Travelers Companies"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SWISSRE",
+      "ticker": "Swiss Re Group",
+      "name": "スイス・リー・グループ",
+      "sub": "再保険会社",
+      "sub_en": "Reinsurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の回収可能額で最上位に挙がる再保険会社グループである",
+          "text_en": "Swiss Re Group is the reinsurer group with the largest reinsurance recoverable from the Company",
+          "source": {
+            "label": "Travelers Companies 10-K(2025-12-31)",
+            "label_en": "Travelers Companies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/86312/000008631226000065/trv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Reinsurer Group Reinsurance Recoverable A.M. Best Rating of Group’s Predominant Reinsurer Swiss Re Group $ 737 A+ second highest of 16 ratings"
+          }
+        }
+      ],
+      "name_en": "Swiss Re Group"
+    },
+    {
+      "id": "BRKB",
+      "ticker": "Berkshire Hathaway",
+      "name": "バークシャー・ハサウェイ",
+      "sub": "再保険会社",
+      "sub_en": "Reinsurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の回収可能額で上位に入る再保険会社グループである",
+          "text_en": "Berkshire Hathaway is a reinsurer group listed among the Company's largest reinsurance recoverables",
+          "source": {
+            "label": "Travelers Companies 10-K(2025-12-31)",
+            "label_en": "Travelers Companies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/86312/000008631226000065/trv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Reinsurer Group Reinsurance Recoverable A.M. Best Rating of Group’s Predominant Reinsurer Swiss Re Group $ 737 A+ second highest of 16 ratings Berkshire Hathaway 435 A++ highest of 16 ratings"
+          }
+        }
+      ],
+      "name_en": "Berkshire Hathaway"
+    },
+    {
+      "id": "MUNICHRE",
+      "ticker": "Munich Re Group",
+      "name": "ミュンヘン再保険グループ",
+      "sub": "再保険会社",
+      "sub_en": "Reinsurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の回収可能額で上位に入る再保険会社グループである",
+          "text_en": "Munich Re Group is a reinsurer group listed among the Company's largest reinsurance recoverables",
+          "source": {
+            "label": "Travelers Companies 10-K(2025-12-31)",
+            "label_en": "Travelers Companies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/86312/000008631226000065/trv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Reinsurer Group Reinsurance Recoverable A.M. Best Rating of Group’s Predominant Reinsurer Swiss Re Group $ 737 A+ second highest of 16 ratings Berkshire Hathaway 435 A++ highest of 16 ratings Munich Re Group 381 A+ second highest of 16 ratings"
+          }
+        }
+      ],
+      "name_en": "Munich Re Group"
+    },
+    {
+      "id": "LONGPOINT",
+      "ticker": "Long Point Re IV",
+      "name": "ロング・ポイント・リーIV",
+      "sub": "巨大災害債券",
+      "sub_en": "Catastrophe bonds",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "巨大災害への備えとして、同社と再保険契約を結んでいる",
+          "text_en": "Long Point Re IV provides catastrophe protection to the Company through an indemnity reinsurance agreement",
+          "source": {
+            "label": "Travelers Companies 10-K(2025-12-31)",
+            "label_en": "Travelers Companies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/86312/000008631226000065/trv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Company has catastrophe protection through an indemnity reinsurance agreement with Long Point Re IV Ltd. (Long Point Re IV), an independent Bermuda company registered as a special purpose insurer under the Bermuda Insurance Act of 1978 and related regulations."
+          }
+        }
+      ],
+      "name_en": "Long Point Re IV"
+    },
+    {
+      "id": "FIDELIS",
+      "ticker": "Fidelis Insurance",
+      "name": "フィデリス・インシュアランス・ホールディングス",
+      "sub": "再保険の相手",
+      "sub_en": "Quota share partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年分の割合再保険契約を更新し、同社が保険料の一部を引き受ける",
+          "text_en": "The Company renewed its quota share reinsurance agreement with Fidelis subsidiaries for 2026",
+          "source": {
+            "label": "Travelers Companies 10-K(2025-12-31)",
+            "label_en": "Travelers Companies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/86312/000008631226000065/trv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Effective January 1, 2026, the Company renewed a quota share reinsurance agreement with subsidiaries of Fidelis Insurance Holdings Limited (Fidelis) for 2026 pursuant to which the Company assumes 20% of the subject gross written premiums of Fidelis on a risk-attaching basis, subject to a loss ratio cap."
+          }
+        }
+      ],
+      "name_en": "Fidelis Insurance Holdings"
+    },
+    {
+      "id": "JUNTO",
+      "ticker": "Junto Holding",
+      "name": "ジュント・ホールディング・ブラジル",
+      "sub": "ブラジル保証保険",
+      "sub_en": "Brazil surety JV",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラジルの保証保険事業を担う合弁会社で、同社が49.5%を保有する",
+          "text_en": "Junto is the Brazilian surety joint venture in which the Company owns 49.5%",
+          "source": {
+            "label": "Travelers Companies 10-K(2025-12-31)",
+            "label_en": "Travelers Companies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/86312/000008631226000065/trv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Company owns 49.5% of Junto, a market leader in surety coverages in Brazil."
+          }
+        }
+      ],
+      "name_en": "Junto Holding Brasil"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

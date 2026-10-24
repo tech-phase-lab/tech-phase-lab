@@ -1,0 +1,107 @@
+{
+  "root": {
+    "ticker": "GS",
+    "name": "ゴールドマン・サックス・グループ",
+    "cik": 886982,
+    "name_en": "Goldman Sachs Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "クレジットカード提携",
+      "sub_en": "Credit card partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アップルとの提携でクレジットカードを発行している",
+          "text_en": "The firm issues credit cards through a partnership arrangement with Apple Inc.",
+          "source": {
+            "label": "Goldman Sachs 10-K(2025年12月期)",
+            "label_en": "Goldman Sachs 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/gs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The firm issues credit cards through a partnership arrangement with Apple Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Apple Cardのプログラムを別の発行会社へ移す契約を結んだ",
+          "text_en": "Goldman Sachs entered into an agreement to transition the Apple Card program to another issuer",
+          "source": {
+            "label": "Goldman Sachs 10-K(2025年12月期)",
+            "label_en": "Goldman Sachs 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/gs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In December 2025, we entered into an agreement to transition the Apple Card program to another issuer."
+          }
+        }
+      ],
+      "name_en": "Apple Inc."
+    },
+    {
+      "id": "TROW",
+      "ticker": "TROW",
+      "name": "T・ロウ・プライス",
+      "sub": "資産運用会社",
+      "sub_en": "Asset manager",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "T・ロウ・プライスと、退職・資産形成向けの運用商品で戦略的に協力している",
+          "text_en": "Goldman Sachs has a strategic collaboration with T. Rowe Price on public and private market investment solutions",
+          "source": {
+            "label": "Goldman Sachs 10-K(2025年12月期)",
+            "label_en": "Goldman Sachs 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/gs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In September 2025, we announced a strategic collaboration with T. Rowe Price, aimed at delivering a range of diversified public and private market investment solutions designed for the needs of the retirement and wealth markets."
+          }
+        }
+      ],
+      "name_en": "T. Rowe Price"
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "sub": "自動車・カード提携",
+      "sub_en": "Automaker, card partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ゼネラル・モーターズのクレジットカード事業を別の発行会社へ売却した",
+          "text_en": "Goldman Sachs sold the General Motors credit card program to another issuer",
+          "source": {
+            "label": "Goldman Sachs 10-K(2025年12月期)",
+            "label_en": "Goldman Sachs 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/gs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "During 2025, we sold the General Motors (GM) credit card program to another issuer."
+          }
+        }
+      ],
+      "name_en": "General Motors"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

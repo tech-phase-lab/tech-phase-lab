@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "HRL",
+    "name": "ホーメル・フーズ",
+    "cik": 48465,
+    "name_en": "Hormel Foods"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、総売上の15.6%を占める",
+          "text_en": "Walmart is the largest customer, at 15.6 percent of consolidated gross sales less returns and allowances",
+          "source": {
+            "label": "ホーメル・フーズ 10-K(2025-10-26)",
+            "label_en": "Hormel Foods 10-K (fiscal year ended 2025-10-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/48465/000004846525000059/hrl-20251026.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "Sales to the Company’s largest customer, Walmart Inc. and its subsidiaries (Walmart), accounted for 15.6 percent of consolidated gross sales less returns and allowances during fiscal 2025."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "MEGAMEX",
+      "ticker": "MegaMex Foods",
+      "name": "メガメックス・フーズ",
+      "sub": "メキシコ食品JV",
+      "sub_en": "Mexican food JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "小売セグメントに損益が含まれる合弁事業",
+          "text_en": "MegaMex Foods is a joint venture included in the Retail segment",
+          "source": {
+            "label": "ホーメル・フーズ 10-K(2025-10-26)",
+            "label_en": "Hormel Foods 10-K (fiscal year ended 2025-10-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/48465/000004846525000059/hrl-20251026.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "This segment also includes the results from the Company’s MegaMex Foods, LLC (MegaMex Foods) joint venture."
+          }
+        }
+      ],
+      "name_en": "MegaMex Foods"
+    },
+    {
+      "id": "GARUDA",
+      "ticker": "Garudafood",
+      "name": "ガルーダフード",
+      "sub": "インドネシア食品",
+      "sub_en": "Indonesian food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドネシアの食品会社に約30%を出資している",
+          "text_en": "Hormel holds approximately 30 percent of Garudafood in Indonesia",
+          "source": {
+            "label": "ホーメル・フーズ 10-K(2025-10-26)",
+            "label_en": "Hormel Foods 10-K (fiscal year ended 2025-10-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/48465/000004846525000059/hrl-20251026.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "Indonesia (PT Garudafood Putra Putri Jaya Tbk (Garudafood), approximately 30 percent holding)"
+          }
+        }
+      ],
+      "name_en": "Garudafood"
+    },
+    {
+      "id": "PUREFOODS",
+      "ticker": "The",
+      "name": "ピュアフーズ・ホーメル",
+      "sub": "フィリピン食品",
+      "sub_en": "Philippine food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フィリピンの食品会社に40%を出資している",
+          "text_en": "Hormel holds a 40 percent interest in Purefoods-Hormel in the Philippines",
+          "source": {
+            "label": "ホーメル・フーズ 10-K(2025-10-26)",
+            "label_en": "Hormel Foods 10-K (fiscal year ended 2025-10-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/48465/000004846525000059/hrl-20251026.htm",
+            "level": "official",
+            "date": "2025-12-05",
+            "quote": "minority interests in food companies in the Philippines (The Purefoods-Hormel Company, Inc., 40 percent holding)"
+          }
+        }
+      ],
+      "name_en": "The Purefoods-Hormel Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

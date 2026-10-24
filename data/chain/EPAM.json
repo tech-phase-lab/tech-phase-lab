@@ -1,0 +1,268 @@
+{
+  "root": {
+    "ticker": "EPAM",
+    "name": "EPAMシステムズ",
+    "cik": 1352010,
+    "name_en": "EPAM Systems"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ACN",
+    "CTSH",
+    "DXC",
+    "DAVA",
+    "G"
+  ],
+  "companies": [
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Accenture is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Cognizant Technology Solutions is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Cognizant Technology Solutions"
+    },
+    {
+      "id": "DXC",
+      "ticker": "DXC",
+      "name": "DXCテクノロジー",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "DXC Technology is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "DXC Technology"
+    },
+    {
+      "id": "DAVA",
+      "ticker": "DAVA",
+      "name": "エンデバ",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Endava is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Endava"
+    },
+    {
+      "id": "G",
+      "ticker": "G",
+      "name": "ジェンパクト",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Genpact is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Genpact"
+    },
+    {
+      "id": "GLOB",
+      "ticker": "GLOB",
+      "name": "グロバント",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Globant is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Globant"
+    },
+    {
+      "id": "GDYN",
+      "ticker": "GDYN",
+      "name": "グリッド・ダイナミクス",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Grid Dynamics is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Grid Dynamics"
+    },
+    {
+      "id": "INFY",
+      "ticker": "INFY",
+      "name": "インフォシス",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Infosys is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Infosys"
+    },
+    {
+      "id": "WIT",
+      "ticker": "WIT",
+      "name": "ウィプロ",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Wipro is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Wipro"
+    },
+    {
+      "id": "CAP",
+      "ticker": "Capgemini",
+      "name": "キャップジェミニ",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するテクノロジーサービス提供会社のひとつである",
+          "text_en": "Capgemini is one of the technology services providers it competes with",
+          "source": {
+            "label": "EPAMシステムズ 10-K(2025-12-31)",
+            "label_en": "EPAM Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000015/epam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
+          }
+        }
+      ],
+      "name_en": "Capgemini"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

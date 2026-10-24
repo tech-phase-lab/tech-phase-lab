@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "BMY",
+    "name": "ブリストル・マイヤーズ スクイブ",
+    "cik": 14272,
+    "name_en": "Bristol Myers Squibb"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "sub": "抗凝固薬の共同開発",
+      "sub_en": "Eliquis co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗凝固薬エリキュイスをファイザーと共同で開発・販売している",
+          "text_en": "BMS and Pfizer jointly develop and commercialize Eliquis",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Pfizer BMS and Pfizer jointly develop and commercialize Eliquis , an anticoagulant discovered by BMS."
+          }
+        }
+      ],
+      "name_en": "Pfizer"
+    },
+    {
+      "id": "ONO",
+      "ticker": "Ono",
+      "name": "小野薬品工業",
+      "sub": "日韓台の共同開発",
+      "sub_en": "Joint development in Asia",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オプジーボなどを日本・韓国・台湾で小野薬品と共同開発・販売している",
+          "text_en": "BMS and Ono jointly develop and commercialize Opdivo and Yervoy in Japan, South Korea and Taiwan",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BMS and Ono jointly develop and commercialize Opdivo , Yervoy and several BMS investigational compounds in Japan, South Korea and Taiwan."
+          }
+        }
+      ],
+      "name_en": "Ono Pharmaceutical"
+    },
+    {
+      "id": "BNTX",
+      "ticker": "BNTX",
+      "name": "ビオンテック",
+      "sub": "がん抗体の共同開発",
+      "sub_en": "Bispecific antibody collaboration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ビオンテックの二重特異性抗体を共同開発・共同販売する提携を結んだ",
+          "text_en": "BMS entered into a strategic collaboration with BioNTech to co-develop and co-commercialize a bispecific antibody",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "entered into a strategic collaboration with BioNTech to co-develop and co-commercialize BioNTech's investigational bispecific antibody pumitamig (BNT327/BMS986545) across multiple solid tumor types"
+          }
+        }
+      ],
+      "name_en": "BioNTech"
+    },
+    {
+      "id": "SYS",
+      "ticker": "SystImmune",
+      "name": "シストイミューン",
+      "sub": "ADC薬の共同開発",
+      "sub_en": "ADC co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗体薬物複合体iza-brenをシストイミューンと共同開発・共同販売する",
+          "text_en": "BMS and SystImmune co-develop and co-commercialize iza-bren",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BMS and SystImmune, Inc. (\"SystImmune\") are parties to a global strategic collaboration for the co-development and co-commercialization of izalontamab brengitecan (iza-bren or BL-B01D1)"
+          }
+        }
+      ],
+      "name_en": "SystImmune"
+    },
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "sub": "血栓薬の共同開発",
+      "sub_en": "Milvexian co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "血栓症予防薬ミルベキシアンをヤンセンと共同開発している",
+          "text_en": "BMS and Janssen jointly develop milvexian",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BMS and Janssen jointly develop milvexian, an investigational oral, highly selective factor XIa inhibitor being studied for the prevention of major thrombotic conditions."
+          }
+        }
+      ],
+      "name_en": "Johnson & Johnson"
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "sub": "ライセンス相手",
+      "sub_en": "Licensing partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Reblozylの権利をメルクからライセンスしている",
+          "text_en": "BMS licenses Reblozyl from Merck",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BMS and Merck are parties to a global licensing agreement pursuant to which BMS licenses Reblozyl from Merck."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Winrevairの権利をメルクにライセンスし、ロイヤルティを受け取る",
+          "text_en": "Merck licenses Winrevair from BMS",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BMS receives royalties from Merck equal to 22 % of net sales."
+          }
+        }
+      ],
+      "name_en": "Merck"
+    },
+    {
+      "id": "ROG",
+      "ticker": "Roche",
+      "name": "ロシュ",
+      "sub": "特許ライセンス",
+      "sub_en": "Patent license",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tecentriqに関する特許ライセンス契約の相手先である",
+          "text_en": "Roche is party to a patent license agreement on Tecentriq",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BMS and Ono are parties to a global patent license agreement with Roche Group related to Tecentriq *, Roche’s anti-PD-L1 antibody."
+          }
+        }
+      ],
+      "name_en": "Roche"
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の三大医薬品卸の一社として、売上の一部を占める",
+          "text_en": "One of the three largest U.S. pharmaceutical wholesalers by share of gross revenues",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "McKesson Corporation 36 % 34 % 33 % Cencora, Inc. 29 % 29 % 29 % Cardinal Health, Inc. 22 % 22 % 23 %"
+          }
+        }
+      ],
+      "name_en": "McKesson"
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "センコラ",
+      "sub": "医薬品卸",
+      "sub_en": "Wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の三大医薬品卸の一社として、売上の一部を占める",
+          "text_en": "One of the three largest U.S. pharmaceutical wholesalers by share of gross revenues",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "McKesson Corporation 36 % 34 % 33 % Cencora, Inc. 29 % 29 % 29 % Cardinal Health, Inc. 22 % 22 % 23 %"
+          }
+        }
+      ],
+      "name_en": "Cencora"
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸",
+      "sub_en": "Wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の三大医薬品卸の一社として、売上の一部を占める",
+          "text_en": "One of the three largest U.S. pharmaceutical wholesalers by share of gross revenues",
+          "source": {
+            "label": "Bristol Myers Squibb 10-K(2025年12月期)",
+            "label_en": "Bristol Myers Squibb 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "McKesson Corporation 36 % 34 % 33 % Cencora, Inc. 29 % 29 % 29 % Cardinal Health, Inc. 22 % 22 % 23 %"
+          }
+        }
+      ],
+      "name_en": "Cardinal Health"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "root": {
+    "ticker": "GPC",
+    "name": "ジェニュイン・パーツ",
+    "cik": 40987,
+    "name_en": "Genuine Parts"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AZO",
+    "ORLY",
+    "AAP",
+    "LKQ",
+    "AIT"
+  ],
+  "companies": [
+    {
+      "id": "AZO",
+      "ticker": "AZO",
+      "name": "オートゾーン",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の主要な競合先に挙がる",
+          "text_en": "AutoZone is a key competitor in North America",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Key competitors in North America include AutoZone, Inc., O'Reilly Auto Parts, Inc., Advance Auto Parts, Inc., and LKQ Corporation, among others."
+          }
+        }
+      ],
+      "name_en": "AutoZone"
+    },
+    {
+      "id": "ORLY",
+      "ticker": "ORLY",
+      "name": "オライリー・オートモーティブ",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の主要な競合先に挙がる",
+          "text_en": "O'Reilly Auto Parts is a key competitor in North America",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Key competitors in North America include AutoZone, Inc., O'Reilly Auto Parts, Inc., Advance Auto Parts, Inc., and LKQ Corporation, among others."
+          }
+        }
+      ],
+      "name_en": "O'Reilly Auto Parts"
+    },
+    {
+      "id": "AAP",
+      "ticker": "AAP",
+      "name": "アドバンス・オートパーツ",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の主要な競合先に挙がる",
+          "text_en": "Advance Auto Parts is a key competitor in North America",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Key competitors in North America include AutoZone, Inc., O'Reilly Auto Parts, Inc., Advance Auto Parts, Inc., and LKQ Corporation, among others."
+          }
+        }
+      ],
+      "name_en": "Advance Auto Parts"
+    },
+    {
+      "id": "LKQ",
+      "ticker": "LKQ",
+      "name": "LKQコーポレーション",
+      "sub": "自動車部品流通",
+      "sub_en": "Auto parts distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米で競合し、欧州でも強い存在感を持つ",
+          "text_en": "LKQ competes in North America and has a strong presence in Europe",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Internationally, competitors include LKQ Corporation, which has a strong presence in Europe, and Bapcor in Australasia, among many others."
+          }
+        }
+      ],
+      "name_en": "LKQ Corporation"
+    },
+    {
+      "id": "BAPCOR",
+      "ticker": "Bapcor",
+      "name": "バプコー",
+      "sub": "自動車部品流通",
+      "sub_en": "Auto parts distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "オーストラリア・ニュージーランド圏の競合先",
+          "text_en": "Bapcor is a competitor in Australasia",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Internationally, competitors include LKQ Corporation, which has a strong presence in Europe, and Bapcor in Australasia, among many others."
+          }
+        }
+      ],
+      "name_en": "Bapcor"
+    },
+    {
+      "id": "AIT",
+      "ticker": "AIT",
+      "name": "アプライド・インダストリアル・テクノロジーズ",
+      "sub": "産業用部品流通",
+      "sub_en": "Industrial distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業用流通での主な競合先",
+          "text_en": "Applied Industrial Technologies is the main competitor in industrial distribution",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In industrial distribution, our main competitor is Applied Industrial Technologies, Inc., but we also compete against Fastenal Company, and W.W. Grainger, Inc, among many other smaller, regional competitors."
+          }
+        }
+      ],
+      "name_en": "Applied Industrial Technologies"
+    },
+    {
+      "id": "FAST",
+      "ticker": "FAST",
+      "name": "ファスナル",
+      "sub": "産業用部品流通",
+      "sub_en": "Industrial distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業用流通で競合する",
+          "text_en": "Fastenal is a competitor in industrial distribution",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In industrial distribution, our main competitor is Applied Industrial Technologies, Inc., but we also compete against Fastenal Company, and W.W. Grainger, Inc, among many other smaller, regional competitors."
+          }
+        }
+      ],
+      "name_en": "Fastenal"
+    },
+    {
+      "id": "GWW",
+      "ticker": "GWW",
+      "name": "W.W.グレインジャー",
+      "sub": "産業用部品流通",
+      "sub_en": "Industrial distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業用流通で競合する",
+          "text_en": "W.W. Grainger is a competitor in industrial distribution",
+          "source": {
+            "label": "ジェニュイン・パーツ 10-K(2025-12-31)",
+            "label_en": "Genuine Parts 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In industrial distribution, our main competitor is Applied Industrial Technologies, Inc., but we also compete against Fastenal Company, and W.W. Grainger, Inc, among many other smaller, regional competitors."
+          }
+        }
+      ],
+      "name_en": "W.W. Grainger"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
