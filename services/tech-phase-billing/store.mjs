@@ -1,13 +1,15 @@
 import { randomUUID } from 'node:crypto';
 import { offer } from './paypal.mjs';
-const S = 'tech_phase_billing_sandbox';
 // A pg Pool-compatible dependency. No process-global pool or fallback database.
-export function billingStore(pool) {
+export function billingStore(pool, mode = 'sandbox') {
+  if(!['sandbox','live'].includes(mode))throw Error('BILLING_DISABLED');
+  const S=mode==='live'?'tech_phase_billing_live':'tech_phase_billing_sandbox';
   async function transaction(work) {
     const client = await pool.connect();
+    let discard=false;
     try { await client.query('BEGIN'); const value = await work(client); await client.query('COMMIT'); return value; }
-    catch (error) { await client.query('ROLLBACK'); throw error; }
-    finally { client.release(); }
+    catch(error){try{await client.query('ROLLBACK');}catch{discard=true;}throw error;}
+    finally{client.release(discard?Error('BILLING_TRANSACTION_FAILED'):undefined);}
   }
   return {
     async summary(userId, now = Date.now()) {
@@ -27,7 +29,7 @@ export function billingStore(pool) {
             WHERE p.subscription_id=chosen.id)
       ) AS review_required FROM access a LEFT JOIN selected s ON true`,[userId,new Date(now)])).rows[0];
       const until=row.until ? new Date(row.until).toISOString() : null;
-      return {environment:'sandbox',plan:until ? 'pro' : 'free',proExpiresAt:until,
+      return {environment:mode,plan:until ? 'pro' : 'free',proExpiresAt:until,
         subscription:row.id ? {id:row.id,currency:row.currency,state:row.state} : null,
         reviewRequired:row.review_required === true};
     },
@@ -79,7 +81,7 @@ export function billingStore(pool) {
       const row = (await pool.query(`SELECT max(period_end) AS until FROM ${S}.entitlement_periods
         WHERE user_id=$1 AND period_start <= $2 AND period_end > $2`,[userId,new Date(now)])).rows[0];
       const until = row?.until ? new Date(row.until).toISOString() : null;
-      return { environment:'sandbox', plan:until ? 'pro' : 'free', proExpiresAt:until };
+      return { environment:mode, plan:until ? 'pro' : 'free', proExpiresAt:until };
     },
     async hasReviewHold(userId, id) {
       const row = (await pool.query(`SELECT EXISTS (
