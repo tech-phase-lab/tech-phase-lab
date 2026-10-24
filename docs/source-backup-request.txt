@@ -1,7 +1,8 @@
-Request: archive source after actual one-attempt AI verification
-Date: 2026-10-23 JST
-Base commit: f9c46edf656210454ac48d992ba49852c44005a2
-Archive this request commit, including preserved coworker changes and AI check code.
+Request: archive current source after research backup restore and destination checks
+Date: 2026-10-24 JST
+Base commit: 6208552fd291a7e2ce94759824e8de478a39eef8
+Archive this request commit, including preserved coworker changes, research backup
+downloaded-byte restore validation and pre-client R2 destination restrictions.
 Use existing configured secrets; encrypt before upload, fully download and restore
 Git in isolation with exact commit/tree comparison. Retain older objects.
 Source only: no live DB, dependency tar, runtime promotion or AI call.
