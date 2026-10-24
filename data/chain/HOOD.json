@@ -1,0 +1,219 @@
+{
+  "root": {
+    "ticker": "HOOD",
+    "name": "ロビンフッド・マーケッツ",
+    "cik": 1783879,
+    "name_en": "Robinhood Markets"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CITADEL",
+      "ticker": "Citadel Securities",
+      "name": "シタデル・セキュリティーズ",
+      "sub": "マーケットメイカー",
+      "sub_en": "Market maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "注文執行の取引収益で、総収益の1割超を占める大口の相手先である",
+          "text_en": "Citadel Securities is a market maker that accounts for over 10% of net revenues",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We derived transaction-based revenues from individual market makers and exchanges in excess of 10% of total net revenues, as follows: Year Ended December 31, 2023 2024 2025 Market makers: Citadel Securities, LLC 12 % 12 % 13 %"
+          }
+        }
+      ],
+      "name_en": "Citadel Securities"
+    },
+    {
+      "id": "WINTERMUTE",
+      "ticker": "Wintermute Trading",
+      "name": "ウィンターミュート・トレーディング",
+      "sub": "マーケットメイカー",
+      "sub_en": "Market maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引収益で、総収益の1割に達した年がある大口の相手先である",
+          "text_en": "Wintermute Trading is a market maker that reached 10% of net revenues in one year",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We derived transaction-based revenues from individual market makers and exchanges in excess of 10% of total net revenues, as follows: Year Ended December 31, 2023 2024 2025 Market makers: Citadel Securities, LLC 12 % 12 % 13 % Wintermute Trading Ltd 2 % 10 % 6 %"
+          }
+        }
+      ],
+      "name_en": "Wintermute Trading"
+    },
+    {
+      "id": "VIRTU",
+      "ticker": "VIRT",
+      "name": "ヴァーチュ・ファイナンシャル",
+      "sub": "マーケットメイカー",
+      "sub_en": "Market maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "夜間取引の注文を主に回送する流動性提供者である",
+          "text_en": "Virtu is the main Liquidity Provider for overnight brokerage trades",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "currently brokerage trades executed overnight primarily are routed through one Liquidity Provider - Virtu"
+          }
+        }
+      ],
+      "name_en": "Virtu Financial"
+    },
+    {
+      "id": "MORNINGSTAR",
+      "ticker": "MORN",
+      "name": "モーニングスター",
+      "sub": "投資調査",
+      "sub_en": "Investment research",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Gold会員向けの銘柄調査レポートを提供している",
+          "text_en": "Morningstar provides the stock research reports for Gold subscribers",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Professional Research. Subscribers have unlimited access to in-depth stock research reports provided by Morningstar."
+          }
+        }
+      ],
+      "name_en": "Morningstar"
+    },
+    {
+      "id": "NASDAQ",
+      "ticker": "NDAQ",
+      "name": "ナスダック",
+      "sub": "取引所・市場データ",
+      "sub_en": "Exchange & market data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Gold会員向けにレベル2の板情報を提供している",
+          "text_en": "Nasdaq provides Level II Market Data to Gold subscribers",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Advanced Market Data. Subscribers have the ability to see greater depth of orders for any given stock or option with Level II Market Data from Nasdaq."
+          }
+        }
+      ],
+      "name_en": "Nasdaq"
+    },
+    {
+      "id": "SAGE",
+      "ticker": "Sage Home Loans",
+      "name": "セージ・ホーム・ローンズ",
+      "sub": "住宅ローン",
+      "sub_en": "Mortgage lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Gold会員向けに住宅ローンの優遇条件を提供している",
+          "text_en": "Sage Home Loans offers Gold subscribers an exclusive mortgage loan offer",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Exclusive Mortgage Rates. Exclusive mortgage loan offer and credit towards closing costs with Sage Home Loans Corporation."
+          }
+        }
+      ],
+      "name_en": "Sage Home Loans"
+    },
+    {
+      "id": "SIG",
+      "ticker": "Susquehanna",
+      "name": "サスケハナ・インターナショナル・グループ",
+      "sub": "トレーディング",
+      "sub_en": "Trading firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "先物・デリバティブ取引所を運営する合弁会社Rotheraを共同で保有している",
+          "text_en": "Susquehanna International Group is Robinhood's joint venture partner in Rothera",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Rothera, owned and operated as a joint venture with SIG, operates a futures and derivatives exchange and clearinghouse through its subsidiary, Rothera E&C."
+          }
+        }
+      ],
+      "name_en": "Susquehanna International Group"
+    },
+    {
+      "id": "VISA",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クレジットカードの発行はVisaからのライセンスに基づいている",
+          "text_en": "The credit card is issued under a license from Visa",
+          "source": {
+            "label": "Robinhood Markets 10-K(December 31, 2025)",
+            "label_en": "Robinhood Markets 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Robinhood Credit is not a bank, and its credit card is issued by Coastal Bank, member FDIC, pursuant to a license from Visa U.S.A. Inc."
+          }
+        }
+      ],
+      "name_en": "Visa"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

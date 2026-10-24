@@ -1,0 +1,194 @@
+{
+  "root": {
+    "ticker": "Q",
+    "name": "クニティ・エレクトロニクス",
+    "cik": 2058873,
+    "name_en": "Qnity Electronics"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ENTG",
+    "ESI",
+    "MKSI"
+  ],
+  "companies": [
+    {
+      "id": "SSNLF",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "半導体メーカー",
+      "sub_en": "Semiconductor maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の純売上高の11%を占める顧客である",
+          "text_en": "Samsung Electronics accounted for 11% of Qnity’s 2025 net sales",
+          "source": {
+            "label": "クニティ 10-K(2025年12月31日期)",
+            "label_en": "Qnity Electronics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customer Percentage of Net Sales during 2025 Samsung Electronics Co., Ltd. 11% Taiwan Semiconductor Manufacturing Company Limited 8%"
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "台湾積体電路製造",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の純売上高の8%を占める顧客である",
+          "text_en": "TSMC accounted for 8% of Qnity’s 2025 net sales",
+          "source": {
+            "label": "クニティ 10-K(2025年12月31日期)",
+            "label_en": "Qnity Electronics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customer Percentage of Net Sales during 2025 Samsung Electronics Co., Ltd. 11% Taiwan Semiconductor Manufacturing Company Limited 8%"
+          }
+        }
+      ],
+      "name_en": "Taiwan Semiconductor Manufacturing"
+    },
+    {
+      "id": "ENTG",
+      "ticker": "ENTG",
+      "name": "エンテグリス",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙げられている",
+          "text_en": "Qnity names it among its most notable competitors",
+          "source": {
+            "label": "クニティ 10-K(2025年12月31日期)",
+            "label_en": "Qnity Electronics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our most notable competitors are Entegris, Merck KGA, Resonac, Element Solutions and MKS Instruments."
+          }
+        }
+      ],
+      "name_en": "Entegris"
+    },
+    {
+      "id": "MRK",
+      "ticker": "Merck KGaA",
+      "name": "メルクKGaA",
+      "sub": "化学・電子材料",
+      "sub_en": "Chemicals & electronic materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙げられている",
+          "text_en": "Qnity names it among its most notable competitors",
+          "source": {
+            "label": "クニティ 10-K(2025年12月31日期)",
+            "label_en": "Qnity Electronics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our most notable competitors are Entegris, Merck KGA, Resonac, Element Solutions and MKS Instruments."
+          }
+        }
+      ],
+      "name_en": "Merck KGaA"
+    },
+    {
+      "id": "RESONAC",
+      "ticker": "Resonac",
+      "name": "レゾナック",
+      "sub": "化学・電子材料",
+      "sub_en": "Chemicals & electronic materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙げられている",
+          "text_en": "Qnity names it among its most notable competitors",
+          "source": {
+            "label": "クニティ 10-K(2025年12月31日期)",
+            "label_en": "Qnity Electronics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our most notable competitors are Entegris, Merck KGA, Resonac, Element Solutions and MKS Instruments."
+          }
+        }
+      ],
+      "name_en": "Resonac"
+    },
+    {
+      "id": "ESI",
+      "ticker": "ESI",
+      "name": "エレメント・ソリューションズ",
+      "sub": "特殊化学品",
+      "sub_en": "Specialty chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙げられている",
+          "text_en": "Qnity names it among its most notable competitors",
+          "source": {
+            "label": "クニティ 10-K(2025年12月31日期)",
+            "label_en": "Qnity Electronics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our most notable competitors are Entegris, Merck KGA, Resonac, Element Solutions and MKS Instruments."
+          }
+        }
+      ],
+      "name_en": "Element Solutions"
+    },
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKSインスツルメンツ",
+      "sub": "半導体装置・材料",
+      "sub_en": "Semiconductor equipment & materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙げられている",
+          "text_en": "Qnity names it among its most notable competitors",
+          "source": {
+            "label": "クニティ 10-K(2025年12月31日期)",
+            "label_en": "Qnity Electronics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our most notable competitors are Entegris, Merck KGA, Resonac, Element Solutions and MKS Instruments."
+          }
+        }
+      ],
+      "name_en": "MKS Instruments"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

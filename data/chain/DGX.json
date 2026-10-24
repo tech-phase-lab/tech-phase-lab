@@ -1,0 +1,144 @@
+{
+  "root": {
+    "ticker": "DGX",
+    "name": "クエスト・ダイアグノスティクス",
+    "cik": 1022079,
+    "name_en": "Quest Diagnostics"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "LH"
+  ],
+  "companies": [
+    {
+      "id": "CORE",
+      "ticker": "Corewell Health",
+      "name": "コーウェル・ヘルス",
+      "sub": "ミシガンの医療機関",
+      "sub_en": "Michigan health system",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ミシガン州で検査を行う合弁会社を共同で設立し、出資比率は当社51%、同社49%である",
+          "text_en": "Quest and Corewell Health share ownership of a Michigan laboratory joint venture, 51% and 49%",
+          "source": {
+            "label": "クエスト 10-K(2025年12月31日期)",
+            "label_en": "Quest Diagnostics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022079/000102207926000015/dgx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Equity ownership of the joint venture is shared 51% by Quest and 49% by Corewell Health."
+          }
+        }
+      ],
+      "name_en": "Corewell Health"
+    },
+    {
+      "id": "LH",
+      "ticker": "LH",
+      "name": "ラボラトリー・コーポレーション・オブ・アメリカ",
+      "sub": "臨床検査の最大手競合",
+      "sub_en": "Largest clinical lab rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "商業臨床検査分野で最大の競合企業である",
+          "text_en": "It is Quest’s largest commercial clinical laboratory competitor",
+          "source": {
+            "label": "クエスト 10-K(2025年12月31日期)",
+            "label_en": "Quest Diagnostics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022079/000102207926000015/dgx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest commercial clinical laboratory competitor is Laboratory Corporation of America Holdings, Inc."
+          }
+        }
+      ],
+      "name_en": "Laboratory Corporation of America"
+    },
+    {
+      "id": "UNH",
+      "ticker": "UNH",
+      "name": "ユナイテッドヘルスケア",
+      "sub": "民間医療保険",
+      "sub_en": "Health insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "同社の優先検査ネットワークに当社が参加先として選ばれた",
+          "text_en": "Quest was chosen to participate in the UnitedHealthcare Preferred Lab Network",
+          "source": {
+            "label": "クエスト 10-K(2025年12月31日期)",
+            "label_en": "Quest Diagnostics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022079/000102207926000015/dgx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The UnitedHealthcare Preferred Lab Network, which chose us to participate, is an example of a health plan taking these steps."
+          }
+        }
+      ],
+      "name_en": "UnitedHealthcare"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "大手小売",
+      "sub_en": "Big-box retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "当社が検査サービスを提供する対象とする小売系医療提供者の例に挙がる",
+          "text_en": "Walmart is an example of the retail healthcare providers Quest serves",
+          "source": {
+            "label": "クエスト 10-K(2025年12月31日期)",
+            "label_en": "Quest Diagnostics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022079/000102207926000015/dgx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We take opportunities to provide services to retail providers of healthcare services, such as \"big-box\" retailers, like Walmart, pharmacy chains, like CVS Health, supermarkets, like Safeway, urgent care centers and Internet-based service providers."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "CVS",
+      "ticker": "CVS",
+      "name": "CVSヘルス",
+      "sub": "薬局チェーン",
+      "sub_en": "Pharmacy chain",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "当社が検査サービスを提供する対象とする薬局チェーンの例に挙がる",
+          "text_en": "CVS Health is an example of the pharmacy chains Quest serves",
+          "source": {
+            "label": "クエスト 10-K(2025年12月31日期)",
+            "label_en": "Quest Diagnostics 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022079/000102207926000015/dgx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We take opportunities to provide services to retail providers of healthcare services, such as \"big-box\" retailers, like Walmart, pharmacy chains, like CVS Health, supermarkets, like Safeway, urgent care centers and Internet-based service providers."
+          }
+        }
+      ],
+      "name_en": "CVS Health"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

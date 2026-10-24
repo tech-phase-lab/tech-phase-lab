@@ -1,0 +1,193 @@
+{
+  "root": {
+    "ticker": "ROK",
+    "name": "ロックウェル・オートメーション",
+    "cik": 1024478,
+    "name_en": "Rockwell Automation"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "EMR",
+    "HON"
+  ],
+  "companies": [
+    {
+      "id": "SIEMENS",
+      "ticker": "Siemens",
+      "name": "シーメンス",
+      "sub": "産業オートメーション",
+      "sub_en": "Industrial automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Siemens is named as a major competitor",
+          "source": {
+            "label": "Rockwell Automation 10-K(September 30, 2025)",
+            "label_en": "Rockwell Automation 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
+          }
+        }
+      ],
+      "name_en": "Siemens"
+    },
+    {
+      "id": "ABB",
+      "ticker": "ABB",
+      "name": "ABBグループ",
+      "sub": "産業オートメーション",
+      "sub_en": "Industrial automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "ABB is named as a major competitor",
+          "source": {
+            "label": "Rockwell Automation 10-K(September 30, 2025)",
+            "label_en": "Rockwell Automation 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
+          }
+        }
+      ],
+      "name_en": "ABB Ltd"
+    },
+    {
+      "id": "SCHNEIDER",
+      "ticker": "Schneider Electric",
+      "name": "シュナイダーエレクトリック",
+      "sub": "電機・制御",
+      "sub_en": "Electrical & controls",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Schneider Electric is named as a major competitor",
+          "source": {
+            "label": "Rockwell Automation 10-K(September 30, 2025)",
+            "label_en": "Rockwell Automation 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
+          }
+        }
+      ],
+      "name_en": "Schneider Electric"
+    },
+    {
+      "id": "EMR",
+      "ticker": "EMR",
+      "name": "エマソン・エレクトリック",
+      "sub": "産業オートメーション",
+      "sub_en": "Industrial automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Emerson Electric is named as a major competitor",
+          "source": {
+            "label": "Rockwell Automation 10-K(September 30, 2025)",
+            "label_en": "Rockwell Automation 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
+          }
+        }
+      ],
+      "name_en": "Emerson Electric"
+    },
+    {
+      "id": "MITSUBISHI",
+      "ticker": "Mitsubishi",
+      "name": "三菱電機",
+      "sub": "電機・制御",
+      "sub_en": "Electrical & controls",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Mitsubishi Electric is named as a major competitor",
+          "source": {
+            "label": "Rockwell Automation 10-K(September 30, 2025)",
+            "label_en": "Rockwell Automation 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
+          }
+        }
+      ],
+      "name_en": "Mitsubishi Electric"
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル・インターナショナル",
+      "sub": "複合産業",
+      "sub_en": "Industrial conglomerate",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Honeywell International is named as a major competitor",
+          "source": {
+            "label": "Rockwell Automation 10-K(September 30, 2025)",
+            "label_en": "Rockwell Automation 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
+          }
+        }
+      ],
+      "name_en": "Honeywell International"
+    },
+    {
+      "id": "DASSAULT",
+      "ticker": "Dassault Systemes",
+      "name": "ダッソー・システムズ",
+      "sub": "産業ソフトウェア",
+      "sub_en": "Industrial software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社として名前が挙がっている",
+          "text_en": "Dassault Systemes is named as a major competitor",
+          "source": {
+            "label": "Rockwell Automation 10-K(September 30, 2025)",
+            "label_en": "Rockwell Automation 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
+          }
+        }
+      ],
+      "name_en": "Dassault Systemes"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

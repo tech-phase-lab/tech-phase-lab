@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "REG",
+    "name": "リージェンシー・センターズ",
+    "cik": 910606,
+    "name_en": "Regency Centers"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PUBLIX",
+      "ticker": "Publix",
+      "name": "パブリックス",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級のテナントで、保有センター内に多数の店舗を構えている",
+          "text_en": "Publix is among its largest tenants by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Tenant GLA Percent of Company Owned GLA Annualized Base Rent Percent of Annualized Base Rent Number of Leased Stores Publix 2,940 5.8 % $ 36,191 2.9 % 67"
+          }
+        }
+      ],
+      "name_en": "Publix"
+    },
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "sub": "オフプライス小売",
+      "sub_en": "Off-price retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位テナントの一社として多数の店舗を入居させている",
+          "text_en": "TJX Companies is a top tenant by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "TJX Companies, Inc. 1,840 3.6 % 33,760 2.7 % 76"
+          }
+        }
+      ],
+      "name_en": "TJX Companies"
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位テナントの一社として店舗を入居させている",
+          "text_en": "Albertsons Companies is a top tenant by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Albertsons Companies, Inc. 2,053 4.1 % 33,619 2.7 % 52"
+          }
+        }
+      ],
+      "name_en": "Albertsons Companies"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン/ホールフーズ",
+      "sub": "小売・食品",
+      "sub_en": "Retail & grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位テナントの一社として店舗を入居させている",
+          "text_en": "Amazon/Whole Foods is a top tenant by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Amazon/Whole Foods 1,312 2.6 % 31,808 2.5 % 39"
+          }
+        }
+      ],
+      "name_en": "Amazon/Whole Foods"
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位テナントの一社として店舗を入居させている",
+          "text_en": "Kroger is a top tenant by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Kroger Co. 2,978 5.9 % 31,292 2.5 % 51"
+          }
+        }
+      ],
+      "name_en": "Kroger"
+    },
+    {
+      "id": "AHOLD",
+      "ticker": "Ahold Delhaize",
+      "name": "アホールド・デレーズ",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位テナントの一社として店舗を入居させている",
+          "text_en": "Ahold Delhaize is a top tenant by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Ahold Delhaize 924 1.8 % 23,189 1.8 % 20"
+          }
+        }
+      ],
+      "name_en": "Ahold Delhaize"
+    },
+    {
+      "id": "CVS",
+      "ticker": "CVS",
+      "name": "CVSヘルス",
+      "sub": "ドラッグストア",
+      "sub_en": "Pharmacy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位テナントの一社として店舗を入居させている",
+          "text_en": "CVS is a top tenant by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "CVS 808 1.6 % 21,942 1.7 % 66"
+          }
+        }
+      ],
+      "name_en": "CVS"
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "sub": "オフプライス小売",
+      "sub_en": "Off-price retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位テナントの一社として店舗を入居させている",
+          "text_en": "Ross Dress For Less is a top tenant by annualized base rent",
+          "source": {
+            "label": "Regency Centers 10-K(December 31, 2025)",
+            "label_en": "Regency Centers 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Ross Dress For Less 587 1.2 % 9,692 0.8 % 25"
+          }
+        }
+      ],
+      "name_en": "Ross Stores"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "SRE",
+    "name": "センプラ",
+    "cik": 1032208,
+    "name_en": "Sempra"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TTE",
+      "ticker": "TotalEnergies",
+      "name": "トタルエナジーズ",
+      "sub": "エネルギー",
+      "sub_en": "Energy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cameron LNG JVの出資者の一つで、16.6%を保有する",
+          "text_en": "An affiliate of TotalEnergies owns 16.6% of the Cameron LNG JV",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "An affiliate of TotalEnergies SE, an affiliate of Mitsui & Co., Ltd., and Japan LNG Investment, LLC (a company jointly owned by Mitsubishi Corporation and Nippon Yusen Kabushiki Kaisha) each own 16.6% of Cameron LNG JV."
+          }
+        }
+      ],
+      "name_en": "TotalEnergies"
+    },
+    {
+      "id": "MITSUI",
+      "ticker": "Mitsui &",
+      "name": "三井物産",
+      "sub": "総合商社",
+      "sub_en": "Trading company",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cameron LNG JVの出資者の一つで、16.6%を保有する",
+          "text_en": "An affiliate of Mitsui owns 16.6% of the Cameron LNG JV",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "An affiliate of TotalEnergies SE, an affiliate of Mitsui & Co., Ltd., and Japan LNG Investment, LLC (a company jointly owned by Mitsubishi Corporation and Nippon Yusen Kabushiki Kaisha) each own 16.6% of Cameron LNG JV."
+          }
+        }
+      ],
+      "name_en": "Mitsui & Co."
+    },
+    {
+      "id": "COP",
+      "ticker": "COP",
+      "name": "コノコフィリップス",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "PA LNG第1期で、20年間・5 MtpaのLNG引き取り契約を結んでいる",
+          "text_en": "An affiliate of ConocoPhillips has a 20-year SPA for 5 Mtpa of LNG from PA LNG Phase 1",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The PA LNG Phase 1 project has definitive SPAs for LNG offtake with: ▪ an affiliate of ConocoPhillips for a 20-year term for 5 Mtpa of LNG"
+          }
+        }
+      ],
+      "name_en": "ConocoPhillips"
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PA LNG第2期の49.9%を保有している",
+          "text_en": "Blackstone owns 49.9% of the PA LNG Phase 2 project",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "SI Partners owns 50.1% and Blackstone owns 49.9% of the PA LNG Phase 2 project"
+          }
+        }
+      ],
+      "name_en": "Blackstone"
+    },
+    {
+      "id": "KKR",
+      "ticker": "KKR",
+      "name": "KKRデナリ",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PA LNG第1期の42%を保有している",
+          "text_en": "KKR Denali owns 42% of the PA LNG Phase 1 project",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "SI Partners, KKR Denali and an affiliate of ConocoPhillips own a 28%, 42% and 30% interest, respectively, in the PA LNG Phase 1 project under construction"
+          }
+        }
+      ],
+      "name_en": "KKR Denali"
+    },
+    {
+      "id": "RWE",
+      "ticker": "RWE",
+      "name": "RWEサプライ&トレーディング",
+      "sub": "電力・エネルギー",
+      "sub_en": "Energy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ポートアーサーLNG事業から15年間、年2.25 MtpaのLNGを引き取る契約を結んでいる",
+          "text_en": "RWE Supply & Trading has a 15-year SPA for 2.25 Mtpa of LNG from the Port Arthur LNG project",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "RWE Supply & Trading GmbH, a subsidiary of RWE AG, for a 15-year term for 2.25 Mtpa of LNG"
+          }
+        }
+      ],
+      "name_en": "RWE"
+    },
+    {
+      "id": "JERA",
+      "ticker": "JERA",
+      "name": "ジェラ",
+      "sub": "電力・燃料",
+      "sub_en": "Power & fuel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ポートアーサーLNG事業から20年間、年1.5 MtpaのLNGを引き取る契約を結んでいる",
+          "text_en": "JERA has a 20-year SPA for 1.5 Mtpa of LNG from the Port Arthur LNG project",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "JERA Co. Inc. for a 20-year term for 1.5 Mtpa of LNG on a free-on-board basis"
+          }
+        }
+      ],
+      "name_en": "JERA"
+    },
+    {
+      "id": "EQT",
+      "ticker": "EQT",
+      "name": "EQTコーポレーション",
+      "sub": "天然ガス",
+      "sub_en": "Natural gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ポートアーサーLNG事業から20年間、年2 MtpaのLNGを引き取る契約を結んでいる",
+          "text_en": "EQT has a 20-year SPA for 2 Mtpa of LNG from the Port Arthur LNG project",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "EQT Corporation for a 20-year term for 2 Mtpa of LNG on a free-on-board basis"
+          }
+        }
+      ],
+      "name_en": "EQT Corporation"
+    },
+    {
+      "id": "BECHTEL",
+      "ticker": "Bechtel",
+      "name": "ベクテル",
+      "sub": "建設・EPC",
+      "sub_en": "EPC contractor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "PA LNG第1期の建設について、約108億ドルの工事契約を結んでいる",
+          "text_en": "Sempra has an EPC contract with Bechtel for PA LNG Phase 1 at an estimated price of approximately $10.8 billion",
+          "source": {
+            "label": "Sempra 10-K(2025年12月31日期)",
+            "label_en": "Sempra 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have an EPC contract with Bechtel to construct the PA LNG Phase 1 project, which has an estimated price of approximately $10.8 billion"
+          }
+        }
+      ],
+      "name_en": "Bechtel"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
