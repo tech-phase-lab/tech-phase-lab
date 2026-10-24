@@ -1,5 +1,37 @@
 # 最新ソースの外部保管・復元記録
 
+## 18:44 JST — 専用実行環境の構成を含む追加保管
+
+前回の保管後に追加した研究DBバックアップ専用Dockerfile、限定ビルドcontext、
+オフライン検査CIと実検証記録を含むソースを追加保管した。
+[実行40083100577](https://github.com/tech-phase-lab/tech-phase-lab/actions/runs/40083100577)、
+job120840500429が成功。実ログ2026-10-24T09:44:16.3752930Zの
+`SOURCE_EXTERNAL_UPLOAD_VERIFIED` で、実ダウンロード・認証付き復号・隔離Git復元と
+正確なcommit/tree一致を確認した。
+
+- commit: `acbef21610550180a3b7d0a4cc48843ddeaa43b5`
+- tree: `c0c399672d4c938b66b07ffc6a803f4f7563e4a7`
+- 管理ファイル1,886件、環境変数名208件（値は保管しない）。
+- 暗号文20,439,068 bytes。
+- SHA256: `805e2d0b31e12f1a88ddc9ca2e91d85cfbc5563707dfa4c9b1313a866ea8feac`
+- object: `tech-phase/source/v1/acbef21610550180a3b7d0a4cc48843ddeaa43b5/805e2d0b31e12f1a88ddc9ca2e91d85cfbc5563707dfa4c9b1313a866ea8feac.aesgcm`
+
+`source_restore_verified=true`、`external_storage_verified=true`、
+`runtime_restore_verified=false`。同名 `.json` は完了manifest。
+旧保存物は保持。既存鍵・バケットを使い、定期実行や本番設定は変更していない。
+要求ファイルだけの変更で実行し、コード・CI定義は前回の検証済み状態を保持した。
+今回、新たに全テストを実行済みとは主張しない。
+
+専用実行環境は**構成ソースの保管済み**であり、完成イメージの保管済みではない。
+[実コンテナの検証](RESEARCH-BACKUP-RUNTIME-CHECK-2026-10-24.md)と
+[既存7イメージの保管](EXTERNAL-RUNTIME-BACKUP-2026-10-24.md)は、それぞれ別の証拠。
+本番DB・履歴・設定値は未保管のまま。元DBへの接続経路がないため本番転送は未実施。
+Railway接続、追加AI、メール、決済、保存ゲート、朝ジョブに変更なし。
+次は元データを読める環境で実データを取得し、独立保管・隔離復元を確認する。
+この追記自体は上記保管commitの後の記録であり、暗号文には含まれない。
+
+## 14:51 JST — 復元検査・保存先制限の実装を保管
+
 2026-10-24 14:51 JST。研究DBバックアップの隔離復元検査と保存先制限、
 他担当のPRO台帳検査・企業関連図更新を含むソースを既存R2へ暗号化して保管した。
 新しい鍵・バケット・スケジュールは作成していない。
