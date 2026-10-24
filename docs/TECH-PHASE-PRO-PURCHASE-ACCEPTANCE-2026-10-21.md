@@ -1,5 +1,18 @@
 # PRO購入の受入状況 — 2026年10月21日（10月22日追記）
 
+## 2026-10-25 JST — 実装のGitHub検証完了と本番切替手順
+
+Live実装commit `baac718cb651638e3a5bbf074a8936dd2517f395` は指定previewブランチへ保存済み。
+[GitHub Actions 40105472690](https://github.com/tech-phase-lab/tech-phase-lab/actions/runs/40105472690) は全ジョブ成功。
+lint・Node・Python・Next buildと、別ジョブのSandbox PostgreSQL並行処理/保存復旧を確認。
+ローカルだけの成功ではなく、GitHub上でも実装の検証を完了した。
+
+[本番切替手順](TECH-PHASE-PRO-LIVE-RELEASE.md) に設定の配置先、005/006適用順、
+通知先、権限/販売の有効化順、実受入、受付停止をまとめた。コードの18変数名と移行ファイルを照合済み。
+今回の変更は文書だけ。既存決済処理の追加変更・実DB適用・実決済・本番受付開始は行っていない。
+次は同手順の実接続と実受入。Railway接続・再認証禁止を維持し、未確認項目を完了扱いしない。
+
+
 ## 2026-10-24 JST — 作業環境復帰後の再構成とLive定期照合
 
 この節を再開時の基準とする。旧 `/tmp/tech-phase-pro-next` と未公開commit
