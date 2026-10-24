@@ -6,6 +6,9 @@
 [専用コンテナの実検証](RESEARCH-BACKUP-RUNTIME-CHECK-2026-10-24.md)も成功。
 初期停止と合成DBの暗号化・隔離復元を確認した。本番への配置・本番データ取得は未実施。
 
+その後、[失敗工程の識別と故障時の検証](RESEARCH-BACKUP-FAILURE-DIAGNOSTICS-2026-10-24.md)を追加。
+この変更後のコードは上記18:44の外部ソース保管には含まれない。
+
 `scripts/tech-phase/external_research_backup.py` は、保存した暗号文を取得し直し、
 その取得ファイルから隔離復元できた場合だけ完了manifestを保存する。
 従来はサイズとSHAの読み戻し照合までが保存処理で、復号・DB検査は別操作だった。
