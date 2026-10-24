@@ -1,0 +1,257 @@
+{
+  "root": {
+    "ticker": "ZBRA",
+    "name": "ゼブラ・テクノロジーズ",
+    "cik": 877212,
+    "name_en": "ZEBRA TECHNOLOGIES CORP"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "HON",
+    "AVY",
+    "CGNX",
+    "HPQ",
+    "PI"
+  ],
+  "companies": [
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "sub": "複数分野の競合",
+      "sub_en": "Multi-segment competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プリンター分野でも、バーコードスキャナー分野でも競合する",
+          "text_en": "Competes in printing and in barcode scanning",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors include: Avery Dennison, Entrust, Honeywell, Sato, Toshiba TEC, and TSC."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "バーコードスキャナー分野で競合する",
+          "text_en": "Competes in barcode scanning",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors that provide a broad portfolio of barcode scanning products and related services that are suitable for most global market applications include Datalogic, Honeywell and Newland"
+          }
+        }
+      ],
+      "name_en": "Honeywell"
+    },
+    {
+      "id": "AVY",
+      "ticker": "AVY",
+      "name": "エイブリィ・デニソン",
+      "sub": "プリンターの競合",
+      "sub_en": "Printing competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プリンター分野で競合する",
+          "text_en": "Competes in printing",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors include: Avery Dennison, Entrust, Honeywell, Sato, Toshiba TEC, and TSC."
+          }
+        }
+      ],
+      "name_en": "Avery Dennison"
+    },
+    {
+      "id": "SATO",
+      "ticker": "Sato",
+      "name": "サトー",
+      "sub": "プリンターの競合",
+      "sub_en": "Printing competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プリンター分野で競合する",
+          "text_en": "Competes in printing",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors include: Avery Dennison, Entrust, Honeywell, Sato, Toshiba TEC, and TSC."
+          }
+        }
+      ],
+      "name_en": "Sato"
+    },
+    {
+      "id": "DATALOGIC",
+      "ticker": "Datalogic",
+      "name": "データロジック",
+      "sub": "スキャナーの競合",
+      "sub_en": "Scanning competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "バーコードスキャナー分野で競合する",
+          "text_en": "Competes in barcode scanning",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors that provide a broad portfolio of barcode scanning products and related services that are suitable for most global market applications include Datalogic, Honeywell and Newland"
+          }
+        }
+      ],
+      "name_en": "Datalogic"
+    },
+    {
+      "id": "CGNX",
+      "ticker": "CGNX",
+      "name": "コグネックス",
+      "sub": "マシンビジョンの競合",
+      "sub_en": "Machine vision competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "固定式スキャナーとマシンビジョンで競合する",
+          "text_en": "Competes in fixed scanning and machine vision",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors in our fixed industrial scanning and machine vision business include Cognex, Keyence, and SICK."
+          }
+        }
+      ],
+      "name_en": "Cognex"
+    },
+    {
+      "id": "KEYENCE",
+      "ticker": "Keyence",
+      "name": "キーエンス",
+      "sub": "マシンビジョンの競合",
+      "sub_en": "Machine vision competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "固定式スキャナーとマシンビジョンで競合する",
+          "text_en": "Competes in fixed scanning and machine vision",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors in our fixed industrial scanning and machine vision business include Cognex, Keyence, and SICK."
+          }
+        }
+      ],
+      "name_en": "Keyence"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HPインク",
+      "sub": "POS・端末の競合",
+      "sub_en": "POS & kiosk competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "POSやセルフサービス端末の分野で競合する",
+          "text_en": "Competes in point-of-sale and self-service categories",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete with many companies in one or more of these related categories including Acrelec, Diebold Nixdorf, HP, Toshiba TEC, VeriFone"
+          }
+        }
+      ],
+      "name_en": "HP"
+    },
+    {
+      "id": "DNB",
+      "ticker": "DBD",
+      "name": "ディーボルド・ニックスドルフ",
+      "sub": "POS・端末の競合",
+      "sub_en": "POS & kiosk competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "POSやセルフサービス端末の分野で競合する",
+          "text_en": "Competes in point-of-sale and self-service categories",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete with many companies in one or more of these related categories including Acrelec, Diebold Nixdorf, HP, Toshiba TEC, VeriFone"
+          }
+        }
+      ],
+      "name_en": "Diebold Nixdorf"
+    },
+    {
+      "id": "PI",
+      "ticker": "PI",
+      "name": "インピンジ",
+      "sub": "RFIDの競合",
+      "sub_en": "RFID competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RFIDの分野で競合する",
+          "text_en": "Competes in RFID",
+          "source": {
+            "label": "Zebra Technologies 10-K(2025-12-31)",
+            "label_en": "Zebra Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete with numerous companies operating in this market including Chainway, Impinj, Invengo, JADAK, Rodinbell, TSC and Ubisense"
+          }
+        }
+      ],
+      "name_en": "Impinj"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "LYV",
+    "name": "ライブ・ネイション・エンターテインメント",
+    "cik": 1335258,
+    "name_en": "Live Nation Entertainment, Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MSGE",
+    "STUB",
+    "SEAT"
+  ],
+  "companies": [
+    {
+      "id": "AEG",
+      "ticker": "Anschutz",
+      "name": "アンシュッツ・エンターテインメント・グループ",
+      "sub": "ライブ興行の競合",
+      "sub_en": "Live promotion competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ライブ音楽の興行で競合する",
+          "text_en": "Competes in live music promotion",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Some of our competitors in the live music promotion industry are Anschutz Entertainment Group, or AEG, Another Planet Entertainment, CTS Eventim, Jam Productions, Ltd., I.M.P., Outback Presents and TEG Dainty"
+          }
+        }
+      ],
+      "name_en": "Anschutz Entertainment Group (AEG)"
+    },
+    {
+      "id": "CTSEVENTIM",
+      "ticker": "CTS Eventim",
+      "name": "CTSエヴェンティム",
+      "sub": "興行・チケットの競合",
+      "sub_en": "Promotion & ticketing competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "興行とチケット販売の両方で競合する",
+          "text_en": "Competes in both promotion and ticketing",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Some of our competitors in the live music promotion industry are Anschutz Entertainment Group, or AEG, Another Planet Entertainment, CTS Eventim, Jam Productions, Ltd., I.M.P., Outback Presents and TEG Dainty"
+          }
+        }
+      ],
+      "name_en": "CTS Eventim"
+    },
+    {
+      "id": "MSGE",
+      "ticker": "MSGE",
+      "name": "マディソン・スクエア・ガーデン・エンターテインメント",
+      "sub": "会場運営の競合",
+      "sub_en": "Venue management competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "会場運営で競合する",
+          "text_en": "Competes in venue management",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our main competitors in venue management include Legends Global, Madison Square Garden Entertainment Corp., The Nederlander Organization and Bowery Presents"
+          }
+        }
+      ],
+      "name_en": "Madison Square Garden Entertainment"
+    },
+    {
+      "id": "LEGENDS",
+      "ticker": "Legends Global",
+      "name": "レジェンズ・グローバル",
+      "sub": "会場運営の競合",
+      "sub_en": "Venue management competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "会場運営で競合する",
+          "text_en": "Competes in venue management",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our main competitors in venue management include Legends Global, Madison Square Garden Entertainment Corp., The Nederlander Organization and Bowery Presents"
+          }
+        }
+      ],
+      "name_en": "Legends Global"
+    },
+    {
+      "id": "STUB",
+      "ticker": "STUB",
+      "name": "スタブハブ",
+      "sub": "二次チケットの競合",
+      "sub_en": "Secondary ticketing competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "二次チケット販売で競合する",
+          "text_en": "Competes in secondary ticketing",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our competitors include primary ticketing companies such as Tickets.com, AXS, Paciolan, Inc., CTS Eventim AG, Eventbrite, eTix, SeatGeek, Ticketek and Fever; secondary ticketing companies such as StubHub, Vivid Seats, Viagogo and SeatGeek"
+          }
+        }
+      ],
+      "name_en": "StubHub"
+    },
+    {
+      "id": "SEAT",
+      "ticker": "SEAT",
+      "name": "ヴィヴィッド・シーツ",
+      "sub": "二次チケットの競合",
+      "sub_en": "Secondary ticketing competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "二次チケット販売で競合する",
+          "text_en": "Competes in secondary ticketing",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our competitors include primary ticketing companies such as Tickets.com, AXS, Paciolan, Inc., CTS Eventim AG, Eventbrite, eTix, SeatGeek, Ticketek and Fever; secondary ticketing companies such as StubHub, Vivid Seats, Viagogo and SeatGeek"
+          }
+        }
+      ],
+      "name_en": "Vivid Seats"
+    },
+    {
+      "id": "SEATGEEK",
+      "ticker": "SeatGeek",
+      "name": "シートゲーク",
+      "sub": "チケットの競合",
+      "sub_en": "Ticketing competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一次・二次の両チケット販売で競合する",
+          "text_en": "Competes in primary and secondary ticketing",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our competitors include primary ticketing companies such as Tickets.com, AXS, Paciolan, Inc., CTS Eventim AG, Eventbrite, eTix, SeatGeek, Ticketek and Fever; secondary ticketing companies such as StubHub, Vivid Seats, Viagogo and SeatGeek"
+          }
+        }
+      ],
+      "name_en": "SeatGeek"
+    },
+    {
+      "id": "EVENTBRITE",
+      "ticker": "Eventbrite",
+      "name": "イベントブライト",
+      "sub": "チケットの競合",
+      "sub_en": "Ticketing competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一次チケット販売で競合する",
+          "text_en": "Competes in primary ticketing",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our competitors include primary ticketing companies such as Tickets.com, AXS, Paciolan, Inc., CTS Eventim AG, Eventbrite, eTix, SeatGeek, Ticketek and Fever; secondary ticketing companies such as StubHub, Vivid Seats, Viagogo and SeatGeek"
+          }
+        }
+      ],
+      "name_en": "Eventbrite"
+    },
+    {
+      "id": "SIRI",
+      "ticker": "SIRI",
+      "name": "シリウスXM",
+      "sub": "広告の出稿先",
+      "sub_en": "Advertising vendor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同社から広告枠を随時購入している",
+          "text_en": "Live Nation buys advertising from Sirius XM from time to time",
+          "source": {
+            "label": "Live Nation 10-K(2025-12-31)",
+            "label_en": "Live Nation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "From time to time, we purchase advertising from Sirius XM"
+          }
+        }
+      ],
+      "name_en": "Sirius XM"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

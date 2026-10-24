@@ -1,0 +1,245 @@
+{
+  "root": {
+    "ticker": "ROP",
+    "name": "ローパー・テクノロジーズ",
+    "cik": 882835,
+    "name_en": "Roper Technologies"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "一部の社内システムと顧客システムを載せるクラウド基盤の一つである",
+          "text_en": "Amazon Web Services is one of the cloud platforms hosting certain enterprise and customer systems",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on business partners such as third-party data centers and cloud platforms, such as Amazon Web Services, Google Cloud Platform, Microsoft Azure, and Oracle Cloud to host certain enterprise and customer systems."
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "クラウド・AI基盤",
+      "sub_en": "Cloud & AI platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クラウド基盤と、AI技術の提供元の両方で名が挙がる",
+          "text_en": "Google is named both as a cloud platform and as an AI technology provider",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on business partners such as third-party data centers and cloud platforms, such as Amazon Web Services, Google Cloud Platform, Microsoft Azure, and Oracle Cloud to host certain enterprise and customer systems."
+          }
+        },
+        {
+          "type": "up",
+          "text": "大規模言語モデルなどのAI技術を提供する会社の一つである",
+          "text_en": "Google is among the companies providing AI technologies such as large language models",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on third-party AI platforms and services, including proprietary and open-source large language models and other AI technologies provided by companies such as OpenAI, Anthropic, Google, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "クラウド・AI基盤",
+      "sub_en": "Cloud & AI platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クラウド基盤のAzureを通じて、一部のシステムを載せている",
+          "text_en": "Microsoft Azure is one of the cloud platforms hosting certain systems",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on business partners such as third-party data centers and cloud platforms, such as Amazon Web Services, Google Cloud Platform, Microsoft Azure, and Oracle Cloud to host certain enterprise and customer systems."
+          }
+        },
+        {
+          "type": "up",
+          "text": "大規模言語モデルなどのAI技術を提供する会社の一つである",
+          "text_en": "Microsoft is among the companies providing AI technologies such as large language models",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on third-party AI platforms and services, including proprietary and open-source large language models and other AI technologies provided by companies such as OpenAI, Anthropic, Google, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "一部の社内システムと顧客システムを載せるクラウド基盤の一つである",
+          "text_en": "Oracle Cloud is one of the cloud platforms hosting certain enterprise and customer systems",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on business partners such as third-party data centers and cloud platforms, such as Amazon Web Services, Google Cloud Platform, Microsoft Azure, and Oracle Cloud to host certain enterprise and customer systems."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "OPENAI",
+      "ticker": "OpenAI",
+      "name": "オープンAI",
+      "sub": "AI基盤",
+      "sub_en": "AI platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AI技術を提供する会社の一つとして名が挙がる",
+          "text_en": "OpenAI is named among providers of AI technologies Roper relies on",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on third-party AI platforms and services, including proprietary and open-source large language models and other AI technologies provided by companies such as OpenAI, Anthropic, Google, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "OpenAI"
+    },
+    {
+      "id": "ANTHROPIC",
+      "ticker": "Anthropic",
+      "name": "アンスロピック",
+      "sub": "AI基盤",
+      "sub_en": "AI platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AI技術を提供する会社の一つとして名が挙がる",
+          "text_en": "Anthropic is named among providers of AI technologies Roper relies on",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We rely on third-party AI platforms and services, including proprietary and open-source large language models and other AI technologies provided by companies such as OpenAI, Anthropic, Google, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "Anthropic"
+    },
+    {
+      "id": "CDR",
+      "ticker": "Clayton, Dubilier",
+      "name": "クレイトン・デュビリア・アンド・ライス",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年11月に産業事業の過半の持ち分を売却した相手である",
+          "text_en": "Roper divested a majority equity stake in its industrial businesses to CD&R in November 2022",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In November 2022, Roper completed the divestiture of a majority equity stake in its industrial businesses, including its entire historical Process Technologies reportable segment and the industrial businesses within its historical Measurement & Analytical Solutions reportable segment (collectively “Indicor”), to Clayton, Dubilier & Rice, LLC (“CD&R”)."
+          }
+        }
+      ],
+      "name_en": "Clayton, Dubilier & Rice"
+    },
+    {
+      "id": "INDICOR",
+      "ticker": "Indicor",
+      "name": "インディコア",
+      "sub": "旧産業事業",
+      "sub_en": "Former industrial businesses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "売却後も少数株主として持ち分を保有している",
+          "text_en": "Roper retained a minority equity interest in Indicor after the sale",
+          "source": {
+            "label": "Roper Technologies 10-K(2025年12月期)",
+            "label_en": "Roper Technologies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000009/rop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Following the sale of the majority stake, Roper retained a minority equity interest in Indicor."
+          }
+        }
+      ],
+      "name_en": "Indicor"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

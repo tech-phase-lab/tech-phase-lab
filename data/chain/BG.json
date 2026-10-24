@@ -1,0 +1,312 @@
+{
+  "root": {
+    "ticker": "BG",
+    "name": "バンジ・グローバル",
+    "cik": 1996862,
+    "name_en": "Bunge Global SA"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ADM"
+  ],
+  "companies": [
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "sub": "石油・エネルギー",
+      "sub_en": "Oil & energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "再生可能ディーゼル向け原料を手がけるBunge Chevron Ag Renewables合弁の相手先である",
+          "text_en": "Chevron is the partner in the Bunge Chevron Ag Renewables joint venture",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also have joint ventures with several partners, including the Bunge Chevron JV for manufacturing low lifecycle carbon intensity transportation fuels"
+          }
+        }
+      ],
+      "name_en": "Chevron"
+    },
+    {
+      "id": "REPSOL",
+      "ticker": "Repsol SA",
+      "name": "レプソル",
+      "sub": "エネルギー",
+      "sub_en": "Energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "スペイン子会社BISAの株式40%をレプソルに売却した",
+          "text_en": "Bunge sold 40% of its Spanish subsidiary BISA to Repsol",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On March 4, 2025, we completed the divestment of 40% of our Spanish operating subsidiary, Bunge Iberica SA (\"BISA\"), which operates three industrial facilities in Spain, to Repsol SA"
+          }
+        }
+      ],
+      "name_en": "Repsol SA"
+    },
+    {
+      "id": "IOI",
+      "ticker": "IOI Corporation",
+      "name": "IOIコーポレーション",
+      "sub": "パーム油・油脂",
+      "sub_en": "Palm oil & fats",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bungeが80%を持つLoders合弁の相手先である",
+          "text_en": "IOI is the partner in the Loders joint venture, in which Bunge holds 80%",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "including our 80% ownership interest in our Loders joint venture with IOI Corporation Berhad"
+          }
+        }
+      ],
+      "name_en": "IOI Corporation Berhad"
+    },
+    {
+      "id": "IFF",
+      "ticker": "IFF",
+      "name": "インターナショナル・フレーバーズ・アンド・フレグランス",
+      "sub": "香料・素材",
+      "sub_en": "Flavors & ingredients",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IFFのレシチンや大豆たんぱく濃縮物などの事業資産を取得する契約を結んだ",
+          "text_en": "Bunge agreed to acquire IFF's lecithin, soy protein concentrate and crush business assets",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we entered into an asset purchase agreement with Solae, L.L.C. to acquire substantially all assets related to the lecithin, soy protein concentrate and crush businesses of International Flavors and Fragrances, Inc"
+          }
+        }
+      ],
+      "name_en": "International Flavors & Fragrances"
+    },
+    {
+      "id": "ADM",
+      "ticker": "ADM",
+      "name": "アーチャー・ダニエルズ・ミッドランド",
+      "sub": "穀物・油糧種子",
+      "sub_en": "Grain & oilseeds",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, Cargill, Louis Dreyfus, and Wilmar, as well as a variety of regional players in each region"
+          }
+        }
+      ],
+      "name_en": "Archer-Daniels-Midland"
+    },
+    {
+      "id": "CARGILL",
+      "ticker": "Cargill",
+      "name": "カーギル",
+      "sub": "穀物・食品",
+      "sub_en": "Grain & food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, Cargill, Louis Dreyfus, and Wilmar, as well as a variety of regional players in each region"
+          }
+        }
+      ],
+      "name_en": "Cargill"
+    },
+    {
+      "id": "LDC",
+      "ticker": "Louis Dreyfus",
+      "name": "ルイ・ドレフュス",
+      "sub": "穀物・商社",
+      "sub_en": "Grain trader",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, Cargill, Louis Dreyfus, and Wilmar, as well as a variety of regional players in each region"
+          }
+        }
+      ],
+      "name_en": "Louis Dreyfus"
+    },
+    {
+      "id": "WILMAR",
+      "ticker": "Wilmar",
+      "name": "ウィルマー",
+      "sub": "アグリビジネス",
+      "sub_en": "Agribusiness",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, Cargill, Louis Dreyfus, and Wilmar, as well as a variety of regional players in each region"
+          }
+        }
+      ],
+      "name_en": "Wilmar"
+    },
+    {
+      "id": "COFCO",
+      "ticker": "COFCO",
+      "name": "コフコ・インターナショナル",
+      "sub": "穀物商社",
+      "sub_en": "Grain trader",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, Cargill, Louis Dreyfus, COFCO International, CHS Inc., and Olam Group Limited, as well as a variety of regional players in each region"
+          }
+        }
+      ],
+      "name_en": "COFCO International"
+    },
+    {
+      "id": "OLAM",
+      "ticker": "Olam Group Limited",
+      "name": "オラム・グループ",
+      "sub": "農産物商社",
+      "sub_en": "Agri trader",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, Cargill, Louis Dreyfus, COFCO International, CHS Inc., and Olam Group Limited, as well as a variety of regional players in each region"
+          }
+        }
+      ],
+      "name_en": "Olam Group Limited"
+    },
+    {
+      "id": "AAK",
+      "ticker": "AAK AB",
+      "name": "AAKエービー",
+      "sub": "特殊油脂",
+      "sub_en": "Specialty oils",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, AAK AB, Cargill, Fuji Oil Co. Ltd., and Wilmar"
+          }
+        }
+      ],
+      "name_en": "AAK AB"
+    },
+    {
+      "id": "FUJIOIL",
+      "ticker": "Fuji Oil",
+      "name": "不二製油",
+      "sub": "油脂・大豆素材",
+      "sub_en": "Oils & soy materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として挙げられている",
+          "text_en": "Named among its key competitors",
+          "source": {
+            "label": "バンジ・グローバル 10-K(2025-12-31)",
+            "label_en": "Bunge Global SA 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Key Competitors ADM, AAK AB, Cargill, Fuji Oil Co. Ltd., and Wilmar"
+          }
+        }
+      ],
+      "name_en": "Fuji Oil Co., Ltd."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

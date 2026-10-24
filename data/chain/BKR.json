@@ -1,0 +1,310 @@
+{
+  "root": {
+    "ticker": "BKR",
+    "name": "ベーカー・ヒューズ",
+    "cik": 1701605,
+    "name_en": "Baker Hughes"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "SLB",
+    "HAL",
+    "NOV",
+    "WFRD",
+    "FTI"
+  ],
+  "companies": [
+    {
+      "id": "GEV",
+      "ticker": "GEV",
+      "name": "GEベルノバ",
+      "sub": "発電機器",
+      "sub_en": "Power equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "供給元として挙げられ、供給を失えば事業に悪影響が出うる",
+          "text_en": "GE Vernova is named as a supplier whose loss may adversely affect Baker Hughes",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "The partial or complete loss of GE Vernova or GE Aerospace as suppliers, as well as contracts with our Aero JV with GE Vernova, may adversely affect our business, financial condition, results of operations and cash flows."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "航空転用型ガスタービンの合弁会社を共同で支配している",
+          "text_en": "GE Vernova jointly controls the aeroderivative joint venture with Baker Hughes",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "The Aero JV is jointly controlled by GE Vernova and us, and as a result, realizing the benefits of this joint venture depends on the continued cooperation between the parties."
+          }
+        }
+      ],
+      "name_en": "GE Vernova"
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GEエアロスペース",
+      "sub": "航空エンジン",
+      "sub_en": "Aero engines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "供給元として挙げられ、供給を失えば事業に悪影響が出うる",
+          "text_en": "GE Aerospace is named as a supplier whose loss may adversely affect Baker Hughes",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "The partial or complete loss of GE Vernova or GE Aerospace as suppliers, as well as contracts with our Aero JV with GE Vernova, may adversely affect our business, financial condition, results of operations and cash flows."
+          }
+        }
+      ],
+      "name_en": "GE Aerospace"
+    },
+    {
+      "id": "WHD",
+      "ticker": "WHD",
+      "name": "カクタス",
+      "sub": "坑口設備",
+      "sub_en": "Wellhead equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同社子会社との合弁会社設立を2025年6月に発表した",
+          "text_en": "Baker Hughes announced the creation of a joint venture with a subsidiary of Cactus in June 2025",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In June 2025, the Company announced the creation of a joint venture with a subsidiary of Cactus, Inc."
+          }
+        }
+      ],
+      "name_en": "Cactus"
+    },
+    {
+      "id": "CR",
+      "ticker": "CR",
+      "name": "クレーン・カンパニー",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "精密センサー・計測機器事業の売却先で、2026年1月1日に取引が完了した",
+          "text_en": "The sale of Precision Sensors & Instrumentation to Crane Company closed on January 1, 2026",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "The sale of Precision Sensors & Instrumentation to Crane Company and the creation of the Surface Pressure Control joint venture with Cactus closed on January 1, 2026."
+          }
+        }
+      ],
+      "name_en": "Crane Company"
+    },
+    {
+      "id": "SLB",
+      "ticker": "SLB",
+      "name": "エスエルビー",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "油田サービス事業の競合として挙げられる",
+          "text_en": "SLB is named as a competitor of the oilfield services business",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ],
+      "name_en": "SLB"
+    },
+    {
+      "id": "HAL",
+      "ticker": "HAL",
+      "name": "ハリバートン",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "油田サービス事業の競合に含まれる",
+          "text_en": "Halliburton is named as a competitor of the oilfield services business",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ],
+      "name_en": "Halliburton"
+    },
+    {
+      "id": "NOV",
+      "ticker": "NOV",
+      "name": "エヌオーブイ",
+      "sub": "油田機器",
+      "sub_en": "Oilfield equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "油田サービス事業の競合の1社である",
+          "text_en": "NOV is named as a competitor of the oilfield services business",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ],
+      "name_en": "NOV"
+    },
+    {
+      "id": "WFRD",
+      "ticker": "WFRD",
+      "name": "ウェザーフォード",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "油田サービス事業で競合する",
+          "text_en": "Weatherford is named as a competitor of the oilfield services business",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ],
+      "name_en": "Weatherford"
+    },
+    {
+      "id": "FTI",
+      "ticker": "FTI",
+      "name": "テクニップFMC",
+      "sub": "海底機器",
+      "sub_en": "Subsea equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "油田サービス事業の競合として名前が挙がる",
+          "text_en": "TechnipFMC is named as a competitor of the oilfield services business",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ],
+      "name_en": "TechnipFMC"
+    },
+    {
+      "id": "FLS",
+      "ticker": "FLS",
+      "name": "フローサーブ",
+      "sub": "流体制御機器",
+      "sub_en": "Flow control",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業・エネルギー技術事業の主な競合の1社だ",
+          "text_en": "Flowserve is named as a main competitor of the industrial and energy technology business",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "IET main competitors include Siemens Energy, Solar (a Caterpillar company), Mitsubishi Heavy Industry, Sulzer, Flowserve, and Emerson."
+          }
+        }
+      ],
+      "name_en": "Flowserve"
+    },
+    {
+      "id": "EMR",
+      "ticker": "EMR",
+      "name": "エマソン",
+      "sub": "自動化機器",
+      "sub_en": "Automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業・エネルギー技術事業の主な競合に含まれる",
+          "text_en": "Emerson is named as a main competitor of the industrial and energy technology business",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年12月31日期)",
+            "label_en": "Baker Hughes 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "IET main competitors include Siemens Energy, Solar (a Caterpillar company), Mitsubishi Heavy Industry, Sulzer, Flowserve, and Emerson."
+          }
+        }
+      ],
+      "name_en": "Emerson"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

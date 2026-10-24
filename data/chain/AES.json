@@ -1,0 +1,280 @@
+{
+  "root": {
+    "ticker": "AES",
+    "name": "AES",
+    "cik": 874761,
+    "name_en": "AES CORP"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "VINACOMIN",
+      "ticker": "Vinacomin",
+      "name": "ビナコミン(ベトナム国家石炭・鉱物産業グループ)",
+      "sub": "石炭の供給元",
+      "sub_en": "Coal supplier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "モンズオン2発電所は同社と石炭供給契約を結んでいる",
+          "text_en": "The Mong Duong 2 plant has a Coal Supply Agreement with Vinacomin",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The BOT company has a PPA with EVN and a Coal Supply Agreement with Vinacomin, both expiring in 2040"
+          }
+        }
+      ],
+      "name_en": "Vinacomin"
+    },
+    {
+      "id": "FLNC",
+      "ticker": "FLNC",
+      "name": "フルエンス・エナジー",
+      "sub": "蓄電システム",
+      "sub_en": "Energy storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シーメンスAGとの合弁事業として設立された",
+          "text_en": "Fluence was created as a joint venture by AES and Siemens AG",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Fluence, created in 2018 as a joint venture by AES and Siemens AG, is a leading global provider of energy storage and services and AI-enabled digital applications for renewables and storage."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "持分法を適用する投資先である",
+          "text_en": "AES accounts for Fluence as an equity method investment",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "As of December 31, 2025, AES holds a 28.19% economic interest in Fluence and the Company accounts for Fluence as an equity method investment"
+          }
+        }
+      ],
+      "name_en": "Fluence Energy"
+    },
+    {
+      "id": "SIEMENS",
+      "ticker": "Siemens",
+      "name": "シーメンスAG",
+      "sub": "合弁パートナー",
+      "sub_en": "Joint venture partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フルエンスを共同で設立した",
+          "text_en": "Siemens AG co-created Fluence with AES",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Fluence, created in 2018 as a joint venture by AES and Siemens AG, is a leading global provider of energy storage and services and AI-enabled digital applications for renewables and storage."
+          }
+        }
+      ],
+      "name_en": "Siemens AG"
+    },
+    {
+      "id": "GRUPOBAL",
+      "ticker": "Grupo Bal",
+      "name": "グルポ・バル",
+      "sub": "風力の合弁相手",
+      "sub_en": "Wind JV partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メキシコのメサ・ラパス風力事業を合弁で開発した",
+          "text_en": "Mesa La Paz wind project was developed under a joint venture with Grupo Bal",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Mesa La Paz is a 306 MW wind project developed under a joint venture with Grupo Bal"
+          }
+        }
+      ],
+      "name_en": "Grupo Bal"
+    },
+    {
+      "id": "ESTRELLA",
+      "ticker": "Estrella-Linda",
+      "name": "エストレリャ・リンダ・グループ",
+      "sub": "ドミニカの提携先",
+      "sub_en": "Dominican partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ドミニカ共和国で戦略的提携を結んでいる",
+          "text_en": "AES has a strategic partnership with the Estrella and Linda Groups",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "AES has a strategic partnership with the Estrella and Linda Groups (\"Estrella-Linda\"), two leading Dominican industrial groups that manage a diversified business portfolio, and also with AFI Popular, a subsidiary of Grupo Popular"
+          }
+        }
+      ],
+      "name_en": "Estrella-Linda Groups"
+    },
+    {
+      "id": "POPULAR",
+      "ticker": "Grupo Popular",
+      "name": "グルポ・ポプラル",
+      "sub": "ドミニカの提携先",
+      "sub_en": "Dominican partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社のAFIポプラルを通じて提携している",
+          "text_en": "AES also has a partnership with AFI Popular, a subsidiary of Grupo Popular",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "AES has a strategic partnership with the Estrella and Linda Groups (\"Estrella-Linda\"), two leading Dominican industrial groups that manage a diversified business portfolio, and also with AFI Popular, a subsidiary of Grupo Popular"
+          }
+        }
+      ],
+      "name_en": "Grupo Popular (AFI Popular)"
+    },
+    {
+      "id": "EVN",
+      "ticker": "Electricity of",
+      "name": "ベトナム電力公社(EVN)",
+      "sub": "電力の買い手",
+      "sub_en": "Power offtaker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "モンズオン2発電所は同社と電力購入契約を結んでいる",
+          "text_en": "The Mong Duong 2 BOT company has a PPA with EVN",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The BOT company has a PPA with EVN and a Coal Supply Agreement with Vinacomin, both expiring in 2040"
+          }
+        }
+      ],
+      "name_en": "Electricity of Vietnam (EVN)"
+    },
+    {
+      "id": "EIX",
+      "ticker": "EIX",
+      "name": "サザン・カリフォルニア・エジソン",
+      "sub": "電力の買い手",
+      "sub_en": "Power offtaker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "サウスランド・ハンティントンビーチ発電所の電力の販売先である",
+          "text_en": "Southern California Edison is the offtaker listed for Southland Energy Huntington Beach",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Southland Energy—Huntington Beach US-CA Gas 694 50 % 2020 2040 Southern California Edison"
+          }
+        }
+      ],
+      "name_en": "Southern California Edison"
+    },
+    {
+      "id": "CEMEX",
+      "ticker": "CEMEX",
+      "name": "セメックス",
+      "sub": "電力の買い手",
+      "sub_en": "Power offtaker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "メキシコのTEG発電所の販売先として挙げられている",
+          "text_en": "CEMEX is the offtaker listed for the TEG plant in Mexico",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Termoeléctrica del Golfo (TEG) Mexico Pet Coke 275 99 % 2007 2027 CEMEX"
+          }
+        }
+      ],
+      "name_en": "CEMEX"
+    },
+    {
+      "id": "CDPQ",
+      "ticker": "CDPQ",
+      "name": "ケベック預金投資公庫(CDPQ)",
+      "sub": "IPALCOの出資者",
+      "sub_en": "IPALCO investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IPALCOに直接・間接に出資している",
+          "text_en": "CDPQ holds direct and indirect interests in IPALCO",
+          "source": {
+            "label": "AES 10-K(2025-12-31)",
+            "label_en": "AES 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "CDPQ owns direct and indirect interests in IPALCO of approximately 30%"
+          }
+        }
+      ],
+      "name_en": "CDPQ"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

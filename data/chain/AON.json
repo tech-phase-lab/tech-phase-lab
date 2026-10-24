@@ -1,0 +1,145 @@
+{
+  "root": {
+    "ticker": "AON",
+    "name": "エーオン",
+    "cik": 315293,
+    "name_en": "Aon"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "WTW",
+    "AJG"
+  ],
+  "companies": [
+    {
+      "id": "MMC",
+      "ticker": "Marsh McLennan",
+      "name": "マーシュ・マクレナン",
+      "sub": "保険ブローカー",
+      "sub_en": "Insurance broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界的な保険ブローカー・コンサルティング会社として競合に挙げられる",
+          "text_en": "Named among competing global insurance brokers and consulting companies",
+          "source": {
+            "label": "エーオン 10-K(2025-12-31)",
+            "label_en": "Aon 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We compete with numerous other global insurance brokers and consulting companies, including, among others, Marsh McLennan, Willis Towers Watson, Arthur J Gallagher & Company, and Lockton Companies, Inc., as well as numerous other global, regional, and local firms in almost every area of our business."
+          }
+        }
+      ],
+      "name_en": "Marsh McLennan"
+    },
+    {
+      "id": "WTW",
+      "ticker": "WTW",
+      "name": "ウィリス・タワーズワトソン",
+      "sub": "保険ブローカー",
+      "sub_en": "Insurance broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界的な保険ブローカー・コンサルティング会社として競合に挙げられる",
+          "text_en": "Named among competing global insurance brokers and consulting companies",
+          "source": {
+            "label": "エーオン 10-K(2025-12-31)",
+            "label_en": "Aon 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We compete with numerous other global insurance brokers and consulting companies, including, among others, Marsh McLennan, Willis Towers Watson, Arthur J Gallagher & Company, and Lockton Companies, Inc., as well as numerous other global, regional, and local firms in almost every area of our business."
+          }
+        }
+      ],
+      "name_en": "Willis Towers Watson"
+    },
+    {
+      "id": "AJG",
+      "ticker": "AJG",
+      "name": "アーサー・J・ギャラガー",
+      "sub": "保険ブローカー",
+      "sub_en": "Insurance broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界的な保険ブローカー・コンサルティング会社として競合のひとつに数えられる",
+          "text_en": "Counted among competing global insurance brokers and consulting companies",
+          "source": {
+            "label": "エーオン 10-K(2025-12-31)",
+            "label_en": "Aon 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We compete with numerous other global insurance brokers and consulting companies, including, among others, Marsh McLennan, Willis Towers Watson, Arthur J Gallagher & Company, and Lockton Companies, Inc., as well as numerous other global, regional, and local firms in almost every area of our business."
+          }
+        }
+      ],
+      "name_en": "Arthur J. Gallagher"
+    },
+    {
+      "id": "LOCKTON",
+      "ticker": "Lockton Companies",
+      "name": "ロックトン・カンパニーズ",
+      "sub": "保険ブローカー",
+      "sub_en": "Insurance broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界的な保険ブローカー・コンサルティング会社として競合に名が出ている",
+          "text_en": "Appears among competing global insurance brokers and consulting companies",
+          "source": {
+            "label": "エーオン 10-K(2025-12-31)",
+            "label_en": "Aon 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We compete with numerous other global insurance brokers and consulting companies, including, among others, Marsh McLennan, Willis Towers Watson, Arthur J Gallagher & Company, and Lockton Companies, Inc., as well as numerous other global, regional, and local firms in almost every area of our business."
+          }
+        }
+      ],
+      "name_en": "Lockton Companies"
+    },
+    {
+      "id": "MDP",
+      "ticker": "Madison Dearborn",
+      "name": "マディソン・ディアボーン・パートナーズ",
+      "sub": "投資ファンド",
+      "sub_en": "Private equity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月30日に、NFPの富裕層向け事業の大部分を同社に売却した",
+          "text_en": "On October 30, 2025, Aon sold a significant majority of NFP’s wealth businesses to it",
+          "source": {
+            "label": "エーオン 10-K(2025-12-31)",
+            "label_en": "Aon 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On October 30, 2025, Aon completed the sale of a significant majority of NFP’s wealth businesses including Wealthspire Advisors, Fiducient Advisors, Newport Private Wealth and related platforms (the “NFP Wealth business”) to Madison Dearborn Partners, LLC."
+          }
+        }
+      ],
+      "name_en": "Madison Dearborn Partners"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

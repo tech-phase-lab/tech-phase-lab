@@ -1,0 +1,262 @@
+{
+  "root": {
+    "ticker": "COR",
+    "name": "センコラ",
+    "cik": 1140859,
+    "name_en": "Cencora"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "MCK",
+    "CAH",
+    "UPS"
+  ],
+  "companies": [
+    {
+      "id": "WBA",
+      "ticker": "Walgreens",
+      "name": "ウォルグリーン",
+      "sub": "ドラッグストア",
+      "sub_en": "Pharmacy chain",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウォルグリーンとブーツの2社で、2025年度の売上の約25%を占めた",
+          "text_en": "Walgreens and Boots together accounted for approximately 25% of revenue in fiscal 2025",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In fiscal 2025, Walgreens and Boots together accounted for approximately 25% of revenue and Evernorth Health Services accounted for approximately 13% of revenue."
+          }
+        },
+        {
+          "type": "down",
+          "text": "米国のウォルグリーン薬局向けに医薬品を流通する契約を結んでいる",
+          "text_en": "Cencora has a distribution agreement to distribute pharmaceuticals to Walgreens pharmacies in the U.S.",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "We have a distribution agreement in the U.S. pursuant to which we distribute pharmaceuticals to Walgreens pharmacies as well as a generics purchasing services arrangement under which Walgreens Boots Alliance Development GmbH (“WBAD”) provides a variety of services to us, including negotiating acquisition pricing with generic manufacturers on our behalf."
+          }
+        }
+      ],
+      "name_en": "Walgreens"
+    },
+    {
+      "id": "BOOTS",
+      "ticker": "Boots UK",
+      "name": "ブーツUK",
+      "sub": "ドラッグストア",
+      "sub_en": "Pharmacy chain",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウォルグリーンとブーツの2社で、2025年度の売上の約25%を占めた",
+          "text_en": "Boots together with Walgreens accounted for approximately 25% of revenue in fiscal 2025",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In fiscal 2025, Walgreens and Boots together accounted for approximately 25% of revenue and Evernorth Health Services accounted for approximately 13% of revenue."
+          }
+        }
+      ],
+      "name_en": "Boots UK"
+    },
+    {
+      "id": "EVERNORTH",
+      "ticker": "Evernorth Health",
+      "name": "エバーノース・ヘルス・サービシズ",
+      "sub": "薬剤給付管理",
+      "sub_en": "Pharmacy benefit services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年度の売上の約13%を占めた第2位の顧客である",
+          "text_en": "Evernorth Health Services accounted for approximately 13% of revenue in fiscal 2025",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In fiscal 2025, Walgreens and Boots together accounted for approximately 25% of revenue and Evernorth Health Services accounted for approximately 13% of revenue."
+          }
+        }
+      ],
+      "name_en": "Evernorth Health Services"
+    },
+    {
+      "id": "WBAD",
+      "ticker": "Walgreens Boots",
+      "name": "ウォルグリーンズ・ブーツ・アライアンス・デベロップメント",
+      "sub": "購買代行",
+      "sub_en": "Purchasing services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ジェネリック医薬品メーカーとの仕入れ価格の交渉などを、Cencoraに代わって行っている",
+          "text_en": "WBAD provides services to Cencora including negotiating acquisition pricing with generic manufacturers on its behalf",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "We have a distribution agreement in the U.S. pursuant to which we distribute pharmaceuticals to Walgreens pharmacies as well as a generics purchasing services arrangement under which Walgreens Boots Alliance Development GmbH (“WBAD”) provides a variety of services to us, including negotiating acquisition pricing with generic manufacturers on our behalf."
+          }
+        }
+      ],
+      "name_en": "Walgreens Boots Alliance Development"
+    },
+    {
+      "id": "TPG",
+      "ticker": "TPG",
+      "name": "TPGインク",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OneOncologyを買収した合弁会社で、TPGが過半の持ち分を持つ",
+          "text_en": "TPG holds the majority interest in the joint venture that acquired OneOncology, in which Cencora invested $718.4 million for a 34.9% interest",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In June 2023, we invested $718.4 million (representing a 34.9% interest) in a joint venture to acquire OneOncology, a network of leading oncology practices, with TPG Inc., a global alternative asset management firm, holding the majority interest in the joint venture."
+          }
+        }
+      ],
+      "name_en": "TPG"
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Pharmaceutical distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合先として名が挙がる",
+          "text_en": "McKesson is named among Cencora's largest competitors",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our largest competitors are McKesson Corporation (“McKesson”), Cardinal Health, Inc. (“Cardinal”), and UPS Logistics, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "米国のヒューマンヘルス流通事業で競合する",
+          "text_en": "Cencora's U.S. human health distribution businesses compete with McKesson",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our U.S. human health distribution businesses compete with both McKesson and Cardinal, as well as national generic distributors and regional distributors within pharmaceutical distribution."
+          }
+        }
+      ],
+      "name_en": "McKesson"
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸",
+      "sub_en": "Pharmaceutical distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合先として名が挙がる",
+          "text_en": "Cardinal Health is named among Cencora's largest competitors",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our largest competitors are McKesson Corporation (“McKesson”), Cardinal Health, Inc. (“Cardinal”), and UPS Logistics, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "米国のヒューマンヘルス流通事業で競合する",
+          "text_en": "Cencora's U.S. human health distribution businesses compete with Cardinal",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our U.S. human health distribution businesses compete with both McKesson and Cardinal, as well as national generic distributors and regional distributors within pharmaceutical distribution."
+          }
+        }
+      ],
+      "name_en": "Cardinal Health"
+    },
+    {
+      "id": "UPS",
+      "ticker": "UPS",
+      "name": "UPSロジスティクス",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合先の一つとして名が挙がる",
+          "text_en": "UPS Logistics is named among Cencora's largest competitors",
+          "source": {
+            "label": "Cencora 10-K(2025年9月期)",
+            "label_en": "Cencora 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our largest competitors are McKesson Corporation (“McKesson”), Cardinal Health, Inc. (“Cardinal”), and UPS Logistics, among others."
+          }
+        }
+      ],
+      "name_en": "UPS Logistics"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

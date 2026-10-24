@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "BALL",
+    "name": "ボール",
+    "cik": 9389,
+    "name_en": "Ball Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BUD",
+      "ticker": "BUD",
+      "name": "アンハイザー・ブッシュ・インベブ",
+      "sub": "ビール大手",
+      "sub_en": "Brewer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年は連結純売上高の15%を占める主要顧客である",
+          "text_en": "Anheuser-Busch InBev and affiliates accounted for 15% of net sales to major customers in the latest fiscal year",
+          "source": {
+            "label": "Ball 10-K(2025年12月31日期)",
+            "label_en": "Ball 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926017410/ball-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Anheuser-Busch InBev and affiliates ​ 15 % 16 % 15 %"
+          }
+        }
+      ],
+      "name_en": "Anheuser-Busch InBev"
+    },
+    {
+      "id": "CCBSS",
+      "ticker": "Coca-Cola",
+      "name": "コカ・コーラ・ボトラーズ・セールス&サービス",
+      "sub": "飲料ボトラー",
+      "sub_en": "Beverage bottler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年は連結純売上高の14%を占める主要顧客だ",
+          "text_en": "Coca-Cola Bottlers' Sales & Services Company LLC and affiliates accounted for 14% of net sales to major customers in the latest fiscal year",
+          "source": {
+            "label": "Ball 10-K(2025年12月31日期)",
+            "label_en": "Ball 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926017410/ball-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Coca-Cola Bottlers' Sales & Services Company LLC and affiliates ​ 14 % 13 % 13 %"
+          }
+        }
+      ],
+      "name_en": "Coca-Cola Bottlers' Sales & Services"
+    },
+    {
+      "id": "REDBULL",
+      "ticker": "Red Bull",
+      "name": "レッドブル",
+      "sub": "エナジー飲料",
+      "sub_en": "Energy drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年は連結純売上高の11%を占める顧客に含まれる",
+          "text_en": "Red Bull GmbH and affiliates accounted for 11% of net sales to major customers in the latest fiscal year",
+          "source": {
+            "label": "Ball 10-K(2025年12月31日期)",
+            "label_en": "Ball 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926017410/ball-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Red Bull GmbH and affiliates ​ 11 % 9 % 8 %"
+          }
+        }
+      ],
+      "name_en": "Red Bull"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

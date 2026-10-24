@@ -1,0 +1,167 @@
+{
+  "root": {
+    "ticker": "ATO",
+    "name": "アトモス・エナジー",
+    "cik": 731802,
+    "name_en": "Atmos Energy"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ARM",
+      "ticker": "ARM Energy",
+      "name": "ARMエナジー・マネジメント",
+      "sub": "ガス販売",
+      "sub_en": "Gas marketer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年度の主要なガス供給元のひとつである",
+          "text_en": "Named as a major gas supplier in fiscal 2025",
+          "source": {
+            "label": "アトモス・エナジー 10-K(2025-09-30)",
+            "label_en": "Atmos Energy 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Major suppliers during fiscal 2025 were ARM Energy Management LLC, Cima Energy, LP, ConocoPhillips Company, ECO Energy Natural Gas LLC, EnLink Gas Marketing LP, Sequent Energy Management LLC, Symmetry Energy Solutions, LLC, Targa Gas Marketing LLC, Tenaska Marking Ventures, and Texla Energy Management, Inc."
+          }
+        }
+      ],
+      "name_en": "ARM Energy Management"
+    },
+    {
+      "id": "COP",
+      "ticker": "COP",
+      "name": "コノコフィリップス",
+      "sub": "石油・ガス生産",
+      "sub_en": "Oil & gas producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年度の主要なガス供給元に挙がっている",
+          "text_en": "Listed among the major gas suppliers in fiscal 2025",
+          "source": {
+            "label": "アトモス・エナジー 10-K(2025-09-30)",
+            "label_en": "Atmos Energy 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Major suppliers during fiscal 2025 were ARM Energy Management LLC, Cima Energy, LP, ConocoPhillips Company, ECO Energy Natural Gas LLC, EnLink Gas Marketing LP, Sequent Energy Management LLC, Symmetry Energy Solutions, LLC, Targa Gas Marketing LLC, Tenaska Marking Ventures, and Texla Energy Management, Inc."
+          }
+        }
+      ],
+      "name_en": "ConocoPhillips"
+    },
+    {
+      "id": "ENLINK",
+      "ticker": "EnLink Gas",
+      "name": "エンリンク・ガス・マーケティング",
+      "sub": "ガス販売",
+      "sub_en": "Gas marketer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年度の主要な供給元のひとつとして記載がある",
+          "text_en": "Appears among the major gas suppliers in fiscal 2025",
+          "source": {
+            "label": "アトモス・エナジー 10-K(2025-09-30)",
+            "label_en": "Atmos Energy 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Major suppliers during fiscal 2025 were ARM Energy Management LLC, Cima Energy, LP, ConocoPhillips Company, ECO Energy Natural Gas LLC, EnLink Gas Marketing LP, Sequent Energy Management LLC, Symmetry Energy Solutions, LLC, Targa Gas Marketing LLC, Tenaska Marking Ventures, and Texla Energy Management, Inc."
+          }
+        }
+      ],
+      "name_en": "EnLink Gas Marketing"
+    },
+    {
+      "id": "SEQUENT",
+      "ticker": "Sequent Energy",
+      "name": "シークエント・エナジー・マネジメント",
+      "sub": "ガス販売",
+      "sub_en": "Gas marketer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年度の主要なガス供給元に含まれる",
+          "text_en": "Included among the major gas suppliers in fiscal 2025",
+          "source": {
+            "label": "アトモス・エナジー 10-K(2025-09-30)",
+            "label_en": "Atmos Energy 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Major suppliers during fiscal 2025 were ARM Energy Management LLC, Cima Energy, LP, ConocoPhillips Company, ECO Energy Natural Gas LLC, EnLink Gas Marketing LP, Sequent Energy Management LLC, Symmetry Energy Solutions, LLC, Targa Gas Marketing LLC, Tenaska Marking Ventures, and Texla Energy Management, Inc."
+          }
+        }
+      ],
+      "name_en": "Sequent Energy Management"
+    },
+    {
+      "id": "SYMMETRY",
+      "ticker": "Symmetry Energy",
+      "name": "シンメトリー・エナジー・ソリューションズ",
+      "sub": "エネルギー販売",
+      "sub_en": "Energy marketer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年度の主要な供給元として並んでいる",
+          "text_en": "Listed as a major supplier in fiscal 2025",
+          "source": {
+            "label": "アトモス・エナジー 10-K(2025-09-30)",
+            "label_en": "Atmos Energy 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Major suppliers during fiscal 2025 were ARM Energy Management LLC, Cima Energy, LP, ConocoPhillips Company, ECO Energy Natural Gas LLC, EnLink Gas Marketing LP, Sequent Energy Management LLC, Symmetry Energy Solutions, LLC, Targa Gas Marketing LLC, Tenaska Marking Ventures, and Texla Energy Management, Inc."
+          }
+        }
+      ],
+      "name_en": "Symmetry Energy Solutions"
+    },
+    {
+      "id": "TARGA",
+      "ticker": "Targa Gas",
+      "name": "ターガ・ガス・マーケティング",
+      "sub": "ガス販売",
+      "sub_en": "Gas marketer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年度の主要なガス供給元のひとつだった",
+          "text_en": "Was one of the major gas suppliers in fiscal 2025",
+          "source": {
+            "label": "アトモス・エナジー 10-K(2025-09-30)",
+            "label_en": "Atmos Energy 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Major suppliers during fiscal 2025 were ARM Energy Management LLC, Cima Energy, LP, ConocoPhillips Company, ECO Energy Natural Gas LLC, EnLink Gas Marketing LP, Sequent Energy Management LLC, Symmetry Energy Solutions, LLC, Targa Gas Marketing LLC, Tenaska Marking Ventures, and Texla Energy Management, Inc."
+          }
+        }
+      ],
+      "name_en": "Targa Gas Marketing"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
