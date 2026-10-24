@@ -1,10 +1,10 @@
-Request: archive current source after research backup restore and destination checks
+Request: archive source including isolated research backup runtime
 Date: 2026-10-24 JST
-Base commit: 6208552fd291a7e2ce94759824e8de478a39eef8
-Archive this request commit, including preserved coworker changes, research backup
-downloaded-byte restore validation and pre-client R2 destination restrictions.
+Base commit: 9142da133bdcf7b21466e21eee813eb6aa596a58
+Archive this request commit, including the dedicated research backup Dockerfile,
+restricted build context, offline container CI and actual verification receipt.
 Use existing configured secrets; encrypt before upload, fully download and restore
 Git in isolation with exact commit/tree comparison. Retain older objects.
-Source only: no live DB, dependency tar, runtime promotion or AI call.
+Source only: no live DB, dependency tar, runtime image custody or AI call.
 Do not change schedules, storage gates, credentials, billing or approved content.
 Record actual receipt separately without retriggering this request file.
