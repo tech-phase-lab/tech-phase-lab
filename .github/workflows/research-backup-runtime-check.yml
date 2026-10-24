@@ -1,0 +1,71 @@
+name: Research backup isolated runtime check
+
+on:
+  push:
+    branches: [codex/research-preview]
+    paths:
+      - .github/workflows/research-backup-runtime-check.yml
+      - services/tech-phase-research-backup/**
+      - services/tech-phase-backup/requirements.txt
+      - scripts/tech-phase/external_research_backup.py
+      - scripts/research/persistence.py
+      - tests/test_tech_phase_external_research.py
+
+permissions:
+  contents: read
+
+concurrency:
+  group: research-backup-isolated-runtime
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.repository == 'tech-phase-lab/tech-phase-lab' && github.ref == 'refs/heads/codex/research-preview'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - name: Build dedicated backup runtime without credentials
+        run: docker build --tag research-backup-check --file services/tech-phase-research-backup/Dockerfile .
+      - name: Check non-root runtime, dependencies and packaged files offline
+        run: |
+          set -euo pipefail
+          test "$(docker image inspect --format '{{.Config.User}}' research-backup-check)" = '10001:10001'
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
+            --pids-limit 64 --memory 256m --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            --entrypoint python research-backup-check -c '
+          import os, pathlib, boto3, cryptography
+          assert os.getuid() == 10001
+          assert os.environ["TECH_PHASE_EXTERNAL_BACKUP_ENABLED"] == "false"
+          assert boto3.__version__ == "1.42.21"
+          assert cryptography.__version__ == "46.0.3"
+          assert {str(p.relative_to("/app")) for p in pathlib.Path("/app").rglob("*") if p.is_file()} == {
+              "requirements.txt", "scripts/research/persistence.py", "scripts/tech-phase/external_research_backup.py"}
+          print("RESEARCH_BACKUP_RUNTIME_CONTENTS_OK")'
+      - name: Default command refuses execution without configuration
+        run: |
+          set -euo pipefail
+          result=0
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
+            --pids-limit 64 --memory 256m --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            research-backup-check > "$RUNNER_TEMP/research-backup-disabled.json" 2>&1 || result=$?
+          test "$result" -eq 1
+          python3 - <<'PY'
+          import json, os, pathlib
+          path = pathlib.Path(os.environ['RUNNER_TEMP']) / 'research-backup-disabled.json'
+          assert json.loads(path.read_text()) == {'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED'}
+          print('RESEARCH_BACKUP_DEFAULT_DISABLED_OK')
+          PY
+      - name: Exercise WAL snapshot, encryption, downloaded-byte restore and rejected destinations offline
+        run: |
+          set -euo pipefail
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
+            --pids-limit 64 --memory 256m --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            --mount "type=bind,source=$PWD/tests/test_tech_phase_external_research.py,target=/app/tests/test_tech_phase_external_research.py,readonly" \
+            --entrypoint python research-backup-check \
+            -m unittest discover -s /app/tests -p test_tech_phase_external_research.py -v
+          echo 'RESEARCH_BACKUP_OFFLINE_RESTORE_TESTS_OK' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Synthetic SQLite and in-memory object storage only; no live volume, R2 request or deployment.' >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,17 @@
+**
+!services/
+services/**
+!services/tech-phase-backup/
+services/tech-phase-backup/**
+!services/tech-phase-backup/requirements.txt
+!services/tech-phase-research-backup/
+services/tech-phase-research-backup/**
+!services/tech-phase-research-backup/Dockerfile
+!scripts/
+scripts/**
+!scripts/research/
+scripts/research/**
+!scripts/research/persistence.py
+!scripts/tech-phase/
+scripts/tech-phase/**
+!scripts/tech-phase/external_research_backup.py
