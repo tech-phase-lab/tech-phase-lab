@@ -1,0 +1,196 @@
+{
+  "root": {
+    "ticker": "VMC",
+    "name": "ヴァルカン・マテリアルズ",
+    "cik": 1396009,
+    "name_en": "Vulcan Materials"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ACA",
+    "AMRZ",
+    "CX",
+    "CRH",
+    "KNF"
+  ],
+  "companies": [
+    {
+      "id": "ACA",
+      "ticker": "ACA",
+      "name": "アルコサ",
+      "sub": "骨材メーカー",
+      "sub_en": "Aggregates producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産者上位10社に入るアルコサは競合先である",
+          "text_en": "Arcosa, Inc. is among the ten largest U.S. aggregates producers, alongside Vulcan",
+          "source": {
+            "label": "Vulcan Materials 10-K(2025-12-31)",
+            "label_en": "Vulcan Materials 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396009/000162828026009546/vmc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Arcosa, Inc."
+    },
+    {
+      "id": "AMRZ",
+      "ticker": "AMRZ",
+      "name": "アムライズ",
+      "sub": "骨材メーカー",
+      "sub_en": "Aggregates producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産者上位10社に入るアムライズは競合先である",
+          "text_en": "Amrize is among the ten largest U.S. aggregates producers, alongside Vulcan",
+          "source": {
+            "label": "Vulcan Materials 10-K(2025-12-31)",
+            "label_en": "Vulcan Materials 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396009/000162828026009546/vmc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Amrize"
+    },
+    {
+      "id": "CX",
+      "ticker": "CX",
+      "name": "セメックス",
+      "sub": "骨材メーカー",
+      "sub_en": "Aggregates producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産者上位10社に入るセメックスは競合先である",
+          "text_en": "Cemex S.A.B. de C.V. is among the ten largest U.S. aggregates producers, alongside Vulcan",
+          "source": {
+            "label": "Vulcan Materials 10-K(2025-12-31)",
+            "label_en": "Vulcan Materials 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396009/000162828026009546/vmc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Cemex S.A.B. de C.V."
+    },
+    {
+      "id": "CRH",
+      "ticker": "CRH",
+      "name": "CRHピーエルシー",
+      "sub": "骨材メーカー",
+      "sub_en": "Aggregates producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産者上位10社に入るCRHピーエルシーは競合先である",
+          "text_en": "CRH plc is among the ten largest U.S. aggregates producers, alongside Vulcan",
+          "source": {
+            "label": "Vulcan Materials 10-K(2025-12-31)",
+            "label_en": "Vulcan Materials 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396009/000162828026009546/vmc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "CRH plc"
+    },
+    {
+      "id": "HEI",
+      "ticker": "Heidelberg",
+      "name": "ハイデルベルク・マテリアルズ",
+      "sub": "骨材メーカー",
+      "sub_en": "Aggregates producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産者上位10社に入るハイデルベルク・マテリアルズは競合先である",
+          "text_en": "Heidelberg Materials AG is among the ten largest U.S. aggregates producers, alongside Vulcan",
+          "source": {
+            "label": "Vulcan Materials 10-K(2025-12-31)",
+            "label_en": "Vulcan Materials 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396009/000162828026009546/vmc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Heidelberg Materials AG"
+    },
+    {
+      "id": "KNF",
+      "ticker": "KNF",
+      "name": "ナイフ・リバー",
+      "sub": "骨材メーカー",
+      "sub_en": "Aggregates producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産者上位10社に入るナイフ・リバーは競合先である",
+          "text_en": "Knife River Corporation is among the ten largest U.S. aggregates producers, alongside Vulcan",
+          "source": {
+            "label": "Vulcan Materials 10-K(2025-12-31)",
+            "label_en": "Vulcan Materials 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396009/000162828026009546/vmc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Knife River Corporation"
+    },
+    {
+      "id": "MLM",
+      "ticker": "MLM",
+      "name": "マーティン・マリエッタ・マテリアルズ",
+      "sub": "骨材メーカー",
+      "sub_en": "Aggregates producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の骨材生産者上位10社に入るマーティン・マリエッタ・マテリアルズは競合先である",
+          "text_en": "Martin Marietta Materials, Inc. is among the ten largest U.S. aggregates producers, alongside Vulcan",
+          "source": {
+            "label": "Vulcan Materials 10-K(2025-12-31)",
+            "label_en": "Vulcan Materials 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396009/000162828026009546/vmc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Martin Marietta Materials, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

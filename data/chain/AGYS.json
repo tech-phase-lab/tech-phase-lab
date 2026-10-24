@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "AGYS",
+    "name": "アジリシス",
+    "cik": 78749,
+    "name_en": "Agilysys"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ORCL"
+  ],
+  "companies": [
+    {
+      "id": "BYD",
+      "ticker": "BYD",
+      "name": "ボイド・ゲーミング",
+      "sub": "カジノ・ゲーミング",
+      "sub_en": "Casino gaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "代表的な導入顧客のひとつである",
+          "text_en": "Listed among Agilysys's representative clients",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Representative Agilysys clients include: 7 Cedars Casino Golden Nugget Lake Charles Resorts World Bimini AVI Foodsystems, Inc. Grand Sierra Resort and Casino Rosen Hotels & Resorts Boyd Gaming Corporation"
+          }
+        }
+      ],
+      "name_en": "Boyd Gaming"
+    },
+    {
+      "id": "CZR",
+      "ticker": "CZR",
+      "name": "シーザーズ・エンターテインメント",
+      "sub": "カジノ・ホテル",
+      "sub_en": "Casinos & hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "代表的な導入顧客のひとつである",
+          "text_en": "Listed among Agilysys's representative clients",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Caesars Entertainment Hilton Worldwide Royal Caribbean Group Carnival UK Inspire Resort Korea"
+          }
+        }
+      ],
+      "name_en": "Caesars Entertainment"
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン・ワールドワイド",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "代表的な導入顧客のひとつである",
+          "text_en": "Listed among Agilysys's representative clients",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Caesars Entertainment Hilton Worldwide Royal Caribbean Group Carnival UK Inspire Resort Korea"
+          }
+        }
+      ],
+      "name_en": "Hilton Worldwide"
+    },
+    {
+      "id": "RCL",
+      "ticker": "RCL",
+      "name": "ロイヤル・カリビアン・グループ",
+      "sub": "クルーズ",
+      "sub_en": "Cruise lines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "代表的な導入顧客のひとつである",
+          "text_en": "Listed among Agilysys's representative clients",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Caesars Entertainment Hilton Worldwide Royal Caribbean Group Carnival UK Inspire Resort Korea"
+          }
+        }
+      ],
+      "name_en": "Royal Caribbean Group"
+    },
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット・インターナショナル",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "代表的な導入顧客のひとつである",
+          "text_en": "Listed among Agilysys's representative clients",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Chukchansi Gold Resort & Casino Marriott International The Venetian Resort Hotel Casino"
+          }
+        }
+      ],
+      "name_en": "Marriott International"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホテル・カジノ向けPOS/PMSで競合している",
+          "text_en": "Competes with Agilysys in POS and PMS solutions",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "These companies, some of which are much larger than we are, include Oracle Corp., Shiji and Infor."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "SHIJI",
+      "ticker": "Shiji",
+      "name": "シージ・グループ",
+      "sub": "ホスピタリティ系ソフト",
+      "sub_en": "Hospitality software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホテル・カジノ向けPOS/PMSで競合している",
+          "text_en": "Competes with Agilysys in POS and PMS solutions",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "These companies, some of which are much larger than we are, include Oracle Corp., Shiji and Infor."
+          }
+        }
+      ],
+      "name_en": "Shiji"
+    },
+    {
+      "id": "INFOR",
+      "ticker": "Infor",
+      "name": "インフォア",
+      "sub": "業務ソフトウェア",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホテル・カジノ向けPOS/PMSで競合している",
+          "text_en": "Competes with Agilysys in POS and PMS solutions",
+          "source": {
+            "label": "Agilysys 10-K(March 31, 2026)",
+            "label_en": "Agilysys 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "These companies, some of which are much larger than we are, include Oracle Corp., Shiji and Infor."
+          }
+        }
+      ],
+      "name_en": "Infor"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

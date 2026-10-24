@@ -1,0 +1,123 @@
+{
+  "root": {
+    "ticker": "LIF",
+    "name": "ライフ360",
+    "cik": 1581760,
+    "name_en": "Life360"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JBL",
+      "ticker": "JBL",
+      "name": "ジェイビル",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハードウェア製品の唯一の製造委託先に指定している",
+          "text_en": "Jabil is designated as the sole contract manufacturer of its hardware products",
+          "source": {
+            "label": "ライフ360 10-K(2025-12-31)",
+            "label_en": "Life360 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581760/000158176026000016/lifx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Jabil has been designated the sole contract manufacturer of our hardware products."
+          }
+        }
+      ],
+      "name_en": "Jabil Inc."
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "アプリ配信",
+      "sub_en": "App distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アプリをほぼApp Store経由で提供しており、承認に依存している",
+          "text_en": "Its mobile apps are almost exclusively accessed through the Apple App Store, and it depends on Apple's approval",
+          "source": {
+            "label": "ライフ360 10-K(2025-12-31)",
+            "label_en": "Life360 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581760/000158176026000016/lifx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our mobile applications are almost exclusively accessed through the Apple App Store and the Google Play Store, and we depend on Apple and Google approving our mobile applications on their respective platforms."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "アプリ配信",
+      "sub_en": "App distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アプリをほぼGoogle Play経由で提供しており、承認に依存している",
+          "text_en": "Its mobile apps are almost exclusively accessed through the Google Play Store, and it depends on Google's approval",
+          "source": {
+            "label": "ライフ360 10-K(2025-12-31)",
+            "label_en": "Life360 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581760/000158176026000016/lifx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our mobile applications are almost exclusively accessed through the Apple App Store and the Google Play Store, and we depend on Apple and Google approving our mobile applications on their respective platforms."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "HUBBLE",
+      "ticker": "Hubble Network",
+      "name": "ハブル・ネットワーク",
+      "sub": "衛星通信",
+      "sub_en": "Satellite connectivity",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略的提携により位置追跡機能を広げる可能性がある",
+          "text_en": "Through a strategic partnership with Hubble, it may expand its location tracking capabilities",
+          "source": {
+            "label": "ライフ360 10-K(2025-12-31)",
+            "label_en": "Life360 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581760/000158176026000016/lifx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Through our strategic partnership with Hubble Network Inc., (“Hubble”), and subject to successful development and integration, we may expand our location tracking capabilities."
+          }
+        }
+      ],
+      "name_en": "Hubble Network Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

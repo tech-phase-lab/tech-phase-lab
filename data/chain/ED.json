@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "ED",
+    "name": "コンソリデーテッド・エジソン",
+    "cik": 1047862,
+    "name_en": "Consolidated Edison"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BNYCP",
+      "ticker": "Brooklyn Navy",
+      "name": "ブルックリン・ネイビーヤード・コージェネレーション・パートナーズ",
+      "sub": "コージェネ発電",
+      "sub_en": "Cogeneration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "蒸気供給量の一部を購入契約で調達する先である",
+          "text_en": "Supplies part of CECONY's steam under a purchase agreement",
+          "source": {
+            "label": "Consolidated Edison 10-K(December 31, 2025)",
+            "label_en": "Consolidated Edison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047862/000104786226000031/ed-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "18 percent was purchased under an agreement with Brooklyn Navy Yard Cogeneration Partners L.P."
+          }
+        }
+      ],
+      "name_en": "Brooklyn Navy Yard Cogeneration Partners"
+    },
+    {
+      "id": "NGG",
+      "ticker": "NGG",
+      "name": "ナショナル・グリッド",
+      "sub": "電力・ガス",
+      "sub_en": "Electricity & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CECONYの送電設備が相互に接続している電力会社のひとつである",
+          "text_en": "Its transmission facilities interconnect with CECONY's transmission facilities",
+          "source": {
+            "label": "Consolidated Edison 10-K(December 31, 2025)",
+            "label_en": "Consolidated Edison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047862/000104786226000031/ed-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CECONY’ s transmission facilities interconnect with those of National Grid, Central Hudson Gas & Electric Corporation, O&R, New York State Electric & Gas, Eversource Energy, Long Island Power Authority, NYPA, New York Transco and Public Service Electric and Gas Company."
+          }
+        }
+      ],
+      "name_en": "National Grid"
+    },
+    {
+      "id": "ES",
+      "ticker": "ES",
+      "name": "エバーソース・エナジー",
+      "sub": "電力・ガス",
+      "sub_en": "Electricity & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CECONYの送電設備が相互に接続している電力会社のひとつである",
+          "text_en": "Its transmission facilities interconnect with CECONY's transmission facilities",
+          "source": {
+            "label": "Consolidated Edison 10-K(December 31, 2025)",
+            "label_en": "Consolidated Edison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047862/000104786226000031/ed-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CECONY’ s transmission facilities interconnect with those of National Grid, Central Hudson Gas & Electric Corporation, O&R, New York State Electric & Gas, Eversource Energy, Long Island Power Authority, NYPA, New York Transco and Public Service Electric and Gas Company."
+          }
+        }
+      ],
+      "name_en": "Eversource Energy"
+    },
+    {
+      "id": "PEG",
+      "ticker": "PEG",
+      "name": "パブリック・サービス・エレクトリック・アンド・ガス",
+      "sub": "電力・ガス",
+      "sub_en": "Electricity & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CECONYの送電設備が相互に接続している電力会社のひとつである",
+          "text_en": "Its transmission facilities interconnect with CECONY's transmission facilities",
+          "source": {
+            "label": "Consolidated Edison 10-K(December 31, 2025)",
+            "label_en": "Consolidated Edison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047862/000104786226000031/ed-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CECONY’ s transmission facilities interconnect with those of National Grid, Central Hudson Gas & Electric Corporation, O&R, New York State Electric & Gas, Eversource Energy, Long Island Power Authority, NYPA, New York Transco and Public Service Electric and Gas Company."
+          }
+        }
+      ],
+      "name_en": "Public Service Electric and Gas"
+    },
+    {
+      "id": "CHGE",
+      "ticker": "Central Hudson",
+      "name": "セントラル・ハドソン・ガス・アンド・エレクトリック",
+      "sub": "電力・ガス",
+      "sub_en": "Electricity & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CECONYの送電設備が相互に接続している電力会社のひとつである",
+          "text_en": "Its transmission facilities interconnect with CECONY's transmission facilities",
+          "source": {
+            "label": "Consolidated Edison 10-K(December 31, 2025)",
+            "label_en": "Consolidated Edison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047862/000104786226000031/ed-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CECONY’ s transmission facilities interconnect with those of National Grid, Central Hudson Gas & Electric Corporation, O&R, New York State Electric & Gas, Eversource Energy, Long Island Power Authority, NYPA, New York Transco and Public Service Electric and Gas Company."
+          }
+        }
+      ],
+      "name_en": "Central Hudson Gas & Electric"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "root": {
+    "ticker": "PDFS",
+    "name": "PDFソリューションズ",
+    "cik": 1120914,
+    "name_en": "PDF Solutions"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ONTO",
+    "SNPS",
+    "AMAT",
+    "EMR",
+    "KEYS"
+  ],
+  "companies": [
+    {
+      "id": "ADVANTEST",
+      "ticker": "Advantest",
+      "name": "アドバンテスト",
+      "sub": "半導体試験装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "長期の戦略的提携を結んでいる",
+          "text_en": "Entered into a long-term strategic partnership",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In July 2020, the Company entered into a long-term strategic partnership with Advantest Corporation through its wholly-owned subsidiary, Advantest America, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同社のクラウドアプリ開発を支援する契約を結び、Exensio分析ソフトを活用している",
+          "text_en": "Agreement to assist development of cloud-based applications for Advantest tools using Exensio",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "(ii) a significant agreement for its assistance in development of cloud-based applications for Advantest tools that leverages our Exensio analytics software"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "工場設備の接続ソフトの分野では、競合先でもある",
+          "text_en": "Also named among providers of equipment connectivity software",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "connectivity software or integration products/services supporting factory equipment connectivity or control needs of customers, such as PEER Group, Inc., Kontron AIS, GmbH, Yokogawa Electric Corp., Advantest Corporation, Kornic Automation Co. Ltd., and Tracces by Capgemini SE"
+          }
+        }
+      ],
+      "name_en": "Advantest"
+    },
+    {
+      "id": "KLA",
+      "ticker": "KLAC",
+      "name": "ケーエルエー",
+      "sub": "検査・歩留まり管理",
+      "sub_en": "Inspection & yield management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "歩留まり管理・予測システムの分野で競合している",
+          "text_en": "Competes in yield management and prediction systems",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "yield management and/or prediction systems, such as KLA Corporation (“KLA”), Onto Innovation, Inc. (“Onto”), and Synopsys, Inc. (“Synopsys”)"
+          }
+        }
+      ],
+      "name_en": "KLA"
+    },
+    {
+      "id": "ONTO",
+      "ticker": "ONTO",
+      "name": "オントー・イノベーション",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "歩留まり管理・予測システムの分野で競合している",
+          "text_en": "Competes in yield management and prediction systems",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "yield management and/or prediction systems, such as KLA Corporation (“KLA”), Onto Innovation, Inc. (“Onto”), and Synopsys, Inc. (“Synopsys”)"
+          }
+        }
+      ],
+      "name_en": "Onto Innovation"
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "シノプシス",
+      "sub": "設計・製造ソフト",
+      "sub_en": "EDA & manufacturing software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "歩留まり管理・予測システムの分野で競合している",
+          "text_en": "Competes in yield management and prediction systems",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "yield management and/or prediction systems, such as KLA Corporation (“KLA”), Onto Innovation, Inc. (“Onto”), and Synopsys, Inc. (“Synopsys”)"
+          }
+        }
+      ],
+      "name_en": "Synopsys"
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド・マテリアルズ",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "半導体製造ソフトの分野で競合している",
+          "text_en": "Competes in semiconductor manufacturing software",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "semiconductor manufacturing software, such as Applied Materials, Inc (“Applied Materials”), Synopsys, Invantest, Inc., Emerson Electric Co., Onto, and Siemens AG"
+          }
+        }
+      ],
+      "name_en": "Applied Materials"
+    },
+    {
+      "id": "EMR",
+      "ticker": "EMR",
+      "name": "エマソン・エレクトリック",
+      "sub": "産業オートメーション",
+      "sub_en": "Industrial automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "半導体製造ソフトの分野で競合している",
+          "text_en": "Competes in semiconductor manufacturing software",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "semiconductor manufacturing software, such as Applied Materials, Inc (“Applied Materials”), Synopsys, Invantest, Inc., Emerson Electric Co., Onto, and Siemens AG"
+          }
+        }
+      ],
+      "name_en": "Emerson Electric"
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "キーサイト・テクノロジー",
+      "sub": "電子計測器",
+      "sub_en": "Electronic measurement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インライン検査・計測・電気試験装置の分野で競合している",
+          "text_en": "Competes in inline inspection, metrology and electrical test equipment",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "inline inspection, metrology and electrical test equipment providers, such as ASML Holding N.V., Applied Materials, KLA, and Keysight Technologies, Inc."
+          }
+        }
+      ],
+      "name_en": "Keysight Technologies"
+    },
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "エーエスエムエル",
+      "sub": "露光・計測装置",
+      "sub_en": "Lithography & metrology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客の社内部門が使う汎用データソフトとして、間接的に競合する",
+          "text_en": "Indirect competition from customers' internal groups using general-purpose software such as Snowflake's",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Tableau from Salesforce, Inc., Spotfire from Cloud Software Group, Snowflake, Inc., Databricks, Inc."
+          }
+        }
+      ],
+      "name_en": "ASML Holding"
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "スノーフレイク",
+      "sub": "データクラウド",
+      "sub_en": "Data cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客の社内チームが使う汎用ソフトとして、間接的に競合している",
+          "text_en": "Indirect competition from customers' internal groups using general-purpose software like Snowflake",
+          "source": {
+            "label": "PDFソリューションズ 10-K(December 31, 2025)",
+            "label_en": "PDF Solutions 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120914/000143774926005366/pdfs20251231d_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Tableau from Salesforce, Inc., Spotfire from Cloud Software Group, Snowflake, Inc., Databricks, Inc."
+          }
+        }
+      ],
+      "name_en": "Snowflake"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

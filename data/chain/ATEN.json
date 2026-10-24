@@ -1,0 +1,321 @@
+{
+  "root": {
+    "ticker": "ATEN",
+    "name": "A10ネットワークス",
+    "cik": 1580808,
+    "name_en": "A10 Networks, Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "競合(A10の資料に記載)",
+      "en": "Competitors (named in A10's filing)"
+    }
+  ],
+  "rivals": [
+    "FFIV",
+    "NTCT",
+    "RDWR",
+    "CSCO",
+    "HPE"
+  ],
+  "companies": [
+    {
+      "id": "LANNER",
+      "ticker": "Lanner Electronics",
+      "name": "ラナー・エレクトロニクス",
+      "sub": "ハードウェア製造",
+      "sub_en": "Hardware maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハードウェア製品の製造を担う受託メーカーの一社",
+          "text_en": "One of the original design manufacturers that build A10's hardware products",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our manufacturers are Lanner Electronics Inc. (“Lanner”), AEWIN Technologies Co., Ltd. (“AEWIN”) and iBase."
+          }
+        }
+      ],
+      "name_en": "Lanner Electronics"
+    },
+    {
+      "id": "AEWIN",
+      "ticker": "AEWIN Technologies",
+      "name": "AEWINテクノロジーズ",
+      "sub": "ハードウェア製造",
+      "sub_en": "Hardware maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハードウェア製品の製造を担う受託メーカーの一社",
+          "text_en": "One of the original design manufacturers that build A10's hardware products",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our manufacturers are Lanner Electronics Inc. (“Lanner”), AEWIN Technologies Co., Ltd. (“AEWIN”) and iBase."
+          }
+        }
+      ],
+      "name_en": "AEWIN Technologies"
+    },
+    {
+      "id": "IBASE",
+      "ticker": "iBase",
+      "name": "アイベース",
+      "sub": "ハードウェア製造",
+      "sub_en": "Hardware maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハードウェア製品の製造を担う受託メーカーの一社",
+          "text_en": "One of the original design manufacturers that build A10's hardware products",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our manufacturers are Lanner Electronics Inc. (“Lanner”), AEWIN Technologies Co., Ltd. (“AEWIN”) and iBase."
+          }
+        }
+      ],
+      "name_en": "iBase"
+    },
+    {
+      "id": "FFIV",
+      "ticker": "FFIV",
+      "name": "F5ネットワークス",
+      "sub": "アプリ配信・DDoS",
+      "sub_en": "App delivery & DDoS",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DDoS対策とアプリケーション配信の両分野で競合する",
+          "text_en": "Competes in both DDoS protection and application delivery",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Providers of network and infrastructure security solutions, including DDoS protection and related services, such as Arbor Networks Inc, a subsidiary of NetScout Systems, Radware Ltd, and F5"
+          }
+        }
+      ],
+      "name_en": "F5"
+    },
+    {
+      "id": "NTCT",
+      "ticker": "NTCT",
+      "name": "ネットスカウト・システムズ",
+      "sub": "DDoS対策",
+      "sub_en": "DDoS protection",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DDoS対策製品で競合するArbor Networksの親会社",
+          "text_en": "Parent of Arbor Networks, a DDoS protection competitor",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Providers of network and infrastructure security solutions, including DDoS protection and related services, such as Arbor Networks Inc, a subsidiary of NetScout Systems, Radware Ltd, and F5"
+          }
+        }
+      ],
+      "name_en": "NetScout Systems"
+    },
+    {
+      "id": "RDWR",
+      "ticker": "RDWR",
+      "name": "ラドウェア",
+      "sub": "DDoS対策",
+      "sub_en": "DDoS protection",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DDoS対策分野で競合する",
+          "text_en": "Competes in DDoS protection",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Providers of network and infrastructure security solutions, including DDoS protection and related services, such as Arbor Networks Inc, a subsidiary of NetScout Systems, Radware Ltd, and F5"
+          }
+        }
+      ],
+      "name_en": "Radware"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Network equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファイアウォールやルーティング製品で競合する",
+          "text_en": "Competes in firewall, routing and carrier-grade infrastructure",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Network equipment and security vendors offering firewall, routing, and carrier-grade infrastructure solutions, including Cisco Systems, Hewlett Packard Enterprise (division f/k/a Juniper Networks, Inc.), and Fortinet Inc."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Network equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "旧Juniper事業を含むネットワーク機器で競合する",
+          "text_en": "Competes in network equipment, including the former Juniper business",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Network equipment and security vendors offering firewall, routing, and carrier-grade infrastructure solutions, including Cisco Systems, Hewlett Packard Enterprise (division f/k/a Juniper Networks, Inc.), and Fortinet Inc."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "ネットワークセキュリティ",
+      "sub_en": "Network security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファイアウォール製品で競合する",
+          "text_en": "Competes in firewall and network security products",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Network equipment and security vendors offering firewall, routing, and carrier-grade infrastructure solutions, including Cisco Systems, Hewlett Packard Enterprise (division f/k/a Juniper Networks, Inc.), and Fortinet Inc."
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ・テクノロジーズ",
+      "sub": "クラウドセキュリティ",
+      "sub_en": "Cloud security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クラウド型のWAAPサービスで競合する",
+          "text_en": "Competes in cloud-based WAAP services",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Cloud-based security and application protection providers offering WAAP and related services, including Akamai, Cloudflare, Imperva, and Amazon Web Services"
+          }
+        }
+      ],
+      "name_en": "Akamai"
+    },
+    {
+      "id": "NET",
+      "ticker": "NET",
+      "name": "クラウドフレア",
+      "sub": "クラウドセキュリティ",
+      "sub_en": "Cloud security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クラウド型のWAAPサービスで競合する",
+          "text_en": "Competes in cloud-based WAAP services",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Cloud-based security and application protection providers offering WAAP and related services, including Akamai, Cloudflare, Imperva, and Amazon Web Services"
+          }
+        }
+      ],
+      "name_en": "Cloudflare"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クラウド型のアプリ保護サービスで競合する",
+          "text_en": "Competes in cloud-based application protection services",
+          "source": {
+            "label": "A10 Networks, Inc. 10-K(2025年12月期)",
+            "label_en": "A10 Networks, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580808/000158080826000014/aten-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Cloud-based security and application protection providers offering WAAP and related services, including Akamai, Cloudflare, Imperva, and Amazon Web Services"
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

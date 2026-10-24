@@ -1,0 +1,179 @@
+{
+  "root": {
+    "ticker": "VICI",
+    "name": "ヴィーアイシーアイ・プロパティーズ",
+    "cik": 1705696,
+    "name_en": "VICI Properties"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CZR",
+      "ticker": "CZR",
+      "name": "シーザーズ・エンターテインメント",
+      "sub": "カジノ運営・賃借人",
+      "sub_en": "Casino operator, tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の賃借人の一社で、年換算賃料の39%を占める",
+          "text_en": "One of its two largest tenants, at 39% of annualized rent",
+          "source": {
+            "label": "VICI Properties 10-K(2025-12-31)",
+            "label_en": "VICI Properties 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Caesars and MGM, our two largest tenants representing 39% and 35%, respectively, of our annualized rent as of December 31, 2025"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ストリップ上の物件売却時に優先取得権を持つ契約がある",
+          "text_en": "VICI holds a ROFR agreement with Caesars on Las Vegas Strip assets",
+          "source": {
+            "label": "VICI Properties 10-K(2025-12-31)",
+            "label_en": "VICI Properties 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We have a ROFR agreement with Caesars (the “Las Vegas Strip ROFR Agreement”), pursuant to which we have the first right, with respect to the first two Las Vegas Strip assets described below that Caesars proposes to sell"
+          }
+        }
+      ],
+      "name_en": "Caesars Entertainment"
+    },
+    {
+      "id": "MGM",
+      "ticker": "MGM",
+      "name": "MGMリゾーツ・インターナショナル",
+      "sub": "カジノ運営・賃借人",
+      "sub_en": "Casino operator, tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の賃借人の一社で、年換算賃料の35%を占める",
+          "text_en": "One of its two largest tenants, at 35% of annualized rent",
+          "source": {
+            "label": "VICI Properties 10-K(2025-12-31)",
+            "label_en": "VICI Properties 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Caesars and MGM, our two largest tenants representing 39% and 35%, respectively, of our annualized rent as of December 31, 2025"
+          }
+        }
+      ],
+      "name_en": "MGM Resorts International"
+    },
+    {
+      "id": "PENN",
+      "ticker": "PENN",
+      "name": "ペン・エンターテインメント",
+      "sub": "カジノ運営・賃借人",
+      "sub_en": "Casino operator, tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "グリークタウンとマーガリタビルの賃貸借を年間賃料8,070万ドルの1本のマスターリースにまとめた",
+          "text_en": "Combined the Greektown and Margaritaville leases into one PENN Master Lease with total annual rent of $80.7 million",
+          "source": {
+            "label": "VICI Properties 10-K(2025-12-31)",
+            "label_en": "VICI Properties 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The PENN Master Lease has total annual rent equal to $80.7 million (the “Combined Rent”), representing the combined annual rent amounts under the Greektown Lease and the Margaritaville Lease as of December 4, 2025."
+          }
+        }
+      ],
+      "name_en": "PENN Entertainment"
+    },
+    {
+      "id": "CANYON",
+      "ticker": "Canyon Ranch",
+      "name": "キャニオン・ランチ",
+      "sub": "ウェルネスリゾート",
+      "sub_en": "Wellness resorts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "キャニオン・ランチ・テューソン等の不動産を取得できるコール権契約を結んでいる",
+          "text_en": "VICI holds call rights on Canyon Ranch Tucson and Lenox real estate",
+          "source": {
+            "label": "VICI Properties 10-K(2025-12-31)",
+            "label_en": "VICI Properties 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We entered into a call right agreement with Canyon Ranch pursuant to which we will have the right to acquire the real estate assets of each of Canyon Ranch Tucson in Tucson, Arizona and Canyon Ranch Lenox in Lenox, Massachusetts, at pre-negotiated terms in a sale-leaseback transaction, subject to certain conditions."
+          }
+        }
+      ],
+      "name_en": "Canyon Ranch"
+    },
+    {
+      "id": "CABOT",
+      "ticker": "Cabot",
+      "name": "キャボット",
+      "sub": "ゴルフリゾート",
+      "sub_en": "Golf resorts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "キャボット・シトラス・ファームズの開発ローン1.2億ドルの一部を不動産保有に転換する売買契約を結んでいる",
+          "text_en": "Purchase and sale agreement to convert part of the $120.0 million Cabot Citrus Farms development loan into real estate ownership",
+          "source": {
+            "label": "VICI Properties 10-K(2025-12-31)",
+            "label_en": "VICI Properties 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We entered into a purchase and sale agreement with Cabot, pursuant to which we will convert a portion of the $120.0 million Cabot Citrus Farms delayed draw development loan into the ownership of certain Cabot Citrus Farms real estate assets"
+          }
+        }
+      ],
+      "name_en": "Cabot"
+    },
+    {
+      "id": "LUCKY",
+      "ticker": "Lucky Strike",
+      "name": "ラッキー・ストライク・エンターテインメント",
+      "sub": "ボウリング施設",
+      "sub_en": "Bowling entertainment centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ラッキー・ストライクのマスターリースに基づく賃借人である",
+          "text_en": "Tenant under the Lucky Strike Master Lease",
+          "source": {
+            "label": "VICI Properties 10-K(2025-12-31)",
+            "label_en": "VICI Properties 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Lucky Strike Master Lease Lucky Strike Entertainment Corporation October 18, 2048 Bowling Entertainment Centers"
+          }
+        }
+      ],
+      "name_en": "Lucky Strike Entertainment"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "CTS",
+    "name": "CTSコーポレーション",
+    "cik": 26058,
+    "name_en": "CTS Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年12月期の売上高に占める割合が11.2%の大口顧客である",
+          "text_en": "Toyota Motor Corporation accounted for 11.2% of net sales in 2025",
+          "source": {
+            "label": "CTSコーポレーション 10-K(2025-12-31)",
+            "label_en": "CTS Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our net sales to significant customers as a percentage of total net sales were as follows: Year Ended December 31, 2025 2024 2023 Toyota Motor Corporation 11.2 % 12.2 % 12.5 % Cummins, Inc. 8.4 % 11.7 % 15.0 % No other customer accounted for 10% or more of total net sales during these periods."
+          }
+        }
+      ],
+      "name_en": "Toyota Motor Corporation"
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "sub": "エンジンメーカー",
+      "sub_en": "Engine maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年12月期の売上高に占める割合が8.4%の大口顧客である",
+          "text_en": "Cummins, Inc. accounted for 8.4% of net sales in 2025",
+          "source": {
+            "label": "CTSコーポレーション 10-K(2025-12-31)",
+            "label_en": "CTS Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our net sales to significant customers as a percentage of total net sales were as follows: Year Ended December 31, 2025 2024 2023 Toyota Motor Corporation 11.2 % 12.2 % 12.5 % Cummins, Inc. 8.4 % 11.7 % 15.0 % No other customer accounted for 10% or more of total net sales during these periods."
+          }
+        }
+      ],
+      "name_en": "Cummins, Inc."
+    },
+    {
+      "id": "AVT",
+      "ticker": "AVT",
+      "name": "アヴネット",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な販売パートナーの流通業者のひとつである",
+          "text_en": "Avnet is one of the key distribution partners",
+          "source": {
+            "label": "CTSコーポレーション 10-K(2025-12-31)",
+            "label_en": "CTS Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our key distribution partners include large global and regional distributors such as Avnet, Inc., Digi-Key Electronics, Master Electronics, Future Electronics, and TTI, Inc."
+          }
+        }
+      ],
+      "name_en": "Avnet, Inc."
+    },
+    {
+      "id": "DKEY",
+      "ticker": "Digi-Key",
+      "name": "デジキー・エレクトロニクス",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な販売パートナーの流通業者のひとつである",
+          "text_en": "Digi-Key Electronics is one of the key distribution partners",
+          "source": {
+            "label": "CTSコーポレーション 10-K(2025-12-31)",
+            "label_en": "CTS Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our key distribution partners include large global and regional distributors such as Avnet, Inc., Digi-Key Electronics, Master Electronics, Future Electronics, and TTI, Inc."
+          }
+        }
+      ],
+      "name_en": "Digi-Key Electronics"
+    },
+    {
+      "id": "MASTER",
+      "ticker": "Master Electronics",
+      "name": "マスター・エレクトロニクス",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な販売パートナーの流通業者のひとつである",
+          "text_en": "Master Electronics is one of the key distribution partners",
+          "source": {
+            "label": "CTSコーポレーション 10-K(2025-12-31)",
+            "label_en": "CTS Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our key distribution partners include large global and regional distributors such as Avnet, Inc., Digi-Key Electronics, Master Electronics, Future Electronics, and TTI, Inc."
+          }
+        }
+      ],
+      "name_en": "Master Electronics"
+    },
+    {
+      "id": "FUTURE",
+      "ticker": "Future Electronics",
+      "name": "フューチャー・エレクトロニクス",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な販売パートナーの流通業者のひとつである",
+          "text_en": "Future Electronics is one of the key distribution partners",
+          "source": {
+            "label": "CTSコーポレーション 10-K(2025-12-31)",
+            "label_en": "CTS Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our key distribution partners include large global and regional distributors such as Avnet, Inc., Digi-Key Electronics, Master Electronics, Future Electronics, and TTI, Inc."
+          }
+        }
+      ],
+      "name_en": "Future Electronics"
+    },
+    {
+      "id": "TTI",
+      "ticker": "TTI",
+      "name": "ティーティーアイ",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な販売パートナーの流通業者のひとつである",
+          "text_en": "TTI, Inc. is one of the key distribution partners",
+          "source": {
+            "label": "CTSコーポレーション 10-K(2025-12-31)",
+            "label_en": "CTS Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26058/000119312526067039/cts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our key distribution partners include large global and regional distributors such as Avnet, Inc., Digi-Key Electronics, Master Electronics, Future Electronics, and TTI, Inc."
+          }
+        }
+      ],
+      "name_en": "TTI, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,280 @@
+{
+  "root": {
+    "ticker": "ACIW",
+    "name": "ACIワールドワイド",
+    "cik": 935036,
+    "name_en": "ACI Worldwide"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "FIS",
+    "FISV",
+    "MA",
+    "GPN"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "技術提携先で、そのハードやクラウド基盤を製品提供に使っている",
+          "text_en": "A technology partner whose infrastructure is used in delivering ACI's products",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have alliances with our technology partners Microsoft Corporation, Amazon, HPE, IBM, Red Hat, and Oracle, whose industry-leading hardware, software, and cloud-based infrastructure services are utilized by and in delivery of ACI’s products."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "技術提携先で、そのハードやクラウド基盤を製品提供に使っている",
+          "text_en": "A technology partner whose infrastructure is used in delivering ACI's products",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have alliances with our technology partners Microsoft Corporation, Amazon, HPE, IBM, Red Hat, and Oracle, whose industry-leading hardware, software, and cloud-based infrastructure services are utilized by and in delivery of ACI’s products."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "IT基盤",
+      "sub_en": "IT infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "技術提携先で、そのハードやクラウド基盤を製品提供に使っている",
+          "text_en": "A technology partner whose infrastructure is used in delivering ACI's products",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have alliances with our technology partners Microsoft Corporation, Amazon, HPE, IBM, Red Hat, and Oracle, whose industry-leading hardware, software, and cloud-based infrastructure services are utilized by and in delivery of ACI’s products."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイ・ビー・エム",
+      "sub": "IT基盤",
+      "sub_en": "IT infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "技術提携先で、そのハードやクラウド基盤を製品提供に使っている",
+          "text_en": "A technology partner whose infrastructure is used in delivering ACI's products",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have alliances with our technology partners Microsoft Corporation, Amazon, HPE, IBM, Red Hat, and Oracle, whose industry-leading hardware, software, and cloud-based infrastructure services are utilized by and in delivery of ACI’s products."
+          }
+        }
+      ],
+      "name_en": "IBM"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "技術提携先で、そのハードやクラウド基盤を製品提供に使っている",
+          "text_en": "A technology partner whose infrastructure is used in delivering ACI's products",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have alliances with our technology partners Microsoft Corporation, Amazon, HPE, IBM, Red Hat, and Oracle, whose industry-leading hardware, software, and cloud-based infrastructure services are utilized by and in delivery of ACI’s products."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "技術・事業の両面で連携する提携先である",
+          "text_en": "Works with ACI as both a technology partner and a business partner",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "organizations such as Visa and Mastercard can act as both technology partners and business partners, depending on the nature of the collaboration"
+          }
+        }
+      ],
+      "name_en": "Visa"
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "技術・事業の両面で連携する提携先である",
+          "text_en": "Works with ACI as both a technology partner and a business partner",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "organizations such as Visa and Mastercard can act as both technology partners and business partners, depending on the nature of the collaboration"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "決済ソフトの分野で競合している",
+          "text_en": "Competes with ACI in payment software",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The software competitors for ACI’s issuing, acquiring, and account-to-account payments solutions include Fidelity National Information Service, Inc. (\"FIS\"), Finastra, Fiserv, Inc. (\"Fiserv\"), Mastercard, NCR, OpenWay Group, Total System Services, Inc. (Global Payments), Volante, and Worldline"
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "FIS",
+      "ticker": "FIS",
+      "name": "フィデリティ・ナショナル・インフォメーション・サービス",
+      "sub": "金融IT",
+      "sub_en": "Financial technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済ソフトの分野で競合している",
+          "text_en": "Competes with ACI in payment software",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The software competitors for ACI’s issuing, acquiring, and account-to-account payments solutions include Fidelity National Information Service, Inc. (\"FIS\"), Finastra, Fiserv, Inc. (\"Fiserv\"), Mastercard, NCR, OpenWay Group, Total System Services, Inc. (Global Payments), Volante, and Worldline"
+          }
+        }
+      ],
+      "name_en": "Fidelity National Information Services"
+    },
+    {
+      "id": "FISV",
+      "ticker": "FISV",
+      "name": "ファイサーブ",
+      "sub": "金融IT",
+      "sub_en": "Financial technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済ソフトの分野で競合している",
+          "text_en": "Competes with ACI in payment software",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The software competitors for ACI’s issuing, acquiring, and account-to-account payments solutions include Fidelity National Information Service, Inc. (\"FIS\"), Finastra, Fiserv, Inc. (\"Fiserv\"), Mastercard, NCR, OpenWay Group, Total System Services, Inc. (Global Payments), Volante, and Worldline"
+          }
+        }
+      ],
+      "name_en": "Fiserv"
+    },
+    {
+      "id": "GPN",
+      "ticker": "GPN",
+      "name": "グローバル・ペイメンツ",
+      "sub": "決済処理",
+      "sub_en": "Payment processing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済ソフトの分野で競合している",
+          "text_en": "Competes with ACI in payment software",
+          "source": {
+            "label": "ACI Worldwide 10-K(December 31, 2025)",
+            "label_en": "ACI Worldwide 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935036/000093503626000011/aciw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The software competitors for ACI’s issuing, acquiring, and account-to-account payments solutions include Fidelity National Information Service, Inc. (\"FIS\"), Finastra, Fiserv, Inc. (\"Fiserv\"), Mastercard, NCR, OpenWay Group, Total System Services, Inc. (Global Payments), Volante, and Worldline"
+          }
+        }
+      ],
+      "name_en": "Global Payments"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

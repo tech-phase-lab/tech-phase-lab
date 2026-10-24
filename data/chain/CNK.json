@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "CNK",
+    "name": "シネマーク・ホールディングス",
+    "cik": 1385280,
+    "name_en": "Cinemark Holdings, Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携",
+      "en": "Partners"
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "AMC"
+  ],
+  "companies": [
+    {
+      "id": "BARCO",
+      "ticker": "Barco",
+      "name": "バルコ",
+      "sub": "映写・音響機器",
+      "sub_en": "Projection & sound",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "省エネ型レーザー映写機への全館転換を計画している",
+          "text_en": "Plans a multi-year conversion of auditoriums to Barco laser projectors",
+          "source": {
+            "label": "Cinemark Holdings, Inc. 10-K(2025年12月期)",
+            "label_en": "Cinemark Holdings, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1385280/000119312526056015/cnk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We are in the early stages of a multi-year project to strategically convert our auditoriums to more energy efficient Barco RGB laser projectors"
+          }
+        }
+      ],
+      "name_en": "Barco"
+    },
+    {
+      "id": "NCMI",
+      "ticker": "NCMI",
+      "name": "ナショナル・シネメディア",
+      "sub": "館内広告",
+      "sub_en": "In-theater ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国劇場の館内広告ネットワークの運営を担う",
+          "text_en": "Operates the in-theater digital advertising network for its U.S. theaters",
+          "source": {
+            "label": "Cinemark Holdings, Inc. 10-K(2025年12月期)",
+            "label_en": "Cinemark Holdings, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1385280/000119312526056015/cnk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our U.S. theaters are part of the in-theater digital network operated by National CineMedia, LLC (“NCM”)."
+          }
+        }
+      ],
+      "name_en": "National CineMedia"
+    },
+    {
+      "id": "AMC",
+      "ticker": "AMC",
+      "name": "AMCエンターテインメント",
+      "sub": "映画館運営",
+      "sub_en": "Theater operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "リーガルと共に、AC JVの合弁事業を営む",
+          "text_en": "Runs the AC JV, LLC joint venture together with Regal Entertainment Group",
+          "source": {
+            "label": "Cinemark Holdings, Inc. 10-K(2025年12月期)",
+            "label_en": "Cinemark Holdings, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1385280/000119312526056015/cnk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "AC JV, LLC, our joint venture with Regal Entertainment Group and AMC Entertainment, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "米国の主な競合として挙げられる映画館チェーン",
+          "text_en": "A primary U.S. theater competitor",
+          "source": {
+            "label": "Cinemark Holdings, Inc. 10-K(2025年12月期)",
+            "label_en": "Cinemark Holdings, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1385280/000119312526056015/cnk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our primary U.S. competitors include Regal and AMC and our primary international competitors, which vary by country, include Cinépolis"
+          }
+        }
+      ],
+      "name_en": "AMC Entertainment"
+    },
+    {
+      "id": "REGAL",
+      "ticker": "Regal",
+      "name": "リーガル",
+      "sub": "映画館運営",
+      "sub_en": "Theater operator",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の主な競合として挙げられる映画館チェーン",
+          "text_en": "A primary U.S. theater competitor",
+          "source": {
+            "label": "Cinemark Holdings, Inc. 10-K(2025年12月期)",
+            "label_en": "Cinemark Holdings, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1385280/000119312526056015/cnk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our primary U.S. competitors include Regal and AMC and our primary international competitors, which vary by country, include Cinépolis"
+          }
+        }
+      ],
+      "name_en": "Regal"
+    },
+    {
+      "id": "CINEPOLIS",
+      "ticker": "Cinépolis",
+      "name": "シネポリス",
+      "sub": "映画館運営",
+      "sub_en": "Theater operator",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "海外市場での主な競合の一つ",
+          "text_en": "One of the primary international competitors",
+          "source": {
+            "label": "Cinemark Holdings, Inc. 10-K(2025年12月期)",
+            "label_en": "Cinemark Holdings, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1385280/000119312526056015/cnk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our primary U.S. competitors include Regal and AMC and our primary international competitors, which vary by country, include Cinépolis"
+          }
+        }
+      ],
+      "name_en": "Cinépolis"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

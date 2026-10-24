@@ -1,0 +1,196 @@
+{
+  "root": {
+    "ticker": "KN",
+    "name": "ノウルズ",
+    "cik": 1587523,
+    "name_en": "Knowles"
+  },
+  "rows": [
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "VSH"
+  ],
+  "companies": [
+    {
+      "id": "WSA",
+      "ticker": "WS Audiology A/S",
+      "name": "WSオーディオロジー",
+      "sub": "補聴器",
+      "sub_en": "Hearing aids",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年に売上高の10%以上を占めた顧客のひとつである",
+          "text_en": "WS Audiology was a customer accounting for 10% or more of revenues in 2025",
+          "source": {
+            "label": "ノウルズ 10-K(2025-12-31)",
+            "label_en": "Knowles 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "The Company's customers that accounted for 10% or more of total revenues in 2025 were WS Audiology A/S and TTI, Inc."
+          }
+        }
+      ],
+      "name_en": "WS Audiology A/S"
+    },
+    {
+      "id": "TTI",
+      "ticker": "TTI",
+      "name": "ティーティーアイ",
+      "sub": "電子部品商社",
+      "sub_en": "Electronics distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年に売上高の10%以上を占めた顧客のひとつである",
+          "text_en": "TTI was a customer accounting for 10% or more of revenues in 2025",
+          "source": {
+            "label": "ノウルズ 10-K(2025-12-31)",
+            "label_en": "Knowles 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "The Company's customers that accounted for 10% or more of total revenues in 2025 were WS Audiology A/S and TTI, Inc."
+          }
+        }
+      ],
+      "name_en": "TTI, Inc."
+    },
+    {
+      "id": "SYNT",
+      "ticker": "Syntiant",
+      "name": "シンティアント",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "事業売却に伴う供給契約に基づき金属缶を販売している",
+          "text_en": "It sells metal cans to Syntiant under a supply agreement tied to the sale of CMM",
+          "source": {
+            "label": "ノウルズ 10-K(2025-12-31)",
+            "label_en": "Knowles 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Revenues increased primarily due to higher shipping volumes of metal cans that we manufacture and sell to Syntiant as part of our supply agreement associated with the sale of CMM"
+          }
+        }
+      ],
+      "name_en": "Syntiant Corp."
+    },
+    {
+      "id": "KAVX",
+      "ticker": "Kyocera AVX",
+      "name": "京セラAVX",
+      "sub": "コンデンサ",
+      "sub_en": "Capacitors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前が挙がっている",
+          "text_en": "Kyocera AVX is named as a competitor",
+          "source": {
+            "label": "ノウルズ 10-K(2025-12-31)",
+            "label_en": "Knowles 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Key competitors of our PD segment include: Kyocera AVX, Yageo Corporation's Kemet products, Vishay Intertechnology, and a broad range of specialty companies and brands."
+          }
+        }
+      ],
+      "name_en": "Kyocera AVX"
+    },
+    {
+      "id": "YAGEO",
+      "ticker": "Yageo (Kemet)",
+      "name": "ヤゲオ",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前が挙がっている",
+          "text_en": "Yageo (Kemet) is named as a competitor",
+          "source": {
+            "label": "ノウルズ 10-K(2025-12-31)",
+            "label_en": "Knowles 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Key competitors of our PD segment include: Kyocera AVX, Yageo Corporation's Kemet products, Vishay Intertechnology, and a broad range of specialty companies and brands."
+          }
+        }
+      ],
+      "name_en": "Yageo (Kemet)"
+    },
+    {
+      "id": "VSH",
+      "ticker": "VSH",
+      "name": "ビシェイ・インターテクノロジー",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前が挙がっている",
+          "text_en": "Vishay Intertechnology is named as a competitor",
+          "source": {
+            "label": "ノウルズ 10-K(2025-12-31)",
+            "label_en": "Knowles 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Key competitors of our PD segment include: Kyocera AVX, Yageo Corporation's Kemet products, Vishay Intertechnology, and a broad range of specialty companies and brands."
+          }
+        }
+      ],
+      "name_en": "Vishay Intertechnology"
+    },
+    {
+      "id": "SONION",
+      "ticker": "Sonion",
+      "name": "ソニオン",
+      "sub": "補聴器部品",
+      "sub_en": "Hearing components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前が挙がっている",
+          "text_en": "Sonion is named as a competitor",
+          "source": {
+            "label": "ノウルズ 10-K(2025-12-31)",
+            "label_en": "Knowles 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587523/000158752326000005/kn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our MSA segment's primary competitor is Sonion."
+          }
+        }
+      ],
+      "name_en": "Sonion"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "root": {
+    "ticker": "CARG",
+    "name": "カーガーズ",
+    "cik": 1494259,
+    "name_en": "CarGurus, Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元・基盤",
+      "en": "Suppliers & platforms",
+      "above": true
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "CARS",
+    "TRUE",
+    "CVNA"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud hosting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "プラットフォームのホスティングにAWSを使っている",
+          "text_en": "Hosts its platform through AWS",
+          "source": {
+            "label": "CarGurus, Inc. 10-K(2025年12月期)",
+            "label_en": "CarGurus, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494259/000119312526059435/carg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "These facilities include hosting through Amazon Web Services, a provider of cloud infrastructure services."
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "検索エンジン",
+      "sub_en": "Search engine",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "サイトへの集客を一部Googleなどの検索エンジンに頼っている",
+          "text_en": "Relies in part on search engines such as Google to drive traffic",
+          "source": {
+            "label": "CarGurus, Inc. 10-K(2025年12月期)",
+            "label_en": "CarGurus, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494259/000119312526059435/carg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We rely, in part, on internet search engines such as Google, Bing, and Yahoo! to drive traffic to our websites."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "CARS",
+      "ticker": "CARS",
+      "name": "カーズ・ドットコム",
+      "sub": "自動車マーケット",
+      "sub_en": "Auto marketplace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の自動車オンライン市場で競合する",
+          "text_en": "Competes in U.S. online automotive marketplaces",
+          "source": {
+            "label": "CarGurus, Inc. 10-K(2025年12月期)",
+            "label_en": "CarGurus, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494259/000119312526059435/carg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "major U.S. online automotive marketplaces, such as AutoTrader.com, CARFAX.com, Cars.com, and TrueCar.com"
+          }
+        }
+      ],
+      "name_en": "Cars.com"
+    },
+    {
+      "id": "TRUE",
+      "ticker": "TRUE",
+      "name": "トゥルーカー",
+      "sub": "自動車マーケット",
+      "sub_en": "Auto marketplace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の自動車オンライン市場で競合する",
+          "text_en": "Competes in U.S. online automotive marketplaces",
+          "source": {
+            "label": "CarGurus, Inc. 10-K(2025年12月期)",
+            "label_en": "CarGurus, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494259/000119312526059435/carg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "major U.S. online automotive marketplaces, such as AutoTrader.com, CARFAX.com, Cars.com, and TrueCar.com"
+          }
+        }
+      ],
+      "name_en": "TrueCar"
+    },
+    {
+      "id": "AUTOTRADER",
+      "ticker": "AutoTrader.com",
+      "name": "オートトレーダー・ドットコム",
+      "sub": "自動車マーケット",
+      "sub_en": "Auto marketplace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の自動車オンライン市場で競合する",
+          "text_en": "Competes in U.S. online automotive marketplaces",
+          "source": {
+            "label": "CarGurus, Inc. 10-K(2025年12月期)",
+            "label_en": "CarGurus, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494259/000119312526059435/carg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "major U.S. online automotive marketplaces, such as AutoTrader.com, CARFAX.com, Cars.com, and TrueCar.com"
+          }
+        }
+      ],
+      "name_en": "AutoTrader.com"
+    },
+    {
+      "id": "CVNA",
+      "ticker": "CVNA",
+      "name": "カーバナ",
+      "sub": "オンライン中古車販売",
+      "sub_en": "Online dealership",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "オンライン販売店として競合する",
+          "text_en": "Competes as an online dealership",
+          "source": {
+            "label": "CarGurus, Inc. 10-K(2025年12月期)",
+            "label_en": "CarGurus, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494259/000119312526059435/carg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "online dealerships, such as Carvana.com"
+          }
+        }
+      ],
+      "name_en": "Carvana"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
