@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "IVZ",
+    "name": "インベスコ",
+    "cik": 914208,
+    "name_en": "Invesco Ltd."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MM",
+      "ticker": "Massachusetts",
+      "name": "マスミューチュアル",
+      "sub": "生命保険・大株主",
+      "sub_en": "Insurer & shareholder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "当社の経営に大きな影響力を持つ株主で、複数の商品にシード投資をしている",
+          "text_en": "MassMutual has significant influence over Invesco and has made seed investments in several products",
+          "source": {
+            "label": "IVZ 10-K(2025-12-31)",
+            "label_en": "IVZ 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914208/000091420826000079/ivz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Further, MassMutual has made significant capital or seed investments in several of our products."
+          }
+        }
+      ],
+      "name_en": "Massachusetts Mutual Life Insurance Company"
+    },
+    {
+      "id": "BRG",
+      "ticker": "Barings",
+      "name": "バリングス",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マスミューチュアル傘下のバリングスと、商品・販売で戦略提携している",
+          "text_en": "Strategic product and distribution partnership with Barings, MassMutual's global asset management subsidiary",
+          "source": {
+            "label": "IVZ 10-K(2025-12-31)",
+            "label_en": "IVZ 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914208/000091420826000079/ivz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In addition to our previously announced broader strategic product and distribution partnership with Barings (MassMutual's global asset management subsidiary), we also announced a new strategic partnership with LGT Capital Partners during the fourth quarter."
+          }
+        }
+      ],
+      "name_en": "Barings"
+    },
+    {
+      "id": "LGT",
+      "ticker": "LGT Capital",
+      "name": "LGTキャピタル・パートナーズ",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "第4四半期に新たな戦略提携を発表した",
+          "text_en": "A new strategic partnership with LGT Capital Partners was announced in the fourth quarter",
+          "source": {
+            "label": "IVZ 10-K(2025-12-31)",
+            "label_en": "IVZ 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914208/000091420826000079/ivz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In addition to our previously announced broader strategic product and distribution partnership with Barings (MassMutual's global asset management subsidiary), we also announced a new strategic partnership with LGT Capital Partners during the fourth quarter."
+          }
+        }
+      ],
+      "name_en": "LGT Capital Partners"
+    },
+    {
+      "id": "INDI",
+      "ticker": "IndusInd",
+      "name": "インドスインド・インターナショナル・ホールディングス",
+      "sub": "金融・販売網",
+      "sub_en": "Finance & distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドの運用会社の持分60%を売却し、同社の販売網と組む",
+          "text_en": "Sold 60% of its interest in Invesco Asset Management (India) to combine with its domestic distribution network",
+          "source": {
+            "label": "IVZ 10-K(2025-12-31)",
+            "label_en": "IVZ 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914208/000091420826000079/ivz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We also completed the sale of 60% of our interest in Invesco Asset Management (India) Private Limited to IndusInd International Holdings Limited to enhance the revenue generation of the business by combining our asset management expertise with their domestic distribution network."
+          }
+        }
+      ],
+      "name_en": "IndusInd International Holdings Limited"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

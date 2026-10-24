@@ -1,0 +1,258 @@
+{
+  "root": {
+    "ticker": "KVUE",
+    "name": "ケンビュー",
+    "cik": 1944048,
+    "name_en": "Kenvue"
+  },
+  "rows": [
+    {
+      "ja": "提携・競合",
+      "en": "Partners & rivals"
+    }
+  ],
+  "rivals": [
+    "PG",
+    "EL",
+    "CHD",
+    "CL",
+    "KMB",
+    "HLN"
+  ],
+  "companies": [
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "sub": "元親会社",
+      "sub_en": "Former parent",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "元親会社として、分離契約などを結び、現在も両社の関係を定めている",
+          "text_en": "Kenvue has a separation agreement and other agreements with J&J that set the framework for their ongoing relationship",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We entered into a separation agreement (the “Separation Agreement”) and various other agreements with J&J for the purpose of effecting the Separation."
+          }
+        }
+      ],
+      "name_en": "Johnson & Johnson"
+    },
+    {
+      "id": "KMB",
+      "ticker": "KMB",
+      "name": "キンバリークラーク",
+      "sub": "合併契約・競合",
+      "sub_en": "Merger partner & rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年11月2日に、合併契約を結んだ",
+          "text_en": "Kenvue entered into a merger agreement with Kimberly-Clark on November 2, 2025",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On November 2, 2025, we entered into an Agreement and Plan of Merger (the “Merger Agreement”) with Kimberly-Clark Corporation, a Delaware corporation"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "エッセンシャルヘルス分野の主な競合に入る",
+          "text_en": "Kimberly-Clark is among its key competitors in Essential Health",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Essential Health . Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Kimberly-Clark"
+    },
+    {
+      "id": "PG",
+      "ticker": "PG",
+      "name": "プロクター・アンド・ギャンブル",
+      "sub": "一般消費財",
+      "sub_en": "Consumer goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "セルフケアなど3分野で主な競合に入る",
+          "text_en": "Procter & Gamble is a key competitor in Self Care, Skin Health and Beauty, and Essential Health",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Self Care. Haleon, Procter & Gamble, Reckitt Benckiser Group, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Procter & Gamble"
+    },
+    {
+      "id": "HLN",
+      "ticker": "HLN",
+      "name": "ヘイリオン",
+      "sub": "コンシューマーヘルス",
+      "sub_en": "Consumer health",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "セルフケアとエッセンシャルヘルスで主な競合に入る",
+          "text_en": "Haleon is a key competitor in Self Care and Essential Health",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Self Care. Haleon, Procter & Gamble, Reckitt Benckiser Group, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Haleon"
+    },
+    {
+      "id": "RKT",
+      "ticker": "Reckitt Benckiser",
+      "name": "レキットベンキーザー",
+      "sub": "一般消費財",
+      "sub_en": "Consumer goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "セルフケア分野の主な競合に入る",
+          "text_en": "Reckitt Benckiser Group is a key competitor in Self Care",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Self Care. Haleon, Procter & Gamble, Reckitt Benckiser Group, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Reckitt Benckiser Group"
+    },
+    {
+      "id": "EL",
+      "ticker": "EL",
+      "name": "エスティローダー",
+      "sub": "化粧品",
+      "sub_en": "Cosmetics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スキンヘルス・ビューティ分野の主な競合に入る",
+          "text_en": "Estée Lauder is a key competitor in Skin Health and Beauty",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Skin Health and Beauty . Beiersdorf, Estée Lauder, L’Oréal, Procter & Gamble, Unilever, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Estée Lauder"
+    },
+    {
+      "id": "BEI",
+      "ticker": "Beiersdorf",
+      "name": "バイヤスドルフ",
+      "sub": "スキンケア",
+      "sub_en": "Skin care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スキンヘルス・ビューティ分野の主な競合に入る",
+          "text_en": "Beiersdorf is a key competitor in Skin Health and Beauty",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Skin Health and Beauty . Beiersdorf, Estée Lauder, L’Oréal, Procter & Gamble, Unilever, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Beiersdorf"
+    },
+    {
+      "id": "CHD",
+      "ticker": "CHD",
+      "name": "チャーチ・アンド・ドワイト",
+      "sub": "一般消費財",
+      "sub_en": "Consumer goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エッセンシャルヘルス分野の主な競合に入る",
+          "text_en": "Church & Dwight is a key competitor in Essential Health",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Essential Health . Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Church & Dwight"
+    },
+    {
+      "id": "CL",
+      "ticker": "CL",
+      "name": "コルゲート・パーモリブ",
+      "sub": "オーラルケア",
+      "sub_en": "Oral care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エッセンシャルヘルス分野の主な競合に入る",
+          "text_en": "Colgate-Palmolive is a key competitor in Essential Health",
+          "source": {
+            "label": "ケンビュー 10-K(2025年12月28日)",
+            "label_en": "Kenvue 10-K (fiscal year ended December 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Essential Health . Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Colgate-Palmolive"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

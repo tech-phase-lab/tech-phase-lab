@@ -1,0 +1,317 @@
+{
+  "root": {
+    "ticker": "LDOS",
+    "name": "リードス",
+    "cik": 1336920,
+    "name_en": "Leidos"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Rivals"
+    }
+  ],
+  "rivals": [
+    "LMT",
+    "NOC",
+    "GD",
+    "RTX",
+    "LHX",
+    "BAH"
+  ],
+  "companies": [
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーティン",
+      "sub": "防衛大手",
+      "sub_en": "Defense prime",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "Lockheed Martin is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "Lockheed Martin"
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "sub": "防衛大手",
+      "sub_en": "Defense prime",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "Northrop Grumman is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "Northrop Grumman"
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "sub": "防衛大手",
+      "sub_en": "Defense prime",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "General Dynamics is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "General Dynamics"
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTXコーポレーション",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "RTX Corporation is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "RTX Corporation"
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "sub": "防衛エレクトロニクス",
+      "sub_en": "Defense electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "L3Harris Technologies is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "L3Harris Technologies"
+    },
+    {
+      "id": "BAH",
+      "ticker": "BAH",
+      "name": "ブーズ・アレン・ハミルトン",
+      "sub": "政府向けコンサル",
+      "sub_en": "Government consulting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "Booz Allen Hamilton is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "Booz Allen Hamilton"
+    },
+    {
+      "id": "CACI",
+      "ticker": "CACI",
+      "name": "CACIインターナショナル",
+      "sub": "政府向けIT",
+      "sub_en": "Government IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "CACI International is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "CACI International"
+    },
+    {
+      "id": "SAIC",
+      "ticker": "SAIC",
+      "name": "サイエンス・アプリケーションズ・インターナショナル",
+      "sub": "政府向けIT",
+      "sub_en": "Government IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "SAIC is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "SAIC"
+    },
+    {
+      "id": "KBR",
+      "ticker": "KBR",
+      "name": "ケービーアール",
+      "sub": "政府向けサービス",
+      "sub_en": "Government services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "KBR, Inc. is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "KBR, Inc."
+    },
+    {
+      "id": "PSN",
+      "ticker": "PSN",
+      "name": "パーソンズ",
+      "sub": "政府向けサービス",
+      "sub_en": "Government services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "Parsons Corporation is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "Parsons Corporation"
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "sub": "政府向けサービス",
+      "sub_en": "Government services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "Amentum Services is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "Amentum Services"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイビーエム",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として名前が挙がっている",
+          "text_en": "IBM is named among its principal competitors",
+          "source": {
+            "label": "リードス 10-K(2026年1月2日)",
+            "label_en": "Leidos 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation, GovCIO, IBM, KBR Inc., L3Harris Technologies, Inc., Lockheed Martin Corporation, ManTech, Northrop Grumman Corporation, Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC"
+          }
+        }
+      ],
+      "name_en": "IBM"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

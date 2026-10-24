@@ -1,0 +1,192 @@
+{
+  "root": {
+    "ticker": "IDXX",
+    "name": "アイデックス・ラボラトリーズ",
+    "cik": 874716,
+    "name_en": "IDEXX Laboratories"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ZTS",
+    "NEOG",
+    "TMO"
+  ],
+  "companies": [
+    {
+      "id": "ORTHO",
+      "ticker": "Ortho-Clinical",
+      "name": "オーソ・クリニカル・ダイアグノスティックス",
+      "sub": "検査スライド供給",
+      "sub_en": "Chemistry slide supplier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Catalystの化学分析スライドの一部を供給する",
+          "text_en": "Supplies certain Catalyst chemistry slides to IDEXX",
+          "source": {
+            "label": "IDEXX Laboratories 10-K(2025年12月31日)",
+            "label_en": "IDEXX Laboratories 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471626000038/idxx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Certain Catalyst chemistry slides are supplied by Ortho-Clinical Diagnostics, Inc."
+          }
+        }
+      ],
+      "name_en": "Ortho-Clinical Diagnostics"
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャーサイエンティフィック",
+      "sub": "検査機器・試薬",
+      "sub_en": "Lab instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同社製の水質検査キットの一部を販売している",
+          "text_en": "IDEXX distributes certain water testing kits made by Thermo Fisher",
+          "source": {
+            "label": "IDEXX Laboratories 10-K(2025年12月31日)",
+            "label_en": "IDEXX Laboratories 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471626000038/idxx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We also distribute certain water testing kits manufactured by Thermo Fisher Scientific, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "畜産・水質検査の分野で競合する",
+          "text_en": "Competes in livestock, poultry and water testing",
+          "source": {
+            "label": "IDEXX Laboratories 10-K(2025年12月31日)",
+            "label_en": "IDEXX Laboratories 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471626000038/idxx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our competitors include smaller regional companies and larger companies with livestock and poultry diagnostics and water testing solution products, such as Neogen Corporation, Charm Sciences, Inc., BioChek, Innovative Diagnostics and Thermo Fisher Scientific Inc."
+          }
+        }
+      ],
+      "name_en": "Thermo Fisher Scientific"
+    },
+    {
+      "id": "MARS",
+      "ticker": "Mars, Incorporated",
+      "name": "マース",
+      "sub": "動物病院・検査",
+      "sub_en": "Vet diagnostics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Antech DiagnosticsやHeskaのブランドで北米市場で競合する",
+          "text_en": "Competes in North America through its Antech Diagnostics and Heska brands",
+          "source": {
+            "label": "IDEXX Laboratories 10-K(2025年12月31日)",
+            "label_en": "IDEXX Laboratories 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471626000038/idxx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We compete with a number of companies in most geographic locations in North America including Mars, Incorporated brands Antech Diagnostics and Heska"
+          }
+        }
+      ],
+      "name_en": "Mars, Incorporated"
+    },
+    {
+      "id": "ZTS",
+      "ticker": "ZTS",
+      "name": "ゾエティス",
+      "sub": "動物用医薬品",
+      "sub_en": "Animal health",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "子会社のAbaxisを含め、北米で競合する",
+          "text_en": "Competes in North America, including through its subsidiary Abaxis",
+          "source": {
+            "label": "IDEXX Laboratories 10-K(2025年12月31日)",
+            "label_en": "IDEXX Laboratories 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471626000038/idxx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Zoetis Inc. (including its wholly-owned subsidiary Abaxis, Inc.)"
+          }
+        }
+      ],
+      "name_en": "Zoetis Inc."
+    },
+    {
+      "id": "COVET",
+      "ticker": "Covetrus",
+      "name": "コベトラス",
+      "sub": "動物医療ソフト",
+      "sub_en": "Vet software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米と英国で動物病院向けソフトウェアの最大の競合である",
+          "text_en": "Its largest competitor for veterinary software in North America and the U.K.",
+          "source": {
+            "label": "IDEXX Laboratories 10-K(2025年12月31日)",
+            "label_en": "IDEXX Laboratories 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471626000038/idxx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our largest competitor in North America and the U.K. is Covetrus, Inc."
+          }
+        }
+      ],
+      "name_en": "Covetrus, Inc."
+    },
+    {
+      "id": "NEOG",
+      "ticker": "NEOG",
+      "name": "ネオジェン",
+      "sub": "食品・畜産検査",
+      "sub_en": "Food & animal testing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "畜産診断や水質検査の分野で競合する",
+          "text_en": "Competes in livestock diagnostics and water testing",
+          "source": {
+            "label": "IDEXX Laboratories 10-K(2025年12月31日)",
+            "label_en": "IDEXX Laboratories 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471626000038/idxx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "such as Neogen Corporation, Charm Sciences, Inc., BioChek"
+          }
+        }
+      ],
+      "name_en": "Neogen Corporation"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

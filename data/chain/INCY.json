@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "INCY",
+    "name": "インサイト",
+    "cik": 879169,
+    "name_en": "Incyte"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NVS",
+      "ticker": "NVS",
+      "name": "ノバルティス",
+      "sub": "ライセンス提携先",
+      "sub_en": "Licensing partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ルキソリチニブの米国外での開発・販売権とカプマチニブの世界での権利を持つ",
+          "text_en": "Holds ruxolitinib rights outside the US and worldwide capmatinib rights under a collaboration agreement",
+          "source": {
+            "label": "Incyte 10-K(2025年12月31日)",
+            "label_en": "Incyte 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879169/000087916926000010/incy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Under our collaboration agreement with Novartis Pharmaceutical International Ltd. (“Novartis”), Novartis received exclusive development and commercialization rights to ruxolitinib outside of the Un"
+          }
+        }
+      ],
+      "name_en": "Novartis"
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "sub": "ライセンス提携先",
+      "sub_en": "Licensing partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "バリシチニブ(OLUMIANT)を導出した提携先である",
+          "text_en": "Licensee and collaborative partner for baricitinib (OLUMIANT)",
+          "source": {
+            "label": "Incyte 10-K(2025年12月31日)",
+            "label_en": "Incyte 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879169/000087916926000010/incy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "OLUMIANT (baricitinib), which is licensed to our collaborative partner Eli Lilly and Company (“Lilly”)"
+          }
+        }
+      ],
+      "name_en": "Eli Lilly"
+    },
+    {
+      "id": "SNDX",
+      "ticker": "SNDX",
+      "name": "シンダックス",
+      "sub": "導入元",
+      "sub_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗CSF-1R抗体axatilimabの共同開発・商業化契約を結んでいる",
+          "text_en": "Holds a collaboration and license agreement for axatilimab, an anti-CSF-1R antibody",
+          "source": {
+            "label": "Incyte 10-K(2025年12月31日)",
+            "label_en": "Incyte 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879169/000087916926000010/incy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In September 2021, we entered into an exclusive worldwide collaboration and license agreement with Syndax Pharmaceuticals, Inc."
+          }
+        }
+      ],
+      "name_en": "Syndax Pharmaceuticals"
+    },
+    {
+      "id": "MGNX",
+      "ticker": "MGNX",
+      "name": "マクロジェニクス",
+      "sub": "導入元",
+      "sub_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レチファンリマブをマクロジェニクスから導入している",
+          "text_en": "Retifanlimab is licensed from MacroGenics",
+          "source": {
+            "label": "Incyte 10-K(2025年12月31日)",
+            "label_en": "Incyte 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879169/000087916926000010/incy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Retifanlimab licensed from MacroGenics, Inc."
+          }
+        }
+      ],
+      "name_en": "MacroGenics"
+    },
+    {
+      "id": "XNCR",
+      "ticker": "XNCR",
+      "name": "ゼンコア",
+      "sub": "導入元",
+      "sub_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "タファシタマブをゼンコアから導入している",
+          "text_en": "Tafasitamab is licensed from Xencor",
+          "source": {
+            "label": "Incyte 10-K(2025年12月31日)",
+            "label_en": "Incyte 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879169/000087916926000010/incy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Tafasitamab licensed from Xencor, Inc."
+          }
+        }
+      ],
+      "name_en": "Xencor"
+    },
+    {
+      "id": "MRUS",
+      "ticker": "MRUS",
+      "name": "メルス",
+      "sub": "二重特異性抗体",
+      "sub_en": "Bispecific antibodies",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "INCA33890の開発にメルスのライセンス済み二重特異性抗体基盤を使っている",
+          "text_en": "Developed INCA33890 using Merus’s licensed bispecific platform",
+          "source": {
+            "label": "Incyte 10-K(2025年12月31日)",
+            "label_en": "Incyte 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879169/000087916926000010/incy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "INCA33890 is a TGFβR2xPD-1 bispecific antibody developed by Incyte using Merus’s licensed bispecific platform"
+          }
+        }
+      ],
+      "name_en": "Merus N.V."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -48353,7 +48353,7 @@
       "strength": "Olive Gardenは米国最大のイタリアン・フルサービス運営会社。Ruth's Chrisなど高級ブランドも持つ。",
       "risks": "食材や人件費、光熱費の上昇が利益率を圧迫しうる。関税や最低賃金の引き上げも負担になる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ダーデンの宅配を担う、複数年の独占契約の相手先。"
     },
     "en": {
       "business": "A full-service restaurant company that runs Olive Garden and other brands.",
@@ -48361,11 +48361,25 @@
       "strength": "Olive Garden is the largest full-service Italian restaurant operator in the U.S., and it also owns fine dining brands such as Ruth's Chris.",
       "risks": "Rising food, labor and utility costs can squeeze margins, and tariffs and higher minimum wages add to the burden.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Uber handles delivery under an exclusive multi-year arrangement with Darden."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Uber Technologies, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "宅配の提携先",
+            "en": "Delivery partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "UBER"
+        }
+      ]
     }
   },
   {
@@ -48386,20 +48400,48 @@
       "revenue": "米国の透析事業が最大の柱。海外の透析センターや統合腎臓ケア事業でも稼ぐ。",
       "strength": "CMSの品質評価制度で長年トップ水準を保つ。患者が治療の方法を選べる柔軟さが特徴。",
       "risks": "法規制の変更や訴訟、民間保険会社との契約交渉が課題。人件費の上昇も抱える。",
-      "competition": "",
-      "relationships": ""
+      "competition": "主な競合にフレゼニウス・メディカルケアがある。",
+      "relationships": "腎臓ケア向け医療機器会社モザークの議決権を50%ずつ保有している。"
     },
     "en": {
       "business": "A healthcare company that provides dialysis and other care to kidney disease patients.",
       "revenue": "U.S. dialysis is its largest business. International centers and integrated kidney care add to earnings.",
       "strength": "It has held an industry-leading spot in CMS quality programs for years, and its care model lets patients choose how they are treated.",
       "risks": "Changing regulation, lawsuits and contract talks with private payors are key issues, along with rising labor costs.",
-      "competition": "",
-      "relationships": ""
+      "competition": "Main competitors include Fresenius Medical Care.",
+      "relationships": "Medtronic holds the other 50% of Mozarc Medical, a kidney care device company co-owned with DaVita."
     },
     "maps": {
-      "competition": [],
-      "relationships": []
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Fresenius Medical Care",
+          "role": "competitor",
+          "label": {
+            "ja": "最大の競合",
+            "en": "Largest competitor"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FMS"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Medtronic",
+          "role": "partner",
+          "label": {
+            "ja": "合弁相手",
+            "en": "Joint venture partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MDT"
+        }
+      ]
     }
   },
   {
@@ -48720,7 +48762,7 @@
       "strength": "126市場・36州に広がる規模で、資金調達や資材の仕入れで有利になる。",
       "risks": "景気循環に左右される。住宅ローン金利が高止まりすると、住宅が売れにくくなりうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "住宅ローンの売却先で、2025年度はローンの約71%が同社などへ直接売却された。 住宅ローンの売却先で、2025年度はローンの約71%が同社などへ直接売却された。"
     },
     "en": {
       "business": "The largest U.S. homebuilder by homes closed.",
@@ -48728,11 +48770,38 @@
       "strength": "Scale across 126 markets in 36 states brings cheaper capital and better supplier pricing.",
       "risks": "It is cyclical, and prolonged high mortgage rates could make homes harder to sell.",
       "competition": "",
-      "relationships": ""
+      "relationships": "About 71% of mortgage loans in fiscal 2025 were sold to Fannie Mae and Freddie Mac, among others. About 71% of mortgage loans in fiscal 2025 were sold to Fannie Mae and Freddie Mac, among others."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Fannie Mae",
+          "role": "customer",
+          "label": {
+            "ja": "ローンの売却先",
+            "en": "Buyer of mortgage loans"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FNMA"
+        },
+        {
+          "kind": "company",
+          "name": "Freddie Mac",
+          "role": "customer",
+          "label": {
+            "ja": "ローンの売却先",
+            "en": "Buyer of mortgage loans"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FMCC"
+        }
+      ]
     }
   },
   {
@@ -49443,7 +49512,7 @@
       "strength": "クラウドへの移行を進め、AIを使った製品を届ける体制づくりが特徴。",
       "risks": "情報漏えいが大きな弱点。過去の重大な事件では認証を失い、売上が落ちた。",
       "competition": "",
-      "relationships": ""
+      "relationships": "クラウド基盤などの購入契約を結び、一部のネットワークとセキュリティ基盤を委託している。"
     },
     "en": {
       "business": "A global data, analytics and technology company that provides credit and workforce information.",
@@ -49451,11 +49520,25 @@
       "strength": "It is moving its systems to the cloud to deliver AI-based products.",
       "risks": "Data breaches are a major weakness. A past serious incident cost it key certifications and hurt revenue.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Equifax agreed to buy cloud platform services and software from Google and outsourced parts of its network and security infrastructure."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "supplier",
+          "label": {
+            "ja": "クラウド基盤の供給元",
+            "en": "Cloud platform supplier"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOGL"
+        }
+      ]
     }
   },
   {
@@ -49511,7 +49594,7 @@
       "strength": "Exchangeへのこれらのサービスに、直接の競合がいない。",
       "risks": "Exchangeの保険料が減るか手数料率が下がると、収益が大きく落ちる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "契約者のための事務代行（アトーニー・イン・ファクト）を務める関係。"
     },
     "en": {
       "business": "A company that handles policy issuance and renewal for the Erie Insurance Exchange.",
@@ -49519,11 +49602,24 @@
       "strength": "It has no direct competition in providing these services to the Exchange.",
       "risks": "Lower premiums at the Exchange or a lower fee rate would cut its revenue and profit sharply.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Erie Indemnity has served as attorney-in-fact for the subscribers at the Erie Insurance Exchange since 1925."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Erie Insurance Exchange",
+          "role": "partner",
+          "label": {
+            "ja": "代行先の保険交換組織",
+            "en": "Attorney-in-fact client"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -49545,7 +49641,7 @@
       "strength": "新規供給が限られる大都市圏に絞り、調査を基に投資先を選ぶのが特徴。",
       "risks": "競合の開発や買収で賃料や入居率が下がりうる。大手の競合もいる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "関連会社が出資元の事業体に優先株投資を行っている相手。"
     },
     "en": {
       "business": "A real estate investment trust that owns and runs apartment communities on the U.S. West Coast.",
@@ -49553,11 +49649,24 @@
       "strength": "It focuses on large metro areas with limited new supply and picks investments through market research.",
       "risks": "Competing housing can push down rents and occupancy, and some rivals are larger.",
       "competition": "",
-      "relationships": ""
+      "relationships": "In August 2022 Essex funded an $11.2 million preferred equity investment in an entity whose sponsor includes an affiliate of MMC (Marcus & Millichap Company)."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Marcus & Millichap Company",
+          "role": "partner",
+          "label": {
+            "ja": "優先株投資の関連先",
+            "en": "Preferred equity sponsor affiliate"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -49653,7 +49762,7 @@
       "strength": "主要子会社がA.M. BestからA+の格付けを得ており、100カ国超に展開する。",
       "risks": "巨大災害の損失が想定を超えうる。準備金が足りなくなる恐れも抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "元受保険料の約22.4%を持ち込む最大の保険ブローカー。 元受保険料の約18.7%を持ち込む2番目の保険ブローカー。"
     },
     "en": {
       "business": "A Bermuda-based company that underwrites reinsurance and insurance.",
@@ -49661,11 +49770,38 @@
       "strength": "Its main subsidiaries are rated A+ by A.M. Best, and its network spans more than 100 countries.",
       "risks": "Catastrophe losses can exceed projections, and loss reserves may prove insufficient.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Marsh McLennan is the broker with the largest share, about 22.4% of gross written premiums. Aon is the broker with the next-largest share, about 18.7% of gross written premiums."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Marsh McLennan",
+          "role": "customer",
+          "label": {
+            "ja": "最大のブローカー",
+            "en": "Largest broker"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MMC"
+        },
+        {
+          "kind": "company",
+          "name": "Aon",
+          "role": "customer",
+          "label": {
+            "ja": "2番目のブローカー",
+            "en": "Second-largest broker"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AON"
+        }
+      ]
     }
   },
   {
@@ -49687,7 +49823,7 @@
       "strength": "大型発電所で規模の利益を生かし、競争力のある費用で電気をつくるのが特徴。",
       "risks": "データセンター需要が想定どおり伸びないと業績に響く。環境規制への対応費用や資金調達も重荷になりうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "送電会社トランスソースを共同保有する関係（エバジー側は13.5%）。 送電会社プレーリーウィンドを共同事業として持つ相手（エバジー側50%）。"
     },
     "en": {
       "business": "A holding company for electric utilities that generate, transmit and sell power.",
@@ -49695,11 +49831,37 @@
       "strength": "It generates power at large central station plants for economies of scale and a competitive cost.",
       "risks": "Weaker-than-expected data center demand would hurt results, and environmental compliance costs and financing needs weigh on it.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Evergy Transmission Company owns 13.5% of Transource and AEP's subsidiary owns the other 86.5%. Prairie Wind is a joint venture between Evergy Kansas Central and subsidiaries of AEP and Berkshire Hathaway Energy; Evergy Kansas Central holds 50%."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "American Electric Power",
+          "role": "partner",
+          "label": {
+            "ja": "送電事業の共同保有",
+            "en": "Transmission co-owner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AEP"
+        },
+        {
+          "kind": "company",
+          "name": "Berkshire Hathaway Energy Company",
+          "role": "partner",
+          "label": {
+            "ja": "送電JVのパートナー",
+            "en": "Transmission JV partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -49823,7 +49985,7 @@
       "strength": "現在の日量生産の約99%を自社で操業する。大型の合併で天然ガスの資源基盤を広げた。",
       "risks": "ガスや石油の価格変動に業績が左右される。大手の競合は資金力で上回りうる。風力や太陽光との競争も受ける。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ヘインズビルのガス集荷パイプラインNG3を共同で建設した相手。 NG3が回収したCO2を引き渡すCO2サービス契約の相手。"
     },
     "en": {
       "business": "The largest independent natural gas producer in the U.S.",
@@ -49831,11 +49993,36 @@
       "strength": "It operates approximately 99% of its current daily production, and a large merger widened its gas resource base.",
       "risks": "Results swing with gas and oil prices, larger rivals may have more resources, and wind and solar compete indirectly.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Expand Energy agreed with Momentum Sustainable Ventures to build the NG3 gas gathering pipeline and carbon capture project. Under a CO2 services agreement, NG3 anticipates delivering CO2 to Exxon for capture, transportation and storage; Expand Energy holds a 35% interest in NG3."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Momentum Sustainable Ventures LLC",
+          "role": "partner",
+          "label": {
+            "ja": "NG3パイプライン共同事業",
+            "en": "NG3 pipeline joint venture"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ExxonMobil Low Carbon Solutions Onshore Storage, LLC",
+          "role": "partner",
+          "label": {
+            "ja": "CO2サービス契約",
+            "en": "CO2 services agreement"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -50175,7 +50362,7 @@
       "strength": "米国のZIPコードの98%をカバーする拠点網が特徴。",
       "risks": "景気や貿易政策の影響を受けやすい。燃料価格や人手の確保、業界の競争も重荷になる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "移行期間中、IT・サイバーセキュリティ機能の一部をフェデックスに頼っている。"
     },
     "en": {
       "business": "North America's largest less-than-truckload (LTL) freight carrier.",
@@ -50183,11 +50370,25 @@
       "strength": "Its network covers 98% of U.S. ZIP Codes.",
       "risks": "It is exposed to the economy and trade policy, and also faces fuel prices, driver supply and competition.",
       "competition": "",
-      "relationships": ""
+      "relationships": "FedEx provides certain IT and cybersecurity functions to FedEx Freight under the Transition Services Agreement."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "FedEx",
+          "role": "supplier",
+          "label": {
+            "ja": "IT機能の提供元",
+            "en": "IT services supplier (transition)"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FDX"
+        }
+      ]
     }
   },
   {
@@ -51009,7 +51210,7 @@
       "strength": "投資を医療不動産に集中させ、ラボや外来医療ビルなどを持つのが特徴。",
       "risks": "入居者の支払い能力や、ライフサイエンス業界の資金難に左右される。医療分野への集中も弱点。",
       "competition": "",
-      "relationships": ""
+      "relationships": "外来医療施設の最大テナントで、セグメント収益の15%を占める。 外来医療施設の主要テナントで、セグメント収益の6%を占める。"
     },
     "en": {
       "business": "A REIT that owns real estate for health care and life science.",
@@ -51017,11 +51218,37 @@
       "strength": "It focuses its investments on healthcare property, including labs and outpatient medical buildings.",
       "risks": "It depends on tenants' ability to pay and on life science funding. Its concentration in healthcare property is another weak point.",
       "competition": "",
-      "relationships": ""
+      "relationships": "HCA Healthcare is the largest outpatient medical tenant, at 15% of segment revenues. CommonSpirit Health is a major outpatient medical tenant, at 6% of segment revenues."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "HCA Healthcare",
+          "role": "customer",
+          "label": {
+            "ja": "HCAヘルスケア(テナント)",
+            "en": "HCA Healthcare (tenant)"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "HCA"
+        },
+        {
+          "kind": "company",
+          "name": "CommonSpirit Health",
+          "role": "customer",
+          "label": {
+            "ja": "コモンスピリット(テナント)",
+            "en": "CommonSpirit Health (tenant)"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -51402,7 +51629,7 @@
       "strength": "原子力空母を設計・建造できる唯一の会社で、強襲揚陸艦の建造も唯一手がける。",
       "risks": "労働力不足や資材の遅れ、インフレを抱える。米海軍という単一の大口顧客に依存する。",
       "competition": "",
-      "relationships": ""
+      "relationships": "傘下のエレクトリック・ボートとバージニア級潜水艦を共同建造する。"
     },
     "en": {
       "business": "The largest U.S. shipbuilder, making naval ships for the U.S. Navy.",
@@ -51410,11 +51637,25 @@
       "strength": "It is the exclusive designer and builder of nuclear-powered aircraft carriers and the sole builder of amphibious assault ships.",
       "risks": "Labor shortages, late materials and inflation weigh on it, and the U.S. Navy is its dominant customer.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Builds Virginia class submarines with General Dynamics' Electric Boat under a teaming agreement."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "General Dynamics",
+          "role": "partner",
+          "label": {
+            "ja": "潜水艦の共同建造",
+            "en": "Virginia class submarine teaming"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GD"
+        }
+      ]
     }
   },
   {
@@ -51672,7 +51913,7 @@
       "strength": "独自ソフトで取引と事務を自動化し、証券サービスで最も低コストの事業者の一つ。2025年にS&P 500に採用された。",
       "risks": "手数料や売買スプレッドの低下圧力と競争の激化を抱える。システム障害やサイバー攻撃にも弱い。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ESGスコアのデータを顧客向けに提供している。"
     },
     "en": {
       "business": "An automated global broker that lets clients trade stocks, options and more worldwide.",
@@ -51680,11 +51921,24 @@
       "strength": "Its in-house software automates trading and back-office work, making it one of the lowest-cost broker-dealers. It joined the S&P 500 in 2025.",
       "risks": "Falling commissions and spreads and tougher competition weigh on it. System failures and cyber attacks are also risks.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Refinitiv provides the ESG Scores offered to customers."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Refinitiv",
+          "role": "supplier",
+          "label": {
+            "ja": "ESGスコア提供元",
+            "en": "ESG Scores provider"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -52050,7 +52304,7 @@
       "strength": "61カ国で240,000社超の顧客を持つ。セキュリティと保管の信頼を築いてきた点が特徴。",
       "risks": "紙やテープから別の技術への移行で、保管需要が減りうる。データセンターは電力費の影響も受ける。",
       "competition": "",
-      "relationships": ""
+      "relationships": "フランクフルトのデータセンター合弁会社を共同で持つ。"
     },
     "en": {
       "business": "A company that stores records and data and provides information management services.",
@@ -52058,11 +52312,24 @@
       "strength": "It has more than 240,000 customers in 61 countries, and a reputation for security and chain of custody.",
       "risks": "A shift from paper and tape to other technologies can cut storage demand, and data center costs depend on power prices.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Joint venture with AGC Equity Partners (the Frankfurt JV)."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "AGC Equity Partners",
+          "role": "partner",
+          "label": {
+            "ja": "合弁事業の相手",
+            "en": "Frankfurt JV partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -52084,7 +52351,7 @@
       "strength": "複数の輸送サービスと第三者を使った物流を一体で提供できる点が強み。自社の集配と鉄道輸送を組み合わせる。",
       "risks": "景気後退で貨物量が減り、運賃も下がりうる。鉄道会社など外部への依存や悪天候も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "1989年から鉄道と長距離トラックを結ぶ提携を続けている。 事業の大半はBNSFとノーフォーク・サザンの鉄道で運ばれる。"
     },
     "en": {
       "business": "A company that runs freight transportation, delivery and logistics services in North America.",
@@ -52092,11 +52359,37 @@
       "strength": "Its feature is offering several transportation services and third-party logistics together, pairing its own pickup and delivery with rail.",
       "risks": "Recessions can cut freight volumes and pressure rates. It also relies on railroads and other third parties, and bad weather disrupts it.",
       "competition": "",
-      "relationships": ""
+      "relationships": "The JBI segment began in 1989 as a partnership with BNSF Railway. Most of the business travels on the BNSF and Norfolk Southern railways."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "BNSF Railway Company",
+          "role": "partner",
+          "label": {
+            "ja": "鉄道との提携",
+            "en": "Rail partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Norfolk Southern",
+          "role": "partner",
+          "label": {
+            "ja": "鉄道との提携",
+            "en": "Rail partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NSC"
+        }
+      ]
     }
   },
   {
@@ -52462,7 +52755,7 @@
       "strength": "資産運用と保険、資本市場事業を組み合わせた事業構成が特徴。",
       "risks": "運用成績が悪いと資金を集めにくくなる。成功報酬の返還義務も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "KKRの運用力を、同社の運用商品を通じて提供する戦略的提携先。 KKRが39.6%を持つヘッジファンド運用会社。"
     },
     "en": {
       "business": "An asset manager that runs investment funds and also operates an insurance business.",
@@ -52470,11 +52763,36 @@
       "strength": "Its mix of asset management, insurance and a capital markets business is a defining feature.",
       "risks": "Poor investment results can make fundraising harder, and it may have to return carried interest.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Strategic partner that gives investors access to KKR investment capabilities through Capital Group sponsored vehicles. Hedge fund manager in which KKR holds a 39.6% interest."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Capital Group",
+          "role": "partner",
+          "label": {
+            "ja": "戦略的提携先",
+            "en": "Strategic partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Marshall Wace LLP",
+          "role": "partner",
+          "label": {
+            "ja": "出資先の運用会社",
+            "en": "Hedge fund partner (39.6%)"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -52611,7 +52929,7 @@
       "strength": "ゲノムなど先進的な検査技術で、指導的な地位の維持を重視する。",
       "risks": "保険の支払い制度や規制の変更、価格競争、人材の確保が重荷になりうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "分離した元事業で、分離後の関係を定める契約を結んでいる。 欧州の診断サービス大手シンラボの株式15%を取得した。"
     },
     "en": {
       "business": "A company providing diagnostic testing and drug development laboratory services.",
@@ -52619,11 +52937,37 @@
       "strength": "It stresses keeping a leadership position in genomic and other advanced testing.",
       "risks": "Changes in payment rules and regulation, price competition and hiring talent can weigh on it.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Former business spun off from Labcorp; the two companies have agreements governing their relationship after the Spin-off. Acquired a 15% minority interest in SYNLAB, a European diagnostic services company."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Fortrea",
+          "role": "partner",
+          "label": {
+            "ja": "分離した元事業",
+            "en": "Spun-off former business"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FTRE"
+        },
+        {
+          "kind": "company",
+          "name": "SYNLAB",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Equity investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -52713,7 +53057,7 @@
       "strength": "標準で豪華な設備を付ける方式と、土地を持たない運営が特徴。",
       "risks": "金利やインフレで需要が揺れ、住宅市況は循環的。値下げを迫られた市場もある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "スピンオフした土地会社で、土地取得と造成の資金提供を受けている。 戸建て賃貸ファンドの合弁契約と物件管理契約を結んでいる。"
     },
     "en": {
       "business": "One of the largest U.S. homebuilders, also offering mortgages and title services.",
@@ -52721,11 +53065,37 @@
       "strength": "Its features are the Everything's Included approach and a land-light operating model.",
       "risks": "Demand swings with interest rates and inflation, and the housing market is cyclical. Some markets needed price cuts.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Spun-off land company that provides Lennar with land acquisition and horizontal development financing solutions. Upward America entered into a joint venture agreement and property management agreement with Invitation Homes."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Millrose",
+          "role": "supplier",
+          "label": {
+            "ja": "土地取得・造成の資金元",
+            "en": "Land financing provider"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Invitation Homes",
+          "role": "partner",
+          "label": {
+            "ja": "戸建て賃貸の合弁相手",
+            "en": "Single-family rental JV partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "INVH"
+        }
+      ]
     }
   },
   {
@@ -52815,7 +53185,7 @@
       "strength": "Boardwalk Pipelinesが2025年に500百万ドルを親会社へ分配するなど、傘下の事業から資金が入るのが特徴。",
       "risks": "親会社は空売りやデリバティブも使い、相場が想定と逆に動くと大きな損失が出うる。パイプラインの成長案件は費用や時期がずれうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "子会社CNAの過去の石綿・環境汚染関連の保険債務の大半を、再保険で引き受ける。バークシャー・ハサウェイの子会社。 CNAの再保険の引受先の一つで、再保険回収可能額がある。"
     },
     "en": {
       "business": "A holding company that owns insurance, pipeline and hotel businesses.",
@@ -52823,11 +53193,36 @@
       "strength": "Cash flows up from its subsidiaries. For example, Boardwalk Pipelines paid distributions of $500 million to the company in 2025.",
       "risks": "The parent also uses short sales and derivatives, so market moves against its bets can cause large losses. Pipeline growth projects can run over on cost and timing.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Berkshire Hathaway subsidiary that took over substantially all of CNA's legacy A&EP liabilities through reinsurance. One of CNA's reinsurers, with reinsurance recoverables owed to CNA."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "National Indemnity Company",
+          "role": "supplier",
+          "label": {
+            "ja": "再保険の引受先",
+            "en": "Reinsurer for legacy liabilities"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Swiss Reinsurance Group",
+          "role": "supplier",
+          "label": {
+            "ja": "再保険の引受先",
+            "en": "Reinsurer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -52883,7 +53278,7 @@
       "strength": "自社店舗やネットで顧客の声を集め、商品設計に生かせるのが特徴。ブランドイメージと技術革新で競う。",
       "risks": "スポーツウェア市場は競争が激しく、大手の参入拡大や新規参入が続く。長期契約のない仕入先や工場に頼る。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ルルレモン・スタジオの既存会員向けに、デジタルフィットネスコンテンツを独占的に提供する契約を結んだ。"
     },
     "en": {
       "business": "A company that designs and sells technical athletic apparel for yoga, running and training.",
@@ -52891,11 +53286,25 @@
       "strength": "Its own stores and online channels let it collect customer feedback for product design. It competes on brand image and technical innovation.",
       "risks": "Athletic apparel is highly competitive, with established firms expanding and new entrants arriving. It lacks long-term contracts with most suppliers and manufacturers.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Contracted to be the exclusive digital fitness content provider to existing lululemon Studio subscribers."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Peloton Interactive, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "デジタルコンテンツ提供元",
+            "en": "Digital fitness content provider"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "PTON"
+        }
+      ]
     }
   },
   {
