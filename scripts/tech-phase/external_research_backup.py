@@ -33,13 +33,15 @@ class BackupStageError(RuntimeError):
 
 STAGES = frozenset({'configuration', 'client', 'snapshot', 'encrypt', 'upload',
                     'download', 'restore', 'manifest_upload', 'manifest_readback',
-                    'archive_input'})
+                    'archive_input', 'export_output'})
 
 
 @contextmanager
 def stage(name):
     try:
         yield
+    except BackupStageError:
+        raise
     except Exception as exc:
         raise BackupStageError(name) from exc
 
@@ -162,8 +164,21 @@ def configuration(env):
     return source, values, bytes.fromhex(key)
 
 
-def verify_restore(archive, manifest, key):
-    """Decrypt into a disposable directory; never promote a DB or call S3."""
+def validate_output(output):
+    """Export only into an existing private directory, never over a DB/sidecar."""
+    output = Path(output)
+    parent = output.parent
+    if (not output.is_absolute() or parent.resolve() != parent
+            or not parent.is_dir() or parent.stat().st_uid != os.geteuid()
+            or parent.stat().st_mode & 0o077
+            or any(os.path.lexists(str(output) + suffix)
+                   for suffix in ('', '-wal', '-shm', '-journal'))):
+        raise ValueError('new output in a private directory required')
+    return output
+
+
+def verify_restore(archive, manifest, key, output=None):
+    """Verify privately; optionally export a new offline DB, never promote it."""
     from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
     archive = Path(archive)
     if not isinstance(manifest, dict):
@@ -182,9 +197,16 @@ def verify_restore(archive, manifest, key):
             or archive.stat().st_size != manifest['bytes']
             or persistence.digest(archive) != manifest.get('sha256')):
         raise ValueError('invalid recovery archive')
-    with tempfile.TemporaryDirectory(prefix='research-restore-') as directory:
+    if output is not None:
+        with stage('export_output'):
+            output = validate_output(output)
+    # Keep staging on the output filesystem so publication can use an atomic,
+    # non-overwriting hard link only after all authentication/DB checks pass.
+    with tempfile.TemporaryDirectory(prefix='research-restore-',
+                                     dir=output.parent if output is not None else None) as directory:
         target = Path(directory) / 'snapshot.sqlite'
         with archive.open('rb') as encrypted, target.open('xb') as plain:
+            target.chmod(0o600)
             nonce = encrypted.read(12)
             encrypted.seek(-16, 2)
             tag = encrypted.read(16)
@@ -200,6 +222,17 @@ def verify_restore(archive, manifest, key):
                 plain.write(decryptor.update(chunk))
             plain.write(decryptor.finalize())
         checked = persistence.validate_database(target, manifest.get('plaintext_sha256'))
+        if output is not None:
+            with stage('export_output'):
+                validate_output(output)
+                with target.open('rb') as handle:
+                    os.fsync(handle.fileno())
+                # Unlike rename/replace, link fails if the output was created
+                # concurrently. Never remove an existing output on failure.
+                os.link(target, output)
+            return {'event': 'TECH_PHASE_RESEARCH_RESTORE_EXPORT_OK',
+                    'bytes': checked['bytes'], 'sha256': checked['sha256'],
+                    'output_written': True, 'promotion': False}
         return {'event': 'TECH_PHASE_RESEARCH_ISOLATED_RESTORE_OK',
                 'bytes': checked['bytes'], 'promotion': False}
 
@@ -209,11 +242,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--verify-archive')
     parser.add_argument('--manifest')
+    parser.add_argument('--restore-output')
     args = parser.parse_args()
-    if args.verify_archive or args.manifest:
-        if not args.verify_archive or not args.manifest:
-            raise ValueError('archive and manifest both required')
+    if args.verify_archive or args.manifest or args.restore_output:
         with stage('archive_input'):
+            if not args.verify_archive or not args.manifest:
+                raise ValueError('archive and manifest both required')
             with Path(args.manifest).open('rb') as handle:
                 raw = handle.read(65537)
             if len(raw) > 65536:
@@ -221,7 +255,7 @@ def main():
             manifest = json.loads(raw)
             key = bytes.fromhex(os.environ['TECH_PHASE_EXTERNAL_KEY_HEX'])
         with stage('restore'):
-            report = verify_restore(args.verify_archive, manifest, key)
+            report = verify_restore(args.verify_archive, manifest, key, output=args.restore_output)
         print(json.dumps(report), flush=True)
         return
     with stage('configuration'):
