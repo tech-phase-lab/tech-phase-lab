@@ -2,11 +2,13 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import sqlite3
+import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('external_research', ROOT / 'scripts/tech-phase/external_research_backup.py')
@@ -152,6 +154,57 @@ class ExternalResearchTests(unittest.TestCase):
         for env in ({}, {'TECH_PHASE_EXTERNAL_BACKUP_ENABLED': 'true'}):
             with self.assertRaises(ValueError):
                 module.configuration(env)
+
+    def configuration(self):
+        return {
+            'TECH_PHASE_EXTERNAL_BACKUP_ENABLED': 'true',
+            'RESEARCH_DB_PATH': '/private/fixture.sqlite',
+            'TECH_PHASE_EXTERNAL_KEY_HEX': 'ab' * 32,
+            'MIRROR_DESTINATION_ENDPOINT': 'https://' + 'a' * 32 + '.r2.cloudflarestorage.com',
+            'MIRROR_DESTINATION_BUCKET': 'resolute-backup-external',
+            'MIRROR_DESTINATION_REGION': 'auto',
+            'MIRROR_DESTINATION_ACCESS_KEY_ID': 'fixture-only',
+            'MIRROR_DESTINATION_SECRET_ACCESS_KEY': 'fixture-only-secret',
+        }
+
+    def test_existing_r2_destination_accepts_standard_and_jurisdiction_endpoints(self):
+        for jurisdiction in ('', '.eu', '.fedramp'):
+            for suffix in ('', '/', ':443', ':443/'):
+                with self.subTest(jurisdiction=jurisdiction, suffix=suffix):
+                    env = self.configuration()
+                    endpoint = 'https://' + 'a' * 32 + jurisdiction + '.r2.cloudflarestorage.com' + suffix
+                    env['MIRROR_DESTINATION_ENDPOINT'] = endpoint
+                    source, config, key = module.configuration(env)
+                    self.assertEqual(source, env['RESEARCH_DB_PATH'])
+                    self.assertEqual(config['ENDPOINT'], endpoint)
+                    self.assertEqual(config['BUCKET'], 'resolute-backup-external')
+                    self.assertEqual(key, bytes.fromhex('ab' * 32))
+
+    def test_wrong_endpoint_bucket_or_region_rejected_before_client_creation(self):
+        endpoint = self.configuration()['MIRROR_DESTINATION_ENDPOINT']
+        invalid = [
+            ('ENDPOINT', value) for value in (
+                'https://example.com', 'https://localhost', 'https://127.0.0.1',
+                'https://bucket.s3.amazonaws.com', endpoint.replace('https:', 'http:'),
+                endpoint + '.example.com', endpoint + ':8443', endpoint + ':bad',
+                endpoint + '/bucket', endpoint + '?query=1', endpoint + '#fragment',
+                endpoint.replace('https://', 'https://user:password@'),
+                endpoint.replace('a' * 32, 'a' * 31), endpoint.replace('a' * 32, 'g' * 32),
+                endpoint.replace('.r2.', '.other.r2.'), endpoint + '.',
+                '\n' + endpoint, endpoint + '\n', endpoint.replace('.r2.', '.r2.\n'),
+            )
+        ] + [('BUCKET', 'other-bucket'), ('BUCKET', ''), ('REGION', 'us-east-1'), ('REGION', '')]
+        for name, value in invalid:
+            with self.subTest(name=name, value=value):
+                env = self.configuration()
+                env['MIRROR_DESTINATION_' + name] = value
+                sdk = Mock()
+                with patch.dict(os.environ, env, clear=True), patch.object(sys, 'argv', ['backup']), \
+                        patch.dict(sys.modules, {'boto3': sdk}), patch.object(module, 'backup') as backup:
+                    with self.assertRaisesRegex(ValueError, 'explicit existing R2 destination required'):
+                        module.main()
+                    sdk.client.assert_not_called()
+                    backup.assert_not_called()
 
     def test_tampering_even_with_updated_checksum_fails_authentication(self):
         with tempfile.TemporaryDirectory() as directory:
