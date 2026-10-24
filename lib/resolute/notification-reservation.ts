@@ -36,14 +36,15 @@ export async function reconcileAlertReservations(db:Database,userId:string,curre
  * a transaction that can roll back after a provider accepted a message.
  * A stale in-memory task cannot claim a cancelled or replaced reservation.
  */
-export async function claimAlertReservation(db:Database,userId:string,task:QueuedNotification) {
+export async function claimAlertReservation(db:Database,userId:string,task:QueuedNotification,provider:string|null=null) {
  if(task.kind!=="alerts")throw new Error("Alert task required");
  const claimed=await db.query(`UPDATE resolute.notification_outbox
-  SET payload=jsonb_set(payload,'{reservation,status}','"attempting"'::jsonb)
+  SET payload=jsonb_set(jsonb_set(jsonb_set(payload,'{reservation,status}','"attempting"'::jsonb),
+   '{reservation,provider}',$6::jsonb),'{reservation,attemptedAt}',to_jsonb(statement_timestamp()))
   WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts' AND accepted_at IS NULL
   AND delivery_date_jst=$3::date AND payload->>'ruleKey'=$4
   AND payload->'settingsRevision'=$5::jsonb
   AND payload->'reservation'->>'version'='1' AND payload->'reservation'->>'status'='queued'
-  RETURNING idempotency_key`,[userId,task.key,task.deliveryDateJst,task.ruleKey,JSON.stringify(task.settingsRevision)]);
+  RETURNING idempotency_key`,[userId,task.key,task.deliveryDateJst,task.ruleKey,JSON.stringify(task.settingsRevision),JSON.stringify(provider)]);
  return claimed.rowCount===1;
 }

@@ -1,6 +1,6 @@
 import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
 import { reconcileAlertReservations } from "./notification-reservation.ts";
-import { createHash } from "node:crypto";
+import { notificationRuleKey } from "./notification-rule-key.ts";
 import type { Pool } from "pg";
 import { parsePlanSnapshot } from "./plan-data.ts";
 import { defaultNotificationSettings, parseNotificationSettings } from "./notification-settings.ts";
@@ -30,7 +30,7 @@ export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInp
    const p=(await client.query("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1",[userId])).rows[0];
    const plan=parsePlanSnapshot(p?{plan:p.plan?{...p.plan,createdAt:p.created_at.toISOString(),updatedAt:p.updated_at.toISOString()}:null,revision:Number(p.revision)}:{plan:null,revision:0}).plan;
    // A new reference price or set of thresholds is a new rule; a delivery-hour change is not.
-   const ruleKey=createHash("sha256").update(JSON.stringify({items:settings.watchItems,lines:plan?.buyLines.map(l=>l.dropPct)??[],surge:settings.surgeCapPct})).digest("hex");
+   const ruleKey=notificationRuleKey(settings,plan);
    const pendingAlert=await reconcileAlertReservations(client,userId,{revision:Number(row?.revision??0),ruleKey,date:jstSlot(clock()).date});
    const previous=(await client.query("SELECT rule_key,notified FROM resolute.notification_state WHERE clerk_user_id=$1",[userId])).rows[0];
    const receipt=(await client.query("SELECT idempotency_key,accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind='alerts' AND accepted_at IS NOT NULL ORDER BY accepted_at DESC LIMIT 1",[userId])).rows[0];
