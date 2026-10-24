@@ -34,15 +34,22 @@ import c_avav from "../../data/chain/AVAV.json" with { type: "json" };
 import c_avgo from "../../data/chain/AVGO.json" with { type: "json" };
 import c_avpt from "../../data/chain/AVPT.json" with { type: "json" };
 import c_avt from "../../data/chain/AVT.json" with { type: "json" };
+import c_avy from "../../data/chain/AVY.json" with { type: "json" };
+import c_axon from "../../data/chain/AXON.json" with { type: "json" };
 import c_axp from "../../data/chain/AXP.json" with { type: "json" };
 import c_ba from "../../data/chain/BA.json" with { type: "json" };
 import c_baba from "../../data/chain/BABA.json" with { type: "json" };
+import c_ball from "../../data/chain/BALL.json" with { type: "json" };
 import c_band from "../../data/chain/BAND.json" with { type: "json" };
+import c_bax from "../../data/chain/BAX.json" with { type: "json" };
+import c_bby from "../../data/chain/BBY.json" with { type: "json" };
 import c_be from "../../data/chain/BE.json" with { type: "json" };
 import c_bhe from "../../data/chain/BHE.json" with { type: "json" };
 import c_bidu from "../../data/chain/BIDU.json" with { type: "json" };
+import c_biib from "../../data/chain/BIIB.json" with { type: "json" };
 import c_bill from "../../data/chain/BILL.json" with { type: "json" };
 import c_bkng from "../../data/chain/BKNG.json" with { type: "json" };
+import c_bkr from "../../data/chain/BKR.json" with { type: "json" };
 import c_bksy from "../../data/chain/BKSY.json" with { type: "json" };
 import c_bl from "../../data/chain/BL.json" with { type: "json" };
 import c_blk from "../../data/chain/BLK.json" with { type: "json" };
@@ -359,15 +366,22 @@ const available: Record<string, ChainMapData> = {
   AVGO: c_avgo as ChainMapData,
   AVPT: c_avpt as ChainMapData,
   AVT: c_avt as ChainMapData,
+  AVY: c_avy as ChainMapData,
+  AXON: c_axon as ChainMapData,
   AXP: c_axp as ChainMapData,
   BA: c_ba as ChainMapData,
   BABA: c_baba as ChainMapData,
+  BALL: c_ball as ChainMapData,
   BAND: c_band as ChainMapData,
+  BAX: c_bax as ChainMapData,
+  BBY: c_bby as ChainMapData,
   BE: c_be as ChainMapData,
   BHE: c_bhe as ChainMapData,
   BIDU: c_bidu as ChainMapData,
+  BIIB: c_biib as ChainMapData,
   BILL: c_bill as ChainMapData,
   BKNG: c_bkng as ChainMapData,
+  BKR: c_bkr as ChainMapData,
   BKSY: c_bksy as ChainMapData,
   BL: c_bl as ChainMapData,
   BLK: c_blk as ChainMapData,

@@ -1,0 +1,229 @@
+{
+  "root": {
+    "ticker": "AVY",
+    "name": "エイブリィ・デニソン",
+    "cik": 8818,
+    "name_en": "Avery Dennison"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MMM"
+  ],
+  "companies": [
+    {
+      "id": "MMM",
+      "ticker": "MMM",
+      "name": "スリーエム",
+      "sub": "粘着材・素材",
+      "sub_en": "Adhesives & materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "グラフィックス・反射製品での最大の競合である",
+          "text_en": "3M is named as a largest competitor in graphics and reflective products",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For graphics and reflective products, our largest competitors are 3M Company (“3M”) and the Orafol Group."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "機能性テープ製品でも競合する",
+          "text_en": "3M is also named as a competitor in performance tapes",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For performance tapes products, our competitors include 3M; Tesa-SE, a subsidiary of Beiersdorf AG; Nitto Denko Corporation; and numerous regional and specialty suppliers."
+          }
+        }
+      ],
+      "name_en": "3M"
+    },
+    {
+      "id": "UPM",
+      "ticker": "UPM",
+      "name": "ユーピーエム",
+      "sub": "ラベル素材",
+      "sub_en": "Label materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ラベル素材分野の大手競合に挙がる",
+          "text_en": "UPM Adhesive Materials, a subsidiary of UPM Corporation, is named as a larger competitor in label materials",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our larger competitors in label materials include UPM Adhesive Materials, a subsidiary of UPM Corporation; Fedrigoni Self-Adhesives; Lintec Corporation; Flexcon Corporation, Inc.; and an array of smaller regional and local companies."
+          }
+        }
+      ],
+      "name_en": "UPM"
+    },
+    {
+      "id": "LINTEC",
+      "ticker": "Lintec",
+      "name": "リンテック",
+      "sub": "粘着素材",
+      "sub_en": "Adhesive materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ラベル素材の競合として名前が出ている",
+          "text_en": "Lintec is named as a larger competitor in label materials",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our larger competitors in label materials include UPM Adhesive Materials, a subsidiary of UPM Corporation; Fedrigoni Self-Adhesives; Lintec Corporation; Flexcon Corporation, Inc.; and an array of smaller regional and local companies."
+          }
+        }
+      ],
+      "name_en": "Lintec"
+    },
+    {
+      "id": "FLEXCON",
+      "ticker": "Flexcon",
+      "name": "フレキシコン",
+      "sub": "粘着素材",
+      "sub_en": "Adhesive materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ラベル素材分野で競合する",
+          "text_en": "Flexcon is named as a larger competitor in label materials",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our larger competitors in label materials include UPM Adhesive Materials, a subsidiary of UPM Corporation; Fedrigoni Self-Adhesives; Lintec Corporation; Flexcon Corporation, Inc.; and an array of smaller regional and local companies."
+          }
+        }
+      ],
+      "name_en": "Flexcon"
+    },
+    {
+      "id": "NITTO",
+      "ticker": "Nitto Denko",
+      "name": "日東電工",
+      "sub": "機能性テープ",
+      "sub_en": "Performance tapes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機能性テープ製品の競合に含まれる",
+          "text_en": "Nitto Denko is named as a competitor in performance tapes",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For performance tapes products, our competitors include 3M; Tesa-SE, a subsidiary of Beiersdorf AG; Nitto Denko Corporation; and numerous regional and specialty suppliers."
+          }
+        }
+      ],
+      "name_en": "Nitto Denko"
+    },
+    {
+      "id": "TESA",
+      "ticker": "Tesa",
+      "name": "テサ",
+      "sub": "機能性テープ",
+      "sub_en": "Performance tapes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機能性テープ製品の競合の1社である",
+          "text_en": "Tesa-SE, a subsidiary of Beiersdorf AG, is named as a competitor in performance tapes",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For performance tapes products, our competitors include 3M; Tesa-SE, a subsidiary of Beiersdorf AG; Nitto Denko Corporation; and numerous regional and specialty suppliers."
+          }
+        }
+      ],
+      "name_en": "Tesa"
+    },
+    {
+      "id": "CHECKPOINT",
+      "ticker": "Checkpoint Systems",
+      "name": "チェックポイント・システムズ",
+      "sub": "RFID・ソリューション",
+      "sub_en": "RFID & solutions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ソリューション部門の主な競合に挙がる",
+          "text_en": "Checkpoint Systems, a subsidiary of CCL Industries, is named as a primary competitor in the Solutions Group",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In the Solutions Group, our primary competitors include Checkpoint Systems, Inc., a subsidiary of CCL Industries Inc.; R-pac International Corporation; SML Group Limited; Arizon RFID Technology Cayman Co Ltd; and Tageos SAS, a subsidiary of Fedrigoni Group."
+          }
+        }
+      ],
+      "name_en": "Checkpoint Systems"
+    },
+    {
+      "id": "SMLGROUP",
+      "ticker": "SML Group",
+      "name": "SMLグループ",
+      "sub": "RFID・ソリューション",
+      "sub_en": "RFID & solutions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ソリューション部門で競合する",
+          "text_en": "SML Group Limited is named as a primary competitor in the Solutions Group",
+          "source": {
+            "label": "Avery Dennison 10-K(2025年12月31日期)",
+            "label_en": "Avery Dennison 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In the Solutions Group, our primary competitors include Checkpoint Systems, Inc., a subsidiary of CCL Industries Inc.; R-pac International Corporation; SML Group Limited; Arizon RFID Technology Cayman Co Ltd; and Tageos SAS, a subsidiary of Fedrigoni Group."
+          }
+        }
+      ],
+      "name_en": "SML Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

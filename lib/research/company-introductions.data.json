@@ -41555,7 +41555,7 @@
       "strength": "FICOスコアは米国の消費者信用リスクの標準的な尺度で、米国の多くの与信判断に使われる。",
       "risks": "収益が少数の製品に偏る。ソフトウェア戦略が実を結ばない可能性や、AIと無料の信用情報の広がりも重荷になる。",
       "competition": "主な競合にトランスユニオンがある。",
-      "relationships": ""
+      "relationships": "エクスペリアン等3社との契約が総売上の51%を占める(2025年度)。 FICO Score XDをエキファックス経由で貸し手に提供している。"
     },
     "en": {
       "business": "A company that provides credit scores (the FICO Score) and analytics software for business decisions.",
@@ -41563,7 +41563,7 @@
       "strength": "The FICO Score is the standard measure of US consumer credit risk and is used in many US lending decisions.",
       "risks": "Revenue is concentrated in a few products. The software strategy may not succeed, and AI and free credit information are spreading.",
       "competition": "Main competitors include TransUnion.",
-      "relationships": ""
+      "relationships": "Agreements with Experian, TransUnion and Equifax accounted for 51% of total revenues in fiscal 2025. FICO Score XD is available to lenders through distribution partners including Equifax."
     },
     "maps": {
       "competition": [
@@ -41582,7 +41582,33 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Experian",
+          "role": "customer",
+          "label": {
+            "ja": "大口取引先",
+            "en": "Major credit bureau customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Equifax",
+          "role": "partner",
+          "label": {
+            "ja": "販売提携先",
+            "en": "Distribution partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "EFX"
+        }
+      ]
     }
   },
   {
@@ -41604,7 +41630,7 @@
       "strength": "政府業務への深い知識、幅広い製品群、部門をつなぐ統合システムが強み。",
       "risks": "サイバー攻撃やAI利用に伴う情報漏えいが、事業と評判を傷つけうる。",
       "competition": "主な競合にオラクル、SAP、ワークデイ、トムソン・ロイター、モトローラ・ソリューションズがある。",
-      "relationships": ""
+      "relationships": "クラウドのホスティングにアマゾン ウェブ サービスを利用している。"
     },
     "en": {
       "business": "A company that provides software and related services to local, state and federal governments.",
@@ -41612,7 +41638,7 @@
       "strength": "Deep government know-how, a broad product range and integrated systems that connect departments are its strengths.",
       "risks": "Cyberattacks and data leaks from AI use can damage the business and its reputation.",
       "competition": "Main competitors include Oracle Corporation, SAP AG, Workday, Inc., Thomson Reuters Corporation, Motorola Solutions, Inc..",
-      "relationships": ""
+      "relationships": "Tyler relies on Amazon Web Services for hosting services for certain cloud solutions."
     },
     "maps": {
       "competition": [
@@ -41687,7 +41713,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon Web Services",
+          "role": "supplier",
+          "label": {
+            "ja": "クラウド供給元",
+            "en": "Cloud hosting provider"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        }
+      ]
     }
   },
   {
@@ -41709,7 +41749,7 @@
       "strength": "多くのニッチ市場で、市場リーダーか、その有力な代替の地位にある。",
       "risks": "クラウドなど第三者の技術に頼るため、障害で業務が止まりうる。サイバー事故を防ぎきれない可能性もある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "一部の社内外システムのホストにアマゾン ウェブ サービス等を利用している。 OpenAIなどの外部AIサービスを利用している。"
     },
     "en": {
       "business": "A diversified technology company that makes specialized software and technology products for niche markets.",
@@ -41717,11 +41757,37 @@
       "strength": "In many niche markets it is the market leader or a strong alternative to it.",
       "risks": "Reliance on third-party technology such as cloud services means outages can disrupt operations, and cyber incidents may not be fully prevented.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Roper relies on cloud platforms such as Amazon Web Services to host certain systems. Roper relies on third-party AI services from companies such as OpenAI."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon Web Services",
+          "role": "supplier",
+          "label": {
+            "ja": "クラウド供給元",
+            "en": "Cloud platform provider"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "supplier",
+          "label": {
+            "ja": "AI供給元",
+            "en": "AI platform provider"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -41743,7 +41809,7 @@
       "strength": "ソフト、ハード、データを組み合わせる統合力と、建設と運輸の二つのクラウド基盤が特徴。",
       "risks": "自社や委託先のシステムが、サイバー攻撃や障害、遅延にさらされる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "キャタピラーとの合弁会社で建設機械向けの制御製品を開発する。 ヒルティとの合弁会社で建設向けの測定ソリューションを共同開発する。"
     },
     "en": {
       "business": "A company offering technology and software that connect office and field work in construction, transportation and other industries.",
@@ -41751,11 +41817,37 @@
       "strength": "It combines software, hardware and data, and runs two cloud platforms, one for construction and one for transportation.",
       "risks": "Its own and its contractors' systems are exposed to cyberattacks, outages and delays.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Trimble has a joint venture with Caterpillar to develop earth-moving machine guidance and control products. Trimble has a joint venture with Hilti for measuring solutions for the building construction trades."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Caterpillar",
+          "role": "partner",
+          "label": {
+            "ja": "合弁パートナー",
+            "en": "Joint venture partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CAT"
+        },
+        {
+          "kind": "company",
+          "name": "Hilti",
+          "role": "partner",
+          "label": {
+            "ja": "合弁パートナー",
+            "en": "Joint venture partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -41868,7 +41960,7 @@
       "strength": "CdTeの薄膜技術と、連続した一貫生産の工程が特徴。",
       "risks": "結晶シリコン製モジュールメーカーとの激しい競争、補助金・税優遇の縮小、原材料の調達先の限定が重なる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ネクステラ・エナジーはモジュール事業の売上高の10%以上を占めた(2025年)。 シリコン・ランチはモジュール事業の売上高の10%以上を占めた(2025年)。"
     },
     "en": {
       "business": "A U.S. company that makes thin film solar power modules.",
@@ -41876,11 +41968,37 @@
       "strength": "Its features are CdTe thin-film technology and a continuous, integrated production process.",
       "risks": "Fierce competition from crystalline silicon module makers, shrinking subsidies and tax benefits, and a limited set of raw-material suppliers weigh on it.",
       "competition": "",
-      "relationships": ""
+      "relationships": "NextEra Energy accounted for 10% or more of modules business net sales in 2025. Silicon Ranch Corporation accounted for 10% or more of modules business net sales in 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "NextEra Energy",
+          "role": "customer",
+          "label": {
+            "ja": "大口顧客",
+            "en": "Major customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NEE"
+        },
+        {
+          "kind": "company",
+          "name": "Silicon Ranch Corporation",
+          "role": "customer",
+          "label": {
+            "ja": "大口顧客",
+            "en": "Major customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -41902,7 +42020,7 @@
       "strength": "太陽光発電と蓄電を一つの技術基盤で管理する、システム全体の手法が特徴。",
       "risks": "自社より大きい競合がいて、低価格販売で売上やシェアを失う恐れがある。",
       "competition": "主な競合にソーラーエッジ、テスラ、チャージポイントがある。",
-      "relationships": ""
+      "relationships": "マイクロインバーターなどの組立・試験をフレックス等に委託している。"
     },
     "en": {
       "business": "A company that makes microinverters and other products that manage home solar power and storage.",
@@ -41910,7 +42028,7 @@
       "strength": "Its feature is a whole-system approach that manages solar generation and storage on one technology platform.",
       "risks": "Some competitors are larger, and low-price sales could cost it revenue and share.",
       "competition": "Main competitors include SolarEdge Technologies, Inc., Tesla, ChargePoint Holdings, Inc..",
-      "relationships": ""
+      "relationships": "Enphase uses Flex to assemble and test certain IQ microinverters and other products."
     },
     "maps": {
       "competition": [
@@ -41957,7 +42075,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Flex",
+          "role": "supplier",
+          "label": {
+            "ja": "製造委託先",
+            "en": "Contract manufacturer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FLEX"
+        }
+      ]
     }
   },
   {
@@ -41979,7 +42111,7 @@
       "strength": "AIツールのAiroと、電話やデジタルでの個別の案内を組み合わせた支援が特徴。",
       "risks": "顧客への販売拡大の失敗、競争の激化、システム障害、AI利用に伴うリスクがある。",
       "competition": "主な競合にショッピファイ、ウィックス、クラウドフレアがある。",
-      "relationships": ""
+      "relationships": "マイクロソフト365を顧客向けに提供している。"
     },
     "en": {
       "business": "A company that provides online business tools for entrepreneurs, such as domains and website building.",
@@ -41987,7 +42119,7 @@
       "strength": "Its feature is support that pairs the AI tool Airo with personal guidance by phone and digital channels.",
       "risks": "Risks include failing to expand sales to customers, tougher competition, system outages and AI-related risks.",
       "competition": "Main competitors include Shopify, Wix, Cloudflare.",
-      "relationships": ""
+      "relationships": "GoDaddy offers Microsoft 365 accounts to its customers."
     },
     "maps": {
       "competition": [
@@ -42034,7 +42166,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "提携先",
+            "en": "Microsoft 365 reseller"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MSFT"
+        }
+      ]
     }
   },
   {
@@ -42090,7 +42236,7 @@
       "strength": "特定メーカーに偏らず幅広い製品を扱うのが特徴。設計から導入、運用まで手伝う。",
       "risks": "主要メーカーや卸への依存と競争の激しさが弱点。AI需要で仕入れ先の供給が滞るおそれもある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "販売の大部分がシスコ等のメーカー製品に由来する。 販売の大部分がデル等のメーカー製品に由来する。"
     },
     "en": {
       "business": "A company that sells IT products and services to businesses and governments.",
@@ -42098,11 +42244,38 @@
       "strength": "It is vendor-neutral and offers a broad range of products, helping customers from design through management.",
       "risks": "It relies on key vendors and wholesale distributors, faces heavy competition, and may see supply disrupted by AI-driven demand.",
       "competition": "",
-      "relationships": ""
+      "relationships": "A significant portion of CDW's sales comes from products made by Cisco and others. A significant portion of CDW's sales comes from products made by Dell Technologies and others."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "role": "supplier",
+          "label": {
+            "ja": "主要仕入先",
+            "en": "Major vendor"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CSCO"
+        },
+        {
+          "kind": "company",
+          "name": "Dell Technologies",
+          "role": "supplier",
+          "label": {
+            "ja": "主要仕入先",
+            "en": "Major vendor"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "DELL"
+        }
+      ]
     }
   },
   {
@@ -42319,7 +42492,7 @@
       "strength": "Norton、Avast、LifeLock、MoneyLionの複数ブランドと、直販・提携・無料版を組み合わせた販売網が特徴。",
       "risks": "競争が激しく、シェアや売上を失いうる。OSやブラウザ各社に連携を制限される恐れも抱える。",
       "competition": "主な競合にApple、Google、Microsoft、Equifax、TransUnionがある。",
-      "relationships": ""
+      "relationships": "ジェンは一部のエンジニアリングと脅威対応サービスをブロードコムに頼っている。"
     },
     "en": {
       "business": "A company that offers cyber safety and financial wellness services to consumers.",
@@ -42327,7 +42500,7 @@
       "strength": "Its features are a family of brands (Norton, Avast, LifeLock, MoneyLion) and a sales network of direct, partner and freemium channels.",
       "risks": "Competition is intense and could cost it market share and revenue. Operating system and browser companies may also limit interoperability.",
       "competition": "Main competitors include Apple, Google, Microsoft, Equifax, TransUnion.",
-      "relationships": ""
+      "relationships": "Gen depends on Broadcom for certain engineering and threat response services."
     },
     "maps": {
       "competition": [
@@ -42397,7 +42570,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "supplier",
+          "label": {
+            "ja": "技術サービスの委託先",
+            "en": "Engineering services provider"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AVGO"
+        }
+      ]
     }
   },
   {
@@ -42467,7 +42654,7 @@
       "strength": "OPISはオランダに独自の指標管理会社を置き、石油・商品の価格報告を国際的な原則に合わせている。",
       "risks": "個人情報保護の法規制や英国の新聞規制の負担が重い。サイバー攻撃の損失は保険で足りない可能性がある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ハーパーコリンズの書籍の販売先にアマゾンが含まれる。 英ニューズUKはDMGメディアと合弁で印刷施設を運営している。"
     },
     "en": {
       "business": "A media company with information services and newspapers, including Dow Jones and the New York Post.",
@@ -42475,11 +42662,37 @@
       "strength": "OPIS runs its own benchmark administrator in the Netherlands and aligns its oil and commodity price reporting with international principles.",
       "risks": "Data privacy rules and U.K. press regulation add a heavy burden. Insurance may not cover all losses from cyber incidents.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Amazon is among the customers of HarperCollins book sales. News UK runs printing facilities through a joint venture with DMG Media."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "customer",
+          "label": {
+            "ja": "書籍の販売先",
+            "en": "Book sales customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "DMG Media",
+          "role": "partner",
+          "label": {
+            "ja": "印刷の合弁相手",
+            "en": "Printing joint venture"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -42622,7 +42835,7 @@
       "strength": "技術力と革新力、新製品に投資する力が、市場での主導権を支える。",
       "risks": "景気後退で受注が減りうる。買収の統合失敗や、部品・原材料の値上がりで利益を削られる恐れもある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "テレダインは2025年にエクセリタスの航空宇宙・防衛電子事業を取得した。 テレダインは2025年にマイクロパック・インダストリーズを取得した。"
     },
     "en": {
       "business": "A technology company that makes sensors, cameras and measurement instruments.",
@@ -42630,11 +42843,36 @@
       "strength": "Its technology, innovation and capacity to invest in new products underpin its leadership in its markets.",
       "risks": "A recession could cut orders. Failed acquisition integration or pricier parts and raw materials could squeeze profit.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Teledyne acquired select aerospace and defense electronics businesses of Excelitas in 2025. Teledyne acquired Micropac Industries in the first quarter of 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Excelitas Technologies Corp.",
+          "role": "supplier",
+          "label": {
+            "ja": "事業取得の相手先",
+            "en": "Acquisition counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Micropac Industries, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "買収した企業",
+            "en": "Acquired company"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -43716,7 +43954,7 @@
       "strength": "北米最大の給湯器メーカーという立場が特徴。業務用では高効率の製品群が優位になる。",
       "risks": "競争の激しい市場で戦う。鋼材価格の変動や関税で、原材料コストが不安定になりうる。",
       "competition": "主な競合にPentair、Franklin Electricがある。",
-      "relationships": ""
+      "relationships": "A・O・スミスはロウズと長年の独占的な関係を持つ。"
     },
     "en": {
       "business": "A company that makes water heaters, boilers and water treatment products for homes and businesses.",
@@ -43724,7 +43962,7 @@
       "strength": "It is the largest water heater maker in North America, and its high-efficiency lines give it an edge in commercial markets.",
       "risks": "It sells in highly competitive markets, and steel price swings and tariffs make its input costs unstable.",
       "competition": "Main competitors include Pentair, Franklin Electric.",
-      "relationships": ""
+      "relationships": "A. O. Smith has a long-standing exclusive relationship with Lowe's."
     },
     "maps": {
       "competition": [
@@ -43755,7 +43993,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Lowe's Companies, Inc.",
+          "role": "customer",
+          "label": {
+            "ja": "小売の販売先",
+            "en": "Retail customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "LOW"
+        }
+      ]
     }
   },
   {
@@ -43777,7 +44029,7 @@
       "strength": "データセンター企業や鉱山会社に再生可能エネルギーを供給する実績が特徴。契約済みで未稼働の案件が12.0 GWある。",
       "risks": "発電所の停止や設備の故障、燃料費の上昇で業績が悪化しうる。老朽化した設備には多額の保守投資も要る。",
       "competition": "",
-      "relationships": ""
+      "relationships": "AESとシーメンスは2018年に合弁でフルエンスを設立した。 AESはグルポ・バルとの合弁でメサ・ラパス風力事業を開発した。"
     },
     "en": {
       "business": "A global energy company that generates and supplies electricity.",
@@ -43785,11 +44037,36 @@
       "strength": "Its track record supplying renewable energy to data center companies and mining companies is a feature, with a backlog of 12.0 GW signed but not yet operating.",
       "risks": "Plant outages, equipment failures and rising fuel costs can hurt results, and older facilities may need heavy maintenance spending.",
       "competition": "",
-      "relationships": ""
+      "relationships": "AES and Siemens AG created Fluence in 2018 as a joint venture. AES developed the Mesa La Paz wind project under a joint venture with Grupo Bal."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Siemens AG",
+          "role": "partner",
+          "label": {
+            "ja": "フルエンスの合弁相手",
+            "en": "Fluence joint venture"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Grupo Bal",
+          "role": "partner",
+          "label": {
+            "ja": "風力事業の合弁相手",
+            "en": "Wind project joint venture"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -43944,20 +44221,46 @@
       "revenue": "純売上の約83%が海外。2025年は中国向けが39%を占め、約70か国で売る。",
       "strength": "チリ、豪州、米国などの鉱区で自社の持ち分を生産する体制が特徴。",
       "risks": "原料やエネルギーの価格変動を抱える。大手競合の値下げで利益率が下がりうる。",
-      "competition": "",
-      "relationships": ""
+      "competition": "主な競合にノウリオンがある。",
+      "relationships": "MARBL合弁事業で、アルベマールはMRLからKemertonの残り40%を取得した。"
     },
     "en": {
       "business": "A chemical maker that extracts and processes lithium and bromine.",
       "revenue": "About 83% of net sales come from outside the U.S. China took 39% in 2025, and it sells in about 70 countries.",
       "strength": "It produces its share of output from sites in Chile, Australia, the U.S. and elsewhere, with its own conversion facilities.",
       "risks": "Raw material and energy costs swing widely, and rivals' price cuts could squeeze margins.",
-      "competition": "",
-      "relationships": ""
+      "competition": "Main competitors include Nouryon.",
+      "relationships": "Albemarle acquired MRL's remaining 40% of Kemerton in the MARBL joint venture restructuring."
     },
     "maps": {
-      "competition": [],
-      "relationships": []
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Nouryon",
+          "role": "competitor",
+          "label": {
+            "ja": "競合企業",
+            "en": "Competitor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Mineral Resources Limited",
+          "role": "partner",
+          "label": {
+            "ja": "合弁事業の相手",
+            "en": "Joint venture partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -43979,7 +44282,7 @@
       "strength": "インビザライン、iTero、exocadを一つのデジタル基盤でつなぐ点が特徴。",
       "risks": "景気が悪いと、患者が高額な治療を控えうる。為替の変動も業績に響く。",
       "competition": "",
-      "relationships": ""
+      "relationships": "アライン社はHeartland Dentalと出資契約を結び、株式を取得した。 アライン社はSmile Doctorsに4,000万ドルを出資した。"
     },
     "en": {
       "business": "A medical device company that makes Invisalign clear aligners and related dental products.",
@@ -43987,11 +44290,36 @@
       "strength": "Its feature is one digital platform linking Invisalign, iTero scanners and exocad software.",
       "risks": "Weak economies can push patients away from costly treatment, and currency swings hit results.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Align subscribed to Heartland Dental Class A stock. Align invested $40 million in Smile Doctors."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Heartland Dental",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Equity investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Smile Doctors, LLC",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Equity investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44013,7 +44341,7 @@
       "strength": "Schlage、LCN、Von Duprinなど40を超えるブランドと、幅広い品ぞろえが強み。",
       "risks": "市場は競争が激しく、細分化している。関税によるコスト上昇も抱える。",
       "competition": "主な競合にFortune Brands Innovations, Inc.がある。",
-      "relationships": ""
+      "relationships": "シュラージはAirbnbと共同で、スマートロックとAirbnbアカウントを連携させた。 アレジオンは契約に基づき、STANLEY Black & Deckerの商標を使用している。"
     },
     "en": {
       "business": "A company that makes door locks and security products for building entrances.",
@@ -44021,7 +44349,7 @@
       "strength": "Its strength is a broad lineup under more than 40 brands, including Schlage, LCN and Von Duprin.",
       "risks": "Its markets are highly competitive and fragmented, and tariffs raise its costs.",
       "competition": "Main competitors include Fortune Brands Innovations, Inc..",
-      "relationships": ""
+      "relationships": "Schlage worked with Airbnb on an integration linking smart locks to Airbnb accounts. Allegion uses certain brands with permission under an agreement with STANLEY Black & Decker."
     },
     "maps": {
       "competition": [
@@ -44039,7 +44367,34 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Airbnb",
+          "role": "partner",
+          "label": {
+            "ja": "連携パートナー",
+            "en": "Integration partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ABNB"
+        },
+        {
+          "kind": "company",
+          "name": "STANLEY Black & Decker",
+          "role": "partner",
+          "label": {
+            "ja": "ブランド使用契約",
+            "en": "Brand agreement"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "SWK"
+        }
+      ]
     }
   },
   {
@@ -44061,7 +44416,7 @@
       "strength": "顧客は供給会社を選べず、IPLとWPLが地域の全顧客に供給する義務を負う。",
       "risks": "データセンターなど大口顧客の需要が想定を下回りうる。規制当局が料金を変える可能性もある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "アライアント・エナジーはATCに出資している。 ATC Holdco LLCがDuke-American Transmission Companyの持分を保有している。"
     },
     "en": {
       "business": "A holding company for regulated electric and natural gas utilities in Iowa and Wisconsin.",
@@ -44069,11 +44424,36 @@
       "strength": "Customers cannot choose their supplier, and its utilities IPL and WPL must serve every customer in their territories.",
       "risks": "Demand from data centers and other large customers may fall short of plans, and regulators may change the rates it can charge.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Alliant Energy holds an ownership interest in ATC. ATC Holdco LLC holds an interest in Duke-American Transmission Company, LLC."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "American Transmission Company LLC",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Equity investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Duke-American Transmission Company, LLC",
+          "role": "partner",
+          "label": {
+            "ja": "間接出資先",
+            "en": "Indirect investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44095,7 +44475,7 @@
       "strength": "専属代理店、独立代理店、直販の三つの販売経路を持つのが特徴。",
       "risks": "ハリケーンなどの自然災害による損失を抱える。2025年の災害損失は4,959百万ドル。",
       "competition": "",
-      "relationships": ""
+      "relationships": "オールステートは2021年にニューヨーク生保子会社をWiltonへ売却した。 オールステートは2021年に生保子会社2社をEverlakeへ売却した。"
     },
     "en": {
       "business": "An insurance company selling auto, homeowners and other property-liability policies.",
@@ -44103,11 +44483,36 @@
       "strength": "It sells through three channels: exclusive agencies, independent agencies and direct.",
       "risks": "Catastrophe losses from hurricanes and other natural events weigh on it, at $4,959 million in 2025.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Allstate sold Allstate Life Insurance Company of New York to Wilton. Allstate sold two life insurance subsidiaries to Everlake in 2021."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Wilton Reassurance Company",
+          "role": "partner",
+          "label": {
+            "ja": "売却先",
+            "en": "Buyer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Everlake US Holdings Company",
+          "role": "partner",
+          "label": {
+            "ja": "売却先",
+            "en": "Buyer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44163,7 +44568,7 @@
       "strength": "7,000件超の特許・意匠・商標と、約1,500人の研究開発人材が強み。",
       "risks": "競争が激しく、原材料やエネルギーの価格変動を受けやすい。バーリー統合の効果が出ない恐れもある。",
       "competition": "主な競合に3M、AptarGroup、Avery Dennison、Ball、Crown Holdingsがある。",
-      "relationships": ""
+      "relationships": "アムコアは2025年4月30日にBerry Globalとの合併を完了した。"
     },
     "en": {
       "business": "A global packaging maker producing packaging and dispensing products for food, health and beauty.",
@@ -44171,7 +44576,7 @@
       "strength": "Over 7,000 patents, registered designs and trademarks and about 1,500 R&D staff are its edge.",
       "risks": "Competition is intense, raw material and energy prices swing, and the Berry integration may fall short of its goals.",
       "competition": "Main competitors include 3M, AptarGroup, Avery Dennison, Ball, Crown Holdings.",
-      "relationships": ""
+      "relationships": "Amcor completed its merger with Berry Global on April 30, 2025."
     },
     "maps": {
       "competition": [
@@ -44241,7 +44646,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Berry Global Group, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "合併相手",
+            "en": "Merger counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "BERY"
+        }
+      ]
     }
   },
   {
@@ -44263,7 +44682,7 @@
       "strength": "料金は規制当局が決める仕組み。送電事業は料金改定の遅れが最も小さい。",
       "risks": "料金は規制当局が決め、会社の裁量が及ばない。サイバー攻撃やデータセンター需要の不確実性も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "アメレンはPanhandle Easternのパイプラインでガスを輸送している。 アメレンはTexas Easternのパイプラインでガスを輸送している。"
     },
     "en": {
       "business": "A holding company for regulated electric and natural gas utilities in Missouri and Illinois.",
@@ -44271,11 +44690,36 @@
       "strength": "Rates are set by regulators, and the transmission business faces the least regulatory lag.",
       "risks": "Regulators set its rates outside its control, and it faces cyberattack risk and uncertain data center demand.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Ameren utilities use Panhandle Eastern's pipeline to transport natural gas. Ameren utilities use Texas Eastern's pipeline to transport natural gas."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Panhandle Eastern Pipe Line Company",
+          "role": "supplier",
+          "label": {
+            "ja": "ガス輸送会社",
+            "en": "Gas pipeline"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Texas Eastern Transmission Corporation",
+          "role": "supplier",
+          "label": {
+            "ja": "ガス輸送会社",
+            "en": "Gas pipeline"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44297,7 +44741,7 @@
       "strength": "発電・送電・配電を一体で手がける。データセンターなど大口顧客の電力需要増が投資計画の軸。",
       "risks": "設備投資の費用を料金で回収できない恐れがある。データセンター需要が想定ほど伸びない場合も響く。",
       "competition": "",
-      "relationships": ""
+      "relationships": "KKR系ファンドが管理する事業体がAEP送電子会社の19.9%持分を取得した。 PSP管理下の事業体がAEP送電子会社の19.9%持分を取得した。"
     },
     "en": {
       "business": "A holding company that owns electric utilities in the U.S.",
@@ -44305,11 +44749,36 @@
       "strength": "It runs generation, transmission and distribution together. Rising power demand from data centers and other large customers anchors its investment plans.",
       "risks": "It may fail to recover capital costs if regulators do not approve rate changes. Data center demand that falls short of projections would also hurt.",
       "competition": "",
-      "relationships": ""
+      "relationships": "A KKR-affiliated entity agreed to acquire a noncontrolling interest in Midwest Transmission Holdings. A PSP-affiliated entity agreed to acquire a 19.9% noncontrolling equity interest in Midwest Transmission Holdings."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Kohlberg Kravis Roberts & Co. L.P.",
+          "role": "partner",
+          "label": {
+            "ja": "出資者",
+            "en": "Investor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Public Sector Pension Investment Board",
+          "role": "partner",
+          "label": {
+            "ja": "出資者",
+            "en": "Investor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44331,7 +44800,7 @@
       "strength": "引受と保険金支払いの専門性、200を超える国と地域の顧客網、長年の販売網が特徴。",
       "risks": "競争の激しい業界にいる。リスクの価格付けや支払準備金の見積もりを誤れば、収益が傷む。",
       "competition": "",
-      "relationships": ""
+      "relationships": "AIGはConvexの株式35%を約21億ドルで取得する。 AIGはAmwinsおよびBlackstoneとロイズ・シンジケート2479を設立する。"
     },
     "en": {
       "business": "A major global insurer serving businesses and individuals.",
@@ -44339,11 +44808,36 @@
       "strength": "Its features are underwriting and claims expertise, customers in over 200 countries and jurisdictions, and long-standing distribution ties.",
       "risks": "It works in a highly competitive industry. Mispricing risk or misjudging loss reserves would hurt profits.",
       "competition": "",
-      "relationships": ""
+      "relationships": "AIG will acquire a 35 percent equity interest in Convex for approximately $2.1 billion. AIG announced a collaboration with Amwins and Blackstone to form Lloyd's Syndicate 2479."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Convex Group Limited",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Equity investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amwins Group, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "提携先",
+            "en": "Partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44365,7 +44859,7 @@
       "strength": "長期のリース契約、高い更新率、追加コストの小ささによる高い利益率が特徴。",
       "risks": "通信会社の設備投資が減れば貸出需要が落ちる。メキシコのAT&Tとの紛争など、顧客との争いも抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ベライゾンの事業会社と、約11,100の無線通信サイトの賃貸・管理に関する契約を結んでいる。 インドの大口顧客ボーダフォン・アイデアが、契約額の一部のみを支払う旨を伝えた。"
     },
     "en": {
       "business": "One of the largest global REITs, leasing space for wireless and other communications equipment.",
@@ -44373,11 +44867,37 @@
       "strength": "Long-term leases, high renewal rates and low incremental costs give it high operating margins.",
       "risks": "Less network spending by carriers would cut leasing demand. Disputes with customers, such as AT&T Mexico, are also a burden.",
       "competition": "",
-      "relationships": ""
+      "relationships": "American Tower has an agreement with Verizon operating entities for the lease, sublease or management of approximately 11,100 wireless communications sites. Vodafone Idea, one of the largest customers in India, said it would make partial payments of its contractual amounts."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Verizon",
+          "role": "customer",
+          "label": {
+            "ja": "サイト賃貸契約",
+            "en": "Site lease agreement"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "VZ"
+        },
+        {
+          "kind": "company",
+          "name": "Vodafone Idea",
+          "role": "customer",
+          "label": {
+            "ja": "インドの大口顧客",
+            "en": "Large customer in India"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44398,20 +44918,48 @@
       "revenue": "規制当局が認める料金で水道・下水道サービスを提供して稼ぐ。",
       "strength": "水道・下水道システムの買収で成長を目指す。料金改定の遅れを減らす仕組みの確保にも動く。",
       "risks": "料金設定の遅れ、老朽化した設備、巨額の設備投資を抱える。水質事故や規制強化もコストを押し上げうる。",
-      "competition": "",
-      "relationships": ""
+      "competition": "主な競合にアメリカン・ステーツ・ウォーターがある。",
+      "relationships": "エッセンシャル・ユーティリティーズとの合併契約を結び、株式交換での統合を予定している。"
     },
     "en": {
       "business": "A regulated utility running water and wastewater services.",
       "revenue": "It earns by providing water and wastewater service at rates set under regulatory approval.",
       "strength": "It aims to grow by acquiring water and wastewater systems, and it seeks regulatory tools to reduce rate-setting delays.",
       "risks": "Rate-setting lag, aging infrastructure and heavy capital spending weigh on it. Contamination events and tighter rules can also raise costs.",
-      "competition": "",
-      "relationships": ""
+      "competition": "Main competitors include American States Water.",
+      "relationships": "American Water signed a merger agreement with Essential Utilities to combine the two companies in a stock-for-stock transaction."
     },
     "maps": {
-      "competition": [],
-      "relationships": []
+      "competition": [
+        {
+          "kind": "company",
+          "name": "American States Water",
+          "role": "competitor",
+          "label": {
+            "ja": "買収で競合",
+            "en": "Acquisition competitor"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AWR"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Essential Utilities",
+          "role": "partner",
+          "label": {
+            "ja": "合併契約の相手",
+            "en": "Merger agreement counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "WTRG"
+        }
+      ]
     }
   },
   {
@@ -44433,7 +44981,7 @@
       "strength": "10,000人を超えるアドバイザー網と、Columbia Threadneedleなどのブランドが特徴。",
       "risks": "市場の変動や景気悪化で業績が落ちうる。競争が激しく、手数料への下押し圧力も受ける。",
       "competition": "",
-      "relationships": ""
+      "relationships": "固定年金の89%を、同社子会社コモンウェルス・アニュイティに共同保険で出再している。 ジェンワース・ファイナンシャルの生命保険子会社と共同保険契約を結んでいる。"
     },
     "en": {
       "business": "A diversified financial services firm focused on wealth management and asset management.",
@@ -44441,11 +44989,37 @@
       "strength": "Its network of more than 10,000 advisors and brands such as Columbia Threadneedle set it apart.",
       "risks": "Market swings and economic downturns can cut results. Intense competition and fee pressure add to the strain.",
       "competition": "",
-      "relationships": ""
+      "relationships": "RiverSource Life has ceded 89% of its closed-block fixed annuities to Global Atlantic subsidiary Commonwealth Annuity on a coinsurance basis. Ameriprise has coinsurance treaties with life insurance subsidiaries of Genworth Financial."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Global Atlantic Financial Group",
+          "role": "partner",
+          "label": {
+            "ja": "年金の再保険先",
+            "en": "Annuity reinsurer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Genworth Financial",
+          "role": "partner",
+          "label": {
+            "ja": "再保険契約の相手",
+            "en": "Reinsurance counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GNW"
+        }
+      ]
     }
   },
   {
@@ -44467,7 +45041,7 @@
       "strength": "ニッチ市場での高い市場シェアと、技術力、効率的で柔軟な製造が特徴。",
       "risks": "市場の競争は激しく、技術、性能、品質、サービス、価格で争う。代替材料や代替工程との競合もある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年7月にファロ・テクノロジーズを買収した。 2025年1月にケルン・マイクロテクニックを買収した。"
     },
     "en": {
       "business": "A global maker of electronic instruments and electromechanical devices.",
@@ -44475,11 +45049,37 @@
       "strength": "Its features are strong share in niche markets, technology capabilities and efficient, flexible manufacturing.",
       "risks": "Its markets are highly competitive on technology, performance, quality, service and price. Alternative materials and processes also compete.",
       "competition": "",
-      "relationships": ""
+      "relationships": "AMETEK acquired FARO Technologies in July 2025. AMETEK acquired Kern Microtechnik in January 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "FARO Technologies",
+          "role": "partner",
+          "label": {
+            "ja": "買収した会社",
+            "en": "Acquired company"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FARO"
+        },
+        {
+          "kind": "company",
+          "name": "Kern Microtechnik",
+          "role": "partner",
+          "label": {
+            "ja": "買収した会社",
+            "en": "Acquired company"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44562,7 +45162,7 @@
       "strength": "センサーからクラウドまで、ハードとソフトを一括で手がける。顧客と地域が分散し、費用構造も柔軟。",
       "risks": "自動車業界は競争が極めて激しい。景気の悪化、関税、インフレで自動車の生産や販売が減りうる。",
       "competition": "主な競合にGentex、Mobileye、Nutanixがある。",
-      "relationships": ""
+      "relationships": "現代自動車グループと自動運転技術の合弁会社モーショナルを設立した。 TTテック・オートの株式を約20%取得した。"
     },
     "en": {
       "business": "An industrial technology company supplying safety, electrified and digital technology to carmakers and others.",
@@ -44570,7 +45170,7 @@
       "strength": "Its technology spans sensor to cloud, hardware and software. Its customers and regions are diversified and its cost structure is flexible.",
       "risks": "The auto technology industry is extremely competitive. Economic weakness, tariffs and inflation can cut vehicle production and sales.",
       "competition": "Main competitors include Gentex, Mobileye, Nutanix.",
-      "relationships": ""
+      "relationships": "Aptiv formed Motional, an autonomous driving joint venture, with Hyundai Motor Group. Aptiv acquired approximately 20% of the equity interests of TTTech Auto."
     },
     "maps": {
       "competition": [
@@ -44614,7 +45214,32 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Hyundai Motor Group",
+          "role": "partner",
+          "label": {
+            "ja": "自動運転の合弁",
+            "en": "Autonomous driving JV"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "TTTech Auto",
+          "role": "partner",
+          "label": {
+            "ja": "出資先",
+            "en": "Equity investee"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44636,7 +45261,7 @@
       "strength": "信用、不動産・インフラ、セカンダリー、PEの4分野を持ち。",
       "risks": "ファンドの成績が悪いと、受け取った成果報酬の返還義務を負いうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年3月にGLPキャピタル・パートナーズの国際事業を買収した。 ランドマーク・パートナーズの買収に資金を充てた。"
     },
     "en": {
       "business": "A global alternative investment manager.",
@@ -44644,11 +45269,36 @@
       "strength": "It runs Credit, Real Assets, Secondaries and Private Equity groups, with $622.5 billion of assets under management.",
       "risks": "It may have to repay performance income under clawback obligations.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Ares completed the acquisition of the international business of GLP Capital Partners on March 1, 2025. Ares financed the acquisition of Landmark Partners, LLC with capital."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "GLP Capital Partners",
+          "role": "partner",
+          "label": {
+            "ja": "買収した会社",
+            "en": "Acquired company"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Landmark Partners",
+          "role": "partner",
+          "label": {
+            "ja": "買収した会社",
+            "en": "Acquired company"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44670,7 +45320,7 @@
       "strength": "業界を絞った専門チームと、世界の仲介網が特徴。",
       "risks": "競争圧力が強い。買収を続けられない場合や、AIの扱いも課題になる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年に米保険ブローカーのアシュアードパートナーズを買収した。 2025年にウッドラフ・ソイヤーを買収した。"
     },
     "en": {
       "business": "A company that brokers insurance and reinsurance and handles claims administration.",
@@ -44678,11 +45328,36 @@
       "strength": "Specialized industry teams and a global broker network are its features.",
       "risks": "It faces strong competitive pressure. An end to its acquisition run and risks from AI are also concerns.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Gallagher completed the acquisition of AssuredPartners. Gallagher completed the acquisition of Woodruff Sawyer."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "AssuredPartners",
+          "role": "partner",
+          "label": {
+            "ja": "買収した会社",
+            "en": "Acquired company"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Woodruff Sawyer",
+          "role": "partner",
+          "label": {
+            "ja": "買収した会社",
+            "en": "Acquired company"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -44704,7 +45379,7 @@
       "strength": "テキサスで最大級の州内パイプラインを運営し、ガス専業で安全と安定供給に集中する。",
       "risks": "規制当局が料金やガス調達費の回収を制限しうる。料金改定の遅れ（規制ラグ）も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年度の主要なガス供給元の一つにターガ・ガス・マーケティングがある。 2025年度の主要なガス供給元の一つにコノコフィリップスがある。"
     },
     "en": {
       "business": "A gas utility that delivers natural gas to customers across eight Southern U.S. regions.",
@@ -44712,11 +45387,37 @@
       "strength": "It is gas-only and runs one of the largest intrastate pipelines in Texas, focused on safe, reliable supply.",
       "risks": "Regulators may limit recovery of costs, and rate relief can lag behind new investment (regulatory lag).",
       "competition": "",
-      "relationships": ""
+      "relationships": "Targa Gas Marketing LLC was one of the major natural gas suppliers in fiscal 2025. ConocoPhillips Company was one of the major natural gas suppliers in fiscal 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Targa Gas Marketing",
+          "role": "supplier",
+          "label": {
+            "ja": "主要ガス供給元",
+            "en": "Major gas supplier"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ConocoPhillips",
+          "role": "supplier",
+          "label": {
+            "ja": "主要ガス供給元",
+            "en": "Major gas supplier"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "COP"
+        }
+      ]
     }
   },
   {
@@ -45042,7 +45743,7 @@
       "strength": "高品質なタンパク質で世界をリードする。R&D SystemsやNovus Biologicalsなどのブランドを持つ。",
       "risks": "情報システムへの侵入やデータ保護法違反で、評判や費用の面で損害を受けうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "バイオテクニーは一部製品をサーモフィッシャーとの販売契約で販売している。 バイオテクニーはウィルソン・ウルフと共同でマーケティングを行っている。"
     },
     "en": {
       "business": "A life science company that makes reagents and instruments for research and diagnostics.",
@@ -45050,11 +45751,37 @@
       "strength": "It is a world leader in high-quality proteins, with brands such as R&D Systems and Novus Biologicals.",
       "risks": "A breach of its IT systems or a data privacy violation could hurt its reputation and raise costs.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Bio-Techne sells some of its products through a distribution agreement with Thermo Fisher Scientific. Bio-Techne runs a collaborative marketing venture with Wilson Wolf for the cell and gene therapy market."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Thermo Fisher Scientific",
+          "role": "partner",
+          "label": {
+            "ja": "販売契約",
+            "en": "Distribution agreement"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TMO"
+        },
+        {
+          "kind": "company",
+          "name": "Wilson Wolf",
+          "role": "partner",
+          "label": {
+            "ja": "共同マーケティング",
+            "en": "Collaborative marketing venture"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -45294,7 +46021,7 @@
       "strength": "先端技術の開発や買収に投資を続けるのが特徴。2024年にAxonicsの買収を完了した。",
       "risks": "競争が激しく、低価格の競合品で見劣りしうる。医療業界の統合や償還の削減で、価格や手術件数が下がる恐れもある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ボストン・サイエンティフィックはペナンブラの買収で合意している。"
     },
     "en": {
       "business": "A company that makes medical devices and sells them to hospitals and physicians.",
@@ -45302,11 +46029,25 @@
       "strength": "It keeps investing in advanced technology through development and acquisitions. It closed the Axonics acquisition in 2024.",
       "risks": "Competition is intense, and low-cost rivals could make its products less competitive. Industry consolidation and reimbursement cuts could lower prices and procedure volumes.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Boston Scientific entered into a definitive agreement to acquire Penumbra."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Penumbra",
+          "role": "partner",
+          "label": {
+            "ja": "ペナンブラ買収の合意",
+            "en": "Agreement to acquire Penumbra"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "PEN"
+        }
+      ]
     }
   },
   {
@@ -45362,7 +46103,7 @@
       "strength": "議決権行使の資料配布と集計を担う、独自で中心的な役割が特徴。",
       "risks": "規制の変更や、少数の大口顧客への依存が響きうる。電子配信が進めば、紙の配布収入が減る可能性もある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ブロードリッジは欧州のアコリンを2026年1月に買収した。 ブロードリッジはキンドリルの証券業務部門を買収した。"
     },
     "en": {
       "business": "A company that provides investing, governance and communications technology to financial firms and companies.",
@@ -45370,11 +46111,37 @@
       "strength": "Its unique, central role in distributing proxy materials and collecting votes is a defining feature.",
       "risks": "Regulatory changes and reliance on a small number of clients can hurt it. A shift to electronic delivery could cut its paper distribution revenue.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Broadridge acquired Acolin Group Holdco Limited in January 2026. Broadridge acquired Kyndryl's Securities Industry Services business."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Acolin Group Holdco Limited",
+          "role": "partner",
+          "label": {
+            "ja": "アコリン買収",
+            "en": "Acquired Acolin"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Kyndryl",
+          "role": "partner",
+          "label": {
+            "ja": "キンドリルSIS事業の買収",
+            "en": "Acquired Kyndryl's SIS business"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "KD"
+        }
+      ]
     }
   },
   {
@@ -45396,7 +46163,7 @@
       "strength": "引受リスクを負わず、代理店や仲介役に徹するのが基本。再保険会社や専属保険会社も一部で運営する。",
       "risks": "Accessionの買収で借入が増えた。保険会社との関係の変化や、技術企業などによる中抜きも抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ブラウン・アンド・ブラウンはワンエイティの専門事業を取得した。"
     },
     "en": {
       "business": "A company that sells insurance as an agency and wholesale broker.",
@@ -45404,11 +46171,24 @@
       "strength": "It mainly acts as an agent or broker without taking underwriting risk. It also runs some reinsurance and captive insurance companies.",
       "risks": "The Accession acquisition raised its debt. Changes in insurer relationships and disintermediation by technology firms are further risks.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Brown & Brown acquired specialty businesses from One80 Intermediaries."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "One80 Intermediaries",
+          "role": "partner",
+          "label": {
+            "ja": "ワンエイティの事業取得",
+            "en": "Acquired One80 specialty businesses"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -45430,7 +46210,7 @@
       "strength": "世界各地に加工工場、精製施設、港湾ターミナル、貯蔵施設を持つのが特徴。",
       "risks": "サイバー攻撃などの情報システムのリスクを抱える。取締役会が監督する。",
       "competition": "",
-      "relationships": ""
+      "relationships": "バンジはIOIとローダーズ合弁事業を共同で営んでいる。 バンジはスペイン子会社の持分をレプソル子会社に売却する契約を結んだ。"
     },
     "en": {
       "business": "A company that processes and refines soybeans and other oilseeds and also handles grain.",
@@ -45438,11 +46218,37 @@
       "strength": "Its feature is a global base of processing plants, refineries, port terminals and storage facilities.",
       "risks": "It carries cybersecurity and IT system risks, which the Board oversees.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Bunge runs the Loders joint venture with IOI Corporation Berhad. Bunge agreed to divest part of its Spanish subsidiary to a Repsol subsidiary."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "IOI Corporation Berhad",
+          "role": "partner",
+          "label": {
+            "ja": "IOIとの合弁事業",
+            "en": "Loders joint venture with IOI"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Repsol",
+          "role": "partner",
+          "label": {
+            "ja": "レプソルとの持分売却契約",
+            "en": "Stock sale agreement with Repsol"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "REPYY"
+        }
+      ]
     }
   },
   {
@@ -45464,7 +46270,7 @@
       "strength": "資産の中心は一流のオフィスビル。政府関連、法律、テクノロジー、メディアなどの顧客に貸す。",
       "risks": "景気悪化やリモートワーク、AIによる人員削減でオフィス需要が減りうる。変動金利の借入も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "セールスフォースはBXPの主要テナントの一社である。 グーグルはBXPの主要テナントの一社である。"
     },
     "en": {
       "business": "A real estate company that owns premier office buildings in major US cities.",
@@ -45472,11 +46278,38 @@
       "strength": "Its portfolio centers on premier workplace buildings, leased to government contractors, legal, technology and media clients.",
       "risks": "Weak economies, remote work and AI-driven job cuts can reduce office demand. It also carries variable-rate debt.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Salesforce is one of BXP's largest tenants. Google is one of BXP's largest tenants."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "role": "customer",
+          "label": {
+            "ja": "主要テナント",
+            "en": "Major tenant"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CRM"
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "customer",
+          "label": {
+            "ja": "主要テナント",
+            "en": "Major tenant"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOGL"
+        }
+      ]
     }
   },
   {
@@ -45498,7 +46331,7 @@
       "strength": "AIを活用した独自の物流システムと、膨大な輸送データが特徴。",
       "risks": "景気後退で貨物量が減りうる。燃料費や運送料の上昇で利益率が下がる恐れもある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "C.H.ロビンソンは欧州陸送事業をセンダーに売却する契約を結んだ。"
     },
     "en": {
       "business": "One of the largest global logistics providers, arranging truckload, ocean and air freight.",
@@ -45506,11 +46339,24 @@
       "strength": "Its features are proprietary AI-driven logistics technology and one of the largest datasets on shipments and carriers.",
       "risks": "A recession can cut freight volumes. Higher fuel and carrier costs can also shrink its margins.",
       "competition": "",
-      "relationships": ""
+      "relationships": "C.H. Robinson agreed to sell its Europe Surface Transportation business to sennder."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "sennder Technologies GmbH",
+          "role": "partner",
+          "label": {
+            "ja": "センダーへの事業売却",
+            "en": "Sale of Europe business to sennder"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -45661,7 +46507,7 @@
       "strength": "Carrier、Viessmann、Toshibaなどのブランドと、デジタルを活用したライフサイクル型の提案が特徴。",
       "risks": "天候や景気で需要が振れる。国際事業、サイバー攻撃、負債、原材料や関税の影響も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "キャリアはAWSと共同でLynxデジタル基盤を開発した。"
     },
     "en": {
       "business": "A global climate and energy company offering heating, cooling and cold chain equipment and services.",
@@ -45669,11 +46515,25 @@
       "strength": "Brands such as Carrier, Viessmann and Toshiba, plus digitally enabled lifecycle solutions, mark its offering.",
       "risks": "Weather and the economy swing demand. International operations, cyber attacks, debt, raw materials and tariffs add risk.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Carrier developed its Lynx digital platform in collaboration with AWS."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon Web Services",
+          "role": "partner",
+          "label": {
+            "ja": "AWSとの共同開発",
+            "en": "Lynx platform with AWS"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        }
+      ]
     }
   },
   {
@@ -45695,7 +46555,7 @@
       "strength": "仕入れから整備、物流、融資まで自社で担う垂直統合型が特徴。独自の写真技術と返品制度で購入の安心感を作る。",
       "risks": "競争の激しい業界で、中古車の価格変動に左右される。多額の負債と支配株主との関係も抱える。",
       "competition": "主な競合にCarMax、Amazon、CarGurus、eBay Motors、Googleがある。",
-      "relationships": ""
+      "relationships": "カーバナは延長保証の販売でドライブタイムと販売契約を結んでいる。 カーバナはルートの優先株とワラントを保有している。"
     },
     "en": {
       "business": "A US e-commerce platform for buying and selling used cars.",
@@ -45703,7 +46563,7 @@
       "strength": "Its vertically integrated model covers sourcing, reconditioning, logistics and financing. Patented photo technology and a return policy build buyer confidence.",
       "risks": "It faces fierce competition and swings in used car prices. Heavy debt and ties to its controlling stockholder add risk.",
       "competition": "Main competitors include CarMax, Amazon, CarGurus, eBay Motors, Google.",
-      "relationships": ""
+      "relationships": "Carvana sells vehicle service contracts under a master dealer agreement with DriveTime. Carvana holds Series A preferred stock and warrants in Root."
     },
     "maps": {
       "competition": [
@@ -45773,7 +46633,33 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "DriveTime Automotive Group, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "ドライブタイムとの販売契約",
+            "en": "Master dealer agreement with DriveTime"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Root",
+          "role": "partner",
+          "label": {
+            "ja": "ルートへの出資",
+            "en": "Equity investment in Root"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ROOT"
+        }
+      ]
     }
   },
   {
@@ -45795,7 +46681,7 @@
       "strength": "小さな町でも、一般的なコンビニより幅広い品ぞろえを競争力のある価格で出せるのが強み。",
       "risks": "競争が激しい。サイバー攻撃や食品安全の問題で、評判と売上を損ないうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ケーシーズはフィークスを買収しCEFCO店舗を獲得した。"
     },
     "en": {
       "business": "A company that runs 2,944 convenience stores in 19 U.S. states.",
@@ -45803,11 +46689,24 @@
       "strength": "Even in small towns, it offers a broader selection than a typical convenience store at competitive prices.",
       "risks": "Competition is intense. Cyber incidents or food-safety problems can hurt its reputation and sales.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Casey's acquired Fikes Wholesale, owner of CEFCO Convenience Stores."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Fikes Wholesale",
+          "role": "partner",
+          "label": {
+            "ja": "フィークスの買収",
+            "en": "Acquired Fikes Wholesale"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -45829,7 +46728,7 @@
       "strength": "S&P 500などの指数オプションを独占的に上場できる権利と、独自のVIX指数の手法を持つ。",
       "risks": "独占ライセンスを失えば業績に響く。取引量の減少や競争の激化も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "CboeはS&P Dow Jones Indicesとライセンス契約を結び、指数連動商品を扱う。 CboeはFrank Russell Companyと指数のライセンス契約を結んでいる。"
     },
     "en": {
       "business": "A company that runs options, futures, equities and FX exchanges around the world.",
@@ -45837,11 +46736,36 @@
       "strength": "It holds exclusive rights to trade index options such as the S&P 500, and owns the VIX Index methodology.",
       "risks": "Losing its exclusive licenses would hit results. Falling trading volumes and tougher competition add risk.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Cboe holds license agreements with index provider S&P Dow Jones Indices. Cboe has license agreements with index provider Frank Russell Company."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "S&P Dow Jones Indices",
+          "role": "partner",
+          "label": {
+            "ja": "指数ライセンス提携",
+            "en": "Index license partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Frank Russell Company",
+          "role": "partner",
+          "label": {
+            "ja": "指数ライセンス提携",
+            "en": "Index license partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -45863,7 +46787,7 @@
       "strength": "施設管理やプロジェクト管理など、景気に左右されにくい継続収入の比重が高いのが特徴。",
       "risks": "物件売買や賃貸の取引収入は景気しだいで増減する。Telfordの防火安全の引当金も負担になる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "CBRE MCIはFannie MaeのDUSプログラムで集合住宅向け融資を行う。 CBREはCrow Holdings系列からTrammell Crowの商号ライセンスを受けている。"
     },
     "en": {
       "business": "A company offering a wide range of commercial real estate services, including for offices.",
@@ -45871,11 +46795,36 @@
       "strength": "Its revenue leans toward resilient, recurring sources such as facilities and project management.",
       "risks": "Transaction revenue from property sales and leasing swings with the cycle. Telford's fire safety provision is a cost.",
       "competition": "",
-      "relationships": ""
+      "relationships": "CBRE MCI has an agreement with Fannie Mae under its DUS Program to provide multifamily financing. CBRE licenses the Trammell Crow Company trade name from an affiliate of Crow Holdings."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Fannie Mae",
+          "role": "partner",
+          "label": {
+            "ja": "DUS融資の提携先",
+            "en": "DUS program lending partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Crow Holdings",
+          "role": "partner",
+          "label": {
+            "ja": "商号ライセンス元",
+            "en": "Trade name licensor"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -45897,7 +46846,7 @@
       "strength": "米国、英国、EUなど複数の国・地域で医薬品の流通網を持つ。",
       "risks": "大口顧客を失うと打撃が大きい。サプライチェーン規制の強化でコストが増えうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "Walgreens and Boots合計でCencoraの売上高の約25%を占める顧客である。 Evernorth Health ServicesはCencoraの売上高の約13%を占める顧客である。"
     },
     "en": {
       "business": "A company that distributes pharmaceuticals wholesale.",
@@ -45905,11 +46854,36 @@
       "strength": "It runs pharmaceutical distribution across several countries and regions, including the U.S., U.K. and EU.",
       "risks": "Losing a key customer would hurt badly. Tighter supply chain rules could raise its costs.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Walgreens and Boots together accounted for approximately 25% of Cencora revenue in fiscal 2025. Evernorth Health Services accounted for approximately 13% of Cencora revenue in fiscal 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Walgreens",
+          "role": "customer",
+          "label": {
+            "ja": "最大級の顧客",
+            "en": "Major customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Evernorth Health Services",
+          "role": "customer",
+          "label": {
+            "ja": "主要顧客",
+            "en": "Major customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -45965,7 +46939,7 @@
       "strength": "Houston Electricの供給地域には、ほかに送配電事業者がいない。",
       "risks": "2021年2月の冬の嵐では停電をめぐる訴訟を受けた。停電対応でも責任を問われうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ヒューストン・エレクトリックの小売電気事業者向け売掛金の相当部分はVistraの関連会社が負っている。 ヒューストン・エレクトリックの小売電気事業者向け売掛金の相当部分はNRGの関連会社が負っている。"
     },
     "en": {
       "business": "A U.S. utility holding company that owns electric and natural gas systems.",
@@ -45973,11 +46947,38 @@
       "strength": "There are no other transmission and distribution utilities in Houston Electric's service area.",
       "risks": "It faced lawsuits over outages in the February 2021 winter storm, and outage handling can bring new claims.",
       "competition": "",
-      "relationships": ""
+      "relationships": "A significant portion of Houston Electric receivables from retail electric providers is due from Vistra affiliates. A significant portion of Houston Electric receivables from retail electric providers is due from NRG affiliates."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Vistra Energy Corp.",
+          "role": "customer",
+          "label": {
+            "ja": "小売電気事業者の顧客",
+            "en": "Retail electric provider customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "VST"
+        },
+        {
+          "kind": "company",
+          "name": "NRG",
+          "role": "customer",
+          "label": {
+            "ja": "小売電気事業者の顧客",
+            "en": "Retail electric provider customer"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NRG"
+        }
+      ]
     }
   },
   {
@@ -45999,7 +47000,7 @@
       "strength": "世界最大のアンモニア生産網と、低炭素アンモニアへの取り組みが特徴。",
       "risks": "市場は世界規模で競争が激しい。天然ガス費用の安い海外製品とも競う。",
       "competition": "主な競合にNutrien Ltd.、LSB Industries、CVR Partners, LPがある。",
-      "relationships": ""
+      "relationships": "CFはJERAとMitsuiとBlue Pointの低炭素アンモニア工場建設の合弁を組んだ。 CFはJERAと三井物産とBlue Pointの低炭素アンモニア工場建設の合弁を組んだ。"
     },
     "en": {
       "business": "A company that makes nitrogen fertilizer and other products from ammonia.",
@@ -46007,7 +47008,7 @@
       "strength": "It runs the world's largest ammonia production network and is pushing into low-carbon ammonia.",
       "risks": "Its markets are global and intensely competitive. It also faces imports made with cheaper natural gas.",
       "competition": "Main competitors include Nutrien Ltd., LSB Industries, CVR Partners, LP.",
-      "relationships": ""
+      "relationships": "CF formed the Blue Point joint venture with JERA and Mitsui to build a low-carbon ammonia facility. CF formed the Blue Point joint venture with JERA and Mitsui to build a low-carbon ammonia facility."
     },
     "maps": {
       "competition": [
@@ -46051,7 +47052,32 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "JERA Co., Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "Blue Point合弁の相手",
+            "en": "Blue Point JV partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Mitsui & Co., Ltd.",
+          "role": "partner",
+          "label": {
+            "ja": "Blue Point合弁の相手",
+            "en": "Blue Point JV partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46073,7 +47099,7 @@
       "strength": "75年以上続く実験動物医学・科学が原点。生体を扱う技術を土台に、非臨床の幅広い製品とサービスを揃える。",
       "risks": "研究用の非ヒト霊長類の調達に課題を抱える。株主による訴訟や、情報システムへの不正アクセスも懸念材料。",
       "competition": "",
-      "relationships": ""
+      "relationships": "Charles Riverは2026年1月にK.F. (Cambodia) Ltd.の資産を取得した。"
     },
     "en": {
       "business": "A company that supplies research models and testing services for non-clinical drug development.",
@@ -46081,11 +47107,24 @@
       "strength": "Its roots are in laboratory animal medicine and science, over 75 years old. That in vivo expertise underpins a broad non-clinical portfolio.",
       "risks": "Securing non-human primates is a challenge. Shareholder lawsuits and unauthorized access to its information systems are also concerns.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Charles River acquired certain assets of K.F. (Cambodia) Ltd. in January 2026."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "K.F. (Cambodia) Ltd.",
+          "role": "partner",
+          "label": {
+            "ja": "資産取得の相手先",
+            "en": "Asset acquisition counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46167,7 +47206,7 @@
       "strength": "責任ある調達の食材と、人工の着色料や保存料を使わない調理が特徴。Food with Integrityを掲げる。",
       "risks": "食中毒など食品安全の問題は大きな痛手になりうる。人件費や食材費の上昇、ブランドの評判低下も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "Chipotleは中東の提携運営店舗をAlshaya Groupと組んで展開している。 ChipotleはレストランのオートメーションをVebuから購入する大口顧客である。"
     },
     "en": {
       "business": "A company that runs Mexican restaurants serving burritos, bowls and tacos.",
@@ -46175,11 +47214,36 @@
       "strength": "It stands out for responsibly sourced ingredients and cooking without artificial colors or preservatives, under its Food with Integrity approach.",
       "risks": "Food safety incidents could hurt badly. Rising wage and ingredient costs and damage to its brand reputation are other weak points.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Chipotle runs partner-operated restaurants in the Middle East in partnership with the Alshaya Group. Chipotle is a significant customer of Vebu, a developer of restaurant automation technology."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Alshaya Group",
+          "role": "partner",
+          "label": {
+            "ja": "中東の提携運営会社",
+            "en": "Middle East operating partner"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Vebu",
+          "role": "supplier",
+          "label": {
+            "ja": "自動化技術の供給元",
+            "en": "Restaurant automation supplier"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46201,7 +47265,7 @@
       "strength": "引受の規律と、商品・地域の分散が特徴。強い財務基盤と請求対応の質も強みとして打ち出す。",
       "risks": "自然災害やサイバー攻撃による大きな損失を抱える。支払準備金が実際の請求に足りなくなる恐れもある。",
       "competition": "",
-      "relationships": ""
+      "relationships": "Marsh & McLennanは各年の元受保険料の約11%を手配した保険ブローカーである。 Chubbは2024年にAon plcからHealthy Paws Pet Insurance LLCの事業を取得した。"
     },
     "en": {
       "business": "A global insurer offering property and casualty, reinsurance and life insurance.",
@@ -46209,11 +47273,36 @@
       "strength": "Disciplined underwriting and product and geographic diversification set it apart, along with a strong balance sheet and claims service.",
       "risks": "Natural disasters and cyber-attacks can cause large losses. Loss reserves could also fall short of actual claims.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Marsh & McLennan generated or placed approximately 11 percent of Chubb gross premiums written each year. Chubb acquired the business of Healthy Paws Pet Insurance LLC from Aon plc in 2024."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Marsh & McLennan Companies, Inc.",
+          "role": "partner",
+          "label": {
+            "ja": "主要ブローカー",
+            "en": "Major broker"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Aon plc",
+          "role": "partner",
+          "label": {
+            "ja": "事業取得の相手先",
+            "en": "Acquisition counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46269,7 +47358,7 @@
       "strength": "代理店への献身、財務の強さ、現場で判断できる運営体制が三つの強み。",
       "risks": "2,000社を超える保険会社がひしめく競争の激しい市場にいる。経済や価格の変動サイクルにも向き合う。",
       "competition": "",
-      "relationships": ""
+      "relationships": "CINFはバミューダの特別目的保険会社Skyline Re II Ltd.と再保険契約を結んでいる。 Chubb Tempest Reinsurance Ltd.はCINFの再保険プログラムに大きく参加する再保険会社の一つである。"
     },
     "en": {
       "business": "A property casualty insurer that sells through independent agencies.",
@@ -46277,11 +47366,36 @@
       "strength": "Its three strengths are commitment to its agencies, financial strength, and an operating structure built for local decision making.",
       "risks": "It competes in a market with more than 2,000 carriers and has to work through difficult economic and pricing cycles.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Cincinnati Financial has a reinsurance agreement with Skyline Re II Ltd., a Bermuda special purpose insurer. Chubb Tempest Reinsurance Ltd. is one of the reinsurers with a large participation in the Cincinnati Financial program."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Skyline Re II Ltd.",
+          "role": "partner",
+          "label": {
+            "ja": "再保険の相手先",
+            "en": "Reinsurance counterparty"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Chubb Tempest Reinsurance Ltd.",
+          "role": "supplier",
+          "label": {
+            "ja": "再保険プログラム参加社",
+            "en": "Reinsurance program participant"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46303,7 +47417,7 @@
       "strength": "特定の顧客に頼らない幅広い顧客基盤が特徴。約12,500の地域配送ルートで届ける。",
       "risks": "UniFirstの買収はまだ完了しておらず、各種の条件次第。市場は細分化され、顧客が自社で行う選択肢とも競う。",
       "competition": "",
-      "relationships": ""
+      "relationships": "シンタスはユニファースト株の全部を取得する合併契約を2026年3月10日に結んだ。"
     },
     "en": {
       "business": "A company that supplies uniform rental and hygiene and safety products to businesses.",
@@ -46311,11 +47425,25 @@
       "strength": "A broad customer base with no single big customer is a feature. It delivers through about 12,500 local delivery routes.",
       "risks": "The UniFirst acquisition has not closed and depends on conditions. Its markets are fragmented, and customers may also do the work in-house.",
       "competition": "",
-      "relationships": ""
+      "relationships": "On March 10, 2026, Cintas entered into a Merger Agreement to acquire all outstanding shares of UniFirst common stock."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "UniFirst",
+          "role": "partner",
+          "label": {
+            "ja": "ユニファースト買収契約",
+            "en": "UniFirst merger agreement"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "UNF"
+        }
+      ]
     }
   },
   {
@@ -46371,7 +47499,7 @@
       "strength": "売上の80%超が、カテゴリーで1位か2位のシェアを持つブランド。Clorox、Glad、Brita、Hidden Valleyなどを持つ。",
       "risks": "競争が激しく、売上や利益、キャッシュフローが減りうる。2026年度は売上が減り、EPSは26%下がった。",
       "competition": "",
-      "relationships": ""
+      "relationships": "ウォルマートはクロロックスの最大の顧客である。 グラッド事業のP&Gとのベンチャー契約は2026年1月31日に満了した。"
     },
     "en": {
       "business": "A company that makes household and professional products such as cleaners, disinfectants and cat litter.",
@@ -46379,11 +47507,38 @@
       "strength": "Over 80% of sales come from brands holding the No. 1 or No. 2 share in their categories, including Clorox, Glad, Brita and Hidden Valley.",
       "risks": "Intense competition can cut sales, earnings and cash flow. In fiscal 2026 sales fell and EPS dropped 26%.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Walmart Stores, Inc. is Clorox's largest customer. The venture agreement with P&G for the Glad business expired on January 31, 2026."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Walmart Stores, Inc.",
+          "role": "customer",
+          "label": {
+            "ja": "最大顧客ウォルマート",
+            "en": "Largest customer Walmart"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "WMT"
+        },
+        {
+          "kind": "company",
+          "name": "The Procter & Gamble Company",
+          "role": "partner",
+          "label": {
+            "ja": "P&Gとのグラッド契約",
+            "en": "Glad venture with P&G"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "PG"
+        }
+      ]
     }
   },
   {
@@ -46439,7 +47594,7 @@
       "strength": "電源を石炭から再生可能エネルギーへ移し、信頼性と手頃な価格の両立を掲げる。",
       "risks": "規制、天候、エネルギー価格、金利に左右される。石炭火力の閉鎖は緊急命令で延長されうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "コンシューマーズは2030年6月からMCVパートナーシップと10年のPPAを結んだ。"
     },
     "en": {
       "business": "A holding company for electric and gas utilities, mainly in Michigan.",
@@ -46447,11 +47602,24 @@
       "strength": "It is moving its power supply from coal to renewables while aiming to keep energy reliable and affordable.",
       "risks": "Regulation, weather, energy prices and interest rates drive results. Emergency orders can extend coal plant operation.",
       "competition": "",
-      "relationships": ""
+      "relationships": "In September 2025, Consumers entered into a new 10-year PPA with the MCV Partnership, effective June 1, 2030."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "MCV Partnership",
+          "role": "supplier",
+          "label": {
+            "ja": "MCVから電力購入",
+            "en": "Power purchase from MCV"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46473,7 +47641,7 @@
       "strength": "信頼とわかりやすさが特徴。顧客の資産は常に1対1で保有する。",
       "risks": "暗号資産の価格変動で業績が大きくぶれる。規制の変化や取引所の障害も響く。",
       "competition": "",
-      "relationships": ""
+      "relationships": "コインベースは2018年にサークルと組み、USDCを立ち上げた。"
     },
     "en": {
       "business": "A company that runs a platform for trading and holding crypto assets.",
@@ -46481,11 +47649,24 @@
       "strength": "Trust and ease of use set it apart. It holds customer assets one-to-one at all times.",
       "risks": "Volatile crypto prices make results swing widely. Regulatory changes and system outages also weigh on it.",
       "competition": "",
-      "relationships": ""
+      "relationships": "In 2018, Coinbase partnered with Circle to launch USDC."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Circle Internet Financial, LLC",
+          "role": "partner",
+          "label": {
+            "ja": "サークルとUSDC提携",
+            "en": "USDC partnership with Circle"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46555,7 +47736,7 @@
       "strength": "50の事業会社が190拠点を持ち、製造業や医療、教育、テクノロジー施設などを手がける。",
       "risks": "建設需要の景気変動に弱い。固定価格契約ではコスト超過で利益が減りうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "2025年第1四半期にセンチュリー・コントラクターズの買収を完了した。 ライトウェイ・プラミング&メカニカルの買収も完了した。"
     },
     "en": {
       "business": "A US contractor that installs and services HVAC and electrical systems.",
@@ -46563,11 +47744,36 @@
       "strength": "Its 50 operating units run 190 locations, serving manufacturing, healthcare, education and technology facilities.",
       "risks": "It is exposed to swings in construction demand. Cost overruns on fixed-price contracts can cut profit.",
       "competition": "",
-      "relationships": ""
+      "relationships": "In the first quarter of 2025, Comfort Systems completed the acquisition of Century Contractors, LLC. Comfort Systems also completed the acquisition of Right Way Plumbing & Mechanical LLC."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Century Contractors, LLC",
+          "role": "partner",
+          "label": {
+            "ja": "センチュリー買収",
+            "en": "Century Contractors acquisition"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Right Way Plumbing & Mechanical LLC",
+          "role": "partner",
+          "label": {
+            "ja": "ライトウェイ買収",
+            "en": "Right Way acquisition"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -46763,7 +47969,7 @@
       "strength": "独自の技術基盤と決済ネットワーク、世界各地での規模が強み。",
       "risks": "銀行など金融機関や専門事業者と競合する。小切手など従来の支払い手段とも競う。",
       "competition": "主な競合にAmerican Express、WEXがある。",
-      "relationships": ""
+      "relationships": "仮想カード決済はマスターカードのネットワーク上で動く。"
     },
     "en": {
       "business": "A payments company that helps businesses pay and manage their expenses.",
@@ -46771,7 +47977,7 @@
       "strength": "Its specialized technology platforms, payment acceptance networks and global scale are key features.",
       "risks": "It faces banks and other financial institutions, plus specialist providers. Cash and checks also compete.",
       "competition": "Main competitors include American Express, WEX.",
-      "relationships": ""
+      "relationships": "Corpay's virtual card solution operates on the Mastercard network."
     },
     "maps": {
       "competition": [
@@ -46802,7 +48008,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Mastercard",
+          "role": "partner",
+          "label": {
+            "ja": "マスターカード網で運営",
+            "en": "Runs on Mastercard network"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MA"
+        }
+      ]
     }
   },
   {
@@ -46824,7 +48044,7 @@
       "strength": "Apartments.com、Homes.com、LoopNetなどの主力ブランドを持つ。",
       "risks": "競争が激しく、顧客や広告主を失えば収益が落ちる。不動産市況の悪化やM&Aの不発も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "コスターは2025年2月28日にマターポートの買収を完了した。 コスターは2025年8月27日にドメインの買収を完了した。"
     },
     "en": {
       "business": "A company that runs real estate information, analytics and online property marketplaces.",
@@ -46832,11 +48052,36 @@
       "strength": "It owns flagship brands such as Apartments.com, Homes.com and LoopNet.",
       "risks": "Competition is intense, and losing clients or advertisers cuts revenue. A real estate downturn or failed acquisitions also hurt.",
       "competition": "",
-      "relationships": ""
+      "relationships": "CoStar's acquisition of Matterport was completed on February 28, 2025. CoStar's acquisition of Domain was completed on August 27, 2025."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Matterport",
+          "role": "partner",
+          "label": {
+            "ja": "マターポート買収完了",
+            "en": "Matterport acquisition completed"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Domain Holdings Australia Pty Limited",
+          "role": "partner",
+          "label": {
+            "ja": "ドメイン買収完了",
+            "en": "Domain acquisition completed"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
