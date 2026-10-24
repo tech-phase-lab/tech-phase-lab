@@ -319,3 +319,22 @@ test('delivery disabled by default makes no DB, account or provider calls',async
  const deliver=createAlertDelivery({connect:forbidden},{provider:{name:'fixture-mail',send:forbidden,lookup:forbidden},recipient:forbidden,links:forbidden,publicOrigin:'https://app.test'});
  assert.equal(await deliver('user_buyer','user_buyer:2027-02-04:alerts'),'disabled');
 });
+
+test('mail stop commits both opt-outs without purchase access, preserves rules and survives protection outage',async()=>{
+ const {createMailStopStore}=await import('../lib/resolute/notification-stop-store.ts');
+ const {db,pool}=await database();let fail=true,calls=0;
+ try{
+  await db.exec(readFileSync(new URL('../db/resolute/017_notification_suppressions.sql',import.meta.url),'utf8'));
+  const store=createNotificationStore(pool());await store('user_buyer','PUT',{settings:{...settings,morningEnabled:true},baseRevision:0});
+  await db.exec("UPDATE resolute.entitlements SET revoked_at=CURRENT_TIMESTAMP");
+  const stop=createMailStopStore(pool('resolute_notification_writer'),async()=>{calls++;if(fail)throw Error('protection unavailable');});
+  await assert.rejects(()=>stop('user_buyer'),/protection unavailable/);
+  const row=(await db.query("SELECT * FROM resolute.notification_settings WHERE clerk_user_id='user_buyer'")).rows[0];
+  assert.equal(Number(row.revision),2);assert.deepEqual(row.settings,{...settings,alertsEnabled:false,morningEnabled:false});
+  assert.deepEqual((await db.query("SELECT kind FROM resolute.notification_suppressions WHERE clerk_user_id='user_buyer' AND revision=2 ORDER BY kind")).rows.map(r=>r.kind),['alerts','morning']);
+  fail=false;assert.deepEqual(await stop('user_buyer'),{stopped:true});assert.equal(calls,2);
+  assert.equal(Number((await db.query('SELECT revision FROM resolute.notification_settings')).rows[0].revision),2);
+  await stop('user_deleted');assert.equal((await db.query('SELECT * FROM resolute.notification_settings')).rows.length,1);
+  await assert.rejects(()=>stop('invalid'));assert.equal(calls,3);
+ }finally{await db.close();}
+});
