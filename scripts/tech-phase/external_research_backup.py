@@ -3,7 +3,7 @@
 Run beside the research volume, never against a downloaded main DB file without
 its live WAL. No cron changes, deletions, notifications or provider API calls.
 """
-from contextlib import closing, nullcontext
+from contextlib import closing, contextmanager, nullcontext
 from datetime import datetime, timezone
 import hashlib
 import importlib.util
@@ -21,6 +21,27 @@ ROOT = Path(__file__).resolve().parents[2]
 spec = importlib.util.spec_from_file_location('research_persistence', ROOT / 'scripts/research/persistence.py')
 persistence = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(persistence)
+
+
+class BackupStageError(RuntimeError):
+    """A fixed diagnostic code; never expose the underlying exception text."""
+
+    def __init__(self, stage):
+        super().__init__('research backup failed')
+        self.stage = stage
+
+
+STAGES = frozenset({'configuration', 'client', 'snapshot', 'encrypt', 'upload',
+                    'download', 'restore', 'manifest_upload', 'manifest_readback',
+                    'archive_input'})
+
+
+@contextmanager
+def stage(name):
+    try:
+        yield
+    except Exception as exc:
+        raise BackupStageError(name) from exc
 
 
 def snapshot(source, destination):
@@ -85,16 +106,20 @@ def backup(source, client, bucket, key):
         cipher = Path(directory) / 'snapshot.aesgcm'
         # A single SQLite transaction snapshot contains every table, not only
         # news or the public JSON feed. Never prune existing local backups.
-        checked = snapshot(source, plain)
+        with stage('snapshot'):
+            checked = snapshot(source, plain)
         stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
         object_key = PREFIX + 'dumps/' + stamp + '.aesgcm'
-        encrypt(plain, cipher, key, object_key)
-        digest = persistence.digest(cipher)
-        size = cipher.stat().st_size
-        with cipher.open('rb') as body:
-            client.put_object(Bucket=bucket, Key=object_key, Body=body, IfNoneMatch='*')
+        with stage('encrypt'):
+            encrypt(plain, cipher, key, object_key)
+            digest = persistence.digest(cipher)
+            size = cipher.stat().st_size
+        with stage('upload'):
+            with cipher.open('rb') as body:
+                client.put_object(Bucket=bucket, Key=object_key, Body=body, IfNoneMatch='*')
         downloaded = Path(directory) / 'downloaded.aesgcm'
-        readback(client, bucket, object_key, size, digest, downloaded)
+        with stage('download'):
+            readback(client, bucket, object_key, size, digest, downloaded)
         manifest = {'version': 1, 'key': object_key, 'bytes': size, 'sha256': digest,
                     'plaintext_sha256': checked['sha256'], 'created_at': stamp,
                     'format': 'nonce12-aes256gcm-ciphertext-tag16',
@@ -102,11 +127,14 @@ def backup(source, client, bucket, key):
                     'full_site_recovery_verified': False}
         # Verify the downloaded object, never the pre-upload local archive.
         # Publish the completion manifest only after authenticated isolated restore.
-        verify_restore(downloaded, manifest, key)
+        with stage('restore'):
+            verify_restore(downloaded, manifest, key)
         manifest['restore_verified'] = True
         raw = json.dumps(manifest, sort_keys=True).encode()
-        client.put_object(Bucket=bucket, Key=object_key + '.json', Body=raw, IfNoneMatch='*')
-        readback(client, bucket, object_key + '.json', len(raw), hashlib.sha256(raw).hexdigest())
+        with stage('manifest_upload'):
+            client.put_object(Bucket=bucket, Key=object_key + '.json', Body=raw, IfNoneMatch='*')
+        with stage('manifest_readback'):
+            readback(client, bucket, object_key + '.json', len(raw), hashlib.sha256(raw).hexdigest())
         return {'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_OK', 'bytes': size,
                 'key': object_key, 'sha256': digest, 'restore_verified': True,
                 'full_site_recovery_verified': False}
@@ -185,28 +213,41 @@ def main():
     if args.verify_archive or args.manifest:
         if not args.verify_archive or not args.manifest:
             raise ValueError('archive and manifest both required')
-        with Path(args.manifest).open('rb') as handle:
-            raw = handle.read(65537)
-        if len(raw) > 65536:
-            raise ValueError('manifest too large')
-        report = verify_restore(args.verify_archive, json.loads(raw),
-                                bytes.fromhex(os.environ['TECH_PHASE_EXTERNAL_KEY_HEX']))
+        with stage('archive_input'):
+            with Path(args.manifest).open('rb') as handle:
+                raw = handle.read(65537)
+            if len(raw) > 65536:
+                raise ValueError('manifest too large')
+            manifest = json.loads(raw)
+            key = bytes.fromhex(os.environ['TECH_PHASE_EXTERNAL_KEY_HEX'])
+        with stage('restore'):
+            report = verify_restore(args.verify_archive, manifest, key)
         print(json.dumps(report), flush=True)
         return
-    source, values, key = configuration(os.environ)
-    import boto3
-    from botocore.config import Config
-    client = boto3.client('s3', endpoint_url=values['ENDPOINT'], region_name=values['REGION'],
-                          aws_access_key_id=values['ACCESS_KEY_ID'],
-                          aws_secret_access_key=values['SECRET_ACCESS_KEY'],
-                          config=Config(s3={'addressing_style': 'path'}, connect_timeout=15,
-                                        read_timeout=120, retries={'max_attempts': 3}))
+    with stage('configuration'):
+        source, values, key = configuration(os.environ)
+    with stage('client'):
+        import boto3
+        from botocore.config import Config
+        client = boto3.client('s3', endpoint_url=values['ENDPOINT'], region_name=values['REGION'],
+                              aws_access_key_id=values['ACCESS_KEY_ID'],
+                              aws_secret_access_key=values['SECRET_ACCESS_KEY'],
+                              config=Config(s3={'addressing_style': 'path'}, connect_timeout=15,
+                                            read_timeout=120, retries={'max_attempts': 3}))
     print(json.dumps(backup(source, client, values['BUCKET'], key)), flush=True)
 
 
-if __name__ == '__main__':
+def run():
     try:
         main()
-    except Exception:
-        print(json.dumps({'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED'}), flush=True)
-        raise SystemExit(1)
+    except Exception as exc:
+        code = (exc.stage if isinstance(exc, BackupStageError) and isinstance(exc.stage, str)
+                and exc.stage in STAGES else 'internal')
+        print(json.dumps({'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED',
+                          'stage': code}), flush=True)
+        return 1
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(run())

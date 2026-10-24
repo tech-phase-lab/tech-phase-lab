@@ -124,8 +124,9 @@ class ExternalResearchTests(unittest.TestCase):
             path = Path(directory) / 'live.sqlite'
             self.source(path)
             store = BadManifestStore()
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'manifest_readback')
             self.assertEqual(len(store.objects), 2)
 
     def test_corrupt_readback_never_publishes_manifest(self):
@@ -133,21 +134,24 @@ class ExternalResearchTests(unittest.TestCase):
             path = Path(directory) / 'live.sqlite'
             self.source(path)
             store = Store(corrupt=True)
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'download')
             self.assertEqual(len(store.objects), 1)
 
     def test_missing_or_incomplete_database_never_uploads(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'live.sqlite'
             store = Store()
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'snapshot')
             self.assertFalse(path.exists())
             with sqlite3.connect(path) as db:
                 db.execute('CREATE TABLE unrelated (id INTEGER)')
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'snapshot')
             self.assertFalse(store.objects)
 
     def test_configuration_fails_closed(self):
@@ -201,10 +205,95 @@ class ExternalResearchTests(unittest.TestCase):
                 sdk = Mock()
                 with patch.dict(os.environ, env, clear=True), patch.object(sys, 'argv', ['backup']), \
                         patch.dict(sys.modules, {'boto3': sdk}), patch.object(module, 'backup') as backup:
-                    with self.assertRaisesRegex(ValueError, 'explicit existing R2 destination required'):
+                    with self.assertRaises(module.BackupStageError) as failure:
                         module.main()
+                    self.assertEqual(failure.exception.stage, 'configuration')
                     sdk.client.assert_not_called()
                     backup.assert_not_called()
+
+    def test_failed_stages_remove_temporaries_and_never_report_success(self):
+        stages = ('snapshot', 'encrypt', 'upload', 'download', 'restore',
+                  'manifest_upload', 'manifest_readback')
+        for failed_stage in stages:
+            with self.subTest(stage=failed_stage), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                source = root / 'live.sqlite'
+                self.source(source)
+                store = Store()
+                real_stage = module.stage
+
+                # Fail after the operation's side effect, including a server
+                # accepting an upload whose response was lost. Do not delete it
+                # or announce success; every private local temporary must go.
+                from contextlib import contextmanager
+                @contextmanager
+                def fail_after(name):
+                    with real_stage(name):
+                        yield
+                        if name == failed_stage:
+                            raise OSError('fixture credential MUST_NOT_APPEAR')
+
+                def action():
+                    print(json.dumps(module.backup(source, store, 'external', b'x' * 32)))
+
+                output = io.StringIO()
+                with patch.object(tempfile, 'tempdir', directory), \
+                        patch.object(module, 'stage', side_effect=fail_after), \
+                        patch.object(module, 'main', side_effect=action), \
+                        patch('sys.stdout', output):
+                    self.assertEqual(module.run(), 1)
+                self.assertEqual(json.loads(output.getvalue()), {
+                    'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': failed_stage})
+                self.assertFalse(list(root.glob('research-*')))
+                self.assertEqual(len(store.objects),
+                                 0 if failed_stage in ('snapshot', 'encrypt') else
+                                 2 if failed_stage in ('manifest_upload', 'manifest_readback') else 1)
+                self.assertTrue(source.exists())
+
+    def test_configuration_and_client_failures_are_safe_and_do_not_start_backup(self):
+        for env, expected in (({}, 'configuration'), (self.configuration(), 'client')):
+            with self.subTest(stage=expected):
+                sdk = Mock()
+                sdk.client.side_effect = RuntimeError('fixture credential MUST_NOT_APPEAR')
+                output = io.StringIO()
+                with patch.dict(os.environ, env, clear=True), patch.object(sys, 'argv', ['backup']), \
+                        patch.dict(sys.modules, {'boto3': sdk, 'botocore.config': Mock()}), \
+                        patch.object(module, 'backup') as backup, patch('sys.stdout', output):
+                    self.assertEqual(module.run(), 1)
+                self.assertEqual(json.loads(output.getvalue()), {
+                    'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': expected})
+                backup.assert_not_called()
+                if expected == 'configuration':
+                    sdk.client.assert_not_called()
+                else:
+                    sdk.client.assert_called_once()
+
+    def test_unknown_diagnostic_and_exception_text_are_never_printed(self):
+        for error in (ValueError('fixture secret'), module.BackupStageError('fixture secret'),
+                      module.BackupStageError(['fixture secret'])):
+            output = io.StringIO()
+            with patch.object(module, 'main', side_effect=error), patch('sys.stdout', output):
+                self.assertEqual(module.run(), 1)
+            self.assertEqual(json.loads(output.getvalue()), {
+                'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': 'internal'})
+
+    def test_verify_cli_distinguishes_input_and_restore_failure_without_client(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = root / 'manifest.json'
+            archive = root / 'missing.aesgcm'
+            for value, expected in (('{', 'archive_input'), ('{}', 'restore')):
+                manifest.write_text(value)
+                output = io.StringIO()
+                sdk = Mock()
+                with patch.dict(os.environ, {'TECH_PHASE_EXTERNAL_KEY_HEX': 'ab' * 32}, clear=True), \
+                        patch.object(sys, 'argv', ['backup', '--verify-archive', str(archive),
+                                                  '--manifest', str(manifest)]), \
+                        patch.dict(sys.modules, {'boto3': sdk}), patch('sys.stdout', output):
+                    self.assertEqual(module.run(), 1)
+                self.assertEqual(json.loads(output.getvalue()), {
+                    'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': expected})
+                sdk.client.assert_not_called()
 
     def test_tampering_even_with_updated_checksum_fails_authentication(self):
         with tempfile.TemporaryDirectory() as directory:

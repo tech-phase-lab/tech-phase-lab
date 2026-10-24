@@ -56,7 +56,7 @@ jobs:
           python3 - <<'PY'
           import json, os, pathlib
           path = pathlib.Path(os.environ['RUNNER_TEMP']) / 'research-backup-disabled.json'
-          assert json.loads(path.read_text()) == {'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED'}
+          assert json.loads(path.read_text()) == {'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': 'configuration'}
           print('RESEARCH_BACKUP_DEFAULT_DISABLED_OK')
           PY
       - name: Exercise WAL snapshot, encryption, downloaded-byte restore and rejected destinations offline
