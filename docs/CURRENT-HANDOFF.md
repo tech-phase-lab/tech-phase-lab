@@ -1,3 +1,29 @@
+## 2026-10-24 JST — PRO checkout final integrated local gates passed
+
+Integrated preview 9f6134c4 while preserving all independently published changes.
+Approved PRO scope remains six files: billing screen, client regression tests and
+four handoff/acceptance records. No news, earnings, RESOLUTE or Railway changes.
+Final sequential gates passed: lint (0 errors, 5 existing warnings), Node 1339/1339
+(408.792s), Python 2624/2624 (806.844s), production build/typecheck, compileall and
+git diff --check. Full local tree must match the GitHub candidate tree before the
+approved preview ref update. This record precedes publication, not a deployment receipt.
+Existing browser state still shows Sandbox review required, renewal stopped and PRO
+until 2026-11-20 19:00 JST. No payment/cancellation operation was repeated.
+Two-member live ledger reconciliation, recurring/dispute acceptance and live backup
+verification remain incomplete; production PRO is not opened by this UI change.
+
+---
+
+## 2026-10-24 JST — PRO recovery resumed on latest preview
+
+Restored checkpoint 1f3b9ef4 on preview f453ce1b in a separate checkout outside
+the previously deleted scratch directory. Retained all parallel runtime/backup
+work without repeating those operations. Diff remains the six approved PRO files;
+news implementation and tests are unchanged. Required gates run sequentially.
+Prior interrupted runs are not accepted as full validation; no branch update yet.
+
+---
+
 ## 2026-10-24 07:17 JST — External live-data backup gap actually observed
 
 Read-only R2 run40032566590 (implementation61cfc1f2) listed the seven known prefixes
@@ -46,6 +72,47 @@ No live payments, DB verification or AI calls. Node binary/Bookworm/Render remai
 Render endpoint restrictions were inventoried; no allowlist/authentication was weakened.
 Next: remaining Python services and complete runtime-image custody with offline probes.
 Keep saving gates OFF, preserve consumed AI claim, no Railway reconnect/key-entry requests.
+
+---
+
+## 2026-10-23 JST — Verification interrupted by a second workspace removal
+
+Recovered candidate d4e29a8f passed 19 PRO client tests, lint (zero errors, five
+existing warnings), production build/typecheck, compileall and diff checks.
+The first recovered full Python run completed 2,598 tests in 1751.726 seconds:
+one failure in test_bloom_independent_sec.py line 599 (thread still alive after
+a two-second cleanup join). The unchanged failing case passed alone; its entire
+19-test module also passed. News code and tests were NOT changed. Baseline remote
+26732969 has successful GitHub CI run 39960775889.
+An isolated full rerun passed the earlier failure point and approximately 1,973
+tests without failures, then the workspace directory was deleted again while
+running. File-not-found errors followed. The interrupted session exited 130.
+This is NOT a passing full gate. JavaScript full rerun was not reached.
+Do not publish a branch ref from this incomplete validation. Restore from the
+GitHub recovery snapshot into a location protected from workspace pruning before
+another full run; avoid repeatedly installing/running inside the removed path.
+All six original changes remain preserved. No main, news, Railway, payment or
+RESOLUTE operations were performed. Earlier handoff-upload review rejection was
+resolved by proving every historical line already existed in this same repository;
+only non-secret restoration status was added. No branch update/deployment occurred.
+
+---
+
+## 2026-10-23 JST — PRO workspace recovered after automated pruning
+
+Workspace maintenance removed the checkout and interrupted validation. The last
+retained Node log reports 1,339/1,339 passing; Python stopped with a failure marker
+before its diagnostic summary. Build was not reached. This is NOT a passing gate.
+Re-cloned preview at 26732969 and recovered all six original publication blobs
+from GitHub tree 1bac8f211b695a72473401f7acac4dfe4dedf4dd. Every recovered blob
+matches its original Git SHA. Application and client-test content are unchanged
+since that candidate; current remote documents were three-way merged, preserving
+parallel work. Later local validation-only notes were lost and are summarized here.
+The independently published SK hynix fixture-time repair and regression remain
+exactly as remote; no news implementation or tests are changed by this work.
+Owner publication approval remains valid. No remote ref/deployment update yet.
+Repeat final gates on the recovered integrated tree. Do not repeat RESOLUTE,
+Railway connection, key setup, SQL, payment or backup operations.
 
 ---
 
@@ -100,6 +167,49 @@ verify actual readback/isolated Git restore. Live DB/protection acceptance remai
 pending a fresh complete write-fenced inventory and isolated restore. Saving gates
 must not be enabled on the basis of this AI test. No schedule, billing, email,
 approved content or customer-storage gate changes are authorized by this receipt.
+
+---
+
+## 2026-10-23 JST — Owner approved six-file PRO preview publication
+
+Owner explicitly approved publishing the six prepared PRO files to
+tech-phase-lab/tech-phase-lab, codex/research-preview, including its automatic
+preview deployment. The previous approval blocker below is historical and
+resolved. No further publication confirmation is required for this scope.
+Remote f9c46edf was integrated without changes to its freshness implementation.
+The integrated tree is undergoing the required gates before publication.
+Do not change main, news acquisition, RESOLUTE, Railway settings or payment data.
+
+---
+
+## 2026-10-23 JST — PRO preview publication blocked by automatic approval review
+
+Candidate local2be83db9/tree8e4ec4da9506b0b89768a753739d7275a4ce1856 passed all
+local gates (Node1338, Python2589, lint, build/typecheck, compileall, diff).
+First GitHub create_blob for the PRO screen was rejected by automatic approval
+review: development continuation was not accepted as explicit authorization to
+publish source to tech-phase-lab/tech-phase-lab. No successful blob/tree/commit/ref
+write occurred in this attempt. Do not bypass with CLI or another API.
+Ask the owner explicitly to publish the six PRO files to codex/research-preview
+and its automatic preview deployment. No main/production release is requested.
+This record is local only. Recheck remote HEAD before any later publication.
+
+---
+
+## 2026-10-23 JST — PRO continuation after owner-reported Railway recovery
+
+Owner reports Railway running again. Railway connector and reconnect prompts
+remain prohibited. RESOLUTE-API redeploy and AI-check preparation belong to the
+other task; do not repeat. Current preview7f485c87 is integrated locally with
+PRO23d8a601. Public PRO /healthz returned200 with sandbox/up; this proves neither
+DB/PayPal readiness nor recovery/backup completion. No payment mutation made.
+Final combined-tree gates passed: Node1338, Python2589, lint0errors with five
+existing warnings, production build/typecheck, compileall and diff checks.
+Prior Python failures did not recur; their historical records remain below.
+PRO also distinguishes identity-loading as a neutral bilingual status instead
+of a false communication-error alert. Other failures/review holds remain visible.
+Prepared preview publication only; live backup/two-member ledger acceptance and
+production opening remain pending. No Railway connector, new purchase or refund.
 
 ---
 
@@ -2729,3 +2839,24 @@ Original start restored; ab018522 emitted RESOLUTE_WRITER_DISABLED at14:15:44Z;
 preflight3dd5d74d verified REMOVED. See RESOLUTE-HTTPS-AUTH-CHECK.md for deployment
 snapshot behavior and full evidence. Fresh maintained-fence inventory, real object
 receipts and independent nonempty restore/replay remain. User action unnecessary.
+
+---
+
+## 2026-10-23 JST — Local PRO checkout fixes integrated with current preview
+
+Local PRO commit 8a7f801a is integrated with preview bd5141f6. The PRO
+change is limited to billing-screen notice recovery, stopping asynchronous work
+on departure, regression tests and handoff records. It remains unpublished;
+no Railway/Vercel operation, payment request or schedule change is authorized
+by this integration. Node1331 passed; lint0errors/5existingwarnings and
+build/typecheck/compileall/diff checks passed. Python2585 completed with four
+failures in unchanged news tests. Those four passed a focused rerun, but a
+second full run showed failures and was interrupted. Full gates are NOT green;
+do not publish. See the October23 entry in TECH-PHASE-LOCAL-CONTINUATION-2026-10-20.md.
+Local Node24.19.0 also differs from the repository/CI pins.
+
+Preserve the newer source-backup and credential-recovery records below. The
+October 22 user report in TECH-PHASE-INCIDENT-HANDOFF-2026-10-22.md is historical,
+not a replacement for later rotations or confirmed R2 recovery. Do not repeat
+completed setup. Live PRO acceptance still waits for runtime availability.
+News/earnings acquisition, RESOLUTE implementation and main are outside scope.

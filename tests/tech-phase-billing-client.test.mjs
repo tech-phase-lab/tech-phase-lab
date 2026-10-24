@@ -61,6 +61,17 @@ test('checkout waits for server status and displays persisted review state in bo
   assert.doesNotMatch(html,/<fieldset|<select|type="checkbox"/);
   assert.match(html,/<button[^>]*disabled/);
  }
+ for(language of ['ja','en']) {
+  stateIndex=0;seed={6:'identity-loading'};
+  const waiting=renderToStaticMarkup(createElement(m.exports.default));
+  assert.match(waiting,/role="status"/);assert.doesNotMatch(waiting,/role="alert"/);
+  assert.ok(waiting.includes(language==='ja'?'ログイン状態を確認しています。':'Checking your sign-in status.'));
+  assert.doesNotMatch(waiting,/<fieldset|<select|type="checkbox"/);
+  stateIndex=0;seed={5:false,6:'billing-unavailable'};
+  const failed=renderToStaticMarkup(createElement(m.exports.default));
+  assert.match(failed,/role="alert"/);
+  assert.ok(failed.includes(language==='ja'?'通信を確認できませんでした。':'Could not confirm the result.'));
+ }
  for(language of ['ja','en'])for(const reviewRequired of [false,true]){
   stateIndex=0;seed={0:true,1:{environment:'sandbox',plan:'free',proExpiresAt:null,reviewRequired,subscription:{id,currency:'JPY',state:'active'}},5:false,7:'verified'};
   const html=renderToStaticMarkup(createElement(m.exports.default));
@@ -255,8 +266,8 @@ test('leaving the purchase page stops automatic verification without a second re
 test('purchase screen automatically verifies a matching return only once across effect reruns',async()=>{
  const require=createRequire(import.meta.url),source=readFileSync(new URL('../app/research/account/billing/screen.tsx',import.meta.url),'utf8');
  const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
- const m={exports:{}},state=[],refs=[],calls=[];let stateIndex=0,refIndex=0,effect;
- const request=async action=>{calls.push(action);return action==='readiness'?{environment:'sandbox',enabled:true,configurationReady:true}:action==='reconcile'?{status:'payment-pending'}:pendingReturnSummary;};
+ const m={exports:{}},state=[],refs=[],calls=[];let stateIndex=0,refIndex=0,effect,failFinalStatus=false;
+ const request=async action=>{calls.push(action);if(failFinalStatus&&action==='status'&&calls.filter(x=>x==='status').length===2)throw Error('billing-unavailable');return action==='readiness'?{environment:'sandbox',enabled:true,configurationReady:true}:action==='reconcile'?{status:'payment-pending'}:pendingReturnSummary;};
  new Function('require','module','exports',compiled)(name=>{
   if(name==='react')return {...require(name),useState:initial=>{const i=stateIndex++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
   if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
@@ -270,5 +281,136 @@ test('purchase screen automatically verifies a matching return only once across 
  try {
   let cleanup=await run();assert.deepEqual(calls,['readiness','status','reconcile','status']);assert.equal(state[7],'pending');assert.equal(state[5],false);cleanup();
   cleanup=await run();assert.equal(calls.filter(x=>x==='reconcile').length,1);assert.deepEqual(state[1],pendingReturnSummary);cleanup();
+  refs.length=0;calls.length=0;failFinalStatus=true;
+  cleanup=await run();assert.deepEqual(calls,['readiness','status','reconcile','status']);
+  assert.equal(state[7],'');assert.equal(state[6],'billing-unavailable');assert.equal(state[5],false);assert.equal(state[1],null);cleanup();
  }finally{if(previous===undefined)delete globalThis.window;else globalThis.window=previous;}
+});
+
+
+test('subscription refresh removes stale payment notices and preserves durable review without mutations',async()=>{
+ const require=createRequire(import.meta.url),source=readFileSync(new URL('../app/research/account/billing/screen.tsx',import.meta.url),'utf8');
+ const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
+ const m={exports:{}},state=[],refs=[],calls=[];let index=0,refIndex=0,next,fail=false;
+ new Function('require','module','exports',compiled)(name=>{
+  if(name==='react')return {...require(name),useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:()=>{}};
+  if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
+  if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
+  if(name==='@/lib/membership/billing-client')return {billingSummary,billingRequest:async action=>{
+   calls.push(action);assert.ok(['readiness','status'].includes(action),'refresh must never mutate');
+   if(action==='readiness')return {environment:'sandbox',enabled:true,configurationReady:true};
+   if(fail)throw Error('billing-unavailable');return next;
+  }};
+  if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
+  return require(name);
+ },m,m.exports);
+ const button=node=>{
+  if(!node||typeof node!=='object')return null;
+  if(node.type==='button'&&node.props.children==='契約状況を再確認')return node;
+  for(const child of [node.props?.children].flat(Infinity)){const found=button(child);if(found)return found;}
+  return null;
+ };
+ for(const notice of ['pending','checking-payment','review','verified','cancelled'])for(const reviewRequired of [false,true]){
+  state.length=0;state[0]=true;state[1]=pendingReturnSummary;state[5]=false;state[6]='';state[7]=notice;
+  next={...pendingReturnSummary,plan:'pro',proExpiresAt:'2026-11-20T00:00:00Z',reviewRequired};
+  index=0;refIndex=0;calls.length=0;
+  const refresh=button(m.exports.default());assert.ok(refresh);refresh.props.onClick();
+  await new Promise(r=>setImmediate(r));
+  assert.equal(state[7],'','an earlier attempt must not describe the refreshed result');
+  assert.deepEqual(state[1],next);assert.equal(state[6],'');assert.deepEqual(calls,['readiness','status']);
+ }
+ fail=true;state[5]=false;state[7]='verified';index=0;refIndex=0;
+ button(m.exports.default()).props.onClick();await new Promise(r=>setImmediate(r));
+ assert.equal(state[7],'');assert.equal(state[6],'billing-unavailable');assert.equal(state[1],null);
+});
+
+test('leaving checkout during identity refresh or an in-flight action prevents navigation and later work',async()=>{
+ const require=createRequire(import.meta.url),source=readFileSync(new URL('../app/research/account/billing/screen.tsx',import.meta.url),'utf8');
+ const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
+ const labels={refresh:'契約状況を再確認',create:'PayPalでテスト購入',reconcile:'支払いを確認',cancel:'テスト契約を解約'};
+ const find=(node,label)=>{
+  if(!node||typeof node!=='object')return null;
+  if(node.type==='button'&&node.props.children===label)return node;
+  for(const child of [node.props?.children].flat(Infinity)){const found=find(child,label);if(found)return found;}
+  return null;
+ };
+ const prior=globalThis.window;
+ try {
+  for(const stage of ['identity','response'])for(const action of Object.keys(labels)) {
+   if(stage==='response'&&action==='refresh')continue;
+   const m={exports:{}},state=[],refs=[],calls=[],navigation=[];let index=0,refIndex=0,effect,release,identityCalls=0;
+   const gate=new Promise(resolve=>{release=resolve;});
+   const summary={...pendingReturnSummary,subscription:action==='create'?null:{...pendingReturnSummary.subscription,state:'active'}};
+   const request=async name=>{
+    calls.push(name);
+    if(name==='readiness')return {environment:'sandbox',enabled:true,configurationReady:true};
+    if(name==='status')return summary;
+    if(stage==='response')await gate;
+    return name==='create'?{id,approvalUrl:'https://www.sandbox.paypal.com/webapps/billing/subscriptions?ba_token=BA-ABCDEFGHIJKL'}:{status:name==='cancel'?'cancelled':'verified'};
+   };
+   new Function('require','module','exports',compiled)(name=>{
+    if(name==='react')return {...require(name),useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
+    if(name==='../../identity-provider')return {useIdentityRefresh:()=>async forced=>{if(forced){identityCalls++;if(stage==='identity')await gate;}}};
+    if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
+    if(name==='@/lib/membership/billing-client')return {billingReturn,billingSummary,sandboxApproval,billingRequest:request};
+    if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
+    return require(name);
+   },m,m.exports);
+   globalThis.window={location:{search:'',assign:url=>navigation.push(url)}};
+   m.exports.default();const cleanup=effect();await new Promise(r=>setImmediate(r));
+   state[3]=true;state[4]=id;index=0;refIndex=0;calls.length=0;
+   const button=find(m.exports.default(),labels[action]);assert.ok(button,action);
+   button.props.onClick();button.props.onClick();await new Promise(r=>setImmediate(r));
+   assert.equal(identityCalls,1,'a double click must not start a second action');
+   cleanup();const snapshot=structuredClone(state);release();await new Promise(r=>setImmediate(r));
+   assert.deepEqual(calls,stage==='identity'?[]:[action],`${stage}: ${action} must stop at departure`);
+   assert.deepEqual(navigation,[]);assert.deepEqual(state,snapshot,'no late UI updates after departure');
+  }
+ }finally{if(prior===undefined)delete globalThis.window;else globalThis.window=prior;}
+});
+
+test('manual response loss recovers only matching durable access or cancellation and never retries a mutation',async()=>{
+ const require=createRequire(import.meta.url),source=readFileSync(new URL('../app/research/account/billing/screen.tsx',import.meta.url),'utf8');
+ const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
+ const active={...pendingReturnSummary,subscription:{...pendingReturnSummary.subscription,state:'active'}};
+ const pro={...active,plan:'pro',proExpiresAt:'2026-11-20T00:00:00Z'};
+ const cancelled={...pro,subscription:{...pro.subscription,state:'cancelled'}};
+ const cases=[
+  ['reconcile',pro,Error('billing-unavailable'),'access-confirmed'],
+  ['reconcile',pro,new TypeError('Failed to fetch'),'access-confirmed'],
+  ['reconcile',pro,new DOMException('timed out','TimeoutError'),'access-confirmed'],
+  ['reconcile',{...pro,reviewRequired:true},Error('billing-unavailable'),''],
+  ['reconcile',pro,Error('settlement-review-required'),''],
+  ['reconcile',active,Error('billing-unavailable'),''],
+  ['reconcile',{...pro,subscription:{...pro.subscription,id:'00000000-0000-4000-8000-000000000002'}},Error('billing-unavailable'),''],
+  ['reconcile',pro,Error('sign-in'),''],
+  ['cancel',cancelled,Error('billing-unavailable'),'cancelled'],
+  ['cancel',{...cancelled,reviewRequired:true},Error('billing-unavailable'),'cancelled'],
+  ['cancel',pro,Error('billing-unavailable'),''],
+  ['cancel',{...cancelled,subscription:{...cancelled.subscription,state:'expired'}},Error('billing-unavailable'),''],
+  ['reconcile',null,Error('billing-unavailable'),''],
+ ];
+ const find=(node,label)=>{
+  if(!node||typeof node!=='object')return null;
+  if(node.type==='button'&&node.props.children===label)return node;
+  for(const child of [node.props?.children].flat(Infinity)){const match=find(child,label);if(match)return match;}
+  return null;
+ };
+ for(const [action,next,failure,notice] of cases){
+  const m={exports:{}},calls=[],state=[true,active,'JPY',true,id,false,'',''];let index=0;
+  new Function('require','module','exports',compiled)(name=>{
+   if(name==='react')return {...require(name),useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>({current:initial}),useEffect:()=>{}};
+   if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
+   if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
+   if(name==='@/lib/membership/billing-client')return {billingSummary,billingRequest:async name=>{calls.push(name);if(name===action)throw failure;if(name==='status')return next;assert.fail('unexpected request');}};
+   if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
+   return require(name);
+  },m,m.exports);
+  find(m.exports.default(),action==='cancel'?'テスト契約を解約':'支払いを確認').props.onClick();
+  await new Promise(r=>setImmediate(r));
+  assert.deepEqual(calls,[action,'status']);assert.equal(state[7],notice);
+  assert.equal(state[6],notice?'':failure.message);assert.deepEqual(state[1],next);
+  assert.equal(state[0],false,'readiness is not inferred from status recovery');
+  if(notice==='cancelled')assert.equal(state[4],null);
+ }
 });

@@ -6,6 +6,7 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('external_research', ROOT / 'scripts/tech-phase/external_research_backup.py')
@@ -65,7 +66,64 @@ class ExternalResearchTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.verify_restore(archive, manifest, key)
             self.assertEqual(db.execute('SELECT count(*) FROM member_saved_research').fetchone()[0], 1)
-            self.assertFalse(report['restore_verified'])
+            self.assertTrue(report['restore_verified'])
+            self.assertTrue(json.loads(store.objects[report['key'] + '.json'])['restore_verified'])
+            self.assertFalse(report['full_site_recovery_verified'])
+            self.assertEqual(len(store.objects), 2)
+
+    def test_restore_reads_downloaded_bytes_before_manifest_publication(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'live.sqlite'
+            self.source(path)
+            store = Store()
+            verifier = module.verify_restore
+            restored_paths = []
+
+            def inspect(archive, manifest, key):
+                restored_paths.append(archive)
+                self.assertEqual(archive.name, 'downloaded.aesgcm')
+                self.assertEqual(archive.read_bytes(), store.objects[manifest['key']])
+                self.assertEqual(archive.stat().st_mode & 0o777, 0o600)
+                self.assertEqual(len(store.objects), 1)
+                return verifier(archive, manifest, key)
+
+            with patch.object(module, 'verify_restore', side_effect=inspect):
+                module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(len(restored_paths), 1)
+            self.assertFalse(restored_paths[0].parent.exists())
+
+    def test_matching_cipher_checksum_does_not_replace_decryption_check(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'live.sqlite'
+            self.source(path)
+            store = Store()
+            encrypt = module.encrypt
+            temporary_paths = []
+
+            def wrong_key(source, target, key, object_key):
+                temporary_paths.append(target)
+                encrypt(source, target, b'y' * 32, object_key)
+
+            with patch.object(module, 'encrypt', side_effect=wrong_key):
+                with self.assertRaises(Exception):
+                    module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(len(store.objects), 1)
+            self.assertFalse(any(key.endswith('.json') for key in store.objects))
+            self.assertFalse(temporary_paths[0].parent.exists())
+
+    def test_manifest_readback_failure_never_reports_success(self):
+        class BadManifestStore(Store):
+            def get_object(self, Bucket, Key):
+                if Key.endswith('.json'):
+                    return {'Body': io.BytesIO(b'bad')}
+                return super().get_object(Bucket, Key)
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'live.sqlite'
+            self.source(path)
+            store = BadManifestStore()
+            with self.assertRaises(ValueError):
+                module.backup(path, store, 'external', b'x' * 32)
             self.assertEqual(len(store.objects), 2)
 
     def test_corrupt_readback_never_publishes_manifest(self):
