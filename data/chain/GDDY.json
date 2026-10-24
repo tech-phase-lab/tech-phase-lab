@@ -1,0 +1,299 @@
+{
+  "root": {
+    "ticker": "GDDY",
+    "name": "ゴーダディ",
+    "cik": 1609711,
+    "name_en": "GoDaddy"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "AMZN",
+    "WIX",
+    "SHOP",
+    "NET"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "メール・生産性",
+      "sub_en": "Email & productivity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Microsoft 365を通じたメール・生産性ツールの提供で提携している",
+          "text_en": "GoDaddy partners with Microsoft 365 to offer email and productivity solutions",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our flexible platform enables us to form strategic partnerships and quickly launch new products and offerings for our customers, including through partnerships such as Microsoft 365 to offer email and productivity solutions to our customers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "コア事業とA&C事業の両方で競合先として名が挙がる",
+          "text_en": "Microsoft is named as a competitor in both the Core Platform and A&C areas",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "• With respect to both our Core Platform and A&C products and services: Wix, Squarespace, Automattic, Ionos, Google, Amazon, Microsoft, Alibaba and Tencent."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホスティング以外の製品や社内システムの多くを、Amazon Web Servicesへ移行し続けている",
+          "text_en": "GoDaddy continues to migrate many of its non-hosting products and internal systems to Amazon Web Services",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We continue to migrate many of our non-hosting products and internal systems to Amazon Web Services."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "コア事業とA&C事業の両方で競合先として名が挙がる",
+          "text_en": "Amazon is named as a competitor in both the Core Platform and A&C areas",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "• With respect to both our Core Platform and A&C products and services: Wix, Squarespace, Automattic, Ionos, Google, Amazon, Microsoft, Alibaba and Tencent."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "PFPT",
+      "ticker": "ProofPoint",
+      "name": "プルーフポイント",
+      "sub": "メール保護",
+      "sub_en": "Email security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メールの暗号化サービスを提携して提供している",
+          "text_en": "GoDaddy offers email encryption services in partnership with ProofPoint",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For customers wanting to protect their email data, we provide email add on services, such as email backup services, encryption services (in partnership with ProofPoint), archiving services (in partnership with Barracuda) and other advanced e-mail security."
+          }
+        }
+      ],
+      "name_en": "ProofPoint"
+    },
+    {
+      "id": "BARRA",
+      "ticker": "Barracuda",
+      "name": "バラクーダ",
+      "sub": "メール保護",
+      "sub_en": "Email security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メールのアーカイブサービスを提携して提供している",
+          "text_en": "GoDaddy offers email archiving services in partnership with Barracuda",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For customers wanting to protect their email data, we provide email add on services, such as email backup services, encryption services (in partnership with ProofPoint), archiving services (in partnership with Barracuda) and other advanced e-mail security."
+          }
+        }
+      ],
+      "name_en": "Barracuda"
+    },
+    {
+      "id": "TITAN",
+      "ticker": "Titan",
+      "name": "タイタン",
+      "sub": "メール",
+      "sub_en": "Email service",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メールサービスのプランを提携して提供している",
+          "text_en": "GoDaddy offers email service plans through its partnership with Titan email",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also offer email service plans through our partnerships with Titan email and Open Xchange email with multi-feature web interfaces that connect to our customers' domains."
+          }
+        }
+      ],
+      "name_en": "Titan"
+    },
+    {
+      "id": "OX",
+      "ticker": "Open Xchange",
+      "name": "オープン・エクスチェンジ",
+      "sub": "メール",
+      "sub_en": "Email service",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メールサービスのプランを提携して提供している",
+          "text_en": "GoDaddy offers email service plans through its partnership with Open Xchange email",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also offer email service plans through our partnerships with Titan email and Open Xchange email with multi-feature web interfaces that connect to our customers' domains."
+          }
+        }
+      ],
+      "name_en": "Open Xchange"
+    },
+    {
+      "id": "WIX",
+      "ticker": "WIX",
+      "name": "ウィックス",
+      "sub": "ウェブ制作",
+      "sub_en": "Website building",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コア事業とA&C事業の両方で競合先として名が挙がる",
+          "text_en": "Wix is named as a competitor in both the Core Platform and A&C areas",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "• With respect to both our Core Platform and A&C products and services: Wix, Squarespace, Automattic, Ionos, Google, Amazon, Microsoft, Alibaba and Tencent."
+          }
+        }
+      ],
+      "name_en": "Wix"
+    },
+    {
+      "id": "SHOP",
+      "ticker": "SHOP",
+      "name": "ショッピファイ",
+      "sub": "ECプラットフォーム",
+      "sub_en": "E-commerce platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "A&C事業の競合先として名が挙がる",
+          "text_en": "Shopify is named as a competitor in the A&C products and services area",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We consider the following to be a representative list of competitors we face in some of the major areas we operate in: • With respect to our A&C products and services: Shopify, Block, BigCommerce, Stripe, PayPal, Liquid Web, SiteGround, WP Engine, Zoho, Mindbody, Toast, Yelp, OpenTable, TikTok, Meta and WeChat;"
+          }
+        }
+      ],
+      "name_en": "Shopify"
+    },
+    {
+      "id": "NET",
+      "ticker": "NET",
+      "name": "クラウドフレア",
+      "sub": "ネットワーク・セキュリティ",
+      "sub_en": "Network & security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コア事業の競合先として名が挙がる",
+          "text_en": "Cloudflare is named as a competitor in the Core Platform area",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "• With respect to our Core Platform products and services: Newfold Digital, Namecheap, Tucows, Dynadot, GMO, Cloudflare, Let's Encrypt, SEDO, Comodo, Hostinger and Identity Digital; and"
+          }
+        }
+      ],
+      "name_en": "Cloudflare"
+    },
+    {
+      "id": "TCX",
+      "ticker": "TCX",
+      "name": "タクス",
+      "sub": "ドメイン登録",
+      "sub_en": "Domain registration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コア事業の競合先として名が挙がる",
+          "text_en": "Tucows is named as a competitor in the Core Platform area",
+          "source": {
+            "label": "GoDaddy 10-K(2025年12月期)",
+            "label_en": "GoDaddy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "• With respect to our Core Platform products and services: Newfold Digital, Namecheap, Tucows, Dynadot, GMO, Cloudflare, Let's Encrypt, SEDO, Comodo, Hostinger and Identity Digital; and"
+          }
+        }
+      ],
+      "name_en": "Tucows"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

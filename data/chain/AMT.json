@@ -1,0 +1,181 @@
+{
+  "root": {
+    "ticker": "AMT",
+    "name": "アメリカン・タワー",
+    "cik": 1053507,
+    "name_en": "American Tower"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル・US",
+      "sub": "通信キャリア",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の総売上の18%を占める最大の顧客だった",
+          "text_en": "T-Mobile was the largest customer, at 18% of total revenue for 2025",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "For the year ended December 31, 2025, our top four customers by total revenue were T-Mobile (18%), AT&T (17%), Verizon Wireless (14%) and Telefónica (10%)."
+          }
+        }
+      ],
+      "name_en": "T-Mobile US"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "エーティーアンドティー",
+      "sub": "通信キャリア",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の総売上の17%を占める顧客である",
+          "text_en": "AT&T was a top customer at 17% of total revenue for 2025",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "For the year ended December 31, 2025, our top four customers by total revenue were T-Mobile (18%), AT&T (17%), Verizon Wireless (14%) and Telefónica (10%)."
+          }
+        },
+        {
+          "type": "down",
+          "text": "メキシコ部門のAT&Tメキシコとは、賃料計算をめぐる仲裁が続いている",
+          "text_en": "The company is in arbitration with AT&T Mexico over the monthly lease calculation",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We are currently engaged in an Arbitration with AT&T Mexico."
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "通信キャリア",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の総売上の14%を占める顧客である",
+          "text_en": "Verizon Wireless was a top customer at 14% of total revenue for 2025",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "For the year ended December 31, 2025, our top four customers by total revenue were T-Mobile (18%), AT&T (17%), Verizon Wireless (14%) and Telefónica (10%)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2015年3月にベライゾンの運営会社と、約11,100カ所の通信サイトの賃貸・管理契約を結んだ",
+          "text_en": "In March 2015 it signed an agreement for the lease, sublease or management of approximately 11,100 sites",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In March 2015, the Company entered into an agreement with various operating entities of Verizon Communications Inc. (“Verizon”) that currently provides for the lease, sublease or management of approximately 11,100 wireless communications sites"
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "TEF",
+      "ticker": "Telefónica",
+      "name": "テレフォニカ",
+      "sub": "通信キャリア",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "総売上の10%を占める顧客である",
+          "text_en": "Telefónica was a top customer at 10% of total revenue for 2025",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "For the year ended December 31, 2025, our top four customers by total revenue were T-Mobile (18%), AT&T (17%), Verizon Wireless (14%) and Telefónica (10%)."
+          }
+        }
+      ],
+      "name_en": "Telefónica"
+    },
+    {
+      "id": "DISH",
+      "ticker": "SATS",
+      "name": "ディッシュ(エコスター傘下)",
+      "sub": "通信キャリア",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の不動産売上の約2%を占める米国の顧客で、契約上の支払いが滞っている",
+          "text_en": "DISH was approximately 2% of total annual property revenue in 2025 and is in default under the SCA",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "DISH represented approximately 2% and 4% of our total annual property revenue and total annual U.S. & Canada property revenue, respectively, for 2025."
+          }
+        },
+        {
+          "type": "down",
+          "text": "2026年1月時点で、戦略的コロケーション契約のもとで債務不履行の状態にある",
+          "text_en": "As of January 2026, DISH is in default under the SCA",
+          "source": {
+            "label": "アメリカン・タワー 10-K(2025-12-31)",
+            "label_en": "American Tower 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "DISH has failed to meet its payment obligations, and as of January 2026 is in default under the SCA."
+          }
+        }
+      ],
+      "name_en": "DISH Network (EchoStar)"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

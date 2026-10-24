@@ -1,0 +1,112 @@
+{
+  "root": {
+    "ticker": "CPAY",
+    "name": "コーペイ",
+    "cik": 1175454,
+    "name_en": "Corpay, Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "仮想カード決済はマスターカードのネットワーク上で動いている",
+          "text_en": "The virtual card solution operates on the Mastercard network",
+          "source": {
+            "label": "コーペイ 10-K(2025-12-31)",
+            "label_en": "Corpay, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1175454/000117545426000018/flt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our virtual card solution operates on the Mastercard network"
+          }
+        },
+        {
+          "type": "up",
+          "text": "取引処理から得る収入の大きな部分がマスターカードのネットワークに依存している",
+          "text_en": "A significant source of revenue comes from processing transactions through the Mastercard networks",
+          "source": {
+            "label": "コーペイ 10-K(2025-12-31)",
+            "label_en": "Corpay, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1175454/000117545426000018/flt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "A significant source of our revenue comes from processing transactions through the Mastercard networks"
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "MET",
+      "ticker": "MET",
+      "name": "メットライフ",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大手保険会社として、顧客の引受リスクを負う形でサービスを共同提供している",
+          "text_en": "It provides services in partnership with Corpay and holds the underwriting risk for customers",
+          "source": {
+            "label": "コーペイ 10-K(2025-12-31)",
+            "label_en": "Corpay, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1175454/000117545426000018/flt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Services are rendered in partnership with major insurance companies including Metlife, Inc., Suhai Suguradora and others, which hold the underwriting risks to our customers"
+          }
+        }
+      ],
+      "name_en": "MetLife, Inc."
+    },
+    {
+      "id": "SUHAI",
+      "ticker": "Suhai Seguradora",
+      "name": "スハイ・セグラドーラ",
+      "sub": "保険（ブラジル）",
+      "sub_en": "Insurance (Brazil)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保険会社として、顧客の引受リスクを負う形でサービスを共同提供している",
+          "text_en": "It provides services in partnership with Corpay and holds the underwriting risk for customers",
+          "source": {
+            "label": "コーペイ 10-K(2025-12-31)",
+            "label_en": "Corpay, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1175454/000117545426000018/flt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Services are rendered in partnership with major insurance companies including Metlife, Inc., Suhai Suguradora and others, which hold the underwriting risks to our customers"
+          }
+        }
+      ],
+      "name_en": "Suhai Seguradora"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

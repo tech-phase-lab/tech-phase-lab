@@ -1,0 +1,294 @@
+{
+  "root": {
+    "ticker": "FICO",
+    "name": "フェア・アイザック",
+    "cik": 814547,
+    "name_en": "Fair Isaac"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "EFX",
+    "TRU",
+    "PEGA",
+    "IBM",
+    "MCO"
+  ],
+  "companies": [
+    {
+      "id": "EXPN",
+      "ticker": "Experian",
+      "name": "エクスペリアン",
+      "sub": "信用情報機関",
+      "sub_en": "Consumer reporting agency",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FICOスコアの販売を担う認可済みの販売パートナーである",
+          "text_en": "Experian is a licensed distribution partner for FICO Scores",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "These Scores are distributed directly by us through our myFICO.com subscription offering and indirectly through our licensed distribution partners, including Experian and certain lenders through the FICO ® Score Open Access Program."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "3大信用情報機関の一社として、FICOと競合するスコア商品の合弁に加わっている",
+          "text_en": "Experian is one of three bureaus in a joint venture selling a credit scoring product competitive with FICO's",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "For example, Experian, TransUnion and Equifax have formed a joint venture that is selling a credit scoring product competitive with our products."
+          }
+        }
+      ],
+      "name_en": "Experian"
+    },
+    {
+      "id": "TRU",
+      "ticker": "TRU",
+      "name": "トランスユニオン",
+      "sub": "信用情報機関",
+      "sub_en": "Consumer reporting agency",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エクスペリアン、トランスユニオン、エキファックスとの契約が、2025年度の売上の51%を占めた",
+          "text_en": "Agreements with Experian, TransUnion and Equifax together made up 51% of FICO's fiscal 2025 revenues",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "During fiscal 2025, 2024 and 2023, revenues generated from our agreements with Experian, TransUnion and Equifax collectively accounted for 51%, 45% and 41% of our total revenues, respectively."
+          }
+        }
+      ],
+      "name_en": "TransUnion"
+    },
+    {
+      "id": "EFX",
+      "ticker": "EFX",
+      "name": "エキファックス",
+      "sub": "信用情報機関",
+      "sub_en": "Consumer reporting agency",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FICO Score XDの販売パートナーとして、レキシスネクシス・リスク・ソリューションズと並んで名が挙がる",
+          "text_en": "Equifax is named with LexisNexis Risk Solutions as a distribution partner for FICO Score XD",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "FICO Score XD is available to lenders through our distribution partners, LexisNexis Risk Solutions and Equifax."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "顧客獲得向け市場で、FICOの競合先として名が挙がる",
+          "text_en": "Equifax is named as a competitor in the customer origination market",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In the customer origination market, we compete with Experian, Equifax, Moody’s, Meridian Link, and CGI, among others."
+          }
+        }
+      ],
+      "name_en": "Equifax"
+    },
+    {
+      "id": "LNRS",
+      "ticker": "LexisNexis Risk",
+      "name": "レキシスネクシス・リスク・ソリューションズ",
+      "sub": "データ提供・販売",
+      "sub_en": "Data provider & distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FICO Score XDを貸し手に提供する販売パートナーである",
+          "text_en": "LexisNexis Risk Solutions is a distribution partner for FICO Score XD",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "FICO Score XD is available to lenders through our distribution partners, LexisNexis Risk Solutions and Equifax."
+          }
+        }
+      ],
+      "name_en": "LexisNexis Risk Solutions"
+    },
+    {
+      "id": "PEGA",
+      "ticker": "PEGA",
+      "name": "ペガシステムズ",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "不正対策、マーケティング、意思決定基盤の各市場で競合する",
+          "text_en": "Pegasystems is named as a competitor in the decision platform market",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In the decision platform market, we compete with Pegasystems, IBM and SAS, among others."
+          }
+        }
+      ],
+      "name_en": "Pegasystems"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイ・ビー・エム",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "意思決定基盤の市場で競合する",
+          "text_en": "IBM is named as a competitor in the decision platform market",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In the decision platform market, we compete with Pegasystems, IBM and SAS, among others."
+          }
+        }
+      ],
+      "name_en": "IBM"
+    },
+    {
+      "id": "MCO",
+      "ticker": "MCO",
+      "name": "ムーディーズ",
+      "sub": "格付・分析",
+      "sub_en": "Ratings & analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客獲得向け市場で競合する",
+          "text_en": "Moody's is named as a competitor in the customer origination market",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In the customer origination market, we compete with Experian, Equifax, Moody’s, Meridian Link, and CGI, among others."
+          }
+        }
+      ],
+      "name_en": "Moody's"
+    },
+    {
+      "id": "SAS",
+      "ticker": "SAS",
+      "name": "SASインスティテュート",
+      "sub": "分析ソフト",
+      "sub_en": "Analytics software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客管理や意思決定基盤の市場で競合する",
+          "text_en": "SAS is named as a competitor in the customer management market",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In the customer management market, we compete with Experian and SAS, among others."
+          }
+        }
+      ],
+      "name_en": "SAS"
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マーケティングサービスの市場で競合する",
+          "text_en": "Adobe is named as a competitor in the marketing services market",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In the marketing services market, we compete with Pegasystems, Equifax, Experian, SAS, Adobe and Salesforce, among others."
+          }
+        }
+      ],
+      "name_en": "Adobe"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マーケティングサービスの市場で競合する",
+          "text_en": "Salesforce is named as a competitor in the marketing services market",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "In the marketing services market, we compete with Pegasystems, Equifax, Experian, SAS, Adobe and Salesforce, among others."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
