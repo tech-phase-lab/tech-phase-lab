@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Rulebook from "./book";
 import ToolShell from "../tool-shell";
+import { useUnsavedChanges } from "../use-unsaved-changes";
 import NumberInput from "../number-input";
 import { ReviewLink as Link, usePlanClient, useNotificationClient } from "../review-context";
 import { PlanClientError } from "@/lib/resolute/plan-client";
@@ -20,6 +21,7 @@ function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const [attempt,setAttempt]=useState(0), pending=useRef<AbortController|null>(null),mutex=useRef(false),denyRef=useRef(deny),editor=useRef<HTMLElement>(null);
  const notice:Record<string,string>={load:en?"We couldn’t load your saved rules. Please try again.":"保存済みのルールを読み込めませんでした。再確認してください。",invalid:en?"Check the numbers and text lengths. Use up to 10 conditions, 100 characters each.":"数字と文字数を確認してください。条件は1行100文字までで10行以内です。",saved:en?"Your rules are saved.":"マイルールを保存しました",conflict:en?"Your plan changed in another window. Your edits are still here. Load the saved version before editing again.":"別の画面で更新されています。入力は残しています。保存済みの内容を読み込んでから見直してください。",uncertain:en?"We couldn’t confirm your rules were saved. Load the saved version before trying again.":"保存を確認できませんでした。再送する前に保存済みの内容を読み込んでください。"};
  const editing=edits!==null;
+ useUnsavedChanges(busy || (edits!==null && !!snapshot?.plan && JSON.stringify(edits)!==JSON.stringify(notebookEdits(snapshot.plan))));
  useEffect(()=>{if(editing){editor.current?.scrollIntoView({block:"start",behavior:"instant"});editor.current?.focus({preventScroll:true});}},[editing]);
  useEffect(()=>{denyRef.current=deny;},[deny]);
  useEffect(()=>{

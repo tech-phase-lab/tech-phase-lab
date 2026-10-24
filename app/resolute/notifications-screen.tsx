@@ -2,6 +2,7 @@
 import { usePlanClient, useNotificationClient, useReview } from "./review-context";
 import { useEffect,useRef,useState, type CSSProperties } from "react";
 import ToolShell from "./tool-shell";
+import { useUnsavedChanges } from "./use-unsaved-changes";
 import StockInput from "./stock-input";
 import NumberInput from "./number-input";
 import FlowNavigation from "./flow-navigation";
@@ -28,6 +29,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const requestNotificationSettings = useNotificationClient();
  const [snapshot,setSnapshot]=useState<NotificationSnapshot|null>(null),[draft,setDraft]=useState<NotificationSettings>(defaultNotificationSettings);
  const [plan,setPlan]=useState<PlanInput|null>(null),[planState,setPlanState]=useState("loading"),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[locked,setLocked]=useState(false),[attempt,setAttempt]=useState(0);
+ useUnsavedChanges(busy || (!!snapshot && JSON.stringify(draft)!==JSON.stringify(snapshot.settings)));
  const [timeOpen,setTimeOpen]=useState(false),[planOpen,setPlanOpen]=useState(false);
  const planDialog=useRef<HTMLDialogElement>(null);
  useEffect(()=>{if(planOpen)planDialog.current?.showModal();else planDialog.current?.close();},[planOpen]);
