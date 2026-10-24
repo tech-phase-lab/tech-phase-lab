@@ -1874,5 +1874,191 @@
         "pattern": "^/Archives/edgar/data/796343/.+"
       }
     ]
+  },
+  {
+    "ticker": "QCOM",
+    "name": "Qualcomm",
+    "sector": "semiconductors",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000804328&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000804328.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000804328",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/804328/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "AMAT",
+    "name": "Applied Materials",
+    "sector": "semiconductors",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000006951&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000006951.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000006951",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/6951/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "CRM",
+    "name": "Salesforce",
+    "sector": "software",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001108524&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001108524.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001108524",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1108524/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "CRWD",
+    "name": "CrowdStrike",
+    "sector": "software",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001535527&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001535527.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001535527",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1535527/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "PANW",
+    "name": "Palo Alto Networks",
+    "sector": "software",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001327567&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001327567.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001327567",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1327567/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "SNOW",
+    "name": "Snowflake",
+    "sector": "software",
+    "scope": "earnings",
+    "indexUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001640147&type=8-K&owner=exclude&count=40&output=atom",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001640147.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001640147",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1640147/.+"
+      }
+    ]
   }
 ]

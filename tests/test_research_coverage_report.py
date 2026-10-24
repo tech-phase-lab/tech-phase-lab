@@ -15,7 +15,7 @@ import signals
 class CoverageReportTests(unittest.TestCase):
     def test_configuration_only_does_not_claim_live_coverage(self):
         result = coverage_report.report()
-        self.assertEqual(len(result['companies']), 44)
+        self.assertEqual(len(result['companies']), 50)
         self.assertTrue(all(r['status'] == 'untested' for r in result['routes']))
         mu = next(c for c in result['companies'] if c['ticker'] == 'MU')
         self.assertIn('micron-blog', mu['dedicatedSupplementalSources'])
