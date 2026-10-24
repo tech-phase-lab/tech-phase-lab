@@ -1,0 +1,290 @@
+{
+  "root": {
+    "ticker": "EL",
+    "name": "エスティ ローダー",
+    "cik": 1001250,
+    "name_en": "Estee Lauder Companies"
+  },
+  "rows": [
+    {
+      "ja": "提携・競合",
+      "en": "Partners & rivals"
+    }
+  ],
+  "rivals": [
+    "PG",
+    "COTY",
+    "UL"
+  ],
+  "companies": [
+    {
+      "id": "MARCOLIN",
+      "ticker": "Marcolin Group",
+      "name": "マルコリン",
+      "sub": "アイウェア",
+      "sub_en": "Eyewear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "トム フォードの商標をアイウェア向けにライセンスしている相手である",
+          "text_en": "Marcolin licenses the TOM FORD trademark for eyewear",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "The Company has license arrangements for the license of the TOM FORD trademark to the Marcolin Group (“Marcolin”) for eyewear and Ermenegildo Zegna N.V. (“Zegna”) for fashionwear, which represents a revenue-generating activity in the ordinary course of business for the Company."
+          }
+        }
+      ],
+      "name_en": "Marcolin Group"
+    },
+    {
+      "id": "ZGN",
+      "ticker": "ZGN",
+      "name": "エルメネジルド・ゼニア",
+      "sub": "ファッション",
+      "sub_en": "Fashion",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "トム フォードの商標をファッションウェア向けにライセンスしている相手である",
+          "text_en": "Zegna licenses the TOM FORD trademark for fashionwear",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "The Company has license arrangements for the license of the TOM FORD trademark to the Marcolin Group (“Marcolin”) for eyewear and Ermenegildo Zegna N.V. (“Zegna”) for fashionwear, which represents a revenue-generating activity in the ordinary course of business for the Company."
+          }
+        }
+      ],
+      "name_en": "Ermenegildo Zegna"
+    },
+    {
+      "id": "LOREAL",
+      "ticker": "L'Oreal",
+      "name": "ロレアル",
+      "sub": "化粧品大手",
+      "sub_en": "Beauty major",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロレアルは、化粧品・香水分野で競合する大手である",
+          "text_en": "L'Oreal is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "L'Oreal"
+    },
+    {
+      "id": "UL",
+      "ticker": "UL",
+      "name": "ユニリーバ",
+      "sub": "日用品大手",
+      "sub_en": "Consumer goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ユニリーバは、スキンケアなどの分野で競合する大手である",
+          "text_en": "Unilever is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "Unilever"
+    },
+    {
+      "id": "PG",
+      "ticker": "PG",
+      "name": "プロクター・アンド・ギャンブル",
+      "sub": "日用品大手",
+      "sub_en": "Consumer goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "P&Gは、スキンケアなどの分野で競合する大手である",
+          "text_en": "P&G is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "Procter & Gamble"
+    },
+    {
+      "id": "LVMH",
+      "ticker": "LVMH",
+      "name": "モエ ヘネシー・ルイ ヴィトン",
+      "sub": "ラグジュアリー",
+      "sub_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "LVMHは、化粧品・香水分野で競合する大手である",
+          "text_en": "LVMH is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "LVMH"
+    },
+    {
+      "id": "CHANEL",
+      "ticker": "Chanel",
+      "name": "シャネル",
+      "sub": "ラグジュアリー",
+      "sub_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シャネルは、化粧品・香水分野で競合する大手である",
+          "text_en": "Chanel is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "Chanel"
+    },
+    {
+      "id": "BEI",
+      "ticker": "Beiersdorf",
+      "name": "バイヤスドルフ",
+      "sub": "スキンケア",
+      "sub_en": "Skin care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "バイヤスドルフは、スキンケア分野で競合する大手である",
+          "text_en": "Beiersdorf is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "Beiersdorf"
+    },
+    {
+      "id": "SHIS",
+      "ticker": "Shiseido",
+      "name": "資生堂",
+      "sub": "化粧品大手",
+      "sub_en": "Beauty major",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "資生堂は、化粧品分野で競合する大手である",
+          "text_en": "Shiseido is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "Shiseido"
+    },
+    {
+      "id": "COTY",
+      "ticker": "COTY",
+      "name": "コティ",
+      "sub": "香水・化粧品",
+      "sub_en": "Fragrance & beauty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コティは、香水・化粧品分野で競合する大手である",
+          "text_en": "Coty is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "Coty"
+    },
+    {
+      "id": "PUIG",
+      "ticker": "Puig Brands",
+      "name": "プイグ",
+      "sub": "香水・化粧品",
+      "sub_en": "Fragrance & beauty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プイグは、香水・化粧品分野で競合する大手である",
+          "text_en": "Puig is a large competitor in beauty",
+          "source": {
+            "label": "Estee Lauder 10-K(2026年6月30日)",
+            "label_en": "Estee Lauder Companies 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/el-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competitors include L’Oreal S.A.; Unilever PLC; Procter & Gamble Co.; LVMH Moët Hennessey Louis Vuitton SE; Chanel Limited; Beiersdorf AG; Shiseido Company, Limited; Coty Inc.; and Puig Brands, S.A."
+          }
+        }
+      ],
+      "name_en": "Puig Brands"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

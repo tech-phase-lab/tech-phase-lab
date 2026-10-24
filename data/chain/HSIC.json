@@ -1,0 +1,267 @@
+{
+  "root": {
+    "ticker": "HSIC",
+    "name": "ヘンリー・シャイン",
+    "cik": 1000228,
+    "name_en": "Henry Schein"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MCK",
+    "NVST",
+    "ZIMV",
+    "XRAY"
+  ],
+  "companies": [
+    {
+      "id": "PATTERSON",
+      "ticker": "Patterson",
+      "name": "パターソン・カンパニーズ",
+      "sub": "歯科流通",
+      "sub_en": "Dental distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の歯科流通で主な競合先",
+          "text_en": "Patterson is a primary US dental distribution competitor",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In the dental distribution market, our primary competitors in the U.S. are the Patterson Dental division of Patterson Companies, Inc. and Benco Dental Supply Company."
+          }
+        }
+      ],
+      "name_en": "Patterson Companies"
+    },
+    {
+      "id": "BENCO",
+      "ticker": "Benco Dental",
+      "name": "ベンコ・デンタル",
+      "sub": "歯科流通",
+      "sub_en": "Dental distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の歯科流通で主な競合先",
+          "text_en": "Benco Dental is a primary US dental distribution competitor",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In the dental distribution market, our primary competitors in the U.S. are the Patterson Dental division of Patterson Companies, Inc. and Benco Dental Supply Company."
+          }
+        }
+      ],
+      "name_en": "Benco Dental Supply"
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医療用品流通",
+      "sub_en": "Medical distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の医療流通で主な競合先",
+          "text_en": "McKesson is a primary US medical distribution competitor",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors in the U.S. medical distribution market, which accounts for the large majority of our global medical sales, are McKesson Corporation and Medline Industries, Inc., which are national distributors."
+          }
+        }
+      ],
+      "name_en": "McKesson"
+    },
+    {
+      "id": "MEDLINE",
+      "ticker": "Medline Industries",
+      "name": "メドライン・インダストリーズ",
+      "sub": "医療用品流通",
+      "sub_en": "Medical distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の医療流通で主な競合先",
+          "text_en": "Medline is a primary US medical distribution competitor",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors in the U.S. medical distribution market, which accounts for the large majority of our global medical sales, are McKesson Corporation and Medline Industries, Inc., which are national distributors."
+          }
+        }
+      ],
+      "name_en": "Medline Industries"
+    },
+    {
+      "id": "STMN",
+      "ticker": "Straumann",
+      "name": "ストローマン",
+      "sub": "歯科インプラント",
+      "sub_en": "Dental implants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "歯科インプラントで主な世界的競合先",
+          "text_en": "Straumann is a primary global competitor in dental implants",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Within Global Specialty Products, our primary global competitors include Straumann, Envista, Zimvie, and Dentsply Sirona for dental implants."
+          }
+        }
+      ],
+      "name_en": "Straumann"
+    },
+    {
+      "id": "NVST",
+      "ticker": "NVST",
+      "name": "エンビスタ",
+      "sub": "歯科インプラント",
+      "sub_en": "Dental implants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "歯科インプラントで主な世界的競合先",
+          "text_en": "Envista is a primary global competitor in dental implants",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Within Global Specialty Products, our primary global competitors include Straumann, Envista, Zimvie, and Dentsply Sirona for dental implants."
+          }
+        }
+      ],
+      "name_en": "Envista"
+    },
+    {
+      "id": "ZIMV",
+      "ticker": "ZIMV",
+      "name": "ジムビー",
+      "sub": "歯科インプラント",
+      "sub_en": "Dental implants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "歯科インプラントで主な世界的競合先",
+          "text_en": "Zimvie is a primary global competitor in dental implants",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Within Global Specialty Products, our primary global competitors include Straumann, Envista, Zimvie, and Dentsply Sirona for dental implants."
+          }
+        }
+      ],
+      "name_en": "Zimvie"
+    },
+    {
+      "id": "XRAY",
+      "ticker": "XRAY",
+      "name": "デンツプライシロナ",
+      "sub": "歯科インプラント",
+      "sub_en": "Dental implants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "歯科インプラントで主な世界的競合先",
+          "text_en": "Dentsply Sirona is a primary global competitor in dental implants",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Within Global Specialty Products, our primary global competitors include Straumann, Envista, Zimvie, and Dentsply Sirona for dental implants."
+          }
+        }
+      ],
+      "name_en": "Dentsply Sirona"
+    },
+    {
+      "id": "LIFCO",
+      "ticker": "Lifco AB",
+      "name": "リフコ",
+      "sub": "歯科流通",
+      "sub_en": "Dental distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国外の歯科流通で競合する",
+          "text_en": "Lifco AB is a large competitor outside the US",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "against several large competitors, including Cadence Group, Proclinic Group, DD Group, Nuent Group, Lifco AB, Planmeca Group, Dental Union, and Dental Bauer"
+          }
+        }
+      ],
+      "name_en": "Lifco AB"
+    },
+    {
+      "id": "PLANMECA",
+      "ticker": "Planmeca Group",
+      "name": "プランメカ",
+      "sub": "歯科機器",
+      "sub_en": "Dental equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国外の歯科流通で競合する",
+          "text_en": "Planmeca Group is a large competitor outside the US",
+          "source": {
+            "label": "ヘンリー・シャイン 10-K(2025-12-27)",
+            "label_en": "Henry Schein 10-K (fiscal year ended 2025-12-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "against several large competitors, including Cadence Group, Proclinic Group, DD Group, Nuent Group, Lifco AB, Planmeca Group, Dental Union, and Dental Bauer"
+          }
+        }
+      ],
+      "name_en": "Planmeca Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "EQT",
+    "name": "EQT",
+    "cik": 33213,
+    "name_en": "EQT Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NEE",
+      "ticker": "NEE",
+      "name": "ネクステラ・エナジー",
+      "sub": "電力・ガス",
+      "sub_en": "Utility & energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マウンテン・バレー・パイプライン(MVP A)の出資者に名を連ねている",
+          "text_en": "Listed as a member of MVP A, which owns the Mountain Valley Pipeline",
+          "source": {
+            "label": "EQT 10-K(2025-12-31)",
+            "label_en": "EQT Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "As of December 31, 2025, MVP A's members consisted of the Midstream Joint Venture and affiliates of each of NextEra Energy, Inc. (NextEra), Con Edison Gas Pipeline and Storage, LLC (ConEd), AltaGas Ltd. (AltaGas) and RGC Resources, Inc. (RGC)."
+          }
+        }
+      ],
+      "name_en": "NextEra Energy"
+    },
+    {
+      "id": "ED",
+      "ticker": "ED",
+      "name": "コンソリデーテッド・エジソン",
+      "sub": "ガスパイプライン",
+      "sub_en": "Gas pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マウンテン・バレー・パイプライン(MVP A)の出資者に名を連ねている",
+          "text_en": "Listed as a member of MVP A, which owns the Mountain Valley Pipeline",
+          "source": {
+            "label": "EQT 10-K(2025-12-31)",
+            "label_en": "EQT Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "As of December 31, 2025, MVP A's members consisted of the Midstream Joint Venture and affiliates of each of NextEra Energy, Inc. (NextEra), Con Edison Gas Pipeline and Storage, LLC (ConEd), AltaGas Ltd. (AltaGas) and RGC Resources, Inc. (RGC)."
+          }
+        }
+      ],
+      "name_en": "Con Edison"
+    },
+    {
+      "id": "ALA",
+      "ticker": "AltaGas",
+      "name": "アルタガス",
+      "sub": "ガス・エネルギー",
+      "sub_en": "Gas & energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マウンテン・バレー・パイプライン(MVP A)の出資者に名を連ねている",
+          "text_en": "Listed as a member of MVP A, which owns the Mountain Valley Pipeline",
+          "source": {
+            "label": "EQT 10-K(2025-12-31)",
+            "label_en": "EQT Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "As of December 31, 2025, MVP A's members consisted of the Midstream Joint Venture and affiliates of each of NextEra Energy, Inc. (NextEra), Con Edison Gas Pipeline and Storage, LLC (ConEd), AltaGas Ltd. (AltaGas) and RGC Resources, Inc. (RGC)."
+          }
+        }
+      ],
+      "name_en": "AltaGas"
+    },
+    {
+      "id": "RGCO",
+      "ticker": "RGCO",
+      "name": "RGCリソーシズ",
+      "sub": "ガス事業",
+      "sub_en": "Gas utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マウンテン・バレー・パイプライン(MVP A)の出資者に名を連ねている",
+          "text_en": "Listed as a member of MVP A, which owns the Mountain Valley Pipeline",
+          "source": {
+            "label": "EQT 10-K(2025-12-31)",
+            "label_en": "EQT Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "As of December 31, 2025, MVP A's members consisted of the Midstream Joint Venture and affiliates of each of NextEra Energy, Inc. (NextEra), Con Edison Gas Pipeline and Storage, LLC (ConEd), AltaGas Ltd. (AltaGas) and RGC Resources, Inc. (RGC)."
+          }
+        }
+      ],
+      "name_en": "RGC Resources"
+    },
+    {
+      "id": "WMB",
+      "ticker": "WMB",
+      "name": "ウィリアムズ・カンパニーズ",
+      "sub": "ミッドストリーム",
+      "sub_en": "Midstream",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガス集荷・処理設備を所有・運営する合弁会社を共同で設立している",
+          "text_en": "Williams is a partner in the Laurel Mountain Midstream joint venture for gathering and processing assets",
+          "source": {
+            "label": "EQT 10-K(2025-12-31)",
+            "label_en": "EQT Corporation 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Laurel Mountain Midstream, LLC (LMM) is a midstream company formed as a joint venture among the Company, Williams Companies Inc. and certain other energy companies for the purpose of owning and operating gathering and processing assets."
+          }
+        }
+      ],
+      "name_en": "Williams Companies"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "root": {
+    "ticker": "IFF",
+    "name": "インターナショナル・フレーバーズ&フレグランシズ",
+    "cik": 51253,
+    "name_en": "International Flavors & Fragrances Inc"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ADM"
+  ],
+  "companies": [
+    {
+      "id": "GIVN",
+      "ticker": "Givaudan",
+      "name": "ジボダン",
+      "sub": "香料大手",
+      "sub_en": "Flavors & fragrances",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手グローバル企業の一社として、香料・素材で競合する",
+          "text_en": "Named as a large global competitor",
+          "source": {
+            "label": "IFF 10-K(2025-12-31)",
+            "label_en": "IFF 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125326000006/iff-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our main competitors consist of (1) other large global companies, such as Givaudan, Novonesis, DSM-Firmenich, Symrise, Kerry, and ADM"
+          }
+        }
+      ],
+      "name_en": "Givaudan"
+    },
+    {
+      "id": "NVZ",
+      "ticker": "Novonesis",
+      "name": "ノボネシス",
+      "sub": "バイオ素材",
+      "sub_en": "Bio-solutions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "酵素や素材の分野で競い合う相手である",
+          "text_en": "Named as a large global competitor",
+          "source": {
+            "label": "IFF 10-K(2025-12-31)",
+            "label_en": "IFF 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125326000006/iff-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our main competitors consist of (1) other large global companies, such as Givaudan, Novonesis, DSM-Firmenich, Symrise, Kerry, and ADM"
+          }
+        }
+      ],
+      "name_en": "Novonesis"
+    },
+    {
+      "id": "DSMF",
+      "ticker": "DSM-Firmenich",
+      "name": "DSM-フィルメニッヒ",
+      "sub": "香料・栄養",
+      "sub_en": "Flavors & nutrition",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同じ市場で競合する大手企業である",
+          "text_en": "Named as a large global competitor",
+          "source": {
+            "label": "IFF 10-K(2025-12-31)",
+            "label_en": "IFF 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125326000006/iff-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our main competitors consist of (1) other large global companies, such as Givaudan, Novonesis, DSM-Firmenich, Symrise, Kerry, and ADM"
+          }
+        }
+      ],
+      "name_en": "DSM-Firmenich"
+    },
+    {
+      "id": "SYM",
+      "ticker": "Symrise",
+      "name": "シムライズ",
+      "sub": "香料大手",
+      "sub_en": "Flavors & fragrances",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する大手グローバル企業に含まれる",
+          "text_en": "Named as a large global competitor",
+          "source": {
+            "label": "IFF 10-K(2025-12-31)",
+            "label_en": "IFF 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125326000006/iff-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our main competitors consist of (1) other large global companies, such as Givaudan, Novonesis, DSM-Firmenich, Symrise, Kerry, and ADM"
+          }
+        }
+      ],
+      "name_en": "Symrise"
+    },
+    {
+      "id": "KRY",
+      "ticker": "Kerry",
+      "name": "ケリー",
+      "sub": "食品素材",
+      "sub_en": "Food ingredients",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "食品素材で競合する大手の一社である",
+          "text_en": "Named as a large global competitor",
+          "source": {
+            "label": "IFF 10-K(2025-12-31)",
+            "label_en": "IFF 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125326000006/iff-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our main competitors consist of (1) other large global companies, such as Givaudan, Novonesis, DSM-Firmenich, Symrise, Kerry, and ADM"
+          }
+        }
+      ],
+      "name_en": "Kerry"
+    },
+    {
+      "id": "ADM",
+      "ticker": "ADM",
+      "name": "アーチャー・ダニエルズ・ミッドランド",
+      "sub": "穀物・食品素材",
+      "sub_en": "Grain & ingredients",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手グローバル企業として競合している",
+          "text_en": "Named as a large global competitor",
+          "source": {
+            "label": "IFF 10-K(2025-12-31)",
+            "label_en": "IFF 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125326000006/iff-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our main competitors consist of (1) other large global companies, such as Givaudan, Novonesis, DSM-Firmenich, Symrise, Kerry, and ADM"
+          }
+        }
+      ],
+      "name_en": "Archer-Daniels-Midland"
+    },
+    {
+      "id": "DD",
+      "ticker": "DD",
+      "name": "デュポン",
+      "sub": "素材大手",
+      "sub_en": "Materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "N&B取引に関し、税負担が生じた場合にデュポンへ補償する可能性がある",
+          "text_en": "IFF may be obligated to indemnify DuPont for tax liability from the N&B Transaction",
+          "source": {
+            "label": "IFF 10-K(2025-12-31)",
+            "label_en": "IFF 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125326000006/iff-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "we may be obligated to indemnify DuPont for any such tax liability imposed on DuPont."
+          }
+        }
+      ],
+      "name_en": "DuPont"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

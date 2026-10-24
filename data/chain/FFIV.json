@@ -1,0 +1,323 @@
+{
+  "root": {
+    "ticker": "FFIV",
+    "name": "F5",
+    "cik": 1048695,
+    "name_en": "F5, Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AKAM",
+    "NET",
+    "FSLY",
+    "AVGO",
+    "CSCO"
+  ],
+  "companies": [
+    {
+      "id": "FLEX",
+      "ticker": "FLEX",
+      "name": "フレックス",
+      "sub": "製造委託先",
+      "sub_en": "Contract manufacturer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な製造委託先として、ハードウェア製品の製造を請け負っている",
+          "text_en": "Flex is F5's primary third-party manufacturer of its hardware systems",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "We outsource the manufacturing of our products to various manufacturing partners, including our primary third-party manufacturer service provider, Flex Ltd."
+          }
+        }
+      ],
+      "name_en": "Flex Ltd."
+    },
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ・テクノロジーズ",
+      "sub": "エッジ・セキュリティ",
+      "sub_en": "Edge & security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エッジ分野の従来型の競合として挙がっている",
+          "text_en": "Akamai is named as a traditional edge competitor",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "F5 competes with traditional edge players including Akamai, Cloudflare and Fastly, as well as networking vendors including Broadcom and Cisco, and pure-play vendors like Aviatrix, and public cloud providers."
+          }
+        }
+      ],
+      "name_en": "Akamai Technologies"
+    },
+    {
+      "id": "NET",
+      "ticker": "NET",
+      "name": "クラウドフレア",
+      "sub": "エッジ・セキュリティ",
+      "sub_en": "Edge & security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エッジ分野とアプリケーション保護の双方で競合している",
+          "text_en": "Cloudflare is named as an edge and application security competitor",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "F5 competes with traditional edge players including Akamai, Cloudflare and Fastly, as well as networking vendors including Broadcom and Cisco, and pure-play vendors like Aviatrix, and public cloud providers."
+          }
+        }
+      ],
+      "name_en": "Cloudflare"
+    },
+    {
+      "id": "FSLY",
+      "ticker": "FSLY",
+      "name": "ファストリー",
+      "sub": "エッジ配信",
+      "sub_en": "Edge delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エッジ分野の従来型の競合のひとつである",
+          "text_en": "Fastly is named as a traditional edge competitor",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "F5 competes with traditional edge players including Akamai, Cloudflare and Fastly, as well as networking vendors including Broadcom and Cisco, and pure-play vendors like Aviatrix, and public cloud providers."
+          }
+        }
+      ],
+      "name_en": "Fastly"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking vendor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットワーク機器ベンダーとして競合している",
+          "text_en": "Broadcom is named as a networking vendor competitor",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "F5 competes with traditional edge players including Akamai, Cloudflare and Fastly, as well as networking vendors including Broadcom and Cisco, and pure-play vendors like Aviatrix, and public cloud providers."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking vendor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットワーク機器ベンダーとして競合している",
+          "text_en": "Cisco is named as a networking vendor competitor",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "F5 competes with traditional edge players including Akamai, Cloudflare and Fastly, as well as networking vendors including Broadcom and Cisco, and pure-play vendors like Aviatrix, and public cloud providers."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アプリケーション保護の分野で競合している",
+          "text_en": "Fortinet is named as an application security competitor",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In application security, we compete with vendors that offer web application firewall, bot detection and mitigation, API protection, carrier-grade firewall, carrier-grade network address translation (\"NAT\"), SSL orchestration, access policy management, and DDoS mitigation including Akamai, Cisco, Cloudflare, Fortinet, Juniper Networks, Palo Alto, Radware, and Thales (Imperva)."
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アプリケーション保護の分野で競合している",
+          "text_en": "Palo Alto is named as an application security competitor",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In application security, we compete with vendors that offer web application firewall, bot detection and mitigation, API protection, carrier-grade firewall, carrier-grade network address translation (\"NAT\"), SSL orchestration, access policy management, and DDoS mitigation including Akamai, Cisco, Cloudflare, Fortinet, Juniper Networks, Palo Alto, Radware, and Thales (Imperva)."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ドット・コム(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Public cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AWSのクラウドマーケットプレイスを通じた販売で提携している",
+          "text_en": "F5 has ongoing partnerships with AWS and sells through its marketplace",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "We have ongoing partnerships with the major cloud providers such as AWS, Microsoft Azure, and Google Cloud Platform and have expanded our reseller routes to market to include their public cloud marketplaces."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NGINX製品の分野ではAWSと競合している",
+          "text_en": "F5 NGINX offerings compete against AWS",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our lightweight, agile, developer-friendly F5 NGINX offerings, which provide capabilities like optimizing Kubernetes traffic management and load balancing cloud-native and hybrid cloud applications compete against Amazon Web Services (\"AWS\"), Google Cloud Platform, Envoy, and HAProxy."
+          }
+        }
+      ],
+      "name_en": "Amazon (AWS)"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト(Azure)",
+      "sub": "クラウド",
+      "sub_en": "Public cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Azureのクラウドマーケットプレイスを通じた販売で提携している",
+          "text_en": "F5 has ongoing partnerships with Microsoft Azure and sells through its marketplace",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "We have ongoing partnerships with the major cloud providers such as AWS, Microsoft Azure, and Google Cloud Platform and have expanded our reseller routes to market to include their public cloud marketplaces."
+          }
+        }
+      ],
+      "name_en": "Microsoft (Azure)"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Public cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Google Cloud Platformのマーケットプレイスを通じた販売で提携している",
+          "text_en": "F5 has ongoing partnerships with Google Cloud Platform and sells through its marketplace",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "We have ongoing partnerships with the major cloud providers such as AWS, Microsoft Azure, and Google Cloud Platform and have expanded our reseller routes to market to include their public cloud marketplaces."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NGINX製品の分野ではGoogle Cloud Platformと競合している",
+          "text_en": "F5 NGINX offerings compete against Google Cloud Platform",
+          "source": {
+            "label": "F5 10-K(2025-09-30)",
+            "label_en": "F5, Inc. 10-K (fiscal year ended 2025-09-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our lightweight, agile, developer-friendly F5 NGINX offerings, which provide capabilities like optimizing Kubernetes traffic management and load balancing cloud-native and hybrid cloud applications compete against Amazon Web Services (\"AWS\"), Google Cloud Platform, Envoy, and HAProxy."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google Cloud)"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "HST",
+    "name": "ホスト・ホテルズ・アンド・リゾーツ",
+    "cik": 1070750,
+    "name_en": "Host Hotels & Resorts"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット・インターナショナル",
+      "sub": "ホテル運営会社",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有ホテルの約64%をマリオットが運営または加盟ブランドとして管理している",
+          "text_en": "Marriott manages or franchises about 64% of Host hotels by 2025 hotel revenues",
+          "source": {
+            "label": "Host Hotels & Resorts 10-K(2025年12月31日)",
+            "label_en": "Host Hotels & Resorts 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000054/hst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Approximately 64% of our hotels (as measured by 2025 hotel revenues) are managed or franchised by Marriott International."
+          }
+        }
+      ],
+      "name_en": "Marriott International"
+    },
+    {
+      "id": "H",
+      "ticker": "H",
+      "name": "ハイアット・ホテルズ",
+      "sub": "ホテル運営会社",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有ホテルの一部をブランド所有者であるハイアットが運営している",
+          "text_en": "Hyatt is one of the brand owners that manage Host hotels",
+          "source": {
+            "label": "Host Hotels & Resorts 10-K(2025年12月31日)",
+            "label_en": "Host Hotels & Resorts 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000054/hst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Agreements governing our hotels that are managed by brand owners (Marriott, Hyatt, Hilton, 1 Hotels and AccorHotels)"
+          }
+        }
+      ],
+      "name_en": "Hyatt Hotels"
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン・ワールドワイド",
+      "sub": "ホテル運営会社",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有ホテルの一部をブランド所有者であるヒルトンが運営している",
+          "text_en": "Hilton is one of the brand owners that manage Host hotels",
+          "source": {
+            "label": "Host Hotels & Resorts 10-K(2025年12月31日)",
+            "label_en": "Host Hotels & Resorts 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000054/hst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Agreements governing our hotels that are managed by brand owners (Marriott, Hyatt, Hilton, 1 Hotels and AccorHotels)"
+          }
+        }
+      ],
+      "name_en": "Hilton Worldwide"
+    },
+    {
+      "id": "ACCOR",
+      "ticker": "AccorHotels",
+      "name": "アコー",
+      "sub": "ホテル運営会社",
+      "sub_en": "Hotel operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有ホテルの一部をブランド所有者であるアコーホテルズが運営している",
+          "text_en": "AccorHotels is one of the brand owners that manage Host hotels",
+          "source": {
+            "label": "Host Hotels & Resorts 10-K(2025年12月31日)",
+            "label_en": "Host Hotels & Resorts 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000054/hst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Agreements governing our hotels that are managed by brand owners (Marriott, Hyatt, Hilton, 1 Hotels and AccorHotels)"
+          }
+        }
+      ],
+      "name_en": "AccorHotels"
+    },
+    {
+      "id": "NOBLE",
+      "ticker": "Noble Investment",
+      "name": "ノーブル・インベストメント・グループ",
+      "sub": "ホテル資産運用",
+      "sub_en": "Hotel asset manager",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年にノーブル関連会社の少数持分を取得する正式契約を結び、合弁事業を営んでいる",
+          "text_en": "Host agreed in 2022 to acquire a minority equity interest in Noble entities, forming the Noble joint venture",
+          "source": {
+            "label": "Host Hotels & Resorts 10-K(2025年12月31日)",
+            "label_en": "Host Hotels & Resorts 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000054/hst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "in 2022, we entered into definitive agreements with Noble Investment Group, LLC, a leading private hospitality asset manager in the upscale, select service and extended stay chain scales"
+          }
+        }
+      ],
+      "name_en": "Noble Investment Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

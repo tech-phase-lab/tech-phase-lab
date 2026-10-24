@@ -1,0 +1,227 @@
+{
+  "root": {
+    "ticker": "PODD",
+    "name": "インスレット",
+    "cik": 1145197,
+    "name_en": "Insulet"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MDT",
+    "TNDM",
+    "BBNX"
+  ],
+  "companies": [
+    {
+      "id": "SANM",
+      "ticker": "SANM",
+      "name": "サンミナ",
+      "sub": "部材供給",
+      "sub_en": "Materials supplier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "部材供給契約を結んでいる",
+          "text_en": "Has a materials supplier agreement with Insulet",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Amended and Restated Materials Supplier Agreement between Insulet Corporation and Sanmina Corporation"
+          }
+        }
+      ],
+      "name_en": "Sanmina Corporation"
+    },
+    {
+      "id": "DXCM",
+      "ticker": "DXCM",
+      "name": "デクスコム",
+      "sub": "連続血糖測定",
+      "sub_en": "CGM",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ポッドがデクスコムのG6・G7センサーと連携する",
+          "text_en": "The Pod integrates with Dexcom G6 and G7 CGMs",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Pod currently integrates with Dexcom, Inc.’s G6 and G7 CGMs and with Abbott Diabetes Care, Inc.’s (“Abbott”) FreeStyle Libre 2 Plus sensor"
+          }
+        }
+      ],
+      "name_en": "Dexcom"
+    },
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット",
+      "sub": "連続血糖測定",
+      "sub_en": "CGM",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ポッドがアボットのFreeStyle Libre 2 Plusと連携する",
+          "text_en": "The Pod integrates with the Abbott FreeStyle Libre 2 Plus sensor",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Pod currently integrates with Dexcom, Inc.’s G6 and G7 CGMs and with Abbott Diabetes Care, Inc.’s (“Abbott”) FreeStyle Libre 2 Plus sensor"
+          }
+        }
+      ],
+      "name_en": "Abbott Diabetes Care"
+    },
+    {
+      "id": "GLOO",
+      "ticker": "Glooko",
+      "name": "グルーコ",
+      "sub": "糖尿病データ管理",
+      "sub_en": "Diabetes data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユーザーデータをグルーコの管理システムにつなぐ提携を結んでいる",
+          "text_en": "Partnered with Glooko to connect user data to its diabetes data system",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Data Management We have partnered with Glooko Inc."
+          }
+        }
+      ],
+      "name_en": "Glooko Inc."
+    },
+    {
+      "id": "AMGN",
+      "ticker": "AMGN",
+      "name": "アムジェン",
+      "sub": "バイオ医薬品",
+      "sub_en": "Biopharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Neulasta Onproキット向けのポッドを製造している",
+          "text_en": "Insulet produces pods for Amgen’s Neulasta Onpro kit",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We also produce pods for Amgen for use in the Neulasta ® Onpro ® kit"
+          }
+        }
+      ],
+      "name_en": "Amgen"
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インスリンポンプ事業のメドトロニック・ダイアベティスと競合する",
+          "text_en": "Competes with Medtronic Diabetes in insulin pumps",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We compete with established companies that produce insulin pumps, such as Medtronic Diabetes, a division of Medtronic plc"
+          }
+        }
+      ],
+      "name_en": "Medtronic"
+    },
+    {
+      "id": "TNDM",
+      "ticker": "TNDM",
+      "name": "タンデム・ダイアベティス・ケア",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インスリンポンプ分野で競合する",
+          "text_en": "Competes in insulin pumps",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Tandem Diabetes Care Inc., as well as emerging companies like Beta Bionics Inc."
+          }
+        }
+      ],
+      "name_en": "Tandem Diabetes Care"
+    },
+    {
+      "id": "BBNX",
+      "ticker": "BBNX",
+      "name": "ベータ・バイオニクス",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "新興のインスリンポンプ企業として競合する",
+          "text_en": "Competes as an emerging insulin pump company",
+          "source": {
+            "label": "Insulet 10-K(2025年12月31日)",
+            "label_en": "Insulet 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145197/000114519726000028/podd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "as well as emerging companies like Beta Bionics Inc."
+          }
+        }
+      ],
+      "name_en": "Beta Bionics"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

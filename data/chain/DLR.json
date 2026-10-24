@@ -1,0 +1,277 @@
+{
+  "root": {
+    "ticker": "DLR",
+    "name": "デジタル・リアルティ・トラスト",
+    "cik": 1297996,
+    "name_en": "Digital Realty Trust"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "EQIX"
+  ],
+  "companies": [
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年間経常収益の9.0%を占める上位テナントの1社である",
+          "text_en": "Oracle is one of the largest tenants, representing 9.0% of annualized recurring revenue",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Oracle Corporation 42 424,130 9.0 %"
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイ・ビー・エム",
+      "sub": "IT・クラウド",
+      "sub_en": "IT & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年間経常収益の2.3%を占める上位テナントの1社である",
+          "text_en": "IBM is one of the largest tenants, representing 2.3% of annualized recurring revenue",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "IBM 34 109,596 2.3 %"
+          }
+        }
+      ],
+      "name_en": "IBM"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "SNS・広告",
+      "sub_en": "Social media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年間経常収益の1.6%を占める上位テナントの1社である",
+          "text_en": "Meta Platforms is one of the largest tenants, representing 1.6% of annualized recurring revenue",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Meta Platforms, Inc. 49 73,494 1.6 %"
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    },
+    {
+      "id": "LUMN",
+      "ticker": "LUMN",
+      "name": "ルーメン・テクノロジーズ",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年間経常収益の1.2%を占める上位テナントの1社である",
+          "text_en": "Lumen Technologies is one of the largest tenants, representing 1.2% of annualized recurring revenue",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Lumen Technologies, Inc. 112 56,649 1.2 %"
+          }
+        }
+      ],
+      "name_en": "Lumen Technologies"
+    },
+    {
+      "id": "EQIX",
+      "ticker": "EQIX",
+      "name": "エクイニクス",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同じ大都市圏で競合するデータセンター事業者として挙げられる",
+          "text_en": "Equinix is named among data center providers competing in the same metropolitan areas",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "​ Competition We compete with numerous data center providers globally, many of whom own or operate properties similar to ours in some of the same metropolitan areas where our data centers are located, including Equinix, Inc. and NTT; various private operators in the U.S.; as well as Global Switch Holdings Limited and various regional operators in Europe, Asia, Latin America, Africa and Australia."
+          }
+        },
+        {
+          "type": "down",
+          "text": "年間経常収益の2.0%を占めるテナントでもある",
+          "text_en": "Equinix is also a tenant, representing 2.0% of annualized recurring revenue",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Equinix 14 95,641 2.0 %"
+          }
+        }
+      ],
+      "name_en": "Equinix"
+    },
+    {
+      "id": "NTT",
+      "ticker": "NTT",
+      "name": "エヌ・ティ・ティ",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同じ大都市圏で競合するデータセンター事業者の1社である",
+          "text_en": "NTT is named among data center providers competing in the same metropolitan areas",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "​ Competition We compete with numerous data center providers globally, many of whom own or operate properties similar to ours in some of the same metropolitan areas where our data centers are located, including Equinix, Inc. and NTT; various private operators in the U.S.; as well as Global Switch Holdings Limited and various regional operators in Europe, Asia, Latin America, Africa and Australia."
+          }
+        }
+      ],
+      "name_en": "NTT"
+    },
+    {
+      "id": "GLOBALSWITCH",
+      "ticker": "Global Switch",
+      "name": "グローバル・スイッチ",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州やアジアなどで競合するデータセンター事業者の1社である",
+          "text_en": "Global Switch Holdings is named among data center providers it competes with",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "​ Competition We compete with numerous data center providers globally, many of whom own or operate properties similar to ours in some of the same metropolitan areas where our data centers are located, including Equinix, Inc. and NTT; various private operators in the U.S.; as well as Global Switch Holdings Limited and various regional operators in Europe, Asia, Latin America, Africa and Australia."
+          }
+        }
+      ],
+      "name_en": "Global Switch Holdings"
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン",
+      "sub": "合弁パートナー",
+      "sub_en": "JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年1月にブラックストーンと合弁会社を設立した",
+          "text_en": "In January 2024, Digital Realty formed a joint venture with Blackstone Inc.",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In January 2024, we formed a joint venture with Blackstone Inc."
+          }
+        }
+      ],
+      "name_en": "Blackstone"
+    },
+    {
+      "id": "MITSUBISHI",
+      "ticker": "Mitsubishi",
+      "name": "三菱商事",
+      "sub": "合弁パートナー",
+      "sub_en": "JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年3月に三菱商事とダラスの2データセンター開発の合弁会社を設立した",
+          "text_en": "In March 2024, Digital Realty formed a joint venture with Mitsubishi Corporation to support the development of two data centers in the Dallas metro area",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In March 2024, we formed a joint venture with Mitsubishi Corporation, or Mitsubishi, to support the development of two data centers in the Dallas metro area"
+          }
+        }
+      ],
+      "name_en": "Mitsubishi Corporation"
+    },
+    {
+      "id": "GIP",
+      "ticker": "GI Partners",
+      "name": "GIパートナーズ",
+      "sub": "合弁パートナー",
+      "sub_en": "JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シカゴのデータセンター用地でGIパートナーズとの合弁会社を拡大した",
+          "text_en": "In April 2024, Digital Realty expanded its existing joint venture with GI Partners at a Chicago campus",
+          "source": {
+            "label": "デジタル・リアルティ・トラスト 10-K(2025年12月期)",
+            "label_en": "Digital Realty Trust 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In April 2024, we expanded our existing joint venture with GI Partners"
+          }
+        }
+      ],
+      "name_en": "GI Partners"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

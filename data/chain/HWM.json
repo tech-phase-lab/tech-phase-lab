@@ -1,0 +1,172 @@
+{
+  "root": {
+    "ticker": "HWM",
+    "name": "ハウメット・エアロスペース",
+    "cik": 4281,
+    "name_en": "Howmet Aerospace"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ATI"
+  ],
+  "companies": [
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTXコーポレーション",
+      "sub": "航空機エンジン",
+      "sub_en": "Aerospace engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の第三者向け売上の約11%を占める大口顧客である",
+          "text_en": "RTX accounted for approximately 11% of Howmet third-party sales in 2025",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年12月31日)",
+            "label_en": "Howmet Aerospace 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2025, RTX Corporation and GE Aerospace each represented approximately 11% of the Company’s third-party sales."
+          }
+        }
+      ],
+      "name_en": "RTX Corporation"
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GEエアロスペース",
+      "sub": "航空機エンジン",
+      "sub_en": "Aerospace engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の第三者向け売上の約11%を占める大口顧客である",
+          "text_en": "GE Aerospace accounted for approximately 11% of Howmet third-party sales in 2025",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年12月31日)",
+            "label_en": "Howmet Aerospace 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2025, RTX Corporation and GE Aerospace each represented approximately 11% of the Company’s third-party sales."
+          }
+        }
+      ],
+      "name_en": "GE Aerospace"
+    },
+    {
+      "id": "BRK",
+      "ticker": "BRK.B",
+      "name": "バークシャー・ハサウェイ",
+      "sub": "精密鋳造・鍛造",
+      "sub_en": "Castings & forgings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のプレシジョン・キャストパーツ経由で、チタン合金や精密鍛造などで競合する",
+          "text_en": "Competes through Precision Castparts in titanium alloys, forgings, castings and fasteners",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年12月31日)",
+            "label_en": "Howmet Aerospace 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Principal competitors include Berkshire Hathaway Inc., through its 2016 acquisition of Precision Castparts Corporation and subsidiaries, for titanium and titanium-based alloys, precision forgings, seamless rolled rings, investment castings, including airfoils, and aerospace fasteners"
+          }
+        }
+      ],
+      "name_en": "Berkshire Hathaway"
+    },
+    {
+      "id": "ATI",
+      "ticker": "ATI",
+      "name": "ATIインク",
+      "sub": "特殊合金",
+      "sub_en": "Specialty alloys",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "チタン合金と精密鍛造の分野で競合する",
+          "text_en": "Competes in titanium alloys and precision forgings",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年12月31日)",
+            "label_en": "Howmet Aerospace 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "ATI Inc.’s High-Performance Materials & Components segment for titanium and titanium-based alloys and precision forgings"
+          }
+        }
+      ],
+      "name_en": "ATI Inc."
+    },
+    {
+      "id": "LISI",
+      "ticker": "Lisi Aerospace",
+      "name": "リシ・エアロスペース",
+      "sub": "航空機ファスナー",
+      "sub_en": "Aerospace fasteners",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空機向けファスナーの分野で競合する",
+          "text_en": "Competes in aerospace fasteners",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年12月31日)",
+            "label_en": "Howmet Aerospace 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Lisi Aerospace (France) for aerospace fasteners"
+          }
+        }
+      ],
+      "name_en": "Lisi Aerospace"
+    },
+    {
+      "id": "DONC",
+      "ticker": "Doncasters Group",
+      "name": "ドンキャスターズ",
+      "sub": "精密鋳造",
+      "sub_en": "Investment castings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インベストメント鋳造の分野で競合する",
+          "text_en": "Competes in investment castings",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年12月31日)",
+            "label_en": "Howmet Aerospace 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Other competitors include Doncasters Group Limited (U.K.) and Consolidated Precision Products Corp."
+          }
+        }
+      ],
+      "name_en": "Doncasters Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

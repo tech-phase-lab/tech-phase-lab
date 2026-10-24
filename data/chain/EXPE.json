@@ -1,0 +1,175 @@
+{
+  "root": {
+    "ticker": "EXPE",
+    "name": "エクスペディア・グループ",
+    "cik": 1324424,
+    "name_en": "Expedia Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "BKNG",
+    "ABNB",
+    "GOOGL"
+  ],
+  "companies": [
+    {
+      "id": "AMADEUS",
+      "ticker": "Amadeus",
+      "name": "アマデウス",
+      "sub": "旅行予約システム",
+      "sub_en": "Global distribution system",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "航空券予約の流通システム(GDS)の提供元として利用している",
+          "text_en": "Expedia uses Amadeus as one of its GDS segment providers",
+          "source": {
+            "label": "Expedia Group 10-K(2025-12-31)",
+            "label_en": "Expedia Group 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000008/expe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We use Amadeus and Sabre as our GDS segment providers in order to ensure the widest possible supply of content for our travelers."
+          }
+        }
+      ],
+      "name_en": "Amadeus"
+    },
+    {
+      "id": "SABR",
+      "ticker": "SABR",
+      "name": "セーバー",
+      "sub": "旅行予約システム",
+      "sub_en": "Global distribution system",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "航空券予約の流通システム(GDS)の提供元として利用している",
+          "text_en": "Expedia uses Sabre as one of its GDS segment providers",
+          "source": {
+            "label": "Expedia Group 10-K(2025-12-31)",
+            "label_en": "Expedia Group 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000008/expe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We use Amadeus and Sabre as our GDS segment providers in order to ensure the widest possible supply of content for our travelers."
+          }
+        }
+      ],
+      "name_en": "Sabre"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ドット・コム",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud infrastructure",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "基盤機能の主要部分をAWSへ移したため、AWSのサービスに依存している",
+          "text_en": "Expedia moved key platform functionality to AWS and now depends on AWS services",
+          "source": {
+            "label": "Expedia Group 10-K(2025-12-31)",
+            "label_en": "Expedia Group 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000008/expe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "as a result of our migration of key portions of our platform functionality to Amazon Web Services (“AWS”), we now depend on the availability of AWS’s services"
+          }
+        }
+      ],
+      "name_en": "Amazon (AWS)"
+    },
+    {
+      "id": "BKNG",
+      "ticker": "BKNG",
+      "name": "ブッキング・ホールディングス",
+      "sub": "オンライン旅行",
+      "sub_en": "Online travel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "旅行予約でBooking.comと競合する",
+          "text_en": "Expedia competes with OTAs such as Booking.com",
+          "source": {
+            "label": "Expedia Group 10-K(2025-12-31)",
+            "label_en": "Expedia Group 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000008/expe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "OTAs such as Booking.com, alternative accommodation providers such as Airbnb, and travel metasearch services"
+          }
+        }
+      ],
+      "name_en": "Booking Holdings"
+    },
+    {
+      "id": "ABNB",
+      "ticker": "ABNB",
+      "name": "エアビーアンドビー",
+      "sub": "宿泊仲介",
+      "sub_en": "Alternative accommodation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Airbnbなど代替宿泊の提供者と競合する",
+          "text_en": "Expedia competes with alternative accommodation providers such as Airbnb",
+          "source": {
+            "label": "Expedia Group 10-K(2025-12-31)",
+            "label_en": "Expedia Group 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000008/expe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "OTAs such as Booking.com, alternative accommodation providers such as Airbnb, and travel metasearch services"
+          }
+        }
+      ],
+      "name_en": "Airbnb"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(グーグル)",
+      "sub": "検索・広告",
+      "sub_en": "Search & advertising",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Googleは検索での地位を使い自社の旅行サービスを前面に出している",
+          "text_en": "Google has used its search position to promote its own travel services",
+          "source": {
+            "label": "Expedia Group 10-K(2025-12-31)",
+            "label_en": "Expedia Group 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000008/expe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Google has used its search market position to promote its own travel services, potentially disintermediating our platform"
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
