@@ -1,0 +1,56 @@
+/* Theme Ranking (PRO): a gold-on-dark finish in the family of the PRO header and the comparison tool. */
+.eyebrow { display:flex; align-items:center; gap:10px; margin:14px 0 18px; font:600 10.5px var(--font-geist-mono),monospace; letter-spacing:.22em; color:#d9bd7c; }
+.eyebrow span:last-child { color:#8d98a6; letter-spacing:.18em; }
+.eyebrow i { width:34px; height:1px; background:linear-gradient(90deg,#d9bd7c,transparent); }
+
+.note { margin:18px 0; padding:14px 16px; border:1px solid #2d3948; border-radius:12px; background:#0f1822; color:#aab6c4; font-size:13.5px; line-height:1.7; }
+.meta { margin:14px 2px 12px; font-size:12px; color:#8d98a6; line-height:1.7; }
+.fine { margin:18px 2px 0; font-size:11.5px; color:#6f7b8a; }
+
+/* Period switch */
+.tabs { display:inline-grid; grid-auto-flow:column; gap:2px; padding:3px; border:1px solid #b8923f55; border-radius:999px; background:linear-gradient(120deg,#1d1a14,#101821); box-shadow:inset 0 1px 0 #ecd5a512; }
+.tabs button { min-height:36px; padding:0 18px; border:0; border-radius:999px; background:none; color:#aab6c4; font:600 13px inherit; letter-spacing:.04em; cursor:pointer; }
+.tabs button[aria-pressed="true"] { color:#241b07; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 2px 10px #d4aa5538; }
+.tabs button:focus-visible { outline:2px solid #ecd08e; outline-offset:2px; }
+
+/* Ranking list */
+.list { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.list > li { border:1px solid #2a3340; border-radius:14px; background:linear-gradient(135deg,#131c27,#0e151e); box-shadow:inset 0 1px 0 #ffffff06; overflow:hidden; }
+.list > li.podium { border-color:#b8923f66; background:linear-gradient(125deg,#241f15,#111a23 62%); box-shadow:inset 0 1px 0 #ecd5a518,0 10px 28px #0003; }
+.list summary { display:grid; grid-template-columns:44px minmax(0,1fr) auto; grid-template-areas:"rank name value" "bar bar bar"; align-items:center; column-gap:12px; row-gap:10px; padding:14px 16px; cursor:pointer; list-style:none; }
+.list summary::-webkit-details-marker { display:none; }
+.list summary:focus-visible { outline:2px solid #ecd08e; outline-offset:-2px; }
+.rank { grid-area:rank; display:grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1px solid #3a4658; color:#c5ced9; font:700 16px var(--font-geist-mono),monospace; }
+.podium .rank { color:#241b07; border:0; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 0 14px #d4aa5547; }
+.name { grid-area:name; display:grid; gap:2px; min-width:0; }
+.name strong { font-size:16px; letter-spacing:.02em; color:#f2eee2; overflow-wrap:anywhere; }
+.podium .name strong { background:linear-gradient(90deg,#fbeab8,#d9bd7c); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.name small { font-size:11.5px; color:#8d98a6; }
+.value { grid-area:value; font:700 18px var(--font-geist-mono),monospace; font-variant-numeric:tabular-nums; color:#c5ced9; }
+.bar { grid-area:bar; display:block; height:5px; border-radius:3px; background:#1a2430; overflow:hidden; }
+.bar i { display:block; height:100%; border-radius:3px; background:#5c6877; }
+.up { color:#5fe0a9; } .down { color:#ff8a7a; }
+.bar i.up { background:linear-gradient(90deg,#2f9f77,#5fe0a9); } .bar i.down { background:linear-gradient(90deg,#d4685a,#ff8a7a); }
+
+.detail { padding:2px 16px 16px 72px; border-top:1px solid #ffffff08; }
+.detail p { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px; margin:12px 0; font-size:12.5px; color:#8d98a6; }
+.detail p b { color:#e8e1cf; letter-spacing:.04em; }
+.detail em { font:600 13px var(--font-geist-mono),monospace; font-style:normal; font-variant-numeric:tabular-nums; color:#c5ced9; }
+.detail ul { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:6px 14px; }
+.detail li { display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px solid #ffffff08; font-size:13px; }
+.detail li a { color:#d9bd7c; text-decoration:none; font-weight:600; letter-spacing:.04em; }
+.detail li a:hover { text-decoration:underline; }
+@media (max-width:600px) { .detail { padding-left:16px; } .list summary { padding:12px 12px; column-gap:10px; } .value { font-size:16px; } }
+
+/* Free visitors: a gold lock with the list of themes but no numbers */
+.lock { position:relative; margin-top:6px; padding:28px 22px 26px; border:1px solid #b8923f66; border-radius:16px; text-align:center; background:radial-gradient(120% 90% at 50% 0%,#2b2417,#111a23 62%); box-shadow:inset 0 1px 0 #ecd5a51c,0 14px 36px #0004; }
+.gem { display:block; margin:0 auto; width:30px; height:30px; fill:none; stroke:#d9bd7c; stroke-width:1.5; stroke-linejoin:round; filter:drop-shadow(0 0 8px #d4aa5560); }
+.lock h2 { margin:12px 0 8px; font-size:20px; letter-spacing:.02em; background:linear-gradient(90deg,#fbeab8,#d4aa55); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.lock p { margin:0 auto 18px; max-width:34em; color:#aab6c4; font-size:13.5px; line-height:1.8; }
+.teaser { list-style:none; margin:0 auto 22px; padding:0; max-width:420px; display:grid; gap:6px; text-align:left; filter:saturate(.85); }
+.teaser li { display:flex; align-items:center; gap:10px; padding:9px 14px; border:1px solid #2a3340; border-radius:10px; background:#0e151e99; color:#cfd6df; font-size:13.5px; }
+.teaser li span { width:22px; font:600 12px var(--font-geist-mono),monospace; color:#b8923f; }
+.teaser li b { margin-left:auto; color:#6a5a33; letter-spacing:.2em; font-weight:400; filter:blur(.6px); }
+.cta { display:inline-block; padding:12px 26px; border-radius:999px; color:#241b07; font-weight:700; letter-spacing:.04em; text-decoration:none; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 4px 18px #d4aa5540; }
+.cta:focus-visible { outline:2px solid #ecd08e; outline-offset:3px; }
+@media (prefers-reduced-motion:reduce) { .tabs button, .cta { transition:none; } }
