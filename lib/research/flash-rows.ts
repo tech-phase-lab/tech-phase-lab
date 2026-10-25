@@ -25,10 +25,7 @@ export const flashInstant = (row: Pick<FlashRow, "at" | "timeKind">) => Date.par
 
 export function flashRows(feed: Partial<GeneralNewsFeed> | null | undefined, wire: Record<string, CompanyWireItem[]>, lang: Language): FlashRow[] {
   const ja = lang === "ja";
-  const rows: FlashRow[] = (feed?.techHeadlines ?? []).flatMap(item => {
-    const title = ja ? item.titleJa : item.titleEn;
-    return title ? [{ id: item.id, kind: 'news' as const, tickers: item.tickers, title, at: item.at, timeKind: item.timeKind }] : [];
-  });
+  const rows: FlashRow[] = [];
   const watched = (tickers: string[]) => tickers.filter(ticker => WATCH_TICKERS.has(ticker));
   const official = Array.isArray(feed?.officialUpdates) ? feed.officialUpdates : [];
   const briefs = Array.isArray(feed?.resultBriefs) ? feed.resultBriefs : [];
@@ -55,7 +52,7 @@ export function flashRows(feed: Partial<GeneralNewsFeed> | null | undefined, wir
     if (tickers.length && title) rows.push({ id: `news:${item.id}`, kind: "news", tickers, title, body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, timeKind: "published", observedAt: item.observedAt });
   }
   // One story is one row, naming every watched company it concerns (owner, Oct 17).
-  for (const story of wireStories(feed?.techAccess === 'free' ? {} : wire, lang, WATCH_TICKERS)) {
+  for (const story of wireStories(wire, lang, WATCH_TICKERS)) {
     rows.push({ id: `wire:${story.id}`, kind: "news", tickers: story.tickers, title: story.title, url: story.url, source: story.publisher, at: story.at, timeKind: "published" });
   }
   for (const row of earningsResults(official, briefs)) {

@@ -1,4 +1,3 @@
-import { parseTechHeadlines, type TechHeadline } from './tech-headlines.ts';
 import providers from "./providers.json" with { type: "json" };
 import reportedNewsTickers from "./reported-news-tickers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
@@ -21,7 +20,7 @@ export type OfficialNewsSource = { id: string; url: string; publisher: string; p
 export type OfficialNewsBrief = { version: 1; scope: "company" | "sector"; validFacts: number; pendingFacts: number };
 export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; newsCategory?: "policy" | "economic"; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[]; pendingResearch?: 1 };
 export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
-export type GeneralNewsFeed = { techAccess?: 'free' | 'pro'; techHeadlines?: TechHeadline[]; ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory; originalPreviewItems?: OriginalPreviewItem[]; originalPreviewWindow?: OriginalPreviewWindow };
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory; originalPreviewItems?: OriginalPreviewItem[]; originalPreviewWindow?: OriginalPreviewWindow };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov", "www.bls.gov"]);
 
@@ -121,7 +120,7 @@ export function availableNewsPayload(value: unknown): GeneralNewsFeed {
       } catch { /* Only the rejected article is omitted. */ }
     }
   }
-  return publicNewsPayload({ ...base, ...accepted, originalPreviewWindow: raw.originalPreviewWindow, techAccess: raw.techAccess, techHeadlines: raw.techHeadlines });
+  return publicNewsPayload({ ...base, ...accepted, originalPreviewWindow: raw.originalPreviewWindow });
 }
 
 export function publicNewsPayload(value: unknown): GeneralNewsFeed {
@@ -283,7 +282,6 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
     }, []);
   }
   const withOriginalPreviews = (feed: GeneralNewsFeed): GeneralNewsFeed => {
-    if (payload.techAccess === 'free' || payload.techAccess === 'pro') feed = { ...feed, techAccess: payload.techAccess, techHeadlines: parseTechHeadlines(payload.techHeadlines) };
     if (payload.originalPreviewItems === undefined) return feed;
     const verifiedUrls = new Set([
       ...feed.items.map(item => item.url),

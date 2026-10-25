@@ -3,10 +3,8 @@
 Authoritative policy: [2026-10-25 FREE / PRO decision](TECH-PHASE-FREE-PRO-POLICY-2026-10-25.md).
 That decision overrides earlier proposals here. This file retains implementation
 notes and unapproved retention candidates; it is not a completion receipt.
-Capital Map FREE access and the price-display switch are implemented.
-The FREE news projection is implemented in `TECH-PHASE-NEWS-ACCESS-2026-10-25.md`;
-live browser acceptance remains pending. Automatic 22-company earnings refresh,
-theme ranking, personal review and retention items are not completed by this change.
+Capital Map FREE access is implemented in the accompanying change; the news delay,
+22-company refresh, theme ranking, personal review and retention items remain unshipped.
 Keep the existing Capital Map presentation. Railway connection/reauthentication is
 prohibited. Work on codex/research-preview only; no main edits or force pushes.
 

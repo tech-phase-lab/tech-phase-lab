@@ -1,14 +1,12 @@
-import { hasProNewsAccess } from "@/lib/research/news-audience-server";
 import { parseCompanyWire } from "@/lib/research/company-wire";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 15;
 
-const headers = { "Cache-Control": "private, no-store", "Vary": "Cookie", "X-Content-Type-Options": "nosniff" };
+const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
 
 export async function GET() {
-  if (!await hasProNewsAccess()) return Response.json({ ok: true, items: {} }, { headers });
   try {
     const base = process.env.RESEARCH_MONITOR_URL;
     const token = process.env.RESEARCH_MONITOR_TOKEN;

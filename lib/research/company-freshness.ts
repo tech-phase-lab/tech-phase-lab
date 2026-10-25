@@ -32,10 +32,6 @@ export function freshByCompany(feed: GeneralNewsFeed | null, wire: Record<string
   const add = (ticker: string, at: string, kind: string, observedAt?: string) => {
     if (isFreshItem(at, kind, observedAt, seen[ticker] ?? 0, now)) counts.set(ticker, (counts.get(ticker) ?? 0) + 1);
   };
-  for (const item of feed?.techHeadlines ?? []) {
-    if (lang === 'ja' && !item.titleJa) continue;
-    for (const ticker of item.tickers) add(ticker, item.at, item.timeKind);
-  }
   for (const item of feed?.officialUpdates ?? []) {
     if (!shownInLanguage(item, lang)) continue;
     const time = officialTime(item);

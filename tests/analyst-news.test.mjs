@@ -90,7 +90,7 @@ test('analyst reporting stays in the news list but never enters the top strip', 
 });
 
 test('public news API carries accepted analyst reporting without reclassifying it as official', async () => {
-  let source = (await readFile(new URL('../app/api/research/news/route.ts', import.meta.url), 'utf8')).replace('import { audienceNews } from "@/lib/research/news-audience-server";', 'const audienceNews = async feed => feed;');
+  let source = await readFile(new URL('../app/api/research/news/route.ts', import.meta.url), 'utf8');
   for (const name of ['public-news-response', 'general-news', 'official-result-events', 'result-news', 'mu-latest']) {
     source = source.replace(new RegExp(`["']@/lib/research/${name}["']`, 'g'),
       JSON.stringify(new URL(`../lib/research/${name}.ts`, import.meta.url).href));
