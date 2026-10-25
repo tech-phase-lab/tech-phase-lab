@@ -17,7 +17,7 @@ export function checkoutService({ store, paypal, termsVersion, now = Date.now })
       const remote = await paypal.get(row.paypal_id);
       if (remote.id !== row.paypal_id || remote.custom_id !== row.id) throw Error('SUBSCRIPTION_MISMATCH');
       return { id: row.id, status: remote.status,
-        approvalUrl: remote.status === 'APPROVAL_PENDING' ? approvalUrl(remote) : null };
+        approvalUrl: remote.status === 'APPROVAL_PENDING' ? approvalUrl(remote,paypal.environment ?? 'sandbox') : null };
     },
     async cancel(userId, id) {
       const row = await store.get(userId,id);

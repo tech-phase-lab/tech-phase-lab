@@ -103,6 +103,9 @@ python3 scripts/tech-phase/external_research_backup.py --verify-archive /private
 ```
 
 認証タグ・平文SHA・SQLite整合性を検証する。復元DBは検査後削除し、本番へ適用しない。
+検査を通過したDBをオフライン復旧用に残す場合は、明示的な `--restore-output` を使う。
+[新規ファイルへの安全な取り出し手順](../services/tech-phase-research-backup/README.md)を参照。
+既存DB・sidecarの上書きや本番サービスの起動は行わない。
 これはデータ復元検査であり、全サイト起動・API認証・会員データ読取の受入は別。
 復旧採用時にはmanifest時刻と選んだ復元時点を確認し、古いデータを最新と表示しない。
 

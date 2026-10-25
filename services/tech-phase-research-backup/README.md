@@ -31,6 +31,52 @@ UID10001の非管理者で動作し、保存機能は初期状態で無効。
 
 ## 本番で未完了の条件
 
+### 検証済みDBを復旧作業へ渡す
+
+既存の `--verify-archive` / `--manifest` だけなら検査後にDBを削除する。
+復旧担当がオフラインで使うDBを残す場合だけ `--restore-output` を追加する。
+信頼する保管記録と照合した暗号文・manifestを使い、復元時点も確認する。
+暗号鍵は既存の安全な参照を利用する。元DBの接続情報やR2資格情報は不要。
+
+```sh
+python scripts/tech-phase/external_research_backup.py \
+  --verify-archive /private/backup.aesgcm \
+  --manifest /private/backup.aesgcm.json \
+  --restore-output /private/recovery/research.sqlite
+```
+
+`/private/recovery` は事前に用意した、実行ユーザー所有で他ユーザーに権限のないディレクトリ。
+出力は絶対パスで指定し、途中のディレクトリにシンボリックリンクを使わない。
+出力DB、同名の `-wal` / `-shm` / `-journal` がある場合は拒否する。既存DBを指定しない。
+認証付き復号・平文SHA・DB整合性の全検査に成功した後だけ、0600の完全なファイルを
+上書きしないhard linkで公開する。作業途中で同名ファイルができても上書きしない。
+成功イベントは `TECH_PHASE_RESEARCH_RESTORE_EXPORT_OK`、`promotion=false`。
+ハードリンクが使えないファイルシステムでは停止し、非原子的なコピーへ切り替えない。
+平文DBを明示的に残す操作なので、公開フォルダー・Git・外部バックアップへ入れない。
+本番DBの交換、サービス起動、ゲート有効化は行わない。書き込み停止と最新履歴の確認を含む
+本番への切替受入は別途必要で、合成DBの出力成功を本番復旧完了とは扱わない。
+
+失敗時は終了コード1と `TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED` を返す。
+追加の `stage` は失敗した工程を表す固定値。例外本文、接続先、DBパス、鍵はログへ出さない。
+
+| stage | 確認する工程 |
+| --- | --- |
+| `configuration` | 無効状態または設定の検査。初期無効での終了もここ。 |
+| `client` | 保存先SDKの読み込み・client生成。通信成功の証拠ではない。 |
+| `snapshot` | 元DBの読み取り、WALを含む取得、DB整合性検査。 |
+| `encrypt` | 暗号化、一時暗号文のサイズ・SHA計算。 |
+| `upload` / `download` | 暗号文の送信／取得とバイト照合。 |
+| `restore` | 取得暗号文の認証付き復号・隔離DB検査。 |
+| `manifest_upload` / `manifest_readback` | 完了記録の送信／取得と照合。 |
+| `archive_input` | 復元検査CLIのmanifest・鍵の読み取り。 |
+| `export_output` | 復元DBの出力先検査・完全なファイルの新規作成。 |
+| `internal` | 上記に分類できない失敗。成功や再試行可能と推測しない。 |
+
+工程の識別であり、たとえば `upload` だけで認証不良や障害と断定しない。
+保存先が受け付けた後に通信が切れる場合もあるため、失敗は「何も保存されなかった」を意味しない。
+自動再送・既存保存物の削除は追加しない。完了manifestがある場合でも失敗した実行を成功へ読み替えない。
+設定や鍵の再登録を機械的に求めず、該当工程の実結果を確認する。
+
 元DBを読める場所とパス、WAL/共有メモリの読み取り条件、既存鍵参照を確認してから利用する。
 同じ本番volumeを新サービスへ勝手に二重接続しない。現在のサービスや朝ジョブの変更は行っていない。
 このイメージを作っただけでは元DBへの接続経路はできず、Railway/Renderへの配置もしていない。

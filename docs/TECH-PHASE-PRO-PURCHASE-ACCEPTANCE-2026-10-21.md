@@ -1,5 +1,68 @@
 # PRO購入の受入状況 — 2026年10月21日（10月22日追記）
 
+## 2026-10-25 JST — 実装のGitHub検証完了と本番切替手順
+
+Live実装commit `baac718cb651638e3a5bbf074a8936dd2517f395` は指定previewブランチへ保存済み。
+[GitHub Actions 40105472690](https://github.com/tech-phase-lab/tech-phase-lab/actions/runs/40105472690) は全ジョブ成功。
+lint・Node・Python・Next buildと、別ジョブのSandbox PostgreSQL並行処理/保存復旧を確認。
+ローカルだけの成功ではなく、GitHub上でも実装の検証を完了した。
+
+[本番切替手順](TECH-PHASE-PRO-LIVE-RELEASE.md) に設定の配置先、005/006適用順、
+通知先、権限/販売の有効化順、実受入、受付停止をまとめた。コードの18変数名と移行ファイルを照合済み。
+今回の変更は文書だけ。既存決済処理の追加変更・実DB適用・実決済・本番受付開始は行っていない。
+次は同手順の実接続と実受入。Railway接続・再認証禁止を維持し、未確認項目を完了扱いしない。
+
+
+## 2026-10-24 JST — 作業環境復帰後の再構成とLive定期照合
+
+この節を再開時の基準とする。旧 `/tmp/tech-phase-pro-next` と未公開commit
+5d652718/d14ab68bは実行環境復帰後に取得できなかった。旧SHAを復元済みと扱わない。
+会話内の差分から本番決済経路を再構成し、GitHubで確認したe569b668の他担当変更を保持。
+保存直前に追加された5831c4fcのRESOLUTE変更も取り込み、Node/lint/buildを統合後に再実行。
+この追加変更にPythonソース/テストの変更はない。
+新しい作業場所は `/workspace/scratch/129dd130c1ab/tech-phase-pro`。
+旧環境の検証結果は今回のコードの証明に流用せず、今回の検証結果を別途記録する。
+
+実装状態:
+- Live専用PayPal設定/API/復帰先/署名証明書host。Sandbox設定へのfallbackなし。
+- Live専用DB/role/TLS検証、005_billing_live.sql、環境別store/runtime。
+- 認証済み会員のAPI/日英購入画面。価格と同意版はサーバーで検証。
+- PROは明示フラグ有効時だけLive台帳を直接参照。古いClerk metadataへのfallbackなし。
+  通信失敗はunavailable。管理者metadataの書込みなし。
+- 新規受付、会員権限、通知の有効化を分離。既存Sandbox経路を維持。
+- Sandboxの受付停止時の通知経路補正とROLLBACK失敗時の接続破棄も再構成。
+
+今回追加したL06（本番定期照合）:
+- 006_live_recovery.sqlで契約ごとの次回照合時刻・lease・失敗回数をDBに保存。
+  PayPal契約IDの登録と同一トランザクションのtriggerでqueueへ追加。既存契約も移行時に登録。
+- 1回10件、設定上限25件。1件ずつ取得し、完了ごとに記録して再開位置にする。
+  3分経過または中断時は新しい契約を開始しない。実行中のプロバイダー照合は既存timeout内で終了。
+- leaseは5分。中断後に再取得でき、古いlease tokenでは完了記録を上書きできない。
+- 失敗は1分から指数的に間隔を延ばし上限1時間。支払待ちは15分、検証済み/保留は6時間後。
+  各契約の間隔は500ms。毎回全会員を無制限に取得しない。
+- 既存reconciliationを利用。購入/解約/請求作成は行わず、確認できた支払期間だけ登録する。
+  返金/異議の保留を解除しない。ログは集計のみで会員ID・契約ID・認証情報を出さない。
+- 実行入口: billingサービスの同じimageで `node live-recovery-entry.mjs`。
+  TECH_PHASE_BILLING_LIVE_RECOVERY_ENABLED=trueを明示するまでDB/PayPalへアクセスしない。
+  RUNTIME=railway-live、PAYPAL_ENV=live、LIVE_BRANCHとRAILWAY_GIT_BRANCHの一致を要求。
+  上記RUNTIME/LIVE_BRANCH/RECOVERY_LIMITの接頭辞はTECH_PHASE_BILLING_。
+  実スケジュールは未設定・未稼働。再開後に処理件数/遅延を見て実行頻度を確定する。
+
+今回の検証記録:
+- 統合後のNode全体: `npm test`、1382件成功（256.846秒）、失敗/skipなし。
+- Python全体: `npm run test:python`、2639件成功（434.072秒）。
+  初回は進行が止まったため中断。診断用の詳細出力/スタック採取を付けて同じnpm runnerで
+  全件再実行し成功。テスト/製品ソースの変更なし。固定テスト時計も維持。
+- 統合後のlint: エラー0、既存警告5。Next本番build/typecheck成功。
+- compileall、diff check成功。実DB/実PayPalへの検証は含まない。
+
+実環境で残るもの:
+- Live専用DB/role作成、005/006適用、TLS/権限、専用PayPalプラン/通知先/キーの実確認。
+- 既存2会員のDB照合と定期回復ログ、更新決済/異議申立て、バックアップの最新実証拠。
+- Live購入→台帳→実会員権限と停止/期限切れの受入。コード検証だけで本番開放しない。
+Railway接続・再認証は禁止継続。今回実決済・設定変更・DB移行・本番開放なし。
+
+
 ## 2026-10-24 JST — 診断処理と統合テストの公開前検証完了
 
 この節は下記の「全体公開ゲート未実行」「次回反映候補」の記録を更新する。

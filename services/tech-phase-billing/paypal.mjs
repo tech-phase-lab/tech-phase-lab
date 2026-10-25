@@ -1,7 +1,29 @@
-// Tech Phase recurring billing. This adapter is deliberately Sandbox-only.
+// Tech Phase recurring billing. Explicit Sandbox and Live environments.
 // Explicit PRO configuration only. The owner approved sharing the Sandbox app
 // credentials; payment tables, plans, webhook and entitlement writers stay separate.
 const BASE = 'https://api-m.sandbox.paypal.com';
+const environments = Object.freeze({
+ sandbox: Object.freeze({base:BASE,approvalOrigin:'https://www.sandbox.paypal.com',certHosts:['api.sandbox.paypal.com','api-m.sandbox.paypal.com']}),
+ live: Object.freeze({base:'https://api-m.paypal.com',approvalOrigin:'https://www.paypal.com',certHosts:['api.paypal.com','api-m.paypal.com']})
+});
+function environment(name) {
+ if(name!=='sandbox'&&name!=='live')fail('BILLING_DISABLED');
+ return environments[name];
+}
+export function liveReturnUrl(value) {
+ let url;try{url=new URL(value);}catch{fail('BILLING_DISABLED');}
+ if(url.protocol!=='https:'||url.port||url.username||url.password||url.search||url.hash||url.pathname!=='/'||
+ !/^[a-z0-9-]+(?:\.[a-z0-9-]+)+$/.test(url.hostname)||/(?:^|\.)(?:localhost|test|invalid|example|vercel\.app)$/.test(url.hostname)||
+ /^[0-9.]+$/.test(url.hostname)||value!==url.origin)fail('BILLING_DISABLED');
+ return url.origin+'/research/account/billing';
+}
+export function liveConfig(env) {
+ if(env.TECH_PHASE_PAYPAL_ENV!=='live')fail('BILLING_DISABLED');
+ for(const key of ['CLIENT_ID','CLIENT_SECRET','WEBHOOK_ID'])if(typeof env[`TECH_PHASE_PAYPAL_LIVE_${key}`]!=='string'||!env[`TECH_PHASE_PAYPAL_LIVE_${key}`].trim())fail('BILLING_DISABLED');
+ const plans=Object.freeze({JPY:planId(env.TECH_PHASE_PAYPAL_LIVE_PLAN_JPY),USD:planId(env.TECH_PHASE_PAYPAL_LIVE_PLAN_USD)});
+ if(plans.JPY===plans.USD)fail('INVALID_PLAN');
+ return Object.freeze({environment:'live',base:environments.live.base,returnUrl:liveReturnUrl(env.TECH_PHASE_BILLING_LIVE_ORIGIN),clientId:env.TECH_PHASE_PAYPAL_LIVE_CLIENT_ID,secret:env.TECH_PHASE_PAYPAL_LIVE_CLIENT_SECRET,webhookId:env.TECH_PHASE_PAYPAL_LIVE_WEBHOOK_ID,plans});
+}
 export const RETURN_URL = 'https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research/account/billing';
 export const OFFERS = Object.freeze({
   JPY: Object.freeze({ currency: 'JPY', minor: 2980, value: '2980' }),
@@ -17,7 +39,7 @@ export function sandboxConfig(env) {
   for (const key of ['CLIENT_ID', 'CLIENT_SECRET', 'WEBHOOK_ID']) {
     if (!env[`TECH_PHASE_PAYPAL_${key}`]?.trim()) fail('BILLING_DISABLED');
   }
-  return Object.freeze({ base: BASE, clientId: env.TECH_PHASE_PAYPAL_CLIENT_ID,
+  return Object.freeze({ environment: 'sandbox', returnUrl: RETURN_URL, base: BASE, clientId: env.TECH_PHASE_PAYPAL_CLIENT_ID,
     secret: env.TECH_PHASE_PAYPAL_CLIENT_SECRET, webhookId: env.TECH_PHASE_PAYPAL_WEBHOOK_ID,
     plans: Object.freeze({ JPY: planId(env.TECH_PHASE_PAYPAL_PLAN_JPY), USD: planId(env.TECH_PHASE_PAYPAL_PLAN_USD) }) });
 }
@@ -43,12 +65,13 @@ export function assertPlan(plan, id, currency) {
       plan.payment_preferences?.auto_bill_outstanding !== false) fail('PLAN_MISMATCH');
   return q;
 }
-export function approvalUrl(remote) {
+export function approvalUrl(remote, mode = 'sandbox') {
+  const profile=environment(mode);
   subscriptionId(remote?.id);
   const links = remote.links?.filter(link => link.rel === 'approve');
   if (!links || links.length !== 1) fail();
   let url; try { url = new URL(links[0].href); } catch { fail(); }
-  if (url.origin !== 'https://www.sandbox.paypal.com' || url.pathname !== '/webapps/billing/subscriptions' ||
+  if (url.origin !== profile.approvalOrigin || url.pathname !== '/webapps/billing/subscriptions' ||
       url.username || url.password || url.hash || !matches(url.searchParams.get('ba_token'), /^BA-[A-Z0-9]{8,64}$/) ||
       [...url.searchParams].length !== 1) fail();
   return url.href;
@@ -71,14 +94,17 @@ async function json(response) {
   finally { reader.releaseLock(); }
 }
 export function createPaypal(config, fetcher = fetch) {
-  if (config.base !== BASE || !config.clientId || !config.secret || !config.webhookId) fail('BILLING_DISABLED');
+  const mode=config.environment ?? 'sandbox', profile=environment(mode);
+  const returnUrl=mode==='live'?liveReturnUrl(new URL(config.returnUrl).origin):RETURN_URL;
+  if(config.base!==profile.base||config.returnUrl!==returnUrl||!config.clientId||!config.secret||!config.webhookId)fail('BILLING_DISABLED');
+  const base=profile.base,clientId=config.clientId,secret=config.secret,webhookId=config.webhookId;
   const plans = { JPY: planId(config.plans?.JPY), USD: planId(config.plans?.USD) };
   let token, expires = 0, tokenRequest;
   async function authorize() {
     if (token && Date.now() < expires) return token;
     if (!tokenRequest) tokenRequest = (async () => {
-      const res = await fetcher(BASE + '/v1/oauth2/token', { method: 'POST', redirect: 'error', cache: 'no-store',
-        signal: AbortSignal.timeout(8000), headers: { Authorization: 'Basic ' + Buffer.from(`${config.clientId}:${config.secret}`).toString('base64'),
+      const res = await fetcher(base + '/v1/oauth2/token', { method: 'POST', redirect: 'error', cache: 'no-store',
+        signal: AbortSignal.timeout(8000), headers: { Authorization: 'Basic ' + Buffer.from(`${clientId}:${secret}`).toString('base64'),
           'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=client_credentials' });
       if (!res.ok) { await res.body?.cancel(); fail(); }
       const data = await json(res);
@@ -91,7 +117,7 @@ export function createPaypal(config, fetcher = fetch) {
   async function call(path, method = 'GET', body, key) {
     try {
       const credential = await authorize();
-      const res = await fetcher(BASE + path, { method, redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(10000),
+      const res = await fetcher(base + path, { method, redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(10000),
         headers: { Authorization: `Bearer ${credential}`, 'Content-Type': 'application/json', Prefer: 'return=representation',
           ...(key ? { 'PayPal-Request-Id': requestId(key) } : {}) },
         ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
@@ -101,15 +127,16 @@ export function createPaypal(config, fetcher = fetch) {
     } catch { fail(); } // Never expose provider error bodies, credentials or buyer details.
   }
   return {
+    environment:mode,
     async create({ id, currency }) {
       requestId(id); const q = offer(currency);
       assertPlan(await call(`/v1/billing/plans/${plans[currency]}`), plans[currency], currency);
       const result = await call('/v1/billing/subscriptions', 'POST', { plan_id: plans[currency], custom_id: id,
         plan: { billing_cycles: [{ sequence: 1, pricing_scheme: { fixed_price: { currency_code: q.currency, value: q.value } } }] },
         application_context: { brand_name: 'Tech Phase', shipping_preference: 'NO_SHIPPING', user_action: 'SUBSCRIBE_NOW',
-          return_url: `${RETURN_URL}?billing=${id}`, cancel_url: `${RETURN_URL}?billing=${id}&cancel=1` } }, id);
+          return_url: `${returnUrl}?billing=${id}`, cancel_url: `${returnUrl}?billing=${id}&cancel=1` } }, id);
       if (!result || result.plan_id !== plans[currency] || result.custom_id !== id) fail();
-      return { id: subscriptionId(result.id), approvalUrl: approvalUrl(result) };
+      return { id: subscriptionId(result.id), approvalUrl: approvalUrl(result,mode) };
     },
     get: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}`),
     cancel: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}/cancel`, 'POST', { reason: 'Cancelled by the subscriber' }),
@@ -121,13 +148,13 @@ export function createPaypal(config, fetcher = fetch) {
       return call(`/v1/billing/subscriptions/${id}/transactions?${params}`);
     },
     async verify(headers, event) {
-      const data = { webhook_id: config.webhookId, webhook_event: event };
+      const data = { webhook_id: webhookId, webhook_event: event };
       for (const [key, header] of Object.entries({ transmission_id: 'paypal-transmission-id', transmission_time: 'paypal-transmission-time',
         cert_url: 'paypal-cert-url', auth_algo: 'paypal-auth-algo', transmission_sig: 'paypal-transmission-sig' })) {
         data[key] = headers.get(header); if (!data[key] || data[key].length > 4096) return false;
       }
       let cert; try { cert = new URL(data.cert_url); } catch { return false; }
-      if (cert.protocol !== 'https:' || !['api.sandbox.paypal.com', 'api-m.sandbox.paypal.com'].includes(cert.hostname) ||
+      if (cert.protocol !== 'https:' || !profile.certHosts.includes(cert.hostname) ||
           cert.port || cert.username || cert.password || cert.search || cert.hash || !/^\/v1\/notifications\/certs\/[A-Za-z0-9-]+$/.test(cert.pathname)) return false;
       return (await call('/v1/notifications/verify-webhook-signature', 'POST', data))?.verification_status === 'SUCCESS';
     },

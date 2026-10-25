@@ -1,7 +1,7 @@
 import { NotificationInputError } from '../../lib/resolute/notification-settings.ts';
 import { NotificationHttpError, readNotificationMutation } from '../../lib/resolute/notification-http.ts';
 import { NotificationAccessDenied, NotificationConflict } from '../../lib/resolute/notification-database.ts';
-import { authenticate } from './auth.mjs';
+import { authenticate, serviceTokenMatches } from './auth.mjs';
 import { readPlanMutation, PlanBodyError } from '../../lib/resolute/plan-http.ts';
 import { PlanInputError } from '../../lib/resolute/plan-data.ts';
 import { PlanAccessDenied, PlanConflict } from '../../lib/resolute/plan-database.ts';
@@ -9,10 +9,20 @@ import { PlanAccessDenied, PlanConflict } from '../../lib/resolute/plan-database
 const headers={'Cache-Control':'private, no-store','Content-Type':'application/json',
   'X-Content-Type-Options':'nosniff'};
 const json=(value,status=200,extra={})=>Response.json(value,{status,headers:{...headers,...extra}});
-export function createHandler(config, read, verify=authenticate, plans, notifications, risk, rizel, aiCheck) {
+export function createHandler(config, read, verify=authenticate, plans, notifications, risk, rizel, aiCheck, mailStop) {
   const windows=new Map(); let active=0;
   return async request => {
     const url=new URL(request.url);
+    // This capability only turns mail OFF. Its encrypted bearer token replaces
+    // the browser session, but the frontend service credential is still required.
+    if(url.pathname==='/internal/v1/notification-stop') {
+      if(request.method!=='POST'||url.search)return json({error:'METHOD_NOT_ALLOWED'},405,{Allow:'POST'});
+      if(!serviceTokenMatches(request.headers.get('x-resolute-service-token'),config.serviceToken))return json({error:'AUTH_REQUIRED'},401);
+      if(!mailStop)return json({error:'STOP_UNAVAILABLE'},503);
+      if(active>=8)return json({error:'RATE_LIMITED'},429,{'Retry-After':'60'});
+      active++;
+      try{return await mailStop(request);}catch{return json({error:'STOP_UNAVAILABLE'},503);}finally{active--;}
+    }
     const isAiCheck=url.pathname==='/internal/v1/ai-check';
     const isRizel=url.pathname==='/internal/v1/rizel/owner';
     const isRisk=['/internal/v1/risk','/internal/v1/risk/owner'].includes(url.pathname);

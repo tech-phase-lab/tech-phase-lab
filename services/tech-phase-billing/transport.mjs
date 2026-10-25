@@ -12,7 +12,7 @@ export function transportConfig(env) {
   if(url.protocol!=='https:'||!url.hostname.endsWith('.up.railway.app')||url.port||url.username||url.password||url.search||url.hash||url.pathname!=='/') throw Error('INVALID_TRANSPORT');
   return {url:url.origin,token};
 }
-async function bounded(body,limit,code='BODY_LIMIT') {
+export async function bounded(body,limit,code='BODY_LIMIT') {
   if(!body)return undefined;
   const reader=body.getReader(),chunks=[];let length=0;
   try {for(;;){const {done,value}=await reader.read();if(done)break;length+=value.byteLength;if(length>limit)throw Error(code);chunks.push(value);}return Buffer.concat(chunks);}
@@ -21,7 +21,8 @@ async function bounded(body,limit,code='BODY_LIMIT') {
 }
 export function billingGateway({env,identity,ownerId,fetcher=fetch}) {
   return async(request,action)=>{
-    if(env.VERCEL_ENV!=='preview'||(action!=='readiness'&&!sandboxEnabled(env)))return reply({error:'billing-disabled'},503);
+    const notificationsEnabled=action==='webhook'&&env.TECH_PHASE_PAYPAL_ENV==='sandbox'&&env.TECH_PHASE_BILLING_SANDBOX_WEBHOOK_ENABLED==='true';
+    if(env.VERCEL_ENV!=='preview'||(action!=='readiness'&&!sandboxEnabled(env)&&!notificationsEnabled))return reply({error:'billing-disabled'},503);
     if(!actions.has(action))return reply({error:'not-found'},404);
     if(request.method!==(['status','readiness'].includes(action)?'GET':'POST'))return reply({error:'method'},405);
     try {

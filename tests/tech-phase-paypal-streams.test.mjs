@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPaypal } from '../services/tech-phase-billing/paypal.mjs';
-const config={base:'https://api-m.sandbox.paypal.com',clientId:'fixture',secret:'fixture',webhookId:'fixture',plans:{JPY:'P-'+'J'.repeat(24),USD:'P-'+'U'.repeat(24)}};
+import { createPaypal, RETURN_URL } from '../services/tech-phase-billing/paypal.mjs';
+const config={environment:'sandbox',returnUrl:RETURN_URL,base:'https://api-m.sandbox.paypal.com',clientId:'fixture',secret:'fixture',webhookId:'fixture',plans:{JPY:'P-'+'J'.repeat(24),USD:'P-'+'U'.repeat(24)}};
 test('PayPal reads release locks on success, invalid JSON and oversize responses',async()=>{
  for(const payload of ['{}','invalid','x'.repeat(262145)]) {
   let cancelled=0;

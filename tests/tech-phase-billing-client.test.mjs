@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import ts from 'typescript';
+import {liveEnabled} from '../services/tech-phase-billing/live-http.mjs';
 import {sandboxMemberAllowed} from '../services/tech-phase-billing/access.mjs';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
@@ -16,7 +17,7 @@ test('checkout clears an earlier identity-loading error only after a successful 
  let stateIndex=0,refIndex=0,effect,identityLoaded=false,statusFails=false;
  const summary={environment:'sandbox',plan:'free',proExpiresAt:null,subscription:null};
  new Function('require','module','exports',compiled)(name=>{
-  if(name==='react')return {...require(name),useState:initial=>{
+  if(name==='react')return {...require(name),useCallback:fn=>fn,useState:initial=>{
    const index=stateIndex++;if(!(index in state))state[index]=initial;
    return [state[index],value=>{state[index]=value;}];
   },useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
@@ -49,7 +50,7 @@ test('checkout waits for server status and displays persisted review state in bo
   if(name==='../../use-research-language')return {useResearchLanguage:()=>[language,()=>{}]};
   if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
   if(name==='@/lib/membership/billing-client')return {billingRequest:()=>assert.fail('render must not fetch')};
-  if(name==='react')return {...require(name),useState:initial=>{
+  if(name==='react')return {...require(name),useCallback:fn=>fn,useState:initial=>{
    const index=stateIndex++;return require(name).useState(seed&&Object.hasOwn(seed,index)?seed[index]:initial);
   }};
   return require(name);
@@ -198,6 +199,7 @@ test('billing page gates preview and enrolled Sandbox identity before rendering 
   if(name==='next/navigation')return {notFound:()=>{throw Error('404');},redirect:path=>{throw Error('REDIRECT:'+path);}};
   if(name==='@/lib/membership/entitlements')return {OWNER_ACCOUNT_ID:'owner'};
   if(name==='@/services/tech-phase-billing/access.mjs')return {sandboxMemberAllowed};
+  if(name==='@/services/tech-phase-billing/live-http.mjs')return {liveEnabled};
   if(name==='./screen')return {default:function Screen(){}};
   return require(name);
  },m,m.exports);
@@ -269,7 +271,7 @@ test('purchase screen automatically verifies a matching return only once across 
  const m={exports:{}},state=[],refs=[],calls=[];let stateIndex=0,refIndex=0,effect,failFinalStatus=false;
  const request=async action=>{calls.push(action);if(failFinalStatus&&action==='status'&&calls.filter(x=>x==='status').length===2)throw Error('billing-unavailable');return action==='readiness'?{environment:'sandbox',enabled:true,configurationReady:true}:action==='reconcile'?{status:'payment-pending'}:pendingReturnSummary;};
  new Function('require','module','exports',compiled)(name=>{
-  if(name==='react')return {...require(name),useState:initial=>{const i=stateIndex++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
+  if(name==='react')return {...require(name),useCallback:fn=>fn,useState:initial=>{const i=stateIndex++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
   if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
   if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
   if(name==='@/lib/membership/billing-client')return {billingReturn,billingSummary,billingRequest:request,verifyBillingReturn:(returned,current,signal)=>verifyBillingReturn(returned,current,signal,request)};
@@ -293,7 +295,7 @@ test('subscription refresh removes stale payment notices and preserves durable r
  const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
  const m={exports:{}},state=[],refs=[],calls=[];let index=0,refIndex=0,next,fail=false;
  new Function('require','module','exports',compiled)(name=>{
-  if(name==='react')return {...require(name),useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:()=>{}};
+  if(name==='react')return {...require(name),useCallback:fn=>fn,useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:()=>{}};
   if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
   if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
   if(name==='@/lib/membership/billing-client')return {billingSummary,billingRequest:async action=>{
@@ -349,7 +351,7 @@ test('leaving checkout during identity refresh or an in-flight action prevents n
     return name==='create'?{id,approvalUrl:'https://www.sandbox.paypal.com/webapps/billing/subscriptions?ba_token=BA-ABCDEFGHIJKL'}:{status:name==='cancel'?'cancelled':'verified'};
    };
    new Function('require','module','exports',compiled)(name=>{
-    if(name==='react')return {...require(name),useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
+    if(name==='react')return {...require(name),useCallback:fn=>fn,useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>refs[refIndex++]??(refs[refIndex-1]={current:initial}),useEffect:callback=>{effect=callback;}};
     if(name==='../../identity-provider')return {useIdentityRefresh:()=>async forced=>{if(forced){identityCalls++;if(stage==='identity')await gate;}}};
     if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
     if(name==='@/lib/membership/billing-client')return {billingReturn,billingSummary,sandboxApproval,billingRequest:request};
@@ -399,7 +401,7 @@ test('manual response loss recovers only matching durable access or cancellation
  for(const [action,next,failure,notice] of cases){
   const m={exports:{}},calls=[],state=[true,active,'JPY',true,id,false,'',''];let index=0;
   new Function('require','module','exports',compiled)(name=>{
-   if(name==='react')return {...require(name),useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>({current:initial}),useEffect:()=>{}};
+   if(name==='react')return {...require(name),useCallback:fn=>fn,useState:initial=>{const i=index++;if(!(i in state))state[i]=initial;return [state[i],v=>{state[i]=v;}];},useRef:initial=>({current:initial}),useEffect:()=>{}};
    if(name==='../../identity-provider')return {useIdentityRefresh:()=>async()=>{}};
    if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
    if(name==='@/lib/membership/billing-client')return {billingSummary,billingRequest:async name=>{calls.push(name);if(name===action)throw failure;if(name==='status')return next;assert.fail('unexpected request');}};

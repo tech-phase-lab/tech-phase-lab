@@ -1,12 +1,12 @@
 // Browser-facing protocol only; no provider credentials or membership writes.
 export type BillingSubscription = { id: string; currency: "JPY" | "USD"; state: string };
-export type BillingSummary = { environment: "sandbox"; plan: "free" | "pro"; proExpiresAt: string | null; subscription: BillingSubscription | null; reviewRequired?: boolean };
+export type BillingSummary = { environment: "sandbox" | "live"; plan: "free" | "pro"; proExpiresAt: string | null; subscription: BillingSubscription | null; reviewRequired?: boolean };
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-export function sandboxApproval(value: unknown): string {
+export function sandboxApproval(value: unknown, mode: "sandbox" | "live" = "sandbox"): string {
   if (typeof value !== "string") throw Error("billing-unavailable");
   let url: URL;
   try { url = new URL(value); } catch { throw Error("billing-unavailable"); }
-  if (url.origin !== "https://www.sandbox.paypal.com" || url.pathname !== "/webapps/billing/subscriptions" ||
+  if (url.origin !== (mode === "live" ? "https://www.paypal.com" : "https://www.sandbox.paypal.com") || url.pathname !== "/webapps/billing/subscriptions" ||
     url.username || url.password || url.hash || [...url.searchParams].length !== 1 ||
     !/^BA-[A-Z0-9]{8,64}$/.test(url.searchParams.get("ba_token") ?? "")) throw Error("billing-unavailable");
   return url.href;
@@ -15,9 +15,9 @@ export function billingReturn(search: string) {
   const params = new URLSearchParams(search), ids = params.getAll("billing");
   return { id: ids.length === 1 && uuid.test(ids[0]) ? ids[0] : null, cancelled: params.get("cancel") === "1" };
 }
-export function billingSummary(value: unknown): BillingSummary {
+export function billingSummary(value: unknown, mode: "sandbox" | "live" = "sandbox"): BillingSummary {
   const v = value as BillingSummary;
-  if (!v || v.environment !== "sandbox" || !["free", "pro"].includes(v.plan) ||
+  if (!v || v.environment !== mode || !["free", "pro"].includes(v.plan) ||
     (v.reviewRequired !== undefined && typeof v.reviewRequired !== "boolean") ||
     (v.reviewRequired === true && !v.subscription) ||
     (v.plan === "pro" ? v.proExpiresAt === null : v.proExpiresAt !== null) ||
@@ -30,7 +30,7 @@ export function billingSummary(value: unknown): BillingSummary {
 // persisted contract. It never creates a purchase or grants access itself.
 export async function verifyBillingReturn(
   returned: ReturnType<typeof billingReturn>, current: BillingSummary,
-  signal: AbortSignal, request = billingRequest,
+  signal: AbortSignal, request = (action: string, body?: Record<string, unknown>, signal?: AbortSignal) => billingRequest(action, body, signal, current.environment),
 ) {
   const sub = current.subscription;
   if (signal.aborted || returned.cancelled || !returned.id || returned.id !== sub?.id ||
@@ -47,14 +47,14 @@ export async function verifyBillingReturn(
     review = error instanceof Error && error.message === "settlement-review-required";
   }
   if (signal.aborted) return null;
-  const next = billingSummary(await request("status", undefined, signal));
+  const next = billingSummary(await request("status", undefined, signal), current.environment);
   if (signal.aborted) return null;
   if (next.subscription?.id !== sub.id) throw Error("billing-unavailable");
   return { summary: next, notice: next.reviewRequired || review ? "review" : next.plan === "pro" ? "verified" : "pending" };
 }
-export async function billingRequest(action: string, body?: Record<string, unknown>, signal?: AbortSignal) {
+export async function billingRequest(action: string, body?: Record<string, unknown>, signal?: AbortSignal, mode: "sandbox" | "live" = "sandbox") {
   if (!["readiness", "status", "create", "reconcile", "cancel"].includes(action)) throw Error("input");
-  const response = await fetch(`/api/research/billing/sandbox/${action}`, {
+  const response = await fetch(`/api/research/billing/${mode}/${action}`, {
     method: body ? "POST" : "GET", credentials: "same-origin", cache: "no-store", redirect: "error",
     headers: body ? { "Content-Type": "application/json" } : undefined,
     body: body ? JSON.stringify(body) : undefined,
@@ -93,14 +93,14 @@ export async function billingRequest(action: string, body?: Record<string, unkno
   if (action === "create") {
     if (typeof result.id !== "string" || !uuid.test(result.id)) throw Error("billing-unavailable");
     if (result.approvalUrl !== null && result.approvalUrl !== undefined) {
-      sandboxApproval(result.approvalUrl);
+      sandboxApproval(result.approvalUrl, mode);
     } else if (!["APPROVED", "ACTIVE", "SUSPENDED", "CANCELLED", "EXPIRED"].includes(result.status)) {
       throw Error("billing-unavailable");
     }
   }
   if (action === "reconcile") {
     if (!["verified", "payment-pending", "review-required"].includes(result.status)) throw Error("billing-unavailable");
-    billingSummary({ ...result, subscription: null });
+    billingSummary({ ...result, subscription: null }, mode);
   }
   return result;
 }

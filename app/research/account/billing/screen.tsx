@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
@@ -17,7 +17,7 @@ const messages: Record<string, [string, string]> = {
   "settlement-review-required": ["支払いを確認できませんでした。運営側での確認が必要です。", "The payment needs manual review."],
   "subscription-not-cancellable": ["この状態では解約できません。契約状況を再確認してください。", "This subscription cannot be cancelled in its current state. Refresh its status."],
 };
-export default function BillingScreen() {
+export default function BillingScreen({mode="sandbox"}: {mode?: "sandbox" | "live"} = {}) {
   const [lang, setLang] = useResearchLanguage(), ja = lang === "ja";
   const refreshIdentity = useIdentityRefresh();
   const [ready, setReady] = useState(false);
@@ -28,23 +28,25 @@ export default function BillingScreen() {
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [salesReady,setSalesReady]=useState(mode === "sandbox");
   const locked = useRef(false);
   const lifetime = useRef<AbortController | null>(null);
   const automaticCheck = useRef<string | null>(null);
   const t = (jp: string, en: string) => ja ? jp : en;
-  async function load(signal?: AbortSignal) {
-    const configuration = await billingRequest("readiness", undefined, signal);
+  const load=useCallback(async (signal?: AbortSignal) => {
+    const configuration = await billingRequest("readiness", undefined, signal, mode);
     if (signal?.aborted) return;
-    const enabled = configuration.environment === "sandbox" && configuration.enabled === true && configuration.configurationReady === true;
+    const enabled = configuration.environment === mode && configuration.enabled === true && configuration.configurationReady === true;
     setReady(enabled);
+    setSalesReady(enabled && (mode === "sandbox" || configuration.salesEnabled === true));
     if (!enabled) { setSummary(null); setError("billing-disabled"); return; }
-    const next = billingSummary(await billingRequest("status", undefined, signal));
+    const next = billingSummary(await billingRequest("status", undefined, signal, mode), mode);
     if (signal?.aborted) return;
     setSummary(next);
     setError("");
     if (next.subscription) setCurrency(next.subscription.currency);
     return next;
-  }
+  }, [mode]);
   useEffect(() => {
     const controller = new AbortController(); lifetime.current = controller;
     const returned = billingReturn(window.location.search);
@@ -69,7 +71,7 @@ export default function BillingScreen() {
       .catch(e => { if (!controller.signal.aborted) { setNotice(""); setReady(false); setSummary(null); setError(e instanceof Error ? e.message : "billing-unavailable"); } })
       .finally(() => { if (!controller.signal.aborted) setBusy(false); });
     return () => controller.abort();
-  }, [refreshIdentity]);
+  }, [refreshIdentity, load]);
   async function act(action: "refresh" | "create" | "reconcile" | "cancel") {
     if (locked.current) return;
     locked.current = true; setBusy(true); setError("");
@@ -81,14 +83,14 @@ export default function BillingScreen() {
       await refreshIdentity(true);
       if (signal?.aborted) return;
       if (action === "create") {
-        if (!agreed || !ready) throw Error("billing-disabled");
-        const result = await billingRequest("create", { currency, acceptedTerms: "sandbox-v1" }, signal);
+        if (!agreed || !ready || !salesReady) throw Error("billing-disabled");
+        const result = await billingRequest("create", { currency, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1" }, signal, mode);
         if (signal?.aborted) return;
-        if (result.approvalUrl) { window.location.assign(sandboxApproval(result.approvalUrl)); return; }
+        if (result.approvalUrl) { window.location.assign(sandboxApproval(result.approvalUrl, mode)); return; }
         setNotice("check-payment");
       } else if (action === "reconcile" || action === "cancel") {
         if (!summary?.subscription || (action === "cancel" && confirmCancel !== summary.subscription.id)) return;
-        const result = await billingRequest(action, { id: summary.subscription.id }, signal);
+        const result = await billingRequest(action, { id: summary.subscription.id }, signal, mode);
         if (signal?.aborted) return;
         setNotice(action === "cancel" ? "cancelled" : result.status === "verified" ? "verified" : result.status === "review-required" ? "review" : "pending");
         setConfirmCancel(null);
@@ -101,7 +103,7 @@ export default function BillingScreen() {
         setNotice(""); setError(e instanceof Error ? e.message : "billing-unavailable"); setReady(false); setSummary(null);
         if (action === "reconcile" || action === "cancel") {
           try {
-            const current = billingSummary(await billingRequest("status", undefined, signal));
+            const current = billingSummary(await billingRequest("status", undefined, signal, mode), mode);
             if (!signal?.aborted) {
               setSummary(current);
               const interrupted = e instanceof Error &&
@@ -122,7 +124,7 @@ export default function BillingScreen() {
   const sub = summary?.subscription;
   const open = sub && !["cancelled", "expired"].includes(sub.state);
   const resumable = !open || ["creating", "approval_pending"].includes(sub.state);
-  const errorText = messages[error]?.[ja ? 0 : 1] ?? t("通信を確認できませんでした。新しい契約を作らず、再確認してください。", "Could not confirm the result. Refresh before starting another subscription.");
+  const errorText = mode === "live" && error === "billing-disabled" ? t("決済サービスは現在ご利用いただけません。", "Billing is currently unavailable.") : messages[error]?.[ja ? 0 : 1] ?? t("通信を確認できませんでした。新しい契約を作らず、再確認してください。", "Could not confirm the result. Refresh before starting another subscription.");
   const notices: Record<string, string> = {
     returned: t("PayPalから戻りました。下の「支払いを確認」で結果を確認してください。", "You returned from PayPal. Use Verify payment below to check the result."),
     "returned-cancelled": t("PayPalでの承認を中断しました。契約の解約完了を意味するものではありません。", "PayPal approval was interrupted. This does not confirm subscription cancellation."),
@@ -138,30 +140,31 @@ export default function BillingScreen() {
     creating: t("手続きを準備中", "Preparing checkout"), approval_pending: t("PayPalでの承認待ち", "Awaiting PayPal approval"),
     active: t("契約中", "Active subscription"), suspended: t("契約停止中", "Suspended"), cancelled: t("自動更新停止済み", "Renewal cancelled"), expired: t("契約終了", "Expired"),
   };
-  return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={t("PRO テスト購入", "PRO test checkout")} description="">
+  return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={mode === "live" ? t("PROのお申し込み・契約管理", "PRO subscription") : t("PRO テスト購入", "PRO test checkout")} description="">
     <section className={styles.card} aria-busy={busy}>
-      <h2>PayPal Sandbox</h2>
-      <p>{t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
+      <h2>{mode === "live" ? "Tech Phase PRO" : "PayPal Sandbox"}</h2>
+      <p>{mode === "live" ? t("月額2,980円または20米ドルで毎月自動更新されます。PayPalで承認する前に、通貨と金額をご確認ください。", "Renews monthly at JPY 2,980 or USD 20. Check the currency and amount before approving on PayPal.") : t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
       {notice && !(notice === "verified" && summary?.reviewRequired) && <p role="status">{notices[notice]}</p>}
       {error && <p role={error === "identity-loading" ? "status" : "alert"}>{errorText}</p>}
       {summary && <div>
         {summary.reviewRequired && <p role="status">{t("この契約のお支払いは運営側での確認が必要です。", "Payment for this subscription needs review.")}</p>}
         <p>{t("契約状況：", "Subscription: ")}{sub ? states[sub.state] : t("契約なし", "None")}</p>
-        <p>{t("テスト環境の利用状態：", "Sandbox access: ")}{summary.plan.toUpperCase()}</p>
+        <p>{mode === "live" ? t("ご利用プラン：", "Your plan: ") : t("テスト環境の利用状態：", "Sandbox access: ")}{summary.plan.toUpperCase()}</p>
         {summary.proExpiresAt && <p>{t("確認済みの利用期限：", "Verified access until: ")}<time dateTime={summary.proExpiresAt}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(summary.proExpiresAt))} JST</time></p>}
       </div>}
       <button type="button" disabled={busy} onClick={() => void act("refresh")}>{busy ? t("確認中…", "Checking…") : t("契約状況を再確認", "Refresh subscription")}</button>
-      {ready && summary && resumable && <fieldset disabled={busy}>
+      {ready && !salesReady && <p role="status">{t("新規お申し込みの受付は停止中です。契約の確認と自動更新の停止は引き続き行えます。", "New subscriptions are closed. You can still manage your subscription and stop renewal.")}</p>}
+      {ready && salesReady && summary && resumable && <fieldset disabled={busy}>
         <legend>{t("月額プラン", "Monthly plan")}</legend>
         <label>{t("通貨", "Currency")}<select value={currency} disabled={Boolean(open)} onChange={e => { setCurrency(e.target.value as "JPY" | "USD"); setAgreed(false); }}><option value="JPY">JPY 2,980 / {t("月", "month")}</option><option value="USD">USD 20 / {t("月", "month")}</option></select></label>
-        <label className={styles.check}><input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />{t("Sandbox内で毎月自動更新されるテスト契約に同意します。実際の請求はありません。", "I agree to a monthly recurring Sandbox test subscription. There is no real charge.")}</label>
-        <button type="button" disabled={!agreed || busy} onClick={() => void act("create")}>{open ? t("PayPalで手続きを再開", "Resume on PayPal") : t("PayPalでテスト購入", "Test checkout with PayPal")}</button>
+        <label className={styles.check}><input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />{mode === "live" ? t("選択した月額料金で毎月自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to monthly renewal at the selected price. I can stop automatic renewal on this page.") : t("Sandbox内で毎月自動更新されるテスト契約に同意します。実際の請求はありません。", "I agree to a monthly recurring Sandbox test subscription. There is no real charge.")}</label>
+        <button type="button" disabled={!agreed || busy} onClick={() => void act("create")}>{open ? t("PayPalで手続きを再開", "Resume on PayPal") : mode === "live" ? t("PayPalで申し込む", "Subscribe with PayPal") : t("PayPalでテスト購入", "Test checkout with PayPal")}</button>
       </fieldset>}
       {ready && sub && sub.state !== "creating" && <button type="button" disabled={busy} onClick={() => void act("reconcile")}>{t("支払いを確認", "Verify payment")}</button>}
       {ready && sub && ["active", "suspended"].includes(sub.state) && <fieldset disabled={busy}>
         <legend>{t("自動更新を停止", "Stop automatic renewal")}</legend>
         <label className={styles.check}><input type="checkbox" checked={confirmCancel === sub.id} onChange={e => setConfirmCancel(e.target.checked ? sub.id : null)} />{t("次回以降の自動更新を停止します。", "Stop future automatic renewals.")}</label>
-        <button type="button" disabled={confirmCancel !== sub.id || busy} onClick={() => void act("cancel")}>{t("テスト契約を解約", "Cancel test subscription")}</button>
+        <button type="button" disabled={confirmCancel !== sub.id || busy} onClick={() => void act("cancel")}>{mode === "live" ? t("自動更新を停止する", "Stop automatic renewal") : t("テスト契約を解約", "Cancel test subscription")}</button>
       </fieldset>}
       <Link href="/research/account">{t("マイアカウントへ戻る", "Back to my account")}</Link>
     </section>

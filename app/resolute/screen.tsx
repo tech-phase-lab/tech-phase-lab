@@ -2,6 +2,7 @@
 import { ReviewLink as Link, usePlanClient } from "./review-context";
 import { useEffect, useRef, useState } from "react";
 import ToolShell from "./tool-shell";
+import { useUnsavedChanges } from "./use-unsaved-changes";
 import NumberInput from "./number-input";
 import QuestionTitle from "./question-title";
 import styles from "./diagnosis.module.css";
@@ -49,10 +50,13 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(null),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[saved,setSaved]=useState(false);
  const [message,setMessage]=useState<keyof typeof messages.ja|null>(null),[formError,setFormError]=useState<"answer"|"text"|null>(null),[locked,setLocked]=useState(false);
  const pending=useRef<AbortController|null>(null),mutex=useRef(false), heading=useRef<HTMLHeadingElement>(null), c=messages[locale], en=locale==="en";
+ const [savedDraft,setSavedDraft]=useState(()=>JSON.stringify(emptyDiagnosisDraft()));
+ useUnsavedChanges(busy || JSON.stringify(draft)!==savedDraft);
  const denyRef=useRef(deny); useEffect(()=>{denyRef.current=deny;},[deny]);
  function accept(p:PlanSnapshot) {
   setSnapshot(p);setLocked(false);setSaved(false);
-  setDraft(p.plan ? draftFromPlan(p.plan) : emptyDiagnosisDraft());setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);
+  const nextDraft=p.plan ? draftFromPlan(p.plan) : emptyDiagnosisDraft();
+  setSavedDraft(JSON.stringify(nextDraft));setDraft(nextDraft);setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);
  }
  useEffect(()=>{
   const controller=new AbortController();pending.current=controller;
@@ -77,7 +81,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   mutex.current=true;setBusy(true);setMessage(null);
   const controller=new AbortController();pending.current=controller;
   try {const p=await requestPlan({plan,baseRevision:snapshot.revision},controller.signal);
-   if(!controller.signal.aborted){setSnapshot(p);setSaved(true);setMessage("saved");}
+   if(!controller.signal.aborted){setSnapshot(p);setSavedDraft(JSON.stringify(draft));setSaved(true);setMessage("saved");}
   }catch(e){if(controller.signal.aborted)return;
    setSaved(false);
    if(e instanceof PlanClientError && ["signed-out","denied"].includes(e.kind)){deny();return;}

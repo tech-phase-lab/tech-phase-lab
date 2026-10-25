@@ -31,6 +31,16 @@ class Store:
 
 
 class ExternalResearchTests(unittest.TestCase):
+    def recovery_pair(self, root):
+        source = root / 'live.sqlite'
+        self.source(source)
+        store = Store()
+        report = module.backup(source, store, 'external', b'x' * 32)
+        archive = root / 'backup.aesgcm'
+        archive.write_bytes(store.objects[report['key']])
+        manifest = json.loads(store.objects[report['key'] + '.json'])
+        return archive, manifest
+
     def source(self, path):
         db = sqlite3.connect(path)
         db.execute('PRAGMA journal_mode=WAL')
@@ -124,8 +134,9 @@ class ExternalResearchTests(unittest.TestCase):
             path = Path(directory) / 'live.sqlite'
             self.source(path)
             store = BadManifestStore()
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'manifest_readback')
             self.assertEqual(len(store.objects), 2)
 
     def test_corrupt_readback_never_publishes_manifest(self):
@@ -133,21 +144,24 @@ class ExternalResearchTests(unittest.TestCase):
             path = Path(directory) / 'live.sqlite'
             self.source(path)
             store = Store(corrupt=True)
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'download')
             self.assertEqual(len(store.objects), 1)
 
     def test_missing_or_incomplete_database_never_uploads(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'live.sqlite'
             store = Store()
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'snapshot')
             self.assertFalse(path.exists())
             with sqlite3.connect(path) as db:
                 db.execute('CREATE TABLE unrelated (id INTEGER)')
-            with self.assertRaises(ValueError):
+            with self.assertRaises(module.BackupStageError) as failure:
                 module.backup(path, store, 'external', b'x' * 32)
+            self.assertEqual(failure.exception.stage, 'snapshot')
             self.assertFalse(store.objects)
 
     def test_configuration_fails_closed(self):
@@ -201,10 +215,95 @@ class ExternalResearchTests(unittest.TestCase):
                 sdk = Mock()
                 with patch.dict(os.environ, env, clear=True), patch.object(sys, 'argv', ['backup']), \
                         patch.dict(sys.modules, {'boto3': sdk}), patch.object(module, 'backup') as backup:
-                    with self.assertRaisesRegex(ValueError, 'explicit existing R2 destination required'):
+                    with self.assertRaises(module.BackupStageError) as failure:
                         module.main()
+                    self.assertEqual(failure.exception.stage, 'configuration')
                     sdk.client.assert_not_called()
                     backup.assert_not_called()
+
+    def test_failed_stages_remove_temporaries_and_never_report_success(self):
+        stages = ('snapshot', 'encrypt', 'upload', 'download', 'restore',
+                  'manifest_upload', 'manifest_readback')
+        for failed_stage in stages:
+            with self.subTest(stage=failed_stage), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                source = root / 'live.sqlite'
+                self.source(source)
+                store = Store()
+                real_stage = module.stage
+
+                # Fail after the operation's side effect, including a server
+                # accepting an upload whose response was lost. Do not delete it
+                # or announce success; every private local temporary must go.
+                from contextlib import contextmanager
+                @contextmanager
+                def fail_after(name):
+                    with real_stage(name):
+                        yield
+                        if name == failed_stage:
+                            raise OSError('fixture credential MUST_NOT_APPEAR')
+
+                def action():
+                    print(json.dumps(module.backup(source, store, 'external', b'x' * 32)))
+
+                output = io.StringIO()
+                with patch.object(tempfile, 'tempdir', directory), \
+                        patch.object(module, 'stage', side_effect=fail_after), \
+                        patch.object(module, 'main', side_effect=action), \
+                        patch('sys.stdout', output):
+                    self.assertEqual(module.run(), 1)
+                self.assertEqual(json.loads(output.getvalue()), {
+                    'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': failed_stage})
+                self.assertFalse(list(root.glob('research-*')))
+                self.assertEqual(len(store.objects),
+                                 0 if failed_stage in ('snapshot', 'encrypt') else
+                                 2 if failed_stage in ('manifest_upload', 'manifest_readback') else 1)
+                self.assertTrue(source.exists())
+
+    def test_configuration_and_client_failures_are_safe_and_do_not_start_backup(self):
+        for env, expected in (({}, 'configuration'), (self.configuration(), 'client')):
+            with self.subTest(stage=expected):
+                sdk = Mock()
+                sdk.client.side_effect = RuntimeError('fixture credential MUST_NOT_APPEAR')
+                output = io.StringIO()
+                with patch.dict(os.environ, env, clear=True), patch.object(sys, 'argv', ['backup']), \
+                        patch.dict(sys.modules, {'boto3': sdk, 'botocore.config': Mock()}), \
+                        patch.object(module, 'backup') as backup, patch('sys.stdout', output):
+                    self.assertEqual(module.run(), 1)
+                self.assertEqual(json.loads(output.getvalue()), {
+                    'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': expected})
+                backup.assert_not_called()
+                if expected == 'configuration':
+                    sdk.client.assert_not_called()
+                else:
+                    sdk.client.assert_called_once()
+
+    def test_unknown_diagnostic_and_exception_text_are_never_printed(self):
+        for error in (ValueError('fixture secret'), module.BackupStageError('fixture secret'),
+                      module.BackupStageError(['fixture secret'])):
+            output = io.StringIO()
+            with patch.object(module, 'main', side_effect=error), patch('sys.stdout', output):
+                self.assertEqual(module.run(), 1)
+            self.assertEqual(json.loads(output.getvalue()), {
+                'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': 'internal'})
+
+    def test_verify_cli_distinguishes_input_and_restore_failure_without_client(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = root / 'manifest.json'
+            archive = root / 'missing.aesgcm'
+            for value, expected in (('{', 'archive_input'), ('{}', 'restore')):
+                manifest.write_text(value)
+                output = io.StringIO()
+                sdk = Mock()
+                with patch.dict(os.environ, {'TECH_PHASE_EXTERNAL_KEY_HEX': 'ab' * 32}, clear=True), \
+                        patch.object(sys, 'argv', ['backup', '--verify-archive', str(archive),
+                                                  '--manifest', str(manifest)]), \
+                        patch.dict(sys.modules, {'boto3': sdk}), patch('sys.stdout', output):
+                    self.assertEqual(module.run(), 1)
+                self.assertEqual(json.loads(output.getvalue()), {
+                    'event': 'TECH_PHASE_RESEARCH_EXTERNAL_BACKUP_FAILED', 'stage': expected})
+                sdk.client.assert_not_called()
 
     def test_tampering_even_with_updated_checksum_fails_authentication(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -220,3 +319,131 @@ class ExternalResearchTests(unittest.TestCase):
             manifest['sha256'] = hashlib.sha256(cipher).hexdigest()
             with self.assertRaises(Exception):
                 module.verify_restore(archive, manifest, b'x' * 32)
+
+    def test_export_cli_leaves_verified_wal_data_private_without_client_or_promotion(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            archive, manifest = self.recovery_pair(root)
+            metadata = root / 'manifest.json'
+            metadata.write_text(json.dumps(manifest))
+            output = root / 'recovered.sqlite'
+            sdk = Mock()
+            stdout = io.StringIO()
+            with patch.dict(os.environ, {'TECH_PHASE_EXTERNAL_KEY_HEX': '78' * 32}, clear=True), \
+                    patch.object(sys, 'argv', ['backup', '--verify-archive', str(archive),
+                                              '--manifest', str(metadata), '--restore-output', str(output)]), \
+                    patch.dict(sys.modules, {'boto3': sdk}), patch('sys.stdout', stdout):
+                self.assertEqual(module.run(), 0)
+            report = json.loads(stdout.getvalue())
+            self.assertEqual(report['event'], 'TECH_PHASE_RESEARCH_RESTORE_EXPORT_OK')
+            self.assertTrue(report['output_written'])
+            self.assertFalse(report['promotion'])
+            self.assertEqual(report['sha256'], manifest['plaintext_sha256'])
+            self.assertEqual(module.persistence.digest(output), manifest['plaintext_sha256'])
+            self.assertEqual(output.stat().st_mode & 0o777, 0o600)
+            self.assertEqual(output.stat().st_nlink, 1)
+            with sqlite3.connect(output.as_uri() + '?mode=ro&immutable=1', uri=True) as db:
+                self.assertEqual(db.execute('SELECT document FROM member_saved_research').fetchone(),
+                                 ('private notes',))
+            self.assertNotIn(str(output), stdout.getvalue())
+            self.assertFalse(list(root.glob('research-restore-*')))
+            sdk.client.assert_not_called()
+
+    def test_export_authentication_hash_and_database_failures_leave_no_output(self):
+        for failure in ('key', 'cipher', 'plaintext_hash', 'database'):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                archive, manifest = self.recovery_pair(root)
+                key = b'x' * 32
+                if failure == 'key':
+                    key = b'y' * 32
+                elif failure == 'cipher':
+                    data = bytearray(archive.read_bytes())
+                    data[20] ^= 1
+                    archive.write_bytes(data)
+                    manifest['sha256'] = module.persistence.digest(archive)
+                elif failure == 'plaintext_hash':
+                    manifest['plaintext_sha256'] = '0' * 64
+                else:
+                    invalid = root / 'invalid.sqlite'
+                    invalid.write_bytes(b'not a database')
+                    archive.unlink()
+                    module.encrypt(invalid, archive, key, manifest['key'])
+                    manifest.update(bytes=archive.stat().st_size, sha256=module.persistence.digest(archive),
+                                    plaintext_sha256=module.persistence.digest(invalid))
+                output = root / 'recovered.sqlite'
+                with self.assertRaises(Exception):
+                    module.verify_restore(archive, manifest, key, output=output)
+                self.assertFalse(output.exists())
+                self.assertFalse(list(root.glob('research-restore-*')))
+
+    def test_export_rejects_existing_outputs_sidecars_and_unsafe_parents(self):
+        for scenario in ('file', 'directory', 'symlink', '-wal', '-shm', '-journal',
+                         'parent_symlink', 'shared_parent', 'relative'):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                archive, manifest = self.recovery_pair(root)
+                output = root / 'recovered.sqlite'
+                if scenario == 'file':
+                    output.write_bytes(b'keep existing database')
+                elif scenario == 'directory':
+                    output.mkdir()
+                elif scenario == 'symlink':
+                    output.symlink_to(root / 'missing')
+                elif scenario.startswith('-'):
+                    Path(str(output) + scenario).write_bytes(b'keep sidecar')
+                elif scenario == 'parent_symlink':
+                    alias = root / 'alias'
+                    alias.symlink_to(root, target_is_directory=True)
+                    output = alias / 'recovered.sqlite'
+                elif scenario == 'shared_parent':
+                    root.chmod(0o755)
+                else:
+                    output = Path('relative-export.sqlite')
+                before = {p.name: p.lstat().st_ino for p in root.iterdir()}
+                with self.assertRaises(module.BackupStageError) as error:
+                    module.verify_restore(archive, manifest, b'x' * 32, output=output)
+                self.assertEqual(error.exception.stage, 'export_output')
+                self.assertEqual({p.name: p.lstat().st_ino for p in root.iterdir()}, before)
+                if scenario == 'file':
+                    self.assertEqual(output.read_bytes(), b'keep existing database')
+
+    def test_export_race_and_disk_failure_never_overwrite_or_publish_partial_db(self):
+        for failure in ('race', 'disk'):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                archive, manifest = self.recovery_pair(root)
+                output = root / 'recovered.sqlite'
+                real_link = os.link
+                def competing_output(source, destination):
+                    Path(destination).write_bytes(b'keep concurrent database')
+                    real_link(source, destination)
+                operation = patch.object(module.os, 'link', side_effect=competing_output) if failure == 'race' \
+                    else patch.object(module.os, 'fsync', side_effect=OSError('disk error'))
+                with operation, self.assertRaises(module.BackupStageError) as error:
+                    module.verify_restore(archive, manifest, b'x' * 32, output=output)
+                self.assertEqual(error.exception.stage, 'export_output')
+                if failure == 'race':
+                    self.assertEqual(output.read_bytes(), b'keep concurrent database')
+                else:
+                    self.assertFalse(output.exists())
+                self.assertFalse(list(root.glob('research-restore-*')))
+
+    def test_default_verification_does_not_export_database(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            archive, manifest = self.recovery_pair(root)
+            before = set(root.iterdir())
+            with patch.object(tempfile, 'tempdir', directory):
+                report = module.verify_restore(archive, manifest, b'x' * 32)
+            self.assertEqual(report['event'], 'TECH_PHASE_RESEARCH_ISOLATED_RESTORE_OK')
+            self.assertNotIn('output_written', report)
+            self.assertEqual(set(root.iterdir()), before)
+
+    def test_export_argument_alone_cannot_start_backup(self):
+        stdout = io.StringIO()
+        with patch.object(sys, 'argv', ['backup', '--restore-output', '/private/new.sqlite']), \
+                patch.object(module, 'backup') as backup, patch('sys.stdout', stdout):
+            self.assertEqual(module.run(), 1)
+        self.assertEqual(json.loads(stdout.getvalue())['stage'], 'archive_input')
+        backup.assert_not_called()

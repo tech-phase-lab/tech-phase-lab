@@ -3,7 +3,7 @@ import { sandboxReadiness } from './readiness.mjs';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const response = (body,status=200) => Response.json(body,{status,headers:{'Cache-Control':'private, no-store',Vary:'Cookie'}});
 export const sandboxEnabled = env => env.VERCEL_ENV === 'preview' && env.TECH_PHASE_BILLING_SANDBOX_ENABLED === 'true' && env.TECH_PHASE_PAYPAL_ENV === 'sandbox';
-async function readBody(request,limit) {
+export async function readBody(request,limit) {
   if (request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json') throw Error('INVALID_INPUT');
   const reader=request.body?.getReader();if(!reader) throw Error('INVALID_INPUT');
   const chunks=[];let size=0;

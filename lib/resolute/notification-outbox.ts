@@ -1,5 +1,6 @@
 import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
-import { createHash } from "node:crypto";
+import { reconcileAlertReservations } from "./notification-reservation.ts";
+import { notificationRuleKey } from "./notification-rule-key.ts";
 import type { Pool } from "pg";
 import { parsePlanSnapshot } from "./plan-data.ts";
 import { defaultNotificationSettings, parseNotificationSettings } from "./notification-settings.ts";
@@ -29,17 +30,27 @@ export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInp
    const p=(await client.query("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1",[userId])).rows[0];
    const plan=parsePlanSnapshot(p?{plan:p.plan?{...p.plan,createdAt:p.created_at.toISOString(),updatedAt:p.updated_at.toISOString()}:null,revision:Number(p.revision)}:{plan:null,revision:0}).plan;
    // A new reference price or set of thresholds is a new rule; a delivery-hour change is not.
-   const ruleKey=createHash("sha256").update(JSON.stringify({items:settings.watchItems,lines:plan?.buyLines.map(l=>l.dropPct)??[],surge:settings.surgeCapPct})).digest("hex");
+   const ruleKey=notificationRuleKey(settings,plan);
+   const pendingAlert=await reconcileAlertReservations(client,userId,{revision:Number(row?.revision??0),ruleKey,date:jstSlot(clock()).date});
    const previous=(await client.query("SELECT rule_key,notified FROM resolute.notification_state WHERE clerk_user_id=$1",[userId])).rows[0];
    const receipt=(await client.query("SELECT idempotency_key,accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind='alerts' AND accepted_at IS NOT NULL ORDER BY accepted_at DESC LIMIT 1",[userId])).rows[0];
    const inputs=await resolveInputs(userId,settings.watchItems.map(i=>i.symbol));
-   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,settings,plan,entitlements,state:previous?.rule_key===ruleKey?previous.notified:{},lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
+   const baseState=previous?.rule_key===ruleKey?previous.notified:{};
+   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,settings,plan,entitlements,state:baseState,lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
    const results:{kind:NotificationTask["kind"];status:"queued"|"duplicate"}[]=[];
    for(const task of tasks){
+    if(task.kind==="alerts"&&pendingAlert){results.push({kind:"alerts",status:"duplicate"});continue;}
     const content=task.kind==="alerts"?{digest:task.digest}:{locale:task.locale,sourceAlertId:task.sourceAlertId};
-    const payload={...content,settingsRevision:Number(row.revision),ruleKey};
+    const payload={...content,settingsRevision:Number(row.revision),ruleKey,
+     ...(task.kind==="alerts"?{reservation:{version:1,status:"queued",baseState,nextState:task.nextState}}:{})};
     const inserted=await client.query(`INSERT INTO resolute.notification_outbox(idempotency_key,clerk_user_id,kind,delivery_date_jst,payload)
-     VALUES($1,$2,$3,$4,$5) ON CONFLICT DO NOTHING RETURNING idempotency_key`,[task.key,userId,task.kind,task.deliveryDateJst,JSON.stringify(payload)]);
+     VALUES($1,$2,$3,$4,$5) ON CONFLICT(idempotency_key) DO UPDATE SET payload=EXCLUDED.payload
+     WHERE resolute.notification_outbox.accepted_at IS NULL
+      AND resolute.notification_outbox.clerk_user_id=EXCLUDED.clerk_user_id
+      AND resolute.notification_outbox.kind='alerts'
+      AND resolute.notification_outbox.payload->'reservation'->>'version'='1'
+      AND resolute.notification_outbox.payload->'reservation'->>'status'='cancelled'
+     RETURNING idempotency_key`,[task.key,userId,task.kind,task.deliveryDateJst,JSON.stringify(payload)]);
     if(inserted.rowCount===0){results.push({kind:task.kind,status:"duplicate"});continue;}
     if(task.kind==="alerts")await client.query(`INSERT INTO resolute.notification_state(clerk_user_id,rule_key,notified) VALUES($1,$2,$3)
      ON CONFLICT(clerk_user_id) DO UPDATE SET rule_key=$2,notified=$3`,[userId,ruleKey,JSON.stringify(task.nextState)]);
