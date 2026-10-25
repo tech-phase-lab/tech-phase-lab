@@ -17,7 +17,7 @@ import ThermometerScreen from "../thermometer/screen";
 import WallScreen from "../wall/screen";
 import TonightScreen from "../tonight/screen";
 import NewsScreen from "../news/screen";
-import styles from "../diagnosis.module.css";
+import ReviewAccessScreen from "./access-screen";
 export default function ReviewScreen({getSessionToken,draftSession}:{getSessionToken?:ReviewSessionToken;draftSession?:string}) {
  const [access, setAccess] = useState<{status:ReviewAccess|"loading"; authorized:boolean}>({status:"loading",authorized:false});
  const {status,authorized}=access;
@@ -39,12 +39,13 @@ export default function ReviewScreen({getSessionToken,draftSession}:{getSessionT
   return () => { controller.abort(); clearInterval(timer); window.removeEventListener("focus",focus); };
  },[attempt]);
  return <>{authorized ? <div hidden={status !== "allowed"}><Workspace draftSession={draftSession}/></div> : null}
- {status !== "allowed" ? <main className={styles.page}><div className={styles.wrap}><section className={styles.card}>
-  <h1>RESOLUTE</h1><p role="status">{status === "loading" ? "運営者のログインを確認しています…" : status === "denied" ?
-   "この入口はRIZELさんの運営者アカウント専用です。Tech Phaseと同じアカウントでログインしてください。" : authorized ? "接続を確認できませんでした。入力は保持しています。「再確認」を押してください。" : "接続を確認できませんでした。もう一度お試しください。"}</p>
-  <button className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>再確認</button>
-  <a href="/research/account">ログイン中のアカウントを確認する</a>
- </section></div></main> : null}</>;
+ {status === "loading" ? <ReviewAccessScreen loading/> : status !== "allowed" ?
+  <ReviewAccessScreen message={status === "denied" ?
+   "この入口はRIZELさんの運営者アカウント専用です。Tech Phaseと同じアカウントでログインしてください。" : authorized ? "接続を確認できませんでした。入力は保持しています。「再確認」を押してください。" : "接続を確認できませんでした。もう一度お試しください。"}>
+   <button type="button" onClick={()=>{setAccess(previous=>({...previous,status:"loading"}));setAttempt(n=>n+1);}}>再確認</button>
+   {status === "denied" ? <a href="/research/account">ログイン中のアカウントを確認する</a> : null}
+  </ReviewAccessScreen> : null}</>;
+
 }
 function Workspace({draftSession}:{draftSession?:string}) {
  const [resuming] = useState(()=>draftSession ? readDiagnosisSession(draftSession,"preview") : null);
