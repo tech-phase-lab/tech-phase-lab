@@ -1,4 +1,4 @@
-import type { Pool } from "pg";
+import type { Pool, PoolClient } from "pg";
 import type { Digest } from "./alert-judge.ts";
 import { dispatchNotification, type QueuedNotification } from "./notification-dispatch.ts";
 import { claimAlertReservation } from "./notification-reservation.ts";
@@ -18,7 +18,7 @@ export type AlertProvider={
  lookup:(key:string,signal:AbortSignal)=>Promise<AlertReceipt|null>;
 };
 type Dependencies={
- enabled?:boolean;provider:AlertProvider;now?:()=>Date;source?:EntitlementSource;
+ enabled?:boolean;provider:AlertProvider|((client:PoolClient,userId:string)=>AlertProvider);now?:()=>Date;source?:EntitlementSource;
  recipient:(userId:string)=>Promise<AlertRecipient>;
  links:(userId:string)=>Promise<{planUrl:string;unsubscribeUrl:string;tonightUrl?:string}>;
  publicOrigin:string;
@@ -57,9 +57,10 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
   if(!deps.enabled)return "disabled";
   if(mode!=="send"&&mode!=="reconcile")throw new Error("Invalid delivery mode");
   if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId)||key.length>200||!key.startsWith(userId+":"))throw new Error("Invalid delivery identity");
-  if(!/^[a-z0-9-]{1,40}$/.test(deps.provider.name))throw new Error("Invalid provider identity");
   const client=await pool.connect();let locked=false,discard=false;
   try{
+   const provider=typeof deps.provider==="function"?deps.provider(client,userId):deps.provider;
+   if(!/^[a-z0-9-]{1,40}$/.test(provider.name))throw new Error("Invalid provider identity");
    discard=true;
    await client.query("SELECT pg_advisory_lock(hashtextextended($1, 0))",[userId]);locked=true;discard=false;
    const row=(await client.query(`SELECT payload,accepted_at,delivery_date_jst::text AS date FROM resolute.notification_outbox
@@ -75,13 +76,13 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
      WHERE clerk_user_id=$1 AND idempotency_key=$2 AND accepted_at IS NULL
      AND payload->'reservation'->>'status'='attempting'
      AND payload->'reservation'->>'provider'=$5 RETURNING idempotency_key`,
-     [userId,key,receipt.acceptedAt,JSON.stringify({messageId:receipt.messageId,acceptedAt:receipt.acceptedAt}),deps.provider.name]);
+     [userId,key,receipt.acceptedAt,JSON.stringify({messageId:receipt.messageId,acceptedAt:receipt.acceptedAt}),provider.name]);
     if(result.rowCount!==1)throw new Error("Receipt acknowledgement failed");
    };
    if(reservation.status==="attempting"){
-    if(reservation.provider!==deps.provider.name||!reservation.attemptedAt)return "review-required";
+    if(reservation.provider!==provider.name||!reservation.attemptedAt)return "review-required";
     let receipt:AlertReceipt|null;
-    try{receipt=await deps.provider.lookup(key,AbortSignal.timeout(15000));}catch{return "uncertain";}
+    try{receipt=await provider.lookup(key,AbortSignal.timeout(15000));}catch{return "uncertain";}
     if(!validReceipt(receipt,key,reservation.attemptedAt,clock()))return "uncertain";
     await acknowledge(receipt);return "reconciled";
    }
@@ -107,13 +108,13 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
      const digest=row.payload.digest as Digest;
      if(!digest||digest.clerkUserId!==userId||digest.idempotencyKey!==key)throw new Error("Digest identity mismatch");
      message=renderAlertMail({locale:recipient.locale,date:digest.payload.date,items:digest.payload.items,...safeLinks(await deps.links(userId),deps.publicOrigin)});
-     const claimed=await claimAlertReservation(client,userId,task,deps.provider.name);
+     const claimed=await claimAlertReservation(client,userId,task,provider.name);
      if(claimed)attemptedAt=(await client.query("SELECT payload->'reservation'->>'attemptedAt' AS at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND idempotency_key=$2",[userId,key])).rows[0]?.at;
      return claimed;
     },
     send:async()=>{
      if(!recipient||!message)throw new Error("Mail preparation missing");
-     receipt=await deps.provider.send({key,to:recipient.email,mail:message},AbortSignal.timeout(15000));
+     receipt=await provider.send({key,to:recipient.email,mail:message},AbortSignal.timeout(15000));
      if(!validReceipt(receipt,key,attemptedAt,clock()))throw new Error("Unconfirmed acceptance");
      return "accepted";
     },

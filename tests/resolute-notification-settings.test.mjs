@@ -338,3 +338,31 @@ test('mail stop commits both opt-outs without purchase access, preserves rules a
   await assert.rejects(()=>stop('invalid'));assert.equal(calls,3);
  }finally{await db.close();}
 });
+
+test('Resend delivery resumes GET after persisted provider ID without a second POST and records delivery status',async()=>{
+ const {createResendAlertDelivery}=await import('../lib/resolute/notification-resend-delivery.ts');
+ const {createResendAlertProvider,resendOutboxEvidence}=await import('../lib/resolute/notification-resend.ts');
+ const {db,pool}=await database();let calls=0,failGet=true,body;
+ const key='user_buyer:2027-02-04:alerts',id='4ef9a417-02e9-4d39-ad75-9611e0fcc33c';
+ const transport=async(url,init)=>{if(init.method==='POST'){calls++;body=JSON.parse(init.body);return Response.json({id});}if(failGet)throw Error('temporary');return Response.json({object:'email',id,from:body.from,to:body.to,cc:[],bcc:[],tags:body.tags,created_at:now.toISOString(),last_event:'delivered',scheduled_at:null});};
+ const options={enabled:true,apiKey:'re_test_only_not_a_real_key',from:'alerts@mail.example.test',publicOrigin:'https://app.test',stopKey:Buffer.alloc(32,7),now:()=>now,request:transport,
+ clerk:{users:{getUser:async userId=>({id:userId,primaryEmailAddressId:'primary',emailAddresses:[{id:'primary',emailAddress:'buyer@example.test',verification:{status:'verified'}}],publicMetadata:{locale:'en',timezone:'UTC'}})}}};
+ try{
+  await createNotificationStore(pool())('user_buyer','PUT',{settings,baseRevision:0});
+  await db.query("INSERT INTO resolute.plans(clerk_user_id,revision,plan,created_at,updated_at) VALUES('user_buyer',1,$1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)",[JSON.stringify(plan)]);
+  await createNotificationOutboxJob(pool(),async()=>inputs,()=>now)('user_buyer');
+  const delivery=createResendAlertDelivery(pool(),options);assert.equal(await delivery('user_buyer',key),'uncertain');assert.equal(calls,1);
+  let row=(await db.query('SELECT * FROM resolute.notification_outbox')).rows[0];assert.equal(row.accepted_at,null);assert.equal(row.payload.resend.id,id);assert.ok(!JSON.stringify(row.payload).includes('buyer@example.test'));
+  assert.match(body.text,/\/resolute\/unsubscribe\?token=u1\./);
+  failGet=false;assert.equal(await delivery('user_buyer',key,'reconcile'),'reconciled');assert.equal(calls,1);
+  row=(await db.query('SELECT * FROM resolute.notification_outbox')).rows[0];assert.equal(row.accepted_at.toISOString(),now.toISOString());assert.equal(row.payload.resendStatus.status,'delivered');
+  const client=await pool().connect();try{
+   const evidence=resendOutboxEvidence(client,'user_buyer');
+   await assert.rejects(()=>evidence.bind(key,{id:'5ef9a417-02e9-4d39-ad75-9611e0fcc33c',recipientHash:'a'.repeat(64)}));
+   assert.equal(await resendOutboxEvidence(client,'user_other').read('user_other:2027-02-04:alerts'),null);
+   await assert.rejects(()=>resendOutboxEvidence(client,'user_other').read(key));
+   const inspector=createResendAlertProvider(options,evidence,transport,()=>now);assert.equal((await inspector.inspect(key,new AbortController().signal)).status,'delivered');
+  }finally{client.release();}
+  assert.equal(calls,1);assert.equal(await delivery('user_buyer',key),'already-accepted');
+ }finally{await db.close();}
+});
