@@ -64,7 +64,7 @@ test("a result missing from the feed still counts once its calendar time has pas
 });
 
 test("FREE sees counts only; PRO and the owner see the lists (source check)", () => {
-  const source = readFileSync(new URL("../app/research/watchlist/stock-notebook.tsx", import.meta.url), "utf8");
+  const source = readFileSync(new URL("../app/research/notebook/stock-notebook.tsx", import.meta.url), "utf8");
   assert.match(source, /const full = memberPlan === "pro" \|\| ownerAccount \|\| ownerRole;/);
   assert.match(source, /\{full \? <div className=\{styles\.details\}>/);
   const watchlist = readFileSync(new URL("../app/research/watchlist/watchlist.tsx", import.meta.url), "utf8");

@@ -21,6 +21,11 @@ class DeskReactionTests(unittest.TestCase):
                 self.assertEqual(desk_reactions.read(db, "b" * 64, post["id"])["reactions"]["like"], {"count": 1, "selected": False})
                 desk_reactions.save(db, "b" * 64, payload)
                 self.assertEqual(desk_reactions.save(db, "a" * 64, {**payload, "selected": False})["reactions"]["like"], {"count": 1, "selected": False})
+                for emoji in ("sad", "angry"):
+                    added = desk_reactions.save(db, "a" * 64, {**payload, "emoji": emoji})
+                    self.assertEqual(added["reactions"][emoji], {"count": 1, "selected": True})
+                    removed = desk_reactions.save(db, "a" * 64, {**payload, "emoji": emoji, "selected": False})
+                    self.assertEqual(removed["reactions"][emoji], {"count": 0, "selected": False})
                 for bad in ({**payload, "emoji": "invalid"}, {**payload, "selected": 1}):
                     with self.assertRaises(ValueError): desk_reactions.save(db, "a" * 64, bad)
                 with self.assertRaises(ValueError): desk_reactions.read(db, "bad-owner", post["id"])

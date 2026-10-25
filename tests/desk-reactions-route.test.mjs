@@ -20,6 +20,7 @@ test('reactions require PRO, reject cross-origin writes and derive actor from se
   assert.equal((await POST(request({...payload,selected:1}))).status,400);
   assert.equal((await POST(request({...payload,emoji:'wrong'}))).status,400);
   assert.equal((await POST(request(payload))).status,200);assert.equal(JSON.parse(calls.at(-1).init.body).ownerKey,undefined);
+  for (const emoji of ['sad','angry']) assert.equal((await POST(request({...payload,emoji}))).status,200);
   globalThis.__reactionMember={status:'signed-in',plan:'pro',ownerMode:true,isAdmin:true,userId:'owner'};assert.equal((await POST(request(payload))).status,200);
  }finally{globalThis.fetch=saved.fetch;delete globalThis.__reactionMember;for(const [key,value]of[['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
