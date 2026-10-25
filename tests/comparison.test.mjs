@@ -1,7 +1,8 @@
+import { OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
 import {buildReviewedTrial} from "../lib/research/comparison-trial.ts";
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { extractFinancials, buildComparison, emptyFinancials, validateComparisonTickers, comparisonAccess } from '../lib/research/comparison.ts';
+import { extractFinancials, buildComparison, emptyFinancials, validateComparisonTickers, comparisonAccess, comparisonExpiresAt } from '../lib/research/comparison.ts';
 const now = Date.parse('2026-09-29T00:00:00Z');
 const accn = '0000000001-26-000001';
 const entry = (val, start='2025-01-01', end='2025-12-31', extra={}) => ({val, start, end, filed:'2026-02-01', accn, form:'10-K', ...extra});
@@ -61,14 +62,22 @@ test('relative annual growth conclusion never labels a stock cheap or a buy',()=
  const r=buildComparison([a,b],now);assert.equal(r.comparable,true);assert.match(r.conclusion.en,/AAA.*highest reported annual/);assert.match(r.conclusion.en,/not a ranking of future growth or value/);
 });
 
+test('verified owner can compare without a paid subscription; admin or browser flags do not grant access',()=>{
+ const owner={status:'signed-in',plan:'free',userId:OWNER_ACCOUNT_ID,ownerAccount:true,accessExpiresAt:0};
+ assert.equal(comparisonAccess(owner,now),200);
+ assert.equal(comparisonExpiresAt(owner,now),now+3600000);
+ for(const value of [{...owner,userId:'user_other'},{...owner,ownerAccount:false},{...owner,userId:undefined},{...owner,ownerAccount:undefined,isAdmin:true}])assert.equal(comparisonAccess(value,now),403);
+ assert.equal(comparisonAccess({...owner,status:'signed-out'},now),401);
+});
+
 test('actual API rejects non-PRO before fetching data, validates selection, and rechecks expiry',async()=>{
  const {readFileSync}=await import('node:fs');const {stripTypeScriptTypes}=await import('node:module');
- globalThis.__comparisonTest={member:{status:'signed-out',plan:'free'},calls:0,catalog:[company('AAA'),company('BBB'),company('CCC')],buildReviewedTrial,buildComparison,comparisonAccess,validateComparisonTickers,load:async ticker=>{globalThis.__comparisonTest.calls++;return parse(payload());}};
+ globalThis.__comparisonTest={member:{status:'signed-out',plan:'free'},calls:0,catalog:[company('AAA'),company('BBB'),company('CCC')],buildReviewedTrial,buildComparison,comparisonAccess,comparisonExpiresAt,validateComparisonTickers,load:async ticker=>{globalThis.__comparisonTest.calls++;return parse(payload());}};
  const source=readFileSync(new URL('../app/api/research/compare/route.ts',import.meta.url),'utf8')
   .replace('import { buildReviewedTrial } from "@/lib/research/comparison-trial";','const {buildReviewedTrial}=globalThis.__comparisonTest;')
   .replace('import { getMembership } from "@/lib/membership/server";','const getMembership=async()=>globalThis.__comparisonTest.member;')
   .replace('import { comparisonCatalog } from "@/lib/research/comparison-catalog";','const comparisonCatalog=globalThis.__comparisonTest.catalog;')
-  .replace('import { buildComparison, comparisonAccess, validateComparisonTickers } from "@/lib/research/comparison";','const {buildComparison,comparisonAccess,validateComparisonTickers}=globalThis.__comparisonTest;')
+  .replace('import { buildComparison, comparisonAccess, comparisonExpiresAt, validateComparisonTickers } from "@/lib/research/comparison";','const {buildComparison,comparisonAccess,comparisonExpiresAt,validateComparisonTickers}=globalThis.__comparisonTest;')
   .replace('import { loadComparisonFinancials, resolveComparisonCompany } from "@/lib/research/comparison-server";','const loadComparisonFinancials=(ticker)=>globalThis.__comparisonTest.load(ticker); const resolveComparisonCompany=async ticker=>globalThis.__comparisonTest.catalog.find(c=>c.ticker===ticker) || null;');
  try {
   const {GET}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
@@ -83,6 +92,9 @@ test('actual API rejects non-PRO before fetching data, validates selection, and 
   globalThis.__comparisonTest.catalog.push(company('EXTRA'));
   assert.equal((await GET(new Request('https://example.com/api/research/compare?tickers=AAA,EXTRA'))).status,200);
   const response=await GET(request);assert.equal(response.status,200);assert.match(response.headers.get('cache-control'),/private, no-store/);assert.equal(response.headers.get('vary'),'Cookie');assert.equal((await response.json()).result.companies.length,2);
+  globalThis.__comparisonTest.member={status:'signed-in',plan:'free',userId:OWNER_ACCOUNT_ID,ownerAccount:true,accessExpiresAt:0};
+  const ownerResponse=await GET(request);assert.equal(ownerResponse.status,200);assert.ok((await ownerResponse.json()).validUntil>Date.now());
+  globalThis.__comparisonTest.member={status:'signed-in',plan:'pro',accessExpiresAt:Date.now()+30000};
   globalThis.__comparisonTest.load=async()=>{globalThis.__comparisonTest.member.accessExpiresAt=Date.now()-1;return parse(payload());};
   assert.equal((await GET(request)).status,403);
  } finally {delete globalThis.__comparisonTest;}

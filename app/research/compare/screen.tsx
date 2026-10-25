@@ -1,5 +1,5 @@
 "use client";
-import { useMemberDisplay } from "../member-display-provider";
+import { useMemberDisplay, useOwnerAccount } from "../member-display-provider";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
@@ -17,10 +17,11 @@ const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
 export default function ComparisonScreen() {
   const memberPlan = useMemberDisplay();
+  const ownerAccount = useOwnerAccount();
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
-  const membership = memberPlan ?? "loading";
+  const membership = ownerAccount ? "pro" : memberPlan ?? "loading";
   const [queries, setQueries] = useState(["", "", ""]);
   const [suggestions, setSuggestions] = useState<{ ticker: string; name: string }[][]>([[], [], []]);
   const [activeTicker, setActiveTicker] = useState<string | null>(null);
@@ -34,9 +35,9 @@ export default function ComparisonScreen() {
   const conclusion = useRef<HTMLDivElement | null>(null);
   const picker = useRef<HTMLElement | null>(null);
   useEffect(() => {
-    if (memberPlan !== "pro") { request.current?.abort(); setResult(null); setBusy(false); }
+    if (membership !== "pro") { request.current?.abort(); setResult(null); setBusy(false); }
     return () => { request.current?.abort(); };
-  }, [memberPlan]);
+  }, [membership]);
   useEffect(() => {
     if (!result) return;
     const timer = setTimeout(() => { setResult(null); }, Math.max(0, Math.min(validUntil - Date.now(), 2147483647)));

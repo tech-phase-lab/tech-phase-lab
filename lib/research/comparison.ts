@@ -1,3 +1,4 @@
+import { isOwnerAccount } from "../membership/entitlements.ts";
 import type { PreparedComparisonAnalysis } from "./comparison-analysis";
 import type { Copy } from "./data";
 export type ComparisonCompany = { ticker: string; name: string; peer: string; caution: Copy };
@@ -39,11 +40,19 @@ export function validateComparisonTickers(value: unknown, allowed: readonly stri
   const tickers = value.map(x => (x as string).trim().toUpperCase());
   return new Set(tickers).size === tickers.length && tickers.every(x => allowed.includes(x)) ? tickers : null;
 }
-export function comparisonAccess(member: { status: string; plan: string; accessExpiresAt?: number }, now = Date.now()): 200 | 401 | 403 | 503 {
+type ComparisonMember = { status: string; plan: string; accessExpiresAt?: number; userId?: string; ownerAccount?: boolean };
+/** The membership object must come from the server's verified identity, never request parameters. */
+const comparisonOwner = (member: ComparisonMember) => member.status === "signed-in" && member.ownerAccount === true && isOwnerAccount(member.userId);
+export function comparisonExpiresAt(member: ComparisonMember, now = Date.now()): number {
+  return comparisonOwner(member) ? now + 3_600_000 : Number.isFinite(member.accessExpiresAt) ? member.accessExpiresAt! : 0;
+}
+export function comparisonAccess(member: ComparisonMember, now = Date.now()): 200 | 401 | 403 | 503 {
   if (member.status === "unavailable") return 503;
   if (member.status !== "signed-in") return 401;
+  if (comparisonOwner(member)) return 200;
   return member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt! > now ? 200 : 403;
 }
+
 const tags = {
   "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss"], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },

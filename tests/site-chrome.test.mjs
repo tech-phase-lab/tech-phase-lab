@@ -112,9 +112,13 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   assert.match(menu, /href="\/research\/notifications"/);
   // The three research items carry no PRO tag or lock.
   const research = menu.slice(menu.indexOf('{ja ? "リサーチ" : "Research"}'), menu.indexOf('{ja ? "ガイド" : "Guides"}'));
-  assert.doesNotMatch(research, /lock|PRO|tag/);
+  const comparisonEntry = '{item("/research/compare", "targets", ja ? "銘柄比較 PRO" : "Stock Comparison PRO")}';
+  assert.ok(research.includes(comparisonEntry));
+  assert.ok(research.indexOf('/research/themes') < research.indexOf('/research/compare'));
+  assert.ok(research.indexOf('/research/compare') < research.indexOf('/research/watchlist'));
+  assert.doesNotMatch(research.replace(comparisonEntry, ''), /lock|PRO|tag/);
   // The sample has no PRO group under the two buttons (owner, Oct 8).
-  assert.doesNotMatch(menu, /proHead|item\("\/research\/(compare|notes|qa|weekly)"/);
+  assert.doesNotMatch(menu, /proHead|item\("\/research\/(notes|qa|weekly)"/);
   assert.doesNotMatch(menu, /: `銘柄比較 PRO, /);
   const css = read("app/research/site-header.module.css");
   assert.match(css, /border-radius:22px 22px 0 0/);

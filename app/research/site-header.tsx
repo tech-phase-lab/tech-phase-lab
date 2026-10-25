@@ -219,6 +219,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
         {item("/research/capital-map", "changes", ja ? "資本マップ" : "Capital Map")}
         {item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
+        {item("/research/compare", "targets", ja ? "銘柄比較 PRO" : "Stock Comparison PRO")}
         {item("/research/watchlist", "star", ja ? "お気に入り" : "Watchlist")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
