@@ -25,6 +25,10 @@ export function freshPulseItems<T extends { at: string; kind: string }>(items: T
 export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language, now?: number, wire: Record<string, CompanyWireItem[]> = {}) {
   const ja = lang === "ja";
   return [
+    ...(feed?.techHeadlines ?? []).flatMap(item => {
+      const title = ja ? item.titleJa : item.titleEn;
+      return title ? [{ id: item.id, ticker: item.tickers.join(' · '), title, body: title, shortTitle: title, headlines: [title], url: '/research/news', at: item.at, kind: item.timeKind }] : [];
+    }),
     // Placeholders awaiting checked copy stay in the news list only.
     ...(feed?.officialUpdates ?? []).filter(item => informativeOfficial(item) && !isEarningsRelated(item) && !item.pendingResearch && shownInLanguage(item, lang)).map(item => {
       const display = officialNewsDisplay(item, lang);
@@ -51,7 +55,7 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
     ...(feed?.items ?? []).map(item => ({ headlines: generalPulseHeadlines(item.tickers, lang, ja ? item.summaryJa : item.title, ja ? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn), id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, body: ja ? item.summaryJa : item.summaryEn, shortTitle: ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const })),
     // Company headlines from Yahoo Finance and Google News, the same ones the Alerts page lists
     // (owner, Oct 15: the strip hardly moved). Only the 22 watched companies, in the shown language.
-    ...wireStories(wire, lang, WATCH_TICKERS).map(story => ({ id: `wire-${story.id}`, ticker: story.tickers.join(" · "), title: story.title, body: story.title, shortTitle: story.title, headlines: [story.title], url: story.url, at: story.at, kind: "published" as const, observedAt: undefined as string | undefined })),
+    ...wireStories(feed?.techAccess === 'free' ? {} : wire, lang, WATCH_TICKERS).map(story => ({ id: `wire-${story.id}`, ticker: story.tickers.join(" · "), title: story.title, body: story.title, shortTitle: story.title, headlines: [story.title], url: story.url, at: story.at, kind: "published" as const, observedAt: undefined as string | undefined })),
   ].map(item => ({ ...item, shortTitle: item.shortTitle ?? item.title, summary: item.headlines[0] }))
     // The strip is a one-line Japanese summary; an item still awaiting its
     // reviewed translation stays in the news list below (in its original) only.

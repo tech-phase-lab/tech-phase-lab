@@ -66,9 +66,11 @@ test('headline, clock and pause remain in a single row; only a full headline is 
   assert.doesNotMatch(css,/\.headline\{[^}]*text-overflow|line-clamp|data-expanded/);
 });
 
-test('the strip opens on the headlines remembered on this device (12 h) and replaces them when the live ones arrive',async()=>{
+test('the strip remembers FREE headlines only and never restores old PRO cache or replaces an empty verified feed',async()=>{
   const raw=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
   assert.match(raw,/PULSE_CACHE_MS = 12 \* 3_600_000/);
-  assert.match(raw,/const items = live\.length \? live : remembered;/);
-  assert.match(raw,/if \(live\.length\) writePulseCache\(lang, live\)/);
+  assert.match(raw,/const items = live\.length \? live : feed \? \[\] : remembered;/);
+  assert.match(raw,/if \(live\.length && feed\?\.techAccess === 'free'\) writePulseCache\(lang, live\)/);
+  assert.match(raw,/tech-phase:pulse-items:free-v2/);
+  assert.doesNotMatch(raw,/tech-phase:pulse-items:v1/);
 });

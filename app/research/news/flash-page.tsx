@@ -128,6 +128,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
     </div>
   </article>;
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
+    {feed?.techAccess === 'free' && <p className={timeline.fine}>{ja ? 'PROでは30分早く、要約付きで読めます' : 'Read alerts 30 minutes earlier with summaries on PRO.'} <a href="/research/account">{ja ? 'PROプランを見る' : 'View PRO'}</a></p>}
     <div className={styles.controls}>
       <div className={tabStyles.tabs} role="group" aria-label={ja ? "表示する速報" : "Alert filter"}>
         {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
@@ -151,6 +152,6 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       })}</div>}
     </div>
     <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News for the 22 tracked stocks and announced earnings, newest first. All times are JST."}</p>
+    <p className={timeline.fine}>{feed?.techAccess === "free" ? (ja ? "無料ニュースは30分遅延・直近5件の見出しのみ。決算結果は無料で公開しています。" : "FREE news: the latest five headlines, delayed 30 minutes. Earnings results remain free.") : ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News for the 22 tracked stocks and announced earnings, newest first. All times are JST."}</p>
   </section>;
 }

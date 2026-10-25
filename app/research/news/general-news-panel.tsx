@@ -21,7 +21,7 @@ import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
 import OriginalPreviewCard from "./original-preview-card";
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
-const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
+const recent = () => snapshot && snapshot.data.techAccess !== 'pro' && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 let lastFailedAt = 0;
 function initialSnapshot(initialNews?: InitialNewsSnapshot | null) {
   const cached = recent();
@@ -101,7 +101,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ...official.map(item => { const time = officialTime(item), shown = clockTime(time.at, time.kind, item.observedAt);
       return { kind: "official" as const, item, publication: { ...shown, dated: time.kind }, at: shown.kind === "date" ? `${shown.at}T00:00:00Z` : shown.at }; }),
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
-    ...(officialOnly || generalOnly ? [] : wireStories(wire, lang, WATCH_TICKERS).map(story => ({ kind: "wire" as const, story, at: story.at }))),
+    ...(officialOnly || generalOnly ? [] : wireStories(data?.techAccess === 'free' ? {} : wire, lang, WATCH_TICKERS).map(story => ({ kind: "wire" as const, story, at: story.at }))),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   const pages = Math.max(1, Math.ceil((updates.length + news.length) / 5));
   const current = Math.min(page, pages), start = (current - 1) * 5;

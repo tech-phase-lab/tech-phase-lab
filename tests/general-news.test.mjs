@@ -6,6 +6,7 @@ import { availableNewsPayload, publicNewsPayload, boundedOfficialHistory } from 
 
 const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
 const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
+  .replace('import { audienceNews } from "@/lib/research/news-audience-server";', 'const audienceNews = async feed => feed;')
   .replace('"@/lib/research/public-news-response"', JSON.stringify(new URL("../lib/research/public-news-response.ts", import.meta.url).href))
   .replace('"@/lib/research/general-news"', JSON.stringify(helper))
   .replace('"@/lib/research/official-result-events"', JSON.stringify(new URL("../lib/research/official-result-events.ts", import.meta.url).href))
@@ -75,14 +76,14 @@ test("public route uses server credential and never caches failed or withdrawn n
     };
     const result = await GET();
     assert.equal(result.status, 200);
-    assert.equal(result.headers.get("Cache-Control"), "no-store");
+    assert.equal(result.headers.get("Cache-Control"), "private, no-store");
     assert.deepEqual((await result.json()).items, [item]);
     globalThis.fetch = async () => Response.json({ ok: true, enabled: false, items: [item] });
     assert.deepEqual((await (await GET()).json()).items, []);
     globalThis.fetch = async () => { throw new Error("private monitor detail"); };
     const failure = await GET();
     assert.equal(failure.status, 503);
-    assert.equal(failure.headers.get("Cache-Control"), "no-store");
+    assert.equal(failure.headers.get("Cache-Control"), "private, no-store");
     const safe = await failure.json();
     assert.equal(safe.ok, false);
     assert.deepEqual(safe.items, []);

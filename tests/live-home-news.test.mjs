@@ -3,7 +3,7 @@ import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
 import { buildPublicNews } from '../lib/research/public-news-response.ts';
-let source = (await readFile(new URL('../lib/research/live-result-events.ts', import.meta.url), 'utf8')).replace("import 'server-only';", '');
+let source = (await readFile(new URL('../lib/research/live-result-events.ts', import.meta.url), 'utf8')).replace("import 'server-only';", '').replace('import { audienceNews } from "./news-audience-server";', 'const audienceNews = async feed => feed;');
 for (const name of ['public-news-response', 'general-news', 'market-results', 'official-result-events']) {
   source = source.replaceAll(`'./${name}'`, JSON.stringify(new URL(`../lib/research/${name}.ts`, import.meta.url).href));
 }
@@ -44,6 +44,8 @@ test('initial news cannot replace a fresher refresh or reappear after a failed c
   assert.deepEqual(stateHelpers.initialSnapshot(initial), fresh);
   stateHelpers.seed(null, now);
   assert.equal(stateHelpers.initialSnapshot(initial), null);
+  stateHelpers.seed({ ...fresh, data: { techAccess: 'pro', items: ['private'] } }, 0);
+  assert.equal(stateHelpers.initialSnapshot(null), null);
   stateHelpers.seed(null, 0);
   assert.equal(stateHelpers.initialSnapshot({ ...initial, checkedAt: now - 120001 }), null);
 });

@@ -1,3 +1,4 @@
+import { audienceNews } from "./news-audience-server";
 import 'server-only';
 import { buildPublicNews } from './public-news-response';
 import type { InitialNewsSnapshot } from './general-news';
@@ -22,7 +23,7 @@ export async function loadLiveHomeNews() {
     try { issuerEvents=officialResultEvents(payload.officialResearch); } catch { /* Hold invalid issuer notes only. */ }
     try { numericalEvents=resultEvents(parseResultBriefs(payload.resultBriefs)); } catch { /* Hold invalid flashes only. */ }
     let news: InitialNewsSnapshot | null = null;
-    try { news = { data: buildPublicNews(payload, { allowOriginalPreview: process.env.VERCEL_ENV === "preview" }), checkedAt: Date.now() }; } catch { /* Client refresh reports/retries unavailable news. */ }
+    try { news = { data: await audienceNews(buildPublicNews(payload, { allowOriginalPreview: process.env.VERCEL_ENV === "preview" })), checkedAt: Date.now() }; } catch { /* Client refresh reports/retries unavailable news. */ }
     return { events: [...issuerEvents, ...numericalEvents], news };
   }catch{return empty;}
 }

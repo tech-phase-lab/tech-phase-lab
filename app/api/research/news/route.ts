@@ -1,3 +1,4 @@
+import { audienceNews } from "@/lib/research/news-audience-server";
 import { buildPublicNews } from "@/lib/research/public-news-response";
 
 export const runtime = "nodejs";
@@ -6,7 +7,7 @@ export const maxDuration = 15;
 
 export async function GET() {
   const startedAt = performance.now();
-  const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
+  const headers = { "Cache-Control": "private, no-store", "Vary": "Cookie", "X-Content-Type-Options": "nosniff" };
   try {
     const base = process.env.RESEARCH_MONITOR_URL;
     const token = process.env.RESEARCH_MONITOR_TOKEN;
@@ -23,7 +24,7 @@ export async function GET() {
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
     const upstreamMs = performance.now() - startedAt;
     const raw = JSON.parse(text);
-    const feed = buildPublicNews(raw, { allowOriginalPreview: process.env.VERCEL_ENV === "preview" });
+    const feed = await audienceNews(buildPublicNews(raw, { allowOriginalPreview: process.env.VERCEL_ENV === "preview" }));
     return Response.json(feed, { headers: { ...headers,
       "Server-Timing": `upstream;dur=${upstreamMs.toFixed(1)},total;dur=${(performance.now() - startedAt).toFixed(1)}`,
     } });
