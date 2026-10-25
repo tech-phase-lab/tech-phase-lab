@@ -256,7 +256,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
                 t("目標株価の変更をスマホに通知", "Price target alerts on your phone"),
               ].map(item => <li key={item}>{item}</li>)}
                 <li><strong>{t("週刊 Tech Phase PRO", "Tech Phase PRO Weekly")}</strong>{t("｜変化と展望", " · Outlook")}</li>
-                <li><strong>{t("リサーチQ&A", "Research Q&A")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
+                <li><strong>{t("リゼルに聞く", "Ask Rizel")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
                 <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
                 <li><strong>{t("銘柄比較 PRO", "Stock comparison PRO")}</strong>{t("｜気になる2〜3銘柄を瞬時に判断", " · Assess 2–3 stocks at a glance")}</li>
               </ul>

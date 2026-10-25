@@ -60,4 +60,4 @@ A September 27 connector update truncated existing research files. Before any Gi
   It supersedes earlier 15-minute/summary proposals: FREE high-tech alerts are
   30-minute-delayed, newest-first latest five headlines only. Capital Map is FREE;
   relationship maps are PRO except the NVDA free sample. The official feature name
-  is テーマランキング / Theme Ranking; Claude owns its pre-contract sample/UI work.
+  is テーマランキング / Theme Ranking; Claude owns both relationship maps and Theme Ranking. Do not duplicate or edit those implementations.

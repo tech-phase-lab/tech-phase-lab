@@ -85,6 +85,15 @@ company fundamentals, assessment information allowed by the member's plan, and
 upcoming events visible. Remember the setting and avoid a price flash on reload.
 Do not treat this display preference as a news filter or suppress adverse facts.
 
+Implemented locally on 2026-10-25: the shared CompactQuote on monitored-company
+pages (including MU) has a bilingual price switch. OFF removes the complete
+quote iframe and chart/provider links. The browser remembers the choice across
+companies/reloads; SSR waits for the preference before mounting any price widget.
+Storage-blocked browsers retain the choice for the current session. The directory
+itself contains no prices, so no redundant switch was added there. Stock search
+is unchanged. Validation and publication status are recorded in
+`TECH-PHASE-PRO-CHANGES-2026-10-25.md`.
+
 ### Standalone theme ranking
 
 Direct menu/home entry named テーマランキング / Theme Ranking -> ranking detail.
