@@ -205,3 +205,13 @@
 @media (prefers-reduced-motion:reduce){.proBtn::before{animation:none;display:none}.rzBtn{animation:none}}
 /* PRO and owner: a little more room between JA/EN and the refresh ring so the two are easier to tap (owner, Oct 21). */
 .header[data-plan="pro"] .lang, .header[data-plan="owner"] .lang { margin-right:6px; }
+
+/* First paint before hydration: the last verified owner/PRO state (set by an inline script) shows the gold label and reload ring at once. */
+.hintOwner, .hintPro, .hintRing { display:none; }
+:global(html[data-member-hint="owner"]) .hintOwner, :global(html[data-member-hint="pro"]) .hintPro { display:inline-flex; gap:5px; }
+:global(html[data-member-hint]) .hintRing { display:grid; }
+:global(html[data-member-hint]) .hintHide { display:none; }
+:global(html[data-member-hint]) .sub { color:var(--gold); }
+:global(html[data-member-hint]) .planName {
+  background:linear-gradient(90deg,#fbeab8,#b8923f); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:700;
+}

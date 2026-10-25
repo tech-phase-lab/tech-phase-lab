@@ -78,6 +78,9 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const suppressClick = useRef(false);
   const ja = lang === "ja";
   const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});
+  // Owner, Oct 25: the strip must not open on the news-only headline and then jump to a newer company headline,
+  // so it waits for the first company-wire answer (or a short grace period) before it shows anything.
+  const [wireSettled, setWireSettled] = useState(false);
   const checkedAt = snapshot?.checkedAt;
   useEffect(() => {
     // Company headlines join the strip, refreshed whenever the news feed is; a failure here never affects the rest.
@@ -87,10 +90,12 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
         const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
         if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) { setWire(items); publishWire(items); } }
       } catch { /* keep the previous list */ }
+      finally { if (alive) setWireSettled(true); }
     })();
-    return () => { alive = false; };
+    const grace = setTimeout(() => setWireSettled(true), 2_500);
+    return () => { alive = false; clearTimeout(grace); };
   }, [checkedAt]);
-  const items = snapshot?.checkedAt ? newsPulseItems(feed, lang, snapshot.checkedAt, wire) : [];
+  const items = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire) : [];
   const first = items[0]?.id ?? "";
   const stopped = paused || interacting || reduced;
   useEffect(() => {

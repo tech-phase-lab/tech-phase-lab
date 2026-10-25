@@ -29,6 +29,8 @@ source=source.replace('import { useEffect, useRef, useState, useSyncExternalStor
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";',
   'const newsSnapshot=()=>runtime.feed;const serverNewsSnapshot=newsSnapshot;const subscribeNews=()=>()=>{};');
 for(const name of ['news-pulse-items','news-pulse-headline','news-time','company-wire','wire-store'])source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
+// The strip waits for the first company-wire answer in the app; these tests start from the settled state.
+source=source.replace('const [wireSettled, setWireSettled] = useState(false);','const [wireSettled, setWireSettled] = useState(true);');
 source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",eastern:"eastern",fresh:"fresh",progress:"progress"};');
 source+='\nexport { FittedHeadline };';
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText.replace('"react/jsx-runtime"',JSON.stringify(pathToFileURL(require.resolve('react/jsx-runtime')).href));
