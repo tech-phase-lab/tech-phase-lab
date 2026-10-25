@@ -259,7 +259,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
                 <li><strong>{t("リサーチQ&A", "Research Q&A")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
                 <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
                 <li><strong>{t("銘柄比較 PRO", "Stock comparison PRO")}</strong>{t("｜気になる2〜3銘柄を瞬時に判断", " · Assess 2–3 stocks at a glance")}</li>
-                <li><strong>{t("資本マップ", "CAPITAL MAP")}</strong>{t("｜運用会社・ETFの投資先と変化", " · Manager portfolios, ETF holdings and changes")}</li>
               </ul>
             </article>
           </div>

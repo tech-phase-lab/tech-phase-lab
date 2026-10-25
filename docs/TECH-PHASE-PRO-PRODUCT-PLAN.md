@@ -1,6 +1,8 @@
 # Tech Phase PRO product design — 2026-10-25 JST
 
-Status: design discussion, not shipped UI, entitlement or billing changes.
+Status: owner decisions below supersede the earlier abstract pillar proposal.
+Capital Map FREE access is implemented in the accompanying change; the news delay,
+22-company refresh, theme ranking, personal review and retention items remain unshipped.
 Keep the existing Capital Map presentation. Railway connection/reauthentication is
 prohibited. Work on codex/research-preview only; no main edits or force pushes.
 
@@ -8,62 +10,83 @@ prohibited. Work on codex/research-preview only; no main edits or force pushes.
 
 - High-tech theme rankings (semiconductors, optical networking, AI cloud, etc.)
   are a key PRO feature. Connect real prices only after the Twelve Data contract.
-- Consider Claude's proposal: FREE news delayed 15 minutes, PRO real time.
-  This is a candidate, not a finalized access-policy change.
+- Confirmed: FREE general high-tech news is delayed 15 minutes with only a short
+  summary; PRO is real time. Earnings results and economic-indicator results must
+  remain available FREE; do not put these results behind the general-news delay.
+  PRO adds deeper earnings interpretation and implications.
+- Capital Map is FREE, including actual disclosed holdings and existing comparisons.
+  Remove its PRO-only access gate and PRO-benefit listing.
+- Theme ranking is a standalone, clearly named entry; do not nest it under
+  a vague "market strength/weakness" category.
 - The 22 tracked companies should not merely duplicate stock-search prices.
   Owner wants a price-display ON/OFF option, including during market selloffs.
-- Preserve and concretize the previously proposed three pillars.
+- Track company changes inside the existing 22-company list, not a separate feature.
+- Personal review uses the user's watchlist: weekly earnings, price-target changes
+  and news counts; upcoming earnings; notifications about verified business
+  counterparties in the relationship map.
 - Evaluate a real usage recap before cancellation, a 1–2 month pause, and an
   annual plan discounted by about two monthly payments. None is yet approved pricing.
 
-## Prior proposals retained without conflating them
+## Concrete destinations (owner correction)
 
-The later functional framing was:
-1. 市場の強弱を調べる — investigate market strength/weakness.
-2. 企業の変化を追いかける — track changes in companies.
-3. 自分の銘柄を振り返る — review one's tracked companies.
+1. テーマ別ランキング — standalone entry and ranking detail; may link onward to
+   related companies, explanations and theme history. Twelve Data contract first.
+2. 監視22銘柄リスト — rapidly receive tracked high-tech company information and
+   see earnings/important-news implications at a glance.
+3. ウォッチリストの振り返り — weekly changes and upcoming events for selected names,
+   with relevant relationship-map counterparty alerts.
 
-Earlier weekend programming was:
-- Saturday: 今週、何が変わったか.
-- Sunday: 来週、何を確認するか.
-- Holidays: テーマ別の深掘り.
-
-Use these as delivery formats for the functional pillars, not six separate tools.
+The earlier labels "市場の強弱を調べる" and "企業の変化を追いかける" are design
+concepts, not extra navigation categories/pages. Do not add a generic three-pillar
+container that hides the theme ranking. Saturday's weekly changes, Sunday's next
+week checks and holiday deep dives remain possible delivery formats for these tools.
 The user explicitly rejects generic AI-generated prose as sufficient PRO value.
 
-## Proposed implementation, pending agreement
+## Implementation design
 
 ### News access
 
-Keep the mobile news entry. FREE initially receives headlines and short summaries
+Keep the mobile news entry. FREE receives general-news headlines and short summaries
 15 minutes after the Tech Phase first-publication timestamp; PRO receives immediate
 access plus implications, assessment changes and alerts. Retain true source and
 publication timestamps and label delayed access. Never reset the delay on cosmetic
 edits; corrections must remain identifiable. Enforce release/access on the server,
-not by hiding complete PRO responses in CSS. Delayed news alone is not the PRO moat.
+not by hiding complete PRO responses in CSS. Earnings/economic result values and
+public result pages are FREE exceptions, with actual release times, units, periods,
+forecast/prior values where verified. Preserve these exceptions when a result also
+appears in the news feed; PRO interpretation is separately entitled. Delayed news
+alone is not the PRO moat.
 
 ### 22-company list
 
 Reuse the existing menu link to /research#monitored-companies, separately from the
-news feed and personal favourites. Make the list about company status, changes and
-upcoming checkpoints. FREE: company/theme basics and public earnings schedule;
-real-time assessment changes, reasons and history proposed for PRO.
+news feed and personal favourites. The owner requires prompt visible updates after
+earnings/important news: an unchanged card after a material new release is not a
+credible result. Proposed event path: validated source -> factual event/update time
+-> before/after operating metrics -> directional implications/review -> assessment
+history. Show newly available factual results promptly without waiting for the full
+PRO interpretation; show analysis progress only for a real queued/running job.
+Do not force a rating change on every event: explicitly record "assessment unchanged"
+and why when evidence supports it. PRO receives immediate implications/history;
+FREE keeps public earnings/results and the allowed delayed general-news summary.
+Measure release-to-ingestion and ingestion-to-card latency separately, including
+missed-update/recovery tests. A specific seconds/minutes SLA is not yet agreed.
 
 Price OFF hides the price, percentage change and price sparkline together. Keep
 company fundamentals, assessment information allowed by the member's plan, and
 upcoming events visible. Remember the setting and avoid a price flash on reload.
 Do not treat this display preference as a news filter or suppress adverse facts.
 
-### Pillar 1: market strength/weakness
+### Standalone theme ranking
 
-Home PRO entry -> theme ranking detail, after the Twelve Data contract. Provide
+Direct menu/home entry named テーマ別ランキング -> ranking detail, after the Twelve Data contract. Provide
 1-day/1-week/1-month rankings, both ends, constituent contributions, participation
 (e.g. number of rising constituents) and links to source-backed company changes.
 Before implementation fix the universe, overlapping membership, weighting, return
 basis and missing-price rules. Price performance is not measured capital inflow.
 Preserve dated snapshots to show persistence/reversals rather than only today's table.
 
-### Pillar 2: changes in companies
+### Company changes inside the 22-company list
 
 Reuse the 22-company list and company detail. Store timestamped old/new values,
 source URL, affected operating metric, assessment rationale and next checkpoint.
@@ -72,10 +95,19 @@ Assessment revisions need evidence and a logged rule/review decision, not an
 unexplained AI-generated upgrade. Produce Saturday's weekly change view from these
 records, with dated links back to the original evidence.
 
-### Pillar 3: review one's tracked companies
+### Personal watchlist review
 
 Reuse existing favourites/watchlists; do not assume brokerage holdings are available.
 Filter the change history and upcoming earnings/events to the user's selected names.
+Weekly view groups earnings, target-price changes (old/new, currency, analyst/source,
+publication date) and deduplicated news counts; avoid counting one release copied by
+several providers as several independent developments. Upcoming earnings show a
+verified date/time and confirmation status, not an inferred guarantee.
+Counterparty alerts require a sourced, typed, dated business relationship and a
+material event linked to that counterparty. Distinguish customers/suppliers/partners
+from an investment ownership edge in Capital Map. Do not notify on every unrelated
+counterparty headline or manufacture a relationship from coincident news mentions.
+Notification delivery/channel and opt-in details are still to be designed.
 Link saved research to subsequent evidence and show which prior checkpoint has been
 resolved or remains pending. Sunday: next week's checks, not generic predictions.
 Holiday deep dives reuse theme/company evidence, dated comparisons and Capital Map
@@ -83,11 +115,12 @@ links; they must add comparative information rather than merely longer AI text.
 
 ### Placement and order
 
-Home has one compact PRO entry section, routing to existing company/list/watchlist
-pages. Only the theme ranking needs a distinct detail view if none exists; do not
-create three disconnected article sections. Suggested order: agree the boundary and
-price toggle, build reusable company change history, then weekly/personal views;
-connect theme-price rankings after contract. No UI is changed by this design record.
+Place theme ranking directly in navigation/home, company changes in the existing
+22-company list, and the personal weekly/next-week view inside the existing watchlist.
+Do not invent three disconnected article sections. First reconcile Capital Map FREE
+access and record this scope; then build the timely 22-company update/evidence history
+and price toggle, followed by watchlist weekly/upcoming/counterparty views. Connect
+theme-price rankings after contract. Do not change billing as part of these steps.
 
 ## Retention candidates
 

@@ -213,3 +213,33 @@ test('bond principal stays distinct from stock shares and never implies company 
   assert.equal(rows[0].companyPercent, null);
   assert.equal(etfOverlap(snapshot([bond]), snapshot([bond])).percent, 0);
 });
+
+test('the public Capital Map returns actual reports without membership or a paid-plan claim', async () => {
+  const { build } = await import('esbuild');
+  const { createRequire } = await import('node:module');
+  const require = createRequire(import.meta.url);
+  const compiled = await build({
+    entryPoints: [new URL('../app/research/capital-map/page.tsx', import.meta.url).pathname],
+    bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic', packages: 'external',
+    plugins: [{ name: 'public-route-test', setup(builder) {
+      builder.onResolve({ filter: /^\.\/screen$/ }, () => ({ path: 'screen', namespace: 'test' }));
+      builder.onLoad({ filter: /.*/, namespace: 'test' }, () => ({ contents: 'export default function CapitalMap() {}' }));
+      builder.onResolve({ filter: /membership\/server|@clerk\/nextjs|research\/comparison$/ }, () => {
+        throw new Error('Public holdings must not depend on membership or PRO authorization');
+      });
+    } }],
+  });
+  const compiledModule = { exports: {} };
+  new Function('require', 'module', 'exports', compiled.outputFiles[0].text)(require, compiledModule, compiledModule.exports);
+  const result = await compiledModule.exports.default();
+  assert.equal(result.props.mode, 'reports');
+  assert.equal(result.props.portfolios.length, 24);
+  assert.equal(result.props.portfolios.filter(p => p.kind === 'manager').length, 13);
+  assert.ok(result.props.portfolios.every(p => p.current.holdings.length > 0 && p.current.source.url.startsWith('https://')));
+  assert.ok(result.props.portfolios.filter(p => p.kind !== 'etf').every(p => p.previous?.asOf === '2026-03-31'));
+  const screen = readFileSync(new URL('../app/research/capital-map/screen.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(screen, /TECH PHASE PRO|Sign in \/ View plan/);
+  const dashboard = readFileSync(new URL('../app/research/research-dashboard.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(dashboard, /<li><strong>\{t\("資本マップ"/);
+  assert.match(dashboard, /href="\/research\/capital-map"/);
+});
