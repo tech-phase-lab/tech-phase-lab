@@ -1328,9 +1328,9 @@ class AutomaticMonitor:
         with questions.connect(self.db_path) as db:
             return questions.submit(db, payload)
 
-    def member_questions(self, owner_key, limit=20, board=False):
+    def member_questions(self, owner_key, limit=20, board=False, page=1):
         with questions.connect(self.db_path) as db:
-            return questions.board_queue(db, owner_key, 50) if board else questions.member_queue(db, owner_key, limit)
+            return questions.board_queue(db, owner_key, 10, page) if board else questions.member_queue(db, owner_key, limit)
 
     def question_queue(self, view="pending", limit=50):
         # Ensure the answer-candidate table exists even on a fresh database.
@@ -3233,6 +3233,20 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "favorites-unavailable"})
             return
+        if path == "/desk-reactions":
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                import desk_reactions
+                with desk_reactions.connect(self.app.db_path) as db:
+                    result = desk_reactions.read(db, self.headers.get("X-Reaction-Owner", ""), parse_qs(parsed.query).get("postId", [""])[0])
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False})
+            return
         if path == "/questions":
             if not self.authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
@@ -3240,7 +3254,7 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 owner_key = self.headers.get("X-Question-Owner", "")
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
-                self.send_json(200, {"ok": True, **self.app.member_questions(owner_key, limit, self.headers.get("X-Question-Audience") == "pro-board")})
+                self.send_json(200, {"ok": True, **self.app.member_questions(owner_key, limit, self.headers.get("X-Question-Audience") == "pro-board", int(parse_qs(parsed.query).get("page", ["1"])[0]))})
             except (TypeError, ValueError) as exc:
                 self.send_json(400, {"ok": False, "error": str(exc)})
             except Exception:
@@ -3323,6 +3337,21 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(400, {"ok": False, "error": str(exc)})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "favorites-unavailable"})
+            return
+        if path == "/desk-reactions":
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                import desk_reactions
+                payload = self.read_json(2000)
+                with desk_reactions.connect(self.app.db_path) as db:
+                    result = desk_reactions.save(db, self.headers.get("X-Reaction-Owner", ""), payload)
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False})
             return
         if path == "/questions":
             if not self.authorized():

@@ -28,15 +28,18 @@ async function identity() {
 
 async function parse(response: Response) {
   const text = await response.text();
-  if (new TextEncoder().encode(text).length > 256_000) throw new Error("oversized");
+  if (new TextEncoder().encode(text).length > 768_000) throw new Error("oversized");
   try { return JSON.parse(text); } catch { throw new Error("invalid-response"); }
 }
 
-export async function GET() {
+export async function GET(request?: Request) {
+  const page = request ? new URL(request.url).searchParams.get("page") ?? "1" : "1";
+  if (!/^[1-9]\d{0,5}$/.test(page) || Number(page) > 100000) return reply(400, { ok: false, error: "invalid-question-page" });
   try {
     const account = await identity();
     if (!account) return reply(401, { ok: false, error: "sign-in-required" });
     if (account === "free") return reply(403, { ok: false, error: "pro-required" });
+    account.url.searchParams.set("page", page);
     const response = await fetch(account.url, { headers: { Authorization: `Bearer ${account.token}`, "X-Question-Owner": account.ownerKey, "X-Question-Audience": "pro-board" }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     const data = await parse(response);
     if (response.ok && data.audience !== "pro-board") return reply(503, { ok: false, error: "board-unavailable" });

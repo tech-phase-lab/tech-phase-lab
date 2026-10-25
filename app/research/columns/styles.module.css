@@ -41,3 +41,6 @@
 .article .weeklySources a{display:block;padding:5px 0;font-size:12px;line-height:1.6;font-weight:400;color:#b5bbb7;text-decoration:none;overflow-wrap:anywhere}
 .article .weeklySources a:hover{text-decoration:underline;color:#d8ded9}
 .weeklySources :focus-visible{outline:2px solid #d8c398;outline-offset:3px}
+
+/* Editing uses the full message width; controls stay compact on phones. */
+.note.editing .noteHeader{display:none}.note.editing .noteBubble{margin-left:0;padding:10px 12px;border-radius:9px}.note.editing .noteBubble::before{display:none}.note.editing .meta{margin:0;font-size:11px}.note.editing{margin:16px 0}.qaArticle{padding:14px 16px;margin:14px 0;line-height:1.65}.qaArticle .questionLabel{margin:0;font-size:10px}.qaArticle h2{font-size:16px;line-height:1.65;margin:3px 0 9px}.qaArticle .text{font-size:14px;margin:7px 0}.qaArticle .answerLabel{margin:5px 0 7px;padding:0;border:0;font-size:12px;gap:8px}.answerLabel>div{display:flex;flex-direction:column;gap:1px}.answerLabel small{font-weight:400;font-size:10px;color:#9faea6}.qaArticle .qaBody{border:0;background:transparent;padding:0;margin:4px 0 0;border-radius:0}.qaArticle footer{margin-top:10px;padding-top:8px;font-size:12px}.qaArticle footer h3{font-size:12px;margin:0 0 4px}

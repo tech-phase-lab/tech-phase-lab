@@ -8,3 +8,4 @@
 .actions button:disabled{opacity:.45;cursor:default}
 .composer p{margin:12px 0 0;color:#c7b997;font-size:12px;line-height:1.6}
 @media(max-width:600px){.composer{padding:12px}.actions{gap:9px}.actions button{padding:7px 17px}.composer textarea{min-height:115px}}
+.composer{padding:12px;border-color:#465451;border-radius:9px;background:#131b1e;box-shadow:none;margin-bottom:20px}.actions{margin-top:8px;justify-content:space-between}.actions button{min-height:32px;padding:6px 18px;font-size:12px}.composer textarea:focus{outline:none;box-shadow:none}
