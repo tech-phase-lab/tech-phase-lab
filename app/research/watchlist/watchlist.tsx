@@ -167,6 +167,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </div>}
       {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のウォッチリストを取り込む", "Import this device’s watchlist")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
+      {favorites.length > 0 && <StockNotebook tickers={favorites} lang={lang} />}
       {!ready ? <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
 
         <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
@@ -223,7 +224,6 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
 
       </> : <div className={styles.empty}><span aria-hidden="true" className={styles.emptyStar}>☆</span><h2>{t("いつもの銘柄を、ひとつの画面に。", "Your stocks, together.")}</h2><p>{t("上の検索欄から追加できます", "Add a stock using the search above")}</p></div>}
 
-      {favorites.length > 0 && <StockNotebook tickers={favorites} lang={lang} />}
     </div>
   </ResearchToolShell></WatchlistFrame>;
 }
