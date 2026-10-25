@@ -72,4 +72,8 @@ test('conference session blogs and earnings "highlights" pages are not listed as
   assert.equal(isNotNews({ title: 'Vertiv launches a new liquid cooling product' }), false);
   assert.equal(isNotNews({ title: 'NVIDIA announces new GTC dates' }), false);
   assert.equal(isNotNews({ title: "JCC's new lab: where Micron's future workforce grows" }), true);
+  assert.equal(isNotNews({ title: 'Washington bans DeepSeek, Microsoft drops UK project: This Week\'s Key Developments' }), true);
+  assert.equal(isNotNews({ title: 'Tech week in review', translationJa: 'テック週間まとめ' }), true);
+  assert.equal(isNotNews({ title: 'Washington bans DeepSeek', translationJa: 'ワシントン、DeepSeekを禁止：今週の主な動向' }), true);
+  assert.equal(isNotNews({ title: 'Microsoft reports earnings this week' }), false);
 });
