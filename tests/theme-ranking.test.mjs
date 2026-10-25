@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { THEMES, THEME_TICKERS } from "../lib/research/theme-definitions.ts";
-import { periodReturn, stockReturns, rankThemes, themeRankingAccess, PERIOD_DAYS } from "../lib/research/theme-ranking.ts";
+import { periodReturn, stockReturns, rankThemes, themeRankingAccess, sampleStockReturns, PERIOD_DAYS } from "../lib/research/theme-ranking.ts";
 
 const series = (ticker, last, first, days = 70) => ({ ticker, asOf: "2026-10-23", closes: Array.from({ length: days }, (_, i) => last - (last - first) * (i / (days - 1))) });
 
@@ -79,4 +79,21 @@ test("PRO gate and the no-invention rule are in place on the route and the scree
   const screen = readFileSync(new URL("../app/research/themes/screen.tsx", import.meta.url), "utf8");
   assert.match(screen, /plan === "free"/);
   assert.doesNotMatch(screen, /Math\.random/);
+});
+
+test("the owner-only sample is deterministic, covers every theme and every period, and is never wired to the API", () => {
+  const a = sampleStockReturns(THEME_TICKERS), b = sampleStockReturns(THEME_TICKERS);
+  assert.deepEqual(a, b);
+  assert.equal(rankThemes(a, "1w").length, THEMES.length);
+  assert.ok(a.every(stock => ["1d", "1w", "1m", "3m"].every(period => Number.isFinite(stock.returns[period]))));
+  const route = readFileSync(new URL("../app/api/research/themes/route.ts", import.meta.url), "utf8");
+  assert.doesNotMatch(route, /sample/i);
+  const screen = readFileSync(new URL("../app/research/themes/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /owner &&/); // the preview button exists only for the owner
+});
+
+test("the screen lists the themes instead of an error while the price feed is not connected", () => {
+  const screen = readFileSync(new URL("../app/research/themes/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /state === "not-connected" && !sample/);
+  assert.match(screen, /THEMES\.map\(theme => <li key=\{theme\.id\}>/);
 });
