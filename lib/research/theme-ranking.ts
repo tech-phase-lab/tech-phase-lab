@@ -50,3 +50,11 @@ export function themeRankingAccess(member: { status: string; plan: string; acces
   if (member.status !== "signed-in") return 401;
   return member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt! > now ? 200 : 403;
 }
+
+/** Owner-only look at the finished screen before the price feed is connected. Plainly labelled as a sample on screen;
+ * never served by an API and never shown to members. Deterministic so the preview does not shuffle on every visit. */
+export function sampleStockReturns(tickers: readonly string[]): StockReturns[] {
+  let seed = 20261025;
+  const next = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  return tickers.map(ticker => ({ ticker, returns: { "1d": (next() - 0.45) * 6, "1w": (next() - 0.4) * 14, "1m": (next() - 0.35) * 30, "3m": (next() - 0.3) * 55 } }));
+}

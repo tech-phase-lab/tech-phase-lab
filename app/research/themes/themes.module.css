@@ -54,3 +54,9 @@
 .cta { display:inline-block; padding:12px 26px; border-radius:999px; color:#241b07; font-weight:700; letter-spacing:.04em; text-decoration:none; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 4px 18px #d4aa5540; }
 .cta:focus-visible { outline:2px solid #ecd08e; outline-offset:3px; }
 @media (prefers-reduced-motion:reduce) { .tabs button, .cta { transition:none; } }
+
+.sampleButton { margin:0 0 14px; padding:10px 16px; border:1px dashed #b8923f88; border-radius:10px; background:#1b1810; color:#e8d3a0; font:600 12.5px inherit; cursor:pointer; }
+.sampleButton:focus-visible { outline:2px solid #ecd08e; outline-offset:2px; }
+.sample { margin:14px 0 12px; padding:10px 14px; border:1px dashed #b8923f; border-radius:10px; background:#1b1810; color:#e8d3a0; font-size:12.5px; line-height:1.7; }
+.sample b { margin-right:8px; padding:2px 8px; border-radius:999px; background:linear-gradient(135deg,#fbeab8,#b8923f); color:#241b07; font:700 10.5px var(--font-geist-mono),monospace; letter-spacing:.14em; }
+.sample button { margin-left:8px; padding:2px 10px; border:1px solid #b8923f77; border-radius:999px; background:none; color:#e8d3a0; font-size:12px; cursor:pointer; }

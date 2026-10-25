@@ -2,10 +2,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
-import { useMemberDisplay, useMemberSettled } from "../member-display-provider";
+import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
-import { THEMES } from "@/lib/research/theme-definitions";
-import { PERIODS, rankThemes, type Period, type StockReturns } from "@/lib/research/theme-ranking";
+import { THEMES, THEME_TICKERS } from "@/lib/research/theme-definitions";
+import { PERIODS, rankThemes, sampleStockReturns, type Period, type StockReturns } from "@/lib/research/theme-ranking";
 import styles from "./themes.module.css";
 
 type Data = { stocks: StockReturns[]; asOf: string; validUntil: number };
@@ -24,6 +24,11 @@ export default function ThemeRankingScreen() {
   const [period, setPeriod] = useState<Period>("1w");
   const [state, setState] = useState<State>("loading");
   const [data, setData] = useState<Data | null>(null);
+  // Owner-only: look at the finished screen with clearly labelled sample numbers while the price feed is not connected.
+  const ownerAccount = useOwnerAccount();
+  const ownerRole = useResearchOwner();
+  const owner = ownerAccount || ownerRole;
+  const [sample, setSample] = useState(false);
   const periodLabel: Record<Period, string> = { "1d": t("1日", "1D"), "1w": t("1週間", "1W"), "1m": t("1か月", "1M"), "3m": t("3か月", "3M") };
 
   useEffect(() => {
@@ -51,7 +56,8 @@ export default function ThemeRankingScreen() {
     return () => clearTimeout(timer);
   }, [data]);
 
-  const rows = useMemo(() => data ? rankThemes(data.stocks, period) : [], [data, period]);
+  const shown = useMemo<Data | null>(() => sample ? { stocks: sampleStockReturns(THEME_TICKERS), asOf: "SAMPLE", validUntil: 0 } : data, [sample, data]);
+  const rows = useMemo(() => shown ? rankThemes(shown.stocks, period) : [], [shown, period]);
   const widest = Math.max(1, ...rows.map(row => Math.abs(row.value)));
 
   return <ResearchToolShell lang={lang} setLang={setLang} title={t("テーマランキング", "Theme Ranking")}
@@ -73,10 +79,25 @@ export default function ThemeRankingScreen() {
         {PERIODS.map(key => <button key={key} type="button" aria-pressed={key === period} onClick={() => setPeriod(key)}>{periodLabel[key]}</button>)}
       </div>
       {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
-      {state === "not-connected" && <p role="status" className={styles.note}>{t("株価データの接続を準備中です。接続でき次第、ここに表示します。", "The price data feed is being connected. The ranking will appear here once it is.")}</p>}
+      {state === "not-connected" && !sample && <>
+        <p role="status" className={styles.note}>{t("株価データの接続を準備中です。接続でき次第、順位と騰落率がここに入ります。それまでは、対象のテーマと銘柄を一覧で表示しています。", "The price data feed is being connected. Rankings and returns will fill in once it is; until then the themes and their stocks are listed.")}</p>
+        {owner && <button type="button" className={styles.sampleButton} onClick={() => setSample(true)}>{t("見本の数字で見た目を確認（運営者のみ・実際の株価ではありません）", "Preview with sample numbers (owner only · not real prices)")}</button>}
+        <ol className={styles.list}>{THEMES.map(theme => <li key={theme.id}>
+          <details>
+            <summary>
+              <span className={styles.rank} aria-hidden="true">–</span>
+              <span className={styles.name}><strong>{ja ? theme.ja : theme.en}</strong><small>{t(`${theme.tickers.length}銘柄`, `${theme.tickers.length} stocks`)}</small></span>
+              <span className={styles.value}>—</span>
+              <span className={styles.bar} aria-hidden="true"><i style={{ width: "0%" }} /></span>
+            </summary>
+            <div className={styles.detail}><ul>{theme.tickers.map(ticker => <li key={ticker}><Link href={`/research/stocks?q=${encodeURIComponent(ticker)}`}>{ticker}</Link><em>—</em></li>)}</ul></div>
+          </details>
+        </li>)}</ol>
+      </>}
       {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "The data could not be loaded. Please try again shortly.")}</p>}
-      {state === "ready" && data && <>
-        <p className={styles.meta}>{t(`${data.asOf} 終値ベース・各テーマの構成銘柄の等ウェイト平均`, `Closing prices as of ${data.asOf} · equal-weighted average of each theme's stocks`)}</p>
+      {((state === "ready" && data) || (state === "not-connected" && sample)) && shown && <>
+        {sample ? <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）。", "A look at the finished screen with made-up numbers — not real prices (owner only).")} <button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>
+          : <p className={styles.meta}>{t(`${shown.asOf} 終値ベース・各テーマの構成銘柄の等ウェイト平均`, `Closing prices as of ${shown.asOf} · equal-weighted average of each theme's stocks`)}</p>}
         {!rows.length && <p className={styles.note}>{t("この期間のランキングを作れるだけのデータがありません。", "There is not enough data to rank this period.")}</p>}
         <ol className={styles.list}>{rows.map(row => <li key={row.id} className={row.rank <= 3 ? styles.podium : undefined}>
           <details>
