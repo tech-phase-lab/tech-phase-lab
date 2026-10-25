@@ -8,7 +8,7 @@ export type EditorialPost = {
 };
 export const postNames = {
   weekly: { ja: "週刊 Tech Phase PRO", en: "Tech Phase PRO Weekly" },
-  qa: { ja: "リゼルに聞く", en: "Ask RIZEL" },
+  qa: { ja: "リゼルに聞く", en: "Ask Rizel" },
   notes: { ja: "リゼルのひとりごと", en: "RIZEL’s Notes" },
 };
 // Rebuild a strict public/member projection. Never spread the editor's payload.

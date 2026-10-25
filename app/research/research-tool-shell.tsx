@@ -22,7 +22,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
       {showHeading && <><h1>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
       {desk && <nav className={styles.deskNav} aria-label={lang === "ja" ? "RIZEL’S DESKメニュー" : "RIZEL’S DESK navigation"}>
         <Link href="/research/notes" aria-current={pathname === "/research/notes" ? "page" : undefined}>{lang === "ja" ? "ひとりごと" : "Notes"}</Link>
-        <Link href="/research/qa" aria-current={pathname?.startsWith("/research/qa") ? "page" : undefined}>{lang === "ja" ? "リゼルに聞く" : "Ask RIZEL"}</Link>
+        <Link href="/research/qa" aria-current={pathname?.startsWith("/research/qa") ? "page" : undefined}>{lang === "ja" ? "リゼルに聞く" : "Ask Rizel"}</Link>
         <Link href="/research/weekly" aria-current={pathname === "/research/weekly" ? "page" : undefined}>{lang === "ja" ? "週刊PRO" : "Weekly"}</Link>
       </nav>}
       {freshness && <FreshnessNotice lang={lang} />}

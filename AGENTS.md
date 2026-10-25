@@ -54,3 +54,10 @@ A September 27 connector update truncated existing research files. Before any Gi
 - Home news: once the Stock News API contract is in place, switch the home screen news
   (top LIVE band and the lower news list) to the Stock News API. The home screen is redesigned
   in mid-November; until then the current sources stay as they are.
+
+- The authoritative FREE / PRO policy is `docs/TECH-PHASE-FREE-PRO-POLICY-2026-10-25.md`.
+  Read it before changing entitlements, PRO benefit copy or related navigation.
+  It supersedes earlier 15-minute/summary proposals: FREE high-tech alerts are
+  30-minute-delayed, newest-first latest five headlines only. Capital Map is FREE;
+  relationship maps are PRO except the NVDA free sample. The official feature name
+  is テーマランキング / Theme Ranking; Claude owns both relationship maps and Theme Ranking. Do not duplicate or edit those implementations.

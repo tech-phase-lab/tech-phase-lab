@@ -1,6 +1,8 @@
 # Tech Phase PRO product design — 2026-10-25 JST
 
-Status: owner decisions below supersede the earlier abstract pillar proposal.
+Authoritative policy: [2026-10-25 FREE / PRO decision](TECH-PHASE-FREE-PRO-POLICY-2026-10-25.md).
+That decision overrides earlier proposals here. This file retains implementation
+notes and unapproved retention candidates; it is not a completion receipt.
 Capital Map FREE access is implemented in the accompanying change; the news delay,
 22-company refresh, theme ranking, personal review and retention items remain unshipped.
 Keep the existing Capital Map presentation. Railway connection/reauthentication is
@@ -10,8 +12,8 @@ prohibited. Work on codex/research-preview only; no main edits or force pushes.
 
 - High-tech theme rankings (semiconductors, optical networking, AI cloud, etc.)
   are a key PRO feature. Connect real prices only after the Twelve Data contract.
-- Confirmed: FREE general high-tech news is delayed 15 minutes with only a short
-  summary; PRO is real time. Earnings results and economic-indicator results must
+- Confirmed: FREE high-tech alerts are delayed 30 minutes, newest first, latest five
+  eligible headlines only, with no summary or full text; PRO is real time. Earnings results and economic-indicator results must
   remain available FREE; do not put these results behind the general-news delay.
   PRO adds deeper earnings interpretation and implications.
 - Capital Map is FREE, including actual disclosed holdings and existing comparisons.
@@ -29,8 +31,10 @@ prohibited. Work on codex/research-preview only; no main edits or force pushes.
 
 ## Concrete destinations (owner correction)
 
-1. テーマ別ランキング — standalone entry and ranking detail; may link onward to
-   related companies, explanations and theme history. Twelve Data contract first.
+1. テーマランキング — standalone entry and ranking detail; may link onward to
+   related companies, explanations and theme history. Official English: Theme Ranking.
+   Claude builds definitions, calculations and the UI with clearly marked sample
+   prices before the contract; real Twelve Data integration follows the contract.
 2. 監視22銘柄リスト — rapidly receive tracked high-tech company information and
    see earnings/important-news implications at a glance.
 3. ウォッチリストの振り返り — weekly changes and upcoming events for selected names,
@@ -46,9 +50,13 @@ The user explicitly rejects generic AI-generated prose as sufficient PRO value.
 
 ### News access
 
-Keep the mobile news entry. FREE receives general-news headlines and short summaries
-15 minutes after the Tech Phase first-publication timestamp; PRO receives immediate
-access plus implications, assessment changes and alerts. Retain true source and
+Keep the mobile news entry. FREE high-tech alerts expose only the newest five
+headlines eligible after a 30-minute delay, with no summary or full text. The earlier
+15-minute/short-summary proposal is superseded. Show the approved notice:
+「PROでは30分早く、要約付きで読めます」. PRO receives real-time alerts, full summaries,
+related companies and cross-checks against earnings, plus entitled notifications.
+The delay clock anchor remains an implementation detail to finalize against source
+and first-publication timestamps; do not treat this note as an implemented gate. Retain true source and
 publication timestamps and label delayed access. Never reset the delay on cosmetic
 edits; corrections must remain identifiable. Enforce release/access on the server,
 not by hiding complete PRO responses in CSS. Earnings/economic result values and
@@ -68,7 +76,7 @@ history. Show newly available factual results promptly without waiting for the f
 PRO interpretation; show analysis progress only for a real queued/running job.
 Do not force a rating change on every event: explicitly record "assessment unchanged"
 and why when evidence supports it. PRO receives immediate implications/history;
-FREE keeps public earnings/results and the allowed delayed general-news summary.
+FREE keeps public earnings/results and the allowed delayed high-tech headlines only.
 Measure release-to-ingestion and ingestion-to-card latency separately, including
 missed-update/recovery tests. A specific seconds/minutes SLA is not yet agreed.
 
@@ -77,9 +85,21 @@ company fundamentals, assessment information allowed by the member's plan, and
 upcoming events visible. Remember the setting and avoid a price flash on reload.
 Do not treat this display preference as a news filter or suppress adverse facts.
 
+Implemented locally on 2026-10-25: the shared CompactQuote on monitored-company
+pages (including MU) has a bilingual price switch. OFF removes the complete
+quote iframe and chart/provider links. The browser remembers the choice across
+companies/reloads; SSR waits for the preference before mounting any price widget.
+Storage-blocked browsers retain the choice for the current session. The directory
+itself contains no prices, so no redundant switch was added there. Stock search
+is unchanged. Validation and publication status are recorded in
+`TECH-PHASE-PRO-CHANGES-2026-10-25.md`.
+
 ### Standalone theme ranking
 
-Direct menu/home entry named テーマ別ランキング -> ranking detail, after the Twelve Data contract. Provide
+Direct menu/home entry named テーマランキング / Theme Ranking -> ranking detail.
+Claude owns the pre-contract foundation (definitions/calculation/UI with sample
+prices); connect live prices only after the Twelve Data contract. Do not duplicate
+Claude's work. Provide
 1-day/1-week/1-month rankings, both ends, constituent contributions, participation
 (e.g. number of rising constituents) and links to source-backed company changes.
 Before implementation fix the universe, overlapping membership, weighting, return
@@ -107,7 +127,9 @@ Counterparty alerts require a sourced, typed, dated business relationship and a
 material event linked to that counterparty. Distinguish customers/suppliers/partners
 from an investment ownership edge in Capital Map. Do not notify on every unrelated
 counterparty headline or manufacture a relationship from coincident news mentions.
-Notification delivery/channel and opt-in details are still to be designed.
+Weekend delivery uses Web Push and in-site display. FREE sees counts only; PRO
+sees the underlying watchlist review. Consent and delivery mechanics remain to be
+implemented. Price-target display is FREE; its smartphone notifications are PRO.
 Link saved research to subsequent evidence and show which prior checkpoint has been
 resolved or remains pending. Sunday: next week's checks, not generic predictions.
 Holiday deep dives reuse theme/company evidence, dated comparisons and Capital Map
@@ -121,6 +143,18 @@ Do not invent three disconnected article sections. First reconcile Capital Map F
 access and record this scope; then build the timely 22-company update/evidence history
 and price toggle, followed by watchlist weekly/upcoming/counterparty views. Connect
 theme-price rankings after contract. Do not change billing as part of these steps.
+
+## Additional confirmed access and naming rules
+
+Company explanations 01–04 below stock search are all FREE. Capital Map is FREE.
+Relationship maps are PRO except NVDA's free sample: label NVDA as a free sample,
+link to it from other companies' PRO notices and from home, and describe the exception
+on the PRO card. Do not conflate ownership data with business relationships.
+
+RIZEL'S DESK contains 週刊 Tech Phase PRO, リゼルのひとりごと and リゼルに聞く.
+The last replaces リサーチQ&A; English is Ask Rizel. Subscriber questions are
+selected and answered by the operator. The notes accumulate a dated market journal
+linked to company pages, earnings and maps, rather than duplicating X posts.
 
 ## Retention candidates
 

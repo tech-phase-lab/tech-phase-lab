@@ -4,3 +4,8 @@
 .links a{color:#b4c5cf;text-decoration:none}
 .links a:last-child{margin-left:auto;color:#d6c49e;font-size:12px}
 .links a:focus-visible{outline:2px solid #d9bd7c;outline-offset:3px}
+.control{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;color:#b4c5cf;font-size:12px}
+.control button{min-width:56px;min-height:36px;border:1px solid #81928a60;border-radius:7px;background:transparent;color:inherit;cursor:pointer}
+.control button[aria-checked="true"]{color:#d6c49e;border-color:#d6c49e80}
+.control button:focus-visible{outline:2px solid #d9bd7c;outline-offset:3px}
+.control button:disabled{cursor:default}

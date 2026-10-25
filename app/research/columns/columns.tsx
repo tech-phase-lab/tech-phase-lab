@@ -77,7 +77,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
   }, [retry, initial, memberPlan, refreshIdentity]);
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
-  return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask RIZEL" : postNames[initialKind][lang]} description="">
+  return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask Rizel" : postNames[initialKind][lang]} description="">
     {initialKind === "weekly" && ownerMode && <WeeklyComposer onPublished={() => setRetry(value => value + 1)} />}
     {initialKind === "all" && <nav className={styles.writeAction}><Link href="/research/weekly">{ja ? "週刊 Tech Phase PRO" : "Tech Phase PRO Weekly"}</Link></nav>}
     {initialKind === "qa" && <nav className={questionStyles.views} aria-label={ja ? "質問メニュー" : "Question views"}><Link href="/research/qa">{ja ? "みんなの質問" : "Questions"}</Link><span aria-current="page">{ja ? "公開された回答" : "Published answers"}</span></nav>}
