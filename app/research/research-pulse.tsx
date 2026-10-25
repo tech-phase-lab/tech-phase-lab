@@ -81,6 +81,10 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   // Owner, Oct 25: the strip must not open on the news-only headline and then jump to a newer company headline,
   // so it waits for the first company-wire answer (or a short grace period) before it shows anything.
   const [wireSettled, setWireSettled] = useState(false);
+  // Keep the strip's space reserved while it loads so the page below does not jump down when it appears;
+  // if nothing ever arrives the space is released after a while.
+  const [gaveUp, setGaveUp] = useState(false);
+  useEffect(() => { const timer = setTimeout(() => setGaveUp(true), 8_000); return () => clearTimeout(timer); }, []);
   const checkedAt = snapshot?.checkedAt;
   useEffect(() => {
     // Company headlines join the strip, refreshed whenever the news feed is; a failure here never affects the rest.
@@ -108,7 +112,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + direction + items.length) % items.length}));
   }
   const item = items[(position.first === first ? position.index : 0) % items.length];
-  if (!item) return null;
+  if (!item) return gaveUp ? null : <div className={styles.slot} aria-hidden="true" />;
   // Japanese readers see Japan time; English readers see U.S. Eastern time.
   const timestamp = pulseClock(item.at, item.kind, ja, "observedAt" in item ? item.observedAt : undefined);
   return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped} tabIndex={0}
