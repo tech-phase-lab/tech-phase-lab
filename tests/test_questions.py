@@ -193,3 +193,20 @@ class DirectAnswerTests(unittest.TestCase):
                 questions.review(db,{"id":QUESTION_ID,"decision":"closed"})
                 with self.assertRaisesRegex(ValueError,'question-not-found'):
                     questions.answer(db,{"id":QUESTION_ID,"body":"復活させない","expectedVersion":updated['post']['version']})
+
+    def test_delete_answer_keeps_question_and_allows_answering_again(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/"q.db"
+            with editorial_posts.connect(path): pass
+            with questions.connect(path) as db:
+                questions.submit(db,{"ownerKey":OWNER_A,"requestId":QUESTION_ID,"body":"決算で最初に見る数字は何ですか？","audience":"pro-board"})
+                questions.answer(db,{"id":QUESTION_ID,"body":"最初の回答です。"})
+                old = editorial_posts.queue(db,published=True)["items"][0]
+                editorial_posts.review(db,{"id":old['id'],"version":old['version'],"kind":"qa","decision":"withdrawn","reviewer":"verified-owner","reason":"Owner deleted reply"})
+                self.assertEqual(editorial_posts.queue(db,published=True)['items'],[])
+                row = db.execute("SELECT * FROM member_questions WHERE id=?", (QUESTION_ID,)).fetchone()
+                self.assertEqual(row['status'],'pending'); self.assertIsNone(row['answer_post_id'])
+                questions.answer(db,{"id":QUESTION_ID,"body":"改めて回答します。"})
+                latest = editorial_posts.queue(db,published=True)['items'][0]
+                self.assertEqual(latest['id'],old['id']); self.assertEqual(latest['bodyJa'],'改めて回答します。')
+                self.assertEqual(db.execute("SELECT count(*) FROM editorial_posts").fetchone()[0],1)

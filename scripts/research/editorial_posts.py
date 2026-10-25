@@ -126,7 +126,7 @@ def review(db, payload):
     expected_kind = payload.get("kind")
     if expected_kind is not None and (not isinstance(expected_kind, str) or expected_kind not in KINDS):
         raise ValueError("invalid-post-kind")
-    if decision not in {"published", "withdrawn"} or not isinstance(actor, str) or not 2 <= len(actor.strip()) <= 120 or not isinstance(reason, str) or not 5 <= len(reason.strip()) <= 500:
+    if decision not in {"published", "withdrawn", "corrected"} or not isinstance(actor, str) or not 2 <= len(actor.strip()) <= 120 or not isinstance(reason, str) or not 5 <= len(reason.strip()) <= 500:
         raise ValueError("invalid-post-review")
     with db:
         db.execute("BEGIN IMMEDIATE")
@@ -136,6 +136,13 @@ def review(db, payload):
         if expected_kind is not None and row["kind"] != expected_kind:
             raise ValueError("post-kind-conflict")
         value = json.loads(row["content"])
+        if decision == "corrected":
+            body = payload.get("bodyJa")
+            if row["status"] != "published" or row["kind"] not in {"notes", "qa"} or not isinstance(body, str) or not 1 <= len(body.strip()) <= 6000 or "\x00" in body:
+                raise ValueError("invalid-post-correction")
+            if value["bodyJa"] == body.strip():
+                return {"item": item(row, True)}
+            value.update(bodyJa=body.strip(), bodyEn="", titleEn="", introEn="")
         if decision == "published":
             if row["kind"] != "notes" and payload.get("verified") is not True:
                 raise ValueError("post-review-required")
@@ -147,8 +154,12 @@ def review(db, payload):
                 raise ValueError("post-sources-required")
         now = stamp()
         published = now if decision == "published" else row["published_at"]
-        db.execute("UPDATE editorial_posts SET version=?,status=?,updated_at=?,published_at=? WHERE id=?",
-                   (version + 1, decision, now, published, post_id))
+        status = "published" if decision == "corrected" else decision
+        db.execute("UPDATE editorial_posts SET version=?,status=?,content=?,updated_at=?,published_at=? WHERE id=?",
+                   (version + 1, status, json.dumps(value, ensure_ascii=False), now, published, post_id))
+        # Removing an answer returns its questions to the unanswered queue atomically.
+        if decision == "withdrawn" and row["kind"] == "qa" and db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='member_questions'").fetchone():
+            db.execute("UPDATE member_questions SET status='pending',answer_post_id=NULL,updated_at=? WHERE answer_post_id=? AND status='answered'", (now, post_id))
         db.execute("INSERT INTO editorial_post_history(post_id,version,action,content,actor,reason,at) VALUES(?,?,?,?,?,?,?)",
                    (post_id, version + 1, decision, json.dumps({"kind": row["kind"], **value}, ensure_ascii=False), actor.strip(), reason.strip(), now))
         return {"item": item(db.execute("SELECT * FROM editorial_posts WHERE id=?", (post_id,)).fetchone(), True)}

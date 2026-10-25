@@ -11,7 +11,7 @@ import styles from "./styles.module.css";
 import { scheduleLeaseRenewal } from "@/lib/research/display-lease";
 import WeeklyComposer from "../weekly/composer";
 import { weeklySections } from "@/lib/research/weekly";
-import AnswerEditor from "../desk/answer-editor";
+import PostActions from "../desk/post-actions";
 import DeskBody from "../desk/body";
 import NoteComposer from "../notes/composer";
 import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
@@ -87,19 +87,22 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
     {shown.status === "loading" && <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "記事を読み込んでいます" : "Loading articles"} />}
     {shown.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
     {shown.status === "ready" && !shown.items.filter(item => kind === "all" || item.kind === kind).length && <section className={styles.article}><h2>{kind === "all" ? ja ? "公開記事は準備中です" : "Articles are being prepared" : ja ? "この種類の記事はまだありません" : "No articles in this category yet"}</h2><p>{ja ? "公開された投稿がここに並びます。" : "Published posts will appear here."}</p><Link href="/research/account">{ja ? "会員情報を確認する" : "View membership"}</Link></section>}
-    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <article className={`${styles.article} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id} key={item.id}>
-      {ownerMode && item.kind === "qa" && /^qa-[a-f0-9]{32}$/.test(item.id) && <AnswerEditor key={`${item.id}-${item.version}`} item={item} onUpdated={() => setRetry(value => value + 1)} />}
-      {ownerMode && item.kind !== "weekly" && !/^qa-[a-f0-9]{32}$/.test(item.id) && <Link href={item.kind === "notes" ? "/research/write" : "/research/editorial"}>{ja ? "編集・削除" : "Edit / unpublish"}</Link>}
-      <div className={item.kind === "notes" ? styles.noteHeader : undefined}>
-      {item.kind === "notes" && <div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div>}
-      {item.kind !== "notes" && <p className={styles.meta}>{postNames[item.kind][lang]} · <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time></p>}
-      </div>
-      <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
-      {item.kind === "notes" && <p className={styles.meta}><time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", timeStyle: "short", hourCycle: "h23", timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}<small className={styles.zone}> JST</small></time></p>}
-      {item.kind !== "notes" && <>{item.kind === "qa" && <p className={styles.questionLabel}>{ja ? "質問" : "QUESTION"}</p>}<h2>{ja ? item.titleJa : item.titleEn}</h2><p className={styles.text}>{ja ? item.introJa : item.introEn}</p></>}
-      {!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : shown.access === "pro" ? <>{item.kind === "qa" && <div className={styles.answerLabel}><span>{ja ? "リゼルの回答" : "RIZEL’S ANSWER"}</span><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /></div>}<div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{item.kind === "weekly" ? weeklySections(ja ? item.bodyJa : item.bodyEn).map((section,index)=><details key={index} className={styles.weeklySection} open={index===0}><summary>{section.title || (ja ? "本文" : "Report")}</summary><p>{section.body}</p></details>) : <DeskBody text={ja ? item.bodyJa : item.bodyEn} media={item.kind === "notes"} />}</div>{item.sources.length > 0 && (item.kind === "weekly" ? <footer className={styles.weeklySourceFooter}><details className={styles.weeklySources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{item.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a></li>)}</ul></details></footer> : <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>)}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>}
-
-      </div>
-    </article>)}
+    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <ColumnArticle key={item.id} item={item} ja={ja} ownerMode={ownerMode} access={shown.access} onUpdated={() => setRetry(value => value + 1)} />)}
   </ResearchToolShell>;
+}
+
+function ColumnArticle({ item, ja, ownerMode, access, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; onUpdated: () => void }) {
+  const [editing, setEditing] = useState(false);
+  const lang = ja ? "ja" : "en";
+  const date = <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind === "notes" ? { timeStyle: "short", hourCycle: "h23" } as const : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time>;
+  const answerLabel = <div className={styles.answerLabel}><span>{ja ? "リゼルの回答" : "RIZEL’S ANSWER"}</span><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /></div>;
+  return <article className={`${styles.article} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id}>
+    {item.kind === "notes" ? <div className={styles.noteHeader}><div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div></div> : <p className={styles.meta}>{postNames[item.kind][lang]} · {date}</p>}
+    <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
+      {item.kind === "notes" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}><p className={styles.meta}>{date}<small className={styles.zone}> JST</small></p></PostActions> : <p className={styles.meta}>{date}<small className={styles.zone}> JST</small></p>)}
+      {item.kind !== "notes" && <>{item.kind === "qa" && <p className={styles.questionLabel}>{ja ? "質問" : "QUESTION"}</p>}<h2>{ja ? item.titleJa : item.titleEn}</h2><p className={styles.text}>{ja ? item.introJa : item.introEn}</p></>}
+      {item.kind === "qa" && access === "pro" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}>{answerLabel}</PostActions> : answerLabel)}
+      {!editing && (!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : access === "pro" ? <><div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{item.kind === "weekly" ? weeklySections(ja ? item.bodyJa : item.bodyEn).map((section,index)=><details key={index} className={styles.weeklySection} open={index===0}><summary>{section.title || (ja ? "本文" : "Report")}</summary><p>{section.body}</p></details>) : <DeskBody text={ja ? item.bodyJa : item.bodyEn} media={item.kind === "notes"} />}</div>{item.sources.length > 0 && (item.kind === "weekly" ? <footer className={styles.weeklySourceFooter}><details className={styles.weeklySources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{item.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a></li>)}</ul></details></footer> : <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>)}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>)}
+    </div>
+  </article>;
 }

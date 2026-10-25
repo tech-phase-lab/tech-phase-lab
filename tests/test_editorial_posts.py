@@ -33,6 +33,23 @@ class EditorialPostsTests(unittest.TestCase):
         self.path = Path(self.tmp.name) / "posts.sqlite"
         self.db = posts.connect(self.path)
 
+    def test_inline_correction_keeps_publication_and_clears_old_translation(self):
+        saved = posts.save(self.db, draft("qa"))["item"]
+        published = posts.review(self.db, review(saved))["item"]
+        corrected = posts.review(self.db, {**review(published, "corrected"), "bodyJa": "==訂正後の回答=="})["item"]
+        self.assertEqual(corrected["status"], "published")
+        self.assertEqual(corrected["publishedAt"], published["publishedAt"])
+        self.assertEqual(corrected["bodyEn"], "")
+        self.assertEqual(corrected["bodyJa"], "==訂正後の回答==")
+        with self.assertRaisesRegex(ValueError, "post-conflict"):
+            posts.review(self.db, {**review(published, "corrected"), "bodyJa": "古い版からの上書き"})
+        with self.assertRaisesRegex(ValueError, "post-kind-conflict"):
+            posts.review(self.db, {**review(corrected, "withdrawn"), "kind": "notes"})
+        removed = posts.review(self.db, review(corrected, "withdrawn"))["item"]
+        self.assertEqual(posts.queue(self.db, published=True)["items"], [])
+        with self.assertRaisesRegex(ValueError, "invalid-post-correction"):
+            posts.review(self.db, {**review(removed, "corrected"), "bodyJa": "非公開を復活させない"})
+
     def tearDown(self):
         self.db.close(); self.tmp.cleanup()
 
