@@ -66,7 +66,7 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         setPlan(member.status === "signed-in" ? (pro ? "pro" : "free") : null);
         // The owner account reads as a member without a paid plan, so it keeps its own short-lived hint.
         const ownerHint = member.status === "signed-in" && member.ownerAccount === true;
-        writeHint(pro || ownerHint ? { plan: pro ? "pro" : "free", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: ownerHint, accessExpiresAt: pro ? member.accessExpiresAt : Date.now() + 6 * 3_600_000 } : null);
+        writeHint(pro || ownerHint ? { plan: pro ? "pro" : "free", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: ownerHint, accessExpiresAt: pro ? member.accessExpiresAt : Date.now() + 7 * 24 * 3_600_000 } : null);
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
       } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { setSettled(true); setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); } }
       finally { if (current === generation) request = null; }

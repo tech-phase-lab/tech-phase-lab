@@ -14,6 +14,8 @@ source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews 
 for (const name of ['news-pulse-items','news-time','news-pulse-headline','company-wire','wire-store']) {
   source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 }
+// The strip waits for the first company-wire answer in the app; these tests start from the settled state.
+source=source.replace('const [wireSettled, setWireSettled] = useState(false);','const [wireSettled, setWireSettled] = useState(true);');
 source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",eastern:"eastern",fresh:"fresh",progress:"progress"};');
 let compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText;
 for(const name of ['react','react/jsx-runtime']) compiled=compiled.replaceAll(JSON.stringify(name),JSON.stringify(pathToFileURL(require.resolve(name)).href));

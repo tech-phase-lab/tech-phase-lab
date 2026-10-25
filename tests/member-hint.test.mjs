@@ -13,3 +13,18 @@ test("last verified paid state is only a display hint that the real check confir
   assert.match(source, /writeHint\(pro \|\| ownerHint \? \{/);
   assert.match(source, /: null\);/);
 });
+
+test('the pre-paint hint script exposes only an unexpired owner/PRO state on <html>', async () => {
+  const { memberHintBoot } = await import('../lib/research/member-hint-boot.ts');
+  const run = (hint) => {
+    const root = { dataset: {} };
+    new Function('localStorage', 'document', memberHintBoot)({ getItem: () => hint === undefined ? null : JSON.stringify(hint) }, { documentElement: root });
+    return root.dataset.memberHint;
+  };
+  const later = Date.now() + 60_000;
+  assert.equal(run({ plan: 'free', ownerAccount: true, accessExpiresAt: later }), 'owner');
+  assert.equal(run({ plan: 'pro', ownerAccount: false, accessExpiresAt: later }), 'pro');
+  assert.equal(run({ plan: 'pro', ownerAccount: false, accessExpiresAt: Date.now() - 1 }), undefined);
+  assert.equal(run({ plan: 'free', accessExpiresAt: later }), undefined);
+  assert.equal(run(undefined), undefined);
+});
