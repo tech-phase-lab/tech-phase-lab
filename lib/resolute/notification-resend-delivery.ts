@@ -19,7 +19,7 @@ export function createResendAlertDelivery(pool:Pick<Pool,"connect">,options:{
   const recipient=createClerkNotificationRecipient(options.clerk);let locale:"ja"|"en"="ja";
   const deliver=createAlertDelivery(pool,{enabled:true,now,publicOrigin:options.publicOrigin,
    recipient:async id=>{const result=await recipient(id);locale=result.locale;return result;},
-   links:async id=>mailStopLinks(options.publicOrigin,tokens,id,locale),
+   links:async id=>({...mailStopLinks(options.publicOrigin,tokens,id,locale),doneUrl:options.publicOrigin+"/resolute/morning#done",skippedUrl:options.publicOrigin+"/resolute/morning#skipped",unsureUrl:options.publicOrigin+"/resolute/morning#unsure"}),
    provider:(client,id)=>createResendAlertProvider({apiKey:options.apiKey,from:options.from,enabled:true},resendOutboxEvidence(client,id),options.request,now),
   });
   return deliver(userId,key,mode);

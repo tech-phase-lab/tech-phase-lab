@@ -406,3 +406,33 @@ test('signed feedback recovers a lost POST response, preserves adverse facts and
   assert.equal(row.accepted_at.toISOString(),now.toISOString());assert.ok(row.payload.resendFeedback.facts.bounced);assert.equal(posts,1);
  }finally{await db.close();}
 });
+
+for(const scenario of ['accepted','lost-response','off','unconfirmed-source','wrong-day'])test(`morning delivery preserves approved timing and durable claims: ${scenario}`,async()=>{
+ const {createResendAlertDelivery}=await import('../lib/resolute/notification-resend-delivery.ts');
+ const {createMailFeedbackStore,parseMailFeedback}=await import('../lib/resolute/notification-feedback.ts');
+ const {createHash}=await import('node:crypto');
+ const {db,pool}=await database();let posts=0,body;const clock=new Date(now.getTime()+86400000),source='user_buyer:2027-02-04:alerts',key='user_buyer:2027-02-05:morning',id='4ef9a417-02e9-4d39-ad75-9611e0fcc33c';
+ const options={enabled:true,apiKey:'re_test_only_not_a_real_key',from:'alerts@mail.example.test',publicOrigin:'https://app.test',stopKey:Buffer.alloc(32,7),now:()=>clock,
+  request:async(url,init)=>{if(init.method==='POST'){posts++;body=JSON.parse(init.body);if(scenario==='lost-response')throw Error('lost');return Response.json({id});}return Response.json({object:'email',id,from:body.from,to:body.to,cc:[],bcc:[],tags:body.tags,created_at:clock.toISOString(),last_event:'delivered',scheduled_at:null});},
+  clerk:{users:{getUser:async userId=>({id:userId,primaryEmailAddressId:'p',emailAddresses:[{id:'p',emailAddress:'buyer@example.test',verification:{status:'verified'}}],publicMetadata:{locale:'en',timezone:'UTC'}})}}};
+ try{
+  await createNotificationStore(pool())('user_buyer','PUT',{settings:{...settings,morningEnabled:true},baseRevision:0});
+  await db.query("INSERT INTO resolute.plans(clerk_user_id,revision,plan,created_at,updated_at) VALUES('user_buyer',1,$1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)",[JSON.stringify(plan)]);
+  await createNotificationOutboxJob(pool(),async()=>inputs,()=>now)('user_buyer');
+  await db.query('UPDATE resolute.notification_outbox SET accepted_at=$1 WHERE idempotency_key=$2',[now.toISOString(),source]);
+  await createNotificationOutboxJob(pool(),async()=>inputs,()=>clock)('user_buyer');
+  if(scenario==='off')await createNotificationStore(pool())('user_buyer','PUT',{settings:{...settings,morningEnabled:false},baseRevision:1});
+  if(scenario==='unconfirmed-source')await db.query('UPDATE resolute.notification_outbox SET accepted_at=NULL WHERE idempotency_key=$1',[source]);
+  if(scenario==='wrong-day')clock.setUTCDate(clock.getUTCDate()+1);
+  const deliver=createResendAlertDelivery(pool(),options);const first=await deliver('user_buyer',key);
+  if(['off','unconfirmed-source','wrong-day'].includes(scenario)){assert.equal(first,'suppressed');assert.equal(posts,0);return;}
+  assert.equal(first,scenario==='accepted'?'accepted':'uncertain');assert.equal(posts,1);
+  assert.match(body.text,/morning#done/);assert.match(body.text,/morning#skipped/);assert.match(body.text,/morning#unsure/);assert.match(body.text,/unsubscribe\?token=u1\./);
+  if(scenario==='lost-response'){
+   const event=parseMailFeedback('msg_morning',{type:'email.delivered',created_at:clock.toISOString(),data:{created_at:clock.toISOString(),email_id:id,from:options.from,to:['buyer@example.test'],tags:{resolute_key:createHash('sha256').update(key).digest('hex')}}},options.from,clock);
+   assert.equal(await createMailFeedbackStore(pool())(event),'recorded');assert.equal(await deliver('user_buyer',key,'reconcile'),'reconciled');
+  }
+  assert.equal(await deliver('user_buyer',key),'already-accepted');assert.equal(posts,1);
+  const row=(await db.query('SELECT payload,accepted_at FROM resolute.notification_outbox WHERE idempotency_key=$1',[key])).rows[0];assert.equal(row.payload.reservation.status,'attempting');assert.equal(row.accepted_at.toISOString(),clock.toISOString());
+ }finally{await db.close();}
+});

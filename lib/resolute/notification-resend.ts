@@ -39,7 +39,7 @@ function acceptedTime(value:unknown) {
 }
 export function createResendAlertProvider(config:{apiKey:string;from:string;enabled?:boolean},evidence:ResendEvidence,request:typeof fetch=fetch,now:()=>Date=()=>new Date()):AlertProvider&{inspect:(key:string,signal:AbortSignal)=>Promise<ResendObservation|null>} {
  if(!/^re_[A-Za-z0-9_-]{10,200}$/.test(config.apiKey)||!email(config.from))throw unavailable();
- const checkKey=(key:string)=>{if(!/^user_[A-Za-z0-9]{1,128}:\d{4}-\d{2}-\d{2}:alerts$/.test(key))throw unavailable();};
+ const checkKey=(key:string)=>{if(!/^user_[A-Za-z0-9]{1,128}:\d{4}-\d{2}-\d{2}:(?:alerts|morning)$/.test(key))throw unavailable();};
  const api=async(path:string,signal:AbortSignal,body?:unknown,idempotency?:string)=>{
   if(!config.enabled)throw unavailable();signal.throwIfAborted();
   return json(await request("https://api.resend.com"+path,{method:body?"POST":"GET",redirect:"error",cache:"no-store",
@@ -91,7 +91,7 @@ export function resendOutboxEvidence(db:Pick<PoolClient,"query">,userId:string):
  const valid=(key:string)=>{if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId)||!key.startsWith(userId+":"))throw unavailable();};
  const blocked=async(recipient:string)=>{
   if(!email(recipient))throw unavailable();
-  const r=await db.query(`SELECT 1 FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind='alerts'
+  const r=await db.query(`SELECT 1 FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind IN ('alerts','morning')
    AND (payload->'resendAttempt'->>'recipientHash'=$2 OR payload->'resend'->>'recipientHash'=$2)
    AND (payload->'resendFeedback'->'facts' ?| ARRAY['bounced','complained','suppressed']
     OR payload->'resendStatus'->>'status' IN ('bounced','complained','suppressed')
@@ -103,17 +103,17 @@ export function resendOutboxEvidence(db:Pick<PoolClient,"query">,userId:string):
   async prepare(key,to,from){valid(key);if(!email(to)||!email(from)||await blocked(to))throw unavailable();
    const attempt={correlation:hash(key),recipientHash:hash(to),fromHash:hash(from)};
    const r=await db.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{resendAttempt}',$3::jsonb)
-    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts' AND accepted_at IS NULL
+    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning') AND accepted_at IS NULL
     AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'
     AND (NOT(payload?'resendAttempt') OR payload->'resendAttempt'=$3::jsonb) RETURNING idempotency_key`,[userId,key,JSON.stringify(attempt)]);
    if(r.rowCount!==1)throw unavailable();
   },
   async read(key){valid(key);const row=(await db.query(`SELECT payload->'resend' AS ref FROM resolute.notification_outbox
-   WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'
+   WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning')
    AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'`,[userId,key])).rows[0];return row?.ref??null;},
   async bind(key,ref){valid(key);if(!uuid(ref.id)||!/^[a-f0-9]{64}$/.test(ref.recipientHash))throw unavailable();
    const r=await db.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{resend}',$3::jsonb)
-    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts' AND accepted_at IS NULL
+    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning') AND accepted_at IS NULL
     AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'
     AND (NOT(payload?'resend') OR payload->'resend'=$3::jsonb) RETURNING idempotency_key`,[userId,key,JSON.stringify(ref)]);
    if(r.rowCount!==1)throw unavailable();},
@@ -121,7 +121,7 @@ export function resendOutboxEvidence(db:Pick<PoolClient,"query">,userId:string):
    const r=await db.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(CASE WHEN payload->'resendFailure'->>'status' IN ('bounced','complained','suppressed') THEN payload
      WHEN $4::jsonb->>'status' IN ('bounced','complained','suppressed','failed')
      THEN jsonb_set(payload,'{resendFailure}',$4::jsonb) ELSE payload END,'{resendStatus}',$4::jsonb)
-    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'
+    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning')
     AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'
     AND payload->'resend'->>'id'=$3
     AND (payload->'resendStatus'->>'checkedAt' IS NULL OR payload->'resendStatus'->>'checkedAt'<=$5)

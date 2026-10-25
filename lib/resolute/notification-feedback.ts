@@ -46,7 +46,7 @@ export function createMailFeedbackStore(pool:Pick<Pool,'connect'>){
   try{
    await c.query('BEGIN');
    const candidates=(await c.query(`SELECT clerk_user_id,idempotency_key FROM resolute.notification_outbox
-    WHERE kind='alerts' AND payload->'resendAttempt'->>'correlation'=$1 LIMIT 2`,[event.correlation])).rows;
+    WHERE kind IN ('alerts','morning') AND payload->'resendAttempt'->>'correlation'=$1 LIMIT 2`,[event.correlation])).rows;
    if(candidates.length===0){await c.query('COMMIT');return 'unmatched';}
    if(candidates.length!==1)throw invalid();
    const {clerk_user_id:userId,idempotency_key:key}=candidates[0];

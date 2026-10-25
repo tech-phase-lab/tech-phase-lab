@@ -10,7 +10,7 @@ export function createMailMonitor(pool:Pick<Pool,'connect'>,options:{enabled?:bo
   const client=await pool.connect();let discard=false;const deadline=Date.now()+30000;
   try{
    const rows=(await client.query(`SELECT clerk_user_id,idempotency_key FROM resolute.notification_outbox
-    WHERE kind='alerts' AND (payload->'reservation'->>'provider'='resend' OR (accepted_at IS NULL AND payload->'reservation'->>'status'='queued'))
+    WHERE kind IN ('alerts','morning') AND (payload->'reservation'->>'provider'='resend' OR (accepted_at IS NULL AND (payload->'reservation'->>'status'='queued' OR (kind='morning' AND NOT(payload?'reservation')))))
     ORDER BY COALESCE(payload->'mailMonitor'->>'checkedAt',''),created_at,idempotency_key LIMIT 26`)).rows;
    report.incomplete=rows.length>25;
    for(const row of rows.slice(0,25)){

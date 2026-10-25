@@ -1,4 +1,5 @@
 import type { Pool, PoolClient } from "pg";
+import {jstSlot} from "./notification-job.ts";
 import type { Digest } from "./alert-judge.ts";
 import { dispatchNotification, type QueuedNotification } from "./notification-dispatch.ts";
 import { claimAlertReservation } from "./notification-reservation.ts";
@@ -6,7 +7,7 @@ import { readEntitlementSnapshot, entitlementSource, type EntitlementSource } fr
 import { parseNotificationSnapshot } from "./notification-settings.ts";
 import { parsePlanSnapshot } from "./plan-data.ts";
 import { notificationRuleKey } from "./notification-rule-key.ts";
-import { renderAlertMail, type RenderedMail } from "./mail-templates.ts";
+import { renderAlertMail, renderNextMorningMail, type RenderedMail } from "./mail-templates.ts";
 
 export type AlertReceipt={key:string;messageId:string;acceptedAt:string};
 export type AlertRecipient={userId:string;email:string;verified:boolean;preferencesConfigured:boolean;unsubscribed:boolean;locale:"ja"|"en"};
@@ -21,7 +22,7 @@ export type AlertProvider={
 type Dependencies={
  enabled?:boolean;provider:AlertProvider|((client:PoolClient,userId:string)=>AlertProvider);now?:()=>Date;source?:EntitlementSource;
  recipient:(userId:string)=>Promise<AlertRecipient>;
- links:(userId:string)=>Promise<{planUrl:string;unsubscribeUrl:string;tonightUrl?:string}>;
+ links:(userId:string)=>Promise<{planUrl:string;unsubscribeUrl:string;tonightUrl?:string;doneUrl?:string;skippedUrl?:string;unsureUrl?:string}>;
  publicOrigin:string;
 };
 function safeLinks(links:Awaited<ReturnType<Dependencies["links"]>>,origin:string) {
@@ -45,7 +46,7 @@ function validReceipt(receipt:AlertReceipt|null,key:string,attemptedAt:unknown,n
 }
 
 /** Disabled unless explicitly injected as enabled. No provider, credentials,
- * cron, signup or endpoint is configured here. Only alert delivery is connected;
+ * cron, signup or endpoint is configured here. Alert and next-morning delivery share the same durable sender;
  * approved next-morning scheduling remains in notification-job.ts unchanged.
  * Session lock spans read/claim/send/receipt. No transaction wraps provider I/O,
  * so a send timeout or failed acknowledgement cannot erase the attempt marker.
@@ -58,6 +59,7 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
   if(!deps.enabled)return "disabled";
   if(mode!=="send"&&mode!=="reconcile")throw new Error("Invalid delivery mode");
   if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId)||key.length>200||!key.startsWith(userId+":"))throw new Error("Invalid delivery identity");
+  const kind=key.endsWith(":morning")?"morning":"alerts";
   const client=await pool.connect();let locked=false,discard=false;
   try{
    const provider=typeof deps.provider==="function"?deps.provider(client,userId):deps.provider;
@@ -65,10 +67,10 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
    discard=true;
    await client.query("SELECT pg_advisory_lock(hashtextextended($1, 0))",[userId]);locked=true;discard=false;
    const row=(await client.query(`SELECT payload,accepted_at,delivery_date_jst::text AS date FROM resolute.notification_outbox
-    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'`,[userId,key])).rows[0];
+    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind=$3`,[userId,key,kind])).rows[0];
    if(!row)return "missing";
    if(row.accepted_at!==null)return "already-accepted";
-   const reservation=row.payload.reservation;
+   const reservation=row.payload.reservation??(kind==="morning"?{version:1,status:"queued"}:undefined);
    if(reservation?.version!==1)return "review-required";
    if(reservation.status==="cancelled")return "cancelled";
    const acknowledge=async(receipt:AlertReceipt)=>{
@@ -89,8 +91,12 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
    }
    if(reservation.status!=="queued")return "review-required";
    if(mode==="reconcile")return "not-attempted";
-   const task:QueuedNotification={key,kind:"alerts",deliveryDateJst:row.date,settingsRevision:row.payload.settingsRevision,ruleKey:row.payload.ruleKey,acceptedAt:null};
+   const task:QueuedNotification={key,kind,deliveryDateJst:row.date,settingsRevision:row.payload.settingsRevision,ruleKey:row.payload.ruleKey,acceptedAt:null};
    let recipient:AlertRecipient|undefined,message:RenderedMail|undefined,receipt:AlertReceipt|null=null,attemptedAt:unknown;
+   if(kind==="morning"){
+    const source=(await client.query("SELECT accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'",[userId,row.payload.sourceAlertId])).rows[0];
+    if(!source?.accepted_at||jstSlot(new Date(source.accepted_at.getTime()+86400000)).date!==row.date)return "suppressed";
+   }
    const result=await dispatchNotification(task,{
     deliveryEnabled:true,now:clock,
     read:async()=>{
@@ -115,6 +121,15 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
      return claimed;
     },
     send:async()=>{
+     if(kind==="morning"){
+      if(!recipient)throw new Error("Recipient missing");
+      const links=safeLinks(await deps.links(userId),deps.publicOrigin);
+      if(!links.doneUrl||!links.skippedUrl||!links.unsureUrl)throw new Error("Morning links missing");
+      message=renderNextMorningMail({locale:recipient.locale,planUrl:links.planUrl,unsubscribeUrl:links.unsubscribeUrl,doneUrl:links.doneUrl,skippedUrl:links.skippedUrl,unsureUrl:links.unsureUrl});
+      const claim=await client.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{reservation}',jsonb_build_object('version',1,'status','attempting','provider',$3::text,'attemptedAt',statement_timestamp()))
+       WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='morning' AND accepted_at IS NULL AND NOT(payload?'reservation') RETURNING payload->'reservation'->>'attemptedAt' AS at`,[userId,key,provider.name]);
+      if(claim.rowCount!==1)throw new Error("Morning already claimed");attemptedAt=claim.rows[0].at;
+     }
      if(!recipient||!message)throw new Error("Mail preparation missing");
      receipt=await provider.send({key,to:recipient.email,mail:message},AbortSignal.timeout(15000));
      if(!validReceipt(receipt,key,attemptedAt,clock()))throw new Error("Unconfirmed acceptance");
