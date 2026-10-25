@@ -20,6 +20,7 @@ import StockLogo from "./stock-logo";
 import { useWatchlistSectors } from "./use-watchlist-sectors";
 import { watchlistSector } from "@/lib/research/watchlist-sector";
 import { formatAlertPrice, upsertPriceAlert } from "@/lib/research/price-alert-settings";
+import StockNotebook from "./stock-notebook";
 import styles from "./watchlist.module.css";
 
 type Company = { ticker: string; name: string; sector?: { ja: string; en: string }; exchange?: string };
@@ -222,6 +223,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
 
       </> : <div className={styles.empty}><span aria-hidden="true" className={styles.emptyStar}>☆</span><h2>{t("いつもの銘柄を、ひとつの画面に。", "Your stocks, together.")}</h2><p>{t("上の検索欄から追加できます", "Add a stock using the search above")}</p></div>}
 
+      {favorites.length > 0 && <StockNotebook tickers={favorites} lang={lang} />}
     </div>
   </ResearchToolShell></WatchlistFrame>;
 }
