@@ -32,3 +32,10 @@ test('the pre-paint hint script exposes only an unexpired owner/PRO state on <ht
 test('the owner hint outlives the owner access window (about an hour) so the next open still shows the header at once', () => {
   assert.match(source, /ownerHint \? Math\.max\(pro \? member\.accessExpiresAt : 0, Date\.now\(\) \+ 7 \* 24 \* 3_600_000\) : member\.accessExpiresAt/);
 });
+
+test('a bad or signed-out answer at startup does not blank or discard the remembered header state', () => {
+  assert.match(source, /remembered && \(!response\.ok \|\| member\.status === "unavailable" \|\| \(member\.status === "signed-out" && \+\+signedOutAnswers < 3\)\)/);
+  assert.match(source, /force && !\(keepDisplay && remembered\)/);
+  // An explicit membership change (sign-in/out, plan change) always starts from a clean display.
+  assert.match(source, /const changed = \(\) => \{ retries = 0; remembered = false; void check\(true\); \};/);
+});

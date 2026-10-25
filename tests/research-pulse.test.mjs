@@ -11,7 +11,7 @@ const require=createRequire(import.meta.url);
 let source=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";',
   'const newsSnapshot = () => globalThis.__pulseTestSnapshot; const serverNewsSnapshot = newsSnapshot; const subscribeNews = () => () => {};');
-for (const name of ['news-pulse-items','news-time','news-pulse-headline','company-wire','wire-store']) {
+for (const name of ['news-pulse-items','news-time','news-pulse-headline','company-wire','wire-store','news-startup']) {
   source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 }
 // The strip waits for the first company-wire answer in the app; these tests start from the settled state.

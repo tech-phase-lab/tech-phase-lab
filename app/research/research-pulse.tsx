@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
+import { takeWireStartup } from "@/lib/research/news-startup";
 import { newsPulseItems } from "@/lib/research/news-pulse-items";
 import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
@@ -91,6 +92,11 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     let alive = true;
     void (async () => {
       try {
+        const started = await takeWireStartup();
+        if (started) {
+          if (!started.error) { const items = parseCompanyWire(started.data).items; if (alive) { setWire(items); publishWire(items); } }
+          return;
+        }
         const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
         if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) { setWire(items); publishWire(items); } }
       } catch { /* keep the previous list */ }
