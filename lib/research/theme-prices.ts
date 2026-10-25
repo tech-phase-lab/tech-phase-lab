@@ -1,6 +1,6 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
-import { THEME_TICKERS } from "./theme-definitions.ts";
+import { tickersOf, type GroupId } from "./theme-definitions.ts";
 import { stockReturns, type CloseSeries, type StockReturns } from "./theme-ranking.ts";
 
 /** Server-side Twelve Data collector for the Theme Ranking. The key lives only in the environment
@@ -41,14 +41,17 @@ async function fetchChunk(symbols: string[], key: string): Promise<CloseSeries[]
   return parseTimeSeries(await response.json(), symbols);
 }
 
-async function collect(): Promise<{ stocks: StockReturns[]; asOf: string }> {
+async function collect(group: GroupId): Promise<{ stocks: StockReturns[]; asOf: string }> {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) throw new Error("not-configured");
+  const tickers = tickersOf(group);
   const series: CloseSeries[] = [];
-  for (let i = 0; i < THEME_TICKERS.length; i += CHUNK) series.push(...await fetchChunk(THEME_TICKERS.slice(i, i + CHUNK), key));
+  for (let i = 0; i < tickers.length; i += CHUNK) series.push(...await fetchChunk(tickers.slice(i, i + CHUNK), key));
   if (!series.length) throw new Error("no-data");
   return { stocks: series.map(stockReturns), asOf: series.map(item => item.asOf).sort().at(-1)! };
 }
 
-/** Ten-minute cache shared by every reader; a failed fetch is never cached (unstable_cache throws through). */
-export const loadThemeReturns = unstable_cache(collect, ["theme-ranking-returns-v1"], { revalidate: 600 });
+/** Ten-minute cache per group, shared by every reader and fetched only when someone opens that group,
+ * so the credits follow what is actually looked at; a failed fetch is never cached (unstable_cache throws through). */
+export const loadThemeReturns = (group: GroupId) =>
+  unstable_cache(() => collect(group), ["theme-ranking-returns-v2", group], { revalidate: 600 })();

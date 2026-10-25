@@ -39,3 +39,18 @@ test('the notice is small, quiet when up to date, and on the pages that show mon
   }
   assert.match(await readFile(new URL('../app/research/research-dashboard.tsx', import.meta.url), 'utf8'), /<FreshnessNotice lang=\{lang\} \/>/);
 });
+
+test('answers that arrive together after returning to the app count once, and a good answer starts over', async () => {
+  const { countBadAnswer } = await import('../lib/research/freshness.ts');
+  let state = { bad: 0, at: 0 };
+  // visibilitychange, pageshow, focus and online can fire together: four bad answers inside one second are one observation.
+  for (let i = 0; i < 4; i++) state = countBadAnswer(state, 'delayed', 1_000_000 + i * 200);
+  assert.equal(state.bad, 1);
+  state = countBadAnswer(state, 'unreachable', 1_000_000 + 30_000);
+  assert.equal(state.bad, 2); // a second answer a poll later does count
+  state = countBadAnswer(state, 'ok', 1_000_000 + 60_000);
+  assert.deepEqual(state, { bad: 0, at: 0 });
+  const source = await readFile(new URL('../app/research/freshness-notice.tsx', import.meta.url), 'utf8');
+  assert.match(source, /running \?\?= /); // one check at a time
+  assert.match(source, /counter\.current = \{ bad: 0, at: 0 \}/); // clean slate on return
+});

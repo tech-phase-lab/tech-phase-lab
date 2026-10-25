@@ -60,3 +60,10 @@
 .sample { margin:14px 0 12px; padding:10px 14px; border:1px dashed #b8923f; border-radius:10px; background:#1b1810; color:#e8d3a0; font-size:12.5px; line-height:1.7; }
 .sample b { margin-right:8px; padding:2px 8px; border-radius:999px; background:linear-gradient(135deg,#fbeab8,#b8923f); color:#241b07; font:700 10.5px var(--font-geist-mono),monospace; letter-spacing:.14em; }
 .sample button { margin-left:8px; padding:2px 10px; border:1px solid #b8923f77; border-radius:999px; background:none; color:#e8d3a0; font-size:12px; cursor:pointer; }
+
+/* Genre chips: a scrolling row above the period switch */
+.groups { display:flex; gap:8px; margin:0 -2px 14px; padding:2px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; }
+.groups::-webkit-scrollbar { display:none; }
+.groups button { flex:none; min-height:36px; padding:0 14px; border:1px solid #2d3948; border-radius:999px; background:#0f1822; color:#aab6c4; font:600 12.5px inherit; letter-spacing:.03em; cursor:pointer; white-space:nowrap; }
+.groups button[aria-pressed="true"] { border-color:#b8923f; color:#fbeab8; background:linear-gradient(120deg,#2a2314,#14100a); box-shadow:0 0 12px #d4aa5522; }
+.groups button:focus-visible { outline:2px solid #ecd08e; outline-offset:2px; }

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { THEMES, THEME_TICKERS } from "../lib/research/theme-definitions.ts";
+import { THEMES, THEME_TICKERS, GROUPS, themesOf, tickersOf, isGroupId } from "../lib/research/theme-definitions.ts";
 import { periodReturn, stockReturns, rankThemes, themeRankingAccess, sampleStockReturns, PERIOD_DAYS } from "../lib/research/theme-ranking.ts";
 
 const series = (ticker, last, first, days = 70) => ({ ticker, asOf: "2026-10-23", closes: Array.from({ length: days }, (_, i) => last - (last - first) * (i / (days - 1))) });
@@ -59,7 +59,7 @@ test("access is PRO only, with an open access window", () => {
 test("the Twelve Data answer is parsed per symbol, newest first, skipping bad symbols", async () => {
   const source = readFileSync(new URL("../lib/research/theme-prices.ts", import.meta.url), "utf8")
     .replace('import "server-only";', "").replace('import { unstable_cache } from "next/cache";', "const unstable_cache = fn => fn;")
-    .replace(/import \{ THEME_TICKERS \} from "\.\/theme-definitions\.ts";/, 'const THEME_TICKERS = [];').replace(/import \{ stockReturns[^;]*;/, "const stockReturns = x => x;");
+    .replace(/import \{ tickersOf[^;]*;/, 'const tickersOf = () => [];').replace(/import \{ stockReturns[^;]*;/, "const stockReturns = x => x;");
   const { stripTypeScriptTypes } = await import("node:module");
   const { parseTimeSeries } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
   const payload = {
@@ -85,6 +85,7 @@ test("the owner-only sample is deterministic, covers every theme and every perio
   const a = sampleStockReturns(THEME_TICKERS), b = sampleStockReturns(THEME_TICKERS);
   assert.deepEqual(a, b);
   assert.equal(rankThemes(a, "1w").length, THEMES.length);
+  for (const group of GROUPS) assert.equal(rankThemes(sampleStockReturns(tickersOf(group.id)), "1w", themesOf(group.id)).length, themesOf(group.id).length, group.id);
   assert.ok(a.every(stock => ["1d", "1w", "1m", "3m"].every(period => Number.isFinite(stock.returns[period]))));
   const route = readFileSync(new URL("../app/api/research/themes/route.ts", import.meta.url), "utf8");
   assert.doesNotMatch(route, /sample/i);
@@ -95,5 +96,17 @@ test("the owner-only sample is deterministic, covers every theme and every perio
 test("the screen lists the themes instead of an error while the price feed is not connected", () => {
   const screen = readFileSync(new URL("../app/research/themes/screen.tsx", import.meta.url), "utf8");
   assert.match(screen, /state === "not-connected" && !sample/);
-  assert.match(screen, /THEMES\.map\(theme => <li key=\{theme\.id\}>/);
+  assert.match(screen, /groupThemes\.map\(theme => <li key=\{theme\.id\}>/);
+});
+
+test("every genre has themes, theme ids are unique across genres, and only known genres are accepted", () => {
+  assert.equal(GROUPS.length, 6);
+  for (const group of GROUPS) { assert.ok(themesOf(group.id).length >= 4, group.id); assert.ok(group.ja && group.en); }
+  assert.ok(THEMES.every(theme => GROUPS.some(group => group.id === theme.group)));
+  assert.equal(new Set(THEMES.map(theme => theme.id)).size, THEMES.length);
+  assert.equal(isGroupId("tech"), true);
+  assert.equal(isGroupId("gold"), false);
+  assert.equal(isGroupId(undefined), false);
+  const route = readFileSync(new URL("../app/api/research/themes/route.ts", import.meta.url), "utf8");
+  assert.match(route, /isGroupId\(requested\)/);
 });
