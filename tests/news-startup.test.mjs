@@ -8,8 +8,8 @@ test('initial HTML starts a single public news request before the UI adopts it',
  const original=globalThis.window;globalThis.window={location:{pathname:'/research'}};let calls=0;
  try{
  const execute=()=>new Function('window','document','fetch',newsStartupScript)(window,{visibilityState:'visible'},async()=>{calls++;return {ok:true,json:async()=>({ok:true,items:[]})};});
- execute();execute();assert.equal(calls,1);
- const pending=takeNewsStartup();assert.deepEqual(await pending,{data:{ok:true,items:[]}});assert.equal(takeNewsStartup(),null);assert.equal(calls,1);
+ execute();execute();assert.equal(calls,2); // the news and the company headlines start together, once
+ const pending=takeNewsStartup();assert.deepEqual(await pending,{data:{ok:true,items:[]}});assert.equal(takeNewsStartup(),null);assert.equal(calls,2);
  }finally{if(original===undefined)delete globalThis.window;else globalThis.window=original;}
 });
 test('failed early request resolves safely for existing retry handling',async()=>{

@@ -36,12 +36,15 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
     let active = true, generation = 0, lastChecked = 0;
     let request: AbortController | null = null;
     let retryTimer: ReturnType<typeof setTimeout> | undefined;
-    let retries = 0;
+    let retries = 0, signedOutAnswers = 0;
+    // True while the header shows the remembered state; a transient bad answer at startup (service waking,
+    // session still restoring) must not blank it or throw the hint away. Only a repeated answer does.
+    let remembered = false;
     function retrySoon() {
-      if (retries++ < 3) retryTimer = setTimeout(() => { void check(true, true); }, 2_000);
+      if (retries++ < 3) retryTimer = setTimeout(() => { void check(true, true, true); }, 2_000);
     }
     let expiry: ReturnType<typeof setTimeout> | undefined;
-    async function check(force = false, resume = false) {
+    async function check(force = false, resume = false, keepDisplay = false) {
       // focus, pageshow and visibilitychange can arrive together on resume.
       // Reuse the running verification instead of aborting/restarting it.
       if (!force && request && !request.signal.aborted) return;
@@ -49,14 +52,15 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
       clearTimeout(retryTimer);
       lastChecked = Date.now(); const current = ++generation;
       request?.abort(); request = new AbortController(); const signal = request.signal;
-      if (force) { setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); setSettled(false); }
+      if (force && !(keepDisplay && remembered)) { setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); setSettled(false); }
       try {
         const { response, member } = await recoverMember(refreshIdentity, AbortSignal.any([signal, AbortSignal.timeout(10000)]), resume || force);
         if (!active || signal.aborted || current !== generation) return;
         clearTimeout(expiry);
         setSettled(true);
+        if (remembered && (!response.ok || member.status === "unavailable" || (member.status === "signed-out" && ++signedOutAnswers < 3))) { retrySoon(); return; }
         if (!response.ok || member.status === "unavailable") { setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); return; }
-        retries = 0;
+        retries = 0; remembered = false; signedOutAnswers = 0;
         setOwner(member.status === "signed-in" && member.isAdmin === true);
         setOwnerMode(member.status === "signed-in" && member.isAdmin === true && member.ownerMode === true);
         // Server-decided: only the approved owner account (never an admin role).
@@ -69,15 +73,16 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         const ownerHint = member.status === "signed-in" && member.ownerAccount === true;
         writeHint(pro || ownerHint ? { plan: pro ? "pro" : "free", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: ownerHint, accessExpiresAt: ownerHint ? Math.max(pro ? member.accessExpiresAt : 0, Date.now() + 7 * 24 * 3_600_000) : member.accessExpiresAt } : null);
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
-      } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { setSettled(true); setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); } }
+      } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { if (remembered) { retrySoon(); return; } setSettled(true); setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); } }
       finally { if (current === generation) request = null; }
     }
-    const changed = () => { retries = 0; void check(true); };
+    const changed = () => { retries = 0; remembered = false; void check(true); };
     const focused = () => { if (document.visibilityState === "visible") void check(false, true); };
     const periodic = () => { if (document.visibilityState === "visible") void check(); };
     if (initial?.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(initial.accessExpiresAt - Date.now(), 2147483647)));
     const hint = initial ? null : readHint();
     if (hint) {
+      remembered = true;
       setPlan(hint.plan); setOwner(hint.owner); setOwnerMode(hint.ownerMode); setOwnerAccount(hint.ownerAccount === true); setSettled(true);
       if (hint.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(hint.accessExpiresAt - Date.now(), 2147483647)));
     }
