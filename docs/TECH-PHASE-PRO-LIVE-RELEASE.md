@@ -47,6 +47,31 @@ Web側はホストが設定する `VERCEL_ENV=production` が必須。previewに
 `TECH_PHASE_BILLING_LIVE_SERVICE_URL` は専用の `https://…up.railway.app` origin。Sandboxと別のURL。
 サービス用トークンは43〜128文字の英数字・`_`・`-`だけで構成する秘密値。
 
+## 接続前の設定確認（オフライン）
+
+ローカルの準備用環境変数を、配置先ごとに確認するコマンドを追加した。
+既存の設定検証を再利用し、DB・PayPal・Railway・Vercelへの接続や設定変更を行わない。
+値・URL・認証情報は出力せず、不足する変数名と固定の問題コードだけを返す。
+
+```sh
+node scripts/tech-phase/check_live_config.mjs web
+node scripts/tech-phase/check_live_config.mjs api
+node scripts/tech-phase/check_live_config.mjs recovery
+```
+
+webはWeb側の変数、apiは決済API側、recoveryは定期照合側の変数を準備したローカル環境で実行する。
+実サービスの環境変数を取得するコマンドではない。秘密値をチャットやGitへ貼り付けない。
+独自ドメイン・本番専用設定が未準備なら不足として止まるのが正しい。
+
+- 終了0：設定の形式が揃い、その配置先の有効化フラグがすべて停止状態。
+- 終了1：不足・形式不正、または有効化済みフラグあり。`missing`・`problems`・`activeFlags`を確認する。
+- 終了2：引数不正または確認処理のエラー。
+- `connectionVerified`と`launchReady`は常にfalse。成功しても接続・プラン実在・DB移行・実受入の証明ではなく、本番受付を開始する許可でもない。
+
+不足設定の検出、Sandboxとの取り違え、同一JPY/USDプラン、別DB/role、ブランチ不一致、
+有効化フラグの検出と、外部接続を禁止したCLI実行を合成テストで確認した。
+購入・解約・照合の処理と画面は変更していない。
+
 ## DBとPayPalの準備
 
 1. DB名 `tech_phase_billing_live`、ログイン名 `tech_phase_billing_live_writer` を用意する。

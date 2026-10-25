@@ -1,5 +1,5 @@
 import { getMembership } from "@/lib/membership/server";
-import { buildComparison, comparisonAccess, validateComparisonTickers } from "@/lib/research/comparison";
+import { buildComparison, comparisonAccess, comparisonExpiresAt, validateComparisonTickers } from "@/lib/research/comparison";
 import { loadComparisonFinancials, resolveComparisonCompany } from "@/lib/research/comparison-server";
 import { buildReviewedTrial } from "@/lib/research/comparison-trial";
 export const dynamic = "force-dynamic";
@@ -16,13 +16,13 @@ export async function GET(request: Request) {
     if (trial) {
       const result = trial === "mu-sndk-20261004" ? buildReviewedTrial(tickers) : null;
       if (!result) return Response.json({ok:false,error:"unknown-trial"},{status:400,headers});
-      return Response.json({ok:true,result,validUntil:"accessExpiresAt" in member ? member.accessExpiresAt : 0},{headers});
+      return Response.json({ok:true,result,validUntil:comparisonExpiresAt(member)},{headers});
     }
     const selected = await Promise.all(tickers.map(resolveComparisonCompany));
     if (selected.some(c => !c)) return Response.json({ ok: false, error: "unknown-company" }, { status: 400, headers });
     const companies = await Promise.all(selected.map(async company => ({ ...company!, ...await loadComparisonFinancials(company!.ticker) })));
     // The entitlement may expire while upstream data is being fetched.
     if (comparisonAccess(member) !== 200) return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
-    return Response.json({ ok: true, result: buildComparison(companies), validUntil: "accessExpiresAt" in member ? member.accessExpiresAt : 0 }, { headers });
+    return Response.json({ ok: true, result: buildComparison(companies), validUntil: comparisonExpiresAt(member) }, { headers });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers }); }
 }

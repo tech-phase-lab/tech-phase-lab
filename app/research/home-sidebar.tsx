@@ -47,8 +47,8 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     { key: "watch", icon: icons.watch, label: t("監視22銘柄", "22 Tracked Stocks"), onClick: () => openView?.("companies"), current: tab === "companies", badge: companyCount === undefined ? null : <em className={styles.count}>{companyCount}</em> },
     { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & Economy"), href: "/research/calendar", current: pathname === "/research/calendar" },
     { key: "map", icon: icons.map, label: t("資本マップ", "Capital Map"), href: "/research/capital-map" },
-    { key: "compare", icon: icons.compare, label: t("銘柄比較", "Compare stocks"), href: "/research/compare", pro: true },
     { key: "themes", icon: icons.market, label: t("テーマランキング", "Theme Ranking"), href: "/research/themes", pro: true },
+    { key: "compare", icon: icons.compare, label: t("銘柄比較", "Stock Comparison"), href: "/research/compare", pro: true },
     { key: "saved", icon: icons.saved, label: t("保存したリサーチ", "Saved research"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
   ];
   const destinations: Record<string, string> = { watch: "/research" + researchViewHashes.companies, metrics: "/research/calendar", saved: "/research" + researchViewHashes.saved };

@@ -1,3 +1,13 @@
+# Owner assignment — 2026-10-25 (latest explicit instruction)
+
+- ALL news work belongs to Claude. Codex must not modify news collection, feeds,
+  translation, summaries, display, caches, FREE/PRO restrictions, or news-specific tests.
+  The news access change a7b58b55 was reverted by 3eedd229 at the owner's request.
+  Do not reapply it. General authorization to continue development is not authorization
+  to work on news. Relationship maps and Theme Ranking also belong to Claude.
+- Codex owns Tech Phase PRO billing and other explicitly assigned non-news work.
+  Railway connection/reauthentication is prohibited. Do not repeat completed purchases.
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
