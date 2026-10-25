@@ -20,7 +20,7 @@ async function relay(request: Request, write = false) {
       if (new TextEncoder().encode(text).length > 2000) return reply(400, { ok: false });
       const input = JSON.parse(text);
       postId = input.postId;
-      if (!["like", "smile", "fire"].includes(input.emoji) || typeof input.selected !== "boolean") return reply(400, { ok: false });
+      if (!["like", "smile", "sad", "angry", "fire"].includes(input.emoji) || typeof input.selected !== "boolean") return reply(400, { ok: false });
       body = JSON.stringify({ postId, emoji: input.emoji, selected: input.selected });
     }
     if (typeof postId !== "string" || !/^[a-z0-9-]{16,64}$/.test(postId)) return reply(400, { ok: false });

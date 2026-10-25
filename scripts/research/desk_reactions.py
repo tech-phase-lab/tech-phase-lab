@@ -2,7 +2,7 @@
 import re
 import editorial_posts
 
-EMOJI = ("like", "smile", "fire")
+EMOJI = ("like", "smile", "sad", "angry", "fire")
 
 
 def connect(path):
