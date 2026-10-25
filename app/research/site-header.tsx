@@ -221,6 +221,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
         {item("/research/compare", "targets", ja ? "銘柄比較 PRO" : "Stock Comparison PRO")}
         {item("/research/watchlist", "star", ja ? "お気に入り" : "Watchlist")}
+        {item("/research/notebook", "saved", ja ? "銘柄手帳" : "Stock Notebook")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
       </div>

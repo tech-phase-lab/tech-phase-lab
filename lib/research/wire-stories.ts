@@ -1,6 +1,7 @@
 import type { Language } from "./data";
 import type { CompanyWireItem } from "./company-wire.ts";
 import { tidyJapanese } from "./ja-text.ts";
+import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
 
 /** Company headlines as stories (owner, Oct 17): the same story arrives for several companies and from
  * several publishers, and the lists showed it five times. One story is one row, listing every company it
@@ -27,8 +28,24 @@ const NOT_NEWS = [
   /\bbuying opportunit(?:y|ies)\b|\bbuy the dip\b|\btime to buy\b|買いの機会|買い時|買い場|押し目買い/i, // opinion pieces that argue for buying carry no news fact
   /逃した[?？]|見逃さない(?:よう|で)|お気に入りの恐竜/,
   /\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:['’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b|今週の(?:主な)?(?:動向|ニュース|まとめ)|週間(?:まとめ|ニュース|動向)/i, // weekly digests read as a teaser for a longer piece
+  /\bweekend trading\b|\bin (?:after|pre)-?(?:hours|market) trading\b.{0,20}\b(?:euros?|yen|pounds?)\b|\btrades? (?:at|for) [\d.,]+ (?:euros?|yen|pounds?)\b|週末取引|[\d.,]+\s?(?:ユーロ|ポンド)で取引/i, // price quotes in a foreign currency while the U.S. market is shut (owner, Oct 26)
 ];
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
+
+/** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).
+ * Only a headline that announces results is judged, and only against a release date we know for that company. */
+const RESULTS_HEADLINE = /\b(?:reports?|announces?|posts?|releases?|delivers?|publishes?)\b.{0,50}\b(?:Q[1-4]|first|second|third|fourth|quarter\w*|fiscal)\b.{0,40}\b(?:results?|earnings)\b|決算(?:を)?発表|決算発表/i;
+const STALE_AFTER_MS = 3 * 24 * 3_600_000;
+const releaseTimes = new Map<string, number[]>();
+for (const event of calendarEvents) if (event.kind === "earnings" && event.ticker) releaseTimes.set(event.ticker, [...(releaseTimes.get(event.ticker) ?? []), Date.parse(event.startsAt)]);
+for (const event of dateOnlyEarnings) if (event.ticker) releaseTimes.set(event.ticker, [...(releaseTimes.get(event.ticker) ?? []), Date.parse(`${event.date}T00:00:00Z`)]);
+export function staleResults(ticker: string, title: string, publishedAt: string) {
+  if (!RESULTS_HEADLINE.test(title)) return false;
+  const at = Date.parse(publishedAt);
+  const before = (releaseTimes.get(ticker) ?? []).filter(time => time <= at);
+  // A release at most three days old, or one we have no date for, is kept.
+  return before.length > 0 && at - Math.max(...before) > STALE_AFTER_MS;
+}
 
 const STOPWORDS = new Set("the and for with from that this its are was has have will into over after than more new how why what stock stocks shares share inc corp says say said amid about could would just now out up down".split(" "));
 const words = (title: string) => new Set((title.toLowerCase().match(/[a-z0-9$.]+/g) ?? []).filter(word => word.length > 2 && !STOPWORDS.has(word)));
@@ -45,7 +62,7 @@ export function wireStories(wire: Record<string, CompanyWireItem[]>, lang: Langu
   const ja = lang === "ja";
   const items = Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(item.titleJa)) : item.titleEn;
-    return title && !isNotNews(item.titleEn) && !isNotNews(title) ? [{ ticker, item, title }] : [];
+    return title && !isNotNews(item.titleEn) && !isNotNews(title) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
   type Cluster = { key: string; words: Set<string>; first: number; tickers: string[]; best: (typeof items)[number] };
   const clusters: Cluster[] = [];

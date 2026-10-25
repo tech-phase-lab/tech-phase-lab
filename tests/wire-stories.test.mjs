@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { wireStories, isNotNews } from '../lib/research/wire-stories.ts';
+import { wireStories, isNotNews, staleResults } from '../lib/research/wire-stories.ts';
 
 const item = (id, titleEn, titleJa, publishedAt, origin = 'third-party') => ({ id, titleEn, titleJa, publisher: 'P', origin, url: `https://example.com/${id}`, publishedAt });
 const WATCHED = new Set(['MU', 'SNDK', 'NVDA', 'CRWV']);
@@ -75,4 +75,17 @@ test('weekly digest headlines are not shown as news', () => {
   assert.equal(isNotNews('Washington bans DeepSeek, Microsoft drops UK project: This Week’s Key Developments'), true);
   assert.equal(isNotNews('ワシントン、DeepSeekを禁止：今週の主な動向'), true);
   assert.equal(isNotNews('Microsoft reports earnings this week'), false);
+});
+
+test('foreign-currency weekend price quotes are not news (owner, Oct 26)', () => {
+  assert.equal(isNotNews('TSMC stock trades at 372.75 euros in weekend trading'), true);
+  assert.equal(isNotNews('TSMC株は週末取引で372.75ユーロで取引される'), true);
+  assert.equal(isNotNews('TSMC raises full-year revenue outlook after strong AI demand'), false);
+});
+
+test('a results headline is stale only days after the known release; other earnings news is kept', () => {
+  assert.equal(staleResults('ASML', 'ASML Holding reports third-quarter results', '2026-10-25T16:48:02Z'), true); // released Oct 14
+  assert.equal(staleResults('ASML', 'ASML Holding reports third-quarter results', '2026-10-14T08:00:00Z'), false); // same day
+  assert.equal(staleResults('ASML', 'ASML orders surge as AI demand lifts outlook', '2026-10-25T16:48:02Z'), false); // not a results headline
+  assert.equal(staleResults('ZZZZ', 'ZZZZ reports third-quarter results', '2026-10-25T16:48:02Z'), false); // no known date
 });
