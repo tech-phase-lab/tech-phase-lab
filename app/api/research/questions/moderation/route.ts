@@ -44,11 +44,13 @@ export async function POST(request: Request) {
     if (!await owner()) return reply(403, { ok: false, error: "owner-required" });
     const text = await request.text();
     if (!text || new TextEncoder().encode(text).length > 32_000) return reply(400, { ok: false, error: "invalid-request" });
-    const input = JSON.parse(text) as { id?: unknown; decision?: unknown; answerPostId?: unknown; body?: unknown };
-    if (input.decision === "reply") {
+    const input = JSON.parse(text) as { id?: unknown; decision?: unknown; answerPostId?: unknown; body?: unknown; expectedVersion?: unknown };
+    if (input.decision === "reply" || input.decision === "edit-reply") {
+      const editing = input.decision === "edit-reply";
+      if (editing && (!Number.isSafeInteger(input.expectedVersion) || Number(input.expectedVersion) < 1)) return reply(400, { ok: false, error: "invalid-answer-version" });
       if (typeof input.id !== "string" || !/^q-[a-f0-9]{32}$/.test(input.id) || typeof input.body !== "string" || !input.body.trim() || input.body.length > 6000 || input.body.includes("\0")) return reply(400, { ok: false, error: "invalid-answer" });
       const { url, token } = configuration("/admin/questions/answer");
-      return relay(url, token, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: input.id, body: input.body }) });
+      return relay(url, token, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: input.id, body: input.body, ...(editing ? { expectedVersion: input.expectedVersion } : {}) }) });
     }
     if (typeof input.id !== "string" || !/^q-[a-f0-9]{32}$/.test(input.id) || !["pending", "answered", "closed"].includes(String(input.decision)) || (input.answerPostId != null && (typeof input.answerPostId !== "string" || input.answerPostId.length > 64))) return reply(400, { ok: false, error: "invalid-request" });
     const { url, token } = configuration("/admin/questions/review");

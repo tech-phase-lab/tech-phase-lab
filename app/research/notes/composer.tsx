@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
+import DeskTextEditor from "../desk/text-editor";
 import styles from "./composer.module.css";
 
 export default function NoteComposer({ onPublished }: { onPublished: () => void }) {
@@ -38,7 +39,7 @@ export default function NoteComposer({ onPublished }: { onPublished: () => void 
     } finally { inFlight.current = false; setBusy(false); }
   }
   return <form className={styles.composer} onSubmit={event => void publish(event)} aria-label="ひとりごとを投稿" aria-busy={busy}>
-    <textarea aria-label="ひとりごとの本文" value={body} onChange={event => setBody(event.target.value)} maxLength={6000} disabled={busy} />
+    <DeskTextEditor label="ひとりごとの本文" value={body} onChange={setBody} disabled={busy} media />
     <div className={styles.actions}>
       <Link href="/research/write">過去の投稿・下書き</Link>
       <span>{body.length.toLocaleString()} / 6,000</span>
