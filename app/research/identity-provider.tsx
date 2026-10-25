@@ -1,4 +1,5 @@
 "use client";
+import { useDiagnosisSessionIdentity } from "../resolute/use-diagnosis-session";
 import { waitForIdentity } from "@/lib/research/member-recovery";
 import { ClerkProvider, useAuth } from "@clerk/nextjs";
 import { jaJP, enUS } from "@clerk/localizations";
@@ -8,6 +9,7 @@ const IdentityRefresh = createContext<(force?: boolean) => Promise<void>>(async 
 export function useIdentityRefresh() { return useContext(IdentityRefresh); }
 function IdentitySession({ children }: { children: ReactNode }) {
   const { isLoaded, getToken, sessionId } = useAuth();
+  useDiagnosisSessionIdentity(isLoaded,sessionId);
   const pending = useRef<{ sessionId: string | null | undefined; task: Promise<void> } | null>(null);
   const refresh = useCallback(async (force = false) => {
     if (!isLoaded) throw Error("identity-loading");

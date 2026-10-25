@@ -1,5 +1,6 @@
 "use client";
 import { useAuth } from "@clerk/nextjs";
+import { useDiagnosisSessionIdentity } from "./use-diagnosis-session";
 import HomeScreen from "./home/screen";
 import DiagnosisScreen from "./screen";
 import SimulationScreen from "./simulation/screen";
@@ -12,6 +13,7 @@ import TonightScreen from "./tonight/screen";
 import NewsScreen from "./news/screen";
 export default function ResoluteIdentity({ simulation=false, notification, extra }: {simulation?:boolean;notification?:"alerts"|"morning";extra?:"home"|"tax"|"thermometer"|"notebook"|"wall"|"tonight"|"news"}) {
  const {isLoaded,sessionId}=useAuth();
+ useDiagnosisSessionIdentity(isLoaded,sessionId);
  if(extra==="home")return <HomeScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(extra==="wall")return <WallScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(extra==="tonight")return <TonightScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
@@ -22,5 +24,5 @@ export default function ResoluteIdentity({ simulation=false, notification, extra
  if(extra==="thermometer")return <ThermometerScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(notification)return <NotificationScreen key={sessionId ?? "signed-out"} identityReady={isLoaded} mode={notification}/>;
  return simulation ? <SimulationScreen key={sessionId ?? "signed-out"} identityReady={isLoaded} /> :
- <DiagnosisScreen key={sessionId ?? "signed-out"} identityReady={isLoaded} />;
+ <DiagnosisScreen key={sessionId ?? "signed-out"} identityReady={isLoaded} draftSession={sessionId ?? undefined} />;
 }

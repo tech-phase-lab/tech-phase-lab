@@ -1,8 +1,9 @@
 "use client";
-import { ReviewLink as Link, usePlanClient } from "./review-context";
-import { useEffect, useRef, useState } from "react";
+import { ReviewLink as Link, usePlanClient, useReview } from "./review-context";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ToolShell from "./tool-shell";
 import { useUnsavedChanges } from "./use-unsaved-changes";
+import { clearDiagnosisSession, readDiagnosisSession, writeDiagnosisSession, DIAGNOSIS_SESSION_TTL } from "@/lib/resolute/diagnosis-session";
 import NumberInput from "./number-input";
 import QuestionTitle from "./question-title";
 import styles from "./diagnosis.module.css";
@@ -41,37 +42,68 @@ const messages = {
  check:"The simulator uses your saved plan once we’ve confirmed it was saved." },
 };
 const sections: Record<string,[string,string]> = { A:["生活とお金","Life and money"],B:["下落への耐え方","Handling a drop"],C:["上昇のとき","During a rally"],D:["投資のスタイル","Your approach"],E:["銘柄と集中","How your investments are spread"],F:["買い増しのルール","Extra purchases"],G:["止まるルール","When to pause"],H:["為替","Exchange rates"] };
-export default function DiagnosisScreen({identityReady=true}:{identityReady?:boolean}) {
- return <ToolShell identityReady={identityReady}>{(locale,deny)=><DiagnosisForm locale={locale} deny={deny}/>}</ToolShell>;
+export default function DiagnosisScreen({identityReady=true,draftSession}:{identityReady?:boolean;draftSession?:string}) {
+ return <ToolShell identityReady={identityReady}>{(locale,deny)=><DiagnosisForm locale={locale} deny={deny} draftSession={draftSession}/>}</ToolShell>;
 }
-function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
+function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:()=>void;draftSession?:string}) {
+ const review=useReview(), channel=review ? "preview" : "live";
+ const [resume] = useState(()=>draftSession ? readDiagnosisSession(draftSession,channel) : null);
+ const baseline=useRef("null"), expiresAt=useRef(resume?.expiresAt ?? Date.now()+DIAGNOSIS_SESSION_TTL);
+ const [draftStorageError,setDraftStorageError]=useState(false);
  const requestPlan = usePlanClient();
  const [draft,setDraft]=useState<DiagnosisDraft>(emptyDiagnosisDraft), [mode,setMode]=useState<"intro"|"questions"|"result">("intro"),[index,setIndex]=useState(0);
  const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(null),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[saved,setSaved]=useState(false);
  const [message,setMessage]=useState<keyof typeof messages.ja|null>(null),[formError,setFormError]=useState<"answer"|"text"|null>(null),[locked,setLocked]=useState(false);
  const pending=useRef<AbortController|null>(null),mutex=useRef(false), heading=useRef<HTMLHeadingElement>(null), c=messages[locale], en=locale==="en";
  const [savedDraft,setSavedDraft]=useState(()=>JSON.stringify(emptyDiagnosisDraft()));
- useUnsavedChanges(busy || JSON.stringify(draft)!==savedDraft);
+ const dirty=JSON.stringify(draft)!==savedDraft;
+ useUnsavedChanges(busy || dirty);
+ const active=!review||review.path==="/resolute/diagnosis";
+ const persistDraft=useCallback((saving=false) => {
+  if(!draftSession)return true;
+  if(!dirty)return clearDiagnosisSession(channel);
+  return writeDiagnosisSession({session:draftSession,channel,expiresAt:expiresAt.current,draft,baseline:baseline.current,mode,index,
+   locked:locked||saving,active,locale});
+ },[draftSession,dirty,channel,draft,mode,index,locked,active,locale]);
+ useEffect(()=>{
+  if(!loading && draftSession)setDraftStorageError(!persistDraft(busy));
+ },[loading,draftSession,persistDraft,busy]);
  const denyRef=useRef(deny); useEffect(()=>{denyRef.current=deny;},[deny]);
  function accept(p:PlanSnapshot) {
+  baseline.current=JSON.stringify(p.plan);
+  expiresAt.current=Date.now()+DIAGNOSIS_SESSION_TTL;
   setSnapshot(p);setLocked(false);setSaved(false);
   const nextDraft=p.plan ? draftFromPlan(p.plan) : emptyDiagnosisDraft();
   setSavedDraft(JSON.stringify(nextDraft));setDraft(nextDraft);setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);
  }
+ const restore=useCallback((p?:PlanSnapshot) => {
+  if(!resume)return;
+  baseline.current=resume.baseline;expiresAt.current=resume.expiresAt;
+  setDraft(resume.draft);setMode(resume.mode);setIndex(resume.index);
+  const conflict=!!p && JSON.stringify(p.plan)!==resume.baseline;
+  setLocked(resume.locked||conflict);
+  if(conflict)setMessage("conflict");else if(resume.locked)setMessage("uncertain");
+ },[resume]);
+ function discard() {
+  if(!window.confirm(en?"Discard unfinished answers and return to the saved plan?":"途中の回答を破棄して保存済みの内容に戻しますか？"))return;
+  clearDiagnosisSession(channel);
+  accept(snapshot ?? {plan:null,revision:0});
+  if(!snapshot)setSnapshot(null);
+ }
  useEffect(()=>{
   const controller=new AbortController();pending.current=controller;
-  void requestPlan(undefined,controller.signal).then(p=>{if(!controller.signal.aborted)accept(p);},e=>{
+  void requestPlan(undefined,controller.signal).then(p=>{if(!controller.signal.aborted){accept(p);restore(p);}},e=>{
    if(controller.signal.aborted)return;
-   if(e instanceof PlanClientError && ["signed-out","denied"].includes(e.kind)){denyRef.current();return;}
-   setMessage("unavailable");
+   if(e instanceof PlanClientError && ["signed-out","denied"].includes(e.kind)){clearDiagnosisSession(channel);denyRef.current();return;}
+   restore();setMessage("unavailable");
   }).finally(()=>{if(!controller.signal.aborted)setLoading(false);});
   return()=>{pending.current?.abort();};
- },[requestPlan]);
+ },[requestPlan,channel,restore]);
  useEffect(()=>{if(mode!=="intro") { heading.current?.focus({preventScroll:true}); heading.current?.scrollIntoView({block:"start",behavior:"instant"}); }},[index,mode]);
  async function reload() {
   if(mutex.current)return;mutex.current=true;setLoading(true);
   const controller=new AbortController();pending.current=controller;
-  try {const p=await requestPlan(undefined,controller.signal);if(!controller.signal.aborted)accept(p);}
+  try {const p=await requestPlan(undefined,controller.signal);if(!controller.signal.aborted){clearDiagnosisSession(channel);accept(p);}}
   catch(e){if(!controller.signal.aborted){if(e instanceof PlanClientError && ["signed-out","denied"].includes(e.kind))deny();else setMessage("unavailable");}}
   finally{mutex.current=false;if(!controller.signal.aborted)setLoading(false);}
  }
@@ -79,12 +111,13 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   if(mutex.current || !snapshot || locked)return;
   let plan;try{plan=draftToPlan(draft);}catch{setMessage("invalid");return;}
   mutex.current=true;setBusy(true);setMessage(null);
+  setDraftStorageError(!persistDraft(true));
   const controller=new AbortController();pending.current=controller;
   try {const p=await requestPlan({plan,baseRevision:snapshot.revision},controller.signal);
-   if(!controller.signal.aborted){setSnapshot(p);setSavedDraft(JSON.stringify(draft));setSaved(true);setMessage("saved");}
+   if(!controller.signal.aborted){clearDiagnosisSession(channel);baseline.current=JSON.stringify(p.plan);setSnapshot(p);setSavedDraft(JSON.stringify(draft));setSaved(true);setMessage("saved");}
   }catch(e){if(controller.signal.aborted)return;
    setSaved(false);
-   if(e instanceof PlanClientError && ["signed-out","denied"].includes(e.kind)){deny();return;}
+   if(e instanceof PlanClientError && ["signed-out","denied"].includes(e.kind)){clearDiagnosisSession(channel);deny();return;}
    setLocked(true);setMessage(e instanceof PlanClientError && e.kind==="conflict" ? "conflict" :
     e instanceof PlanClientError && e.kind==="invalid" ? "invalid" : e instanceof PlanClientError && e.kind==="rate-limited" ? "rate" : "uncertain");
   }finally{mutex.current=false;if(!controller.signal.aborted)setBusy(false);}
@@ -95,6 +128,12 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
    if(index===visible.length-1){draftToPlan(draft);setMode("result");}else setIndex(i=>i+1);
   }catch(e){setFormError(e instanceof Error && e.message==="INVALID_TEXT"?"text":"answer");}
  }
+ const draftNotice=dirty && draftSession ? <div>
+  <p className={draftStorageError?styles.error:styles.muted} role="status">{draftStorageError
+   ? en?"We couldn’t keep your answers in this tab. Reloading may lose them.":"このタブへの一時保存ができません。再読み込みすると回答が失われる場合があります。"
+   : en?"Unfinished answers are kept in this tab for up to 12 hours so you can resume after reloading. They are not saved to the server.":"途中の回答はこのタブ内で最大12時間だけ一時保存し、再読み込み後も再開できます。サーバーには保存していません。"}</p>
+  <button type="button" className={styles.secondary} disabled={loading||busy} onClick={discard}>{en?"Discard unfinished answers":"途中の回答を破棄する"}</button>
+ </div> : null;
  const bodyMessage=<>{loading?<p role="status" className={styles.status}>{c.loading}</p>:null}
   {message?<p role="status" className={message==="saved" || message==="existing"?styles.status:styles.error}>{c[message]}</p>:null}</>;
  const reloadButton=<button type="button" className={styles.secondary} disabled={loading||busy} onClick={()=>void reload()}>{c.reload}</button>;
@@ -104,7 +143,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほどルールは鮮明になります。<br/>※所要時間 約5分</>}</p>
   <fieldset className={styles.currencyChoice} aria-label={en?"Currency":"通貨"}>{(["JPY","USD"] as const).map(currency=><button type="button" key={currency} aria-pressed={draft.currency===currency} disabled={!!snapshot?.plan||loading} onClick={()=>{if(currency===draft.currency)return;if(Object.values(draft.answers).some(v=>v!==null)&&!window.confirm(en?"Changing currency clears your answers. Start again?":"通貨を変えると回答を消して最初から入力します。変更しますか？"))return;setDraft({...emptyDiagnosisDraft(),currency});}}>{currency==="JPY"?en?"Japanese yen · JPY":"日本円 · JPY":en?"US dollars · USD":"米ドル · USD"}</button>)}</fieldset>
 
-  {bodyMessage}
+  {bodyMessage}{draftNotice}
   <button type="button" className={styles.primary} disabled={loading||locked} onClick={()=>{setMode("questions");setSaved(false);}}>{snapshot?.plan?c.redo:c.start}</button>
   {snapshot?.plan?<Link className={styles.primary} href="/resolute/notebook" prefetch={false}>{en?"Open my rulebook":"マイルールを開く"}</Link>:null}
   {snapshot?.plan?<Link className={styles.secondary} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
@@ -132,6 +171,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
      <span id={`range-${q.id}`} className={styles.muted}>{limits.min.toLocaleString()}–{limits.max.toLocaleString()}{q.id==="q25"?(en?" (keeps every step below 100%)":"（すべての段階が100%未満になる範囲）"):""}</span>
     </label>:null}
     {q.free?<label className={styles.field}>{c.free}<textarea value={draft[q.free].join("\n")} onChange={e=>{const field=q.free!;setDraft(d=>({...d,[field]:e.target.value.split("\n")}));}} aria-describedby="privacy-note"/><span id="privacy-note" className={styles.muted}>{c.private}</span></label>:null}
+    {draftNotice}
     {formError?<p className={styles.error} role="alert">{c[formError]}</p>:null}
     <div className={`${styles.nav} ${styles.questionNav}`}><button type="button" className={styles.secondary} onClick={()=>{setFormError(null);if(index===0)setMode("intro");else setIndex(i=>i-1);}}>{c.back}</button>
      <button type="button" className={styles.primary} onClick={next}>{index===visible.length-1?c.result:c.next}</button></div>
@@ -147,7 +187,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <p className={styles.closing}><span>{c.closingFirst}</span><span>{c.closingLast}</span></p>
   <section className={styles.card}><p className={styles.muted}>{result.disclaimer}</p>
    {!result.buyLines.length&&draft.answers.q24!=="none"?<p className={styles.muted}>{c.later}</p>:null}
-   {bodyMessage}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
+   {bodyMessage}{draftNotice}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
    {saved?<Link className={styles.secondary} href="/resolute/wall" prefetch={false}>{locale==="en"?"Make your rules wallpaper":"ルールのお守りを作る"}</Link>:null}
    {saved?<Link className={`${styles.primary} ${styles.continueButton}`} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
    <button type="button" className={styles.secondary} disabled={busy||loading} onClick={()=>{setMode("questions");setSaved(false);setMessage(null);}}>{c.edit}</button>

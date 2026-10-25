@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { requestReviewAccess, type ReviewAccess, type ReviewSessionToken } from "@/lib/resolute/review-client";
 import { createReviewSamplePlan } from "@/lib/resolute/review-sample";
+import { readDiagnosisSession } from "@/lib/resolute/diagnosis-session";
 import controls from "./controls.module.css";
 import { createReviewStore } from "@/lib/resolute/review-store";
 import { ReviewContext, type ReviewPath } from "../review-context";
@@ -17,7 +18,7 @@ import WallScreen from "../wall/screen";
 import TonightScreen from "../tonight/screen";
 import NewsScreen from "../news/screen";
 import styles from "../diagnosis.module.css";
-export default function ReviewScreen({getSessionToken}:{getSessionToken?:ReviewSessionToken}) {
+export default function ReviewScreen({getSessionToken,draftSession}:{getSessionToken?:ReviewSessionToken;draftSession?:string}) {
  const [access, setAccess] = useState<{status:ReviewAccess|"loading"; authorized:boolean}>({status:"loading",authorized:false});
  const {status,authorized}=access;
  const tokenRef=useRef(getSessionToken);
@@ -37,7 +38,7 @@ export default function ReviewScreen({getSessionToken}:{getSessionToken?:ReviewS
   const focus = () => void check(); window.addEventListener("focus",focus);
   return () => { controller.abort(); clearInterval(timer); window.removeEventListener("focus",focus); };
  },[attempt]);
- return <>{authorized ? <div hidden={status !== "allowed"}><Workspace/></div> : null}
+ return <>{authorized ? <div hidden={status !== "allowed"}><Workspace draftSession={draftSession}/></div> : null}
  {status !== "allowed" ? <main className={styles.page}><div className={styles.wrap}><section className={styles.card}>
   <h1>RESOLUTE</h1><p role="status">{status === "loading" ? "運営者のログインを確認しています…" : status === "denied" ?
    "この入口はRIZELさんの運営者アカウント専用です。Tech Phaseと同じアカウントでログインしてください。" : authorized ? "接続を確認できませんでした。入力は保持しています。「再確認」を押してください。" : "接続を確認できませんでした。もう一度お試しください。"}</p>
@@ -45,7 +46,8 @@ export default function ReviewScreen({getSessionToken}:{getSessionToken?:ReviewS
   <a href="/research/account">ログイン中のアカウントを確認する</a>
  </section></div></main> : null}</>;
 }
-function Workspace() {
+function Workspace({draftSession}:{draftSession?:string}) {
+ const [resuming] = useState(()=>draftSession ? readDiagnosisSession(draftSession,"preview") : null);
  const [store] = useState(() => {
   try { return createReviewStore(window.localStorage); } catch { return createReviewStore(); }
  });
@@ -54,9 +56,9 @@ function Workspace() {
  const [opening,setOpening] = useState(false);
  const [scenario,setScenario] = useState<import("@/lib/resolute/review-scenarios").ReviewScenario>("sample");
  const [showRizel,setShowRizel] = useState(false);
- const [path,setPath] = useState<ReviewPath>("/resolute");
+ const [path,setPath] = useState<ReviewPath>(resuming?.active ? "/resolute/diagnosis" : "/resolute");
  const [notificationsVisited,setNotificationsVisited]=useState(false);
- const [locale,setLocale] = useState<DiagnosisLocale>("ja");
+ const [locale,setLocale] = useState<DiagnosisLocale>(resuming?.locale ?? "ja");
  function navigate(next: ReviewPath) {
   if(next==="/resolute/alerts"||next==="/resolute/morning")setNotificationsVisited(true);
   setPath(next);
@@ -92,12 +94,12 @@ function Workspace() {
    <p><a href={`/resolute/checkout?lang=${locale}`}>{en?"Test checkout (Sandbox)":"テスト購入（Sandbox）"}</a></p>
    <label><input type="checkbox" checked={persistence.remembered} onChange={event=>store.setRemembered(event.target.checked)}/>
     {en?"Keep saved preview rules and settings on this device":"保存した確認用ルールと設定をこの端末に残す"}</label>
-   <p className={controls.note}>{en?"This includes your financial amounts and answers. Use only on your own device. Uncheck to remove the saved copy. Unfinished quiz answers won’t be kept.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の未保存の回答は残りません"}</p>
+   <p className={controls.note}>{en?"This includes your financial amounts and answers. Use only on your own device. Uncheck to remove the saved copy. Unfinished quiz answers are kept temporarily in this tab for up to 12 hours, separately from this setting.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の回答は、この設定とは別に、このタブ内で最大12時間だけ一時保存します。"}</p>
    {persistence.error?<p role="status">{en?"We couldn’t save or remove the copy on this device. Your changes are still here in this tab.":"端末への保存・削除を確認できませんでした。この画面内の入力は保持しています"}</p>:null}
    </details>
   </aside>
   {path === "/resolute" ? <HomeScreen/> : null}
-  <div hidden={path !== "/resolute/diagnosis"}><DiagnosisScreen key={planVersion}/></div>
+  <div hidden={path !== "/resolute/diagnosis"}><DiagnosisScreen key={planVersion} draftSession={draftSession}/></div>
   {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
    path === "/resolute/wall" ? <WallScreen/> : path === "/resolute/tonight" ? <TonightScreen/> : path === "/resolute/news" ? <NewsScreen/> : path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
   {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}
