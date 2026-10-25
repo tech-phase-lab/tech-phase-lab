@@ -29,3 +29,13 @@ test("the limit applies to the 速報 page only: the home news and the news API 
     assert.doesNotMatch(readFileSync(new URL(file, import.meta.url), "utf8"), /free-flash|freeFlashRows/, file);
   }
 });
+
+test("the company page's monitor is the same FREE window, retitled so the name stays honest", async () => {
+  const { freeWindow } = await import("../lib/research/free-flash.ts");
+  const items = [{ id: "a", t: NOW - 10 * 60_000 }, { id: "b", t: NOW - 40 * 60_000 }, { id: "c", t: NOW - 50 * 60_000 }];
+  assert.deepEqual(freeWindow(items, item => item.t, NOW).map(item => item.id), ["b", "c"]);
+  const source = readFileSync(new URL("../app/research/companies/company-activity.tsx", import.meta.url), "utf8");
+  assert.match(source, /const rows = full \? allRows : freeWindow\(allRows, rowInstant, clockNow\)/);
+  assert.match(source, /full \? \(ja \? 'リアルタイム監視' : 'Live monitor'\) : \(ja \? 'ニュース監視' : 'News monitor'\)/); // only PRO/owner read "real-time"
+  assert.match(source, /\{full \? <a href=\{row\.wire\.url\}/); // no outbound link for FREE
+});

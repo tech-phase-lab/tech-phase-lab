@@ -14,3 +14,10 @@ export function freeFlashRows(rows: readonly FlashRow[], now = Date.now()): Flas
     // Headline only: no summary, no linked text.
     .map(({ body: _body, url: _url, ...row }) => row);
 }
+
+/** The same window for any newest-first list that carries a timestamp (the company page's monitor uses it too):
+ * at least 30 minutes old, newest first, at most five. */
+export function freeWindow<T extends { id: string }>(rows: readonly T[], instantOf: (row: T) => number, now = Date.now()): T[] {
+  const cutoff = now - FREE_FLASH_DELAY_MS;
+  return rows.filter(row => instantOf(row) <= cutoff).sort((a, b) => instantOf(b) - instantOf(a) || a.id.localeCompare(b.id)).slice(0, FREE_FLASH_LIMIT);
+}

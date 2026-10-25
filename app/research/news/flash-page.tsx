@@ -5,7 +5,7 @@ import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { flashRows, WATCH_TICKERS, type FlashRow } from "@/lib/research/flash-rows";
-import { freeFlashRows, FREE_FLASH_LIMIT } from "@/lib/research/free-flash";
+import { freeFlashRows } from "@/lib/research/free-flash";
 import Link from "next/link";
 import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { providers } from "@/lib/research/intake";
@@ -149,7 +149,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
         </div>
       </details>
     </div>
-    {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? `30分遅れで、新しい順に直近${FREE_FLASH_LIMIT}件・見出しのみを表示しています。` : `Showing the latest ${FREE_FLASH_LIMIT} headlines, 30 minutes behind.`} <Link href="/research#tech-phase-pro">{ja ? "PROでは、30分早く、要約付きで読めます" : "PRO shows them 30 minutes earlier, with summaries"}</Link></p>}
+    {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件・見出しのみ" : " 30 min behind · latest 5 · headlines only"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム＋要約付きです。" : "PRO: real-time, with summaries."}</Link></p>}
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
