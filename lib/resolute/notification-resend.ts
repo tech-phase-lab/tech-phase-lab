@@ -12,6 +12,8 @@ type Reference={id:string;recipientHash:string};
 export type ResendStatus="sent"|"delivered"|"delivery_delayed"|"bounced"|"failed"|"complained"|"suppressed"|"unknown";
 export type ResendObservation={status:ResendStatus;checkedAt:string;acceptedAt:string};
 export type ResendEvidence={
+ prepare:(key:string,to:string,from:string)=>Promise<void>;
+ blocked:(recipient:string)=>Promise<boolean>;
  read:(key:string)=>Promise<Reference|null>;
  bind:(key:string,reference:Reference)=>Promise<void>;
  observe:(key:string,id:string,result:ResendObservation)=>Promise<void>;
@@ -37,7 +39,7 @@ function acceptedTime(value:unknown) {
 }
 export function createResendAlertProvider(config:{apiKey:string;from:string;enabled?:boolean},evidence:ResendEvidence,request:typeof fetch=fetch,now:()=>Date=()=>new Date()):AlertProvider&{inspect:(key:string,signal:AbortSignal)=>Promise<ResendObservation|null>} {
  if(!/^re_[A-Za-z0-9_-]{10,200}$/.test(config.apiKey)||!email(config.from))throw unavailable();
- const checkKey=(key:string)=>{if(!/^user_[A-Za-z0-9]{1,128}:\d{4}-\d{2}-\d{2}:alerts$/.test(key))throw unavailable();};
+ const checkKey=(key:string)=>{if(!/^user_[A-Za-z0-9]{1,128}:\d{4}-\d{2}-\d{2}:(?:alerts|morning)$/.test(key))throw unavailable();};
  const api=async(path:string,signal:AbortSignal,body?:unknown,idempotency?:string)=>{
   if(!config.enabled)throw unavailable();signal.throwIfAborted();
   return json(await request("https://api.resend.com"+path,{method:body?"POST":"GET",redirect:"error",cache:"no-store",
@@ -65,12 +67,13 @@ export function createResendAlertProvider(config:{apiKey:string;from:string;enab
   const ref=await evidence.read(key);if(!ref)throw unavailable();
   return {key,messageId:ref.id,acceptedAt:result.acceptedAt};
  };
- return {name:"resend",inspect,lookup,async send(input,signal){
+ return {name:"resend",inspect,lookup,recipientAllowed:async recipient=>!await evidence.blocked(recipient),async send(input,signal){
   try{
    if(!config.enabled)throw unavailable();checkKey(input.key);signal.throwIfAborted();
    if(!email(input.to)||!input.mail||typeof input.mail.subject!=="string"||!input.mail.subject||input.mail.subject.length>998||/[\r\n]/.test(input.mail.subject)||typeof input.mail.text!=="string"||!input.mail.text||Buffer.byteLength(input.mail.text)>60000)throw unavailable();
    const existing=await evidence.read(input.key);
    if(existing){if(existing.recipientHash!==hash(input.to))throw unavailable();return await lookup(input.key,signal);}
+   await evidence.prepare(input.key,input.to,config.from);
    const data=await api('/emails',signal,{from:config.from,to:[input.to],subject:input.mail.subject,text:input.mail.text,tags:[{name:'resolute_key',value:hash(input.key)}]},'resolute-'+hash(input.key));
    if(!uuid(data.id))throw unavailable();
    // Persist provider ID BEFORE receipt retrieval. A GET/ack outage can resume
@@ -86,19 +89,39 @@ export function createResendAlertProvider(config:{apiKey:string;from:string;enab
  */
 export function resendOutboxEvidence(db:Pick<PoolClient,"query">,userId:string):ResendEvidence {
  const valid=(key:string)=>{if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId)||!key.startsWith(userId+":"))throw unavailable();};
+ const blocked=async(recipient:string)=>{
+  if(!email(recipient))throw unavailable();
+  const r=await db.query(`SELECT 1 FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind IN ('alerts','morning')
+   AND (payload->'resendAttempt'->>'recipientHash'=$2 OR payload->'resend'->>'recipientHash'=$2)
+   AND (payload->'resendFeedback'->'facts' ?| ARRAY['bounced','complained','suppressed']
+    OR payload->'resendStatus'->>'status' IN ('bounced','complained','suppressed')
+    OR payload->'resendFailure'->>'status' IN ('bounced','complained','suppressed')) LIMIT 1`,[userId,hash(recipient)]);
+  return r.rows.length>0;
+ };
  return {
+  blocked,
+  async prepare(key,to,from){valid(key);if(!email(to)||!email(from)||await blocked(to))throw unavailable();
+   const attempt={correlation:hash(key),recipientHash:hash(to),fromHash:hash(from)};
+   const r=await db.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{resendAttempt}',$3::jsonb)
+    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning') AND accepted_at IS NULL
+    AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'
+    AND (NOT(payload?'resendAttempt') OR payload->'resendAttempt'=$3::jsonb) RETURNING idempotency_key`,[userId,key,JSON.stringify(attempt)]);
+   if(r.rowCount!==1)throw unavailable();
+  },
   async read(key){valid(key);const row=(await db.query(`SELECT payload->'resend' AS ref FROM resolute.notification_outbox
-   WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'
+   WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning')
    AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'`,[userId,key])).rows[0];return row?.ref??null;},
   async bind(key,ref){valid(key);if(!uuid(ref.id)||!/^[a-f0-9]{64}$/.test(ref.recipientHash))throw unavailable();
    const r=await db.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{resend}',$3::jsonb)
-    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts' AND accepted_at IS NULL
+    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning') AND accepted_at IS NULL
     AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'
     AND (NOT(payload?'resend') OR payload->'resend'=$3::jsonb) RETURNING idempotency_key`,[userId,key,JSON.stringify(ref)]);
    if(r.rowCount!==1)throw unavailable();},
   async observe(key,id,result){valid(key);
-   const r=await db.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{resendStatus}',$4::jsonb)
-    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'
+   const r=await db.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(CASE WHEN payload->'resendFailure'->>'status' IN ('bounced','complained','suppressed') THEN payload
+     WHEN $4::jsonb->>'status' IN ('bounced','complained','suppressed','failed')
+     THEN jsonb_set(payload,'{resendFailure}',$4::jsonb) ELSE payload END,'{resendStatus}',$4::jsonb)
+    WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind IN ('alerts','morning')
     AND payload->'reservation'->>'provider'='resend' AND payload->'reservation'->>'status'='attempting'
     AND payload->'resend'->>'id'=$3
     AND (payload->'resendStatus'->>'checkedAt' IS NULL OR payload->'resendStatus'->>'checkedAt'<=$5)

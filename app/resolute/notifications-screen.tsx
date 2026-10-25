@@ -34,6 +34,12 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const planDialog=useRef<HTMLDialogElement>(null);
  useEffect(()=>{if(planOpen)planDialog.current?.showModal();else planDialog.current?.close();},[planOpen]);
  const [message,setMessage]=useState(""),[change,setChange]=useState(-25),[pick,setPick]=useState<"done"|"skipped"|"unsure"|null>(null);
+ useEffect(()=>{
+  if(mode!=="morning")return;
+  let active=true;const value=window.location.hash.slice(1);
+  if(value==="done"||value==="skipped"||value==="unsure")queueMicrotask(()=>{if(active)setPick(value);});
+  return()=>{active=false;};
+ },[mode]);
  const controllerRef=useRef<AbortController|null>(null),mutex=useRef(false),denyRef=useRef(deny);
  useEffect(()=>{denyRef.current=deny;},[deny]);
  useEffect(()=>{const c=new AbortController();controllerRef.current=c;

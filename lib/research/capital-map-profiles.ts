@@ -2,9 +2,36 @@
 export type CapitalProfile = {
   person: [string, string]; role: [string, string]; description: [string, string]; source: string;
   leadership?: [string, string];
+  checkedOn?: string;
   portrait?: { url: string; source: string; credit: string; license: string; licenseUrl: string };
 };
 export const capitalProfiles: Record<string, CapitalProfile> = {
+  thiel: {
+    person: ["ピーター・ティール", "Peter Thiel"], role: ["関連運用会社：Thiel Macro", "Associated manager: Thiel Macro"],
+    description: ["Thiel MacroのSEC開示に基づく保有情報。個人資産全体を示すものではありません。", "Holdings disclosed by Thiel Macro, not a complete personal portfolio."],
+    source: "https://www.sec.gov/Archives/edgar/data/1810747/000182912625005082/simplifyexchange_485apos.htm", checkedOn: "2026-10-25",
+  },
+  soros: {
+    person: ["ジョージ・ソロス", "George Soros"], role: ["創業者", "Founder"],
+    description: ["Soros Fund Managementの開示保有。創業者個人の売買を示すものではありません。", "Disclosed holdings of Soros Fund Management, not the founder’s personal trades."],
+    source: "https://sorosfundmgmt.com/about/", checkedOn: "2026-10-25",
+  },
+  ark: {
+    person: ["キャシー・ウッド", "Cathie Wood"], role: ["創業者", "Founder"],
+    description: ["ARK Investment Management全体の13F開示。ARKK単独の保有情報ではありません。", "ARK Investment Management’s aggregate 13F holdings, not ARKK alone."],
+    source: "https://www.ark-invest.com/board-of-directors", checkedOn: "2026-10-25",
+  },
+  jpmorgan: {
+    person: ["JPモルガン・チェース", "JPMorgan Chase"], role: ["13F提出運用会社", "13F reporting manager"],
+    description: ["JPモルガン・チェースが運用裁量を持つ開示対象保有。自行の資産だけを示すものではありません。", "Reportable holdings under JPMorgan Chase’s investment discretion, not solely its own assets."],
+    source: "https://www.sec.gov/Archives/edgar/data/19617/000001961726000325/primary_doc.xml", checkedOn: "2026-10-25",
+  },
+  blackrock: {
+    person: ["ブラックロック", "BlackRock"], role: ["13F提出運用会社", "13F reporting manager"],
+    description: ["BlackRockの13F開示対象保有。全運用資産や特定ETF単独の構成とは異なります。", "BlackRock’s reportable 13F holdings, not total assets under management or a single ETF."],
+    source: "https://www.sec.gov/Archives/edgar/data/2012383/000201238326003238/primary_doc.xml", checkedOn: "2026-10-25",
+  },
+
   nvidia: {
     person: ["ジェンスン・フアン", "Jensen Huang"], role: ["共同創業者・CEO", "Co-Founder & CEO"],
     description: ["GPUを軸にAIの計算基盤を支える。", "GPUs powering AI computing."],

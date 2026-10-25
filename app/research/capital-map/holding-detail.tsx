@@ -25,13 +25,13 @@ export default function HoldingDetail({ portfolio, securityId, instrument, basel
         <div><small>{t("保有評価額", "Holding value")}</small><strong>{portfolio.current.source?.type === "issuer" && portfolio.current.source.totalValue === 0 ? "—" : money(row.value)}</strong><span>USD · {portfolio.current.asOf}</span></div>
         <div><small>{t("構成比", "Portfolio weight")}</small><strong>{row.weight > 0 && row.weight < .01 ? "<0.01" : row.weight.toFixed(2)}%</strong><span>{portfolio.name}</span></div>
       </div>
-      <h2>{t("保有株数の変化", "Change in shares held")}</h2>
+      <h2>{row.instrument === "bond" ? t("保有元本の変化", "Change in principal held") : t("保有株数の変化", "Change in shares held")}</h2>
       <div className={styles.detailShares}>
         <div><small>{baseline?.asOf ?? t("比較データなし", "No comparison data")}</small><strong>{previousShares === null ? "—" : number(previousShares)}</strong></div>
         <span aria-hidden="true">→</span>
         <div><small>{portfolio.current.asOf}</small><strong>{number(row.shares)}</strong></div>
       </div>
-      <p className={styles.detailDelta} data-change={row.change}>{delta === null ? t("増減は未確認", "Change unavailable") : `${delta > 0 ? "+" : ""}${number(delta)} ${t("株", "shares")}`}{row.shareChangePercent !== null && <span> ({row.shareChangePercent > 0 ? "+" : ""}{row.shareChangePercent.toFixed(2)}%)</span>}{row.change === "new" && <span> · {t("新規保有", "New holding")}</span>}{row.change === "exited" && <span> · {t("保有解消", "Position exited")}</span>}</p>
+      <p className={styles.detailDelta} data-change={row.change}>{delta === null ? t("増減は未確認", "Change unavailable") : `${delta > 0 ? "+" : ""}${number(delta)} ${row.instrument === "bond" ? t("USD（元本）", "USD principal") : t("株", "shares")}`}{row.shareChangePercent !== null && <span> ({row.shareChangePercent > 0 ? "+" : ""}{row.shareChangePercent.toFixed(2)}%)</span>}{row.change === "new" && <span> · {t("新規保有", "New holding")}</span>}{row.change === "exited" && <span> · {t("保有解消", "Position exited")}</span>}</p>
       {old && <p className={styles.detailOwner}>{t("前回の保有評価額", "Previous holding value")}: {baseline?.source?.type === "issuer" && baseline.source.totalValue === 0 ? "—" : money(old.value)}</p>}
       {portfolio.current.source && <div className={styles.source}><a href={portfolio.current.source.url} target="_blank" rel="noreferrer">{t("今回の開示", "Current source")}</a>{baseline?.source && <a href={baseline.source.url} target="_blank" rel="noreferrer">{t("比較元の開示", "Comparison source")}</a>}</div>}
     </>}

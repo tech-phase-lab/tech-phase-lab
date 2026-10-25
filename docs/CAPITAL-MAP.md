@@ -166,3 +166,49 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Reworded each of the five corporate descriptions around its business, avoiding repeated 「テック企業」 endings while keeping short Japanese/English copy.
 - Display name remains `Google`. Alphabet is mentioned in the description: `Alphabet傘下で検索やYouTube、クラウドを展開。` The `alphabet-13f` identifier and holdings are unchanged.
 - Next priority: scheduled disclosure/ETF data refresh. Current import scripts consume reviewed local source files; no capital-map scheduled refresh workflow is present.
+
+### 2026-10-25: Five additional managers, existing presentation retained
+
+- Added Thiel Macro, Soros Fund Management, ARK Investment Management, JPMorgan
+  Chase and BlackRock to the existing manager selector. Berkshire/Buffett is not
+  duplicated. Original disclosures, history, ETF/corporate files and CSS are unchanged.
+- Separate `capital-map-additional-managers.json` contains June 30, 2026 holdings
+  and March 31 comparisons. SEC submissions metadata supplies filing dates. Raw
+  information-table hashes, original URLs, cover URLs and cover totals are retained.
+  JPMorgan's March report uses full RESTATEMENT accession
+  `0000019617-26-000225`; the superseded original is not added to it.
+- Current raw rows / aggregated positions: Thiel 8/8, Soros 266/266, ARK 191/191,
+  JPMorgan 34,064/7,720, BlackRock 49,968/5,696. Totals reconcile without excluding
+  notes or changing the denominator. Grouping is CUSIP + instrument.
+- PRN debt is identified as `bond`; the existing quantity field contains reported
+  USD principal for these positions. Their detail/tooltip labels say principal,
+  not shares. Existing stock/option layout and text remain unchanged. Bond amounts
+  never imply issuer ownership or enter equity overlap. Thiel's prior zero-value
+  `NA` / `000000000` placeholder is excluded, leaving an explicitly empty report.
+- Tickers reuse unambiguous, previously reviewed CUSIP mappings only. Unknown
+  tickers retain issuer name and CUSIP. Profiles reuse the existing initials fallback;
+  new portrait photographs have not been added. ARK means aggregate manager 13F,
+  not ARKK alone; manager holdings do not represent a founder's personal trades.
+- Reproduce offline with `python3 scripts/capital-map/import-additional-managers.py DIR`.
+  For each key (`thiel`, `soros`, `ark`, `jpmorgan`, `blackrock`) and period (`current`,
+  `previous`), supply `KEY-PERIOD-cover.xml`, `KEY-PERIOD-table.xml`, and
+  `KEY-PERIOD-meta.json`. Metadata is `{cik, filing, urls:{cover,table}}`; `filing`
+  is the matching SEC submissions record, including accessionNumber, reportDate,
+  filingDate and form. The importer verifies identity, quarter, amendment type,
+  row count, value total and quantity unit before writing only the new dataset.
+- Trump/Pelosi are pending: transaction/range disclosures cannot be substituted
+  for exact complete 13F positions. Do not invent weights, current quantities or
+  performance from the supplied reference screenshots. Sources reviewed:
+  https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf
+  https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035553.pdf
+  https://www2.oge.gov/web/oge.nsf/Resources/Now+Available:+The+President%E2%80%99s+and+Vice+President%E2%80%99s+certified+annual+financial+disclosure+reports
+- Existing membership gate is unchanged in this expansion. The owner's desired
+  FREE availability of the map is a separate pending access-policy change.
+
+Owner's adjacent product decisions (not implemented by this change): high-tech
+**theme** rankings (semiconductors, optical networking, AI cloud, etc.), including
+both strongest and weakest, connect to Twelve Data only after contract. Keep the
+mobile news entry, with FREE sample/PRO full access as the tentative plan. Proposed
+22-stock split: FREE independent list/basic information, PRO immediate assessment
+changes and reasons. Locations/content of the three PRO pillars are not finalized;
+no new pillar pages are created here. Railway access/reauthentication remains prohibited.
