@@ -24,6 +24,13 @@ test('member question route requires identity, hashes ownership and keeps retrie
     assert.equal((await GET()).status,200);
     assert.match(state.calls[0].init.headers['X-Question-Owner'],/^[a-f0-9]{64}$/);
     assert.doesNotMatch(JSON.stringify(state.calls),/user_private_123/);
+    assert.equal((await GET(new Request('https://example.test/api/research/questions?page=6'))).status,200);
+    assert.equal(new URL(state.calls.at(-1).url).searchParams.get('page'),'6');
+    for (const page of ['0','-1','1.5','100001','abc']) {
+      const count=state.calls.length;
+      assert.equal((await GET(new Request(`https://example.test/api/research/questions?page=${page}`))).status,400);
+      assert.equal(state.calls.length,count);
+    }
     const body=JSON.stringify({audience:'pro-board',requestId:'q-'+'1'.repeat(32),body:'決算で最初に見る数字は何ですか？'});
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://attacker.test','content-type':'application/json'},body}))).status,403);
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);

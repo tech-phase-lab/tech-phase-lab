@@ -22,10 +22,10 @@ export default function PostActions({ item, onUpdated, editing, setEditing, chil
   }
   return <>
     <div className={styles.postHeader}>{children}<div className={styles.postActions}>
-      <button type="button" aria-label={item.kind === "qa" ? "回答を編集" : "投稿を編集"} title="編集" disabled={busy} onClick={() => { if (!editing) { setBody(item.bodyJa); version.current = item.version; } setEditing(true); }}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z" /></svg></button>
+      <button type="button" aria-label={item.kind === "qa" ? "回答を編集" : "投稿を編集"} title="編集" aria-pressed={editing} disabled={busy} onClick={() => { if (editing) { setEditing(false); return; } if (!dirty) { setBody(item.bodyJa); version.current = item.version; } setEditing(true); }}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z" /></svg></button>
       <button type="button" aria-label={item.kind === "qa" ? "回答を削除" : "投稿を削除"} title="削除" disabled={busy} onClick={() => void save("delete")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" /></svg></button>
     </div></div>
-    {editing && <div className={styles.inlineEditor}><DeskTextEditor label={item.kind === "qa" ? "回答の本文" : "投稿の本文"} value={body} onChange={setBody} disabled={busy} media={item.kind === "notes"} /><div className={styles.toolbar}><button type="button" disabled={busy || !dirty || !body.trim()} onClick={() => void save("edit")}>{busy ? "保存中…" : "保存"}</button><button type="button" disabled={busy} onClick={() => { setBody(item.bodyJa); setEditing(false); setMessage(""); }}>キャンセル</button></div></div>}
+    {editing && <div className={styles.inlineEditor}><DeskTextEditor label={item.kind === "qa" ? "回答の本文" : "投稿の本文"} value={body} onChange={setBody} disabled={busy} media={item.kind === "notes"} /><div className={styles.saveActions}><button type="button" disabled={busy || !dirty || !body.trim()} onClick={() => void save("edit")}>{busy ? "保存中…" : "保存"}</button><button type="button" disabled={busy} onClick={() => { setBody(item.bodyJa); setEditing(false); setMessage(""); }}>キャンセル</button></div></div>}
     {message && <p className={styles.actionMessage} role="status">{message}</p>}
   </>;
 }

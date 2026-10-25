@@ -1,4 +1,4 @@
 import type { Metadata } from "next";
-import ServerPosts from "../../columns/server-posts";
+import ColumnsPage from "../../columns/columns";
 export const metadata: Metadata = { title: "リゼルに聞く｜公開回答 | Tech Phase Research" };
-export default function Page() { return <ServerPosts initialKind="qa" />; }
+export default function Page() { return <ColumnsPage initialKind="qa" />; }

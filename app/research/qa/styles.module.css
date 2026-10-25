@@ -10,3 +10,5 @@
 
 /* Answer editor occupies the full card, rather than the metadata flex row. */
 .history article>.answer{display:block;width:100%;box-sizing:border-box}.answer label{display:grid;width:100%;gap:7px;margin-top:0}.answer textarea{display:block;box-sizing:border-box;width:100%;font-size:16px;min-height:130px}.answer .submit{flex-wrap:wrap}.history article>a{display:inline-flex;margin-top:6px;padding:7px 12px;border:1px solid #a8905b70;border-radius:7px;color:#dfc894;background:#a8905b15;font-size:13px;text-decoration:none}
+
+.answerIdentity{display:flex;align-items:center;gap:10px;margin-bottom:10px}.answerIdentity img{border-radius:50%;flex-shrink:0}.answerIdentity>div{display:flex;flex-direction:column;gap:1px}.answerIdentity strong{font-size:12px}.answerIdentity time{font-size:11px}.pagination{display:flex;justify-content:center;align-items:center;gap:18px;margin-top:20px}.pagination button{border:1px solid #627579;border-radius:6px;background:transparent;color:#e8dfcd;padding:8px 16px;cursor:pointer}.pagination button:disabled{opacity:.35;cursor:default}

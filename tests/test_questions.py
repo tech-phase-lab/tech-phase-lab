@@ -43,6 +43,29 @@ class QuestionTests(unittest.TestCase):
     def tearDown(self):
         self.db.close(); self.temp.cleanup()
 
+    def test_board_paginates_beyond_fifty_and_embeds_only_published_answers(self):
+        for index in range(61):
+            self.db.execute("INSERT INTO member_questions(id,owner_key,body,status,created_at,updated_at,audience) VALUES(?,?,?,?,?,?,?)", (f"q-{index:032x}", OWNER_A, "質問の本文です。", "pending", f"2026-01-{index % 28 + 1:02d}T00:00:00Z", "2026-01-01T00:00:00Z", "pro-board"))
+        self.db.commit()
+        pages = [questions.board_queue(self.db, OWNER_B, page=page) for page in range(1, 8)]
+        ids = [item["id"] for page in pages for item in page["items"]]
+        self.assertEqual(len(ids), 61)
+        self.assertEqual(len(set(ids)), 61)
+        self.assertTrue(all(page["hasNext"] for page in pages[:6]))
+        self.assertFalse(pages[-1]["hasNext"])
+        question_id = pages[0]["items"][0]["id"]
+        questions.answer(self.db, {"id": question_id, "body": "回答をここに表示します。", "reviewer": "owner"})
+        answer = questions.board_queue(self.db, OWNER_B)["items"][0]["answer"]
+        self.assertEqual(answer["bodyJa"], "回答をここに表示します。")
+        self.assertNotIn("sourceNotes", answer)
+        self.assertNotIn(OWNER_A, json.dumps(answer))
+        self.db.execute("UPDATE editorial_posts SET status='withdrawn' WHERE id=?", (answer["id"],))
+        self.db.commit()
+        self.assertNotIn("answer", questions.board_queue(self.db, OWNER_B)["items"][0])
+        for page in (0, -1, 100001, True):
+            with self.assertRaisesRegex(ValueError, "invalid-question-page"):
+                questions.board_queue(self.db, OWNER_B, page=page)
+
     def test_board_shares_only_new_posts_and_hides_deleted(self):
         private = questions.submit(self.db, {"ownerKey": OWNER_A, "body": "以前の非公開質問は共有しないでください。"})["item"]
         payload = {"ownerKey": OWNER_A, "requestId": QUESTION_ID, "body": "新しい質問はPRO会員で共有します。", "audience": "pro-board"}

@@ -13,6 +13,7 @@ import WeeklyComposer from "../weekly/composer";
 import { weeklySections } from "@/lib/research/weekly";
 import PostActions from "../desk/post-actions";
 import DeskBody from "../desk/body";
+import Reactions from "../desk/reactions";
 import NoteComposer from "../notes/composer";
 import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
@@ -94,15 +95,16 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
 function ColumnArticle({ item, ja, ownerMode, access, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; onUpdated: () => void }) {
   const [editing, setEditing] = useState(false);
   const lang = ja ? "ja" : "en";
-  const date = <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind === "notes" ? { timeStyle: "short", hourCycle: "h23" } as const : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time>;
-  const answerLabel = <div className={styles.answerLabel}><span>{ja ? "リゼルの回答" : "RIZEL’S ANSWER"}</span><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /></div>;
-  return <article className={`${styles.article} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id}>
-    {item.kind === "notes" ? <div className={styles.noteHeader}><div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div></div> : <p className={styles.meta}>{postNames[item.kind][lang]} · {date}</p>}
+  const date = <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind !== "weekly" ? { timeStyle: "short", hourCycle: "h23" } as const : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time>;
+  const answerLabel = <div className={styles.answerLabel}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /><div><span>{ja ? "リゼル" : "RIZEL"}</span><small>{date} JST</small></div></div>;
+  return <article className={`${styles.article} ${editing ? styles.editing : ""} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id}>
+    {item.kind === "notes" ? <div className={styles.noteHeader}><div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div></div> : item.kind === "weekly" ? <p className={styles.meta}>{postNames[item.kind][lang]} · {date}</p> : null}
     <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
       {item.kind === "notes" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}><p className={styles.meta}>{date}<small className={styles.zone}> JST</small></p></PostActions> : <p className={styles.meta}>{date}<small className={styles.zone}> JST</small></p>)}
-      {item.kind !== "notes" && <>{item.kind === "qa" && <p className={styles.questionLabel}>{ja ? "質問" : "QUESTION"}</p>}<h2>{ja ? item.titleJa : item.titleEn}</h2><p className={styles.text}>{ja ? item.introJa : item.introEn}</p></>}
+      {item.kind !== "notes" && <>{item.kind === "qa" && <p className={styles.questionLabel}>{ja ? "質問" : "QUESTION"}</p>}<h2>{ja ? item.titleJa : item.titleEn}</h2>{(ja ? item.introJa : item.introEn) && <p className={styles.text}>{ja ? item.introJa : item.introEn}</p>}</>}
       {item.kind === "qa" && access === "pro" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}>{answerLabel}</PostActions> : answerLabel)}
       {!editing && (!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : access === "pro" ? <><div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{item.kind === "weekly" ? weeklySections(ja ? item.bodyJa : item.bodyEn).map((section,index)=><details key={index} className={styles.weeklySection} open={index===0}><summary>{section.title || (ja ? "本文" : "Report")}</summary><p>{section.body}</p></details>) : <DeskBody text={ja ? item.bodyJa : item.bodyEn} media={item.kind === "notes"} />}</div>{item.sources.length > 0 && (item.kind === "weekly" ? <footer className={styles.weeklySourceFooter}><details className={styles.weeklySources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{item.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a></li>)}</ul></details></footer> : <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>)}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>)}
+      {item.kind === "notes" && access === "pro" && <Reactions postId={item.id} ja={ja} />}
     </div>
   </article>;
 }

@@ -117,13 +117,23 @@ def member_queue(db, owner_key, limit=20):
     return {"items": [_item(row) for row in rows]}
 
 
-def board_queue(db, owner_key, limit=50):
+def board_queue(db, owner_key, limit=10, page=1):
+    import editorial_posts
     owner_key = _owner(owner_key)
-    limit = max(1, min(int(limit), 50))
-    rows = db.execute("SELECT * FROM member_questions WHERE audience='pro-board' AND status!='closed' ORDER BY created_at DESC,id DESC LIMIT ?", (limit,)).fetchall()
-    items = [{**_item(row), "isMine": row["owner_key"] == owner_key} for row in rows]
+    limit = max(1, min(int(limit), 10))
+    if type(page) is not int or not 1 <= page <= 100000:
+        raise ValueError("invalid-question-page")
+    rows = db.execute("SELECT * FROM member_questions WHERE audience='pro-board' AND status!='closed' ORDER BY created_at DESC,id DESC LIMIT ? OFFSET ?", (limit + 1, (page - 1) * limit)).fetchall()
+    items = []
+    for row in rows[:limit]:
+        value = {**_item(row), "isMine": row["owner_key"] == owner_key}
+        if row["status"] == "answered" and row["answer_post_id"]:
+            answer = db.execute("SELECT * FROM editorial_posts WHERE id=? AND kind='qa' AND status='published'", (row["answer_post_id"],)).fetchone()
+            if answer:
+                value["answer"] = editorial_posts.item(answer)
+        items.append(value)
     private = db.execute("SELECT * FROM member_questions WHERE owner_key=? AND audience='private' ORDER BY created_at DESC,id DESC LIMIT 20", (owner_key,)).fetchall()
-    return {"items": items, "privateItems": [_item(row) for row in private], "audience": "pro-board"}
+    return {"items": items, "privateItems": [_item(row) for row in private], "audience": "pro-board", "page": page, "hasNext": len(rows) > limit}
 
 
 def moderation_queue(db, view="pending", limit=50):

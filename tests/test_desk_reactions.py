@@ -1,0 +1,29 @@
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/research"))
+import desk_reactions
+import editorial_posts
+
+
+class DeskReactionTests(unittest.TestCase):
+    def test_member_uniqueness_undo_and_published_notes_only(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with desk_reactions.connect(Path(directory) / "test.sqlite") as db:
+                post = editorial_posts.save(db, {"id": "note-reaction-test", "version": 0, "kind": "notes", "bodyJa": "テスト用の本文です。"})["item"]
+                with self.assertRaises(ValueError):
+                    desk_reactions.read(db, "a" * 64, post["id"])
+                db.execute("UPDATE editorial_posts SET status='published' WHERE id=?", (post["id"],)); db.commit()
+                payload = {"postId": post["id"], "emoji": "like", "selected": True}
+                for _ in range(2):
+                    self.assertEqual(desk_reactions.save(db, "a" * 64, payload)["reactions"]["like"], {"count": 1, "selected": True})
+                self.assertEqual(desk_reactions.read(db, "b" * 64, post["id"])["reactions"]["like"], {"count": 1, "selected": False})
+                desk_reactions.save(db, "b" * 64, payload)
+                self.assertEqual(desk_reactions.save(db, "a" * 64, {**payload, "selected": False})["reactions"]["like"], {"count": 1, "selected": False})
+                for bad in ({**payload, "emoji": "invalid"}, {**payload, "selected": 1}):
+                    with self.assertRaises(ValueError): desk_reactions.save(db, "a" * 64, bad)
+                with self.assertRaises(ValueError): desk_reactions.read(db, "bad-owner", post["id"])
+                for kind, status in (("qa", "published"), ("notes", "withdrawn")):
+                    db.execute("UPDATE editorial_posts SET kind=?,status=? WHERE id=?", (kind, status, post["id"])); db.commit()
+                    with self.assertRaises(ValueError): desk_reactions.save(db, "a" * 64, payload)
