@@ -70,3 +70,9 @@ test('Japanese headlines drop the comma after a bracket and keep a name with its
   assert.equal(tidyJapanese(lumentum), lumentum);
   assert.equal(tidyJapanese('Alphabet (GOOGL), plans robotaxis'), 'Alphabet (GOOGL), plans robotaxis');
 });
+
+test('weekly digest headlines are not shown as news', () => {
+  assert.equal(isNotNews('Washington bans DeepSeek, Microsoft drops UK project: This Week’s Key Developments'), true);
+  assert.equal(isNotNews('ワシントン、DeepSeekを禁止：今週の主な動向'), true);
+  assert.equal(isNotNews('Microsoft reports earnings this week'), false);
+});

@@ -52,8 +52,8 @@ export function socialChatter(item: OfficialUpdate) {
 
 /** Posts that are not news for readers (owner, Oct 23): a conference session blog ("GTC: How ... ") and an
  * earnings "highlights" page, which repeats the earnings release already listed with the results. */
-const NOT_NEWS = /^\s*(?:GTC|Computex|OCP)(?:\s+\w+)?\s*[:：]|\b(?:Q[1-4]|first|second|third|fourth)\b.{0,30}\bhighlights?\b|\bhighlights?\b.{0,40}\b(?:Q[1-4]|quarter)\b|\bfuture workforce\b|\b(?:community college|apprenticeship|scholarship)\b|労働力が育つ|人材育成/i;
-export const isNotNews = (item: OfficialUpdate) => NOT_NEWS.test(item.title);
+const NOT_NEWS = /^\s*(?:GTC|Computex|OCP)(?:\s+\w+)?\s*[:：]|\b(?:Q[1-4]|first|second|third|fourth)\b.{0,30}\bhighlights?\b|\bhighlights?\b.{0,40}\b(?:Q[1-4]|quarter)\b|\bfuture workforce\b|\b(?:community college|apprenticeship|scholarship)\b|労働力が育つ|人材育成|\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:['’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b|今週の(?:主な)?(?:動向|ニュース|まとめ)|週間(?:まとめ|ニュース|動向)/i;
+export const isNotNews = (item: OfficialUpdate) => NOT_NEWS.test(item.title) || NOT_NEWS.test(item.translationJa ?? '');
 
 export function informativeOfficial(item: OfficialUpdate) {
   if (socialChatter(item) || isNotNews(item)) return false;

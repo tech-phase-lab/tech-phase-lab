@@ -26,6 +26,7 @@ const NOT_NEWS = [
   /理由$|その理由|理由とは|なぜ.{0,40}[？?]$/,
   /\bbuying opportunit(?:y|ies)\b|\bbuy the dip\b|\btime to buy\b|買いの機会|買い時|買い場|押し目買い/i, // opinion pieces that argue for buying carry no news fact
   /逃した[?？]|見逃さない(?:よう|で)|お気に入りの恐竜/,
+  /\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:['’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b|今週の(?:主な)?(?:動向|ニュース|まとめ)|週間(?:まとめ|ニュース|動向)/i, // weekly digests read as a teaser for a longer piece
 ];
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
 
