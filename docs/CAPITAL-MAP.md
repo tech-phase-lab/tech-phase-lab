@@ -212,3 +212,22 @@ mobile news entry, with FREE sample/PRO full access as the tentative plan. Propo
 22-stock split: FREE independent list/basic information, PRO immediate assessment
 changes and reasons. Locations/content of the three PRO pillars are not finalized;
 no new pillar pages are created here. Railway access/reauthentication remains prohibited.
+
+### 2026-10-25: Owner confirms Capital Map is FREE
+
+- Supersedes earlier PRO-only access notes above. The normal route now returns the
+  same actual disclosures and prior-period comparisons without requiring membership.
+- Capital Map routes bypass the identity proxy like other public research tools.
+  The paid comparison and other protected routes keep their existing authorization.
+- Removed Capital Map from the home PRO benefits card, changed its eyebrow to
+  TECH PHASE RESEARCH, and removed the obsolete sign-in/plan link from the empty state.
+- Holdings, comparison functions, layout and CSS are unchanged. Public sample
+  remains explicitly fictional. See TECH-PHASE-PRO-PRODUCT-PLAN.md for the confirmed
+  news/earnings boundary, standalone theme ranking and watchlist review scope.
+- Validation: anonymous production-server HTTP 200 returns actual existing/added
+  reports and history without a login/plan prompt. 76 existing Japanese/English
+  list/detail renders match after normalizing only the intended eyebrow label
+  (shell/navigation/images stubbed); original datasets and CSS remain unchanged.
+  On integrated base 5441b88a: Node 1417/1417, Python 2639/2639, lint (0 errors,
+  5 existing warnings), production build/typecheck, compileall and diff check pass.
+  This is local validation preceding branch publication, not hosted UI acceptance.

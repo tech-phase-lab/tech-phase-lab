@@ -117,11 +117,11 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
     <div className={styles.page}>
       {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} sample={!reported} onBack={backToList} />}
       <div hidden={Boolean(detailId) && hasData}>
-      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE PRO{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
+      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE RESEARCH{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
       {!hasData ? <section className={styles.preparing}>
         <h2>{t("世界の運用会社とETFの投資先をひと目で。", "Explore the portfolios behind managers and ETFs.")}</h2>
         <p>{t("保有銘柄と構成比、銘柄ごとの保有先、ETFの重複を確認できます。", "Explore holdings, portfolio weights, stock holders and ETF overlap.")}</p>
-        <Link className={styles.primary} href="/research/account">{t("ログイン・プランを確認", "Sign in / View plan")} →</Link> <Link className={styles.primary} href="/research/capital-map/sample">{t("サンプルを見る", "Explore sample")} →</Link>
+        <Link className={styles.primary} href="/research/capital-map/sample">{t("サンプルを見る", "Explore sample")} →</Link>
       </section> : <>
         {!reported && <p className={styles.notice}>{t("架空データの表示サンプルです。", "Display sample using fictional data.")} <Link href="/research/capital-map">{t("実際の保有データを見る", "View reported holdings")} →</Link></p>}
         <div className={styles.navigationRow}><nav className={styles.tabs} aria-label={t("資本マップ", "Capital map")}>
