@@ -50,6 +50,14 @@ test('moderation route is owner-only and uses the server editor credential', asy
     state.member.isAdmin=true;
     assert.equal((await POST(new Request('https://example.test/api/research/questions/moderation',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:replyBody}))).status,200);
     assert.equal(new URL(state.calls.at(-1).url).pathname,'/admin/questions/answer');
+    const editRequest = (version, origin='https://example.test') => new Request('https://example.test/api/research/questions/moderation',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({id:'q-'+'1'.repeat(32),decision:'edit-reply',body:'訂正した回答です。',expectedVersion:version})});
+    for (const version of [undefined, 0, -1, true, '2']) assert.equal((await POST(editRequest(version))).status,400);
+    assert.equal((await POST(editRequest(2,'https://attacker.test'))).status,403);
+    state.member.isAdmin=false;
+    assert.equal((await POST(editRequest(2))).status,403);
+    state.member.isAdmin=true;
+    assert.equal((await POST(editRequest(2))).status,200);
+    assert.equal(JSON.parse(state.calls.at(-1).init.body).expectedVersion,2);
     const body=JSON.stringify({id:'q-'+'1'.repeat(32),decision:'closed'});
     assert.equal((await POST(new Request('https://example.test/api/research/questions/moderation',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);
     assert.equal(new URL(state.calls.at(-1).url).pathname,'/admin/questions/review');

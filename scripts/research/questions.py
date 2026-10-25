@@ -210,6 +210,20 @@ def answer(db, payload):
             raise ValueError("question-not-found")
         post_id = "qa-" + question_id[2:]
         current = db.execute("SELECT * FROM editorial_posts WHERE id=?", (post_id,)).fetchone()
+        if current and "expectedVersion" in payload:
+            expected = payload["expectedVersion"]
+            if type(expected) is not int or expected < 1 or current["version"] != expected or current["status"] != "published" or row["answer_post_id"] != post_id or current["kind"] != "qa":
+                raise ValueError("answer-conflict")
+            content = json.loads(current["content"])
+            if content["bodyJa"] == body:
+                return {"item": _item(row), "post": editorial_posts.item(current)}
+            content.update(bodyJa=body, titleEn="", introEn="", bodyEn="")
+            encoded = json.dumps(content, ensure_ascii=False)
+            db.execute("UPDATE editorial_posts SET version=version+1,content=?,updated_at=? WHERE id=?", (encoded, now, post_id))
+            db.execute("INSERT INTO editorial_post_history(post_id,version,action,content,actor,reason,at) VALUES(?,?,'published',?,'authenticated-owner','Owner corrected reply',?)", (post_id, expected + 1, json.dumps({"kind": "qa", **content}, ensure_ascii=False), now))
+            return {"item": _item(row), "post": editorial_posts.item(db.execute("SELECT * FROM editorial_posts WHERE id=?", (post_id,)).fetchone())}
+        if "expectedVersion" in payload:
+            raise ValueError("answer-conflict")
         if current:
             if current["status"] != "published" or json.loads(current["content"])["bodyJa"] != body or row["answer_post_id"] != post_id:
                 raise ValueError("answer-conflict")

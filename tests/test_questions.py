@@ -163,3 +163,33 @@ class DirectAnswerTests(unittest.TestCase):
                 self.assertEqual(post["bodyJa"],"売上の伸びと見通しを確認します。")
                 private=questions.submit(db,{"ownerKey":OWNER_B,"body":"これは以前の非公開の質問です。"})["item"]
                 with self.assertRaises(ValueError): questions.answer(db,{"id":private["id"],"body":"公開しない"})
+
+    def test_correction_preserves_link_and_date_rejects_stale_version(self):
+        import json
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/"q.db"
+            with editorial_posts.connect(path): pass
+            with questions.connect(path) as db:
+                questions.submit(db,{"ownerKey":OWNER_A,"requestId":QUESTION_ID,"body":"決算で最初に見る数字は何ですか？","audience":"pro-board"})
+                questions.answer(db,{"id":QUESTION_ID,"body":"最初の回答です。"})
+                old = editorial_posts.queue(db,published=True)["items"][0]
+                row = db.execute("SELECT content FROM editorial_posts WHERE id=?", (old['id'],)).fetchone()
+                content = json.loads(row[0]); content.update(titleEn='Old question',bodyEn='Old answer')
+                db.execute("UPDATE editorial_posts SET content=? WHERE id=?", (json.dumps(content),old['id'])); db.commit()
+                updated = questions.answer(db,{"id":QUESTION_ID,"body":"**訂正した回答です。**","expectedVersion":old['version']})
+                self.assertEqual(updated['post']['version'],old['version']+1)
+                self.assertEqual(updated['post']['publishedAt'],old['publishedAt'])
+                self.assertEqual(updated['post']['bodyEn'],'')
+                self.assertEqual(updated['item']['answerPostId'],old['id'])
+                self.assertEqual(db.execute("SELECT count(*) FROM editorial_posts").fetchone()[0],1)
+                self.assertEqual(db.execute("SELECT count(*) FROM editorial_post_history").fetchone()[0],2)
+                for version in [old['version'],True,0,-1,'2']:
+                    with self.assertRaisesRegex(ValueError,'answer-conflict'):
+                        questions.answer(db,{"id":QUESTION_ID,"body":"上書き禁止","expectedVersion":version})
+                self.assertEqual(editorial_posts.queue(db,published=True)['items'][0]['bodyJa'],'**訂正した回答です。**')
+                # Repeating unchanged content at the current version creates no history.
+                questions.answer(db,{"id":QUESTION_ID,"body":"**訂正した回答です。**","expectedVersion":updated['post']['version']})
+                self.assertEqual(db.execute("SELECT count(*) FROM editorial_post_history").fetchone()[0],2)
+                questions.review(db,{"id":QUESTION_ID,"decision":"closed"})
+                with self.assertRaisesRegex(ValueError,'question-not-found'):
+                    questions.answer(db,{"id":QUESTION_ID,"body":"復活させない","expectedVersion":updated['post']['version']})

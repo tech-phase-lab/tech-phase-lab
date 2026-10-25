@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { postNames, type EditorialPost, type PostKind } from "@/lib/research/editorial-posts";
+import DeskTextEditor from "../desk/text-editor";
+import DeskBody from "../desk/body";
 import styles from "./styles.module.css";
 const blank = (kind: PostKind): EditorialPost => ({ id: crypto.randomUUID(), version: 0, kind, status: "draft", titleJa: "", titleEn: "", introJa: "", introEn: "", bodyJa: "", bodyEn: "", sourceNotes: "", sources: [], updatedAt: "", publishedAt: null });
 const statusNames = { draft: "下書き", published: "公開中", withdrawn: "取り下げ" };
@@ -17,7 +19,7 @@ export default function EditorialEditor() {
   return <main className={styles.main}>
     <header><p>TECH PHASE · PRIVATE EDITOR</p><h1>リゼルの投稿デスク</h1><Link href="/research/questions">質問受信箱</Link> · <Link href="/research/review">速報レビューへ</Link> · <Link href="/research/columns">会員向けページへ</Link></header>
     <label className={styles.auth}>編集用トークン<input type="password" autoComplete="off" value={token} onChange={e => setToken(e.target.value)} /></label>
-    <p>トークンはこの画面のメモリだけで保持します。トークン変更時は未保存の入力が消えます。本文はプレーンテキストで表示します。</p>
+    <p>トークンはこの画面のメモリだけで保持します。トークン変更時は未保存の入力が消えます。ひとりごと・回答の本文は太字、赤文字、黄色マーカーで装飾できます。</p>
     <Workspace key={token} token={token} />
   </main>;
 }
@@ -84,7 +86,7 @@ function Workspace({ token }: { token: string }) {
       <div className={styles.languages}>{(["Ja", "En"] as const).map(lang => <div key={lang} hidden={writingLanguage !== lang}><h2>{lang === "Ja" ? "日本語" : "English"}</h2>
         <label>見出し<input maxLength={180} value={draft[`title${lang}`]} onChange={e => edit(`title${lang}`, e.target.value)} /></label>
         <label>無料で表示する導入文<textarea maxLength={500} value={draft[`intro${lang}`]} onChange={e => edit(`intro${lang}`, e.target.value)} /></label>
-        <label>PRO会員向けの本文<textarea className={styles.body} maxLength={6000} value={draft[`body${lang}`]} onChange={e => edit(`body${lang}`, e.target.value)} /><small className={styles.counter}>{draft[`body${lang}`].length.toLocaleString()} / 6,000文字</small></label>
+        <div>{draft.kind === "weekly" ? <label>PRO会員向けの本文<textarea className={styles.body} maxLength={6000} value={draft[`body${lang}`]} onChange={e => edit(`body${lang}`, e.target.value)} /></label> : <DeskTextEditor label={`PRO会員向けの本文（${lang === "Ja" ? "日本語" : "English"}）`} value={draft[`body${lang}`]} onChange={value => edit(`body${lang}`, value)} disabled={busy} media={draft.kind === "notes"} />}<small className={styles.counter}>{draft[`body${lang}`].length.toLocaleString()} / 6,000文字</small></div>
       </div>)}</div>
       <details className={styles.support}><summary>元メモ・出典を整える</summary><label>根拠・元メモ（非公開）<textarea maxLength={4000} value={draft.sourceNotes || ""} onChange={e => edit("sourceNotes", e.target.value)} /></label>
       <h2>出典（PRO本文と一緒に表示）</h2>
@@ -100,7 +102,7 @@ function Workspace({ token }: { token: string }) {
       <section className={styles.review}><h2>公開確認</h2><p>下書きを保存した後、日英の文章と元メモを確認して公開します。</p><label>確認者<input value={reviewer} maxLength={120} onChange={e => setReviewer(e.target.value)} /></label><label>確認・取り下げの理由<input value={reason} maxLength={500} onChange={e => setReason(e.target.value)} /></label>
       <label className={styles.check}><input type="checkbox" checked={verified} onChange={e => setVerified(e.target.checked)} />日英の意味・数字・出典・本人の見解・個人情報を確認しました</label>
       <div className={styles.actions}><button disabled={busy || dirty || !draft.version || !verified || reviewer.trim().length < 2 || reason.trim().length < 5 || draft.status === "published"} onClick={() => void write("published")}>PRO記事として公開</button><button disabled={busy || dirty || draft.status !== "published" || reviewer.trim().length < 2 || reason.trim().length < 5} onClick={() => void write("withdrawn")}>公開を取り下げる</button></div></section>
-      <section className={styles.preview}><h2>表示プレビュー（未保存の入力を含む）</h2><select aria-label="プレビュー言語" value={preview} onChange={e => setPreview(e.target.value as "ja" | "en")}><option value="ja">日本語</option><option value="en">English</option></select><p>{postNames[draft.kind][preview]}</p><h3>{preview === "ja" ? draft.titleJa : draft.titleEn}</h3><p>{preview === "ja" ? draft.introJa : draft.introEn}</p><hr /><p className={styles.text}>{preview === "ja" ? draft.bodyJa : draft.bodyEn}</p></section>
+      <section className={styles.preview}><h2>表示プレビュー（未保存の入力を含む）</h2><select aria-label="プレビュー言語" value={preview} onChange={e => setPreview(e.target.value as "ja" | "en")}><option value="ja">日本語</option><option value="en">English</option></select><p>{postNames[draft.kind][preview]}</p><h3>{preview === "ja" ? draft.titleJa : draft.titleEn}</h3><p>{preview === "ja" ? draft.introJa : draft.introEn}</p><hr /><div className={styles.text}>{draft.kind === "weekly" ? (preview === "ja" ? draft.bodyJa : draft.bodyEn) : <DeskBody text={preview === "ja" ? draft.bodyJa : draft.bodyEn} media={draft.kind === "notes"} />}</div></section>
     </section>}</div>
   </>;
 }

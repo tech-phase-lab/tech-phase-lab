@@ -2,6 +2,7 @@
 import { useIdentityRefresh } from "../identity-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import DeskTextEditor from "../desk/text-editor";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useOwnerMode } from "../member-display-provider";
@@ -80,5 +81,5 @@ function InlineAnswer({ item, ja, onAnswered }: { item: Question; ja: boolean; o
     } catch { setMessage(ja ? "公開できませんでした。入力は残っています。" : "Could not publish. Your text is still here."); }
     finally { setBusy(false); }
   }
-  return <div className={styles.answer}>{!open ? <button onClick={() => setOpen(true)}>{ja ? "回答する" : "Answer"}</button> : <><label>{ja ? "回答" : "Answer"}<textarea autoFocus value={body} maxLength={6000} onChange={event => setBody(event.target.value)} /></label><div className={styles.submit}><button disabled={busy || !body.trim()} onClick={() => void publish()}>{busy ? ja ? "公開中…" : "Publishing…" : ja ? "回答を公開" : "Publish answer"}</button><button disabled={busy} onClick={() => setOpen(false)}>{ja ? "閉じる" : "Close"}</button></div>{message && <p role="status">{message}</p>}</>}</div>;
+  return <div className={styles.answer}>{!open ? <button onClick={() => setOpen(true)}>{ja ? "回答する" : "Answer"}</button> : <><DeskTextEditor label={ja ? "回答" : "Answer"} value={body} onChange={setBody} disabled={busy} /><div className={styles.submit}><button disabled={busy || !body.trim()} onClick={() => void publish()}>{busy ? ja ? "公開中…" : "Publishing…" : ja ? "回答を公開" : "Publish answer"}</button><button disabled={busy} onClick={() => setOpen(false)}>{ja ? "閉じる" : "Close"}</button></div>{message && <p role="status">{message}</p>}</>}</div>;
 }
