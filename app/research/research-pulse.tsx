@@ -67,6 +67,21 @@ function FittedHeadline({ headlines, full, lang, label, onSlide }: { headlines: 
   </span>;
 }
 
+type PulseItem = ReturnType<typeof newsPulseItems>[number];
+// Owner, Oct 25: opening on an empty strip and then showing it reads worse than opening on the headlines seen last
+// time and letting them change, so the strip remembers its latest headlines on this device (display only).
+const PULSE_CACHE_KEY = "tech-phase:pulse-items:v1";
+const PULSE_CACHE_MS = 12 * 3_600_000;
+function readPulseCache(lang: Language): PulseItem[] {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(PULSE_CACHE_KEY) ?? "null") as { lang?: string; savedAt?: number; items?: PulseItem[] } | null;
+    return saved?.lang === lang && Number.isFinite(saved.savedAt) && Date.now() - saved.savedAt! < PULSE_CACHE_MS && Array.isArray(saved.items) ? saved.items : [];
+  } catch { return []; }
+}
+function writePulseCache(lang: Language, items: PulseItem[]) {
+  try { window.localStorage.setItem(PULSE_CACHE_KEY, JSON.stringify({ lang, savedAt: Date.now(), items: items.slice(0, 8) })); } catch { /* storage may be blocked */ }
+}
+
 export default function ResearchPulse({ lang }: { lang: Language }) {
   const snapshot = useSyncExternalStore(subscribeNews, newsSnapshot, serverNewsSnapshot);
   const feed = snapshot?.data;
@@ -105,7 +120,12 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     const grace = setTimeout(() => setWireSettled(true), 2_500);
     return () => { alive = false; clearTimeout(grace); };
   }, [checkedAt]);
-  const items = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire) : [];
+  const live = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire) : [];
+  const [remembered, setRemembered] = useState<PulseItem[]>([]);
+  useEffect(() => { setRemembered(readPulseCache(lang)); }, [lang]);
+  const liveKey = live.map(item => item.id).join("|");
+  useEffect(() => { if (live.length) writePulseCache(lang, live); }, [lang, liveKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  const items = live.length ? live : remembered;
   const first = items[0]?.id ?? "";
   const stopped = paused || interacting || reduced;
   useEffect(() => {

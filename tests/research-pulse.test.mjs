@@ -65,3 +65,10 @@ test('headline, clock and pause remain in a single row; only a full headline is 
   assert.match(css,/\.clipped\{text-overflow:ellipsis\}/);
   assert.doesNotMatch(css,/\.headline\{[^}]*text-overflow|line-clamp|data-expanded/);
 });
+
+test('the strip opens on the headlines remembered on this device (12 h) and replaces them when the live ones arrive',async()=>{
+  const raw=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
+  assert.match(raw,/PULSE_CACHE_MS = 12 \* 3_600_000/);
+  assert.match(raw,/const items = live\.length \? live : remembered;/);
+  assert.match(raw,/if \(live\.length\) writePulseCache\(lang, live\)/);
+});
