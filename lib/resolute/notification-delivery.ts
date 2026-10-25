@@ -12,6 +12,7 @@ export type AlertReceipt={key:string;messageId:string;acceptedAt:string};
 export type AlertRecipient={userId:string;email:string;verified:boolean;preferencesConfigured:boolean;unsubscribed:boolean;locale:"ja"|"en"};
 export type AlertProvider={
  name:string;
+ recipientAllowed?:(email:string)=>Promise<boolean>;
  // Adapter must honor this key, use the abort signal, and normalize verified
  // provider responses. A duplicate alone is NOT a confirmed acceptance receipt.
  send:(input:{key:string;to:string;mail:RenderedMail},signal:AbortSignal)=>Promise<AlertReceipt|null>;
@@ -100,6 +101,7 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
      const rights=await readEntitlementSnapshot(client,userId,deps.source??entitlementSource());
      recipient=await deps.recipient(userId);
      if(recipient.userId!==userId)throw new Error("Recipient identity mismatch");
+     if(recipient.verified&&provider.recipientAllowed&&!await provider.recipientAllowed(recipient.email))recipient={...recipient,unsubscribed:true};
      return {settings:snapshot.settings,revision:snapshot.revision,ruleKey:notificationRuleKey(snapshot.settings,plan),entitlements:rights.records,
       recipientVerified:recipient.verified,preferencesConfigured:recipient.preferencesConfigured,unsubscribed:recipient.unsubscribed,planExists:!!plan};
     },

@@ -1,3 +1,4 @@
+import {createMailFeedbackRuntime} from '../../lib/resolute/notification-feedback-runtime.ts';
 import {mailStopRequest} from '../../lib/resolute/notification-stop-service.ts';
 import {aiCheckRequest} from './ai-check.mjs';
 import {rizelReviewRequest} from './rizel-review-store.mjs';
@@ -18,6 +19,7 @@ if(new URL(db.connectionString).username!=='resolute_api_reader')throw Error('Re
 const payments=paymentRuntime(process.env,config);
 const livePayments=livePaymentRuntime(process.env,config);
 const handler=createHandler(config,getResoluteEntitlementsForUser,undefined,operateResolutePlan,operateNotificationSettings,riskRequest,rizelReviewRequest,aiCheckRequest,mailStopRequest);
-const server=createApiServer(async request=>await livePayments(request) ?? await payments(request) ?? await handler(request));
+const feedback=createMailFeedbackRuntime(process.env);
+const server=createApiServer(async request=>await feedback(request) ?? await livePayments(request) ?? await payments(request) ?? await handler(request));
 server.listen(Number(process.env.PORT || 3000),'::',()=>console.log('RESOLUTE_API_READY'));
 process.on('SIGTERM',()=>server.close(()=>process.exit(0)));

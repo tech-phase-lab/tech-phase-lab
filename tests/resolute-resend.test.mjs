@@ -10,7 +10,7 @@ const config={apiKey:'re_test_only_not_a_real_key',from,enabled:true};
 const input={key,to,mail:{subject:'Approved subject',text:'Approved text'}};
 const result=()=>({object:'email',id,from,to:[to],cc:[],bcc:[],created_at:'2027-02-03 22:00:00.123456+00',last_event:'sent',scheduled_at:null,tags:[{name:'resolute_key',value:hash(key)}]});
 function fixture(){let reference=null;const observations=[],requests=[];let reply=result(),failGet=false,failPost=false;
- const evidence={read:async()=>reference,bind:async(k,r)=>{assert.equal(k,key);reference=r;},observe:async(k,i,r)=>{assert.equal(k,key);assert.equal(i,id);observations.push(r);}};
+ const evidence={prepare:async()=>{},blocked:async()=>false,read:async()=>reference,bind:async(k,r)=>{assert.equal(k,key);reference=r;},observe:async(k,i,r)=>{assert.equal(k,key);assert.equal(i,id);observations.push(r);}};
  const transport=async(url,init)=>{requests.push({url,init});assert.equal(new URL(url).origin,'https://api.resend.com');assert.equal(init.redirect,'error');assert.equal(init.cache,'no-store');assert.ok(init.signal instanceof AbortSignal);
  if(init.method==='POST'){if(failPost)throw Error('private provider error');return Response.json({id});}if(failGet)throw Error('private read error');return Response.json(reply);};
  return {evidence,observations,requests,provider:createResendAlertProvider(config,evidence,transport,now),setReply:r=>reply=r,setGetFail:v=>failGet=v,setPostFail:v=>failPost=v};}
@@ -46,7 +46,7 @@ test('foreign receipts, malformed responses and addresses fail closed without se
 test('disabled composition makes zero DB, Clerk and provider calls; adapters never retry HTTP errors',async()=>{
  const fail=()=>{throw Error('unexpected I/O');};
  const send=createResendAlertDelivery({connect:fail},{apiKey:'',from:'',publicOrigin:'',stopKey:Buffer.alloc(0),clerk:{users:{getUser:fail}}});assert.equal(await send('user_buyer',key),'disabled');
- const disabled=createResendAlertProvider({...config,enabled:false},{read:fail,bind:fail,observe:fail},fail,now);await assert.rejects(()=>disabled.send(input,signal()));await assert.rejects(()=>disabled.lookup(key,signal()));
+ const disabled=createResendAlertProvider({...config,enabled:false},{prepare:fail,blocked:fail,read:fail,bind:fail,observe:fail},fail,now);await assert.rejects(()=>disabled.send(input,signal()));await assert.rejects(()=>disabled.lookup(key,signal()));
  for(const response of [()=>Response.json({error:'secret'},{status:429}),()=>Response.json({error:'secret'},{status:500}),()=>new Response('x'),()=>Response.json({id:'https://evil.test'}),()=>Response.json({large:'x'.repeat(262145)})]){
   let calls=0;const f=fixture();const p=createResendAlertProvider(config,f.evidence,async()=>{calls++;return response();},now);await assert.rejects(()=>p.send(input,signal()),/^Error: Mail provider unavailable$/);assert.equal(calls,1);
  }
